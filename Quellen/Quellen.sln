@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchieferWurf", "SchieferWur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageVisualisierung2D", "VorlageVisualisierung2D\VorlageVisualisierung2D.csproj", "{693022B4-2592-4513-87BE-D935E15F976D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageVisualisierung3D", "VorlageVisualisierung3D\VorlageVisualisierung3D.csproj", "{B3053622-6828-4D17-9215-2665C9F848AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{693022B4-2592-4513-87BE-D935E15F976D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{693022B4-2592-4513-87BE-D935E15F976D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{693022B4-2592-4513-87BE-D935E15F976D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3053622-6828-4D17-9215-2665C9F848AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3053622-6828-4D17-9215-2665C9F848AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3053622-6828-4D17-9215-2665C9F848AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3053622-6828-4D17-9215-2665C9F848AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
