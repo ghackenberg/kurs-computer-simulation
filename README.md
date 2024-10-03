@@ -4,7 +4,7 @@ Dieses Repository enthält Beispiele zum Thema Computer-Simulation.
 
 ## Beispiele
 
-* [Schiefer Wurf](./Sources/SchieferWurf/)
+* [Schiefer Wurf](./Quellen/SchieferWurf/)
 
 ## Dokumente
 
