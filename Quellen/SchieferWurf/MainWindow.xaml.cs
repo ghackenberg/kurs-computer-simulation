@@ -26,7 +26,7 @@ namespace SchieferWurf
             var vy0 = 10; // in m/s
             var py0 = 1.5; // in m
 
-            var dt = 0.01; // in s
+            var dt = 0.2; // in s
 
             var t0 = 0; // in s
             var tmax = 2.3; // in s
