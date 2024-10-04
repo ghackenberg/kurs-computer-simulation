@@ -149,12 +149,15 @@ classDiagram
     Disk --|> Quadric
 
     Light --|> SceneElement
-    Grid --|> SceneElement
-    Axies --|> SceneElement
     Polygon --|> SceneElement
     Quadric --|> SceneElement
+    Grid --|> SceneElement
+    Axies --|> SceneElement
     Folder --|> SceneElement
 
     SceneContainer "*" --o "ParentScene" Scene
 
     SceneElement <|-- SceneContainer
+
+    style Scene fill:white
+    style ArcBall fill:white
