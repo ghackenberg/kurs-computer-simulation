@@ -1,0 +1,80 @@
+classDiagram
+
+    class Scene {
+        +RenderBoundingVolumes: boolean
+        +DoHitTest(x: int, y: int) List~SceneElement~
+        +Draw(camera: Camera = null) void
+        +RenderElement(element: SceneElement, mode: RenderMode) void
+        +CreateInContext(gl: OpenGL) void
+        +DestroyInContext(gl: OpenGL) void
+    }
+    class SceneElement {
+        +Name: string
+        +IsEnabled: boolean
+    }
+    class SceneContainer {
+
+    }
+    class Cube {
+
+    }
+    class Effect {
+
+    }
+    class Camera {
+
+    }
+    class FrustumCamera {
+
+    }
+    class OrthographicCamera {
+        +Left: double
+        +Right: double
+        +Top: double
+        +Bottom: double
+        +Near: double
+        +Far: double
+    }
+    class PerspectiveCamera {
+        +FieldOfView: double
+        +Near: double
+        +Far: double
+    }
+    class LookAtCamera {
+        +Target: Vector
+        +UpVector: Vector
+    }
+    class ArcBallCamera {
+
+    }
+    class OpenGL {
+
+    }
+    class Asset {
+
+    }
+
+    OrthographicCamera --|> Camera
+
+    PerspectiveCamera --|> Camera
+
+    LookAtCamera --|> PerspectiveCamera
+
+    ArcBallCamera --|> PerspectiveCamera
+
+    FrustumCamera --|> Camera
+
+    Camera --|> SceneElement
+
+    Camera "CurrentCamera" <-- Scene
+
+    Effect "Effects" --o SceneElement
+
+    SceneElement "Parent" o-- "Children" SceneElement
+    SceneElement <|-- SceneContainer
+
+    SceneContainer "*" --o "ParentScene" Scene
+
+    Asset "Assets" --o Scene
+
+    Scene --> "CurrentOpenGLContext" OpenGL
