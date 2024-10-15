@@ -1,0 +1,163 @@
+classDiagram
+
+    direction BT
+
+    class Scene {
+        +CurrentOpenGLContext: OpenGL
+        +RenderBoundingVolumes: boolean
+        +Assets: List~Asset~
+        +DoHitTest(x: int, y: int) List~SceneElement~
+        +Draw(camera: Camera = null) void
+        +RenderElement(element: SceneElement, mode: RenderMode) void
+        +CreateInContext(gl: OpenGL) void
+        +DestroyInContext(gl: OpenGL) void
+    }
+    class SceneElement {
+        +Name: string
+        +IsEnabled: boolean
+        +Children: List~SceneElement~
+        +Effects: List~Effect~
+    }
+    class SceneContainer {
+
+    }
+    class Camera {
+        <<Abstract>>
+        +Position: Vertex
+        +AspectRatio: double
+    }
+    class FrustumCamera {
+        +Left: double
+        +Right: double
+        +Top: double
+        +Bottom: double
+        +Near: double
+        +Far: double
+    }
+    class OrthographicCamera {
+        +Left: double
+        +Right: double
+        +Top: double
+        +Bottom: double
+        +Near: double
+        +Far: double
+    }
+    class PerspectiveCamera {
+        +FieldOfView: double
+        +Near: double
+        +Far: double
+    }
+    class LookAtCamera {
+        +Target: Vector
+        +UpVector: Vector
+    }
+    class ArcBallCamera {
+
+    }
+    class ArcBall {
+
+    }
+    class Light {
+        +Position: Vertex
+        +Ambient: Color
+        +Diffuse: Color
+        +Specular: Color
+        +ShadowColor: GLColor
+        +On: boolean
+        +CastShadow: boolean
+    }
+    class Spotlight {
+        +Direction: Vertex
+        +SpotCutoff: float
+    }
+    class Grid {
+
+    }
+    class Axies {
+
+    }
+    class Polygon {
+        +Faces: List~Face~
+        +Vertices: List~Vertex~
+        +UVs: List~UV~
+        +Normals: List~Vertex~
+        +DrawNormals: boolean
+        +Transformation: LinearTransformation
+        +BoundingVolume: BoundingVolume
+        +IsFrozen: boolean
+        +Material: Material
+    }
+    class Quadric {
+        +QuadricDrawStyle: DrawStyle
+        +NormalOrientation: Orientation
+        +NormalGeneration: Normals
+        +TextureCoords: boolean
+        +Transformation: LinearTransformation
+        +CurrentOpenGLContext: OpenGL
+        +Material: Material
+    }
+    class Folder {
+
+    }
+    class Cube {
+
+    }
+    class Cylinder {
+        +BaseRadius: float
+        +TopRadius: float
+        +Height: float
+        +Slices: int
+        +Stacks: int
+        +BoundingVolume: BoundingVolume
+    }
+    class Sphere {
+        +Radius: float
+        +Slices: int
+        +Stacks: int
+        +BoundingVolume: BoundingVolume
+    }
+    class Disk {
+        +InnerRadius: float
+        +OuterRadius: float
+        +StartAngle: float
+        +SweepAngle: float
+        +Slices: int
+        +Loops: int
+    }
+
+    Spotlight --|> Light
+
+    OrthographicCamera --|> Camera
+
+    PerspectiveCamera --|> Camera
+
+    LookAtCamera --|> PerspectiveCamera
+
+    ArcBall <--o ArcBallCamera
+
+    ArcBallCamera --|> PerspectiveCamera
+
+    FrustumCamera --|> Camera
+
+    Camera --|> SceneElement
+    Camera "CurrentCamera" <-- Scene
+
+    Cube --|> Polygon
+
+    Sphere --|> Quadric
+    Cylinder --|> Quadric
+    Disk --|> Quadric
+
+    Light --|> SceneElement
+    Polygon --|> SceneElement
+    Quadric --|> SceneElement
+    Grid --|> SceneElement
+    Axies --|> SceneElement
+    Folder --|> SceneElement
+
+    SceneContainer "*" --o "ParentScene" Scene
+
+    SceneElement <|-- SceneContainer
+
+    style Scene fill:white
+    style ArcBall fill:white
