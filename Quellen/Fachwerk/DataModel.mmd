@@ -1,0 +1,40 @@
+classDiagram
+
+    class Model {
+        +Name: string
+        +AddNode(name: string, x: double, y: double) Node
+        +AddRod(nodeA: Node, nodeB: Node) Rod
+        +AddBearing(node: Node, fixX: bool, fixY: bool) Bearing
+        +AddExternalForce(node: Node, forceX: double, forceY: double) ExternalForce
+        +Solve() void
+    }
+    class Node {
+        +Name: string
+        +X: double
+        +Y: double
+    }
+    class Rod {
+        +Force: double
+    }
+    class Bearing {
+        +FixX: boolean
+        +FixY: boolean
+        +ForceX: double
+        +ForceY: double
+    }
+    class ExternalForce {
+        +ForceX: double
+        +ForceY: double
+    }
+
+    Model o--"*" Node: Nodes
+    Model o--"*" Rod: Rods
+    Model o--"*" Bearing: Bearings
+    Model o--"*" ExternalForce: ExternalForces
+
+    Rod -->"1" Node: NodeA
+    Rod -->"1" Node: NodeB
+
+    Bearing -->"1" Node: Node
+
+    ExternalForce -->"1" Node: Node
