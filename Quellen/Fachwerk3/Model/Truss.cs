@@ -1,5 +1,4 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
-using System.Windows.Navigation;
 
 namespace Fachwerk3.Model
 {
