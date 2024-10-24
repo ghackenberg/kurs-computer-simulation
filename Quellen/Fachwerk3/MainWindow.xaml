@@ -1,0 +1,38 @@
+﻿<Window x:Class="Fachwerk3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Fachwerk3"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" SizeChanged="Window_SizeChanged">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.Column="0">
+            <TabItem Header="Knoten">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="NodeDataGrid"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Stäbe">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="RodDataGrid"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Lager">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="BearingDataGrid"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Lasten">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="LoadDataGrid"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Canvas x:Name="Visualization" Grid.Column="1"/>
+    </Grid>
+</Window>
