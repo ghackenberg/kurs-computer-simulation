@@ -53,7 +53,7 @@ namespace Fachwerk2
             truss.AddBearing(c, false, true);
 
             truss.AddLoad(c, -1, 0.5);
-            truss.AddLoad(e, -0.5, -1);
+            truss.AddLoad(e, -0.25, -1);
 
             // Modell lösen
 
@@ -130,7 +130,7 @@ namespace Fachwerk2
                 var r = rod.Force < 0 ? 255 : 0;
                 var g = 0;
                 var b = rod.Force < 0 ? 0 : 255;
-                var a = Math.Abs(rod.Force) / maxForce * 255;
+                var a = Math.Abs(rod.Force) / maxForce * 128;
                 
                 var color = Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b);
 
@@ -148,14 +148,14 @@ namespace Fachwerk2
 
             foreach (var bearing in truss.Bearings)
             {
-                PaintLine(bearing.Node.X, bearing.Node.Y, bearing.Node.X + bearing.ForceX, bearing.Node.Y + bearing.ForceY, 0.5, Colors.Green);
+                PaintForce(bearing.Node.X, bearing.Node.Y, bearing.ForceX, bearing.ForceY, Colors.Orange);
             }
 
             // Externe Kräfte zeichnen
 
             foreach (var load in truss.Loads)
             {
-                PaintLine(load.Node.X, load.Node.Y, load.Node.X + load.ForceX, load.Node.Y + load.ForceY, 0.5, Colors.Green);
+                PaintForce(load.Node.X, load.Node.Y, load.ForceX, load.ForceY, Colors.Green);
             }
 
             // Knoten zeichnen
@@ -206,6 +206,39 @@ namespace Fachwerk2
             line.Y2 = canvasY2;
 
             Visualization.Children.Add(line);
+        }
+
+        private void PaintTriangle(double x1, double y1, double x2, double y2, double x3, double y3, Color color)
+        {
+            var p1 = new Point(ProjectX(x1), ProjectY(y1));
+            var p2 = new Point(ProjectX(x2), ProjectY(y2));
+            var p3 = new Point(ProjectX(x3), ProjectY(y3));
+
+            var polygon = new Polygon();
+            polygon.Fill = new SolidColorBrush(color);
+            polygon.Points.Add(p1);
+            polygon.Points.Add(p2);
+            polygon.Points.Add(p3);
+
+            Visualization.Children.Add(polygon);
+        }
+
+        private void PaintForce(double x, double y, double fx, double fy, Color color)
+        {
+            PaintLine(x, y, x + fx * 0.91, y + fy * 0.91, 0.5, color);
+
+            double l = Math.Sqrt(fx * fx + fy * fy);
+
+            double x1 = x + fx * 0.9 + fy / l * 0.05;
+            double y1 = y + fy * 0.9 - fx / l * 0.05;
+
+            double x2 = x + fx;
+            double y2 = y + fy;
+
+            double x3 = x + fx * 0.9 - fy / l * 0.05;
+            double y3 = y + fy * 0.9 + fx / l * 0.05;
+
+            PaintTriangle(x1, y1, x2, y2, x3, y3, color);
         }
 
         private void PaintText(double trussX, double trussY, double trussF, Color color, string text)
