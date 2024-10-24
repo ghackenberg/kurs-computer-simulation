@@ -2,8 +2,6 @@
 {
     internal class Node
     {
-        public int Index { get; }
-
         public string Name { get; }
 
         public double X { get; }
@@ -12,10 +10,11 @@
         public double DisplacementX { get; set; }
         public double DisplacementY { get; set; }
 
-        public Node(int index, string name, double x, double y)
-        {
-            Index = index;
+        public Bearing? Bearing { get; set; }
+        public Load? Load { get; set; }
 
+        public Node(string name, double x, double y)
+        {
             Name = name;
 
             X = x;

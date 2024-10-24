@@ -1,4 +1,5 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
+using System.Windows.Navigation;
 
 namespace Fachwerk3.Model
 {
@@ -11,7 +12,7 @@ namespace Fachwerk3.Model
 
         public Node AddNode(string name, double x, double y)
         {
-            var node = new Node(Nodes.Count, name, x, y);
+            var node = new Node(name, x, y);
 
             Nodes.Add(node);
 
@@ -19,7 +20,7 @@ namespace Fachwerk3.Model
         }
         public Rod AddRod(Node nodeA, Node nodeB)
         {
-            var rod = new Rod(Rods.Count, nodeA, nodeB);
+            var rod = new Rod(nodeA, nodeB);
 
             Rods.Add(rod);
 
@@ -27,7 +28,14 @@ namespace Fachwerk3.Model
         }
         public Bearing AddBearing(Node node, bool fixX, bool fixY)
         {
-            var bearing = new Bearing(Bearings.Count, node, fixX, fixY);
+            if (node.Bearing != null)
+            {
+                throw new Exception("Maximum one bearing!");
+            }
+
+            var bearing = new Bearing(node, fixX, fixY);
+
+            node.Bearing = bearing;
 
             Bearings.Add(bearing);
 
@@ -35,7 +43,14 @@ namespace Fachwerk3.Model
         }
         public Load AddLoad(Node node, double forceX, double forceY)
         {
-            var load = new Load(Loads.Count, node, forceX, forceY);
+            if (node.Load != null)
+            {
+                throw new Exception("Maximum one load!");
+            }
+
+            var load = new Load(node, forceX, forceY);
+
+            node.Load = load;
 
             Loads.Add(load);
 
@@ -44,56 +59,149 @@ namespace Fachwerk3.Model
 
         public void Solve()
         {
-            // Anzahl der bekannten Knoten-Verschiebungen berechnen
+            int i;
+
+            // Schritt 1: Anzahl der bekannten Knotenverschiebungen berechnen
 
             var uKnownCount = 0;
 
             foreach (var bearing in Bearings)
             {
-                if (bearing.FixX)
-                {
-                    uKnownCount++;
-                }
-                if (bearing.FixY)
-                {
-                    uKnownCount++;
-                }
+                uKnownCount += bearing.Degree;
             }
 
-            // Anzahl der unbekannten Knoten-Verschiebungen berechnen
+            // Schritt 2: Anzahl der unbekannten Knotenverschiebungen berechnen
 
             var uUnknownCount = Nodes.Count * 2 - uKnownCount;
 
-            // Anzahl der bekannten Knoten-Kräfte berechnen
+            // Anzahl der bekannten Knotenkräfte berechnen
 
-            var fKnownCount = Loads.Count * 2;
+            var fKnownCount = uUnknownCount;
 
-            // Anzahl der unbekannten Knoten-Kräfte berechnen
+            // Schritt 3: Anzahl der unbekannten Knotenkräfte (= Lagerkräfte) berechnen
 
-            var fUnknownCount = Nodes.Count * 2 - fKnownCount;
+            var fUnknownCount = uKnownCount;
 
-            // Matrizen erstellen
+            // Schritt 4: Steifigkeitsmatrix erstellen
 
             var kAA = Matrix<double>.Build.Dense(fUnknownCount, uKnownCount);
             var kAB = Matrix<double>.Build.Dense(fUnknownCount, uUnknownCount);
             var kBA = Matrix<double>.Build.Dense(fKnownCount, uKnownCount);
             var kBB = Matrix<double>.Build.Dense(fKnownCount, uUnknownCount);
 
-            // TODO -> Matrizen befüllen
-
-            // Vektoren erstellen
+            ///////////////////////////////
+            // TODO -> Matrizen befüllen //
+            ///////////////////////////////
+            
+            // Schritt 5: Bekannten Verschiebevektor erstellen (sortiert nach Knoten!)
 
             var uKnown = Vector<double>.Build.Dense(uKnownCount);
+
+            // Schritt 6: Bekannten Kraftvektor erstellen (sortiert nach Knoten!)
+
             var fKnown = Vector<double>.Build.Dense(fKnownCount);
 
-            // TODO -> Vektoren befüllen
+            i = 0;
 
-            // Vektoren berechnen
+            foreach (var node in Nodes)
+            {
+                if (node.Bearing != null)
+                {
+                    // Bekannte Kraftvektorkomponente für *nicht* fixierte Richtung
 
-            var uUnknown = kBB.Inverse() * fKnown;
-            var fUnknown = kAA * uKnown + kAB * uUnknown;
+                    if (!node.Bearing.FixX)
+                    {
+                        fKnown[i++] = node.Load != null ? node.Load.ForceX : 0;
+                    }
+                    if (!node.Bearing.FixY)
+                    {
+                        fKnown[i++] = node.Load != null ? node.Load.ForceY : 0;
+                    }
+                }
+                else
+                {
+                    // Bekannte Kraftvektorkomponenten für beide Richtungen
 
-            // TODO -> Ergebnisse extrahieren
+                    fKnown[i++] = node.Load != null ? node.Load.ForceX : 0;
+                    fKnown[i++] = node.Load != null ? node.Load.ForceY : 0;
+                }
+            }
+
+            if (i != fKnownCount)
+            {
+                throw new Exception("Incorrect f-vector write!");
+            }
+
+            // Schritt 7: Knotenverschiebungen berechnen
+
+            var uUnknown = kBB.Inverse() * (fKnown - kBA * uKnown); // MAGIC!!!
+
+            if (uUnknown.Count != uUnknownCount)
+            {
+                throw new Exception("Incorrect vector size!");
+            }
+
+            // Schritt 8: Lagerkräfte berechnen
+
+            var fUnknown = kAA * uKnown + kAB * uUnknown; // MAGIC!!!
+
+            if (fUnknown.Count != fUnknownCount)
+            {
+                throw new Exception("Incorrect vector size!");
+            }
+
+            // Schritt 9: Knotenverschiebungen übertragen
+
+            i = 0;
+
+            foreach (var node in Nodes)
+            {
+                if (node.Bearing != null)
+                {
+                    if (!node.Bearing.FixX)
+                    {
+                        node.DisplacementX = uUnknown[i++];
+                    }
+                    if (!node.Bearing.FixY)
+                    {
+                        node.DisplacementY = uUnknown[i++];
+                    }
+                }
+                else
+                {
+                    node.DisplacementX = uUnknown[i++];
+                    node.DisplacementY = uUnknown[i++];
+                }
+            }
+
+            if (i != uUnknownCount)
+            {
+                throw new Exception("Incorrect u-vector read!");
+            }
+
+            // Schritt 10: Lagerkräfte übertragen
+
+            i = 0;
+
+            foreach (var node in Nodes)
+            {
+                if (node.Bearing != null)
+                {
+                    if (node.Bearing.FixX)
+                    {
+                        node.Bearing.ForceX = fUnknown[i++];
+                    }
+                    if (node.Bearing.FixY)
+                    {
+                        node.Bearing.ForceY = fUnknown[i++];
+                    }
+                }
+            }
+
+            if (i != fUnknownCount)
+            {
+                throw new Exception("Incorrect f-vector read!");
+            }
         }
 
     }

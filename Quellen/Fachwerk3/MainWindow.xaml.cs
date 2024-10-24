@@ -53,7 +53,7 @@ namespace Fachwerk3
             truss.AddRod(c, e);
 
             truss.AddBearing(a, true, true);
-            truss.AddBearing(c, false, true);
+            truss.AddBearing(c, true, true);
 
             truss.AddLoad(c, -1, 0.5);
             truss.AddLoad(e, -0.25, -1);
@@ -66,19 +66,19 @@ namespace Fachwerk3
 
             minX = truss.Nodes.Min(node => node.X);
             minX = Math.Min(minX, truss.Loads.Min(load => load.Node.X + load.ForceX));
-            minX = Math.Min(minX, truss.Bearings.Min(bearing => bearing.Node.X + bearing.ForceX));
+            // TODO -> minX = Math.Min(minX, truss.Bearings.Min(bearing => bearing.Node.X + bearing.ForceX));
 
             minY = truss.Nodes.Min(node => node.Y);
             minY = Math.Min(minY, truss.Loads.Min(load => load.Node.Y + load.ForceY));
-            minY = Math.Min(minY, truss.Bearings.Min(bearing => bearing.Node.Y + bearing.ForceY));
+            // TODO -> minY = Math.Min(minY, truss.Bearings.Min(bearing => bearing.Node.Y + bearing.ForceY));
 
             maxX = truss.Nodes.Max(node => node.X);
             maxX = Math.Max(maxX, truss.Loads.Max(load => load.Node.X + load.ForceX));
-            maxX = Math.Max(maxX, truss.Bearings.Max(bearing => bearing.Node.X + bearing.ForceX));
+            // TODO -> maxX = Math.Max(maxX, truss.Bearings.Max(bearing => bearing.Node.X + bearing.ForceX));
 
             maxY = truss.Nodes.Max(node => node.Y);
             maxY = Math.Max(maxY, truss.Loads.Max(load => load.Node.Y + load.ForceY));
-            maxY = Math.Max(maxY, truss.Bearings.Max(bearing => bearing.Node.Y + bearing.ForceY));
+            // TODO -> maxY = Math.Max(maxY, truss.Bearings.Max(bearing => bearing.Node.Y + bearing.ForceY));
 
             // Differenzen bestimmen
 
@@ -151,7 +151,7 @@ namespace Fachwerk3
 
             foreach (var bearing in truss.Bearings)
             {
-                PaintForce(bearing.Node.X, bearing.Node.Y, bearing.ForceX, bearing.ForceY, Colors.Orange);
+                // TODO -> PaintForce(bearing.Node.X, bearing.Node.Y, bearing.ForceX, bearing.ForceY, Colors.Orange);
             }
 
             // Externe Kräfte zeichnen
