@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace Fachwerk3.Model
+﻿namespace Fachwerk3.Model
 {
     internal class Node
     {
@@ -10,6 +8,9 @@ namespace Fachwerk3.Model
 
         public double X { get; }
         public double Y { get; }
+
+        public double DisplacementX { get; set; }
+        public double DisplacementY { get; set; }
 
         public Node(int index, string name, double x, double y)
         {

@@ -44,105 +44,56 @@ namespace Fachwerk3.Model
 
         public void Solve()
         {
-            // Anzahl Reihen berechnen
+            // Anzahl der bekannten Knoten-Verschiebungen berechnen
 
-            var rows = Nodes.Count * 2;
-
-            // Anzahl Spalten berechnen
-
-            var cols = Rods.Count;
+            var uKnownCount = 0;
 
             foreach (var bearing in Bearings)
             {
                 if (bearing.FixX)
                 {
-                    cols++;
+                    uKnownCount++;
                 }
                 if (bearing.FixY)
                 {
-                    cols++;
+                    uKnownCount++;
                 }
             }
 
-            // Bestimmtheit prüfen
+            // Anzahl der unbekannten Knoten-Verschiebungen berechnen
 
-            if (rows != cols)
-            {
-                throw new Exception("Unstable truss!");
-            }
+            var uUnknownCount = Nodes.Count * 2 - uKnownCount;
 
-            // Verbindungs- und Lagerungsmatrix erstellen
+            // Anzahl der bekannten Knoten-Kräfte berechnen
 
-            var A = Matrix<double>.Build.Dense(rows, cols);
+            var fKnownCount = Loads.Count * 2;
 
-            foreach (var rod in Rods)
-            {
-                var dx = rod.NodeB.X - rod.NodeA.X;
-                var dy = rod.NodeB.Y - rod.NodeA.Y;
+            // Anzahl der unbekannten Knoten-Kräfte berechnen
 
-                var l = Math.Sqrt(dx * dx + dy * dy);
+            var fUnknownCount = Nodes.Count * 2 - fKnownCount;
 
-                A[rod.NodeA.Index * 2 + 0, rod.Index] = dx / l;
-                A[rod.NodeA.Index * 2 + 1, rod.Index] = dy / l;
+            // Matrizen erstellen
 
-                A[rod.NodeB.Index * 2 + 0, rod.Index] = -dx / l;
-                A[rod.NodeB.Index * 2 + 1, rod.Index] = -dy / l;
-            }
+            var kAA = Matrix<double>.Build.Dense(fUnknownCount, uKnownCount);
+            var kAB = Matrix<double>.Build.Dense(fUnknownCount, uUnknownCount);
+            var kBA = Matrix<double>.Build.Dense(fKnownCount, uKnownCount);
+            var kBB = Matrix<double>.Build.Dense(fKnownCount, uUnknownCount);
 
-            var col = 0;
+            // TODO -> Matrizen befüllen
 
-            foreach (var bearing in Bearings)
-            {
-                if (bearing.FixX)
-                {
-                    A[bearing.Node.Index * 2 + 0, Rods.Count + col] = 1;
-                    col++;
-                }
-                if (bearing.FixY)
-                {
-                    A[bearing.Node.Index * 2 + 1, Rods.Count + col] = 1;
-                    col++;
-                }
-            }
+            // Vektoren erstellen
 
-            // Lastvektor erstellen
+            var uKnown = Vector<double>.Build.Dense(uKnownCount);
+            var fKnown = Vector<double>.Build.Dense(fKnownCount);
 
-            var b = Vector<double>.Build.Dense(rows);
+            // TODO -> Vektoren befüllen
 
-            foreach (var load in Loads)
-            {
-                b[load.Node.Index * 2 + 0] = load.ForceX;
-                b[load.Node.Index * 2 + 1] = load.ForceY;
-            }
+            // Vektoren berechnen
 
-            // Stab- und Lagerkräfte berechnen
+            var uUnknown = kBB.Inverse() * fKnown;
+            var fUnknown = kAA * uKnown + kAB * uUnknown;
 
-            var x = A.Inverse().Multiply(b);
-
-            // Stabkräfte übertragen
-
-            foreach (var rod in Rods)
-            {
-                rod.Force = x[rod.Index];
-            }
-
-            // Lagerkräfte übertragen
-
-            col = 0;
-
-            foreach (var bearing in Bearings)
-            {
-                if (bearing.FixX)
-                {
-                    bearing.ForceX = x[Rods.Count + col];
-                    col++;
-                }
-                if (bearing.FixY)
-                {
-                    bearing.ForceY = x[Rods.Count + col];
-                    col++;
-                }
-            }
+            // TODO -> Ergebnisse extrahieren
         }
 
     }

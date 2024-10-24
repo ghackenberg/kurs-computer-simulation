@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace Fachwerk2.Model
+﻿namespace Fachwerk2.Model
 {
     internal class Node
     {
