@@ -65,6 +65,25 @@ namespace Fachwerk3.Model
 
             var uKnown = Vector<double>.Build.Dense(uKnownCount);
 
+            i = 0;
+
+            foreach (var node in Nodes)
+            {
+                if (node.FixX)
+                {
+                    uKnown[i++] = node.DisplacementX;
+                }
+                if (node.FixY)
+                {
+                    uKnown[i++] = node.DisplacementY;
+                }
+            }
+
+            if (i != uKnownCount)
+            {
+                throw new Exception("Incorrect u-vector write!");
+            }
+
             // Schritt 6: Bekannten Kraftvektor erstellen (sortiert nach Knoten!)
 
             var fKnown = Vector<double>.Build.Dense(fKnownCount);
