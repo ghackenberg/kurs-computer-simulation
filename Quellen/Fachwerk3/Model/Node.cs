@@ -12,6 +12,9 @@
 
         public int DegreesOfFreedom { get; }
 
+        public int IndexX { get; set; }
+        public int IndexY { get; set; }
+
         public double ForceX { get; set; }
         public double ForceY { get; set; }
 

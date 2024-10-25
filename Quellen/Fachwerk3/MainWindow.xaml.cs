@@ -30,6 +30,8 @@ namespace Fachwerk3
 
         private double maxForce;
 
+        private double forceFactor = 10;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,9 +42,9 @@ namespace Fachwerk3
 
             var a = truss.AddNode("a", 0, 0, true, true);
             var b = truss.AddNode("b", 2, 0);
-            var c = truss.AddNode("c", 4, 0, true, true, -1, 0.5);
-            var d = truss.AddNode("d", 1, 1);
-            var e = truss.AddNode("e", 3, 1, false, false, -0.25, -1);
+            var c = truss.AddNode("c", 4, 0, true, true);
+            var d = truss.AddNode("d", 1, 1, false, false, 0, -0.05);
+            var e = truss.AddNode("e", 3, 1);
 
             truss.AddRod(a, b);
             truss.AddRod(b, c);
@@ -58,11 +60,11 @@ namespace Fachwerk3
 
             // Bereich der Knotenkoordinaten bestimmen
 
-            minX = truss.Nodes.Min(node => Math.Min(node.FinalX, node.FinalX + node.ForceX));
-            minY = truss.Nodes.Min(node => Math.Min(node.FinalY, node.FinalY + node.ForceY));
+            minX = truss.Nodes.Min(node => Math.Min(node.FinalX, node.FinalX + node.ForceX * forceFactor));
+            minY = truss.Nodes.Min(node => Math.Min(node.FinalY, node.FinalY + node.ForceY * forceFactor));
 
-            maxX = truss.Nodes.Max(node => Math.Max(node.FinalX, node.FinalX + node.ForceX));
-            maxY = truss.Nodes.Max(node => Math.Max(node.FinalY, node.FinalY + node.ForceY));
+            maxX = truss.Nodes.Max(node => Math.Max(node.FinalX, node.FinalX + node.ForceX * forceFactor));
+            maxY = truss.Nodes.Max(node => Math.Max(node.FinalY, node.FinalY + node.ForceY * forceFactor));
 
             // Differenzen bestimmen
 
@@ -131,7 +133,15 @@ namespace Fachwerk3
                 var fx = node.ForceX;
                 var fy = node.ForceY;
 
-                PaintForce(x, y, fx, fy, Colors.Green);
+                if (node.FixX == node.FixY)
+                {
+                    PaintForce(x, y, fx, fy, node.FixX ? Colors.Orange : Colors.Green);
+                }
+                else
+                {
+                    PaintForce(x, y, fx, 0, node.FixX ? Colors.Orange : Colors.Green);
+                    PaintForce(x, y, 0, fy, node.FixY ? Colors.Orange : Colors.Green);
+                }
 
                 PaintCircle(x, y, 1, Colors.Black);
 
@@ -219,6 +229,9 @@ namespace Fachwerk3
 
         private void PaintForce(double x, double y, double fx, double fy, Color color)
         {
+            fx *= forceFactor;
+            fy *= forceFactor;
+
             PaintLine(x, y, x + fx * 0.91, y + fy * 0.91, 0.5, color);
 
             double l = Math.Sqrt(fx * fx + fy * fy);
