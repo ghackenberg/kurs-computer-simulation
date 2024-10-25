@@ -1,6 +1,6 @@
 ﻿namespace Fachwerk3.Model
 {
-    internal class Rod
+    public class Rod
     {
         public Node NodeA { get; }
         public Node NodeB { get; }
@@ -9,7 +9,7 @@
 
         public double Area { get; }
 
-        public double Length { get; }
+        public double Length { get; } // Berechnet!
 
         public double Force { get; set; } // Berechnet!
 

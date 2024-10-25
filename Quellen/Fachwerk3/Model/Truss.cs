@@ -1,30 +1,12 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
-using System.Windows.Media;
 
 namespace Fachwerk3.Model
 {
-    internal class Truss
+    public class Truss
     {
         public List<Node> Nodes { get; } = new List<Node>();
 
         public List<Rod> Rods { get; } = new List<Rod>();
-
-        private int uKnownCount;
-        private int fKnownCount;
-
-        private int uUnknownCount;
-        private int fUnknownCount;
-
-        private Matrix<double> kAA = Matrix<double>.Build.Dense(0, 0);
-        private Matrix<double> kAB = Matrix<double>.Build.Dense(0, 0);
-        private Matrix<double> kBA = Matrix<double>.Build.Dense(0, 0);
-        private Matrix<double> kBB = Matrix<double>.Build.Dense(0, 0);
-
-        private Vector<double> uKnown = Vector<double>.Build.Dense(0);
-        private Vector<double> fKnown = Vector<double>.Build.Dense(0);
-
-        private Vector<double> uUnknown = Vector<double>.Build.Dense(0);
-        private Vector<double> fUnknown = Vector<double>.Build.Dense(0);
 
         public Node AddNode(string name, double x, double y, bool fixX = false, bool fixY = false, double forceX = 0, double forceY = 0)
         {
@@ -42,6 +24,23 @@ namespace Fachwerk3.Model
 
             return rod;
         }
+
+        private int uKnownCount;
+        private int fKnownCount;
+
+        private int uUnknownCount;
+        private int fUnknownCount;
+
+        private Matrix<double> kAA = Matrix<double>.Build.Dense(0, 0);
+        private Matrix<double> kAB = Matrix<double>.Build.Dense(0, 0);
+        private Matrix<double> kBA = Matrix<double>.Build.Dense(0, 0);
+        private Matrix<double> kBB = Matrix<double>.Build.Dense(0, 0);
+
+        private Vector<double> uKnown = Vector<double>.Build.Dense(0);
+        private Vector<double> fKnown = Vector<double>.Build.Dense(0);
+
+        private Vector<double> uUnknown = Vector<double>.Build.Dense(0);
+        private Vector<double> fUnknown = Vector<double>.Build.Dense(0);
 
         public void Solve()
         {
@@ -86,7 +85,7 @@ namespace Fachwerk3.Model
                 throw new Exception("Problem!");
             }
 
-            // Schritt 5: Steifigkeitsmatrix erstellen
+            // Schritt 5: Steifigkeitsmatrix erstellen (Superposition der Stäbe)
 
             kAA = Matrix<double>.Build.Dense(fUnknownCount, uKnownCount);
             kAB = Matrix<double>.Build.Dense(fUnknownCount, uUnknownCount);
@@ -142,7 +141,7 @@ namespace Fachwerk3.Model
                 Select(a.FixY, b.FixY)[a.IndexY, b.IndexY] += -s * ey * ey;
                 Select(b.FixY, a.FixY)[b.IndexY, a.IndexY] += -s * ey * ey;
 
-                // Diagonale 2
+                // Andere  Diagonale
 
                 Select(a.FixX, b.FixY)[a.IndexX, b.IndexY] += -s * ex * ey;
                 Select(b.FixX, a.FixY)[b.IndexX, a.IndexY] += -s * ex * ey;
@@ -237,7 +236,7 @@ namespace Fachwerk3.Model
                 node.FinalY = node.InitialY + node.DisplacementY;
             }
 
-            // Schritt 13: Stabkräfte berechnen
+            // Schritt 13: Stabkräfte aus Stablängenänderung berechnen
 
             foreach (var rod in Rods)
             {

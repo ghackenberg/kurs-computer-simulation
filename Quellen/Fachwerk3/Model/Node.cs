@@ -1,6 +1,6 @@
 ﻿namespace Fachwerk3.Model
 {
-    internal class Node
+    public class Node
     {
         public string Name { get; }
 
@@ -10,19 +10,19 @@
         public bool FixX { get; }
         public bool FixY { get; }
 
-        public int DegreesOfFreedom { get; }
+        public int DegreesOfFreedom { get; } // Berechnet!
 
-        public int IndexX { get; set; }
-        public int IndexY { get; set; }
+        public int IndexX { get; set; } // Berechnet!
+        public int IndexY { get; set; } // Berechnet!
 
-        public double ForceX { get; set; }
-        public double ForceY { get; set; }
+        public double ForceX { get; set; } // Berechnet, wenn fixiert!
+        public double ForceY { get; set; } // Berechnet, wenn fixiert!
 
-        public double DisplacementX { get; set; }
-        public double DisplacementY { get; set; }
+        public double DisplacementX { get; set; } // Berechnet, wenn nicht fixiert!
+        public double DisplacementY { get; set; } // Berechnet, wenn nicht fixiert!
 
-        public double FinalX { get; set; }
-        public double FinalY { get; set; }
+        public double FinalX { get; set; } // Berechnet!
+        public double FinalY { get; set; } // Berechnet!
 
         public Node(string name, double initialX, double initialY, bool fixX, bool fixY, double forceX, double forceY)
         {
