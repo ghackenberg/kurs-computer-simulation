@@ -5,55 +5,24 @@ namespace Fachwerk3.Model
     internal class Truss
     {
         public List<Node> Nodes { get; } = new List<Node>();
-        public List<Rod> Rods { get; } = new List<Rod>();
-        public List<Bearing> Bearings { get; } = new List<Bearing>();
-        public List<Load> Loads { get; } = new List<Load>();
 
-        public Node AddNode(string name, double x, double y)
+        public List<Rod> Rods { get; } = new List<Rod>();
+
+        public Node AddNode(string name, double x, double y, bool fixX = false, bool fixY = false, double forceX = 0, double forceY = 0)
         {
-            var node = new Node(name, x, y);
+            var node = new Node(name, x, y, fixX, fixY, forceX, forceY);
 
             Nodes.Add(node);
 
             return node;
         }
-        public Rod AddRod(Node nodeA, Node nodeB)
+        public Rod AddRod(Node nodeA, Node nodeB, double elasticity = 1, double area = 1)
         {
-            var rod = new Rod(nodeA, nodeB);
+            var rod = new Rod(nodeA, nodeB, elasticity, area);
 
             Rods.Add(rod);
 
             return rod;
-        }
-        public Bearing AddBearing(Node node, bool fixX, bool fixY)
-        {
-            if (node.Bearing != null)
-            {
-                throw new Exception("Maximum one bearing!");
-            }
-
-            var bearing = new Bearing(node, fixX, fixY);
-
-            node.Bearing = bearing;
-
-            Bearings.Add(bearing);
-
-            return bearing;
-        }
-        public Load AddLoad(Node node, double forceX, double forceY)
-        {
-            if (node.Load != null)
-            {
-                throw new Exception("Maximum one load!");
-            }
-
-            var load = new Load(node, forceX, forceY);
-
-            node.Load = load;
-
-            Loads.Add(load);
-
-            return load;
         }
 
         public void Solve()
@@ -62,16 +31,16 @@ namespace Fachwerk3.Model
 
             // Schritt 1: Anzahl der bekannten Knotenverschiebungen berechnen
 
-            var uKnownCount = 0;
+            var uUnknownCount = 0;
 
-            foreach (var bearing in Bearings)
+            foreach (var node in Nodes)
             {
-                uKnownCount += bearing.Degree;
+                uUnknownCount += node.DegreesOfFreedom;
             }
 
             // Schritt 2: Anzahl der unbekannten Knotenverschiebungen berechnen
 
-            var uUnknownCount = Nodes.Count * 2 - uKnownCount;
+            var uKnownCount = Nodes.Count * 2 - uUnknownCount;
 
             // Anzahl der bekannten Knotenkräfte berechnen
 
@@ -104,25 +73,13 @@ namespace Fachwerk3.Model
 
             foreach (var node in Nodes)
             {
-                if (node.Bearing != null)
+                if (!node.FixX)
                 {
-                    // Bekannte Kraftvektorkomponente für *nicht* fixierte Richtung
-
-                    if (!node.Bearing.FixX)
-                    {
-                        fKnown[i++] = node.Load != null ? node.Load.ForceX : 0;
-                    }
-                    if (!node.Bearing.FixY)
-                    {
-                        fKnown[i++] = node.Load != null ? node.Load.ForceY : 0;
-                    }
+                    fKnown[i++] = node.ForceX;
                 }
-                else
+                if (!node.FixY)
                 {
-                    // Bekannte Kraftvektorkomponenten für beide Richtungen
-
-                    fKnown[i++] = node.Load != null ? node.Load.ForceX : 0;
-                    fKnown[i++] = node.Load != null ? node.Load.ForceY : 0;
+                    fKnown[i++] = node.ForceY;
                 }
             }
 
@@ -155,20 +112,12 @@ namespace Fachwerk3.Model
 
             foreach (var node in Nodes)
             {
-                if (node.Bearing != null)
-                {
-                    if (!node.Bearing.FixX)
-                    {
-                        node.DisplacementX = uUnknown[i++];
-                    }
-                    if (!node.Bearing.FixY)
-                    {
-                        node.DisplacementY = uUnknown[i++];
-                    }
-                }
-                else
+                if (!node.FixX)
                 {
                     node.DisplacementX = uUnknown[i++];
+                }
+                if (!node.FixY)
+                {
                     node.DisplacementY = uUnknown[i++];
                 }
             }
@@ -184,22 +133,27 @@ namespace Fachwerk3.Model
 
             foreach (var node in Nodes)
             {
-                if (node.Bearing != null)
+                if (node.FixX)
                 {
-                    if (node.Bearing.FixX)
-                    {
-                        node.Bearing.ForceX = fUnknown[i++];
-                    }
-                    if (node.Bearing.FixY)
-                    {
-                        node.Bearing.ForceY = fUnknown[i++];
-                    }
+                    node.ForceX = fUnknown[i++];
+                }
+                if (node.FixY)
+                {
+                    node.ForceY = fUnknown[i++];
                 }
             }
 
             if (i != fUnknownCount)
             {
                 throw new Exception("Incorrect f-vector read!");
+            }
+
+            // Schritt 11: Finale Knotenkoordinaten berechnen
+
+            foreach (var node in Nodes)
+            {
+                node.FinalX = node.InitialX + node.DisplacementX;
+                node.FinalY = node.InitialY + node.DisplacementY;
             }
         }
 

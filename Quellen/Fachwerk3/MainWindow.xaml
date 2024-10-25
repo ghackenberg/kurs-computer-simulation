@@ -22,16 +22,6 @@
                     <DataGrid x:Name="RodDataGrid"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Lager">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="BearingDataGrid"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Lasten">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="LoadDataGrid"/>
-                </Grid>
-            </TabItem>
         </TabControl>
         <Canvas x:Name="Visualization" Grid.Column="1"/>
     </Grid>

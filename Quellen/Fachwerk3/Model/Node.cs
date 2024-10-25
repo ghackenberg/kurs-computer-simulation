@@ -4,21 +4,37 @@
     {
         public string Name { get; }
 
-        public double X { get; }
-        public double Y { get; }
+        public double InitialX { get; }
+        public double InitialY { get; }
+
+        public bool FixX { get; }
+        public bool FixY { get; }
+
+        public int DegreesOfFreedom { get; }
+
+        public double ForceX { get; set; }
+        public double ForceY { get; set; }
 
         public double DisplacementX { get; set; }
         public double DisplacementY { get; set; }
 
-        public Bearing? Bearing { get; set; }
-        public Load? Load { get; set; }
+        public double FinalX { get; set; }
+        public double FinalY { get; set; }
 
-        public Node(string name, double x, double y)
+        public Node(string name, double initialX, double initialY, bool fixX, bool fixY, double forceX, double forceY)
         {
             Name = name;
 
-            X = x;
-            Y = y;
+            InitialX = initialX;
+            InitialY = initialY;
+
+            FixX = fixX;
+            FixY = fixY;
+
+            DegreesOfFreedom = (fixX ? 0 : 1) + (fixY ? 0 : 1);
+
+            ForceX = forceX;
+            ForceY = forceY;
         }
 
         public override string ToString()
