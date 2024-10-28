@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:VorlageVisualisierung2D"
         xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="2D-Visualisierung mit WPF und ScottPlot" Height="450" Width="800">
     <Grid>
         <ScottPlot:WpfPlot x:Name="WpfPlot1" />
     </Grid>
