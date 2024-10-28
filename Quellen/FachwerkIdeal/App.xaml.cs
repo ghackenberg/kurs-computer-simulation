@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Ballwurf
+namespace FachwerkIdeal
 {
     public partial class App : Application
     {

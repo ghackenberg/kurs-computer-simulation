@@ -1,9 +1,9 @@
-﻿<Application x:Class="Ballwurf.App"
+﻿<Application x:Class="FachwerkElastisch.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Ballwurf"
+             xmlns:local="clr-namespace:FachwerkElastisch"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+         
     </Application.Resources>
 </Application>

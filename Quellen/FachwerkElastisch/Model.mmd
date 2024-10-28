@@ -1,0 +1,30 @@
+classDiagram
+
+    class Truss {
+        +AddNode(name: string, initialX: double, initialY: double, fixX = false, fixY = false, forceX = 0.0, forceY = 0.0) Node
+        +AddRod(nodeA: Node, nodeB: Node, elasticity = 1.0, area = 1.0) Rod
+        +Solve() void
+    }
+    class Node {
+        +Name: string
+        +InitialX: double
+        +InitialY: double
+        +FixX: boolean
+        +FixY: boolean
+        +ForceX: double
+        +ForceY: double
+        +DisplacementX: double
+        +DisplacementY: double
+    }
+    class Rod {
+        +Elasticity: double
+        +Area: double
+        +Length: double
+        +Force: double
+    }
+
+    Truss o--"*" Node: Nodes
+    Truss o--"*" Rod: Rods
+
+    Rod -->"1" Node: NodeA
+    Rod -->"1" Node: NodeB

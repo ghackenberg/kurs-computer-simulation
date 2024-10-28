@@ -1,19 +1,7 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
-namespace SchieferWurf
+namespace Ballwurf
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -79,17 +67,17 @@ namespace SchieferWurf
 
             // Daten visualisieren
 
-            WpfPlot1.Plot.Add.Scatter(dataX, dataAY);
-            WpfPlot1.Plot.Add.Scatter(dataX, dataVY);
-            WpfPlot1.Plot.Add.Scatter(dataX, dataPY);
+            Visualization.Plot.Add.Scatter(dataX, dataAY);
+            Visualization.Plot.Add.Scatter(dataX, dataVY);
+            Visualization.Plot.Add.Scatter(dataX, dataPY);
             
-            WpfPlot1.Plot.Add.Scatter(dataX, dataVYE);
-            WpfPlot1.Plot.Add.Scatter(dataX, dataPYE);
+            Visualization.Plot.Add.Scatter(dataX, dataVYE);
+            Visualization.Plot.Add.Scatter(dataX, dataPYE);
 
-            WpfPlot1.Plot.Add.Scatter(dataX, dataVYI);
-            WpfPlot1.Plot.Add.Scatter(dataX, dataPYI);
+            Visualization.Plot.Add.Scatter(dataX, dataVYI);
+            Visualization.Plot.Add.Scatter(dataX, dataPYI);
 
-            WpfPlot1.Refresh();
+            Visualization.Refresh();
         }
     }
 }

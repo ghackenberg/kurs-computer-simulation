@@ -15,38 +15,48 @@ Grundsätzlich kann man zwischen statischen und dynamischen Modellen unterscheid
 
 ### 1.1. Statische Modelle
 
-Statische Modelle betrachten Zustände, bei denen es ohne externe Einwirkung keine Zustandsänderung gibt.
+Statische Modelle betrachten Systemzustände, bei denen es ohne externe Einwirkung zu keiner Zustandsänderung kommt.
 Bei solchen Modellen sind typischerweise einige Zustandseigenschaften bekannt, andere jedoch nicht.
-Des Weiteren beschreibt das Modell den Zusammenhang zwischen den bekannten und unbekannten Zustandseigenschaften.
-Simulationsprogramme sind dann dafür verantwortlich, die unbekannten Zustandseigenschaften zu berechnen.
-Wir betrachten die folgenden Beispiele, um ein besseres Verständnis für statische Modelle und deren Berechnung zu bekommen:
+Das Systemmodell beschreibt dann den Zusammenhang zwischen den bekannten und den unbekannten Zustandseigenschaften.
+Simulationsprogramme sind nun dafür verantwortlich, die *unbekannten* Zustandseigenschaften aus den bekannten zu berechnen.
 
-* Fachwerk
-
-#### [Fachwerk](./Quellen/Fachwerk/)
-
+Als Beispiel für statische Modelle betrachten wir im Folgenden das Konzept der **Fachwerke** aus der Bautechnik.
 Ein Fachwerk ist ein System bestehend aus Knoten, die über Stäbe miteinander verbunden sind.
 Des Weiteren sind einige der Knoten gelagert, d.h. deren Position im Raum ist fixiert.
-Dabei können entweder beide Richtungungen oder nur eine der beiden Richtungen fixiert sein.
-Schließlich wirken auf die Knoten noch externe Kräft in einer oder zwei Richtungen.
-Das Computerprogramm berechnet die Kräfte, die auf die einzelne Stäbe wirken.
-Dabei kann man zwischen grundsätzlich Zugkräften und Druckkräften unterscheiden.
-Druckkräfte sind meist kritischer, da Stäbe in der Regel unter Druck leichter knicken als unter Zug zu brechen.
-Außerdem berechnet das Programm die Kräfte, die auf die unterschiedlichen Lager wirken.
+Dabei können entweder alle Richtungungen oder nur eine Teilmenge der Richtungen fixiert sein.
+Schließlich wirken auf die Knoten noch externe Kräfte in eine oder mehrere Richtungen.
 
-Zur Berechnung der Kräfte muss ein lineares Gleichungssystem gelöst werden.
-Für die Lösung des Gleichungssystems kann z.B. die Sinulärwertzerlegung verwendet werden.
-Die Singulärwertzerlegung berechnet eine Lösung mit der Methode der kleinsten Quadrate.
-Das Programm verwendet dafür die Bibliothek [Math.NET Numerics](https://numerics.mathdotnet.com/).
+Im Folgenden betrachten wir zwei Arten, wie Fachwerke modelliert werden können:
 
-![](./Quellen/Fachwerk/Screenshot.png)
+* Ideales Fachwerk (die Länge der Stäbe ändert sich *nicht* unter Druck/Zug)
+* Elastisches Fachwerk (die Länge der Stäbe ändert sich unter Druck/Zug)
+
+#### [Ideales Fachwerk](./Quellen/FachwerkIdeal/)
+
+Bei einem idealen Fachwerk ist die Annahme, dass es durch externe Kräfte zu *keiner* Verformung des Fachwerks kommt.
+Das heißt anders ausgedrückt, dass die Positionen der Knoten und die Längen der Stäbe unveränderlich sind.
+Die unbekannten Zustandseigenschaften sind somit die Stab- und Lagerkräfte, welche auf Stäbe und gelagerte Knoten wirken.
+Der Zusammenhang zwischen Stab- bzw. Lagerkräften und externen Kräften kann als lineares Gleichungssystem ausgedrückt werden.
+Das lineare Gleichungssystem kann mit Hilfe der Matrixinversion gelöst werden, welche z.B. die Bibliothek [Math.NET Numerics](https://numerics.mathdotnet.com/) implementiert.
+
+![](./Quellen/FachwerkIdeal/Screenshot.png)
 
 Die folgende Grafik zeigt das Datenmodell des Programms für die Berechnung der Lager- und Stabkräfte eines einfachen zweidimensionalen Fachwerks.
-Über die Klasse ``Model`` können Fachwerke inklusive der darin enthaltenen Knoten, Stäbe, Lager, und externen Kräfte definiert werden.
-Des Weiteren bietet die Klasse ``Model`` die Methode ``Solve``, welche mittels der Singulärwertzerlegung die Stab- und Lagerkräfte berechnet.
-Die Visualisierung erfolgt schließlich mit einem ``DataGrid`` sowie einem ``Canvas``, welche die Windows Presentation Foundation bereitstellt.
+Über die Klasse ``Truss`` können Fachwerke inklusive der darin enthaltenen Knoten, Stäbe, Lager, und externen Kräfte definiert werden.
+Des Weiteren bietet die Klasse ``Truss`` die Methode ``Solve``, welche mittels der Matrixinversion die Stab- und Lagerkräfte berechnet.
+Die Visualisierung erfolgt schließlich mit einem ``DataGrid`` sowie einem ``Canvas``, welche die Windows Presentation Foundation (WPF) bereitstellt.
 
-![](./Quellen/Fachwerk/DataModel.svg)
+![](./Quellen/FachwerkIdeal/Model.svg)
+
+#### [Elastisches Fachwerk](./Quellen/FachwerkElastisch/)
+
+Bei einem elastischen Fachwerk kann sich die Länge der Stäbe durch die Einwirkung einer externen Kraft verändern. Das Modell muss dafür um die Elastizität sowie die Querschnittfläche der Stäbe erweitert werden. Die unbekannten Zustandseigenschaften sind in diesem Fall die Verschiebungen der ungelagerten Knoten sowie die Lagerkräfte, welche an den gelagerten Knoten wirken. Der Zusammenhang zwischen Verschiebungen bzw. Lagerkräften und externen Kräften kann wieder vereinfacht als lineares Gleichungssystem ausgedrückt werden. Die Lösung erfolgt auch wieder mittels Matrixinversion.
+
+![](./Quellen/FachwerkElastisch/Screenshot.png)
+
+Die folgende Grafik zeigt das Datenmodell des Simulationsprogramms. Die Klasse `Truss` kann verwendet werden, um Fachwerke zu definieren. Mit der Methode `AddNode(...)` können dem Fachwerk neue Knoten hinzugefügt werden. Dabei müssen die initiale Knotenposition sowie die Lagerung und externe Kräfte angegeben werden. Mit der Methode `AddRod(...)` können dem Fachwerk hingegen neue Stäbe hinzugefügt werden. Dabei müssen die beiden verbundenen Knoten sowie die Elastizität und die Querschnittsfläche angegeben werden. Die Methode `Solve()` berechnet schließlich die Lagerkräfte und Knotenverschiebungen.
+
+![](./Quellen/FachwerkElastisch/Model.svg)
 
 ### 1.2. Dynamische Modelle
 
