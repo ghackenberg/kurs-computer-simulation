@@ -1,5 +1,7 @@
 # Kurs in Computer-Simulation
 
+![](./Grafiken/Social-Preview.png)
+
 Dieses Repository enthält Beispiele zum Thema Computer-Simulation, welche an der [Fakultät für Technik und angewandte Naturwissenschaften](https://fh-ooe.at/campus-wels) (engl. *School of Engineering*) der [Fachhochschule Oberösterreich](https://www.fh-ooe.at/) entwickelt wurden. Die Beispiele verwenden
 
 * die Programmiersprache **C#** für die Umsetzung der Datenstrukturen und Algorithmen sowie
