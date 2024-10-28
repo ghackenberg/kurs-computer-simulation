@@ -1,17 +1,28 @@
 # Kurs in Computer-Simulation
 
-Dieses Repository enthält Beispiele zum Thema Computer-Simulation.
+Dieses Repository enthält Beispiele zum Thema Computer-Simulation, welche an der [Fakultät für Technik und angewandte Naturwissenschaften](https://fh-ooe.at/campus-wels) (engl. *School of Engineering*) der [Fachhochschule Oberösterreich](https://www.fh-ooe.at/) entwickelt wurden. Die Beispiele verwenden
 
-* Modelle
-* Vorlagen
-* Dokumente
+* die Programmiersprache **C#** für die Umsetzung der Datenstrukturen und Algorithmen sowie
+* das Framework **Windows Presentation Foundation (WPF)** für die Erstellung grafischer Benutzerschnittstellen.
+
+Des Weiteren verwenden wir für die Umsetzung der Beispiele einige vorgefertigte Bibliotheken, welche grundlegende Funktionen für Berechnung und Visualisierung bereistellen. Die wichtigsten Bibliotheken sind
+
+* **Math.NET Numerics** für die Lösung linearer Gleichungssysteme,
+* **ScottPlott** für die Erstellung von Diagrammen, und
+* **SharpGL** für die Erstellung von 3D-Visualisierungen.
+
+Der folgende Inhalt ist in drei Abschnitte untergliedert:
+
+1. **Modelle** (Übersicht die Simulationsmodelle und -programme)
+1. **Vorlagen** (Übersicht der Vorlagen für 2D- und 3D-Visualisierung)
+1. **Dokumente** (Übersicht der Dokumente rund um das Repository und den Quelltext)
 
 ## 1. Modelle
 
 Grundsätzlich kann man zwischen statischen und dynamischen Modellen unterscheiden:
 
-* Statische Modelle (Betrachtung eines einzelnen stabilen Systemzustands)
-* Dynamische Modelle (Betrachtung der Änderung des Systemzustands über die Zeit)
+1. Statische Modelle (Betrachtung eines einzelnen stabilen Systemzustands)
+1. Dynamische Modelle (Betrachtung der Änderung des Systemzustands über die Zeit)
 
 ### 1.1. Statische Modelle
 
@@ -28,8 +39,8 @@ Schließlich wirken auf die Knoten noch externe Kräfte in eine oder mehrere Ric
 
 Im Folgenden betrachten wir zwei Arten, wie Fachwerke modelliert werden können:
 
-* Ideales Fachwerk (die Länge der Stäbe ändert sich *nicht* unter Druck/Zug)
-* Elastisches Fachwerk (die Länge der Stäbe ändert sich unter Druck/Zug)
+1. Ideales Fachwerk (die Länge der Stäbe ändert sich *nicht* unter Druck/Zug)
+1. Elastisches Fachwerk (die Länge der Stäbe ändert sich unter Druck/Zug)
 
 #### [Ideales Fachwerk](./Quellen/FachwerkIdeal/)
 
@@ -65,15 +76,15 @@ Dafür muss in der Regel ein Startzustand sowie eine Zustandsübergangsfunktion 
 Die Simulation rechnet dann den Zustand des Systems gemäß der Zustandsübergangsfunktion weiter.
 Man kann grundsätzlich zwischen zwei Arten von Modellen unterschieden werden:
 
-* Zeitkontinuierliche Modelle (Modell beschreibt Zustand zu jedem Zeitpunkt)
-* Zeitdiskrete Modelle (Modell beschreibt Zustands nur zu ausgewählten Zeitpunkten)
+1. Zeitkontinuierliche Modelle (Modell beschreibt Zustand zu jedem Zeitpunkt)
+1. Zeitdiskrete Modelle (Modell beschreibt Zustands nur zu ausgewählten Zeitpunkten)
 
 #### 1.2.1. Zeitkontinuierliche Modelle
 
 Bei den zeitkontinuierlichen Modellen betrachten wir zwei Beispiele, die sich in ihrer Komplexität leicht unterscheiden und für welche die analytischen Lösungen bereits bekannt sind:
 
-* Ballwurf
-* Federpendel
+1. Ballwurf
+1. Federpendel
 
 ##### [Ballwurf](./Quellen/Ballwurf/)
 
@@ -89,8 +100,8 @@ Dieses Beispiel zeigt die **numerische Integration zeitkontinuierlicher Modelle*
 
 Bei den zeitdiskreten Modellen können wieder zwei Arten unterschieden werden, die diskreten Zeitschritte durchzuführen:
 
-* Fester Zeitschritt
-* Variabler Zeitschritt
+1. Fester Zeitschritt
+1. Variabler Zeitschritt
 
 ##### 1.2.2.1. Fester Zeitschritt
 
