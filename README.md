@@ -87,20 +87,31 @@ Man kann grundsätzlich zwischen zwei Arten von Modellen unterschieden werden:
 
 #### 1.2.1. Zeitkontinuierliche Modelle
 
-Bei den zeitkontinuierlichen Modellen betrachten wir zwei Beispiele, die sich in ihrer Komplexität leicht unterscheiden und für welche die analytischen Lösungen bereits bekannt sind:
+Zeitkontinuierliche Modelle beschreiben den Zustand des Systems als kontinuierliche (d.h. stetige) Funktion über der Zeitdomäne.
+In der Regel sind bei dieser Art von Modellen der Startzustand (d.h. Konstanten) sowie die Veränderung des Zustands über die Zeit (d.h. dessen Ableitung nach der Zeit) bekannt.
+Um nun den Zustand des Systems zu einem gewissen Zeitpunkt zu berechnen, muss die Ableitung des Zustands folglich über die Zeit integriert werden.
+
+In Ausnahmefällen können das Integral dabei analyntisch bestimmt und somit der Systemzustand exakt berechnet werden.
+Im Regelfall ist dies jedoch nicht möglich und das Integral muss näherungsweise mit numerischen Verfahren bestimmt werden.
+Die einfachsten numerischen Verfahren sind das explizite und das implizite Eulerverfahren, welche mit einer festen Schrittweite arbeiten.
+Die Größe dieser Schrittweite wirkt sich dabei direkt auf die Genauigkeit der Schätzung bzw. den numerischen Fehler aus.
+
+Im Folgenden betrachten wir zwei Anwendungsbeispiele, die sich in ihrer Komplexität leicht unterscheiden und für welche die analytischen Lösungen bereits bekannt sind:
 
 1. **1D-Ballwurf** (Anfangsgeschwindigkeit, Anfangsposition und Erdbeschleunigung)
-1. **1D-Federpendel**
+1. **1D-Federpendel** (Federkonstante, Anfangsbeschleinigung, Anfangsgeschwindigkeit und Anfangsposition)
 
 ##### [1D-Ballwurf](./Quellen/DynamischBallwurf1D/)
 
-Dieses Beispiel zeigt die **numerische Integration zeitkontinuierlicher Modelle** mit dem expliziten und dem impliziten Euler-Verfahren sowie den Vergleich der numerischen Lösungen mit der analytischen Lösung, welche für dieses einfache Integral noch berechnet werden kann.
+Beim ersten Beispiel wird der senkrechte Wurf eines Balles betrachtet. Die zeitveränderlichen Zustandseigenschafts sind dabei die Position und die Geschwindigkeit des Balles. Die Beschleunigung des Balles ist hingegen konstant (und gleich der Erdbeschleunigung). Die Geschwindigkeit des Balles ergibt sich somit aus der Anfangsgeschwindigkeit sowie der Integration der Beschleunigung über die Zeit. Die Position des Balles ergibt sich hingegen aus der Anfangsposition sowie der Integration der Geschwindigkeit über die Zeit.
 
 ![](./Quellen/DynamischBallwurf1D/Screenshot.png)
 
 ##### [1D-Federpendel](./Quellen/DynamischFederpendel1D/)
 
-*Kommt demnächst.*
+TODO
+
+![](./Quellen/DynamischFederpendel1D/Screenshot.png)
 
 #### 1.2.2. Zeitdiskrete Modelle
 

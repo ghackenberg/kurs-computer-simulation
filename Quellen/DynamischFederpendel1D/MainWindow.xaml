@@ -4,9 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DynamischFederpendel1D"
+        xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
         Title="Federpendel" Height="450" Width="800">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ScottPlot:WpfPlot x:Name="VisualizationF" Grid.Row="0" Grid.Column="0"/>
+        <ScottPlot:WpfPlot x:Name="VisualizationA" Grid.Row="0" Grid.Column="1"/>
+        <ScottPlot:WpfPlot x:Name="VisualizationV" Grid.Row="1" Grid.Column="0"/>
+        <ScottPlot:WpfPlot x:Name="VisualizationP" Grid.Row="1" Grid.Column="1"/>
     </Grid>
 </Window>

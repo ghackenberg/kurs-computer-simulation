@@ -11,9 +11,9 @@ namespace Ballwurf
 
             // Konstanten festlegen
 
-            var ay0 = -9.81; // in m/s²
-            var vy0 = 10; // in m/s
-            var py0 = 1.5; // in m
+            var a0 = -9.81; // in m/s²
+            var v0 = 10; // in m/s
+            var p0 = 1.5; // in m
 
             var dt = 0.2; // in s
 
@@ -24,17 +24,17 @@ namespace Ballwurf
 
             // Arrays initialisieren
 
-            var dataX = new double[steps];
+            var dataT = new double[steps];
 
-            var dataAY = new double[steps];
-            var dataVY = new double[steps];
-            var dataPY = new double[steps];
+            var dataA = new double[steps];
+            var dataV = new double[steps];
+            var dataP = new double[steps];
 
-            var dataVYE = new double[steps];
-            var dataPYE = new double[steps];
+            var dataVE = new double[steps];
+            var dataPE = new double[steps];
 
-            var dataVYI = new double[steps];
-            var dataPYI = new double[steps];
+            var dataVI = new double[steps];
+            var dataPI = new double[steps];
 
             // Berechnung durchführen
 
@@ -42,27 +42,27 @@ namespace Ballwurf
             {
                 var t = t0 + i * dt;
 
-                dataX[i] = t;
+                dataT[i] = t;
 
-                dataAY[i] = ay0;
-                dataVY[i] = vy0 + ay0 * t;
-                dataPY[i] = py0 + vy0 * t + ay0 * t * t / 2;
+                dataA[i] = a0;
+                dataV[i] = v0 + a0 * t;
+                dataP[i] = p0 + v0 * t + a0 * t * t / 2;
 
                 if (i == 0)
                 {
-                    dataVYE[i] = vy0;
-                    dataPYE[i] = py0;
+                    dataVE[i] = v0;
+                    dataPE[i] = p0;
 
-                    dataVYI[i] = vy0;
-                    dataPYI[i] = py0;
+                    dataVI[i] = v0;
+                    dataPI[i] = p0;
                 }
                 else
                 {
-                    dataVYE[i] = dataVYE[i - 1] + dataAY[i - 1] * dt;
-                    dataPYE[i] = dataPYE[i - 1] + dataVYE[i - 1] * dt;
+                    dataVE[i] = dataVE[i - 1] + dataA[i - 1] * dt;
+                    dataPE[i] = dataPE[i - 1] + dataVE[i - 1] * dt;
 
-                    dataVYI[i] = dataVYI[i - 1] + dataAY[i] * dt;
-                    dataPYI[i] = dataPYI[i - 1] + dataVYI[i] * dt;
+                    dataVI[i] = dataVI[i - 1] + dataA[i] * dt;
+                    dataPI[i] = dataPI[i - 1] + dataVI[i] * dt;
                 }
             }
 
@@ -74,43 +74,43 @@ namespace Ballwurf
             var ground = Visualization.Plot.Add.HorizontalLine(0);
             ground.LegendText = "Boden";
 
-            var a = Visualization.Plot.Add.Scatter(dataX, dataAY);
+            var a = Visualization.Plot.Add.Scatter(dataT, dataA);
             a.LegendText = "Beschleunigung (in m/s²)";
             a.LineColor = Color.FromHSL(0.25f, 1, 0.33f);
             a.MarkerColor = Color.FromHSL(0.25f, 1, 0.33f);
 
-            var v = Visualization.Plot.Add.Scatter(dataX, dataVY);
+            var v = Visualization.Plot.Add.Scatter(dataT, dataV);
             v.LegendText = "Geschwindigkeit Analytisch (in m/s)";
             v.LineWidth = 5;
             v.LineColor = Color.FromHSL(0, 1, 0.25f);
             v.MarkerSize = 14;
             v.MarkerColor = Color.FromHSL(0, 1, 0.25f);
 
-            var ve = Visualization.Plot.Add.Scatter(dataX, dataVYE);
+            var ve = Visualization.Plot.Add.Scatter(dataT, dataVE);
             ve.LegendText = "Geschwindigkeit Numerisch Euler Explizit (in m/s)";
             ve.LineWidth = 3;
             ve.LineColor = Color.FromHSL(0, 1, 0.5f);
             ve.MarkerSize = 10;
             ve.MarkerColor = Color.FromHSL(0, 1, 0.5f);
 
-            var vi = Visualization.Plot.Add.Scatter(dataX, dataVYI);
+            var vi = Visualization.Plot.Add.Scatter(dataT, dataVI);
             vi.LegendText = "Geschwindigkeit Numerisch Euler Implizit (in m/s)";
             vi.LineWidth = 1;
             vi.LineColor = Color.FromHSL(0, 1, 0.75f);
             vi.MarkerSize = 5;
             vi.MarkerColor = Color.FromHSL(0, 1, 0.75f);
 
-            var p = Visualization.Plot.Add.Scatter(dataX, dataPY);
+            var p = Visualization.Plot.Add.Scatter(dataT, dataP);
             p.LegendText = "Position Analytisch (in m)";
             p.LineColor = Color.FromHSL(0.75f, 1, 0.25f);
             p.MarkerColor = Color.FromHSL(0.75f, 1, 0.25f);
 
-            var pe = Visualization.Plot.Add.Scatter(dataX, dataPYE);
+            var pe = Visualization.Plot.Add.Scatter(dataT, dataPE);
             pe.LegendText = "Position Numerisch Euler Explizit (in m)";
             pe.LineColor = Color.FromHSL(0.75f, 1, 0.5f);
             pe.MarkerColor = Color.FromHSL(0.75f, 1, 0.5f);
 
-            var pi = Visualization.Plot.Add.Scatter(dataX, dataPYI);
+            var pi = Visualization.Plot.Add.Scatter(dataT, dataPI);
             pi.LegendText = "Position Numerisch Euler Implizit (in m)";
             pi.LineColor = Color.FromHSL(0.75f, 1, 0.75f);
             pi.MarkerColor = Color.FromHSL(0.75f, 1, 0.75f);
