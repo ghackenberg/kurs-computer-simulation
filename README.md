@@ -45,7 +45,7 @@ Im Folgenden betrachten wir zwei Arten, wie Fachwerke modelliert werden können:
 1. Ideales Fachwerk (die Länge der Stäbe ändert sich *nicht* unter Druck/Zug)
 1. Elastisches Fachwerk (die Länge der Stäbe ändert sich unter Druck/Zug)
 
-#### [Ideales Fachwerk](./Quellen/FachwerkIdeal/)
+#### [Ideales Fachwerk](./Quellen/StatischFachwerkIdeal2D/)
 
 Bei einem idealen Fachwerk ist die Annahme, dass es durch externe Kräfte zu *keiner* Verformung des Fachwerks kommt.
 Das heißt anders ausgedrückt, dass die Positionen der Knoten und die Längen der Stäbe unveränderlich sind.
@@ -53,24 +53,24 @@ Die unbekannten Zustandseigenschaften sind somit die Stab- und Lagerkräfte, wel
 Der Zusammenhang zwischen Stab- bzw. Lagerkräften und externen Kräften kann als lineares Gleichungssystem ausgedrückt werden.
 Das lineare Gleichungssystem kann mit Hilfe der Matrixinversion gelöst werden, welche z.B. die Bibliothek [Math.NET Numerics](https://numerics.mathdotnet.com/) implementiert.
 
-![](./Quellen/FachwerkIdeal/Screenshot.png)
+![](./Quellen/StatischFachwerkIdeal2D/Screenshot.png)
 
 Die folgende Grafik zeigt das Datenmodell des Programms für die Berechnung der Lager- und Stabkräfte eines einfachen zweidimensionalen Fachwerks.
 Über die Klasse ``Truss`` können Fachwerke inklusive der darin enthaltenen Knoten, Stäbe, Lager, und externen Kräfte definiert werden.
 Des Weiteren bietet die Klasse ``Truss`` die Methode ``Solve``, welche mittels der Matrixinversion die Stab- und Lagerkräfte berechnet.
 Die Visualisierung erfolgt schließlich mit einem ``DataGrid`` sowie einem ``Canvas``, welche die Windows Presentation Foundation (WPF) bereitstellt.
 
-![](./Quellen/FachwerkIdeal/Model.svg)
+![](./Quellen/StatischFachwerkIdeal2D/Model.svg)
 
-#### [Elastisches Fachwerk](./Quellen/FachwerkElastisch/)
+#### [Elastisches Fachwerk](./Quellen/StatischFachwerkElastisch2D/)
 
 Bei einem elastischen Fachwerk kann sich die Länge der Stäbe durch die Einwirkung einer externen Kraft verändern. Das Modell muss dafür um die Elastizität sowie die Querschnittfläche der Stäbe erweitert werden. Die unbekannten Zustandseigenschaften sind in diesem Fall die Verschiebungen der ungelagerten Knoten sowie die Lagerkräfte, welche an den gelagerten Knoten wirken. Der Zusammenhang zwischen Verschiebungen bzw. Lagerkräften und externen Kräften kann wieder vereinfacht als lineares Gleichungssystem ausgedrückt werden. Die Lösung erfolgt auch wieder mittels Matrixinversion.
 
-![](./Quellen/FachwerkElastisch/Screenshot.png)
+![](./Quellen/StatischFachwerkElastisch2D/Screenshot.png)
 
 Die folgende Grafik zeigt das Datenmodell des Simulationsprogramms. Die Klasse `Truss` kann verwendet werden, um Fachwerke zu definieren. Mit der Methode `AddNode(...)` können dem Fachwerk neue Knoten hinzugefügt werden. Dabei müssen die initiale Knotenposition sowie die Lagerung und externe Kräfte angegeben werden. Mit der Methode `AddRod(...)` können dem Fachwerk hingegen neue Stäbe hinzugefügt werden. Dabei müssen die beiden verbundenen Knoten sowie die Elastizität und die Querschnittsfläche angegeben werden. Die Methode `Solve()` berechnet schließlich die Lagerkräfte und Knotenverschiebungen.
 
-![](./Quellen/FachwerkElastisch/Model.svg)
+![](./Quellen/StatischFachwerkElastisch2D/Model.svg)
 
 ### 1.2. Dynamische Modelle
 
@@ -89,13 +89,13 @@ Bei den zeitkontinuierlichen Modellen betrachten wir zwei Beispiele, die sich in
 1. Ballwurf
 1. Federpendel
 
-##### [Ballwurf](./Quellen/Ballwurf/)
+##### [Ballwurf](./Quellen/DynamischBallwurf1D/)
 
 Dieses Beispiel zeigt die **numerische Integration zeitkontinuierlicher Modelle** mit dem expliziten und dem impliziten Euler-Verfahren sowie den Vergleich der numerischen Lösungen mit der analytischen Lösung, welche für dieses einfache Integral noch berechnet werden kann.
 
-![](./Quellen/Ballwurf/Screenshot.png)
+![](./Quellen/DynamischBallwurf1D/Screenshot.png)
 
-##### [Federpendel](./Quellen/Federpendel/)
+##### [Federpendel](./Quellen/DynamischFederpendel1D/)
 
 *Kommt demnächst.*
 
