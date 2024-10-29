@@ -10,6 +10,7 @@ Dieses Repository enthält Beispiele zum Thema Computer-Simulation, welche an de
 Des Weiteren verwenden wir für die Umsetzung der Beispiele einige vorgefertigte Bibliotheken, welche grundlegende Funktionen für Berechnung und Visualisierung bereistellen. Die wichtigsten Bibliotheken sind
 
 * **Math.NET Numerics** für die Lösung linearer Gleichungssysteme,
+* **SimSharp** für die Simulation ereignisdiskreter Modelle,
 * **ScottPlott** für die Erstellung von Diagrammen, und
 * **SharpGL** für die Erstellung von 3D-Visualisierungen.
 
