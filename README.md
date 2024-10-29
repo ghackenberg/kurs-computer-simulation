@@ -103,13 +103,21 @@ Im Folgenden betrachten wir zwei Anwendungsbeispiele, die sich in ihrer Komplexi
 
 ##### [1D-Ballwurf](./Quellen/DynamischBallwurf1D/)
 
-Beim ersten Beispiel wird der senkrechte Wurf eines Balles betrachtet. Die zeitveränderlichen Zustandseigenschafts sind dabei die Position und die Geschwindigkeit des Balles. Die Beschleunigung des Balles ist hingegen konstant (und gleich der Erdbeschleunigung). Die Geschwindigkeit des Balles ergibt sich somit aus der Anfangsgeschwindigkeit sowie der Integration der Beschleunigung über die Zeit. Die Position des Balles ergibt sich hingegen aus der Anfangsposition sowie der Integration der Geschwindigkeit über die Zeit.
+Beim ersten Beispiel betrachten wir den senkrechten Wurf eines Balles. Die Zustandseigenschaften sind dabei die Position und die Geschwindigkeit des Balles.
+Die Beschleunigung des Balles ist hingegen konstant (und gleich der Erdbeschleunigung).
+Die Geschwindigkeit des Balles ergibt sich somit aus der Anfangsgeschwindigkeit sowie der Integration der Beschleunigung über die Zeit.
+Die Position des Balles ergibt sich hingegen aus der Anfangsposition sowie der Integration der Geschwindigkeit über die Zeit.
 
 ![](./Quellen/DynamischBallwurf1D/Screenshot.png)
 
 ##### [1D-Federpendel](./Quellen/DynamischFederpendel1D/)
 
-TODO
+Beim zweiten Beispiel betrachten wird die Schwingung einer gefederten Masse.
+Die Zustandseigenschaften sind dabei die Position, die Beschleunigung, und die Geschwindigkeit der Masse sowie die auf die Masse einwirkende Federkraft.
+Die Masse selbst sowie die Federkonstante sind hingegen unveränderlich.
+Die numerische Integration mit dem expliziten Eulerverfahren erfolgt analog zum vorigen Beispiel.
+Die numerische Integration mit dem impliziten Eulerverfahren ist hingegen etwas komplizierter, weil die Geschwindigkeit von der Position und die Position von der Geschgwindigkeit abhängen.
+Aus diesem Grund muss für das implizite Eulerverfahren ein lineares Gleichungssystem gelöst werden, welches Position, Federkraft, Beschleunigung, und Geschwindigkeit in Beziehung setzt.
 
 ![](./Quellen/DynamischFederpendel1D/Screenshot.png)
 
