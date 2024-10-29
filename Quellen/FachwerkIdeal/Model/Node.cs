@@ -9,7 +9,13 @@
         public double X { get; }
         public double Y { get; }
 
-        public Node(int index, string name, double x, double y)
+        public bool FixX { get; }
+        public bool FixY { get; }
+
+        public double ForceX { get; set; } // Berechnet!
+        public double ForceY { get; set; } // Berechnet!
+
+        public Node(int index, string name, double x, double y, bool fixX, bool fixY, double forceX, double forceY)
         {
             Index = index;
 
@@ -17,6 +23,12 @@
 
             X = x;
             Y = y;
+
+            FixX = fixX;
+            FixY = fixY;
+
+            ForceX = forceX;
+            ForceY = forceY;
         }
 
         public override string ToString()

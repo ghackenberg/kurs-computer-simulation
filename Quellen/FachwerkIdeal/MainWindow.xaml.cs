@@ -35,11 +35,11 @@ namespace FachwerkIdeal
 
             truss = new Truss();
 
-            var a = truss.AddNode("a", 0, 0);
+            var a = truss.AddNode("a", 0, 0, true, true);
             var b = truss.AddNode("b", 2, 0);
-            var c = truss.AddNode("c", 4, 0);
+            var c = truss.AddNode("c", 4, 0, false, true);
             var d = truss.AddNode("d", 1, 1);
-            var e = truss.AddNode("e", 3, 1);
+            var e = truss.AddNode("e", 3, 1, false, false, -0.25, -0.5);
 
             truss.AddRod(a, b);
             truss.AddRod(b, c);
@@ -49,11 +49,6 @@ namespace FachwerkIdeal
             truss.AddRod(b, e);
             truss.AddRod(c, e);
 
-            truss.AddBearing(a, true, true);
-            truss.AddBearing(c, false, true);
-
-            truss.AddLoad(e, -0.25, -0.5);
-
             // Modell lösen
 
             truss.Solve();
@@ -61,20 +56,16 @@ namespace FachwerkIdeal
             // Bereich der Knotenkoordinaten bestimmen
 
             minX = truss.Nodes.Min(node => node.X);
-            minX = Math.Min(minX, truss.Loads.Min(load => load.Node.X + load.ForceX));
-            minX = Math.Min(minX, truss.Bearings.Min(bearing => bearing.Node.X + bearing.ForceX));
+            minX = Math.Min(minX, truss.Nodes.Min(node => node.X + node.ForceX));
 
             minY = truss.Nodes.Min(node => node.Y);
-            minY = Math.Min(minY, truss.Loads.Min(load => load.Node.Y + load.ForceY));
-            minY = Math.Min(minY, truss.Bearings.Min(bearing => bearing.Node.Y + bearing.ForceY));
+            minY = Math.Min(minY, truss.Nodes.Min(node => node.Y + node.ForceY));
 
             maxX = truss.Nodes.Max(node => node.X);
-            maxX = Math.Max(maxX, truss.Loads.Max(load => load.Node.X + load.ForceX));
-            maxX = Math.Max(maxX, truss.Bearings.Max(bearing => bearing.Node.X + bearing.ForceX));
+            maxX = Math.Max(maxX, truss.Nodes.Max(node => node.X + node.ForceX));
 
             maxY = truss.Nodes.Max(node => node.Y);
-            maxY = Math.Max(maxY, truss.Loads.Max(load => load.Node.Y + load.ForceY));
-            maxY = Math.Max(maxY, truss.Bearings.Max(bearing => bearing.Node.Y + bearing.ForceY));
+            maxY = Math.Max(maxY, truss.Nodes.Max(node => node.Y + node.ForceY));
 
             // Differenzen bestimmen
 
@@ -89,43 +80,32 @@ namespace FachwerkIdeal
 
             NodeDataGrid.ItemsSource = truss.Nodes;
             RodDataGrid.ItemsSource = truss.Rods;
-            BearingDataGrid.ItemsSource = truss.Bearings;
-            LoadDataGrid.ItemsSource = truss.Loads;
         }
 
         public void Repaint()
         {
             // Canvas-Inhalt leeren
+
             Visualization.Children.Clear();
 
             // Canvas-Größe auslesen
+
             width = Visualization.ActualWidth;
             height = Visualization.ActualHeight;
 
             // Längenverhältnisse bestimmen
+
             var scaleX = (width * 0.8) / diffX;
             var scaleY = (height * 0.8) / diffY;
 
             scale = Math.Min(scaleX, scaleY);
 
-            /*
-            // Rahmen zeichnen
-            PaintLine(minX, minY, maxX, minY, 1, Colors.LightGray);
-            PaintLine(minX, minY, minX, maxY, 1, Colors.LightGray);
-            PaintLine(minX, maxY, maxX, maxY, 1, Colors.LightGray);
-            PaintLine(maxX, minY, maxX, maxY, 1, Colors.LightGray);
-
-            // Eckpunkte zeichnen
-            PaintCircle(minX, minY, 1, Colors.Gray);
-            PaintCircle(minX, maxY, 1, Colors.Gray);
-            PaintCircle(maxX, minY, 1, Colors.Gray);
-            PaintCircle(maxX, maxY, 1, Colors.Gray);
-            */
-
             // Stäbe zeichnen
 
             foreach (var rod in truss.Rods)
             {
+                // Stablinie zeichnen
+
                 var r = rod.Force < 0 ? 255 : 0;
                 var g = 0;
                 var b = rod.Force < 0 ? 0 : 255;
@@ -135,6 +115,8 @@ namespace FachwerkIdeal
 
                 PaintLine(rod.NodeA.X, rod.NodeA.Y, rod.NodeB.X, rod.NodeB.Y, 0.5, color);
 
+                // Stabtext zeichnen
+
                 var mx = (rod.NodeA.X + rod.NodeB.X) / 2;
                 var my = (rod.NodeA.Y + rod.NodeB.Y) / 2;
 
@@ -143,25 +125,27 @@ namespace FachwerkIdeal
                 PaintText(mx, my, 1, Colors.Black, text);
             }
 
-            // Lagerkräfte zeichnen
-
-            foreach (var bearing in truss.Bearings)
-            {
-                PaintForce(bearing.Node.X, bearing.Node.Y, bearing.ForceX, bearing.ForceY, Colors.Orange);
-            }
-
-            // Externe Kräfte zeichnen
-
-            foreach (var load in truss.Loads)
-            {
-                PaintForce(load.Node.X, load.Node.Y, load.ForceX, load.ForceY, Colors.Green);
-            }
-
             // Knoten zeichnen
 
             foreach (var node in truss.Nodes)
             {
+                // Knotenkräfte zeichnen
+
+                if (node.FixX == node.FixY)
+                {
+                    PaintForce(node.X, node.Y, node.ForceX, node.ForceY, node.FixX ? Colors.Orange : Colors.Green);
+                }
+                else
+                {
+                    PaintForce(node.X, node.Y, node.ForceX, 0, node.FixX ? Colors.Orange : Colors.Green);
+                    PaintForce(node.X, node.Y, 0, node.ForceY, node.FixY ? Colors.Orange : Colors.Green);
+                }
+
+                // Knotenkreis zeichnen
+
                 PaintCircle(node.X, node.Y, 1, Colors.Black);
+
+                // Knotentext zeichnen
 
                 PaintText(node.X, node.Y, 1, Colors.White, node.Name);
             }

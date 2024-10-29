@@ -6,12 +6,10 @@ namespace FachwerkIdeal.Model
     {
         public List<Node> Nodes { get; } = new List<Node>();
         public List<Rod> Rods { get; } = new List<Rod>();
-        public List<Bearing> Bearings { get; } = new List<Bearing>();
-        public List<Load> Loads { get; } = new List<Load>();
 
-        public Node AddNode(string name, double x, double y)
+        public Node AddNode(string name, double x, double y, bool fixX = false, bool fixY = false, double forceX = 0, double forceY = 0)
         {
-            var node = new Node(Nodes.Count, name, x, y);
+            var node = new Node(Nodes.Count, name, x, y, fixX, fixY, forceX, forceY);
 
             Nodes.Add(node);
 
@@ -25,22 +23,6 @@ namespace FachwerkIdeal.Model
 
             return rod;
         }
-        public Bearing AddBearing(Node node, bool fixX, bool fixY)
-        {
-            var bearing = new Bearing(Bearings.Count, node, fixX, fixY);
-
-            Bearings.Add(bearing);
-
-            return bearing;
-        }
-        public Load AddLoad(Node node, double forceX, double forceY)
-        {
-            var load = new Load(Loads.Count, node, forceX, forceY);
-
-            Loads.Add(load);
-
-            return load;
-        }
 
         public void Solve()
         {
@@ -52,13 +34,13 @@ namespace FachwerkIdeal.Model
 
             var cols = Rods.Count;
 
-            foreach (var bearing in Bearings)
+            foreach (var node in Nodes)
             {
-                if (bearing.FixX)
+                if (node.FixX)
                 {
                     cols++;
                 }
-                if (bearing.FixY)
+                if (node.FixY)
                 {
                     cols++;
                 }
@@ -91,16 +73,16 @@ namespace FachwerkIdeal.Model
 
             var col = 0;
 
-            foreach (var bearing in Bearings)
+            foreach (var node in Nodes)
             {
-                if (bearing.FixX)
+                if (node.FixX)
                 {
-                    A[bearing.Node.Index * 2 + 0, Rods.Count + col] = 1;
+                    A[node.Index * 2 + 0, Rods.Count + col] = 1;
                     col++;
                 }
-                if (bearing.FixY)
+                if (node.FixY)
                 {
-                    A[bearing.Node.Index * 2 + 1, Rods.Count + col] = 1;
+                    A[node.Index * 2 + 1, Rods.Count + col] = 1;
                     col++;
                 }
             }
@@ -109,10 +91,10 @@ namespace FachwerkIdeal.Model
 
             var b = Vector<double>.Build.Dense(rows);
 
-            foreach (var load in Loads)
+            foreach (var node in Nodes)
             {
-                b[load.Node.Index * 2 + 0] = load.ForceX;
-                b[load.Node.Index * 2 + 1] = load.ForceY;
+                b[node.Index * 2 + 0] = node.ForceX;
+                b[node.Index * 2 + 1] = node.ForceY;
             }
 
             // Stab- und Lagerkräfte berechnen
@@ -130,16 +112,16 @@ namespace FachwerkIdeal.Model
 
             col = 0;
 
-            foreach (var bearing in Bearings)
+            foreach (var node in Nodes)
             {
-                if (bearing.FixX)
+                if (node.FixX)
                 {
-                    bearing.ForceX = x[Rods.Count + col];
+                    node.ForceX = x[Rods.Count + col];
                     col++;
                 }
-                if (bearing.FixY)
+                if (node.FixY)
                 {
-                    bearing.ForceY = x[Rods.Count + col];
+                    node.ForceY = x[Rods.Count + col];
                     col++;
                 }
             }

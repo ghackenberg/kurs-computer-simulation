@@ -1,39 +1,25 @@
 classDiagram
 
     class Truss {
-        +AddNode(name: string, x: double, y: double) Node
+        +AddNode(name: string, x: double, y: double, fixX = false, fixY = false, forceX = 0.0, forceY = 0.0) Node
         +AddRod(nodeA: Node, nodeB: Node) Rod
-        +AddBearing(node: Node, fixX: bool, fixY: bool) Bearing
-        +AddLoad(node: Node, forceX: double, forceY: double) Load
         +Solve() void
     }
     class Node {
         +Name: string
         +X: double
         +Y: double
-    }
-    class Rod {
-        +Force: double
-    }
-    class Bearing {
         +FixX: boolean
         +FixY: boolean
         +ForceX: double
         +ForceY: double
     }
-    class Load {
-        +ForceX: double
-        +ForceY: double
+    class Rod {
+        +Force: double
     }
 
     Truss o--"*" Node: Nodes
     Truss o--"*" Rod: Rods
-    Truss o--"*" Bearing: Bearings
-    Truss o--"*" Load: Loads
 
     Rod -->"1" Node: NodeA
     Rod -->"1" Node: NodeB
-
-    Bearing -->"1" Node: Node
-
-    Load -->"1" Node: Node
