@@ -7,10 +7,13 @@ Dieses Repository enthält Beispiele zum Thema Computer-Simulation, welche an de
 * die Programmiersprache **C#** für die Umsetzung der Datenstrukturen und Algorithmen sowie
 * das Framework **Windows Presentation Foundation (WPF)** für die Erstellung grafischer Benutzerschnittstellen.
 
-Des Weiteren verwenden wir für die Umsetzung der Beispiele einige vorgefertigte Bibliotheken, welche grundlegende Funktionen für Berechnung und Visualisierung bereistellen. Die wichtigsten Bibliotheken sind
+Des Weiteren verwenden wir für die Umsetzung der Beispiele einige vorgefertigte Bibliotheken, welche **grundlegende Funktionen für Berechnung** bereistellen. Die wichtigsten Bibliotheken sind
 
 * **Math.NET Numerics** für die Lösung linearer Gleichungssysteme,
 * **SimSharp** für die Simulation ereignisdiskreter Modelle,
+
+Schließlich nutzen wir auch einige vorgefertige Bibliotheken für die **Visualisierung der Daten**, welche durch die Simulationsprogramme verwaltet und berechnet werden. Die wichtigsten Bibliotheken sind
+
 * **ScottPlott** für die Erstellung von Diagrammen, und
 * **SharpGL** für die Erstellung von 3D-Visualisierungen.
 
@@ -24,8 +27,8 @@ Der folgende Inhalt ist in drei Abschnitte untergliedert:
 
 Grundsätzlich kann man zwischen statischen und dynamischen Modellen unterscheiden:
 
-1. Statische Modelle (Betrachtung eines einzelnen stabilen Systemzustands)
-1. Dynamische Modelle (Betrachtung der Änderung des Systemzustands über die Zeit)
+1. **Statische Modelle** (Betrachtung eines einzelnen stabilen Systemzustands)
+1. **Dynamische Modelle** (Betrachtung der Änderung des Systemzustands über die Zeit)
 
 ### 1.1. Statische Modelle
 
@@ -42,10 +45,10 @@ Schließlich wirken auf die Knoten noch externe Kräfte in eine oder mehrere Ric
 
 Im Folgenden betrachten wir zwei Arten, wie Fachwerke modelliert werden können:
 
-1. Ideales Fachwerk (die Länge der Stäbe ändert sich *nicht* unter Druck/Zug)
-1. Elastisches Fachwerk (die Länge der Stäbe ändert sich unter Druck/Zug)
+1. **Ideales 2D-Fachwerk** (die Länge der Stäbe ändert sich *nicht* unter Druck/Zug)
+1. **Elastisches 2D-Fachwerk** (die Länge der Stäbe ändert sich unter Druck/Zug)
 
-#### [Ideales Fachwerk](./Quellen/StatischFachwerkIdeal2D/)
+#### [Ideales 2D-Fachwerk](./Quellen/StatischFachwerkIdeal2D/)
 
 Bei einem idealen Fachwerk ist die Annahme, dass es durch externe Kräfte zu *keiner* Verformung des Fachwerks kommt.
 Das heißt anders ausgedrückt, dass die Positionen der Knoten und die Längen der Stäbe unveränderlich sind.
@@ -62,7 +65,7 @@ Die Visualisierung erfolgt schließlich mit einem ``DataGrid`` sowie einem ``Can
 
 ![](./Quellen/StatischFachwerkIdeal2D/Model.svg)
 
-#### [Elastisches Fachwerk](./Quellen/StatischFachwerkElastisch2D/)
+#### [Elastisches 2D-Fachwerk](./Quellen/StatischFachwerkElastisch2D/)
 
 Bei einem elastischen Fachwerk kann sich die Länge der Stäbe durch die Einwirkung einer externen Kraft verändern. Das Modell muss dafür um die Elastizität sowie die Querschnittfläche der Stäbe erweitert werden. Die unbekannten Zustandseigenschaften sind in diesem Fall die Verschiebungen der ungelagerten Knoten sowie die Lagerkräfte, welche an den gelagerten Knoten wirken. Der Zusammenhang zwischen Verschiebungen bzw. Lagerkräften und externen Kräften kann wieder vereinfacht als lineares Gleichungssystem ausgedrückt werden. Die Lösung erfolgt auch wieder mittels Matrixinversion.
 
@@ -79,23 +82,23 @@ Dafür muss in der Regel ein Startzustand sowie eine Zustandsübergangsfunktion 
 Die Simulation rechnet dann den Zustand des Systems gemäß der Zustandsübergangsfunktion weiter.
 Man kann grundsätzlich zwischen zwei Arten von Modellen unterschieden werden:
 
-1. Zeitkontinuierliche Modelle (Modell beschreibt Zustand zu jedem Zeitpunkt)
-1. Zeitdiskrete Modelle (Modell beschreibt Zustands nur zu ausgewählten Zeitpunkten)
+1. **Zeitkontinuierliche Modelle** (Modell beschreibt Zustand zu jedem Zeitpunkt)
+1. **Zeitdiskrete Modelle** (Modell beschreibt Zustands nur zu ausgewählten Zeitpunkten)
 
 #### 1.2.1. Zeitkontinuierliche Modelle
 
 Bei den zeitkontinuierlichen Modellen betrachten wir zwei Beispiele, die sich in ihrer Komplexität leicht unterscheiden und für welche die analytischen Lösungen bereits bekannt sind:
 
-1. Ballwurf
-1. Federpendel
+1. **1D-Ballwurf** (Anfangsgeschwindigkeit, Anfangsposition und Erdbeschleunigung)
+1. **1D-Federpendel**
 
-##### [Ballwurf](./Quellen/DynamischBallwurf1D/)
+##### [1D-Ballwurf](./Quellen/DynamischBallwurf1D/)
 
 Dieses Beispiel zeigt die **numerische Integration zeitkontinuierlicher Modelle** mit dem expliziten und dem impliziten Euler-Verfahren sowie den Vergleich der numerischen Lösungen mit der analytischen Lösung, welche für dieses einfache Integral noch berechnet werden kann.
 
 ![](./Quellen/DynamischBallwurf1D/Screenshot.png)
 
-##### [Federpendel](./Quellen/DynamischFederpendel1D/)
+##### [1D-Federpendel](./Quellen/DynamischFederpendel1D/)
 
 *Kommt demnächst.*
 
@@ -103,8 +106,8 @@ Dieses Beispiel zeigt die **numerische Integration zeitkontinuierlicher Modelle*
 
 Bei den zeitdiskreten Modellen können wieder zwei Arten unterschieden werden, die diskreten Zeitschritte durchzuführen:
 
-1. Fester Zeitschritt
-1. Variabler Zeitschritt
+1. **Fester Zeitschritt**
+1. **Variabler Zeitschritt**
 
 ##### 1.2.2.1. Fester Zeitschritt
 
