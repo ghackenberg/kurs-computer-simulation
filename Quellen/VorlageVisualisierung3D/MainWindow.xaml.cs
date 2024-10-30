@@ -16,6 +16,8 @@ using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Lighting;
 using SharpGL.SceneGraph.Helpers;
 using System.Windows.Threading;
+using System.IO;
+using SharpGL.Serialization.Wavefront;
 
 namespace VorlageVisualisierung3D
 {
@@ -53,6 +55,8 @@ namespace VorlageVisualisierung3D
             // Lichter, Raster und Achsen initialisieren
             SceneHelper.InitialiseModelingScene(scene);
 
+            // TODO new ObjFileFormat().LoadData();
+
             // Zufallszahlengenerator erzeugen
             var random = new Random();
 
@@ -78,7 +82,7 @@ namespace VorlageVisualisierung3D
                 }
                 OpenGLControl.DoRender();
             };
-            dispatcher.Interval = TimeSpan.FromSeconds(1);
+            dispatcher.Interval = TimeSpan.FromMilliseconds(1000/30);
             dispatcher.Start();
         }
     }

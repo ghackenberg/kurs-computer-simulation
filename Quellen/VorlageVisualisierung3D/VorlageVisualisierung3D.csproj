@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SharpGL.Serialization" Version="3.1.1" />
     <PackageReference Include="SharpGL.WPF" Version="3.1.1" />
   </ItemGroup>
 
