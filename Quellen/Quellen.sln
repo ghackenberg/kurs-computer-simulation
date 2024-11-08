@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatischFachwerkIdeal2D", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatischFachwerkElastisch2D", "StatischFachwerkElastisch2D\StatischFachwerkElastisch2D.csproj", "{D0751381-01A5-4C7F-9138-D5DFA73CF084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamischFederpendel1D", "DynamischFederpendel1D\DynamischFederpendel1D.csproj", "{A4409242-C687-4F46-B55E-2ED839EFA05C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamischFederpendel1D", "DynamischFederpendel1D\DynamischFederpendel1D.csproj", "{A4409242-C687-4F46-B55E-2ED839EFA05C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamischWarteschlange", "DynamischWarteschlange\DynamischWarteschlange.csproj", "{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A4409242-C687-4F46-B55E-2ED839EFA05C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4409242-C687-4F46-B55E-2ED839EFA05C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4409242-C687-4F46-B55E-2ED839EFA05C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
