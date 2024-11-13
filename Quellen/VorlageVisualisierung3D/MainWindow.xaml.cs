@@ -1,23 +1,11 @@
-﻿using SharpGL.SceneGraph.Primitives;
-using SharpGL.WPF;
-using SharpGL;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using SharpGL.SceneGraph.Effects;
+﻿using SharpGL;
 using SharpGL.SceneGraph;
-using SharpGL.SceneGraph.Lighting;
 using SharpGL.SceneGraph.Helpers;
-using System.Windows.Threading;
-using System.IO;
+using SharpGL.SceneGraph.Primitives;
 using SharpGL.Serialization.Wavefront;
+using SharpGL.WPF;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace VorlageVisualisierung3D
 {
@@ -55,14 +43,33 @@ namespace VorlageVisualisierung3D
             // Lichter, Raster und Achsen initialisieren
             SceneHelper.InitialiseModelingScene(scene);
 
-            // TODO new ObjFileFormat().LoadData();
+            // OBJ Wavefront Modelle laden und der Szene hinzufügen
+            var obj = new ObjFileFormat().LoadData("../../../test.obj");
+
+            while (obj.SceneContainer.Children.Count > 0)
+            {
+                var child = obj.SceneContainer.Children[0];
+
+                if (child is SharpGL.SceneGraph.Primitives.Polygon)
+                {
+                    var polygon = (SharpGL.SceneGraph.Primitives.Polygon)child;
+
+                    polygon.Transformation.ScaleX = 0.025f;
+                    polygon.Transformation.ScaleY = 0.025f;
+                    polygon.Transformation.ScaleZ = 0.025f;
+                }
+
+                obj.SceneContainer.RemoveChild(child);
+
+                scene.SceneContainer.AddChild(child);
+            }
 
             // Zufallszahlengenerator erzeugen
             var random = new Random();
 
             // Würfelobjekte erzeugen und der Szene hinzufügen
             var cubes = new Cube[10];
-            for (var  i = 0; i < cubes.Length; i++)
+            for (var i = 0; i < cubes.Length; i++)
             {
                 cubes[i] = new Cube();
                 cubes[i].Transformation.TranslateX = (random.NextSingle() - 0.5f) * 20;
@@ -82,7 +89,7 @@ namespace VorlageVisualisierung3D
                 }
                 OpenGLControl.DoRender();
             };
-            dispatcher.Interval = TimeSpan.FromMilliseconds(1000/30);
+            dispatcher.Interval = TimeSpan.FromMilliseconds(1000 / 30);
             dispatcher.Start();
         }
     }
