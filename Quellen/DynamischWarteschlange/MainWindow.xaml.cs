@@ -24,17 +24,23 @@ namespace DynamischWarteschlange
             // Simulationslauf durchführen
             sim.Run();
 
+            // Beschäftigungsverlauf visualisieren
             DiagramBusy.Plot.XLabel("Zeit (in Sekunden)");
             DiagramBusy.Plot.YLabel("Beschäftigung");
 
             var b = DiagramBusy.Plot.Add.Scatter(sim.ChartTime, sim.ChartBusy);
             b.MarkerShape = ScottPlot.MarkerShape.None;
 
+            // Warteschlangenverlauf visualisieren
             DiagramLength.Plot.XLabel("Zeit (in Sekunden)");
             DiagramLength.Plot.YLabel("Länge der Warteschlange");
 
             var l = DiagramLength.Plot.Add.Scatter(sim.ChartTime, sim.ChartLength);
             l.MarkerShape = ScottPlot.MarkerShape.None;
+
+            // TODO Wartezeiten visualisieren
+
+            // TODO Servicezeiten visualisieren
         }
     }
 }
