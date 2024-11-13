@@ -49,6 +49,11 @@
                 // Uhrzeit vorstellen auf den Zeitpunkt des Ereignisses
                 Clock = next.Timestamp;
 
+                // Chart-Daten aktualisieren
+                ChartTime.Add(Clock);
+                ChartBusy.Add(State.Busy);
+                ChartLength.Add(State.Length);
+
                 // Ankunftsereignisse erkennen und verarbeiten
                 if (next is ArrivalEvent)
                 {
@@ -88,17 +93,9 @@
                 }
 
                 // Chart-Daten aktualisieren
-                if (ChartTime.Last() == Clock)
-                {
-                    ChartBusy[ChartBusy.Count - 1] = State.Busy;
-                    ChartLength[ChartLength.Count - 1] = State.Length;
-                }
-                else
-                {
-                    ChartTime.Add(Clock);
-                    ChartBusy.Add(State.Busy);
-                    ChartLength.Add(State.Length);
-                }
+                ChartTime.Add(Clock);
+                ChartBusy.Add(State.Busy);
+                ChartLength.Add(State.Length);
             }
         }
     }
