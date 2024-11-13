@@ -6,7 +6,7 @@
         // Belegung der Kasse bzw. der Maschine
         public bool Busy { get; set; } = false;
 
-        // Länge der Warteschlange vor der Kasse bzw. der Maschine
-        public int Length { get; set; } = 0;
+        // Warteschlange vor der Kasse bzw. der Maschine
+        public Queue<double> Queue { get; } = new Queue<double>();
     }
 }
