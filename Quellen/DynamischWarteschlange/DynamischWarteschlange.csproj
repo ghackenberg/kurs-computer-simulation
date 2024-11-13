@@ -8,4 +8,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ScottPlot.WPF" Version="5.0.45" />
+  </ItemGroup>
+
 </Project>

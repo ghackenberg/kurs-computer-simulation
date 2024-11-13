@@ -3,25 +3,38 @@ using System.Windows;
 
 namespace DynamischWarteschlange
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
 
+            // Zufallszahlengenerator erzeugen
             var ran = new Random();
 
-            var sim = new Simulation();
+            // Simulationsobjekt erzeugen
+            var sim = new Simulation(ran);
 
-            sim.Add(new ArrivalEvent(ran.NextDouble() * 60 * 60));
-            sim.Add(new ArrivalEvent(ran.NextDouble() * 60 * 60));
-            sim.Add(new ArrivalEvent(ran.NextDouble() * 60 * 60));
-            sim.Add(new ArrivalEvent(ran.NextDouble() * 60 * 60));
+            // Ereignisse hinzufügen
+            for (var i = 0; i < 20; i++)
+            {
+                sim.Add(new ArrivalEvent(ran.NextDouble() * 60 * 60));
+            }
 
+            // Simulationslauf durchführen
             sim.Run();
+
+            DiagramBusy.Plot.XLabel("Zeit (in Sekunden)");
+            DiagramBusy.Plot.YLabel("Beschäftigung");
+
+            var b = DiagramBusy.Plot.Add.Scatter(sim.ChartTime, sim.ChartBusy);
+            b.MarkerShape = ScottPlot.MarkerShape.None;
+
+            DiagramLength.Plot.XLabel("Zeit (in Sekunden)");
+            DiagramLength.Plot.YLabel("Länge der Warteschlange");
+
+            var l = DiagramLength.Plot.Add.Scatter(sim.ChartTime, sim.ChartLength);
+            l.MarkerShape = ScottPlot.MarkerShape.None;
         }
     }
 }

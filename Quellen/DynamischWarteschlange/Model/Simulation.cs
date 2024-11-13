@@ -2,60 +2,102 @@
 {
     internal class Simulation
     {
-        private PriorityQueue<Event, double> queue = new PriorityQueue<Event, double>();
+        // Generator für Zufallszahlen
+        public Random Random { get; }
 
-        public void Add(Event e)
+        // Simulationsuhr definieren
+        public double Clock { get; set; } = 0;
+
+        // Simulationszustand definieren
+        public State State { get; set; } = new State();
+
+        public List<double> ChartTime = new List<double>();
+
+        public List<bool> ChartBusy = new List<bool>();
+
+        public List<int> ChartLength = new List<int>();
+
+        // Ereigniswarteschlange definieren
+        private PriorityQueue<Event, double> Queue { get; } = new PriorityQueue<Event, double>();
+
+        // Simulation mit Zufallszahlengenerator erzeugen
+        public Simulation(Random random)
         {
-            queue.Enqueue(e, e.Timestamp);
+            Random = random;
         }
 
-        private double clock = 0;
+        // Methode zum Hinzufügen von Ereignissen
+        public void Add(Event e)
+        {
+            Queue.Enqueue(e, e.Timestamp);
+        }
 
-        private bool busy = false;
-
-        private int length = 0;
-
+        // Durchführung der Simulationsschleife
         public void Run()
         {
-            while (queue.Count > 0)
+            // Chart-Daten initialisieren
+            ChartTime.Add(Clock);
+            ChartBusy.Add(State.Busy);
+            ChartLength.Add(State.Length);
+
+            // Solange rechnen, bis alle Ereignisse abgearbeitet sind
+            while (Queue.Count > 0)
             {
-                Event next = queue.Dequeue();
+                // Nächstes Ereignis aus der Warteschlange nehmen
+                Event next = Queue.Dequeue();
 
-                clock = next.Timestamp;
+                // Uhrzeit vorstellen auf den Zeitpunkt des Ereignisses
+                Clock = next.Timestamp;
 
+                // Ankunftsereignisse erkennen und verarbeiten
                 if (next is ArrivalEvent)
                 {
-                    if (busy)
+                    if (State.Busy)
                     {
-                        length++;
+                        State.Length++;
                     }
                     else
                     {
-                        busy = true;
+                        State.Busy = true;
 
-                        var serviceTime = 5 * 60;
+                        var serviceTime = Random.NextDouble() * 5 * 60;
 
-                        Add(new DepartureEvent(clock + serviceTime));
+                        Add(new DepartureEvent(Clock + serviceTime));
                     }
                 }
+                // Abfahrtsereignisse erkennen und verarbeiten
                 else if (next is DepartureEvent)
                 {
-                    if (length == 0)
+                    if (State.Length == 0)
                     {
-                        busy = false;
+                        State.Busy = false;
                     }
                     else
                     {
-                        length--;
+                        State.Length--;
 
-                        var serviceTime = 5 * 60;
+                        var serviceTime = Random.NextDouble() * 5 * 60;
 
-                        Add(new DepartureEvent(clock + serviceTime));
+                        Add(new DepartureEvent(Clock + serviceTime));
                     }
-                } 
+                }
+                // Andere Ereignistypen erkennen und verarbeiten
                 else
                 {
                     throw new Exception("Unsupported event type!");
+                }
+
+                // Chart-Daten aktualisieren
+                if (ChartTime.Last() == Clock)
+                {
+                    ChartBusy[ChartBusy.Count - 1] = State.Busy;
+                    ChartLength[ChartLength.Count - 1] = State.Length;
+                }
+                else
+                {
+                    ChartTime.Add(Clock);
+                    ChartBusy.Add(State.Busy);
+                    ChartLength.Add(State.Length);
                 }
             }
         }
