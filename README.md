@@ -125,8 +125,8 @@ Aus diesem Grund muss für das implizite Eulerverfahren ein lineares Gleichungss
 
 Bei den zeitdiskreten Modellen können wieder zwei Arten unterschieden werden, die diskreten Zeitschritte durchzuführen:
 
-1. **Fester Zeitschritt**
-1. **Variabler Zeitschritt**
+1. **Fester Zeitschritt** (TODO)
+1. **Variabler Zeitschritt** (TODO)
 
 ##### 1.2.2.1. Fester Zeitschritt
 
@@ -134,7 +134,15 @@ Bei den zeitdiskreten Modellen können wieder zwei Arten unterschieden werden, d
 
 ##### 1.2.2.2. Variabler Zeitschritt
 
-*Kommt demnächst.*
+TODO
+
+1. **Warteschlange** (TODO)
+
+###### [Warteschlange](./Quellen/DynamischWarteschlange/)
+
+TODO
+
+![](./Quellen/DynamischWarteschlange/Screenshot.png)
 
 ## 2. Vorlagen
 
