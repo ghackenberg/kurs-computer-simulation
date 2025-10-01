@@ -1,0 +1,77 @@
+/* @theme fhooe */
+
+@import 'default';
+
+section {
+    position: relative;
+}
+
+section::before {
+    content: "";
+
+    display: block;
+
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    z-index: 100;
+
+    width: 3rem;
+    height: 3rem;
+
+    background-color: #004B96;    
+    background-image: url(../../Themen/fhooe.svg);
+    background-repeat: no-repeat;
+    background-size: 66%;
+    background-position: center;
+}
+
+section div.columns {
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    gap: 2rem;
+}
+
+section div.columns.top {
+    align-items: flex-start;
+}
+
+section div.columns > div {
+    flex-basis: 1rem;
+    flex-grow: 1;
+}
+section div.columns > div.two {
+    flex-grow: 2;
+}
+section div.columns > div.three {
+    flex-grow: 3;
+}
+section div.columns > div.four {
+    flex-grow: 4;
+}
+section div.columns > div.five {
+    flex-grow: 5;
+}
+section div.columns > div.six {
+    flex-grow: 6;
+}
+
+ins.fk {
+    text-decoration-style: dashed;
+}
+ins.pfk {
+    text-decoration-style: double;
+}
+
+div.box {
+    border: 1px solid black;
+    
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}

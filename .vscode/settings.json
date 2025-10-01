@@ -3,11 +3,11 @@
         "commands": [
             {
                 "match": ".mmd",
-                "cmd": "mmdc -i \"${file}\" -o \"${fileDirname}/${fileBasenameNoExt}.png\""
-            },{
-                "match": ".mmd",
                 "cmd": "mmdc -i \"${file}\" -o \"${fileDirname}/${fileBasenameNoExt}.svg\""
             }
         ]
-    }
+    },
+    "markdown.marp.themes": [
+        "./Themen/fhooe.css"
+    ]
 }
