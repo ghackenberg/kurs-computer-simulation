@@ -3,19 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VorlageVisualisierung2D", "VorlageVisualisierung2D\VorlageVisualisierung2D.csproj", "{693022B4-2592-4513-87BE-D935E15F976D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VorlageVisualisierung2D", "WS24\VorlageVisualisierung2D\VorlageVisualisierung2D.csproj", "{693022B4-2592-4513-87BE-D935E15F976D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VorlageVisualisierung3D", "VorlageVisualisierung3D\VorlageVisualisierung3D.csproj", "{B3053622-6828-4D17-9215-2665C9F848AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VorlageVisualisierung3D", "WS24\VorlageVisualisierung3D\VorlageVisualisierung3D.csproj", "{B3053622-6828-4D17-9215-2665C9F848AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamischBallwurf1D", "DynamischBallwurf1D\DynamischBallwurf1D.csproj", "{34DDB7F1-294F-48B1-808E-78B47143903F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamischBallwurf1D", "WS24\DynamischBallwurf1D\DynamischBallwurf1D.csproj", "{34DDB7F1-294F-48B1-808E-78B47143903F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatischFachwerkIdeal2D", "StatischFachwerkIdeal2D\StatischFachwerkIdeal2D.csproj", "{36D8020A-316C-4AE3-8703-1500C479A16E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatischFachwerkIdeal2D", "WS24\StatischFachwerkIdeal2D\StatischFachwerkIdeal2D.csproj", "{36D8020A-316C-4AE3-8703-1500C479A16E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatischFachwerkElastisch2D", "StatischFachwerkElastisch2D\StatischFachwerkElastisch2D.csproj", "{D0751381-01A5-4C7F-9138-D5DFA73CF084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatischFachwerkElastisch2D", "WS24\StatischFachwerkElastisch2D\StatischFachwerkElastisch2D.csproj", "{D0751381-01A5-4C7F-9138-D5DFA73CF084}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamischFederpendel1D", "DynamischFederpendel1D\DynamischFederpendel1D.csproj", "{A4409242-C687-4F46-B55E-2ED839EFA05C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamischFederpendel1D", "WS24\DynamischFederpendel1D\DynamischFederpendel1D.csproj", "{A4409242-C687-4F46-B55E-2ED839EFA05C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamischWarteschlange", "DynamischWarteschlange\DynamischWarteschlange.csproj", "{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamischWarteschlange", "WS24\DynamischWarteschlange\DynamischWarteschlange.csproj", "{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WS24", "WS24", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WS25", "WS25", "{F7ACCD52-769B-46D8-A98D-3F363F55C7F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdealesFachwerk2D", "WS25\IdealesFachwerk2D\IdealesFachwerk2D.csproj", "{80634D94-A6F2-4BDC-B7EF-59641F64AF73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,9 +57,23 @@ Global
 		{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80634D94-A6F2-4BDC-B7EF-59641F64AF73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80634D94-A6F2-4BDC-B7EF-59641F64AF73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80634D94-A6F2-4BDC-B7EF-59641F64AF73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80634D94-A6F2-4BDC-B7EF-59641F64AF73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{693022B4-2592-4513-87BE-D935E15F976D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B3053622-6828-4D17-9215-2665C9F848AC} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{34DDB7F1-294F-48B1-808E-78B47143903F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{36D8020A-316C-4AE3-8703-1500C479A16E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{D0751381-01A5-4C7F-9138-D5DFA73CF084} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A4409242-C687-4F46-B55E-2ED839EFA05C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B07AA46E-F8E4-4B8C-8522-81CFAEED014A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{80634D94-A6F2-4BDC-B7EF-59641F64AF73} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B78BB052-30AD-4804-A50D-523BA6002BC8}
