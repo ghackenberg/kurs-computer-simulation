@@ -111,8 +111,8 @@ namespace IdealesFachwerk2D.Model
 
             foreach (Node node in Nodes)
             {
-                b[node.Number * 2 + 0] = node.ForceX;
-                b[node.Number * 2 + 1] = node.ForceY;
+                b[node.Number * 2 + 0] = -node.ForceX;
+                b[node.Number * 2 + 1] = -node.ForceY;
             }
 
             // Gleichungssystem lösen
