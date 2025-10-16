@@ -4,10 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VorlageVisualisierung3D"
-        xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
+        xmlns:vorlagen="clr-namespace:VorlageVisualisierung3D.Vorlagen"
         mc:Ignorable="d"
         Title="Vorlage Visualisierung 3D" Height="450" Width="800">
-    <Grid>
-        <sharpGL:OpenGLControl OpenGLDraw="OpenGLControl_OpenGLDraw" OpenGLInitialized="OpenGLControl_OpenGLInitialized"/>
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <vorlagen:PointVorlage Grid.Row="0" Grid.Column="0"/>
+        
+        <vorlagen:LineVorlage Grid.Row="0" Grid.Column="1"/>
+        <vorlagen:LineStripVorlage Grid.Row="1" Grid.Column="1"/>
+        <vorlagen:LineLoopVorlage Grid.Row="2" Grid.Column="1"/>
+        
+        <vorlagen:TriangleVorlage Grid.Row="0" Grid.Column="2"/>
+        <vorlagen:TriangleStripVorlage Grid.Row="1" Grid.Column="2"/>
+        <vorlagen:TriangleFanVorlage Grid.Row="2" Grid.Column="2"/>
+
+        <vorlagen:QuadVorlage Grid.Row="0" Grid.Column="3"/>
+        <vorlagen:QuadStripVorlage Grid.Row="1" Grid.Column="3"/>
     </Grid>
 </Window>

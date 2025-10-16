@@ -1,0 +1,47 @@
+﻿using SharpGL;
+
+namespace VorlageVisualisierung3D.Vorlagen
+{
+    public class PointVorlage : BasisVorlage
+    {
+        public PointVorlage() : base("Points")
+        {
+
+        }
+
+        protected override void DrawModel(OpenGL gl)
+        {
+            // Punktfarbe festlegen
+
+            float[] color = { 1, 0, 0, 1 };
+
+            gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT_AND_DIFFUSE, color);
+
+            // Punktgröße festlegen
+
+            gl.PointSize(2);
+
+            // Punktzeichnen beginnen
+
+            gl.Begin(OpenGL.GL_POINTS);
+
+            // - Farben und Koordinaten festlegen
+
+            Color(gl, 1, 0, 0);
+            gl.Vertex(-1, -1, 0);
+
+            Color(gl, 0, 1, 0);
+            gl.Vertex(+1, -1, 0);
+
+            Color(gl, 0, 0, 1);
+            gl.Vertex(-1, +1, 0);
+
+            Color(gl, 1, 1, 0);
+            gl.Vertex(+1, +1, 0);
+
+            // Punktzeichnen beenden
+
+            gl.End();
+        }
+    }
+}
