@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:VorlageVisualisierung3D"
         xmlns:vorlagen="clr-namespace:VorlageVisualisierung3D.Vorlagen"
         mc:Ignorable="d"
-        Title="Vorlage Visualisierung 3D" Height="450" Width="800">
-    <Grid ShowGridLines="True">
+        Title="Vorlage Visualisierung 3D" Height="450" Width="800" BorderBrush="LightGray" BorderThickness="1">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -21,7 +21,9 @@
         </Grid.RowDefinitions>
         
         <vorlagen:PointVorlage Grid.Row="0" Grid.Column="0"/>
-        
+        <Label Grid.Row="1" Grid.Column="0" BorderBrush="LightGray" BorderThickness="1"/>
+        <Label Grid.Row="2" Grid.Column="0" BorderBrush="LightGray" BorderThickness="1"/>
+
         <vorlagen:LineVorlage Grid.Row="0" Grid.Column="1"/>
         <vorlagen:LineStripVorlage Grid.Row="1" Grid.Column="1"/>
         <vorlagen:LineLoopVorlage Grid.Row="2" Grid.Column="1"/>
@@ -32,5 +34,6 @@
 
         <vorlagen:QuadVorlage Grid.Row="0" Grid.Column="3"/>
         <vorlagen:QuadStripVorlage Grid.Row="1" Grid.Column="3"/>
+        <Label Grid.Row="2" Grid.Column="3" BorderBrush="LightGray" BorderThickness="1"/>
     </Grid>
 </Window>
