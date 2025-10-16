@@ -43,10 +43,10 @@ Des Weiteren sind einige der Knoten gelagert, d.h. deren Position im Raum ist fi
 Dabei können entweder alle Richtungungen oder nur eine Teilmenge der Richtungen fixiert sein.
 Schließlich wirken auf die Knoten noch externe Kräfte in eine oder mehrere Richtungen.
 
-Im Folgenden betrachten wir zwei Arten, wie Fachwerke modelliert werden können:
+Im Folgenden betrachten wir unterschiedliche Arten, wie Fachwerke modelliert werden können:
 
-1. **Ideales 2D-Fachwerk** (die Länge der Stäbe ändert sich *nicht* unter Druck/Zug)
-1. **Elastisches 2D-Fachwerk** (die Länge der Stäbe ändert sich unter Druck/Zug)
+1. **Ideales 2D/3D-Fachwerk** (die Länge der Stäbe ändert sich *nicht* unter Druck/Zug)
+1. **Elastisches 2D/3D-Fachwerk** (die Länge der Stäbe ändert sich unter Druck/Zug)
 
 #### [Ideales 2D-Fachwerk](./Quellen/WS24/StatischFachwerkIdeal2D/)
 
@@ -65,6 +65,18 @@ Die Visualisierung erfolgt schließlich mit einem ``DataGrid`` sowie einem ``Can
 
 ![](./Quellen/WS24/StatischFachwerkIdeal2D/Model.svg)
 
+#### [Ideales 3D-Fachwerk](./Quellen/WS25/IdealesFachwerk3D/)
+
+TODO
+
+![](./Quellen/WS25/IdealesFachwerk3D/Screenshot.png)
+
+TODO
+
+![](./Quellen/WS25/IdealesFachwerk3D/Model.svg)
+
+TODO
+
 #### [Elastisches 2D-Fachwerk](./Quellen/WS24/StatischFachwerkElastisch2D/)
 
 Bei einem elastischen Fachwerk kann sich die Länge der Stäbe durch die Einwirkung einer externen Kraft verändern. Das Modell muss dafür um die Elastizität sowie die Querschnittfläche der Stäbe erweitert werden. Die unbekannten Zustandseigenschaften sind in diesem Fall die Verschiebungen der ungelagerten Knoten sowie die Lagerkräfte, welche an den gelagerten Knoten wirken. Der Zusammenhang zwischen Verschiebungen bzw. Lagerkräften und externen Kräften kann wieder vereinfacht als lineares Gleichungssystem ausgedrückt werden. Die Lösung erfolgt auch wieder mittels Matrixinversion.
@@ -74,6 +86,18 @@ Bei einem elastischen Fachwerk kann sich die Länge der Stäbe durch die Einwirk
 Die folgende Grafik zeigt das Datenmodell des Simulationsprogramms. Die Klasse `Truss` kann verwendet werden, um Fachwerke zu definieren. Mit der Methode `AddNode(...)` können dem Fachwerk neue Knoten hinzugefügt werden. Dabei müssen die initiale Knotenposition sowie die Lagerung und externe Kräfte angegeben werden. Mit der Methode `AddRod(...)` können dem Fachwerk hingegen neue Stäbe hinzugefügt werden. Dabei müssen die beiden verbundenen Knoten sowie die Elastizität und die Querschnittsfläche angegeben werden. Die Methode `Solve()` berechnet schließlich die Lagerkräfte und Knotenverschiebungen.
 
 ![](./Quellen/WS24/StatischFachwerkElastisch2D/Model.svg)
+
+#### [Elastisches 3D-Fachwerk](./Quellen/WS25/ElastischesFachwerk3D/)
+
+TODO
+
+![](./Quellen/WS25/ElastischesFachwerk3D/Screenshot.png)
+
+TODO
+
+![](./Quellen/WS25/ElastischesFachwerk3D/Model.svg)
+
+TODO
 
 ### 1.2. Dynamische Modelle
 
@@ -125,18 +149,27 @@ Aus diesem Grund muss für das implizite Eulerverfahren ein lineares Gleichungss
 
 Bei den zeitdiskreten Modellen können wieder zwei Arten unterschieden werden, die diskreten Zeitschritte durchzuführen:
 
-1. **Fester Zeitschritt** (TODO)
-1. **Variabler Zeitschritt** (TODO)
+1. **Festes Inkrement** (die Simulationszeit schreitet mit einer definierten Schrittweite voran, welche sich über den Simulationverlauf nicht ändert)
+1. **Nächstes Ereignis** (die Simulationszeit schreitet mit einer variablen Schrittweite voran, welche durch Ereignisse definiert wird)
 
-##### 1.2.2.1. Fester Zeitschritt
+##### 1.2.2.1. Festes Inkrement
 
 *Kommt demnächst.*
 
-##### 1.2.2.2. Variabler Zeitschritt
+##### 1.2.2.2. Nächstes Ereignis
 
-TODO
+Die folgende Grafik zeigt den Ablauf einer dynamischen zeitdiskreten Simulationrechnung, bei der von Ereignis zu Ereignis gesprungen wird.
+Die Simulationsrechnung startet mit der Initialisierung der Zeit, des Zustandes, und der Ereignisse.
+Dann folgt die Ereignisverarbeitung, bis keine weiteren Ereignisse mehr vorliegen (oder eine maximale Zeit erreicht ist).
+Bei der Ereignisverarbeitung wird in jeder Iteration das jeweils nächste Ereignis bestimmt, die Zeit aktualisiert, der Zustand aktualisiert, und die Ereignisse aktualisiert.
 
-1. **Warteschlange** (TODO)
+![](./Grafiken/Next-Event-Time-Advance.svg)
+
+Nun wenden wir diese Technik auf unterschiedliche Problemstellungen an, um ein besseres Verständnis der Funktionsweise zu bekommen.
+Im Rahmen dieses Kurses betrachten wir die folgenden Anwendungsfälle für zeitdiskrete Simulationsrechnungen mit Ereignissprüngen:
+
+1. **Warteschlange** (der Klassiker für Eregnissprünge mit einer Menge von Aufträgen und einer beschränkten Ressource)
+1. *Kommt demnächst.*
 
 ###### [Warteschlange](./Quellen/WS24/DynamischWarteschlange/)
 
@@ -158,15 +191,27 @@ Das Beispiel nutzt dafür das Microsoft WPF Framework für allgemeine grafische 
 
 ![](./Quellen/WS24/VorlageVisualisierung2D/Screenshot.png)
 
-### 2.2. [3D-Visualisierung mit **WPF und SharpGL**](./Quellen/WS24/VorlageVisualisierung3D/)
+### 2.2. 3D-Visualisierung mit **WPF und SharpGL**
 
 Manchmal kann es auch hilfreich sein, 3D-Visualisierungen (z.B. des Systemzustands) in deine Simulationsprogramme zu integrieren.
-Dieses Beispiel zeigt dir, wie du solche Visualisierungen mit SharpGL in deine WPF-Anwendungen einfach integrieren kannst.
+Die folgenden Beispiele zeigen dir, wie du solche Visualisierungen mit SharpGL in deine WPF-Anwendungen einfach integrieren kannst.
+Grundsätzlich hast du zwei Möglichkeiten, 3D-Visualisierungen programmatisch zu erzeugen, nämlich über die **prozedurale** oder die **objektorientierte API**.
 
-![](./Quellen/WS24/VorlageVisualisierung3D/Screenshot.png)
+#### [2.2.1. Prozedurale API](./Quellen/WS25/VorlageVisualisierung3D/)
+
+Die prozedurale API bietet dir grundlegende Zeichenoperationen für primitive 3D-Grafikobjekte wie Punkte, Linien, Dreiecke und Vierecke. Der folgende Screenshot zeigt dir, was man mit diesen primitiven Objekten machen kann und welche Varianten es davon gibt.
+
+![](./Quellen/WS25/VorlageVisualisierung3D/Screenshot.png)
+
+TODO
+
+#### [2.2.2. Objektorientierte API](./Quellen/WS24/VorlageVisualisierung3D/)
 
 Bei SharpGL kannst du die 3D-Visualisierungen in Form eines Szenengraphen einfach definieren.
 Ein Szenengraph beschreibt den Inhalt einer 3D-Visualisierung in Form von Objekten und deren Zusammenhängen.
+
+![](./Quellen/WS24/VorlageVisualisierung3D/Screenshot.png)
+
 Die folgende Grafik zeigt die Klassen, aus welchen sich ein Szenengraph bei SharpGL zusammensetzt, und deren Beziehungen.
 
 ![](./Grafiken/SharpGL.SceneGraph.svg)
