@@ -1,9 +1,10 @@
-﻿using IdealesFachwerk3D.Model;
+﻿using ElastischesFachwerk3D.Case;
+using ElastischesFachwerk3D.Model;
 using MathNet.Numerics.LinearAlgebra;
 using SharpGL;
 using System.Windows;
 
-namespace IdealesFachwerk3D
+namespace ElastischesFachwerk3D
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -19,6 +20,9 @@ namespace IdealesFachwerk3D
         private readonly Vector<double> unitY = Vector<double>.Build.Dense(new double[] { 0, 1, 0 });
         private readonly Vector<double> unitZ = Vector<double>.Build.Dense(new double[] { 0, 0, 1 });
 
+        private readonly bool drawInitial = true;
+        private readonly bool drawFinal = true;
+
         private float rotation = 0;
 
         public MainWindow()
@@ -27,27 +31,7 @@ namespace IdealesFachwerk3D
 
             // Fachwerk definieren
 
-            truss = new Truss();
-
-            // - Knoten hinzufügen
-
-            Node a = truss.AddNode("A", -10, 0, -5, true, true, true, 0, 0, 0);
-            Node b = truss.AddNode("B", +10, 0, -5, false, true, false, 0, 0, 0);
-            Node c = truss.AddNode("C", 0, 0, 10, false, true, true, 0, 0, 0);
-            Node d = truss.AddNode("D", 0, 10, 0, false, false, false, -1, -5, -1);
-
-            // - Stäbe hinzufügen
-
-            truss.AddRod(a, b);
-            truss.AddRod(b, c);
-            truss.AddRod(c, a);
-
-            truss.AddRod(a, d);
-            truss.AddRod(b, d);
-            truss.AddRod(c, d);
-
-            // Fachwerk berechnen
-
+            truss = Case1.Create();
             truss.Solve();
 
             forceRodMin = truss.Rods.Min(rod => rod.Force);
@@ -161,7 +145,14 @@ namespace IdealesFachwerk3D
 
             foreach (Node node in truss.Nodes)
             {
-                ColoredCubeVertices(gl, node.PositionX, node.PositionY, node.PositionZ, 0.5f, 0.75f, 0.75f, 0.75f);
+                if (drawInitial)
+                {
+                    ColoredCubeVertices(gl, node.InitialX, node.InitialY, node.InitialZ, 0.25f, 0.8f, 0.8f, 0.8f);
+                }
+                if (drawFinal)
+                {
+                    ColoredCubeVertices(gl, node.FinalX, node.FinalY, node.FinalZ, 0.25f, 0.5f, 0.5f, 0.5f);
+                }
             }
 
             gl.End();
@@ -174,19 +165,41 @@ namespace IdealesFachwerk3D
 
             foreach (Node node in truss.Nodes)
             {
-                Vector<double> position = node.PositionVector();
+                Vector<double> initial = node.InitialVector();
+                Vector<double> final = node.FinalVector();
 
                 if (node.FixX)
                 {
-                    ColoredLineVertices(gl, position - unitX, position + unitX, 0, 0, 0);
+                    if (drawFinal)
+                    {
+                        ColoredLineVertices(gl, final - unitX, final + unitX, 0, 0, 0);
+                    }
+                    else if (drawInitial)
+                    {
+                        ColoredLineVertices(gl, initial - unitX, initial + unitX, 0, 0, 0);
+                    }
                 }
                 if (node.FixY)
                 {
-                    ColoredLineVertices(gl, position - unitY, position + unitY, 0, 0, 0);
+                    if (drawFinal)
+                    {
+                        ColoredLineVertices(gl, final - unitY, final + unitY, 0, 0, 0);
+                    }
+                    else if (drawInitial)
+                    {
+                        ColoredLineVertices(gl, initial - unitY, initial + unitY, 0, 0, 0);
+                    }
                 }
                 if (node.FixZ)
                 {
-                    ColoredLineVertices(gl, position - unitZ, position + unitZ, 0, 0, 0);
+                    if (drawFinal)
+                    {
+                        ColoredLineVertices(gl, final - unitZ, final + unitZ, 0, 0, 0);
+                    }
+                    else if (drawInitial)
+                    {
+                        ColoredLineVertices(gl, initial - unitZ, initial + unitZ, 0, 0, 0);
+                    }
                 }
             }
 
@@ -200,13 +213,23 @@ namespace IdealesFachwerk3D
 
             foreach (Node node in truss.Nodes)
             {
-                Vector<double> position = node.PositionVector();
-
                 Vector<double> inputForce = node.InputForceVector();
                 Vector<double> outputForce = node.OutputForceVector();
 
-                ColoredLineVertices(gl, position - inputForce, position, 0, 1, 0);
-                ColoredLineVertices(gl, position, position + outputForce, 1, 1, 0);
+                if (drawFinal)
+                {
+                    Vector<double> position = node.FinalVector();
+
+                    ColoredLineVertices(gl, position - inputForce * 20, position, 0, 1, 0);
+                    ColoredLineVertices(gl, position, position + outputForce * 20, 1, 1, 0);
+                }
+                else if (drawInitial)
+                {
+                    Vector<double> position = node.InitialVector();
+
+                    ColoredLineVertices(gl, position - inputForce * 20, position, 0, 1, 0);
+                    ColoredLineVertices(gl, position, position + outputForce * 20, 1, 1, 0);
+                }
             }
 
             gl.End();
@@ -222,12 +245,25 @@ namespace IdealesFachwerk3D
                 Node u = rod.NodeA;
                 Node v = rod.NodeB;
 
-                double r = rod.Force > 0 ? 0.5 + 0.5 * (rod.Force / forceRodMax) : 0;
-                double g = 0;
-                double b = rod.Force < 0 ? 0.5 + 0.5 * (rod.Force / forceRodMin) : 0;
+                // - Initiale Lage
 
-                ColoredVertex(gl, u.PositionX, u.PositionY, u.PositionZ, r, g, b);
-                ColoredVertex(gl, v.PositionX, v.PositionY, v.PositionZ, r, g, b);
+                if (drawInitial)
+                {
+                    ColoredVertex(gl, u.InitialX, u.InitialY, u.InitialZ, 0.9, 0.9, 0.9);
+                    ColoredVertex(gl, v.InitialX, v.InitialY, v.InitialZ, 0.9, 0.9, 0.9);
+                }
+
+                // - Finale Lage
+
+                if (drawFinal)
+                {
+                    double r = rod.Force > 0 ? 0.5 + 0.5 * (rod.Force / forceRodMax) : 0;
+                    double g = 0;
+                    double b = rod.Force < 0 ? 0.5 + 0.5 * (rod.Force / forceRodMin) : 0;
+
+                    ColoredVertex(gl, u.FinalX, u.FinalY, u.FinalZ, r, g, b);
+                    ColoredVertex(gl, v.FinalX, v.FinalY, v.FinalZ, r, g, b);
+                }
             }
 
             gl.End();
