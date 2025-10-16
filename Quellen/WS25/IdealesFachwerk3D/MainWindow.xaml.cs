@@ -10,24 +10,33 @@ namespace IdealesFachwerk3D
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Truss truss;
+        private readonly Truss truss;
 
-        private float rotation = 0;
+        private readonly double forceRodMin;
+        private readonly double forceRodMax;
 
         private readonly Vector<double> unitX = Vector<double>.Build.Dense(new double[] { 1, 0, 0 });
         private readonly Vector<double> unitY = Vector<double>.Build.Dense(new double[] { 0, 1, 0 });
         private readonly Vector<double> unitZ = Vector<double>.Build.Dense(new double[] { 0, 0, 1 });
 
+        private float rotation = 0;
+
         public MainWindow()
         {
             InitializeComponent();
 
+            // Fachwerk definieren
+
             truss = new Truss();
+
+            // - Knoten hinzufügen
 
             Node a = truss.AddNode("A", -10, 0, -5, true, true, true, 0, 0, 0);
             Node b = truss.AddNode("B", +10, 0, -5, false, true, false, 0, 0, 0);
             Node c = truss.AddNode("C", 0, 0, 10, false, true, true, 0, 0, 0);
             Node d = truss.AddNode("D", 0, 10, 0, false, false, false, -1, -5, -1);
+
+            // - Stäbe hinzufügen
 
             truss.AddRod(a, b);
             truss.AddRod(b, c);
@@ -37,25 +46,42 @@ namespace IdealesFachwerk3D
             truss.AddRod(b, d);
             truss.AddRod(c, d);
 
+            // Fachwerk berechnen
+
             truss.Solve();
+
+            forceRodMin = truss.Rods.Min(rod => rod.Force);
+            forceRodMax = truss.Rods.Max(rod => rod.Force);
         }
 
         private void OpenGLControl_OpenGLInitialized(object sender, SharpGL.WPF.OpenGLRoutedEventArgs args)
         {
             OpenGL gl = args.OpenGL;
 
-            gl.ClearColor(1, 1, 1, 1);
+            // Tiefentest aktivieren
 
             gl.Enable(OpenGL.GL_DEPTH_TEST);
 
+            // Hintergrundfarbe festlegen
+
+            gl.ClearColor(1, 1, 1, 1);
+
+            // Schattierungsmodell festlegen
+
             gl.ShadeModel(OpenGL.GL_SMOOTH);
+
+            // Licht aktivieren
 
             gl.Enable(OpenGL.GL_LIGHTING);
             gl.Enable(OpenGL.GL_LIGHT0);
 
+            // - Umgebungslicht konfigurieren
+
             float[] ambient = { 0.33f, 0.33f, 0.33f, 1 };
 
             gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, ambient);
+
+            // - Punktlicht konfigurieren
 
             float[] lightPosition = { 0, -10, 0, 1 };
             float[] lightAmbient = { 0.33f, 0.33f, 0.33f, 1 };
@@ -68,12 +94,14 @@ namespace IdealesFachwerk3D
 
         private void OpenGLControl_OpenGLDraw(object sender, SharpGL.WPF.OpenGLRoutedEventArgs args)
         {
-            double forceRodMin = truss.Rods.Min(rod => rod.Force);
-            double forceRodMax = truss.Rods.Max(rod => rod.Force);
 
             OpenGL gl = args.OpenGL;
 
+            // Farb- und Tiefenpuffer leeren
+
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
+
+            // Modelltransformation setzen
 
             gl.LoadIdentity();
 
@@ -233,42 +261,42 @@ namespace IdealesFachwerk3D
 
         private void CubeVertices(OpenGL gl, double cx, double cy, double cz, double s)
         {
-            // Bottom
+            // Unterseite
 
             gl.Vertex(cx - s / 2, cy - s / 2, cz - s / 2);
             gl.Vertex(cx - s / 2, cy - s / 2, cz + s / 2);
             gl.Vertex(cx + s / 2, cy - s / 2, cz + s / 2);
             gl.Vertex(cx + s / 2, cy - s / 2, cz - s / 2);
 
-            // Top
+            // Oberseite
 
             gl.Vertex(cx - s / 2, cy + s / 2, cz - s / 2);
             gl.Vertex(cx - s / 2, cy + s / 2, cz + s / 2);
             gl.Vertex(cx + s / 2, cy + s / 2, cz + s / 2);
             gl.Vertex(cx + s / 2, cy + s / 2, cz - s / 2);
 
-            // Left
+            // Rückseite
 
             gl.Vertex(cx - s / 2, cy - s / 2, cz - s / 2);
             gl.Vertex(cx - s / 2, cy + s / 2, cz - s / 2);
             gl.Vertex(cx + s / 2, cy + s / 2, cz - s / 2);
             gl.Vertex(cx + s / 2, cy - s / 2, cz - s / 2);
 
-            // Right
+            // Vorderseite
 
             gl.Vertex(cx - s / 2, cy - s / 2, cz + s / 2);
             gl.Vertex(cx - s / 2, cy + s / 2, cz + s / 2);
             gl.Vertex(cx + s / 2, cy + s / 2, cz + s / 2);
             gl.Vertex(cx + s / 2, cy - s / 2, cz + s / 2);
 
-            // Front
+            // Linke Seite
 
             gl.Vertex(cx - s / 2, cy - s / 2, cz - s / 2);
             gl.Vertex(cx - s / 2, cy + s / 2, cz - s / 2);
             gl.Vertex(cx - s / 2, cy + s / 2, cz + s / 2);
             gl.Vertex(cx - s / 2, cy - s / 2, cz + s / 2);
 
-            // Back
+            // Recht Seite
 
             gl.Vertex(cx + s / 2, cy - s / 2, cz - s / 2);
             gl.Vertex(cx + s / 2, cy + s / 2, cz - s / 2);
