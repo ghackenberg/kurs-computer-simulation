@@ -213,11 +213,12 @@ Dazu müssen wir die Positionsfunktion $p(t_{ground}) = 0$ setzen und nach dem Z
 | $p_0 - g * t_{ground}^2 / 2$ | $=$ | $0$ |
 | $p_0$ | $=$ | $g * t_{ground}^2 / 2$ |
 | $2 * p_0 / g$ | $=$ | $t_{ground}^2$ |
-| $\sqrt{2 * p_0 / g}$ | $=$ | $t_{ground}$ |
+| $\pm \sqrt{2 * p_0 / g}$ | $=$ | $t_{ground}$ |
 
-Im Regelfall ist dies jedoch nicht möglich und das Integral muss näherungsweise mit numerischen Verfahren bestimmt werden.
+Im Regelfall sind diese analytischen Lösungsmethoden jedoch nicht möglich und die Differnzialgleichungen müssen näherungsweise mit numerischen Verfahren bestimmt werden.
 Die einfachsten numerischen Verfahren sind das explizite und das implizite Eulerverfahren, welche mit einer festen Schrittweite arbeiten.
-Die Größe dieser Schrittweite wirkt sich dabei direkt auf die Genauigkeit der Schätzung bzw. den numerischen Fehler aus.
+Die Größe der Schrittweite wirkt sich dabei allgemein direkt auf die Genauigkeit der Schätzung bzw. den numerischen Fehler aus.
+*Eine Erweiterung und Verallgemeinerung der Eulerverfahren ist das Runge-Kutta-Verfahren, welches zusätzliche Glieder der Taylor-Reihe der zu approximierenden Zustandesfunktion verwendet um bessere Ergebnisse zu erhalten.*
 
 Im Folgenden betrachten wir zwei Anwendungsbeispiele, die sich in ihrer Komplexität leicht unterscheiden und für welche die analytischen Lösungen bereits bekannt sind:
 
