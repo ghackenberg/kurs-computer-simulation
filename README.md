@@ -25,17 +25,59 @@ Der folgende Inhalt ist in drei Abschnitte untergliedert:
 
 ## 1. Modelle
 
-Grundsätzlich kann man zwischen statischen und dynamischen Modellen unterscheiden:
+Modelle sind zunächst einmal eine **vereinfachte Beschreibung der physikalischen Wirklichkeit**.
+Die Beschreibungen sind in der Regel in irgendeiner Weise vereinfacht, da die Wirklichkeit praktisch nicht vollständig beschrieben werden kann.
+Zum Beispiel beschreiben mechanische Modelle die Wirklichkeit als Menge von Körpern mit gewissen konstanten und zeitvariablen Eigenschaften.
+Zu den *konstanten* Eigenschaften können zum Beispiel die Massen sowie bei Festkörpern die Formen und die Masseschwerpunkte gezählt werden.
+Zu den *variablen* Eigenschaften können hingegen die wirkenden Kräfte, die resultierenden Beschleunigungen, die Geschwindigkeiten sowie die Positionen und die Orientierungen im Raum gezählt werden.
+Solche mechanischen Modelle vernachlässigen dabei zum Beispiel termische Eigenschaften wie Temperaturen, elektrische Eigenschaften wie Leitfähigkeit, oder optische Eigenschaften wie Lichtspiegelung oder -brechung.
+
+![](./Grafiken/Realität-und-Modell.jpg)
+
+Wir als Ingenieure nutzen nun solche Modelle, um **die Wirklichkeit einerseits zu verstehen und andererseits gestaltbar zu machen**.
+*Verstehen* bedeutet in diesem Zusammenhang, dass wir die Wirklichkeit mithilfe unserer Modelle möglichst gut vorhersagen können.
+Zum Beispiel helfen uns die Modelle der Newton'schen Mechanik vorauszusagen, welche Flugkurve ein Flugobjekt (z.B. ein Ball) unter gegebenen Voraussetzungen (z.B. Wurfposition, -geschwindigkeit, und -richtung) nehmen wird.
+*Gestalten* heißt hingegen, dass wir unsere Vorhersagen nutzen um in unserem Sinne gezielt Einfluss auf die Wirklichkeit zu nehmen.
+Zum Beispiel helfen uns wieder die Modelle der Newton'schen Mechanik ein Katapult so auszulegen, dass Flugobjekte (z.B. Steine mit einer Masse von 50 Kilogramm) über eine gewisse Distanz (z.B. 50 Meter) geschleudert werden können.
+
+![](./Grafiken/Modell-Nutzen.jpg)
+
+Nun stellt sich die Frage, welche **Arten von Modellen** es eigentlich gibt.
+Die Modelle der Newton'schen Mechanik beschreiben die physische Realität zum Beispiel in Form von *Differenzialgleichungen* über die Zeit.
+Die Differenzialgleichungen beschreiben dabei eine die Änderung des Systemzustands und der Systemzustand muss durch Integration der Differenziale berechnet werden.
+Modelle von Fachwerksbauten beschreiben die physische Realität hingegen in Form von *Gleichungssystemen*, welche ohne Differenziale über die Zeit auskommen und dabei nicht an Gültigkeit und Nützlichkeit für ingenieursmäßige Anwendungen einzubüßen.
+Diese Vereinfachung ist möglich, da die entsprechenden Modelle nur die eingeschwungenen Zustände der Fachwerke beschreiben, in denen sich ohne äußere Einwirkung nichts mehr ändert.
+Folglich unterscheiden wir im weiteren Verlauf zwei grundlegende Arten von Modellen:
 
 1. **Statische Modelle** (Betrachtung eines einzelnen stabilen Systemzustands)
 1. **Dynamische Modelle** (Betrachtung der Änderung des Systemzustands über die Zeit)
 
+Im Folgenden gehen wir genauer auf diese beiden Modellarten ein.
+In Abschnitt 1.1. beleuchten wir zuerst die Kategorie der statischen Modelle, welche ohne den Faktor Zeit auskommen.
+In Abschnitt 1.2. untersuchen wir dann die Kategorie der dynamischen Modelle, welche das Zeitverhalten genauer abbilden.
+
 ### 1.1. Statische Modelle
 
-Statische Modelle betrachten Systemzustände, bei denen es ohne externe Einwirkung zu keiner Zustandsänderung kommt.
+Statische Modelle betrachten Systemzustände $s$, bei denen es ohne externe Einwirkung zu keiner Zustandsänderung kommt.
 Bei solchen Modellen sind typischerweise einige Zustandseigenschaften bekannt, andere jedoch nicht.
-Das Systemmodell beschreibt dann den Zusammenhang zwischen den bekannten und den unbekannten Zustandseigenschaften.
-Simulationsprogramme sind nun dafür verantwortlich, die *unbekannten* Zustandseigenschaften aus den bekannten zu berechnen.
+Das Systemmodell $f$ beschreibt dann den Zusammenhang zwischen den bekannten Zustandseigenschaften $s_{bekannt}$ und den unbekannten Zustandseigenschaften $s_{unbekannt}$:
+
+$s_{unbekannt} = f(s_{bekannt})$
+
+Simulationsprogramme sind nun dafür verantwortlich, die *unbekannten* Zustandseigenschaften aus den *bekannten* zu berechnen.
+Je nach Modell müssen unterschiedliche Techniken eingesetzt werden, um die Berechnung durchführen zu können.
+Für lineare Gleichungssysteme kann z.B. das Gauß'sche Eliminationsverfahren angewendet werden.
+Für nicht-lineare Gleichungssysteme müssen andere Techniken eingesetzt werden.
+
+```mermaid
+flowchart LR
+
+    Input(["<code>s<sub>bekannt</sub></code>"])
+    Output(["<code>s<sub>unbekannt</sub></code>"])
+    Programm["Simulationsprogramm<br/>(beinhaltet <code>f</code>)"]
+
+    Input --> Programm --> Output
+```
 
 Als Beispiel für statische Modelle betrachten wir im Folgenden das Konzept der **Fachwerke** aus der Bautechnik.
 Ein Fachwerk ist ein System bestehend aus Knoten, die über Stäbe miteinander verbunden sind.
@@ -115,7 +157,64 @@ Zeitkontinuierliche Modelle beschreiben den Zustand des Systems als kontinuierli
 In der Regel sind bei dieser Art von Modellen der Startzustand (d.h. Konstanten) sowie die Veränderung des Zustands über die Zeit (d.h. dessen Ableitung nach der Zeit) bekannt.
 Um nun den Zustand des Systems zu einem gewissen Zeitpunkt zu berechnen, muss die Ableitung des Zustands folglich über die Zeit integriert werden.
 
-In Ausnahmefällen können das Integral dabei analyntisch bestimmt und somit der Systemzustand exakt berechnet werden.
+![](./Grafiken/Modellarten%20-%20Kontinuierlich.svg)
+
+Modelle der Newton'schen Mechanik beschreiben die Wirklichkeit zum Beispiel als ein System von *Differenzialgleichungen*.
+In diesem System entspricht beispielsweise die Geschwindigkeit eines Körpers der Änderung der Position des Körpers über die Zeit.
+Genauso entspricht die Beschleunigung eines jeden Körpers der Änderung der Geschwindigkeit des jeweiligen Körpers über die Zeit.
+Kennt man also die Beschleunigung, die auf einen Körper wirkt (z.B. die Erdbeschleunigung), kann man daraus die Geschwindigkeit zu einem bestimmten Zeit bestimmen.
+Und kennt man die Geschwindigkeit des Körpers, kann man daraus wiederum die Position des Körpers zu einem bestimmten Zeitpunkt berechnen.
+
+| Größe | Formel |
+|-|-|
+| Masse | $m$ |
+| Kraft | $f(t)$ |
+| Beschleunigung | $a(t) = f(t) / m$ |
+| Geschwindigkeit | $v(t) = v_0 + \int_0^t a(t)dt$ |
+| Position | $p(t) = p_0 + \int_0^t v(t)dt$ |
+
+In Ausnahmefällen können das Integral dabei analytisch bestimmt und somit der Systemzustand zu einem gegebenen Zeitpunkt exakt berechnet werden.
+Dies ist zum Beispiel der Fall, wenn wir annehmen, dass auf den Körper konstant die Erdbeschleunigung wirkt.
+Die folgende Tabelle zeigt die analytische Lösung für die Geschwindigkeit abhängig die Zeit und die Position abhängig von der Zeit.
+
+| Größe | Formel |
+|-|-|
+| Beschleunigung | $a(t) = -g$ |
+| Geschwindigkeit | $v(t) = v_0 - g*t$ |
+| Position | $p(t) = p_0 - g * t^2 / 2$ |
+
+Nun können wir die Flugkurve des Körpers mithilfe der Formeln weiter analysieren.
+Zum Beispiel wollen wir den höchsten Punkt der Flugbahn und dessen Zeitpunkt bestimmen.
+Dazu müssen wir zuerst die Geschwindigkeitsfunktion $v(t_{peak}) = 0$ setzten und nach Zeitpunkt $t_{peak}$ auflösen.
+
+| Linke Seite | $=$ | Rechte Seite |
+|-|-|-|
+| $v(t_{peak})$ | $=$ | $0$ |
+| $v_0 - g * t_{peak}$ | $=$ | $0$ |
+| $v_0$ | $=$ | $g * t_{peak}$ |
+| $v_0 / g$ | $=$ | $t_{peak}$ |
+
+Danach können wir die Positionsfunktion $p(t_{peak})$ nutzen, um die Höhe des Flugkurve zu bestimmen.
+Dazu müssen wir einfach die vorige Formel für $t_{peak}$ in die Positionsfunktion einsetzen und soweit wie möglich vereinfachen.
+
+| Linke Seite | $=$ | Rechte Seite |
+|-|-|-|
+| $p(t_{peak})$ | $=$ | $p_0 - g * t_{peak}^2 / 2$ |
+| | $=$ | $p_0 - g * (v_0 / g)^2 / 2$ |
+| | $=$ | $p_0 - g * v_0^2 / g^2 / 2$ |
+| | $=$ | $p_0 - v_0^2 / g / 2$ |
+
+Außerdem möchten wir wissen, wann der Körper auf den Boden auftrifft.
+Dazu müssen wir die Positionsfunktion $p(t_{ground}) = 0$ setzen und nach dem Zeitpunkt $t_{ground}$ auflösen.
+
+| Linke Seite | $=$ | Rechte Seite |
+|-|-|-|
+| $p(t_{ground})$ | $=$ | $0$ |
+| $p_0 - g * t_{ground}^2 / 2$ | $=$ | $0$ |
+| $p_0$ | $=$ | $g * t_{ground}^2 / 2$ |
+| $2 * p_0 / g$ | $=$ | $t_{ground}^2$ |
+| $\sqrt{2 * p_0 / g}$ | $=$ | $t_{ground}$ |
+
 Im Regelfall ist dies jedoch nicht möglich und das Integral muss näherungsweise mit numerischen Verfahren bestimmt werden.
 Die einfachsten numerischen Verfahren sind das explizite und das implizite Eulerverfahren, welche mit einer festen Schrittweite arbeiten.
 Die Größe dieser Schrittweite wirkt sich dabei direkt auf die Genauigkeit der Schätzung bzw. den numerischen Fehler aus.
@@ -147,35 +246,62 @@ Aus diesem Grund muss für das implizite Eulerverfahren ein lineares Gleichungss
 
 #### 1.2.2. Zeitdiskrete Modelle
 
+Zeitdiskrete Modelle zeichnen sich dadurch aus, dass Zustandsübergänge nur zu bestimmten Zeitpunkten stattfinden (und nicht kontinuierlich).
+Somit wird die Zustandsfunktion zu einer **nicht-stetigen Stufenfunktion**, statt zu einer stetigen Verlaufsfunktion.
+
+![](./Grafiken/Modellarten%20-%20Diskret.svg)
+
+Diese Art der Modellierung eignet sich beispielsweise zur Beschreibung der Verhaltens von speicherprogrammierbaren Steuerungen.
+Speicherprogrammierbare Steuerungen haben nämlich einen festen Arbeitstakt, in dem Eingänge gelesen und Ausgänge geschrieben werden.
+Die Werte der Eingänge und Ausgänge ändern sich dabei nur beim Übergang von einem zum nächsten Taktzyklus.
+Zwischen den Übergängen sind die Werte der Eingänge und Ausgänge hingegen konstant.
+
 Bei den zeitdiskreten Modellen können wieder zwei Arten unterschieden werden, die diskreten Zeitschritte durchzuführen:
 
-1. **Festes Inkrement** (die Simulationszeit schreitet mit einer definierten Schrittweite voran, welche sich über den Simulationverlauf nicht ändert)
-1. **Nächstes Ereignis** (die Simulationszeit schreitet mit einer variablen Schrittweite voran, welche durch Ereignisse definiert wird)
+1. **Konstantschritt** (die Simulationszeit schreitet mit einer definierten Schrittweite voran, welche sich über den Simulationverlauf nicht ändert)
+1. **Ereignisschritt** (die Simulationszeit schreitet mit einer variablen Schrittweite voran, welche durch Ereignisse definiert wird)
 
-##### 1.2.2.1. Festes Inkrement
+##### 1.2.2.1. Konstantschritt
 
-*Kommt demnächst.*
+TODO
 
-##### 1.2.2.2. Nächstes Ereignis
+![](./Grafiken/Modellarten%20-%20Diskret%20-%20Konstant%20-%20Delta.svg)
+
+TODO
+
+![](./Grafiken/Modellarten%20-%20Diskret%20-%20Konstant%20-%20Multipel.svg)
+
+TODO
+
+##### 1.2.2.2. Ereignisschritt
+
+TODO
+
+![](./Grafiken/Modellarten%20-%20Diskret%20-%20Ereignis.svg)
 
 Die folgende Grafik zeigt den Ablauf einer dynamischen zeitdiskreten Simulationrechnung, bei der von Ereignis zu Ereignis gesprungen wird.
-Die Simulationsrechnung startet mit der Initialisierung der Zeit, des Zustandes, und der Ereignisse.
-Dann folgt die Ereignisverarbeitung, bis keine weiteren Ereignisse mehr vorliegen (oder eine maximale Zeit erreicht ist).
-Bei der Ereignisverarbeitung wird in jeder Iteration das jeweils nächste Ereignis bestimmt, die Zeit aktualisiert, der Zustand aktualisiert, und die Ereignisse aktualisiert.
 
 ![](./Grafiken/Next-Event-Time-Advance.svg)
+
+Die Simulationsrechnung startet mit der Initialisierung der Zeit, des Zustandes, und der Ereignisse.
+Dann folgt die Ereignisverarbeitung, bis keine weiteren Ereignisse mehr vorliegen (oder eine maximale Zeit erreicht ist).
+Bei der Ereignisverarbeitung wird in jeder Iteration zunächst das jeweils nächste Ereignis bestimmt.
+Dann wird die Simulationszeit auf den Eintrittszeitpunkt des ausgewählten Ereignisses gesetzt.
+Im nächsten Schritt wird der folgende Systemzustand abhängig vom bisher gültigen Systemzustand und dem eintretenden Ereignis aktualisiert.
+Schließlich werden noch optional Folgeereignisse generiert, welche sich aus dem aktuellen Ereignis ergeben.
 
 Nun wenden wir diese Technik auf unterschiedliche Problemstellungen an, um ein besseres Verständnis der Funktionsweise zu bekommen.
 Im Rahmen dieses Kurses betrachten wir die folgenden Anwendungsfälle für zeitdiskrete Simulationsrechnungen mit Ereignissprüngen:
 
 1. **Warteschlange** (der Klassiker für Eregnissprünge mit einer Menge von Aufträgen und einer beschränkten Ressource)
-1. *Kommt demnächst.*
 
 ###### [Warteschlange](./Quellen/WS24/DynamischWarteschlange/)
 
 TODO
 
 ![](./Quellen/WS24/DynamischWarteschlange/Screenshot.png)
+
+TODO
 
 ## 2. Vorlagen
 
