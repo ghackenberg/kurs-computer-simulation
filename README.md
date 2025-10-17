@@ -153,9 +153,26 @@ Man kann grundsätzlich zwischen zwei Arten von Modellen unterschieden werden:
 
 #### 1.2.1. Zeitkontinuierliche Modelle
 
-Zeitkontinuierliche Modelle beschreiben den Zustand des Systems als kontinuierliche (d.h. stetige) Funktion über der Zeitdomäne.
-In der Regel sind bei dieser Art von Modellen der Startzustand (d.h. Konstanten) sowie die Veränderung des Zustands über die Zeit (d.h. dessen Ableitung nach der Zeit) bekannt.
+Zeitkontinuierliche Modelle beschreiben den Zustand $s(t)$ des Systems als kontinuierliche (d.h. stetige) Funktion über der Zeitdomäne.
+In der Regel sind bei dieser Art von Modellen der Startzustand $s_0$ (d.h. Konstanten) sowie die Veränderung des Zustands $s'(t)$ über die Zeit (d.h. dessen Ableitung nach der Zeit) bekannt.
 Um nun den Zustand des Systems zu einem gewissen Zeitpunkt zu berechnen, muss die Ableitung des Zustands folglich über die Zeit integriert werden.
+
+$s(t) = s_0 + \int_0^ts`(t)\delta t$
+
+Eine wichtige Eigenschaft der Zustandsfunktion $s(t)$ ist, dass der Wert der Funktion zum Zeitpunkt $t = 0$ dem Startzustand $s_0$ entspricht, das heißt es gilt $s(0) = s_0$.
+Dieser Zusammenhang zeigt sich, wenn man den Wert $t = 0$ in die Zustandsfunktion $s(t)$ einsetzt und das Integral der Zustandsübergangsfunktion $\int_0^ts'(t)\delta t$ berechnet.
+Wir erkennen leicht, dass das Integral der Zustandsübergangsfunktion an der Stelle $t = 0$ den Wert Null hat.
+
+| Rechte Seite | $=$ | Linke Seite |
+|-|-|-|
+| $s(0)$ | $=$ | $s_0 + \int_0^0s'(t)\delta t$ |
+| | $=$ | $s_0 + 0$ |
+| | $=$ | $s_0$ |
+
+Die folgende Grafik illustriert die Zustandsfunktion $s(t)$ inklusive deren Startzustand $s_0$ und Ableitung nach der Zeit $s'(t)$.
+Die Zustandsfunktion $s(t)$ ist in der Grafik als kontinuierlicher blauer Verlauf dargestellt.
+Der Startzustand $s_0$ entspricht in der Grafik dem Schnittpunkt der blauen Verlaufskurve mit der Y-Achse.
+Die Ableitung der Zustandsfunktion nach der Zeit $s'(t)$ ist schließlich an sechs ausgewählten Punkten als rote Tangente dargestellt.
 
 ![](./Grafiken/Modellarten%20-%20Kontinuierlich.svg)
 
@@ -170,11 +187,64 @@ Und kennt man die Geschwindigkeit des Körpers, kann man daraus wiederum die Pos
 | Masse | $m$ |
 | Kraft | $f(t)$ |
 | Beschleunigung | $a(t) = f(t) / m$ |
-| Geschwindigkeit | $v(t) = v_0 + \int_0^t a(t)dt$ |
-| Position | $p(t) = p_0 + \int_0^t v(t)dt$ |
+| Geschwindigkeit | $v(t) = v_0 + \int_0^t a(t)\delta t$ |
+| Position | $p(t) = p_0 + \int_0^t v(t)\delta t$ |
 
-In Ausnahmefällen können das Integral dabei analytisch bestimmt und somit der Systemzustand zu einem gegebenen Zeitpunkt exakt berechnet werden.
-Dies ist zum Beispiel der Fall, wenn wir annehmen, dass auf den Körper konstant die Erdbeschleunigung wirkt.
+Nun kann man mit diesem Modell bestimmte Fragen beantworten, z.B. welche Position $p_{gesucht}$ und welche Geschwindigkeit $v_{gesucht}$ hat der Körper zu einem gewissen Zeitpunkt $t_{gegeben}$.
+Um diese Frage zu beantworten, müssen wir den Zeitpunkt in die obigen Zustandsfunktionen einsetzen und die Funktionen berechnen, was in weiterer Folge die Bestimmung der Integrale erfordert.
+
+| Gegeben | $\rightarrow$ | Gesucht | | |
+|-|-|-|-|-|
+| $t_{gegeben}$ | $\rightarrow$ | $p(t_{gegeben})$ | $=$ | $p_{gesucht}$ |
+| $t_{gegeben}$ | $\rightarrow$ | $v(t_{gegeben})$ | $=$ | $v_{gesucht}$ |
+| $t_{gegeben}$ | $\rightarrow$ | $a(t_{gegeben})$ | $=$ | $a_{gesucht}$ |
+
+Eine andere Frage wäre beispielsweise, zu welchen Zeitpunkten $t_{gesucht}$ der Körper eine gewisse Position $p_{gegeben}$ oder Geschwindigkeit $v_{gegeben}$ hat bzw. Beschleunigung $a_{gegeben}$ erfährt.
+Um diese Frage zu beantworten, müssen wir die obigen Zustandsfunktionen gleich der gewünschten Zuständswerte setzen und die Gleichungen nach der Zeit auflösen.
+
+| Gegeben | $\rightarrow$ | Gesucht | | |
+|-|-|-|-|-|
+| $p_{gegeben}$ | $\rightarrow$ | $p^{-1}(p_{gegeben})$ | $=$ | $t_{gesucht}$ |
+| $v_{gegeben}$ | $\rightarrow$ | $v^{-1}(v_{gegeben})$ | $=$ | $t_{gesucht}$ |
+| $a_{gegeben}$ | $\rightarrow$ | $a^{-1}(a_{gegeben})$ | $=$ | $t_{gesucht}$ |
+
+In Ausnahmefällen können die gesuchten Größen analytisch bestimmt und somit der Systemzustand zu einem gegebenen Zeitpunkt oder der Zeitpunkt, zu dem ein bestimmter Zustand gilt, exakt berechnet werden.
+Im Regelfall sind diese analytischen Lösungsmethoden aufgrund der Komplexität der Differenzialgleichungen und -gleichungssysteme jedoch nicht praktisch anwendbar und die gesuchten Größen müssen näherungsweise mit numerischen Verfahren bestimmt werden.
+Die einfachsten numerischen Verfahren sind das explizite und das implizite Eulerverfahren, welche mit einer festen Schrittweite $\Delta t$ arbeiten.
+Die Größe der Schrittweite wirkt sich dabei allgemein direkt auf die Genauigkeit der Schätzung bzw. den numerischen Fehler aus.
+Eine Erweiterung und Verallgemeinerung der Eulerverfahren ist das Runge-Kutta-Verfahren, welches zusätzliche Glieder der Taylor-Reihe der zu approximierenden Zustandesfunktion verwendet um bessere Ergebnisse zu erhalten.
+
+```mermaid
+flowchart
+
+    Lösungsmethoden --> Analytisch
+    Lösungsmethoden --> Numerisch
+    
+    Numerisch --> Euler
+    Numerisch --> RungeKutta["Runge-Kutta"]
+    Numerisch --> Weitere["..."]
+
+    Euler --> Implizit
+    Euler --> Explizit
+```
+
+Die numerischen Methoden berechnen allgemein Schätzwerte $s_i'$ für für die Zustände $s(i*\Delta t)$ zu definierten Zeitpunkten $i * \Delta t$.
+
+Im Folgenden untersuchen wir für die weitere Vertiefung zwei Anwendungsbeispiele, die sich in ihrer Komplexität leicht unterscheiden und für welche die analytischen Lösungen bereits bekannt sind.
+Uns ist in diesem Fall wichtig, dass sich die Modelle für die obigen Fragestellungen auch analytisch lösen lassen, damit wir einen Vergleich zwischen analytischen und numerischen Methoden anstellen können.
+Insbesondere geht es uns um den Fehler, den die numerischen Methoden abhängig von ihren Einstellungen wie der Schrittweite in Relation zur exakten analytischen Lösung machen.
+Die beiden Anwendungsfälle sind die folgenden:
+
+1. **1D-Ballwurf** (Anfangsgeschwindigkeit, Anfangsposition und Erdbeschleunigung)
+1. **1D-Federpendel** (Federkonstante, Anfangsbeschleinigung, Anfangsgeschwindigkeit und Anfangsposition)
+
+##### [1D-Ballwurf](./Quellen/WS24/DynamischBallwurf1D/)
+
+Beim ersten Beispiel betrachten wir den senkrechten Wurf eines Balles.
+Die Zustandseigenschaften sind dabei die Position und die Geschwindigkeit des Balles.
+Die Beschleunigung des Balles ist hingegen konstant (und gleich der Erdbeschleunigung).
+Die Geschwindigkeit des Balles ergibt sich somit aus der Anfangsgeschwindigkeit sowie der Integration der Beschleunigung über die Zeit.
+Die Position des Balles ergibt sich hingegen aus der Anfangsposition sowie der Integration der Geschwindigkeit über die Zeit.
 Die folgende Tabelle zeigt die analytische Lösung für die Geschwindigkeit abhängig die Zeit und die Position abhängig von der Zeit.
 
 | Größe | Formel |
@@ -215,22 +285,7 @@ Dazu müssen wir die Positionsfunktion $p(t_{ground}) = 0$ setzen und nach dem Z
 | $2 * p_0 / g$ | $=$ | $t_{ground}^2$ |
 | $\pm \sqrt{2 * p_0 / g}$ | $=$ | $t_{ground}$ |
 
-Im Regelfall sind diese analytischen Lösungsmethoden jedoch nicht möglich und die Differnzialgleichungen müssen näherungsweise mit numerischen Verfahren bestimmt werden.
-Die einfachsten numerischen Verfahren sind das explizite und das implizite Eulerverfahren, welche mit einer festen Schrittweite arbeiten.
-Die Größe der Schrittweite wirkt sich dabei allgemein direkt auf die Genauigkeit der Schätzung bzw. den numerischen Fehler aus.
-*Eine Erweiterung und Verallgemeinerung der Eulerverfahren ist das Runge-Kutta-Verfahren, welches zusätzliche Glieder der Taylor-Reihe der zu approximierenden Zustandesfunktion verwendet um bessere Ergebnisse zu erhalten.*
-
-Im Folgenden betrachten wir zwei Anwendungsbeispiele, die sich in ihrer Komplexität leicht unterscheiden und für welche die analytischen Lösungen bereits bekannt sind:
-
-1. **1D-Ballwurf** (Anfangsgeschwindigkeit, Anfangsposition und Erdbeschleunigung)
-1. **1D-Federpendel** (Federkonstante, Anfangsbeschleinigung, Anfangsgeschwindigkeit und Anfangsposition)
-
-##### [1D-Ballwurf](./Quellen/WS24/DynamischBallwurf1D/)
-
-Beim ersten Beispiel betrachten wir den senkrechten Wurf eines Balles. Die Zustandseigenschaften sind dabei die Position und die Geschwindigkeit des Balles.
-Die Beschleunigung des Balles ist hingegen konstant (und gleich der Erdbeschleunigung).
-Die Geschwindigkeit des Balles ergibt sich somit aus der Anfangsgeschwindigkeit sowie der Integration der Beschleunigung über die Zeit.
-Die Position des Balles ergibt sich hingegen aus der Anfangsposition sowie der Integration der Geschwindigkeit über die Zeit.
+TODO
 
 ![](./Quellen/WS24/DynamischBallwurf1D/Screenshot.png)
 
