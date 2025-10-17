@@ -80,7 +80,7 @@ flowchart LR
 ```
 
 Als Beispiel für statische Modelle betrachten wir im Folgenden das Konzept der **Fachwerke** aus der Bautechnik.
-Ein Fachwerk ist ein System bestehend aus Knoten, die über Stäbe miteinander verbunden sind.
+Ein Fachwerk ist ein System bestehend aus Knoten $n \in N$, die über Stäbe $r \in R \subseteq N \times N$ miteinander verbunden sind.
 Des Weiteren sind einige der Knoten gelagert, d.h. deren Position im Raum ist fixiert.
 Dabei können entweder alle Richtungungen oder nur eine Teilmenge der Richtungen fixiert sein.
 Schließlich wirken auf die Knoten noch externe Kräfte in eine oder mehrere Richtungen.
@@ -90,24 +90,65 @@ Im Folgenden betrachten wir unterschiedliche Arten, wie Fachwerke modelliert wer
 1. **Ideales 2D/3D-Fachwerk** (die Länge der Stäbe ändert sich *nicht* unter Druck/Zug)
 1. **Elastisches 2D/3D-Fachwerk** (die Länge der Stäbe ändert sich unter Druck/Zug)
 
-#### [Ideales 2D-Fachwerk](./Quellen/WS24/StatischFachwerkIdeal2D/)
+Wir gehen nun zunächst auf die Modellierung und Berechnung von idealen Fachwerken im zwei- und dreidimensionalen Raum sein.
+Danach betrachten wir noch den elastischen Fall, bei dem es durch Krafteinwirkung zu Verformungen kommen kann.
+Beachte, dass auch eine elastoplastische Modellierung möglich ist, welche es ermöglicht verbleibende Verformungen nach Krafteinwirkung zu bestimmen.
+Diesen Fall lassen wir jedoch aus.
+
+#### 1.1.1. Ideales Fachwerk
 
 Bei einem idealen Fachwerk ist die Annahme, dass es durch externe Kräfte zu *keiner* Verformung des Fachwerks kommt.
 Das heißt anders ausgedrückt, dass die Positionen der Knoten und die Längen der Stäbe unveränderlich sind.
 Die unbekannten Zustandseigenschaften sind somit die Stab- und Lagerkräfte, welche auf Stäbe und gelagerte Knoten wirken.
 Der Zusammenhang zwischen Stab- bzw. Lagerkräften und externen Kräften kann als lineares Gleichungssystem ausgedrückt werden.
-Das lineare Gleichungssystem kann mit Hilfe der Matrixinversion gelöst werden, welche z.B. die Bibliothek [Math.NET Numerics](https://numerics.mathdotnet.com/) implementiert.
+Das lineare Gleichungssystem kann schließlich mit Hilfe der Matrixinversion gelöst werden, welche z.B. die Bibliothek [Math.NET Numerics](https://numerics.mathdotnet.com/) implementiert.
 
-![](./Quellen/WS24/StatischFachwerkIdeal2D/Screenshot.png)
+##### 1.1.1.1. [Ideales 2D-Fachwerk](./Quellen/WS24/StatischFachwerkIdeal2D/)
 
-Die folgende Grafik zeigt das Datenmodell des Programms für die Berechnung der Lager- und Stabkräfte eines einfachen zweidimensionalen Fachwerks.
+Zunächst konstruieren wir uns ein Beispiel bestehend aus fünf Knoten $K = \{a, b, c, d, e\}$.
+Für jeden Knoten $k \in K$ definieren wir des weiteren dessen X-Koordinate $k_x \in \mathbb{R}$ und dessen Y-Koordinate $k_y \in \mathbb{R}$ im zweidimensionalen Raum.
+Nun verbinden wir die Knoten untereinander und bilden so die Menge der Stäbe, die wir hier in Form einer *Adjazenzmatrix* darstellen:
+
+| $R$ | $a$ | $b$ | $c$ | $d$ | $e$ |
+|-|-|-|-|-|-|
+| $a$ |   | 1 |   | 1 |   |
+| $b$ | 1 |   | 1 | 1 | 1 |
+| $c$ |   | 1 |   |   | 1 |
+| $d$ | 1 | 1 |   |   | 1 |
+| $e$ |   | 1 | 1 | 1 |   |
+
+TODO
+
+![](./Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Beispiel.png)
+
+TODO
+
+![](./Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Gleichungen.png)
+
+TODO
+
+![](./Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Gleichungssystem.jpg)
+
+TODO
+
+$x = A^{-1}b$
+
+Die folgende Grafik zeigt das Datenmodell des Programms für die Berechnung der Lager- und Stabkräfte eines idealen zweidimensionalen Fachwerks.
 Über die Klasse ``Truss`` können Fachwerke inklusive der darin enthaltenen Knoten, Stäbe, Lager, und externen Kräfte definiert werden.
 Des Weiteren bietet die Klasse ``Truss`` die Methode ``Solve``, welche mittels der Matrixinversion die Stab- und Lagerkräfte berechnet.
 Die Visualisierung erfolgt schließlich mit einem ``DataGrid`` sowie einem ``Canvas``, welche die Windows Presentation Foundation (WPF) bereitstellt.
 
 ![](./Quellen/WS24/StatischFachwerkIdeal2D/Model.svg)
 
-#### [Ideales 3D-Fachwerk](./Quellen/WS25/IdealesFachwerk3D/)
+TODO
+
+![](./Quellen/WS25/IdealesFachwerk2D/Tafelbild_Visualisierung.jpg)
+
+TODO
+
+![](./Quellen/WS24/StatischFachwerkIdeal2D/Screenshot.png)
+
+##### 1.1.1.2. [Ideales 3D-Fachwerk](./Quellen/WS25/IdealesFachwerk3D/)
 
 TODO
 
@@ -119,9 +160,13 @@ TODO
 
 TODO
 
-#### [Elastisches 2D-Fachwerk](./Quellen/WS24/StatischFachwerkElastisch2D/)
+#### 1.1.2. Elastisches Fachwerk
 
 Bei einem elastischen Fachwerk kann sich die Länge der Stäbe durch die Einwirkung einer externen Kraft verändern. Das Modell muss dafür um die Elastizität sowie die Querschnittfläche der Stäbe erweitert werden. Die unbekannten Zustandseigenschaften sind in diesem Fall die Verschiebungen der ungelagerten Knoten sowie die Lagerkräfte, welche an den gelagerten Knoten wirken. Der Zusammenhang zwischen Verschiebungen bzw. Lagerkräften und externen Kräften kann wieder vereinfacht als lineares Gleichungssystem ausgedrückt werden. Die Lösung erfolgt auch wieder mittels Matrixinversion.
+
+##### 1.1.2.1. [Elastisches 2D-Fachwerk](./Quellen/WS24/StatischFachwerkElastisch2D/)
+
+TODO
 
 ![](./Quellen/WS24/StatischFachwerkElastisch2D/Screenshot.png)
 
@@ -129,7 +174,7 @@ Die folgende Grafik zeigt das Datenmodell des Simulationsprogramms. Die Klasse `
 
 ![](./Quellen/WS24/StatischFachwerkElastisch2D/Model.svg)
 
-#### [Elastisches 3D-Fachwerk](./Quellen/WS25/ElastischesFachwerk3D/)
+##### 1.1.2.2. [Elastisches 3D-Fachwerk](./Quellen/WS25/ElastischesFachwerk3D/)
 
 TODO
 
@@ -150,6 +195,8 @@ Man kann grundsätzlich zwischen zwei Arten von Modellen unterschieden werden:
 
 1. **Zeitkontinuierliche Modelle** (Modell beschreibt Zustand zu jedem Zeitpunkt)
 1. **Zeitdiskrete Modelle** (Modell beschreibt Zustands nur zu ausgewählten Zeitpunkten)
+
+Im Folgenden betrachten wir zunächst zeitkontinuierliche Modelle, bevor wir in die Welt der zeitdiskreten Modelle abtauchen.
 
 #### 1.2.1. Zeitkontinuierliche Modelle
 
@@ -257,24 +304,38 @@ flowchart
     Euler --> Explizit
 ```
 
+###### Analytische Lösung
+
+TODO
+
+###### Numerische Lösung
+
 Die numerischen Methoden berechnen allgemein Schätzwerte $s_i'$ für für die Zustände $s(i*\Delta t)$ zu definierten Zeitpunkten $i * \Delta t$ mit ganzzahligen Inkrementen $i \in \mathbb{N}$.
 Da die Schätzwerte $s_i'$ in der Regel nur eine Näherung des tatsächlichen Funktionswertes $s(i*\Delta t)$ sind, ergibt sich ein Schätzfehler $e_i$.
-Der Schätzfehler kann zum Beispiel als der Betrag der Differenz des tatsächlichen Funktionswertes und der Schätzung definiert werden, das heißt $e_i = |s(i * \Delta t) - s_i'|$. Beachte, dass der Schätzfehler nur genau bestimmt werden kann, wenn die analytische Lösung der Zustandsfunktion vorliegt.
+Der Schätzfehler kann zum Beispiel als der Betrag der Differenz des tatsächlichen Funktionswertes und der Schätzung definiert werden, das heißt $e_i = |s(i * \Delta t) - s_i^\sim|$. Beachte, dass der Schätzfehler nur genau bestimmt werden kann, wenn die analytische Lösung der Zustandsfunktion vorliegt.
 
 *TODO: Bild des Schätzfehlers*
 
-Nun stellt sich die Frage, wie die unterschiedlichen numerischen Methoden ihre Schätzwerte $s_i'$ bestimmen.
+Nun stellt sich die Frage, wie die unterschiedlichen numerischen Methoden ihre Schätzwerte $s_i^\sim$ bestimmen.
 Zumindest für das erste Inkrement $i = 0$ arbeiten alle numerischen Verfahren in der Regel mit dem gleichen Schätzwert, nämlich dem Startzustand $s_0$.
 Dieser Zusammenhang erklärt sich dadurch, dass für die Berechnung der Zustandsfunktion $s(t)$ an der Stelle $t = 0$ das Integral der Zustandsübergangsfunktion $s'(t)$ nicht ausgewertet werden muss.
 
 | Linke Seite | $=$ | Rechte Seite |
 |-|-|-|
-| $s_0'$ | $=$ | $s(0 * \Delta t)$ |
+| $s_0^\sim$ | $=$ | $s(0 * \Delta t)$ |
 | | $=$ | $s(0)$ |
 | | $=$ | $s_0 + \int_{t' = 0}^0s'(t')\delta t'$ |
 | | $=$ | $s_0$ |
 
-*TODO: Beschreibung des expliziten Eulerverfahrens*
+Bei der Berechnung der folgenden Schätzwerte $s_{i+1}^\sim$ unterscheiden sich die Methoden jedoch recht deutlich.
+Das explizite Eulerverfahren nimmt beispielsweise die Steigung $s'(i * \Delta t)$ zum Zeitpunkt $i * \Delta t$, um den Schätzwert für den nächsten Zeitpunkt $(i + 1) * \Delta t$ zu bestimmen.
+Daraus ergibt sich die folgende Berechnungsvorschrift für alle weiteren Stütztstellen:
+
+$s_{i + 1}^\sim = s_i^\sim + s'(i * \Delta t) * \Delta t$
+
+Das implizite Eulerverfahren unterscheidet sich auf den ersten Blick nur unwesentlich, nämlich dadurch, dass die Steigung im nächsten Zeitpunkt $(i + 1) * \Delta t$ verwendet wird.
+
+$s_{i + 1}^\sim = s_i^\sim + s'((i + 1) * \Delta t) * \Delta t$
 
 *TODO: Beschreibung des impliziten Eulerverfahrens*
 
@@ -381,7 +442,7 @@ TODO
 
 ##### 1.2.2.2. Ereignisschritt
 
-TODO
+We
 
 ![](./Grafiken/Modellarten%20-%20Diskret%20-%20Ereignis.svg)
 
