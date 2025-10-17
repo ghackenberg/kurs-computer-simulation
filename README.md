@@ -153,19 +153,21 @@ Man kann grundsätzlich zwischen zwei Arten von Modellen unterschieden werden:
 
 #### 1.2.1. Zeitkontinuierliche Modelle
 
+##### Modelldefinition
+
 Zeitkontinuierliche Modelle beschreiben den Zustand $s(t)$ des Systems als kontinuierliche (d.h. stetige) Funktion über der Zeitdomäne.
 In der Regel sind bei dieser Art von Modellen der Startzustand $s_0$ (d.h. Konstanten) sowie die Veränderung des Zustands $s'(t)$ über die Zeit (d.h. dessen Ableitung nach der Zeit) bekannt.
 Um nun den Zustand des Systems zu einem gewissen Zeitpunkt zu berechnen, muss die Ableitung des Zustands folglich über die Zeit integriert werden.
 
-$s(t) = s_0 + \int_0^ts`(t)\delta t$
+$s(t) = s_0 + \int_{t' = 0}^ts'(t')\delta t'$
 
 Eine wichtige Eigenschaft der Zustandsfunktion $s(t)$ ist, dass der Wert der Funktion zum Zeitpunkt $t = 0$ dem Startzustand $s_0$ entspricht, das heißt es gilt $s(0) = s_0$.
-Dieser Zusammenhang zeigt sich, wenn man den Wert $t = 0$ in die Zustandsfunktion $s(t)$ einsetzt und das Integral der Zustandsübergangsfunktion $\int_0^ts'(t)\delta t$ berechnet.
+Dieser Zusammenhang zeigt sich, wenn man den Wert $t = 0$ in die Zustandsfunktion $s(t)$ einsetzt und das Integral der Zustandsübergangsfunktion $\int_{t' = 0}^ts'(t')\delta t'$ berechnet.
 Wir erkennen leicht, dass das Integral der Zustandsübergangsfunktion an der Stelle $t = 0$ den Wert Null hat.
 
 | Rechte Seite | $=$ | Linke Seite |
 |-|-|-|
-| $s(0)$ | $=$ | $s_0 + \int_0^0s'(t)\delta t$ |
+| $s(0)$ | $=$ | $s_0 + \int_{t' = 0}^0s'(t')\delta t'$ |
 | | $=$ | $s_0 + 0$ |
 | | $=$ | $s_0$ |
 
@@ -176,47 +178,74 @@ Die Ableitung der Zustandsfunktion nach der Zeit $s'(t)$ ist schließlich an sec
 
 ![](./Grafiken/Modellarten%20-%20Kontinuierlich.svg)
 
-Modelle der Newton'schen Mechanik beschreiben die Wirklichkeit zum Beispiel als ein System von *Differenzialgleichungen*.
+Die Modelle der Newton'schen Mechanik beschreiben die Wirklichkeit zum Beispiel als ein System von *Differenzialgleichungen* über der Zeit.
 In diesem System entspricht beispielsweise die Geschwindigkeit eines Körpers der Änderung der Position des Körpers über die Zeit.
 Genauso entspricht die Beschleunigung eines jeden Körpers der Änderung der Geschwindigkeit des jeweiligen Körpers über die Zeit.
-Kennt man also die Beschleunigung, die auf einen Körper wirkt (z.B. die Erdbeschleunigung), kann man daraus die Geschwindigkeit zu einem bestimmten Zeit bestimmen.
-Und kennt man die Geschwindigkeit des Körpers, kann man daraus wiederum die Position des Körpers zu einem bestimmten Zeitpunkt berechnen.
+Die Zusammenhänge der konstanten Größen und zeitvariablen Zustandsgrößen sind in folgender Tabelle zusammengefasst:
 
 | Größe | Formel |
 |-|-|
 | Masse | $m$ |
 | Kraft | $f(t)$ |
 | Beschleunigung | $a(t) = f(t) / m$ |
-| Geschwindigkeit | $v(t) = v_0 + \int_0^t a(t)\delta t$ |
-| Position | $p(t) = p_0 + \int_0^t v(t)\delta t$ |
+| Geschwindigkeit | $v(t) = v_0 + \int_{t' = 0}^t a(t')\delta t'$ |
+| Position | $p(t) = p_0 + \int_{t' = 0}^t v(t')\delta t'$ |
 
-Nun kann man mit diesem Modell bestimmte Fragen beantworten, z.B. welche Position $p_{gesucht}$ und welche Geschwindigkeit $v_{gesucht}$ hat der Körper zu einem gewissen Zeitpunkt $t_{gegeben}$.
-Um diese Frage zu beantworten, müssen wir den Zeitpunkt in die obigen Zustandsfunktionen einsetzen und die Funktionen berechnen, was in weiterer Folge die Bestimmung der Integrale erfordert.
+##### Fragestellungen
+
+Gegeben die Zustandsfunktion $s(t)$ können nun unterschiedliche Fragen beantwortet werden.
+Im Folgenden definieren wir zwei Fragestellungen, welche sich anhand der gegebenen und gesuchten Größen unterschieden:
+
+###### Fragestellung 1: $t_{gegeben} \rightarrow s_{gesucht}$
+
+Bei der ersten der beiden allgemeinen Fragestellungen möchte man wissen, welchen Zustand $s_{gesucht}$ das System zu einem gegebenen Zeitpunkt $t_{gegeben}$ einnimmt.
+Dazu muss man den Zeitpunkt in die Zustandsfunktion einsetzten und somit das Integral der Zustandsübergangsfunktion $\int_{t' = 0}^{t_{gegeben}}s'(t')\delta t'$ berechnen.
+Dieser Anwendungsfall der Modelle ist in der folgenden Tabelle noch einmal zusammengefasst:
 
 | Gegeben | $\rightarrow$ | Gesucht | | |
 |-|-|-|-|-|
-| $t_{gegeben}$ | $\rightarrow$ | $p(t_{gegeben})$ | $=$ | $p_{gesucht}$ |
-| $t_{gegeben}$ | $\rightarrow$ | $v(t_{gegeben})$ | $=$ | $v_{gesucht}$ |
-| $t_{gegeben}$ | $\rightarrow$ | $a(t_{gegeben})$ | $=$ | $a_{gesucht}$ |
+| $t_{gegeben}$ | $\rightarrow$ | $s_{gesucht}$ | $=$ | $s(t_{gegeben})$ 
+| | | | $=$ | $s_0 + \int_{t' = 0}^{t_{gegeben}}s'(t')\delta t'$ |
+
+Angewendet auf das Modell der Newton'schen Meschanik fragen wir z.B., welche Position $p_{gesucht}$ und welche Geschwindigkeit $v_{gesucht}$ der Körper zu einem gewissen Zeitpunkt $t_{gegeben}$ hat.
+Um diese Frage zu beantworten, müssen wir folglich die Beschleunigung über die Zeit integrieren, um die Geschwindigkeit über die Zeit zu erhalten.
+Dann können wir die Geschwindigkeit über die Zeit integrieren im die Position über die Zeit zu bestimmen.
+
+| Gegeben | $\rightarrow$ | Gesucht | | |
+|-|-|-|-|-|
+| $t_{gegeben}$ | $\rightarrow$ | $v_{gesucht}$ | $=$ | $v(t_{gegeben})$ |
+| | | | $=$ | $v_0 + \int_{t' = 0}^{t_{gegeben}}a(t')\delta t'$ |
+| | $\rightarrow$ | $p_{gesucht}$ | $=$ | $p(t_{gegeben})$ |
+| | | | $=$ | $p_0 + \int_{t' = 0}^{t_{gegeben}}v(t')\delta t$ |
+
+###### Fragestellung 2: $s_{gegeben} \rightarrow t_{gesucht}$
+
+Alternativ kann man zum Beispiel die Frage stellen, zu welchem Zeitpunkt bzw. Zeitpunkten $t_{gesucht}$ das System einen gegeben Zustand $s_{gegeben}$ einnimmt.
+Dazu muss man die Zustandsfunktion zu dem gesuchten Zeitpunkt $s(t_{gesucht})$ gleich dem gegeben Zustand $s_{gegeben}$ setzen und nach dem Zeitpunkt auflösen.
+Diese Berechnung erfordert folglich die Bestimmung der Inversen der Zustandsfunktion $s^{-1}(s_{gegeben})$ mit $s^{-1}(s(t)) = t$:
+
+| Gegeben | $\rightarrow$ | Gesucht | | |
+|-|-|-|-|-|
+| $s_{gegeben}$ | $\rightarrow$ | $t_{gesucht}$ | $=$ | $s^{-1}(s_{gegeben})$
 
 Eine andere Frage wäre beispielsweise, zu welchen Zeitpunkten $t_{gesucht}$ der Körper eine gewisse Position $p_{gegeben}$ oder Geschwindigkeit $v_{gegeben}$ hat bzw. Beschleunigung $a_{gegeben}$ erfährt.
 Um diese Frage zu beantworten, müssen wir die obigen Zustandsfunktionen gleich der gewünschten Zuständswerte setzen und die Gleichungen nach der Zeit auflösen.
 
 | Gegeben | $\rightarrow$ | Gesucht | | |
 |-|-|-|-|-|
-| $p_{gegeben}$ | $\rightarrow$ | $p^{-1}(p_{gegeben})$ | $=$ | $t_{gesucht}$ |
-| $v_{gegeben}$ | $\rightarrow$ | $v^{-1}(v_{gegeben})$ | $=$ | $t_{gesucht}$ |
-| $a_{gegeben}$ | $\rightarrow$ | $a^{-1}(a_{gegeben})$ | $=$ | $t_{gesucht}$ |
+| $p_{gegeben}$ | $\rightarrow$ | $t_{gesucht}$ | $=$ | $p^{-1}(p_{gegeben})$ |
+| $v_{gegeben}$ | $\rightarrow$ | $t_{gesucht}$ | $=$ | $v^{-1}(v_{gegeben})$ |
+| $a_{gegeben}$ | $\rightarrow$ | $t_{gesucht}$ | $=$ | $a^{-1}(a_{gegeben})$ |
+
+##### Lösungsmethoden
 
 In Ausnahmefällen können die gesuchten Größen analytisch bestimmt und somit der Systemzustand zu einem gegebenen Zeitpunkt oder der Zeitpunkt, zu dem ein bestimmter Zustand gilt, exakt berechnet werden.
 Im Regelfall sind diese analytischen Lösungsmethoden aufgrund der Komplexität der Differenzialgleichungen und -gleichungssysteme jedoch nicht praktisch anwendbar und die gesuchten Größen müssen näherungsweise mit numerischen Verfahren bestimmt werden.
-Die einfachsten numerischen Verfahren sind das explizite und das implizite Eulerverfahren, welche mit einer festen Schrittweite $\Delta t$ arbeiten.
-Die Größe der Schrittweite wirkt sich dabei allgemein direkt auf die Genauigkeit der Schätzung bzw. den numerischen Fehler aus.
-Eine Erweiterung und Verallgemeinerung der Eulerverfahren ist das Runge-Kutta-Verfahren, welches zusätzliche Glieder der Taylor-Reihe der zu approximierenden Zustandesfunktion verwendet um bessere Ergebnisse zu erhalten.
+Die einfachsten numerischen Verfahren sind das explizite und das implizite Eulerverfahren.
+Eine Erweiterung und Verallgemeinerung der Eulerverfahren ist das Runge-Kutta-Verfahren.
 
 ```mermaid
 flowchart
-
     Lösungsmethoden --> Analytisch
     Lösungsmethoden --> Numerisch
     
@@ -228,7 +257,28 @@ flowchart
     Euler --> Explizit
 ```
 
-Die numerischen Methoden berechnen allgemein Schätzwerte $s_i'$ für für die Zustände $s(i*\Delta t)$ zu definierten Zeitpunkten $i * \Delta t$.
+Die numerischen Methoden berechnen allgemein Schätzwerte $s_i'$ für für die Zustände $s(i*\Delta t)$ zu definierten Zeitpunkten $i * \Delta t$ mit ganzzahligen Inkrementen $i \in \mathbb{N}$.
+Da die Schätzwerte $s_i'$ in der Regel nur eine Näherung des tatsächlichen Funktionswertes $s(i*\Delta t)$ sind, ergibt sich ein Schätzfehler $e_i$.
+Der Schätzfehler kann zum Beispiel als der Betrag der Differenz des tatsächlichen Funktionswertes und der Schätzung definiert werden, das heißt $e_i = |s(i * \Delta t) - s_i'|$. Beachte, dass der Schätzfehler nur genau bestimmt werden kann, wenn die analytische Lösung der Zustandsfunktion vorliegt.
+
+*TODO: Bild des Schätzfehlers*
+
+Nun stellt sich die Frage, wie die unterschiedlichen numerischen Methoden ihre Schätzwerte $s_i'$ bestimmen.
+Zumindest für das erste Inkrement $i = 0$ arbeiten alle numerischen Verfahren in der Regel mit dem gleichen Schätzwert, nämlich dem Startzustand $s_0$.
+Dieser Zusammenhang erklärt sich dadurch, dass für die Berechnung der Zustandsfunktion $s(t)$ an der Stelle $t = 0$ das Integral der Zustandsübergangsfunktion $s'(t)$ nicht ausgewertet werden muss.
+
+| Linke Seite | $=$ | Rechte Seite |
+|-|-|-|
+| $s_0'$ | $=$ | $s(0 * \Delta t)$ |
+| | $=$ | $s(0)$ |
+| | $=$ | $s_0 + \int_{t' = 0}^0s'(t')\delta t'$ |
+| | $=$ | $s_0$ |
+
+*TODO: Beschreibung des expliziten Eulerverfahrens*
+
+*TODO: Beschreibung des impliziten Eulerverfahrens*
+
+##### Anwendungsbeispiele
 
 Im Folgenden untersuchen wir für die weitere Vertiefung zwei Anwendungsbeispiele, die sich in ihrer Komplexität leicht unterscheiden und für welche die analytischen Lösungen bereits bekannt sind.
 Uns ist in diesem Fall wichtig, dass sich die Modelle für die obigen Fragestellungen auch analytisch lösen lassen, damit wir einen Vergleich zwischen analytischen und numerischen Methoden anstellen können.
@@ -238,7 +288,7 @@ Die beiden Anwendungsfälle sind die folgenden:
 1. **1D-Ballwurf** (Anfangsgeschwindigkeit, Anfangsposition und Erdbeschleunigung)
 1. **1D-Federpendel** (Federkonstante, Anfangsbeschleinigung, Anfangsgeschwindigkeit und Anfangsposition)
 
-##### [1D-Ballwurf](./Quellen/WS24/DynamischBallwurf1D/)
+###### [1D-Ballwurf](./Quellen/WS24/DynamischBallwurf1D/)
 
 Beim ersten Beispiel betrachten wir den senkrechten Wurf eines Balles.
 Die Zustandseigenschaften sind dabei die Position und die Geschwindigkeit des Balles.
@@ -289,7 +339,7 @@ TODO
 
 ![](./Quellen/WS24/DynamischBallwurf1D/Screenshot.png)
 
-##### [1D-Federpendel](./Quellen/WS24/DynamischFederpendel1D/)
+###### [1D-Federpendel](./Quellen/WS24/DynamischFederpendel1D/)
 
 Beim zweiten Beispiel betrachten wird die Schwingung einer gefederten Masse.
 Die Zustandseigenschaften sind dabei die Position, die Beschleunigung, und die Geschwindigkeit der Masse sowie die auf die Masse einwirkende Federkraft.
