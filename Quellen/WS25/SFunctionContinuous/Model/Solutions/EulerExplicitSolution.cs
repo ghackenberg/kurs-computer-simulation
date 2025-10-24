@@ -2,7 +2,9 @@
 {
     class EulerExplicitSolution : Solution
     {
-        public Dictionary<Function, bool[]> R = new Dictionary<Function, bool[]>();
+        public Dictionary<Function, bool[]> ReadyFlag = new Dictionary<Function, bool[]>();
+        public Dictionary<Function, bool[]> GuessFlag = new Dictionary<Function, bool[]>();
+        public Dictionary<Function, double[]> GuessValue = new Dictionary<Function, double[]>();
 
         public Dictionary<Function, double[]> X = new Dictionary<Function, double[]>();
         public Dictionary<Function, double[]> D = new Dictionary<Function, double[]>();
@@ -12,7 +14,10 @@
         public override void Solve(Composition composition, double step, double tmax)
         {
             // Verzeichnisse initialisieren
-            R.Clear();
+            ReadyFlag.Clear();
+            GuessFlag.Clear();
+            GuessValue.Clear();
+
             X.Clear();
             D.Clear();
             U.Clear();
@@ -21,7 +26,9 @@
             // Vektoren initialisieren
             foreach (Function f in composition.Functions)
             {
-                R[f] = new bool[f.DimU];
+                ReadyFlag[f] = new bool[f.DimU];
+                GuessFlag[f] = new bool[f.DimU];
+                GuessValue[f] = new double[f.DimU];
 
                 X[f] = new double[f.DimX];
                 D[f] = new double[f.DimX];
@@ -46,12 +53,15 @@
                 {
                     for (int i = 0; i < f.DimU; i++)
                     {
-                        R[f][i] = false;
+                        ReadyFlag[f][i] = false;
+                        GuessFlag[f][i] = false;
                     }
                 }
 
                 // Ausgaben berechnen und weiterleiten
                 List<Function> open = new List<Function>(composition.Functions);
+
+                int guessIteration = 0;
 
                 while (open.Count > 0)
                 {
@@ -79,18 +89,70 @@
                                 int tfu = c.Input;
 
                                 U[tf][tfu] = Y[sf][sfy];
-                                R[tf][tfu] = true;
+
+                                ReadyFlag[tf][tfu] = true;
                             }
 
-                            // Funktion entfernen
-                            open.RemoveAt(i--);
+                            if (!HasGuess(f))
+                            {
+                                // Funktion entfernen
+                                open.RemoveAt(i--);
+                            }
                         }
                     }
 
                     // Funktionszahl prüfen
                     if (count == open.Count)
                     {
-                        throw new Exception("Loop detected!");
+                        if (guessIteration == 1000)
+                        {
+                            throw new Exception("Could not solve algebraic loop!");
+                        }
+
+                        if (guessIteration > 0)
+                        {
+                            double error = 0;
+
+                            foreach (Function f in open)
+                            {
+                                for (int i = 0; i < f.DimU; i++)
+                                {
+                                    if (GuessFlag[f][i])
+                                    {
+                                        error += Math.Abs(GuessValue[f][i] - U[f][i]);
+                                    }
+                                }
+                            }
+
+                            if (error < 0.01)
+                            {
+                                open.Clear();
+                            }
+                        }
+
+                        // Schätzung machen
+                        foreach (Function f in open)
+                        {
+                            for (int i = 0; i < f.DimU; i++)
+                            {
+                                if (!ReadyFlag[f][i])
+                                {
+                                    ReadyFlag[f][i] = true;
+                                    GuessFlag[f][i] = true;
+                                    GuessValue[f][i] = 0;
+
+                                    U[f][i] = GuessValue[f][i];
+                                }
+                                else if (GuessFlag[f][i])
+                                {
+                                    GuessValue[f][i] = GuessValue[f][i] + (U[f][i] - GuessValue[f][i]) * 0.1;
+
+                                    U[f][i] = GuessValue[f][i];
+                                }
+                            }
+                        }
+
+                        guessIteration++;
                     }
                 }
 
@@ -118,12 +180,24 @@
         {
             for (int i = 0; i < f.DimU; i++)
             {
-                if (!R[f][i])
+                if (!ReadyFlag[f][i])
                 {
                     return false;
                 }
             }
             return true;
+        }
+
+        private bool HasGuess(Function f)
+        {
+            for (int i = 0; i < f.DimU; i++)
+            {
+                if (!GuessFlag[f][i])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

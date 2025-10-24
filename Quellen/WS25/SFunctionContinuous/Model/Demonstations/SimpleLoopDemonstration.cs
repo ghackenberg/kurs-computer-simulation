@@ -2,24 +2,21 @@
 
 namespace SFunctionContinuous.Model.Demonstations
 {
-    class LoopDemonstration : Demonstration
+    class SimpleLoopDemonstration : Demonstration
     {
-        public LoopDemonstration()
+        public SimpleLoopDemonstration()
         {
             Function a = new ConstantFunction("Constant", 1);
-            Function b = new AddFunction("Add");
-            Function c = new IntegrateFunction("Intergate", 0);
-            Function d = new RecordFunction("Record");
+            Function b = new SubtractFunction("Subtract");
+            Function c = new RecordFunction("Record");
 
             Composition.AddFunction(a);
             Composition.AddFunction(b);
             Composition.AddFunction(c);
-            Composition.AddFunction(d);
 
             Composition.AddConnection(a, 0, b, 0);
             Composition.AddConnection(b, 0, c, 0);
-            Composition.AddConnection(c, 0, d, 0);
-            Composition.AddConnection(c, 0, b, 1);
+            Composition.AddConnection(b, 0, b, 1);
         }
     }
 }

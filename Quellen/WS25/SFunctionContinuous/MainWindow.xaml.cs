@@ -19,7 +19,7 @@ namespace SFunctionContinuous
 
             // Modell erstellen und lösen
 
-            Demonstration demonstration = new LoopDemonstration();
+            Demonstration demonstration = new ComplexLoopDemonstration();
 
             try
             {
