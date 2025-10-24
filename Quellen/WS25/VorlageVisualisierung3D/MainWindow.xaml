@@ -13,6 +13,7 @@
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -35,5 +36,9 @@
         <vorlagen:QuadVorlage Grid.Row="0" Grid.Column="3"/>
         <vorlagen:QuadStripVorlage Grid.Row="1" Grid.Column="3"/>
         <Label Grid.Row="2" Grid.Column="3" BorderBrush="LightGray" BorderThickness="1"/>
+
+        <vorlagen:MatrixVorlage Grid.Row="0" Grid.Column="4"/>
+        <Label Grid.Row="1" Grid.Column="4" BorderBrush="LightGray" BorderThickness="1"/>
+        <Label Grid.Row="2" Grid.Column="4" BorderBrush="LightGray" BorderThickness="1"/>
     </Grid>
 </Window>

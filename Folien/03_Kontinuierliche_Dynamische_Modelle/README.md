@@ -250,7 +250,7 @@ $$ y(t) = y_0 + v_0 t - \frac{1}{2} g t^2 $$
 ---
 
 <div class="columns">
-<div class="three">
+<div>
 
 ### Vertikaler Wurf: Analytische Lösung (Zusammenfassung)
 
@@ -267,12 +267,7 @@ Diese Formeln beschreiben die exakte Trajektorie des Objekts für jeden beliebig
 </div>
 <div>
 
-![width:1000px](https://mathegym.de/images/v1/physik/gl_803_02.png)
-
-</div>
-<div>
-
-![width:1000px](https://mathegym.de/images/v1/physik/gl_803_01.png)
+![](../../Quellen/WS24/DynamischBallwurf1D/Screenshot.png)
 
 </div>
 </div>
@@ -284,8 +279,7 @@ Diese Formeln beschreiben die exakte Trajektorie des Objekts für jeden beliebig
 
 ## 3.3: Numerische Integrationsverfahren
 
-**Grundidee:**
-Approximiere den kontinuierlichen Verlauf von `x(t)` durch eine Folge von Werten $x_k \approx x(t_k)$ an diskreten Zeitpunkten $t_k = t_0 + k \cdot h$.
+**Grundidee:** Approximiere den kontinuierlichen Verlauf von `x(t)` durch eine Folge von Werten $x_k \approx x(t_k)$ an diskreten Zeitpunkten $t_k = t_0 + k \cdot h$.
 
 - `h`: Schrittweite (step size)
 
@@ -300,7 +294,7 @@ $$ x(t+h) \approx x(t) + h f(t, x(t)) $$
 </div>
 <div>
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Sintay_SVG.svg/1024px-Sintay_SVG.svg.png)
+![](./Numerische_Verfahren.jpg)
 
 </div>
 </div>
@@ -323,7 +317,7 @@ $$ x_{k+1} = x_k + h \cdot f(t_k, x_k) $$
 </div>
 <div>
 
-![Explizite Euler-Methode](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Euler_two_steps.svg/1024px-Euler_two_steps.svg.png)
+![width:2000px](./Euler%20-%20Explizit.svg)
 
 </div>
 </div>
@@ -397,7 +391,7 @@ $$ x_{k+1} = x_k + h \cdot f(t_{k+1}, x_{k+1}) $$
 </div>
 <div>
 
-![width:1000px](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUo-ACGCs0D-p9khUXLm9XbO0_wTf9DG-_Cw&s)
+![width:1000px](./Euler%20-%20Implizit.svg)
 
 </div>
 </div>
@@ -723,21 +717,45 @@ Ein bewährter Ansatz ist die Modularisierung, inspiriert von **Simulink S-Funct
 
 ### Struktur einer vereinfachten S-Funktion
 
+<div class="columns">
+<div class="two">
+
 Ein Block, der ein kontinuierliches dynamisches System beschreibt, benötigt typischerweise folgende Methoden:
 
-- `mdlInitializeSizes(n_cont_states, n_inputs, n_outputs)`: Definiert die "Größe" des Blocks (Anzahl der Zustände, Ein- und Ausgänge).
-- `mdlInitializeConditions(initial_states)`: Setzt die Anfangswerte $x_0$ für die Zustände.
-- `mdlDerivatives(t, states, inputs)`: Berechnet die Ableitungen der Zustände: $\dot{x} = f(t, x, u)$. **Dies ist das Herzstück des Modells.**
-- `mdlOutputs(t, states, inputs)`: Berechnet die Ausgänge des Blocks: $y = g(t, x, u)$.
+- `InitializeSizes()`: Definiert die "Größe" des Blocks (Anzahl der Zustände, Ein- und Ausgänge).
+- `InitializeConditions(double[] x0)`: Setzt die Anfangswerte $x_0$ für die Zustände.
+- `Derivatives(double t, double[] x, double[] u, double[] dx)`: Berechnet die Ableitungen der Zustände: $\dot{x} = f(t, x, u)$. **Dies ist das Herzstück des Modells.**
+- `Outputs(double t, double[] x, double[] u, double[] y)`: Berechnet die Ausgänge des Blocks: $y = g(t, x, u)$.
+
+</div>
+<div>
+
+```csharp
+class SFunction {
+
+    int NumContinuousStates
+    int NumInputs
+    int NumOuputs
+
+    void InitializeSizes()
+    void InitializeConditions(...)
+    void Derivatives(...)
+    void Outputs(...)
+
+}
+```
+
+</div>
+</div>
 
 ---
 
 ### Beispiel: S-Funktion für eine Konstante
 
-Ein Block, der einen konstanten Wert ausgibt.
-
 <div class="columns top">
 <div class="two">
+
+Ein Block, der einen konstanten Wert ausgibt.
 
 - **Eigenschaften:**
   - Keine Zustände (`NumContinuousStates = 0`)
@@ -752,30 +770,21 @@ Ein Block, der einen konstanten Wert ausgibt.
 <div class="two">
 
 ```csharp
-class ConstantBlock {
+class ConstantBlock : SFunction {
     // Parameter
     double Value = 1.0;
 
-    void mdlInitializeSizes() {
+    void InitializeSizes() {
         NumContinuousStates = 0;
         NumInputs = 0;
         NumOutputs = 1;
     }
 
-    void mdlInitializeConditions(double[] x0) {
-        // Nichts zu tun
-    }
-
-    void mdlDerivatives(double t, 
-                        double[] x, double[] u,
-                        double[] dx) {
-        // Nichts zu tun
-    }
-
-    void mdlOutputs(double t, 
-                    double[] x, double[] u,
-                    double[] y_out) {
-        y_out[0] = this.Value;
+    void Outputs(double t, 
+                 double[] x,
+                 double[] u,
+                 double[] y) {
+        y[0] = this.Value;
     }
 }
 ```
@@ -806,20 +815,21 @@ Ein Block, der seinen Eingang mit einem konstanten Faktor multipliziert.
 <div class="two">
 
 ```csharp
-class GainBlock {
+class GainBlock : SFunction {
     // Parameter
     double Gain = 2.0;
 
-    void mdlInitializeSizes() {
+    void InitializeSizes() {
         NumContinuousStates = 0;
         NumInputs = 1;
         NumOutputs = 1;
     }
 
-    void mdlOutputs(double t, 
-                    double[] x, double[] u,
-                    double[] y_out) {
-        y_out[0] = this.Gain * u[0];
+    void Outputs(double t, 
+                 double[] x,
+                 double[] u,
+                 double[] y) {
+        y[0] = this.Gain * u[0];
     }
 }
 ```
@@ -850,19 +860,20 @@ Ein Block, der seine Eingänge addiert oder subtrahiert.
 <div class="two">
 
 ```csharp
-class SumBlock {
-    // Parameter: z.B. "+-"
-    string Signs = "++";
+class SumBlock : SFunction {
+    // Parameter: z.B. "+" oder "-"
+    string Signs = "+-";
 
-    void mdlInitializeSizes() {
+    void InitializeSizes() {
         NumContinuousStates = 0;
         NumInputs = 2; // oder mehr
         NumOutputs = 1;
     }
 
-    void mdlOutputs(double t, 
-                    double[] x, double[] u,
-                    double[] y_out) {
+    void Outputs(double t, 
+                 double[] x,
+                 double[] u,
+                 double[] y) {
         double sum = 0.0;
         // Annahme: Signs.Length == NumInputs
         for (int i = 0; i < NumInputs; i++) {
@@ -871,7 +882,7 @@ class SumBlock {
             else
                 sum -= u[i];
         }
-        y_out[0] = sum;
+        y[0] = sum;
     }
 }
 ```
@@ -901,27 +912,29 @@ Der wichtigste Block für dynamische Systeme. Er integriert das Eingangssignal.
 <div class="two">
 
 ```csharp
-class IntegratorBlock {
-    void mdlInitializeSizes() {
+class IntegratorBlock : SFunction {
+    void InitializeSizes() {
         NumContinuousStates = 1;
         NumInputs = 1;
         NumOutputs = 1;
     }
-    void mdlInitializeConditions(double[] x0) {
+    void InitializeConditions(double[] x) {
         // Setze Anfangswert
-        x0[0] = 0.0; 
+        x[0] = 0.0; 
     }
-    void mdlDerivatives(double t, 
-                        double[] x, double[] u,
-                        double[] dx) {
+    void Derivatives(double t, 
+                     double[] x,
+                     double[] u,
+                     double[] dx) {
         // dx/dt = u
         dx[0] = u[0];
     }
-    void mdlOutputs(double t, 
-                    double[] x, double[] u,
-                    double[] y_out) {
+    void Outputs(double t, 
+                 double[] x,
+                 double[] u,
+                 double[] y) {
         // y = x
-        y_out[0] = x[0];
+        y[0] = x[0];
     }
 }
 ```
@@ -946,15 +959,15 @@ class SpringMassDamper {
     // Eingänge u = [F]
     // Ausgänge y = [y, v, a]
 
-    void mdlInitializeSizes() {
+    void InitializeSizes() {
         NumContinuousStates = 2;
         NumInputs = 1;
         NumOutputs = 3;
     }
 
-    void mdlInitializeConditions(double[] x0) {
-        x0[0] = 1.0; // y_0
-        x0[1] = 0.0; // v_0
+    void InitializeConditions(double[] x) {
+        x[0] = 1.0; // y_0
+        x[1] = 0.0; // v_0
     }
 }
 ```
@@ -963,9 +976,10 @@ class SpringMassDamper {
 <div class="two">
 
 ```csharp
-    void mdlDerivatives(double t, 
-                        double[] x, double[] u,
-                        double[] dx)
+    void Derivatives(double t, 
+                     double[] x,
+                     double[] u,
+                     double[] dx)
     {
         double y = x[0];
         double v = x[1];
@@ -975,16 +989,17 @@ class SpringMassDamper {
         dx[1] = (F - k*y - d*v) / m; // dv/dt
     }
 
-    void mdlOutputs(double t, 
-                    double[] x, double[] u,
-                    double[] y_out)
+    void Outputs(double t, 
+                 double[] x,
+                 double[] u,
+                 double[] y)
     {
-        y_out[0] = x[0]; // Position
-        y_out[1] = x[1]; // Geschwindigkeit
+        y[0] = x[0]; // Position
+        y[1] = x[1]; // Geschwindigkeit
         
         // Beschleunigung ist algebraisch
         double F = u[0];
-        y_out[2] = (F - k*x[0] - d*x[1]) / m;
+        y[2] = (F - k*x[0] - d*x[1]) / m;
     }
 }
 ```
@@ -999,12 +1014,12 @@ class SpringMassDamper {
 Der Solver (z.B. ein expliziter Euler) orchestriert die Simulation.
 
 1.  **Initialisierung:**
-    - Rufe `mdlInitializeSizes` und `mdlInitializeConditions` für alle Blöcke auf.
+    - Rufe `InitializeSizes` und `InitializeConditions` für alle Blöcke auf.
     - Setze $t = t_0$ und $x = x_0$.
 2.  **Zeitschritt-Schleife (für k = 0, 1, 2, ...):**
-    1. **Outputs berechnen:** Rufe für alle Blöcke `mdlOutputs(t_k, x_k, u_k)` auf, um die Ausgänge $y_k$ zu erhalten.
+    1. **Outputs berechnen:** Rufe für alle Blöcke `Outputs(t, x, u, y)` auf, um die Ausgänge $y_k$ zu erhalten.
     2. **Verbindungen auflösen:** Die Ausgänge $y_k$ von Block A werden zu den Eingängen $u_k$ von Block B.
-    3. **Ableitungen berechnen:** Rufe für alle Blöcke `mdlDerivatives(t_k, x_k, u_k)` auf, um die Ableitungen $\dot{x}_k$ zu erhalten.
+    3. **Ableitungen berechnen:** Rufe für alle Blöcke `Derivatives(t, x, u, dx)` auf, um die Ableitungen $\dot{x}_k$ zu erhalten.
     4. **Zustände integrieren:** Der Solver berechnet den neuen Zustand $x_{k+1}$ mit der gewählten Methode (z.B. $x_{k+1} = x_k + h \cdot \dot{x}_k$).
     5. **Zeit fortschreiten:** $t_{k+1} = t_k + h$.
 
