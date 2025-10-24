@@ -74,7 +74,7 @@
                         Function f = open[i];
 
                         // Bereitschaft prüfen
-                        if (Ready(f))
+                        if (IsReady(f))
                         {
                             // Ausgaben berechnen
                             f.CalculateOutputs(t, X[f], U[f], Y[f]);
@@ -83,9 +83,9 @@
                             foreach (Connection c in f.ConnectionsOut)
                             {
                                 Function sf = c.Source;
-                                int sfy = c.Output;
-
                                 Function tf = c.Target;
+
+                                int sfy = c.Output;
                                 int tfu = c.Input;
 
                                 U[tf][tfu] = Y[sf][sfy];
@@ -93,6 +93,7 @@
                                 ReadyFlag[tf][tfu] = true;
                             }
 
+                            // Funktion als erledigt markieren (wenn keine Schätzung notwendig war)
                             if (!HasGuess(f))
                             {
                                 // Funktion entfernen
@@ -104,13 +105,17 @@
                     // Funktionszahl prüfen
                     if (count == open.Count)
                     {
+                        // Iterationen für Schätzung prüfen
                         if (guessIteration == 1000)
                         {
+                            // Simulation abbrechen
                             throw new Exception("Could not solve algebraic loop!");
                         }
 
+                        // Aktuellen Schätzfehler berechnen und prüfen
                         if (guessIteration > 0)
                         {
+                            // Aktuellen Schätzfehler berechnen
                             double error = 0;
 
                             foreach (Function f in open)
@@ -124,13 +129,15 @@
                                 }
                             }
 
+                            // Schleife abbrechen, wenn Schätzfehler klein genug
                             if (error < 0.01)
                             {
+                                // Alle offenen Funktionen als erledigt markieren
                                 open.Clear();
                             }
                         }
 
-                        // Schätzung machen
+                        // Schätzung initialisieren und aktualisieren
                         foreach (Function f in open)
                         {
                             for (int i = 0; i < f.DimU; i++)
@@ -139,12 +146,15 @@
                                 {
                                     ReadyFlag[f][i] = true;
                                     GuessFlag[f][i] = true;
+
+                                    // Schätzung initialisieren
                                     GuessValue[f][i] = 0;
 
                                     U[f][i] = GuessValue[f][i];
                                 }
                                 else if (GuessFlag[f][i])
                                 {
+                                    // Schätzung anpassen
                                     GuessValue[f][i] = GuessValue[f][i] + (U[f][i] - GuessValue[f][i]) * 0.1;
 
                                     U[f][i] = GuessValue[f][i];
@@ -176,7 +186,7 @@
             }
         }
 
-        private bool Ready(Function f)
+        private bool IsReady(Function f)
         {
             for (int i = 0; i < f.DimU; i++)
             {
