@@ -19,13 +19,13 @@ namespace SFunctionContinuous
 
             // Modell erstellen und lösen
 
-            Demonstration demonstration = new ComplexLoopDemonstration();
+            Demonstration demonstration = new SimpleLoopDemonstration();
 
             try
             {
-                Solution solution = new EulerExplicitSolution();
+                Solution solution = new EulerExplicitSolution(demonstration.Composition);
 
-                solution.Solve(demonstration.Composition, 5, 100);
+                solution.Solve(1, 10);
             }
             catch (Exception e)
             {

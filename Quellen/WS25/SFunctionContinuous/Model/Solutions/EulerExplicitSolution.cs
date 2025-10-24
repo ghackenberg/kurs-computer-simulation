@@ -2,45 +2,19 @@
 {
     class EulerExplicitSolution : Solution
     {
-        public Dictionary<Function, bool[]> ReadyFlag = new Dictionary<Function, bool[]>();
-        public Dictionary<Function, bool[]> GuessFlag = new Dictionary<Function, bool[]>();
-        public Dictionary<Function, double[]> GuessValue = new Dictionary<Function, double[]>();
 
-        public Dictionary<Function, double[]> X = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> D = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> U = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> Y = new Dictionary<Function, double[]>();
-
-        public override void Solve(Composition composition, double step, double tmax)
+        public EulerExplicitSolution(Composition composition) : base(composition)
         {
-            // Verzeichnisse initialisieren
-            ReadyFlag.Clear();
-            GuessFlag.Clear();
-            GuessValue.Clear();
 
-            X.Clear();
-            D.Clear();
-            U.Clear();
-            Y.Clear();
+        }
 
-            // Vektoren initialisieren
-            foreach (Function f in composition.Functions)
-            {
-                ReadyFlag[f] = new bool[f.DimU];
-                GuessFlag[f] = new bool[f.DimU];
-                GuessValue[f] = new double[f.DimU];
-
-                X[f] = new double[f.DimX];
-                D[f] = new double[f.DimX];
-                U[f] = new double[f.DimU];
-                Y[f] = new double[f.DimY];
-            }
-
+        public override void Solve(double step, double tmax)
+        {
             // Zeit initialisieren
             double t = 0;
 
             // Zustände initialisieren
-            foreach (Function f in composition.Functions)
+            foreach (Function f in Functions)
             {
                 f.InitializeConditions(X[f]);
             }
@@ -49,21 +23,26 @@
             while (t <= tmax)
             {
                 // Bereitschaft zurücksetzen
-                foreach (Function f in composition.Functions)
+                foreach (Function f in Functions)
                 {
                     for (int i = 0; i < f.DimU; i++)
                     {
                         ReadyFlag[f][i] = false;
-                        GuessFlag[f][i] = false;
+                        GuessMasterFlag[f][i] = false;
+                        GuessSlaveFlag[f][i] = false;
                     }
                 }
 
                 // Ausgaben berechnen und weiterleiten
-                List<Function> open = new List<Function>(composition.Functions);
+                List<Function> open = new List<Function>(Functions);
+                List<Function> done = new List<Function>();
+
+                List<Function> guessMaster = new List<Function>();
+                List<Function> guessSlave = new List<Function>();
 
                 int guessIteration = 0;
 
-                while (open.Count > 0)
+                while (open.Count > 0 || guessMaster.Count > 0)
                 {
                     // Funktionszahl vorher merken
                     int count = open.Count;
@@ -80,100 +59,129 @@
                             f.CalculateOutputs(t, X[f], U[f], Y[f]);
 
                             // Ausgaben weiterleiten
-                            foreach (Connection c in f.ConnectionsOut)
+                            ForwardOutputs(f);
+
+                            // Funktion als erledigt markieren
+                            open.RemoveAt(i--);
+
+                            // Funktion als abhängig geschätzt markieren
+                            if (guessMaster.Count > 0 && guessIteration == 0)
                             {
-                                Function sf = c.Source;
-                                Function tf = c.Target;
-
-                                int sfy = c.Output;
-                                int tfu = c.Input;
-
-                                U[tf][tfu] = Y[sf][sfy];
-
-                                ReadyFlag[tf][tfu] = true;
+                                guessSlave.Add(f);
                             }
-
-                            // Funktion als erledigt markieren (wenn keine Schätzung notwendig war)
-                            if (!HasGuess(f))
+                            else
                             {
-                                // Funktion entfernen
-                                open.RemoveAt(i--);
+                                done.Add(f);
                             }
                         }
                     }
 
-                    // Funktionszahl prüfen
+                    // Prüfen, ob die Anzahl offener Funktionen gleich geblieben ist
                     if (count == open.Count)
                     {
-                        // Iterationen für Schätzung prüfen
-                        if (guessIteration == 1000)
+                        // Schätzung initialisieren
+                        if (open.Count > 0)
                         {
-                            // Simulation abbrechen
-                            throw new Exception("Could not solve algebraic loop!");
-                        }
+                            Function f = open[0];
 
-                        // Aktuellen Schätzfehler berechnen und prüfen
-                        if (guessIteration > 0)
-                        {
-                            // Aktuellen Schätzfehler berechnen
-                            double error = 0;
-
-                            foreach (Function f in open)
-                            {
-                                for (int i = 0; i < f.DimU; i++)
-                                {
-                                    if (GuessFlag[f][i])
-                                    {
-                                        error += Math.Abs(GuessValue[f][i] - U[f][i]);
-                                    }
-                                }
-                            }
-
-                            // Schleife abbrechen, wenn Schätzfehler klein genug
-                            if (error < 0.01)
-                            {
-                                // Alle offenen Funktionen als erledigt markieren
-                                open.Clear();
-                            }
-                        }
-
-                        // Schätzung initialisieren und aktualisieren
-                        foreach (Function f in open)
-                        {
+                            // Eingänge setzten
                             for (int i = 0; i < f.DimU; i++)
                             {
                                 if (!ReadyFlag[f][i])
                                 {
                                     ReadyFlag[f][i] = true;
-                                    GuessFlag[f][i] = true;
+                                    GuessMasterFlag[f][i] = true;
 
                                     // Schätzung initialisieren
                                     GuessValue[f][i] = 0;
 
                                     U[f][i] = GuessValue[f][i];
                                 }
-                                else if (GuessFlag[f][i])
-                                {
-                                    // Schätzung anpassen
-                                    GuessValue[f][i] = GuessValue[f][i] + (U[f][i] - GuessValue[f][i]) * 0.1;
+                            }
 
-                                    U[f][i] = GuessValue[f][i];
+                            // Ausgänge berechnen
+                            f.CalculateOutputs(t, X[f], U[f], Y[f]);
+
+                            // Ausgänge weiterleiten
+                            ForwardOutputs(f);
+
+                            // Funktion als erledigt markieren
+                            open.RemoveAt(0);
+
+                            // Funktion als unabhängig geschätzt markieren
+                            guessMaster.Add(f);
+                        }
+                        else
+                        {
+                            // Schleife beenden, wenn Schätzfehler klein genug
+                            if (ComputeError() < 0.01)
+                            {
+                                guessMaster.Clear();
+                            }
+                            // Simulation abbrechen, wenn maximale Anzahl Durchläufe erreicht ist
+                            else if (guessIteration == 100000)
+                            {
+                                throw new Exception("Could not solve algebraic loop!");
+                            }
+                            // Schätzung anpassen und nächste Iteration starten
+                            else
+                            {
+                                foreach (Function f in guessSlave)
+                                {
+                                    for (int i = 0; i < f.DimU; i++)
+                                    {
+                                        if (GuessSlaveFlag[f][i])
+                                        {
+                                            ReadyFlag[f][i] = false;
+                                        }
+                                    }
+                                    open.Add(f);
                                 }
+
+                                foreach (Function f in guessMaster)
+                                {
+                                    for (int i = 0; i < f.DimU; i++)
+                                    {
+                                        if (GuessMasterFlag[f][i])
+                                        {
+                                            GuessValue[f][i] = GuessValue[f][i] + (U[f][i] - GuessValue[f][i]) * 0.001;
+
+                                            U[f][i] = GuessValue[f][i];
+                                        }
+                                        else if (GuessSlaveFlag[f][i])
+                                        {
+                                            ReadyFlag[f][i] = false;
+                                        }
+                                    }
+                                    if (IsReady(f))
+                                    {
+                                        // Ausgänge berechnen
+                                        f.CalculateOutputs(t, X[f], U[f], Y[f]);
+
+                                        // Ausgänge weiterleiten
+                                        ForwardOutputs(f);
+                                    }
+                                    else
+                                    {
+                                        // Funktion als offen markieren
+                                        open.Add(f);
+                                    }
+                                }
+
+                                guessIteration++;
                             }
                         }
-
-                        guessIteration++;
                     }
                 }
 
                 // Ableitungen berechnen
-                foreach (Function f in composition.Functions)
+                foreach (Function f in Composition.Functions)
                 {
                     f.CalculateDerivatives(t, X[f], U[f], D[f]);
                 }
 
                 // Zustände integrieren
-                foreach (Function f in composition.Functions)
+                foreach (Function f in Composition.Functions)
                 {
                     for (int i = 0; i < f.DimX; i++)
                     {
@@ -184,30 +192,6 @@
                 // Zeit aktualisieren
                 t += step;
             }
-        }
-
-        private bool IsReady(Function f)
-        {
-            for (int i = 0; i < f.DimU; i++)
-            {
-                if (!ReadyFlag[f][i])
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private bool HasGuess(Function f)
-        {
-            for (int i = 0; i < f.DimU; i++)
-            {
-                if (!GuessFlag[f][i])
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

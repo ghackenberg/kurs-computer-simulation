@@ -16,6 +16,10 @@
 
         public override void CalculateOutputs(double t, double[] x, double[] u, double[] y)
         {
+            if (Data.Count > 0 && Data[Data.Count - 1].Item1 == t)
+            {
+                Data.RemoveAt(Data.Count - 1);
+            }
             Data.Add((t, u[0]));
         }
     }

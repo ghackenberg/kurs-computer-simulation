@@ -2,7 +2,12 @@
 {
     class EulerImplicitSolution : Solution
     {
-        public override void Solve(Composition composition, double step, double tmax)
+        public EulerImplicitSolution(Composition composition) : base(composition)
+        {
+
+        }
+
+        public override void Solve(double step, double tmax)
         {
 
         }
