@@ -16,7 +16,7 @@ Die Studierenden sollen in der Lage sein, die Algorithmen für die Berechnung (z
 
 Die Studierenden sollen in der Lage sein, eigene 2D- und 3D-Visualisierungen für Simulationsdaten zu entwickeln, welche über einfache Diagramme hinausgehen.
 
-## Kursinhalt
+## Kursinhalte
 
 Im Kurs betrachten wir sowohl statische als auch dynamische Modelle. Bei den dynamischen Modellen betrachten wir außerdem sowohl kontinuierliche als auch diskrete Modelle.
 
@@ -34,7 +34,7 @@ Für die Visualisierung nutzen wir `WPF` (inklusive `WPF Canvas` für Vektorgraf
 
 Für die Präsentationsfolien (bzw. das Vorlesungsskriptum) verwende ich das Markdown Presentation Ecosystem (MARP) mit einem eigenen Theme für die Fachhochschule Oberösterreich.
 
-Der Grundlegende Aufbau der MARP-Dateien für die Präsentationsfolien umfasst Kapitel-, Abschnitts- und Unterabschnittsüberschriften sowie Inhaltsfolien wie im folgenden Beispiel dargestellt.
+Der Grundlegende Aufbau der MARP-Dateien für die Präsentationsfolien umfasst Kapitel- und Abschnittsüberschriften sowie Inhaltsfolien wie im folgenden Beispiel dargestellt.
 
 ```md
 ---
@@ -58,13 +58,7 @@ Abschnittsübersicht
 
 ---
 
-### N.M.K: Unterabschnittsüberschrift
-
-Unterabschnittsübersicht
-
----
-
-#### Inhaltsfolienüberschrift
+### Inhaltsfolienüberschrift
 
 Inhaltsfolientext
 ...
