@@ -12,12 +12,11 @@ math: mathjax
 # Kapitel 3: Kontinuierliche Dynamische Modelle
 
 - 3.1: Grundlagen und Definitionen
-- 3.2: Analytische vs. Numerische Lösung
-- 3.3: Beispiel: Freier Fall / Vertikaler Wurf
-- 3.4: Numerische Integrationsverfahren
-- 3.5: Beispiel: Ungedämpftes Federpendel
-- 3.6: Differential-Algebraische Gleichungen
-- 3.7: Softwarearchitektur für Simulation
+- 3.2: Beispiel: Freier Fall / Vertikaler Wurf
+- 3.3: Numerische Integrationsverfahren
+- 3.4: Beispiel: Ungedämpftes Federpendel
+- 3.5: Differential-Algebraische Gleichungen
+- 3.6: Softwarearchitektur für Simulation
 
 ---
 
@@ -31,8 +30,6 @@ math: mathjax
 - Beschreiben Systeme, deren Zustände sich **kontinuierlich** über die Zeit ändern.
 - Die Zeit wird als kontinuierliche Variable `t` (aus den reellen Zahlen) betrachtet.
 - Die Zustandsänderungen werden durch **Differentialgleichungen** beschrieben.
-
-![height:200px](../../Grafiken/Modellarten%20-%20Kontinuierlich.svg)
 
 </div>
 <div>
@@ -52,23 +49,41 @@ $$ \frac{dx}{dt} = \dot{x}(t) = f(t, x(t), u(t)) $$
 
 ---
 
+<div class="columns">
+<div class="three">
+
 ### Zustandsraumdarstellung
 
 Eine übliche Methode zur Darstellung von dynamischen Systemen.
 
 **Zustandsgleichung:**
+
 $$ \dot{x}(t) = f(t, x(t), u(t)) $$
+
 Beschreibt die Dynamik des Systems.
 
 **Ausgangsgleichung:**
+
 $$ y(t) = g(t, x(t), u(t)) $$
+
 Beschreibt, wie die beobachtbaren Ausgänge `y(t)` aus den Zuständen `x(t)` und Eingängen `u(t)` berechnet werden.
 
-- `x`: Zustandsvektor
-- `u`: Eingangsvektor
-- `y`: Ausgangsvektor
+**Legende:**
+
+*`x`: Zustandsvektor,  `u`: Eingangsvektor, `y`: Ausgangsvektor*
+
+</div>
+<div>
+
+![](./Diagramme/Zustandsraum.svg)
+
+</div>
+</div>
 
 ---
+
+<div class="columns">
+<div class="three">
 
 ### Von höheren Ordnungen zur ersten Ordnung
 
@@ -84,6 +99,14 @@ $$ m \ddot{y}(t) + d \dot{y}(t) + k y(t) = F(t) $$
 2.  Leite die Zustandsvariablen nach der Zeit ab:
     -   $\dot{x}_1(t) = \dot{y}(t) = x_2(t)$
     -   $\dot{x}_2(t) = \ddot{y}(t) = \frac{1}{m}(F(t) - d x_2(t) - k x_1(t))$
+
+</div>
+<div>
+
+![width: 1000px](./Bewegungsgleichung.jpg)
+
+</div>
+</div>
 
 ---
 
@@ -107,9 +130,7 @@ Dies entspricht der Form $\dot{x} = Ax + Bu$.
 
 ---
 
-## 3.2: Analytische vs. Numerische Lösung
-
-**Wie löst man eine Differentialgleichung?**
+### Wie löst man eine Differentialgleichung?
 
 <div class="columns top">
 <div class="two">
@@ -137,7 +158,9 @@ Dies entspricht der Form $\dot{x} = Ax + Bu$.
 
 ---
 
-## 3.3: Beispiel: Freier Fall / Vertikaler Wurf
+![bg right:30%](./Wurfbeispiel.jpg)
+
+## 3.2: Beispiel: Freier Fall / Vertikaler Wurf
 
 Ein einfaches, aber fundamentales Beispiel für ein kontinuierliches dynamisches System.
 
@@ -157,12 +180,20 @@ Dies ist eine DGL 2. Ordnung.
 
 ### Vertikaler Wurf: Zustandsraummodell
 
+Zunächst überführen wir das DGL 2. Ordnung in System von DGLs. 1. Ordnung (das Zustandsraummodell):
+
+<div class="columns top">
+<div>
+
 **DGL 2. Ordnung:**
 $$ \ddot{y}(t) = -g $$
 
 **Zustandsvariablen:**
 - $x_1(t) = y(t)$ (Position/Höhe)
 - $x_2(t) = \dot{y}(t)$ (Geschwindigkeit)
+
+</div>
+<div>
 
 **System von DGLs 1. Ordnung:**
 - $\dot{x}_1(t) = \dot{y}(t) = x_2(t)$
@@ -172,27 +203,54 @@ $$ \ddot{y}(t) = -g $$
 $$ \dot{x} = \begin{pmatrix} \dot{x}_1 \\ \dot{x}_2 \end{pmatrix} = \begin{pmatrix} x_2 \\ -g \end{pmatrix} = f(x) $$
 Hier ist die Dynamik `f` unabhängig von `t` und es gibt keinen Eingang `u`.
 
+</div>
+</div>
+
 ---
 
 ### Vertikaler Wurf: Analytische Lösung
 
 Wir lösen die DGLs durch direkte Integration.
 
+<div class="columns top">
+<div>
+
 **Anfangsbedingungen:**
-- $y(0) = y_0$ (Anfangshöhe)
+
+Zunächst müssen wir den Anfangszustand festlegen:
+
+- $y(0) = y_0$<br/>(Anfangshöhe)
 - $\dot{y}(0) = v_0$ (Anfangsgeschwindigkeit)
 
-**1. Integration (Geschwindigkeit):**
+</div>
+<div>
+
+**1. Integration (*Geschwindigkeit*):**
+
+Dann können wir die Geschwindigkeit berechnen:
+
 $$ \dot{y}(t) = v(t) = \int -g \, dt = -g t + C_1 $$
 Mit $\dot{y}(0) = v_0$ folgt $C_1 = v_0$.
 $$ v(t) = v_0 - g t $$
 
-**2. Integration (Position):**
+</div>
+<div>
+
+**2. Integration (*Position*):**
+
+Schließlich ergibt sich daraus die Positionsgleichung:
+
 $$ y(t) = \int (v_0 - g t) \, dt = v_0 t - \frac{1}{2} g t^2 + C_2 $$
 Mit $y(0) = y_0$ folgt $C_2 = y_0$.
 $$ y(t) = y_0 + v_0 t - \frac{1}{2} g t^2 $$
 
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div class="three">
 
 ### Vertikaler Wurf: Analytische Lösung (Zusammenfassung)
 
@@ -206,15 +264,30 @@ $$ v(t) = v_0 - g t $$
 
 Diese Formeln beschreiben die exakte Trajektorie des Objekts für jeden beliebigen Zeitpunkt `t > 0`.
 
+</div>
+<div>
+
+![width:1000px](https://mathegym.de/images/v1/physik/gl_803_02.png)
+
+</div>
+<div>
+
+![width:1000px](https://mathegym.de/images/v1/physik/gl_803_01.png)
+
+</div>
+</div>
+
 ---
 
-## 3.4: Numerische Integrationsverfahren
+<div class="columns">
+<div class="three">
+
+## 3.3: Numerische Integrationsverfahren
 
 **Grundidee:**
-Approximiere den kontinuierlichen Verlauf von `x(t)` durch eine Folge von Werten $x_k$ an diskreten Zeitpunkten $t_k = t_0 + k \cdot h$.
+Approximiere den kontinuierlichen Verlauf von `x(t)` durch eine Folge von Werten $x_k \approx x(t_k)$ an diskreten Zeitpunkten $t_k = t_0 + k \cdot h$.
 
 - `h`: Schrittweite (step size)
-- $x_k \approx x(t_k)$
 
 **Basis:** Taylor-Reihenentwicklung
 $$ x(t+h) = x(t) + h \dot{x}(t) + \frac{h^2}{2!} \ddot{x}(t) + \dots $$
@@ -224,7 +297,18 @@ $$ x(t+h) \approx x(t) + h \dot{x}(t) $$
 Da wir wissen, dass $\dot{x}(t) = f(t, x(t))$, erhalten wir:
 $$ x(t+h) \approx x(t) + h f(t, x(t)) $$
 
+</div>
+<div>
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Sintay_SVG.svg/1024px-Sintay_SVG.svg.png)
+
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div>
 
 ### Die explizite Euler-Methode
 
@@ -236,7 +320,13 @@ $$ x_{k+1} = x_k + h \cdot f(t_k, x_k) $$
 - Um den neuen Zustand $x_{k+1}$ zu berechnen, wird die Ableitung (Steigung) am **aktuellen** Punkt $(t_k, x_k)$ verwendet.
 - Die Methode ist **explizit**, weil $x_{k+1}$ direkt aus bekannten Werten berechnet werden kann.
 
-![Explizite Euler-Methode](https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Forward_Euler_method.svg/400px-Forward_Euler_method.svg.png)
+</div>
+<div>
+
+![Explizite Euler-Methode](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Euler_two_steps.svg/1024px-Euler_two_steps.svg.png)
+
+</div>
+</div>
 
 ---
 
@@ -257,6 +347,9 @@ $$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k
 
 ---
 
+<div class="columns">
+<div class="three">
+
 ### Beispielrechnung: Expliziter Euler
 
 **Parameter:**
@@ -272,9 +365,23 @@ $$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k
 - $y_2 = y_1 + h \cdot v_1 = 100 + 0.1 \cdot (-0.981) = 99.9019\,m$
 - $v_2 = v_1 - h \cdot g = -0.981 - 0.1 \cdot 9.81 = -1.962\,m/s$
 
-... und so weiter.
+</div>
+<div>
+
+| $i$ | $a_i$ | $v_i$ | $y_i$ |
+|-|-|-|-|
+| 0 | -9.81 | 0 | 100 |
+| 1 | -9.81 | -0.981 | 100 |
+| 2 | -9.81 | -1.962 | 00.9019 |
+| ... | ... | ... | ... |
+
+</div>
+</div>
 
 ---
+
+<div class="columns">
+<div>
 
 ### Die implizite Euler-Methode
 
@@ -287,7 +394,13 @@ $$ x_{k+1} = x_k + h \cdot f(t_{k+1}, x_{k+1}) $$
 - Die Methode ist **implizit**, weil der gesuchte Wert $x_{k+1}$ auf beiden Seiten der Gleichung steht.
 - Es muss bei jedem Schritt eine (oft nichtlineare) Gleichung gelöst werden!
 
-![Implizite Euler-Methode](https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Backward_Euler_method.svg/400px-Backward_Euler_method.svg.png)
+</div>
+<div>
+
+![width:1000px](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUo-ACGCs0D-p9khUXLm9XbO0_wTf9DG-_Cw&s)
+
+</div>
+</div>
 
 ---
 
@@ -363,7 +476,10 @@ Beide Methoden haben einen lokalen Fehler der Ordnung $O(h^2)$ und einen globale
 
 ---
 
-## 3.5: Beispiel: Ungedämpftes Federpendel
+<div class="columns">
+<div class="two">
+
+## 3.4: Beispiel: Ungedämpftes Federpendel
 
 Ein klassisches Beispiel für ein oszillierendes System.
 
@@ -377,9 +493,22 @@ $$ F_{Feder} = -k y $$
 $$ F = m a \implies -k y(t) = m \ddot{y}(t) $$
 $$ \ddot{y}(t) = -\frac{k}{m} y(t) $$
 
+</div>
+<div>
+
+![](./Pendelbeispiel.jpg)
+
+</div>
+</div>
+
 ---
 
 ### Federpendel: Zustandsraummodell
+
+Wir überführen das Modell zunächst wieder in ein Zustandsraummodell:
+
+<div class="columns top">
+<div>
 
 **DGL 2. Ordnung:**
 $$ \ddot{y}(t) = -\frac{k}{m} y(t) $$
@@ -388,12 +517,18 @@ $$ \ddot{y}(t) = -\frac{k}{m} y(t) $$
 - $x_1(t) = y(t)$ (Position/Auslenkung)
 - $x_2(t) = \dot{y}(t)$ (Geschwindigkeit)
 
+</div>
+<div>
+
 **System von DGLs 1. Ordnung:**
 - $\dot{x}_1(t) = x_2(t)$
 - $\dot{x}_2(t) = -\frac{k}{m} x_1(t)$
 
 **Zustandsraumdarstellung:**
 $$ \dot{x} = \begin{pmatrix} \dot{x}_1 \\ \dot{x}_2 \end{pmatrix} = \begin{pmatrix} x_2 \\ -\frac{k}{m} x_1 \end{pmatrix} = f(x) $$
+
+</div>
+</div>
 
 ---
 
@@ -411,7 +546,8 @@ $$ y(t) = C_1 \cos(\omega t) + C_2 \sin(\omega t) $$
 
 **Spezifische analytische Lösung:**
 $$ y(t) = y_0 \cos(\omega t) + \frac{v_0}{\omega} \sin(\omega t) $$
-Diese Lösung beschreibt eine ewige, ungedämpfte Schwingung. Die Gesamtenergie des Systems bleibt erhalten.
+
+Diese Lösung beschreibt eine ewige, ungedämpfte Schwingung.
 
 ---
 
@@ -429,32 +565,27 @@ $$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k
 
 ---
 
+<div class="columns">
+<div>
+
 ### Problem des expliziten Eulers: Instabilität
 
-Was passiert mit der Energie des Systems bei der numerischen Simulation?
-Die Gesamtenergie ist $E = E_{kin} + E_{pot} = \frac{1}{2}mv^2 + \frac{1}{2}ky^2$.
+Was passiert mit der Energie des Systems bei der numerischen Simulation? Die Gesamtenergie ist:
+
+$E = E_{kin} + E_{pot} = \frac{1}{2}mv^2 + \frac{1}{2}ky^2$
 
 Bei der analytischen Lösung ist `E` konstant.
 Beim expliziten Euler-Verfahren **wächst** die numerische Energie $E_k = \frac{1}{2}mv_k^2 + \frac{1}{2}ky_k^2$ mit jedem Schritt!
 
-<div class="columns">
-<div class="two">
-
-**Analytische Lösung**
-![Analytische Lösung](https://i.imgur.com/sZ2Z3hC.png)
-Amplitude bleibt konstant.
-
-</div>
-<div class="two">
-
-**Expliziter Euler**
-![Expliziter Euler](https://i.imgur.com/b8yN3yG.png)
-Amplitude wächst -> instabil!
-
-</div>
-</div>
-
 Dieses Verhalten ist typisch für den expliziten Euler bei oszillierenden Systemen. Das Verfahren ist nur bedingt stabil. Eine kleinere Schrittweite `h` verlangsamt das Anwachsen, verhindert es aber nicht.
+
+</div>
+<div>
+
+![](./Pendelsimulation.png)
+
+</div>
+</div>
 
 ---
 
@@ -471,7 +602,7 @@ Dies ist ein lineares Gleichungssystem für die unbekannten Größen $y_{k+1}$ u
 
 ---
 
-## 3.6: Differential-Algebraische Gleichungen (DAE)
+## 3.5: Differential-Algebraische Gleichungen (DAE)
 
 Das Gleichungssystem aus dem impliziten Euler ist ein Beispiel für eine **algebraische Schleife**.
 
@@ -542,29 +673,23 @@ $$
 
 ---
 
+<div class="columns">
+<div>
+
 ### Stabilität des impliziten Eulers
 
 Führt man die Simulation mit dem impliziten Euler durch, beobachtet man ein anderes Verhalten.
 
-<div class="columns">
-<div class="two">
-
-**Expliziter Euler**
-![Expliziter Euler](https://i.imgur.com/b8yN3yG.png)
-Amplitude wächst (numerisch instabil).
-
-</div>
-<div class="two">
-
-**Impliziter Euler**
-![Impliziter Euler](https://i.imgur.com/JgQ2aJt.png)
-Amplitude schrumpft (numerische Dämpfung).
-
-</div>
-</div>
-
 - Der implizite Euler führt künstliche Dämpfung in das System ein; die Energie nimmt ab.
 - Das Verfahren ist **A-stabil**: Die Lösung geht für $h \to \infty$ gegen Null, sie explodiert niemals. Dies ist oft ein erwünschtes Verhalten, auch wenn es physikalisch nicht ganz korrekt ist.
+
+</div>
+<div>
+
+![](./Pendelsimulation.png)
+
+</div>
+</div>
 
 ---
 
@@ -584,7 +709,7 @@ Die Wahl der richtigen Schrittweite ist ein kritischer Kompromiss zwischen Genau
 
 ---
 
-## 3.7: Softwarearchitektur für Simulation
+## 3.6: Softwarearchitektur für Simulation
 
 Wie können wir komplexe dynamische Systeme am Computer modellieren und simulieren?
 Ein bewährter Ansatz ist die Modularisierung, inspiriert von **Simulink S-Functions**.
@@ -678,11 +803,11 @@ Der Solver (z.B. ein expliziter Euler) orchestriert die Simulation.
     - Rufe `mdlInitializeSizes` und `mdlInitializeConditions` für alle Blöcke auf.
     - Setze $t = t_0$ und $x = x_0$.
 2.  **Zeitschritt-Schleife (für k = 0, 1, 2, ...):**
-    a. **Outputs berechnen:** Rufe für alle Blöcke `mdlOutputs(t_k, x_k, u_k)` auf, um die Ausgänge $y_k$ zu erhalten.
-    b. **Verbindungen auflösen:** Die Ausgänge $y_k$ von Block A werden zu den Eingängen $u_k$ von Block B.
-    c. **Ableitungen berechnen:** Rufe für alle Blöcke `mdlDerivatives(t_k, x_k, u_k)` auf, um die Ableitungen $\dot{x}_k$ zu erhalten.
-    d. **Zustände integrieren:** Der Solver berechnet den neuen Zustand $x_{k+1}$ mit der gewählten Methode (z.B. $x_{k+1} = x_k + h \cdot \dot{x}_k$).
-    e. **Zeit fortschreiten:** $t_{k+1} = t_k + h$.
+    1. **Outputs berechnen:** Rufe für alle Blöcke `mdlOutputs(t_k, x_k, u_k)` auf, um die Ausgänge $y_k$ zu erhalten.
+    2. **Verbindungen auflösen:** Die Ausgänge $y_k$ von Block A werden zu den Eingängen $u_k$ von Block B.
+    3. **Ableitungen berechnen:** Rufe für alle Blöcke `mdlDerivatives(t_k, x_k, u_k)` auf, um die Ableitungen $\dot{x}_k$ zu erhalten.
+    4. **Zustände integrieren:** Der Solver berechnet den neuen Zustand $x_{k+1}$ mit der gewählten Methode (z.B. $x_{k+1} = x_k + h \cdot \dot{x}_k$).
+    5. **Zeit fortschreiten:** $t_{k+1} = t_k + h$.
 
 ---
 

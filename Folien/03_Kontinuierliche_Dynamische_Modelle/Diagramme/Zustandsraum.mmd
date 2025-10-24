@@ -1,0 +1,10 @@
+flowchart TB
+
+    U(("u(t)")) --> F["x'(t) = f(t, x(t), u(t))"] -->|Integrator| X(("x(t)")) --> G["y(t) = g(t, x(t), u(t))"] --> Y(("y(t)"))
+
+    U --> G
+
+    X --> F
+
+    style F fill:yellow,stroke:orange
+    style G fill:yellow,stroke:orange
