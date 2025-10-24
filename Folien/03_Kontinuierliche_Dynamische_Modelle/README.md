@@ -7,6 +7,8 @@ paginate: true
 math: mathjax
 ---
 
+![bg right](./Titelbild.jpg)
+
 # Kapitel 3: Kontinuierliche Dynamische Modelle
 
 - 3.1: Grundlagen und Definitionen
@@ -21,11 +23,19 @@ math: mathjax
 
 ## 3.1: Grundlagen und Definitionen
 
+<div class="columns top">
+<div>
+
 **Was sind kontinuierliche dynamische Modelle?**
 
 - Beschreiben Systeme, deren Zustände sich **kontinuierlich** über die Zeit ändern.
 - Die Zeit wird als kontinuierliche Variable `t` (aus den reellen Zahlen) betrachtet.
 - Die Zustandsänderungen werden durch **Differentialgleichungen** beschrieben.
+
+![height:200px](../../Grafiken/Modellarten%20-%20Kontinuierlich.svg)
+
+</div>
+<div>
 
 **Formale Darstellung:**
 
@@ -36,6 +46,9 @@ $$ \frac{dx}{dt} = \dot{x}(t) = f(t, x(t), u(t)) $$
 - `x(t)`: Vektor der Zustandsvariablen zum Zeitpunkt `t`
 - `u(t)`: Vektor der Eingangssignale zum Zeitpunkt `t`
 - `f`: Funktion, die die Änderungsrate des Zustands beschreibt
+
+</div>
+</div>
 
 ---
 
@@ -689,7 +702,7 @@ Durch die Kombination einfacher S-Funktionen können komplexe Systeme modelliert
     - Eingang: Positionen $y_1, y_2$.
     - Ausgang: $F_{koppel} = k_{12} (y_2 - y_1)$.
 
-Die Ausgänge werden über die Eingänge der jeweils anderen Blöcke verbunden. Der Solver löst das resultierende Gesamtsystem von DGLs.
+Die Ausgänge werden über die Eingänge der jeweils anderen Blöcke verbunden.
 
 ---
 

@@ -7,9 +7,9 @@ paginate: true
 math: mathjax
 ---
 
+![bg right](./Titelbild.jpg)
+
 # Kapitel 1: Systemsimulation und den Digitalen Zwilling
-
-
 
 - 1.1: Motivation: Warum simulieren wir?
 - 1.2: Arten von Modellen
@@ -644,7 +644,7 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 
 ---
 
-# Zusammenfassung Kapitel 2
+# Zusammenfassung Kapitel 1
 
 - **Modelle** sind vereinfachte Abbilder der Realität für einen bestimmten Zweck.
 - **Simulation** ist das Experimentieren mit diesen Modellen.

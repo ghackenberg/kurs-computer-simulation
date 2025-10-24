@@ -7,6 +7,8 @@ paginate: true
 math: mathjax
 ---
 
+![bg right](./Titelbild.jpg)
+
 # Kapitel 2: Statische Modelle am Beispiel des Fachwerks
 
 - 2.1: Einführung und historische Entwicklung
