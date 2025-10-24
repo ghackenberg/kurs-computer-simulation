@@ -9,23 +9,14 @@ math: mathjax
 
 # Kapitel 2: Statische Modelle am Beispiel des Fachwerks
 
----
-
-## 2.1: Übersicht
-
-- Historische Entwicklung und Motivation
-- Das ideale Fachwerk in 2D
-    - Mathematische Modellierung
-    - Numerische Lösung
-    - Visualisierung
-- Das elastische Fachwerk in 2D
-    - Mathematische Modellierung & Linearisierung
-- Erweiterung auf 3D
-- Grundlagen der 3D-Visualisierung mit OpenGL
+- 2.1: Einführung und historische Entwicklung
+- 2.2: Das ideale Fachwerk in 2D
+- 2.3: Das elastische Fachwerk in 2D 
+- 2.4: Erweiterung auf 3D
 
 ---
 
-## 2.2: Einführung und historische Entwicklung
+## 2.1: Einführung und historische Entwicklung
 
 ---
 
@@ -43,7 +34,7 @@ math: mathjax
 
 Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist, die an ihren Enden durch Knoten (Gelenke) miteinander verbunden sind.
 
-![Beispiel eines Fachwerks](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Beispiel.png)
+![width:700px](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Beispiel.png)
 
 ---
 
@@ -58,10 +49,10 @@ Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist
 
 ### Pioniere der Fachwerktheorie
 
-<div class="columns">
+<div class="columns top">
 <div class="one">
 
-**Squire Whipple (1847)**
+**Squire Whipple<br/>(1847)**
 - "A Work on Bridge Building"
 - Entwickelt als einer der ersten die korrekte mathematische Methode zur Berechnung der Kräfte in den Stäben eines Fachwerks (Ritter'sches Schnittverfahren, Knotenpunktverfahren).
 
@@ -75,7 +66,7 @@ Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist
 </div>
 <div class="one">
 
-**James Clerk Maxwell (1864)**
+**James Clerk Maxwell<br/>(1864)**
 - Führt das **Kräfteplanverfahren** ein und erkennt, dass die Stabkräfte als reziproke Figuren zum Lageplan des Fachwerks aufgefasst werden können.
 
 </div>
@@ -92,7 +83,7 @@ Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist
 
 ---
 
-## 2.3: Das ideale Fachwerk in 2D
+## 2.2: Das ideale Fachwerk in 2D
 
 ---
 
@@ -133,11 +124,6 @@ Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist
 <div class="columns">
 <div class="one">
 
-![Gleichungssystem](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Gleichungssystem.jpg)
-
-</div>
-<div class="one">
-
 Betrachten wir die Gleichgewichtsbedingung in x-Richtung am Knoten 2:
 
 $\sum F_{2,x} = 0$
@@ -147,6 +133,11 @@ Die Stabkräfte $S_1$, $S_2$ und $S_5$ haben eine Komponente in x-Richtung.
 $S_1 \cdot \cos(\alpha_1) + S_2 \cdot \cos(\alpha_2) + S_5 \cdot \cos(\alpha_5) = 0$
 
 Die Winkel $\alpha_i$ ergeben sich aus der Geometrie der Stäbe.
+
+</div>
+<div class="one">
+
+![Gleichungssystem](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Gleichungssystem.jpg)
 
 </div>
 </div>
@@ -187,7 +178,7 @@ $x = A^{-1} \cdot b$
 
 ### Algorithmen zur Lösung von LGS
 
-<div class="columns">
+<div class="columns top">
 <div class="one">
 
 **Direkte Löser**
@@ -227,8 +218,6 @@ var x = A.Solve(b);
 // x enthält jetzt die Stab- und Lagerkräfte
 ```
 
-![Lösung des Gleichungssystems](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Lösung.jpg)
-
 ---
 
 ### Programmtechnische Umsetzung: Datenstrukturen
@@ -258,15 +247,27 @@ public class Bar
 
 ---
 
+<div class="columns">
+<div>
+
 ### 2D-Visualisierung: Die Herausforderung
 
 - Das Fachwerk existiert in "Weltkoordinaten" (z.B. in Metern).
 - Der Computerbildschirm (z.B. ein `WPF Canvas`) verwendet "Bildschirmkoordinaten" (in Pixel).
 - Wir benötigen eine Transformation, um unsere Welt auf den Bildschirm abzubilden.
 
-![Koordinatensysteme](../../Quellen/WS24/StatischFachwerkIdeal2D/Visualisierung_Fachwerkskoordinaten.jpg)
+</div>
+<div>
+
+![](../../Quellen/WS24/StatischFachwerkIdeal2D/Visualisierung_Fachwerkskoordinaten.jpg)
+
+</div>
+</div>
 
 ---
+
+<div class="columns">
+<div>
 
 ### Transformation: Welt -> Bildschirm
 
@@ -276,7 +277,13 @@ Die Transformation besteht meist aus drei Schritten:
 2.  **Translation (Verschiebung)**: Der Ursprung des Fachwerks soll an eine bestimmte Stelle auf dem Canvas verschoben werden (z.B. in die Mitte).
 3.  **Invertierung der Y-Achse**: In der Mathematik zeigt die Y-Achse nach oben, bei den meisten 2D-Grafiksystemen nach unten.
 
+</div>
+<div>
+
 ![Bildkoordinaten](../../Quellen/WS24/StatischFachwerkIdeal2D/Visualisierung_Bildkoordinaten.jpg)
+
+</div>
+</div>
 
 ---
 
@@ -302,57 +309,35 @@ return new Point(screenX, screenY);
 
 ---
 
+<div class="columns">
+<div>
+
 ### Visualisierung der Kräfte: Pfeile
 
 - Die berechneten Stabkräfte (Zug/Druck) und externen Kräfte sollen als Pfeile dargestellt werden.
-- Ein Pfeil besteht aus einem **Pfeilkörper** (eine Linie) und einer **Pfeilspitze** (ein gefülltes Polygon).
-
-![Visualisierung](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Visualisierung.png)
-
----
-
-### Zeichnen der Pfeilspitze
-
+- Ein Pfeil besteht aus einem **Pfeilkörper** (eine Linie) und einer **Pfeilspitze**.
 - Die Pfeilspitze ist ein kleines Dreieck (oder ein anderes Polygon) am Ende des Pfeilkörpers.
 - Um sie zu zeichnen, benötigen wir die Koordinaten ihrer Eckpunkte.
 - Diese können wir aus dem Endpunkt der Linie und dem Richtungsvektor der Linie berechnen.
 
-![Pfeilspitze Geometrie](../../Quellen/WS24/IdealesFachwerk2D/Tafelbild_Visualisierung_Pfeilspitze_2D.jpg)
+</div>
+<div>
+
+![Visualisierung](../../Quellen/WS25/IdealesFachwerk2D/Tafelbild_Visualisierung_Pfeilspitze_2D.jpg)
+
+</div>
 
 ---
 
 ### Berechnung der Pfeilspitze
 
-```csharp
-// Gegeben: Startpunkt P1, Endpunkt P2
-// Länge und Winkel der Pfeilspitze
-double arrowLength = 10; // in Pixel
-double arrowAngle = Math.PI / 6; // 30 Grad
-
-// 1. Richtungsvektor der Linie
-Vector lineVec = P2 - P1;
-lineVec.Normalize();
-
-// 2. Vektoren für die Seiten der Pfeilspitze
-// Rotiere den Linienvektor um +arrowAngle und -arrowAngle
-Matrix rot1 = new Matrix();
-rot1.Rotate(arrowAngle * 180 / Math.PI);
-Vector arrowVec1 = Vector.Multiply(lineVec, rot1) * arrowLength;
-
-Matrix rot2 = new Matrix();
-rot2.Rotate(-arrowAngle * 180 / Math.PI);
-Vector arrowVec2 = Vector.Multiply(lineVec, rot2) * arrowLength;
-
-// 3. Eckpunkte der Pfeilspitze
-Point pA = P2 - arrowVec1;
-Point pB = P2 - arrowVec2;
-
-// Zeichne das Polygon mit den Punkten (P2, pA, pB)
+```cshrap
+TODO
 ```
 
 ---
 
-## 2.4: Das elastische Fachwerk in 2D
+## 2.3: Das elastische Fachwerk in 2D
 
 ---
 
@@ -393,7 +378,7 @@ $S = \frac{E \cdot A}{L_0} \cdot \Delta L$
 - $\Delta L \approx (\vec{u}_j - \vec{u}_i) \cdot \vec{e}$
 - $\vec{e}$ ist der Einheitsvektor in Richtung des Stabes.
 
-![Stablängenänderung](../../Quellen/WS24/StatischFachwerkElastisch2D/Stablängenänderung.jpg)
+![width:700px](../../Quellen/WS24/StatischFachwerkElastisch2D/Stablängenänderung.jpg)
 
 ---
 
@@ -406,14 +391,24 @@ $S = \frac{E \cdot A}{L_0} \cdot \Delta L$
 
 ---
 
+<div class="columns">
+<div>
+
 ### Stab-Steifigkeitsbeziehung
 
-- Kombiniert man Hooke'sches Gesetz und die Längenänderungs-Beziehung, erhält man eine Beziehung zwischen den Kräften, die auf die Knoten eines Stabes wirken, und den Verschiebungen dieser Knoten.
-- Dies lässt sich als **Stab-Steifigkeitsmatrix** $k_{stab}$ formulieren.
+Kombiniert man Hooke'sches Gesetz und die Längenänderungs-Beziehung, erhält man eine Beziehung zwischen den Kräften, die auf die Knoten eines Stabes wirken, und den Verschiebungen dieser Knoten.
+
+Dies lässt sich als **Stab-Steifigkeitsmatrix** $k_{stab}$ formulieren:
 
 $\begin{pmatrix} F_{ix} \\ F_{iy} \\ F_{jx} \\ F_{jy} \end{pmatrix} = k_{stab} \cdot \begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix}$
 
+</div>
+<div>
+
 ![Stabgleichungssystem](../../Quellen/WS24/StatischFachwerkElastisch2D/Stabgleichungssystem.jpg)
+
+</div>
+</div>
 
 ---
 
@@ -437,6 +432,9 @@ $K \cdot u = f$
 
 ---
 
+<div class="columns">
+<div>
+
 ### Einbau der Randbedingungen
 
 - Das bisherige System $K \cdot u = f$ ist singulär (nicht lösbar), da das Fachwerk noch "frei im Raum schwebt".
@@ -445,7 +443,13 @@ $K \cdot u = f$
 - z.B. $u_{1x} = 0$, $u_{1y} = 0$.
 - Dies führt zur Modifikation des Gleichungssystems (z.B. durch Streichen von Zeilen/Spalten oder Setzen von großen Diagonalelementen).
 
+</div>
+<div>
+
 ![Gleichungssystem mit Randbedingungen](../../Quellen/WS24/StatischFachwerkElastisch2D/Allgemeines%20Gleichungssystem%20mit%20Randbedingungen.jpg)
+
+</div>
+</div>
 
 ---
 
@@ -460,16 +464,15 @@ Das elastische Modell liefert uns also sowohl die **Verformungen** als auch die 
 
 ---
 
-## 2.5: Erweiterung auf 3D
+## 2.4: Erweiterung auf 3D
 
 ---
 
 ### Vom 2D- zum 3D-Fachwerk
 
-- Die grundlegenden physikalischen Prinzipien (Kräftegleichgewicht, Hooke'sches Gesetz) bleiben exakt gleich.
-- Die Mathematik wird lediglich um eine Dimension erweitert.
+Die grundlegenden physikalischen Prinzipien (Kräftegleichgewicht, Hooke'sches Gesetz) bleiben exakt gleich. Die Mathematik wird lediglich um eine Dimension erweitert:
 
-<div class="columns">
+<div class="columns top">
 <div class="one">
 
 **2D**
@@ -490,13 +493,27 @@ Das elastische Modell liefert uns also sowohl die **Verformungen** als auch die 
 
 ---
 
+<div class="columns">
+<div>
+
 ### Ideales Fachwerk in 3D
 
 - **Knotenpunktverfahren**: An jedem Knoten werden nun **drei** Gleichgewichtsgleichungen aufgestellt.
 - Für ein Fachwerk mit $k$ Knoten, $s$ Stäben und $l$ Lagerreaktionen muss gelten: $3k = s + l$ (statische Bestimmtheit).
 - Das LGS $A \cdot x = b$ wird entsprechend größer, das Prinzip ist aber identisch. Die Koeffizienten in $A$ sind nun die Richtungskosinusse der Stäbe im 3D-Raum.
 
+</div>
+<div>
+
+![](../../Quellen/WS25/IdealesFachwerk3D/Screenshot.png)
+
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div>
 
 ### Elastisches Fachwerk in 3D
 
@@ -505,7 +522,18 @@ Das elastische Modell liefert uns also sowohl die **Verformungen** als auch die 
 - **Globale Steifigkeitsmatrix $K$**: Wird analog zum 2D-Fall assembliert, wird aber deutlich größer. Für ein Fachwerk mit $k$ Knoten ist $K$ eine $3k \times 3k$ Matrix.
 - Die Lösung $K \cdot u = f$ folgt dem gleichen Schema.
 
+</div>
+<div>
+
+![](../../Quellen/WS25/ElastischesFachwerk3D/Screenshot.png)
+
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div>
 
 ### Die größte Herausforderung: Visualisierung
 
@@ -513,11 +541,13 @@ Das elastische Modell liefert uns also sowohl die **Verformungen** als auch die 
 - Wir müssen eine 3D-Szene auf einen 2D-Bildschirm projizieren.
 - Dies ist die Aufgabe der **3D-Grafikpipeline**, die typischerweise mit APIs wie **OpenGL** oder **DirectX** gesteuert wird.
 
-![3D Fachwerk](../../Quellen/WS25/ElastischesFachwerk3D/Screenshot.png)
+</div>
+<div>
 
----
+TODO
 
-## 2.6: Grundlagen der 3D-Visualisierung mit OpenGL
+</div>
+</div>
 
 ---
 
@@ -799,7 +829,7 @@ gl.End();
 
 ---
 
-## 2.7: Zusammenfassung
+# Zusammenfassung Kapitel 1
 
 - **Statische Modelle** beschreiben Systeme im Gleichgewicht und sind die Grundlage der Strukturanalyse.
 - Das **ideale Fachwerk** ist ein einfaches Modell zur Berechnung von Stabkräften mittels linearer Gleichungssysteme.

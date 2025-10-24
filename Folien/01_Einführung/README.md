@@ -7,25 +7,20 @@ paginate: true
 math: mathjax
 ---
 
-# Kapitel 1: Einführung in die Systemsimulation und den Digitalen Zwilling
+# Kapitel 1: Systemsimulation und den Digitalen Zwilling
 
-Eine Reise von der Abstraktion der Realität bis zum virtuellen Abbild.
 
----
 
-## 1.1: Übersicht
-
-- Was ist ein Modell? Was ist eine Simulation?
-- Praktische Fragestellungen und Nutzen
-- Arten von Modellen
-- Analytische vs. Numerische Lösungsansätze
-- Die Notwendigkeit der Visualisierung
-- Der Digitale Zwilling
-- Zusammenhang von Simulation und Digitalem Zwilling
+- 1.1: Motivation: Warum simulieren wir?
+- 1.2: Arten von Modellen
+- 1.3: Lösungsmethoden
+- 1.4: Visualisierung von Simulationsdaten
+- 1.5: Der Digitale Zwilling
+- 1.6: Simulation & Digitaler Zwilling
 
 ---
 
-## 1.2: Motivation: Warum simulieren wir?
+## 1.1: Motivation: Warum simulieren wir?
 
 ---
 
@@ -138,7 +133,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 
 ---
 
-## 1.3: Arten von Modellen
+## 1.2: Arten von Modellen
 
 ---
 
@@ -199,8 +194,6 @@ Diese Unterscheidung ist vor allem bei **dynamischen Modellen** relevant.
 - Mathematisch: Differentialgleichungen (DGLs).
 - **Beispiel**: Füllstand eines Wassertanks, Schwingung eines Federpendels.
 
-![Kontinuierliche Modelle](../../Grafiken/Modellarten%20-%20Kontinuierlich.svg)
-
 </div>
 <div class="one">
 
@@ -209,6 +202,25 @@ Diese Unterscheidung ist vor allem bei **dynamischen Modellen** relevant.
 - Die Zustandsgrößen nehmen oft Werte aus einem diskreten Bereich an.
 - Mathematisch: Differenzengleichungen, Ereignislisten.
 - **Beispiel**: Warteschlange an einer Kasse, Produktionsablauf.
+
+</div>
+</div>
+
+---
+
+### Kontinuierliche vs. Diskrete Modelle
+
+<div class="columns top">
+<div class="one">
+
+**Kontinuierliche Modelle**
+
+![Kontinuierliche Modelle](../../Grafiken/Modellarten%20-%20Kontinuierlich.svg)
+
+</div>
+<div class="one">
+
+**Diskrete Modelle**
 
 ![Diskrete Modelle](../../Grafiken/Modellarten%20-%20Diskret.svg)
 
@@ -229,8 +241,6 @@ Diskrete Modelle können weiter unterteilt werden:
 - Typisch für digitale Regelungen oder wenn ein kontinuierliches System abgetastet wird.
 - **Beispiel**: Abtastung eines analogen Signals mit einem A/D-Wandler.
 
-![Zeitdiskrete Modelle](../../Grafiken/Modellarten%20-%20Diskret%20-%20Konstant%20-%20Delta.svg)
-
 </div>
 <div class="one">
 
@@ -238,6 +248,25 @@ Diskrete Modelle können weiter unterteilt werden:
 - Zustandsänderungen werden durch das Eintreten von **Ereignissen** (Events) ausgelöst.
 - Die Zeit schreitet von einem Ereignis zum nächsten.
 - **Beispiel**: Ankunft eines Kunden in einer Warteschlange, Fertigstellung eines Teils auf einer Maschine.
+
+</div>
+</div>
+
+---
+
+### Zeitdiskrete vs. Ereignisdiskrete Modelle
+
+<div class="columns">
+<div class="one">
+
+**Zeitdiskret (konstanter Zeitschritt)**
+
+![Zeitdiskrete Modelle](../../Grafiken/Modellarten%20-%20Diskret%20-%20Konstant%20-%20Delta.svg)
+
+</div>
+<div class="one">
+
+**Ereignisdiskret**
 
 ![Ereignisdiskrete Modelle](../../Grafiken/Modellarten%20-%20Diskret%20-%20Ereignis.svg)
 
@@ -270,7 +299,7 @@ Diskrete Modelle können weiter unterteilt werden:
 
 ---
 
-## 1.4: Lösungsmethoden
+## 1.3: Lösungsmethoden
 
 ---
 
@@ -341,7 +370,7 @@ Fast alle praxisrelevanten Simulationen basieren auf numerischen Methoden.
 
 ---
 
-## 1.5: Visualisierung von Simulationsdaten
+## 1.4: Visualisierung von Simulationsdaten
 
 ---
 
@@ -488,7 +517,7 @@ Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, d
 
 ---
 
-## 1.6: Der Digitale Zwilling
+## 1.5: Der Digitale Zwilling
 
 ---
 
@@ -521,8 +550,7 @@ Es besteht aus drei Kernkomponenten:
 </div>
 <div class="one">
 
-![Grieves' Digital Twin Concept](https://www.researchgate.net/profile/Jan-Frederik-Uhlenkamp/publication/335142522/figure/fig1/AS:814181079068673@1571127304347/Digital-Twin-Framework-based-on-Grieves-5_W640.jpg)
-*Quelle: Michael Grieves*
+![Grieves' Digital Twin Concept](./Diagramme/Digitaler_Zwilling.svg)
 
 </div>
 </div>
@@ -543,7 +571,7 @@ Ein Digitaler Zwilling "lebt" und entwickelt sich mit seinem physischen Gegenst�
 
 ---
 
-## 1.7: Simulation & Digitaler Zwilling
+## 1.6: Simulation & Digitaler Zwilling
 
 ---
 
@@ -616,7 +644,7 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 
 ---
 
-## 1.8: Zusammenfassung
+# Zusammenfassung Kapitel 2
 
 - **Modelle** sind vereinfachte Abbilder der Realität für einen bestimmten Zweck.
 - **Simulation** ist das Experimentieren mit diesen Modellen.
@@ -628,7 +656,7 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 
 ---
 
-### Ausblick
+## Ausblick
 
 In den nächsten Kapiteln werden wir uns die verschiedenen Modellarten im Detail ansehen und lernen, wie man sie praktisch umsetzt.
 
