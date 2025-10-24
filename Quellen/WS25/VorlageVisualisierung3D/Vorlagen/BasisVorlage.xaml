@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:VorlageVisualisierung3D.Vorlagen"
              xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" BorderBrush="LightGray" BorderThickness="1">
     <Grid>
         <sharpGL:OpenGLControl OpenGLInitialized="OpenGLControl_OpenGLInitialized" OpenGLDraw="OpenGLControl_OpenGLDraw"/>
         <Label x:Name="Label"/>

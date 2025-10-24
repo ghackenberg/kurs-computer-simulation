@@ -1,19 +1,23 @@
 classDiagram
 
+    direction LR
+
     class Truss {
-        +AddNode(name: string, x: double, y: double, fixX = false, fixY = false, forceX = 0.0, forceY = 0.0) Node
-        +AddRod(nodeA: Node, nodeB: Node) Rod
+        +AddNode(...) Node
+        +AddRod(...) Rod
         +Solve() void
     }
+
     class Node {
         +Name: string
-        +X: double
-        +Y: double
+        +PositionX: double
+        +PositionY: double
         +FixX: boolean
         +FixY: boolean
         +ForceX: double
         +ForceY: double
     }
+    
     class Rod {
         +Force: double
     }

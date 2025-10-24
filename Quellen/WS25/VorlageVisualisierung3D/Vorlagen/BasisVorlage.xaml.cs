@@ -87,6 +87,13 @@ namespace VorlageVisualisierung3D.Vorlagen
             gl.ShadeModel(OpenGL.GL_SMOOTH);
         }
 
+        protected void Vertex(OpenGL gl, float x, float y, float z, float red, float green, float blue)
+        {
+            Color(gl, red, green, blue);
+
+            gl.Vertex(x, y, z);
+        }
+
         protected void Color(OpenGL gl, float red, float green, float blue)
         {
             float[] color = { red, green, blue, 1 };

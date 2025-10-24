@@ -7,23 +7,21 @@ classDiagram
         +AddRod(...) Rod
         +Solve() void
     }
-    
+
     class Node {
         +Name: string
-        +InitialX: double
-        +InitialY: double
+        +PositionX: double
+        +PositionY: double
+        +PositionZ: double
         +FixX: boolean
         +FixY: boolean
+        +FixZ: boolean
         +ForceX: double
         +ForceY: double
-        +DisplacementX: double
-        +DisplacementY: double
+        +ForceZ: double
     }
-
+    
     class Rod {
-        +Elasticity: double
-        +Area: double
-        +Length: double
         +Force: double
     }
 

@@ -1,0 +1,19 @@
+flowchart LR
+
+    Start(("Start"))
+
+    subgraph Initialisierung
+        Init["1\. Zeit initialisieren<br/>2\. Zustand initialisieren<br/>3\. Ereignisse initialisieren"]
+    end
+
+    subgraph Ereignisverarbeitung
+        Loop["1\. Ereignis auswählen<br/>2. Zeit aktualisieren<br/>3. Zustand aktualisieren<br/>4. Ereignisse aktualisieren"]
+        Check(["Weitere Ereignisse?"])
+    end
+
+    Stop(("Stopp"))
+
+    Start --> Init --> Loop --> Check
+
+    Check -- Nein --> Stop
+    Check -- Ja --> Loop
