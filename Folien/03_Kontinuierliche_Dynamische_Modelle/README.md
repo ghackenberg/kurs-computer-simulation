@@ -158,7 +158,7 @@ Dies entspricht der Form $\dot{x} = Ax + Bu$.
 
 ---
 
-![bg right:30%](./Wurfbeispiel.jpg)
+![bg right:40%](./Wurfbeispiel.jpg)
 
 ## 3.2: Beispiel: Freier Fall / Vertikaler Wurf
 
@@ -729,6 +729,205 @@ Ein Block, der ein kontinuierliches dynamisches System beschreibt, benötigt typ
 - `mdlInitializeConditions(initial_states)`: Setzt die Anfangswerte $x_0$ für die Zustände.
 - `mdlDerivatives(t, states, inputs)`: Berechnet die Ableitungen der Zustände: $\dot{x} = f(t, x, u)$. **Dies ist das Herzstück des Modells.**
 - `mdlOutputs(t, states, inputs)`: Berechnet die Ausgänge des Blocks: $y = g(t, x, u)$.
+
+---
+
+### Beispiel: S-Funktion für eine Konstante
+
+Ein Block, der einen konstanten Wert ausgibt.
+
+<div class="columns top">
+<div class="two">
+
+- **Eigenschaften:**
+  - Keine Zustände (`NumContinuousStates = 0`)
+  - Keine Eingänge (`NumInputs = 0`)
+  - Ein Ausgang (`NumOutputs = 1`)
+  - Ein Parameter (`Value`)
+
+- **Verhalten:**
+  - Der Ausgang `y` ist immer gleich dem Parameter `Value`.
+
+</div>
+<div class="two">
+
+```csharp
+class ConstantBlock {
+    // Parameter
+    double Value = 1.0;
+
+    void mdlInitializeSizes() {
+        NumContinuousStates = 0;
+        NumInputs = 0;
+        NumOutputs = 1;
+    }
+
+    void mdlInitializeConditions(double[] x0) {
+        // Nichts zu tun
+    }
+
+    void mdlDerivatives(double t, 
+                        double[] x, double[] u,
+                        double[] dx) {
+        // Nichts zu tun
+    }
+
+    void mdlOutputs(double t, 
+                    double[] x, double[] u,
+                    double[] y_out) {
+        y_out[0] = this.Value;
+    }
+}
+```
+
+</div>
+</div>
+
+---
+
+### Beispiel: S-Funktion für einen Gain (Verstärkung)
+
+<div class="columns top">
+<div class="two">
+
+Ein Block, der seinen Eingang mit einem konstanten Faktor multipliziert.
+
+- **Eigenschaften:**
+  - Keine Zustände (`NumContinuousStates = 0`)
+  - Ein Eingang (`NumInputs = 1`)
+  - Ein Ausgang (`NumOutputs = 1`)
+  - Ein Parameter (`Gain`)
+  - Direkte Durchleitung (direct feedthrough)
+
+- **Verhalten:**
+  - `y = Gain * u`
+
+</div>
+<div class="two">
+
+```csharp
+class GainBlock {
+    // Parameter
+    double Gain = 2.0;
+
+    void mdlInitializeSizes() {
+        NumContinuousStates = 0;
+        NumInputs = 1;
+        NumOutputs = 1;
+    }
+
+    void mdlOutputs(double t, 
+                    double[] x, double[] u,
+                    double[] y_out) {
+        y_out[0] = this.Gain * u[0];
+    }
+}
+```
+
+</div>
+</div>
+
+---
+
+### Beispiel: S-Funktion für eine Summe
+
+<div class="columns top">
+<div class="two">
+
+Ein Block, der seine Eingänge addiert oder subtrahiert.
+
+- **Eigenschaften:**
+  - Keine Zustände (`NumContinuousStates = 0`)
+  - Mehrere Eingänge (z.B. `NumInputs = 2`)
+  - Ein Ausgang (`NumOutputs = 1`)
+  - Parameter für die Operationen (z.B. `[+, -]`)
+  - Direkte Durchleitung (direct feedthrough)
+
+- **Verhalten:**
+  - `y = u[0] - u[1]`
+
+</div>
+<div class="two">
+
+```csharp
+class SumBlock {
+    // Parameter: z.B. "+-"
+    string Signs = "++";
+
+    void mdlInitializeSizes() {
+        NumContinuousStates = 0;
+        NumInputs = 2; // oder mehr
+        NumOutputs = 1;
+    }
+
+    void mdlOutputs(double t, 
+                    double[] x, double[] u,
+                    double[] y_out) {
+        double sum = 0.0;
+        // Annahme: Signs.Length == NumInputs
+        for (int i = 0; i < NumInputs; i++) {
+            if (Signs[i] == '+')
+                sum += u[i];
+            else
+                sum -= u[i];
+        }
+        y_out[0] = sum;
+    }
+}
+```
+
+</div>
+</div>
+
+---
+
+### Beispiel: S-Funktion für einen Integrator
+
+<div class="columns top">
+<div class="two">
+
+Der wichtigste Block für dynamische Systeme. Er integriert das Eingangssignal.
+
+- **Eigenschaften:**
+  - Ein Zustand (`NumContinuousStates = 1`)
+  - Ein Eingang (`NumInputs = 1`)
+  - Ein Ausgang (`NumOutputs = 1`)
+
+- **Verhalten:**
+  - Die Ableitung des Zustands ist der Eingang: $\dot{x} = u$
+  - Der Ausgang ist der Zustand: $y = x$
+
+</div>
+<div class="two">
+
+```csharp
+class IntegratorBlock {
+    void mdlInitializeSizes() {
+        NumContinuousStates = 1;
+        NumInputs = 1;
+        NumOutputs = 1;
+    }
+    void mdlInitializeConditions(double[] x0) {
+        // Setze Anfangswert
+        x0[0] = 0.0; 
+    }
+    void mdlDerivatives(double t, 
+                        double[] x, double[] u,
+                        double[] dx) {
+        // dx/dt = u
+        dx[0] = u[0];
+    }
+    void mdlOutputs(double t, 
+                    double[] x, double[] u,
+                    double[] y_out) {
+        // y = x
+        y_out[0] = x[0];
+    }
+}
+```
+
+</div>
+</div>
 
 ---
 
