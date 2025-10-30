@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Kapitel 3: Kontinuierliche Dynamische Modelle'
+header: 'Kapitel 4: Kontinuierliche Dynamische Modelle'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -9,18 +9,18 @@ math: mathjax
 
 ![bg right](./Titelbild.jpg)
 
-# Kapitel 3: Kontinuierliche Dynamische Modelle
+# Kapitel 4: Kontinuierliche Dynamische Modelle
 
-- 3.1: Grundlagen und Definitionen
-- 3.2: Beispiel: Freier Fall / Vertikaler Wurf
-- 3.3: Numerische Integrationsverfahren
-- 3.4: Beispiel: Ungedämpftes Federpendel
-- 3.5: Differential-Algebraische Gleichungen
-- 3.6: Softwarearchitektur für Simulation
+- 4.1: Grundlagen und Definitionen
+- 4.2: Beispiel: Freier Fall / Vertikaler Wurf
+- 4.3: Numerische Integrationsverfahren
+- 4.4: Beispiel: Ungedämpftes Federpendel
+- 4.5: Differential-Algebraische Gleichungen
+- 4.6: Softwarearchitektur für Simulation
 
 ---
 
-## 3.1: Grundlagen und Definitionen
+## 4.1: Grundlagen und Definitionen
 
 <div class="columns top">
 <div>
@@ -160,7 +160,7 @@ Dies entspricht der Form $\dot{x} = Ax + Bu$.
 
 ![bg right:40%](./Wurfbeispiel.jpg)
 
-## 3.2: Beispiel: Freier Fall / Vertikaler Wurf
+## 4.2: Beispiel: Freier Fall / Vertikaler Wurf
 
 Ein einfaches, aber fundamentales Beispiel für ein kontinuierliches dynamisches System.
 
@@ -277,7 +277,7 @@ Diese Formeln beschreiben die exakte Trajektorie des Objekts für jeden beliebig
 <div class="columns">
 <div class="three">
 
-## 3.3: Numerische Integrationsverfahren
+## 4.3: Numerische Integrationsverfahren
 
 **Grundidee:** Approximiere den kontinuierlichen Verlauf von `x(t)` durch eine Folge von Werten $x_k \approx x(t_k)$ an diskreten Zeitpunkten $t_k = t_0 + k \cdot h$.
 
@@ -473,7 +473,7 @@ Beide Methoden haben einen lokalen Fehler der Ordnung $O(h^2)$ und einen globale
 <div class="columns">
 <div class="two">
 
-## 3.4: Beispiel: Ungedämpftes Federpendel
+## 4.4: Beispiel: Ungedämpftes Federpendel
 
 Ein klassisches Beispiel für ein oszillierendes System.
 
@@ -596,7 +596,7 @@ Dies ist ein lineares Gleichungssystem für die unbekannten Größen $y_{k+1}$ u
 
 ---
 
-## 3.5: Differential-Algebraische Gleichungen (DAE)
+## 4.5: Differential-Algebraische Gleichungen (DAE)
 
 Das Gleichungssystem aus dem impliziten Euler ist ein Beispiel für eine **algebraische Schleife**.
 
@@ -703,7 +703,7 @@ Die Wahl der richtigen Schrittweite ist ein kritischer Kompromiss zwischen Genau
 
 ---
 
-## 3.6: Softwarearchitektur für Simulation
+## 4.6: Softwarearchitektur für Simulation
 
 Wie können wir komplexe dynamische Systeme am Computer modellieren und simulieren?
 Ein bewährter Ansatz ist die Modularisierung, inspiriert von **Simulink S-Functions**.
@@ -1059,7 +1059,7 @@ Die S-Funktions-Architektur muss dem Solver mitteilen, ob eine solche direkte Ab
 
 ---
 
-# Zusammenfassung Kapitel 3
+# Zusammenfassung Kapitel 4
 
 - **Kontinuierliche dynamische Modelle** beschreiben Systeme mit kontinuierlicher Zeitentwicklung mittels **Differentialgleichungen**.
 - Die **Zustandsraumdarstellung** ($\dot{x}=f(x,u), y=g(x,u)$) ist eine Standardform.

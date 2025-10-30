@@ -52,7 +52,11 @@ math: mathjax
 
 # Kapitel N: Kapitelüberschrift
 
-Platzhalter für Kapitelübersicht
+Dieses Kapitel umfasst die folgenden Abschnitte:
+
+- N.1: Abschnittsüberschrift 1
+- N.2: Abschnittsüberschrift 2
+- ...
 
 ---
 
@@ -62,7 +66,11 @@ Platzhalter für Kapitelübersicht
 
 ## N.M: Abschnittsüberschrift
 
-Platzhalter für Abschnittsübersicht
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Inhalt 1
+- Inhalt 2
+- ...
 
 ---
 
