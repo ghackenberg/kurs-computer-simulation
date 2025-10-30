@@ -11,13 +11,20 @@ math: mathjax
 
 # Kapitel 2: Statische Modelle am Beispiel des Fachwerks
 
+Dieses Kapitel umfasst die folgenden Abschnitte:
+
 - 2.1: Einführung und historische Entwicklung
 - 2.2: Das ideale Fachwerk in 2D
 - 2.3: Das elastische Fachwerk in 2D 
+- TODO
 
 ---
 
 ## 2.1: Einführung und historische Entwicklung
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- TODO
 
 ---
 
@@ -84,7 +91,11 @@ Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist
 
 ---
 
-## 2.2: Das ideale Fachwerk in 2D
+## 2.3: Mathematisches Modell eines idealen Fachwerks
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- TODO
 
 ---
 
@@ -177,6 +188,14 @@ $x = A^{-1} \cdot b$
 
 ---
 
+## 2.2 Algorithmen zur Lösung von LGS
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- TODO
+
+---
+
 ### Algorithmen zur Lösung von LGS
 
 <div class="columns top">
@@ -194,6 +213,142 @@ $x = A^{-1} \cdot b$
 - Starten mit einer Schätzung und verbessern die Lösung schrittweise.
 - Oft effizienter für sehr große, dünn besetzte Systeme.
 - Beispiele: Jacobi-Verfahren, Gauß-Seidel-Verfahren.
+
+</div>
+</div>
+
+---
+
+TODO Folien zu Gauß-Elimination
+
+---
+
+TODO Folien zu LU-Zerlegung
+
+---
+
+TODO Folien zum iterativen Löser
+
+---
+
+## 2.4: Programmtechnische Umsetzung von Fachwerken
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- TODO
+
+---
+
+<div class="columns">
+<div>
+
+
+### Programmtechnische Umsetzung: Datenstrukturen
+
+Wie repräsentieren wir ein Fachwerk im Code?
+
+TODO Kurze Erklärung des UML-Diagramms in der rechten Spalte
+
+</div>
+<div>
+
+![](../../Quellen/WS24/StatischFachwerkIdeal2D/Model.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO
+
+</div>
+<div>
+
+```csharp
+public class Node
+{
+    public string Name { get; set; }
+    
+    // Position des Knotens
+    public double PositionX { get; set; }
+    public double PositionY { get; set; }
+
+    // Lagerung des Knoten
+    public double FixX { get; set; }
+    public double FixY { get; set; }
+
+     // Last- oder Lagerkraft
+    public double ForceX { get; set; }
+    public double ForceY { get; set; }
+}
+```
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO
+
+</div>
+<div>
+
+```csharp
+public class Rod
+{
+    public Node NodeA { get; set; }
+    public Node NodeB { get; set; }
+    
+    // Berechnetes Ergebnis
+    public double Force { get; set; }
+}
+```
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+</div>
+<div>
+
+```csharp
+public class Truss
+{
+    public List<Node> Nodes = new List<Node>();
+    public List<Rod> Rods = new List<Node>();
+
+    public Node AddNode(
+            double positionX, double positionY,
+            bool fixX, bool fixY,
+            double forceX, double forceY)
+    {
+        Nodes.Add(new Node(
+            positionX, positionY,
+            fixX, fixY,
+            forceX, forceY))
+    }
+
+    public Rod AddRod(Node a, Node b)
+    {
+        Rods.Add(new Rod(a, b));
+    }
+
+    public void Solve()
+    {
+        ...
+    }
+}
+```
 
 </div>
 </div>
@@ -221,30 +376,11 @@ var x = A.Solve(b);
 
 ---
 
-### Programmtechnische Umsetzung: Datenstrukturen
+## 2.5: Erstellung von 2D-Visualisierungen mit WPF Canvas
 
-Wie repräsentieren wir ein Fachwerk im Code?
+Dieser Abschnitt umfasst die folgenden Inhalte:
 
-```csharp
-// Ein Knoten hat eine Position und eine externe Kraft
-public class Node
-{
-    public int Id { get; set; }
-    public double X { get; set; }
-    public double Y { get; set; }
-    public double Fx { get; set; } // Externe Kraft
-    public double Fy { get; set; }
-}
-
-// Ein Stab verbindet zwei Knoten
-public class Bar
-{
-    public int Id { get; set; }
-    public Node StartNode { get; set; }
-    public Node EndNode { get; set; }
-    public double Force { get; set; } // Berechnetes Ergebnis
-}
-```
+- TODO
 
 ---
 

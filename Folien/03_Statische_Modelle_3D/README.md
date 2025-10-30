@@ -7,11 +7,21 @@ paginate: true
 math: mathjax
 ---
 
+![bg right](./Titelbild.jpg)
+
 # Kapitel 3: TODO
+
+Dieses Kapitel umfasst die folgenden Inhalte:
+
+- TODO
 
 ---
 
 ## 3.1: Erweiterung auf 3D
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- TODO
 
 ---
 
@@ -95,6 +105,14 @@ TODO
 
 </div>
 </div>
+
+---
+
+## 3.2: Einführung in OpenGL
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- TODO
 
 ---
 
@@ -376,7 +394,20 @@ gl.End();
 
 ---
 
+## Abschnitt 3.3: Einführung in Szenengraphen
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- TODO
+
+---
+
+TODO Folien zu Szenengraphen
+
+---
+
 # Zusammenfassung Kapitel 3
 
 - Die Erweiterung auf **3D** ist konzeptionell einfach, erhöht aber die Größe der Gleichungssysteme.
 - Die **Visualisierung** erfordert eine komplexe **Grafik-Pipeline** (3D) mit Konzepten wie Matrizen, Buffern und Beleuchtung.
+- TODO
