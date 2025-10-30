@@ -22,6 +22,13 @@ math: mathjax
 
 ## 4.1: Grundlagen und Definitionen
 
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Definition von kontinuierlichen dynamischen Modellen
+- Die Zustandsraumdarstellung
+- Umwandlung von Differentialgleichungen höherer Ordnung
+- Analytische vs. numerische Lösungsansätze
+
 ---
 
 ### Was sind kontinuierliche dynamische Modelle?
@@ -166,6 +173,12 @@ Dies entspricht der Form $\dot{x} = Ax + Bu$.
 
 ## 4.2: Beispiel: Freier Fall / Vertikaler Wurf
 
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Physikalische Modellierung des vertikalen Wurfs
+- Aufstellen des Zustandsraummodells
+- Herleitung der analytischen Lösung
+
 ---
 
 ### Vertikaler Wurf: Einführung
@@ -283,6 +296,13 @@ Diese Formeln beschreiben die exakte Trajektorie des Objekts für jeden beliebig
 ---
 
 ## 4.3: Numerische Integrationsverfahren
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Grundidee der numerischen Integration (Taylor-Entwicklung)
+- Die explizite Euler-Methode
+- Die implizite Euler-Methode
+- Vergleich der Genauigkeit und Stabilität
 
 ---
 
@@ -486,6 +506,13 @@ Beide Methoden haben einen lokalen Fehler der Ordnung $O(h^2)$ und einen globale
 
 ## 4.4: Beispiel: Ungedämpftes Federpendel
 
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Physikalische Modellierung des Federpendels
+- Aufstellen des Zustandsraummodells
+- Herleitung der analytischen Lösung
+- Analyse der numerischen Stabilität (expliziter vs. impliziter Euler)
+
 
 ---
 
@@ -606,6 +633,12 @@ Dies ist ein lineares Gleichungssystem für die unbekannten Größen $y_{k+1}$ u
 
 ## 4.5: Differential-Algebraische Gleichungen (DAE)
 
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Entstehung von algebraischen Schleifen bei impliziten Verfahren
+- Formulierung und Lösung als DAE
+- Stabilitätseigenschaften und der Einfluss der Schrittweite
+
 ---
 
 ### Differential-Algebraische Gleichungen
@@ -716,6 +749,13 @@ Die Wahl der richtigen Schrittweite ist ein kritischer Kompromiss zwischen Genau
 ---
 
 ## 4.6: Softwarearchitektur für Simulation
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Konzept der S-Funktionen zur modularen Modellierung
+- Implementierung von Basis-Blöcken (Gain, Sum, Integrator)
+- Modellierung eines Systems durch Verschaltung von Blöcken
+- Zusammenspiel von Solver und Modellblöcken
 
 ---
 
