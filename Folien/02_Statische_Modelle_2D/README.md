@@ -15,8 +15,9 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 - 2.1: Einführung und historische Entwicklung
 - 2.2: Das ideale Fachwerk in 2D
-- 2.3: Das elastische Fachwerk in 2D 
-- TODO
+- 2.3: Das elastische Fachwerk in 2D
+- 2.4: Programmtechnische Umsetzung
+- 2.5: 2D-Visualisierung mit WPF Canvas
 
 ---
 
@@ -24,7 +25,10 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- TODO
+- Definition eines statischen Modells
+- Das Fachwerk als Anwendungsbeispiel
+- Historischer Abriss der Fachwerktheorie
+- Typische Fragestellungen für die Modellierung
 
 ---
 
@@ -91,11 +95,13 @@ Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist
 
 ---
 
-## 2.3: Mathematisches Modell eines idealen Fachwerks
+## 2.2: Das ideale Fachwerk in 2D
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- TODO
+- Annahmen und physikalische Grundlagen
+- Aufstellen des linearen Gleichungssystems (LGS)
+- Algorithmen zur Lösung des LGS
 
 ---
 
@@ -131,30 +137,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Beispiel: Gleichung für Knoten 2, x-Richtung
-
 <div class="columns">
-<div class="one">
-
-Betrachten wir die Gleichgewichtsbedingung in x-Richtung am Knoten 2:
-
-$\sum F_{2,x} = 0$
-
-Die Stabkräfte $S_1$, $S_2$ und $S_5$ haben eine Komponente in x-Richtung.
-
-$S_1 \cdot \cos(\alpha_1) + S_2 \cdot \cos(\alpha_2) + S_5 \cdot \cos(\alpha_5) = 0$
-
-Die Winkel $\alpha_i$ ergeben sich aus der Geometrie der Stäbe.
-
-</div>
-<div class="one">
-
-![Gleichungssystem](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Gleichungssystem.jpg)
-
-</div>
-</div>
-
----
+<div>
 
 ### Das lineare Gleichungssystem (LGS)
 
@@ -166,45 +150,25 @@ $A \cdot x = b$
 - $x$: Der **Lösungsvektor**. Er enthält die unbekannten Stabkräfte und Lagerreaktionen.
 - $b$: Der **Lastvektor**. Er enthält die an den Knoten angreifenden externen Kräfte.
 
----
+</div>
+<div>
 
-### Die Geometriematrix A im Detail
+![Gleichungssystem](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Gleichungssystem.jpg)
 
-- Jede **Zeile** der Matrix $A$ entspricht einer Gleichgewichtsbedingung (z.B. Knoten 3, y-Richtung).
-- Jede **Spalte** der Matrix $A$ entspricht einer unbekannten Kraft (z.B. Stabkraft $S_4$).
-- Der Eintrag $A_{ij}$ ist der Koeffizient (z.B. $\cos(\alpha)$), mit dem die unbekannte Kraft $j$ in die Gleichung $i$ eingeht.
-- Viele Einträge in $A$ sind Null, da ein Stab nur an zwei Knoten angreift. Man spricht von einer **dünn besetzten Matrix** (sparse matrix).
-
----
-
-### Lösung des LGS
-
-Um die unbekannten Kräfte $x$ zu finden, müssen wir das LGS lösen:
-
-$x = A^{-1} \cdot b$
-
-- Die direkte Berechnung der Inversen $A^{-1}$ ist numerisch aufwändig und instabil.
-- In der Praxis verwendet man robustere und effizientere Algorithmen.
+</div>
+</div>
 
 ---
 
-## 2.2 Algorithmen zur Lösung von LGS
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- TODO
-
----
-
-### Algorithmen zur Lösung von LGS
+### Lösung des LGS: Algorithmen
 
 <div class="columns top">
 <div class="one">
 
 **Direkte Löser**
 - Finden die exakte Lösung (abgesehen von Rundungsfehlern) in einer endlichen Anzahl von Schritten.
-- **Gauß-Elimination**: Umformung der Matrix $A$ in eine obere Dreiecksmatrix, die dann einfach durch Rückwärtseinsetzen gelöst werden kann.
-- **LU-Zerlegung**: Zerlegung von $A$ in eine untere ($L$) und eine obere ($U$) Dreiecksmatrix ($A = L \cdot U$). Die Lösung von $L \cdot (U \cdot x) = b$ erfolgt dann in zwei einfachen Schritten.
+- **Gauß-Elimination**: Umformung der Matrix $A$ in eine obere Dreiecksmatrix.
+- **LU-Zerlegung**: Zerlegung von $A$ in eine untere ($L$) und eine obere ($U$) Dreiecksmatrix.
 
 </div>
 <div class="one">
@@ -219,40 +183,211 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-TODO Folien zu Gauß-Elimination
+### Direkter Löser: Gauß-Elimination
+
+Das Gauß'sche Eliminationsverfahren ist ein klassischer Algorithmus zur Lösung von LGS.
+
+**Vorgehen:**
+1.  **Vorwärtselimination**: Das LGS $A \cdot x = b$ wird durch zeilenweise Umformungen in eine obere Dreiecksform $U \cdot x = c$ gebracht.
+    - Für jede Spalte $j$ von $1$ bis $n-1$:
+    - Eliminiere die Koeffizienten unterhalb der Diagonalen ($A_{ij}$ mit $i > j$) durch Subtraktion eines Vielfachen der $j$-ten Zeile.
+    - Die gleichen Operationen werden auf den Vektor $b$ angewendet.
+2.  **Rückwärtseinsetzen**: Das gestaffelte System wird von unten nach oben gelöst.
+    - $x_n = c_n / U_{nn}$
+    - $x_i = (c_i - \sum_{j=i+1}^{n} U_{ij} \cdot x_j) / U_{ii}$ für $i = n-1, ..., 1$.
 
 ---
 
-TODO Folien zu LU-Zerlegung
+### Direkter Löser: LU-Zerlegung
+
+Die LU-Zerlegung faktorisiert die Matrix $A$ in ein Produkt aus einer unteren Dreiecksmatrix $L$ und einer oberen Dreiecksmatrix $U$, d.h. $A = L \cdot U$
+
+**Vorgehen:**
+1.  **Zerlegung**: Finde $L$ und $U$. Dies geschieht oft mit einer Variante des Gauß-Algorithmus. $L$ enthält die Multiplikatoren der Elimination, $U$ ist das Ergebnis der Vorwärtselimination.
+2.  **Löse $A \cdot x = b$ in zwei Schritten:**
+    - Ersetze $A$ durch $L \cdot U \implies L \cdot (U \cdot x) = b$.
+    - Definiere $y = U \cdot x$.
+    - **Vorwärtseinsetzen**: Löse $L \cdot y = b$ nach $y$.
+    - **Rückwärtseinsetzen**: Löse $U \cdot x = y$ nach $x$.
+
+**Vorteil**: Die teure Zerlegung muss nur einmal berechnet werden. Danach können LGS mit derselben Matrix $A$ aber unterschiedlichen Lastvektoren $b$ sehr schnell gelöst werden.
 
 ---
 
-TODO Folien zum iterativen Löser
+### Iterative Löser (z.B. Jacobi-Verfahren)
+
+Iterative Löser nähern sich der Lösung schrittweise an. Sie sind besonders für große, dünn besetzte Matrizen geeignet.
+
+**Grundidee:**
+1.  Forme die Gleichung $A \cdot x = b$ um, sodass $x$ auf einer Seite isoliert wird.
+2.  Zerlege dazu $A$ in $A = D + R$, wobei $D$ die Diagonale von $A$ ist und $R$ den Rest enthält.
+3.  $D \cdot x + R \cdot x = b \implies D \cdot x = b - R \cdot x \implies x = D^{-1} \cdot (b - R \cdot x)$
+4.  Daraus wird eine Iterationsvorschrift:
+    $x^{(k+1)} = D^{-1} \cdot (b - R \cdot x^{(k)})$
+5.  Starte mit einem Schätzwert $x^{(0)}$ und wiederhole die Iteration, bis die Änderung $\|x^{(k+1)} - x^{(k)}\|$ klein genug ist.
 
 ---
 
-## 2.4: Programmtechnische Umsetzung von Fachwerken
+## 2.3: Das elastische Fachwerk in 2D
+
+---
+
+### Grenzen des idealen Fachwerks
+
+- Das ideale Fachwerkmodell kann nur die **Kräfte** berechnen.
+- Es kann **keine Aussage über Verformungen** treffen, da die Stäbe als unendlich steif angenommen werden.
+- In der Realität ist jeder Werkstoff elastisch und verformt sich unter Last.
+- **Fragestellung**: Wie stark verschieben sich die Knoten, wenn eine Last angreift?
+
+---
+
+### Das elastische Modell: Neue Annahmen
+
+- Die Stäbe sind nicht mehr starr, sondern **elastisch**. Ihr Verhalten wird durch das **Hooke'sche Gesetz** beschrieben.
+- Die Knoten sind weiterhin **gelenkig**.
+- Die entscheidende neue Unbekannte sind nicht die Stabkräfte, sondern die **Knotenverschiebungen** $\vec{u}$.
+
+---
+
+### Hooke'sches Gesetz für einen Stab
+
+Die Kraft $S$ in einem Stab ist proportional zu seiner Längenänderung $\Delta L$.
+
+$S = \frac{E \cdot A}{L_0} \cdot \Delta L$
+
+- $E$: **Elastizitätsmodul** (Materialkonstante, z.B. für Stahl ca. 210 GPa)
+- $A$: **Querschnittsfläche** des Stabes
+- $L_0$: **Anfangslänge** des Stabes
+- Der Term $\frac{E \cdot A}{L_0}$ wird als **Stabsteifigkeit** $k$ bezeichnet.
+
+---
+
+<div class="columns">
+<div>
+
+### Von der Längenänderung zur Knotenverschiebung
+
+- Die Längenänderung $\Delta L$ eines Stabes hängt von den Verschiebungen seiner beiden Endknoten ab.
+- Für einen Stab zwischen Knoten $i$ und $j$ mit Verschiebungsvektoren $\vec{u}_i$ und $\vec{u}_j$:
+- $\Delta L \approx (\vec{u}_j - \vec{u}_i) \cdot \vec{e}$
+- $\vec{e}$ ist der Einheitsvektor in Richtung des Stabes.
+
+</div>
+<div>
+
+![width:700px](../../Quellen/WS24/StatischFachwerkElastisch2D/Stablängenänderung.jpg)
+
+</div>
+</div>
+
+---
+
+### Die Linearisierung: Kleine-Verformungs-Theorie
+
+- Die exakte Berechnung von $\Delta L$ ist kompliziert, da sich die Richtung des Stabes $\vec{e}$ mit der Verformung ändert (geometrische Nichtlinearität).
+- **Vereinfachung**: Wir nehmen an, dass die Verformungen $\vec{u}$ so **klein** sind, dass sich die Geometrie des Fachwerks nicht nennenswert ändert.
+- Wir können also für die Berechnung den Einheitsvektor $\vec{e}$ des **unverformten** Stabes verwenden.
+- Dies ist eine **Linearisierung**, die für die meisten Anwendungen im Hoch- und Maschinenbau gültig ist.
+
+---
+
+<div class="columns">
+<div>
+
+### Stab-Steifigkeitsbeziehung
+
+Kombiniert man Hooke'sches Gesetz und die Längenänderungs-Beziehung, erhält man eine Beziehung zwischen den Kräften, die auf die Knoten eines Stabes wirken, und den Verschiebungen dieser Knoten.
+
+Dies lässt sich als **Stab-Steifigkeitsmatrix** $k_{stab}$ formulieren:
+
+$\begin{pmatrix} F_{ix} \\ F_{iy} \\ F_{jx} \\ F_{jy} \end{pmatrix} = k_{stab} \cdot \begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix}$
+
+</div>
+<div>
+
+![Stabgleichungssystem](../../Quellen/WS24/StatischFachwerkElastisch2D/Stabgleichungssystem.jpg)
+
+</div>
+</div>
+
+---
+
+### Assemblierung der globalen Steifigkeitsmatrix
+
+- Der entscheidende Schritt ist die "Assemblierung": Die einzelnen Stab-Steifigkeitsmatrizen werden zu einer **globalen Steifigkeitsmatrix** $K$ für das gesamte Fachwerk zusammengesetzt.
+- Das Prinzip lautet: Die globale Steifigkeit an einem Knoten ist die Summe der Steifigkeiten aller Stäbe, die an diesem Knoten zusammentreffen.
+- Dieser Prozess folgt einem festen Algorithmus und lässt sich gut programmieren.
+
+---
+
+### Das globale Gleichungssystem
+
+Das Ergebnis ist wieder ein lineares Gleichungssystem, diesmal für das elastische Fachwerk:
+
+$K \cdot u = f$
+
+- $K$: Die **globale Steifigkeitsmatrix**. Sie hängt von der Geometrie und den Materialeigenschaften (E, A) ab. Sie ist quadratisch, symmetrisch und (für stabile Fachwerke) positiv definit.
+- $u$: Der Vektor der unbekannten **Knotenverschiebungen**.
+- $f$: Der Vektor der bekannten **externen Knotenkräfte**.
+
+---
+
+<div class="columns">
+<div>
+
+### Einbau der Randbedingungen
+
+- Das bisherige System $K \cdot u = f$ ist singulär (nicht lösbar), da das Fachwerk noch "frei im Raum schwebt".
+- Wir müssen die **Lagerungen** (Randbedingungen) einbauen.
+- An einem gelagerten Knoten ist die Verschiebung bekannt (meistens Null).
+- z.B. $u_{1x} = 0$, $u_{1y} = 0$.
+- Dies führt zur Modifikation des Gleichungssystems (z.B. durch Streichen von Zeilen/Spalten oder Setzen von großen Diagonalelementen).
+
+</div>
+<div>
+
+![Gleichungssystem mit Randbedingungen](../../Quellen/WS24/StatischFachwerkElastisch2D/Allgemeines%20Gleichungssystem%20mit%20Randbedingungen.jpg)
+
+</div>
+</div>
+
+---
+
+### Lösung und Ergebnisse
+
+1.  **Löse $K \cdot u = f$ nach $u$ auf**: Das Ergebnis sind die Verschiebungen aller Knoten.
+2.  **Post-Processing**:
+    - Aus den Knotenverschiebungen $u$ kann für jeden Stab die Längenänderung $\Delta L$ berechnet werden.
+    - Aus $\Delta L$ kann mit dem Hooke'schen Gesetz die **Stabkraft** $S$ berechnet werden.
+
+Das elastische Modell liefert uns also sowohl die **Verformungen** als auch die **Kräfte**!
+
+---
+
+## 2.4: Programmtechnische Umsetzung
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- TODO
+- Datenstrukturen zur Repräsentation eines Fachwerks
+- Klassen für Knoten (`Node`), Stäbe (`Rod`) und das Fachwerk (`Truss`)
+- Verwendung von numerischen Bibliotheken am Beispiel von `Math.NET Numerics`
 
 ---
 
 <div class="columns">
-<div>
-
+<div class="five">
 
 ### Programmtechnische Umsetzung: Datenstrukturen
 
-Wie repräsentieren wir ein Fachwerk im Code?
-
-TODO Kurze Erklärung des UML-Diagramms in der rechten Spalte
+Das UML-Diagramm zeigt die drei zentralen Klassen:
+- **`Truss`**: Die Hauptklasse, die das gesamte Fachwerk repräsentiert. Sie enthält eine Liste aller `Node` (Knoten) und `Rod` (Stäbe). Die `Solve`-Methode kapselt die Berechnung.
+- **`Node`**: Repräsentiert einen einzelnen Knotenpunkt mit seiner Position, Lagerung (fix/frei) und den an ihm angreifenden externen Kräften.
+- **`Rod`**: Repräsentiert einen einzelnen Stab, der zwei `Node`-Objekte verbindet. Nach der Berechnung enthält er die ermittelte Stabkraft (`Force`).
 
 </div>
 <div>
 
-![](../../Quellen/WS24/StatischFachwerkIdeal2D/Model.svg)
+![](./Diagramme/Model.svg)
 
 </div>
 </div>
@@ -262,7 +397,13 @@ TODO Kurze Erklärung des UML-Diagramms in der rechten Spalte
 <div class="columns">
 <div>
 
-TODO
+### Die `Node`-Klasse
+
+Die `Node`-Klasse speichert alle relevanten Informationen für einen einzelnen Knotenpunkt:
+- **`Name`**: Ein Bezeichner für den Knoten.
+- **`PositionX`, `PositionY`**: Die Koordinaten des Knotens in der 2D-Ebene.
+- **`FixX`, `FixY`**: Boole'sche Werte, die angeben, ob der Knoten in X- oder Y-Richtung als Festlager fixiert ist.
+- **`ForceX`, `ForceY`**: Die an diesem Knoten angreifenden externen Kräfte (Lasten).
 
 </div>
 <div>
@@ -276,11 +417,11 @@ public class Node
     public double PositionX { get; set; }
     public double PositionY { get; set; }
 
-    // Lagerung des Knoten
-    public double FixX { get; set; }
-    public double FixY { get; set; }
+    // Lagerung des Knoten (true = fixiert)
+    public bool FixX { get; set; }
+    public bool FixY { get; set; }
 
-     // Last- oder Lagerkraft
+    // Last- oder Lagerkraft
     public double ForceX { get; set; }
     public double ForceY { get; set; }
 }
@@ -294,7 +435,11 @@ public class Node
 <div class="columns">
 <div>
 
-TODO
+### Die `Rod`-Klasse
+
+Die `Rod`-Klasse ist die einfachste Struktur:
+- Sie verbindet zwei Knoten (`NodeA`, `NodeB`).
+- Das `Force`-Feld speichert das Ergebnis der Berechnung: die Zug- (positiv) oder Druckkraft (negativ) im Stab.
 
 </div>
 <div>
@@ -318,6 +463,13 @@ public class Rod
 <div class="columns">
 <div>
 
+### Die `Truss`-Klasse
+
+Die `Truss`-Klasse orchestriert das Modell:
+- Sie hält Listen für alle Knoten und Stäbe.
+- `AddNode` und `AddRod` sind "Factory"-Methoden, um das Fachwerk einfach aufzubauen.
+- Die `Solve`-Methode (hier nur angedeutet) ist der Ort, an dem die Koeffizientenmatrix `A` und der Lastvektor `b` aufgebaut und das LGS gelöst wird.
+
 </div>
 <div>
 
@@ -325,27 +477,24 @@ public class Rod
 public class Truss
 {
     public List<Node> Nodes = new List<Node>();
-    public List<Rod> Rods = new List<Node>();
+    public List<Rod> Rods = new List<Rod>();
 
     public Node AddNode(
             double positionX, double positionY,
             bool fixX, bool fixY,
             double forceX, double forceY)
     {
-        Nodes.Add(new Node(
-            positionX, positionY,
-            fixX, fixY,
-            forceX, forceY))
+        // ... Implementierung ...
     }
 
     public Rod AddRod(Node a, Node b)
     {
-        Rods.Add(new Rod(a, b));
+        // ... Implementierung ...
     }
 
     public void Solve()
     {
-        ...
+        // Hier wird das LGS aufgebaut und gelöst
     }
 }
 ```
@@ -376,11 +525,13 @@ var x = A.Solve(b);
 
 ---
 
-## 2.5: Erstellung von 2D-Visualisierungen mit WPF Canvas
+## 2.5: 2D-Visualisierung mit WPF Canvas
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- TODO
+- Die Herausforderung: Transformation von Welt- zu Bildschirmkoordinaten
+- Schritte der Transformation: Skalierung, Translation, Y-Invertierung
+- Visualisierung von Kräften mittels Pfeilen
 
 ---
 
@@ -468,142 +619,34 @@ return new Point(screenX, screenY);
 
 ### Berechnung der Pfeilspitze
 
-```cshrap
-TODO
+```csharp
+/// <summary>
+/// Berechnet die Punkte für eine Pfeilspitze.
+/// </summary>
+/// <param name="tip">Die Position der Pfeilspitze.</param>
+/// <param name="direction">Der normalisierte Richtungsvektor des Pfeils.</param>
+/// <param name="size">Die Größe der Pfeilspitze.</param>
+/// <returns>Ein Array von Punkten für das Pfeilspitzen-Polygon.</returns>
+public Point[] GetArrowhead(Point tip, Vector direction, double size)
+{
+    // Vektor, der 90° zur Richtung steht
+    var perpendicular = new Vector(-direction.Y, direction.X);
+
+    // Eckpunkte der Pfeilspitze berechnen
+    // (zurück entlang der Richtung und dann seitlich)
+    var p1 = tip - (size * direction) + (size / 2 * perpendicular);
+    var p2 = tip - (size * direction) - (size / 2 * perpendicular);
+
+    return new Point[] { tip, p1, p2 };
+}
 ```
 
 ---
 
-## 2.3: Das elastische Fachwerk in 2D
-
----
-
-### Grenzen des idealen Fachwerks
-
-- Das ideale Fachwerkmodell kann nur die **Kräfte** berechnen.
-- Es kann **keine Aussage über Verformungen** treffen, da die Stäbe als unendlich steif angenommen werden.
-- In der Realität ist jeder Werkstoff elastisch und verformt sich unter Last.
-- **Fragestellung**: Wie stark verschieben sich die Knoten, wenn eine Last angreift?
-
----
-
-### Das elastische Modell: Neue Annahmen
-
-- Die Stäbe sind nicht mehr starr, sondern **elastisch**. Ihr Verhalten wird durch das **Hooke'sche Gesetz** beschrieben.
-- Die Knoten sind weiterhin **gelenkig**.
-- Die entscheidende neue Unbekannte sind nicht die Stabkräfte, sondern die **Knotenverschiebungen** $\vec{u}$.
-
----
-
-### Hooke'sches Gesetz für einen Stab
-
-Die Kraft $S$ in einem Stab ist proportional zu seiner Längenänderung $\Delta L$.
-
-$S = \frac{E \cdot A}{L_0} \cdot \Delta L$
-
-- $E$: **Elastizitätsmodul** (Materialkonstante, z.B. für Stahl ca. 210 GPa)
-- $A$: **Querschnittsfläche** des Stabes
-- $L_0$: **Anfangslänge** des Stabes
-- Der Term $\frac{E \cdot A}{L_0}$ wird als **Stabsteifigkeit** $k$ bezeichnet.
-
----
-
-### Von der Längenänderung zur Knotenverschiebung
-
-- Die Längenänderung $\Delta L$ eines Stabes hängt von den Verschiebungen seiner beiden Endknoten ab.
-- Für einen Stab zwischen Knoten $i$ und $j$ mit Verschiebungsvektoren $\vec{u}_i$ und $\vec{u}_j$:
-- $\Delta L \approx (\vec{u}_j - \vec{u}_i) \cdot \vec{e}$
-- $\vec{e}$ ist der Einheitsvektor in Richtung des Stabes.
-
-![width:700px](../../Quellen/WS24/StatischFachwerkElastisch2D/Stablängenänderung.jpg)
-
----
-
-### Die Linearisierung: Kleine-Verformungs-Theorie
-
-- Die exakte Berechnung von $\Delta L$ ist kompliziert, da sich die Richtung des Stabes $\vec{e}$ mit der Verformung ändert (geometrische Nichtlinearität).
-- **Vereinfachung**: Wir nehmen an, dass die Verformungen $\vec{u}$ so **klein** sind, dass sich die Geometrie des Fachwerks nicht nennenswert ändert.
-- Wir können also für die Berechnung den Einheitsvektor $\vec{e}$ des **unverformten** Stabes verwenden.
-- Dies ist eine **Linearisierung**, die für die meisten Anwendungen im Hoch- und Maschinenbau gültig ist.
-
----
-
-<div class="columns">
-<div>
-
-### Stab-Steifigkeitsbeziehung
-
-Kombiniert man Hooke'sches Gesetz und die Längenänderungs-Beziehung, erhält man eine Beziehung zwischen den Kräften, die auf die Knoten eines Stabes wirken, und den Verschiebungen dieser Knoten.
-
-Dies lässt sich als **Stab-Steifigkeitsmatrix** $k_{stab}$ formulieren:
-
-$\begin{pmatrix} F_{ix} \\ F_{iy} \\ F_{jx} \\ F_{jy} \end{pmatrix} = k_{stab} \cdot \begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix}$
-
-</div>
-<div>
-
-![Stabgleichungssystem](../../Quellen/WS24/StatischFachwerkElastisch2D/Stabgleichungssystem.jpg)
-
-</div>
-</div>
-
----
-
-### Assemblierung der globalen Steifigkeitsmatrix
-
-- Der entscheidende Schritt ist die "Assemblierung": Die einzelnen Stab-Steifigkeitsmatrizen werden zu einer **globalen Steifigkeitsmatrix** $K$ für das gesamte Fachwerk zusammengesetzt.
-- Das Prinzip lautet: Die globale Steifigkeit an einem Knoten ist die Summe der Steifigkeiten aller Stäbe, die an diesem Knoten zusammentreffen.
-- Dieser Prozess folgt einem festen Algorithmus und lässt sich gut programmieren.
-
----
-
-### Das globale Gleichungssystem
-
-Das Ergebnis ist wieder ein lineares Gleichungssystem, diesmal für das elastische Fachwerk:
-
-$K \cdot u = f$
-
-- $K$: Die **globale Steifigkeitsmatrix**. Sie hängt von der Geometrie und den Materialeigenschaften (E, A) ab. Sie ist quadratisch, symmetrisch und (für stabile Fachwerke) positiv definit.
-- $u$: Der Vektor der unbekannten **Knotenverschiebungen**.
-- $f$: Der Vektor der bekannten **externen Knotenkräfte**.
-
----
-
-<div class="columns">
-<div>
-
-### Einbau der Randbedingungen
-
-- Das bisherige System $K \cdot u = f$ ist singulär (nicht lösbar), da das Fachwerk noch "frei im Raum schwebt".
-- Wir müssen die **Lagerungen** (Randbedingungen) einbauen.
-- An einem gelagerten Knoten ist die Verschiebung bekannt (meistens Null).
-- z.B. $u_{1x} = 0$, $u_{1y} = 0$.
-- Dies führt zur Modifikation des Gleichungssystems (z.B. durch Streichen von Zeilen/Spalten oder Setzen von großen Diagonalelementen).
-
-</div>
-<div>
-
-![Gleichungssystem mit Randbedingungen](../../Quellen/WS24/StatischFachwerkElastisch2D/Allgemeines%20Gleichungssystem%20mit%20Randbedingungen.jpg)
-
-</div>
-</div>
-
----
-
-### Lösung und Ergebnisse
-
-1.  **Löse $K \cdot u = f$ nach $u$ auf**: Das Ergebnis sind die Verschiebungen aller Knoten.
-2.  **Post-Processing**:
-    - Aus den Knotenverschiebungen $u$ kann für jeden Stab die Längenänderung $\Delta L$ berechnet werden.
-    - Aus $\Delta L$ kann mit dem Hooke'schen Gesetz die **Stabkraft** $S$ berechnet werden.
-
-Das elastische Modell liefert uns also sowohl die **Verformungen** als auch die **Kräfte**!
-
----
-
-# Zusammenfassung Kapitel 1
+# Zusammenfassung Kapitel 2
 
 - **Statische Modelle** beschreiben Systeme im Gleichgewicht und sind die Grundlage der Strukturanalyse.
 - Das **ideale Fachwerk** ist ein einfaches Modell zur Berechnung von Stabkräften mittels linearer Gleichungssysteme.
 - Das **elastische Fachwerk** erweitert dies um Materialeigenschaften und erlaubt die Berechnung von Verformungen. Die **Linearisierung** ist hier eine entscheidende Vereinfachung.
-- Die **Visualisierung** ist entscheidend und erfordert Transformationen (2D).
+- Die **programmtechnische Umsetzung** erfordert geeignete Datenstrukturen und die Nutzung numerischer Bibliotheken.
+- Die **Visualisierung** ist entscheidend für die Interpretation der Ergebnisse und erfordert Transformationen zwischen Koordinatensystemen.

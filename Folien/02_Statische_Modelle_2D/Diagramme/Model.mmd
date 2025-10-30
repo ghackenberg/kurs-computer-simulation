@@ -1,0 +1,29 @@
+classDiagram
+
+    direction TB
+
+    class Truss {
+        +AddNode(...) Node
+        +AddRod(...) Rod
+        +Solve() void
+    }
+
+    class Node {
+        +Name: string
+        +PositionX: double
+        +PositionY: double
+        +FixX: boolean
+        +FixY: boolean
+        +ForceX: double
+        +ForceY: double
+    }
+    
+    class Rod {
+        +Force: double
+    }
+
+    Truss o--"*" Node: Nodes
+    Truss o--"*" Rod: Rods
+
+    Rod -->"1" Node: NodeA
+    Rod -->"1" Node: NodeB
