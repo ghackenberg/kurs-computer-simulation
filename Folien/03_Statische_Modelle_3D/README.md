@@ -9,19 +9,23 @@ math: mathjax
 
 ![bg right](./Titelbild.jpg)
 
-# Kapitel 3: TODO
+# Kapitel 3: Statische Modelle in 3D
 
 Dieses Kapitel umfasst die folgenden Inhalte:
 
-- TODO
+- 3.1: Erweiterung der Berechnungsmodelle auf 3D
+- 3.2: Grundlagen der 3D-Visualisierung mit OpenGL
+- 3.3: Strukturierung komplexer Szenen mit Szenengraphen
 
 ---
 
-## 3.1: Erweiterung auf 3D
+## 3.1: Erweiterung der Berechnungsmodelle auf 3D
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- TODO
+- Erweiterung der Freiheitsgrade von 2D auf 3D
+- Anpassung des idealen Fachwerk-Modells für 3D
+- Anpassung des elastischen Fachwerk-Modells für 3D
 
 ---
 
@@ -89,14 +93,104 @@ Die grundlegenden physikalischen Prinzipien (Kräftegleichgewicht, Hooke\'sches 
 
 ---
 
+## 3.2: Grundlagen der 3D-Visualisierung mit OpenGL
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Grundkonzepte von OpenGL (Zustandsmaschine, Grafik-Pipeline)
+- Verwendung von Buffern (Color, Depth)
+- Koordinatensysteme und Transformationen (Projection, ModelView)
+- Zeichnen von Primitiven und Beleuchtung
+
+---
+
+### Was ist OpenGL?
+
+- **Open Graphics Library**
+- Eine plattform- und programmiersprachenübergreifende **API** zur Erzeugung von 2D- und 3D-Computergrafik.
+- Es ist ein **Standard**, der von Grafikkartenherstellern implementiert wird.
+- Es bietet eine Schnittstelle, um der **GPU (Graphics Processing Unit)** Befehle zum Zeichnen zu geben.
+- Wir betrachten hier "klassisches" (fixed-function) OpenGL, wie es in `SharpGL` oft für einfache Darstellungen genutzt wird.
+
+---
+
+TODO SharpGL OpenGLControl
+
+---
+
+TODO SharpGL OpenGLControl Initialize Ereignisroutine
+
+---
+
+TODO Clear Color
+
+---
+
+TODO Umgebungslicht
+
+---
+
+TODO Punktlicht (Position / Ambient / Diffuse / Specular)
+
+---
+
+TODO Schattierungsmodus
+
+---
+
+TODO Depth Test
+
+---
+
+TODO SharpGL OpenGLControl Draw Ereignisroutine
+
+---
+
+TODO Clear Color / Depth Buffer
+
+---
+
+TODO OpenGL Primitives (Lines / Triangles / Quads)
+
+---
+
+TODO Material (Ambient / Diffuse / Specular)
+
+---
+
+TODO OpenGL LoadIdentity
+
+---
+
+TODO OpenGL Translate / Rotate / Scale
+
+---
+
+TODO OpenGL PushMatrix / PopMatrix
+
+---
+
+## 3.3: Strukturierung mit einem Szenengraphen
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Motivation und Konzept eines Szenengraphen
+- Aufbau einer Szene aus Knoten, Transformationen und Gruppen
+- Traversierung des Graphen zur Darstellung der Szene
+- Umsetzung in C# am Beispiel der Vorlage
+
+---
+
 <div class="columns">
 <div>
 
-### Die größte Herausforderung: Visualisierung
+### Die Herausforderung: Komplexe Szenen
 
-- Während die Berechnung eine reine Erweiterung der Dimension ist, stellt die Visualisierung eine neue Herausforderung dar.
-- Wir müssen eine 3D-Szene auf einen 2D-Bildschirm projizieren.
-- Dies ist die Aufgabe der **3D-Grafikpipeline**, die typischerweise mit APIs wie **OpenGL** oder **DirectX** gesteuert wird.
+- Direkte OpenGL-Aufrufe für hunderte Objekte werden schnell unübersichtlich.
+- Wie lassen sich Objekte gruppieren (z.B. ein Tisch mit vier Beinen)?
+- Wie lassen sich Transformationen logisch vererben (z.B. ein Mond, der um einen Planeten rotiert, der um die Sonne rotiert)?
+
+**Lösung**: Eine baumartige Datenstruktur zur Organisation der Szene – ein **Szenengraph**.
 
 </div>
 <div>
@@ -108,306 +202,113 @@ TODO
 
 ---
 
-## 3.2: Einführung in OpenGL
+### Das Konzept des Szenengraphen
 
-Dieser Abschnitt umfasst die folgenden Inhalte:
+Ein Szenengraph ist eine hierarchische Struktur (ein Baum), die alle Elemente einer 3D-Szene enthält.
 
-- TODO
-
----
-
-### Was ist OpenGL?
-
-- **Open Graphics Library**
-- Eine plattform- und programmiersprachenübergreifende **API** (Application Programming Interface) zur Erzeugung von 2D- und 3D-Computergrafik.
-- Es ist ein **Standard**, der von Grafikkartenherstellern implementiert wird.
-- Es bietet eine Schnittstelle, um der **GPU (Graphics Processing Unit)** Befehle zum Zeichnen zu geben.
-- Wir betrachten hier "klassisches" (fixed-function) OpenGL, wie es in `SharpGL` oft für einfache Darstellungen genutzt wird.
+- **Knoten (Nodes)**: Die Elemente im Baum. Jeder Knoten repräsentiert etwas in der Szene.
+- **Wurzelknoten (Root Node)**: Der oberste Knoten, von dem die ganze Szene ausgeht.
+- **Blattknoten (Leaf Nodes)**: Knoten am Ende der Äste. Sie enthalten die sichtbare Geometrie (z.B. ein 3D-Modell).
+- **Gruppenknoten (Group Nodes)**: Knoten, die andere Knoten (Kinder) zusammenfassen. Sie definieren die Struktur.
+- **Transformationen**: Jeder Knoten kann eine oder mehrere Transformationen (Verschiebung, Rotation, Skalierung) haben, die auch auf alle seine Kinder wirken.
 
 ---
 
-### OpenGL als Zustandsmaschine
+<div class="columns">
+<div>
 
-- Man kann sich OpenGL als eine große Maschine mit sehr vielen Schaltern und Einstellungen vorstellen.
-- **Beispiele für Zustände**:
-    - Aktuelle Zeichenfarbe
-    - Aktuelle Transformationsmatrix
-    - Ist die Beleuchtung aktiviert?
-    - Ist der Tiefentest aktiviert?
-- **Befehle**:
-    - `glColor3f(1, 0, 0)`: Setzt die aktuelle Farbe auf Rot. Alle danach gezeichneten Objekte sind rot, bis die Farbe wieder geändert wird.
-    - `glEnable(GL_LIGHTING)`: Schaltet die Beleuchtung ein.
+### Umsetzung: Die Klassenstruktur
 
----
+- **`Scene`**: Das Hauptobjekt. Enthält den `Root`-Knoten und globale Einstellungen wie Lichter und Hintergrundfarbe.
+- **`Node`**: Die abstrakte Basisklasse für alle Knoten. Definiert eine Liste von `Transforms` und eine `Draw`-Methode.
+- **`Group`**: Ein `Node`, der eine Liste von Kindern (`Node`s) besitzt. Erzeugt die Baumstruktur.
+- **`Primitive` / `Volume`**: Konkrete `Node`-Typen, die Geometrie darstellen (Blattknoten).
+- **`Transform`**: Basisklasse für `Translate`, `Rotate`, `Scale`.
 
-### Die Grafik-Pipeline (Fixed-Function, stark vereinfacht)
+</div>
+<div>
 
-Der Weg von einem 3D-Punkt (Vertex) zu einem farbigen Pixel auf dem Bildschirm.
+![UML-Diagramm des Szenengraphen](../../Quellen/WS25/VorlageSzenengraph3D/Model.Scene.svg)
 
-1.  **Vertex-Transformation**: Der Vertex wird mit der ModelView- und Projection-Matrix transformiert.
-2.  **Primitive Assembly**: Aus den transformierten Vertices werden Primitiven (Linien, Dreiecke) zusammengesetzt.
-3.  **Rasterisierung**: Die Primitiven werden in Fragmente (Pixel-Kandidaten) umgewandelt.
-4.  **Fragment-Verarbeitung**: Beleuchtung und Texturierung werden angewendet, um die endgültige Farbe des Fragments zu bestimmen.
-5.  **Per-Fragment Operations**: Tiefentest, Blending, etc. entscheiden, ob und wie das Fragment in den Framebuffer geschrieben wird.
+</div>
+</div>
 
 ---
 
-### Framebuffer: Die "Leinwand" der GPU
+### Traversierung des Graphen
 
-Der **Framebuffer** ist ein Speicherbereich auf der GPU, der alle für die Darstellung relevanten Informationen enthält.
-
-- **Color Buffer**: Speichert die Farbinformation (RGBA) für jedes einzelne Pixel des Ausgabebildes. Das ist das, was man am Ende sieht.
-- **Depth Buffer (Z-Buffer)**: Speichert für jedes Pixel einen Tiefenwert (meist zwischen 0.0 und 1.0).
-- **Stencil Buffer**: Ein weiterer Buffer für komplexere Effekte (hier nicht im Detail behandelt).
-
----
-
-### Der Depth Buffer: Verdeckungen lösen
-
-- **Problem**: Wenn wir zwei Dreiecke zeichnen, die sich überlappen, welches ist vorne?
-- **Lösung**: Der **Tiefentest (Depth Test)**.
-- Muss explizit aktiviert werden: `glEnable(GL_DEPTH_TEST)`.
-- **Funktionsweise**:
-    1. Bevor ein Pixel gezeichnet wird, wird sein Z-Wert (Abstand zur Kamera) mit dem bereits im Depth Buffer gespeicherten Z-Wert an dieser Pixel-Position verglichen.
-    2. Ist der neue Z-Wert **kleiner** (näher an der Kamera), wird das Pixel gezeichnet und der Depth Buffer mit dem neuen, kleineren Z-Wert aktualisiert.
-    3. Ist der neue Z-Wert größer, wird das Pixel verworfen (da es von etwas verdeckt wird).
-- **Wichtig**: Der Depth Buffer muss vor jedem neuen Frame gelöscht werden! `glClear(GL_DEPTH_BUFFER_BIT)`.
-
----
-
-### Clearing Buffers
-
-- Vor dem Zeichnen eines neuen Bildes (Frames) müssen die Buffer zurückgesetzt werden.
-- `glClearColor(r, g, b, a)`: Legt die "Löschfarbe" fest (Hintergrundfarbe).
-- `glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)`: Löscht den Color Buffer mit der Löschfarbe und den Depth Buffer auf seinen Maximalwert.
+Das Zeichnen der Szene erfolgt durch eine **rekursive Traversierung** des Baumes, beginnend am Wurzelknoten.
 
 ```csharp
-// In der Render-Methode (wird für jeden Frame aufgerufen)
-var gl = openGLControl.OpenGL;
+public void Draw(OpenGL gl)
+{
+    gl.PushMatrix(); // Aktuellen Zustand der ModelView-Matrix sichern
 
-// 1. Hintergrundfarbe setzen und Buffer löschen
-gl.ClearColor(0.1f, 0.2f, 0.3f, 1.0f); // Dunkelblau
-gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
+    // 1. Alle Transformationen DIESES Knotens anwenden
+    foreach (Transform t in Transforms)
+    {
+        t.Apply(gl);
+    }
 
-// ... hier kommen die Zeichenbefehle ...
+    // 2. Die lokale Geometrie DIESES Knotens zeichnen
+    DrawLocal(gl);
+
+    gl.PopMatrix(); // Gesicherten Zustand wiederherstellen
+}
 ```
 
 ---
 
-### Koordinatensysteme und Transformationen
+### Die `Group`-Klasse
 
-Der Kern der 3D-Grafik: Punkte von einem Koordinatensystem in ein anderes zu überführen.
-
-1.  **Objektkoordinaten (Model Space)**: Die Koordinaten, in denen ein Objekt modelliert wurde (z.B. der Ursprung ist die Mitte des Objekts).
-2.  **Weltkoordinaten (World Space)**: Positioniert die Objekte in der globalen 3D-Szene.
-3.  **Kamerakoordinaten (View Space)**: Transformiert die Welt so, dass die Kamera im Ursprung ist und in die negative Z-Richtung blickt.
-4.  **Clip Space**: Projiziert die 3D-Szene auf einen 2D-Bereich.
-5.  **Bildschirmkoordinaten (Screen Space)**: Skaliert das Ergebnis auf die Pixel des Fensters.
-
----
-
-### Die OpenGL-Matrizen
-
-OpenGL verwaltet die Transformationen mit zwei Hauptmatrizen:
-
-- **Projection Matrix**: Zuständig für die Transformation von Kamera- in den Clip-Space (Schritt 4).
-- **ModelView Matrix**: Zuständig für die Transformation von Objekt- in den Kamera-Space (Schritte 1-3).
-
-Man muss OpenGL sagen, welche Matrix man gerade bearbeiten möchte:
-`glMatrixMode(GL_PROJECTION)` oder `glMatrixMode(GL_MODELVIEW)`.
-
----
-
-### Die Projection Matrix
-
-- Definiert das **Sichtvolumen (Viewing Frustum)**. Alles außerhalb dieses Volumens wird weggeschnitten (clipping).
-- **Perspektivische Projektion (`gluPerspective`)**:
-    - Objekte, die weiter weg sind, erscheinen kleiner.
-    - Erzeugt eine realistische Tiefenwahrnehmung.
-    - Parameter: Öffnungswinkel (fov), Seitenverhältnis (aspect), nahe und ferne Clipping-Ebene (zNear, zFar).
-- **Orthographische Projektion (`glOrtho`)**:
-    - Keine perspektivische Verkürzung, parallele Linien bleiben parallel.
-    - Nützlich für technische Zeichnungen, 2D-Darstellungen oder UI-Elemente.
-
----
-
-### Setup der Projection Matrix
+Die `DrawLocal`-Methode eines `Group`-Knotens ist besonders einfach: Sie ruft lediglich die `Draw`-Methode all ihrer Kinder auf.
 
 ```csharp
-// Typischer Code am Anfang oder bei Größenänderung des Fensters
-var gl = openGLControl.OpenGL;
-gl.MatrixMode(OpenGL.GL_PROJECTION);
-gl.LoadIdentity(); // Matrix zurücksetzen
-
-// Perspektivische Projektion
-// fov=60°, aspect=width/height, near=0.1, far=1000
-gl.Perspective(60.0f, (double)Width / (double)Height, 0.1, 1000.0);
+// Aus der Klasse Group
+protected override void DrawLocal(OpenGL gl)
+{
+    // Rufe die Draw-Methode für alle Kinder auf
+    foreach (Node child in _children.Values)
+    {
+        child.Draw(gl);
+    }
+}
 ```
 
----
-
-### Die ModelView Matrix
-
-- Ist eine Kombination aus **Model-Transformation** und **View-Transformation**.
-- **View-Transformation (`gluLookAt`)**: Definiert die Kamera.
-    - Position der Kamera (eye).
-    - Punkt, auf den die Kamera schaut (center).
-    - "Oben"-Vektor der Kamera (up), typischerweise (0, 1, 0).
-- **Model-Transformation**: Positioniert das Objekt in der Welt.
-    - `glTranslate(x, y, z)`: Verschieben.
-    - `glRotate(angle, x, y, z)`: Rotieren um eine Achse.
-    - `glScale(x, y, z)`: Skalieren.
+Durch diesen rekursiven Aufruf (`Group.Draw` -> `Child.Draw` -> ...) werden die Transformationen korrekt entlang der Baumhierarchie akkumuliert.
 
 ---
 
-### Setup der ModelView Matrix
+### Beispiel: Aufbau einer Szene
+
+So wird in der Vorlage eine einfache Szene aufgebaut:
 
 ```csharp
-// In der Render-Methode
-var gl = openGLControl.OpenGL;
-gl.MatrixMode(OpenGL.GL_MODELVIEW);
-gl.LoadIdentity(); // Matrix zurücksetzen
+// 1. Wurzelknoten erstellen
+Group root = new Group("Root");
 
-// 1. Kamera positionieren (View-Transformation)
-// Kamera bei (5,5,5), schaut auf (0,0,0), Y ist oben
-gl.LookAt(5, 5, 5, 0, 0, 0, 0, 1, 0);
+// 2. Transformationen auf die ganze Szene anwenden
+root.Transforms.Add(new Translate(0, 0, -5)); // Alles nach hinten schieben
+root.Transforms.Add(_rotate); // Eine globale Rotation hinzufügen
 
-// 2. Objekt transformieren (Model-Transformation)
-// Verschiebe das Fachwerk um (1,0,0)
-gl.Translate(1.0f, 0.0f, 0.0f);
-// Rotiere es um 45 Grad um die Y-Achse
-gl.Rotate(45.0f, 0.0f, 1.0f, 0.0f);
+// 3. Geometrie-Knoten erstellen
+Cube cube1 = new Cube("Cube1", 1, 1, 1, Material.RED);
 
-// ... jetzt das Fachwerk zeichnen ...
+// 4. Lokale Transformation auf den Würfel anwenden
+cube1.Transforms.Add(new Translate(0, 0, -2));
+
+// 5. Würfel als Kind zum Wurzelknoten hinzufügen
+root.Add(cube1);
+
+// 6. Szene mit dem Wurzelknoten erstellen
+_scene = new Scene(Color.WHITE, Color.DARKGRAY, root);
 ```
-**Wichtig**: Die Transformationen werden in umgekehrter Reihenfolge angewendet! (Zuerst Skalieren, dann Rotieren, dann Verschieben).
-
----
-
-### Zeichnen von Primitiven
-
-- Der grundlegende Weg, um Geometrie zu definieren.
-- Man beginnt einen Zeichenblock mit `gl.Begin(...)` und beendet ihn mit `gl.End()`.
-- Der Parameter von `gl.Begin` bestimmt, **wie** die folgenden Vertices interpretiert werden.
-
----
-
-### Primitiv-Typen
-
-- `GL_POINTS`: Jeder Vertex ist ein Punkt.
-- `GL_LINES`: Je zwei Vertices bilden eine Linie.
-- `GL_LINE_STRIP`: Die Vertices werden zu einer durchgehenden Linie verbunden.
-- `GL_LINE_LOOP`: Wie `GL_LINE_STRIP`, aber der letzte Vertex wird mit dem ersten verbunden.
-- `GL_TRIANGLES`: Je drei Vertices bilden ein gefülltes Dreieck.
-- `GL_QUADS`: Je vier Vertices bilden ein gefülltes Viereck.
-- `GL_POLYGON`: Die Vertices bilden ein gefülltes Polygon.
-
----
-
-### Beispiel: Ein Dreieck und eine Linie zeichnen
-
-```csharp
-var gl = openGLControl.OpenGL;
-
-// Zeichne eine rote Linie
-gl.Color(1.0f, 0.0f, 0.0f); // Farbe auf Rot setzen
-gl.Begin(OpenGL.GL_LINES);
-    gl.Vertex(0.0f, 0.0f, 0.0f);
-    gl.Vertex(1.0f, 1.0f, 0.0f);
-gl.End();
-
-// Zeichne ein grünes Dreieck
-gl.Color(0.0f, 1.0f, 0.0f); // Farbe auf Grün setzen
-gl.Begin(OpenGL.GL_TRIANGLES);
-    gl.Vertex(0.0f, 0.0f, 0.0f);
-    gl.Vertex(1.0f, 0.0f, 0.0f);
-    gl.Vertex(0.5f, 1.0f, 0.0f);
-gl.End();
-```
-
----
-
-### Beleuchtung
-
-- Ohne Beleuchtung sehen 3D-Objekte flach aus. Die Farbe eines Pixels ist einfach die Grundfarbe, die mit `glColor` gesetzt wurde.
-- Die Beleuchtung simuliert, wie Licht von der Oberfläche eines Objekts reflektiert wird, und erzeugt so den Eindruck von Tiefe und Form.
-- Muss aktiviert werden: `glEnable(GL_LIGHTING)`.
-
----
-
-### Komponenten des Beleuchtungsmodells (Phong)
-
-OpenGL verwendet ein einfaches, aber effektives Beleuchtungsmodell, das sich aus drei Komponenten zusammensetzt:
-
-- **Ambient (Umgebungslicht)**: Eine Grundhelligkeit, die von überall zu kommen scheint. Verhindert, dass Flächen im Schatten komplett schwarz sind.
-- **Diffuse (diffuses Licht)**: Licht von einer gerichteten Lichtquelle, das von einer matten Oberfläche in alle Richtungen gleichmäßig gestreut wird. Die Helligkeit hängt vom Winkel zwischen Lichtstrahl und Oberflächennormale ab.
-- **Specular (Glanzlicht)**: Erzeugt Glanzlichter auf glatten Oberflächen. Die Helligkeit hängt zusätzlich von der Kameraposition ab.
-
----
-
-### Was wird für die Beleuchtung benötigt?
-
-1.  **Lichtquellen aktivieren und definieren**:
-    - `glEnable(GL_LIGHT0)`
-    - `glLightfv(GL_LIGHT0, GL_POSITION, ...)`: Position der Lichtquelle.
-    - `glLightfv(GL_LIGHT0, GL_DIFFUSE, ...)`: Farbe des diffusen Lichts.
-2.  **Materialien für die Objekte definieren**:
-    - `glMaterialfv(GL_FRONT, GL_DIFFUSE, ...)`: Wie reflektiert das Material diffuses Licht?
-    - `glMaterialfv(GL_FRONT, GL_SPECULAR, ...)`: Wie stark glänzt das Material?
-3.  **Normalenvektoren für die Vertices definieren**:
-    - Der **Normalenvektor** (kurz: Normale) ist ein Vektor, der senkrecht auf der Oberfläche steht.
-    - Er ist **entscheidend** für die Berechnung, wie viel Licht eine Fläche empfängt.
-    - `glNormal3f(nx, ny, nz)`
-
----
-
-### Normalenvektoren
-
-- Für eine flache Oberfläche (z.B. ein Dreieck) ist die Normale für alle Vertices gleich. Sie kann aus zwei Kantenvektoren des Dreiecks per Kreuzprodukt berechnet werden.
-- Für gekrümmte Oberflächen hat jeder Vertex seine eigene Normale (Vertex Normal), um weiche Übergänge zu simulieren (Gouraud Shading).
-- OpenGL muss die Normalen kennen, **bevor** der Vertex definiert wird.
-- `glEnable(GL_NORMALIZE)`: Sorgt dafür, dass die Normalenvektoren immer die Länge 1 haben, auch wenn das Objekt skaliert wird.
-
----
-
-### Beispiel: Beleuchtetes Dreieck
-
-```csharp
-var gl = openGLControl.OpenGL;
-
-gl.Enable(GL_LIGHTING);
-gl.Enable(GL_LIGHT0);
-
-// Material für das Dreieck (z.B. grüner Kunststoff)
-float[] mat_diffuse = { 0.1f, 0.8f, 0.2f, 1.0f };
-gl.Material(OpenGL.GL_FRONT, OpenGL.GL_DIFFUSE, mat_diffuse);
-
-gl.Begin(OpenGL.GL_TRIANGLES);
-    // Normale für die ganze Fläche (zeigt aus dem Bildschirm heraus)
-    gl.Normal(0.0f, 0.0f, 1.0f);
-
-    gl.Vertex(0.0f, 0.0f, 0.0f);
-    gl.Vertex(1.0f, 0.0f, 0.0f);
-    gl.Vertex(0.5f, 1.0f, 0.0f);
-gl.End();
-```
-
----
-
-## Abschnitt 3.3: Einführung in Szenengraphen
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- TODO
-
----
-
-TODO Folien zu Szenengraphen
 
 ---
 
 # Zusammenfassung Kapitel 3
 
-- Die Erweiterung auf **3D** ist konzeptionell einfach, erhöht aber die Größe der Gleichungssysteme.
-- Die **Visualisierung** erfordert eine komplexe **Grafik-Pipeline** (3D) mit Konzepten wie Matrizen, Buffern und Beleuchtung.
-- TODO
+- Die Erweiterung statischer Modelle auf **3D** ist mathematisch eine Erweiterung der Vektoren und Matrizen um eine Dimension.
+- Die **Visualisierung** wird deutlich komplexer und erfordert eine **Grafik-Pipeline** wie die von OpenGL.
+- Ein **Szenengraph** ist eine essentielle Datenstruktur, um komplexe 3D-Szenen hierarchisch zu organisieren und Transformationen logisch zu vererben.
+- Die Traversierung des Graphen mit `glPushMatrix` und `glPopMatrix` sorgt für die korrekte Anwendung der Transformationen auf die jeweiligen Objekte und deren Kinder.
