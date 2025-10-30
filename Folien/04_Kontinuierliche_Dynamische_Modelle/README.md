@@ -670,7 +670,7 @@ Um $y_{k+1}$ und $v_{k+1}$ zu finden, müssen wir bei jedem Zeitschritt dieses $
 
 ---
 
-### Lösung der algebraischen Schleife
+### Analytische Lösung der algebraischen Schleife
 
 Wir müssen die Matrix invertieren:
 $$
@@ -752,310 +752,71 @@ Die Wahl der richtigen Schrittweite ist ein kritischer Kompromiss zwischen Genau
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Konzept der S-Funktionen zur modularen Modellierung
-- Implementierung von Basis-Blöcken (Gain, Sum, Integrator)
-- Modellierung eines Systems durch Verschaltung von Blöcken
-- Zusammenspiel von Solver und Modellblöcken
+- Konzept der `Function`-Klasse als modularer Baustein
+- Implementierung von Basis-Blöcken (Constant, Add, Integrate)
+- Modellierung eines Systems durch eine `Composition`
+- Die Rolle der `Solution`-Klasse (Solver)
+- Ablauf einer Simulations-Schleife
+- Umgang mit algebraischen Schleifen
 
 ---
 
-### Softwarearchitektur für Simulation
+### Die `Function`-Klasse als Basis
 
-Wie können wir komplexe dynamische Systeme am Computer modellieren und simulieren?
-Ein bewährter Ansatz ist die Modularisierung, inspiriert von **Simulink S-Functions**.
+Jede Komponente des Systems wird als eine von der abstrakten Klasse `Function` abgeleitete Klasse implementiert.
 
-**Grundidee:**
-- Jede Komponente des Systems wird als "Blackbox" (ein Block) mit definierten Schnittstellen modelliert.
-- Jeder Block kapselt seine eigenen Zustandsgleichungen.
-- Ein übergeordneter "Solver" (Integrator) kümmert sich um die numerische Lösung der DGLs für das Gesamtsystem.
+```csharp
+abstract class Function
+{
+    // Dimensionen des Blocks
+    public readonly int DimX; // Anzahl Zustände
+    public readonly int DimU; // Anzahl Eingänge
+    public readonly int DimY; // Anzahl Ausgänge
+
+    // Definiert die Anfangswerte der Zustände
+    virtual public void InitializeConditions(double[] x) { }
+    // Berechnet die Ableitungen: dx = f(t, x, u)
+    virtual public void CalculateDerivatives(
+        double t, double[] x, double[] u, double[] dx) { }
+    // Berechnet die Ausgänge: y = g(t, x, u)
+    virtual public void CalculateOutputs(
+        double t, double[] x, double[] u, double[] y) { }
+}
+```
 
 ---
 
-### Struktur einer vereinfachten S-Funktion
+### Beispiel: `ConstantFunction`
+
+Ein Block, der einen konstanten Wert ausgibt. Er hat keine Zustände und keine Eingänge.
 
 <div class="columns">
 <div class="two">
 
-Ein Block, der ein kontinuierliches dynamisches System beschreibt, benötigt typischerweise folgende Methoden:
-
-- `InitializeSizes()`: Definiert die "Größe" des Blocks (Anzahl der Zustände, Ein- und Ausgänge).
-- `InitializeConditions(double[] x0)`: Setzt die Anfangswerte $x_0$ für die Zustände.
-- `Derivatives(double t, double[] x, double[] u, double[] dx)`: Berechnet die Ableitungen der Zustände: $\dot{x} = f(t, x, u)$. **Dies ist das Herzstück des Modells.**
-- `Outputs(double t, double[] x, double[] u, double[] y)`: Berechnet die Ausgänge des Blocks: $y = g(t, x, u)$.
-
-</div>
-<div>
-
-```csharp
-class SFunction {
-
-    int NumContinuousStates
-    int NumInputs
-    int NumOuputs
-
-    void InitializeSizes()
-    void InitializeConditions(...)
-    void Derivatives(...)
-    void Outputs(...)
-
-}
-```
-
-</div>
-</div>
-
----
-
-### Beispiel: S-Funktion für eine Konstante
-
-<div class="columns top">
-<div class="two">
-
-Ein Block, der einen konstanten Wert ausgibt.
-
-- **Eigenschaften:**
-  - Keine Zustände (`NumContinuousStates = 0`)
-  - Keine Eingänge (`NumInputs = 0`)
-  - Ein Ausgang (`NumOutputs = 1`)
-  - Ein Parameter (`Value`)
-
-- **Verhalten:**
-  - Der Ausgang `y` ist immer gleich dem Parameter `Value`.
+- **`DimX = 0`** (keine Zustände)
+- **`DimU = 0`** (keine Eingänge)
+- **`DimY = 1`** (ein Ausgang)
+- **`CalculateOutputs`**: Setzt den Ausgang `y[0]` auf den konstanten `Value`.
+- `CalculateDerivatives` und `InitializeConditions` sind nicht nötig.
 
 </div>
 <div class="two">
 
 ```csharp
-class ConstantBlock : SFunction {
-    // Parameter
-    double Value = 1.0;
+class ConstantFunction : Function
+{
+    public double Value;
 
-    void InitializeSizes() {
-        NumContinuousStates = 0;
-        NumInputs = 0;
-        NumOutputs = 1;
-    }
-
-    void Outputs(double t, 
-                 double[] x,
-                 double[] u,
-                 double[] y) {
-        y[0] = this.Value;
-    }
-}
-```
-
-</div>
-</div>
-
----
-
-### Beispiel: S-Funktion für einen Gain (Verstärkung)
-
-<div class="columns top">
-<div class="two">
-
-Ein Block, der seinen Eingang mit einem konstanten Faktor multipliziert.
-
-- **Eigenschaften:**
-  - Keine Zustände (`NumContinuousStates = 0`)
-  - Ein Eingang (`NumInputs = 1`)
-  - Ein Ausgang (`NumOutputs = 1`)
-  - Ein Parameter (`Gain`)
-  - Direkte Durchleitung (direct feedthrough)
-
-- **Verhalten:**
-  - `y = Gain * u`
-
-</div>
-<div class="two">
-
-```csharp
-class GainBlock : SFunction {
-    // Parameter
-    double Gain = 2.0;
-
-    void InitializeSizes() {
-        NumContinuousStates = 0;
-        NumInputs = 1;
-        NumOutputs = 1;
-    }
-
-    void Outputs(double t, 
-                 double[] x,
-                 double[] u,
-                 double[] y) {
-        y[0] = this.Gain * u[0];
-    }
-}
-```
-
-</div>
-</div>
-
----
-
-### Beispiel: S-Funktion für eine Summe
-
-<div class="columns top">
-<div class="two">
-
-Ein Block, der seine Eingänge addiert oder subtrahiert.
-
-- **Eigenschaften:**
-  - Keine Zustände (`NumContinuousStates = 0`)
-  - Mehrere Eingänge (z.B. `NumInputs = 2`)
-  - Ein Ausgang (`NumOutputs = 1`)
-  - Parameter für die Operationen (z.B. `[+, -]`)
-  - Direkte Durchleitung (direct feedthrough)
-
-- **Verhalten:**
-  - `y = u[0] - u[1]`
-
-</div>
-<div class="two">
-
-```csharp
-class SumBlock : SFunction {
-    // Parameter: z.B. "+" oder "-"
-    string Signs = "+-";
-
-    void InitializeSizes() {
-        NumContinuousStates = 0;
-        NumInputs = 2; // oder mehr
-        NumOutputs = 1;
-    }
-
-    void Outputs(double t, 
-                 double[] x,
-                 double[] u,
-                 double[] y) {
-        double sum = 0.0;
-        // Annahme: Signs.Length == NumInputs
-        for (int i = 0; i < NumInputs; i++) {
-            if (Signs[i] == '+')
-                sum += u[i];
-            else
-                sum -= u[i];
-        }
-        y[0] = sum;
-    }
-}
-```
-
-</div>
-</div>
-
----
-
-### Beispiel: S-Funktion für einen Integrator
-
-<div class="columns top">
-<div class="two">
-
-Der wichtigste Block für dynamische Systeme. Er integriert das Eingangssignal.
-
-- **Eigenschaften:**
-  - Ein Zustand (`NumContinuousStates = 1`)
-  - Ein Eingang (`NumInputs = 1`)
-  - Ein Ausgang (`NumOutputs = 1`)
-
-- **Verhalten:**
-  - Die Ableitung des Zustands ist der Eingang: $\dot{x} = u$
-  - Der Ausgang ist der Zustand: $y = x$
-
-</div>
-<div class="two">
-
-```csharp
-class IntegratorBlock : SFunction {
-    void InitializeSizes() {
-        NumContinuousStates = 1;
-        NumInputs = 1;
-        NumOutputs = 1;
-    }
-    void InitializeConditions(double[] x) {
-        // Setze Anfangswert
-        x[0] = 0.0; 
-    }
-    void Derivatives(double t, 
-                     double[] x,
-                     double[] u,
-                     double[] dx) {
-        // dx/dt = u
-        dx[0] = u[0];
-    }
-    void Outputs(double t, 
-                 double[] x,
-                 double[] u,
-                 double[] y) {
-        // y = x
-        y[0] = x[0];
-    }
-}
-```
-
-</div>
-</div>
-
----
-
-### Beispiel: S-Funktion für das Federpendel
-
-<div class="columns top">
-<div class="two">
-
-```csharp
-// Block-Definition
-class SpringMassDamper {
-    // Parameter
-    double m, k, d;
-
-    // Zustände x = [y, v]
-    // Eingänge u = [F]
-    // Ausgänge y = [y, v, a]
-
-    void InitializeSizes() {
-        NumContinuousStates = 2;
-        NumInputs = 1;
-        NumOutputs = 3;
-    }
-
-    void InitializeConditions(double[] x) {
-        x[0] = 1.0; // y_0
-        x[1] = 0.0; // v_0
-    }
-}
-```
-
-</div>
-<div class="two">
-
-```csharp
-    void Derivatives(double t, 
-                     double[] x,
-                     double[] u,
-                     double[] dx)
+    public ConstantFunction(string name, double value) 
+        : base(name, 0, 0, 1)
     {
-        double y = x[0];
-        double v = x[1];
-        double F = u[0];
-
-        dx[0] = v; // dy/dt
-        dx[1] = (F - k*y - d*v) / m; // dv/dt
+        Value = value;
     }
 
-    void Outputs(double t, 
-                 double[] x,
-                 double[] u,
-                 double[] y)
+    public override void CalculateOutputs(
+        double t, double[] x, double[] u, double[] y)
     {
-        y[0] = x[0]; // Position
-        y[1] = x[1]; // Geschwindigkeit
-        
-        // Beschleunigung ist algebraisch
-        double F = u[0];
-        y[2] = (F - k*x[0] - d*x[1]) / m;
+        y[0] = Value;
     }
 }
 ```
@@ -1065,53 +826,199 @@ class SpringMassDamper {
 
 ---
 
-### Zusammenspiel von Solver und S-Funktionen
+### Beispiel: `AddFunction`
 
-Der Solver (z.B. ein expliziter Euler) orchestriert die Simulation.
+Ein Block, der zwei Eingänge addiert. Er hat keine Zustände. Man spricht von einer **algebraischen Funktion** oder einem Block mit **direct feedthrough**.
 
-1.  **Initialisierung:**
-    - Rufe `InitializeSizes` und `InitializeConditions` für alle Blöcke auf.
-    - Setze $t = t_0$ und $x = x_0$.
-2.  **Zeitschritt-Schleife (für k = 0, 1, 2, ...):**
-    1. **Outputs berechnen:** Rufe für alle Blöcke `Outputs(t, x, u, y)` auf, um die Ausgänge $y_k$ zu erhalten.
-    2. **Verbindungen auflösen:** Die Ausgänge $y_k$ von Block A werden zu den Eingängen $u_k$ von Block B.
-    3. **Ableitungen berechnen:** Rufe für alle Blöcke `Derivatives(t, x, u, dx)` auf, um die Ableitungen $\dot{x}_k$ zu erhalten.
-    4. **Zustände integrieren:** Der Solver berechnet den neuen Zustand $x_{k+1}$ mit der gewählten Methode (z.B. $x_{k+1} = x_k + h \cdot \dot{x}_k$).
-    5. **Zeit fortschreiten:** $t_{k+1} = t_k + h$.
+<div class="columns">
+<div class="two">
 
----
+- **`DimX = 0`** (keine Zustände)
+- **`DimU = 2`** (zwei Eingänge)
+- **`DimY = 1`** (ein Ausgang)
+- **`CalculateOutputs`**: Berechnet die Summe der Eingänge `u[0] + u[1]`.
 
-### Modellierung komplexer Systeme
+</div>
+<div class="two">
 
-Durch die Kombination einfacher S-Funktionen können komplexe Systeme modelliert werden.
+```csharp
+class AddFunction : Function
+{
+    public AddFunction(string name) 
+        : base(name, 0, 2, 1) { }
 
-**Beispiel: Zwei gekoppelte Feder-Masse-Systeme**
+    public override void CalculateOutputs(
+        double t, double[] x, double[] u, double[] y)
+    {
+        y[0] = u[0] + u[1];
+    }
+}
+```
 
-- **Block 1:** Modelliert die erste Masse $m_1$.
-    - Eingang: Kraft von der Kopplungsfeder.
-    - Ausgang: Position $y_1$.
-- **Block 2:** Modelliert die zweite Masse $m_2$.
-    - Eingang: Kraft von der Kopplungsfeder.
-    - Ausgang: Position $y_2$.
-- **Block 3 (algebraisch):** Berechnet die Kraft der Kopplungsfeder.
-    - Eingang: Positionen $y_1, y_2$.
-    - Ausgang: $F_{koppel} = k_{12} (y_2 - y_1)$.
-
-Die Ausgänge werden über die Eingänge der jeweils anderen Blöcke verbunden.
+</div>
+</div>
 
 ---
 
-### Umgang mit algebraischen Schleifen in S-Funktionen
+### Beispiel: `IntegrateFunction`
 
-Was passiert, wenn der Ausgang eines Blocks direkt (ohne Verzögerung durch einen Zustand) auf seinen eigenen Eingang zurückwirkt?
+Der zentrale Block zur Modellierung von Dynamik. Er integriert das Eingangssignal über die Zeit.
 
-`Ausgang y = g(x, u)`
-`Eingang u = y`
+<div class="columns">
+<div class="two">
 
-- **Explizite Solver:** Können dies nicht auflösen. Die Berechnung für den aktuellen Zeitschritt hängt von sich selbst ab. Simulink wirft einen "Algebraic loop" Fehler.
-- **Implizite Solver:** Sind genau dafür gemacht! Sie führen zu einem Gleichungssystem (wie beim impliziten Euler für das Federpendel), das in jedem Zeitschritt gelöst werden muss.
+- **`DimX = 1`** (ein Zustand, der den aktuellen Wert speichert)
+- **`DimU = 1`** (ein Eingang, die Ableitung)
+- **`DimY = 1`** (ein Ausgang, der aktuelle Zustandswert)
+- **`InitializeConditions`**: Setzt den Anfangswert des Zustands.
+- **`CalculateDerivatives`**: $\dot{x} = u$. Die Ableitung des Zustands ist der Eingang.
+- **`CalculateOutputs`**: $y = x$. Der Ausgang ist der aktuelle Wert des Zustands.
 
-Die S-Funktions-Architektur muss dem Solver mitteilen, ob eine solche direkte Abhängigkeit (`direct feedthrough`) vom Eingang zum Ausgang besteht, damit er entsprechend reagieren kann.
+</div>
+<div class="two">
+
+```csharp
+class IntegrateFunction : Function
+{
+    public IntegrateFunction(string name, double startValue) 
+        : base(name, 1, 1, 1) { /* ... */ }
+
+    public override void InitializeConditions(double[] x)
+        => x[0] = StartValue;
+
+    public override void CalculateDerivatives(
+        double t, double[] x, double[] u, double[] dx)
+        => dx[0] = u[0];
+
+    public override void CalculateOutputs(
+        double t, double[] x, double[] u, double[] y)
+        => y[0] = x[0];
+}
+```
+
+</div>
+</div>
+
+---
+
+### Die `Connection`-Klasse
+
+Die `Connection`-Klasse repräsentiert eine einzelne Verbindung zwischen dem Ausgangport einer Quell-Funktion und dem Eingangsport einer Ziel-Funktion.
+
+<div class="columns">
+<div class="two">
+
+- **`Source`**: Die `Function`-Instanz, von der das Signal kommt.
+- **`Output`**: Der Index des Ausgangsports der `Source`-Funktion.
+- **`Target`**: Die `Function`-Instanz, zu der das Signal geht.
+- **`Input`**: Der Index des Eingangsports der `Target`-Funktion.
+
+</div>
+<div class="two">
+
+```csharp
+class Connection
+{
+    public Function Source;
+    public int Output;
+
+    public Function Target;
+    public int Input;
+
+    public Connection(
+        Function source, 
+        int output, 
+        Function target, 
+        int input)
+    {
+        // ...
+    }
+}
+```
+
+</div>
+</div>
+
+---
+
+### Die `Composition`-Klasse
+
+Das Gesamtmodell wird in einer `Composition`-Klasse zusammengebaut.
+
+- Sie enthält eine Liste aller `Function`-Instanzen.
+- Sie enthält eine Liste aller `Connection`-Instanzen, die Ausgänge mit Eingängen verbinden.
+
+```csharp
+class Composition
+{
+    public List<Function> Functions;
+    public List<Connection> Connections;
+
+    public void AddFunction(Function f) { /* ... */ }
+
+    public void AddConnection(
+        Function sourceFunc, int outputIdx, 
+        Function targetFunc, int inputIdx) 
+    { /* ... */ }
+}
+```
+
+---
+
+### Die `Solution`-Klasse (Solver)
+
+Die `Solution`-Klasse ist für die Durchführung der Simulation verantwortlich.
+
+- Sie hält die `Composition` (das Modell).
+- Sie verwaltet die Daten-Arrays für alle Blöcke:
+  - `X`: Zustände / `D`: Ableitungen (`dx/dt`)
+  - `U`: Eingänge / `Y`: Ausgänge
+- Die `Solve`-Methode implementiert den eigentlichen Algorithmus (z.B. Euler explizit).
+
+```csharp
+abstract class Solution
+{
+    public Composition Composition;
+    
+    public Dictionary<Function, double[]> X, D, U, Y;
+
+    public abstract void Solve(double step, double tmax);
+}
+```
+
+---
+
+### Der Simulations-Loop (ohne Lösung von algebraischen Schleifen)
+
+Der Solver in `EulerExplicitSolution` führt die folgenden Schritte aus:
+
+1.  **Initialisierung**: `InitializeConditions` aller Blöcke aufrufen.
+2.  **Zeitschleife** (`while t <= tmax`):
+    a. **Bereitschafts-Flags zurücksetzen.**
+    b. **Topologische Sortierung**: Finde eine ausführbare Reihenfolge der Blöcke.
+       - Starte mit Blöcken ohne Eingänge (z.B. `ConstantFunction`).
+       - Berechne deren `Outputs`.
+       - Leite die Ausgänge an die Eingänge der nächsten Blöcke weiter (`ForwardOutputs`).
+       - Wiederhole, bis alle `Outputs` für den Zeitpunkt `t` berechnet sind.
+
+    c. **Ableitungen berechnen**: Rufe `CalculateDerivatives` für alle Blöcke auf.
+    d. **Zustände integrieren**: $x_{k+1} = x_k + h \cdot \dot{x}_k$.
+    e. **Zeit erhöhen**: $t = t + h$.
+
+---
+
+### Umgang mit algebraischen Schleifen
+
+Was passiert, wenn der Ausgang eines Blocks auf seinen eigenen Eingang zurückwirkt?
+
+- Der einfache `EulerExplicitSolution` kann dies nicht lösen und wirft eine "Algebraische Schleife erkannt!"-Exception.
+- Der `EulerExplicitLoopSolution` implementiert eine Lösungsstrategie:
+  1.  Wenn eine Schleife erkannt wird, wird ein Eingang der Schleife zu einem "GuessMaster".
+  2.  Für diesen Eingang wird ein Wert **geraten** (z.B. 0).
+  3.  Die Werte werden durch die Schleife propagiert, bis am "GuessMaster" wieder ein Wert ankommt.
+  4.  Die Differenz zwischen geratenem und zurückkommendem Wert ist der **Fehler**.
+  5.  Der geratene Wert wird basierend auf dem Fehler angepasst (z.B. mit einem kleinen Schritt in die richtige Richtung).
+  6.  Schritte 3-5 werden wiederholt, bis der Fehler klein genug ist.
 
 ---
 
