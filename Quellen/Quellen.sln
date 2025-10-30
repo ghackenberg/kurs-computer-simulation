@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElastischesFachwerk3D", "WS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFunctionContinuous", "WS25\SFunctionContinuous\SFunctionContinuous.csproj", "{4570C25E-6E81-4A83-B209-3DC40B79DAF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageSzenengraph3D", "WS25\VorlageSzenengraph3D\VorlageSzenengraph3D.csproj", "{D0AF0298-6D27-4FFA-ABC6-019CCB2BD906}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{4570C25E-6E81-4A83-B209-3DC40B79DAF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4570C25E-6E81-4A83-B209-3DC40B79DAF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4570C25E-6E81-4A83-B209-3DC40B79DAF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0AF0298-6D27-4FFA-ABC6-019CCB2BD906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0AF0298-6D27-4FFA-ABC6-019CCB2BD906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0AF0298-6D27-4FFA-ABC6-019CCB2BD906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0AF0298-6D27-4FFA-ABC6-019CCB2BD906}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{93B2D1CF-7708-494F-8302-73B39061CC42} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 		{7E1D649C-286F-44FE-B4CD-4DBD92465B66} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 		{4570C25E-6E81-4A83-B209-3DC40B79DAF1} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
+		{D0AF0298-6D27-4FFA-ABC6-019CCB2BD906} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B78BB052-30AD-4804-A50D-523BA6002BC8}
