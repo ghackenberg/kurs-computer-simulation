@@ -237,6 +237,31 @@ gl.Enable(OpenGL.GL_LIGHTING);
 
 ---
 
+<div class="columns">
+<div>
+
+### Das Phong-Beleuchtungsmodell
+
+Die Farbe eines Punktes auf einer Oberfläche wird als Summe von drei Komponenten berechnet:
+
+$I_{f} = I_{a} + I_{d} + I_{s}$
+
+- **Ambient**: Konstante Grundhelligkeit, simuliert indirektes Licht.
+- **Diffuse**: Helligkeit basierend auf dem Winkel des Lichteinfalls, simuliert matte Oberflächen.
+- **Specular**: Glanzlicht, das von der Kameraposi-tion abhängt, simuliert glänzende Oberflächen.
+
+Jede dieser Komponenten wird für jede Lichtquelle berechnet und aufsummiert.
+
+</div>
+<div>
+
+![width:900px](https://upload.wikimedia.org/wikipedia/commons/6/6b/Phong_components_version_4.png)
+
+</div>
+</div>
+
+---
+
 ### Globales Umgebungslicht
 
 Umgebungslicht (*Ambient Light*) sorgt dafür, dass auch die nicht direkt von einer Lichtquelle angestrahlten Flächen eines Objekts nicht komplett schwarz sind. Es simuliert indirekte Beleuchtung.
@@ -268,31 +293,6 @@ float[] lightDiffuse = { 1, 1, 1, 1 };  // Helles, weißes diffuses Licht
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, lightPosition);
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE, lightDiffuse);
 ```
-
----
-
-<div class="columns">
-<div>
-
-### Das Phong-Beleuchtungsmodell
-
-Die Farbe eines Punktes auf einer Oberfläche wird als Summe von drei Komponenten berechnet:
-
-$I_{f} = I_{a} + I_{d} + I_{s}$
-
-- **Ambient**: Konstante Grundhelligkeit, simuliert indirektes Licht.
-- **Diffuse**: Helligkeit basierend auf dem Winkel des Lichteinfalls, simuliert matte Oberflächen.
-- **Specular**: Glanzlicht, das von der Kameraposi-tion abhängt, simuliert glänzende Oberflächen.
-
-Jede dieser Komponenten wird für jede Lichtquelle berechnet und aufsummiert.
-
-</div>
-<div>
-
-![width:900px](https://upload.wikimedia.org/wikipedia/commons/6/6b/Phong_components_version_4.png)
-
-</div>
-</div>
 
 ---
 
@@ -431,6 +431,36 @@ gl.ShadeModel(OpenGL.GL_SMOOTH);
 <div>
 
 ![width:1000px](https://xoax.net/sub_cpp/crs_opengl/Lesson5/Image2.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO Beschreibung von Flat Shading. Zusammenhang mit Vertex-Normalen
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/ShadeModel_Flat.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO Beschreibung von Smooth Shading. Zusammenhang mit Vertex-Normalen
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/ShadeModel_Smooth.svg)
 
 </div>
 </div>
