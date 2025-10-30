@@ -1,0 +1,34 @@
+classDiagram
+
+    class Primitive {
+        <<Abstract>>
+    }
+
+    class Volume {
+        <<Abstract>>
+    }
+
+    class Material {
+        +Ambient : Color
+        +Diffuse : Color
+        +Specular : Color
+        +Apply(gl : OpenGL) void
+    }
+
+    class Color {
+        +Red : float
+        +Green : float
+        +Blue : float
+        +Alpha : float
+    }
+
+    Primitive *-- "*" Material : -materials
+    
+    Volume *-- "1" Material : +Material
+
+    Material *-- Color : +Ambient
+    Material *-- Color : +Diffuse
+    Material *-- Color : +Specular
+
+    style Primitive fill:white
+    style Volume fill:white

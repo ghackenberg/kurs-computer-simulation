@@ -1,0 +1,16 @@
+classDiagram
+
+    class Vertex {
+        +Vector : Vector
+        +Apply(gl : OpenGL) void
+    }
+
+    class Vector {
+    }
+
+    Primitive *-- Vertex : -vertices
+
+    Vertex *-- Vector : +Vector
+
+    style Primitive fill:white
+    style Vector fill:white

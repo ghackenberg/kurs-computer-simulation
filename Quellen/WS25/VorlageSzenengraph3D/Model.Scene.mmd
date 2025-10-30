@@ -1,0 +1,66 @@
+classDiagram
+
+    class Scene {
+        +Clear : Color
+        +Ambient : Color
+        +Initialize(gl : OpenGL) void
+        +Draw(gl : OpenGL) void
+    }
+
+    class Transform {
+        <<Abstract>>
+        +Apply(gl : OpenGL) void*
+        +Invert() Transform*
+    }
+
+    class Light {
+        +Position : Vector
+        +Ambient : Color
+        +Diffuse : Color
+        +Specular : Color
+        +Apply(gl : OpenGL) void
+    }
+
+    class Node {
+        <<Abstract>>
+        +Name : string
+        +Transforms : List~Transform~
+        +Draw(gl : OpenGL) void
+        #DrawLocal(gl : OpenGL) void*
+    }
+
+    class Primitive {
+        <<Abstract>>
+        -beginMode : uint
+        -vertices : List~Vertex~
+        -materials : List~Material~
+        +Add(v : Vertex, m : Material) void
+        +Get(i : int) Tuple~Vertex, Material~
+        +Set(i : int, v : Vertex, m : Material) void
+        +Remove(i : int) void
+        #DrawLocal(gl : OpenGL) void
+    }
+
+    class Volume {
+        <<Abstract>>
+        +Material : Material
+    }
+
+    class Group {
+        #DrawLocal(gl : OpenGL) void
+    }
+
+    Scene *-- Light: +Lights
+    Scene *-- Node: +Root
+
+    Transform --* Node : +Transforms
+
+    Node <|-- Primitive
+    Node <|-- Volume
+    Node <|-- Group
+
+    Node --* Group: +Children
+
+    style Transform fill:yellow,stroke:orange
+    style Primitive fill:yellow,stroke:orange
+    style Volume fill:yellow,stroke:orange

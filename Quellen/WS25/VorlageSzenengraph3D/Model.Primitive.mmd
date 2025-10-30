@@ -1,0 +1,26 @@
+classDiagram
+
+    direction LR
+
+    class Primitive {
+        <<Abstract>>
+    }
+
+    class Lines {
+        +Width : float
+        #DrawLocal(gl : OpenGL) void
+    }
+
+    class Triangles {
+
+    }
+
+    class Quads {
+
+    }
+
+    Primitive <|-- Lines
+    Primitive <|-- Triangles
+    Primitive <|-- Quads
+
+    style Primitive fill:white

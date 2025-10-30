@@ -1,0 +1,36 @@
+classDiagram
+
+    direction LR
+
+    class Rotate {
+        +Axis : Vector
+        +Angle : float
+        +Apply(gl : OpenGL) void
+        +Invert() Transform
+    }
+
+    class Translate {
+        +Delta : Vector
+        +Apply(gl : OpenGL) void
+        +Invert() Transform
+    }
+
+    class Scale {
+        +Factor : Vector
+        +Apply(gl : OpenGL) void
+        +Invert() Transform
+    }
+
+    class Vector {
+    }
+
+    Transform <|-- Rotate
+    Transform <|-- Translate
+    Transform <|-- Scale
+
+    Rotate *-- Vector : Axis
+    Translate *-- Vector : Delta
+    Scale *-- Vector : Factor
+
+    style Transform fill:white
+    style Vector fill:white

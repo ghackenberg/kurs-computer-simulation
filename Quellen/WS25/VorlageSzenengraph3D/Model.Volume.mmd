@@ -1,0 +1,42 @@
+classDiagram
+
+    direction LR
+
+    class Volume {
+        <<Abstract>>
+    }
+
+    class Cube {
+        +Size : Vector
+        -material : Material
+        -scale : Scale
+        -quads : Quads
+        #DrawLocal(gl : OpenGL) void
+    }
+
+    class Sphere {
+        +Radius : float
+        #DrawLocal(gl : OpenGL) void
+    }
+
+    class Cone {
+        +Radius1 : float
+        +Radius2 : float
+        +Height : float
+        #DrawLocal(gl : OpenGL) void
+    }
+
+    Volume <|-- Cube
+    Volume <|-- Sphere
+    Volume <|-- Cone
+
+    Cube *-- Vector : +Size
+    Cube *-- Material : -material
+    Cube *-- Scale : -scale
+    Cube *-- Quads : -quads
+
+    style Volume fill:white
+    style Vector fill:white
+    style Material fill:white
+    style Scale fill:white
+    style Quads fill:white
