@@ -317,7 +317,7 @@ $$ x_{k+1} = x_k + h \cdot f(t_k, x_k) $$
 </div>
 <div>
 
-![width:2000px](./Euler%20-%20Explizit.svg)
+![width:2000px](./Diagramme/Euler%20-%20Explizit.svg)
 
 </div>
 </div>
@@ -391,7 +391,7 @@ $$ x_{k+1} = x_k + h \cdot f(t_{k+1}, x_{k+1}) $$
 </div>
 <div>
 
-![width:1000px](./Euler%20-%20Implizit.svg)
+![width:1000px](./Diagramme/Euler%20-%20Implizit.svg)
 
 </div>
 </div>
