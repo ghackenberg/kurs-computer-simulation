@@ -73,15 +73,57 @@ Die grundlegenden physikalischen Prinzipien (Kräftegleichgewicht, Hooke\'sches 
 
 ---
 
-TODO Folie zu Kräftegleichgewicht in einem Knoten
+### Kräftegleichgewicht im 3D-Knoten
+
+Für jeden freien Knoten im Fachwerk muss die Summe aller Kräfte in jeder Raumrichtung null ergeben. Ein Stab $j$, der am Knoten $i$ angreift, übt eine Kraft $S_j$ aus, die entlang der Stabachse wirkt.
+
+- **Stabvektor**: $L_j = P_k - P_i$ (Vektor von Knoten $i$ zu Knoten $k$)
+- **Einheitsvektor**: $e_j = \frac{L_j}{|L_j|}$
+- **Kraftvektor**: $F_j = S_j \cdot e_j = S_j \cdot \begin{pmatrix} \cos(\alpha_x) \\ \cos(\alpha_y) \\ \cos(\alpha_z) \end{pmatrix}$
+
+Das Gleichgewicht am Knoten $i$ lautet dann:
+
+$\sum_{j} F_j + F_{ext,i} = 0 \implies \begin{cases} \sum_j S_j \cdot e_{j,x} + F_{ext,i,x} = 0 \\ \sum_j S_j \cdot e_{j,y} + F_{ext,i,y} = 0 \\ \sum_j S_j \cdot e_{j,z} + F_{ext,i,z} = 0 \end{cases}$
 
 ---
 
-TODO Folie zu Matrixdarstellung des Kräftegleichgewichts in einem Knoten
+### Matrixdarstellung für einen Knoten
+
+Die drei Gleichgewichtsgleichungen für einen Knoten lassen sich in Matrixform schreiben. Für einen Knoten, an dem die Stäbe 1, 2 und 3 angreifen, sieht das so aus:
+
+$$
+\begin{pmatrix}
+e_{1,x} & e_{2,x} & e_{3,x} \\
+e_{1,y} & e_{2,y} & e_{3,y} \\
+e_{1,z} & e_{2,z} & e_{3,z}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+S_1 \\ S_2 \\ S_3
+\end{pmatrix}
+=
+\begin{pmatrix}
+-F_{ext,x} \\ -F_{ext,y} \\ -F_{ext,z}
+\end{pmatrix}
+$$
+
+- Die Matrix enthält die x-, y- und z-Komponenten der Einheitsvektoren der Stäbe.
+- Der Vektor $S$ enthält die unbekannten Stabkräfte.
+- Der Vektor auf der rechten Seite enthält die externen Kräfte.
 
 ---
 
-TODO Folie zu Gleichungssystem für mehrere Knoten
+### Globales Gleichungssystem
+
+Stellt man die Gleichungen für alle $k$ Knoten auf, erhält man ein großes lineares Gleichungssystem mit $3k$ Gleichungen.
+
+$A \cdot s = f_{ext}$
+
+- **$A$ (Geometriematrix)**: Eine $3k \times s$ Matrix, die die Geometrie des Fachwerks beschreibt (die Richtungskosinusse der Stäbe). Jede Spalte entspricht einem Stab, jede Zeile einer Gleichgewichtsrichtung an einem Knoten.
+- **$s$ (Stabkraftvektor)**: Ein Vektor der Länge $s$ mit den unbekannten Stabkräften.
+- **$f_{ext}$ (Lastvektor)**: Ein Vektor der Länge $3k$, der die externen Kräfte an allen Knoten enthält.
+
+Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A$ quadratisch ($s \times s$) und kann gelöst werden.
 
 ---
 
@@ -440,7 +482,12 @@ gl.ShadeModel(OpenGL.GL_SMOOTH);
 <div class="columns">
 <div>
 
-TODO Beschreibung von Flat Shading. Zusammenhang mit Vertex-Normalen
+### Flat Shading
+
+- Die Beleuchtungsrechnung wird nur **einmal pro Polygon** (z.B. Dreieck) durchgeführt.
+- Das gesamte Polygon wird mit einer einzigen, konstanten Farbe gefüllt.
+- Das Ergebnis sind klar sichtbare Kanten zwischen den Polygonen, was zu einem "facettierten" Aussehen führt.
+- Für Flat Shading wird typischerweise die Normale der Fläche (`Face Normal`) verwendet, die für alle Vertices des Polygons gleich ist.
 
 </div>
 <div>
@@ -455,7 +502,12 @@ TODO Beschreibung von Flat Shading. Zusammenhang mit Vertex-Normalen
 <div class="columns">
 <div>
 
-TODO Beschreibung von Smooth Shading. Zusammenhang mit Vertex-Normalen
+### Smooth Shading (Gouraud Shading)
+
+- Die Beleuchtungsrechnung wird **für jeden Vertex** des Polygons einzeln durchgeführt.
+- Dabei wird die individuelle Normale jedes Vertex (`Vertex Normal`) verwendet.
+- Die resultierenden Farben an den Eckpunkten werden dann über die Fläche des Polygons interpoliert.
+- Das Ergebnis ist ein weicher, kontinuierlicher Farbübergang, der die Illusion einer gekrümmten Oberfläche erzeugt.
 
 </div>
 <div>
@@ -535,7 +587,19 @@ Geometrie wird innerhalb von `gl.Begin()` und `gl.End()` definiert. Der Paramete
 <div class="columns">
 <div>
 
-TODO Folie zu `GL_POINTS`
+### `GL_POINTS`
+
+Zeichnet für jeden übergebenen Vertex einen einzelnen Punkt. Die Größe der Punkte kann mit `gl.PointSize()` eingestellt werden.
+
+```csharp
+gl.Begin(OpenGL.GL_POINTS);
+
+gl.Vertex(1, 1, 0); // Punkt 1
+gl.Vertex(2, 2, 0); // Punkt 2
+gl.Vertex(3, 1, 0); // Punkt 3
+
+gl.End();
+```
 
 </div>
 <div>
@@ -550,7 +614,21 @@ TODO Folie zu `GL_POINTS`
 <div class="columns">
 <div>
 
-TODO Folie zu `GL_LINES`
+### `GL_LINES`
+
+Zeichnet eine Serie von separaten Linien. Jeweils zwei aufeinanderfolgende Vertices definieren eine Linie. Ein dritter Vertex würde mit dem vierten eine neue, unabhängige Linie bilden.
+
+```csharp
+gl.Begin(OpenGL.GL_LINES);
+
+gl.Vertex(1, 1, 0);
+gl.Vertex(2, 2, 0); // Linie 1-2
+
+gl.Vertex(3, 1, 0);
+gl.Vertex(4, 2, 0); // Linie 3-4
+
+gl.End();
+```
 
 </div>
 <div>
@@ -565,7 +643,20 @@ TODO Folie zu `GL_LINES`
 <div class="columns">
 <div>
 
-TODO Folie zu `GL_LINE_STRIP`
+### `GL_LINE_STRIP`
+
+Zeichnet eine zusammenhängende Kette von Linien. Der Endpunkt einer Linie ist der Startpunkt der nächsten.
+
+```csharp
+gl.Begin(OpenGL.GL_LINE_STRIP);
+
+gl.Vertex(1, 1, 0);
+gl.Vertex(2, 2, 0); // Linie 1-2
+gl.Vertex(3, 1, 0); // Linie 2-3
+gl.Vertex(4, 2, 0); // Linie 3-4
+
+gl.End();
+```
 
 </div>
 <div>
@@ -580,7 +671,20 @@ TODO Folie zu `GL_LINE_STRIP`
 <div class="columns">
 <div>
 
-TODO Folie zu `GL_LINE_LOOP`
+### `GL_LINE_LOOP`
+
+Funktioniert wie `GL_LINE_STRIP`, aber am Ende wird zusätzlich eine Linie vom letzten zum ersten Vertex gezeichnet, um die Form zu schließen.
+
+```csharp
+gl.Begin(OpenGL.GL_LINE_LOOP);
+
+gl.Vertex(1, 1, 0);
+gl.Vertex(2, 2, 0); // Linie 1-2
+gl.Vertex(3, 1, 0); // Linie 2-3
+gl.Vertex(4, 2, 0); // Linie 3-4
+
+gl.End(); // Linie 4-1
+```
 
 </div>
 <div>
@@ -595,7 +699,23 @@ TODO Folie zu `GL_LINE_LOOP`
 <div class="columns">
 <div>
 
-TODO Folie zu `GL_TRIANGLES`
+### `GL_TRIANGLES`
+
+Zeichnet eine Serie von separaten, gefüllten Dreiecken. Jeweils drei aufeinanderfolgende Vertices definieren ein Dreieck.
+
+```csharp
+gl.Begin(OpenGL.GL_TRIANGLES);
+
+gl.Vertex(1, 1, 0);
+gl.Vertex(2, 2, 0);
+gl.Vertex(1, 2, 0); // Dreieck 1
+
+gl.Vertex(3, 1, 0);
+gl.Vertex(4, 2, 0);
+gl.Vertex(3, 2, 0); // Dreieck 2
+
+gl.End();
+```
 
 </div>
 <div>
@@ -610,7 +730,21 @@ TODO Folie zu `GL_TRIANGLES`
 <div class="columns">
 <div>
 
-TODO Folie zu `GL_TRIANGLE_STRIP`
+### `GL_TRIANGLE_STRIP`
+
+Zeichnet eine Kette von verbundenen Dreiecken. Jeder neue Vertex (ab dem dritten) bildet mit seinen beiden Vorgängern ein neues Dreieck. Dies ist effizienter als `GL_TRIANGLES`, da weniger Vertices übertragen werden müssen.
+
+```csharp
+gl.Begin(OpenGL.GL_TRIANGLE_STRIP);
+
+gl.Vertex(1, 1, 0);
+gl.Vertex(2, 1, 0);
+gl.Vertex(1, 2, 0); // Dreieck 1: V1-V2-V3
+gl.Vertex(2, 2, 0); // Dreieck 2: V2-V3-V4
+gl.Vertex(3, 2, 0); // Dreieck 3: V3-V4-V5
+
+gl.End();
+```
 
 </div>
 <div>
@@ -625,7 +759,21 @@ TODO Folie zu `GL_TRIANGLE_STRIP`
 <div class="columns">
 <div>
 
-TODO Folie zu `GL_TRIANGLE_FAN`
+### `GL_TRIANGLE_FAN`
+
+Zeichnet einen Fächer von Dreiecken, die sich alle den ersten Vertex teilen. Jeder neue Vertex (ab dem zweiten) bildet mit seinem Vorgänger und dem allerersten Vertex ein neues Dreieck. Ideal für Kreise oder Kegelspitzen.
+
+```csharp
+gl.Begin(OpenGL.GL_TRIANGLE_FAN);
+
+gl.Vertex(0, 0, 0);
+gl.Vertex(2, 0, 0);
+gl.Vertex(1, 1, 0); // Dreieck 1: V1-V2-V3
+gl.Vertex(0, 2, 0); // Dreieck 2: V1-V3-V4
+gl.Vertex(-1, 1, 0);// Dreieck 3: V1-V4-V5
+
+gl.End();
+```
 
 </div>
 <div>
@@ -640,7 +788,20 @@ TODO Folie zu `GL_TRIANGLE_FAN`
 <div class="columns">
 <div>
 
-TODO Folie zu `GL_QUADS`
+### `GL_QUADS`
+
+Zeichnet eine Serie von separaten, gefüllten Vierecken. Jeweils vier aufeinanderfolgende Vertices definieren ein Viereck. Die Vertices müssen konvex und koplanar sein.
+
+```csharp
+gl.Begin(OpenGL.GL_QUADS);
+
+gl.Vertex(1, 1, 0);
+gl.Vertex(2, 1, 0);
+gl.Vertex(2, 2, 0);
+gl.Vertex(1, 2, 0); // Viereck 1
+
+gl.End();
+```
 
 </div>
 <div>
@@ -655,7 +816,22 @@ TODO Folie zu `GL_QUADS`
 <div class="columns">
 <div>
 
-TODO Folie zu `GL_QUAD_STRIP`
+### `GL_QUAD_STRIP`
+
+Zeichnet eine Kette von verbundenen Vierecken. Jedes neue Paar von Vertices bildet mit dem vorherigen Paar ein neues Viereck.
+
+```csharp
+gl.Begin(OpenGL.GL_QUAD_STRIP);
+
+gl.Vertex(1, 1, 0);
+gl.Vertex(2, 1, 0);
+gl.Vertex(1, 2, 0);
+gl.Vertex(2, 2, 0); // Viereck 1: V1-V2-V4-V3
+gl.Vertex(1, 3, 0);
+gl.Vertex(2, 3, 0); // Viereck 2: V3-V4-V6-V5
+
+gl.End();
+```
 
 </div>
 <div>
@@ -802,7 +978,13 @@ public void Draw(OpenGL gl)
 <div class="columns">
 <div class="two">
 
-Folie zu Klasse `Transform`
+### Klasse `Transform`
+
+Die abstrakte Klasse `Transform` ist die Basis für alle Transformationen im Szenengraphen.
+
+- Sie definiert eine einzige abstrakte Methode: `Apply(OpenGL gl)`.
+- Jede konkrete Transformations-Klasse (`Translate`, `Rotate`, `Scale`) implementiert diese Methode, um den entsprechenden OpenGL-Befehl aufzurufen.
+- Ein `Node` im Szenengraphen besitzt eine Liste von `Transform`-Objekten.
 
 </div>
 <div>
@@ -814,15 +996,45 @@ Folie zu Klasse `Transform`
 
 ---
 
-TODO Folie zu Klasse `Translate` (`Delta`)
+<div class="columns top">
+<div>
+
+### Klasse `Translate`
+
+Die Klasse `Translate` repräsentiert eine Verschiebung im 3D-Raum.
+
+- **Eigenschaften**: 
+    - `Delta`: Der Verschiebungsvektor.
+- **`Apply()`-Methode**: Ruft `gl.Translate(Delta.X, Delta.Y, Delta.Z)` auf.
+- Dies multipliziert die aktuelle ModelView-Matrix mit einer Translationsmatrix und verschiebt so den Ursprung des Koordinatensystems für alle nachfolgenden Zeichenoperationen.
+
+</div>
+<div>
+
+### Klasse `Rotate`
+
+Die Klasse `Rotate` repräsentiert eine Rotation um eine beliebige Achse.
+
+- **Eigenschaften**:
+    - `Angle`: Der Rotationswinkel in Grad.
+    - `Axis`: Der Vektor, der die Rotationsachse definiert.
+- **`Apply()`-Methode**: Ruft `gl.Rotate(Angle, Axis.X, Axis.Y, Axis.Z)` auf.
+- Dies multipliziert die aktuelle ModelView-Matrix mit einer Rotationsmatrix.
+
+</div>
+</div>
 
 ---
 
-TODO Folie zu Klasse `Rotate` (`Axis`, `Angle`)
+### Klasse `Scale`
 
----
+Die Klasse `Scale` repräsentiert eine Skalierung.
 
-TODO Folie zu Klasse `Scale` (`Factor`)
+- **Eigenschaften**:
+    - `Factor`: Die Skalierungsfaktoren für jede Achse als Vektor-Objekt.
+- **`Apply()`-Methode**: Ruft `gl.Scale(Factor.X, Factor.Y, Factor.Z)` auf.
+- Dies multipliziert die aktuelle ModelView-Matrix mit einer Skalierungsmatrix.
+- **Achtung**: Eine ungleichmäßige Skalierung (z.B. `Factor.X != Factor.Y`) kann Normalenvektoren verzerren. Für korrekte Beleuchtung muss dann `gl.Enable(OpenGL.GL_NORMALIZE)` oder `gl.Enable(OpenGL.GL_RESCALE_NORMAL)` aktiviert werden.
 
 ---
 
@@ -849,7 +1061,13 @@ Durch diesen rekursiven Aufruf (`Group.Draw` -> `Child.Draw` -> ...) werden die 
 <div class="columns">
 <div class="two">
 
-TODO Folie zu Klasse `Primitive`
+### Klasse `Primitive`
+
+Die abstrakte Klasse `Primitive` ist die Basis für alle 2D-Grundformen, die aus einer Liste von Vertices bestehen.
+
+- **Erbt von**: `Node`.
+- **Speichert**: Eine Liste von `Vertex`- und `Material`-Paaren.
+- **Funktionsweise**: Die `DrawLocal`-Methode zeichnet die Geometrie, indem sie für jeden Vertex das zugehörige Material setzt und dann den Vertex selbst an OpenGL übergibt. Der `_beginMode` (z.B. `GL_POINTS`, `GL_LINES`) bestimmt, wie die Vertices interpretiert werden.
 
 </div>
 <div>
@@ -861,30 +1079,69 @@ TODO Folie zu Klasse `Primitive`
 
 ---
 
-TODO Folie zu Methode `DrawLocal` der Klasse `Primitive`
+<div class="columns top">
+<div>
+
+### Klasse `Points`
+
+Die Klasse `Points` erbt von `Primitive` und zeichnet eine Menge von Punkten.
+
+- **Konstruktor**: Setzt den `BeginMode` auf `GL_POINTS`.
+- **Eigenschaft `Size`**: Steuert die Größe der zu zeichnenden Punkte in Pixel.
+- **`DrawLocal()`-Methode**: Ruft `gl.PointSize(Size)` auf, bevor die `DrawLocal`-Methode der `Primitive`-Basisklasse die Punkte zeichnet.
+
+</div>
+<div>
+
+### Klasse `Lines`
+
+Die Klasse `Lines` erbt von `Primitive` und zeichnet eine Menge von Linien.
+
+- **Konstruktor**: Setzt den `BeginMode` auf `GL_LINES` (oder `GL_LINE_STRIP` / `GL_LINE_LOOP`, je nach Konstruktor).
+- **Eigenschaft `Width`**: Steuert die Breite der zu zeichnenden Linien in Pixel.
+- **`DrawLocal()`-Methode**: Ruft `gl.LineWidth(Width)` auf, bevor die `DrawLocal`-Methode der `Primitive`-Basisklasse die Linien zeichnet.
+
+</div>
+</div>
 
 ---
 
-TODO Folie zu Klasse `Points` (`Size`)
+<div class="columns top">
+<div>
 
----
+### Klasse `Triangles`
 
-TODO Folie zu Klasse `Lines` (`Width`)
+Die Klasse `Triangles` erbt von `Primitive` und zeichnet eine Menge von gefüllten Dreiecken.
 
----
+- **Konstruktor**: Setzt den `BeginMode` auf `GL_TRIANGLES` (oder `GL_TRIANGLE_STRIP` / `GL_TRIANGLE_FAN`, je nach Konstruktor).
+- **Funktionsweise**: Die `DrawLocal`-Methode der Basisklasse wird aufgerufen, um die Dreiecke zu zeichnen. Es gibt keine zusätzlichen Eigenschaften oder Überschreibungen in dieser Klasse.
 
-TODO Folie zu Klasse `Triangles`
+</div>
+<div>
 
----
+### Klasse `Quads`
 
-TODO Folie zu Klasse `Quads`
+Die Klasse `Quads` erbt von `Primitive` und zeichnet eine Menge von gefüllten Vierecken.
+
+- **Konstruktor**: Setzt den `BeginMode` auf `GL_QUADS` (oder `GL_QUAD_STRIP`, je nach Konstruktor).
+- **Funktionsweise**: Die `DrawLocal`-Methode der Basisklasse wird aufgerufen, um die Vierecke zu zeichnen. Es gibt keine zusätzlichen Eigenschaften oder Überschreibungen in dieser Klasse.
+
+</div>
+</div>
 
 ---
 
 <div class="columns">
 <div class="two">
 
-TODO Folie zu Klasse `Volume`
+### Klasse `Volume`
+
+Die abstrakte Klasse `Volume` ist die Basisklasse für alle 3D-Volumenkörper.
+
+- Erbt von `Node`.
+- Definiert Eigenschaften, die alle Volumenkörper teilen, z.B. `Material`.
+- Die `DrawLocal()`-Methode wird von den konkreten Klassen (`Cube`, `Sphere`, `Cone`) implementiert, um die Geometrie des Körpers zu zeichnen.
+- Im Gegensatz zu `Primitive` müssen hier die Normalenvektoren für jede Fläche bzw. jeden Vertex korrekt berechnet und gesetzt werden, um eine realistische Beleuchtung zu erzielen.
 
 </div>
 <div>
@@ -899,7 +1156,14 @@ TODO Folie zu Klasse `Volume`
 <div class="columns">
 <div class="two">
 
-TODO Folie zu Klasse `Cube` (`SizeX`, `SizeY`, `SizeZ`)
+### Klasse `Cube`
+
+Zeichnet einen Würfel oder Quader.
+
+- **Eigenschaften**:
+    - `Size`: Die Abmessung des Quaders in X-, Y- und Z-Richtung als Vektor-Objekt.
+- **`DrawLocal()`-Methode**:
+    - Zeichnet die 6 Seiten des Quaders, typischerweise mit `gl.Begin(OpenGL.GL_QUADS)`.
 
 </div>
 <div>
@@ -914,7 +1178,16 @@ TODO Folie zu Klasse `Cube` (`SizeX`, `SizeY`, `SizeZ`)
 <div class="columns">
 <div class="two">
 
-TODO Folie zu Klasse `Sphere` (`Radius`, `Slices`, `Stacks`)
+### Klasse `Sphere`
+
+Zeichnet eine Kugel.
+
+- **Eigenschaften**:
+    - `Radius`: Der Radius der Kugel.
+    - `Slices`: Die Anzahl der Unterteilungen entlang des Umfangs (wie Längengrade).
+    - `Stacks`: Die Anzahl der Unterteilungen von Pol zu Pol (wie Breitengrade).
+- **`DrawLocal()`-Methode**:
+    - Die Kugel wird durch eine Serie von `GL_QUAD_STRIP`s (für die "Bauchbinden") und `GL_TRIANGLE_FAN`s (für die Polkappen) approximiert.
 
 </div>
 <div>
@@ -929,7 +1202,17 @@ TODO Folie zu Klasse `Sphere` (`Radius`, `Slices`, `Stacks`)
 <div class="columns">
 <div class="two">
 
-TODO Folie zu Klasse `Cone` (`Radius1`, `Radius2`, `Height`, `Slices`, `Stacks`)
+### Klasse `Cone` / `Cylinder`
+
+Zeichnet einen Kegel, einen Zylinder oder einen Kegelstumpf.
+
+- **Eigenschaften**:
+    - `Radius1`, `Radius2`: Radien an den beiden Enden. Wenn einer null ist, entsteht ein Kegel. Wenn sie gleich sind, ein Zylinder.
+    - `Height`: Die Höhe.
+    - `Slices`, `Stacks`: Unterteilungen.
+- **`DrawLocal()`-Methode**:
+    - Der Mantel wird mit `GL_QUAD_STRIP` gezeichnet.
+    - Die Deckel (falls `Radius > 0`) werden mit `GL_TRIANGLE_FAN` gezeichnet.
 
 </div>
 <div>
