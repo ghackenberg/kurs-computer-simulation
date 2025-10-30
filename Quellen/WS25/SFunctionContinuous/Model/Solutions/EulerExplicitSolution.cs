@@ -14,35 +14,18 @@
             double t = 0;
 
             // Zustände initialisieren
-            foreach (Function f in Functions)
-            {
-                f.InitializeConditions(X[f]);
-            }
+            InitializeConditions();
 
             // Simulationsschleife
             while (t <= tmax)
             {
                 // Bereitschaft zurücksetzen
-                foreach (Function f in Functions)
-                {
-                    for (int i = 0; i < f.DimU; i++)
-                    {
-                        ReadyFlag[f][i] = false;
-                        GuessMasterFlag[f][i] = false;
-                        GuessSlaveFlag[f][i] = false;
-                    }
-                }
+                ResetFlags();
 
                 // Ausgaben berechnen und weiterleiten
                 List<Function> open = new List<Function>(Functions);
-                List<Function> done = new List<Function>();
 
-                List<Function> guessMaster = new List<Function>();
-                List<Function> guessSlave = new List<Function>();
-
-                int guessIteration = 0;
-
-                while (open.Count > 0 || guessMaster.Count > 0)
+                while (open.Count > 0)
                 {
                     // Funktionszahl vorher merken
                     int count = open.Count;
@@ -63,131 +46,21 @@
 
                             // Funktion als erledigt markieren
                             open.RemoveAt(i--);
-
-                            // Funktion als abhängig geschätzt markieren
-                            if (guessMaster.Count > 0 && guessIteration == 0)
-                            {
-                                guessSlave.Add(f);
-                            }
-                            else
-                            {
-                                done.Add(f);
-                            }
                         }
                     }
 
                     // Prüfen, ob die Anzahl offener Funktionen gleich geblieben ist
                     if (count == open.Count)
                     {
-                        // Schätzung initialisieren
-                        if (open.Count > 0)
-                        {
-                            Function f = open[0];
-
-                            // Eingänge setzten
-                            for (int i = 0; i < f.DimU; i++)
-                            {
-                                if (!ReadyFlag[f][i])
-                                {
-                                    ReadyFlag[f][i] = true;
-                                    GuessMasterFlag[f][i] = true;
-
-                                    // Schätzung initialisieren
-                                    GuessValue[f][i] = 0;
-
-                                    U[f][i] = GuessValue[f][i];
-                                }
-                            }
-
-                            // Ausgänge berechnen
-                            f.CalculateOutputs(t, X[f], U[f], Y[f]);
-
-                            // Ausgänge weiterleiten
-                            ForwardOutputs(f);
-
-                            // Funktion als erledigt markieren
-                            open.RemoveAt(0);
-
-                            // Funktion als unabhängig geschätzt markieren
-                            guessMaster.Add(f);
-                        }
-                        else
-                        {
-                            // Schleife beenden, wenn Schätzfehler klein genug
-                            if (ComputeError() < 0.01)
-                            {
-                                guessMaster.Clear();
-                            }
-                            // Simulation abbrechen, wenn maximale Anzahl Durchläufe erreicht ist
-                            else if (guessIteration == 100000)
-                            {
-                                throw new Exception("Could not solve algebraic loop!");
-                            }
-                            // Schätzung anpassen und nächste Iteration starten
-                            else
-                            {
-                                foreach (Function f in guessSlave)
-                                {
-                                    for (int i = 0; i < f.DimU; i++)
-                                    {
-                                        if (GuessSlaveFlag[f][i])
-                                        {
-                                            ReadyFlag[f][i] = false;
-                                        }
-                                    }
-                                    open.Add(f);
-                                }
-
-                                foreach (Function f in guessMaster)
-                                {
-                                    for (int i = 0; i < f.DimU; i++)
-                                    {
-                                        if (GuessMasterFlag[f][i])
-                                        {
-                                            GuessValue[f][i] = GuessValue[f][i] + (U[f][i] - GuessValue[f][i]) * 0.001;
-
-                                            U[f][i] = GuessValue[f][i];
-                                        }
-                                        else if (GuessSlaveFlag[f][i])
-                                        {
-                                            ReadyFlag[f][i] = false;
-                                        }
-                                    }
-                                    if (IsReady(f))
-                                    {
-                                        // Ausgänge berechnen
-                                        f.CalculateOutputs(t, X[f], U[f], Y[f]);
-
-                                        // Ausgänge weiterleiten
-                                        ForwardOutputs(f);
-                                    }
-                                    else
-                                    {
-                                        // Funktion als offen markieren
-                                        open.Add(f);
-                                    }
-                                }
-
-                                guessIteration++;
-                            }
-                        }
+                        throw new Exception("Algebraische Schleife erkannt!");
                     }
                 }
 
                 // Ableitungen berechnen
-                foreach (Function f in Composition.Functions)
-                {
-                    f.CalculateDerivatives(t, X[f], U[f], D[f]);
-                }
+                CalculateDerivatives(t);
 
                 // Zustände integrieren
-                foreach (Function f in Composition.Functions)
-                {
-                    for (int i = 0; i < f.DimX; i++)
-                    {
-                        X[f][i] += D[f][i];
-                    }
-                }
+                IntegrateContinuousStates();
 
                 // Zeit aktualisieren
                 t += step;

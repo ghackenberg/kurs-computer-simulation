@@ -1,8 +1,8 @@
 ﻿namespace SFunctionContinuous.Model.Solutions
 {
-    class EulerImplicitSolution : Solution
+    class EulerImplicitLoopSolution : Solution
     {
-        public EulerImplicitSolution(Composition composition) : base(composition)
+        public EulerImplicitLoopSolution(Composition composition) : base(composition)
         {
 
         }

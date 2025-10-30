@@ -38,6 +38,27 @@
             }
         }
 
+        public void InitializeConditions()
+        {
+            foreach (Function f in Functions)
+            {
+                f.InitializeConditions(X[f]);
+            }
+        }
+
+        public void ResetFlags()
+        {
+            foreach (Function f in Functions)
+            {
+                for (int i = 0; i < f.DimU; i++)
+                {
+                    ReadyFlag[f][i] = false;
+                    GuessMasterFlag[f][i] = false;
+                    GuessSlaveFlag[f][i] = false;
+                }
+            }
+        }
+
         public void ForwardOutputs(Function f)
         {
             foreach (Connection c in f.ConnectionsOut)
@@ -96,6 +117,25 @@
                 }
             }
             return false;
+        }
+
+        public void CalculateDerivatives(double t)
+        {
+            foreach (Function f in Composition.Functions)
+            {
+                f.CalculateDerivatives(t, X[f], U[f], D[f]);
+            }
+        }
+
+        public void IntegrateContinuousStates()
+        {
+            foreach (Function f in Composition.Functions)
+            {
+                for (int i = 0; i < f.DimX; i++)
+                {
+                    X[f][i] += D[f][i];
+                }
+            }
         }
 
         public abstract void Solve(double step, double tmax);
