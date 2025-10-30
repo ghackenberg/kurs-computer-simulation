@@ -6,6 +6,11 @@ classDiagram
         <<Abstract>>
     }
 
+    class Points {
+        +Size : float
+        #DrawLocal(gl : OpenGL) void
+    }
+
     class Lines {
         +Width : float
         #DrawLocal(gl : OpenGL) void
@@ -19,6 +24,7 @@ classDiagram
 
     }
 
+    Primitive <|-- Points
     Primitive <|-- Lines
     Primitive <|-- Triangles
     Primitive <|-- Quads

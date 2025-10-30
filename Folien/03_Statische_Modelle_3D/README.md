@@ -116,6 +116,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+<div class="columns">
+<div>
+
 ### Was ist OpenGL?
 
 - **Open Graphics Library**
@@ -123,6 +126,14 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Es ist ein **Standard**, der von Grafikkartenherstellern implementiert wird.
 - Es bietet eine Schnittstelle, um der **GPU (Graphics Processing Unit)** Befehle zum Zeichnen zu geben.
 - Wir betrachten hier "klassisches" (fixed-function) OpenGL, wie es in `SharpGL` oft für einfache Darstellungen genutzt wird.
+
+</div>
+<div>
+
+![](https://upload.wikimedia.org/wikipedia/commons/e/e9/Opengl-logo.svg)
+
+</div>
+</div>
 
 ---
 
@@ -175,11 +186,14 @@ private void OnInitialize(object sender, OpenGLRoutedEventArgs args)
 
 ### Hintergrundfarbe festlegen
 
-Die `ClearColor`-Methode definiert die Farbe, mit der der Bildschirm bei jedem neuen Frame geleert wird. Die Parameter sind die RGBA-Werte als `float` zwischen 0.0 und 1.0.
+Die `ClearColor`-Methode definiert die Farbe, mit der der Bildschirm bei jedem Frame geleert wird.
+
+- Die Parameter sind die RGBA-Werte als `float` zwischen 0.0 und 1.0.
+- Bei der Farbe *Schwarz* sind alle Werte auf Null gesetzt.
+- Bei der Farbe *Weiß* sind hingegen alle Werte auf Eins gesetzt.
 
 ```csharp
 // In der OnInitialize-Routine
-OpenGL gl = args.OpenGL;
 
 // Setzt die Hintergrundfarbe auf ein Dunkelblau
 gl.ClearColor(0.1f, 0.2f, 0.3f, 1.0f);
@@ -200,14 +214,17 @@ gl.ClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 
 ### Beleuchtung & Material aktivieren
 
-Damit Objekte auf Licht reagieren, müssen zwei Dinge global aktiviert werden:
-- `GL_LIGHTING`: Schaltet das gesamte Beleuchtungssystem ein. Ohne dies sind alle Objekte nur in ihrer Grundfarbe sichtbar.
-- `GL_COLOR_MATERIAL`: Erlaubt es, die Materialeigenschaften eines Objekts über den `glColor`-Befehl zu steuern. Dies ist eine Vereinfachung.
+Damit Objekte auf Licht reagieren, muss die Lichtberechnung zunächst global aktiviert werden:
+
+- `GL_LIGHTING`: Schaltet das gesamte Beleuchtungssystem ein.
+- Ohne dies sind alle Objekte nur in ihrer Grundfarbe sichtbar.
+- Die Beleuchtung verursacht die Schattierung der Oberflächen.
 
 ```csharp
 // In der OnInitialize-Routine
+
+// Aktiviert das Beleuchtungssystem
 gl.Enable(OpenGL.GL_LIGHTING);
-gl.Enable(OpenGL.GL_COLOR_MATERIAL);
 ```
 
 </div>
@@ -220,19 +237,9 @@ gl.Enable(OpenGL.GL_COLOR_MATERIAL);
 
 ---
 
-### Unterschiedliche Arten von Beleuchtung
-
-- **Ambient** - TODO Kurzbeschreibung
-- **Diffuse** - TODO Kurzbeschreibung
-- **Specular** - TODO Kurzbeschreibung
-
-![width:2000px](https://upload.wikimedia.org/wikipedia/commons/6/6b/Phong_components_version_4.png)
-
----
-
 ### Globales Umgebungslicht
 
-Umgebungslicht (Ambient Light) sorgt dafür, dass auch die nicht direkt von einer Lichtquelle angestrahlten Flächen eines Objekts nicht komplett schwarz sind. Es simuliert indirekte Beleuchtung.
+Umgebungslicht (*Ambient Light*) sorgt dafür, dass auch die nicht direkt von einer Lichtquelle angestrahlten Flächen eines Objekts nicht komplett schwarz sind. Es simuliert indirekte Beleuchtung.
 
 ```csharp
 // In der OnInitialize-Routine
@@ -261,6 +268,146 @@ float[] lightDiffuse = { 1, 1, 1, 1 };  // Helles, weißes diffuses Licht
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, lightPosition);
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE, lightDiffuse);
 ```
+
+---
+
+<div class="columns">
+<div>
+
+### Das Phong-Beleuchtungsmodell
+
+Die Farbe eines Punktes auf einer Oberfläche wird als Summe von drei Komponenten berechnet:
+
+$I_{f} = I_{a} + I_{d} + I_{s}$
+
+- **Ambient**: Konstante Grundhelligkeit, simuliert indirektes Licht.
+- **Diffuse**: Helligkeit basierend auf dem Winkel des Lichteinfalls, simuliert matte Oberflächen.
+- **Specular**: Glanzlicht, das von der Kameraposi-tion abhängt, simuliert glänzende Oberflächen.
+
+Jede dieser Komponenten wird für jede Lichtquelle berechnet und aufsummiert.
+
+</div>
+<div>
+
+![width:900px](https://upload.wikimedia.org/wikipedia/commons/6/6b/Phong_components_version_4.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+### Vektoren für die Beleuchtungsrechnung
+
+Für die Berechnung werden an jedem Punkt der Oberfläche vier Vektoren benötigt:
+
+- **$N$ (Normalenvektor)**: Vektor, der senkrecht von der Oberfläche weg zeigt.
+- **$L$ (Lichtvektor)**: Vektor vom Oberflächenpunkt zur Lichtquelle.
+- **$V$ (Betrachtungsvektor)**: Vektor vom Oberflächenpunkt zur Kamera.
+- **$R$ (Reflexionsvektor)**: Vektor, in den der Lichtstrahl an der Oberfläche reflektiert wird. 
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/Phong%20-%20Vektoren.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+### **Ambient**-Komponente
+
+Die Ambient-Komponente ist am einfachsten. Sie ist das Produkt aus der Lichtfarbe und der Materialfarbe für Umgebungslicht.
+
+$I_{a} = \text{light}_{a} \cdot \text{material}_{a}$
+
+- $\text{light}_{a}$: Farbe des globalen Umgebungslichts (z.B. `GL_LIGHT_MODEL_AMBIENT`).
+- $\text{material}_{a}$: Ambient-Reflexionsvermögen des Materials (definiert mit `glMaterial`).
+
+Diese Komponente ist für jeden Punkt eines Objekts gleich und sorgt für eine Grundhelligkeit.
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/Phong%20-%20Vektoren.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+### **Diffuse**-Komponente
+
+Die Diffuse-Komponente hängt vom Winkel zwischen dem Normalenvektor $N$ und dem Lichtvektor $L$ ab. Je direkter das Licht auf die Oberfläche trifft, desto heller ist sie.
+
+$I_{d} = \text{light}_{d} \cdot \text{material}_{d} \cdot \max(0, N \cdot L)$
+
+- $N \cdot L$: Skalarprodukt der normalisierten Vektoren. Entspricht $\cos(\delta)$.
+- $\max(0, ...)$: Sorgt dafür, dass von hinten beleuchtete Flächen nicht negativ beitragen.
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/Phong%20-%20Diffuse.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+### **Specular**-Komponente
+
+Die Specular-Komponente erzeugt ein Glanzlicht und hängt vom Winkel zwischen dem Reflexionsvektor $R$ und dem Betrachtervektor $V$ ab.
+
+$I_{s} = \text{light}_{s} \cdot \text{material}_{s} \cdot (\max(0, R \cdot V))^{\text{shininess}}$
+
+- $R = 2(N \cdot L)N - L$: Berechnung des Reflexionsvektors.
+- $\text{shininess}$: Ein Exponent, der die Größe und Schärfe des Glanzlichts steuert (definiert mit `glMaterial`). Je höher der Wert, desto kleiner und schärfer der Glanzpunkt.
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/Phong%20-%20Specular.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+### Kombination für **mehrere** Lichtquellen
+
+Die finale Farbe eines Punktes ist die Summe der Ambient-Komponente (global) und der Summe der Diffuse- und Specular-Komponenten für *jede* aktive Lichtquelle.
+
+$I_{f} = I_{a} + \sum_{i=1}^{n} (I_{\text{d}, i} + I_{\text{s}, i})$
+
+- $I_{a}$: Globale Ambient-Komponente.
+- $I_{\text{d}, i}$: Diffuser Beitrag der Lichtquelle $i$.
+- $I_{\text{s}, i}$: Specular-Beitrag der Lichtquelle $i$.
+
+In klassischem OpenGL wird diese Berechnung für bis zu 8 Lichtquellen (`GL_LIGHT0` bis `GL_LIGHT7`) automatisch durchgeführt.
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/Phong%20-%20Kombiniert.svg)
+
+</div>
+</div>
 
 ---
 
@@ -343,22 +490,150 @@ private void OnDraw(object sender, OpenGLRoutedEventArgs args)
 
 Geometrie wird innerhalb von `gl.Begin()` und `gl.End()` definiert. Der Parameter von `gl.Begin` legt fest, wie die folgenden Vertices interpretiert werden.
 
-- `GL_LINES`: Zeichnet Linien zwischen je zwei Vertices.
-- `GL_TRIANGLES`: Zeichnet gefüllte Dreiecke.
-- `GL_QUADS`: Zeichnet gefüllte Vierecke.
+- `GL_POINTS`: Zeichnet für jeden Vertex einen einzelnen Punkt.
+- `GL_LINES`: Zeichnet Linien zwischen je zwei Vertices (1-2, 3-4, ...).
+- `GL_LINE_STRIP`: Zeichnet eine verbundene Linienkette (1-2, 2-3, 3-4, ...).
+- `GL_LINE_LOOP`: Wie `GL_LINE_STRIP`, schließt aber die Lücke zwischen dem letzten und ersten Vertex.
+- `GL_TRIANGLES`: Zeichnet für je drei Vertices ein separates, gefülltes Dreieck (1-2-3, 4-5-6, ...).
+- `GL_TRIANGLE_STRIP`: Erzeugt eine Kette von Dreiecken, die sich Vertices teilen (1-2-3, 2-3-4, 3-4-5, ...).
+- `GL_TRIANGLE_FAN`: Erzeugt einen Fächer von Dreiecken um den ersten Vertex (1-2-3, 1-3-4, 1-4-5, ...).
+- `GL_QUADS`: Zeichnet für je vier Vertices ein separates, gefülltes Viereck (1-2-3-4, 5-6-7-8, ...).
+- `GL_QUAD_STRIP`: Erzeugt eine Kette von Vierecken (1-2-4-3, 3-4-6-5, ...)
 
-```csharp
-gl.Begin(OpenGL.GL_TRIANGLES);
-    gl.Color(1.0f, 0.0f, 0.0f); // Rot
-    gl.Vertex(0, 1, 0);
+---
 
-    gl.Color(0.0f, 1.0f, 0.0f); // Grün
-    gl.Vertex(-1, -1, 0);
+<div class="columns">
+<div>
 
-    gl.Color(0.0f, 0.0f, 1.0f); // Blau
-    gl.Vertex(1, -1, 0);
-gl.End();
-```
+TODO Folie zu `GL_POINTS`
+
+</div>
+<div>
+
+![width:1000px](./OpenGL_Primitives_Points.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO Folie zu `GL_LINES`
+
+</div>
+<div>
+
+![width:1000px](./OpenGL_Primitives_Lines.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO Folie zu `GL_LINE_STRIP`
+
+</div>
+<div>
+
+![width:1000px](./OpenGL_Primitives_LineStrip.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO Folie zu `GL_LINE_LOOP`
+
+</div>
+<div>
+
+![width:1000px](./OpenGL_Primitives_LineLoop.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO Folie zu `GL_TRIANGLES`
+
+</div>
+<div>
+
+![width:1000px](./OpenGL_Primitives_Triangles.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO Folie zu `GL_TRIANGLE_STRIP`
+
+</div>
+<div>
+
+![width:1000px](./OpenGL_Primitives_TriangleStrip.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO Folie zu `GL_TRIANGLE_FAN`
+
+</div>
+<div>
+
+![width:1000px](./OpenGL_Primitives_TriangleFan.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO Folie zu `GL_QUADS`
+
+</div>
+<div>
+
+![width:1000px](./OpenGL_Primitives_Quads.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+TODO Folie zu `GL_QUAD_STRIP`
+
+</div>
+<div>
+
+![width:1000px](./OpenGL_Primitives_QuadStrip.png)
+
+</div>
+</div>
 
 ---
 
@@ -557,6 +832,10 @@ TODO Folie zu Klasse `Primitive`
 ---
 
 TODO Folie zu Methode `DrawLocal` der Klasse `Primitive`
+
+---
+
+TODO Folie zu Klasse `Points` (`Size`)
 
 ---
 
