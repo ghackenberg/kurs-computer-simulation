@@ -1,0 +1,35 @@
+classDiagram
+
+    direction TB
+
+    class Composition {
+
+    }
+
+    class Solution {
+        <<Abstract>>
+        X : Dictionary~Function, double[]~
+        D : Dictionary~Function, double[]~
+        U : Dictionary~Function, double[]~
+        Y : Dictionary~Function, double[]~
+        ReadyFlag : Dictionary~Function, bool[]~
+        Solve(step : double, tmax : double) void*
+    }
+
+    class EulerExplicitSolution {
+        Solve(step : double, tmax : double) void
+    }
+
+    class EulerExplicitLoopSolution {
+        GuessMasterFlag : Dictionary~Function, bool[]~
+        GuessSlaveFlag : Dictionary~Function, bool[]~
+        GuessValue : Dictionary~Function, double[]~
+        Solve(step : double, tmax : double) void
+    }
+
+    Composition "1" --* Solution
+
+    Solution <|-- EulerExplicitSolution
+    Solution <|-- EulerExplicitLoopSolution
+
+    style Composition fill:white

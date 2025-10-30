@@ -761,6 +761,27 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+<div class="columns">
+<div class="two">
+
+### Die Kernklassen der Architektur
+
+Die Architektur besteht aus drei zentralen Klassen, um ein block-basiertes Modell zu erstellen:
+
+- **`Function`**: Die abstrakte Basisklasse für alle Blöcke. Jeder Block kapselt eine spezifische Funktionalität.
+- **`Connection`**: Repräsentiert eine Verbindung von einem Ausgangsport (`Output`) eines Quell-Blocks (`Source`) zu einem Eingangsport (`Input`) eines Ziel-Blocks (`Target`).
+- **`Composition`**: Dient als Container für das gesamte Modell. Es hält eine Liste aller `Function`- und `Connection`-Instanzen.
+
+</div>
+<div>
+
+![](../../Quellen/WS25/SFunctionContinuous/Model.svg)
+
+</div>
+</div>
+
+---
+
 ### Die `Function`-Klasse als Basis
 
 Jede Komponente des Systems wird als eine von der abstrakten Klasse `Function` abgeleitete Klasse implementiert.
@@ -783,6 +804,29 @@ abstract class Function
         double t, double[] x, double[] u, double[] y) { }
 }
 ```
+
+---
+
+<div class="columns">
+<div class="three">
+
+### Algebraische Blöcke
+
+Algebraische Blöcke haben keine Zustände (`DimX = 0`). Ihr Ausgang `y` hängt direkt von den Eingängen `u` und/oder internen Parametern ab.
+
+- **`ConstantFunction`**: Erzeugt einen konstanten Wert.
+- **`AddFunction`**: Addiert zwei Eingänge.
+- **`SubtractFunction`**: Subtrahiert den zweiten vom ersten Eingang.
+- **`MultiplyFunction`**: Multipliziert einen Eingang mit einem Faktor.
+- **`RecordFunction`**: Dient zur Aufzeichnung von Signalen für die spätere Visualisierung.
+
+</div>
+<div>
+
+![](../../Quellen/WS25/SFunctionContinuous/Model.Function.svg)
+
+</div>
+</div>
 
 ---
 
@@ -826,6 +870,42 @@ class ConstantFunction : Function
 
 ---
 
+### Beispiel: `MultiplyFunction`
+
+Ein Block, der seinen Eingang mit einem konstanten Faktor multipliziert.
+
+<div class="columns">
+<div class="two">
+
+- **`DimX = 0`** (keine Zustände)
+- **`DimU = 1`** (ein Eingang)
+- **`DimY = 1`** (ein Ausgang)
+- **`CalculateOutputs`**: Multipliziert den Eingang mit einem konstanten Faktor `y[0] = Factor * u[0]`.
+
+</div>
+<div class="two">
+
+```csharp
+class MultiplyFunction : Function
+{
+    public double Factor;
+
+    public MultiplyFunction(string name, double factor)
+        : base(name, 0, 1, 1) { /*...*/ }
+
+    public override void CalculateOutputs(
+        double t, double[] x, double[] u, double[] y)
+    {
+        y[0] = Factor * u[0];
+    }
+}
+```
+
+</div>
+</div>
+
+---
+
 ### Beispiel: `AddFunction`
 
 Ein Block, der zwei Eingänge addiert. Er hat keine Zustände. Man spricht von einer **algebraischen Funktion** oder einem Block mit **direct feedthrough**.
@@ -860,9 +940,32 @@ class AddFunction : Function
 
 ---
 
+<div class="columns">
+<div class="two">
+
+### Der `IntegrateFunction` Block
+
+Der `IntegrateFunction`-Block ist der entscheidende Baustein zur Modellierung dynamischer Systeme.
+
+- Er ist der **einzige Block mit einem Zustand** (`DimX = 1`).
+- Sein Zustand `x` repräsentiert den integrierten Wert seines Eingangs `u`.
+- Die Methode `CalculateDerivatives` setzt die Zustandsableitung $\dot{x}$ gleich dem Eingang $u$.
+- Der Solver nutzt diese Ableitung, um den Zustand `x` im nächsten Zeitschritt zu berechnen.
+- Der Ausgang `y` des Blocks ist einfach der aktuelle Wert des Zustands `x`.
+
+</div>
+<div>
+
+![](../../Quellen/WS25/SFunctionContinuous/Model.Function.Integrate.svg)
+
+</div>
+</div>
+
+---
+
 ### Beispiel: `IntegrateFunction`
 
-Der zentrale Block zur Modellierung von Dynamik. Er integriert das Eingangssignal über die Zeit.
+Der zentrale Block zur Modellierung von Dynamik. Er integriert das Eingangssignal über die Zeit und ist der einzige Block mit einem Zustand.
 
 <div class="columns">
 <div class="two">
@@ -880,15 +983,17 @@ Der zentrale Block zur Modellierung von Dynamik. Er integriert das Eingangssigna
 ```csharp
 class IntegrateFunction : Function
 {
-    public IntegrateFunction(string name, double startValue) 
+    public IntegrateFunction(
+        string name, double startValue) 
         : base(name, 1, 1, 1) { /* ... */ }
 
-    public override void InitializeConditions(double[] x)
+    public override void InitializeConditions(
+        double[] x)
         => x[0] = StartValue;
 
     public override void CalculateDerivatives(
-        double t, double[] x, double[] u, double[] dx)
-        => dx[0] = u[0];
+        double t, double[] x, double[] u, double[] d)
+        => d[0] = u[0];
 
     public override void CalculateOutputs(
         double t, double[] x, double[] u, double[] y)
@@ -965,15 +1070,42 @@ class Composition
 
 ---
 
+<div class="columns">
+<div>
+
+### Lösungsstrategien (Solver)
+
+Die `Solution`-Klasse ist die Basis für verschiedene Lösungsstrategien. Sie enthält die Daten-Arrays (`X`, `D`, `U`, `Y` und `ReadyFlag`) und die grundlegende Simulationslogik.
+
+- **`EulerExplicitSolution`**: Ein einfacher Solver, der keine algebraischen Schleifen auflösen kann (gibt Fehlermeldung zurück).
+- **`EulerExplicitLoopSolution`**: Eine erweiterte Version, die algebraische Schleifen mittels einer iterativen Schätzung auflösen kann.
+
+</div>
+<div>
+
+![](../../Quellen/WS25/SFunctionContinuous/Model.Solution.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
 ### Die `Solution`-Klasse (Solver)
 
 Die `Solution`-Klasse ist für die Durchführung der Simulation verantwortlich.
 
 - Sie hält die `Composition` (das Modell).
-- Sie verwaltet die Daten-Arrays für alle Blöcke:
+- Sie verwaltet die Daten-Arrays für alle Funktionen:
   - `X`: Zustände / `D`: Ableitungen (`dx/dt`)
   - `U`: Eingänge / `Y`: Ausgänge
+- Sie verwaltet die Bereitschaft von Eingängen für alle Funktionen (`ReadyFlag`)
 - Die `Solve`-Methode implementiert den eigentlichen Algorithmus (z.B. Euler explizit).
+
+</div>
+<div>
 
 ```csharp
 abstract class Solution
@@ -982,43 +1114,100 @@ abstract class Solution
     
     public Dictionary<Function, double[]> X, D, U, Y;
 
+    public Dictionary<Function, bool[]> ReadyFlag;
+
     public abstract void Solve(double step, double tmax);
 }
 ```
 
+</div>
+</div>
+
 ---
 
-### Der Simulations-Loop (ohne Lösung von algebraischen Schleifen)
+### Die Implementierung der Methode `Solve` in der Klasse `EulerExplicitSolution`
 
-Der Solver in `EulerExplicitSolution` führt die folgenden Schritte aus:
-
-1.  **Initialisierung**: `InitializeConditions` aller Blöcke aufrufen.
+1.  **Initialisierung**: `InitializeConditions` aller Funktionen aufrufen.
 2.  **Zeitschleife** (`while t <= tmax`):
-    a. **Bereitschafts-Flags zurücksetzen.**
-    b. **Topologische Sortierung**: Finde eine ausführbare Reihenfolge der Blöcke.
-       - Starte mit Blöcken ohne Eingänge (z.B. `ConstantFunction`).
-       - Berechne deren `Outputs`.
-       - Leite die Ausgänge an die Eingänge der nächsten Blöcke weiter (`ForwardOutputs`).
-       - Wiederhole, bis alle `Outputs` für den Zeitpunkt `t` berechnet sind.
+    a. **Bereitschaft der Eingänge für alle Funktionen zurücksetzen** (`ReadyFlag`)
+    b. **Liste der offenen Funktionen mit allen Funktionen intialisieren** (`open`)
+    c. **Ausgänge berechnen** (`while open.Count > 0`):
+       - Funktionen suchen, für die alle Eingänge bereit sind (`ReadyFlag`)
+       - Ausgänge der Funktionen, die bereit sind, berechnen (`Y`)
+       - Ausgänge entsprechend den Verbindungen weiterleiten (`U`, `ReadyFlag`)
+       - Berechnete Funktionen aus der Liste der offenen Funktionen entfernen (`open.Remove`)
 
-    c. **Ableitungen berechnen**: Rufe `CalculateDerivatives` für alle Blöcke auf.
-    d. **Zustände integrieren**: $x_{k+1} = x_k + h \cdot \dot{x}_k$.
-    e. **Zeit erhöhen**: $t = t + h$.
+    d. **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke aufrufen.
+    e. **Zustände integrieren**: $x_{k+1} = x_k + h \cdot \dot{x}_k$.
+    f. **Zeit erhöhen**: $t = t + h$.
 
 ---
 
-### Umgang mit algebraischen Schleifen
+![bg contain right](./EulerExplicit_Beispiel.png)
 
-Was passiert, wenn der Ausgang eines Blocks auf seinen eigenen Eingang zurückwirkt?
+### Beispiel: `SimpleDemonstration`
 
-- Der einfache `EulerExplicitSolution` kann dies nicht lösen und wirft eine "Algebraische Schleife erkannt!"-Exception.
-- Der `EulerExplicitLoopSolution` implementiert eine Lösungsstrategie:
-  1.  Wenn eine Schleife erkannt wird, wird ein Eingang der Schleife zu einem "GuessMaster".
-  2.  Für diesen Eingang wird ein Wert **geraten** (z.B. 0).
-  3.  Die Werte werden durch die Schleife propagiert, bis am "GuessMaster" wieder ein Wert ankommt.
-  4.  Die Differenz zwischen geratenem und zurückkommendem Wert ist der **Fehler**.
-  5.  Der geratene Wert wird basierend auf dem Fehler angepasst (z.B. mit einem kleinen Schritt in die richtige Richtung).
-  6.  Schritte 3-5 werden wiederholt, bis der Fehler klein genug ist.
+Dieses Beispiel modelliert einen einfachen, vorwärtsgerichteten Signalfluss ohne Rückkopplungen.
+
+- Zwei konstante Werte (1 und 2) werden erzeugt.
+- Der erste Wert wird mit 2 multipliziert.
+- Das Ergebnis wird zum zweiten Wert addiert (`(1*2) + 2 = 4`).
+- Dieses Ergebnis wird zweimal integriert und aufgezeichnet.
+- Da keine Rückkopplungen vorhanden sind, kann der `EulerExplicitSolution` das Modell problemlos lösen.
+
+---
+
+### Erkennung von **algebraischen Schleifen** in der Klasse `EulerExplicitSolution`
+
+1.  Zu Beginn jedes Zeitschritts wird eine `open`-Liste mit allen Funktionen des Modells erstellt.
+2.  Der Solver tritt in eine Schleife ein, die so lange läuft, bis die `open`-Liste leer ist.
+3.  Innerhalb der Schleife wird die Anzahl der Elemente in `open` vor einer Iteration gespeichert.
+4.  Alle Funktionen in `open` werden durchlaufen. Wenn eine Funktion "bereit" ist (d.h. alle ihre Eingänge sind bekannt), werden ihre Ausgänge berechnet und sie wird aus `open` entfernt.
+5.  Nach der Iteration wird die aktuelle Anzahl der Elemente in `open` mit der gespeicherten Anzahl verglichen.
+6.  **Wenn sich die Anzahl nicht verringert hat**, bedeutet dies, dass keine der verbleibenden Funktionen ausgeführt werden konnte. Dies ist das Kennzeichen einer algebraischen Schleife.
+7.  In diesem Fall bricht der Solver die Simulation ab und wirft eine `Exception`.
+
+---
+
+![bg contain right:35%](./EulerExplicit_Loop.png)
+
+### Beispiel: `SimpleLoopDemonstration`
+
+Dieses Beispiel enthält eine direkte algebraische Schleife: Der Ausgang eines `Subtract`-Blocks wird direkt auf einen seiner Eingänge zurückgeführt.
+
+- Das Modell versucht, die Gleichung `y = 1 - y` zu lösen.
+- Der `EulerExplicitSolution` durchläuft die `open`-Liste, kann aber den `Subtract`-Block nie ausführen, da einer seiner Eingänge immer von seinem eigenen, noch nicht berechneten Ausgang abhängt.
+- Nachdem keine Blöcke mehr ausgeführt werden können, die `open`-Liste aber noch den `Subtract`-Block enthält, erkennt der Solver die Schleife.
+- Die Simulation wird mit einer "Algebraische Schleife erkannt!"-Exception abgebrochen.
+
+---
+
+### Umgang mit **algebraischen Schleifen** in der Klasse `EulerExplicitLoopSolution`
+
+Der `EulerExplicitLoopSolution` erweitert den einfachen Solver, um Schleifen aufzulösen.
+
+1.  **Schätzung starten**:
+    - Ein Block aus der `open`-Liste wird zum `GuessMaster`
+    - Für seine unbekannten Eingänge wird ein Wert **geraten** (z.B. 0) und als `GuessValue` gespeichert.
+2.  **Iterative Lösung**:
+    - Die Werte werden durch die Schleife propagiert.
+    - Am Ende der Schleife wird der neu berechnete Wert am Eingang des `GuessMaster` mit dem `GuessValue` verglichen.
+    - Der `GuessValue` wird basierend auf dem Fehler angepasst (z.B. `GuessValue += (U - GuessValue) * 0.001`).
+    - Dieser Vorgang wird wiederholt, bis der Fehler unter einem Schwellenwert liegt.
+
+---
+
+![bg contain right:40%](./EulerExplicitLoop_Simple.png)
+
+### Beispiel: `SimpleLoopDemonstration` mit Schleifenauflösung
+
+Dasselbe Modell mit der algebraischen Schleife (`y = 1 - y`) wird nun mit dem `EulerExplicitLoopSolution` gelöst.
+
+- Der Solver erkennt die Schleife wie zuvor.
+- Anstatt abzubrechen, wählt er den `Subtract`-Block als `GuessMaster`.
+- Er rät einen Wert für den rückgekoppelten Eingang (z.B. 0).
+- Er berechnet den Ausgang (`y = 1 - 0 = 1`) und den Fehler (`1 - 0 = 1`).
+- Der geratene Wert wird iterativ angepasst, bis der Fehler minimiert ist und der Ausgang `y` gegen die korrekte Lösung `0.5` konvergiert.
 
 ---
 

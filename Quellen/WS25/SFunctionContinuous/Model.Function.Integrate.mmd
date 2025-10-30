@@ -1,0 +1,21 @@
+classDiagram
+
+    direction TB
+
+    class Function {
+        <<Abstract>>
+    }
+
+    class IntegrateFunction {
+        DimX = 1
+        DimU = 1
+        DimY = 1
+        StartValue : double
+        InitializeConditions(...) void
+        CalculateDerivatives(...) void
+        CalculateOutputs(...) void
+    }
+    
+    Function <|-- IntegrateFunction
+
+    style Function fill:white

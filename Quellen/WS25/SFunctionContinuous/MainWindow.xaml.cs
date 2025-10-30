@@ -23,7 +23,7 @@ namespace SFunctionContinuous
 
             try
             {
-                Solution solution = new EulerExplicitLoopSolution(demonstration.Composition);
+                Solution solution = new EulerExplicitSolution(demonstration.Composition);
 
                 solution.Solve(1, 10);
             }

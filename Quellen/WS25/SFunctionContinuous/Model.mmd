@@ -1,0 +1,31 @@
+classDiagram
+
+    class Function {
+        <<Abstract>>
+
+        Name : string
+
+        DimX : int
+        DimU : int
+        DimY : int
+
+        InitializeConditions(x) void*
+        ComputeDerivatives(t, x, u, d) void*
+        ComputeOutputs(t, x, u, y) void*
+    }
+
+    class Connection {
+        Output : int
+        Input : int
+    }
+
+    class Composition {
+        AddFunction(f : Function) void
+        AddConnection(s : Function, o : int, t : Function, i : int) void
+    }
+
+    Composition *-- "*" Function
+    Composition *-- "*" Connection
+
+    Connection --> "1" Function: Source
+    Connection --> "1" Function: Target
