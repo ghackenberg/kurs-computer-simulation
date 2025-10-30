@@ -73,6 +73,18 @@ Die grundlegenden physikalischen Prinzipien (Kräftegleichgewicht, Hooke\'sches 
 
 ---
 
+TODO Folie zu Kräftegleichgewicht in einem Knoten
+
+---
+
+TODO Folie zu Matrixdarstellung des Kräftegleichgewichts in einem Knoten
+
+---
+
+TODO Folie zu Gleichungssystem für mehrere Knoten
+
+---
+
 <div class="columns">
 <div>
 
@@ -497,6 +509,18 @@ Folie zu Klasse `Transform`
 
 ---
 
+TODO Folie zu Klasse `Translate` (`Delta`)
+
+---
+
+TODO Folie zu Klasse `Rotate` (`Axis`, `Angle`)
+
+---
+
+TODO Folie zu Klasse `Scale` (`Factor`)
+
+---
+
 ### Die `Group`-Klasse
 
 Die `DrawLocal`-Methode eines `Group`-Knotens ist besonders einfach: Sie ruft lediglich die `Draw`-Methode all ihrer Kinder auf.
@@ -529,6 +553,22 @@ TODO Folie zu Klasse `Primitive`
 
 </div>
 </div>
+
+---
+
+TODO Folie zu Methode `DrawLocal` der Klasse `Primitive`
+
+---
+
+TODO Folie zu Klasse `Lines` (`Width`)
+
+---
+
+TODO Folie zu Klasse `Triangles`
+
+---
+
+TODO Folie zu Klasse `Quads`
 
 ---
 
@@ -580,7 +620,7 @@ TODO Folie zu Klasse `Sphere` (`Radius`, `Slices`, `Stacks`)
 <div class="columns">
 <div class="two">
 
-TODO Folie zu Klasse `Cone` (`Radius1`, `Radius2`, `Height`, `Slices`)
+TODO Folie zu Klasse `Cone` (`Radius1`, `Radius2`, `Height`, `Slices`, `Stacks`)
 
 </div>
 <div>
