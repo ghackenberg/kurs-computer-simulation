@@ -135,55 +135,103 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-<div class="columns">
-<div>
+### Mathematische Beschreibung des Fachwerks
 
-### Mathematische Modellierung: Knotenpunktverfahren
+Um das Fachwerk mathematisch zu beschreiben, definieren wir:
 
-- Wir betrachten jeden Knoten einzeln.
-- Für jeden Knoten muss ein **Kräftegleichgewicht** in x- und y-Richtung herrschen.
-- $\sum F_x = 0$
-- $\sum F_y = 0$
+1.  **Eine Menge von Knoten**: $N = \{n_1, n_2, ..., n_k\}$
+    - Jeder Knoten $n_i$ hat als Eigenschaften:
+        - Eine Position $\vec{p}_i = (x_i, y_i)$.
+        - Eine externe Kraft $\vec{F}_{ext,i}$ (kann auch $\vec{0}$ sein).
+        - Lagerbedingungen (z.B. fix in x/y, frei).
 
-</div>
-<div>
+2.  **Eine Menge von Stäben**: $R = \{r_1, r_2, ..., r_s\}$
+    - Jeder Stab $r_j$ verbindet zwei Knoten, z.B. $r_j = (n_a, n_b)$ mit $n_a, n_b \in N$.
+    - Jedem Stab ist eine unbekannte Stabkraft $S_j$ zugeordnet.
 
-![Gleichungen für einen Knoten](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Gleichungen.png)
-
-</div>
-</div>
+Ziel ist es, die Stabkräfte $S_j$ und die Lagerreaktionen zu finden.
 
 ---
 
-### Aufstellen des Gleichungssystems
+### Kräftegleichgewicht in jedem Knoten
 
-- Für ein Fachwerk mit $k$ Knoten erhalten wir $2k$ Gleichungen.
-- Die Unbekannten sind die Kräfte in den $s$ Stäben und die $l$ Lagerreaktionen.
-- Wenn $2k = s + l$, ist das System **statisch bestimmt** und (im Prinzip) lösbar.
-- Jede Gleichung beschreibt, wie die Stab- und Lagerkräfte zur Einhaltung des Gleichgewichts an einem Knoten in einer Richtung beitragen.
+Für einen Stab zwischen Knoten $i$ (Position $\vec{p}_i$) und Knoten $k$ (Position $\vec{p}_k$):
+1.  **Verbindungsvektor**: $\vec{v}_{ik} = \vec{p}_k - \vec{p}_i$
+2.  **Stablänge**: $L_{ik} = |\vec{v}_{ik}|$
+3.  **Normalisierter Richtungsvektor**: $\vec{e}_{ik} = \frac{\vec{v}_{ik}}{L_{ik}} = \begin{pmatrix} e_{x,ik} \\ e_{y,ik} \end{pmatrix}$
+
+Die Kraft, die der Stab auf den Knoten $i$ ausübt, ist $\vec{F}_i = S_{ik} \cdot \vec{e}_{ik}$.
+
+Das Gleichgewicht am Knoten $i$ lautet dann:
+
+$\sum_{k} (S_{ik} \cdot \vec{e}_{ik}) + \vec{F}_{ext,i} = \vec{0}$
+
+Aufgeteilt in Komponenten:
+- $\sum_{k} S_{ik} \cdot e_{x,ik} + F_{ext,ix} = 0$
+- $\sum_{k} S_{ik} \cdot e_{y,ik} + F_{ext,iy} = 0$
 
 ---
 
-<div class="columns">
-<div>
+### Gesamtes Gleichungssystem
+
+Stellt man die zwei Gleichgewichts-Gleichungen für jeden der $k$ Knoten auf, erhält man ein System von $2k$ linearen Gleichungen.
+
+$$
+\begin{pmatrix}
+e_{x,11} & e_{x,12} & \dots & e_{x,1s} & 1 & 0 & \dots \\
+e_{y,11} & e_{y,12} & \dots & e_{y,1s} & 0 & 1 & \dots \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots \\
+e_{x,k1} & e_{x,k2} & \dots & e_{x,ks} & 0 & 0 & \dots \\
+e_{y,k1} & e_{y,k2} & \dots & e_{y,ks} & 0 & 0 & \dots
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+S_1 \\
+\vdots \\
+S_s \\
+F_{Lager,1,x} \\
+F_{Lager,1,y} \\
+\vdots
+\end{pmatrix}
+=
+\begin{pmatrix}
+-F_{ext,1,x} \\
+-F_{ext,1,y} \\
+\vdots \\
+-F_{ext,k,x} \\
+-F_{ext,k,y}
+\end{pmatrix}
+$$
+
+- Die Matrix enthält die Koeffizienten ($e_{x,ik}, e_{y,ik}$) für jede Stabkraft $S_j$ und jede Lagerkraft in jeder Knotengleichung.
+- Viele Einträge in der Matrix sind Null, da ein Stab nur an zwei Knoten angreift.
+
+---
 
 ### Das lineare Gleichungssystem (LGS)
 
-Wenn wir dies für alle Knoten und beide Richtungen tun, erhalten wir ein lineares Gleichungssystem der Form:
+Allgemein schreiben wir das lineare Gleichungssystem so:
 
 $A \cdot x = b$
 
-- $A$: Die **Koeffizientenmatrix** (Geometriematrix). Sie enthält die Kosinus- und Sinus-Werte der Stabwinkel und beschreibt, wie die Stäbe an den Knoten "zusammenhängen".
-- $x$: Der **Lösungsvektor**. Er enthält die unbekannten Stabkräfte und Lagerreaktionen.
-- $b$: Der **Lastvektor**. Er enthält die an den Knoten angreifenden externen Kräfte.
+Und so nennen wir die Variablen dieses Gleichungssystems:
 
-</div>
-<div>
+- $A$: Die **Koeffizientenmatrix** (Geometriematrix). Sie enthält die normierten Richtungsvektoren der Stäbe und beschreibt, wie die Stäbe an den Knoten "zusammenhängen".
+- $x$: Der **Lösungsvektor**. Er enthält die unbekannten Stabkräfte und Lagerreaktionen (die Gesuchten in unserer Problemstellung).
+- $b$: Der **Lastvektor**. Er enthält die an den Knoten angreifenden externen Kräfte (gegebene Größen in unserer Problemstellung).
 
-![Gleichungssystem](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Gleichungssystem.jpg)
+---
 
-</div>
-</div>
+### Lösbarkeit des Gleichungssystems
+
+Ein LGS $A \cdot x = b$ ist genau dann eindeutig lösbar, wenn die Koeffizientenmatrix $A$ **quadratisch** und **regulär** (invertierbar) ist.
+
+- **Quadratisch**: Die Anzahl der Gleichungen muss der Anzahl der Unbekannten entsprechen. Für ein statisch bestimmtes Fachwerk ist dies der Fall ($2k = s + l$).
+- **Regulär**: Die Determinante der Matrix muss ungleich null sein ($\det(A) \neq 0$).
+    - Physikalisch bedeutet eine singuläre Matrix ($\det(A) = 0$), dass das Fachwerk **instabil** ist. Es würde unter Last kollabieren oder sich als Mechanismus bewegen.
+    - Dies wird auch als **kinematische Unbestimmtheit** bezeichnet.
+
+Die Lösbarkeit hängt also direkt von der statischen Bestimmtheit und Stabilität des Fachwerks ab.
 
 ---
 
