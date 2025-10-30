@@ -46,15 +46,23 @@ paginate: true
 math: mathjax
 ---
 
+<!-- Platzhalter für Kapitelbildbeschreibung -->
+
+![bg right](./Kapitelbilddateipfad)
+
 # Kapitel N: Kapitelüberschrift
 
-Kapitelübersicht
+Platzhalter für Kapitelübersicht
 
 ---
 
+<!-- Platzhalter für Abschnittsbildbeschreibung -->
+
+![bg right](./Abschnittsbilddateipfad)
+
 ## N.M: Abschnittsüberschrift
 
-Abschnittsübersicht
+Platzhalter für Abschnittsübersicht
 
 ---
 
@@ -108,7 +116,7 @@ Quelltext
 </div>
 <div class="one|two|three|four|five|six">
 
-![Bildbeschreibung](./Bilddateipfad)
+![Platzhalter für Bildbeschreibung](./Bilddateipfad)
 
 </div>
 </div>

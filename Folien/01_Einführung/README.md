@@ -299,6 +299,27 @@ Diskrete Modelle können weiter unterteilt werden:
 
 ---
 
+### Deterministische vs. Stochastische Modelle
+
+<div class="columns top">
+<div class="one">
+
+**Deterministische Modelle**
+
+![](../../Grafiken/Modellarten%20-%20Deterministisch.svg)
+
+</div>
+<div class="one">
+
+**Stochastische Modelle**
+
+![](../../Grafiken/Modellarten%20-%20Probabilistisch.svg)
+
+</div>
+</div>
+
+---
+
 ## 1.3: Lösungsmethoden
 
 ---
