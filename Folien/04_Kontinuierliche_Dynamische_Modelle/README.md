@@ -22,10 +22,14 @@ math: mathjax
 
 ## 4.1: Grundlagen und Definitionen
 
+---
+
+### Was sind kontinuierliche dynamische Modelle?
+
 <div class="columns top">
 <div>
 
-**Was sind kontinuierliche dynamische Modelle?**
+**Informelle Beschreibung:**
 
 - Beschreiben Systeme, deren Zustände sich **kontinuierlich** über die Zeit ändern.
 - Die Zeit wird als kontinuierliche Variable `t` (aus den reellen Zahlen) betrachtet.
@@ -162,6 +166,10 @@ Dies entspricht der Form $\dot{x} = Ax + Bu$.
 
 ## 4.2: Beispiel: Freier Fall / Vertikaler Wurf
 
+---
+
+### Vertikaler Wurf: Einführung
+
 Ein einfaches, aber fundamentales Beispiel für ein kontinuierliches dynamisches System.
 
 **Annahmen:**
@@ -274,10 +282,14 @@ Diese Formeln beschreiben die exakte Trajektorie des Objekts für jeden beliebig
 
 ---
 
+## 4.3: Numerische Integrationsverfahren
+
+---
+
 <div class="columns">
 <div class="three">
 
-## 4.3: Numerische Integrationsverfahren
+### Numerische Integrationsverfahren
 
 **Grundidee:** Approximiere den kontinuierlichen Verlauf von `x(t)` durch eine Folge von Werten $x_k \approx x(t_k)$ an diskreten Zeitpunkten $t_k = t_0 + k \cdot h$.
 
@@ -470,10 +482,14 @@ Beide Methoden haben einen lokalen Fehler der Ordnung $O(h^2)$ und einen globale
 
 ---
 
-<div class="columns">
-<div class="two">
+![bg contain right:40%](./Pendelbeispiel.jpg)
 
 ## 4.4: Beispiel: Ungedämpftes Federpendel
+
+
+---
+
+### Federpendel: Einführung
 
 Ein klassisches Beispiel für ein oszillierendes System.
 
@@ -486,14 +502,6 @@ Ein klassisches Beispiel für ein oszillierendes System.
 $$ F_{Feder} = -k y $$
 $$ F = m a \implies -k y(t) = m \ddot{y}(t) $$
 $$ \ddot{y}(t) = -\frac{k}{m} y(t) $$
-
-</div>
-<div>
-
-![](./Pendelbeispiel.jpg)
-
-</div>
-</div>
 
 ---
 
@@ -597,6 +605,10 @@ Dies ist ein lineares Gleichungssystem für die unbekannten Größen $y_{k+1}$ u
 ---
 
 ## 4.5: Differential-Algebraische Gleichungen (DAE)
+
+---
+
+### Differential-Algebraische Gleichungen
 
 Das Gleichungssystem aus dem impliziten Euler ist ein Beispiel für eine **algebraische Schleife**.
 
@@ -704,6 +716,10 @@ Die Wahl der richtigen Schrittweite ist ein kritischer Kompromiss zwischen Genau
 ---
 
 ## 4.6: Softwarearchitektur für Simulation
+
+---
+
+### Softwarearchitektur für Simulation
 
 Wie können wir komplexe dynamische Systeme am Computer modellieren und simulieren?
 Ein bewährter Ansatz ist die Modularisierung, inspiriert von **Simulink S-Functions**.
