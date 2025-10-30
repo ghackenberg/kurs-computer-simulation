@@ -42,11 +42,20 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+<div class="columns">
+<div>
+
 ### Das Fachwerk als klassisches Beispiel
 
 Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist, die an ihren Enden durch Knoten (Gelenke) miteinander verbunden sind.
 
+</div>
+<div>
+
 ![width:700px](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Beispiel.png)
+
+</div>
+</div>
 
 ---
 
@@ -105,6 +114,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+<div class="columns">
+<div>
+
 ### Annahmen des idealen Fachwerks
 
 1.  Die Stäbe sind **gerade** und haben ein **vernachlässigbares Eigengewicht**.
@@ -113,9 +125,18 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 **Folgerung**: In den Stäben treten nur **Normalkräfte** (Zug- oder Druckkräfte) in Längsrichtung auf, keine Biegemomente oder Querkräfte.
 
+</div>
+<div>
+
 ![Elemente eines Fachwerks](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Elemente.png)
 
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div>
 
 ### Mathematische Modellierung: Knotenpunktverfahren
 
@@ -124,7 +145,13 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - $\sum F_x = 0$
 - $\sum F_y = 0$
 
+</div>
+<div>
+
 ![Gleichungen für einen Knoten](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Gleichungen.png)
+
+</div>
+</div>
 
 ---
 
