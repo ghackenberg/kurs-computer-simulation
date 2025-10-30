@@ -114,59 +114,282 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-TODO SharpGL OpenGLControl
+### Einbindung mit SharpGL
+
+Die `SharpGL.WPF`-Bibliothek stellt ein `OpenGLControl` für die einfache Integration von OpenGL-Funktionalität in WPF-Anwendungen bereit.
+
+- Es ist ein WPF-`Control`, das eine Zeichenfläche für OpenGL bzw. die Grafikkarte (z.B. Nvidia) zur Verfügung stellt.
+- Es stellt zwei zentrale Ereignisse für die Initialisierung und das Zeichnen bereit: `OpenGLInitialized` und `OpenGLDraw`.
+
+Und so wird das `OpenGLControl`-Steuerelement in ein WPF-Fenster eingebunden (beachte den XML-Namensraum `xmlns:sharpGL`):
+
+```xml
+<Window xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF">
+    <Grid>
+        <sharpGL:OpenGLControl  OpenGLInitialized="OnInitialize" OpenGLDraw="OnDraw"/>
+    </Grid>
+</Window>
+```
 
 ---
 
-TODO SharpGL OpenGLControl Initialize Ereignisroutine
+### Initialisierung der Szene: `OpenGLInitialized`
+
+Die `OpenGLInitialized`-Ereignisroutine wird **einmalig** aufgerufen, wenn der OpenGL-Kontext bereit ist. Hier werden alle globalen Zustände gesetzt.
+
+```csharp
+private void OnInitialize(object sender, OpenGLRoutedEventArgs args)
+{
+    OpenGL gl = args.OpenGL;
+
+    // 1. Hintergrundfarbe festlegen (Clear Color)
+    
+    // 2. Beleuchtung und Materialeigenschaften aktivieren
+    
+    // 3. Globales Umgebungslicht definieren
+    
+    // 4. Punktlichtquellen aktivieren und definieren
+    
+    // 5. Schattierungsmodus für weiche Farbübergänge
+    
+    // 6. Tiefentest für korrekte Verdeckungen aktivieren
+}
+```
 
 ---
 
-TODO Clear Color
+<div class="columns">
+<div>
+
+### Hintergrundfarbe festlegen
+
+Die `ClearColor`-Methode definiert die Farbe, mit der der Bildschirm bei jedem neuen Frame geleert wird. Die Parameter sind die RGBA-Werte als `float` zwischen 0.0 und 1.0.
+
+```csharp
+// In der OnInitialize-Routine
+OpenGL gl = args.OpenGL;
+
+// Setzt die Hintergrundfarbe auf ein Dunkelblau
+gl.ClearColor(0.1f, 0.2f, 0.3f, 1.0f);
+```
+
+</div>
+<div>
+
+![width:1000px](https://upload.wikimedia.org/wikipedia/commons/8/83/RGB_Cube_Show_lowgamma_cutout_b.png)
+
+</div>
+</div>
 
 ---
 
-TODO Umgebungslicht
+<div class="columns">
+<div>
+
+### Beleuchtung & Material aktivieren
+
+Damit Objekte auf Licht reagieren, müssen zwei Dinge global aktiviert werden:
+- `GL_LIGHTING`: Schaltet das gesamte Beleuchtungssystem ein. Ohne dies sind alle Objekte nur in ihrer Grundfarbe sichtbar.
+- `GL_COLOR_MATERIAL`: Erlaubt es, die Materialeigenschaften eines Objekts über den `glColor`-Befehl zu steuern. Dies ist eine Vereinfachung.
+
+```csharp
+// In der OnInitialize-Routine
+gl.Enable(OpenGL.GL_LIGHTING);
+gl.Enable(OpenGL.GL_COLOR_MATERIAL);
+```
+
+</div>
+<div>
+
+![width:1000px](https://www.dca.ufrn.br/~lmarcos/courses/compgraf/redbook/images/Image77.gif)
+
+</div>
+</div>
 
 ---
 
-TODO Punktlicht (Position / Ambient / Diffuse / Specular)
+### Unterschiedliche Arten von Beleuchtung
+
+- **Ambient** - TODO Kurzbeschreibung
+- **Diffuse** - TODO Kurzbeschreibung
+- **Specular** - TODO Kurzbeschreibung
+
+![width:2000px](https://upload.wikimedia.org/wikipedia/commons/6/6b/Phong_components_version_4.png)
 
 ---
 
-TODO Schattierungsmodus
+### Globales Umgebungslicht
+
+Umgebungslicht (Ambient Light) sorgt dafür, dass auch die nicht direkt von einer Lichtquelle angestrahlten Flächen eines Objekts nicht komplett schwarz sind. Es simuliert indirekte Beleuchtung.
+
+```csharp
+// In der OnInitialize-Routine
+
+// Definiert ein schwaches, weißes Umgebungslicht für die gesamte Szene
+float[] ambientLight = { 0.2f, 0.2f, 0.2f, 1.0f };
+gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, ambientLight);
+```
 
 ---
 
-TODO Depth Test
+### Punktlichtquelle definieren
+
+Eine Punktlichtquelle strahlt von einer Position im Raum Licht ab. Man kann ihre Farbe für die diffuse und spiegelnde Reflexion getrennt definieren.
+
+```csharp
+// In der OnInitialize-Routine
+
+// Aktiviert die erste Lichtquelle (GL_LIGHT0)
+gl.Enable(OpenGL.GL_LIGHT0);
+
+// Definiert die Eigenschaften von GL_LIGHT0
+float[] lightPosition = { 2, 2, 5, 1 }; // Position (x, y, z, w=1 für Punktlicht)
+float[] lightDiffuse = { 1, 1, 1, 1 };  // Helles, weißes diffuses Licht
+
+gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, lightPosition);
+gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE, lightDiffuse);
+```
 
 ---
 
-TODO SharpGL OpenGLControl Draw Ereignisroutine
+<div class="columns">
+<div>
+
+### Schattierungsmodus festlegen
+
+Der Schattierungsmodus bestimmt, wie die Farben zwischen den Eckpunkten eines Polygons interpoliert werden.
+- `GL_FLAT`: Das gesamte Polygon hat eine einzige Farbe.
+- `GL_SMOOTH`: Die Farben werden zwischen den Eckpunkten interpoliert (Gouraud Shading).
+
+```csharp
+// In der OnInitialize-Routine
+
+// Weiche Farbübergänge aktivieren
+gl.ShadeModel(OpenGL.GL_SMOOTH);
+```
+
+</div>
+<div>
+
+![width:1000px](https://xoax.net/sub_cpp/crs_opengl/Lesson5/Image2.png)
+
+</div>
+</div>
 
 ---
 
-TODO Clear Color / Depth Buffer
+<div class="columns">
+<div>
+
+### Tiefentest aktivieren
+
+Der Tiefentest (Depth Test) sorgt dafür, dass Objekte, die weiter von der Kamera entfernt sind, von näheren Objekten verdeckt werden.
+
+```csharp
+// In der OnInitialize-Routine
+
+// Aktiviere den Tiefentest
+gl.Enable(OpenGL.GL_DEPTH_TEST);
+```
+
+</div>
+<div>
+
+![](https://glampert.com/static/images/posts/depth-buffer.jpeg)
+
+</div>
+</div>
 
 ---
 
-TODO OpenGL Primitives (Lines / Triangles / Quads)
+### Der Render-Loop: `OpenGLDraw`
+
+Die `OpenGLDraw`-Ereignisroutine wird für jeden Frame wiederholt aufgerufen. Hier finden alle Zeichenoperationen statt.
+
+```csharp
+private void OnDraw(object sender, OpenGLRoutedEventArgs args)
+{
+    OpenGL gl = args.OpenGL;
+
+    // 1. Buffer zurücksetzen (Farbe und Tiefe)
+    gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
+
+    // 2. ModelView-Matrix zurücksetzen
+    gl.MatrixMode(OpenGL.GL_MODELVIEW);
+    gl.LoadIdentity();
+
+    // 3. Kamera positionieren
+    gl.LookAt(5, 5, 5, 0, 0, 0, 0, 1, 0);
+
+    // 4. Objekte zeichnen...
+}
+```
 
 ---
 
-TODO Material (Ambient / Diffuse / Specular)
+### Zeichnen von Primitiven
+
+Geometrie wird innerhalb von `gl.Begin()` und `gl.End()` definiert. Der Parameter von `gl.Begin` legt fest, wie die folgenden Vertices interpretiert werden.
+
+- `GL_LINES`: Zeichnet Linien zwischen je zwei Vertices.
+- `GL_TRIANGLES`: Zeichnet gefüllte Dreiecke.
+- `GL_QUADS`: Zeichnet gefüllte Vierecke.
+
+```csharp
+gl.Begin(OpenGL.GL_TRIANGLES);
+    gl.Color(1.0f, 0.0f, 0.0f); // Rot
+    gl.Vertex(0, 1, 0);
+
+    gl.Color(0.0f, 1.0f, 0.0f); // Grün
+    gl.Vertex(-1, -1, 0);
+
+    gl.Color(0.0f, 0.0f, 1.0f); // Blau
+    gl.Vertex(1, -1, 0);
+gl.End();
+```
 
 ---
 
-TODO OpenGL LoadIdentity
+### Materialeigenschaften
+
+Das Material definiert, wie eine Oberfläche Licht reflektiert. Die wichtigsten Eigenschaften sind:
+- **Ambient**: Farbe des Objekts unter Umgebungslicht.
+- **Diffuse**: Grundfarbe des Objekts, wenn es direkt beleuchtet wird.
+- **Specular**: Farbe des Glanzlichts auf dem Objekt.
+
+```csharp
+// Definiere ein Material für glänzendes, rotes Plastik
+float[] matDiffuse = { 1.0f, 0.0f, 0.0f, 1.0f };
+float[] matSpecular = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+gl.Material(OpenGL.GL_FRONT, OpenGL.GL_DIFFUSE, matDiffuse);
+gl.Material(OpenGL.GL_FRONT, OpenGL.GL_SPECULAR, matSpecular);
+```
 
 ---
 
-TODO OpenGL Translate / Rotate / Scale
+### Transformationen und der Matrix-Stack
 
----
+Um Objekte unabhängig voneinander zu positionieren, nutzt OpenGL einen Matrix-Stack.
 
-TODO OpenGL PushMatrix / PopMatrix
+- `gl.PushMatrix()`: Speichert die aktuelle ModelView-Matrix.
+- `gl.PopMatrix()`: Stellt die zuletzt gespeicherte Matrix wieder her.
+
+```csharp
+// Zeichne einen Planeten
+gl.PushMatrix();
+    gl.Rotate(planetRotation, 0, 1, 0);
+    gl.Translate(5, 0, 0);
+    // ... zeichne Planet ...
+
+    // Zeichne einen Mond, der den Planeten umkreist
+    gl.PushMatrix();
+        gl.Rotate(moonRotation, 0, 1, 0);
+        gl.Translate(1, 0, 0);
+        // ... zeichne Mond ...
+    gl.PopMatrix(); // Zurück zum Planeten-Koordinatensystem
+gl.PopMatrix(); // Zurück zum Sonnen-Koordinatensystem
+```
 
 ---
 
@@ -195,7 +418,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div>
 
-TODO
+![Szenengraph-Struktur](./Diagramme/Szenengraph.svg)
 
 </div>
 </div>
@@ -259,6 +482,21 @@ public void Draw(OpenGL gl)
 
 ---
 
+<div class="columns">
+<div class="two">
+
+Folie zu Klasse `Transform`
+
+</div>
+<div>
+
+![](../../Quellen/WS25/VorlageSzenengraph3D/Model.Transform.svg)
+
+</div>
+</div>
+
+---
+
 ### Die `Group`-Klasse
 
 Die `DrawLocal`-Methode eines `Group`-Knotens ist besonders einfach: Sie ruft lediglich die `Draw`-Methode all ihrer Kinder auf.
@@ -276,6 +514,81 @@ protected override void DrawLocal(OpenGL gl)
 ```
 
 Durch diesen rekursiven Aufruf (`Group.Draw` -> `Child.Draw` -> ...) werden die Transformationen korrekt entlang der Baumhierarchie akkumuliert.
+
+---
+
+<div class="columns">
+<div class="two">
+
+TODO Folie zu Klasse `Primitive`
+
+</div>
+<div>
+
+![](../../Quellen/WS25/VorlageSzenengraph3D/Model.Primitive.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+TODO Folie zu Klasse `Volume`
+
+</div>
+<div>
+
+![](../../Quellen/WS25/VorlageSzenengraph3D/Model.Volume.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+TODO Folie zu Klasse `Cube` (`SizeX`, `SizeY`, `SizeZ`)
+
+</div>
+<div>
+
+![width:1000px](https://machinethink.net/images/3d-rendering/Geometry@2x.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+TODO Folie zu Klasse `Sphere` (`Radius`, `Slices`, `Stacks`)
+
+</div>
+<div>
+
+![width:1000px](https://www.mbsoftworks.sk/tutorials/opengl4/022-cylinder-and-sphere/8_sllices_stacks_sphere.png)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+TODO Folie zu Klasse `Cone` (`Radius1`, `Radius2`, `Height`, `Slices`)
+
+</div>
+<div>
+
+![width:1000px](https://www.songho.ca/opengl/files/gl_cylinder03.png)
+
+</div>
+</div>
 
 ---
 

@@ -16,6 +16,8 @@ classDiagram
 
     class Sphere {
         +Radius : float
+        +Slices : int
+        +Stacks : int
         #DrawLocal(gl : OpenGL) void
     }
 
@@ -23,6 +25,7 @@ classDiagram
         +Radius1 : float
         +Radius2 : float
         +Height : float
+        +Slices : int
         #DrawLocal(gl : OpenGL) void
     }
 
