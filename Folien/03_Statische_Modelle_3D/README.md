@@ -291,7 +291,7 @@ gl.ShadeModel(OpenGL.GL_SMOOTH);
 ---
 
 <div class="columns">
-<div>
+<div class="two">
 
 ### Tiefentest aktivieren
 
@@ -307,7 +307,7 @@ gl.Enable(OpenGL.GL_DEPTH_TEST);
 </div>
 <div>
 
-![](https://glampert.com/static/images/posts/depth-buffer.jpeg)
+![](https://i.sstatic.net/uZhIF.png)
 
 </div>
 </div>
