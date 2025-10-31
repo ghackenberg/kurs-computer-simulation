@@ -14,37 +14,42 @@ namespace VorlageSzenengraph3D.Model
         public static readonly Material GREEN = new Material(Color.GREEN);
         public static readonly Material BLUE = new Material(Color.BLUE);
 
+        public uint Face { get; set; } = OpenGL.GL_FRONT;
+
         public Color Ambient { get; set; }
         public Color Diffuse { get; set; }
         public Color Specular { get; set; }
+        public float Shininess { get; set; }
 
-        public Material(float red, float green, float blue) : this(red, green, blue, 1)
+        public Material(float red, float green, float blue, float shininess = 100) : this(red, green, blue, 1, shininess)
         {
 
         }
 
-        public Material(float red, float green, float blue, float alpha) : this(new Color(red, green, blue, alpha))
+        public Material(float red, float green, float blue, float alpha, float shininess = 100) : this(new Color(red, green, blue, alpha), shininess)
         {
 
         }
 
-        public Material(Color color) : this(color, color, color)
+        public Material(Color color, float shininess = 100) : this(color, color, color, shininess)
         {
 
         }
 
-        public Material(Color ambient, Color diffuse, Color specular)
+        public Material(Color ambient, Color diffuse, Color specular, float shininess = 100)
         {
             Ambient = ambient;
             Diffuse = diffuse;
             Specular = specular;
+            Shininess = shininess;
         }
 
         public void Apply(OpenGL gl)
         {
-            gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT, Ambient.Array());
-            gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_DIFFUSE, Diffuse.Array());
-            gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_SPECULAR, Specular.Array());
+            gl.Material(Face, OpenGL.GL_AMBIENT, Ambient.Array());
+            gl.Material(Face, OpenGL.GL_DIFFUSE, Diffuse.Array());
+            gl.Material(Face, OpenGL.GL_SPECULAR, Specular.Array());
+            gl.Material(Face, OpenGL.GL_SHININESS, Shininess);
         }
 
         public Material Clone()
