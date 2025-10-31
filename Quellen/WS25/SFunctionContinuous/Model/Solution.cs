@@ -8,6 +8,7 @@
         public List<Connection> Connections;
 
         public Dictionary<Function, bool[]> ReadyFlag = new Dictionary<Function, bool[]>();
+
         public Dictionary<Function, bool[]> GuessMasterFlag = new Dictionary<Function, bool[]>();
         public Dictionary<Function, bool[]> GuessSlaveFlag = new Dictionary<Function, bool[]>();
         public Dictionary<Function, double[]> GuessValue = new Dictionary<Function, double[]>();
@@ -16,6 +17,7 @@
         public Dictionary<Function, double[]> D = new Dictionary<Function, double[]>();
         public Dictionary<Function, double[]> U = new Dictionary<Function, double[]>();
         public Dictionary<Function, double[]> Y = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> Z = new Dictionary<Function, double[]>();
 
         public Solution(Composition composition)
         {
@@ -27,6 +29,7 @@
             foreach (Function f in Functions)
             {
                 ReadyFlag[f] = new bool[f.DimU];
+
                 GuessMasterFlag[f] = new bool[f.DimU];
                 GuessSlaveFlag[f] = new bool[f.DimU];
                 GuessValue[f] = new double[f.DimU];
@@ -35,6 +38,7 @@
                 D[f] = new double[f.DimX];
                 U[f] = new double[f.DimU];
                 Y[f] = new double[f.DimY];
+                Z[f] = new double[f.DimZ];
             }
         }
 
@@ -53,6 +57,7 @@
                 for (int i = 0; i < f.DimU; i++)
                 {
                     ReadyFlag[f][i] = false;
+
                     GuessMasterFlag[f][i] = false;
                     GuessSlaveFlag[f][i] = false;
                 }
@@ -136,6 +141,39 @@
                     X[f][i] += D[f][i];
                 }
             }
+        }
+
+        public bool CalculateZeroCrossings(double t)
+        {
+            Dictionary<Function, double[]> cache = new Dictionary<Function, double[]>();
+
+            foreach (Function f in Composition.Functions)
+            {
+                double[] z = new double[f.DimZ];
+
+                f.CalculateZeros(t, X[f], U[f], z);
+
+                for (int i = 0; i < f.DimZ; i++)
+                {
+                    if (z[i] > 0 && Z[f][i] < 0)
+                    {
+                        return true;
+                    }
+                    else if (z[i] < 0 && Z[f][i] > 0)
+                    {
+                        return true;
+                    }
+                }
+
+                cache[f] = z;
+            }
+
+            foreach (Function f in Composition.Functions)
+            {
+                Z[f] = cache[f];
+            }
+
+            return false;
         }
 
         public abstract void Solve(double step, double tmax);

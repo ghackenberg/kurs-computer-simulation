@@ -56,6 +56,12 @@
                     }
                 }
 
+                // Nulldurchgänge berechnen
+                if (CalculateZeroCrossings(t))
+                {
+                    // Repeat with different time step!
+                }
+
                 // Ableitungen berechnen
                 CalculateDerivatives(t);
 

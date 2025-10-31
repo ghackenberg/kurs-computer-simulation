@@ -13,14 +13,16 @@
         public readonly int DimX;
         public readonly int DimU;
         public readonly int DimY;
+        public readonly int DimZ;
 
-        public Function(string name, int dimX, int dimU, int dimY)
+        public Function(string name, int dimX, int dimU, int dimY, int dimZ)
         {
             Name = name;
 
             DimX = dimX;
             DimU = dimU;
             DimY = dimY;
+            DimZ = dimZ;
         }
 
         virtual public void InitializeConditions(double[] x)
@@ -34,6 +36,11 @@
         }
 
         virtual public void CalculateOutputs(double t, double[] x, double[] u, double[] y)
+        {
+
+        }
+
+        virtual public void CalculateZeros(double t, double[] x, double[] u, double[] z)
         {
 
         }
