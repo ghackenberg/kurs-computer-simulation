@@ -40,7 +40,12 @@
 
         }
 
-        virtual public void CalculateZeros(double t, double[] x, double[] u, double[] z)
+        virtual public void CalculateZeroCrossings(double t, double[] x, double[] u, double[] z)
+        {
+
+        }
+
+        virtual public void UpdateStates(double t, double[] x, double[] u)
         {
 
         }

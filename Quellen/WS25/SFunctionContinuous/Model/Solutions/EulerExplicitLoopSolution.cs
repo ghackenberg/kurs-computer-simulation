@@ -8,17 +8,27 @@
 
         }
 
-        public override void Solve(double step, double tmax)
+        public override void Solve(double smax, double tmax)
         {
             // Zeit initialisieren
             double t = 0;
 
-            // Zustände initialisieren
-            InitializeConditions();
-
             // Simulationsschleife
             while (t <= tmax)
             {
+                double step = smax;
+
+                if (t == 0)
+                {
+                    // Zustände initialisieren
+                    InitializeConditions();
+                }
+                else
+                {
+                    // Zustände integrieren
+                    IntegrateContinuousStates(step);
+                }
+
                 // Bereitschaft zurücksetzen
                 ResetFlags();
 
@@ -163,17 +173,17 @@
                     }
                 }
 
+                // Ableitungen berechnen
+                CalculateDerivatives(t);
+
                 // Nulldurchgänge berechnen
                 if (CalculateZeroCrossings(t))
                 {
                     // Repeat with different time step!
                 }
 
-                // Ableitungen berechnen
-                CalculateDerivatives(t);
-
-                // Zustände integrieren
-                IntegrateContinuousStates();
+                // Zustände aktualisieren
+                UpdateStates(t);
 
                 // Zeit aktualisieren
                 t += step;

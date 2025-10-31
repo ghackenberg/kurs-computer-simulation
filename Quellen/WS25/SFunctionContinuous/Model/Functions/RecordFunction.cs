@@ -4,7 +4,7 @@
     {
         public List<(double, double)> Data = new List<(double, double)>();
 
-        public RecordFunction(string name) : base(name, 0, 1, 0)
+        public RecordFunction(string name) : base(name, 0, 1, 0, 0)
         {
 
         }

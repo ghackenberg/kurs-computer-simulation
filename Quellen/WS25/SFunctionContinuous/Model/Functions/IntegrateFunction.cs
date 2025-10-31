@@ -4,7 +4,7 @@
     {
         public double StartValue;
 
-        public IntegrateFunction(string name, double startValue) : base(name, 1, 1, 1)
+        public IntegrateFunction(string name, double startValue) : base(name, 1, 1, 1, 0)
         {
             StartValue = startValue;
         }

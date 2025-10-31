@@ -2,7 +2,7 @@
 {
     class SubtractFunction : Function
     {
-        public SubtractFunction(string name = "Subtract") : base(name, 0, 2, 1)
+        public SubtractFunction(string name = "Subtract") : base(name, 0, 2, 1, 0)
         {
 
         }

@@ -4,7 +4,7 @@
     {
         public double Value;
 
-        public ConstantFunction(string name, double value) : base(name, 0, 0, 1)
+        public ConstantFunction(string name, double value) : base(name, 0, 0, 1, 0)
         {
             Value = value;
         }

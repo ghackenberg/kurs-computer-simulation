@@ -2,7 +2,7 @@
 {
     class AddFunction : Function
     {
-        public AddFunction(string name = "Add") : base(name, 0, 2, 1)
+        public AddFunction(string name = "Add") : base(name, 0, 2, 1, 0)
         {
 
         }

@@ -132,50 +132,68 @@
             }
         }
 
-        public void IntegrateContinuousStates()
+        public void IntegrateContinuousStates(double step)
         {
             foreach (Function f in Composition.Functions)
             {
                 for (int i = 0; i < f.DimX; i++)
                 {
-                    X[f][i] += D[f][i];
+                    X[f][i] += D[f][i] * step;
                 }
             }
         }
 
         public bool CalculateZeroCrossings(double t)
         {
+            // Berechne die ZeroCrossing-Signale für alle Funktionen und prüfe auf ZeroCrossings
             Dictionary<Function, double[]> cache = new Dictionary<Function, double[]>();
 
             foreach (Function f in Composition.Functions)
             {
+                // Berechne die neuen Werte der ZeroCrossing-Signale
                 double[] z = new double[f.DimZ];
 
-                f.CalculateZeros(t, X[f], U[f], z);
+                f.CalculateZeroCrossings(t, X[f], U[f], z);
 
-                for (int i = 0; i < f.DimZ; i++)
+                // Prüfe, ob bereits zuvor ein ZeroCrossing-Signal berechnet wurde
+                if (t > 0)
                 {
-                    if (z[i] > 0 && Z[f][i] < 0)
+                    // Wenn ja, prüfe, ob eines der Signale das Vorzeichen gewechselt hat
+                    for (int i = 0; i < f.DimZ; i++)
                     {
-                        return true;
-                    }
-                    else if (z[i] < 0 && Z[f][i] > 0)
-                    {
-                        return true;
+                        if (z[i] > 0 && Z[f][i] < 0)
+                        {
+                            return true;
+                        }
+                        else if (z[i] < 0 && Z[f][i] > 0)
+                        {
+                            return true;
+                        }
                     }
                 }
 
+                // Speichere die neu berechneten Werte der ZeroCrossing-Signale
                 cache[f] = z;
             }
 
+            // Merke die Werte der ZeroCrossing-Signale für den nächsten Durchlauf
             foreach (Function f in Composition.Functions)
             {
                 Z[f] = cache[f];
             }
 
+            // Es wurde kein ZeroCrossing erkannt
             return false;
         }
 
-        public abstract void Solve(double step, double tmax);
+        public void UpdateStates(double t)
+        {
+            foreach (Function f in Composition.Functions)
+            {
+                f.UpdateStates(t, X[f], U[f]);
+            }
+        }
+
+        public abstract void Solve(double smax, double tmax);
     }
 }
