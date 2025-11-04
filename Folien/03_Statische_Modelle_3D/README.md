@@ -1207,17 +1207,104 @@ Zeichnet eine Kugel.
 
 ---
 
-TODO Folie zur Berechnung der Koordinaten der Eckpunkte der Kugel
+### Berechnung der Kugel-**Koordinaten**
+
+Die Position der Eckpunkte einer Kugeloberfläche wird am einfachsten mit **Kugelkoordinaten** berechnet. Jeder Punkt wird durch einen Radius $r$ und zwei Winkel $\phi$ (phi) und $\theta$ (theta) beschrieben.
+
+- **$\phi$ (phi)**: Der polare Winkel (Breitengrad), der von der positiven Y-Achse aus gemessen wird. Er läuft von $0$ (Nordpol) bis $\pi$ (Südpol).
+- **$\theta$ (theta)**: Der azimutale Winkel (Längengrad), der in der XZ-Ebene gemessen wird. Er läuft von $0$ bis $2\pi$ (umfasst also den gesamten Kreis).
+
+**Formeln:**
+
+<div class="columns top">
+<div>
+
+Die Winkel werden aus den `stacks` ($i$) und `slices` ($j$) abgeleitet:
+
+$\phi = \frac{i}{\text{stacks}} \cdot \pi$
+$\theta = \frac{j}{\text{slices}} \cdot 2\pi$
+
+</div>
+<div>
+
+Die Umrechnung in kartesische Koordinaten erfolgt mittels Trigonometrie:
+
+$x = r \cdot \sin(\phi) \cdot \cos(\theta)$
+$y = r \cdot \cos(\phi)$
+$z = r \cdot \sin(\phi) \cdot \sin(\theta)$
+
+</div>
+</div>
 
 ---
 
-TODO Folie zur Berechnung der Normalen an den Eckpunkten der Kugel
+### Implementierung der **Koordinaten**-Berechnung in C#:
+
+Für die Berechnung nutzen wir die trigonometrischen Funktionen `Sin` und `Cos` der Klasse `Math`, welche von *Microsoft* standardmäßig bereitgestellt wird:
+
+```csharp
+private (float x, float y, float z) ComputeCoordinate(float radius, int i, int j)
+{
+    // Berechne zunächst die Winkel
+    float phi = i / (float)stacks * Math.PI;
+    float theta = j / (float)slices * 2 * Math.PI;
+
+    // Berechne dann die Koordinaten
+    float x = radius * (float)Math.Sin(phi) * (float)Math.Cos(theta);
+    float y = radius * (float)Math.Cos(phi);
+    float z = radius * (float)Math.Sin(phi) * (float)Math.Sin(theta);
+
+    // Gebe schließlich die berechneten Koordinaten zurück
+    return (x, y, z);
+}
+```
+
+</div>
+</div>
 
 ---
 
-### Darstellung einer **Kugel** mit unterschiedlichen Eigenschaften
+### Berechnung der Kugel-**Normalen**
 
-Der folgende *Screenshot* zeigt Kugeldarstellungen mit unterschiedlichen Eigenschaften:
+Für eine korrekte Beleuchtung benötigt OpenGL an jedem Vertex einen **Normalenvektor**.
+
+- Bei einer im Ursprung zentrierten Kugel ist der Normalenvektor an einem Punkt $P$ auf der Oberfläche einfach der **normalisierte Vektor** vom Ursprung zu diesem Punkt $P$.
+- Das entspricht gleichzeitig dem Koordinatenvektor des Punktes auf einer **Einheitskugel** (einer Kugel mit Radius 1).
+
+**Formel:**
+
+Der Normalenvektor $N$ ist der normalisierte Ortsvektor $\vec{p}$:
+
+$N = \frac{\vec{p}}{|\vec{p}|} = \frac{1}{r} \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} \sin(\phi) \cos(\theta) \\ \cos(\phi) \\ \sin(\phi) \sin(\theta) \end{pmatrix}$
+
+</div>
+<div>
+
+---
+
+### Implementierung der **Normalen**-Berechnung in C#
+
+Man berechnet die Koordinate einfach mit einem Radius von 1. Der resultierende Vektor ist bereits normalisiert und kann direkt als Normale verwendet werden.
+
+```csharp
+private void SphereVertexNormal(OpenGL gl, int i, int j)
+{
+    // Berechne die Koordinate auf einer Einheitskugel
+    (float nx, float ny, float nz) = ComputeCoordinate(1.0f, i, j);
+
+    // Setze den Normalenvektor
+    gl.Normal(nx, ny, nz);
+}
+```
+
+</div>
+</div>
+
+---
+
+### Darstellung einer **Kugel** mit unterschiedlichen Einstellungen
+
+Der folgende *Screenshot* zeigt Kugeldarstellungen mit unterschiedlichen Einstellungen:
 
 ![](../../Quellen/WS25/BeispielKugel3D/Screenshot.png)
 
@@ -1256,9 +1343,9 @@ TODO Folie zur Berechnung der Normalen an den Eckpunkten des Zylinders
 
 ---
 
-### Darstellung eines **Zylinder** mit unterschiedlichen Eigenschaften
+### Darstellung eines **Zylinder** mit unterschiedlichen Einstellungen
 
-Der folgende *Screenshot* zeigt Zylinderdarstellungen mit unterschiedlichen Eigenschaften:
+Der folgende *Screenshot* zeigt Zylinderdarstellungen mit unterschiedlichen Einstellungen:
 
 ![](../../Quellen/WS25/BeispielZylinder3D/Screenshot.png)
 
