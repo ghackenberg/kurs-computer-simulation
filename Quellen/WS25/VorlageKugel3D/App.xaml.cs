@@ -1,8 +1,6 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
 
-namespace KugelÜbung
+namespace VorlageKugel3D
 {
     /// <summary>
     /// Interaction logic for App.xaml

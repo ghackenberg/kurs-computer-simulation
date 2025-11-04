@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFunctionContinuous", "WS25
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageSzenengraph3D", "WS25\VorlageSzenengraph3D\VorlageSzenengraph3D.csproj", "{D0AF0298-6D27-4FFA-ABC6-019CCB2BD906}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KugelÜbung", "WS25\KugelÜbung\KugelÜbung.csproj", "{2EFB6449-6361-4F2D-B6C7-D37FE809B0E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageKugel3D", "WS25\VorlageKugel3D\VorlageKugel3D.csproj", "{2EFB6449-6361-4F2D-B6C7-D37FE809B0E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
