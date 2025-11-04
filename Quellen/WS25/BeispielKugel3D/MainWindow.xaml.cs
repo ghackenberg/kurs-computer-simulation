@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace VorlageZylinder3D
+namespace BeispielKugel3D
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

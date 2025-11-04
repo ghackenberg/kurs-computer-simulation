@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace VorlageZylinder3D
+namespace BeispielWürfel3D
 {
     /// <summary>
     /// Interaction logic for App.xaml

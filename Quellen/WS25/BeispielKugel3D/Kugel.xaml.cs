@@ -2,7 +2,7 @@
 using SharpGL.WPF;
 using System.Windows.Controls;
 
-namespace VorlageKugel3D
+namespace BeispielKugel3D
 {
     /// <summary>
     /// Interaktionslogik für BasisVorlage.xaml

@@ -2,7 +2,7 @@
 using SharpGL.WPF;
 using System.Windows.Controls;
 
-namespace VorlageZylinder3D
+namespace BeispielZylinder3D
 {
     /// <summary>
     /// Interaktionslogik für BasisVorlage.xaml
