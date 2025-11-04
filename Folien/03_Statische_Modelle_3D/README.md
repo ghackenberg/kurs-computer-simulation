@@ -1175,6 +1175,14 @@ Zeichnet einen Würfel oder Quader.
 
 ---
 
+### Darstellung eines **Würfel** mit unterschiedlichen Eigenschaften
+
+Der folgende *Screenshot* zeigt Würfeldarstellungen mit unterschiedlichen Eigenschaften:
+
+![](../../Quellen/WS25/BeispielWürfel3D/Screenshot.png)
+
+---
+
 <div class="columns">
 <div class="two">
 
@@ -1199,10 +1207,26 @@ Zeichnet eine Kugel.
 
 ---
 
+TODO Folie zur Berechnung der Koordinaten der Eckpunkte der Kugel
+
+---
+
+TODO Folie zur Berechnung der Normalen an den Eckpunkten der Kugel
+
+---
+
+### Darstellung einer **Kugel** mit unterschiedlichen Eigenschaften
+
+Der folgende *Screenshot* zeigt Kugeldarstellungen mit unterschiedlichen Eigenschaften:
+
+![](../../Quellen/WS25/BeispielKugel3D/Screenshot.png)
+
+---
+
 <div class="columns">
 <div class="two">
 
-### Klasse `Cone` / `Cylinder`
+### Klasse `Cylinder`
 
 Zeichnet einen Kegel, einen Zylinder oder einen Kegelstumpf.
 
@@ -1221,6 +1245,22 @@ Zeichnet einen Kegel, einen Zylinder oder einen Kegelstumpf.
 
 </div>
 </div>
+
+---
+
+TODO Folie zur Berechnung der Koordinaten der Eckpunkte des Zylinders
+
+---
+
+TODO Folie zur Berechnung der Normalen an den Eckpunkten des Zylinders
+
+---
+
+### Darstellung eines **Zylinder** mit unterschiedlichen Eigenschaften
+
+Der folgende *Screenshot* zeigt Zylinderdarstellungen mit unterschiedlichen Eigenschaften:
+
+![](../../Quellen/WS25/BeispielZylinder3D/Screenshot.png)
 
 ---
 
