@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageSzenengraph3D", "WS2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageKugel3D", "WS25\VorlageKugel3D\VorlageKugel3D.csproj", "{2EFB6449-6361-4F2D-B6C7-D37FE809B0E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageZylinder3D", "WS25\VorlageZylinder3D\VorlageZylinder3D.csproj", "{315F8C60-5169-0BCF-EB78-5AD1DFA65A4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{2EFB6449-6361-4F2D-B6C7-D37FE809B0E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EFB6449-6361-4F2D-B6C7-D37FE809B0E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EFB6449-6361-4F2D-B6C7-D37FE809B0E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{315F8C60-5169-0BCF-EB78-5AD1DFA65A4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{315F8C60-5169-0BCF-EB78-5AD1DFA65A4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{315F8C60-5169-0BCF-EB78-5AD1DFA65A4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{315F8C60-5169-0BCF-EB78-5AD1DFA65A4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +122,7 @@ Global
 		{4570C25E-6E81-4A83-B209-3DC40B79DAF1} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 		{D0AF0298-6D27-4FFA-ABC6-019CCB2BD906} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 		{2EFB6449-6361-4F2D-B6C7-D37FE809B0E9} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
+		{315F8C60-5169-0BCF-EB78-5AD1DFA65A4D} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B78BB052-30AD-4804-A50D-523BA6002BC8}

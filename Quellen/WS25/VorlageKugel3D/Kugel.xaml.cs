@@ -139,8 +139,6 @@ namespace VorlageKugel3D
 
         private void SphereWire(OpenGL gl, float radius, int stacks, int slices)
         {
-            // Stacks
-
             if (Solid)
             {
                 Material(gl, 10, 10, 10, 0, 0, 0, 0, 0, 0, 100);
@@ -150,10 +148,25 @@ namespace VorlageKugel3D
                 Material(gl, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100);
             }
 
+            // Points
+
+            gl.PointSize(5);
+
+            gl.Begin(OpenGL.GL_POINTS);
+            for (int i = 0; i <= stacks; i++)
+            {
+                for (int j = 0; j < slices; j++)
+                {
+                    SphereVertex(gl, radius, stacks, slices, i, j);
+                }
+            }
+            gl.End();
+
+            // Stacks
+
             for (int i = 1; i < stacks; i++)
             {
                 gl.Begin(OpenGL.GL_LINE_LOOP);
-                SphereVertex(gl, radius, stacks, slices, i, 0);
                 for (int j = 0; j < slices; j++)
                 {
                     SphereVertex(gl, radius, stacks, slices, i, j);
@@ -163,19 +176,9 @@ namespace VorlageKugel3D
 
             // Slices
 
-            if (Solid)
-            {
-                Material(gl, 10, 10, 10, 0, 0, 0, 0, 0, 0, 100);
-            }
-            else
-            {
-                Material(gl, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100);
-            }
-
             for (int j = 0; j < slices; j++)
             {
                 gl.Begin(OpenGL.GL_LINE_STRIP);
-                SphereVertex(gl, radius, stacks, slices, 0, j);
                 for (int i = 0; i <= stacks; i++)
                 {
                     SphereVertex(gl, radius, stacks, slices, i, j);
@@ -194,29 +197,6 @@ namespace VorlageKugel3D
                 {
                     SphereVertex(gl, radius * 1.0f, stacks, slices, i, j);
                     SphereVertex(gl, radius * 1.1f, stacks, slices, i, j);
-                }
-            }
-            gl.End();
-
-            // Points
-
-            if (Solid)
-            {
-                Material(gl, 10, 10, 10, 0, 0, 0, 0, 0, 0, 100);
-            }
-            else
-            {
-                Material(gl, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100);
-            }
-
-            gl.PointSize(5);
-
-            gl.Begin(OpenGL.GL_POINTS);
-            for (int i = 0; i <= stacks; i++)
-            {
-                for (int j = 0; j < slices; j++)
-                {
-                    SphereVertex(gl, radius, stacks, slices, i, j);
                 }
             }
             gl.End();
@@ -266,6 +246,7 @@ namespace VorlageKugel3D
 
             return (x, y, z);
         }
+
         private void Material(OpenGL gl, float ar, float ag, float ab, float dr, float dg, float db, float sr, float sg, float sb, float s)
         {
             float[] ambient = { ar, ag, ab, 1 };
