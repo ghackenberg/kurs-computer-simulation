@@ -33,10 +33,11 @@ classDiagram
         <<Abstract>>
         -beginMode : uint
         -vertices : List~Vertex~
+        -normals: List~Normal~
         -materials : List~Material~
-        +Add(v : Vertex, m : Material) void
-        +Get(i : int) Tuple~Vertex, Material~
-        +Set(i : int, v : Vertex, m : Material) void
+        +Add(v : Vertex, n : Normal, m : Material) void
+        +Get(i : int) Tuple~Vertex, Normal, Material~
+        +Set(i : int, v : Vertex, n : Normal, m : Material) void
         +Remove(i : int) void
         #DrawLocal(gl : OpenGL) void
     }

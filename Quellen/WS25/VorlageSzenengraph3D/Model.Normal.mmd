@@ -1,0 +1,16 @@
+classDiagram
+
+    class Normal {
+        +Vector : Vector
+        +Apply(gl : OpenGL) void
+    }
+
+    class Vector {
+    }
+
+    Primitive *-- Normal : -normals
+
+    Normal *-- Vector : +Vector
+
+    style Primitive fill:white
+    style Vector fill:white

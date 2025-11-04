@@ -8,9 +8,6 @@ classDiagram
 
     class Cube {
         +Size : Vector
-        -material : Material
-        -scale : Scale
-        -quads : Quads
         #DrawLocal(gl : OpenGL) void
     }
 
@@ -34,12 +31,6 @@ classDiagram
     Volume <|-- Cone
 
     Cube *-- Vector : +Size
-    Cube *-- Material : -material
-    Cube *-- Scale : -scale
-    Cube *-- Quads : -quads
 
     style Volume fill:white
     style Vector fill:white
-    style Material fill:white
-    style Scale fill:white
-    style Quads fill:white
