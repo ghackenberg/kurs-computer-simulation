@@ -31,7 +31,7 @@ namespace VorlageSzenengraph3D.Model
 
         }
 
-        public Material(Color color, float shininess = 100) : this(color, color, color, shininess)
+        public Material(Color color, float shininess = 100) : this(color, color, new Color(1, 1, 1), shininess)
         {
 
         }

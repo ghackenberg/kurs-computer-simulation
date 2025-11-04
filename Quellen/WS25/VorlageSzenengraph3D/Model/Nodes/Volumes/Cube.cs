@@ -1,18 +1,10 @@
 ﻿using SharpGL;
-using VorlageSzenengraph3D.Model.Nodes.Primitives;
-using VorlageSzenengraph3D.Model.Transforms;
 
 namespace VorlageSzenengraph3D.Model.Nodes.Volumes
 {
     public class Cube : Shape
     {
         public Vector Size { get; set; }
-
-        private Scale _scale;
-
-        private Material _material;
-
-        private Quads _quads;
 
         public Cube(string name, float sizeX, float sizeY, float sizeZ, Material material) : this(name, new Vector(sizeX, sizeY, sizeZ), material)
         {
@@ -22,68 +14,69 @@ namespace VorlageSzenengraph3D.Model.Nodes.Volumes
         public Cube(string name, Vector size, Material material) : base(name, material)
         {
             Size = size;
-
-            _scale = new Scale(size.X / 2, size.Y / 2, size.Z / 2);
-
-            _material = material.Clone();
-
-            _quads = new Quads("");
-            _quads.Transforms.Add(_scale);
-
-            // Rückseite
-
-            _quads.Add(new Vertex(-1, -1, -1), _material);
-            _quads.Add(new Vertex(+1, -1, -1), _material);
-            _quads.Add(new Vertex(+1, +1, -1), _material);
-            _quads.Add(new Vertex(-1, +1, -1), _material);
-
-            // Vorderseite
-
-            _quads.Add(new Vertex(-1, -1, +1), _material);
-            _quads.Add(new Vertex(+1, -1, +1), _material);
-            _quads.Add(new Vertex(+1, +1, +1), _material);
-            _quads.Add(new Vertex(-1, +1, +1), _material);
-
-            // Linke Seite
-
-            _quads.Add(new Vertex(-1, -1, -1), _material);
-            _quads.Add(new Vertex(-1, -1, +1), _material);
-            _quads.Add(new Vertex(-1, +1, +1), _material);
-            _quads.Add(new Vertex(-1, +1, -1), _material);
-
-            // Rechte Seite
-
-            _quads.Add(new Vertex(+1, -1, -1), _material);
-            _quads.Add(new Vertex(+1, -1, +1), _material);
-            _quads.Add(new Vertex(+1, +1, +1), _material);
-            _quads.Add(new Vertex(+1, +1, -1), _material);
-
-            // Unterseite
-
-            _quads.Add(new Vertex(-1, -1, -1), _material);
-            _quads.Add(new Vertex(-1, -1, +1), _material);
-            _quads.Add(new Vertex(+1, -1, +1), _material);
-            _quads.Add(new Vertex(+1, -1, -1), _material);
-
-            // Oberseite
-
-            _quads.Add(new Vertex(-1, +1, -1), _material);
-            _quads.Add(new Vertex(-1, +1, +1), _material);
-            _quads.Add(new Vertex(+1, +1, +1), _material);
-            _quads.Add(new Vertex(+1, +1, -1), _material);
         }
 
         protected override void DrawLocal(OpenGL gl)
         {
-            _scale.Factor.X = Size.X / 2;
-            _scale.Factor.Y = Size.Y / 2;
-            _scale.Factor.Z = Size.Z / 2;
+            Material.Apply(gl);
 
-            _material.Ambient = Material.Ambient;
-            _material.Diffuse = Material.Diffuse;
-            _material.Specular = Material.Specular;
+            gl.Begin(OpenGL.GL_QUADS);
 
-            _quads.Draw(gl);
+            // Bottom
+
+            gl.Normal(0, -1, 0);
+
+            gl.Vertex(-Size.X / 2, -Size.Y / 2, -Size.Z / 2);
+            gl.Vertex(+Size.X / 2, -Size.Y / 2, -Size.Z / 2);
+            gl.Vertex(+Size.X / 2, -Size.Y / 2, +Size.Z / 2);
+            gl.Vertex(-Size.X / 2, -Size.Y / 2, +Size.Z / 2);
+
+            // Top
+
+            gl.Normal(0, +1, 0);
+
+            gl.Vertex(-Size.X / 2, +Size.Y / 2, -Size.Z / 2);
+            gl.Vertex(+Size.X / 2, +Size.Y / 2, -Size.Z / 2);
+            gl.Vertex(+Size.X / 2, +Size.Y / 2, +Size.Z / 2);
+            gl.Vertex(-Size.X / 2, +Size.Y / 2, +Size.Z / 2);
+
+            // Back
+
+            gl.Normal(0, 0, -1);
+
+            gl.Vertex(-Size.X / 2, -Size.Y / 2, -Size.Z / 2);
+            gl.Vertex(+Size.X / 2, -Size.Y / 2, -Size.Z / 2);
+            gl.Vertex(+Size.X / 2, +Size.Y / 2, -Size.Z / 2);
+            gl.Vertex(-Size.X / 2, +Size.Y / 2, -Size.Z / 2);
+
+            // Front
+
+            gl.Normal(0, 0, +1);
+
+            gl.Vertex(-Size.X / 2, -Size.Y / 2, +Size.Z / 2);
+            gl.Vertex(+Size.X / 2, -Size.Y / 2, +Size.Z / 2);
+            gl.Vertex(+Size.X / 2, +Size.Y / 2, +Size.Z / 2);
+            gl.Vertex(-Size.X / 2, +Size.Y / 2, +Size.Z / 2);
+
+            // Left
+
+            gl.Normal(-1, 0, 0);
+
+            gl.Vertex(-Size.X / 2, -Size.Y / 2, -Size.Z / 2);
+            gl.Vertex(-Size.X / 2, +Size.Y / 2, -Size.Z / 2);
+            gl.Vertex(-Size.X / 2, +Size.Y / 2, +Size.Z / 2);
+            gl.Vertex(-Size.X / 2, -Size.Y / 2, +Size.Z / 2);
+
+            // Right
+
+            gl.Normal(+1, 0, 0);
+
+            gl.Vertex(+Size.X / 2, -Size.Y / 2, -Size.Z / 2);
+            gl.Vertex(+Size.X / 2, +Size.Y / 2, -Size.Z / 2);
+            gl.Vertex(+Size.X / 2, +Size.Y / 2, +Size.Z / 2);
+            gl.Vertex(+Size.X / 2, -Size.Y / 2, +Size.Z / 2);
+
+            gl.End();
         }
     }
 }

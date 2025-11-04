@@ -74,6 +74,10 @@ namespace VorlageSzenengraph3D.Model
             // Wurzelknoten zeichnen
 
             Root.Draw(gl);
+
+            // Zeichnen beenden
+
+            gl.Flush();
         }
     }
 }

@@ -6,15 +6,15 @@ namespace VorlageSzenengraph3D.Model.Nodes.Volumes
     {
         public float Radius { get; set; }
 
-        public int Slices { get; set; }
         public int Stacks { get; set; }
+        public int Slices { get; set; }
 
-        public Sphere(string name, float radius, int slices, int stacks, Material material) : base(name, material)
+        public Sphere(string name, float radius, int stacks, int slices, Material material) : base(name, material)
         {
             Radius = radius;
 
-            Slices = slices;
             Stacks = stacks;
+            Slices = slices;
         }
 
         protected override void DrawLocal(OpenGL gl)
@@ -57,25 +57,18 @@ namespace VorlageSzenengraph3D.Model.Nodes.Volumes
 
         private void SphereVertex(OpenGL gl, int i, int j)
         {
-            (float x, float y, float z) = ComputeCoordinate(Radius + 0, i, j);
+            (float vx, float vy, float vz) = ComputeVertex(Radius + 0, i, j);
+            (float nx, float ny, float nz) = ComputeVertex(Radius + 1, i, j);
 
-            (float nx, float ny, float nz) = ComputeCoordinate(Radius + 1, i, j);
-
-            gl.Normal(nx - x, ny - y, nz - z);
-
-            gl.Vertex(x, y, z);
+            gl.Normal(nx - vx, ny - vy, nz - vz);
+            gl.Vertex(vx, vy, vz);
         }
 
-        private (float x, float y, float z) ComputeCoordinate(float radius, int i, int j)
+        private (float x, float y, float z) ComputeVertex(float radius, int i, int j)
         {
             float phi = (float)Math.PI / Stacks * i;
             float theta = (float)Math.PI * 2 / Slices * j;
 
-            return ComputeCoordinate(radius, phi, theta);
-        }
-
-        private (float x, float y, float z) ComputeCoordinate(float radius, float phi, float theta)
-        {
             float x = radius * (float)Math.Sin(phi) * (float)Math.Cos(theta);
             float y = radius * (float)Math.Cos(phi);
             float z = radius * (float)Math.Sin(phi) * (float)Math.Sin(theta);
