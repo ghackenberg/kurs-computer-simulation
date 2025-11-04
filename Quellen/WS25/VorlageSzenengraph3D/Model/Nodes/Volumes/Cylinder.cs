@@ -83,14 +83,15 @@ namespace VorlageSzenengraph3D.Model.Nodes.Volumes
 
         private (float nx, float ny, float nz) ComputeNormal(int i, int j)
         {
-            float phi = (Radius1 - Radius2) / Height;
             float theta = (float)Math.PI * 2 / Slices * j;
 
-            float nx = (float)Math.Cos(theta) * (float)Math.Cos(phi);
-            float ny = (float)Math.Sin(phi);
-            float nz = (float)Math.Sin(theta) * (float)Math.Cos(phi);
+            float nx = Height * (float)Math.Cos(theta);
+            float ny = Radius1 - Radius2;
+            float nz = Height * (float)Math.Sin(theta);
 
-            return (nx, ny, nz);
+            float norm = (float)Math.Sqrt(nx * nx + ny * ny + nz * nz);
+
+            return (nx / norm, ny / norm, nz / norm);
         }
     }
 }

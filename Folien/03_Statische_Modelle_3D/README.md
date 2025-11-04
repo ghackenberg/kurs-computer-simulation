@@ -1335,11 +1335,19 @@ Zeichnet einen Kegel, einen Zylinder oder einen Kegelstumpf.
 
 ---
 
-TODO Folie zur Berechnung der Koordinaten der Eckpunkte des Zylinders
+TODO Folie zur Berechnung der Zylinder-Koordinaten mit Formeln
 
 ---
 
-TODO Folie zur Berechnung der Normalen an den Eckpunkten des Zylinders
+TODO Folie zur Implementierung der Berechnung der Zylinder-Koordinaten in C#
+
+---
+
+TODO Folie zur Berechnung der Zylinder-Normalen mit Formalen
+
+---
+
+TODO Folie zur Implementierung der Berechnung der Zylinder-Normalen in C#
 
 ---
 
