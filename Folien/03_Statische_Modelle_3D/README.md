@@ -1273,9 +1273,9 @@ Für eine korrekte Beleuchtung benötigt OpenGL an jedem Vertex einen **Normalen
 
 **Formel:**
 
-Der Normalenvektor $N$ ist der normalisierte Ortsvektor $\vec{p}$:
+Der Normalenvektor $N_{\phi,\theta}$ ist der normalisierte Ortsvektor $\vec{p}$:
 
-$N = \frac{\vec{p}}{|\vec{p}|} = \frac{1}{r} \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} \sin(\phi) \cos(\theta) \\ \cos(\phi) \\ \sin(\phi) \sin(\theta) \end{pmatrix}$
+$N_{\phi,\theta} = \frac{\vec{p}}{|\vec{p}|} = \frac{1}{r} \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} \sin(\phi) \cos(\theta) \\ \cos(\phi) \\ \sin(\phi) \sin(\theta) \end{pmatrix}$
 
 </div>
 <div>
@@ -1335,19 +1335,111 @@ Zeichnet einen Kegel, einen Zylinder oder einen Kegelstumpf.
 
 ---
 
-TODO Folie zur Berechnung der Zylinder-Koordinaten mit Formeln
+### Berechnung der Zylinder-**Koordinaten**
+
+Die Position der Eckpunkte auf der Zylinder- bzw. Kegel(stumpf)-Oberfläche wird mit einer Mischung aus Zylinder- und linearen Koordinaten berechnet.
+
+- **$\phi$ (phi)**: Ein Parameter, der die Position entlang der Höhe des Zylinders beschreibt. Er läuft von $0$ (unten, bei $r_1$) bis $1$ (oben, bei $r_2$).
+- **$\theta$ (theta)**: Der azimutale Winkel, der die Position auf dem Umfang beschreibt. Er läuft von $0$ bis $2\pi$.
+- **$r(\phi)$**: Der Radius an einer bestimmten Höhe $\phi$, der linear zwischen $r_1$ und $r_2$ interpoliert wird.
+
+**Formeln:**
+
+<div class="columns top">
+<div>
+
+Die Parameter werden aus den `stacks` ($i$) und `slices` ($j$) abgeleitet:
+
+$\phi = \frac{i}{\text{stacks}}$
+$\theta = \frac{j}{\text{slices}} \cdot 2\pi$
+$r(\phi) = r_1 + \phi \cdot (r_2 - r_1)$
+
+</div>
+<div>
+
+Die Umrechnung in kartesische Koordinaten erfolgt dann so:
+
+$x = r(\phi) \cdot \cos(\theta)$
+$y = h \cdot \phi$
+$z = r(\phi) \cdot \sin(\theta)$
+
+</div>
+</div>
 
 ---
 
-TODO Folie zur Implementierung der Berechnung der Zylinder-Koordinaten in C#
+### Implementierung der **Koordinaten**-Berechnung in C#
+
+Die Berechnung wird auf zwei Schritte aufgeteilt. Der erste Schritt berechnet die Parameter `phi`, `theta` und `radius` aus den *Stack*- und *Slice*-Indizes, der zweite berechnet daraus die finalen Koordinaten.
+
+```csharp
+private (float x, float y, float z) ComputeCoordinate(int i, int j)
+{
+    // Schritt 1: Phi, Theta und Radius berechnen
+
+    float phi = i / (float)Stacks;
+    float theta = (float)Math.PI * 2 / Slices * j;
+    float radius = Radius1 + phi * (Radius2 - Radius1);
+
+    // Schritt 2: Koordinaten berechnen
+
+    float x = radius * (float)Math.Cos(theta);
+    float y = Length * phi;
+    float z = radius * (float)Math.Sin(theta);
+
+    return (x, y, z);
+}
+```
 
 ---
 
-TODO Folie zur Berechnung der Zylinder-Normalen mit Formalen
+<div class="columns">
+<div class="three">
+
+### Berechnung der Zylinder-**Normalen**
+
+Der Normalenvektor für die Mantelfläche ist entscheidend für die korrekte Beleuchtung. Er steht senkrecht auf der Oberfläche.
+
+- Für einen perfekten Zylinder ($r_1 = r_2$) zeigt die Normale einfach vom Mittelpunkt der Y-Achse nach außen (in der XZ-Ebene).
+- Für einen Kegel oder Kegelstumpf ist die Normale geneigt. Die Neigung hängt vom Verhältnis der Radien-Differenz zur Höhe ab.
+
+**Formel:**
+
+Der (unnormalisierte) Normalenvektor $N_\theta$ an einem Punkt auf der Mantelfläche lässt sich aus der Geometrie ableiten:
+
+$N_\theta = \begin{pmatrix} h \cdot \cos(\theta) \\ r_1 - r_2 \\ h \cdot \sin(\theta) \end{pmatrix}$
+
+</div>
+<div>
+
+![](./Diagramme/Zylindernormale.svg)
+
+</div>
+</div>
 
 ---
 
-TODO Folie zur Implementierung der Berechnung der Zylinder-Normalen in C#
+### Implementierung der **Normalen**-Berechnung in C#
+
+Die Implementierung berechnet den Normalenvektor basierend auf der Formel, normalisiert ihn und gibt das Ergebnis zurück. Der `theta`-Winkel wird aus dem *Slice*-Index `j` berechnet.
+
+```csharp
+private (float nx, float ny, float nz) ComputeNormal(int j)
+{
+    // Schritt 1: Berechne den Theta-Winkel
+    float theta = (float)Math.PI * 2 / slices * j;
+
+    // Schritt 2: Berechne den unnormalisierten Normalenvektor
+    float nx = Length * (float)Math.Cos(theta);
+    float ny = Radius1 - Radius2;
+    float nz = Length * (float)Math.Sin(theta);
+
+    // Schritt 3: Normalisiere den Vektor
+    float norm = (float)Math.Sqrt(nx * nx + ny * ny + nz * nz);
+
+    return (nx / norm, ny / norm, nz / norm);
+}
+```
 
 ---
 
