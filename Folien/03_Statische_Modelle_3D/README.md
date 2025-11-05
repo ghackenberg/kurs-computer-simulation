@@ -1394,25 +1394,82 @@ private (float x, float y, float z) ComputeCoordinate(int i, int j)
 ---
 
 <div class="columns">
-<div class="three">
+<div class="two">
 
 ### Berechnung der Zylinder-**Normalen**
 
-Der Normalenvektor für die Mantelfläche ist entscheidend für die korrekte Beleuchtung. Er steht senkrecht auf der Oberfläche.
+Der Normalenvektor für die Mantelfläche ist entscheidend für die korrekte Beleuchtung, da er bestimmt, wie Licht von der Oberfläche reflektiert wird. Er muss senkrecht auf der Oberfläche stehen.
 
-- Für einen perfekten Zylinder ($r_1 = r_2$) zeigt die Normale einfach vom Mittelpunkt der Y-Achse nach außen (in der XZ-Ebene).
-- Für einen Kegel oder Kegelstumpf ist die Normale geneigt. Die Neigung hängt vom Verhältnis der Radien-Differenz zur Höhe ab.
+- Für einen **perfekten Zylinder** ($r_1 = r_2$) ist die Normale einfach ein Vektor, der vom Mittelpunkt der Y-Achse nach außen zeigt. Die Y-Komponente ist 0.
+- Für einen **Kegel oder Kegelstumpf** ist die Normale geneigt. Die Neigung hängt vom Verhältnis der Radien-Differenz zur Höhe ab.
 
-**Formel:**
-
-Der (unnormalisierte) Normalenvektor $N_\theta$ an einem Punkt auf der Mantelfläche lässt sich aus der Geometrie ableiten:
-
-$N_\theta = \begin{pmatrix} h \cdot \cos(\theta) \\ r_1 - r_2 \\ h \cdot \sin(\theta) \end{pmatrix}$
+Die Herleitung des Normalenvektors erfolgt geometrisch über einen 2D-Querschnitt.
 
 </div>
 <div>
 
-![](./Diagramme/Zylindernormale.svg)
+![width:1000px](./Diagramme/Zylindernormale%20-%20Querschnitt%20XY.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Herleitung der Zylinder-Normalen in **2D**
+
+Die Herleitung erfolgt über einen 2D-Querschnitt in der XY-Ebene (für $\theta=0$). Die Mantelfläche wird hier zu einer geraden Linie.
+
+1.  **Eckpunkte der Linie**: Die Linie verläuft vom Punkt $P_1 = (r_1, 0)$ zum Punkt $P_2 = (r_2, h)$.
+2.  **Richtungsvektor der Linie**: Der Vektor entlang der Linie ist $\vec{v} = P_2 - P_1 = \begin{pmatrix} r_2 - r_1 \\ h \end{pmatrix}$.
+3.  **Normalenvektor in 2D**: Ein Vektor, der senkrecht auf $\vec{v}$ steht, ist der Normalenvektor $\vec{n}_{2D}$. Man erhält ihn durch Vertauschen der Komponenten und Negieren einer davon.
+
+    $\vec{n} = \begin{pmatrix} h \\ -(r_2 - r_1) \end{pmatrix} = \begin{pmatrix} h \\ r_1 - r_2 \end{pmatrix}$
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/Zylindernormale%20-%20Normalenvektor%20XY.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Herleitung der Zylinder-Normalen in **3D**
+
+Die 3D-Normale $\vec{P}_\theta$ entsteht durch Rotation des 2D-Normalenvektors $\vec{n}$ um die Y-Achse.
+
+- Der 2D-Vektor $\vec{n} = \begin{pmatrix} n_x \\ n_y \end{pmatrix} = \begin{pmatrix} h \\ r_1 - r_2 \end{pmatrix}$ liegt in der XY-Ebene.
+- Bei der Rotation um die Y-Achse bleibt die Y-Komponente unverändert.
+- Die X-Komponente $n_x$ wird zur radialen Komponente in der XZ-Ebene.
+
+**Zusammensetzung des 3D-Vektors:**
+
+<div class="columns">
+<div>
+
+$P_x = n_x \cdot \cos(\theta) = h \cdot \cos(\theta)$
+$P_y = n_y = r_1 - r_2$
+$P_z = n_x \cdot \sin(\theta) = h \cdot \sin(\theta)$
+
+</div>
+<div>
+
+$\implies \vec{P}_\theta = \begin{pmatrix} h \cdot \cos(\theta) \\ r_1 - r_2 \\ h \cdot \sin(\theta) \end{pmatrix}$
+
+</div>
+</div>
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/Zylindernormale%20-%20Normalenvektor%20XZ.svg)
 
 </div>
 </div>
