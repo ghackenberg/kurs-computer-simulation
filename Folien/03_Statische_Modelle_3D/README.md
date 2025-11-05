@@ -147,6 +147,89 @@ Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A
 
 ---
 
+### Stablängenänderung durch Knotenverschiebung
+
+Die Längenänderung $\Delta L$ eines Stabes zwischen den Knoten $i$ und $j$ hängt von deren Verschiebungen $\vec{u}_i$ und $\vec{u}_j$ ab.
+
+- **Verschiebungsvektoren**: $\vec{u}_i = (u_{ix}, u_{iy}, u_{iz})$ und $\vec{u}_j = (u_{jx}, u_{jy}, u_{jz})$.
+- **Einheitsvektor des Stabes**: $\vec{e} = (e_x, e_y, e_z)$, wobei $e_x, e_y, e_z$ die Richtungscosinusse sind.
+
+Die Längenänderung ist die Projektion der relativen Verschiebung der Knoten auf die Stabachse:
+
+$\Delta L = (\vec{u}_j - \vec{u}_i) \cdot \vec{e}$
+
+Ausgeschrieben ergibt das:
+
+$\Delta L = e_x(u_{jx} - u_{ix}) + e_y(u_{jy} - u_{iy}) + e_z(u_{jz} - u_{iz})$
+
+---
+
+### Stabkräfte und Steifigkeitsbeziehung
+
+Nach dem **Hooke'schen Gesetz** ist die Kraft $S$ im Stab proportional zur Längenänderung $\Delta L$.
+
+$S = \frac{E \cdot A}{L} \cdot \Delta L$
+
+- $E$: Elastizitätsmodul (Materialeigenschaft)
+- $A$: Querschnittsfläche des Stabes
+- $L$: Ursprüngliche Länge des Stabes
+
+Die Stabkraft $S$ erzeugt an den Knoten $i$ und $j$ die Gegenkräfte $\vec{f}_i$ und $\vec{f}_j$:
+
+$\vec{f}_j = S \cdot \vec{e}$
+$\vec{f}_i = -S \cdot \vec{e}$
+
+Diese Kräfte halten das Gleichgewicht mit den externen Kräften.
+
+---
+
+### Die 3D-Stab-Steifigkeitsmatrix (1/2)
+
+Ziel ist es, eine Matrix $k_{Stab}$ zu finden, die die Knotenverschiebungen $\vec{u}$ direkt mit den resultierenden Knotenkäften $\vec{f}_{Stab}$ in Beziehung setzt: $\vec{f}_{Stab} = k_{Stab} \cdot \vec{u}$.
+
+- **Vektor der Knotenverschiebungen**: $\vec{u} = (u_{ix}, u_{iy}, u_{iz}, u_{jx}, u_{jy}, u_{jz})^T$
+- **Vektor der Stabkräfte**: $\vec{f}_{Stab} = (\vec{f}_i^T, \vec{f}_j^T)^T$
+
+Setzt man die Formeln für $\Delta L$ und $S$ in die Kraftgleichungen ein, erhält man:
+
+$\vec{f}_{Stab} = \frac{EA}{L} \cdot \Delta L \cdot \begin{pmatrix} -e_x \\ -e_y \\ -e_z \\ e_x \\ e_y \\ e_z \end{pmatrix} = \frac{EA}{L} \cdot \left( \begin{pmatrix} -e_x & -e_y & -e_z & e_x & e_y & e_z \end{pmatrix} \cdot \vec{u} \right) \cdot \begin{pmatrix} -e_x \\ -e_y \\ -e_z \\ e_x \\ e_y \\ e_z \end{pmatrix}$
+
+---
+
+### Die 3D-Stab-Steifigkeitsmatrix (2/2)
+
+Das Ausmultiplizieren der Vektoren führt zur **6x6-Stab-Steifigkeitsmatrix** $k_{Stab}$:
+
+$k_{Stab} = \frac{EA}{L} \begin{pmatrix}
+e_x^2 & e_x e_y & e_x e_z & -e_x^2 & -e_x e_y & -e_x e_z \\
+e_y e_x & e_y^2 & e_y e_z & -e_y e_x & -e_y^2 & -e_y e_z \\
+e_z e_x & e_z e_y & e_z^2 & -e_z e_x & -e_z e_y & -e_z^2 \\
+-e_x^2 & -e_x e_y & -e_x e_z & e_x^2 & e_x e_y & e_x e_z \\
+-e_y e_x & -e_y^2 & -e_y e_z & e_y e_x & e_y^2 & e_y e_z \\
+-e_z e_x & -e_z e_y & -e_z^2 & e_z e_x & e_z e_y & e_z^2
+\end{pmatrix}$
+
+Diese Matrix beschreibt den Zusammenhang zwischen den 6 Verschiebungs-Freiheitsgraden eines Stabes und den daraus resultierenden 6 Knotenkräften im globalen Koordinatensystem.
+
+---
+
+### Globales Gleichungssystem
+
+Die globale Steifigkeitsmatrix $K$ des gesamten Fachwerks wird durch "Assemblierung" der einzelnen Stab-Steifigkeitsmatrizen $k_{Stab}$ aufgebaut.
+
+- Für jeden Stab werden die 36 Elemente seiner $k_{Stab}$-Matrix an die richtigen Positionen in der globalen Matrix $K$ addiert. Die Positionen ergeben sich aus den globalen Freiheitsgraden der beiden Knoten des Stabes.
+- Dieser Prozess wird als **Direkte Steifigkeitsmethode** bezeichnet.
+
+Das resultierende globale Gleichungssystem lautet:
+
+$K \cdot \vec{u} = \vec{f}$
+
+- $K$: Globale Steifigkeitsmatrix (Größe $3k \times 3k$ für $k$ Knoten)
+- $\vec{u}$: Globaler Vektor der unbekannten Knotenverschiebungen
+- $\vec{f}$: Globaler Vektor der externen Kräfte
+
+---
+
 ## 3.2: Grundlagen der 3D-Visualisierung mit OpenGL
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
