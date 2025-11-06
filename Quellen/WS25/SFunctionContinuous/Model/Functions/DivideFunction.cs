@@ -2,21 +2,21 @@
 
 namespace SFunctionContinuous.Model.Functions
 {
-    class MultiplyFunction : Function
+    class DivideFunction : Function
     {
-        public MultiplyFunction(string name = "Multiply") : base(name)
+        public DivideFunction(string name = "Divide") : base(name)
         {
             // Inputs
             Inputs.Add(new InputDeclaration("A", true));
             Inputs.Add(new InputDeclaration("B", true));
 
             // Outputs
-            Outputs.Add(new OutputDeclaration("Product"));
+            Outputs.Add(new OutputDeclaration("Quotiet"));
         }
 
         public override void CalculateOutputs(double t, double[] x, double[] u, double[] y)
         {
-            y[0] = u[0] * u[1];
+            y[0] = u[0] / u[1];
         }
     }
 }

@@ -8,7 +8,7 @@ namespace SFunctionContinuous.Model.Demonstations
         {
             Function a = new ConstantFunction("Constant1", 1);
             Function b = new ConstantFunction("Constant2", 2);
-            Function c = new MultiplyFunction("Multiply", 2);
+            Function c = new GainFunction("Multiply", 2);
             Function d = new AddFunction("Add");
             Function e = new IntegrateFunction("Intergate1", 0);
             Function f = new RecordFunction("Record1");

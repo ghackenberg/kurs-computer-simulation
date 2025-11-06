@@ -2,6 +2,6 @@
 {
     abstract class Demonstration
     {
-        public Composition Composition = new Composition();
+        public Composition Composition { get; } = new Composition();
     }
 }

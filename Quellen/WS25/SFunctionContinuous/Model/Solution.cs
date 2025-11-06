@@ -2,22 +2,22 @@
 {
     abstract class Solution
     {
-        public Composition Composition;
+        public Composition Composition { get; }
 
-        public List<Function> Functions;
-        public List<Connection> Connections;
+        public List<Function> Functions { get; }
+        public List<Connection> Connections { get; }
 
-        public Dictionary<Function, bool[]> ReadyFlag = new Dictionary<Function, bool[]>();
+        public Dictionary<Function, bool[]> ReadyFlag { get; } = new Dictionary<Function, bool[]>();
 
-        public Dictionary<Function, bool[]> GuessMasterFlag = new Dictionary<Function, bool[]>();
-        public Dictionary<Function, bool[]> GuessSlaveFlag = new Dictionary<Function, bool[]>();
-        public Dictionary<Function, double[]> GuessValue = new Dictionary<Function, double[]>();
+        public Dictionary<Function, bool[]> GuessMasterFlag { get; } = new Dictionary<Function, bool[]>();
+        public Dictionary<Function, bool[]> GuessSlaveFlag { get; } = new Dictionary<Function, bool[]>();
+        public Dictionary<Function, double[]> GuessValue { get; } = new Dictionary<Function, double[]>();
 
-        public Dictionary<Function, double[]> X = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> D = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> U = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> Y = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> Z = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> X { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> D { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> U { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> Y { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> Z { get; } = new Dictionary<Function, double[]>();
 
         public Solution(Composition composition)
         {
@@ -28,17 +28,17 @@
 
             foreach (Function f in Functions)
             {
-                ReadyFlag[f] = new bool[f.DimU];
+                ReadyFlag[f] = new bool[f.Inputs.Count];
 
-                GuessMasterFlag[f] = new bool[f.DimU];
-                GuessSlaveFlag[f] = new bool[f.DimU];
-                GuessValue[f] = new double[f.DimU];
+                GuessMasterFlag[f] = new bool[f.Inputs.Count];
+                GuessSlaveFlag[f] = new bool[f.Inputs.Count];
+                GuessValue[f] = new double[f.Inputs.Count];
 
-                X[f] = new double[f.DimX];
-                D[f] = new double[f.DimX];
-                U[f] = new double[f.DimU];
-                Y[f] = new double[f.DimY];
-                Z[f] = new double[f.DimZ];
+                X[f] = new double[f.ContinuousStates.Count];
+                D[f] = new double[f.ContinuousStates.Count];
+                U[f] = new double[f.Inputs.Count];
+                Y[f] = new double[f.Outputs.Count];
+                Z[f] = new double[f.ZeroCrossings.Count];
             }
         }
 
@@ -54,9 +54,9 @@
         {
             foreach (Function f in Functions)
             {
-                for (int i = 0; i < f.DimU; i++)
+                for (int i = 0; i < f.Inputs.Count; i++)
                 {
-                    ReadyFlag[f][i] = false;
+                    ReadyFlag[f][i] = !f.Inputs[i].DirectFeedThrough;
 
                     GuessMasterFlag[f][i] = false;
                     GuessSlaveFlag[f][i] = false;
@@ -88,7 +88,7 @@
 
             foreach (Function f in Functions)
             {
-                for (int i = 0; i < f.DimU; i++)
+                for (int i = 0; i < f.Inputs.Count; i++)
                 {
                     if (GuessMasterFlag[f][i])
                     {
@@ -102,7 +102,7 @@
 
         public bool IsReady(Function f)
         {
-            for (int i = 0; i < f.DimU; i++)
+            for (int i = 0; i < f.Inputs.Count; i++)
             {
                 if (!ReadyFlag[f][i])
                 {
@@ -114,7 +114,7 @@
 
         public bool HasGuess(Function f)
         {
-            for (int i = 0; i < f.DimU; i++)
+            for (int i = 0; i < f.Inputs.Count; i++)
             {
                 if (!GuessMasterFlag[f][i] && !GuessSlaveFlag[f][i])
                 {
@@ -136,7 +136,7 @@
         {
             foreach (Function f in Composition.Functions)
             {
-                for (int i = 0; i < f.DimX; i++)
+                for (int i = 0; i < f.ContinuousStates.Count; i++)
                 {
                     X[f][i] += D[f][i] * step;
                 }
@@ -151,7 +151,7 @@
             foreach (Function f in Composition.Functions)
             {
                 // Berechne die neuen Werte der ZeroCrossing-Signale
-                double[] z = new double[f.DimZ];
+                double[] z = new double[f.ZeroCrossings.Count];
 
                 f.CalculateZeroCrossings(t, X[f], U[f], z);
 
@@ -159,7 +159,7 @@
                 if (t > 0)
                 {
                     // Wenn ja, prüfe, ob eines der Signale das Vorzeichen gewechselt hat
-                    for (int i = 0; i < f.DimZ; i++)
+                    for (int i = 0; i < f.ZeroCrossings.Count; i++)
                     {
                         if (z[i] > 0 && Z[f][i] < 0)
                         {

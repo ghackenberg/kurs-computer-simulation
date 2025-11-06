@@ -2,23 +2,24 @@
 {
     class Connection
     {
-        public Function Source;
-        public int Output;
+        public Function Source { get; }
+        public Function Target { get; }
 
-        public Function Target;
-        public int Input;
+        public int Output { get; }
+        public int Input { get; }
 
         public Connection(Function source, int output, Function target, int input)
         {
             Source = source;
-            Output = output;
             Target = target;
+
+            Output = output;
             Input = input;
         }
 
         public override string ToString()
         {
-            return $"y[{Output}] -> u[{Input}]";
+            return $"{Source.Outputs[Output].Name} -> {Target.Inputs[Input].Name}";
         }
     }
 }

@@ -1,12 +1,15 @@
-﻿namespace SFunctionContinuous.Model.Functions
+﻿using SFunctionContinuous.Model.Declarations;
+
+namespace SFunctionContinuous.Model.Functions
 {
     class RecordFunction : Function
     {
-        public List<(double, double)> Data = new List<(double, double)>();
+        public List<(double, double)> Data { get; } = new List<(double, double)>();
 
-        public RecordFunction(string name) : base(name, 0, 1, 0, 0)
+        public RecordFunction(string name) : base(name)
         {
-
+            // Inputs
+            Inputs.Add(new InputDeclaration("U", true));
         }
 
         public override void InitializeConditions(double[] x)

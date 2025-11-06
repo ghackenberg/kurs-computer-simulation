@@ -2,8 +2,8 @@
 {
     class Composition
     {
-        public List<Function> Functions = new List<Function>();
-        public List<Connection> Connections = new List<Connection>();
+        public List<Function> Functions { get; } = new List<Function>();
+        public List<Connection> Connections { get; } = new List<Connection>();
 
         public void AddFunction(Function f)
         {
@@ -12,11 +12,11 @@
 
         public void AddConnection(Function sf, int sfy, Function tf, int tfu)
         {
-            if (sfy >= sf.DimY)
+            if (sfy >= sf.Outputs.Count)
             {
                 throw new Exception("Source output not defined!");
             }
-            if (tfu >= tf.DimU)
+            if (tfu >= tf.Inputs.Count)
             {
                 throw new Exception("Target input not defined!");
             }

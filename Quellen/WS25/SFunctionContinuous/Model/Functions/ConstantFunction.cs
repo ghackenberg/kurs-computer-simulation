@@ -1,12 +1,18 @@
-﻿namespace SFunctionContinuous.Model.Functions
+﻿using SFunctionContinuous.Model.Declarations;
+
+namespace SFunctionContinuous.Model.Functions
 {
     class ConstantFunction : Function
     {
         public double Value;
 
-        public ConstantFunction(string name, double value) : base(name, 0, 0, 1, 0)
+        public ConstantFunction(string name, double value) : base(name)
         {
+            // Parameters
             Value = value;
+
+            // Outputs
+            Outputs.Add(new OutputDeclaration("Value"));
         }
 
         public override void CalculateOutputs(double t, double[] x, double[] u, double[] y)

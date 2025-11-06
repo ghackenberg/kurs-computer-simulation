@@ -84,7 +84,7 @@
                             Function f = open[0];
 
                             // Eingänge setzten
-                            for (int i = 0; i < f.DimU; i++)
+                            for (int i = 0; i < f.Inputs.Count; i++)
                             {
                                 if (!ReadyFlag[f][i])
                                 {
@@ -127,7 +127,7 @@
                             {
                                 foreach (Function f in guessSlave)
                                 {
-                                    for (int i = 0; i < f.DimU; i++)
+                                    for (int i = 0; i < f.Inputs.Count; i++)
                                     {
                                         if (GuessSlaveFlag[f][i])
                                         {
@@ -139,7 +139,7 @@
 
                                 foreach (Function f in guessMaster)
                                 {
-                                    for (int i = 0; i < f.DimU; i++)
+                                    for (int i = 0; i < f.Inputs.Count; i++)
                                     {
                                         if (GuessMasterFlag[f][i])
                                         {

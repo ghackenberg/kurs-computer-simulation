@@ -1,28 +1,26 @@
-﻿namespace SFunctionContinuous.Model
+﻿using SFunctionContinuous.Model.Declarations;
+
+namespace SFunctionContinuous.Model
 {
     abstract class Function
     {
-        public List<Function> FunctionsBefore = new List<Function>();
-        public List<Function> FunctionsAfter = new List<Function>();
+        public List<Function> FunctionsBefore { get; } = new List<Function>();
+        public List<Function> FunctionsAfter { get; } = new List<Function>();
 
-        public List<Connection> ConnectionsIn = new List<Connection>();
-        public List<Connection> ConnectionsOut = new List<Connection>();
+        public List<Connection> ConnectionsIn { get; } = new List<Connection>();
+        public List<Connection> ConnectionsOut { get; } = new List<Connection>();
 
-        public readonly string Name;
+        public string Name { get; }
 
-        public readonly int DimX;
-        public readonly int DimU;
-        public readonly int DimY;
-        public readonly int DimZ;
+        public List<StateDeclaration> ContinuousStates { get; } = new List<StateDeclaration>();
+        public List<StateDeclaration> DiscreteStates { get; } = new List<StateDeclaration>();
+        public List<InputDeclaration> Inputs { get; } = new List<InputDeclaration>();
+        public List<OutputDeclaration> Outputs { get; } = new List<OutputDeclaration>();
+        public List<ZeroCrossingDeclaration> ZeroCrossings { get; } = new List<ZeroCrossingDeclaration>();
 
-        public Function(string name, int dimX, int dimU, int dimY, int dimZ)
+        public Function(string name)
         {
             Name = name;
-
-            DimX = dimX;
-            DimU = dimU;
-            DimY = dimY;
-            DimZ = dimZ;
         }
 
         virtual public void InitializeConditions(double[] x)

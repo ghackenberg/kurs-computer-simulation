@@ -1,12 +1,24 @@
-﻿namespace SFunctionContinuous.Model.Functions
+﻿using SFunctionContinuous.Model.Declarations;
+
+namespace SFunctionContinuous.Model.Functions
 {
     class IntegrateFunction : Function
     {
         public double StartValue;
 
-        public IntegrateFunction(string name, double startValue) : base(name, 1, 1, 1, 0)
+        public IntegrateFunction(string name, double startValue) : base(name)
         {
+            // Parameters
             StartValue = startValue;
+
+            // States
+            ContinuousStates.Add(new StateDeclaration("X"));
+
+            // Inputs
+            Inputs.Add(new InputDeclaration("U", false));
+
+            // Outputs
+            Outputs.Add(new OutputDeclaration("Y"));
         }
 
         public override void InitializeConditions(double[] x)
