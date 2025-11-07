@@ -1,22 +1,22 @@
-﻿namespace SFunctionContinuous.Model
+﻿namespace SFunctionContinuous.Framework
 {
-    class Composition
+    public class Model
     {
-        public List<Function> Functions = new List<Function>();
-        public List<Connection> Connections = new List<Connection>();
+        public List<Block> Blocks { get; } = new List<Block>();
+        public List<Connection> Connections { get; } = new List<Connection>();
 
-        public void AddFunction(Function f)
+        public void AddBlock(Block f)
         {
-            Functions.Add(f);
+            Blocks.Add(f);
         }
 
-        public void AddConnection(Function sf, int sfy, Function tf, int tfu)
+        public void AddConnection(Block sf, int sfy, Block tf, int tfu)
         {
-            if (sfy >= sf.DimY)
+            if (sfy >= sf.Outputs.Count)
             {
                 throw new Exception("Source output not defined!");
             }
-            if (tfu >= tf.DimU)
+            if (tfu >= tf.Inputs.Count)
             {
                 throw new Exception("Target input not defined!");
             }
@@ -31,8 +31,8 @@
 
             Connection c = new Connection(sf, sfy, tf, tfu);
 
-            sf.FunctionsAfter.Add(tf);
-            tf.FunctionsBefore.Add(sf);
+            sf.BlocksAfter.Add(tf);
+            tf.BlocksBefore.Add(sf);
 
             sf.ConnectionsOut.Add(c);
             tf.ConnectionsIn.Add(c);
