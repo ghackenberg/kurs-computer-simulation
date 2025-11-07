@@ -2,8 +2,8 @@
 {
     abstract class Solution
     {
-        public double AlgebraicLoopErrorThreshold { get; set; } = 0.001;
-        public double ZeroCrossingValueThreshold { get; set; } = 0.001;
+        public double AlgebraicLoopErrorThreshold { get; set; } = 0.0001;
+        public double ZeroCrossingValueThreshold { get; set; } = 0.0001;
 
         public int AlgebraicLoopIterationCountLimit { get; set; } = 100000;
         public int ZeroCrossingIterationCountLimit { get; set; } = 100000;
@@ -202,6 +202,20 @@
 
             // Es wurde kein ZeroCrossing erkannt
             return value;
+        }
+
+        protected void ClampZeroCrossings(double zeroCrossingValue)
+        {
+            foreach (Function f in Composition.Functions)
+            {
+                for (int i = 0; i < f.ZeroCrossings.Count; i++)
+                {
+                    if (ZeroCrossings[f][i] == +zeroCrossingValue || ZeroCrossings[f][i] == -zeroCrossingValue)
+                    {
+                        ZeroCrossings[f][i] = 0;
+                    }
+                }
+            }
         }
 
         protected void IntegrateContinuousStates(double step)

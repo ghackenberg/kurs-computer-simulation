@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace SFunctionContinuous.Model.Solutions
+﻿namespace SFunctionContinuous.Model.Solutions
 {
     class EulerExplicitSolution : Solution
     {
@@ -41,7 +39,7 @@ namespace SFunctionContinuous.Model.Solutions
                 // Schleifenzähler initialisieren
                 int zeroCrossingIterationCount = 0;
 
-                // Nulldurchgangswert prüfen
+                // Mindestens einmal iterieren und wenn Nulldurchgang existiert, iterieren und die Nullstelle lokalisieren
                 while (zeroCrossingValue > ZeroCrossingValueThreshold && zeroCrossingIterationCount++ < ZeroCrossingIterationCountLimit)
                 {
                     // Zeitschritt aktualisieren
@@ -61,19 +59,29 @@ namespace SFunctionContinuous.Model.Solutions
 
                     // Nulldurchgängswert berechnen
                     zeroCrossingValue = CalculateZeroCrossings(time + timeStep);
-
-                    // Zustände aktualisieren
-                    UpdateStates(time + timeStep);
                 }
 
-                // Nulldurchgang prüfen und Fehler ausgeben
+                // Nulldurchgang existiert, aber nicht gefunden?
                 if (zeroCrossingValue > ZeroCrossingValueThreshold)
                 {
+                    // Fehler ausgeben
                     throw new Exception($"Nulldurchgang nicht gefunden ({time + timeStep}, {zeroCrossingValue})!");
                 }
-                else if (zeroCrossingIterationCount > 1)
+
+                // Nulldurchgang existiert und gefunden?
+                if (zeroCrossingValue > 0)
                 {
-                    MessageBox.Show($"Nulldurchgang zum Zeitpunkt {time + timeStep} mit Wert {zeroCrossingValue} in {zeroCrossingIterationCount} Iterationen gefunden!");
+                    // Zustände aktualisieren
+                    UpdateStates(time + timeStep);
+
+                    // Ausgaben noch einmal neu berechnen und weiterleiten
+                    CalculateOutputs(time + timeStep);
+
+                    // Ableitungen noch einmal neu berechnen
+                    CalculateDerivatives(time + timeStep);
+
+                    // Werte der Nulldurchgänge abschneiden
+                    ClampZeroCrossings(zeroCrossingValue);
                 }
 
                 // Zeit aktualisieren

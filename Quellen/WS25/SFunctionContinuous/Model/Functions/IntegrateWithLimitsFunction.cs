@@ -5,22 +5,22 @@ namespace SFunctionContinuous.Model.Functions
     class IntegrateWithLimitsFunction : Function
     {
         public double StartValue;
-        public double UpperLimit;
         public double LowerLimit;
+        public double UpperLimit;
 
-        public IntegrateWithLimitsFunction(string name, double startValue, double upperLimit, double lowerLimit) : base(name)
+        public IntegrateWithLimitsFunction(string name, double startValue, double lowerLimit, double upperLimit) : base(name)
         {
             // Parameters
             StartValue = startValue;
-            UpperLimit = upperLimit;
             LowerLimit = lowerLimit;
+            UpperLimit = upperLimit;
 
             // States
             ContinuousStates.Add(new StateDeclaration("X"));
 
             // Inputs
-            Inputs.Add(new InputDeclaration("U", false));
-            Inputs.Add(new InputDeclaration("U", false));
+            Inputs.Add(new InputDeclaration("U1", false));
+            Inputs.Add(new InputDeclaration("U2", false));
 
             // Outputs
             Outputs.Add(new OutputDeclaration("Y"));
@@ -53,10 +53,15 @@ namespace SFunctionContinuous.Model.Functions
 
         public override void UpdateStates(double time, double[] continuousStates, double[] discreteStates, double[] inputs)
         {
-            if (continuousStates[0] <= LowerLimit || continuousStates[0] >= UpperLimit)
+            if (continuousStates[0] < LowerLimit || continuousStates[0] > UpperLimit)
             {
                 continuousStates[0] = inputs[1];
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{Name}\n(StartValue = {StartValue}, LowerLimit = {LowerLimit}, UpperLimit = {UpperLimit})";
         }
     }
 }

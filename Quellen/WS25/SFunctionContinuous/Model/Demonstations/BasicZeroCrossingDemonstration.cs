@@ -6,10 +6,10 @@ namespace SFunctionContinuous.Model.Demonstations
     {
         public BasicZeroCrossingDemonstration()
         {
-            Function d = new ConstantFunction("D", -0.3);
-            Function x = new ConstantFunction("X", +1);
-            Function i = new IntegrateWithLimitsFunction("I", 1, Double.MaxValue, 0);
-            Function r = new RecordFunction("R");
+            Function d = new ConstantFunction("Derivative", -0.3);
+            Function x = new ConstantFunction("State", +1);
+            Function i = new IntegrateWithLowerLimitFunction("IntegrateWithLowerLimit", 1, 0);
+            Function r = new RecordFunction("Record");
 
             Composition.AddFunction(x);
             Composition.AddFunction(d);
