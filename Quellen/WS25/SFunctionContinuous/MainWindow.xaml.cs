@@ -1,9 +1,9 @@
 ﻿using Microsoft.Msagl.Drawing;
 using ScottPlot.Plottables;
-using SFunctionContinuous.Model;
-using SFunctionContinuous.Model.Blocks;
-using SFunctionContinuous.Model.Examples;
-using SFunctionContinuous.Model.Solvers;
+using SFunctionContinuous.Framework;
+using SFunctionContinuous.Framework.Blocks;
+using SFunctionContinuous.Framework.Examples;
+using SFunctionContinuous.Framework.Solvers;
 using System.Windows;
 
 namespace SFunctionContinuous
