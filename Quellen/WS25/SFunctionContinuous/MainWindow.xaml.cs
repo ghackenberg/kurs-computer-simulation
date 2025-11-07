@@ -19,13 +19,13 @@ namespace SFunctionContinuous
 
             // Modell erstellen und lösen
 
-            Example demonstration = new BouncingBallExample();
+            Example example = new BouncingBallExample();
 
             try
             {
-                Solver solution = new EulerExplicitSolver(demonstration.Model);
+                Solver solution = new EulerExplicitSolver(example.Model);
 
-                solution.Solve(0.01, 20);
+                solution.Solve(example.TimeStepMax, example.TimeMax);
             }
             catch (Exception e)
             {
@@ -36,11 +36,11 @@ namespace SFunctionContinuous
 
             Graph graph = new Graph();
 
-            foreach (Block f in demonstration.Model.Blocks)
+            foreach (Block f in example.Model.Blocks)
             {
                 graph.AddNode($"{f.GetHashCode()}").LabelText = f.ToString();
             }
-            foreach (Connection c in demonstration.Model.Connections)
+            foreach (Connection c in example.Model.Connections)
             {
                 graph.AddEdge($"{c.Source.GetHashCode()}", c.ToString(), $"{c.Target.GetHashCode()}");
             }
@@ -49,7 +49,7 @@ namespace SFunctionContinuous
 
             // Chart-Visualisierung erstellen
 
-            foreach (Block f in demonstration.Model.Blocks)
+            foreach (Block f in example.Model.Blocks)
             {
                 if (f is RecordBlock)
                 {

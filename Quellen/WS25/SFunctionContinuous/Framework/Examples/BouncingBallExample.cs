@@ -4,7 +4,7 @@ namespace SFunctionContinuous.Framework.Examples
 {
     public class BouncingBallExample : Example
     {
-        public BouncingBallExample()
+        public BouncingBallExample() : base(0.001, 20)
         {
             Block g = new ConstantBlock("Gravity", -9.81);
             Block v = new IntegrateWithResetBlock("Veocity", 10);
