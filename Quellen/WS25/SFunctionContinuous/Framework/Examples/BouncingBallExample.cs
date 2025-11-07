@@ -4,13 +4,13 @@ namespace SFunctionContinuous.Framework.Examples
 {
     public class BouncingBallExample : Example
     {
-        public BouncingBallExample() : base(0.001, 20)
+        public BouncingBallExample() : base(0.1, 20)
         {
             Block g = new ConstantBlock("Gravity", -9.81);
-            Block v = new IntegrateWithResetBlock("Veocity", 10);
+            Block v = new IntegrateWithResetBlock("Velocity", 10);
             Block p = new IntegrateBlock("Position", 10);
-            Block h = new HitLowerLimitBlock("Hit", 0);
-            Block d = new GainBlock("Damp", -0.8);
+            Block h = new HitLowerLimitBlock("HitLowerLimit", 0);
+            Block d = new GainBlock("Damping", -0.8);
             //Block rg = new RecordBlock("RecordGravity");
             Block rv = new RecordBlock("RecordVelocity");
             Block rp = new RecordBlock("RecordPosition");

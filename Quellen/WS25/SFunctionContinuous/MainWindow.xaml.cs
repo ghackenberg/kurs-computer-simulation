@@ -23,7 +23,7 @@ namespace SFunctionContinuous
 
             try
             {
-                Solver solution = new EulerExplicitSolver(example.Model);
+                Solver solution = new EulerExplicitLoopSolver(example.Model);
 
                 solution.Solve(example.TimeStepMax, example.TimeMax);
             }
