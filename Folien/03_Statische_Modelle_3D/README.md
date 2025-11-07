@@ -1171,8 +1171,8 @@ Durch diesen rekursiven Aufruf (`Group.Draw` -> `Child.Draw` -> ...) werden die 
 Die abstrakte Klasse `Primitive` ist die Basis für alle 2D-Grundformen, die aus einer Liste von Vertices bestehen.
 
 - **Erbt von**: `Node`.
-- **Speichert**: Eine Liste von `Vertex`- und `Material`-Paaren.
-- **Funktionsweise**: Die `DrawLocal`-Methode zeichnet die Geometrie, indem sie für jeden Vertex das zugehörige Material setzt und dann den Vertex selbst an OpenGL übergibt. Der `_beginMode` (z.B. `GL_POINTS`, `GL_LINES`) bestimmt, wie die Vertices interpretiert werden.
+- **Speichert**: Jeweils eine Liste von `Vertex`-, `Normal`- und `Material`-Objekten.
+- **Funktionsweise**: Die `DrawLocal`-Methode zeichnet die Geometrie, indem sie für jeden Vertex das zugehörige Material, die Normale und dann den Vertex selbst an OpenGL übergibt. Der `_beginMode` (z.B. `GL_POINTS`, `GL_LINES`) bestimmt, wie die Daten interpretiert werden.
 
 </div>
 <div>
