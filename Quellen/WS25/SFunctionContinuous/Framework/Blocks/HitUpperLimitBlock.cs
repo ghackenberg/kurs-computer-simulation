@@ -2,14 +2,14 @@
 
 namespace SFunctionContinuous.Framework.Blocks
 {
-    public class HitLowerLimitBlock : Block
+    public class HitUpperLimitBlock : Block
     {
-        public double LowerLimit;
+        public double UpperLimit;
 
-        public HitLowerLimitBlock(string name, double lowerLimit) : base(name)
+        public HitUpperLimitBlock(string name, double upperLimit) : base(name)
         {
             // Parameters
-            LowerLimit = lowerLimit;
+            UpperLimit = upperLimit;
 
             // Inputs
             Inputs.Add(new InputDeclaration("U", true));
@@ -23,7 +23,7 @@ namespace SFunctionContinuous.Framework.Blocks
 
         public override void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
         {
-            if (inputs[0] - LowerLimit <= 0)
+            if (inputs[0] - UpperLimit >= 0)
             {
                 outputs[0] = 1;
             }
@@ -35,12 +35,12 @@ namespace SFunctionContinuous.Framework.Blocks
 
         public override void CalculateZeroCrossings(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] zeroCrossings)
         {
-            zeroCrossings[0] = inputs[0] - LowerLimit;
+            zeroCrossings[0] = inputs[0] - UpperLimit;
         }
 
         public override string ToString()
         {
-            return $"{Name}\n(LowerLimit = {LowerLimit})";
+            return $"{Name}\n(UpperLimit = {UpperLimit})";
         }
     }
 }

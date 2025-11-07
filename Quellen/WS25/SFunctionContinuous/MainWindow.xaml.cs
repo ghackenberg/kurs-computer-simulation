@@ -68,8 +68,6 @@ namespace SFunctionContinuous
 
                     Scatter scatter = Chart.Plot.Add.Scatter(t, u);
 
-                    scatter.MarkerShape = ScottPlot.MarkerShape.None;
-
                     scatter.LegendText = f.Name;
                 }
             }
