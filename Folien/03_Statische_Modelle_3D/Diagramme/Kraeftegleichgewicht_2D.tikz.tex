@@ -4,25 +4,34 @@
 
 \begin{document}
 \begin{tikzpicture}[
-    node_style/.style={circle, fill=blue!20, draw=blue, thick, inner sep=1pt},
-    force_style/.style={-Latex, thick, blue!70!black},
+    node_style/.style={circle, fill=gray, inner sep=1.5pt},
+    force_style/.style={-Latex, thick, blue},
     label_style/.style={font=\small}
 ]
 
-    % Node at the origin
-    \node[node_style] (node_i) at (0,0) {}; 
+    \coordinate (node_i) at (0,0);
+    \coordinate (node_1) at (1.5,1.5);
+    \coordinate (node_2) at (-1.5,1.5);
+    \coordinate (node_3) at (0,-1.5);
 
-    % Forces
-    \draw[force_style] (node_i.center) -- node[left, label_style] {$S_1 \cdot e_1$} (-1.8, 0.8);
-    \draw[force_style] (node_i.center) -- node[left, label_style] {$S_2 \cdot e_2$} (0, -0.9);
-    \draw[force_style] (node_i.center) -- node[right, label_style] {$S_3 \cdot e_3$} (1.8, 0.8);
+    % Rods
+    \draw[line width=1pt, lightgray] (node_i) -- (node_1);
+    \draw[line width=1pt, lightgray] (node_i) -- (node_2);
+    \draw[line width=1pt, lightgray] (node_i) -- (node_3);
 
-    % External force (optional, but good for context)
-    \draw[force_style, red!70!black] (node_i.center) -- node[right, label_style, red!70!black] {$F_{ext}$} (0.9, -0.7);
+    % Nodes
+    \node[node_style] at (node_i) {}; 
+    \node[node_style] at (node_1) {}; 
+    \node[node_style] at (node_2) {}; 
+    \node[node_style] at (node_3) {}; 
 
-    % Coordinate system (optional, but good for context)
-    \draw[->, gray] (0,0) -- (2.2,0) node[right, label_style] {$x$};
-    \draw[->, gray] (0,0) -- (0,1.2) node[above, label_style] {$y$};
+    % Rod forces
+    \draw[force_style] (node_i) -- node[left, label_style] {$S_1 \cdot e_1$} (-0.8, 0.8);
+    \draw[force_style] (node_i) -- node[left, label_style] {$S_2 \cdot e_2$} (0, -0.9);
+    \draw[force_style] (node_i) -- node[right, label_style] {$S_3 \cdot e_3$} (0.8, 0.8);
+
+    % External force
+    \draw[force_style, red] (node_i) -- node[right, label_style, red] {$F_{ext}$} (0.9, -0.7);
 
 \end{tikzpicture}
 \end{document}
