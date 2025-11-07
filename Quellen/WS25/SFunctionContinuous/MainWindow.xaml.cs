@@ -19,13 +19,13 @@ namespace SFunctionContinuous
 
             // Modell erstellen und lösen
 
-            Example demonstration = new BasicZeroCrossingExample();
+            Example demonstration = new BouncingBallExample();
 
             try
             {
                 Solver solution = new EulerExplicitSolver(demonstration.Model);
 
-                solution.Solve(1, 10);
+                solution.Solve(0.01, 20);
             }
             catch (Exception e)
             {
@@ -67,6 +67,8 @@ namespace SFunctionContinuous
                     }
 
                     Scatter scatter = Chart.Plot.Add.Scatter(t, u);
+
+                    scatter.MarkerShape = ScottPlot.MarkerShape.None;
 
                     scatter.LegendText = f.Name;
                 }
