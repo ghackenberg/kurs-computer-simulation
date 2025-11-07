@@ -160,6 +160,7 @@
 
         protected double CalculateZeroCrossings(double t)
         {
+            // Rückgabewert initialisieren
             double value = -1;
 
             // Berechne die ZeroCrossing-Signale für alle Funktionen und prüfe auf ZeroCrossings
@@ -200,22 +201,8 @@
                 ZeroCrossings[f] = cache[f];
             }
 
-            // Es wurde kein ZeroCrossing erkannt
+            // Rückgabewerte zurückgeben
             return value;
-        }
-
-        protected void ClampZeroCrossings(double zeroCrossingValue)
-        {
-            foreach (Function f in Composition.Functions)
-            {
-                for (int i = 0; i < f.ZeroCrossings.Count; i++)
-                {
-                    if (ZeroCrossings[f][i] == +zeroCrossingValue || ZeroCrossings[f][i] == -zeroCrossingValue)
-                    {
-                        ZeroCrossings[f][i] = 0;
-                    }
-                }
-            }
         }
 
         protected void IntegrateContinuousStates(double step)

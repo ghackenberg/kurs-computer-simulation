@@ -27,7 +27,7 @@
             // Simulationsschleife
             while (time <= timeMax)
             {
-                // Zustände merken
+                // Interne Variablen merken
                 RememberInternalVariables();
 
                 // Zeitschritt initialieren
@@ -45,19 +45,19 @@
                     // Zeitschritt aktualisieren
                     timeStep /= 2;
 
-                    // Zustände zurücksetzen
+                    // Interne Variablen zurücksetzen
                     RestoreInternalVariables();
 
                     // Kontnuierliche Zustände integrieren
                     IntegrateContinuousStates(timeStep);
 
-                    // Ausgaben berechnen und weiterleiten
+                    // Ausgaben berechnen
                     CalculateOutputs(time + timeStep);
 
                     // Ableitungen berechnen
                     CalculateDerivatives(time + timeStep);
 
-                    // Nulldurchgängswert berechnen
+                    // Nulldurchgänge berechnen
                     zeroCrossingValue = CalculateZeroCrossings(time + timeStep);
                 }
 
@@ -74,14 +74,14 @@
                     // Zustände aktualisieren
                     UpdateStates(time + timeStep);
 
-                    // Ausgaben noch einmal neu berechnen und weiterleiten
+                    // Ausgaben noch einmal neu berechnen
                     CalculateOutputs(time + timeStep);
 
                     // Ableitungen noch einmal neu berechnen
                     CalculateDerivatives(time + timeStep);
 
-                    // Werte der Nulldurchgänge abschneiden
-                    ClampZeroCrossings(zeroCrossingValue);
+                    // Nulldurchgänge noch einmal neu berechnen
+                    CalculateZeroCrossings(time + timeStep);
                 }
 
                 // Zeit aktualisieren
