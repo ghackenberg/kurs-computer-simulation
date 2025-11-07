@@ -129,3 +129,20 @@ Quelltext
 </div>
 </div>
 ````
+
+Die Bilder selbst können mit Tikz, Asymptote, oder Mermaid.js erstellt werden. Die Quelldateien werden in Visual Studio Code mittels *RunOnSave* automatisch in SVG-Dateien kompiliert.
+
+## Ordnerstruktur
+
+Dieses Repository ist nach folgendem Schema aufgebaut:
+
+- Der Ordner `./Folien` enthält die Foliensätze
+- Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]` enthält den Foliensatz für Kapitel `XX`
+- Die Datei `./Folien/[XX_Kapitel_Bezeichnung]/README.md` enthält den MARP-Markdown für den Foliensatz des Kapitels
+- Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme` enthält die Tikz-, Asymptote- Mermaid.js-Quelldateien und die kompilierten SVG-Dateien
+- Der Ordner `./Quellen` enthält die zugehörigen C#-Implementierungen nach Semester und Thema geordnet
+- Der Ordner `./Quellen/[WSXX]` enthält die C#-Implementierung aus dem Wintersemester `XX`
+- Der Ordner `./Quellen/[SSXX]` enthält die C#-Implementierung aus dem Sommersemester `XX`
+- Der Ordner `./Quellen/[WS|SSXX]/[Projektname]` enthält die C#-Implementierung aus einem speziellen Semester und zu einem spezifischen Thema
+- Der Ordner `./Vorlagen` enthält Vorlagen für Tikz-, Asmptote- und Mermaid.js-Grafiken
+
