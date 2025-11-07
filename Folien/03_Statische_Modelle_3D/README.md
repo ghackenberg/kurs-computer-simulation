@@ -79,7 +79,7 @@ Für jeden freien Knoten im Fachwerk muss die Summe aller Kräfte in jeder Raumr
 
 - **Stabvektor**: $L_j = P_k - P_i$ (Vektor von Knoten $i$ zu Knoten $k$)
 - **Einheitsvektor**: $e_j = \frac{L_j}{|L_j|}$
-- **Kraftvektor**: $F_j = S_j \cdot e_j = S_j \cdot \begin{pmatrix} \cos(\alpha_x) \\ \cos(\alpha_y) \\ \cos(\alpha_z) \end{pmatrix}$
+- **Kraftvektor**: $F_j = S_j \cdot e_j = S_j \cdot \begin{pmatrix} e_{j,x} \\ e_{j,y} \\ e_{j,z} \end{pmatrix}$
 
 Das Gleichgewicht am Knoten $i$ lautet dann:
 
