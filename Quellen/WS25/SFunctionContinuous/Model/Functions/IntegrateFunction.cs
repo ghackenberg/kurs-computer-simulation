@@ -21,19 +21,19 @@ namespace SFunctionContinuous.Model.Functions
             Outputs.Add(new OutputDeclaration("Y"));
         }
 
-        public override void InitializeConditions(double[] x)
+        public override void InitializeStates(double[] continuousStates, double[] discreteStates)
         {
-            x[0] = StartValue;
+            continuousStates[0] = StartValue;
         }
 
-        public override void CalculateDerivatives(double t, double[] x, double[] u, double[] d)
+        public override void CalculateDerivatives(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] derivatives)
         {
-            d[0] = u[0];
+            derivatives[0] = inputs[0];
         }
 
-        public override void CalculateOutputs(double t, double[] x, double[] u, double[] y)
+        public override void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
         {
-            y[0] = x[0];
+            outputs[0] = continuousStates[0];
         }
     }
 }

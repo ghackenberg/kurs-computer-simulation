@@ -35,7 +35,7 @@
                     if (IsReady(f))
                     {
                         // Ausgaben berechnen
-                        f.CalculateOutputs(time, ContinuousStates[f], Inputs[f], Outputs[f]);
+                        f.CalculateOutputs(time, ContinuousStates[f], DiscreteStates[f], Inputs[f], Outputs[f]);
 
                         // Ausgaben weiterleiten
                         ForwardOutputs(f);
@@ -79,7 +79,7 @@
                         }
 
                         // Ausgänge berechnen
-                        f.CalculateOutputs(time, ContinuousStates[f], Inputs[f], Outputs[f]);
+                        f.CalculateOutputs(time, ContinuousStates[f], DiscreteStates[f], Inputs[f], Outputs[f]);
 
                         // Ausgänge weiterleiten
                         ForwardOutputs(f);
@@ -135,7 +135,7 @@
                                 if (IsReady(f))
                                 {
                                     // Ausgänge berechnen
-                                    f.CalculateOutputs(time, ContinuousStates[f], Inputs[f], Outputs[f]);
+                                    f.CalculateOutputs(time, ContinuousStates[f], DiscreteStates[f], Inputs[f], Outputs[f]);
 
                                     // Ausgänge weiterleiten
                                     ForwardOutputs(f);

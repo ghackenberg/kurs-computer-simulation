@@ -2,9 +2,9 @@
 
 namespace SFunctionContinuous.Model.Demonstations
 {
-    class SimpleDemonstration : Demonstration
+    class BasicDemonstration : Demonstration
     {
-        public SimpleDemonstration()
+        public BasicDemonstration()
         {
             Function a = new ConstantFunction("Constant1", 1);
             Function b = new ConstantFunction("Constant2", 2);

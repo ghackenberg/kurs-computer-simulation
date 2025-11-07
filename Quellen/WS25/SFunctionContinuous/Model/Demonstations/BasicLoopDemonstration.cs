@@ -2,9 +2,9 @@
 
 namespace SFunctionContinuous.Model.Demonstations
 {
-    class ComplexLoopDemonstration : Demonstration
+    class BasicLoopDemonstration : Demonstration
     {
-        public ComplexLoopDemonstration()
+        public BasicLoopDemonstration()
         {
             Function a = new ConstantFunction("Constant", 1);
             Function b = new AddFunction("Add");

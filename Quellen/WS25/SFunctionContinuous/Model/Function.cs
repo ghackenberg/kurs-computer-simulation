@@ -23,27 +23,27 @@ namespace SFunctionContinuous.Model
             Name = name;
         }
 
-        virtual public void InitializeConditions(double[] x)
+        virtual public void InitializeStates(double[] continuousStates, double[] discreteStates)
         {
 
         }
 
-        virtual public void CalculateDerivatives(double t, double[] x, double[] u, double[] d)
+        virtual public void CalculateDerivatives(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] derivatives)
         {
 
         }
 
-        virtual public void CalculateOutputs(double t, double[] x, double[] u, double[] y)
+        virtual public void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
         {
 
         }
 
-        virtual public void CalculateZeroCrossings(double t, double[] x, double[] u, double[] z)
+        virtual public void CalculateZeroCrossings(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] zeroCrossings)
         {
 
         }
 
-        virtual public void UpdateStates(double t, double[] x, double[] u)
+        virtual public void UpdateStates(double time, double[] continuousStates, double[] discreteStates, double[] inputs)
         {
 
         }

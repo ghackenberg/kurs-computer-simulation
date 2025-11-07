@@ -1,4 +1,6 @@
-﻿namespace SFunctionContinuous.Model.Solutions
+﻿using System.Windows;
+
+namespace SFunctionContinuous.Model.Solutions
 {
     class EulerExplicitSolution : Solution
     {
@@ -13,13 +15,10 @@
             double time = 0;
 
             // Zustände initialisieren
-            InitializeConditions();
+            InitializeStates();
 
             // Ausgaben berechnen und weiterleiten
             CalculateOutputs(time);
-
-            // Zustände aktualisieren
-            UpdateStates(time);
 
             // Ableitungen berechnen
             CalculateDerivatives(time);
@@ -57,20 +56,24 @@
                     // Ausgaben berechnen und weiterleiten
                     CalculateOutputs(time + timeStep);
 
-                    // Zustände aktualisieren
-                    UpdateStates(time + timeStep);
-
                     // Ableitungen berechnen
                     CalculateDerivatives(time + timeStep);
 
                     // Nulldurchgängswert berechnen
                     zeroCrossingValue = CalculateZeroCrossings(time + timeStep);
+
+                    // Zustände aktualisieren
+                    UpdateStates(time + timeStep);
                 }
 
                 // Nulldurchgang prüfen und Fehler ausgeben
                 if (zeroCrossingValue > ZeroCrossingValueThreshold)
                 {
-                    throw new Exception("Nulldurchgang nicht gefunden!");
+                    throw new Exception($"Nulldurchgang nicht gefunden ({time + timeStep}, {zeroCrossingValue})!");
+                }
+                else if (zeroCrossingIterationCount > 1)
+                {
+                    MessageBox.Show($"Nulldurchgang zum Zeitpunkt {time + timeStep} mit Wert {zeroCrossingValue} in {zeroCrossingIterationCount} Iterationen gefunden!");
                 }
 
                 // Zeit aktualisieren
@@ -102,7 +105,7 @@
                     if (IsReady(f))
                     {
                         // Ausgaben der Funktion berechnen
-                        f.CalculateOutputs(time, ContinuousStates[f], Inputs[f], Outputs[f]);
+                        f.CalculateOutputs(time, ContinuousStates[f], DiscreteStates[f], Inputs[f], Outputs[f]);
 
                         // Ausgaben der Funktion weiterleiten
                         ForwardOutputs(f);

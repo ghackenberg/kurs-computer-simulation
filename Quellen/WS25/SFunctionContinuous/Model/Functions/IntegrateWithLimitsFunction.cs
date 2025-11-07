@@ -20,6 +20,7 @@ namespace SFunctionContinuous.Model.Functions
 
             // Inputs
             Inputs.Add(new InputDeclaration("U", false));
+            Inputs.Add(new InputDeclaration("U", false));
 
             // Outputs
             Outputs.Add(new OutputDeclaration("Y"));
@@ -29,32 +30,32 @@ namespace SFunctionContinuous.Model.Functions
             ZeroCrossings.Add(new ZeroCrossingDeclaration("UpperLimit"));
         }
 
-        public override void InitializeConditions(double[] x)
+        public override void InitializeStates(double[] continuousStates, double[] discreteStates)
         {
-            x[0] = StartValue;
+            continuousStates[0] = StartValue;
         }
 
-        public override void CalculateDerivatives(double t, double[] x, double[] u, double[] d)
+        public override void CalculateDerivatives(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] derivatives)
         {
-            d[0] = u[0];
+            derivatives[0] = inputs[0];
         }
 
-        public override void CalculateOutputs(double t, double[] x, double[] u, double[] y)
+        public override void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
         {
-            y[0] = x[0];
+            outputs[0] = continuousStates[0];
         }
 
-        public override void CalculateZeroCrossings(double t, double[] x, double[] u, double[] z)
+        public override void CalculateZeroCrossings(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] zeroCrossings)
         {
-            z[0] = x[0] - LowerLimit;
-            z[1] = x[0] - UpperLimit;
+            zeroCrossings[0] = continuousStates[0] - LowerLimit;
+            zeroCrossings[1] = continuousStates[0] - UpperLimit;
         }
 
-        public override void UpdateStates(double t, double[] x, double[] u)
+        public override void UpdateStates(double time, double[] continuousStates, double[] discreteStates, double[] inputs)
         {
-            if (x[0] <= LowerLimit || x[0] >= UpperLimit)
+            if (continuousStates[0] <= LowerLimit || continuousStates[0] >= UpperLimit)
             {
-                x[0] = u[1];
+                continuousStates[0] = inputs[1];
             }
         }
     }

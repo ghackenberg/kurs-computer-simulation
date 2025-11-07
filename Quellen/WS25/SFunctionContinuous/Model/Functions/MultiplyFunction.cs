@@ -14,9 +14,9 @@ namespace SFunctionContinuous.Model.Functions
             Outputs.Add(new OutputDeclaration("Product"));
         }
 
-        public override void CalculateOutputs(double t, double[] x, double[] u, double[] y)
+        public override void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
         {
-            y[0] = u[0] * u[1];
+            outputs[0] = inputs[0] * inputs[1];
         }
     }
 }

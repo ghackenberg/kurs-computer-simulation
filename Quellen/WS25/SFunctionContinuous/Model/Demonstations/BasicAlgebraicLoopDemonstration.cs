@@ -2,9 +2,9 @@
 
 namespace SFunctionContinuous.Model.Demonstations
 {
-    class SimpleLoopDemonstration : Demonstration
+    class BasicAlgebraicLoopDemonstration : Demonstration
     {
-        public SimpleLoopDemonstration()
+        public BasicAlgebraicLoopDemonstration()
         {
             Function a = new ConstantFunction("Constant", 1);
             Function b = new SubtractFunction("Subtract");

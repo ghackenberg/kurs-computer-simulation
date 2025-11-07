@@ -12,18 +12,18 @@ namespace SFunctionContinuous.Model.Functions
             Inputs.Add(new InputDeclaration("U", true));
         }
 
-        public override void InitializeConditions(double[] x)
+        public override void InitializeStates(double[] continuousStates, double[] discreteStates)
         {
             Data.Clear();
         }
 
-        public override void CalculateOutputs(double t, double[] x, double[] u, double[] y)
+        public override void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
         {
-            if (Data.Count > 0 && Data[Data.Count - 1].Item1 == t)
+            if (Data.Count > 0 && Data[Data.Count - 1].Item1 >= time)
             {
                 Data.RemoveAt(Data.Count - 1);
             }
-            Data.Add((t, u[0]));
+            Data.Add((time, inputs[0]));
         }
     }
 }

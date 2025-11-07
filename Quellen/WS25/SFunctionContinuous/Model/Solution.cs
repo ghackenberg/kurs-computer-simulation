@@ -2,8 +2,8 @@
 {
     abstract class Solution
     {
-        public double AlgebraicLoopErrorThreshold { get; set; } = 0.0001;
-        public double ZeroCrossingValueThreshold { get; set; } = 0.0001;
+        public double AlgebraicLoopErrorThreshold { get; set; } = 0.001;
+        public double ZeroCrossingValueThreshold { get; set; } = 0.001;
 
         public int AlgebraicLoopIterationCountLimit { get; set; } = 100000;
         public int ZeroCrossingIterationCountLimit { get; set; } = 100000;
@@ -58,11 +58,11 @@
 
         public abstract void Solve(double smax, double tmax);
 
-        protected void InitializeConditions()
+        protected void InitializeStates()
         {
             foreach (Function f in Functions)
             {
-                f.InitializeConditions(ContinuousStates[f]);
+                f.InitializeStates(ContinuousStates[f], DiscreteStates[f]);
             }
         }
 
@@ -146,7 +146,7 @@
         {
             foreach (Function f in Composition.Functions)
             {
-                f.CalculateDerivatives(t, ContinuousStates[f], Inputs[f], Derivatives[f]);
+                f.CalculateDerivatives(t, ContinuousStates[f], DiscreteStates[f], Inputs[f], Derivatives[f]);
             }
         }
 
@@ -154,7 +154,7 @@
         {
             foreach (Function f in Composition.Functions)
             {
-                f.UpdateStates(t, ContinuousStates[f], Inputs[f]);
+                f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
             }
         }
 
@@ -171,7 +171,7 @@
                 double[] z = new double[f.ZeroCrossings.Count];
 
                 // Berechne die neuen Werte der ZeroCrossing-Signale
-                f.CalculateZeroCrossings(t, ContinuousStates[f], Inputs[f], z);
+                f.CalculateZeroCrossings(t, ContinuousStates[f], DiscreteStates[f], Inputs[f], z);
 
                 // Prüfe, ob bereits zuvor ein ZeroCrossing-Signal berechnet wurde
                 if (t > 0)
