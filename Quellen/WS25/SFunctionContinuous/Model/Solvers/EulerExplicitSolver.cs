@@ -1,8 +1,8 @@
-﻿namespace SFunctionContinuous.Model.Solutions
+﻿namespace SFunctionContinuous.Model.Solvers
 {
-    class EulerExplicitSolution : Solution
+    public class EulerExplicitSolver : Solver
     {
-        public EulerExplicitSolution(Composition composition) : base(composition)
+        public EulerExplicitSolver(Model composition) : base(composition)
         {
 
         }
@@ -95,7 +95,7 @@
             ResetFlags();
 
             // Alle Funktion als "zu berechnen" markieren
-            List<Function> open = [.. Functions];
+            List<Block> open = [.. Functions];
 
             // Solange arbeiten, bis alle Funktionen berechnet sind
             while (open.Count > 0)
@@ -107,7 +107,7 @@
                 for (int i = 0; i < open.Count; i++)
                 {
                     // Nächste zu berechnende Funktion auswählen
-                    Function f = open[i];
+                    Block f = open[i];
 
                     // Bereitschaft der Funktion prüfen
                     if (IsReady(f))

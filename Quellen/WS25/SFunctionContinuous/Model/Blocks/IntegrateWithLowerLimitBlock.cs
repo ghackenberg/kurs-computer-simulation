@@ -1,19 +1,17 @@
 ﻿using SFunctionContinuous.Model.Declarations;
 
-namespace SFunctionContinuous.Model.Functions
+namespace SFunctionContinuous.Model.Blocks
 {
-    class IntegrateWithLimitsFunction : Function
+    public class IntegrateWithLowerLimitBlock : Block
     {
         public double StartValue;
         public double LowerLimit;
-        public double UpperLimit;
 
-        public IntegrateWithLimitsFunction(string name, double startValue, double lowerLimit, double upperLimit) : base(name)
+        public IntegrateWithLowerLimitBlock(string name, double startValue, double lowerLimit) : base(name)
         {
             // Parameters
             StartValue = startValue;
             LowerLimit = lowerLimit;
-            UpperLimit = upperLimit;
 
             // States
             ContinuousStates.Add(new StateDeclaration("X"));
@@ -27,7 +25,6 @@ namespace SFunctionContinuous.Model.Functions
 
             // ZeroCrossings
             ZeroCrossings.Add(new ZeroCrossingDeclaration("LowerLimit"));
-            ZeroCrossings.Add(new ZeroCrossingDeclaration("UpperLimit"));
         }
 
         public override void InitializeStates(double[] continuousStates, double[] discreteStates)
@@ -48,12 +45,11 @@ namespace SFunctionContinuous.Model.Functions
         public override void CalculateZeroCrossings(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] zeroCrossings)
         {
             zeroCrossings[0] = continuousStates[0] - LowerLimit;
-            zeroCrossings[1] = continuousStates[0] - UpperLimit;
         }
 
         public override void UpdateStates(double time, double[] continuousStates, double[] discreteStates, double[] inputs)
         {
-            if (continuousStates[0] < LowerLimit || continuousStates[0] > UpperLimit)
+            if (continuousStates[0] < LowerLimit)
             {
                 continuousStates[0] = inputs[1];
             }
@@ -61,7 +57,7 @@ namespace SFunctionContinuous.Model.Functions
 
         public override string ToString()
         {
-            return $"{Name}\n(StartValue = {StartValue}, LowerLimit = {LowerLimit}, UpperLimit = {UpperLimit})";
+            return $"{Name}\n(StartValue = {StartValue}, LowerLimit = {LowerLimit})";
         }
     }
 }

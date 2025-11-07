@@ -1,10 +1,10 @@
 ﻿using SFunctionContinuous.Model.Declarations;
 
-namespace SFunctionContinuous.Model.Functions
+namespace SFunctionContinuous.Model.Blocks
 {
-    class SubtractFunction : Function
+    public class SubtractBlock : Block
     {
-        public SubtractFunction(string name = "Subtract") : base(name)
+        public SubtractBlock(string name = "Subtract") : base(name)
         {
             // Inputs
             Inputs.Add(new InputDeclaration("A", true));

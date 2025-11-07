@@ -1,14 +1,14 @@
 ﻿namespace SFunctionContinuous.Model
 {
-    class Connection
+    public class Connection
     {
-        public Function Source { get; }
-        public Function Target { get; }
+        public Block Source { get; }
+        public Block Target { get; }
 
         public int Output { get; }
         public int Input { get; }
 
-        public Connection(Function source, int output, Function target, int input)
+        public Connection(Block source, int output, Block target, int input)
         {
             Source = source;
             Target = target;

@@ -1,8 +1,8 @@
-﻿namespace SFunctionContinuous.Model.Solutions
+﻿namespace SFunctionContinuous.Model.Solvers
 {
-    class EulerExplicitLoopSolution : EulerExplicitSolution
+    public class EulerExplicitLoopSolver : EulerExplicitSolver
     {
-        public EulerExplicitLoopSolution(Composition composition) : base(composition)
+        public EulerExplicitLoopSolver(Model composition) : base(composition)
         {
 
         }
@@ -13,11 +13,11 @@
             ResetFlags();
 
             // Ausgaben berechnen und weiterleiten
-            List<Function> open = [.. Functions];
-            List<Function> done = new List<Function>();
+            List<Block> open = [.. Functions];
+            List<Block> done = new List<Block>();
 
-            List<Function> guessMaster = new List<Function>();
-            List<Function> guessSlave = new List<Function>();
+            List<Block> guessMaster = new List<Block>();
+            List<Block> guessSlave = new List<Block>();
 
             int algebraicLoopIterationCount = 0;
 
@@ -29,7 +29,7 @@
                 // Funktionen durchlaufen
                 for (int i = 0; i < open.Count; i++)
                 {
-                    Function f = open[i];
+                    Block f = open[i];
 
                     // Bereitschaft prüfen
                     if (IsReady(f))
@@ -61,7 +61,7 @@
                     // Schätzung initialisieren
                     if (open.Count > 0)
                     {
-                        Function f = open[0];
+                        Block f = open[0];
 
                         // Eingänge setzten
                         for (int i = 0; i < f.Inputs.Count; i++)
@@ -105,7 +105,7 @@
                         // Schätzung anpassen und nächste Iteration starten
                         else
                         {
-                            foreach (Function f in guessSlave)
+                            foreach (Block f in guessSlave)
                             {
                                 for (int i = 0; i < f.Inputs.Count; i++)
                                 {
@@ -117,7 +117,7 @@
                                 open.Add(f);
                             }
 
-                            foreach (Function f in guessMaster)
+                            foreach (Block f in guessMaster)
                             {
                                 for (int i = 0; i < f.Inputs.Count; i++)
                                 {

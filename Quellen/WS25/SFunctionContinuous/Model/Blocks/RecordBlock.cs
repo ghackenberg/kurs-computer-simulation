@@ -1,12 +1,12 @@
 ﻿using SFunctionContinuous.Model.Declarations;
 
-namespace SFunctionContinuous.Model.Functions
+namespace SFunctionContinuous.Model.Blocks
 {
-    class RecordFunction : Function
+    public class RecordBlock : Block
     {
         public List<(double, double)> Data { get; } = new List<(double, double)>();
 
-        public RecordFunction(string name) : base(name)
+        public RecordBlock(string name) : base(name)
         {
             // Inputs
             Inputs.Add(new InputDeclaration("U", true));

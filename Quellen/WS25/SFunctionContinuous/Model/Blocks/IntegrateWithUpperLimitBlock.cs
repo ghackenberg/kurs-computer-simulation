@@ -1,13 +1,13 @@
 ﻿using SFunctionContinuous.Model.Declarations;
 
-namespace SFunctionContinuous.Model.Functions
+namespace SFunctionContinuous.Model.Blocks
 {
-    class IntegrateWithUpperLimitFunction : Function
+    public class IntegrateWithUpperLimitBlock : Block
     {
         public double StartValue;
         public double UpperLimit;
 
-        public IntegrateWithUpperLimitFunction(string name, double startValue, double upperLimit) : base(name)
+        public IntegrateWithUpperLimitBlock(string name, double startValue, double upperLimit) : base(name)
         {
             // Parameters
             StartValue = startValue;

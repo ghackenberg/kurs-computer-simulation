@@ -1,6 +1,6 @@
 ﻿namespace SFunctionContinuous.Model
 {
-    abstract class Solution
+    public abstract class Solver
     {
         public double AlgebraicLoopErrorThreshold { get; set; } = 0.0001;
         public double ZeroCrossingValueThreshold { get; set; } = 0.0001;
@@ -8,35 +8,35 @@
         public int AlgebraicLoopIterationCountLimit { get; set; } = 100000;
         public int ZeroCrossingIterationCountLimit { get; set; } = 100000;
 
-        public Composition Composition { get; }
+        public Model Composition { get; }
 
-        public List<Function> Functions { get; }
+        public List<Block> Functions { get; }
         public List<Connection> Connections { get; }
 
-        public Dictionary<Function, bool[]> ReadyFlag { get; } = new Dictionary<Function, bool[]>();
+        public Dictionary<Block, bool[]> ReadyFlag { get; } = new Dictionary<Block, bool[]>();
 
-        public Dictionary<Function, bool[]> GuessMasterFlag { get; } = new Dictionary<Function, bool[]>();
-        public Dictionary<Function, bool[]> GuessSlaveFlag { get; } = new Dictionary<Function, bool[]>();
-        public Dictionary<Function, double[]> GuessValue { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Block, bool[]> GuessMasterFlag { get; } = new Dictionary<Block, bool[]>();
+        public Dictionary<Block, bool[]> GuessSlaveFlag { get; } = new Dictionary<Block, bool[]>();
+        public Dictionary<Block, double[]> GuessValue { get; } = new Dictionary<Block, double[]>();
 
-        public Dictionary<Function, double[]> ContinuousStatesPrevious { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> ContinuousStates { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> DiscreteStatesPrevious { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> DiscreteStates { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> Derivatives { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> Inputs { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> Outputs { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> ZeroCrossingsPrevious { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> ZeroCrossings { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Block, double[]> ContinuousStatesPrevious { get; } = new Dictionary<Block, double[]>();
+        public Dictionary<Block, double[]> ContinuousStates { get; } = new Dictionary<Block, double[]>();
+        public Dictionary<Block, double[]> DiscreteStatesPrevious { get; } = new Dictionary<Block, double[]>();
+        public Dictionary<Block, double[]> DiscreteStates { get; } = new Dictionary<Block, double[]>();
+        public Dictionary<Block, double[]> Derivatives { get; } = new Dictionary<Block, double[]>();
+        public Dictionary<Block, double[]> Inputs { get; } = new Dictionary<Block, double[]>();
+        public Dictionary<Block, double[]> Outputs { get; } = new Dictionary<Block, double[]>();
+        public Dictionary<Block, double[]> ZeroCrossingsPrevious { get; } = new Dictionary<Block, double[]>();
+        public Dictionary<Block, double[]> ZeroCrossings { get; } = new Dictionary<Block, double[]>();
 
-        public Solution(Composition composition)
+        public Solver(Model composition)
         {
             Composition = composition;
 
-            Functions = Composition.Functions;
+            Functions = Composition.Blocks;
             Connections = Composition.Connections;
 
-            foreach (Function f in Functions)
+            foreach (Block f in Functions)
             {
                 ReadyFlag[f] = new bool[f.Inputs.Count];
 
@@ -60,7 +60,7 @@
 
         protected void InitializeStates()
         {
-            foreach (Function f in Functions)
+            foreach (Block f in Functions)
             {
                 f.InitializeStates(ContinuousStates[f], DiscreteStates[f]);
             }
@@ -70,7 +70,7 @@
 
         protected void ResetFlags()
         {
-            foreach (Function f in Functions)
+            foreach (Block f in Functions)
             {
                 for (int i = 0; i < f.Inputs.Count; i++)
                 {
@@ -82,7 +82,7 @@
             }
         }
 
-        protected bool IsReady(Function f)
+        protected bool IsReady(Block f)
         {
             for (int i = 0; i < f.Inputs.Count; i++)
             {
@@ -94,7 +94,7 @@
             return true;
         }
 
-        protected bool HasGuess(Function f)
+        protected bool HasGuess(Block f)
         {
             for (int i = 0; i < f.Inputs.Count; i++)
             {
@@ -106,12 +106,12 @@
             return false;
         }
 
-        protected void ForwardOutputs(Function f)
+        protected void ForwardOutputs(Block f)
         {
             foreach (Connection c in f.ConnectionsOut)
             {
-                Function sf = c.Source;
-                Function tf = c.Target;
+                Block sf = c.Source;
+                Block tf = c.Target;
 
                 int sfy = c.Output;
                 int tfu = c.Input;
@@ -128,7 +128,7 @@
         {
             double error = 0;
 
-            foreach (Function f in Functions)
+            foreach (Block f in Functions)
             {
                 for (int i = 0; i < f.Inputs.Count; i++)
                 {
@@ -144,7 +144,7 @@
 
         protected void CalculateDerivatives(double t)
         {
-            foreach (Function f in Composition.Functions)
+            foreach (Block f in Composition.Blocks)
             {
                 f.CalculateDerivatives(t, ContinuousStates[f], DiscreteStates[f], Inputs[f], Derivatives[f]);
             }
@@ -152,7 +152,7 @@
 
         protected void UpdateStates(double t)
         {
-            foreach (Function f in Composition.Functions)
+            foreach (Block f in Composition.Blocks)
             {
                 f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
             }
@@ -164,9 +164,9 @@
             double value = -1;
 
             // Berechne die ZeroCrossing-Signale für alle Funktionen und prüfe auf ZeroCrossings
-            Dictionary<Function, double[]> cache = new Dictionary<Function, double[]>();
+            Dictionary<Block, double[]> cache = new Dictionary<Block, double[]>();
 
-            foreach (Function f in Composition.Functions)
+            foreach (Block f in Composition.Blocks)
             {
                 // Initialisiere den Speicher für die neuen Werte
                 double[] z = new double[f.ZeroCrossings.Count];
@@ -196,7 +196,7 @@
             }
 
             // Merke die Werte der ZeroCrossing-Signale für den nächsten Durchlauf
-            foreach (Function f in Composition.Functions)
+            foreach (Block f in Composition.Blocks)
             {
                 ZeroCrossings[f] = cache[f];
             }
@@ -207,7 +207,7 @@
 
         protected void IntegrateContinuousStates(double step)
         {
-            foreach (Function f in Composition.Functions)
+            foreach (Block f in Composition.Blocks)
             {
                 for (int i = 0; i < f.ContinuousStates.Count; i++)
                 {
@@ -218,7 +218,7 @@
 
         protected void RememberInternalVariables()
         {
-            foreach (Function f in Composition.Functions)
+            foreach (Block f in Composition.Blocks)
             {
                 Array.Copy(ContinuousStates[f], ContinuousStatesPrevious[f], f.ContinuousStates.Count);
                 Array.Copy(DiscreteStates[f], DiscreteStatesPrevious[f], f.DiscreteStates.Count);
@@ -228,7 +228,7 @@
 
         protected void RestoreInternalVariables()
         {
-            foreach (Function f in Composition.Functions)
+            foreach (Block f in Composition.Blocks)
             {
                 Array.Copy(ContinuousStatesPrevious[f], ContinuousStates[f], f.ContinuousStates.Count);
                 Array.Copy(DiscreteStatesPrevious[f], DiscreteStates[f], f.DiscreteStates.Count);

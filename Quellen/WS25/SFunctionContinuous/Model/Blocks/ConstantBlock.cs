@@ -1,12 +1,12 @@
 ﻿using SFunctionContinuous.Model.Declarations;
 
-namespace SFunctionContinuous.Model.Functions
+namespace SFunctionContinuous.Model.Blocks
 {
-    class ConstantFunction : Function
+    public class ConstantBlock : Block
     {
         public double Value;
 
-        public ConstantFunction(string name, double value) : base(name)
+        public ConstantBlock(string name, double value) : base(name)
         {
             // Parameters
             Value = value;

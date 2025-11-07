@@ -1,12 +1,12 @@
 ﻿using SFunctionContinuous.Model.Declarations;
 
-namespace SFunctionContinuous.Model.Functions
+namespace SFunctionContinuous.Model.Blocks
 {
-    class IntegrateFunction : Function
+    public class IntegrateBlock : Block
     {
         public double StartValue;
 
-        public IntegrateFunction(string name, double startValue) : base(name)
+        public IntegrateBlock(string name, double startValue) : base(name)
         {
             // Parameters
             StartValue = startValue;

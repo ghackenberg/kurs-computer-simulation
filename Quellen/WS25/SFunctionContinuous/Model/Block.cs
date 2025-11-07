@@ -2,10 +2,10 @@
 
 namespace SFunctionContinuous.Model
 {
-    abstract class Function
+    public abstract class Block
     {
-        public List<Function> FunctionsBefore { get; } = new List<Function>();
-        public List<Function> FunctionsAfter { get; } = new List<Function>();
+        public List<Block> BlocksBefore { get; } = new List<Block>();
+        public List<Block> BlocksAfter { get; } = new List<Block>();
 
         public List<Connection> ConnectionsIn { get; } = new List<Connection>();
         public List<Connection> ConnectionsOut { get; } = new List<Connection>();
@@ -18,7 +18,7 @@ namespace SFunctionContinuous.Model
         public List<OutputDeclaration> Outputs { get; } = new List<OutputDeclaration>();
         public List<ZeroCrossingDeclaration> ZeroCrossings { get; } = new List<ZeroCrossingDeclaration>();
 
-        public Function(string name)
+        public Block(string name)
         {
             Name = name;
         }

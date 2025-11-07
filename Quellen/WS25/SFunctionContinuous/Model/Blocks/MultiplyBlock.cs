@@ -1,22 +1,22 @@
 ﻿using SFunctionContinuous.Model.Declarations;
 
-namespace SFunctionContinuous.Model.Functions
+namespace SFunctionContinuous.Model.Blocks
 {
-    class DivideFunction : Function
+    public class MultiplyBlock : Block
     {
-        public DivideFunction(string name = "Divide") : base(name)
+        public MultiplyBlock(string name = "Multiply") : base(name)
         {
             // Inputs
             Inputs.Add(new InputDeclaration("A", true));
             Inputs.Add(new InputDeclaration("B", true));
 
             // Outputs
-            Outputs.Add(new OutputDeclaration("Quotiet"));
+            Outputs.Add(new OutputDeclaration("Product"));
         }
 
         public override void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
         {
-            outputs[0] = inputs[0] / inputs[1];
+            outputs[0] = inputs[0] * inputs[1];
         }
     }
 }

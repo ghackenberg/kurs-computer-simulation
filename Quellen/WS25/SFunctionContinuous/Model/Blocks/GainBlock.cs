@@ -1,12 +1,12 @@
 ﻿using SFunctionContinuous.Model.Declarations;
 
-namespace SFunctionContinuous.Model.Functions
+namespace SFunctionContinuous.Model.Blocks
 {
-    class GainFunction : Function
+    public class GainBlock : Block
     {
         public double Factor;
 
-        public GainFunction(string name, double factor) : base(name)
+        public GainBlock(string name, double factor) : base(name)
         {
             // Parameters
             Factor = factor;

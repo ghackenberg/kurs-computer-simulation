@@ -1,9 +1,9 @@
 ﻿using Microsoft.Msagl.Drawing;
 using ScottPlot.Plottables;
 using SFunctionContinuous.Model;
-using SFunctionContinuous.Model.Demonstations;
-using SFunctionContinuous.Model.Functions;
-using SFunctionContinuous.Model.Solutions;
+using SFunctionContinuous.Model.Blocks;
+using SFunctionContinuous.Model.Examples;
+using SFunctionContinuous.Model.Solvers;
 using System.Windows;
 
 namespace SFunctionContinuous
@@ -19,11 +19,11 @@ namespace SFunctionContinuous
 
             // Modell erstellen und lösen
 
-            Demonstration demonstration = new BasicZeroCrossingDemonstration();
+            Example demonstration = new BasicZeroCrossingExample();
 
             try
             {
-                Solution solution = new EulerExplicitSolution(demonstration.Composition);
+                Solver solution = new EulerExplicitSolver(demonstration.Model);
 
                 solution.Solve(1, 10);
             }
@@ -36,11 +36,11 @@ namespace SFunctionContinuous
 
             Graph graph = new Graph();
 
-            foreach (Function f in demonstration.Composition.Functions)
+            foreach (Block f in demonstration.Model.Blocks)
             {
                 graph.AddNode($"{f.GetHashCode()}").LabelText = f.ToString();
             }
-            foreach (Connection c in demonstration.Composition.Connections)
+            foreach (Connection c in demonstration.Model.Connections)
             {
                 graph.AddEdge($"{c.Source.GetHashCode()}", c.ToString(), $"{c.Target.GetHashCode()}");
             }
@@ -49,11 +49,11 @@ namespace SFunctionContinuous
 
             // Chart-Visualisierung erstellen
 
-            foreach (Function f in demonstration.Composition.Functions)
+            foreach (Block f in demonstration.Model.Blocks)
             {
-                if (f is RecordFunction)
+                if (f is RecordBlock)
                 {
-                    RecordFunction r = (RecordFunction)f;
+                    RecordBlock r = (RecordBlock)f;
 
                     double[] t = new double[r.Data.Count];
                     double[] u = new double[r.Data.Count];
