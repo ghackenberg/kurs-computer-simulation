@@ -23,24 +23,24 @@
 \coordinate (Pj_prime) at ($(Pj) + (uj)$);
 
 % Zeichne ursprünglichen Stab
-\draw[line width=2pt, gray!50] (Pi) -- (Pj);
+\draw[line width=2pt, lightgray] (Pi) -- (Pj);
 \node[dot, label=left:$P_i$] at (Pi) {};
 \node[dot, label=left:$P_j$] at (Pj) {};
 
 % Zeichne verschobenen Stab
-\draw[line width=2pt, red!80] (Pi_prime) -- (Pj_prime);
+\draw[line width=2pt, red] (Pi_prime) -- (Pj_prime);
 \node[dot, label=right:$P'_i$] at (Pi_prime) {};
 \node[dot, label=right:$P'_j$] at (Pj_prime) {};
 
 % Zeichne Verschiebungsvektoren
-\draw[vec, green!60!black] (Pi) -- (Pi_prime) node[midway, below] {$\vec{u}_i$};
-\draw[vec, green!60!black] (Pj) -- (Pj_prime) node[midway, above] {$\vec{u}_j$};
+\draw[vec, blue] (Pi) -- (Pi_prime) node[midway, below] {$\vec{u}_i$};
+\draw[vec, blue] (Pj) -- (Pj_prime) node[midway, above] {$\vec{u}_j$};
 
 % Zeichne relativen Verschiebungsvektor
 \coordinate (delta_u_start) at ($(Pi) + (2,3)$);
 
 % Projektion
-\draw[line width=2pt, orange!80] ($(Pi)!(Pj_prime)!(Pj)$) -- ($(Pi)!(Pi_prime)!(Pj)$);
+\draw[line width=2pt, orange] ($(Pi)!(Pj_prime)!(Pj)$) -- ($(Pi)!(Pi_prime)!(Pj)$);
 \draw[projection] (Pj_prime) -- ($(Pi)!(Pj_prime)!(Pj)$);
 \draw[projection] (Pi_prime) -- ($(Pi)!(Pi_prime)!(Pj)$);
 
