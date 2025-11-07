@@ -5,4 +5,9 @@ obj
 
 *.user
 
+*_.tex
+*.tikz.pdf
+*.tikz.aux
+*.tikz.log
+
 Folien/*/*.pdf

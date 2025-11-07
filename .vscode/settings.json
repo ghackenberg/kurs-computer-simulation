@@ -4,6 +4,12 @@
             {
                 "match": ".mmd",
                 "cmd": "mmdc -i \"${file}\" -o \"${fileDirname}/${fileBasenameNoExt}.svg\""
+            },{
+                "match": ".asy",
+                "cmd": "asy \"${file}\" -o \"${fileDirname}/${fileBasenameNoExt}\" -f svg -q"
+            },{
+                "match": ".tikz.tex",
+                "cmd": "pdflatex -shell-escape -output-directory=\"${fileDirname}\" \"${file}\" && pdftocairo -svg \"${fileDirname}/${fileBasenameNoExt}.pdf\" \"${fileDirname}/${fileBasenameNoExt}.svg\""
             }
         ]
     },
