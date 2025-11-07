@@ -1,13 +1,13 @@
 ﻿namespace SFunctionContinuous.Model.Solutions
 {
-    class EulerImplicitLoopSolution : Solution
+    class EulerImplicitLoopSolution : EulerImplicitSolution
     {
         public EulerImplicitLoopSolution(Composition composition) : base(composition)
         {
 
         }
 
-        public override void Solve(double step, double tmax)
+        protected override void CalculateOutputs(double t)
         {
             throw new NotImplementedException();
         }

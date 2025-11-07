@@ -52,15 +52,10 @@ namespace SFunctionContinuous.Model.Functions
 
         public override void UpdateStates(double t, double[] x, double[] u)
         {
-            if (EqualsNumeric(x[0], LowerLimit) || EqualsNumeric(x[0], UpperLimit))
+            if (x[0] <= LowerLimit || x[0] >= UpperLimit)
             {
                 x[0] = u[1];
             }
-        }
-
-        private bool EqualsNumeric(double a, double b)
-        {
-            return Math.Abs(a - b) < 0.00001;
         }
     }
 }

@@ -2,6 +2,12 @@
 {
     abstract class Solution
     {
+        public double AlgebraicLoopErrorThreshold { get; set; } = 0.0001;
+        public double ZeroCrossingValueThreshold { get; set; } = 0.0001;
+
+        public int AlgebraicLoopIterationCountLimit { get; set; } = 100000;
+        public int ZeroCrossingIterationCountLimit { get; set; } = 100000;
+
         public Composition Composition { get; }
 
         public List<Function> Functions { get; }
@@ -13,11 +19,15 @@
         public Dictionary<Function, bool[]> GuessSlaveFlag { get; } = new Dictionary<Function, bool[]>();
         public Dictionary<Function, double[]> GuessValue { get; } = new Dictionary<Function, double[]>();
 
-        public Dictionary<Function, double[]> X { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> D { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> U { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> Y { get; } = new Dictionary<Function, double[]>();
-        public Dictionary<Function, double[]> Z { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> ContinuousStatesPrevious { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> ContinuousStates { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> DiscreteStatesPrevious { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> DiscreteStates { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> Derivatives { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> Inputs { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> Outputs { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> ZeroCrossingsPrevious { get; } = new Dictionary<Function, double[]>();
+        public Dictionary<Function, double[]> ZeroCrossings { get; } = new Dictionary<Function, double[]>();
 
         public Solution(Composition composition)
         {
@@ -34,23 +44,31 @@
                 GuessSlaveFlag[f] = new bool[f.Inputs.Count];
                 GuessValue[f] = new double[f.Inputs.Count];
 
-                X[f] = new double[f.ContinuousStates.Count];
-                D[f] = new double[f.ContinuousStates.Count];
-                U[f] = new double[f.Inputs.Count];
-                Y[f] = new double[f.Outputs.Count];
-                Z[f] = new double[f.ZeroCrossings.Count];
+                ContinuousStatesPrevious[f] = new double[f.ContinuousStates.Count];
+                ContinuousStates[f] = new double[f.ContinuousStates.Count];
+                Derivatives[f] = new double[f.ContinuousStates.Count];
+                DiscreteStatesPrevious[f] = new double[f.DiscreteStates.Count];
+                DiscreteStates[f] = new double[f.DiscreteStates.Count];
+                Inputs[f] = new double[f.Inputs.Count];
+                Outputs[f] = new double[f.Outputs.Count];
+                ZeroCrossingsPrevious[f] = new double[f.ZeroCrossings.Count];
+                ZeroCrossings[f] = new double[f.ZeroCrossings.Count];
             }
         }
 
-        public void InitializeConditions()
+        public abstract void Solve(double smax, double tmax);
+
+        protected void InitializeConditions()
         {
             foreach (Function f in Functions)
             {
-                f.InitializeConditions(X[f]);
+                f.InitializeConditions(ContinuousStates[f]);
             }
         }
 
-        public void ResetFlags()
+        protected abstract void CalculateOutputs(double t);
+
+        protected void ResetFlags()
         {
             foreach (Function f in Functions)
             {
@@ -64,43 +82,7 @@
             }
         }
 
-        public void ForwardOutputs(Function f)
-        {
-            foreach (Connection c in f.ConnectionsOut)
-            {
-                Function sf = c.Source;
-                Function tf = c.Target;
-
-                int sfy = c.Output;
-                int tfu = c.Input;
-
-                U[tf][tfu] = Y[sf][sfy];
-
-                ReadyFlag[tf][tfu] = true;
-
-                GuessSlaveFlag[tf][tfu] = HasGuess(f);
-            }
-        }
-
-        public double ComputeError()
-        {
-            double error = 0;
-
-            foreach (Function f in Functions)
-            {
-                for (int i = 0; i < f.Inputs.Count; i++)
-                {
-                    if (GuessMasterFlag[f][i])
-                    {
-                        error += Math.Abs(GuessValue[f][i] - U[f][i]);
-                    }
-                }
-            }
-
-            return error;
-        }
-
-        public bool IsReady(Function f)
+        protected bool IsReady(Function f)
         {
             for (int i = 0; i < f.Inputs.Count; i++)
             {
@@ -112,7 +94,7 @@
             return true;
         }
 
-        public bool HasGuess(Function f)
+        protected bool HasGuess(Function f)
         {
             for (int i = 0; i < f.Inputs.Count; i++)
             {
@@ -124,36 +106,72 @@
             return false;
         }
 
-        public void CalculateDerivatives(double t)
+        protected void ForwardOutputs(Function f)
         {
-            foreach (Function f in Composition.Functions)
+            foreach (Connection c in f.ConnectionsOut)
             {
-                f.CalculateDerivatives(t, X[f], U[f], D[f]);
+                Function sf = c.Source;
+                Function tf = c.Target;
+
+                int sfy = c.Output;
+                int tfu = c.Input;
+
+                Inputs[tf][tfu] = Outputs[sf][sfy];
+
+                ReadyFlag[tf][tfu] = true;
+
+                GuessSlaveFlag[tf][tfu] = HasGuess(f);
             }
         }
 
-        public void IntegrateContinuousStates(double step)
+        protected double ComputeAlgebraicLoopError()
         {
-            foreach (Function f in Composition.Functions)
+            double error = 0;
+
+            foreach (Function f in Functions)
             {
-                for (int i = 0; i < f.ContinuousStates.Count; i++)
+                for (int i = 0; i < f.Inputs.Count; i++)
                 {
-                    X[f][i] += D[f][i] * step;
+                    if (GuessMasterFlag[f][i])
+                    {
+                        error += Math.Abs(GuessValue[f][i] - Inputs[f][i]);
+                    }
                 }
             }
+
+            return error;
         }
 
-        public bool CalculateZeroCrossings(double t)
+        protected void CalculateDerivatives(double t)
         {
+            foreach (Function f in Composition.Functions)
+            {
+                f.CalculateDerivatives(t, ContinuousStates[f], Inputs[f], Derivatives[f]);
+            }
+        }
+
+        protected void UpdateStates(double t)
+        {
+            foreach (Function f in Composition.Functions)
+            {
+                f.UpdateStates(t, ContinuousStates[f], Inputs[f]);
+            }
+        }
+
+        protected double CalculateZeroCrossings(double t)
+        {
+            double value = -1;
+
             // Berechne die ZeroCrossing-Signale für alle Funktionen und prüfe auf ZeroCrossings
             Dictionary<Function, double[]> cache = new Dictionary<Function, double[]>();
 
             foreach (Function f in Composition.Functions)
             {
-                // Berechne die neuen Werte der ZeroCrossing-Signale
+                // Initialisiere den Speicher für die neuen Werte
                 double[] z = new double[f.ZeroCrossings.Count];
 
-                f.CalculateZeroCrossings(t, X[f], U[f], z);
+                // Berechne die neuen Werte der ZeroCrossing-Signale
+                f.CalculateZeroCrossings(t, ContinuousStates[f], Inputs[f], z);
 
                 // Prüfe, ob bereits zuvor ein ZeroCrossing-Signal berechnet wurde
                 if (t > 0)
@@ -161,13 +179,13 @@
                     // Wenn ja, prüfe, ob eines der Signale das Vorzeichen gewechselt hat
                     for (int i = 0; i < f.ZeroCrossings.Count; i++)
                     {
-                        if (z[i] > 0 && Z[f][i] < 0)
+                        if (z[i] > 0 && ZeroCrossings[f][i] < 0)
                         {
-                            return true;
+                            value = Math.Max(value, +z[i]);
                         }
-                        else if (z[i] < 0 && Z[f][i] > 0)
+                        else if (z[i] < 0 && ZeroCrossings[f][i] > 0)
                         {
-                            return true;
+                            value = Math.Max(value, -z[i]);
                         }
                     }
                 }
@@ -179,21 +197,42 @@
             // Merke die Werte der ZeroCrossing-Signale für den nächsten Durchlauf
             foreach (Function f in Composition.Functions)
             {
-                Z[f] = cache[f];
+                ZeroCrossings[f] = cache[f];
             }
 
             // Es wurde kein ZeroCrossing erkannt
-            return false;
+            return value;
         }
 
-        public void UpdateStates(double t)
+        protected void IntegrateContinuousStates(double step)
         {
             foreach (Function f in Composition.Functions)
             {
-                f.UpdateStates(t, X[f], U[f]);
+                for (int i = 0; i < f.ContinuousStates.Count; i++)
+                {
+                    ContinuousStates[f][i] += Derivatives[f][i] * step;
+                }
             }
         }
 
-        public abstract void Solve(double smax, double tmax);
+        protected void RememberInternalVariables()
+        {
+            foreach (Function f in Composition.Functions)
+            {
+                Array.Copy(ContinuousStates[f], ContinuousStatesPrevious[f], f.ContinuousStates.Count);
+                Array.Copy(DiscreteStates[f], DiscreteStatesPrevious[f], f.DiscreteStates.Count);
+                Array.Copy(ZeroCrossings[f], ZeroCrossingsPrevious[f], f.ZeroCrossings.Count);
+            }
+        }
+
+        protected void RestoreInternalVariables()
+        {
+            foreach (Function f in Composition.Functions)
+            {
+                Array.Copy(ContinuousStatesPrevious[f], ContinuousStates[f], f.ContinuousStates.Count);
+                Array.Copy(DiscreteStatesPrevious[f], DiscreteStates[f], f.DiscreteStates.Count);
+                Array.Copy(ZeroCrossingsPrevious[f], ZeroCrossings[f], f.ZeroCrossings.Count);
+            }
+        }
     }
 }

@@ -2,84 +2,122 @@
 {
     class EulerExplicitSolution : Solution
     {
-
         public EulerExplicitSolution(Composition composition) : base(composition)
         {
 
         }
 
-        public override void Solve(double smax, double tmax)
+        public sealed override void Solve(double timeStepMax, double timeMax)
         {
             // Zeit initialisieren
-            double t = 0;
+            double time = 0;
+
+            // Zustände initialisieren
+            InitializeConditions();
+
+            // Ausgaben berechnen und weiterleiten
+            CalculateOutputs(time);
+
+            // Zustände aktualisieren
+            UpdateStates(time);
+
+            // Ableitungen berechnen
+            CalculateDerivatives(time);
+
+            // Nulldurchgänge berechnen
+            CalculateZeroCrossings(time);
 
             // Simulationsschleife
-            while (t <= tmax)
+            while (time <= timeMax)
             {
-                double step = smax;
+                // Zustände merken
+                RememberInternalVariables();
 
-                if (t == 0)
+                // Zeitschritt initialieren
+                double timeStep = timeStepMax * 2;
+
+                // Nulldurchgängswert initialisieren
+                double zeroCrossingValue = 1;
+
+                // Schleifenzähler initialisieren
+                int zeroCrossingIterationCount = 0;
+
+                // Nulldurchgangswert prüfen
+                while (zeroCrossingValue > ZeroCrossingValueThreshold && zeroCrossingIterationCount++ < ZeroCrossingIterationCountLimit)
                 {
-                    // Zustände initialisieren
-                    InitializeConditions();
-                }
-                else
-                {
-                    // Zustände integrieren
-                    IntegrateContinuousStates(step);
-                }
+                    // Zeitschritt aktualisieren
+                    timeStep /= 2;
 
-                // Bereitschaft zurücksetzen
-                ResetFlags();
+                    // Zustände zurücksetzen
+                    RestoreInternalVariables();
 
-                // Ausgaben berechnen und weiterleiten
-                List<Function> open = new List<Function>(Functions);
+                    // Kontnuierliche Zustände integrieren
+                    IntegrateContinuousStates(timeStep);
 
-                while (open.Count > 0)
-                {
-                    // Funktionszahl vorher merken
-                    int count = open.Count;
+                    // Ausgaben berechnen und weiterleiten
+                    CalculateOutputs(time + timeStep);
 
-                    // Funktionen durchlaufen
-                    for (int i = 0; i < open.Count; i++)
-                    {
-                        Function f = open[i];
+                    // Zustände aktualisieren
+                    UpdateStates(time + timeStep);
 
-                        // Bereitschaft prüfen
-                        if (IsReady(f))
-                        {
-                            // Ausgaben berechnen
-                            f.CalculateOutputs(t, X[f], U[f], Y[f]);
+                    // Ableitungen berechnen
+                    CalculateDerivatives(time + timeStep);
 
-                            // Ausgaben weiterleiten
-                            ForwardOutputs(f);
-
-                            // Funktion als erledigt markieren
-                            open.RemoveAt(i--);
-                        }
-                    }
-
-                    // Prüfen, ob die Anzahl offener Funktionen gleich geblieben ist
-                    if (count == open.Count)
-                    {
-                        throw new Exception("Algebraische Schleife erkannt!");
-                    }
+                    // Nulldurchgängswert berechnen
+                    zeroCrossingValue = CalculateZeroCrossings(time + timeStep);
                 }
 
-                // Ableitungen berechnen
-                CalculateDerivatives(t);
-
-                // Nulldurchgänge berechnen
-                if (CalculateZeroCrossings(t))
+                // Nulldurchgang prüfen und Fehler ausgeben
+                if (zeroCrossingValue > ZeroCrossingValueThreshold)
                 {
-                    // Repeat with different time step!
+                    throw new Exception("Nulldurchgang nicht gefunden!");
                 }
-
-                // Zustände aktualisieren
-                UpdateStates(t);
 
                 // Zeit aktualisieren
-                t += step;
+                time += timeStep;
+            }
+        }
+
+        protected override void CalculateOutputs(double time)
+        {
+            // Bereitschaft zurücksetzen
+            ResetFlags();
+
+            // Alle Funktion als "zu berechnen" markieren
+            List<Function> open = [.. Functions];
+
+            // Solange arbeiten, bis alle Funktionen berechnet sind
+            while (open.Count > 0)
+            {
+                // Zahl der zu berechnenden Funktionen merken
+                int count = open.Count;
+
+                // Zu berechnende Funktionen durchlaufen
+                for (int i = 0; i < open.Count; i++)
+                {
+                    // Nächste zu berechnende Funktion auswählen
+                    Function f = open[i];
+
+                    // Bereitschaft der Funktion prüfen
+                    if (IsReady(f))
+                    {
+                        // Ausgaben der Funktion berechnen
+                        f.CalculateOutputs(time, ContinuousStates[f], Inputs[f], Outputs[f]);
+
+                        // Ausgaben der Funktion weiterleiten
+                        ForwardOutputs(f);
+
+                        // Funktion als erledigt markieren
+                        open.RemoveAt(i--);
+                    }
+                }
+
+                // Prüfen, ob die Anzahl der offenen Funktionen gleich geblieben ist
+                if (count == open.Count)
+                {
+                    // Fehlermeldung ausgeben
+                    throw new Exception("Algebraische Schleife erkannt!");
+                }
             }
         }
     }
