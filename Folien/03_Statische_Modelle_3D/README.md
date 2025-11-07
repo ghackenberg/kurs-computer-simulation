@@ -117,7 +117,7 @@ $$
 </div>
 <div>
 
-![width:1000px](./Diagramme/Kräftegleichgewicht_3D.tikz.svg)
+![width:800px](./Diagramme/Kraeftegleichgewicht_2D.tikz.svg)
 
 </div>
 </div>
