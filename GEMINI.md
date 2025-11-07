@@ -139,7 +139,12 @@ Dieses Repository ist nach folgendem Schema aufgebaut:
 - Der Ordner `./Folien` enthält die Foliensätze
 - Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]` enthält den Foliensatz für Kapitel `XX`
 - Die Datei `./Folien/[XX_Kapitel_Bezeichnung]/README.md` enthält den MARP-Markdown für den Foliensatz des Kapitels
-- Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme` enthält die Tikz-, Asymptote- Mermaid.js-Quelldateien und die kompilierten SVG-Dateien
+- Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme` enthält die Tikz-, Asymptote- Mermaid.
+- Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].tikz.tex` enthält den Quelltext einer Tikz-Grafik
+- Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].tikz.svg` enthält die kompilierte SVG-Datei für eine Tikz-Grafik
+- Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].asy` enthält den Quelltext einer Asymptote-Grafik
+- Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].mmd` enthält den Quelltext einer Mermaid.js-Grafik
+- Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].svg` enthält die kompilierte SVG-Datei für eine Asymptote- oder eine Mermaid.js-Grafik
 - Der Ordner `./Quellen` enthält die zugehörigen C#-Implementierungen nach Semester und Thema geordnet
 - Der Ordner `./Quellen/[WSXX]` enthält die C#-Implementierung aus dem Wintersemester `XX`
 - Der Ordner `./Quellen/[SSXX]` enthält die C#-Implementierung aus dem Sommersemester `XX`

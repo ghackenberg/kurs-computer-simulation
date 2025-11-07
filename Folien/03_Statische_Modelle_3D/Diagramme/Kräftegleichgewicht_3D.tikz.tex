@@ -1,0 +1,45 @@
+\documentclass[tikz,crop]{standalone}
+\usepackage{tikz-3dplot}
+
+\begin{document}
+    \tdplotsetmaincoords{70}{110}
+    \begin{tikzpicture}[tdplot_main_coords, scale=2]
+        
+        % Koordinatenachsen
+        \draw[->, gray] (0,0,0) -- (2,0,0) node[anchor=north east]{$x$};
+        \draw[->, gray] (0,0,0) -- (0,2,0) node[anchor=north west]{$y$};
+        \draw[->, gray] (0,0,0) -- (0,0,2) node[anchor=south]{$z$};
+
+        % Knotenpunkt
+        \node[circle,fill=black,inner sep=1pt] (K) at (0,0,0) {};
+
+        % Stabrichtungen (Einheitsvektoren)
+        \coordinate (e1) at (1,0.2,0.3);
+        \coordinate (e2) at (-0.5,0.8,0.5);
+        \coordinate (e3) at (-0.2,-0.8,0.7);
+
+        % Stabkräfte (Vektoren)
+        \pgfmathsetmacro{\Sone}{1.2}
+        \pgfmathsetmacro{\Stwo}{1.0}
+        \pgfmathsetmacro{\Sthree}{1.5}
+
+        \coordinate (S1) at (\Sone*1, \Sone*0.2, \Sone*0.3);
+        \coordinate (S2) at (\Stwo*-0.5, \Stwo*0.8, \Stwo*0.5);
+        \coordinate (S3) at (\Sthree*-0.2, \Sthree*-0.8, \Sthree*0.7);
+        
+        % Externe Kraft (Resultierende der Stabkräfte)
+        \coordinate (Fext) at (-\Sone*1 - \Stwo*-0.5 - \Sthree*-0.2, - \Sone*0.2 - \Stwo*0.8 - \Sthree*-0.8, -\Sone*0.3 - \Stwo*0.5 - \Sthree*0.7);
+
+        % Stäbe (nur angedeutet)
+        \draw[thick, gray, dashed] (K) -- (e1);
+        \draw[thick, gray, dashed] (K) -- (e2);
+        \draw[thick, gray, dashed] (K) -- (e3);
+
+        % Kraftvektoren
+        \draw[->, red, thick] (K) -- (S1) node[right] {$S_1 \cdot \vec{e}_1$};
+        \draw[->, red, thick] (K) -- (S2) node[left] {$S_2 \cdot \vec{e}_2$};
+        \draw[->, red, thick] (K) -- (S3) node[below left] {$S_3 \cdot \vec{e}_3$};
+        \draw[->, blue, thick] (K) -- (Fext) node[above right] {$\vec{F}_{ext}$};
+
+    \end{tikzpicture}
+\end{document}

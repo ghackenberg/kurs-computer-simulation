@@ -87,6 +87,9 @@ $\sum_{j} F_j + F_{ext,i} = 0 \implies \begin{cases} \sum_j S_j \cdot e_{j,x} + 
 
 ---
 
+<div class="columns">
+<div class="two">
+
 ### Matrixdarstellung für einen Knoten
 
 Die drei Gleichgewichtsgleichungen für einen Knoten lassen sich in Matrixform schreiben. Für einen Knoten, an dem die Stäbe 1, 2 und 3 angreifen, sieht das so aus:
@@ -110,6 +113,14 @@ $$
 - Die Matrix enthält die x-, y- und z-Komponenten der Einheitsvektoren der Stäbe.
 - Der Vektor $S$ enthält die unbekannten Stabkräfte.
 - Der Vektor auf der rechten Seite enthält die externen Kräfte.
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/Kräftegleichgewicht_3D.tikz.svg)
+
+</div>
+</div>
 
 ---
 
@@ -147,6 +158,9 @@ Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A
 
 ---
 
+<div class="columns">
+<div class="two">
+
 ### Stablängenänderung durch Knotenverschiebung
 
 Die Längenänderung $\Delta L$ eines Stabes zwischen den Knoten $i$ und $j$ hängt von deren Verschiebungen $\vec{u}_i$ und $\vec{u}_j$ ab.
@@ -156,11 +170,19 @@ Die Längenänderung $\Delta L$ eines Stabes zwischen den Knoten $i$ und $j$ hä
 
 Die Längenänderung ist die Projektion der relativen Verschiebung der Knoten auf die Stabachse:
 
-$\Delta L = (\vec{u}_j - \vec{u}_i) \cdot \vec{e}$
+$\Delta L \approx (\vec{u}_j - \vec{u}_i) \cdot \vec{e}$
 
 Ausgeschrieben ergibt das:
 
-$\Delta L = e_x(u_{jx} - u_{ix}) + e_y(u_{jy} - u_{iy}) + e_z(u_{jz} - u_{iz})$
+$\Delta L \approx e_x(u_{jx} - u_{ix}) + e_y(u_{jy} - u_{iy}) + e_z(u_{jz} - u_{iz})$
+
+</div>
+<div>
+
+![width:800px](./Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
+
+</div>
+</div>
 
 ---
 

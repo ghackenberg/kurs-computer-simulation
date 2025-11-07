@@ -7,7 +7,13 @@ obj
 
 *_.tex
 *.tikz.pdf
-*.tikz.aux
-*.tikz.log
+
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.out
+*.synctex.gz
+*.toc
 
 Folien/*/*.pdf
