@@ -4,6 +4,26 @@
 
 \usepackage{tikz}
 
+\AtBeginSection{
+    \begin{frame}
+        \vfill
+        \centering
+        \textbf{\insertsectionhead}
+        \vfill
+    \end{frame}
+}
+
+\AtBeginSubsection{
+    \begin{frame}
+        \vfill
+        \centering
+        \textbf{\insertsectionhead}
+        
+        \insertsubsectionhead
+        \vfill
+    \end{frame}
+}
+
 \title{Beispiel Foliensatz}
 \subtitle{Untertitel}
 \author{Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme}
@@ -14,14 +34,14 @@
 
 \frame{\titlepage}
 
-\section{Abschnitt}
+\section{Abschnitt 1}
 
 \begin{frame}
     \frametitle{Beispiel Foliensatz}
     Dies ist eine Beispiel-Folie.
 \end{frame}
 
-\subsection{Unterabschnitt}
+\subsection{Unterabschnitt 1}
 
 \begin{frame}
     \frametitle{Folie mit drei Spalten}
@@ -54,7 +74,7 @@
     \end{columns}
 \end{frame}
 
-\subsection{Test}
+\subsection{Unterabschnitt 2}
 
 \begin{frame}
     \frametitle{Folie mit Aufzählung}
@@ -65,7 +85,7 @@
     \end{itemize}
 \end{frame}
 
-\section{Ende}
+\section{Abschnitt 2}
 
 \begin{frame}
     \frametitle{Endfolie}
