@@ -1,22 +1,8 @@
 \documentclass[aspectratio=169]{beamer}
 
-\AtBeginSection[]{
-    \begin{frame}
-        \vfill
-        \centering
-        \usebeamerfont{title}\insertsectionhead\par%
-        \vfill
-    \end{frame}
-}
+\usetheme{Goettingen}
 
-\AtBeginSubsection[]{
-    \begin{frame}
-        \vfill
-        \centering
-        \usebeamerfont{title}\insertsubsectionhead\par%
-        \vfill
-    \end{frame}
-}
+\usepackage{tikz}
 
 \title{Beispiel Foliensatz}
 \subtitle{Untertitel}
@@ -38,18 +24,52 @@
 \subsection{Unterabschnitt}
 
 \begin{frame}
-    \frametitle{Beispiel Foliensatz}
+    \frametitle{Folie mit drei Spalten}
     \begin{columns}
         \begin{column}{0.33\textwidth}
             Linke Spalte
         \end{column}
         \begin{column}{0.33\textwidth}
-            Rechte Spalte
+            Mittlere Spalte
         \end{column}
         \begin{column}{0.33\textwidth}
             Rechte Spalte
         \end{column}
     \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Folie mit zwei Spalten (Text und Bild)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            Linke Spalte
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{tikzpicture}
+                \draw[thick,->] (0,0) -- (4,0) node[anchor=north west] {x axis};
+                \draw[thick,->] (0,0) -- (0,4) node[anchor=south east] {y axis};
+                \draw[thick] (0,0) -- (3,3);
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Test}
+
+\begin{frame}
+    \frametitle{Folie mit Aufzählung}
+    \begin{itemize}
+        \item Erster Punkt
+        \item Zweiter Punkt
+        \item Dritter Punkt
+    \end{itemize}
+\end{frame}
+
+\section{Ende}
+
+\begin{frame}
+    \frametitle{Endfolie}
+    Vielen Dank für Ihre Aufmerksamkeit!
 \end{frame}
 
 \end{document}
