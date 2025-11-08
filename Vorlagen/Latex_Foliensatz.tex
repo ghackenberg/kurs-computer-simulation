@@ -1,0 +1,55 @@
+\documentclass[aspectratio=169]{beamer}
+
+\AtBeginSection[]{
+    \begin{frame}
+        \vfill
+        \centering
+        \usebeamerfont{title}\insertsectionhead\par%
+        \vfill
+    \end{frame}
+}
+
+\AtBeginSubsection[]{
+    \begin{frame}
+        \vfill
+        \centering
+        \usebeamerfont{title}\insertsubsectionhead\par%
+        \vfill
+    \end{frame}
+}
+
+\title{Beispiel Foliensatz}
+\subtitle{Untertitel}
+\author{Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme}
+\institute{Fakultät für Technik und angewandte Naturwissenschaften, Fachhochschule Oberösterreich}
+\date{2025-11-08}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Abschnitt}
+
+\begin{frame}
+    \frametitle{Beispiel Foliensatz}
+    Dies ist eine Beispiel-Folie.
+\end{frame}
+
+\subsection{Unterabschnitt}
+
+\begin{frame}
+    \frametitle{Beispiel Foliensatz}
+    \begin{columns}
+        \begin{column}{0.33\textwidth}
+            Linke Spalte
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            Rechte Spalte
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            Rechte Spalte
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\end{document}

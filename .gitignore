@@ -1,3 +1,5 @@
+# Visual Studio temporary files
+
 .vs
 
 bin
@@ -5,15 +7,22 @@ obj
 
 *.user
 
+# Asymptote generated files
+
 *_.tex
-*.tikz.pdf
+
+# Latex intermediate files
 
 *.aux
-*.log
 *.fls
 *.fdb_latexmk
+*.log
+*.nav
 *.out
+*.snm
 *.synctex.gz
 *.toc
 
-Folien/*/*.pdf
+# MARP/Latex/Tikz build files
+
+*.pdf
