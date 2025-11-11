@@ -823,7 +823,7 @@ Algebraische Blöcke haben keine Zustände (`DimX = 0`). Ihr Ausgang `y` hängt 
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Model.Function.svg)
+![](../../Quellen/WS25/SFunctionContinuous/Block.DirectFeedThrough.svg)
 
 </div>
 </div>
@@ -956,7 +956,7 @@ Der `IntegrateFunction`-Block ist der entscheidende Baustein zur Modellierung dy
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Model.Function.Integrate.svg)
+![](../../Quellen/WS25/SFunctionContinuous/Block.Integrate.svg)
 
 </div>
 </div>
@@ -1083,7 +1083,7 @@ Die `Solution`-Klasse ist die Basis für verschiedene Lösungsstrategien. Sie en
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Model.Solution.svg)
+![](../../Quellen/WS25/SFunctionContinuous/Solver.svg)
 
 </div>
 </div>
