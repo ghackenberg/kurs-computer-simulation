@@ -8,6 +8,8 @@
         public int AlgebraicLoopIterationCountLimit { get; set; } = 100000;
         public int ZeroCrossingIterationCountLimit { get; set; } = 100000;
 
+        public double AlgebraicLoopLearningRate { get; set; } = 0.1;
+
         public Model Composition { get; }
 
         public List<Block> Functions { get; }

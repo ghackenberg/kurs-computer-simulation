@@ -123,7 +123,7 @@
                                 {
                                     if (GuessMasterFlag[f][i])
                                     {
-                                        GuessValue[f][i] = GuessValue[f][i] + (Inputs[f][i] - GuessValue[f][i]) * 0.001;
+                                        GuessValue[f][i] = GuessValue[f][i] + (Inputs[f][i] - GuessValue[f][i]) * AlgebraicLoopLearningRate;
 
                                         Inputs[f][i] = GuessValue[f][i];
                                     }
