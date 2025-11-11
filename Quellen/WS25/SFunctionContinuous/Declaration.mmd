@@ -1,0 +1,29 @@
+classDiagram
+
+    direction LR
+
+    class Declaration {
+        <<Abstract>>
+        Name : string
+    }
+
+    class StateDeclaration {
+    
+    }
+
+    class InputDeclaration {
+        DirectFeedThrough : bool
+    }
+
+    class OutputDeclaration {
+    
+    }
+
+    class ZeroCrossingDeclaration {
+    
+    }
+
+    Declaration <|-- StateDeclaration
+    Declaration <|-- InputDeclaration
+    Declaration <|-- OutputDeclaration
+    Declaration <|-- ZeroCrossingDeclaration

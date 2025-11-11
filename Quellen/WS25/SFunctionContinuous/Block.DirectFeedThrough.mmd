@@ -1,0 +1,22 @@
+classDiagram
+
+    direction LR
+
+    class Block {
+        <<Abstract>>
+    }
+
+    class ConstantBlock {
+        Value : double
+    }
+    class GainBlock {
+        Factor : double
+    }
+    class AddBlock {
+    }
+
+    Block <|-- ConstantBlock
+    Block <|-- GainBlock
+    Block <|-- AddBlock
+
+    style Function fill:white

@@ -1,0 +1,27 @@
+classDiagram
+
+    direction TB
+
+    class Solver {
+        <<Abstract>>
+    }
+
+    class EulerImplicitSolver {
+        ImplicitErrorThreshold : double
+        ImplicitIterationCountLimit : int
+        ImplicitLearningRate : double
+        Solve(timeStepMax : double, timeMax : double) void
+        CalculateOutputs(...) void
+    }
+
+    class EulerImplicitLoopSolver {
+        GuessMasterFlag : Dictionary~Block, bool[]~
+        GuessSlaveFlag : Dictionary~Block, bool[]~
+        GuessValue : Dictionary~Block, double[]~
+        CalculateOutputs(...) void
+    }
+
+    Solver <|-- EulerImplicitSolver
+    EulerImplicitSolver <|-- EulerImplicitLoopSolver
+
+    style Solver fill:white

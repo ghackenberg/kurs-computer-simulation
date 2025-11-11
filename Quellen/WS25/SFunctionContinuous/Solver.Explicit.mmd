@@ -1,0 +1,24 @@
+classDiagram
+
+    direction TB
+
+    class Solver {
+        <<Abstract>>
+    }
+
+    class EulerExplicitSolver {
+        Solve(timeStepMax : double, timeMax : double) void
+        CalculateOutputs(...) void
+    }
+
+    class EulerExplicitLoopSolver {
+        GuessMasterFlag : Dictionary~Block, bool[]~
+        GuessSlaveFlag : Dictionary~Block, bool[]~
+        GuessValue : Dictionary~Block, double[]~
+        CalculateOutputs(...) void
+    }
+
+    Solver <|-- EulerExplicitSolver
+    EulerExplicitSolver <|-- EulerExplicitLoopSolver
+
+    style Solver fill:white

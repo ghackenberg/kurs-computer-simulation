@@ -1,31 +1,27 @@
 classDiagram
 
-    class Function {
-        <<Abstract>>
-
-        Name : string
-
-        DimX : int
-        DimU : int
-        DimY : int
-
-        InitializeConditions(x) void*
-        ComputeDerivatives(t, x, u, d) void*
-        ComputeOutputs(t, x, u, y) void*
-    }
-
     class Connection {
+        Source : Block
         Output : int
+        Target : Block
         Input : int
     }
 
-    class Composition {
-        AddFunction(f : Function) void
-        AddConnection(s : Function, o : int, t : Function, i : int) void
+    class Model {
+        Blocks : List~Block~
+        Connections : List~Connection~
+        AddBlock(f : Block) void
+        AddConnection(sf : Block, sfy : int, tf : Block, tfu : int) void
     }
 
-    Composition *-- "*" Function
-    Composition *-- "*" Connection
+    class Block {
+        <<Abstract>>
+    }
 
-    Connection --> "1" Function: Source
-    Connection --> "1" Function: Target
+    Model *-- "*" Block
+    Model *-- "*" Connection
+
+    Connection --> "1" Block: Source
+    Connection --> "1" Block: Target
+
+    style Block fill:white

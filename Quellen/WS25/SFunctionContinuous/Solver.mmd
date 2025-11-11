@@ -1,0 +1,63 @@
+classDiagram
+
+    direction TB
+
+    class Model {
+    }
+
+    class Solver {
+        <<Abstract>>
+        AlgebraicLoopErrorThreshold : double
+        AlgebraicLoopIterationCountLimit : int
+        AlgebraicLoopLearningRate : double
+        ZeroCrossingValueThreshold : double
+        ZeroCrossingIterationCountLimit : int
+        Model : Model
+        Functions : List<Block>
+        Connections : List<Connection>
+        ReadyFlag : Dictionary~Block, bool[]~
+        ContinuousStatesPrevious : Dictionary~Block, double[]~
+        ContinuousStates : Dictionary~Block, double[]~
+        DiscreteStatesPrevious : Dictionary~Block, double[]~
+        DiscreteStates : Dictionary~Block, double[]~
+        Derivatives : Dictionary~Block, double[]~
+        Inputs : Dictionary~Block, double[]~
+        Outputs : Dictionary~Block, double[]~
+        ZeroCrossingsPrevious : Dictionary~Block, double[]~
+        ZeroCrossings : Dictionary~Block, double[]~
+        Solve(smax : double, tmax : double) void
+    }
+
+    class EulerExplicitSolver {
+        Solve(timeStepMax : double, timeMax : double) void
+    }
+
+    class EulerExplicitLoopSolver {
+        GuessMasterFlag : Dictionary~Block, bool[]~
+        GuessSlaveFlag : Dictionary~Block, bool[]~
+        GuessValue : Dictionary~Block, double[]~
+        Solve(timeStepMax : double, timeMax : double) void
+    }
+
+    class EulerImplicitSolver {
+        ImplicitErrorThreshold : double
+        ImplicitIterationCountLimit : int
+        ImplicitLearningRate : double
+        Solve(timeStepMax : double, timeMax : double) void
+    }
+
+    class EulerImplicitLoopSolver {
+        GuessMasterFlag : Dictionary~Block, bool[]~
+        GuessSlaveFlag : Dictionary~Block, bool[]~
+        GuessValue : Dictionary~Block, double[]~
+        Solve(timeStepMax : double, timeMax : double) void
+    }
+
+    Model "1" --* Solver
+
+    Solver <|-- EulerExplicitSolver
+    Solver <|-- EulerExplicitLoopSolver
+    Solver <|-- EulerImplicitSolver
+    Solver <|-- EulerImplicitLoopSolver
+
+    style Model fill:white

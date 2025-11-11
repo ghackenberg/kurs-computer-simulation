@@ -2,20 +2,17 @@ classDiagram
 
     direction TB
 
-    class Function {
+    class Block {
         <<Abstract>>
     }
 
-    class IntegrateFunction {
-        DimX = 1
-        DimU = 1
-        DimY = 1
+    class IntegrateBlock {
         StartValue : double
-        InitializeConditions(...) void
+        InitializeStates(...) void
         CalculateDerivatives(...) void
         CalculateOutputs(...) void
     }
     
-    Function <|-- IntegrateFunction
+    Block <|-- IntegrateBlock
 
     style Function fill:white
