@@ -1074,6 +1074,8 @@ Implementiert den expliziten Euler-Algorithmus.
 
 ### Simulationsschleife in `EulerExplicitSolver`
 
+Die Klasse `EulerExplicitSolver` implementiert einen einfachen Algorithmus für die Berechnung des Modells. Der Algorithmus umfasst die folgenden Schritte und Unterschritte:
+
 1.  **Initialisierung**: `InitializeStates` aller Blöcke aufrufen.
 2. **Ausgänge berechnen**: `CalculateOutputs` für alle Blöcke aufrufen.
 3. **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke 
@@ -1145,7 +1147,7 @@ Ein Modell mit einer direkten algebraischen Schleife.
 
 ---
 
-### Erkennung von algebraischen Schleifen
+### **Erkennung** von algebraischen Schleifen
 
 1.  Erstelle eine Liste `open` aller Blöcke.
 2.  Iteriere, solange `open` nicht leer ist:
@@ -1171,7 +1173,9 @@ Dieser Solver erweitert den `EulerExplicitSolver`, um algebraische Schleifen auf
 - Erbt von `EulerExplicitSolver`.
 - Überschreibt die `CalculateOutputs`-Methode.
 - Wenn eine algebraische Schleife erkannt wird, bricht er nicht ab, sondern beginnt einen iterativen Lösungsversuch.
-- Er "errät" den Wert eines Eingangs in der Schleife und iteriert, bis der Fehler klein genug ist.
+- Er "errät" den Wert eines Eingangs in der Schleife und iteriert, bis der Fehler klein genug ist
+- Für die Verwaltung der Schätzungen werden neue *Dictionaries* und Methoden eingeführt
+- Außerdem werden neue Steuervariablen definiert, mit welchen der Algorithmus konfiguriert werden kann
 
 </div>
 <div>
@@ -1183,7 +1187,7 @@ Dieser Solver erweitert den `EulerExplicitSolver`, um algebraische Schleifen auf
 
 ---
 
-### Lösung von algebraischen Schleifen
+### **Lösung** von algebraischen Schleifen
 
 Der `EulerExplicitLoopSolver` löst die Schleife durch eine iterative Methode (Fixpunkt-Iteration).
 
@@ -1222,6 +1226,8 @@ Implementiert den impliziten Euler-Algorithmus.
 - In jedem Zeitschritt wird iterativ nach der Ableitung $\dot{x}_{k+1}$ gesucht, die die implizite Euler-Gleichung erfüllt.
 - Dies macht den Solver numerisch stabiler, aber auch rechenintensiver.
 - Kann in seiner Basisimplementierung keine algebraischen Schleifen lösen.
+- Die Implementierung basiert auf einem einfachen Fixpunktverfahren.
+- Das Verfahren ist einfach, aber nicht besonders schnell und robust.
 
 </div>
 <div>
