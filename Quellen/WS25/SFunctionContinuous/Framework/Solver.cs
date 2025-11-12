@@ -2,21 +2,13 @@
 {
     public abstract class Solver
     {
-        public double AlgebraicLoopErrorThreshold { get; set; } = 0.0001;
-        public int AlgebraicLoopIterationCountLimit { get; set; } = 100000;
-        public double AlgebraicLoopLearningRate { get; set; } = 0.1;
-
         public Model Composition { get; }
 
-        public List<Block> Functions { get; }
+        public List<Block> Blocks { get; }
         public List<Connection> Connections { get; }
 
         public Dictionary<Block, bool[]> InputReadyFlags { get; } = new Dictionary<Block, bool[]>();
-        public Dictionary<Block, bool[]> InputGuessMasterFlags { get; } = new Dictionary<Block, bool[]>();
-        public Dictionary<Block, bool[]> InputGuessSlaveFlags { get; } = new Dictionary<Block, bool[]>();
-        public Dictionary<Block, double[]> InputGuessValues { get; } = new Dictionary<Block, double[]>();
 
-        public Dictionary<Block, double[]> ContinuousStatesPrevious { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> ContinuousStates { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> Derivatives { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> Inputs { get; } = new Dictionary<Block, double[]>();
@@ -26,21 +18,17 @@
         {
             Composition = composition;
 
-            Functions = Composition.Blocks;
+            Blocks = Composition.Blocks;
             Connections = Composition.Connections;
 
-            foreach (Block f in Functions)
+            foreach (Block b in Blocks)
             {
-                InputReadyFlags[f] = new bool[f.Inputs.Count];
-                InputGuessMasterFlags[f] = new bool[f.Inputs.Count];
-                InputGuessSlaveFlags[f] = new bool[f.Inputs.Count];
-                InputGuessValues[f] = new double[f.Inputs.Count];
+                InputReadyFlags[b] = new bool[b.Inputs.Count];
 
-                ContinuousStatesPrevious[f] = new double[f.ContinuousStates.Count];
-                ContinuousStates[f] = new double[f.ContinuousStates.Count];
-                Derivatives[f] = new double[f.ContinuousStates.Count];
-                Inputs[f] = new double[f.Inputs.Count];
-                Outputs[f] = new double[f.Outputs.Count];
+                ContinuousStates[b] = new double[b.ContinuousStates.Count];
+                Derivatives[b] = new double[b.ContinuousStates.Count];
+                Inputs[b] = new double[b.Inputs.Count];
+                Outputs[b] = new double[b.Outputs.Count];
             }
         }
 
@@ -48,7 +36,7 @@
 
         protected void InitializeStates()
         {
-            foreach (Block f in Functions)
+            foreach (Block f in Blocks)
             {
                 f.InitializeStates(ContinuousStates[f]);
             }
@@ -56,16 +44,13 @@
 
         protected abstract void CalculateOutputs(double t);
 
-        protected void ResetFlags()
+        protected virtual void ResetFlags()
         {
-            foreach (Block f in Functions)
+            foreach (Block f in Blocks)
             {
                 for (int i = 0; i < f.Inputs.Count; i++)
                 {
                     InputReadyFlags[f][i] = !f.Inputs[i].DirectFeedThrough;
-
-                    InputGuessMasterFlags[f][i] = false;
-                    InputGuessSlaveFlags[f][i] = false;
                 }
             }
         }
@@ -82,19 +67,7 @@
             return true;
         }
 
-        protected bool HasGuess(Block f)
-        {
-            for (int i = 0; i < f.Inputs.Count; i++)
-            {
-                if (!InputGuessMasterFlags[f][i] && !InputGuessSlaveFlags[f][i])
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        protected void ForwardOutputs(Block f)
+        protected virtual void ForwardOutputs(Block f)
         {
             foreach (Connection c in f.ConnectionsOut)
             {
@@ -107,27 +80,7 @@
                 Inputs[tf][tfu] = Outputs[sf][sfy];
 
                 InputReadyFlags[tf][tfu] = true;
-
-                InputGuessSlaveFlags[tf][tfu] = HasGuess(f);
             }
-        }
-
-        protected double ComputeAlgebraicLoopError()
-        {
-            double error = 0;
-
-            foreach (Block f in Functions)
-            {
-                for (int i = 0; i < f.Inputs.Count; i++)
-                {
-                    if (InputGuessMasterFlags[f][i])
-                    {
-                        error += Math.Abs(InputGuessValues[f][i] - Inputs[f][i]);
-                    }
-                }
-            }
-
-            return error;
         }
 
         protected void CalculateDerivatives(double t)
@@ -146,22 +99,6 @@
                 {
                     ContinuousStates[f][i] += Derivatives[f][i] * step;
                 }
-            }
-        }
-
-        protected void RememberInternalVariables()
-        {
-            foreach (Block f in Composition.Blocks)
-            {
-                Array.Copy(ContinuousStates[f], ContinuousStatesPrevious[f], f.ContinuousStates.Count);
-            }
-        }
-
-        protected void RestoreInternalVariables()
-        {
-            foreach (Block f in Composition.Blocks)
-            {
-                Array.Copy(ContinuousStatesPrevious[f], ContinuousStates[f], f.ContinuousStates.Count);
             }
         }
     }

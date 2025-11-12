@@ -19,11 +19,11 @@ namespace SFunctionContinuous
 
             // Modell erstellen und lösen
 
-            Example example = new BasicLoopExample();
+            Example example = new BasicAlgebraicLoopExample();
 
             try
             {
-                Solver solution = new EulerImplicitSolver(example.Model);
+                Solver solution = new EulerImplicitLoopSolver(example.Model);
 
                 solution.Solve(example.TimeStepMax, example.TimeMax);
             }

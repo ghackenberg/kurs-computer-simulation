@@ -44,7 +44,7 @@
             ResetFlags();
 
             // Alle Funktion als "zu berechnen" markieren
-            List<Block> open = [.. Functions];
+            List<Block> open = [.. Blocks];
 
             // Solange arbeiten, bis alle Funktionen berechnet sind
             while (open.Count > 0)

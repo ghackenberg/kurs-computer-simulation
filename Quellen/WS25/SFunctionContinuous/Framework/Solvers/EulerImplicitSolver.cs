@@ -2,13 +2,18 @@
 {
     public class EulerImplicitSolver : Solver
     {
+        public Dictionary<Block, double[]> ContinuousStatesPrevious { get; } = new Dictionary<Block, double[]>();
+
         public double ImplicitErrorThreshold { get; set; } = 0.0001;
         public int ImplicitIterationCountLimit { get; set; } = 100000;
         public double ImplicitLearningRate { get; set; } = 0.1;
 
         public EulerImplicitSolver(Model composition) : base(composition)
         {
-
+            foreach (Block b in Blocks)
+            {
+                ContinuousStatesPrevious[b] = new double[b.ContinuousStates.Count];
+            }
         }
 
         public sealed override void Solve(double timeStep, double timeMax)
@@ -46,7 +51,7 @@
                     // Ableitungen merken
                     Dictionary<Block, double[]> derivativesPrevious = new Dictionary<Block, double[]>();
 
-                    foreach (Block f in Functions)
+                    foreach (Block f in Blocks)
                     {
                         derivativesPrevious[f] = new double[f.ContinuousStates.Count];
 
@@ -65,7 +70,7 @@
                     // Fehler berechnen
                     implicitError = 0;
 
-                    foreach (Block f in Functions)
+                    foreach (Block f in Blocks)
                     {
                         for (int i = 0; i < f.ContinuousStates.Count; i++)
                         {
@@ -77,7 +82,7 @@
                     if (implicitError > ImplicitErrorThreshold)
                     {
                         // Ableitungen anpassen
-                        foreach (Block f in Functions)
+                        foreach (Block f in Blocks)
                         {
                             for (int i = 0; i < f.ContinuousStates.Count; i++)
                             {
@@ -98,13 +103,29 @@
             }
         }
 
+        protected void RememberInternalVariables()
+        {
+            foreach (Block f in Composition.Blocks)
+            {
+                Array.Copy(ContinuousStates[f], ContinuousStatesPrevious[f], f.ContinuousStates.Count);
+            }
+        }
+
+        protected void RestoreInternalVariables()
+        {
+            foreach (Block f in Composition.Blocks)
+            {
+                Array.Copy(ContinuousStatesPrevious[f], ContinuousStates[f], f.ContinuousStates.Count);
+            }
+        }
+
         protected override void CalculateOutputs(double time)
         {
             // Bereitschaft zurücksetzen
             ResetFlags();
 
             // Alle Funktion als "zu berechnen" markieren
-            List<Block> open = [.. Functions];
+            List<Block> open = [.. Blocks];
 
             // Solange arbeiten, bis alle Funktionen berechnet sind
             while (open.Count > 0)

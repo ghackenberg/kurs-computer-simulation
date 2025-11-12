@@ -2,9 +2,82 @@
 {
     public class EulerImplicitLoopSolver : EulerImplicitSolver
     {
+        public Dictionary<Block, bool[]> InputGuessMasterFlags { get; } = new Dictionary<Block, bool[]>();
+        public Dictionary<Block, bool[]> InputGuessSlaveFlags { get; } = new Dictionary<Block, bool[]>();
+        public Dictionary<Block, double[]> InputGuessValues { get; } = new Dictionary<Block, double[]>();
+
+        public double AlgebraicLoopErrorThreshold { get; set; } = 0.0001;
+        public int AlgebraicLoopIterationCountLimit { get; set; } = 100000;
+        public double AlgebraicLoopLearningRate { get; set; } = 0.1;
+
         public EulerImplicitLoopSolver(Model composition) : base(composition)
         {
+            foreach (Block b in Blocks)
+            {
+                InputGuessMasterFlags[b] = new bool[b.Inputs.Count];
+                InputGuessSlaveFlags[b] = new bool[b.Inputs.Count];
+                InputGuessValues[b] = new double[b.Inputs.Count];
+            }
+        }
 
+        protected double ComputeAlgebraicLoopError()
+        {
+            double error = 0;
+
+            foreach (Block f in Blocks)
+            {
+                for (int i = 0; i < f.Inputs.Count; i++)
+                {
+                    if (InputGuessMasterFlags[f][i])
+                    {
+                        error += Math.Abs(InputGuessValues[f][i] - Inputs[f][i]);
+                    }
+                }
+            }
+
+            return error;
+        }
+
+        protected override void ResetFlags()
+        {
+            base.ResetFlags();
+
+            foreach (Block f in Blocks)
+            {
+                for (int i = 0; i < f.Inputs.Count; i++)
+                {
+                    InputGuessMasterFlags[f][i] = false;
+                    InputGuessSlaveFlags[f][i] = false;
+                }
+            }
+        }
+
+        protected bool HasGuess(Block f)
+        {
+            for (int i = 0; i < f.Inputs.Count; i++)
+            {
+                if (!InputGuessMasterFlags[f][i] && !InputGuessSlaveFlags[f][i])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        protected override void ForwardOutputs(Block f)
+        {
+            base.ForwardOutputs(f);
+
+            foreach (Connection c in f.ConnectionsOut)
+            {
+                Block sf = c.Source;
+                Block tf = c.Target;
+
+                int sfy = c.Output;
+                int tfu = c.Input;
+
+                InputGuessSlaveFlags[tf][tfu] = HasGuess(f);
+            }
         }
 
         protected override void CalculateOutputs(double time)
@@ -13,7 +86,7 @@
             ResetFlags();
 
             // Ausgaben berechnen und weiterleiten
-            List<Block> open = [.. Functions];
+            List<Block> open = [.. Blocks];
             List<Block> done = new List<Block>();
 
             List<Block> guessMaster = new List<Block>();

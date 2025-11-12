@@ -1,28 +1,18 @@
 classDiagram
 
-    direction LR
+    direction TB
 
     class Model {
     }
 
     class Solver {
         <<Abstract>>
-        AlgebraicLoopErrorThreshold : double
-        AlgebraicLoopIterationCountLimit : int
-        AlgebraicLoopLearningRate : double
-        ZeroCrossingValueThreshold : double
-        ZeroCrossingIterationCountLimit : int
         Model : Model
-        ContinuousStatesPrevious : Dictionary~Block, double[]~
         ContinuousStates : Dictionary~Block, double[]~
-        DiscreteStatesPrevious : Dictionary~Block, double[]~
-        DiscreteStates : Dictionary~Block, double[]~
         Derivatives : Dictionary~Block, double[]~
         InputReadyFlags : Dictionary~Block, bool[]~
         Inputs : Dictionary~Block, double[]~
         Outputs : Dictionary~Block, double[]~
-        ZeroCrossingsPrevious : Dictionary~Block, double[]~
-        ZeroCrossings : Dictionary~Block, double[]~
         Solve(smax : double, tmax : double) void
     }
 

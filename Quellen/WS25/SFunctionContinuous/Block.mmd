@@ -10,15 +10,11 @@ classDiagram
         ConnectionsIn : List~Connection~
         ConnectionsOut : List~Connection~
         ContinuousStates : List~StateDeclaration~
-        DiscreteStates : List~StateDeclaration~
         Inputs : List~InputDeclaration~
         Outputs : List~OutputDeclaration~
-        ZeroCrossings : List~ZeroCrossingDeclaration~
         InitializeStates(...) void
         CalculateDerivatives(...) void
         CalculateOutputs(...) void
-        CalculateZeroCrossings(...) void
-        UpdateStates(...) void
     }
 
     class StateDeclaration {
@@ -30,16 +26,10 @@ classDiagram
     class OutputDeclaration {
     }
 
-    class ZeroCrossingDeclaration {
-    }
-
     Block *-- "*" StateDeclaration : ContinuousStates
-    Block *-- "*" StateDeclaration : DiscreteStates
     Block *-- "*" InputDeclaration : Inputs
     Block *-- "*" OutputDeclaration : Outputs
-    Block *-- "*" ZeroCrossingDeclaration : ZeroCrossings
 
     style StateDeclaration fill:white
     style InputDeclaration fill:white
     style OutputDeclaration fill:white
-    style ZeroCrossingDeclaration fill:white

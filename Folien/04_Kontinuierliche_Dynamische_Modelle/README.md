@@ -687,7 +687,7 @@ Jeder Block deklariert seine Zustände, Ein- und Ausgänge im Konstruktor.
 </div>
 <div>
 
-![](./Diagramme//Declaration.svg)
+![](../../Quellen/WS25/SFunctionContinuous/Declaration.svg)
 
 </div>
 </div>
@@ -882,7 +882,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ---
 
 <div class="columns">
-<div class="two">
+<div>
 
 ### Die `Solver`-Klasse
 
@@ -899,7 +899,7 @@ Die `Solver`-Klasse ist für die Durchführung der Simulation verantwortlich.
 </div>
 <div>
 
-![](./Diagramme/Solver.svg)
+![](../../Quellen/WS25/SFunctionContinuous/Solver.svg)
 
 </div>
 </div>
