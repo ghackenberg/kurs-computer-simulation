@@ -14,7 +14,7 @@ namespace SFunctionContinuous.Framework.Blocks
             Outputs.Add(new OutputDeclaration("Difference"));
         }
 
-        public override void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
+        public override void CalculateOutputs(double time, double[] continuousStates, double[] inputs, double[] outputs)
         {
             outputs[0] = inputs[0] - inputs[1];
         }

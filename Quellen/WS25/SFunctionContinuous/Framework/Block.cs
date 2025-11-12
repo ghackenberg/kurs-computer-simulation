@@ -13,37 +13,25 @@ namespace SFunctionContinuous.Framework
         public string Name { get; }
 
         public List<StateDeclaration> ContinuousStates { get; } = new List<StateDeclaration>();
-        public List<StateDeclaration> DiscreteStates { get; } = new List<StateDeclaration>();
         public List<InputDeclaration> Inputs { get; } = new List<InputDeclaration>();
         public List<OutputDeclaration> Outputs { get; } = new List<OutputDeclaration>();
-        public List<ZeroCrossingDeclaration> ZeroCrossings { get; } = new List<ZeroCrossingDeclaration>();
 
         public Block(string name)
         {
             Name = name;
         }
 
-        virtual public void InitializeStates(double[] continuousStates, double[] discreteStates)
+        virtual public void InitializeStates(double[] continuousStates)
         {
 
         }
 
-        virtual public void CalculateDerivatives(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] derivatives)
+        virtual public void CalculateDerivatives(double time, double[] continuousStates, double[] inputs, double[] derivatives)
         {
 
         }
 
-        virtual public void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
-        {
-
-        }
-
-        virtual public void CalculateZeroCrossings(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] zeroCrossings)
-        {
-
-        }
-
-        virtual public void UpdateStates(double time, double[] continuousStates, double[] discreteStates, double[] inputs)
+        virtual public void CalculateOutputs(double time, double[] continuousStates, double[] inputs, double[] outputs)
         {
 
         }

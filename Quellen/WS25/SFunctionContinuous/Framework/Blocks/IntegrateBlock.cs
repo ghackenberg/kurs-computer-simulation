@@ -21,17 +21,17 @@ namespace SFunctionContinuous.Framework.Blocks
             Outputs.Add(new OutputDeclaration("Y"));
         }
 
-        public override void InitializeStates(double[] continuousStates, double[] discreteStates)
+        public override void InitializeStates(double[] continuousStates)
         {
             continuousStates[0] = StartValue;
         }
 
-        public override void CalculateDerivatives(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] derivatives)
+        public override void CalculateDerivatives(double time, double[] continuousStates, double[] inputs, double[] derivatives)
         {
             derivatives[0] = inputs[0];
         }
 
-        public override void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
+        public override void CalculateOutputs(double time, double[] continuousStates, double[] inputs, double[] outputs)
         {
             outputs[0] = continuousStates[0];
         }

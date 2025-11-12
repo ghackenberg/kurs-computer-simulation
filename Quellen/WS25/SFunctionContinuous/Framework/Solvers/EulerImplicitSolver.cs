@@ -11,7 +11,7 @@
 
         }
 
-        public sealed override void Solve(double timeStepMax, double timeMax)
+        public sealed override void Solve(double timeStep, double timeMax)
         {
             // Zeit initialisieren
             double time = 0;
@@ -25,117 +25,72 @@
             // Ableitungen berechnen
             CalculateDerivatives(time);
 
-            // Nulldurchgänge berechnen
-            CalculateZeroCrossings(time);
-
             // Simulationsschleife
             while (time <= timeMax)
             {
                 // Interne Variablen merken
                 RememberInternalVariables();
 
-                // Zeitschritt initialieren
-                double timeStep = timeStepMax * 2;
+                // Fehler der impliziten Integration initialisieren
+                double implicitError = 1;
 
-                // Nulldurchgängswert initialisieren
-                double zeroCrossingValue = 1;
+                // Implizite Iterationzähler initialisieren
+                int implicitIterationCount = 0;
 
-                // Schleifenzähler initialisieren
-                int zeroCrossingIterationCount = 0;
-
-                // Mindestens einmal iterieren und wenn Nulldurchgang existiert, iterieren und die Nullstelle lokalisieren
-                while (zeroCrossingValue > ZeroCrossingValueThreshold && zeroCrossingIterationCount++ < ZeroCrossingIterationCountLimit)
+                // Solange iterieren, bis der Fehler klein genug ist oder die maximale Iterationsanzahl erreicht ist
+                while (implicitError > ImplicitErrorThreshold && implicitIterationCount++ < ImplicitIterationCountLimit)
                 {
-                    // Zeitschritt aktualisieren
-                    timeStep /= 2;
+                    // Interne Variablen zurücksetzen
+                    RestoreInternalVariables();
 
-                    // Fehler der impliziten Integration initialisieren
-                    double implicitError = 1;
+                    // Ableitungen merken
+                    Dictionary<Block, double[]> derivativesPrevious = new Dictionary<Block, double[]>();
 
-                    // Implizite Iterationzähler initialisieren
-                    int implicitIterationCount = 0;
-
-                    // Solange iterieren, bis der Fehler klein genug ist oder die maximale Iterationsanzahl erreicht ist
-                    while (implicitError > ImplicitErrorThreshold && implicitIterationCount++ < ImplicitIterationCountLimit)
+                    foreach (Block f in Functions)
                     {
-                        // Interne Variablen zurücksetzen
-                        RestoreInternalVariables();
+                        derivativesPrevious[f] = new double[f.ContinuousStates.Count];
 
-                        // Ableitungen merken
-                        Dictionary<Block, double[]> derivativesPrevious = new Dictionary<Block, double[]>();
+                        Array.Copy(Derivatives[f], derivativesPrevious[f], f.ContinuousStates.Count);
+                    }
 
-                        foreach (Block f in Functions)
+                    // Kontnuierliche Zustände integrieren
+                    IntegrateContinuousStates(timeStep);
+
+                    // Ausgaben berechnen
+                    CalculateOutputs(time + timeStep);
+
+                    // Ableitungen berechnen
+                    CalculateDerivatives(time + timeStep);
+
+                    // Fehler berechnen
+                    implicitError = 0;
+
+                    foreach (Block f in Functions)
+                    {
+                        for (int i = 0; i < f.ContinuousStates.Count; i++)
                         {
-                            derivativesPrevious[f] = new double[f.ContinuousStates.Count];
-
-                            Array.Copy(Derivatives[f], derivativesPrevious[f], f.ContinuousStates.Count);
+                            implicitError = Math.Max(implicitError, Math.Abs(Derivatives[f][i] - derivativesPrevious[f][i]));
                         }
+                    }
 
-                        // Kontnuierliche Zustände integrieren
-                        IntegrateContinuousStates(timeStep);
-
-                        // Ausgaben berechnen
-                        CalculateOutputs(time + timeStep);
-
-                        // Ableitungen berechnen
-                        CalculateDerivatives(time + timeStep);
-
-                        // Fehler berechnen
-                        implicitError = 0;
-
+                    // Prüfen, ob der Fehler noch zu groß ist
+                    if (implicitError > ImplicitErrorThreshold)
+                    {
+                        // Ableitungen anpassen
                         foreach (Block f in Functions)
                         {
                             for (int i = 0; i < f.ContinuousStates.Count; i++)
                             {
-                                implicitError = Math.Max(implicitError, Math.Abs(Derivatives[f][i] - derivativesPrevious[f][i]));
-                            }
-                        }
-
-                        // Prüfen, ob der Fehler noch zu groß ist
-                        if (implicitError > ImplicitErrorThreshold)
-                        {
-                            // Ableitungen anpassen
-                            foreach (Block f in Functions)
-                            {
-                                for (int i = 0; i < f.ContinuousStates.Count; i++)
-                                {
-                                    Derivatives[f][i] = derivativesPrevious[f][i] + (Derivatives[f][i] - derivativesPrevious[f][i]) * ImplicitLearningRate;
-                                }
+                                Derivatives[f][i] = derivativesPrevious[f][i] + (Derivatives[f][i] - derivativesPrevious[f][i]) * ImplicitLearningRate;
                             }
                         }
                     }
-
-                    // Implizite Integration konnte nicht konvergieren?
-                    if (implicitError > ImplicitErrorThreshold)
-                    {
-                        throw new Exception("Implizite Integration konnte nicht konvergieren!");
-                    }
-
-                    // Nulldurchgänge berechnen
-                    zeroCrossingValue = CalculateZeroCrossings(time + timeStep);
                 }
 
-                // Nulldurchgang existiert, aber nicht gefunden?
-                if (zeroCrossingValue > ZeroCrossingValueThreshold)
+                // Implizite Integration konnte nicht konvergieren?
+                if (implicitError > ImplicitErrorThreshold)
                 {
-                    // Fehler ausgeben
-                    throw new Exception($"Nulldurchgang nicht gefunden ({time + timeStep}, {zeroCrossingValue})!");
-                }
-
-                // Nulldurchgang existiert und gefunden?
-                if (zeroCrossingValue > 0)
-                {
-                    // Zustände aktualisieren
-                    UpdateStates(time + timeStep);
-
-                    // Ausgaben noch einmal neu berechnen
-                    CalculateOutputs(time + timeStep);
-
-                    // Ableitungen noch einmal neu berechnen
-                    CalculateDerivatives(time + timeStep);
-
-                    // Nulldurchgänge noch einmal neu berechnen
-                    CalculateZeroCrossings(time + timeStep);
+                    throw new Exception("Implizite Integration konnte nicht konvergieren!");
                 }
 
                 // Zeit aktualisieren
@@ -167,7 +122,7 @@
                     if (IsReady(f))
                     {
                         // Ausgaben der Funktion berechnen
-                        f.CalculateOutputs(time, ContinuousStates[f], DiscreteStates[f], Inputs[f], Outputs[f]);
+                        f.CalculateOutputs(time, ContinuousStates[f], Inputs[f], Outputs[f]);
 
                         // Ausgaben der Funktion weiterleiten
                         ForwardOutputs(f);

@@ -6,10 +6,6 @@
         public int AlgebraicLoopIterationCountLimit { get; set; } = 100000;
         public double AlgebraicLoopLearningRate { get; set; } = 0.1;
 
-        public double ZeroCrossingValueThreshold { get; set; } = 0.0001;
-        public int ZeroCrossingIterationCountLimit { get; set; } = 100000;
-
-
         public Model Composition { get; }
 
         public List<Block> Functions { get; }
@@ -22,13 +18,9 @@
 
         public Dictionary<Block, double[]> ContinuousStatesPrevious { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> ContinuousStates { get; } = new Dictionary<Block, double[]>();
-        public Dictionary<Block, double[]> DiscreteStatesPrevious { get; } = new Dictionary<Block, double[]>();
-        public Dictionary<Block, double[]> DiscreteStates { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> Derivatives { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> Inputs { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> Outputs { get; } = new Dictionary<Block, double[]>();
-        public Dictionary<Block, double[]> ZeroCrossingsPrevious { get; } = new Dictionary<Block, double[]>();
-        public Dictionary<Block, double[]> ZeroCrossings { get; } = new Dictionary<Block, double[]>();
 
         public Solver(Model composition)
         {
@@ -47,12 +39,8 @@
                 ContinuousStatesPrevious[f] = new double[f.ContinuousStates.Count];
                 ContinuousStates[f] = new double[f.ContinuousStates.Count];
                 Derivatives[f] = new double[f.ContinuousStates.Count];
-                DiscreteStatesPrevious[f] = new double[f.DiscreteStates.Count];
-                DiscreteStates[f] = new double[f.DiscreteStates.Count];
                 Inputs[f] = new double[f.Inputs.Count];
                 Outputs[f] = new double[f.Outputs.Count];
-                ZeroCrossingsPrevious[f] = new double[f.ZeroCrossings.Count];
-                ZeroCrossings[f] = new double[f.ZeroCrossings.Count];
             }
         }
 
@@ -62,7 +50,7 @@
         {
             foreach (Block f in Functions)
             {
-                f.InitializeStates(ContinuousStates[f], DiscreteStates[f]);
+                f.InitializeStates(ContinuousStates[f]);
             }
         }
 
@@ -146,63 +134,8 @@
         {
             foreach (Block f in Composition.Blocks)
             {
-                f.CalculateDerivatives(t, ContinuousStates[f], DiscreteStates[f], Inputs[f], Derivatives[f]);
+                f.CalculateDerivatives(t, ContinuousStates[f], Inputs[f], Derivatives[f]);
             }
-        }
-
-        protected void UpdateStates(double t)
-        {
-            foreach (Block f in Composition.Blocks)
-            {
-                f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
-            }
-        }
-
-        protected double CalculateZeroCrossings(double t)
-        {
-            // Rückgabewert initialisieren
-            double value = -1;
-
-            // Berechne die ZeroCrossing-Signale für alle Funktionen und prüfe auf ZeroCrossings
-            Dictionary<Block, double[]> cache = new Dictionary<Block, double[]>();
-
-            foreach (Block f in Composition.Blocks)
-            {
-                // Initialisiere den Speicher für die neuen Werte
-                double[] z = new double[f.ZeroCrossings.Count];
-
-                // Berechne die neuen Werte der ZeroCrossing-Signale
-                f.CalculateZeroCrossings(t, ContinuousStates[f], DiscreteStates[f], Inputs[f], z);
-
-                // Prüfe, ob bereits zuvor ein ZeroCrossing-Signal berechnet wurde
-                if (t > 0)
-                {
-                    // Wenn ja, prüfe, ob eines der Signale das Vorzeichen gewechselt hat
-                    for (int i = 0; i < f.ZeroCrossings.Count; i++)
-                    {
-                        if (z[i] > 0 && ZeroCrossings[f][i] < 0)
-                        {
-                            value = Math.Max(value, +z[i]);
-                        }
-                        else if (z[i] < 0 && ZeroCrossings[f][i] > 0)
-                        {
-                            value = Math.Max(value, -z[i]);
-                        }
-                    }
-                }
-
-                // Speichere die neu berechneten Werte der ZeroCrossing-Signale
-                cache[f] = z;
-            }
-
-            // Merke die Werte der ZeroCrossing-Signale für den nächsten Durchlauf
-            foreach (Block f in Composition.Blocks)
-            {
-                ZeroCrossings[f] = cache[f];
-            }
-
-            // Rückgabewerte zurückgeben
-            return value;
         }
 
         protected void IntegrateContinuousStates(double step)
@@ -221,8 +154,6 @@
             foreach (Block f in Composition.Blocks)
             {
                 Array.Copy(ContinuousStates[f], ContinuousStatesPrevious[f], f.ContinuousStates.Count);
-                Array.Copy(DiscreteStates[f], DiscreteStatesPrevious[f], f.DiscreteStates.Count);
-                Array.Copy(ZeroCrossings[f], ZeroCrossingsPrevious[f], f.ZeroCrossings.Count);
             }
         }
 
@@ -231,8 +162,6 @@
             foreach (Block f in Composition.Blocks)
             {
                 Array.Copy(ContinuousStatesPrevious[f], ContinuousStates[f], f.ContinuousStates.Count);
-                Array.Copy(DiscreteStatesPrevious[f], DiscreteStates[f], f.DiscreteStates.Count);
-                Array.Copy(ZeroCrossingsPrevious[f], ZeroCrossings[f], f.ZeroCrossings.Count);
             }
         }
     }

@@ -12,12 +12,12 @@ namespace SFunctionContinuous.Framework.Blocks
             Inputs.Add(new InputDeclaration("U", true));
         }
 
-        public override void InitializeStates(double[] continuousStates, double[] discreteStates)
+        public override void InitializeStates(double[] continuousStates)
         {
             Data.Clear();
         }
 
-        public override void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
+        public override void CalculateOutputs(double time, double[] continuousStates, double[] inputs, double[] outputs)
         {
             if (Data.Count > 0 && Data[Data.Count - 1].Item1 >= time)
             {
