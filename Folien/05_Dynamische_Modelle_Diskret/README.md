@@ -195,7 +195,20 @@ Wenn ein Kunde ankommt, wird geprüft, ob die Bedienstation frei ist.
 </div>
 <div>
 
-TODO Detaillierte Beschreibung einer Illustration für das Ereignis (z.B. Kunde kommt an Kasse an)
+<!--
+Eine minimalistische Vektorgrafik im Flat-Design-Stil, die das "Arrival"-Ereignis in einem Warteschlangensystem darstellt.
+
+**Inhalt:**
+Eine stilisierte Person (Kunde) schiebt einen Einkaufswagen auf eine Supermarktkasse zu. Die Kasse ist besetzt, und eine weitere Person (Kassierer) bedient gerade einen anderen Kunden. Hinter dem ankommenden Kunden bildet sich eine kleine Schlange aus weiteren stilisierten Personen. Die Szene fängt den Moment der Ankunft und das Einreihen in die Warteschlange ein.
+
+**Stil:**
+- **Farbpalette:** Begrenzt auf kühle Töne wie Blau und Grau, mit einem warmen Akzent (z.B. Gelb) für den ankommenden Kunden, um ihn hervorzuheben.
+- **Formen:** Einfache geometrische Formen, klare Linien, keine überflüssigen Details.
+- **Komposition:** Der Fokus liegt auf der Bewegung des ankommenden Kunden in Richtung der bereits bestehenden Schlange. Der Hintergrund ist abstrakt und neutral.
+- **Atmosphäre:** Sauber, modern und informativ.
+-->
+
+![](./Illustrationen/ArrivalEvent.jpg)
 
 </div>
 </div>
@@ -227,7 +240,20 @@ Wenn ein Kunde fertig bedient ist, wird geprüft, ob weitere Kunden warten.
 </div>
 <div>
 
-TODO Detaillierte Beschreibung einer Illustration für das Ereignis (z.B. Kunde ist mit bezahlen fertig)
+<!--
+Eine minimalistische Vektorgrafik im Flat-Design-Stil, die das "Departure"-Ereignis in einem Warteschlangensystem darstellt.
+
+**Inhalt:**
+Eine stilisierte Person (Kunde) verlässt mit einer Einkaufstasche die Supermarktkasse. Die Kasse ist nun frei, und der Kassierer wendet sich dem nächsten Kunden in der Warteschlange zu, der gerade vortritt. Die Warteschlange ist sichtbar kürzer als zuvor. Die Szene fängt den Moment des Abschlusses und des Übergangs zum nächsten Kunden ein.
+
+**Stil:**
+- **Farbpalette:** Begrenzt auf kühle Töne wie Blau und Grau, mit einem positiven Akzent (z.B. Grün) für den abfahrenden Kunden oder die freie Kasse, um den erfolgreichen Abschluss zu signalisieren.
+- **Formen:** Einfache geometrische Formen, klare Linien, keine überflüssigen Details.
+- **Komposition:** Der Fokus liegt auf dem verlassenden Kunden und der nun freien Kasse, die bereit für den nächsten Vorgang ist. Der Hintergrund ist abstrakt und neutral.
+- **Atmosphäre:** Effizient, fließend und geordnet.
+-->
+
+![](./Illustrationen/DepartureEvent.jpg)
 
 </div>
 </div>
