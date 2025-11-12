@@ -697,7 +697,12 @@ Jeder Block deklariert seine Zustände, Ein- und Ausgänge im Konstruktor.
 <div class="columns">
 <div class="two">
 
-TODO Folie zu Quelle- und Senkeblöcken (Constant und Record)
+### Quelle- und Senkenblöcke
+
+- **Quellen** sind Blöcke ohne Eingänge, die Signale erzeugen.
+    - **`ConstantBlock`**: Eine Signalquelle, die einen konstanten Wert ausgibt.
+- **Senken** sind Blöcke ohne Ausgänge, die Signale verarbeiten oder speichern.
+    - **`RecordBlock`**: Eine Signalsenke, die die ankommenden Werte über die Zeit aufzeichnet. Sie hat keine Ausgänge und dient zur Visualisierung.
 
 </div>
 <div>
@@ -749,17 +754,17 @@ public class ConstantBlock : Block
 ---
 
 <div class="columns">
-<div class="three">
+<div>
 
 ### Algebraische Blöcke
 
 Algebraische Blöcke haben keine Zustände. Ihr Ausgang `y` hängt direkt von den Eingängen `u` ab (`DirectFeedThrough = true`).
 
-- **`GainBlock`**: Multipliziert einen Eingang mit einem Faktor.
-- TODO AddBlock
-- TODO SubstractBlock
-- TODO MultiplyBlock
-- TODO DivideBlock
+- **`GainBlock`**: Multipliziert einen Eingang mit einem konstanten Faktor.
+- **`AddBlock`**: Addiert zwei Eingänge.
+- **`SubtractBlock`**: Subtrahiert zwei Eingänge.
+- **`MultiplyBlock`**: Multipliziert zwei Eingänge.
+- **`DivideBlock`**: Dividiert zwei Eingänge.
 
 </div>
 <div>
@@ -771,11 +776,81 @@ Algebraische Blöcke haben keine Zustände. Ihr Ausgang `y` hängt direkt von de
 
 ---
 
-TODO Folie zur Implementierung des Gain-Blocks
+### Beispiel: `GainBlock`
+
+Ein Block, der einen Eingang mit einem konstanten Faktor multipliziert.
+
+<div class="columns">
+<div class="two">
+
+- **Deklaration**: Ein Eingang `U`, ein Ausgang `Y`.
+- **`CalculateOutputs`**: Setzt den Ausgang `outputs[0]` auf das Produkt aus `inputs[0]` und dem `Factor`.
+- Der Eingang hat `DirectFeedThrough = true`.
+
+</div>
+<div class="two">
+
+```csharp
+public class GainBlock : Block
+{
+    public double Factor;
+
+    public GainBlock(string name, double factor) : base(name)
+    {
+        Factor = factor;
+        Inputs.Add(new InputDeclaration("U", true));
+        Outputs.Add(new OutputDeclaration("Y"));
+    }
+
+    public override void CalculateOutputs(double time, 
+        double[] continuousStates, double[] inputs, 
+        double[] outputs)
+    {
+        outputs[0] = Factor * inputs[0];
+    }
+}
+```
+
+</div>
+</div>
 
 ---
 
-TODO Folie zur Implementierung des Add-Blocks
+### Beispiel: `AddBlock`
+
+Ein Block, der zwei Eingänge addiert.
+
+<div class="columns">
+<div class="two">
+
+- **Deklaration**: Zwei Eingänge `A` und `B`, ein Ausgang `Sum`.
+- **`CalculateOutputs`**: Setzt den Ausgang `outputs[0]` auf die Summe von `inputs[0]` und `inputs[1]`.
+- Beide Eingänge haben `DirectFeedThrough = true`.
+
+</div>
+<div class="two">
+
+```csharp
+public class AddBlock : Block
+{
+    public AddBlock(string name = "Add") : base(name)
+    {
+        Inputs.Add(new InputDeclaration("A", true));
+        Inputs.Add(new InputDeclaration("B", true));
+        Outputs.Add(new OutputDeclaration("Sum"));
+    }
+
+    public override void CalculateOutputs(double time, 
+        double[] continuousStates, double[] inputs, 
+        double[] outputs)
+    {
+        outputs[0] = inputs[0] + inputs[1];
+    }
+}
+```
+
+</div>
+</div>
 
 ---
 
@@ -827,7 +902,70 @@ public class IntegrateBlock : Block
 
 ---
 
-TODO Folie zur Implementierung der Methoden InitializeStates, CalculateDerivatives, und CalculateOutputs des Integrate-Blocks
+### `IntegrateBlock`: Implementierung
+
+Die Methoden implementieren die Kernlogik der Integration.
+
+<div class="columns top">
+<div class="three">
+
+**`InitializeStates(...)`**
+
+Wird vom Solver am Anfang der Simulation aufgerufen. Setzt den Anfangswert des Zustands `X` auf den konfigurierten `StartValue`.
+
+</div>
+<div class="three">
+
+**`CalculateDerivatives(...)`**
+
+Wird in jedem Zeitschritt aufgerufen, um die Ableitungen zu berechnen. Die Ableitung des Zustands $\dot{x}$ ist per Definition der Wert am Eingang `U`.
+
+</div>
+<div class="three">
+
+**`CalculateOutputs(...)`**
+
+Wird aufgerufen, um die Ausgänge des Blocks zu berechnen. Der Ausgang `Y` ist einfach der aktuelle Wert des Zustands `X`.
+
+</div>
+</div>
+
+<div class="columns top">
+<div>
+
+```csharp
+public override void InitializeStates(
+    double[] continuousStates)
+{
+    continuousStates[0] = StartValue;
+}
+```
+
+</div>
+<div>
+
+```csharp
+public override void CalculateDerivatives(..., 
+    double[] inputs, double[] derivatives)
+{
+    derivatives[0] = inputs[0];
+}
+```
+
+</div>
+<div>
+
+```csharp
+public override void CalculateOutputs(...,
+    double[] continuousStates, ...,
+    double[] outputs)
+{
+    outputs[0] = continuousStates[0];
+}
+```
+
+</div>
+</div>
 
 ---
 
@@ -877,7 +1015,10 @@ class Connection
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- TODO
+- Die `Solver`-Klasse als zentraler Algorithmus
+- Expliziter Euler-Solver (`EulerExplicitSolver`)
+- Impliziter Euler-Solver (`EulerImplicitSolver`)
+- Erkennung und Behandlung von algebraischen Schleifen (`EulerExplicitLoopSolver`, `EulerImplicitLoopSolver`)
 
 ---
 
@@ -907,12 +1048,19 @@ Die `Solver`-Klasse ist für die Durchführung der Simulation verantwortlich.
 ---
 
 <div class="columns">
-<div class="three">
+<div class="two">
 
-TODO Folie zu EulerImplicitSolver
+### Der `EulerExplicitSolver`
+
+Implementiert den expliziten Euler-Algorithmus.
+
+- Erbt von der abstrakten `Solver`-Klasse.
+- Die `Solve`-Methode enthält die Haupt-Simulationsschleife.
+- Die `CalculateOutputs`-Methode implementiert eine topologische Sortierung, um die Blöcke in der richtigen Reihenfolge auszuführen.
+- Erkennt algebraische Schleifen und wirft eine Exception, da er diese nicht auflösen kann.
 
 </div>
-<div class="two">
+<div>
 
 ![](../../Quellen/WS25/SFunctionContinuous/Solver.Explicit.svg)
 
@@ -920,6 +1068,9 @@ TODO Folie zu EulerImplicitSolver
 </div>
 
 ---
+
+<div class="columns">
+<div class="two">
 
 ### Simulationsschleife in `EulerExplicitSolver`
 
@@ -932,34 +1083,95 @@ TODO Folie zu EulerImplicitSolver
     c. **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke aufrufen.
     e. **Zeit erhöhen**: $t = t + h$.
 
----
+</div>
+<div>
 
-![bg contain right](./Screenshots/Einfaches_Beispiel_Euler_Explizit.png)
+TODO Mermaid-Diagramm für die Simualtionsschleife
 
-TODO Folie zu BasicExample (inklusive mathematische Beschreibung)
-
----
-
-![bg contain right](./Screenshots/Einfache_Schleife_Euler_Explizit.png)
-
-TODO Folie zu BasicLoopExample (inklusive mathematische Beschreibung)
+</div>
+</div>
 
 ---
 
-![bg contain right](./Screenshots/Einfache_Algebraische_Schleife_Euler_Explizit.png)
+![bg contain right:40%](./Screenshots/Einfaches_Beispiel_Euler_Explizit.png)
 
-TODO Folie zu BasicAlgebraicLoopExample (inklusive mathematische Beschreibung) mit EulerExplicitSolver (Fehlermeldung!)
+### Beispiel: `BasicExample`
+
+Zweifache Integration einer Konstante.
+
+**Modellaufbau:**
+- Ein `ConstantBlock` erzeugt den Wert `1`.
+- Ein erster `IntegrateBlock` integriert die Konstante.
+- Ein zweiter `IntegrateBlock` integriert das Ergebnis des ersten.
+
+**Mathematische Beschreibung:**
+- Ausgang von `Integrate1`: $y_1(t) = \int u(t) dt = \int 1 dt = t$
+- Ausgang von `Integrate2`: $y_2(t) = \int y_1(t) dt = \int t dt = \frac{1}{2}t^2$
 
 ---
 
-TODO Folie zur Erkennung algebraischer Schleifen
+![bg contain right:40%](./Screenshots/Einfache_Schleife_Euler_Explizit.png)
+
+### Beispiel: `BasicLoopExample`
+
+Ein Modell mit einer einfachen Rückkopplungsschleife.
+
+**Modellaufbau:**
+- Ein `IntegrateBlock` mit Anfangswert `1`.
+- Der Ausgang des Integrators wird direkt auf seinen eigenen Eingang zurückgeführt.
+
+**Mathematische Beschreibung:**
+- Das Modell beschreibt die Differentialgleichung:
+  $$ \dot{x}(t) = x(t) $$
+- Die analytische Lösung dieser DGL ist die e-Funktion:
+  $$ x(t) = e^t $$
+
+---
+
+![bg contain right:40%](./Screenshots/Einfache_Algebraische_Schleife_Euler_Explizit.png)
+
+### Beispiel: `BasicAlgebraicLoopExample`
+
+Ein Modell mit einer direkten algebraischen Schleife.
+
+**Modellaufbau:**
+- Ein `ConstantBlock` mit dem Wert `1`.
+- Ein `SubtractBlock`.
+- Der Ausgang des `SubtractBlock` wird auf seinen zweiten Eingang zurückgeführt. Der erste Eingang ist die Konstante.
+
+**Mathematische Beschreibung:**
+- Der `SubtractBlock` berechnet: $y = 1 - y$
+- Die Lösung lautet: $2y = 1 \implies y = 0.5$
+
+---
+
+### Erkennung von algebraischen Schleifen
+
+1.  Erstelle eine Liste `open` aller Blöcke.
+2.  Iteriere, solange `open` nicht leer ist:
+    a. Merke die Anzahl der Blöcke in `open`.
+    b. Gehe alle Blöcke in `open` durch.
+    c. Wenn alle Eingänge eines Blocks `f` bereit sind (`AreAllInputsReady`):
+    - Berechne die Ausgänge von `f`.
+    - Leite die Ausgänge an die Nachfolger weiter (`ForwardOutputs`).
+    - Entferne `f` aus `open`.
+
+    d. Wenn sich die Anzahl der Blöcke in `open` in einer Iteration nicht verringert hat, bedeutet das, dass kein Block mehr berechnet werden kann.
+    e. Dies ist nur möglich, wenn eine zyklische Abhängigkeit (algebraische Schleife) vorliegt -> Wirf eine `Exception`.
 
 ---
 
 <div class="columns">
 <div class="two">
 
-TODO Folie zu EulerExplicitLoopSolver
+### Der `EulerExplicitLoopSolver`
+
+Dieser Solver erweitert den `EulerExplicitSolver`, um algebraische Schleifen aufzulösen.
+
+- Erbt von `EulerExplicitSolver`.
+- Überschreibt die `CalculateOutputs`-Methode.
+- Wenn eine algebraische Schleife erkannt wird, bricht er nicht ab, sondern beginnt einen iterativen Lösungsversuch.
+- Er "errät" den Wert eines Eingangs in der Schleife und iteriert, bis der Fehler klein genug ist.
 
 </div>
 <div>
@@ -971,20 +1183,45 @@ TODO Folie zu EulerExplicitLoopSolver
 
 ---
 
-TODO Folie zur Lösung algebraischer Schleifen
+### Lösung von algebraischen Schleifen
+
+Der `EulerExplicitLoopSolver` löst die Schleife durch eine iterative Methode (Fixpunkt-Iteration).
+
+1.  Wenn eine Schleife erkannt wird (kein Fortschritt in `open`), wähle einen Block aus der Schleife.
+2.  "Rate" den Wert für einen seiner noch nicht berechneten Eingänge (z.B. setze ihn auf 0). Markiere diesen als `InputGuessMaster`.
+3.  Berechne die Schleife mit diesem geratenen Wert.
+4.  Am Ende der Schleife wird der "geratene" Eingang selbst einen neuen Wert vom Vorgängerblock erhalten.
+5.  Vergleiche den neuen Wert mit dem geratenen Wert. Die Differenz ist der Fehler.
+6.  Wenn der Fehler zu groß ist, passe den geratenen Wert an (z.B. mit einer Lernrate) und wiederhole ab Schritt 3.
+    `guess = guess + (new_value - guess) * learning_rate`
+7.  Wenn der Fehler klein genug ist, ist die Schleife gelöst.
 
 ---
 
 ![bg contain right](./Screenshots/Einfache_Algebraische_Schleife_Euler_Explizit_Loop.png)
 
-TODO Folie zu BasicAlgebraicLoopExample (inklusive mathematische Beschreibung) mit EulerExplicitLoopSolver
+### `BasicAlgebraicLoopExample` mit `EulerExplicitLoopSolver`
+
+Wird das Modell mit dem `EulerExplicitLoopSolver` ausgeführt, kann die algebraische Schleife erfolgreich gelöst werden.
+
+**Simulationsergebnis:**
+- Der Solver iteriert in jedem Zeitschritt, um die Gleichung $y = 1 - y$ aufzulösen.
+- Er konvergiert schnell gegen die korrekte Lösung $y = 0.5$.
+- Der `Record`-Block zeichnet über die gesamte Simulationsdauer den konstanten Wert `0.5` auf.
 
 ---
 
 <div class="columns">
 <div class="two">
 
-TODO Folie zu EulerImplicitSolver
+### Der `EulerImplicitSolver`
+
+Implementiert den impliziten Euler-Algorithmus.
+
+- Die `Solve`-Methode enthält eine zusätzliche innere Schleife.
+- In jedem Zeitschritt wird iterativ nach der Ableitung $\dot{x}_{k+1}$ gesucht, die die implizite Euler-Gleichung erfüllt.
+- Dies macht den Solver numerisch stabiler, aber auch rechenintensiver.
+- Kann in seiner Basisimplementierung keine algebraischen Schleifen lösen.
 
 </div>
 <div>
@@ -996,14 +1233,44 @@ TODO Folie zu EulerImplicitSolver
 
 ---
 
-TODO Folie zur Simulationsschleife in EulerImplicitSolver
+<div class="columns">
+<div class="three">
+
+### Simulationsschleife in `EulerImplicitSolver`
+
+1.  **Initialisierung**: Wie beim expliziten Solver.
+2.  **Zeitschleife** (`while t <= tmax`):
+    a. **Merke Zustände**: Speichere den aktuellen Zustand $x_k$.
+    b. Setze die Ableitung $\dot{x}_{k+1}$ auf die bekannte Ableitung $\dot{x}_k$.
+    c. **Wiederhole bis Konvergenz:**
+    - Berechne den neuen Zustand $x_{k+1} = x_k + h \cdot \dot{x}_{k+1}$.
+    - Berechne die Ausgänge $y_{k+1}$ mit dem neuen Zustand $x_{k+1}$.
+    - Berechne die neue Ableitung $\dot{x}'_{k+1}$ mit den neuen Ausgängen.
+    - Wenn sich die Ableitung kaum noch ändert, dann beende.
+    - Ansonsten, passe $\dot{x}_{k+1}$ an und wiederhole.
+
+    d. **Zeit erhöhen**: $t = t + h$.
+
+</div>
+<div>
+
+TODO Mermaid Grafik für die implizite Simulationsschleife
+
+</div>
+</div>
 
 ---
 
 <div class="columns">
 <div class="two">
 
-TODO Folie zu EulerImplicitLoopSolver
+### Der `EulerImplicitLoopSolver`
+
+Kombiniert den impliziten Solver mit der Auflösung von algebraischen Schleifen.
+
+- Erbt von `EulerImplicitSolver`.
+- Überschreibt die `CalculateOutputs`-Methode mit der iterativen Logik des `EulerExplicitLoopSolver`.
+- Dadurch können Modelle, die sowohl implizite Integration erfordern als auch algebraische Schleifen enthalten, stabil gelöst werden.
 
 </div>
 <div>

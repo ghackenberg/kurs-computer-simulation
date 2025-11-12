@@ -17,6 +17,9 @@ classDiagram
     }
     class DivideBlock {
     }
+    class InputDeclaration {
+        DirectFeedThrough = true
+    }
 
     Block <|-- GainBlock
     Block <|-- AddBlock
@@ -24,4 +27,11 @@ classDiagram
     Block <|-- MultiplyBlock
     Block <|-- DivideBlock
 
+    GainBlock *-- "1" InputDeclaration
+    AddBlock *-- "2" InputDeclaration
+    SubstractBlock *-- "2" InputDeclaration
+    MultiplyBlock *-- "2" InputDeclaration
+    DivideBlock *-- "2" InputDeclaration
+
     style Block fill:white
+    style InputDeclaration fill:white
