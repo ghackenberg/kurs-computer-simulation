@@ -752,6 +752,49 @@ Add(new ArrivalEvent(Clock + interarrivalTime));
 
 ---
 
+### Implementierung: **Exponentialverteilung**
+
+Zufallszahlen, die einer **Exponentialverteilung** folgen, können mittels der **Inversionsmethode** aus gleichverteilten Zufallszahlen erzeugt werden.
+
+- Eine gleichverteilte Zufallszahl $u \in [0, 1)$ wird mit `random.NextDouble()` erzeugt.
+- Die Transformation lautet: $x = -\frac{1}{\lambda} \ln(1 - u)$
+- $\lambda$ ist die Rate der Verteilung (z.B. mittlere Anzahl Ankünfte pro Zeiteinheit).
+
+```csharp
+private double NextExponential(Random random, double lambda)
+{
+    // random.NextDouble() liefert eine Zahl in [0.0, 1.0)
+    double u = random.NextDouble();
+    // Inversionsmethode anwenden
+    // (1.0 - u) um zu verhindern, dass Log(0) -> -unendlich wird
+    return -Math.Log(1.0 - u) / lambda;
+}
+```
+
+---
+
+### Implementierung: **Normalverteilung (Box-Muller)**
+
+Zufallszahlen, die einer **Normalverteilung** folgen, können mittels der **Box-Muller-Transformation** erzeugt werden. Diese Methode transformiert zwei unabhängige, gleichverteilte Zufallszahlen in zwei unabhängige, standardnormalverteilte Zufallszahlen.
+
+- $Z_0 = \sqrt{-2 \ln U_1} \cos(2\pi U_2)$
+- Eine standardnormalverteilte Zahl $Z_0$ kann dann auf eine beliebige Normalverteilung mit Mittelwert $\mu$ und Standardabweichung $\sigma$ skaliert werden: $X = \mu + \sigma Z_0$.
+
+```csharp
+private double NextNormal(Random random, double mean, double stdDev)
+{
+    // Zwei gleichverteilte Zufallszahlen im Intervall (0.0, 1.0]
+    double u1 = 1.0 - random.NextDouble();
+    double u2 = 1.0 - random.NextDouble();
+    // Box-Muller-Transformation für eine standardnormalverteilte Zahl (Z)
+    double z = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Cos(2.0 * Math.PI * u2);
+    // Transformation zur gewünschten Normalverteilung (µ, σ)
+    return mean + stdDev * z;
+}
+```
+
+---
+
 <div class="columns">
 <div>
 
