@@ -7,19 +7,19 @@ classDiagram
 
     class Solver {
         <<Abstract>>
+        Model : Model
         ZeroCrossingValueThreshold : double
         ZeroCrossingIterationCountLimit : int
-        Model : Model
-        ContinuousStatesPrevious : Dictionary~Block, double[]~
         ContinuousStates : Dictionary~Block, double[]~
-        DiscreteStatesPrevious : Dictionary~Block, double[]~
         DiscreteStates : Dictionary~Block, double[]~
         Derivatives : Dictionary~Block, double[]~
         Inputs : Dictionary~Block, double[]~
         Outputs : Dictionary~Block, double[]~
-        ZeroCrossingsPrevious : Dictionary~Block, double[]~
         ZeroCrossings : Dictionary~Block, double[]~
         InputReadyFlags : Dictionary~Block, bool[]~
+        ContinuousStatesPrevious : Dictionary~Block, double[]~
+        DiscreteStatesPrevious : Dictionary~Block, double[]~
+        ZeroCrossingsPrevious : Dictionary~Block, double[]~
         Solve(smax : double, tmax : double) void
         InitializeStates() void
         ResetFlags() void
