@@ -144,11 +144,13 @@ Ein diskretes Simulationsmodell besteht aus folgenden Komponenten:
 
 Für jedes Ereignis $e_i$ gibt es eine **Ereignisroutine**, die beim Eintreten des Ereignisses ausgeführt wird und zwei Hauptaufgaben hat:
 
-1.  **Zustandsänderung:** Aktualisierung des Systemzustands $\vec{z}(t)$.
+1.  **Zustandsänderung:** Aktualisierung des Systemzustands $\vec{z}(t)$ basierend auf dem alten Zustand und dem aktuellen Ereignis.
     -   $\vec{z}(t_{neu}) \leftarrow f(\vec{z}(t_{alt}), e_i)$
-2.  **Ereignisplanung:** Generierung neuer zukünftiger Ereignisse und deren Einfügen in die Ereignisliste $L$.
-    -   Ein `Ankunfts`-Ereignis kann das *nächste* `Ankunfts`-Ereignis planen.
-    -   Ein `Ankunfts`-Ereignis kann ein `Bedienende`-Ereignis planen, wenn die Station frei ist.
+
+2.  **Ereignisplanung:** Generierung einer Menge neuer zukünftiger Ereignisse $E_{neu}$ und Aktualisierung der Ereignisliste $L$.
+    -   $E_{neu} = g(\vec{z}(t_{alt}), e_i)$
+    -   $L_{neu} = (L_{alt} \setminus \{(e_i, t_i)\}) \cup E_{neu}$
+    - Die Liste $L_{neu}$ muss nach Zeitstempeln sortiert bleiben.
 
 ---
 
@@ -165,7 +167,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Beispiel: Mathematische Beschreibung (1/2)
+### Mathematische Beschreibung
 
 Anwendung des Formalismus auf das Warteschlangensystem:
 
@@ -180,32 +182,108 @@ Anwendung des Formalismus auf das Warteschlangensystem:
 
 ---
 
-### Beispiel: Mathematische Beschreibung (2/2)
-
-<div class="columns top">
+<div class="columns">
 <div>
 
-**Ereignisroutine für Ankunft $e_A$ zum Zeitpunkt $t$:**
+### Ereignisroutine für **Ankunft**
 
-1. $N(t) \leftarrow N(t) + 1$.
-2. Wenn $B(t) = 0$ (frei):
-    - $B(t) \leftarrow 1$.
-    - Plane $e_D$ zum Zeitpunkt $t + \text{Bedienzeit}$.
-3. Plane nächstes $e_A$ zum Zeitpunkt $t + \text{Zwischenankunftszeit}$.
+Wenn ein Kunde ankommt, wird geprüft, ob die Bedienstation frei ist.
+
+- **Station besetzt:** Der Kunde wird in die Warteschlange eingereiht.
+- **Station frei:** Die Station wird besetzt und ein `DepartureEvent` für die Zukunft geplant, das das Ende der Bedienung markiert.
 
 </div>
 <div>
 
-**Ereignisroutine für Abfahrt $e_D$ zum Zeitpunkt $t$:**
-
-1. $N(t) \leftarrow N(t) - 1$.
-2. Wenn $N(t) > 0$ (Kunden warten):
-    - Plane $e_D$ zum Zeitpunkt $t + \text{Bedienzeit}$.
-3. Sonst (keine Kunden mehr):
-    - $B(t) \leftarrow 0$.
+TODO Detaillierte Beschreibung einer Illustration für das Ereignis (z.B. Kunde kommt an Kasse an)
 
 </div>
 </div>
+
+---
+
+### **Formalisierung** der Ereignisroutine für Ankunft $e_A$ zum Zeitpunkt $t$
+
+1.  **Zustandsänderung $f(\vec{z}(t_{alt}), e_A)$:**
+    - $N(t_{neu}) = N(t_{alt}) + 1$.
+    - Wenn $B(t_{alt}) = 0$ (frei) dann $B(t_{neu}) \leftarrow 1$ sonst $B(t_{neu}) = 0$.
+2.  **Ereignisplanung $g(\vec{z}(t), e_A)$:**
+    - $\{(e_A, t + \text{Zwischenankunftszeit})\} \cup ($ wenn $B(t)=0$ dann $\{(e_D, t + \text{Bedienzeit})\}$ sonst $\emptyset)$
+
+![](./Diagramme/ArrivalEvent.svg)
+
+---
+
+<div class="columns">
+<div>
+
+### Ereignisroutine für **Abfahrt**
+
+Wenn ein Kunde fertig bedient ist, wird geprüft, ob weitere Kunden warten.
+
+- **Schlange leer:** Die Station wird freigegeben.
+- **Schlange nicht leer:** Der nächste Kunde wird aus der Schlange geholt und ein neues `DepartureEvent` für dessen Bedienende geplant.
+
+</div>
+<div>
+
+TODO Detaillierte Beschreibung einer Illustration für das Ereignis (z.B. Kunde ist mit bezahlen fertig)
+
+</div>
+</div>
+
+---
+
+### **Formalisierung** der Ereignisroutine für Abfahrt $e_D$ zum Zeitpunkt $t$
+
+1.  **Zustandsänderung $f(\vec{z}(t_{alt}), e_D)$:**
+    - $N(t_{neu}) = N(t_{alt}) - 1$.
+    - Wenn $N(t_{alt}) = 0$ (keine Kunden mehr) dann $B(t_{neu}) \leftarrow 0$ sonst $B(t_{neu}) = 1$.
+2.  **Ereignisplanung $g(\vec{z}(t), e_D)$:**
+    - wenn $N(t)>0$ dann $\{(e_D, t + \text{Bedienzeit})\}$ sonst $\emptyset$
+
+![](./Diagramme/DepartureEvent.svg)
+
+---
+
+<!-- Übersicht über den Simulationsalgorithmus für diskrete Systeme. -->
+
+## 5.3: Simulationsalgorithmus
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Vorstellung des **"Next-Event Time Advance"**-Algorithmus
+- Die drei zentralen Schritte: **Initialisierung, Ereignisauswahl, Ereignisbehandlung**
+- Bedeutung der **Simulationsuhr** und der **Ereignisliste**
+
+---
+
+<!-- Dieser Abschnitt erläutert den "Next-Event Time Advance"-Algorithmus, der die Grundlage für die Simulation von diskreten Systemen bildet. -->
+
+### Simulationsalgorithmus
+
+1.  **Initialisierung:** Startzustand und initiale Ereignisse festlegen.
+2.  **Schleife:** Solange es zukünftige Ereignisse gibt:
+    a.  **Ereignis auswählen:** Das Ereignis mit dem frühesten Zeitstempel aus der Ereignisliste (Event Queue) entnehmen.
+    b.  **Uhr vorstellen:** Die Simulationsuhr auf den Zeitstempel dieses Ereignisses setzen.
+    c.  **Ereignis behandeln:** Die Zustandsänderungen für das Ereignis durchführen und ggf. neue Ereignisse generieren und in die Ereignisliste einfügen.
+
+![](../../Grafiken/Next-Event-Time-Advance.svg)
+
+
+---
+
+<!-- Übersicht über die Implementierung des Simulationsmodells in C#. -->
+
+## 5.4: Implementierung in C#
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Implementierung der **Simulationsschleife**
+- Verwendung einer **`PriorityQueue`** für die Ereignisliste
+- Logik zur Behandlung von **Ankunftsereignissen** (`ArrivalEvent`)
+- Logik zur Behandlung von **Abfahrtsereignissen** (`DepartureEvent`)
+
 
 ---
 
@@ -280,69 +358,6 @@ namespace DynamischWarteschlange.Model
     internal class DepartureEvent : Event { ... }
 }
 ```
-
----
-
-<!-- Übersicht über den Simulationsalgorithmus für diskrete Systeme. -->
-
-## 5.3: Simulationsalgorithmus
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Vorstellung des **"Next-Event Time Advance"**-Algorithmus
-- Die drei zentralen Schritte: **Initialisierung, Ereignisauswahl, Ereignisbehandlung**
-- Bedeutung der **Simulationsuhr** und der **Ereignisliste**
-
----
-
-<!-- Dieser Abschnitt erläutert den "Next-Event Time Advance"-Algorithmus, der die Grundlage für die Simulation von diskreten Systemen bildet. -->
-
-### Simulationsalgorithmus
-
-1.  **Initialisierung:** Startzustand und initiale Ereignisse festlegen.
-2.  **Schleife:** Solange es zukünftige Ereignisse gibt:
-    a.  **Ereignis auswählen:** Das Ereignis mit dem frühesten Zeitstempel aus der Ereignisliste (Event Queue) entnehmen.
-    b.  **Uhr vorstellen:** Die Simulationsuhr auf den Zeitstempel dieses Ereignisses setzen.
-    c.  **Ereignis behandeln:** Die Zustandsänderungen für das Ereignis durchführen und ggf. neue Ereignisse generieren und in die Ereignisliste einfügen.
-
-![](../../Grafiken/Next-Event-Time-Advance.svg)
-
----
-
-### Ereignisroutine: `ArrivalEvent`
-
-Wenn ein Kunde ankommt, wird geprüft, ob die Bedienstation frei ist.
-
-- **Station besetzt:** Der Kunde wird in die Warteschlange eingereiht.
-- **Station frei:** Die Station wird besetzt und ein `DepartureEvent` für die Zukunft geplant, das das Ende der Bedienung markiert.
-
-![](./Diagramme/ArrivalEvent.svg)
-
-
----
-
-### Ereignisroutine: `DepartureEvent`
-
-Wenn ein Kunde fertig bedient ist, wird geprüft, ob weitere Kunden warten.
-
-- **Schlange leer:** Die Station wird freigegeben.
-- **Schlange nicht leer:** Der nächste Kunde wird aus der Schlange geholt und ein neues `DepartureEvent` für dessen Bedienende geplant.
-
-![](./Diagramme/DepartureEvent.svg)
-
-
----
-
-<!-- Übersicht über die Implementierung des Simulationsmodells in C#. -->
-
-## 5.4: Implementierung in C#
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Implementierung der **Simulationsschleife**
-- Verwendung einer **`PriorityQueue`** für die Ereignisliste
-- Logik zur Behandlung von **Ankunftsereignissen** (`ArrivalEvent`)
-- Logik zur Behandlung von **Abfahrtsereignissen** (`DepartureEvent`)
 
 ---
 
