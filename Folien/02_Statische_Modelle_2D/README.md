@@ -338,31 +338,84 @@ $S = \frac{E \cdot A}{L_0} \cdot \Delta L$
 ---
 
 <div class="columns">
-<div>
+<div class="three">
 
-### Von der Längenänderung zur Knotenverschiebung
+### Von der Knotenverschiebung zur Längenänderung
 
 - Die Längenänderung $\Delta L$ eines Stabes hängt von den Verschiebungen seiner beiden Endknoten ab.
-- Für einen Stab zwischen Knoten $i$ und $j$ mit Verschiebungsvektoren $\vec{u}_i$ und $\vec{u}_j$:
-- $\Delta L \approx (\vec{u}_j - \vec{u}_i) \cdot \vec{e}$
-- $\vec{e}$ ist der Einheitsvektor in Richtung des Stabes.
+- Für einen Stab zwischen Knoten $i$ und $j$ mit Verschiebungsvektoren $\vec{u}_i$ und $\vec{u}_j$.
+- Die exakte Längenänderung ist die Differenz zwischen der neuen Länge $L'$ (nach der Verformung) und der ursprünglichen Länge $L$.
+
+- **Neuer Stabvektor**: $\vec{L}' = (\vec{p}_j + \vec{u}_j) - (\vec{p}_i + \vec{u}_i) = \vec{L} + (\vec{u}_j - \vec{u}_i)$
+- **Neue Länge**: $L' = |\vec{L}'|$
+- **Exakte Längenänderung**: $\Delta L = L' - L$
+
+Diese Formel ist nichtlinear. Für die **Finite-Elemente-Methode** wird sie üblicherweise linearisiert.
 
 </div>
 <div>
 
-![width:700px](../../Quellen/WS24/StatischFachwerkElastisch2D/Stablängenänderung.jpg)
+![width:700px](../03_Statische_Modelle_3D/Diagramme/Stablaengenaenderung.tikz.svg)
 
 </div>
 </div>
 
 ---
 
-### Die Linearisierung: Kleine-Verformungs-Theorie
+<div class="columns">
+<div class="two">
 
-- Die exakte Berechnung von $\Delta L$ ist kompliziert, da sich die Richtung des Stabes $\vec{e}$ mit der Verformung ändert (geometrische Nichtlinearität).
-- **Vereinfachung**: Wir nehmen an, dass die Verformungen $\vec{u}$ so **klein** sind, dass sich die Geometrie des Fachwerks nicht nennenswert ändert.
-- Wir können also für die Berechnung den Einheitsvektor $\vec{e}$ des **unverformten** Stabes verwenden.
-- Dies ist eine **Linearisierung**, die für die meisten Anwendungen im Hoch- und Maschinenbau gültig ist.
+### Herleitung der Näherungsformel (1/2)
+
+Um die exakte, nichtlineare Formel zu linearisieren, betrachten wir das Quadrat der neuen Länge $L'^2$. Sei $\Delta \vec{u} = \vec{u}_j - \vec{u}_i$.
+
+$L'^2 = |\vec{L} + \Delta \vec{u}|^2 = (\vec{L} + \Delta \vec{u}) \cdot (\vec{L} + \Delta \vec{u})$
+
+Ausmultiplizieren des Skalarprodukts ergibt:
+
+$L'^2 = \vec{L} \cdot \vec{L} + 2(\vec{L} \cdot \Delta \vec{u}) + \Delta \vec{u} \cdot \Delta \vec{u}$
+$L'^2 = L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2$
+
+Die neue Länge ist somit:
+
+$L' = \sqrt{L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2}$
+
+</div>
+<div>
+
+![width:700px](../03_Statische_Modelle_3D/Diagramme/Stablaengenaenderung.tikz.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Herleitung der Näherungsformel (2/2)
+
+$L' = L \sqrt{1 + \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2} + \frac{|\Delta \vec{u}|^2}{L^2}}$
+
+Für die Annahme **kleiner Verschiebungen** gilt $|\Delta \vec{u}| \ll L$. Daher kann der quadratische Term $\frac{|\Delta \vec{u}|^2}{L^2}$ vernachlässigt werden.
+
+$L' \approx L \sqrt{1 + \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2}}$
+
+Mit der Taylor-Näherung $\sqrt{1+x} \approx 1 + \frac{x}{2}$ für kleine $x$ erhalten wir:
+
+$L' \approx L \left(1 + \frac{1}{2} \cdot \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2}\right) = L + \frac{\vec{L} \cdot \Delta \vec{u}}{L}$
+
+Die Längenänderung $\Delta L = L' - L$ ist damit:
+
+$\Delta L \approx \frac{\vec{L} \cdot \Delta \vec{u}}{L} = \left(\frac{\vec{L}}{L}\right) \cdot \Delta \vec{u} = \vec{e} \cdot (\vec{u}_j - \vec{u}_i)$
+
+</div>
+<div>
+
+![width:700px](../03_Statische_Modelle_3D/Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
+
+</div>
+</div>
 
 ---
 
