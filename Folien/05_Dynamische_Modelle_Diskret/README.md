@@ -791,11 +791,7 @@ Die folgenden beiden Diagramme zeigen den Verlauf der Wahrscheinlichkeitsdichtef
 
 ---
 
-TODO Folie zur Herleitung der Lösung mittels Inversionsmethode
-
----
-
-### Implementierung der Exponentialverteilung mittels **Inversionsmethode**
+### Implementierung der Exponentialverteilung
 
 Zufallszahlen, die einer **Exponentialverteilung** folgen, können mittels der **Inversionsmethode** aus gleichverteilten Zufallszahlen erzeugt werden.
 
@@ -817,16 +813,52 @@ private double NextExponential(Random random, double lambda)
 
 ---
 
+<div class="columns">
+<div class="three">
+
+### Herleitung mittels Inversionsmethode (1/2) - **Prinzip**
+
+Die **Inversionsmethode** (Inverse Transform Sampling) ist ein Verfahren zur Erzeugung von Zufallszahlen nach einer beliebigen Verteilung, deren kumulative Verteilungsfunktion (CDF) $F_X(x)$ bekannt und analytisch invertierbar ist.
+
+**Grundidee:**
+1.  Wir wissen: Wenn eine Zufallsvariable $X$ die CDF $F_X(x)$ besitzt, dann ist $U = F_X(X)$ gleichverteilt im Intervall $[0, 1]$.
+2.  Umgekehrt können wir eine gleichverteilte Zufallszahl $U \sim \text{Uniform}(0, 1)$ nutzen, um $X$ zu erzeugen, indem wir die umgekehrte Funktion der CDF, $F_X^{-1}$, anwenden: $X = F_X^{-1}(U)$
+
+</div>
+<div class="two">
+
+![width:1000](./Diagramme/Inversionsmethode_Prinzip.tikz.svg)
+
+</div>
+</div>
+
+---
+
+### Herleitung mittels Inversionsmethode (2/2) - **Exponentialverteilung**
+
+**Ziel:** Erzeuge eine Zufallsvariable $X$ mit der kumulativen Verteilungsfunktion (CDF) der Exponentialverteilung: $F_X(x) = 1 - e^{-\lambda x}$ für $x \ge 0$.
+
+**Schritte:**
+1.  Setze die CDF gleich einer gleichverteilten Zufallszahl $U \in [0, 1)$: $U = 1 - e^{-\lambda X}$
+2.  Löse nach $e^{-\lambda X}$ auf: $e^{-\lambda X} = 1 - U$
+3.  Wende den natürlichen Logarithmus auf beide Seiten an:
+    $\ln(e^{-\lambda X}) = \ln(1 - U)$ und $-\lambda X = \ln(1 - U)$
+4.  Löse nach $X$ auf: $X = -\frac{1}{\lambda} \ln(1 - U)$
+
+**Hinweis:** Da $U$ eine gleichverteilte Zufallszahl in $[0, 1)$ ist, ist auch $1 - U$ eine gleichverteilte Zufallszahl in $(0, 1]$. Daher kann die Formel vereinfacht werden zu: $X = -\frac{1}{\lambda} \ln(U)$
+
+---
+
 ### Definition der **Normalverteilung**
 
-Die **Normalverteilung**, auch **Gauß-Verteilung** genannt, ist eine kontinuierliche Wahrscheinlichkeitsverteilung, die symmetrisch um ihren Mittelwert ist. Sie beschreibt, dass Datenpunkte, die nahe am Mittelwert liegen, häufiger auftreten als Datenpunkte, die weiter vom Mittelwert entfernt sind.
+Die **Normalverteilung**, auch **Gauß-Verteilung** genannt, ist eine kontinuierliche Wahrscheinlichkeits-verteilung, die symmetrisch um ihren Mittelwert ist. Sie beschreibt, dass Datenpunkte, die nahe am Mittelwert liegen, häufiger auftreten als Datenpunkte, die weiter vom Mittelwert entfernt sind.
 
 - Oft als "Glockenkurve" bezeichnet.
 - **Parameter:**
   - $\mu$ (Mittelwert): Der zentrale Wert der Verteilung.
   - $\sigma$ (Standardabweichung): Ein Maß für die Streuung der Daten um den Mittelwert.
 - **Wahrscheinlichkeitsdichtefunktion (PDF):**
-  $f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2} \left(\frac{x - \mu}{\sigma}\right)^2}$
+  - $f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2} \left(\frac{x - \mu}{\sigma}\right)^2}$
 - Die kumulative Verteilungsfunktion (CDF) hat keine geschlossene analytische Form und wird üblicherweise mit $\Phi(x)$ bezeichnet.
 
 ---
@@ -854,11 +886,7 @@ Die folgenden beiden Diagramme zeigen den Verlauf der Wahrscheinlichkeitsdichtef
 
 ---
 
-TODO Mehrere Folien zur Herleitung der Lösung mittels Box-Muller-Transformation
-
----
-
-### Implementierung der Normalverteilung mittels **Box-Muller-Transformation**
+### Implementierung der Normalverteilung
 
 Zufallszahlen, die einer **Normalverteilung** folgen, können mittels der **Box-Muller-Transformation** erzeugt werden. Diese Methode transformiert zwei unabhängige, gleichverteilte Zufallszahlen in zwei unabhängige, standardnormalverteilte Zufallszahlen.
 
@@ -877,6 +905,55 @@ private double NextNormal(Random random, double mean, double stdDev)
     return mean + stdDev * z;
 }
 ```
+
+---
+
+### Herleitung der Box-Muller-Transformation (1/3) - **Die Idee**
+
+Die **Box-Muller-Transformation** ist eine Methode zur Erzeugung von Paaren unabhängiger, standardnormalverteilter Zufallszahlen aus Paaren unabhängiger, gleichverteilter Zufallszahlen.
+
+**Grundidee:**
+1.  Betrachte zwei unabhängige standardnormalverteilte Zufallsvariablen $Z_1$ und $Z_2$.
+2.  Ihre gemeinsame Wahrscheinlichkeitsdichtefunktion (PDF) ist:
+    - $f(z_1, z_2) = \frac{1}{2\pi} e^{-\frac{z_1^2 + z_2^2}{2}}$
+3.  Diese PDF besitzt eine **radiale Symmetrie**. Dies legt nahe, dass eine Transformation in Polarkoordinaten hilfreich sein könnte.
+    -   $Z_1 = R \cos \Theta$
+    -   $Z_2 = R \sin \Theta$
+    -   Wobei $R^2 = Z_1^2 + Z_2^2$ und $\Theta = \arctan(Z_2/Z_1)$.
+
+---
+
+### Herleitung der Box-Muller-Transformation (2/3) - **Die Transformation**
+
+Die Transformation von kartesischen zu Polarkoordinaten führt zu neuen Zufallsvariablen $R$ (Radius) und $\Theta$ (Winkel).
+
+**Eigenschaften von $R^2$ und $\Theta$:**
+-   Es kann gezeigt werden, dass $R^2 = Z_1^2 + Z_2^2$ einer Exponentialverteilung mit Rate $\lambda = 1/2$ folgt.
+    -   Wir können $R^2$ aus einer gleichverteilten Zufallszahl $U_1 \in (0, 1]$ erzeugen, indem wir die Inversionsmethode anwenden:
+        $R^2 = -2 \ln(U_1)$
+-   Der Winkel $\Theta$ ist gleichverteilt im Intervall $[0, 2\pi]$.
+    -   Wir können $\Theta$ aus einer gleichverteilten Zufallszahl $U_2 \in [0, 1)$ erzeugen:
+        $\Theta = 2\pi U_2$
+
+**Zusammenfassung der Zwischenschritte:**
+-   $R = \sqrt{-2 \ln U_1}$  und  $\Theta = 2\pi U_2$
+
+---
+
+### Herleitung der Box-Muller-Transformation (3/3) - **Die Formeln**
+
+Durch Einsetzen von $R$ und $\Theta$ in die Polarkoordinaten-Gleichungen erhalten wir die beiden standardnormalverteilten Zufallszahlen $Z_1$ und $Z_2$:
+
+1.  **Erste standardnormalverteilte Zufallszahl $Z_1$:**
+    $Z_1 = R \cos \Theta = \sqrt{-2 \ln U_1} \cos(2\pi U_2)$
+
+2.  **Zweite standardnormalverteilte Zufallszahl $Z_2$:**
+    $Z_2 = R \sin \Theta = \sqrt{-2 \ln U_1} \sin(2\pi U_2)$
+
+**Anwendung:**
+-   Diese Methode erzeugt immer ein Paar von standardnormalverteilten Zufallszahlen.
+-   Man kann eine der Zahlen verwenden und die andere für den nächsten Bedarf speichern oder verwerfen, falls nur eine benötigt wird.
+-   Um eine Normalverteilung mit Mittelwert $\mu$ und Standardabweichung $\sigma$ zu erhalten, skaliert man die standardnormalverteilte Zahl $Z$, sodass  $X = \mu + \sigma Z$
 
 ---
 
