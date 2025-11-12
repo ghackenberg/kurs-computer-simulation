@@ -694,13 +694,14 @@ myPlot.Axes.AutoScale();
 
 <!-- Übersicht über probabilistische Modelle und Monte-Carlo-Simulation. -->
 
-## 5.6: Probabilistische Modelle und Monte-Carlo-Simulation
+## 5.6: Probabilistische Modell
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - **Abgrenzung** deterministischer und probabilistischer Modelle
 - **Erweiterung des Formalismus** um Zufallsvariablen
-- **Grundprinzip** der Monte-Carlo-Simulation zur statistischen Auswertung
+- **Definition und Herleitung** der Exponentialverteilung
+- **Definition und Herleitung** der Normalverteilung (Box-Muller-Transformation)
 
 ---
 
@@ -1191,13 +1192,15 @@ Dieses Beispiel zeigt, wie ein gemeinsam genutzter Zähler bei parallelem Zugrif
 **Falsches Ergebnis (ohne `lock`):**
 ```csharp
 int counter = 0;
+
 Parallel.For(0, 10000, _ =>
 {
     // Mehrere Threads versuchen gleichzeitig,
-    // 'counter' zu lesen, zu inkrementieren und zu schreiben.
-    // Dies führt zu Datenverlust.
+    // 'counter' zu lesen, zu inkrementieren und
+    // zu schreiben. Dies führt zu Datenverlust.
     counter++; // Nicht threadsicher!
 });
+
 Console.WriteLine($"Ergebnis (falsch): {counter}");
 // Erwartet: 10000, Tatsächlich: < 10000
 ```
@@ -1208,9 +1211,12 @@ Console.WriteLine($"Ergebnis (falsch): {counter}");
 **Korrigiertes Ergebnis (mit `lock`):**
 ```csharp
 int counter = 0;
+
 // Ein Objekt, das als Sperre dient.
-// Nur ein Thread kann gleichzeitig den Code im 'lock'-Block ausführen.
+// Nur ein Thread kann gleichzeitig den
+// Code im 'lock'-Block ausführen.
 object lockObject = new object();
+
 Parallel.For(0, 10000, _ =>
 {
     lock (lockObject) // Threadsicher!
@@ -1218,6 +1224,7 @@ Parallel.For(0, 10000, _ =>
         counter++;
     }
 });
+
 Console.WriteLine($"Ergebnis (korrekt): {counter}");
 // Erwartet: 10000, Tatsächlich: 10000
 ```
