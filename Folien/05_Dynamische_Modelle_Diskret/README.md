@@ -603,6 +603,9 @@ Nach dem Simulationslauf werden diese Daten verwendet, um Verläufe und Histogra
 
 ---
 
+<div class="columns">
+<div class="two">
+
 ### Visualisierung mit ScottPlot
 
 `ScottPlot` ist eine freie und quelloffene Bibliothek für .NET zur Erstellung von Diagrammen.
@@ -613,6 +616,104 @@ Nach dem Simulationslauf werden diese Daten verwendet, um Verläufe und Histogra
 - **Interaktiv:** Diagramme in WPF- und WinForms-Anwendungen sind standardmäßig interaktiv (zoomen, verschieben).
 
 Ideal für die schnelle Visualisierung von Simulationsergebnissen.
+
+</div>
+<div>
+
+![](https://scottplot.net/images/brand/favicon.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="three">
+
+### ScottPlot API: **Grundlagen**
+
+Die zentrale Klasse in ScottPlot ist `ScottPlot.Plot`. Eine Instanz davon repräsentiert ein Diagramm.
+
+**Typischer Workflow:**
+1.  **Plot-Objekt erhalten:** Entweder über ein `FormsPlot` (WinForms) oder `WpfPlot` (WPF) Control oder direkt `new Plot()`.
+2.  **Daten hinzufügen:** Mit Methoden wie `Plot.Add.Scatter()`, `Plot.Add.Line()`, `Plot.Add.Bar()`.
+3.  **Diagramm konfigurieren:** Achsenbeschriftungen (`Plot.XLabel()`, `Plot.YLabel()`), Titel (`Plot.Title()`), Legende (`Plot.Legend.IsVisible = true`).
+4.  **Rendern/Aktualisieren:** Das Diagramm neu zeichnen lassen (z.B. `WpfPlot.Plot.Render()`).
+
+</div>
+<div>
+
+```csharp
+// Ein Plot-Objekt erhalten
+var myPlot = WpfPlotControl.Plot;
+
+// Daten hinzufügen
+myPlot.Add.Scatter(xs, ys);
+
+// Achsen beschriften
+myPlot.XLabel("Zeit [s]");
+myPlot.YLabel("Wert");
+
+// Diagramm aktualisieren
+WpfPlotControl.Refresh();
+```
+
+</div>
+</div>
+
+---
+
+### ScottPlot API: **Linien- und Streudiagramme**
+
+```csharp
+// Daten für X- und Y-Achse
+double[] xs = { 1, 2, 3, 4, 5 };
+double[] ys1 = { 10, 12, 15, 13, 18 };
+double[] ys2 = { 8, 11, 13, 16, 14 };
+
+// Linien- und Streudiagramm hinzufügen
+var scatter1 = myPlot.Add.Scatter(xs, ys1);
+scatter1.Label = "Messreihe 1";
+scatter1.Color = ScottPlot.Colors.Blue;
+scatter1.MarkerSize = 5; // Punkte anzeigen
+
+var scatter2 = myPlot.Add.Scatter(xs, ys2);
+scatter2.Label = "Messreihe 2";
+scatter2.Color = ScottPlot.Colors.Red;
+scatter2.LineStyle = ScottPlot.LineStyle.Dash; // Gestrichelte Linie
+
+// Legende anzeigen
+myPlot.Legend.IsVisible = true;
+
+// Achsen automatisch anpassen
+myPlot.Axes.AutoScale();
+```
+
+---
+
+### ScottPlot API: **Histogramme**
+
+```csharp
+// Beispiel: Wartezeiten aus einer Simulation
+double[] waitTimes = { 1.2, 2.5, 1.8, 3.1, 2.0, 1.5, 2.8, 3.5, 2.2, 1.9 };
+
+// Histogramm-Daten berechnen
+// bins: Anzahl der Intervalle
+var hist = new ScottPlot.Statistics.Histogram(waitTimes, min: 0, max: 5, binCount: 10);
+
+// Histogramm zum Plot hinzufügen
+var bar = myPlot.Add.Bar(hist.Counts, hist.BinCenters);
+bar.Label = "Verteilung der Wartezeiten";
+bar.FillColor = ScottPlot.Colors.Green.WithAlpha(0.7);
+bar.BorderColor = ScottPlot.Colors.Green;
+
+// Achsen beschriften
+myPlot.XLabel("Wartezeit [min]");
+myPlot.YLabel("Häufigkeit");
+
+// Achsen automatisch anpassen
+myPlot.Axes.AutoScale();
+```
 
 ---
 
