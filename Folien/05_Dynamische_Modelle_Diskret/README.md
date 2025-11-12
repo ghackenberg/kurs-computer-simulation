@@ -926,12 +926,97 @@ Parallel.For(0, numberOfReplications, i =>
 
 ---
 
-TODO Folie zur Erklärung von Parallel.For
+### Task Parallel Library: `Parallel.For`
+
+`Parallel.For` ist eine Methode aus der Task Parallel Library (TPL) in .NET, die eine `for`-Schleife parallelisiert.
+
+- Die TPL kümmert sich automatisch um die Erstellung und Verwaltung von Threads und die Aufteilung der Arbeit auf die verfügbaren CPU-Kerne.
+- Der Schleifenkörper wird als *Lambda*-Ausdruck übergeben, der für jede Iteration ausgeführt wird – potenziell auf einem anderen Thread.
+
+<div class="columns">
+<div>
+
+**Sequentiell:**
+```csharp
+for (int i = 0; i < 100; i++)
+{
+    DoWork(i);
+}
+```
+
+</div>
+<div>
+
+**Parallel:**
+```csharp
+Parallel.For(0, 100, i =>
+{
+    DoWork(i);
+});
+```
+
+</div>
+</div>
 
 ---
 
-TODO Folie zur Erklärung von ConcurrentBag
+### Threadsichere Sammlungen: `ConcurrentBag<T>`
+
+Wenn mehrere Threads gleichzeitig auf eine Standard-Collection wie `List<T>` schreibend zugreifen, kann dies zu Datenkorruption (*Race Conditions*) führen.
+
+- `ConcurrentBag<T>` ist eine threadsichere Collection, die für Szenarien optimiert ist, in denen die Reihenfolge der Elemente keine Rolle spielt.
+- Sie erlaubt das gleichzeitige Hinzufügen von Elementen durch mehrere Threads ohne explizite `lock`-Anweisungen.
+
+<div class="columns">
+<div>
+
+**Nicht threadsicher:**
+```csharp
+var list = new List<double>();
+
+// Führt zu Fehlern!
+Parallel.For(0, 100, i =>
+{
+    list.Add(i * 2.0);
+});
+```
+
+</div>
+<div>
+
+**Threadsicher:**
+```csharp
+var bag = new ConcurrentBag<double>();
+
+// Sicher!
+Parallel.For(0, 100, i =>
+{
+    bag.Add(i * 2.0);
+});
+```
+
+</div>
+</div>
 
 ---
 
-TODO Folie zur Erklärung von thread-lokalen Random-Instanzen
+TODO Folie zur Erklärung von Race Conditions
+
+---
+
+### Threadsicherheit von `System.Random`
+
+Die Klasse `System.Random` ist **nicht threadsicher**. Wenn mehrere Threads dieselbe `Random`-Instanz verwenden, kann deren interner Zustand beschädigt werden. Dies führt zu fehlerhaften oder nicht mehr zufälligen Zahlenfolgen.
+
+**Lösung:** Jeder Thread muss seine eigene, unabhängige `Random`-Instanz erhalten.
+- In einer `Parallel.For`-Schleife wird dies erreicht, indem man die Instanz *innerhalb* des Schleifenkörpers erstellt.
+- Um sicherzustellen, dass jede Instanz eine andere Zahlenfolge erzeugt, muss sie mit einem eindeutigen **Seed** initialisiert werden. Die Schleifenvariable `i` ist dafür gut geeignet.
+
+```csharp
+Parallel.For(0, numberOfReplications, i =>
+{
+    // Jede Iteration (potenziell in einem anderen Thread)
+    // erhält eine eigene, eindeutig initialisierte Random-Instanz.
+    var localRandom = new Random(seed: i);
+});
+```
