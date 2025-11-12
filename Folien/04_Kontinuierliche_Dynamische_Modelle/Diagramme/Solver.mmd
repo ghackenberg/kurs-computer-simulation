@@ -1,0 +1,21 @@
+classDiagram
+
+    direction TB
+
+    class Model {
+    }
+
+    class Solver {
+        <<Abstract>>
+        Model : Model
+        ContinuousStates : Dictionary~Block, double[]~
+        Derivatives : Dictionary~Block, double[]~
+        InputReadyFlags : Dictionary~Block, bool[]~
+        Inputs : Dictionary~Block, double[]~
+        Outputs : Dictionary~Block, double[]~
+        Solve(smax : double, tmax : double) void
+    }
+
+    Model "1" --* Solver
+
+    style Model fill:white

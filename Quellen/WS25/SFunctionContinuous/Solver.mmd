@@ -13,14 +13,12 @@ classDiagram
         ZeroCrossingValueThreshold : double
         ZeroCrossingIterationCountLimit : int
         Model : Model
-        Functions : List<Block>
-        Connections : List<Connection>
-        ReadyFlag : Dictionary~Block, bool[]~
         ContinuousStatesPrevious : Dictionary~Block, double[]~
         ContinuousStates : Dictionary~Block, double[]~
         DiscreteStatesPrevious : Dictionary~Block, double[]~
         DiscreteStates : Dictionary~Block, double[]~
         Derivatives : Dictionary~Block, double[]~
+        InputReadyFlags : Dictionary~Block, bool[]~
         Inputs : Dictionary~Block, double[]~
         Outputs : Dictionary~Block, double[]~
         ZeroCrossingsPrevious : Dictionary~Block, double[]~

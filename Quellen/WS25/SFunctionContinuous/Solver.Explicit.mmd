@@ -8,13 +8,19 @@ classDiagram
 
     class EulerExplicitSolver {
         Solve(timeStepMax : double, timeMax : double) void
+
         CalculateOutputs(...) void
     }
 
     class EulerExplicitLoopSolver {
-        GuessMasterFlag : Dictionary~Block, bool[]~
-        GuessSlaveFlag : Dictionary~Block, bool[]~
-        GuessValue : Dictionary~Block, double[]~
+        AlgebraicLoopErrorThreshold : double
+        AlgebraicLoopIterationCountLimit : int
+        AlgebraicLoopLearningRate : double
+
+        InputGuessMasterFlags : Dictionary~Block, bool[]~
+        InputGuessSlaveFlags : Dictionary~Block, bool[]~
+        InputGuessValues : Dictionary~Block, double[]~
+
         CalculateOutputs(...) void
     }
 

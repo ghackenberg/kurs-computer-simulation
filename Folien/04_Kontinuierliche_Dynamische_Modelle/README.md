@@ -13,9 +13,9 @@ math: mathjax
 
 - 4.1: Grundlagen und Definitionen
 - 4.2: Beispiel: Freier Fall / Vertikaler Wurf
-- 4.3: Numerische Integrationsverfahren
-- 4.4: Beispiel: Ungedämpftes Federpendel
-- 4.5: Softwarearchitektur für Simulation
+- 4.3: Beispiel: Ungedämpftes Federpendel
+- 4.4: Softwarearchitektur für Simulation
+- 4.5: Lösungsalgorithmen für Simulation
 
 ---
 
@@ -168,6 +168,80 @@ Dies entspricht der Form $\dot{x} = Ax + Bu$.
 
 ---
 
+<div class="columns">
+<div class="three">
+
+### Numerische Integrationsverfahren
+
+**Grundidee:** Approximiere den kontinuierlichen Verlauf von `x(t)` durch eine Folge von Werten $x_k \approx x(t_k)$ an diskreten Zeitpunkten $t_k = t_0 + k \cdot h$.
+
+- `h`: Schrittweite (step size)
+
+**Basis:** Taylor-Reihenentwicklung
+$$ x(t+h) = x(t) + h \dot{x}(t) + \frac{h^2}{2!} \ddot{x}(t) + \dots $$
+
+Wenn `h` klein ist, können wir Terme höherer Ordnung vernachlässigen:
+$$ x(t+h) \approx x(t) + h \dot{x}(t) $$
+Da wir wissen, dass $\dot{x}(t) = f(t, x(t))$, erhalten wir:
+$$ x(t+h) \approx x(t) + h f(t, x(t)) $$
+
+</div>
+<div>
+
+![](./Numerische_Verfahren.jpg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+### Die explizite Euler-Methode
+
+Auch "Euler-Vorwärts" genannt. Die einfachste numerische Methode.
+
+**Formel:**
+$$ x_{k+1} = x_k + h \cdot f(t_k, x_k) $$
+
+- Um den neuen Zustand $x_{k+1}$ zu berechnen, wird die Ableitung (Steigung) am **aktuellen** Punkt $(t_k, x_k)$ verwendet.
+- Die Methode ist **explizit**, weil $x_{k+1}$ direkt aus bekannten Werten berechnet werden kann.
+
+</div>
+<div>
+
+![width:2000px](./Diagramme/Euler%20-%20Explizit.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+### Die implizite Euler-Methode
+
+Auch "Euler-Rückwärts" genannt.
+
+**Formel:**
+$$ x_{k+1} = x_k + h \cdot f(t_{k+1}, x_{k+1}) $$
+
+- Um den neuen Zustand $x_{k+1}$ zu berechnen, wird die Ableitung (Steigung) am **zukünftigen** Punkt $(t_{k+1}, x_{k+1})$ verwendet.
+- Die Methode ist **implizit**, weil der gesuchte Wert $x_{k+1}$ auf beiden Seiten der Gleichung steht.
+- Es muss bei jedem Schritt eine (oft nichtlineare) Gleichung gelöst werden!
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/Euler%20-%20Implizit.svg)
+
+</div>
+</div>
+
+---
+
 ![bg right:40%](./Wurfbeispiel.jpg)
 
 ## 4.2: Beispiel: Freier Fall / Vertikaler Wurf
@@ -294,68 +368,7 @@ Diese Formeln beschreiben die exakte Trajektorie des Objekts für jeden beliebig
 
 ---
 
-## 4.3: Numerische Integrationsverfahren
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Grundidee der numerischen Integration (Taylor-Entwicklung)
-- Die explizite Euler-Methode
-- Die implizite Euler-Methode
-- Vergleich der Genauigkeit und Stabilität
-
----
-
-<div class="columns">
-<div class="three">
-
-### Numerische Integrationsverfahren
-
-**Grundidee:** Approximiere den kontinuierlichen Verlauf von `x(t)` durch eine Folge von Werten $x_k \approx x(t_k)$ an diskreten Zeitpunkten $t_k = t_0 + k \cdot h$.
-
-- `h`: Schrittweite (step size)
-
-**Basis:** Taylor-Reihenentwicklung
-$$ x(t+h) = x(t) + h \dot{x}(t) + \frac{h^2}{2!} \ddot{x}(t) + \dots $$
-
-Wenn `h` klein ist, können wir Terme höherer Ordnung vernachlässigen:
-$$ x(t+h) \approx x(t) + h \dot{x}(t) $$
-Da wir wissen, dass $\dot{x}(t) = f(t, x(t))$, erhalten wir:
-$$ x(t+h) \approx x(t) + h f(t, x(t)) $$
-
-</div>
-<div>
-
-![](./Numerische_Verfahren.jpg)
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div>
-
-### Die explizite Euler-Methode
-
-Auch "Euler-Vorwärts" genannt. Die einfachste numerische Methode.
-
-**Formel:**
-$$ x_{k+1} = x_k + h \cdot f(t_k, x_k) $$
-
-- Um den neuen Zustand $x_{k+1}$ zu berechnen, wird die Ableitung (Steigung) am **aktuellen** Punkt $(t_k, x_k)$ verwendet.
-- Die Methode ist **explizit**, weil $x_{k+1}$ direkt aus bekannten Werten berechnet werden kann.
-
-</div>
-<div>
-
-![width:2000px](./Diagramme/Euler%20-%20Explizit.svg)
-
-</div>
-</div>
-
----
-
-### Anwendung: Expliziter Euler auf den vertikalen Wurf
+### Vertikaler Wurf: Numerische Lösung (**Expliziter Euler**)
 
 **Zustandsmodell:**
 $$ \dot{x} = \begin{pmatrix} \dot{y} \\ \dot{v} \end{pmatrix} = \begin{pmatrix} v \\ -g \end{pmatrix} = f(x) $$
@@ -405,31 +418,7 @@ $$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k
 
 ---
 
-<div class="columns">
-<div>
-
-### Die implizite Euler-Methode
-
-Auch "Euler-Rückwärts" genannt.
-
-**Formel:**
-$$ x_{k+1} = x_k + h \cdot f(t_{k+1}, x_{k+1}) $$
-
-- Um den neuen Zustand $x_{k+1}$ zu berechnen, wird die Ableitung (Steigung) am **zukünftigen** Punkt $(t_{k+1}, x_{k+1})$ verwendet.
-- Die Methode ist **implizit**, weil der gesuchte Wert $x_{k+1}$ auf beiden Seiten der Gleichung steht.
-- Es muss bei jedem Schritt eine (oft nichtlineare) Gleichung gelöst werden!
-
-</div>
-<div>
-
-![width:1000px](./Diagramme/Euler%20-%20Implizit.svg)
-
-</div>
-</div>
-
----
-
-### Anwendung: Impliziter Euler auf den vertikalen Wurf
+### Vertikaler Wurf: Numerische Lösung (**Impliziter Euler**)
 
 **Implizite Euler-Formel:**
 $$ x_{k+1} = x_k + h \cdot f(x_{k+1}) $$
@@ -503,7 +492,7 @@ Beide Methoden haben einen lokalen Fehler der Ordnung $O(h^2)$ und einen globale
 
 ![bg contain right:40%](./Pendelbeispiel.jpg)
 
-## 4.4: Beispiel: Ungedämpftes Federpendel
+## 4.3: Beispiel: Ungedämpftes Federpendel
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -511,7 +500,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Aufstellen des Zustandsraummodells
 - Herleitung der analytischen Lösung
 - Analyse der numerischen Stabilität (expliziter vs. impliziter Euler)
-
 
 ---
 
@@ -631,7 +619,7 @@ Dies ist ein lineares Gleichungssystem für die unbekannten Größen $y_{k+1}$ u
 
 ---
 
-## 4.5: Softwarearchitektur für Simulation
+## 4.4: Softwarearchitektur für Simulation
 
 Dieser Abschnitt beschreibt eine flexible, blockbasierte Architektur für die Simulation von dynamischen Systemen, die stark an das Konzept von **Simulink S-Functions** angelehnt ist.
 
@@ -639,8 +627,6 @@ Dieser Abschnitt beschreibt eine flexible, blockbasierte Architektur für die Si
 - Deklaration von Zuständen, Ein- und Ausgängen
 - Implementierung von algebraischen und dynamischen Blöcken
 - Modellierung eines Gesamtsystems in der `Model`-Klasse
-- Die Rolle der `Solver`-Klasse und verschiedene Lösungsstrategien
-- Umgang mit algebraischen Schleifen und Nulldurchgängen (Zero-Crossings)
 
 ---
 
@@ -674,17 +660,14 @@ public abstract class Block
 {
     // Deklarationen für Zustände, Ein- & Ausgänge
     public List<StateDeclaration> ContinuousStates { get; }
-    public List<StateDeclaration> DiscreteStates { get; }
     public List<InputDeclaration> Inputs { get; }
     public List<OutputDeclaration> Outputs { get; }
-    public List<ZeroCrossingDeclaration> ZeroCrossings { get; }
 
     // Virtuelle Methoden, die vom Solver aufgerufen werden
     virtual public void InitializeStates(...);
     virtual public void CalculateDerivatives(...);
     virtual public void CalculateOutputs(...);
     virtual public void UpdateStates(...);
-    virtual public void CalculateZeroCrossings(...);
 }
 ```
 
@@ -697,15 +680,14 @@ public abstract class Block
 
 Jeder Block deklariert seine Zustände, Ein- und Ausgänge im Konstruktor.
 
-- **`StateDeclaration`**: Definiert einen kontinuierlichen oder diskreten Zustand.
+- **`StateDeclaration`**: Definiert einen kontinuierlichen Zustand.
 - **`InputDeclaration`**: Definiert einen Eingang. Das Flag `DirectFeedThrough` gibt an, ob der Ausgang direkt vom Eingang abhängt (wichtig für algebraische Schleifen).
 - **`OutputDeclaration`**: Definiert einen Ausgang.
-- **`ZeroCrossingDeclaration`**: Definiert eine Funktion, deren Nulldurchgang ein Ereignis auslöst.
 
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Declaration.svg)
+![](./Diagramme//Declaration.svg)
 
 </div>
 </div>
@@ -793,6 +775,10 @@ TODO Folie zur Implementierung des Gain-Blocks
 
 ---
 
+TODO Folie zur Implementierung des Add-Blocks
+
+---
+
 <div class="columns">
 <div class="two">
 
@@ -841,26 +827,7 @@ public class IntegrateBlock : Block
 
 ---
 
-TODO Folie zur Implementierung der Methoden InitializeStates, CalculateDerivatives, und CalculateOutputs
-
----
-
-<div class="columns">
-<div class="two">
-
-TODO Folie zu ZeroCrossing Blöcken (HitLowerLimit, HitUpperLimit)
-
-</div>
-<div>
-
-![](../../Quellen/WS25/SFunctionContinuous/Block.ZeroCrossing.svg)
-
-</div>
-</div>
-
----
-
-TODO Folie zur Implementierung des HitLowerLimit Blocks
+TODO Folie zur Implementierung der Methoden InitializeStates, CalculateDerivatives, und CalculateOutputs des Integrate-Blocks
 
 ---
 
@@ -906,8 +873,16 @@ class Connection
 
 ---
 
+## 4.5: Lösungsalgorithmen für Simulationen
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- TODO
+
+---
+
 <div class="columns">
-<div>
+<div class="two">
 
 ### Die `Solver`-Klasse
 
@@ -915,15 +890,16 @@ Die `Solver`-Klasse ist für die Durchführung der Simulation verantwortlich.
 
 - Sie hält das `Model`.
 - Sie verwaltet die Daten-Arrays für alle Blöcke:
-  - `ContinuousStates`, `DiscreteStates`
-  - `Derivatives`, `Inputs`, `Outputs`, `ZeroCrossings`
-- Die `Solve`-Methode implementiert den eigentlichen Algorithmus (z.B. expliziter Euler mit Nulldurchgangssuche).
+  - `ContinuousStates` und `Derivatives`
+  - `Inputs` und `Outputs`
+  - `InputReadyFlags`
+- Die `Solve`-Methode implementiert den eigentlichen Algorithmus (z.B. expliziter Euler).
 - Sie enthält die Logik zur Erkennung und Behandlung von algebraischen Schleifen.
 
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Solver.svg)
+![](./Diagramme/Solver.svg)
 
 </div>
 </div>
@@ -952,17 +928,13 @@ Die `Solver`-Klasse ist für die Durchführung der Simulation verantwortlich.
 ### Simulationsschleife in `EulerExplicitSolver`
 
 1.  **Initialisierung**: `InitializeStates` aller Blöcke aufrufen.
-2.  **Zeitschleife** (`while t <= tmax`):
-    a. **Interne Zustände merken** für evtl. Schrittweitenanpassung.
-    b. **Nulldurchgangs-Schleife**:
-       - Zeitschritt `h` ggf. halbieren, um Nulldurchgang genau zu treffen.
-       - **Zustände integrieren**: $x_{k+1} = x_k + h \cdot \dot{x}_k$.
-       - **Ausgänge berechnen**: `CalculateOutputs` für alle Blöcke aufrufen.
-       - **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke aufrufen.
-       - **Nulldurchgänge prüfen**: `CalculateZeroCrossings` aufrufen und prüfen, ob ein Vorzeichenwechsel stattgefunden hat.
-
-    c. **Bei Nulldurchgang**: `UpdateStates` der betroffenen Blöcke aufrufen (z.B. für einen Stoß).
-    d. **Zeit erhöhen**: $t = t + h$.
+2. **Ausgänge berechnen**: `CalculateOutputs` für alle Blöcke aufrufen.
+3. **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke 
+4.  **Zeitschleife** (`while t <= tmax`):
+    a. **Zustände integrieren**: $x_{k+1} = x_k + h \cdot \dot{x}_k$.
+    b. **Ausgänge berechnen**: `CalculateOutputs` für alle Blöcke aufrufen.
+    c. **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke aufrufen.
+    e. **Zeit erhöhen**: $t = t + h$.
 
 ---
 
@@ -993,7 +965,7 @@ TODO Folie zur Lösung algebraischer Schleifen
 ---
 
 <div class="columns">
-<div class="three">
+<div class="four">
 
 ### **Implizite** Lösungsstrategien
 
@@ -1012,38 +984,6 @@ TODO Folie zur Lösung algebraischer Schleifen
 ---
 
 TODO Folie zur Simulationsschleife in EulerImplicitSolver
-
----
-
-### Beispiel: `BouncingBallExample`
-
-Ein Beispiel für ein hybrides System, das kontinuierliche Bewegung und diskrete Ereignisse (Stoß) kombiniert.
-
-- **Kontinuierlich**: Die Schwerkraft (`ConstantBlock`) wirkt auf die Geschwindigkeit (`IntegrateWithResetBlock`), diese wirkt auf die Position (`IntegrateBlock`).
-- **Diskret**: Ein `HitLowerLimitBlock` prüft, ob die Position den Boden (`<= 0`) erreicht.
-- **Ereignis**: Wenn der Boden erreicht wird, löst der `HitLowerLimitBlock` ein Ereignis aus. Dies triggert die `UpdateStates`-Methode des `IntegrateWithResetBlock`, welcher die Geschwindigkeit umkehrt und dämpft (z.B. `v_neu = -0.8 * v_alt`).
-
-```csharp
-// ... Blöcke erstellen (Gravity, Velocity, Position, HitLowerLimit, ...)
-// ... Verbindungen herstellen
-Model.AddConnection(g, 0, v, 0); // Gravity -> Velocity
-Model.AddConnection(v, 0, p, 0); // Velocity -> Position
-Model.AddConnection(p, 0, h, 0); // Position -> HitLowerLimit
-Model.AddConnection(h, 0, v, 1); // HitLowerLimit -> Velocity (Reset-Trigger)
-Model.AddConnection(d, 0, v, 2); // Damping*v -> Velocity (Reset-Wert)
-```
-
----
-
-![bg contain right](./Screenshots/Bouncing_Ball_Euler_Explizit.png)
-
-TODO Folie zu Ergebnis des BouncingBall Beispiels mit explizitem Solver (Ball bleibt über die Nulllinie)
-
----
-
-![bg contain right](./Screenshots/Bouncing_Ball_Euler_Implizit.png)
-
-TODO Folie zu Ergebnis des BouncingBall Beispiels mit implizitem Solver (Ball durchbricht die Nulllinie und "haut ab")
 
 ---
 

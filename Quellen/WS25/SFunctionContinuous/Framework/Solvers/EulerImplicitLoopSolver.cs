@@ -66,15 +66,15 @@
                         // Eingänge setzten
                         for (int i = 0; i < f.Inputs.Count; i++)
                         {
-                            if (!ReadyFlag[f][i])
+                            if (!InputReadyFlags[f][i])
                             {
-                                ReadyFlag[f][i] = true;
-                                GuessMasterFlag[f][i] = true;
+                                InputReadyFlags[f][i] = true;
+                                InputGuessMasterFlags[f][i] = true;
 
                                 // Schätzung initialisieren
-                                GuessValue[f][i] = 0;
+                                InputGuessValues[f][i] = 0;
 
-                                Inputs[f][i] = GuessValue[f][i];
+                                Inputs[f][i] = InputGuessValues[f][i];
                             }
                         }
 
@@ -109,9 +109,9 @@
                             {
                                 for (int i = 0; i < f.Inputs.Count; i++)
                                 {
-                                    if (GuessSlaveFlag[f][i])
+                                    if (InputGuessSlaveFlags[f][i])
                                     {
-                                        ReadyFlag[f][i] = false;
+                                        InputReadyFlags[f][i] = false;
                                     }
                                 }
                                 open.Add(f);
@@ -121,15 +121,15 @@
                             {
                                 for (int i = 0; i < f.Inputs.Count; i++)
                                 {
-                                    if (GuessMasterFlag[f][i])
+                                    if (InputGuessMasterFlags[f][i])
                                     {
-                                        GuessValue[f][i] = GuessValue[f][i] + (Inputs[f][i] - GuessValue[f][i]) * AlgebraicLoopLearningRate;
+                                        InputGuessValues[f][i] = InputGuessValues[f][i] + (Inputs[f][i] - InputGuessValues[f][i]) * AlgebraicLoopLearningRate;
 
-                                        Inputs[f][i] = GuessValue[f][i];
+                                        Inputs[f][i] = InputGuessValues[f][i];
                                     }
-                                    else if (GuessSlaveFlag[f][i])
+                                    else if (InputGuessSlaveFlags[f][i])
                                     {
-                                        ReadyFlag[f][i] = false;
+                                        InputReadyFlags[f][i] = false;
                                     }
                                 }
                                 if (IsReady(f))

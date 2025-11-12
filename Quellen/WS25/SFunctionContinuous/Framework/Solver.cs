@@ -3,23 +3,22 @@
     public abstract class Solver
     {
         public double AlgebraicLoopErrorThreshold { get; set; } = 0.0001;
-        public double ZeroCrossingValueThreshold { get; set; } = 0.0001;
-
         public int AlgebraicLoopIterationCountLimit { get; set; } = 100000;
+        public double AlgebraicLoopLearningRate { get; set; } = 0.1;
+
+        public double ZeroCrossingValueThreshold { get; set; } = 0.0001;
         public int ZeroCrossingIterationCountLimit { get; set; } = 100000;
 
-        public double AlgebraicLoopLearningRate { get; set; } = 0.1;
 
         public Model Composition { get; }
 
         public List<Block> Functions { get; }
         public List<Connection> Connections { get; }
 
-        public Dictionary<Block, bool[]> ReadyFlag { get; } = new Dictionary<Block, bool[]>();
-
-        public Dictionary<Block, bool[]> GuessMasterFlag { get; } = new Dictionary<Block, bool[]>();
-        public Dictionary<Block, bool[]> GuessSlaveFlag { get; } = new Dictionary<Block, bool[]>();
-        public Dictionary<Block, double[]> GuessValue { get; } = new Dictionary<Block, double[]>();
+        public Dictionary<Block, bool[]> InputReadyFlags { get; } = new Dictionary<Block, bool[]>();
+        public Dictionary<Block, bool[]> InputGuessMasterFlags { get; } = new Dictionary<Block, bool[]>();
+        public Dictionary<Block, bool[]> InputGuessSlaveFlags { get; } = new Dictionary<Block, bool[]>();
+        public Dictionary<Block, double[]> InputGuessValues { get; } = new Dictionary<Block, double[]>();
 
         public Dictionary<Block, double[]> ContinuousStatesPrevious { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> ContinuousStates { get; } = new Dictionary<Block, double[]>();
@@ -40,11 +39,10 @@
 
             foreach (Block f in Functions)
             {
-                ReadyFlag[f] = new bool[f.Inputs.Count];
-
-                GuessMasterFlag[f] = new bool[f.Inputs.Count];
-                GuessSlaveFlag[f] = new bool[f.Inputs.Count];
-                GuessValue[f] = new double[f.Inputs.Count];
+                InputReadyFlags[f] = new bool[f.Inputs.Count];
+                InputGuessMasterFlags[f] = new bool[f.Inputs.Count];
+                InputGuessSlaveFlags[f] = new bool[f.Inputs.Count];
+                InputGuessValues[f] = new double[f.Inputs.Count];
 
                 ContinuousStatesPrevious[f] = new double[f.ContinuousStates.Count];
                 ContinuousStates[f] = new double[f.ContinuousStates.Count];
@@ -76,10 +74,10 @@
             {
                 for (int i = 0; i < f.Inputs.Count; i++)
                 {
-                    ReadyFlag[f][i] = !f.Inputs[i].DirectFeedThrough;
+                    InputReadyFlags[f][i] = !f.Inputs[i].DirectFeedThrough;
 
-                    GuessMasterFlag[f][i] = false;
-                    GuessSlaveFlag[f][i] = false;
+                    InputGuessMasterFlags[f][i] = false;
+                    InputGuessSlaveFlags[f][i] = false;
                 }
             }
         }
@@ -88,7 +86,7 @@
         {
             for (int i = 0; i < f.Inputs.Count; i++)
             {
-                if (!ReadyFlag[f][i])
+                if (!InputReadyFlags[f][i])
                 {
                     return false;
                 }
@@ -100,7 +98,7 @@
         {
             for (int i = 0; i < f.Inputs.Count; i++)
             {
-                if (!GuessMasterFlag[f][i] && !GuessSlaveFlag[f][i])
+                if (!InputGuessMasterFlags[f][i] && !InputGuessSlaveFlags[f][i])
                 {
                     return true;
                 }
@@ -120,9 +118,9 @@
 
                 Inputs[tf][tfu] = Outputs[sf][sfy];
 
-                ReadyFlag[tf][tfu] = true;
+                InputReadyFlags[tf][tfu] = true;
 
-                GuessSlaveFlag[tf][tfu] = HasGuess(f);
+                InputGuessSlaveFlags[tf][tfu] = HasGuess(f);
             }
         }
 
@@ -134,9 +132,9 @@
             {
                 for (int i = 0; i < f.Inputs.Count; i++)
                 {
-                    if (GuessMasterFlag[f][i])
+                    if (InputGuessMasterFlags[f][i])
                     {
-                        error += Math.Abs(GuessValue[f][i] - Inputs[f][i]);
+                        error += Math.Abs(InputGuessValues[f][i] - Inputs[f][i]);
                     }
                 }
             }

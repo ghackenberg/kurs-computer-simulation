@@ -1,0 +1,24 @@
+classDiagram
+
+    direction LR
+
+    class Declaration {
+        <<Abstract>>
+        Name : string
+    }
+
+    class StateDeclaration {
+    
+    }
+
+    class InputDeclaration {
+        DirectFeedThrough : bool
+    }
+
+    class OutputDeclaration {
+    
+    }
+
+    Declaration <|-- StateDeclaration
+    Declaration <|-- InputDeclaration
+    Declaration <|-- OutputDeclaration
