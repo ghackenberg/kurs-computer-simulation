@@ -16,11 +16,12 @@ math: mathjax
 Dieses Kapitel umfasst die folgenden Abschnitte:
 
 - 5.1: Grundlagen und Konzepte
-- 5.2: Modellierung eines Warteschlangensystems
+- 5.2: Warteschlangensystem
 - 5.3: Simulationsalgorithmus
 - 5.4: Implementierung in C#
 - 5.5: Analyse und Visualisierung
-- 5.6: Probabilistische Modelle und Monte-Carlo-Simulation
+- 5.6: Probabilistische Modelle
+- 5.7: Monte-Carlo-Simulation
 
 ---
 
@@ -159,7 +160,7 @@ Für jedes Ereignis $e_i$ gibt es eine **Ereignisroutine**, die beim Eintreten d
 
 <!-- Übersicht über die Modellierung eines Warteschlangensystems. -->
 
-## 5.2: Modellierung eines Warteschlangensystems
+## 5.2: Warteschlangensystem
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -752,7 +753,49 @@ Add(new ArrivalEvent(Clock + interarrivalTime));
 
 ---
 
-### Implementierung: **Exponentialverteilung**
+### Definition der **Exponentialverteilung**
+
+Die **Exponentialverteilung** beschreibt die Zeit zwischen zwei aufeinanderfolgenden Ereignissen in einem Poisson-Prozess, d.h. Ereignisse, die kontinuierlich und unabhängig voneinander mit einer konstanten durchschnittlichen Rate auftreten.
+
+- **Kontinuierliche** Wahrscheinlichkeitsverteilung.
+- **Parameter:** $\lambda > 0$ (Ratenparameter), der die durchschnittliche Anzahl der Ereignisse pro Zeiteinheit angibt.
+- **Wahrscheinlichkeitsdichtefunktion (PDF):**
+  $f(x; \lambda) = \lambda e^{-\lambda x}$ für $x \ge 0$
+- **Kumulative Verteilungsfunktion (CDF):**
+  $F(x; \lambda) = 1 - e^{-\lambda x}$ für $x \ge 0$
+- **Erwartungswert (Mittelwert):** $E[X] = 1/\lambda$
+- **Varianz:** $Var[X] = 1/\lambda^2$
+
+---
+
+### Verlauf der Exponentialverteilung
+
+Die folgenden beiden Diagramme zeigen den Verlauf der Wahrscheinlichkeitsdichtefunktion und der kummulativen Verteilungsfunktion für die Exponentialverteilung:
+
+<div class="columns">
+<div>
+
+**Wahrscheinlichkeitsdichtefunktion**
+
+![width:350](https://upload.wikimedia.org/wikipedia/commons/a/af/ExpDichteF.svg)
+
+</div>
+<div>
+
+**Kumulative Verteilungsfunktion**
+
+![width:350](https://upload.wikimedia.org/wikipedia/commons/b/ba/ExpVerteilungF.svg)
+
+</div>
+</div>
+
+---
+
+TODO Folie zur Herleitung der Lösung mittels Inversionsmethode
+
+---
+
+### Implementierung der Exponentialverteilung mittels **Inversionsmethode**
 
 Zufallszahlen, die einer **Exponentialverteilung** folgen, können mittels der **Inversionsmethode** aus gleichverteilten Zufallszahlen erzeugt werden.
 
@@ -765,6 +808,7 @@ private double NextExponential(Random random, double lambda)
 {
     // random.NextDouble() liefert eine Zahl in [0.0, 1.0)
     double u = random.NextDouble();
+
     // Inversionsmethode anwenden
     // (1.0 - u) um zu verhindern, dass Log(0) -> -unendlich wird
     return -Math.Log(1.0 - u) / lambda;
@@ -773,7 +817,48 @@ private double NextExponential(Random random, double lambda)
 
 ---
 
-### Implementierung: **Normalverteilung (Box-Muller)**
+### Definition der **Normalverteilung**
+
+Die **Normalverteilung**, auch **Gauß-Verteilung** genannt, ist eine kontinuierliche Wahrscheinlichkeitsverteilung, die symmetrisch um ihren Mittelwert ist. Sie beschreibt, dass Datenpunkte, die nahe am Mittelwert liegen, häufiger auftreten als Datenpunkte, die weiter vom Mittelwert entfernt sind.
+
+- Oft als "Glockenkurve" bezeichnet.
+- **Parameter:**
+  - $\mu$ (Mittelwert): Der zentrale Wert der Verteilung.
+  - $\sigma$ (Standardabweichung): Ein Maß für die Streuung der Daten um den Mittelwert.
+- **Wahrscheinlichkeitsdichtefunktion (PDF):**
+  $f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2} \left(\frac{x - \mu}{\sigma}\right)^2}$
+- Die kumulative Verteilungsfunktion (CDF) hat keine geschlossene analytische Form und wird üblicherweise mit $\Phi(x)$ bezeichnet.
+
+---
+
+### Verlauf der Normalverteilung
+
+Die folgenden beiden Diagramme zeigen den Verlauf der Wahrscheinlichkeitsdichtefunktion und der kummulativen Verteilungsfunktion für die Normalverteilung:
+
+<div class="columns top">
+<div>
+
+**Wahrscheinlichkeitsdichtefunktion**
+
+![](https://upload.wikimedia.org/wikipedia/commons/7/74/Normal_Distribution_PDF.svg)
+
+</div>
+<div>
+
+**Kumulative Verteilungsfunktion**
+
+![](https://upload.wikimedia.org/wikipedia/commons/1/14/Normal-distribution-cumulative-distribution-function-many.svg)
+
+</div>
+</div>
+
+---
+
+TODO Mehrere Folien zur Herleitung der Lösung mittels Box-Muller-Transformation
+
+---
+
+### Implementierung der Normalverteilung mittels **Box-Muller-Transformation**
 
 Zufallszahlen, die einer **Normalverteilung** folgen, können mittels der **Box-Muller-Transformation** erzeugt werden. Diese Methode transformiert zwei unabhängige, gleichverteilte Zufallszahlen in zwei unabhängige, standardnormalverteilte Zufallszahlen.
 
@@ -813,6 +898,20 @@ Das Ergebnis (z.B. mittlere Wartezeit = 4.7 min) ist nicht repräsentativ für d
 
 </div>
 </div>
+
+---
+
+## 5.7: Monte-Carlo-Simulation
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Grundprinzip der Monte-Carlo-Simulation
+- Monte-Carlo-Algorithmus
+- Parallelisierung zur Performance-Verbesserung
+- Task Parallel Library (`Parallel.For`)
+- Threadsichere Sammlungen (`ConcurrentBag<T>`)
+- Race Conditions und deren Vermeidung
+- Threadsicherheit von `System.Random`
 
 ---
 
