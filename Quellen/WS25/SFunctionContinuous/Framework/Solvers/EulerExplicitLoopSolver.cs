@@ -20,7 +20,7 @@
             }
         }
 
-        protected double ComputeAlgebraicLoopError()
+        protected double ComputeInputGuessMasterError()
         {
             double error = 0;
 
@@ -38,9 +38,9 @@
             return error;
         }
 
-        protected override void ResetFlags()
+        protected override void ResetInputReadyFlags()
         {
-            base.ResetFlags();
+            base.ResetInputReadyFlags();
 
             foreach (Block f in Blocks)
             {
@@ -52,7 +52,7 @@
             }
         }
 
-        protected bool HasGuess(Block f)
+        protected bool HasInputGuess(Block f)
         {
             for (int i = 0; i < f.Inputs.Count; i++)
             {
@@ -76,14 +76,14 @@
                 int sfy = c.Output;
                 int tfu = c.Input;
 
-                InputGuessSlaveFlags[tf][tfu] = HasGuess(f);
+                InputGuessSlaveFlags[tf][tfu] = HasInputGuess(f);
             }
         }
 
         protected override void CalculateOutputs(double time)
         {
             // Bereitschaft zurücksetzen
-            ResetFlags();
+            ResetInputReadyFlags();
 
             // Ausgaben berechnen und weiterleiten
             List<Block> open = [.. Blocks];
@@ -105,7 +105,7 @@
                     Block f = open[i];
 
                     // Bereitschaft prüfen
-                    if (IsReady(f))
+                    if (AreAllInputsReady(f))
                     {
                         // Ausgaben berechnen
                         f.CalculateOutputs(time, ContinuousStates[f], Inputs[f], Outputs[f]);
@@ -166,7 +166,7 @@
                     else
                     {
                         // Schleife beenden, wenn Schätzfehler klein genug
-                        if (ComputeAlgebraicLoopError() <= AlgebraicLoopErrorThreshold)
+                        if (ComputeInputGuessMasterError() <= AlgebraicLoopErrorThreshold)
                         {
                             guessMaster.Clear();
                         }
@@ -205,7 +205,7 @@
                                         InputReadyFlags[f][i] = false;
                                     }
                                 }
-                                if (IsReady(f))
+                                if (AreAllInputsReady(f))
                                 {
                                     // Ausgänge berechnen
                                     f.CalculateOutputs(time, ContinuousStates[f], Inputs[f], Outputs[f]);

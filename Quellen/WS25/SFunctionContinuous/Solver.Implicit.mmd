@@ -8,29 +8,16 @@ classDiagram
 
     class EulerImplicitSolver {
         ContinuousStatesPrevious : Dictionary~Block, double[]~
-        
+
         ImplicitErrorThreshold : double
         ImplicitIterationCountLimit : int
         ImplicitLearningRate : double
 
-        Solve(timeStepMax : double, timeMax : double) void
+        Solve(timeStep : double, timeLimit : double) void
 
-        CalculateOutputs(...) void
-    }
-
-    class EulerImplicitLoopSolver {
-        AlgebraicLoopErrorThreshold : double
-        AlgebraicLoopIterationCountLimit : int
-        AlgebraicLoopLearningRate : double
-
-        InputGuessMasterFlags : Dictionary~Block, bool[]~
-        InputGuessSlaveFlags : Dictionary~Block, bool[]~
-        InputGuessValues : Dictionary~Block, double[]~
-
-        CalculateOutputs(...) void
+        CalculateOutputs(time : double) void
     }
 
     Solver <|-- EulerImplicitSolver
-    EulerImplicitSolver <|-- EulerImplicitLoopSolver
 
     style Solver fill:white

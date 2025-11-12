@@ -882,7 +882,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ---
 
 <div class="columns">
-<div>
+<div class="two">
 
 ### Die `Solver`-Klasse
 

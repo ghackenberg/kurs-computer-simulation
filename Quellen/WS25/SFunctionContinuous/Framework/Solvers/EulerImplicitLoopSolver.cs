@@ -38,9 +38,9 @@
             return error;
         }
 
-        protected override void ResetFlags()
+        protected override void ResetInputReadyFlags()
         {
-            base.ResetFlags();
+            base.ResetInputReadyFlags();
 
             foreach (Block f in Blocks)
             {
@@ -83,7 +83,7 @@
         protected override void CalculateOutputs(double time)
         {
             // Bereitschaft zurücksetzen
-            ResetFlags();
+            ResetInputReadyFlags();
 
             // Ausgaben berechnen und weiterleiten
             List<Block> open = [.. Blocks];
@@ -105,7 +105,7 @@
                     Block f = open[i];
 
                     // Bereitschaft prüfen
-                    if (IsReady(f))
+                    if (AreAllInputsReady(f))
                     {
                         // Ausgaben berechnen
                         f.CalculateOutputs(time, ContinuousStates[f], Inputs[f], Outputs[f]);
@@ -205,7 +205,7 @@
                                         InputReadyFlags[f][i] = false;
                                     }
                                 }
-                                if (IsReady(f))
+                                if (AreAllInputsReady(f))
                                 {
                                     // Ausgänge berechnen
                                     f.CalculateOutputs(time, ContinuousStates[f], Inputs[f], Outputs[f]);

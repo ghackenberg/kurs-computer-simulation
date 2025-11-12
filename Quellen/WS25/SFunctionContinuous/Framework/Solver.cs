@@ -44,7 +44,7 @@
 
         protected abstract void CalculateOutputs(double t);
 
-        protected virtual void ResetFlags()
+        protected virtual void ResetInputReadyFlags()
         {
             foreach (Block f in Blocks)
             {
@@ -55,7 +55,7 @@
             }
         }
 
-        protected bool IsReady(Block f)
+        protected bool AreAllInputsReady(Block f)
         {
             for (int i = 0; i < f.Inputs.Count; i++)
             {

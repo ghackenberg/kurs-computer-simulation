@@ -41,7 +41,7 @@
         protected override void CalculateOutputs(double time)
         {
             // Bereitschaft zurücksetzen
-            ResetFlags();
+            ResetInputReadyFlags();
 
             // Alle Funktion als "zu berechnen" markieren
             List<Block> open = [.. Blocks];
@@ -59,7 +59,7 @@
                     Block f = open[i];
 
                     // Bereitschaft der Funktion prüfen
-                    if (IsReady(f))
+                    if (AreAllInputsReady(f))
                     {
                         // Ausgaben der Funktion berechnen
                         f.CalculateOutputs(time, ContinuousStates[f], Inputs[f], Outputs[f]);

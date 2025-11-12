@@ -7,24 +7,11 @@ classDiagram
     }
 
     class EulerExplicitSolver {
-        Solve(timeStepMax : double, timeMax : double) void
+        Solve(timeStep : double, timeLimit : double) void
 
-        CalculateOutputs(...) void
-    }
-
-    class EulerExplicitLoopSolver {
-        AlgebraicLoopErrorThreshold : double
-        AlgebraicLoopIterationCountLimit : int
-        AlgebraicLoopLearningRate : double
-
-        InputGuessMasterFlags : Dictionary~Block, bool[]~
-        InputGuessSlaveFlags : Dictionary~Block, bool[]~
-        InputGuessValues : Dictionary~Block, double[]~
-
-        CalculateOutputs(...) void
+        CalculateOutputs(time : double) void
     }
 
     Solver <|-- EulerExplicitSolver
-    EulerExplicitSolver <|-- EulerExplicitLoopSolver
 
     style Solver fill:white

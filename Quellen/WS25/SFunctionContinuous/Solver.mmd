@@ -10,10 +10,17 @@ classDiagram
         Model : Model
         ContinuousStates : Dictionary~Block, double[]~
         Derivatives : Dictionary~Block, double[]~
-        InputReadyFlags : Dictionary~Block, bool[]~
         Inputs : Dictionary~Block, double[]~
         Outputs : Dictionary~Block, double[]~
-        Solve(smax : double, tmax : double) void
+        InputReadyFlags : Dictionary~Block, bool[]~
+        Solve(timeStep : double, timeLimit : double) void
+        InitializeStates() void
+        ResetInputReadyFlags() void
+        AreAllInputsReady(block : Block) bool
+        CalculateOutputs(time : double) void
+        ForwardOutputs(block : Block) bool 
+        CalculateDerivatives(time : doube) void
+        IntegrateContinuousStates(timeStep : double) void
     }
 
     Model "1" --* Solver

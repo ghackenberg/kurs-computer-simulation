@@ -1,0 +1,33 @@
+classDiagram
+
+    direction TB
+
+    class Solver {
+        <<Abstract>>
+    }
+
+    class EulerImplicitSolver {
+
+    }
+
+    class EulerImplicitLoopSolver {
+        AlgebraicLoopErrorThreshold : double
+        AlgebraicLoopIterationCountLimit : int
+        AlgebraicLoopLearningRate : double
+
+        InputGuessMasterFlags : Dictionary~Block, bool[]~
+        InputGuessSlaveFlags : Dictionary~Block, bool[]~
+        InputGuessValues : Dictionary~Block, double[]~
+        
+        ResetInputReadyFlags() void
+        CalculateOutputs(time : double) void
+        ForwardOutputs(block : Block) void
+        HasInputGuess(block : Block) bool
+        ComputeInputGuessMasterError() double
+    }
+
+    Solver <|-- EulerImplicitSolver
+    EulerImplicitSolver <|-- EulerImplicitLoopSolver
+
+    style Solver fill:white
+    style EulerImplicitSolver fill:white
