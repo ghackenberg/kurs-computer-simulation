@@ -299,7 +299,44 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-TODO Folien zur Erklärung der Arbeitsweise des Algorithmus an einem konkreten Beispiel mit definierten Ergebnissen und Zeiten. Tabellarische Darstellung der Zustände über die Zeit sowie der Ereignislisten und deren Veränderung über die Zeit.
+<div class="columns">
+<div>
+
+### Konkretes Beispiel: Simulationsablauf
+
+Annahmen für das Beispiel:
+- **Kunde 1:** Ankunft bei t=1, Bedienzeit=3
+- **Kunde 2:** Ankunft bei t=2, Bedienzeit=2
+- **Kunde 3:** Ankunft bei t=5, Bedienzeit=3
+
+**Initialisierung:**
+- `Clock = 0`
+- `State = { Busy: false, Queue: [] }`
+- `EventQueue = [ (Arrival, t=1), (Arrival, t=2), (Arrival, t=5) ]`
+
+</div>
+<div>
+
+TODO Detaillierte Bildbeschreibung für eine passende Illustration zu diesem Beispiel
+
+</div>
+</div>
+
+---
+
+### Tabellarischer Ablauf
+
+Die folgende Tabelle zeigt die Werte der `Clock`, des `State` und der `EventQueue` während der Simulationsrechnung:
+
+| Clock | Event | State (Busy, Queue) | Event Queue | Anmerkung |
+| :--- | :--- | :--- | :--- | :--- |
+| 0 | Init | `(false, 0)` | `[(A,1), (A,2), (A,5)]` |
+| 1 | Arrival | `(true, 0)` | `[(A,2), (D,4), (A,5)]` | K1 kommt an und wird bedient |
+| 2 | Arrival | `(true, 1)` | `[(D,4), (A,5)]` | K2 kommt an und wartet |
+| 4 | Departure | `(true, 0)` | `[(A,5), (D,6)]` | K1 ist fertig, K2 wird bedient |
+| 5 | Arrival | `(true, 1)` | `[(D,6)]` | K3 kommt an und wartet |
+| 6 | Departure | `(true, 0)` | `[(D,9)]` | K2 ist fertig, K3 wird bedient |
+| 9 | Departure | `(false, 0)` | `[]` | K3 ist fertig |
 
 ---
 
@@ -651,7 +688,20 @@ Das Ergebnis (z.B. mittlere Wartezeit = 4.7 min) ist nicht repräsentativ für d
 </div>
 <div>
 
-TODO Detaillierte Beschreibung einer Illustration des Problems
+<!--
+Eine minimalistische Vektorgrafik, die das Problem der Einzelsimulation illustriert.
+
+**Inhalt:**
+Drei separate Diagramme untereinander, die jeweils einen Simulationslauf ("Replikation") darstellen. Jeder Lauf startet am selben Punkt (links), folgt aber einem anderen, zufälligen Pfad (dargestellt als gewellte Linie). Jeder Pfad endet bei einem anderen Ergebniswert auf einer Skala (rechts), z.B. "4.7 min", "8.1 min", "6.2 min". Dies verdeutlicht, dass das Ergebnis einer einzelnen Simulation stark variieren kann.
+
+**Stil:**
+- **Farbpalette:** Jeder Pfad hat eine andere Farbe (z.B. Blau, Grün, Orange), um die Eigenständigkeit zu betonen.
+- **Formen:** Einfache, klare Linien und Formen.
+- **Komposition:** Der Fokus liegt auf der Varianz der Endergebnisse.
+- **Atmosphäre:** Informativ, die Unsicherheit stochastischer Ergebnisse betonend.
+-->
+
+![](./Illustrationen/ProbabilistischeModelle.jpg)
 
 </div>
 </div>
