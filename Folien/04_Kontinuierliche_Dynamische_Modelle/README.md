@@ -15,8 +15,7 @@ math: mathjax
 - 4.2: Beispiel: Freier Fall / Vertikaler Wurf
 - 4.3: Numerische Integrationsverfahren
 - 4.4: Beispiel: Ungedämpftes Federpendel
-- 4.5: Differential-Algebraische Gleichungen
-- 4.6: Softwarearchitektur für Simulation
+- 4.5: Softwarearchitektur für Simulation
 
 ---
 
@@ -629,126 +628,10 @@ $$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k
 
 Dies ist ein lineares Gleichungssystem für die unbekannten Größen $y_{k+1}$ und $v_{k+1}$.
 
----
-
-## 4.5: Differential-Algebraische Gleichungen (DAE)
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Entstehung von algebraischen Schleifen bei impliziten Verfahren
-- Formulierung und Lösung als DAE
-- Stabilitätseigenschaften und der Einfluss der Schrittweite
 
 ---
 
-### Differential-Algebraische Gleichungen
-
-Das Gleichungssystem aus dem impliziten Euler ist ein Beispiel für eine **algebraische Schleife**.
-
-**System umordnen:**
-1.  $y_{k+1} - h \cdot v_{k+1} = y_k$
-2.  $(h \frac{k}{m}) y_{k+1} + v_{k+1} = v_k$
-
-**In Matrixform:**
-$$
-\begin{pmatrix}
-1 & -h \\
-h \frac{k}{m} & 1
-\end{pmatrix}
-\begin{pmatrix}
-y_{k+1} \\
-v_{k+1}
-\end{pmatrix}
-=
-\begin{pmatrix}
-y_k \\
-v_k
-\end{pmatrix}
-$$
-
-Um $y_{k+1}$ und $v_{k+1}$ zu finden, müssen wir bei jedem Zeitschritt dieses $2 \times 2$ Gleichungssystem lösen. Dies ist eine **differential-algebraische Gleichung (DAE)**.
-
----
-
-### Analytische Lösung der algebraischen Schleife
-
-Wir müssen die Matrix invertieren:
-$$
-\begin{pmatrix}
-y_{k+1} \\
-v_{k+1}
-\end{pmatrix}
-=
-\begin{pmatrix}
-1 & -h \\
-h \frac{k}{m} & 1
-\end{pmatrix}^{-1}
-\begin{pmatrix}
-y_k \\
-v_k
-\end{pmatrix}
-$$
-
-Die Inverse einer $2 \times 2$ Matrix $\begin{pmatrix} a & b \\ c & d \end{pmatrix}$ ist $\frac{1}{ad-bc} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}$.
-
-$$ \text{det} = 1 \cdot 1 - (-h) \cdot (h \frac{k}{m}) = 1 + h^2 \frac{k}{m} $$
-
-$$
-\begin{pmatrix}
-y_{k+1} \\
-v_{k+1}
-\end{pmatrix}
-=
-\frac{1}{1 + h^2 \frac{k}{m}}
-\begin{pmatrix}
-1 & h \\
--h \frac{k}{m} & 1
-\end{pmatrix}
-\begin{pmatrix}
-y_k \\
-v_k
-\end{pmatrix}
-$$
-
----
-
-<div class="columns">
-<div>
-
-### Stabilität des impliziten Eulers
-
-Führt man die Simulation mit dem impliziten Euler durch, beobachtet man ein anderes Verhalten.
-
-- Der implizite Euler führt künstliche Dämpfung in das System ein; die Energie nimmt ab.
-- Das Verfahren ist **A-stabil**: Die Lösung geht für $h \to \infty$ gegen Null, sie explodiert niemals. Dies ist oft ein erwünschtes Verhalten, auch wenn es physikalisch nicht ganz korrekt ist.
-
-</div>
-<div>
-
-![](./Pendelsimulation.png)
-
-</div>
-</div>
-
----
-
-### Einfluss der Schrittweite `h`
-
-Die Genauigkeit aller numerischen Verfahren hängt entscheidend von der Schrittweite `h` ab.
-
-- **Zu großes `h`**:
-    - Große Ungenauigkeit.
-    - Kann bei expliziten Verfahren zu Instabilität führen.
-- **Zu kleines `h`**:
-    - Hohe Genauigkeit.
-    - Hoher Rechenaufwand (mehr Schritte für das gleiche Zeitintervall).
-    - Kann zu Rundungsfehler-Akkumulation führen.
-
-Die Wahl der richtigen Schrittweite ist ein kritischer Kompromiss zwischen Genauigkeit und Rechenzeit. Moderne Solver verwenden oft **adaptive Schrittweitensteuerung**, um `h` während der Simulation anzupassen.
-
----
-
-## 4.6: Softwarearchitektur für Simulation
+## 4.5: Softwarearchitektur für Simulation
 
 Dieser Abschnitt beschreibt eine flexible, blockbasierte Architektur für die Simulation von dynamischen Systemen, die stark an das Konzept von **Simulink S-Functions** angelehnt ist.
 

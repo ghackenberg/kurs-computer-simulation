@@ -4,7 +4,7 @@ namespace SFunctionContinuous.Framework.Examples
 {
     public class BasicZeroCrossingExample : Example
     {
-        public BasicZeroCrossingExample()
+        public BasicZeroCrossingExample() : base(1, 10)
         {
             Block d = new ConstantBlock("Derivative", -0.3);
             Block x = new ConstantBlock("State", +1);
