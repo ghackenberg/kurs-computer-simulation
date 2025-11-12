@@ -9,8 +9,6 @@ math: mathjax
 
 <!-- In diesem Kapitel werden die Grundlagen von diskreten dynamischen Modellen sowie deren Simulation und Implementierung behandelt. -->
 
-![bg right](./Titelbild.jpg)
-
 # Kapitel 5: Diskrete Dynamische Modelle
 
 Dieses Kapitel umfasst die folgenden Abschnitte:
@@ -62,15 +60,95 @@ Typische Anwendungsbeispiele sind:
 
 ---
 
-TODO Folie Warteschlangesystem und typische Fragestellungen
+<div class="columns">
+<div class="two">
+
+### Anwendungsbeispiel: Warteschlangensysteme
+
+Systeme, in denen "Kunden" auf eine oder mehrere "Bedienstationen" warten.
+
+**Typische Fragestellungen:**
+- Wie viele Schalter/Kassen werden benötigt, um eine maximale Wartezeit nicht zu überschreiten?
+- Wie lang ist die durchschnittliche und maximale Wartezeit?
+- Wie hoch ist die durchschnittliche und maximale Auslastung der Schalter?
+- Wie wirkt sich eine Änderung der Ankunftsrate der Kunden aus?
+
+</div>
+<div>
+
+![](./Diagramme/Warteschlangensystem.svg)
+
+</div>
+</div>
 
 ---
 
-TODO Folie Produktions- und Logistiksysteme und typische Fragestellungen
+<div class="columns">
+<div class="five">
+
+### Anwendungsbeispiel: Produktions- & Logistiksysteme
+
+Systeme, die den Fluss von Material, Teilen und Produkten durch eine Reihe von Prozessen (z.B. Maschinen, Lager, Transport) modellieren.
+
+**Typische Fragestellungen:**
+- Was ist der maximale Durchsatz der Produktionslinie?
+- Wo befinden sich Engpässe (Bottlenecks) im System?
+- Wie groß müssen Pufferlager dimensioniert werden?
+- Wie wirkt sich der Ausfall einer Maschine auf die Gesamtleistung aus?
+
+</div>
+<div>
+
+![](./Diagramme/Produktionssystem.svg)
+
+</div>
+</div>
 
 ---
 
-TODO Folie Computernetzwerke und typische Fragestellungen
+<div class="columns">
+<div class="three">
+
+### Anwendungsbeispiel: Computernetzwerke
+
+Systeme zur Übertragung von Datenpaketen zwischen verschiedenen Knoten (z.B. Clients, Server, Router).
+
+**Typische Fragestellungen:**
+- Wie hoch ist die durchschnittliche Netzwerkauslastung?
+- Wie groß sind die Latenzzeiten (Verzögerungen) für Datenpakete?
+- Was ist der maximale Datendurchsatz zwischen zwei Punkten?
+- Wie robust ist das Netzwerk gegen den Ausfall von Verbindungen oder Knoten?
+
+</div>
+<div>
+
+![](./Diagramme/Computernetzwerk.svg)
+
+</div>
+</div>
+
+---
+
+### Allgemeiner Formalismus (1/2)
+
+Ein diskretes Simulationsmodell besteht aus folgenden Komponenten:
+
+- **Systemzustand $\vec{z}(t)$:** Eine Menge von Zustandsvariablen, die das System beschreiben (z.B. `Queue.Count`, `Server.Busy`). Der Zustand ändert sich nur zu diskreten Zeitpunkten.
+- **Ereignisse $e$:** Vorkommnisse, die den Systemzustand sprunghaft ändern (z.B. `Ankunft`, `Bedienende`).
+- **Simulationsuhr $t$:** Verfolgt den Fortschritt der Simulationszeit. Sie springt von Ereignis zu Ereignis.
+- **Ereignisliste $L$:** Eine nach Zeit geordnete Liste zukünftiger Ereignisse. $L = [(e_1, t_1), (e_2, t_2), ...]$ mit $t_1 \le t_2 \le ...$
+
+---
+
+### Allgemeiner Formalismus (2/2)
+
+Für jedes Ereignis $e_i$ gibt es eine **Ereignisroutine**, die beim Eintreten des Ereignisses ausgeführt wird und zwei Hauptaufgaben hat:
+
+1.  **Zustandsänderung:** Aktualisierung des Systemzustands $\vec{z}(t)$.
+    -   $\vec{z}(t_{neu}) \leftarrow f(\vec{z}(t_{alt}), e_i)$
+2.  **Ereignisplanung:** Generierung neuer zukünftiger Ereignisse und deren Einfügen in die Ereignisliste $L$.
+    -   Ein `Ankunfts`-Ereignis kann das *nächste* `Ankunfts`-Ereignis planen.
+    -   Ein `Ankunfts`-Ereignis kann ein `Bedienende`-Ereignis planen, wenn die Station frei ist.
 
 ---
 
@@ -84,6 +162,50 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Definition des **Systemzustands** (`State`)
 - Definition der **Ereignisse** (`Events`)
 - Abbildung von Zustand und Ereignissen in **C#-Klassen**
+
+---
+
+### Beispiel: Mathematische Beschreibung (1/2)
+
+Anwendung des Formalismus auf das Warteschlangensystem:
+
+- **Systemzustand $\vec{z}(t)$:**
+  - $N(t)$: Anzahl der Kunden im System (in Schlange + in Bedienung).
+  - $B(t)$: Zustand der Bedienstation (0 = frei, 1 = besetzt).
+  - $\vec{z}(t) = (N(t), B(t))$
+
+- **Ereignisse $e$:**
+  - $e_A$: Ankunft eines Kunden (Arrival).
+  - $e_D$: Ende der Bedienung eines Kunden (Departure).
+
+---
+
+### Beispiel: Mathematische Beschreibung (2/2)
+
+<div class="columns top">
+<div>
+
+**Ereignisroutine für Ankunft $e_A$ zum Zeitpunkt $t$:**
+
+1. $N(t) \leftarrow N(t) + 1$.
+2. Wenn $B(t) = 0$ (frei):
+    - $B(t) \leftarrow 1$.
+    - Plane $e_D$ zum Zeitpunkt $t + \text{Bedienzeit}$.
+3. Plane nächstes $e_A$ zum Zeitpunkt $t + \text{Zwischenankunftszeit}$.
+
+</div>
+<div>
+
+**Ereignisroutine für Abfahrt $e_D$ zum Zeitpunkt $t$:**
+
+1. $N(t) \leftarrow N(t) - 1$.
+2. Wenn $N(t) > 0$ (Kunden warten):
+    - Plane $e_D$ zum Zeitpunkt $t + \text{Bedienzeit}$.
+3. Sonst (keine Kunden mehr):
+    - $B(t) \leftarrow 0$.
+
+</div>
+</div>
 
 ---
 
@@ -187,11 +309,27 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-TODO Folie Ereignisroutine ArrivalEvent
+### Ereignisroutine: `ArrivalEvent`
+
+Wenn ein Kunde ankommt, wird geprüft, ob die Bedienstation frei ist.
+
+- **Station besetzt:** Der Kunde wird in die Warteschlange eingereiht.
+- **Station frei:** Die Station wird besetzt und ein `DepartureEvent` für die Zukunft geplant, das das Ende der Bedienung markiert.
+
+![](./Diagramme/ArrivalEvent.svg)
+
 
 ---
 
-TODO Folie Ereignisroutine DepartureEvent
+### Ereignisroutine: `DepartureEvent`
+
+Wenn ein Kunde fertig bedient ist, wird geprüft, ob weitere Kunden warten.
+
+- **Schlange leer:** Die Station wird freigegeben.
+- **Schlange nicht leer:** Der nächste Kunde wird aus der Schlange geholt und ein neues `DepartureEvent` für dessen Bedienende geplant.
+
+![](./Diagramme/DepartureEvent.svg)
+
 
 ---
 
@@ -368,7 +506,18 @@ Nach dem Simulationslauf werden diese Daten verwendet, um Verläufe und Histogra
 
 ---
 
-TODO Folie ScottPlot
+### Visualisierung mit ScottPlot
+
+`ScottPlot` ist eine freie und quelloffene Bibliothek für .NET zur Erstellung von Diagrammen.
+
+- **Einfache API:** Erlaubt das schnelle Erstellen von Diagrammen mit wenigen Codezeilen.
+- **Performant:** Optimiert für die interaktive Darstellung großer Datenmengen.
+- **Vielseitig:** Unterstützt eine Vielzahl von Diagrammtypen wie Linien-, Streu-, Balkendiagramme und Histogramme.
+- **Interaktiv:** Diagramme in WPF- und WinForms-Anwendungen sind standardmäßig interaktiv (zoomen, verschieben).
+
+Ideal für die schnelle Visualisierung von Simulationsergebnissen.
+
+---
 
 ```csharp
 // Beschäftigungsverlauf visualisieren

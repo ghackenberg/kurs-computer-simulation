@@ -1,0 +1,18 @@
+graph TD
+    subgraph "Clients"
+        C1[Client A]
+        C2[Client B]
+    end
+    subgraph "Netzwerk"
+        R1[Router]
+        R2[Switch]
+    end
+    subgraph "Server"
+        S1[Web Server]
+        S2[Database]
+    end
+    C1 --> R1;
+    C2 --> R1;
+    R1 --> R2;
+    R2 --> S1;
+    S1 --> S2;

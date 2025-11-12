@@ -1,0 +1,18 @@
+graph TD
+    subgraph Kundenstrom
+        direction LR
+        k1(Kunde)
+        k2(Kunde)
+        k3(...)
+    end
+
+    subgraph System
+        direction LR
+        W(Warteschlange) -- Kunde --> S(Bedienstation)
+    end
+
+    k1 --> W
+    k2 --> W
+    k3 --> W
+
+    S -- bedienter Kunde --> V(System verlassen)

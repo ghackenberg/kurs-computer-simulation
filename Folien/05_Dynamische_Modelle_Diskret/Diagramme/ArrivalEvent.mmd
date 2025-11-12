@@ -1,0 +1,7 @@
+flowchart LR
+    Start((Ankunfts-Ereignis)) --> IsBusy{Station besetzt?};
+    IsBusy -- Ja --> Enqueue[Kunde in Warteschlange einreihen];
+    IsBusy -- Nein --> SetBusy[Station auf <i>besetzt</i> setzen];
+    SetBusy --> ScheduleDeparture[Neues Abfahrts-Ereignis planen];
+    Enqueue --> End((Ende));
+    ScheduleDeparture --> End;

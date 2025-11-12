@@ -1,0 +1,7 @@
+flowchart LR
+    Start((Abfahrts-Ereignis)) --> IsQueueEmpty{Warteschlange leer?};
+    IsQueueEmpty -- Ja --> SetFree[Station auf <i>frei</i> setzen];
+    IsQueueEmpty -- Nein --> Dequeue[Nächsten Kunden aus Schlange holen];
+    Dequeue --> ScheduleDeparture[Neues Abfahrts-Ereignis für diesen Kunden planen];
+    SetFree --> End((Ende));
+    ScheduleDeparture --> End;
