@@ -211,19 +211,6 @@ Wenn ein Kunde ankommt, wird geprüft, ob die Bedienstation frei ist.
 </div>
 <div>
 
-<!--
-Eine minimalistische Vektorgrafik im Flat-Design-Stil, die das "Arrival"-Ereignis in einem Warteschlangensystem darstellt.
-
-**Inhalt:**
-Eine stilisierte Person (Kunde) schiebt einen Einkaufswagen auf eine Supermarktkasse zu. Die Kasse ist besetzt, und eine weitere Person (Kassierer) bedient gerade einen anderen Kunden. Hinter dem ankommenden Kunden bildet sich eine kleine Schlange aus weiteren stilisierten Personen. Die Szene fängt den Moment der Ankunft und das Einreihen in die Warteschlange ein.
-
-**Stil:**
-- **Farbpalette:** Begrenzt auf kühle Töne wie Blau und Grau, mit einem warmen Akzent (z.B. Gelb) für den ankommenden Kunden, um ihn hervorzuheben.
-- **Formen:** Einfache geometrische Formen, klare Linien, keine überflüssigen Details.
-- **Komposition:** Der Fokus liegt auf der Bewegung des ankommenden Kunden in Richtung der bereits bestehenden Schlange. Der Hintergrund ist abstrakt und neutral.
-- **Atmosphäre:** Sauber, modern und informativ.
--->
-
 ![](./Illustrationen/ArrivalEvent.jpg)
 
 </div>
@@ -255,19 +242,6 @@ Wenn ein Kunde fertig bedient ist, wird geprüft, ob weitere Kunden warten.
 
 </div>
 <div>
-
-<!--
-Eine minimalistische Vektorgrafik im Flat-Design-Stil, die das "Departure"-Ereignis in einem Warteschlangensystem darstellt.
-
-**Inhalt:**
-Eine stilisierte Person (Kunde) verlässt mit einer Einkaufstasche die Supermarktkasse. Die Kasse ist nun frei, und der Kassierer wendet sich dem nächsten Kunden in der Warteschlange zu, der gerade vortritt. Die Warteschlange ist sichtbar kürzer als zuvor. Die Szene fängt den Moment des Abschlusses und des Übergangs zum nächsten Kunden ein.
-
-**Stil:**
-- **Farbpalette:** Begrenzt auf kühle Töne wie Blau und Grau, mit einem positiven Akzent (z.B. Grün) für den abfahrenden Kunden oder die freie Kasse, um den erfolgreichen Abschluss zu signalisieren.
-- **Formen:** Einfache geometrische Formen, klare Linien, keine überflüssigen Details.
-- **Komposition:** Der Fokus liegt auf dem verlassenden Kunden und der nun freien Kasse, die bereit für den nächsten Vorgang ist. Der Hintergrund ist abstrakt und neutral.
-- **Atmosphäre:** Effizient, fließend und geordnet.
--->
 
 ![](./Illustrationen/DepartureEvent.jpg)
 
@@ -749,18 +723,6 @@ Das Ergebnis einer einzelnen Simulation ist damit selbst eine **Zufallsvariable*
 </div>
 <div>
 
-<!--
-Eine minimalistische Vektorgrafik, die einen deterministischen und einen probabilistischen Prozess vergleicht.
-
-**Inhalt:**
-Links zeigt ein einzelner, gerader Pfeil von einem Startpunkt A zu einem Endpunkt B, beschriftet mit "Deterministisch". Rechts zweigen von einem Startpunkt A mehrere gewellte, unvorhersehbare Pfeile in eine Cloud von möglichen Endpunkten ab, beschriftet mit "Probabilistisch".
-
-**Stil:**
-- **Farbpalette:** Blau- und Grautöne. Der deterministische Pfad ist dunkel und solide, die probabilistischen Pfade sind heller und transparenter.
-- **Formen:** Klare, einfache Formen.
-- **Atmosphäre:** Informativ, konzeptionell.
--->
-
 ![](../../Grafiken/Modellarten%20-%20Probabilistisch.svg)
 
 </div>
@@ -803,19 +765,6 @@ Das Ergebnis (z.B. mittlere Wartezeit = 4.7 min) ist nicht repräsentativ für d
 
 </div>
 <div>
-
-<!--
-Eine minimalistische Vektorgrafik, die das Problem der Einzelsimulation illustriert.
-
-**Inhalt:**
-Drei separate Diagramme untereinander, die jeweils einen Simulationslauf ("Replikation") darstellen. Jeder Lauf startet am selben Punkt (links), folgt aber einem anderen, zufälligen Pfad (dargestellt als gewellte Linie). Jeder Pfad endet bei einem anderen Ergebniswert auf einer Skala (rechts), z.B. "4.7 min", "8.1 min", "6.2 min". Dies verdeutlicht, dass das Ergebnis einer einzelnen Simulation stark variieren kann.
-
-**Stil:**
-- **Farbpalette:** Jeder Pfad hat eine andere Farbe (z.B. Blau, Grün, Orange), um die Eigenständigkeit zu betonen.
-- **Formen:** Einfache, klare Linien und Formen.
-- **Komposition:** Der Fokus liegt auf der Varianz der Endergebnisse.
-- **Atmosphäre:** Informativ, die Unsicherheit stochastischer Ergebnisse betonend.
--->
 
 ![](./Illustrationen/ProbabilistischeModelle.jpg)
 
@@ -1000,7 +949,62 @@ Parallel.For(0, 100, i =>
 
 ---
 
-TODO Folie zur Erklärung von Race Conditions
+### Exkurs: **Race Conditions**
+
+Eine **Race Condition** (Wettlaufsituation) tritt auf, wenn mehrere Threads gleichzeitig auf dieselben gemeinsam genutzten Daten zugreifen und versuchen, diese zu ändern. Das Endergebnis hängt dann von der unvorhersehbaren Reihenfolge ab, in der die Threads ausgeführt werden.
+
+**Konsequenzen:**
+- **Falsche Ergebnisse:** Die Daten können inkonsistent oder fehlerhaft sein.
+- **Datenkorruption:** Der Zustand des Programms kann unbrauchbar werden.
+- **Schwer zu debuggen:** Da Race Conditions nicht deterministisch sind, treten sie oft nur sporadisch auf und sind schwer zu reproduzieren.
+
+**Beispiel:** Zwei Threads inkrementieren einen gemeinsamen Zähler. Wenn der Zugriff nicht synchronisiert ist, kann der Zähler einen falschen Endwert haben, da eine Inkrementierung die andere überschreiben könnte.
+
+---
+
+### Code-Beispiel: Race Condition mit Zähler
+
+Dieses Beispiel zeigt, wie ein gemeinsam genutzter Zähler bei parallelem Zugriff ohne Synchronisation zu falschen Ergebnissen führen kann und wie dies mit einem `lock`-Statement behoben wird.
+
+<div class="columns top">
+<div>
+
+**Falsches Ergebnis (ohne `lock`):**
+```csharp
+int counter = 0;
+Parallel.For(0, 10000, _ =>
+{
+    // Mehrere Threads versuchen gleichzeitig,
+    // 'counter' zu lesen, zu inkrementieren und zu schreiben.
+    // Dies führt zu Datenverlust.
+    counter++; // Nicht threadsicher!
+});
+Console.WriteLine($"Ergebnis (falsch): {counter}");
+// Erwartet: 10000, Tatsächlich: < 10000
+```
+
+</div>
+<div>
+
+**Korrigiertes Ergebnis (mit `lock`):**
+```csharp
+int counter = 0;
+// Ein Objekt, das als Sperre dient.
+// Nur ein Thread kann gleichzeitig den Code im 'lock'-Block ausführen.
+object lockObject = new object();
+Parallel.For(0, 10000, _ =>
+{
+    lock (lockObject) // Threadsicher!
+    {
+        counter++;
+    }
+});
+Console.WriteLine($"Ergebnis (korrekt): {counter}");
+// Erwartet: 10000, Tatsächlich: 10000
+```
+
+</div>
+</div>
 
 ---
 
