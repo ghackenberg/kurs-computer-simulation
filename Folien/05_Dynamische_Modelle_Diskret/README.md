@@ -9,6 +9,8 @@ math: mathjax
 
 <!-- In diesem Kapitel werden die Grundlagen von diskreten dynamischen Modellen sowie deren Simulation und Implementierung behandelt. -->
 
+![bg right](./Titelbild.jpg)
+
 # Kapitel 5: Diskrete Dynamische Modelle
 
 Dieses Kapitel umfasst die folgenden Abschnitte:
@@ -168,6 +170,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+<div class="columns">
+<div class="two">
+
 ### Mathematische Beschreibung
 
 Anwendung des Formalismus auf das Warteschlangensystem:
@@ -180,6 +185,16 @@ Anwendung des Formalismus auf das Warteschlangensystem:
 - **Ereignisse $e$:**
   - $e_A$: Ankunft eines Kunden (Arrival).
   - $e_D$: Ende der Bedienung eines Kunden (Departure).
+
+</div>
+<div>
+
+
+
+![](./Illustrationen/SimulationBeispiel.jpg)
+
+</div>
+</div>
 
 ---
 
@@ -317,7 +332,7 @@ Annahmen für das Beispiel:
 </div>
 <div>
 
-TODO Detaillierte Bildbeschreibung für eine passende Illustration zu diesem Beispiel
+![](./Illustrationen/SimulationBeispiel.jpg)
 
 </div>
 </div>
