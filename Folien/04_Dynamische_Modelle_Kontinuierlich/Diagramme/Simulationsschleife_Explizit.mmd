@@ -1,0 +1,15 @@
+graph TD
+
+    A(Start) --> B(Zustände <i>initialiseren</i><br/>Ausgänge berechnen<br/>Ableitungen berechnen);
+
+    subgraph Zeitschleife
+        E{Weiter?};
+        E -- Ja --> F(Zustände <i>integrieren</i><br/>Ausgänge berechnen<br/>Ableitungen berechnen<br/>Zeit erhöhen);
+        F --> E;
+    end
+
+    B --> E;
+    E -- Nein --> J(Ende);
+
+    style A fill:black,stroke:black,color:white
+    style J fill:black,stroke:black,color:white

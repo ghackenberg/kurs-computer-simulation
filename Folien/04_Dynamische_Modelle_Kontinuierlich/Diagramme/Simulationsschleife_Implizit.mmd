@@ -1,0 +1,23 @@
+graph TB
+    
+    A(Start) --> B(Zustände initialisieren<br/>Ausgänge berechnen<br/>Ableitungen berechnen);
+
+    subgraph Zeitschleife
+        E{Weiter?};
+        E -- Ja --> H;
+        
+        subgraph "Ableitungsschleife"
+            G{Fehler?};
+            G -- Ja --> H(Ableitungen aktualisieren<br/>Zustände integrieren<br/>Ausgänge berechnen<br/>Ableitungen berechnen<br/>Fehler berechnen);
+            H --> G;
+        end
+
+        G -- Nein --> M(Zeit erhöhen);
+        M --> E;
+    end
+
+    B --> E;
+    E -- Nein --> N(Ende);
+
+    style A fill:black,stroke:black,color:white
+    style N fill:black,stroke:black,color:white

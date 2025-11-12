@@ -1070,7 +1070,7 @@ Implementiert den expliziten Euler-Algorithmus.
 ---
 
 <div class="columns">
-<div class="two">
+<div class="three">
 
 ### Simulationsschleife in `EulerExplicitSolver`
 
@@ -1086,7 +1086,7 @@ Implementiert den expliziten Euler-Algorithmus.
 </div>
 <div>
 
-TODO Mermaid-Diagramm für die Simualtionsschleife
+![](./Diagramme/Simulationsschleife_Explizit.svg)
 
 </div>
 </div>
@@ -1254,7 +1254,7 @@ Implementiert den impliziten Euler-Algorithmus.
 </div>
 <div>
 
-TODO Mermaid Grafik für die implizite Simulationsschleife
+![](./Diagramme/Simulationsschleife_Implizit.svg)
 
 </div>
 </div>
