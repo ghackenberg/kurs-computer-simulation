@@ -878,7 +878,28 @@ var stdDev = Math.Sqrt(variance);
 
 ---
 
-### **Parallelisierung** der Berechnung
+<div class="columns">
+<div>
+
+### Parallelisierung der Monte-Carlo-Simulation
+
+Da jede Replikation einer Monte-Carlo-Simulation **unabhängig** von den anderen ist, können alle Replikationen **parallel** ausgeführt werden.
+
+- Dies ist ein klassischer "Embarrassingly Parallel"-Anwendungsfall.
+- Auf modernen Multi-Core-CPUs kann dies zu einer massiven Beschleunigung führen.
+- Anstatt 10.000 Replikationen nacheinander auszuführen, kann man z.B. auf 8 Kernen jeweils 1.250 Replikationen gleichzeitig berechnen.
+
+</div>
+<div>
+
+![](./Illustrationen/MonteCarloParallel.jpg)
+
+</div>
+</div>
+
+---
+
+### Implementierung der Parallelisierung
 
 ```csharp
 // Threadsichere Sammlung für die Ergebnisse
@@ -902,3 +923,15 @@ Parallel.For(0, numberOfReplications, i =>
     }
 });
 ```
+
+---
+
+TODO Folie zur Erklärung von Parallel.For
+
+---
+
+TODO Folie zur Erklärung von ConcurrentBag
+
+---
+
+TODO Folie zur Erklärung von thread-lokalen Random-Instanzen
