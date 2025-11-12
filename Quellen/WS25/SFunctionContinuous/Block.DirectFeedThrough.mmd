@@ -6,17 +6,22 @@ classDiagram
         <<Abstract>>
     }
 
-    class ConstantBlock {
-        Value : double
-    }
     class GainBlock {
         Factor : double
     }
     class AddBlock {
     }
+    class SubstractBlock {
+    }
+    class MultiplyBlock {
+    }
+    class DivideBlock {
+    }
 
-    Block <|-- ConstantBlock
     Block <|-- GainBlock
     Block <|-- AddBlock
+    Block <|-- SubstractBlock
+    Block <|-- MultiplyBlock
+    Block <|-- DivideBlock
 
-    style Function fill:white
+    style Block fill:white

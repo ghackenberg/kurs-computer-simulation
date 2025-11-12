@@ -750,14 +750,14 @@ Die Wahl der richtigen Schrittweite ist ein kritischer Kompromiss zwischen Genau
 
 ## 4.6: Softwarearchitektur für Simulation
 
-Dieser Abschnitt umfasst die folgenden Inhalte:
+Dieser Abschnitt beschreibt eine flexible, blockbasierte Architektur für die Simulation von dynamischen Systemen, die stark an das Konzept von **Simulink S-Functions** angelehnt ist.
 
-- Konzept der `Function`-Klasse als modularer Baustein
-- Implementierung von Basis-Blöcken (Constant, Add, Integrate)
-- Modellierung eines Systems durch eine `Composition`
-- Die Rolle der `Solution`-Klasse (Solver)
-- Ablauf einer Simulations-Schleife
-- Umgang mit algebraischen Schleifen
+- Konzept der `Block`-Klasse als universeller Baustein
+- Deklaration von Zuständen, Ein- und Ausgängen
+- Implementierung von algebraischen und dynamischen Blöcken
+- Modellierung eines Gesamtsystems in der `Model`-Klasse
+- Die Rolle der `Solver`-Klasse und verschiedene Lösungsstrategien
+- Umgang mit algebraischen Schleifen und Nulldurchgängen (Zero-Crossings)
 
 ---
 
@@ -766,11 +766,11 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Die Kernklassen der Architektur
 
-Die Architektur besteht aus drei zentralen Klassen, um ein block-basiertes Modell zu erstellen:
+Die Architektur basiert auf drei zentralen Klassen, um ein block-basiertes Modell zu erstellen:
 
-- **`Function`**: Die abstrakte Basisklasse für alle Blöcke. Jeder Block kapselt eine spezifische Funktionalität.
-- **`Connection`**: Repräsentiert eine Verbindung von einem Ausgangsport (`Output`) eines Quell-Blocks (`Source`) zu einem Eingangsport (`Input`) eines Ziel-Blocks (`Target`).
-- **`Composition`**: Dient als Container für das gesamte Modell. Es hält eine Liste aller `Function`- und `Connection`-Instanzen.
+- **`Block`**: Die abstrakte Basisklasse für alle Funktionsblöcke. Jeder Block kapselt eine spezifische Funktionalität (z.B. Addition, Integration, Konstante).
+- **`Connection`**: Repräsentiert eine Verbindung von einem Ausgangsport eines Quell-Blocks zu einem Eingangsport eines Ziel-Blocks.
+- **`Model`**: Dient als Container für das gesamte System. Es hält eine Liste aller `Block`- und `Connection`-Instanzen.
 
 </div>
 <div>
@@ -782,28 +782,104 @@ Die Architektur besteht aus drei zentralen Klassen, um ein block-basiertes Model
 
 ---
 
-### Die `Function`-Klasse als Basis
+### Die `Block`-Klasse (S-Function)
 
-Jede Komponente des Systems wird als eine von der abstrakten Klasse `Function` abgeleitete Klasse implementiert.
+Jede Komponente wird von der abstrakten Klasse `Block` abgeleitet. Sie definiert die Schnittstellen, die ein Solver benötigt, um das System zu simulieren.
 
 ```csharp
-abstract class Function
+public abstract class Block
 {
-    // Dimensionen des Blocks
-    public readonly int DimX; // Anzahl Zustände
-    public readonly int DimU; // Anzahl Eingänge
-    public readonly int DimY; // Anzahl Ausgänge
+    // Deklarationen für Zustände, Ein- & Ausgänge
+    public List<StateDeclaration> ContinuousStates { get; }
+    public List<StateDeclaration> DiscreteStates { get; }
+    public List<InputDeclaration> Inputs { get; }
+    public List<OutputDeclaration> Outputs { get; }
+    public List<ZeroCrossingDeclaration> ZeroCrossings { get; }
 
-    // Definiert die Anfangswerte der Zustände
-    virtual public void InitializeConditions(double[] x) { }
-    // Berechnet die Ableitungen: dx = f(t, x, u)
-    virtual public void CalculateDerivatives(
-        double t, double[] x, double[] u, double[] dx) { }
-    // Berechnet die Ausgänge: y = g(t, x, u)
-    virtual public void CalculateOutputs(
-        double t, double[] x, double[] u, double[] y) { }
+    // Virtuelle Methoden, die vom Solver aufgerufen werden
+    virtual public void InitializeStates(...);
+    virtual public void CalculateDerivatives(...);
+    virtual public void CalculateOutputs(...);
+    virtual public void UpdateStates(...);
+    virtual public void CalculateZeroCrossings(...);
 }
 ```
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Deklaration von Schnittstellen
+
+Jeder Block deklariert seine Zustände, Ein- und Ausgänge im Konstruktor.
+
+- **`StateDeclaration`**: Definiert einen kontinuierlichen oder diskreten Zustand.
+- **`InputDeclaration`**: Definiert einen Eingang. Das Flag `DirectFeedThrough` gibt an, ob der Ausgang direkt vom Eingang abhängt (wichtig für algebraische Schleifen).
+- **`OutputDeclaration`**: Definiert einen Ausgang.
+- **`ZeroCrossingDeclaration`**: Definiert eine Funktion, deren Nulldurchgang ein Ereignis auslöst.
+
+</div>
+<div>
+
+![](../../Quellen/WS25/SFunctionContinuous/Declaration.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+TODO Folie zu Quelle- und Senkeblöcken (Constant und Record)
+
+</div>
+<div>
+
+![](../../Quellen/WS25/SFunctionContinuous/Block.SourceSink.svg)
+
+</div>
+</div>
+
+---
+
+### Beispiel: `ConstantBlock`
+
+Ein Block, der einen konstanten Wert ausgibt. Er hat keine Zustände und keine Eingänge.
+
+<div class="columns">
+<div class="two">
+
+- **Deklaration**: Ein Ausgang `Value`.
+- **`CalculateOutputs`**: Setzt den Ausgang `outputs[0]` auf den konstanten `Value`.
+- Die anderen Methoden (`CalculateDerivatives`, etc.) werden nicht überschrieben.
+
+</div>
+<div class="two">
+
+```csharp
+public class ConstantBlock : Block
+{
+    public double Value;
+
+    public ConstantBlock(string name, double value) : base(name)
+    {
+        Value = value;
+        Outputs.Add(new OutputDeclaration("Value"));
+    }
+
+    public override void CalculateOutputs(double time, 
+        double[] continuousStates, double[] discreteStates, 
+        double[] inputs, double[] outputs)
+    {
+        outputs[0] = Value;
+    }
+}
+```
+
+</div>
+</div>
 
 ---
 
@@ -812,13 +888,13 @@ abstract class Function
 
 ### Algebraische Blöcke
 
-Algebraische Blöcke haben keine Zustände (`DimX = 0`). Ihr Ausgang `y` hängt direkt von den Eingängen `u` und/oder internen Parametern ab.
+Algebraische Blöcke haben keine Zustände. Ihr Ausgang `y` hängt direkt von den Eingängen `u` ab (`DirectFeedThrough = true`).
 
-- **`ConstantFunction`**: Erzeugt einen konstanten Wert.
-- **`AddFunction`**: Addiert zwei Eingänge.
-- **`SubtractFunction`**: Subtrahiert den zweiten vom ersten Eingang.
-- **`MultiplyFunction`**: Multipliziert einen Eingang mit einem Faktor.
-- **`RecordFunction`**: Dient zur Aufzeichnung von Signalen für die spätere Visualisierung.
+- **`GainBlock`**: Multipliziert einen Eingang mit einem Faktor.
+- TODO AddBlock
+- TODO SubstractBlock
+- TODO MultiplyBlock
+- TODO DivideBlock
 
 </div>
 <div>
@@ -830,128 +906,22 @@ Algebraische Blöcke haben keine Zustände (`DimX = 0`). Ihr Ausgang `y` hängt 
 
 ---
 
-### Beispiel: `ConstantFunction`
-
-Ein Block, der einen konstanten Wert ausgibt. Er hat keine Zustände und keine Eingänge.
-
-<div class="columns">
-<div class="two">
-
-- **`DimX = 0`** (keine Zustände)
-- **`DimU = 0`** (keine Eingänge)
-- **`DimY = 1`** (ein Ausgang)
-- **`CalculateOutputs`**: Setzt den Ausgang `y[0]` auf den konstanten `Value`.
-- `CalculateDerivatives` und `InitializeConditions` sind nicht nötig.
-
-</div>
-<div class="two">
-
-```csharp
-class ConstantFunction : Function
-{
-    public double Value;
-
-    public ConstantFunction(string name, double value) 
-        : base(name, 0, 0, 1)
-    {
-        Value = value;
-    }
-
-    public override void CalculateOutputs(
-        double t, double[] x, double[] u, double[] y)
-    {
-        y[0] = Value;
-    }
-}
-```
-
-</div>
-</div>
-
----
-
-### Beispiel: `MultiplyFunction`
-
-Ein Block, der seinen Eingang mit einem konstanten Faktor multipliziert.
-
-<div class="columns">
-<div class="two">
-
-- **`DimX = 0`** (keine Zustände)
-- **`DimU = 1`** (ein Eingang)
-- **`DimY = 1`** (ein Ausgang)
-- **`CalculateOutputs`**: Multipliziert den Eingang mit einem konstanten Faktor `y[0] = Factor * u[0]`.
-
-</div>
-<div class="two">
-
-```csharp
-class MultiplyFunction : Function
-{
-    public double Factor;
-
-    public MultiplyFunction(string name, double factor)
-        : base(name, 0, 1, 1) { /*...*/ }
-
-    public override void CalculateOutputs(
-        double t, double[] x, double[] u, double[] y)
-    {
-        y[0] = Factor * u[0];
-    }
-}
-```
-
-</div>
-</div>
-
----
-
-### Beispiel: `AddFunction`
-
-Ein Block, der zwei Eingänge addiert. Er hat keine Zustände. Man spricht von einer **algebraischen Funktion** oder einem Block mit **direct feedthrough**.
-
-<div class="columns">
-<div class="two">
-
-- **`DimX = 0`** (keine Zustände)
-- **`DimU = 2`** (zwei Eingänge)
-- **`DimY = 1`** (ein Ausgang)
-- **`CalculateOutputs`**: Berechnet die Summe der Eingänge `u[0] + u[1]`.
-
-</div>
-<div class="two">
-
-```csharp
-class AddFunction : Function
-{
-    public AddFunction(string name) 
-        : base(name, 0, 2, 1) { }
-
-    public override void CalculateOutputs(
-        double t, double[] x, double[] u, double[] y)
-    {
-        y[0] = u[0] + u[1];
-    }
-}
-```
-
-</div>
-</div>
+TODO Folie zur Implementierung des Gain-Blocks
 
 ---
 
 <div class="columns">
 <div class="two">
 
-### Der `IntegrateFunction` Block
+### Der `IntegrateBlock`
 
-Der `IntegrateFunction`-Block ist der entscheidende Baustein zur Modellierung dynamischer Systeme.
+Der `IntegrateBlock` ist der entscheidende Baustein zur Modellierung dynamischer Systeme.
 
-- Er ist der **einzige Block mit einem Zustand** (`DimX = 1`).
+- Er ist der **einzige grundlegende Block mit einem kontinuierlichen Zustand**.
 - Sein Zustand `x` repräsentiert den integrierten Wert seines Eingangs `u`.
-- Die Methode `CalculateDerivatives` setzt die Zustandsableitung $\dot{x}$ gleich dem Eingang $u$.
-- Der Solver nutzt diese Ableitung, um den Zustand `x` im nächsten Zeitschritt zu berechnen.
-- Der Ausgang `y` des Blocks ist einfach der aktuelle Wert des Zustands `x`.
+- `InitializeStates`: Setzt den Anfangswert des Zustands.
+- `CalculateDerivatives`: Setzt die Zustandsableitung $\dot{x}$ gleich dem Eingang $u$.
+- `CalculateOutputs`: Der Ausgang `y` des Blocks ist einfach der aktuelle Wert des Zustands `x`.
 
 </div>
 <div>
@@ -963,122 +933,109 @@ Der `IntegrateFunction`-Block ist der entscheidende Baustein zur Modellierung dy
 
 ---
 
-### Beispiel: `IntegrateFunction`
+### Beispiel: `IntegrateBlock`
 
-Der zentrale Block zur Modellierung von Dynamik. Er integriert das Eingangssignal über die Zeit und ist der einzige Block mit einem Zustand.
-
-<div class="columns">
-<div class="two">
-
-- **`DimX = 1`** (ein Zustand, der den aktuellen Wert speichert)
-- **`DimU = 1`** (ein Eingang, die Ableitung)
-- **`DimY = 1`** (ein Ausgang, der aktuelle Zustandswert)
-- **`InitializeConditions`**: Setzt den Anfangswert des Zustands.
-- **`CalculateDerivatives`**: $\dot{x} = u$. Die Ableitung des Zustands ist der Eingang.
-- **`CalculateOutputs`**: $y = x$. Der Ausgang ist der aktuelle Wert des Zustands.
-
-</div>
-<div class="two">
+Der zentrale Block zur Modellierung von Dynamik. Er integriert das Eingangssignal über die Zeit.
 
 ```csharp
-class IntegrateFunction : Function
+public class IntegrateBlock : Block
 {
-    public IntegrateFunction(
-        string name, double startValue) 
-        : base(name, 1, 1, 1) { /* ... */ }
+    public double StartValue;
 
-    public override void InitializeConditions(
-        double[] x)
-        => x[0] = StartValue;
-
-    public override void CalculateDerivatives(
-        double t, double[] x, double[] u, double[] d)
-        => d[0] = u[0];
-
-    public override void CalculateOutputs(
-        double t, double[] x, double[] u, double[] y)
-        => y[0] = x[0];
-}
-```
-
-</div>
-</div>
-
----
-
-### Die `Connection`-Klasse
-
-Die `Connection`-Klasse repräsentiert eine einzelne Verbindung zwischen dem Ausgangport einer Quell-Funktion und dem Eingangsport einer Ziel-Funktion.
-
-<div class="columns">
-<div class="two">
-
-- **`Source`**: Die `Function`-Instanz, von der das Signal kommt.
-- **`Output`**: Der Index des Ausgangsports der `Source`-Funktion.
-- **`Target`**: Die `Function`-Instanz, zu der das Signal geht.
-- **`Input`**: Der Index des Eingangsports der `Target`-Funktion.
-
-</div>
-<div class="two">
-
-```csharp
-class Connection
-{
-    public Function Source;
-    public int Output;
-
-    public Function Target;
-    public int Input;
-
-    public Connection(
-        Function source, 
-        int output, 
-        Function target, 
-        int input)
+    public IntegrateBlock(string name, double startValue) : base(name)
     {
-        // ...
+        StartValue = startValue;
+        ContinuousStates.Add(new StateDeclaration("X"));
+        Inputs.Add(new InputDeclaration("U", false));
+        Outputs.Add(new OutputDeclaration("Y"));
     }
+
+    public override void InitializeStates(...) { ... }
+    public override void CalculateDerivatives(...) { ... }
+    public override void CalculateOutputs(...) { ... }
 }
 ```
+
+---
+
+TODO Folie zur Implementierung der Methoden InitializeStates, CalculateDerivatives, und CalculateOutputs
+
+---
+
+<div class="columns">
+<div class="two">
+
+TODO Folie zu ZeroCrossing Blöcken (HitLowerLimit, HitUpperLimit)
+
+</div>
+<div>
+
+![](../../Quellen/WS25/SFunctionContinuous/Block.ZeroCrossing.svg)
 
 </div>
 </div>
 
 ---
 
-### Die `Composition`-Klasse
+TODO Folie zur Implementierung des HitLowerLimit Blocks
 
-Das Gesamtmodell wird in einer `Composition`-Klasse zusammengebaut.
+---
 
-- Sie enthält eine Liste aller `Function`-Instanzen.
-- Sie enthält eine Liste aller `Connection`-Instanzen, die Ausgänge mit Eingängen verbinden.
+### Die `Model`- und `Connection`-Klassen
+
+Das Gesamtmodell wird in einer `Model`-Klasse zusammengebaut, die alle Blöcke und deren Verbindungen (`Connection`) enthält.
+
+<div class="columns top">
+<div class="three">
 
 ```csharp
-class Composition
+// Ausschnitt aus der Model-Klasse
+class Model
 {
-    public List<Function> Functions;
-    public List<Connection> Connections;
+    public List<Block> Blocks { get; }
+    public List<Connection> Connections { get; }
 
-    public void AddFunction(Function f) { /* ... */ }
+    public void AddBlock(Block f) { ... }
 
     public void AddConnection(
-        Function sourceFunc, int outputIdx, 
-        Function targetFunc, int inputIdx) 
-    { /* ... */ }
+        Block sourceBlock, int outputIndex, 
+        Block targetBlock, int inputIndex) 
+    { ... }
 }
 ```
+
+</div>
+<div class="two">
+
+```csharp
+// Die Connection-Klasse
+class Connection
+{
+    public Block Source { get; }
+    public int Output { get; }
+    public Block Target { get; }
+    public int Input { get; }
+}
+```
+
+</div>
+</div>
 
 ---
 
 <div class="columns">
 <div>
 
-### Lösungsstrategien (Solver)
+### Die `Solver`-Klasse
 
-Die `Solution`-Klasse ist die Basis für verschiedene Lösungsstrategien. Sie enthält die Daten-Arrays (`X`, `D`, `U`, `Y` und `ReadyFlag`) und die grundlegende Simulationslogik.
+Die `Solver`-Klasse ist für die Durchführung der Simulation verantwortlich.
 
-- **`EulerExplicitSolution`**: Ein einfacher Solver, der keine algebraischen Schleifen auflösen kann (gibt Fehlermeldung zurück).
-- **`EulerExplicitLoopSolution`**: Eine erweiterte Version, die algebraische Schleifen mittels einer iterativen Schätzung auflösen kann.
+- Sie hält das `Model`.
+- Sie verwaltet die Daten-Arrays für alle Blöcke:
+  - `ContinuousStates`, `DiscreteStates`
+  - `Derivatives`, `Inputs`, `Outputs`, `ZeroCrossings`
+- Die `Solve`-Methode implementiert den eigentlichen Algorithmus (z.B. expliziter Euler mit Nulldurchgangssuche).
+- Sie enthält die Logik zur Erkennung und Behandlung von algebraischen Schleifen.
 
 </div>
 <div>
@@ -1091,123 +1048,90 @@ Die `Solution`-Klasse ist die Basis für verschiedene Lösungsstrategien. Sie en
 ---
 
 <div class="columns">
-<div>
+<div class="three">
 
-### Die `Solution`-Klasse (Solver)
+### **Explizite** Lösungsstrategien
 
-Die `Solution`-Klasse ist für die Durchführung der Simulation verantwortlich.
+- **`EulerExplicitSolver`**: Ein einfacher Solver, der eine algebraische Schleife erkennt und die Simulation mit einer Fehlermeldung abbricht. Eine Schleife liegt vor, wenn Ausgänge von Blöcken berechnet werden müssen, deren Eingänge aber noch nicht alle bekannt sind.
 
-- Sie hält die `Composition` (das Modell).
-- Sie verwaltet die Daten-Arrays für alle Funktionen:
-  - `X`: Zustände / `D`: Ableitungen (`dx/dt`)
-  - `U`: Eingänge / `Y`: Ausgänge
-- Sie verwaltet die Bereitschaft von Eingängen für alle Funktionen (`ReadyFlag`)
-- Die `Solve`-Methode implementiert den eigentlichen Algorithmus (z.B. Euler explizit).
+- **`EulerExplicitLoopSolver`**: Eine erweiterte Version, die algebraische Schleifen mittels einer iterativen Schätzung auflösen kann. Sie "errät" einen Wert für einen unbekannten Eingang, propagiert ihn durch die Schleife und passt die Schätzung an, bis der Fehler minimiert ist.
 
 </div>
-<div>
+<div class="two">
+
+![](../../Quellen/WS25/SFunctionContinuous/Solver.Explicit.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="three">
+
+### **Implizite** Lösungsstrategien
+
+- **`EulerImplicitSolver`**: Implementiert den impliziten Euler-Algorithmus. In jedem Zeitschritt wird eine innere Iterationsschleife ausgeführt, um die Zustandsableitungen zu finden, die die implizite Gleichung erfüllen. Dies ist aufwändiger, aber stabiler für steife Systeme.
+
+- **`EulerImplicitLoopSolver`**: Kombiniert den impliziten Solver mit der iterativen Auflösung von algebraischen Schleifen.
+
+</div>
+<div class="two">
+
+![](../../Quellen/WS25/SFunctionContinuous/Solver.Implicit.svg)
+
+</div>
+</div>
+
+---
+
+### Simulationsschleife in `EulerExplicitSolver`
+
+1.  **Initialisierung**: `InitializeStates` aller Blöcke aufrufen.
+2.  **Zeitschleife** (`while t <= tmax`):
+    a. **Interne Zustände merken** für evtl. Schrittweitenanpassung.
+    b. **Nulldurchgangs-Schleife**:
+       - Zeitschritt `h` ggf. halbieren, um Nulldurchgang genau zu treffen.
+       - **Zustände integrieren**: $x_{k+1} = x_k + h \cdot \dot{x}_k$.
+       - **Ausgänge berechnen**: `CalculateOutputs` für alle Blöcke aufrufen.
+       - **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke aufrufen.
+       - **Nulldurchgänge prüfen**: `CalculateZeroCrossings` aufrufen und prüfen, ob ein Vorzeichenwechsel stattgefunden hat.
+
+    c. **Bei Nulldurchgang**: `UpdateStates` der betroffenen Blöcke aufrufen (z.B. für einen Stoß).
+    d. **Zeit erhöhen**: $t = t + h$.
+
+---
+
+TODO Folie zur Simulationsschleife in EulerImplicitSolver
+
+---
+
+TODO Folie zur Erkennung algebraischer Schleifen
+
+---
+
+TODO Folie zur Lösung algebraischer Schleifen
+
+---
+
+### Beispiel: `BouncingBallExample`
+
+Ein Beispiel für ein hybrides System, das kontinuierliche Bewegung und diskrete Ereignisse (Stoß) kombiniert.
+
+- **Kontinuierlich**: Die Schwerkraft (`ConstantBlock`) wirkt auf die Geschwindigkeit (`IntegrateWithResetBlock`), diese wirkt auf die Position (`IntegrateBlock`).
+- **Diskret**: Ein `HitLowerLimitBlock` prüft, ob die Position den Boden (`<= 0`) erreicht.
+- **Ereignis**: Wenn der Boden erreicht wird, löst der `HitLowerLimitBlock` ein Ereignis aus. Dies triggert die `UpdateStates`-Methode des `IntegrateWithResetBlock`, welcher die Geschwindigkeit umkehrt und dämpft (z.B. `v_neu = -0.8 * v_alt`).
 
 ```csharp
-abstract class Solution
-{
-    public Composition Composition;
-    
-    public Dictionary<Function, double[]> X, D, U, Y;
-
-    public Dictionary<Function, bool[]> ReadyFlag;
-
-    public abstract void Solve(double step, double tmax);
-}
+// ... Blöcke erstellen (Gravity, Velocity, Position, HitLowerLimit, ...)
+// ... Verbindungen herstellen
+Model.AddConnection(g, 0, v, 0); // Gravity -> Velocity
+Model.AddConnection(v, 0, p, 0); // Velocity -> Position
+Model.AddConnection(p, 0, h, 0); // Position -> HitLowerLimit
+Model.AddConnection(h, 0, v, 1); // HitLowerLimit -> Velocity (Reset-Trigger)
+Model.AddConnection(d, 0, v, 2); // Damping*v -> Velocity (Reset-Wert)
 ```
 
-</div>
-</div>
-
----
-
-### Die Implementierung der Methode `Solve` in der Klasse `EulerExplicitSolution`
-
-1.  **Initialisierung**: `InitializeConditions` aller Funktionen aufrufen.
-2.  **Zeitschleife** (`while t <= tmax`):
-    a. **Bereitschaft der Eingänge für alle Funktionen zurücksetzen** (`ReadyFlag`)
-    b. **Liste der offenen Funktionen mit allen Funktionen intialisieren** (`open`)
-    c. **Ausgänge berechnen** (`while open.Count > 0`):
-       - Funktionen suchen, für die alle Eingänge bereit sind (`ReadyFlag`)
-       - Ausgänge der Funktionen, die bereit sind, berechnen (`Y`)
-       - Ausgänge entsprechend den Verbindungen weiterleiten (`U`, `ReadyFlag`)
-       - Berechnete Funktionen aus der Liste der offenen Funktionen entfernen (`open.Remove`)
-
-    d. **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke aufrufen.
-    e. **Zustände integrieren**: $x_{k+1} = x_k + h \cdot \dot{x}_k$.
-    f. **Zeit erhöhen**: $t = t + h$.
-
----
-
-![bg contain right](./EulerExplicit_Beispiel.png)
-
-### Beispiel: `SimpleDemonstration`
-
-Dieses Beispiel modelliert einen einfachen, vorwärtsgerichteten Signalfluss ohne Rückkopplungen.
-
-- Zwei konstante Werte (1 und 2) werden erzeugt.
-- Der erste Wert wird mit 2 multipliziert.
-- Das Ergebnis wird zum zweiten Wert addiert (`(1*2) + 2 = 4`).
-- Dieses Ergebnis wird zweimal integriert und aufgezeichnet.
-- Da keine Rückkopplungen vorhanden sind, kann der `EulerExplicitSolution` das Modell problemlos lösen.
-
----
-
-### Erkennung von **algebraischen Schleifen** in der Klasse `EulerExplicitSolution`
-
-1.  Zu Beginn jedes Zeitschritts wird eine `open`-Liste mit allen Funktionen des Modells erstellt.
-2.  Der Solver tritt in eine Schleife ein, die so lange läuft, bis die `open`-Liste leer ist.
-3.  Innerhalb der Schleife wird die Anzahl der Elemente in `open` vor einer Iteration gespeichert.
-4.  Alle Funktionen in `open` werden durchlaufen. Wenn eine Funktion "bereit" ist (d.h. alle ihre Eingänge sind bekannt), werden ihre Ausgänge berechnet und sie wird aus `open` entfernt.
-5.  Nach der Iteration wird die aktuelle Anzahl der Elemente in `open` mit der gespeicherten Anzahl verglichen.
-6.  **Wenn sich die Anzahl nicht verringert hat**, bedeutet dies, dass keine der verbleibenden Funktionen ausgeführt werden konnte. Dies ist das Kennzeichen einer algebraischen Schleife.
-7.  In diesem Fall bricht der Solver die Simulation ab und wirft eine `Exception`.
-
----
-
-![bg contain right:35%](./EulerExplicit_Loop.png)
-
-### Beispiel: `SimpleLoopDemonstration`
-
-Dieses Beispiel enthält eine direkte algebraische Schleife: Der Ausgang eines `Subtract`-Blocks wird direkt auf einen seiner Eingänge zurückgeführt.
-
-- Das Modell versucht, die Gleichung `y = 1 - y` zu lösen.
-- Der `EulerExplicitSolution` durchläuft die `open`-Liste, kann aber den `Subtract`-Block nie ausführen, da einer seiner Eingänge immer von seinem eigenen, noch nicht berechneten Ausgang abhängt.
-- Nachdem keine Blöcke mehr ausgeführt werden können, die `open`-Liste aber noch den `Subtract`-Block enthält, erkennt der Solver die Schleife.
-- Die Simulation wird mit einer "Algebraische Schleife erkannt!"-Exception abgebrochen.
-
----
-
-### Umgang mit **algebraischen Schleifen** in der Klasse `EulerExplicitLoopSolution`
-
-Der `EulerExplicitLoopSolution` erweitert den einfachen Solver, um Schleifen aufzulösen.
-
-1.  **Schätzung starten**:
-    - Ein Block aus der `open`-Liste wird zum `GuessMaster`
-    - Für seine unbekannten Eingänge wird ein Wert **geraten** (z.B. 0) und als `GuessValue` gespeichert.
-2.  **Iterative Lösung**:
-    - Die Werte werden durch die Schleife propagiert.
-    - Am Ende der Schleife wird der neu berechnete Wert am Eingang des `GuessMaster` mit dem `GuessValue` verglichen.
-    - Der `GuessValue` wird basierend auf dem Fehler angepasst (z.B. `GuessValue += (U - GuessValue) * 0.001`).
-    - Dieser Vorgang wird wiederholt, bis der Fehler unter einem Schwellenwert liegt.
-
----
-
-![bg contain right:40%](./EulerExplicitLoop_Simple.png)
-
-### Beispiel: `SimpleLoopDemonstration` mit Schleifenauflösung
-
-Dasselbe Modell mit der algebraischen Schleife (`y = 1 - y`) wird nun mit dem `EulerExplicitLoopSolution` gelöst.
-
-- Der Solver erkennt die Schleife wie zuvor.
-- Anstatt abzubrechen, wählt er den `Subtract`-Block als `GuessMaster`.
-- Er rät einen Wert für den rückgekoppelten Eingang (z.B. 0).
-- Er berechnet den Ausgang (`y = 1 - 0 = 1`) und den Fehler (`1 - 0 = 1`).
-- Der geratene Wert wird iterativ angepasst, bis der Fehler minimiert ist und der Ausgang `y` gegen die korrekte Lösung `0.5` konvergiert.
 
 ---
 
