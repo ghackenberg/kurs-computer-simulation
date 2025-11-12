@@ -18,6 +18,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 - 5.3: Simulationsalgorithmus
 - 5.4: Implementierung in C#
 - 5.5: Analyse und Visualisierung
+- 5.6: Probabilistische Modelle und Monte-Carlo-Simulation
 
 ---
 
@@ -221,7 +222,7 @@ Eine stilisierte Person (Kunde) schiebt einen Einkaufswagen auf eine Supermarktk
     - $N(t_{neu}) = N(t_{alt}) + 1$.
     - Wenn $B(t_{alt}) = 0$ (frei) dann $B(t_{neu}) \leftarrow 1$ sonst $B(t_{neu}) = 0$.
 2.  **Ereignisplanung $g(\vec{z}(t), e_A)$:**
-    - $\{(e_A, t + \text{Zwischenankunftszeit})\} \cup ($ wenn $B(t)=0$ dann $\{(e_D, t + \text{Bedienzeit})\}$ sonst $\emptyset)$
+    - \{(e_A, t + \text{Zwischenankunftszeit})\} \cup ($ wenn $B(t)=0$ dann \{(e_D, t + \text{Bedienzeit})\} sonst $\emptyset$)
 
 ![](./Diagramme/ArrivalEvent.svg)
 
@@ -266,7 +267,7 @@ Eine stilisierte Person (Kunde) verlässt mit einer Einkaufstasche die Supermark
     - $N(t_{neu}) = N(t_{alt}) - 1$.
     - Wenn $N(t_{alt}) = 0$ (keine Kunden mehr) dann $B(t_{neu}) \leftarrow 0$ sonst $B(t_{neu}) = 1$.
 2.  **Ereignisplanung $g(\vec{z}(t), e_D)$:**
-    - wenn $N(t)>0$ dann $\{(e_D, t + \text{Bedienzeit})\}$ sonst $\emptyset$
+    - wenn $N(t)>0$ dann \{(e_D, t + \text{Bedienzeit})\} sonst $\emptyset$
 
 ![](./Diagramme/DepartureEvent.svg)
 
@@ -296,6 +297,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ![](../../Grafiken/Next-Event-Time-Advance.svg)
 
+---
+
+TODO Folien zur Erklärung der Arbeitsweise des Algorithmus an einem konkreten Beispiel mit definierten Ergebnissen und Zeiten. Tabellarische Darstellung der Zustände über die Zeit sowie der Ereignislisten und deren Veränderung über die Zeit.
 
 ---
 
@@ -560,14 +564,148 @@ Ideal für die schnelle Visualisierung von Simulationsergebnissen.
 
 ---
 
-```csharp
-// Beschäftigungsverlauf visualisieren
-DiagramBusy.Plot.XLabel("Simulationszeit (in Sekunden)");
-DiagramBusy.Plot.YLabel("Beschäftigung");
-DiagramBusy.Plot.Add.Scatter(sim.ChartTime, sim.ChartBusy);
+<!-- Übersicht über probabilistische Modelle und Monte-Carlo-Simulation. -->
 
-// Warteschlangenverlauf visualisieren
-DiagramLength.Plot.XLabel("Simulationszeit (in Sekunden)");
-DiagramLength.Plot.YLabel("Warteschlange");
-DiagramLength.Plot.Add.Scatter(sim.ChartTime, sim.ChartLength);
+## 5.6: Probabilistische Modelle und Monte-Carlo-Simulation
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- **Abgrenzung** deterministischer und probabilistischer Modelle
+- **Erweiterung des Formalismus** um Zufallsvariablen
+- **Grundprinzip** der Monte-Carlo-Simulation zur statistischen Auswertung
+
+---
+
+<!-- Dieser Abschnitt grenzt deterministische von probabilistischen (stochastischen) Modellen ab. -->
+
+<div class="columns">
+<div class="two">
+
+### Probabilistische vs. Deterministische Modelle
+
+Bisher waren unsere Modelle **deterministisch**: Bei gleichem Input kommt immer der gleiche Output heraus.
+
+Reale Systeme beinhalten jedoch oft **Zufallsprozesse**:
+- Kundenankünfte sind unregelmäßig.
+- Bedienzeiten oder Prozessdauern variieren.
+
+Diese Zufälligkeiten werden durch **Wahrscheinlichkeitsverteilungen** (z.B. Exponential-, Normalverteilung) modelliert. Das Modell wird **probabilistisch** (oder stochastisch). 
+
+Das Ergebnis einer einzelnen Simulation ist damit selbst eine **Zufallsvariable**.
+
+</div>
+<div>
+
+<!--
+Eine minimalistische Vektorgrafik, die einen deterministischen und einen probabilistischen Prozess vergleicht.
+
+**Inhalt:**
+Links zeigt ein einzelner, gerader Pfeil von einem Startpunkt A zu einem Endpunkt B, beschriftet mit "Deterministisch". Rechts zweigen von einem Startpunkt A mehrere gewellte, unvorhersehbare Pfeile in eine Cloud von möglichen Endpunkten ab, beschriftet mit "Probabilistisch".
+
+**Stil:**
+- **Farbpalette:** Blau- und Grautöne. Der deterministische Pfad ist dunkel und solide, die probabilistischen Pfade sind heller und transparenter.
+- **Formen:** Klare, einfache Formen.
+- **Atmosphäre:** Informativ, konzeptionell.
+-->
+
+![](../../Grafiken/Modellarten%20-%20Probabilistisch.svg)
+
+</div>
+</div>
+
+---
+
+### Erweiterter Formalismus mit Zufallsvariablen
+
+Die Zufälligkeit fließt in die **Ereignisplanung** ein. Die Funktion $g$ hängt nun zusätzlich von einer Zufallszahl (oder einem Zufallsvektor) $\omega$ ab.
+
+-   $E_{neu} = g(\vec{z}(t_{alt}), e_i, \omega_i)$
+
+Im Warteschlangen-Beispiel werden Zwischenankunfts- und Bedienzeiten aus Verteilungen gezogen:
+-   **Zwischenankunftszeit** $\sim \text{Exponential}(\lambda)$
+-   **Bedienzeit** $\sim \text{Normal}(\mu, \sigma^2)$
+
+```csharp
+// Bedienzeit aus einer Normalverteilung mit µ=3min, σ=30s
+var serviceTime = NextNormal(mean: 3 * 60, stdDev: 0.5 * 60);
+Add(new DepartureEvent(Clock + serviceTime));
+
+// Nächste Ankunft mit Exponentialverteilung (mittlere Ankunftsrate: 1 Kunde alle 2min)
+var interarrivalTime = NextExponential(lambda: 1.0 / (2 * 60));
+Add(new ArrivalEvent(Clock + interarrivalTime));
+```
+
+---
+
+<div class="columns">
+<div>
+
+### Das Problem mit der Einzelsimulation
+
+Ein einzelner Simulationslauf (eine **Replikation**) ist nur *ein möglicher* Systemverlauf ("Sample Path").
+
+Das Ergebnis (z.B. mittlere Wartezeit = 4.7 min) ist nicht repräsentativ für das allgemeine Systemverhalten. Bei einem erneuten Lauf mit anderen Zufallszahlen könnte das Ergebnis 8.1 min sein.
+
+**Ziel:** Wir wollen nicht das Ergebnis eines einzelnen Laufs, sondern **statistische Kennzahlen** über viele mögliche Verläufe hinweg (z.B. den Erwartungswert der mittleren Wartezeit).
+
+</div>
+<div>
+
+TODO Detaillierte Beschreibung einer Illustration des Problems
+
+</div>
+</div>
+
+---
+
+<!-- Dieser Abschnitt erklärt das Grundprinzip der Monte-Carlo-Simulation. -->
+
+### Monte-Carlo-Simulation
+
+Die **Monte-Carlo-Methode** ist ein numerisches Verfahren, um statistische Eigenschaften eines Systems durch wiederholte Simulation zu schätzen.
+
+**Grundprinzip:**
+1.  Führe die Simulation sehr oft durch ($N$ **Replikationen**).
+2.  Jede Replikation muss mit **unabhängigen Zufallszahlen** laufen (d.h. anderer Startwert / "Seed" für den Zufallszahlengenerator).
+3.  Sammle die Ergebnis-Kennzahl (z.B. mittlere Wartezeit) aus jeder einzelnen Replikation.
+4.  Werte die gesammelten Ergebnisse statistisch aus (z.B. Mittelwert, Varianz, Konfidenzintervall).
+
+Nach dem **Gesetz der großen Zahlen** nähert sich der Mittelwert der Ergebnisse mit steigendem $N$ dem wahren Erwartungswert der Kennzahl an.
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Monte-Carlo-Algorithmus
+
+</div>
+<div>
+
+![](./Illustrationen/MonteCarlo.jpg)
+
+</div>
+</div>
+
+```csharp
+var results = new List<double>();
+int numberOfReplications = 1000;
+
+for (int i = 0; i < numberOfReplications; i++)
+{
+    // Wichtig: Jede Replikation braucht einen anderen Seed!
+    var simulation = new Simulation(seed: i); 
+    simulation.Run();
+    // Sammle die relevante Kenngröße aus dem Simulationslauf
+    if (simulation.WaitTimes.Any())
+    {
+        var averageWaitTime = simulation.WaitTimes.Average();
+        results.Add(averageWaitTime);
+    }
+}
+
+// Werte die Ergebnisse aller Replikationen statistisch aus
+var overallMeanWaitTime = results.Average();
+var variance = results.Sum(d => Math.Pow(d - overallMeanWaitTime, 2)) / (results.Count - 1);
+var stdDev = Math.Sqrt(variance);
 ```
