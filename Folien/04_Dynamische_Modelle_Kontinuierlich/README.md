@@ -909,11 +909,7 @@ Die `Solver`-Klasse ist für die Durchführung der Simulation verantwortlich.
 <div class="columns">
 <div class="three">
 
-### **Explizite** Lösungsstrategien
-
-- **`EulerExplicitSolver`**: Ein einfacher Solver, der eine algebraische Schleife erkennt und die Simulation mit einer Fehlermeldung abbricht. Eine Schleife liegt vor, wenn Ausgänge von Blöcken berechnet werden müssen, deren Eingänge aber noch nicht alle bekannt sind.
-
-- **`EulerExplicitLoopSolver`**: Eine erweiterte Version, die algebraische Schleifen mittels einer iterativen Schätzung auflösen kann. Sie "errät" einen Wert für einen unbekannten Eingang, propagiert ihn durch die Schleife und passt die Schätzung an, bis der Fehler minimiert ist.
+TODO Folie zu EulerImplicitSolver
 
 </div>
 <div class="two">
@@ -952,7 +948,7 @@ TODO Folie zu BasicLoopExample (inklusive mathematische Beschreibung)
 
 ![bg contain right](./Screenshots/Einfache_Algebraische_Schleife_Euler_Explizit.png)
 
-TODO Folie zu BasicAlgebraicLoopExample (inklusive mathematische Beschreibung)
+TODO Folie zu BasicAlgebraicLoopExample (inklusive mathematische Beschreibung) mit EulerExplicitSolver (Fehlermeldung!)
 
 ---
 
@@ -960,21 +956,38 @@ TODO Folie zur Erkennung algebraischer Schleifen
 
 ---
 
+<div class="columns">
+<div class="two">
+
+TODO Folie zu EulerExplicitLoopSolver
+
+</div>
+<div>
+
+![](../../Quellen/WS25/SFunctionContinuous/Solver.Explicit.Loop.svg)
+
+</div>
+</div>
+
+---
+
 TODO Folie zur Lösung algebraischer Schleifen
 
 ---
 
+![bg contain right](./Screenshots/Einfache_Algebraische_Schleife_Euler_Explizit_Loop.png)
+
+TODO Folie zu BasicAlgebraicLoopExample (inklusive mathematische Beschreibung) mit EulerExplicitLoopSolver
+
+---
+
 <div class="columns">
-<div class="four">
+<div class="two">
 
-### **Implizite** Lösungsstrategien
-
-- **`EulerImplicitSolver`**: Implementiert den impliziten Euler-Algorithmus. In jedem Zeitschritt wird eine innere Iterationsschleife ausgeführt, um die Zustandsableitungen zu finden, die die implizite Gleichung erfüllen. Dies ist aufwändiger, aber stabiler für steife Systeme.
-
-- **`EulerImplicitLoopSolver`**: Kombiniert den impliziten Solver mit der iterativen Auflösung von algebraischen Schleifen.
+TODO Folie zu EulerImplicitSolver
 
 </div>
-<div class="two">
+<div>
 
 ![](../../Quellen/WS25/SFunctionContinuous/Solver.Implicit.svg)
 
@@ -984,6 +997,21 @@ TODO Folie zur Lösung algebraischer Schleifen
 ---
 
 TODO Folie zur Simulationsschleife in EulerImplicitSolver
+
+---
+
+<div class="columns">
+<div class="two">
+
+TODO Folie zu EulerImplicitLoopSolver
+
+</div>
+<div>
+
+![](../../Quellen/WS25/SFunctionContinuous/Solver.Implicit.Loop.svg)
+
+</div>
+</div>
 
 ---
 
