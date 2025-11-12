@@ -1,0 +1,27 @@
+classDiagram
+
+    direction LR
+
+    class Block {
+        <<Abstract>>
+    }
+
+    class GainBlock {
+        Factor : double
+    }
+    class AddBlock {
+    }
+    class SubstractBlock {
+    }
+    class MultiplyBlock {
+    }
+    class DivideBlock {
+    }
+
+    Block <|-- GainBlock
+    Block <|-- AddBlock
+    Block <|-- SubstractBlock
+    Block <|-- MultiplyBlock
+    Block <|-- DivideBlock
+
+    style Block fill:white

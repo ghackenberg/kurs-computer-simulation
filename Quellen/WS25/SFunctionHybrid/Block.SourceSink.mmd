@@ -1,0 +1,18 @@
+classDiagram
+
+    direction LR
+
+    class Block {
+        <<Abstract>>
+    }
+
+    class ConstantBlock {
+        Value : double
+    }
+    class RecordBlock {
+    }
+
+    Block <|-- ConstantBlock
+    Block <|-- RecordBlock
+
+    style Block fill:white

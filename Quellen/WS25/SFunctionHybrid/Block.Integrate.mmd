@@ -1,0 +1,18 @@
+classDiagram
+
+    direction TB
+
+    class Block {
+        <<Abstract>>
+    }
+
+    class IntegrateBlock {
+        StartValue : double
+        InitializeStates(...) void
+        CalculateDerivatives(...) void
+        CalculateOutputs(...) void
+    }
+    
+    Block <|-- IntegrateBlock
+
+    style Block fill:white

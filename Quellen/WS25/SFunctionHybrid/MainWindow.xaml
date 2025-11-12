@@ -7,7 +7,7 @@
         xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
         xmlns:mlsagl="http://mlsagl"
         mc:Ignorable="d"
-        Title="Kontinuierliche S-Funktion" Height="450" Width="800">
+        Title="Hybride S-Funktionen" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

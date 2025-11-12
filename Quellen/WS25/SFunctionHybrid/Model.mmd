@@ -1,0 +1,27 @@
+classDiagram
+
+    class Connection {
+        Source : Block
+        Output : int
+        Target : Block
+        Input : int
+    }
+
+    class Model {
+        Blocks : List~Block~
+        Connections : List~Connection~
+        AddBlock(f : Block) void
+        AddConnection(sf : Block, sfy : int, tf : Block, tfu : int) void
+    }
+
+    class Block {
+        <<Abstract>>
+    }
+
+    Model *-- "*" Block
+    Model *-- "*" Connection
+
+    Connection --> "1" Block: Source
+    Connection --> "1" Block: Target
+
+    style Block fill:white

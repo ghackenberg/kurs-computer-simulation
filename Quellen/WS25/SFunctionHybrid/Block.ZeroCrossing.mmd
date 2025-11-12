@@ -1,0 +1,19 @@
+classDiagram
+
+    direction LR
+
+    class Block {
+        <<Abstract>>
+    }
+
+    class HitLowerLimitBlock {
+        LowerLimit : double
+    }
+    class HitUpperLimitBlock {
+        UpperLimit : double
+    }
+
+    Block <|-- HitLowerLimitBlock
+    Block <|-- HitUpperLimitBlock
+
+    style Block fill:white
