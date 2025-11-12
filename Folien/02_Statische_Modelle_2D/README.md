@@ -440,6 +440,37 @@ $\begin{pmatrix} F_{ix} \\ F_{iy} \\ F_{jx} \\ F_{jy} \end{pmatrix} = k_{stab} \
 
 ---
 
+### Herleitung der Stab-Steifigkeitsmatrix (1/2)
+
+Ziel ist es, eine Matrix $k_{Stab}$ zu finden, die die Knotenverschiebungen $\vec{u}$ direkt mit den resultierenden Knotenkäften $\vec{f}_{Stab}$ in Beziehung setzt: $\vec{f}_{Stab} = k_{Stab} \cdot \vec{u}$.
+
+1.  **Kräfte am Stab**: Die Stabkraft $S$ erzeugt an den Knoten $i$ und $j$ die Gegenkräfte $\vec{f}_i = -S \cdot \vec{e}$ und $\vec{f}_j = S \cdot \vec{e}$.
+2.  **Zusammenfassen**: $\vec{f}_{Stab} = \begin{pmatrix} \vec{f}_i \\ \vec{f}_j \end{pmatrix} = S \begin{pmatrix} -\vec{e} \\ \vec{e} \end{pmatrix} = \frac{EA}{L} \Delta L \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}$
+3.  **Längenänderung**: $\Delta L \approx e_x(u_{jx} - u_{ix}) + e_y(u_{jy} - u_{iy})$
+
+In Matrixschreibweise: $\Delta L \approx \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \cdot \begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix}$
+
+---
+
+### Herleitung der Stab-Steifigkeitsmatrix (2/2)
+
+Setzt man die Matrixform für $\Delta L$ in die Gleichung für $\vec{f}_{Stab}$ ein, erhält man:
+
+$\vec{f}_{Stab} = \frac{EA}{L} \left( \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \cdot \vec{u} \right) \cdot \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}$
+
+Durch Ausmultiplizieren der Vektoren (äußeres Produkt) ergibt sich die **4x4-Stab-Steifigkeitsmatrix** $k_{Stab}$:
+
+$k_{Stab} = \frac{EA}{L} \begin{pmatrix}
+e_x^2 & e_x e_y & -e_x^2 & -e_x e_y \\
+e_y e_x & e_y^2 & -e_y e_x & -e_y^2 \\
+-e_x^2 & -e_x e_y & e_x^2 & e_x e_y \\
+-e_y e_x & -e_y^2 & e_y e_x & e_y^2
+\end{pmatrix}$
+
+Diese Matrix beschreibt den linearen Zusammenhang zwischen den 4 Verschiebungs-Freiheitsgraden eines Stabes und den daraus resultierenden 4 Knotenkräften im globalen Koordinatensystem.
+
+---
+
 ### Assemblierung der globalen Steifigkeitsmatrix
 
 - Der entscheidende Schritt ist die "Assemblierung": Die einzelnen Stab-Steifigkeitsmatrizen werden zu einer **globalen Steifigkeitsmatrix** $K$ für das gesamte Fachwerk zusammengesetzt.
