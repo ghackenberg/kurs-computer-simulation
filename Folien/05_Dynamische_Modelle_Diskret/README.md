@@ -23,12 +23,24 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+<!-- Übersicht über die Grundlagen und Konzepte von diskreten dynamischen Modellen. -->
+
+## 5.1: Grundlagen und Konzepte
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- **Definition** diskreter dynamischer Modelle
+- **Abgrenzung** zu kontinuierlichen Modellen
+- **Typische Anwendungsbeispiele** wie Warteschlangensysteme
+
+---
+
 <!-- Dieser Abschnitt führt in die grundlegenden Konzepte von diskreten dynamischen Systemen ein und grenzt sie von kontinuierlichen Systemen ab. -->
 
 <div class="columns">
 <div class="two">
 
-## 5.1: Grundlagen und Konzepte
+### Grundlagen und Konzepte
 
 Diskrete dynamische Modelle beschreiben Systeme, deren Zustand sich nur zu diskreten Zeitpunkten ändert. Diese Zustandsänderungen werden durch **Ereignisse** ausgelöst.
 
@@ -50,12 +62,37 @@ Typische Anwendungsbeispiele sind:
 
 ---
 
+TODO Folie Warteschlangesystem und typische Fragestellungen
+
+---
+
+TODO Folie Produktions- und Logistiksysteme und typische Fragestellungen
+
+---
+
+TODO Folie Computernetzwerke und typische Fragestellungen
+
+---
+
+<!-- Übersicht über die Modellierung eines Warteschlangensystems. -->
+
+## 5.2: Modellierung eines Warteschlangensystems
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- **Modellierung** eines einfachen Warteschlangensystems
+- Definition des **Systemzustands** (`State`)
+- Definition der **Ereignisse** (`Events`)
+- Abbildung von Zustand und Ereignissen in **C#-Klassen**
+
+---
+
 <!-- In diesem Abschnitt wird das Beispiel eines einfachen Warteschlangensystems (Single-Server Queue) modelliert. -->
 
 <div class="columns">
 <div class="two">
 
-## 5.2: Modellierung eines Warteschlangensystems
+### Modellierung eines Warteschlangensystems
 
 Wir betrachten ein einfaches System mit einer einzigen Bedienstation (Server) und einer Warteschlange.
 
@@ -124,9 +161,21 @@ namespace DynamischWarteschlange.Model
 
 ---
 
-<!-- Dieser Abschnitt erläutert den "Next-Event Time Advance"-Algorithmus, der die Grundlage für die Simulation von diskreten Systemen bildet. -->
+<!-- Übersicht über den Simulationsalgorithmus für diskrete Systeme. -->
 
 ## 5.3: Simulationsalgorithmus
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Vorstellung des **"Next-Event Time Advance"**-Algorithmus
+- Die drei zentralen Schritte: **Initialisierung, Ereignisauswahl, Ereignisbehandlung**
+- Bedeutung der **Simulationsuhr** und der **Ereignisliste**
+
+---
+
+<!-- Dieser Abschnitt erläutert den "Next-Event Time Advance"-Algorithmus, der die Grundlage für die Simulation von diskreten Systemen bildet. -->
+
+### Simulationsalgorithmus
 
 1.  **Initialisierung:** Startzustand und initiale Ereignisse festlegen.
 2.  **Schleife:** Solange es zukünftige Ereignisse gibt:
@@ -138,12 +187,33 @@ namespace DynamischWarteschlange.Model
 
 ---
 
+TODO Folie Ereignisroutine ArrivalEvent
+
+---
+
+TODO Folie Ereignisroutine DepartureEvent
+
+---
+
+<!-- Übersicht über die Implementierung des Simulationsmodells in C#. -->
+
+## 5.4: Implementierung in C#
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Implementierung der **Simulationsschleife**
+- Verwendung einer **`PriorityQueue`** für die Ereignisliste
+- Logik zur Behandlung von **Ankunftsereignissen** (`ArrivalEvent`)
+- Logik zur Behandlung von **Abfahrtsereignissen** (`DepartureEvent`)
+
+---
+
 <!-- In diesem Abschnitt wird die C#-Implementierung des Simulationsalgorithmus und der Ereignisbehandlung gezeigt. -->
 
 <div class="columns">
 <div class="three">
 
-## 5.4: Implementierung in C#
+### Implementierung in C#
 
 Die `Simulation`-Klasse steuert den Ablauf und enthält die Simulationsuhr (`Clock`), den Systemzustand (`State`) und die Ereignisliste (`EventQueue`).
 
@@ -266,11 +336,23 @@ else if (next is DepartureEvent)
 
 ---
 
+<!-- Übersicht über die Analyse und Visualisierung der Simulationsergebnisse. -->
+
+## 5.5: Analyse und Visualisierung
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- **Sammeln von Daten** während der Simulation (z.B. Warteschlangenlänge)
+- **Speicherung** der Daten in Listen für die spätere Auswertung
+- **Visualisierung** der Ergebnisse als Verlaufsdiagramme und Histogramme mittels `ScottPlot`
+
+---
+
 <!-- Dieser Abschnitt zeigt, wie die während der Simulation gesammelten Daten mit ScottPlot visualisiert werden können. -->
 
 ![bg contain right](../../Quellen/WS24/DynamischWarteschlange/Screenshot.png)
 
-## 5.5: Analyse und Visualisierung
+### Analyse und Visualisierung
 
 Während der Simulation werden Daten wie die Belegung der Station, die Länge der Warteschlange und die Wartezeiten der Kunden gesammelt.
 
@@ -283,6 +365,10 @@ public List<double> WaitTime = new List<double>();
 ```
 
 Nach dem Simulationslauf werden diese Daten verwendet, um Verläufe und Histogramme zu erstellen, z.B. mit der Bibliothek `ScottPlot`.
+
+---
+
+TODO Folie ScottPlot
 
 ```csharp
 // Beschäftigungsverlauf visualisieren
