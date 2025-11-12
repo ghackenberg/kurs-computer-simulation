@@ -19,7 +19,7 @@ namespace SFunctionContinuous
 
             // Modell erstellen und lösen
 
-            Example example = new BouncingBallExample();
+            Example example = new BasicLoopExample();
 
             try
             {

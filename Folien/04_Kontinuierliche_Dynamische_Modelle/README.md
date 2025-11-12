@@ -949,6 +949,49 @@ Die `Solver`-Klasse ist für die Durchführung der Simulation verantwortlich.
 
 ---
 
+### Simulationsschleife in `EulerExplicitSolver`
+
+1.  **Initialisierung**: `InitializeStates` aller Blöcke aufrufen.
+2.  **Zeitschleife** (`while t <= tmax`):
+    a. **Interne Zustände merken** für evtl. Schrittweitenanpassung.
+    b. **Nulldurchgangs-Schleife**:
+       - Zeitschritt `h` ggf. halbieren, um Nulldurchgang genau zu treffen.
+       - **Zustände integrieren**: $x_{k+1} = x_k + h \cdot \dot{x}_k$.
+       - **Ausgänge berechnen**: `CalculateOutputs` für alle Blöcke aufrufen.
+       - **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke aufrufen.
+       - **Nulldurchgänge prüfen**: `CalculateZeroCrossings` aufrufen und prüfen, ob ein Vorzeichenwechsel stattgefunden hat.
+
+    c. **Bei Nulldurchgang**: `UpdateStates` der betroffenen Blöcke aufrufen (z.B. für einen Stoß).
+    d. **Zeit erhöhen**: $t = t + h$.
+
+---
+
+![bg contain right](./Screenshots/Einfaches_Beispiel_Euler_Explizit.png)
+
+TODO Folie zu BasicExample (inklusive mathematische Beschreibung)
+
+---
+
+![bg contain right](./Screenshots/Einfache_Schleife_Euler_Explizit.png)
+
+TODO Folie zu BasicLoopExample (inklusive mathematische Beschreibung)
+
+---
+
+![bg contain right](./Screenshots/Einfache_Algebraische_Schleife_Euler_Explizit.png)
+
+TODO Folie zu BasicAlgebraicLoopExample (inklusive mathematische Beschreibung)
+
+---
+
+TODO Folie zur Erkennung algebraischer Schleifen
+
+---
+
+TODO Folie zur Lösung algebraischer Schleifen
+
+---
+
 <div class="columns">
 <div class="three">
 
@@ -968,32 +1011,7 @@ Die `Solver`-Klasse ist für die Durchführung der Simulation verantwortlich.
 
 ---
 
-### Simulationsschleife in `EulerExplicitSolver`
-
-1.  **Initialisierung**: `InitializeStates` aller Blöcke aufrufen.
-2.  **Zeitschleife** (`while t <= tmax`):
-    a. **Interne Zustände merken** für evtl. Schrittweitenanpassung.
-    b. **Nulldurchgangs-Schleife**:
-       - Zeitschritt `h` ggf. halbieren, um Nulldurchgang genau zu treffen.
-       - **Zustände integrieren**: $x_{k+1} = x_k + h \cdot \dot{x}_k$.
-       - **Ausgänge berechnen**: `CalculateOutputs` für alle Blöcke aufrufen.
-       - **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke aufrufen.
-       - **Nulldurchgänge prüfen**: `CalculateZeroCrossings` aufrufen und prüfen, ob ein Vorzeichenwechsel stattgefunden hat.
-
-    c. **Bei Nulldurchgang**: `UpdateStates` der betroffenen Blöcke aufrufen (z.B. für einen Stoß).
-    d. **Zeit erhöhen**: $t = t + h$.
-
----
-
 TODO Folie zur Simulationsschleife in EulerImplicitSolver
-
----
-
-TODO Folie zur Erkennung algebraischer Schleifen
-
----
-
-TODO Folie zur Lösung algebraischer Schleifen
 
 ---
 
@@ -1015,6 +1033,17 @@ Model.AddConnection(h, 0, v, 1); // HitLowerLimit -> Velocity (Reset-Trigger)
 Model.AddConnection(d, 0, v, 2); // Damping*v -> Velocity (Reset-Wert)
 ```
 
+---
+
+![bg contain right](./Screenshots/Bouncing_Ball_Euler_Explizit.png)
+
+TODO Folie zu Ergebnis des BouncingBall Beispiels mit explizitem Solver (Ball bleibt über die Nulllinie)
+
+---
+
+![bg contain right](./Screenshots/Bouncing_Ball_Euler_Implizit.png)
+
+TODO Folie zu Ergebnis des BouncingBall Beispiels mit implizitem Solver (Ball durchbricht die Nulllinie und "haut ab")
 
 ---
 
@@ -1024,6 +1053,6 @@ Model.AddConnection(d, 0, v, 2); // Damping*v -> Velocity (Reset-Wert)
 - Die **Zustandsraumdarstellung** ($\dot{x}=f(x,u), y=g(x,u)$) ist eine Standardform.
 - **Analytische Lösungen** sind exakt, aber selten findbar. **Numerische Lösungen** sind Approximationen und universell einsetzbar.
 - **Expliziter Euler** ist einfach, aber oft instabil.
-- **Impliziter Euler** ist stabil, erfordert aber die Lösung von (oft nichtlinearen) Gleichungssystemen in jedem Schritt (**algebraische Schleifen / DAEs**).
+- **Impliziter Euler** ist stabil, erfordert aber die Lösung von (oft nichtlinearen) Gleichungssystemen in jedem Schritt.
 - Die **Schrittweite `h`** ist ein kritischer Parameter, der Genauigkeit und Rechenaufwand steuert.
 - **S-Funktionen** bieten eine modulare Architektur, um komplexe Systeme zu modellieren, die von einem zentralen **Solver** gelöst werden.

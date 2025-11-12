@@ -6,20 +6,14 @@ namespace SFunctionContinuous.Framework.Examples
     {
         public BasicLoopExample()
         {
-            Block a = new ConstantBlock("Constant", 1);
-            Block b = new AddBlock("Add");
-            Block c = new IntegrateBlock("Intergate", 0);
-            Block d = new RecordBlock("Record");
+            Block i = new IntegrateBlock("Intergate", 1);
+            Block r = new RecordBlock("Record");
 
-            Model.AddBlock(a);
-            Model.AddBlock(b);
-            Model.AddBlock(c);
-            Model.AddBlock(d);
+            Model.AddBlock(i);
+            Model.AddBlock(r);
 
-            Model.AddConnection(a, 0, b, 0);
-            Model.AddConnection(b, 0, c, 0);
-            Model.AddConnection(c, 0, d, 0);
-            Model.AddConnection(c, 0, b, 1);
+            Model.AddConnection(i, 0, i, 0);
+            Model.AddConnection(i, 0, r, 0);
         }
     }
 }
