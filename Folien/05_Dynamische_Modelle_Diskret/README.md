@@ -638,7 +638,7 @@ Die zentrale Klasse in ScottPlot ist `ScottPlot.Plot`. Eine Instanz davon reprä
 1.  **Plot-Objekt erhalten:** Entweder über ein `FormsPlot` (WinForms) oder `WpfPlot` (WPF) Control oder direkt `new Plot()`.
 2.  **Daten hinzufügen:** Mit Methoden wie `Plot.Add.Scatter()`, `Plot.Add.Line()`, `Plot.Add.Bar()`.
 3.  **Diagramm konfigurieren:** Achsenbeschriftungen (`Plot.XLabel()`, `Plot.YLabel()`), Titel (`Plot.Title()`), Legende (`Plot.Legend.IsVisible = true`).
-4.  **Rendern/Aktualisieren:** Das Diagramm neu zeichnen lassen (z.B. `WpfPlot.Plot.Render()`).
+4.  **Rendern/Aktualisieren:** Das Diagramm neu zeichnen lassen (z.B. `WpfPlot.Plot.Render()`)
 
 </div>
 <div>
@@ -874,4 +874,31 @@ for (int i = 0; i < numberOfReplications; i++)
 var overallMeanWaitTime = results.Average();
 var variance = results.Sum(d => Math.Pow(d - overallMeanWaitTime, 2)) / (results.Count - 1);
 var stdDev = Math.Sqrt(variance);
+```
+
+---
+
+### **Parallelisierung** der Berechnung
+
+```csharp
+// Threadsichere Sammlung für die Ergebnisse
+var results = new ConcurrentBag<double>();
+int numberOfReplications = 10000;
+
+Parallel.For(0, numberOfReplications, i =>
+{
+    // Wichtig: Jeder Thread braucht eine eigene Random-Instanz,
+    // initialisiert mit einem eindeutigen Seed.
+    var threadLocalRandom = new Random(i);
+
+    // Simulation mit der thread-lokalen Random-Instanz durchführen
+    var simulation = new Simulation(random: threadLocalRandom); 
+    simulation.Run();
+    
+    if (simulation.WaitTimes.Any())
+    {
+        var averageWaitTime = simulation.WaitTimes.Average();
+        results.Add(averageWaitTime);
+    }
+});
 ```
