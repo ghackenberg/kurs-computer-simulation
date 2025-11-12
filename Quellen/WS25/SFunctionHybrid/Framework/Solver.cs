@@ -2,23 +2,15 @@
 {
     public abstract class Solver
     {
-        public double AlgebraicLoopErrorThreshold { get; set; } = 0.0001;
-        public int AlgebraicLoopIterationCountLimit { get; set; } = 100000;
-        public double AlgebraicLoopLearningRate { get; set; } = 0.1;
-
         public double ZeroCrossingValueThreshold { get; set; } = 0.0001;
         public int ZeroCrossingIterationCountLimit { get; set; } = 100000;
 
+        public Model Model { get; }
 
-        public Model Composition { get; }
-
-        public List<Block> Functions { get; }
+        public List<Block> Blocks { get; }
         public List<Connection> Connections { get; }
 
         public Dictionary<Block, bool[]> InputReadyFlags { get; } = new Dictionary<Block, bool[]>();
-        public Dictionary<Block, bool[]> InputGuessMasterFlags { get; } = new Dictionary<Block, bool[]>();
-        public Dictionary<Block, bool[]> InputGuessSlaveFlags { get; } = new Dictionary<Block, bool[]>();
-        public Dictionary<Block, double[]> InputGuessValues { get; } = new Dictionary<Block, double[]>();
 
         public Dictionary<Block, double[]> ContinuousStatesPrevious { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> ContinuousStates { get; } = new Dictionary<Block, double[]>();
@@ -30,19 +22,16 @@
         public Dictionary<Block, double[]> ZeroCrossingsPrevious { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> ZeroCrossings { get; } = new Dictionary<Block, double[]>();
 
-        public Solver(Model composition)
+        public Solver(Model model)
         {
-            Composition = composition;
+            Model = model;
 
-            Functions = Composition.Blocks;
-            Connections = Composition.Connections;
+            Blocks = Model.Blocks;
+            Connections = Model.Connections;
 
-            foreach (Block f in Functions)
+            foreach (Block f in Blocks)
             {
                 InputReadyFlags[f] = new bool[f.Inputs.Count];
-                InputGuessMasterFlags[f] = new bool[f.Inputs.Count];
-                InputGuessSlaveFlags[f] = new bool[f.Inputs.Count];
-                InputGuessValues[f] = new double[f.Inputs.Count];
 
                 ContinuousStatesPrevious[f] = new double[f.ContinuousStates.Count];
                 ContinuousStates[f] = new double[f.ContinuousStates.Count];
@@ -60,7 +49,7 @@
 
         protected void InitializeStates()
         {
-            foreach (Block f in Functions)
+            foreach (Block f in Blocks)
             {
                 f.InitializeStates(ContinuousStates[f], DiscreteStates[f]);
             }
@@ -68,21 +57,18 @@
 
         protected abstract void CalculateOutputs(double t);
 
-        protected void ResetFlags()
+        protected virtual void ResetFlags()
         {
-            foreach (Block f in Functions)
+            foreach (Block f in Blocks)
             {
                 for (int i = 0; i < f.Inputs.Count; i++)
                 {
                     InputReadyFlags[f][i] = !f.Inputs[i].DirectFeedThrough;
-
-                    InputGuessMasterFlags[f][i] = false;
-                    InputGuessSlaveFlags[f][i] = false;
                 }
             }
         }
 
-        protected bool IsReady(Block f)
+        protected bool AreAllInputsReady(Block f)
         {
             for (int i = 0; i < f.Inputs.Count; i++)
             {
@@ -94,19 +80,7 @@
             return true;
         }
 
-        protected bool HasGuess(Block f)
-        {
-            for (int i = 0; i < f.Inputs.Count; i++)
-            {
-                if (!InputGuessMasterFlags[f][i] && !InputGuessSlaveFlags[f][i])
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        protected void ForwardOutputs(Block f)
+        protected virtual void ForwardOutputs(Block f)
         {
             foreach (Connection c in f.ConnectionsOut)
             {
@@ -119,32 +93,12 @@
                 Inputs[tf][tfu] = Outputs[sf][sfy];
 
                 InputReadyFlags[tf][tfu] = true;
-
-                InputGuessSlaveFlags[tf][tfu] = HasGuess(f);
             }
-        }
-
-        protected double ComputeAlgebraicLoopError()
-        {
-            double error = 0;
-
-            foreach (Block f in Functions)
-            {
-                for (int i = 0; i < f.Inputs.Count; i++)
-                {
-                    if (InputGuessMasterFlags[f][i])
-                    {
-                        error += Math.Abs(InputGuessValues[f][i] - Inputs[f][i]);
-                    }
-                }
-            }
-
-            return error;
         }
 
         protected void CalculateDerivatives(double t)
         {
-            foreach (Block f in Composition.Blocks)
+            foreach (Block f in Model.Blocks)
             {
                 f.CalculateDerivatives(t, ContinuousStates[f], DiscreteStates[f], Inputs[f], Derivatives[f]);
             }
@@ -152,7 +106,7 @@
 
         protected void UpdateStates(double t)
         {
-            foreach (Block f in Composition.Blocks)
+            foreach (Block f in Model.Blocks)
             {
                 f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
             }
@@ -166,7 +120,7 @@
             // Berechne die ZeroCrossing-Signale für alle Funktionen und prüfe auf ZeroCrossings
             Dictionary<Block, double[]> cache = new Dictionary<Block, double[]>();
 
-            foreach (Block f in Composition.Blocks)
+            foreach (Block f in Model.Blocks)
             {
                 // Initialisiere den Speicher für die neuen Werte
                 double[] z = new double[f.ZeroCrossings.Count];
@@ -196,7 +150,7 @@
             }
 
             // Merke die Werte der ZeroCrossing-Signale für den nächsten Durchlauf
-            foreach (Block f in Composition.Blocks)
+            foreach (Block f in Model.Blocks)
             {
                 ZeroCrossings[f] = cache[f];
             }
@@ -207,7 +161,7 @@
 
         protected void IntegrateContinuousStates(double step)
         {
-            foreach (Block f in Composition.Blocks)
+            foreach (Block f in Model.Blocks)
             {
                 for (int i = 0; i < f.ContinuousStates.Count; i++)
                 {
@@ -218,7 +172,7 @@
 
         protected void RememberInternalVariables()
         {
-            foreach (Block f in Composition.Blocks)
+            foreach (Block f in Model.Blocks)
             {
                 Array.Copy(ContinuousStates[f], ContinuousStatesPrevious[f], f.ContinuousStates.Count);
                 Array.Copy(DiscreteStates[f], DiscreteStatesPrevious[f], f.DiscreteStates.Count);
@@ -228,7 +182,7 @@
 
         protected void RestoreInternalVariables()
         {
-            foreach (Block f in Composition.Blocks)
+            foreach (Block f in Model.Blocks)
             {
                 Array.Copy(ContinuousStatesPrevious[f], ContinuousStates[f], f.ContinuousStates.Count);
                 Array.Copy(DiscreteStatesPrevious[f], DiscreteStates[f], f.DiscreteStates.Count);

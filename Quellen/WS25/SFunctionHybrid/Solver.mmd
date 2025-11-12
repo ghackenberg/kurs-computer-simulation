@@ -7,9 +7,6 @@ classDiagram
 
     class Solver {
         <<Abstract>>
-        AlgebraicLoopErrorThreshold : double
-        AlgebraicLoopIterationCountLimit : int
-        AlgebraicLoopLearningRate : double
         ZeroCrossingValueThreshold : double
         ZeroCrossingIterationCountLimit : int
         Model : Model
@@ -18,12 +15,22 @@ classDiagram
         DiscreteStatesPrevious : Dictionary~Block, double[]~
         DiscreteStates : Dictionary~Block, double[]~
         Derivatives : Dictionary~Block, double[]~
-        InputReadyFlags : Dictionary~Block, bool[]~
         Inputs : Dictionary~Block, double[]~
         Outputs : Dictionary~Block, double[]~
         ZeroCrossingsPrevious : Dictionary~Block, double[]~
         ZeroCrossings : Dictionary~Block, double[]~
+        InputReadyFlags : Dictionary~Block, bool[]~
         Solve(smax : double, tmax : double) void
+        InitializeStates() void
+        ResetFlags() void
+        AreAllInputsReady(block : Block) bool
+        CalculateOutputs(time : double) void
+        ForwardOutputs(block : Block) bool 
+        CalculateDerivatives(time : doube) void
+        CalculateZeroCrossings(time : double) double
+        IntegrateContinuousStates(timeStep : double) void
+        RememberInternalVariables() void
+        RestoreInternalVariables() void
     }
 
     Model "1" --* Solver

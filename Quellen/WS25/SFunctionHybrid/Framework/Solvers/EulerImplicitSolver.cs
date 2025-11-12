@@ -64,7 +64,7 @@
                         // Ableitungen merken
                         Dictionary<Block, double[]> derivativesPrevious = new Dictionary<Block, double[]>();
 
-                        foreach (Block f in Functions)
+                        foreach (Block f in Blocks)
                         {
                             derivativesPrevious[f] = new double[f.ContinuousStates.Count];
 
@@ -83,7 +83,7 @@
                         // Fehler berechnen
                         implicitError = 0;
 
-                        foreach (Block f in Functions)
+                        foreach (Block f in Blocks)
                         {
                             for (int i = 0; i < f.ContinuousStates.Count; i++)
                             {
@@ -95,7 +95,7 @@
                         if (implicitError > ImplicitErrorThreshold)
                         {
                             // Ableitungen anpassen
-                            foreach (Block f in Functions)
+                            foreach (Block f in Blocks)
                             {
                                 for (int i = 0; i < f.ContinuousStates.Count; i++)
                                 {
@@ -149,7 +149,7 @@
             ResetFlags();
 
             // Alle Funktion als "zu berechnen" markieren
-            List<Block> open = [.. Functions];
+            List<Block> open = [.. Blocks];
 
             // Solange arbeiten, bis alle Funktionen berechnet sind
             while (open.Count > 0)
@@ -164,7 +164,7 @@
                     Block f = open[i];
 
                     // Bereitschaft der Funktion prüfen
-                    if (IsReady(f))
+                    if (AreAllInputsReady(f))
                     {
                         // Ausgaben der Funktion berechnen
                         f.CalculateOutputs(time, ContinuousStates[f], DiscreteStates[f], Inputs[f], Outputs[f]);

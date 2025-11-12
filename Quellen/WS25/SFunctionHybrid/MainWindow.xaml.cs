@@ -19,11 +19,11 @@ namespace SFunctionContinuous
 
             // Modell erstellen und lösen
 
-            Example example = new BasicLoopExample();
+            Example example = new BouncingBallExample();
 
             try
             {
-                Solver solution = new EulerImplicitSolver(example.Model);
+                Solver solution = new EulerExplicitSolver(example.Model);
 
                 solution.Solve(example.TimeStepMax, example.TimeMax);
             }

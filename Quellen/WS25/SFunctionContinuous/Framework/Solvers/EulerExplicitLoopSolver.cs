@@ -38,9 +38,9 @@
             return error;
         }
 
-        protected override void ResetInputReadyFlags()
+        protected override void ResetFlags()
         {
-            base.ResetInputReadyFlags();
+            base.ResetFlags();
 
             foreach (Block f in Blocks)
             {
@@ -83,7 +83,7 @@
         protected override void CalculateOutputs(double time)
         {
             // Bereitschaft zurücksetzen
-            ResetInputReadyFlags();
+            ResetFlags();
 
             // Ausgaben berechnen und weiterleiten
             List<Block> open = [.. Blocks];

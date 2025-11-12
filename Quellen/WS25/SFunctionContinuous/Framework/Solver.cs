@@ -44,7 +44,7 @@
 
         protected abstract void CalculateOutputs(double t);
 
-        protected virtual void ResetInputReadyFlags()
+        protected virtual void ResetFlags()
         {
             foreach (Block f in Blocks)
             {

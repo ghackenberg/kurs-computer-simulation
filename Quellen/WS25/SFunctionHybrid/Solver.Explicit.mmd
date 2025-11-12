@@ -12,19 +12,6 @@ classDiagram
         CalculateOutputs(...) void
     }
 
-    class EulerExplicitLoopSolver {
-        AlgebraicLoopErrorThreshold : double
-        AlgebraicLoopIterationCountLimit : int
-        AlgebraicLoopLearningRate : double
-
-        InputGuessMasterFlags : Dictionary~Block, bool[]~
-        InputGuessSlaveFlags : Dictionary~Block, bool[]~
-        InputGuessValues : Dictionary~Block, double[]~
-
-        CalculateOutputs(...) void
-    }
-
     Solver <|-- EulerExplicitSolver
-    EulerExplicitSolver <|-- EulerExplicitLoopSolver
 
     style Solver fill:white

@@ -95,7 +95,7 @@
             ResetFlags();
 
             // Alle Funktion als "zu berechnen" markieren
-            List<Block> open = [.. Functions];
+            List<Block> open = [.. Blocks];
 
             // Solange arbeiten, bis alle Funktionen berechnet sind
             while (open.Count > 0)
@@ -110,7 +110,7 @@
                     Block f = open[i];
 
                     // Bereitschaft der Funktion prüfen
-                    if (IsReady(f))
+                    if (AreAllInputsReady(f))
                     {
                         // Ausgaben der Funktion berechnen
                         f.CalculateOutputs(time, ContinuousStates[f], DiscreteStates[f], Inputs[f], Outputs[f]);

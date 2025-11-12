@@ -122,7 +122,7 @@
         protected override void CalculateOutputs(double time)
         {
             // Bereitschaft zurücksetzen
-            ResetInputReadyFlags();
+            ResetFlags();
 
             // Alle Funktion als "zu berechnen" markieren
             List<Block> open = [.. Blocks];
