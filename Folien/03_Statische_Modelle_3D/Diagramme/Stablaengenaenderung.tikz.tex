@@ -36,10 +36,5 @@
 \draw[vec, blue] (Pi) -- (Pi_prime) node[midway, below] {$\vec{u}_i$};
 \draw[vec, blue] (Pj) -- (Pj_prime) node[midway, above] {$\vec{u}_j$};
 
-% Projektion
-\draw[line width=2pt, orange] ($(Pi)!(Pj_prime)!(Pj)$) -- ($(Pi)!(Pi_prime)!(Pj)$);
-\draw[projection] (Pj_prime) -- ($(Pi)!(Pj_prime)!(Pj)$);
-\draw[projection] (Pi_prime) -- ($(Pi)!(Pi_prime)!(Pj)$);
-
 \end{tikzpicture}
 \end{document}

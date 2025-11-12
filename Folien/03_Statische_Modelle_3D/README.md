@@ -57,7 +57,7 @@ Die grundlegenden physikalischen Prinzipien (Kräftegleichgewicht, Hooke\'sches 
 <div class="columns">
 <div>
 
-### Ideales Fachwerk in 3D
+### **Ideales** Fachwerk in 3D
 
 - **Knotenpunktverfahren**: An jedem Knoten werden nun **drei** Gleichgewichtsgleichungen aufgestellt.
 - Für ein Fachwerk mit $k$ Knoten, $s$ Stäben und $l$ Lagerreaktionen muss gelten: $3k = s + l$ (statische Bestimmtheit).
@@ -141,7 +141,7 @@ Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A
 <div class="columns">
 <div>
 
-### Elastisches Fachwerk in 3D
+### **Elastisches** Fachwerk in 3D
 
 - **Knotenverschiebungen**: Der Vektor $u$ enthält nun für jeden Knoten drei Komponenten ($u_x, u_y, u_z$).
 - **Stab-Steifigkeitsmatrix**: Die $k_{stab}$ ist nun eine 6x6-Matrix, da sie die 3 Verschiebungen an beiden Enden des Stabes in Beziehung setzt.
@@ -166,15 +166,71 @@ Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A
 Die Längenänderung $\Delta L$ eines Stabes zwischen den Knoten $i$ und $j$ hängt von deren Verschiebungen $\vec{u}_i$ und $\vec{u}_j$ ab.
 
 - **Verschiebungsvektoren**: $\vec{u}_i = (u_{ix}, u_{iy}, u_{iz})$ und $\vec{u}_j = (u_{jx}, u_{jy}, u_{jz})$.
-- **Einheitsvektor des Stabes**: $\vec{e} = (e_x, e_y, e_z)$, wobei $e_x, e_y, e_z$ die Richtungscosinusse sind.
+- **Ursprünglicher Stabvektor**: $\vec{L}_{ij} = \vec{p}_j - \vec{p}_i$
 
-Die Längenänderung ist die Projektion der relativen Verschiebung der Knoten auf die Stabachse:
+Die exakte Längenänderung ist die Differenz zwischen der neuen Länge $L'$ (nach der Verformung) und der ursprünglichen Länge $L$.
 
-$\Delta L \approx (\vec{u}_j - \vec{u}_i) \cdot \vec{e}$
+- **Neuer Stabvektor**: $\vec{L}'_{ij} = (\vec{p}_j + \vec{u}_j) - (\vec{p}_i + \vec{u}_i) = \vec{L}_{ij} + (\vec{u}_j - \vec{u}_i)$
+- **Neue Länge**: $L' = |\vec{L}'_{ij}|$
 
-Ausgeschrieben ergibt das:
+</div>
+<div>
 
-$\Delta L \approx e_x(u_{jx} - u_{ix}) + e_y(u_{jy} - u_{iy}) + e_z(u_{jz} - u_{iz})$
+![width:800px](./Diagramme/Stablaengenaenderung.tikz.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="three">
+
+### **Exakte** Berechnung der Stablängenänderung
+
+Die exakte Längenänderung ist: $\Delta L = L' - L = |\vec{L}_{ij} + \vec{u}_j - \vec{u}_i| - |\vec{L}_{ij}|$.
+
+Um die Wurzel zu eliminieren, betrachten wir das Quadrat der neuen Länge $L'^2$. Sei $\Delta \vec{u} = \vec{u}_j - \vec{u}_i$.
+
+$L'^2 = |\vec{L} + \Delta \vec{u}|^2 = (\vec{L} + \Delta \vec{u}) \cdot (\vec{L} + \Delta \vec{u})$
+
+Ausmultiplizieren des Skalarprodukts ergibt:
+
+$L'^2 = \vec{L} \cdot \vec{L} + 2(\vec{L} \cdot \Delta \vec{u}) + \Delta \vec{u} \cdot \Delta \vec{u}$
+$L'^2 = L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2$
+
+Die neue Länge ist somit:
+
+$L' = \sqrt{L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2} = L \sqrt{1 + \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2} + \frac{|\Delta \vec{u}|^2}{L^2}}$
+
+</div>
+<div>
+
+![width:800px](./Diagramme/Stablaengenaenderung.tikz.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="three">
+
+### **Näherungsweise** Berechnung der Stablängenänderung
+
+Für die in der Praxis übliche Annahme **kleiner Verschiebungen** gilt $|\Delta \vec{u}| \ll L$. Daher kann der quadratische Term $\frac{|\Delta \vec{u}|^2}{L^2}$ vernachlässigt werden.
+
+$L' \approx L \sqrt{1 + \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2}}$
+
+Mit der Taylor-Näherung $\sqrt{1+x} \approx 1 + \frac{x}{2}$ für kleine $x$ erhalten wir:
+
+$L' \approx L \left(1 + \frac{1}{2} \cdot \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2}\right) = L \left(1 + \frac{\vec{L} \cdot \Delta \vec{u}}{L^2}\right) = L + \frac{\vec{L} \cdot \Delta \vec{u}}{L}$
+
+Die Längenänderung $\Delta L = L' - L$ ist damit:
+
+$\Delta L \approx \frac{\vec{L} \cdot \Delta \vec{u}}{L} = \left(\frac{\vec{L}}{L}\right) \cdot \Delta \vec{u} = \vec{e} \cdot (\vec{u}_j - \vec{u}_i)$
+
+Dies führt direkt zur linearisierten, näherungsweisen Berechnung.
 
 </div>
 <div>
