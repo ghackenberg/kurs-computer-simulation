@@ -55,24 +55,24 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ---
 
 <div class="columns">
-<div class="five">
+<div class="three">
 
 ### Abgrenzung zu rein kontinuierlichen und rein diskreten Modellen
 
 - **Rein kontinuierliche Modelle:**
     - Zustand ändert sich stetig über die Zeit.
     - Beschrieben durch Differentialgleichungen.
-    - Beispiel: Feder-Masse-Dämpfer-System ohne externe Schalter.
+    - Beispiel: Feder-Masse-Dämpfer-System.
 - **Rein diskrete Modelle:**
-    - Zustand ändert sich nur zu bestimmten, isolierten Zeitpunkten.
-    - Beschrieben durch Ereignisse und Zustandsübergänge.
+    - Zustand ändert sich nur zu bestimmten Zeitpunkten.
+    - Beschrieben durch Ereignisse / Zustandsübergänge.
     - Beispiel: Warteschlangensysteme, Petri-Netze.
 - **Hybride Modelle:** Überbrücken die Lücke zwischen diesen beiden Welten, indem sie beide Arten von Dynamiken integrieren.
 
 </div>
 <div class="two">
 
-<!-- Eine konzeptionelle, abstrakte Infografik im Triptychon-Stil, die drei Modellierungs-Paradigmen darstellt. Oberer Bereich (Kontinuierlich): Eine glatte, fließende, leuchtend blaue Sinuswelle bewegt sich nahtlos vor einem hellgrauen Hintergrund. Mittlerer Bereich (Hybrid): Eine Verschmelzung der oberen und unteren Stile. Die blaue, fließende Welle wird abrupt von einem scharfen, roten, geometrischen Impuls getroffen. An diesem Punkt zerspringt die Welle kurzzeitig in digitale Blöcke und es entsteht ein heller Lichtblitz, bevor sie sich in einer neuen Form fortsetzt. Unterer Bereich (Diskret): Eine Reihe von scharfkantigen, leuchtend roten Würfeln, die auf einem dunklen Gitter angeordnet und durch gerade, gestrichelte Linien verbunden sind, um Zustandsprünge zu symbolisieren. -->
+![](./Illustrationen/KontinuierlichDiskretHybrid.jpg)
 
 </div>
 </div>
