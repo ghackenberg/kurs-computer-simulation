@@ -23,7 +23,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
+<!-- Titelbild: Eine abstrakte Darstellung diskreter, leuchtender Punkte, die sprunghaft durch eine dunkle Galaxie navigieren, im Kontrast zu einem angedeuteten, kontinuierlichen Fluss. -->
 
 ## 5.1: Grundlagen und Konzepte
 
@@ -154,9 +154,7 @@ Für jedes Ereignis $e_i$ gibt es eine **Ereignisroutine**, die beim Eintreten d
 
 ---
 
-<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
-
-## 5.2: Warteschlangensystem
+<!-- Titelbild: Eine abstrakte Illustration von leuchtenden Energiebahnen, die sich in einer dunklen Galaxie zu einer Warteschlange formen und auf einen zentralen, pulsierenden Knotenpunkt (Bedienstation) zusteuern. -->
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -259,7 +257,7 @@ Wenn ein Kunde fertig bedient ist, wird geprüft, ob weitere Kunden warten.
 
 ---
 
-<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
+<!-- Titelbild: Eine abstrakte Darstellung einer kosmischen Uhr in einer dunklen Galaxie, deren Zeiger von einem leuchtenden Ereignis zum nächsten springt, symbolisiert durch aufleuchtende Knotenpunkte in einer Ereignisliste. -->
 
 ## 5.3: Simulationsalgorithmus
 
@@ -322,11 +320,7 @@ Die folgende Tabelle zeigt die Werte der `Clock`, des `State` und der `EventQueu
 | 6 | Departure | `(true, 0)` | `[(D,9)]` | K2 ist fertig, K3 wird bedient |
 | 9 | Departure | `(false, 0)` | `[]` | K3 ist fertig |
 
----
-
-<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
-
-## 5.4: Implementierung in C#
+<!-- Titelbild: Eine abstrakte Visualisierung von C#-Code-Strukturen, die als leuchtende Pfade und Knotenpunkte in einer dunklen Galaxie angeordnet sind, symbolisierend die Implementierung der Simulationslogik. -->
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -533,11 +527,7 @@ else if (next is DepartureEvent)
 </div>
 </div>
 
----
-
-<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
-
-## 5.5: Analyse und Visualisierung
+<!-- Titelbild: Eine abstrakte Darstellung von leuchtenden Datenpunkten und Linien, die sich in einer dunklen Galaxie zu Diagrammen und Histogrammen formen, symbolisierend die Analyse und Visualisierung von Simulationsergebnissen. -->
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -677,11 +667,7 @@ myPlot.YLabel("Häufigkeit");
 myPlot.Axes.AutoScale();
 ```
 
----
-
-<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
-
-## 5.6: Probabilistische Modell
+<!-- Titelbild: Eine abstrakte Illustration von zufällig verteilten, leuchtenden Nebeln und Galaxienstrukturen, die Wahrscheinlichkeitsverteilungen wie die Glockenkurve in einer dunklen Galaxie andeuten. -->
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -962,11 +948,7 @@ Das Ergebnis (z.B. mittlere Wartezeit = 4.7 min) ist nicht repräsentativ für d
 </div>
 </div>
 
----
-
-<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
-
-## 5.7: Monte-Carlo-Simulation
+<!-- Titelbild: Eine abstrakte Darstellung mehrerer paralleler Simulationsläufe als leuchtende Ströme, die sich in einer dunklen Galaxie zu einem einzigen, statistischen Ergebnis vereinen, symbolisierend die Monte-Carlo-Simulation. -->
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
