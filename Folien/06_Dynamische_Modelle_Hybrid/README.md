@@ -72,7 +72,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div class="two">
 
-TODO Mermaid Diagramm mit Kontinuierlichen Modellen oben, diskreten Modellen unten, und hybriden Modellen in der Mitte
+<!-- Eine konzeptionelle, abstrakte Infografik im Triptychon-Stil, die drei Modellierungs-Paradigmen darstellt. Oberer Bereich (Kontinuierlich): Eine glatte, fließende, leuchtend blaue Sinuswelle bewegt sich nahtlos vor einem hellgrauen Hintergrund. Mittlerer Bereich (Hybrid): Eine Verschmelzung der oberen und unteren Stile. Die blaue, fließende Welle wird abrupt von einem scharfen, roten, geometrischen Impuls getroffen. An diesem Punkt zerspringt die Welle kurzzeitig in digitale Blöcke und es entsteht ein heller Lichtblitz, bevor sie sich in einer neuen Form fortsetzt. Unterer Bereich (Diskret): Eine Reihe von scharfkantigen, leuchtend roten Würfeln, die auf einem dunklen Gitter angeordnet und durch gerade, gestrichelte Linien verbunden sind, um Zustandsprünge zu symbolisieren. -->
 
 </div>
 </div>
@@ -142,7 +142,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div>
 
-TODO Tikz-basierte Illustration eines einfachen Nulldurchgangs
+<!-- Eine minimalistische, technische Diagramm-Illustration im Stil von Vektorgrafiken, die einen Nulldurchgang darstellt. Eine fette, schwarze horizontale Linie ('Zeit (t)') und eine vertikale Linie ('g(t)') bilden ein Koordinatensystem. Eine glatte, dunkelblaue Kurve beginnt über der Zeitachse, kreuzt sie und endet darunter. Genau am Schnittpunkt leuchtet ein markanter roter Punkt, der als 'Ereignis (g(t)=0)' gekennzeichnet ist. Der Bereich über der Achse ist zartgrün, der untere zartrot hinterlegt, um den Vorzeichenwechsel zu verdeutlichen. Der Stil ist extrem sauber und präzise, ohne fotografische Texturen. -->
 
 </div>
 </div>
