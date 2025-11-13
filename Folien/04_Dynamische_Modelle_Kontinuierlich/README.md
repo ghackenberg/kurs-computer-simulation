@@ -1196,7 +1196,7 @@ Wird das Modell mit dem `EulerExplicitLoopSolver` ausgeführt, kann die algebrai
 
 ---
 
-### Praktische Anwendung: Nichtlineares elektrisches Netzwerk (1/2)
+### Praktische Anwendung: **Nichtlineares elektrisches Netzwerk** (1/2)
 
 **Beispiel: Spannungsteiler mit nichtlinearem Widerstand**
 
@@ -1216,7 +1216,7 @@ Der Ausgang $V_{out}$ hängt direkt von sich selbst ab.
 <div class="columns">
 <div class="three">
 
-### Praktische Anwendung: Nichtlineares elektrisches Netzwerk (2/2)
+### Praktische Anwendung: **Nichtlineares elektrisches Netzwerk** (2/2)
 
 **Blockdiagramm der Schleife:**
 
@@ -1235,6 +1235,40 @@ Die Auflösung erfordert einen iterativen Prozess in jedem einzelnen Simulations
 
 </div>
 </div>
+
+---
+
+### Beispiel: **Diode** als nichtlineares Element (1/2)
+
+Ein klassisches Beispiel für ein Bauteil mit nichtlinearer Kennlinie ist die Halbleiterdiode. Ihr Verhalten lässt sich durch die **Shockley-Gleichung** beschreiben.
+
+**Strom-Spannungs-Kennlinie einer Diode**
+
+Die Funktion $I = f(V_{out})$ für eine Diode lautet:
+
+$$ I = I_S \left( e^{\frac{V_{out}}{n \cdot V_T}} - 1 \right) $$
+
+Diese Gleichung beschreibt den exponentiellen Anstieg des Stroms, sobald die Spannung in Durchlassrichtung einen Schwellenwert überschreitet.
+
+**Einsetzen in die Maschengleichung:**
+
+$$ V_{out} = V_{in} - R_1 \cdot I_S \left( e^{\frac{V_{out}}{n \cdot V_T}} - 1 \right) $$
+
+Diese transzendente Gleichung kann nicht analytisch nach $V_{out}$ umgeformt werden.
+
+---
+
+### Beispiel: **Diode** als nichtlineares Element (2/2)
+
+**Parameter der Shockley-Gleichung:**
+
+- **$I_S$ (Sperrsättigungsstrom):** Ein sehr kleiner Strom, der bei Anlegen einer Spannung in Sperrrichtung fließt (typ. $10^{-12}$ bis $10^{-6}$ A). Material- und temperaturabhängig.
+- **$n$ (Idealitätsfaktor):** Ein dimensionsloser Faktor, der die Abweichung der Diode vom idealen Verhalten beschreibt (typ. zwischen 1 und 2).
+- **$V_T$ (Temperaturspannung):** Hängt von der Temperatur ab. Bei Raumtemperatur ($\approx 25-26$ mV).
+
+**Konsequenz für die Simulation:**
+
+Die Auflösung der algebraischen Schleife erfordert in jedem Zeitschritt ein numerisches Verfahren (wie das Newton-Raphson-Verfahren oder eine Fixpunkt-Iteration), um den Arbeitspunkt ($V_{out}$, $I$) zu finden, der beide Gleichungen (Maschenregel und Diodenkennlinie) erfüllt.
 
 ---
 
