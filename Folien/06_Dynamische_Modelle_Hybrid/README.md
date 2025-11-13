@@ -21,8 +21,6 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-<!-- Titelbild: Eine abstrakte Illustration, die die Verschmelzung von kontinuierlichen und diskreten Systemen in einer dunklen Galaxie darstellt, mit fließenden Energiebahnen, die auf scharfe, punktuelle Ereignisse treffen. -->
-
 ![bg right:40%](./Illustrationen/Abschnitt_1.jpg)
 
 ## 6.1: Einführung in Hybride Dynamische Modelle
@@ -49,7 +47,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div>
 
-TODO Diffusion-Modell-basierte Ilustration eines physikalischen Prozesses, der durch Software gesteuert wird
+<!-- Eine fotorealistische, cineastische Darstellung eines schlanken, modernen Roboterarms, der präzise eine komplexe mechanische Uhr montiert. Die kontinuierliche Bewegung des Arms wird durch eine glatte, fließende, leuchtend blaue Lichtspur mit leichter Bewegungsunschärfe visualisiert. Scharfe, leuchtend grüne digitale Impulse wandern entlang ätherischer Datenleitungen von einer holografischen Computerschnittstelle zur Basis des Roboters und symbolisieren die diskreten Steuersignale der Software. An den Interaktionspunkten, an denen die Impulse auf die Bewegungsbahn treffen, kommt es zu hellen Lichtblitzen, die Aktionen wie das Schließen des Greifers auslösen. Der Hintergrund ist dunkel und sauber, um die Lichteffekte und die High-Tech-Ästhetik zu betonen. -->
 
 </div>
 </div>
@@ -115,8 +113,6 @@ TODO Mermaid Diagramm mit Kontinuierlichen Modellen oben, diskreten Modellen unt
 
 ---
 
-<!-- Titelbild: Eine abstrakte Illustration von Wellen, die sich in einer dunklen Galaxie ausbreiten und an bestimmten Punkten scharf die Nulllinie durchqueren, symbolisierend die Nulldurchgangsdetektion. -->
-
 ![bg right:40%](./Illustrationen/Abschnitt_2.jpg)
 
 ## 6.2: Nulldurchgangsdetektion
@@ -166,7 +162,7 @@ TODO Tikz-basierte Illustration eines einfachen Nulldurchgangs
 </div>
 <div>
 
-TODO Diffusion-Modell-basierte Illustration von zwei Kugeln, die zusammenstoßen
+<!-- Eine abstrakte, kosmische Illustration von zwei leuchtenden Kugeln, eine rot und eine blau, die im Zentrum eines dunklen Raumes kollidieren. Ihre bisherigen Wege sind als sanfte, verblassende Lichtspuren sichtbar. Der Moment des Aufpralls wird durch einen brillanten, scharfkantigen Blitz aus weißem und violettem Licht dramatisiert, von dem aus Energiwellen und ein feines geometrisches Gitter nach außen strahlen. Dies symbolisiert das plötzliche, diskrete Ereignis und die abrupte Änderung der Systemdynamik. -->
 
 </div>
 </div>
@@ -250,8 +246,6 @@ TODO Mermaid Klassendiagramm
     - `zeroCrossings[1] = continuousStates[0] - UpperLimit;`
 
 ---
-
-<!-- Titelbild: Eine abstrakte Illustration eines leuchtenden Balls, der in einer dunklen Galaxie auf eine Oberfläche prallt und dabei Energie verliert, symbolisierend den Bouncing Ball. -->
 
 ![bg right:40%](./Illustrationen/Abschnitt_3.jpg)
 
@@ -361,8 +355,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-<!-- Titelbild: Eine abstrakte Darstellung von regelmäßig getakteten, leuchtenden Impulsen, die sich durch eine dunkle Galaxie bewegen, symbolisierend diskrete Blöcke mit fester Abtastzeit. -->
-
 ![bg right:40%](./Illustrationen/Abschnitt_4.jpg)
 
 ## 6.4: Diskrete Blöcke mit regelmäßiger Abtastzeit
@@ -444,8 +436,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
     - Wenn ja, würde `UpdateStates` des Blocks aufgerufen und die `NextHitTime` für diesen Block neu berechnet.
 
 ---
-
-<!-- Titelbild: Eine abstrakte Illustration von unregelmäßig auftretenden, leuchtenden Ereignissen in einer dunklen Galaxie, die eine variable Abtastzeit symbolisieren. -->
 
 ![bg right:40%](./Illustrationen/Abschnitt_5.jpg)
 
