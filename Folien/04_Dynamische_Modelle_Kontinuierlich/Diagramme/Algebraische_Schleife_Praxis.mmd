@@ -1,0 +1,13 @@
+graph LR
+    subgraph "Algebraische Schleife"
+        Vout(V_out) --> NLE;
+        NLE("Nichtlineares<br>Element I=f(V_out)") --> I(Strom I);
+        I --> Gain(Gain R1);
+        Vin(Vin) --> Subtract;
+        Gain --> Subtract(Subtraktion);
+        Subtract --> Vout;
+    end
+
+    style NLE fill:#f9f,stroke:#333,stroke-width:2px
+    style Subtract fill:#f9f,stroke:#333,stroke-width:2px
+    style Gain fill:#f9f,stroke:#333,stroke-width:2px

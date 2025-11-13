@@ -1196,6 +1196,48 @@ Wird das Modell mit dem `EulerExplicitLoopSolver` ausgeführt, kann die algebrai
 
 ---
 
+### Praktische Anwendung: Nichtlineares elektrisches Netzwerk (1/2)
+
+**Beispiel: Spannungsteiler mit nichtlinearem Widerstand**
+
+Betrachten wir einen einfachen Spannungsteiler. Anstelle eines festen Lastwiderstands $R_2$ verwenden wir ein nichtlineares Element (z.B. eine Diode, eine Lampe, ein Thermistor), dessen Strom-Spannungs-Kennlinie nicht linear ist.
+
+**Systemgleichungen:**
+1.  Maschenregel: $V_{in} = I \cdot R_1 + V_{out}$
+2.  Kennlinie des Elements: $I = f(V_{out})$
+
+**Algebraische Schleife:**
+Um $V_{out}$ zu berechnen, müssen wir eine Gleichung lösen, in der $V_{out}$ auf beiden Seiten implizit vorkommt:
+$$ V_{out} = V_{in} - R_1 \cdot f(V_{out}) $$
+Der Ausgang $V_{out}$ hängt direkt von sich selbst ab.
+
+---
+
+<div class="columns">
+<div class="three">
+
+### Praktische Anwendung: Nichtlineares elektrisches Netzwerk (2/2)
+
+**Blockdiagramm der Schleife:**
+
+Die Auflösung erfordert einen iterativen Prozess in jedem einzelnen Simulationsschritt:
+
+1.  **Schätze** einen Wert für $V_{out}$.
+2.  Berechne den Strom $I = f(V_{out})$.
+3.  Berechne einen neuen Wert für $V_{out}' = V_{in} - I \cdot R_1$.
+4.  Vergleiche $V_{out}'$ mit dem geschätzten $V_{out}$.
+5.  Wenn die Differenz zu groß ist, passe die Schätzung an und wiederhole ab Schritt 2.
+
+</div>
+<div>
+
+![width:1000px](./Diagramme/Algebraische_Schleife_Praxis.svg)
+
+</div>
+</div>
+
+---
+
 <div class="columns">
 <div class="two">
 
