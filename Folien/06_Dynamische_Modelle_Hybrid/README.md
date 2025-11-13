@@ -208,7 +208,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div>
 
-TODO Mermaid Klassendiagramm
+<!-- Eine abstrakte 3D-Visualisierung einer Software-Architektur. Im Zentrum schwebt ein großer, leuchtender, halbtransparenter Würfel, der eine Kernklasse wie 'Solver' oder 'Block' darstellt. Kleinere, leuchtende Blöcke, die abgeleitete Klassen oder Komponenten repräsentieren, sind durch Lichtstrahlen und pulsierende Datenströme mit dem zentralen Würfel verbunden, was Vererbung und Interaktion symbolisiert. Die gesamte Struktur schwebt in einem dunklen, digitalen Raum mit einem dezenten Gitter im Hintergrund, was ein Gefühl von Struktur und High-Tech vermittelt. (Hinweis: Dies ist eine künstlerische Interpretation. Für ein formales UML-Diagramm sollte Mermaid- oder PlantUML-Syntax verwendet werden.) -->
 
 </div>
 </div>
@@ -228,7 +228,7 @@ TODO Mermaid Klassendiagramm
 </div>
 <div>
 
-TODO Mermaid Klassendiagramm
+<!-- Eine abstrakte 3D-Visualisierung einer Software-Architektur. Im Zentrum schwebt ein großer, leuchtender, halbtransparenter Würfel, der eine Kernklasse wie 'Solver' oder 'Block' darstellt. Kleinere, leuchtende Blöcke, die abgeleitete Klassen oder Komponenten repräsentieren, sind durch Lichtstrahlen und pulsierende Datenströme mit dem zentralen Würfel verbunden, was Vererbung und Interaktion symbolisiert. Die gesamte Struktur schwebt in einem dunklen, digitalen Raum mit einem dezenten Gitter im Hintergrund, was ein Gefühl von Struktur und High-Tech vermittelt. (Hinweis: Dies ist eine künstlerische Interpretation. Für ein formales UML-Diagramm sollte Mermaid- oder PlantUML-Syntax verwendet werden.) -->
 
 </div>
 </div>
