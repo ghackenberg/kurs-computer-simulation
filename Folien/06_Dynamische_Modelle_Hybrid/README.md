@@ -23,6 +23,8 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 <!-- Titelbild: Eine abstrakte Illustration, die die Verschmelzung von kontinuierlichen und diskreten Systemen in einer dunklen Galaxie darstellt, mit fließenden Energiebahnen, die auf scharfe, punktuelle Ereignisse treffen. -->
 
+![bg right:40%](./Illustrationen/Abschnitt_1.jpg)
+
 ## 6.1: Einführung in Hybride Dynamische Modelle
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -92,6 +94,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ---
 
 <!-- Titelbild: Eine abstrakte Illustration von Wellen, die sich in einer dunklen Galaxie ausbreiten und an bestimmten Punkten scharf die Nulllinie durchqueren, symbolisierend die Nulldurchgangsdetektion. -->
+
+![bg right:40%](./Illustrationen/Abschnitt_2.jpg)
 
 ## 6.2: Nulldurchgangsdetektion
 
@@ -172,6 +176,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ---
 
 <!-- Titelbild: Eine abstrakte Illustration eines leuchtenden Balls, der in einer dunklen Galaxie auf eine Oberfläche prallt und dabei Energie verliert, symbolisierend den Bouncing Ball. -->
+
+![bg right:40%](./Illustrationen/Abschnitt_3.jpg)
 
 ## 6.3: Fallbeispiel: Der Bouncing Ball
 
@@ -276,6 +282,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 <!-- Titelbild: Eine abstrakte Darstellung von regelmäßig getakteten, leuchtenden Impulsen, die sich durch eine dunkle Galaxie bewegen, symbolisierend diskrete Blöcke mit fester Abtastzeit. -->
 
+![bg right:40%](./Illustrationen/Abschnitt_4.jpg)
+
 ## 6.4: Diskrete Blöcke mit regelmäßiger Abtastzeit
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -344,6 +352,11 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Verwaltung der diskreten Zustände:**
     - `DiscreteStates` Array im `Block` würde die internen Zustände des diskreten Blocks speichern.
     - Diese Zustände werden nur bei `UpdateStates` aktualisiert.
+
+---
+
+### Implementierung (konzeptionell)
+
 - **Solver-Logik:**
     - Der Solver müsste für jeden diskreten Block die `NextHitTime` (nächste Abtastzeit) berechnen.
     - Bei jedem Simulationsschritt würde der Solver prüfen, ob die aktuelle Simulationszeit die `NextHitTime` eines diskreten Blocks erreicht oder überschritten hat.
@@ -352,6 +365,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ---
 
 <!-- Titelbild: Eine abstrakte Illustration von unregelmäßig auftretenden, leuchtenden Ereignissen in einer dunklen Galaxie, die eine variable Abtastzeit symbolisieren. -->
+
+![bg right:40%](./Illustrationen/Abschnitt_5.jpg)
 
 ## 6.5: Diskrete Blöcke mit variabler Abtastzeit (Next Variable Hit Time)
 
@@ -404,6 +419,11 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
     - Jeder diskrete Block müsste eine Methode implementieren, die dem Solver den nächsten Zeitpunkt mitteilt, zu dem er aktiv werden muss.
     - Dies könnte auf internen Timern, Zustandsbedingungen oder externen Triggern basieren.
     - Rückgabe von `double.PositiveInfinity` wenn keine weitere Aktivierung geplant ist.
+
+---
+
+### Implementierung (konzeptionell)
+
 - **Solver-Logik:**
     - **Globale Ereignisliste:** Eine `PriorityQueue` (oder ähnliche Struktur) zur Verwaltung aller `NextHitTime`s von diskreten Blöcken und Zero-Crossing-Ereignissen.
     - **Schrittweise Simulation:** Bei jedem Schritt wählt der Solver das Minimum aus:
