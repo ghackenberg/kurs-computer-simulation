@@ -776,12 +776,12 @@ Algebraische Blöcke haben keine Zustände. Ihr Ausgang `y` hängt direkt von de
 
 ---
 
+<div class="columns">
+<div class="two">
+
 ### Beispiel: `GainBlock`
 
 Ein Block, der einen Eingang mit einem konstanten Faktor multipliziert.
-
-<div class="columns">
-<div class="two">
 
 - **Deklaration**: Ein Eingang `U`, ein Ausgang `Y`.
 - **`CalculateOutputs`**: Setzt den Ausgang `outputs[0]` auf das Produkt aus `inputs[0]` und dem `Factor`.
@@ -816,12 +816,12 @@ public class GainBlock : Block
 
 ---
 
+<div class="columns">
+<div class="two">
+
 ### Beispiel: `AddBlock`
 
 Ein Block, der zwei Eingänge addiert.
-
-<div class="columns">
-<div class="two">
 
 - **Deklaration**: Zwei Eingänge `A` und `B`, ein Ausgang `Sum`.
 - **`CalculateOutputs`**: Setzt den Ausgang `outputs[0]` auf die Summe von `inputs[0]` und `inputs[1]`.
@@ -902,35 +902,26 @@ public class IntegrateBlock : Block
 
 ---
 
+<div class="columns">
+<div class="">
+
 ### `IntegrateBlock`: Implementierung
 
-Die Methoden implementieren die Kernlogik der Integration.
-
-<div class="columns top">
-<div class="three">
+Und das machen die Methoden des Blocks:
 
 **`InitializeStates(...)`**
 
-Wird vom Solver am Anfang der Simulation aufgerufen. Setzt den Anfangswert des Zustands `X` auf den konfigurierten `StartValue`.
-
-</div>
-<div class="three">
+- Setzt den Anfangswert des Zustands `X` auf den konfigurierten `StartValue`.
 
 **`CalculateDerivatives(...)`**
 
-Wird in jedem Zeitschritt aufgerufen, um die Ableitungen zu berechnen. Die Ableitung des Zustands $\dot{x}$ ist per Definition der Wert am Eingang `U`.
-
-</div>
-<div class="three">
+- Die Ableitung des Zustands $\dot{x}$ ist per Definition der Wert am Eingang `U`.
 
 **`CalculateOutputs(...)`**
 
-Wird aufgerufen, um die Ausgänge des Blocks zu berechnen. Der Ausgang `Y` ist einfach der aktuelle Wert des Zustands `X`.
+- Der Ausgang `Y` ist einfach der aktuelle Wert des Zustands `X`.
 
 </div>
-</div>
-
-<div class="columns top">
 <div>
 
 ```csharp
@@ -939,23 +930,13 @@ public override void InitializeStates(
 {
     continuousStates[0] = StartValue;
 }
-```
 
-</div>
-<div>
-
-```csharp
 public override void CalculateDerivatives(..., 
     double[] inputs, double[] derivatives)
 {
     derivatives[0] = inputs[0];
 }
-```
 
-</div>
-<div>
-
-```csharp
 public override void CalculateOutputs(...,
     double[] continuousStates, ...,
     double[] outputs)
