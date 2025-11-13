@@ -142,7 +142,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Implementierung im `Solver.cs` und `EulerExplicitSolver.cs`
+### Implementierung im `Solver.cs` und `EulerExplicitSolver.cs` (1/2)
 
 - **`Solver.cs`:**
     - `ZeroCrossingValueThreshold`: Toleranz für die Nulldurchgangslokalisierung.
@@ -152,6 +152,11 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
         - Ruft `Block.CalculateZeroCrossings` auf.
         - Prüft auf Vorzeichenwechsel zwischen dem aktuellen und dem vorherigen Zeitschritt.
         - Gibt den maximalen Absolutwert der Zero-Crossing-Funktionen zurück, die einen Vorzeichenwechsel hatten.
+
+---
+
+### Implementierung im `Solver.cs` und `EulerExplicitSolver.cs` (2/2)
+
 - **`EulerExplicitSolver.cs`:**
     - Die `Solve`-Methode enthält die Hauptschleife für die Simulation.
     - Innerhalb dieser Schleife wird die iterative Bisektion angewendet, um Nulldurchgänge zu lokalisieren.
@@ -159,12 +164,17 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Zero-Crossing-Funktionen in Blöcken
+### Zero-Crossing-Funktionen in Blöcken (1/2)
 
 - **`Block.cs`:**
     - Definiert eine virtuelle Methode `CalculateZeroCrossings(...)`, die von spezialisierten Blöcken überschrieben werden kann.
     - Enthält eine Liste von `ZeroCrossingDeclaration`s, die die Zero-Crossing-Signale des Blocks beschreiben.
-- **`ZeroCrossingDeclaration`:** Eine einfache Klasse zur Benennung eines Zero-Crossing-Signals.
+- **`ZeroCrossingDeclaration.cs`:** Eine einfache Klasse zur Benennung eines Zero-Crossing-Signals.
+
+---
+
+### Zero-Crossing-Funktionen in Blöcken (2/2)
+
 - **`HitLowerLimitBlock.cs`:**
     - Ein Block, der ein Zero-Crossing erzeugt, wenn sein Eingang einen definierten unteren Grenzwert erreicht.
     - `zeroCrossings[0] = inputs[0] - LowerLimit;`
@@ -265,7 +275,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Diskussion der Genauigkeit und Stabilität
+### Diskussion der Genauigkeit und Stabilität (1/2)
 
 - **Genauigkeit der Nulldurchgangslokalisierung:**
     - Direkt abhängig von `ZeroCrossingValueThreshold` (wie nah an Null muss das Signal sein) und der maximalen Anzahl von Iterationen.
@@ -274,6 +284,11 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
     - Der verwendete `EulerExplicitSolver` ist ein einfacher Integrator.
     - Bei sehr kleinen Zeitschrittweiten oder "steifen" Systemen (schnelle Dynamik) kann es zu numerischen Instabilitäten kommen.
     - Die präzise Behandlung von Ereignissen hilft, diese Instabilitäten zu minimieren, da die Integration genau an den Ereignispunkten unterbrochen und neu gestartet wird.
+
+---
+
+### Diskussion der Genauigkeit und Stabilität (2/2)
+
 - **Einfluss des `TimeStepMax`:**
     - Die maximale Schrittweite beeinflusst die Geschwindigkeit der Simulation und die initiale Genauigkeit der Nulldurchgangslokalisierung.
     - Ein kleinerer `TimeStepMax` führt zu mehr Schritten und potenziell genaueren Ergebnissen, aber längerer Simulationszeit.
