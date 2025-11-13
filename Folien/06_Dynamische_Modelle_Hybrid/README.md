@@ -36,6 +36,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+<div class="columns">
+<div>
+
 ### Definition hybrider dynamischer Modelle
 
 - **Kombination** aus kontinuierlichen und diskreten Dynamiken.
@@ -43,7 +46,18 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Beispiele:** Systeme mit physikalischen Prozessen, die durch Software gesteuert werden, oder mechanische Systeme mit Kontaktphänomenen.
 - **Modellierung:** Oft durch Differential-Algebraische Gleichungen (DAEs) und endliche Automaten (State Machines).
 
+</div>
+<div>
+
+TODO Diffusion-Modell-basierte Ilustration eines physikalischen Prozesses, der durch Software gesteuert wird
+
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div class="five">
 
 ### Abgrenzung zu rein kontinuierlichen und rein diskreten Modellen
 
@@ -56,6 +70,14 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
     - Beschrieben durch Ereignisse und Zustandsübergänge.
     - Beispiel: Warteschlangensysteme, Petri-Netze.
 - **Hybride Modelle:** Überbrücken die Lücke zwischen diesen beiden Welten, indem sie beide Arten von Dynamiken integrieren.
+
+</div>
+<div class="two">
+
+TODO Mermaid Diagramm mit Kontinuierlichen Modellen oben, diskreten Modellen unten, und hybriden Modellen in der Mitte
+
+</div>
+</div>
 
 ---
 
@@ -109,6 +131,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+<div class="columns">
+<div>
+
 ### Konzept des Nulldurchgangs (Zero-Crossing)
 
 - Eine **Zero-Crossing-Funktion** $g(t, \vec{x}(t))$ ist eine Hilfsfunktion, deren Vorzeichenwechsel ein diskretes Ereignis signalisiert.
@@ -118,7 +143,18 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
     - $g = \text{Höhe} - \text{Bodenlinie}$ (Kollision)
     - $g = \text{Temperatur} - \text{Schwellwert}$ (Thermostat schaltet)
 
+</div>
+<div>
+
+TODO Tikz-basierte Illustration eines einfachen Nulldurchgangs
+
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div class="two">
 
 ### Bedeutung in hybriden Systemen (Ereignisdetektion)
 
@@ -126,6 +162,14 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Korrekte Zustandsübergänge:** Stellt sicher, dass Zustands-Resets oder -Modifikationen exakt zum Zeitpunkt des Ereignisses erfolgen.
 - **Vermeidung numerischer Fehler:** Ohne Nulldurchgangsdetektion könnten Ereignisse übersprungen oder ungenau behandelt werden, was zu falschen Simulationsergebnissen führt.
 - **Grundlage für hybride Solver:** Integriert die kontinuierliche Integration mit der diskreten Ereignisbehandlung.
+
+</div>
+<div>
+
+TODO Diffusion-Modell-basierte Illustration von zwei Kugeln, die zusammenstoßen
+
+</div>
+</div>
 
 ---
 
@@ -155,6 +199,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+<div class="columns">
+<div>
+
 ### Implementierung im `Solver.cs` und `EulerExplicitSolver.cs` (2/2)
 
 - **`EulerExplicitSolver.cs`:**
@@ -162,7 +209,18 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
     - Innerhalb dieser Schleife wird die iterative Bisektion angewendet, um Nulldurchgänge zu lokalisieren.
     - Bei einem gefundenen Nulldurchgang wird `UpdateStates` aufgerufen, um die Zustände des Systems anzupassen.
 
+</div>
+<div>
+
+TODO Mermaid Klassendiagramm
+
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div>
 
 ### Zero-Crossing-Funktionen in Blöcken (1/2)
 
@@ -170,6 +228,14 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
     - Definiert eine virtuelle Methode `CalculateZeroCrossings(...)`, die von spezialisierten Blöcken überschrieben werden kann.
     - Enthält eine Liste von `ZeroCrossingDeclaration`s, die die Zero-Crossing-Signale des Blocks beschreiben.
 - **`ZeroCrossingDeclaration.cs`:** Eine einfache Klasse zur Benennung eines Zero-Crossing-Signals.
+
+</div>
+<div>
+
+TODO Mermaid Klassendiagramm
+
+</div>
+</div>
 
 ---
 
