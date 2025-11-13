@@ -7,8 +7,6 @@ paginate: true
 math: mathjax
 ---
 
-<!-- In diesem Kapitel werden die Grundlagen von diskreten dynamischen Modellen sowie deren Simulation und Implementierung behandelt. -->
-
 ![bg right](./Titelbild.jpg)
 
 # Kapitel 5: Diskrete Dynamische Modelle
@@ -25,7 +23,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-<!-- Übersicht über die Grundlagen und Konzepte von diskreten dynamischen Modellen. -->
+<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
 
 ## 5.1: Grundlagen und Konzepte
 
@@ -36,8 +34,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Typische Anwendungsbeispiele** wie Warteschlangensysteme
 
 ---
-
-<!-- Dieser Abschnitt führt in die grundlegenden Konzepte von diskreten dynamischen Systemen ein und grenzt sie von kontinuierlichen Systemen ab. -->
 
 <div class="columns">
 <div class="two">
@@ -158,7 +154,7 @@ Für jedes Ereignis $e_i$ gibt es eine **Ereignisroutine**, die beim Eintreten d
 
 ---
 
-<!-- Übersicht über die Modellierung eines Warteschlangensystems. -->
+<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
 
 ## 5.2: Warteschlangensystem
 
@@ -263,7 +259,7 @@ Wenn ein Kunde fertig bedient ist, wird geprüft, ob weitere Kunden warten.
 
 ---
 
-<!-- Übersicht über den Simulationsalgorithmus für diskrete Systeme. -->
+<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
 
 ## 5.3: Simulationsalgorithmus
 
@@ -274,8 +270,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Bedeutung der **Simulationsuhr** und der **Ereignisliste**
 
 ---
-
-<!-- Dieser Abschnitt erläutert den "Next-Event Time Advance"-Algorithmus, der die Grundlage für die Simulation von diskreten Systemen bildet. -->
 
 ### Simulationsalgorithmus
 
@@ -330,7 +324,7 @@ Die folgende Tabelle zeigt die Werte der `Clock`, des `State` und der `EventQueu
 
 ---
 
-<!-- Übersicht über die Implementierung des Simulationsmodells in C#. -->
+<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
 
 ## 5.4: Implementierung in C#
 
@@ -341,10 +335,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Logik zur Behandlung von **Ankunftsereignissen** (`ArrivalEvent`)
 - Logik zur Behandlung von **Abfahrtsereignissen** (`DepartureEvent`)
 
-
 ---
-
-<!-- In diesem Abschnitt wird das Beispiel eines einfachen Warteschlangensystems (Single-Server Queue) modelliert. -->
 
 <div class="columns">
 <div class="two">
@@ -371,7 +362,7 @@ Wir betrachten ein einfaches System mit einer einzigen Bedienstation (Server) un
 
 ---
 
-### Systemzustand (State)
+### Systemzustand (Klasse `State`)
 
 Der Zustand des Systems wird durch eine Klasse abgebildet, die alle relevanten Zustandsgrößen enthält. Für unser Warteschlangensystem sind das die Belegung der Station und die Warteschlange selbst.
 
@@ -392,7 +383,7 @@ namespace DynamischWarteschlange.Model
 
 ---
 
-### Ereignisse (Events)
+### Ereignisse (Klasse `Event`)
 
 Ereignisse repräsentieren die Zeitpunkte, an denen sich der Systemzustand ändern kann. Wir definieren eine Basisklasse `Event` mit einem Zeitstempel und leiten davon spezifische Ereignistypen ab.
 
@@ -417,8 +408,6 @@ namespace DynamischWarteschlange.Model
 ```
 
 ---
-
-<!-- In diesem Abschnitt wird die C#-Implementierung des Simulationsalgorithmus und der Ereignisbehandlung gezeigt. -->
 
 <div class="columns">
 <div class="three">
@@ -546,7 +535,7 @@ else if (next is DepartureEvent)
 
 ---
 
-<!-- Übersicht über die Analyse und Visualisierung der Simulationsergebnisse. -->
+<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
 
 ## 5.5: Analyse und Visualisierung
 
@@ -557,8 +546,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Visualisierung** der Ergebnisse als Verlaufsdiagramme und Histogramme mittels `ScottPlot`
 
 ---
-
-<!-- Dieser Abschnitt zeigt, wie die während der Simulation gesammelten Daten mit ScottPlot visualisiert werden können. -->
 
 ![bg contain right](../../Quellen/WS24/DynamischWarteschlange/Screenshot.png)
 
@@ -692,7 +679,7 @@ myPlot.Axes.AutoScale();
 
 ---
 
-<!-- Übersicht über probabilistische Modelle und Monte-Carlo-Simulation. -->
+<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
 
 ## 5.6: Probabilistische Modell
 
@@ -704,8 +691,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Definition und Herleitung** der Normalverteilung (Box-Muller-Transformation)
 
 ---
-
-<!-- Dieser Abschnitt grenzt deterministische von probabilistischen (stochastischen) Modellen ab. -->
 
 <div class="columns">
 <div class="two">
@@ -979,6 +964,8 @@ Das Ergebnis (z.B. mittlere Wartezeit = 4.7 min) ist nicht repräsentativ für d
 
 ---
 
+<!-- TODO Beschreibung eines Titelbilds für diesen Abschnitt -->
+
 ## 5.7: Monte-Carlo-Simulation
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -992,8 +979,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Threadsicherheit von `System.Random`
 
 ---
-
-<!-- Dieser Abschnitt erklärt das Grundprinzip der Monte-Carlo-Simulation. -->
 
 ### Monte-Carlo-Simulation
 
