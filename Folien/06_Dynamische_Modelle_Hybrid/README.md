@@ -47,7 +47,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div>
 
-<!-- Eine fotorealistische, cineastische Darstellung eines schlanken, modernen Roboterarms, der präzise eine komplexe mechanische Uhr montiert. Die kontinuierliche Bewegung des Arms wird durch eine glatte, fließende, leuchtend blaue Lichtspur mit leichter Bewegungsunschärfe visualisiert. Scharfe, leuchtend grüne digitale Impulse wandern entlang ätherischer Datenleitungen von einer holografischen Computerschnittstelle zur Basis des Roboters und symbolisieren die diskreten Steuersignale der Software. An den Interaktionspunkten, an denen die Impulse auf die Bewegungsbahn treffen, kommt es zu hellen Lichtblitzen, die Aktionen wie das Schließen des Greifers auslösen. Der Hintergrund ist dunkel und sauber, um die Lichteffekte und die High-Tech-Ästhetik zu betonen. -->
+![](./Illustrationen/HybrideModelle.jpg)
 
 </div>
 </div>
@@ -162,7 +162,7 @@ TODO Tikz-basierte Illustration eines einfachen Nulldurchgangs
 </div>
 <div>
 
-<!-- Eine abstrakte, kosmische Illustration von zwei leuchtenden Kugeln, eine rot und eine blau, die im Zentrum eines dunklen Raumes kollidieren. Ihre bisherigen Wege sind als sanfte, verblassende Lichtspuren sichtbar. Der Moment des Aufpralls wird durch einen brillanten, scharfkantigen Blitz aus weißem und violettem Licht dramatisiert, von dem aus Energiwellen und ein feines geometrisches Gitter nach außen strahlen. Dies symbolisiert das plötzliche, diskrete Ereignis und die abrupte Änderung der Systemdynamik. -->
+![](./Illustrationen/ObjektKollision.jpg)
 
 </div>
 </div>
