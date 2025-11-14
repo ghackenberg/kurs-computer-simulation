@@ -1,10 +1,11 @@
 ﻿using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionContinuous.Framework.Blocks
 {
     public class SubtractBlock : Block
     {
-        public SubtractBlock(string name = "Subtract") : base(name, -1, 0)
+        public SubtractBlock(string name = "Subtract") : base(name, new InheritedSampleTime())
         {
             // Inputs
             Inputs.Add(new InputDeclaration("A", true));

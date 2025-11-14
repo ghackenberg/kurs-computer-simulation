@@ -1,4 +1,5 @@
 ﻿using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionContinuous.Framework.Blocks
 {
@@ -6,7 +7,7 @@ namespace SFunctionContinuous.Framework.Blocks
     {
         public double Value;
 
-        public ConstantBlock(string name, double value) : base(name, Double.PositiveInfinity, 0)
+        public ConstantBlock(string name, double value) : base(name, new ConstantSampleTime())
         {
             // Parameters
             Value = value;

@@ -6,7 +6,7 @@
         public Dictionary<Block, bool[]> InputGuessSlaveFlags { get; } = new Dictionary<Block, bool[]>();
         public Dictionary<Block, double[]> InputGuessValues { get; } = new Dictionary<Block, double[]>();
 
-        public double AlgebraicLoopErrorThreshold { get; set; } = 0.0001;
+        public double AlgebraicLoopErrorThreshold { get; set; } = 1e-4;
         public int AlgebraicLoopIterationCountLimit { get; set; } = 100000;
         public double AlgebraicLoopLearningRate { get; set; } = 0.1;
 

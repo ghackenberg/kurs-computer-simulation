@@ -1,4 +1,5 @@
 ﻿using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionContinuous.Framework.Blocks
 {
@@ -6,7 +7,7 @@ namespace SFunctionContinuous.Framework.Blocks
     {
         public List<(double, double)> Data { get; } = new List<(double, double)>();
 
-        public RecordBlock(string name) : base(name, -1, 0)
+        public RecordBlock(string name) : base(name, new InheritedSampleTime())
         {
             // Inputs
             Inputs.Add(new InputDeclaration("U", true));

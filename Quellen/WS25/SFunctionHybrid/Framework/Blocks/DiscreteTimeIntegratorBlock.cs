@@ -1,5 +1,6 @@
 ﻿using SFunctionContinuous.Framework;
 using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionHybrid.Framework.Blocks
 {
@@ -7,12 +8,18 @@ namespace SFunctionHybrid.Framework.Blocks
     {
         public double StartValue { get; }
 
-        public DiscreteTimeIntegratorBlock(string name, double startValue, double sampleTimeOffset, double sampleTimePeriod) : base(name, sampleTimeOffset, sampleTimePeriod)
+        public DiscreteTimeIntegratorBlock(string name, double startValue, double sampleTimeOffset, double sampleTimePeriod) : base(name, new DiscreteSampleTime(sampleTimeOffset, sampleTimePeriod))
         {
+            // Parameters
+            StartValue = startValue;
+
+            // Discrete states
             DiscreteStates.Add(new StateDeclaration("X"));
 
+            // Inputs
             Inputs.Add(new InputDeclaration("U", false));
 
+            // Outputs
             Outputs.Add(new OutputDeclaration("Y"));
         }
 
@@ -28,7 +35,12 @@ namespace SFunctionHybrid.Framework.Blocks
 
         public override void UpdateStates(double time, double[] continuousStates, double[] discreteStates, double[] inputs)
         {
-            discreteStates[0] = inputs[0] * SampleTimePeriod;
+            discreteStates[0] += inputs[0] * ((DiscreteSampleTime) SampleTime).Period;
+        }
+
+        public override string ToString()
+        {
+            return $"{Name}\n(StartValue = {StartValue}, Offset = {((DiscreteSampleTime)SampleTime).Offset}, Period = {((DiscreteSampleTime)SampleTime).Period})";
         }
     }
 }

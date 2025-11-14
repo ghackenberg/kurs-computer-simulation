@@ -1,4 +1,5 @@
 ﻿using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionContinuous.Framework.Blocks
 {
@@ -6,7 +7,7 @@ namespace SFunctionContinuous.Framework.Blocks
     {
         public double UpperLimit;
 
-        public HitUpperLimitBlock(string name, double upperLimit) : base(name, -1, 0)
+        public HitUpperLimitBlock(string name, double upperLimit) : base(name, new InheritedSampleTime())
         {
             // Parameters
             UpperLimit = upperLimit;

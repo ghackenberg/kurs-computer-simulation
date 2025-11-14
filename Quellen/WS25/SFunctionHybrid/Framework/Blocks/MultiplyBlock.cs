@@ -1,10 +1,11 @@
 ﻿using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionContinuous.Framework.Blocks
 {
     public class MultiplyBlock : Block
     {
-        public MultiplyBlock(string name = "Multiply") : base(name, -1, 0)
+        public MultiplyBlock(string name = "Multiply") : base(name, new InheritedSampleTime())
         {
             // Inputs
             Inputs.Add(new InputDeclaration("A", true));

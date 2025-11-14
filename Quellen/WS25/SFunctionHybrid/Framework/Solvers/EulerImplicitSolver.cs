@@ -2,7 +2,7 @@
 {
     public class EulerImplicitSolver : Solver
     {
-        public double ImplicitErrorThreshold { get; set; } = 0.0001;
+        public double ImplicitErrorThreshold { get; set; } = 1e-4;
         public int ImplicitIterationCountLimit { get; set; } = 100000;
         public double ImplicitLearningRate { get; set; } = 0.1;
 

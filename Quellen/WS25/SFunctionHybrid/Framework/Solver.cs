@@ -1,8 +1,10 @@
-﻿namespace SFunctionContinuous.Framework
+﻿using SFunctionHybrid.Framework.SampleTimes;
+
+namespace SFunctionContinuous.Framework
 {
     public abstract class Solver
     {
-        public double ZeroCrossingValueThreshold { get; set; } = 0.0001;
+        public double ZeroCrossingValueThreshold { get; set; } = 1e-6;
         public int ZeroCrossingIterationCountLimit { get; set; } = 100000;
 
         public Model Model { get; }
@@ -11,6 +13,8 @@
         public List<Connection> Connections { get; }
 
         public Dictionary<Block, bool[]> InputReadyFlags { get; } = new Dictionary<Block, bool[]>();
+        public Dictionary<Block, bool> ZeroCrossingFlags { get; } = new Dictionary<Block, bool>();
+        public Dictionary<Block, double> NextVariableHitTimes { get; } = new Dictionary<Block, double>();
 
         public Dictionary<Block, double[]> ContinuousStatesPrevious { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> ContinuousStates { get; } = new Dictionary<Block, double[]>();
@@ -52,6 +56,15 @@
             foreach (Block f in Blocks)
             {
                 f.InitializeStates(ContinuousStates[f], DiscreteStates[f]);
+
+                if (f.SampleTime is DiscreteSampleTime)
+                {
+                    NextVariableHitTimes[f] = ((DiscreteSampleTime)f.SampleTime).Offset;
+                }
+                else if (f.SampleTime is VariableSampleTime)
+                {
+                    NextVariableHitTimes[f] = ((VariableSampleTime)f.SampleTime).Offset;
+                }
             }
         }
 
@@ -108,12 +121,39 @@
         {
             foreach (Block f in Model.Blocks)
             {
-                f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
+                if (ZeroCrossingFlags[f])
+                {
+                    f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
+                }
+                else if (f.SampleTime is DiscreteSampleTime)
+                {
+                    if (Math.Abs(t - NextVariableHitTimes[f]) < 1e-9)
+                    {
+                        f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
+
+                        NextVariableHitTimes[f] += ((DiscreteSampleTime)f.SampleTime).Period;
+                    }
+                }
+                else if (f.SampleTime is VariableSampleTime)
+                {
+                    if (Math.Abs(t - NextVariableHitTimes[f]) < 1e-9)
+                    {
+                        f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
+
+                        NextVariableHitTimes[f] = f.GetNextVariableHitTime(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
+                    }
+                }
             }
         }
 
         protected double CalculateZeroCrossings(double t)
         {
+            // ZeroCrossing-Flags zurücksetzen
+            foreach (Block f in Model.Blocks)
+            {
+                ZeroCrossingFlags[f] = false;
+            }
+
             // Rückgabewert initialisieren
             double value = -1;
 
@@ -134,13 +174,17 @@
                     // Wenn ja, prüfe, ob eines der Signale das Vorzeichen gewechselt hat
                     for (int i = 0; i < f.ZeroCrossings.Count; i++)
                     {
-                        if (z[i] > 0 && ZeroCrossings[f][i] < 0)
+                        if (z[i] >= 0 && ZeroCrossings[f][i] < 0)
                         {
                             value = Math.Max(value, +z[i]);
+                            // Nulldurchgang merken (wichtig für UpdateStates)
+                            ZeroCrossingFlags[f] = true;
                         }
-                        else if (z[i] < 0 && ZeroCrossings[f][i] > 0)
+                        else if (z[i] <= 0 && ZeroCrossings[f][i] > 0)
                         {
                             value = Math.Max(value, -z[i]);
+                            // Nulldurchgang merken (wichtig für UpdateStates)
+                            ZeroCrossingFlags[f] = true;
                         }
                     }
                 }

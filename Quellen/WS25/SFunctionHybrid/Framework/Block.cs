@@ -1,4 +1,5 @@
 ﻿using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework;
 
 namespace SFunctionContinuous.Framework
 {
@@ -18,17 +19,13 @@ namespace SFunctionContinuous.Framework
         public List<OutputDeclaration> Outputs { get; } = new List<OutputDeclaration>();
         public List<ZeroCrossingDeclaration> ZeroCrossings { get; } = new List<ZeroCrossingDeclaration>();
 
-        public double SampleTimeOffset { get; }
-        public double SampleTimePeriod { get; }
+        public SampleTime SampleTime { get; }
 
-        public double NextVariableTimeHit { get; set; }
-
-        public Block(string name, double sampleTimeOffset, double sampleTimePeriod)
+        public Block(string name, SampleTime sampleTime)
         {
             Name = name;
 
-            SampleTimeOffset = sampleTimeOffset;
-            SampleTimePeriod = sampleTimePeriod;
+            SampleTime = sampleTime;
         }
 
         virtual public void InitializeStates(double[] continuousStates, double[] discreteStates)
@@ -36,12 +33,17 @@ namespace SFunctionContinuous.Framework
 
         }
 
-        virtual public void CalculateDerivatives(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] derivatives)
+        virtual public double GetNextVariableHitTime(double time, double[] continuousStates, double[] discreteStates, double[] inputs)
+        {
+            return 0;
+        }
+
+        virtual public void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
         {
 
         }
 
-        virtual public void CalculateOutputs(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] outputs)
+        virtual public void CalculateDerivatives(double time, double[] continuousStates, double[] discreteStates, double[] inputs, double[] derivatives)
         {
 
         }

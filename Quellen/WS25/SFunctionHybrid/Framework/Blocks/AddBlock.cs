@@ -1,10 +1,11 @@
 ﻿using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionContinuous.Framework.Blocks
 {
     public class AddBlock : Block
     {
-        public AddBlock(string name = "Add") : base(name, -1, 0)
+        public AddBlock(string name = "Add") : base(name, new InheritedSampleTime())
         {
             // Inputs
             Inputs.Add(new InputDeclaration("A", true));

@@ -1,4 +1,5 @@
 ﻿using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionContinuous.Framework.Blocks
 {
@@ -6,7 +7,7 @@ namespace SFunctionContinuous.Framework.Blocks
     {
         public double Factor;
 
-        public GainBlock(string name, double factor) : base(name, -1, 0)
+        public GainBlock(string name, double factor) : base(name, new InheritedSampleTime())
         {
             // Parameters
             Factor = factor;

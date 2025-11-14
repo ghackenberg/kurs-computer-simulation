@@ -1,5 +1,6 @@
 ﻿using SFunctionContinuous.Framework;
 using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionHybrid.Framework.Blocks
 {
@@ -7,8 +8,9 @@ namespace SFunctionHybrid.Framework.Blocks
     {
         public double StartValue { get; }
 
-        public ZeroOrderHoldBlock(string name, double startValue, double sampleTimeOffset, double sampleTimePeriod) : base(name, sampleTimeOffset, sampleTimePeriod)
+        public ZeroOrderHoldBlock(string name, double startValue, double sampleTimeOffset, double sampleTimePeriod) : base(name, new DiscreteSampleTime(sampleTimeOffset, sampleTimePeriod))
         {
+            // Parameters
             StartValue = startValue;
 
             // Discrete states
@@ -34,6 +36,11 @@ namespace SFunctionHybrid.Framework.Blocks
         public override void UpdateStates(double time, double[] continuousStates, double[] discreteStates, double[] inputs)
         {
             discreteStates[0] = inputs[0];
+        }
+
+        public override string ToString()
+        {
+            return $"{Name}\n(Offset = {((DiscreteSampleTime) SampleTime).Offset}, Period = {((DiscreteSampleTime)SampleTime).Period})";
         }
     }
 }

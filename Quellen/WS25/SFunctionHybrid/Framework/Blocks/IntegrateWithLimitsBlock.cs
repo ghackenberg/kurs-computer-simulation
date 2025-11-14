@@ -1,4 +1,5 @@
 ﻿using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionContinuous.Framework.Blocks
 {
@@ -8,7 +9,7 @@ namespace SFunctionContinuous.Framework.Blocks
         public double LowerLimit;
         public double UpperLimit;
 
-        public IntegrateWithLimitsBlock(string name, double startValue, double lowerLimit, double upperLimit) : base(name, 0, 0)
+        public IntegrateWithLimitsBlock(string name, double startValue, double lowerLimit, double upperLimit) : base(name, new ContinuousSampleTime())
         {
             // Parameters
             StartValue = startValue;

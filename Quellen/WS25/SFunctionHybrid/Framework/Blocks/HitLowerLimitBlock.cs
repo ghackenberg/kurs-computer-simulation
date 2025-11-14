@@ -1,4 +1,5 @@
 ﻿using SFunctionContinuous.Framework.Declarations;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionContinuous.Framework.Blocks
 {
@@ -6,7 +7,7 @@ namespace SFunctionContinuous.Framework.Blocks
     {
         public double LowerLimit;
 
-        public HitLowerLimitBlock(string name, double lowerLimit) : base(name, -1, 0)
+        public HitLowerLimitBlock(string name, double lowerLimit) : base(name, new InheritedSampleTime())
         {
             // Parameters
             LowerLimit = lowerLimit;
