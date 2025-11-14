@@ -6,7 +6,7 @@ namespace SFunctionContinuous.Framework.Blocks
     {
         public double Value;
 
-        public ConstantBlock(string name, double value) : base(name)
+        public ConstantBlock(string name, double value) : base(name, Double.PositiveInfinity, 0)
         {
             // Parameters
             Value = value;

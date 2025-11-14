@@ -7,7 +7,7 @@ namespace SFunctionContinuous.Framework.Blocks
         public double StartValue;
         public double UpperLimit;
 
-        public IntegrateWithUpperLimitBlock(string name, double startValue, double upperLimit) : base(name)
+        public IntegrateWithUpperLimitBlock(string name, double startValue, double upperLimit) : base(name, 0, 0)
         {
             // Parameters
             StartValue = startValue;

@@ -18,9 +18,17 @@ namespace SFunctionContinuous.Framework
         public List<OutputDeclaration> Outputs { get; } = new List<OutputDeclaration>();
         public List<ZeroCrossingDeclaration> ZeroCrossings { get; } = new List<ZeroCrossingDeclaration>();
 
-        public Block(string name)
+        public double SampleTimeOffset { get; }
+        public double SampleTimePeriod { get; }
+
+        public double NextVariableTimeHit { get; set; }
+
+        public Block(string name, double sampleTimeOffset, double sampleTimePeriod)
         {
             Name = name;
+
+            SampleTimeOffset = sampleTimeOffset;
+            SampleTimePeriod = sampleTimePeriod;
         }
 
         virtual public void InitializeStates(double[] continuousStates, double[] discreteStates)

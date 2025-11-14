@@ -6,7 +6,7 @@ namespace SFunctionContinuous.Framework.Blocks
     {
         public List<(double, double)> Data { get; } = new List<(double, double)>();
 
-        public RecordBlock(string name) : base(name)
+        public RecordBlock(string name) : base(name, -1, 0)
         {
             // Inputs
             Inputs.Add(new InputDeclaration("U", true));

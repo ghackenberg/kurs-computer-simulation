@@ -6,7 +6,7 @@ namespace SFunctionContinuous.Framework.Blocks
     {
         public double StartValue;
 
-        public IntegrateBlock(string name, double startValue) : base(name)
+        public IntegrateBlock(string name, double startValue) : base(name, 0, 0)
         {
             // Parameters
             StartValue = startValue;

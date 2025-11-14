@@ -4,7 +4,7 @@ namespace SFunctionContinuous.Framework.Blocks
 {
     public class MultiplyBlock : Block
     {
-        public MultiplyBlock(string name = "Multiply") : base(name)
+        public MultiplyBlock(string name = "Multiply") : base(name, -1, 0)
         {
             // Inputs
             Inputs.Add(new InputDeclaration("A", true));

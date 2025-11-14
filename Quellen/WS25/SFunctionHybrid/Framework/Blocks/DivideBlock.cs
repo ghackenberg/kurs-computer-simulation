@@ -4,7 +4,7 @@ namespace SFunctionContinuous.Framework.Blocks
 {
     public class DivideBlock : Block
     {
-        public DivideBlock(string name = "Divide") : base(name)
+        public DivideBlock(string name = "Divide") : base(name, -1, 0)
         {
             // Inputs
             Inputs.Add(new InputDeclaration("A", true));

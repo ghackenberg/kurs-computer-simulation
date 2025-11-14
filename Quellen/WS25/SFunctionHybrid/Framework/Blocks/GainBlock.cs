@@ -6,7 +6,7 @@ namespace SFunctionContinuous.Framework.Blocks
     {
         public double Factor;
 
-        public GainBlock(string name, double factor) : base(name)
+        public GainBlock(string name, double factor) : base(name, -1, 0)
         {
             // Parameters
             Factor = factor;

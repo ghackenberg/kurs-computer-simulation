@@ -6,7 +6,7 @@ namespace SFunctionContinuous.Framework.Blocks
     {
         public double LowerLimit;
 
-        public HitLowerLimitBlock(string name, double lowerLimit) : base(name)
+        public HitLowerLimitBlock(string name, double lowerLimit) : base(name, -1, 0)
         {
             // Parameters
             LowerLimit = lowerLimit;

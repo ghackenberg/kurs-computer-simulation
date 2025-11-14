@@ -6,7 +6,7 @@ namespace SFunctionContinuous.Framework.Blocks
     {
         public double UpperLimit;
 
-        public HitUpperLimitBlock(string name, double upperLimit) : base(name)
+        public HitUpperLimitBlock(string name, double upperLimit) : base(name, -1, 0)
         {
             // Parameters
             UpperLimit = upperLimit;

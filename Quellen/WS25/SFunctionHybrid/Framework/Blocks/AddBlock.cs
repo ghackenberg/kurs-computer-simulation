@@ -4,7 +4,7 @@ namespace SFunctionContinuous.Framework.Blocks
 {
     public class AddBlock : Block
     {
-        public AddBlock(string name = "Add") : base(name)
+        public AddBlock(string name = "Add") : base(name, -1, 0)
         {
             // Inputs
             Inputs.Add(new InputDeclaration("A", true));
