@@ -21,13 +21,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WS24", "WS24", "{02EA681E-C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WS25", "WS25", "{F7ACCD52-769B-46D8-A98D-3F363F55C7F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdealesFachwerk2D", "WS25\IdealesFachwerk2D\IdealesFachwerk2D.csproj", "{80634D94-A6F2-4BDC-B7EF-59641F64AF73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FachwerkIdeal2D", "WS25\FachwerkIdeal2D\FachwerkIdeal2D.csproj", "{80634D94-A6F2-4BDC-B7EF-59641F64AF73}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageVisualisierung3D", "WS25\VorlageVisualisierung3D\VorlageVisualisierung3D.csproj", "{FFCCD45B-A6CE-4DB2-A0C7-635B62A4278F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdealesFachwerk3D", "WS25\IdealesFachwerk3D\IdealesFachwerk3D.csproj", "{93B2D1CF-7708-494F-8302-73B39061CC42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FachwerkIdeal3D", "WS25\FachwerkIdeal3D\FachwerkIdeal3D.csproj", "{93B2D1CF-7708-494F-8302-73B39061CC42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElastischesFachwerk3D", "WS25\ElastischesFachwerk3D\ElastischesFachwerk3D.csproj", "{7E1D649C-286F-44FE-B4CD-4DBD92465B66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FachwerkElastisch3D", "WS25\FachwerkElastisch3D\FachwerkElastisch3D.csproj", "{7E1D649C-286F-44FE-B4CD-4DBD92465B66}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFunctionContinuous", "WS25\SFunctionContinuous\SFunctionContinuous.csproj", "{4570C25E-6E81-4A83-B209-3DC40B79DAF1}"
 EndProject
