@@ -117,33 +117,48 @@ namespace SFunctionContinuous.Framework
             }
         }
 
-        protected void UpdateStates(double t)
+        protected bool UpdateStates(double t)
         {
+            bool updated = false;
+
             foreach (Block f in Model.Blocks)
             {
+                // Zustandsaktualisierung bei Nulldurchgang
                 if (ZeroCrossingFlags[f])
                 {
                     f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
+
+                    updated = true;
                 }
+                // Zustandsaktualisierung bei diskreter Abtastzeit
                 else if (f.SampleTime is DiscreteSampleTime)
                 {
                     if (Math.Abs(t - NextVariableHitTimes[f]) < 1e-9)
                     {
                         f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
 
+                        // Bestimmung der nächsten Abtastzeit
                         NextVariableHitTimes[f] += ((DiscreteSampleTime)f.SampleTime).Period;
+
+                        updated = true;
                     }
                 }
+                // Zustandsaktualisierung bei variabler Abtastzeit
                 else if (f.SampleTime is VariableSampleTime)
                 {
                     if (Math.Abs(t - NextVariableHitTimes[f]) < 1e-9)
                     {
                         f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
 
+                        // Bestimmung der nächsten Abtastzeit
                         NextVariableHitTimes[f] = f.GetNextVariableHitTime(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
+
+                        updated = true;
                     }
                 }
             }
+
+            return updated;
         }
 
         protected double CalculateZeroCrossings(double t)

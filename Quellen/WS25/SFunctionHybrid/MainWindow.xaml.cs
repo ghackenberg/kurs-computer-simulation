@@ -4,6 +4,7 @@ using SFunctionContinuous.Framework;
 using SFunctionContinuous.Framework.Blocks;
 using SFunctionContinuous.Framework.Examples;
 using SFunctionContinuous.Framework.Solvers;
+using SFunctionHybrid.Framework.Examples;
 using System.Windows;
 
 namespace SFunctionContinuous
@@ -19,7 +20,7 @@ namespace SFunctionContinuous
 
             // Modell erstellen und lösen
 
-            Example example = new BouncingBallExample();
+            Example example = new BasicDiscreteExample();
 
             try
             {

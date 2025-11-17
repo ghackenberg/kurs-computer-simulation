@@ -1,4 +1,6 @@
-﻿namespace SFunctionContinuous.Framework.Solvers
+﻿using SFunctionHybrid.Framework.SampleTimes;
+
+namespace SFunctionContinuous.Framework.Solvers
 {
     public class EulerImplicitSolver : Solver
     {
@@ -35,7 +37,17 @@
                 RememberInternalVariables();
 
                 // Zeitschritt initialieren
-                double timeStep = timeStepMax * 2;
+                double timeStep = timeStepMax;
+
+                foreach (Block b in Blocks)
+                {
+                    if (b.SampleTime is DiscreteSampleTime || b.SampleTime is VariableSampleTime)
+                    {
+                        timeStep = Math.Min(timeStep, NextVariableHitTimes[b] - time);
+                    }
+                }
+
+                timeStep *= 2;
 
                 // Nulldurchgängswert initialisieren
                 double zeroCrossingValue = 1;
@@ -122,12 +134,9 @@
                     throw new Exception($"Nulldurchgang nicht gefunden ({time + timeStep}, {zeroCrossingValue})!");
                 }
 
-                // Nulldurchgang existiert und gefunden?
-                if (zeroCrossingValue > 0)
+                // Diskreter Zustandsübergang (wegen Nulldurchgang oder diskreter/variabler Abtastzeit)?
+                if (UpdateStates(time + timeStep))
                 {
-                    // Zustände aktualisieren
-                    UpdateStates(time + timeStep);
-
                     // Ausgaben noch einmal neu berechnen
                     CalculateOutputs(time + timeStep);
 
