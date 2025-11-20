@@ -1,0 +1,24 @@
+graph LR
+    subgraph "Modell"
+        F_ext(F<sub>Antrieb</sub>)
+        S2 -- F<sub>Netto</sub> --> G1
+        subgraph Algebraische Schleife
+            direction RL
+            G1[Gain <br> 1/m]
+            S2[Subtract]
+            AM[Added Mass <br> m<sub>Zusatz</sub> * a]
+            
+            G1 -- a --> AM
+            AM -- F<sub>Zusatz</sub> --> S2
+        end
+        I_v[Integrator <br> v]
+        Drag[Drag <br> c * v²]
+        S1[Subtract]
+        
+        Drag -- F<sub>Widerstand</sub> --> S1
+        F_ext --> S1
+        S1 -- F<sub>ext</sub> - F<sub>Widerstand</sub> --> S2
+
+        G1 -- a --> I_v
+        I_v -- v --> Drag
+    end

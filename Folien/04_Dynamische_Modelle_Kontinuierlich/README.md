@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Kapitel 4: Kontinuierliche Dynamische Modelle (2025-11-13)'
+header: 'Kapitel 4: Kontinuierliche Dynamische Modelle (2025-11-20)'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -1269,6 +1269,46 @@ Diese transzendente Gleichung kann nicht analytisch nach $V_{out}$ umgeformt wer
 **Konsequenz für die Simulation:**
 
 Die Auflösung der algebraischen Schleife erfordert in jedem Zeitschritt ein numerisches Verfahren (wie das Newton-Raphson-Verfahren oder eine Fixpunkt-Iteration), um den Arbeitspunkt ($V_{out}$, $I$) zu finden, der beide Gleichungen (Maschenregel und Diodenkennlinie) erfüllt.
+
+---
+
+### Praktische Anwendung: **Beschleunigung im Fluid** (Added Mass) (1/2)
+
+**Beispiel: Beschleunigung eines Körpers (z.B. U-Boot) in Wasser**
+
+Wenn ein Körper in einem Fluid beschleunigt, muss er auch das umgebende Fluid verdrängen und beschleunigen. Nach dem 3. Newtonschen Gesetz übt das Fluid eine entgegengesetzte Trägheitskraft auf den Körper aus. Diese wird als **hydrodynamische Zusatzmasse** (Added Mass) bezeichnet.
+
+**Systemgleichungen:**
+1.  **Newtonsches Gesetz:** $m \cdot a = F_{Netto} = F_{Antrieb} - F_{Widerstand} - F_{Zusatz}$
+2.  **Widerstandskraft:** Hängt von der Geschwindigkeit ab, z.B. $F_{Widerstand} = c \cdot v^2$.
+3.  **Zusatzmassenkraft:** Ist proportional zur Beschleunigung $a$: $F_{Zusatz} = m_{Zusatz} \cdot a$.
+
+**Algebraische Schleife:**
+Setzt man die Kraft-Terme in das Newtonsche Gesetz ein, erhält man eine Gleichung, in der die Beschleunigung $a$ auf beiden Seiten auftritt:
+$$ m \cdot a = F_{Antrieb} - c \cdot v^2 - m_{Zusatz} \cdot a $$
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Praktische Anwendung: Beschleunigung im Fluid (2/2)
+
+**Blockdiagramm der Schleife:**
+
+1.  Ein Solver (wie `EulerExplicitLoopSolver`) **schätzt** einen Startwert für die Beschleunigung `a`.
+2.  Mit diesem `a` wird die Zusatzkraft $F_{Zusatz} = m_{Zusatz} \cdot a$ berechnet.
+3.  Die Nettokraft wird berechnet: $F_{Netto} = F_{Antrieb} - F_{Widerstand} - F_{Zusatz}$.
+4.  Daraus ergibt sich ein neuer Wert für die Beschleunigung: $a' = F_{Netto} / m$.
+5.  Der Solver vergleicht $a'$ mit der Schätzung `a` und passt die Schätzung an, bis die Differenz unter einer Toleranzschwelle liegt.
+
+</div>
+<div>
+
+![](./Diagramme/Algebraische_Schleife_Mechanik.svg)
+
+</div>
+</div>
 
 ---
 
