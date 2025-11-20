@@ -219,9 +219,9 @@ Wenn ein Kunde ankommt, wird geprüft, ob die Bedienstation frei ist.
 
 1.  **Zustandsänderung $f(\vec{z}(t_{alt}), e_A)$:**
     - $N(t_{neu}) = N(t_{alt}) + 1$.
-    - Wenn $B(t_{alt}) = 0$ (frei) dann $B(t_{neu}) \leftarrow 1$ sonst $B(t_{neu}) = 0$.
+    - $B(t_{neu}) = 1$.
 2.  **Ereignisplanung $g(\vec{z}(t), e_A)$:**
-    - \{(e_A, t + \text{Zwischenankunftszeit})\} \cup ($ wenn $B(t)=0$ dann \{(e_D, t + \text{Bedienzeit})\} sonst $\emptyset$)
+    - $\{(e_A, t + \text{Zwischenankunftszeit})\} \cup ($ wenn $B(t)=0$ dann $\{(e_D, t + \text{Bedienzeit})\}$ sonst $\emptyset)$.
 
 ![](./Diagramme/ArrivalEvent.svg)
 
@@ -251,9 +251,9 @@ Wenn ein Kunde fertig bedient ist, wird geprüft, ob weitere Kunden warten.
 
 1.  **Zustandsänderung $f(\vec{z}(t_{alt}), e_D)$:**
     - $N(t_{neu}) = N(t_{alt}) - 1$.
-    - Wenn $N(t_{alt}) = 0$ (keine Kunden mehr) dann $B(t_{neu}) \leftarrow 0$ sonst $B(t_{neu}) = 1$.
+    - Wenn $N(t_{alt}) = 1$ (keine Kunden mehr) dann $B(t_{neu}) = 0$ sonst $B(t_{neu}) = 1$.
 2.  **Ereignisplanung $g(\vec{z}(t), e_D)$:**
-    - wenn $N(t)>0$ dann \{(e_D, t + \text{Bedienzeit})\} sonst $\emptyset$
+    - wenn $N(t)>0$ dann $\{(e_D, t + \text{Bedienzeit})\}$ sonst $\emptyset$.
 
 ![](./Diagramme/DepartureEvent.svg)
 
