@@ -142,7 +142,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div>
 
-<!-- Eine minimalistische, technische Diagramm-Illustration im Stil von Vektorgrafiken, die einen Nulldurchgang darstellt. Eine fette, schwarze horizontale Linie ('Zeit (t)') und eine vertikale Linie ('g(t)') bilden ein Koordinatensystem. Eine glatte, dunkelblaue Kurve beginnt über der Zeitachse, kreuzt sie und endet darunter. Genau am Schnittpunkt leuchtet ein markanter roter Punkt, der als 'Ereignis (g(t)=0)' gekennzeichnet ist. Der Bereich über der Achse ist zartgrün, der untere zartrot hinterlegt, um den Vorzeichenwechsel zu verdeutlichen. Der Stil ist extrem sauber und präzise, ohne fotografische Texturen. -->
+![Nulldurchgang w:1000](./Diagramme/Nulldurchgang.tikz.svg)
 
 </div>
 </div>
