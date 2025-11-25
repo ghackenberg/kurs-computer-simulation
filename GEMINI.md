@@ -144,6 +144,8 @@ Dieses Repository ist nach folgendem Schema aufgebaut:
 - Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].tikz.svg` enthält die kompilierte SVG-Datei für eine Tikz-Grafik
 - Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].mmd` enthält den Quelltext einer Mermaid.js-Grafik
 - Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].svg` enthält die kompilierte SVG-Datei für eine Mermaid.js-Grafik
+- Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]/Illustrationen` enthält mit Imagen generierte Illustrationen
+- Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Illustrationen/[Illustrationsname].jpg` enthält eine mit Imagen generierte Illsutration
 - Der Ordner `./Quellen` enthält die zugehörigen C#-Implementierungen nach Semester und Thema geordnet
 - Der Ordner `./Quellen/[WSXX]` enthält die C#-Implementierung aus dem Wintersemester `XX`
 - Der Ordner `./Quellen/[SSXX]` enthält die C#-Implementierung aus dem Sommersemester `XX`
