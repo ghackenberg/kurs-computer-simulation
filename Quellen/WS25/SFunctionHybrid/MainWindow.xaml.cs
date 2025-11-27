@@ -19,11 +19,11 @@ namespace SFunctionHybrid
 
             // Modell erstellen und lösen
 
-            Example example = new VariableSampleTimeExample();
+            Example example = new VariableZeroOrderHoldExample();
 
             try
             {
-                Solver solution = new EulerExplicitSolver(example.Model);
+                Solver solution = new EulerImplicitSolver(example.Model);
 
                 Title += $" - {example.GetType().Name} / {solution.GetType().Name}";
 
