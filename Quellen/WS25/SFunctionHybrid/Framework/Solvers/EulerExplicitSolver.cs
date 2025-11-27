@@ -1,6 +1,6 @@
 ﻿using SFunctionHybrid.Framework.SampleTimes;
 
-namespace SFunctionContinuous.Framework.Solvers
+namespace SFunctionHybrid.Framework.Solvers
 {
     public class EulerExplicitSolver : Solver
     {

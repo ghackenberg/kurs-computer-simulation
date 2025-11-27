@@ -1,7 +1,7 @@
-﻿using SFunctionContinuous.Framework.Declarations;
+﻿using SFunctionHybrid.Framework.Declarations;
 using SFunctionHybrid.Framework;
 
-namespace SFunctionContinuous.Framework
+namespace SFunctionHybrid.Framework
 {
     public abstract class Block
     {

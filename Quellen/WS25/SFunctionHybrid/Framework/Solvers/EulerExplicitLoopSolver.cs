@@ -1,4 +1,4 @@
-﻿namespace SFunctionContinuous.Framework.Solvers
+﻿namespace SFunctionHybrid.Framework.Solvers
 {
     public class EulerExplicitLoopSolver : EulerExplicitSolver
     {

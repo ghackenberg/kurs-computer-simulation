@@ -1,4 +1,4 @@
-﻿namespace SFunctionContinuous.Framework
+﻿namespace SFunctionHybrid.Framework
 {
     public class Model
     {

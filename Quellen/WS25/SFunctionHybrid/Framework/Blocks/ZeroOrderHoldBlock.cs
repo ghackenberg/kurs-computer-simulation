@@ -1,5 +1,5 @@
-﻿using SFunctionContinuous.Framework;
-using SFunctionContinuous.Framework.Declarations;
+﻿using SFunctionHybrid.Framework;
+using SFunctionHybrid.Framework.Declarations;
 using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionHybrid.Framework.Blocks

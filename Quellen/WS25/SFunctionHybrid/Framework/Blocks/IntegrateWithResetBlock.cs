@@ -1,8 +1,8 @@
-﻿using SFunctionContinuous.Framework.Declarations;
+﻿using SFunctionHybrid.Framework.Declarations;
 using SFunctionHybrid.Framework.SampleTimes;
 using System.Security.RightsManagement;
 
-namespace SFunctionContinuous.Framework.Blocks
+namespace SFunctionHybrid.Framework.Blocks
 {
     public class IntegrateWithResetBlock : Block
     {

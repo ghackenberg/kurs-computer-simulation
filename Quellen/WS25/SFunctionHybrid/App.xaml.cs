@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace SFunctionContinuous
+namespace SFunctionHybrid
 {
     /// <summary>
     /// Interaction logic for App.xaml

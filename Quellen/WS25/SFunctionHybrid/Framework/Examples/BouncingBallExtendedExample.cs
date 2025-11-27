@@ -1,6 +1,6 @@
-﻿using SFunctionContinuous.Framework.Blocks;
+﻿using SFunctionHybrid.Framework.Blocks;
 
-namespace SFunctionContinuous.Framework.Examples
+namespace SFunctionHybrid.Framework.Examples
 {
     public class BouncingBallExtendedExample : Example
     {

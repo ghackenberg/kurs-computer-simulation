@@ -1,13 +1,13 @@
 ﻿using Microsoft.Msagl.Drawing;
 using ScottPlot.Plottables;
-using SFunctionContinuous.Framework;
-using SFunctionContinuous.Framework.Blocks;
-using SFunctionContinuous.Framework.Examples;
-using SFunctionContinuous.Framework.Solvers;
+using SFunctionHybrid.Framework;
+using SFunctionHybrid.Framework.Blocks;
+using SFunctionHybrid.Framework.Examples;
+using SFunctionHybrid.Framework.Solvers;
 using SFunctionHybrid.Framework.Examples;
 using System.Windows;
 
-namespace SFunctionContinuous
+namespace SFunctionHybrid
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

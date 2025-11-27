@@ -1,4 +1,4 @@
-﻿namespace SFunctionContinuous.Framework.Declarations
+﻿namespace SFunctionHybrid.Framework.Declarations
 {
     public class OutputDeclaration : Declaration
     {

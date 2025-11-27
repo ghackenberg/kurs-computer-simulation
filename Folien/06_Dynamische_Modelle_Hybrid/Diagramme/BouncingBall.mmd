@@ -1,0 +1,19 @@
+graph TD
+    subgraph "System"
+        G[Gravity] --> V(Velocity)
+        V --> P(Position)
+        P --> H(HitLowerLimit)
+        V --> D(Damping)
+        H --> V
+        D --> V
+        V --> RV[Record]
+        P --> RP[Record]
+    end
+
+    style G fill:#f9f,stroke:#333,stroke-width:2px
+    style V fill:#bbf,stroke:#333,stroke-width:2px
+    style P fill:#bbf,stroke:#333,stroke-width:2px
+    style H fill:#bfb,stroke:#333,stroke-width:2px
+    style D fill:#fbe,stroke:#333,stroke-width:2px
+    style RV fill:#eee,stroke:#333,stroke-width:2px
+    style RP fill:#eee,stroke:#333,stroke-width:2px

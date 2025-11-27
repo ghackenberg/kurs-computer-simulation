@@ -1,5 +1,5 @@
-﻿using SFunctionContinuous.Framework;
-using SFunctionContinuous.Framework.Blocks;
+﻿using SFunctionHybrid.Framework;
+using SFunctionHybrid.Framework.Blocks;
 using SFunctionHybrid.Framework.Blocks;
 
 namespace SFunctionHybrid.Framework.Examples

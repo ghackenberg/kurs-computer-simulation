@@ -1,6 +1,6 @@
 ﻿using SFunctionHybrid.Framework.SampleTimes;
 
-namespace SFunctionContinuous.Framework
+namespace SFunctionHybrid.Framework
 {
     public abstract class Solver
     {
