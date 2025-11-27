@@ -124,7 +124,7 @@ namespace SFunctionContinuous.Framework
             foreach (Block f in Model.Blocks)
             {
                 // Zustandsaktualisierung bei Nulldurchgang
-                if (ZeroCrossingFlags[f])
+                if (f.SampleTime is ContinuousSampleTime || f.SampleTime is InheritedSampleTime)
                 {
                     f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
 
