@@ -186,6 +186,192 @@ Dieser Formalismus erlaubt die Modellierung des komplexen Zusammenspiels von kon
 
 ![bg right:40%](./Illustrationen/Abschnitt_2.jpg)
 
+## 6.2: Überarbeitete Softwarearchitektur
+
+TODO Inhaltsübersicht
+
+---
+
+TODO Überschrift
+
+Die in Kapitel 4 vorgestellte Softwarearchitektur bildet die Grundlage für die Modellierung und Simulation kontinuierlicher dynamischer Systeme. Sie basierte auf den Kernkomponenten `Block`, `Connection` und `Model`, wobei jeder `Block` kontinuierliche Zustände (`ContinuousStates`), Eingänge (`Inputs`) und Ausgänge (`Outputs`) deklarierte. Der `Solver` war für die Initialisierung, die Berechnung von Ausgängen und Ableitungen sowie die Integration der kontinuierlichen Zustände zuständig.
+
+Um hybride Systeme zu unterstützen, die sowohl kontinuierliche als auch diskrete Dynamiken umfassen, wurde diese Architektur erweitert. Die zentralen Erweiterungen betreffen die `Block`-Klasse selbst, neue Deklarationstypen für Ereignisse, und ein umfassenderes Konzept für Abtastzeiten.
+
+---
+
+### Erweiterte `Block`-Klasse
+
+Die `Block`-Klasse, der zentrale Baustein unserer Simulationsumgebung, wurde erheblich erweitert, um diskrete Zustände, Ereignisse und flexible Abtastzeiten verwalten zu können:
+
+-   **`DiscreteStates`**: Eine Liste von diskreten Zustandsvariablen, die sich nur sprunghaft ändern.
+-   **`ZeroCrossings`**: Eine Liste von Ereignissignalen, deren Nulldurchgänge diskrete Ereignisse auslösen.
+-   **`SampleTime`**: Ein Objekt, das die Abtasteigenschaften des Blocks definiert (kontinuierlich, diskret, variabel).
+-   **`GetNextVariableHitTime(...)`**: Eine Methode zur Bestimmung des nächsten Zeitpunkts, zu dem ein Block mit variabler Abtastzeit aktiv werden muss.
+-   **`CalculateZeroCrossings(...)`**: Eine Methode zur Berechnung der Werte der Zero-Crossing-Funktionen.
+-   **`UpdateStates(...)`**: Eine Methode, die bei diskret getakteten Blöcken oder nach dem Erkennen eines Nulldurchgangs aufgerufen wird, um die Zustände (kontinuierlich und/oder diskret) sprunghaft anzupassen.
+
+---
+
+<div class="columns">
+<div class="two">
+
+TODO Überschrift und Text
+
+</div>
+<div class="three">
+
+![Klassendiagramm Block](../../Quellen/WS25/SFunctionHybrid/Block.svg)
+
+</div>
+</div>
+
+---
+
+```csharp
+public abstract class Block
+{
+    public List<StateDeclaration> ContinuousStates { get; }
+    public List<StateDeclaration> DiscreteStates { get; }
+    public List<InputDeclaration> Inputs { get; }
+    public List<OutputDeclaration> Outputs { get; }
+    public List<ZeroCrossingDeclaration> ZeroCrossings { get; }
+
+    public SampleTime SampleTime { get; }
+
+    virtual public void InitializeStates(
+        double[] cStates, double[] dStates);
+    virtual public double GetNextVariableHitTime(
+        double time, double[] cStates, double[] dStates, double[] inputs);
+    virtual public void CalculateOutputs(
+        double time, double[] cStates, double[] dStates, double[] inputs, double[] outputs);
+    virtual public void CalculateDerivatives(
+        double time, double[] cStates, double[] dStates, double[] inputs, double[] derivatives);
+    virtual public void CalculateZeroCrossings(
+        double time, double[] cStates, double[] dStates, double[] inputs, double[] zeroCrossings);
+    virtual public void UpdateStates(
+        double time, double[] cStates, double[] dStates, double[] inputs);
+}
+```
+
+---
+
+<div class="columns">
+<div class="three">
+
+### Deklaration von Schnittstellen und Ereignissen
+
+Neben den bereits bekannten Deklarationen für Zustände (`StateDeclaration`), Eingänge (`InputDeclaration`) und Ausgänge (`OutputDeclaration`) wurde eine neue `ZeroCrossingDeclaration` hinzugefügt, um die Zero-Crossing-Signale eines Blocks zu beschreiben.
+
+```csharp
+namespace SFunctionHybrid.Framework.Declarations
+{
+    public class ZeroCrossingDeclaration : Declaration
+    {
+        public ZeroCrossingDeclaration(string name) : base(name)
+        {
+
+        }
+    }
+}
+```
+
+</div>
+<div class="two">
+
+![Klassendiagramm Deklarationen](../../Quellen/WS25/SFunctionHybrid/Declaration.svg)
+
+</div>
+</div>
+
+---
+
+### Abtastzeiten (`SampleTime`)
+
+Das Konzept der Abtastzeit (`SampleTime`) wurde eingeführt, um dem Solver mitzuteilen, wie und wann ein Block seine Zustände aktualisieren und Ausgänge berechnen soll. Dies wird durch eine Klassenhierarchie abgebildet:
+
+-   **`ContinuousSampleTime`**: Der Block ist kontinuierlich und wird bei jedem Integrationsschritt des Solvers berechnet (Standard für kontinuierliche Blöcke).
+-   **`DiscreteSampleTime`**: Der Block ist diskret und wird in festen, periodischen Intervallen aktualisiert. Definiert durch `Offset` (Startzeitpunkt) und `Period` (Abtastperiode).
+-   **`VariableSampleTime`**: Der Block ist ereignisgesteuert und wird zu variablen Zeitpunkten aktualisiert, die der Block selbst über `GetNextVariableHitTime` meldet. Definiert durch einen initialen `Offset`.
+-   **`ConstantSampleTime`**: Für Blöcke, die konstante Werte liefern und keine Abtastzeit im eigentlichen Sinne benötigen (z.B. `ConstantBlock`).
+-   **`InheritedSampleTime`**: Die Abtastzeit wird vom übergeordneten System oder den Eingangsblöcken geerbt (Standard für algebraische Blöcke).
+
+---
+
+<div class="columns">
+<div class="three">
+
+```csharp
+public abstract class SampleTime { }
+
+public class ContinuousSampleTime : SampleTime { }
+
+public class DiscreteSampleTime : SampleTime
+{
+    public double Offset { get; }
+    public double Period { get; }
+    public DiscreteSampleTime(double offset, double period) { /* ... */ }
+}
+
+public class VariableSampleTime : SampleTime
+{
+    public double Offset { get; }
+    public VariableSampleTime(double offset) { /* ... */ }
+}
+
+public class ConstantSampleTime : SampleTime { }
+
+public class InheritedSampleTime : SampleTime { }
+```
+
+</div>
+<div>
+
+![Klassendiagramm SampleTime](../../Quellen/WS25/SFunctionHybrid/SampleTime.svg)
+
+</div>
+</div>
+
+---
+
+### Neue Block-Typen für Hybride Systeme
+
+-   **Diskrete Zeitintegratoren und Zero-Order Holds:**
+    -   `DiscreteTimeIntegratorBlock`: Integriert ein Signal in festen diskreten Schritten.
+    -   `ZeroOrderHoldBlock`: Hält den letzten abgetasteten Wert eines kontinuierlichen Signals für eine definierte Abtastperiode.
+
+-   **Zero-Crossing-Detektoren:**
+    -   `HitLowerLimitBlock`: Erzeugt ein Ereignis, wenn ein Signal einen unteren Grenzwert erreicht.
+    -   `HitUpperLimitBlock`: Erzeugt ein Ereignis, wenn ein Signal einen oberen Grenzwert erreicht.
+
+-   **Variable Abtastzeit-Blöcke:**
+    -   `VariableSampleTimeBlock`: Ein Block, dessen Abtastzeitpunkte dynamisch durch ein Eingangssignal gesteuert werden.
+    -   `VariableZeroOrderHoldBlock`: Ein Zero-Order Hold, dessen Abtastrate variabel ist.
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Erweiterte Solver-Implementierungen
+
+-   Sie berücksichtigt nun `DiscreteStates` bei der Initialisierung und Zustandsspeicherung.
+-   Die Logik zur Nulldurchgangsdetektion wurde erweitert und nutzt die `ZeroCrossings`-Deklarationen der Blöcke.
+-   Die `UpdateStates`-Methode des Solvers ruft nun die `UpdateStates`-Methode der Blöcke basierend auf ihren `SampleTime`-Eigenschaften (diskret, variabel) oder erkannten Zero-Crossings auf.
+-   Neue Solver-Varianten wie `EulerExplicitLoopSolver` und `EulerImplicitLoopSolver` können algebraische Schleifen auflösen und unterstützen implizite Integration.
+
+</div>
+<div>
+
+![Klassendiagramm Solver](../../Quellen/WS25/SFunctionHybrid/Solver.svg)
+
+</div>
+</div>
+
+---
+
+![bg right:40%](./Illustrationen/Abschnitt_2.jpg)
+
 ## 6.2: Nulldurchgangsdetektion
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
