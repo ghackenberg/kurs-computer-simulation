@@ -4,7 +4,6 @@ using SFunctionHybrid.Framework;
 using SFunctionHybrid.Framework.Blocks;
 using SFunctionHybrid.Framework.Examples;
 using SFunctionHybrid.Framework.Solvers;
-using SFunctionHybrid.Framework.Examples;
 using System.Windows;
 
 namespace SFunctionHybrid
@@ -20,11 +19,11 @@ namespace SFunctionHybrid
 
             // Modell erstellen und lösen
 
-            Example example = new BouncingBallExtendedExample();
+            Example example = new VariableSampleTimeExample();
 
             try
             {
-                Solver solution = new EulerImplicitSolver(example.Model);
+                Solver solution = new EulerExplicitSolver(example.Model);
 
                 Title += $" - {example.GetType().Name} / {solution.GetType().Name}";
 
