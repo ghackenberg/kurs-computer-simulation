@@ -113,7 +113,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Erweiterter S-Function-Formalismus (1/3)
+### Erweiterter Formalismus (1/3)
 
 <div class="columns top">
 <div class="two">
@@ -150,7 +150,7 @@ Um hybride Systeme zu modellieren, erweitern wir diesen Formalismus um:
 
 ---
 
-### Erweiterter S-Function-Formalismus (2/3)
+### Erweiterter Formalismus (2/3)
 
 **Zustände:**
 Ein hybrides System besitzt zwei Arten von Zuständen:
@@ -168,7 +168,7 @@ Die Dynamik wird durch vier Kernfunktionen beschrieben:
 
 ---
 
-### Erweiterter S-Function-Formalismus (3/3)
+### Erweiterter Formalismus (3/3)
 
 3.  **Zero-Crossing-Funktion $z$**:
     Eine Vektor-wertige Funktion, deren Nulldurchgänge Ereignisse signalisieren.
