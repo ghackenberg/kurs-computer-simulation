@@ -113,6 +113,77 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Erweiterter S-Function-Formalismus (1/3)
+
+<div class="columns top">
+<div class="two">
+
+**Bisheriger Formalismus (rein kontinuierlich)**
+
+Basierend auf der Zustandsraumdarstellung aus Kapitel 4:
+
+**Zustandsgleichung (Ableitungen):**
+$$ \dot{x}(t) = f(t, x(t), u(t)) $$
+
+**Ausgangsgleichung:**
+$$ y(t) = g(t, x(t), u(t)) $$
+
+- $x(t)$: Vektor der **kontinuierlichen** Zustände
+- $u(t)$: Vektor der Eingänge
+- $y(t)$: Vektor der Ausgänge
+
+</div>
+<div class="two">
+
+**Erweiterung für hybride Systeme**
+
+Um hybride Systeme zu modellieren, erweitern wir diesen Formalismus um:
+
+1.  **Diskrete Zustände ($x_d$)**: Speichern von Zustandsinformation, die sich nur sprunghaft ändert (z.B. der aktuelle Modus eines Schalters).
+
+2.  **Update-Funktion ($h$)**: Definiert die sprunghafte Änderung der Zustände bei einem Ereignis.
+
+3.  **Zero-Crossing-Funktion ($z$)**: Erkennt, wann ein diskretes Ereignis eintritt (z.B. Kollision, Schwellwert erreicht).
+
+</div>
+</div>
+
+---
+
+### Erweiterter S-Function-Formalismus (2/3)
+
+**Zustände:**
+Ein hybrides System besitzt zwei Arten von Zuständen:
+- **Kontinuierliche Zustände $x_c(t) \in \mathbb{R}^{n_c}$**: Ändern sich stetig (z.B. Position, Geschwindigkeit).
+- **Diskrete Zustände $x_d(t) \in \mathbb{R}^{n_d}$**: Ändern sich nur zu diskreten Zeitpunkten (z.B. Schaltzustand, Zähler).
+
+**Funktionen:**
+Die Dynamik wird durch vier Kernfunktionen beschrieben:
+
+1.  **Ableitungsfunktion $f$**: Definiert die kontinuierliche Dynamik.
+    $$ \dot{x}_c(t) = f(t, x_c(t), x_d(t), u(t)) $$
+
+2.  **Ausgangsfunktion $g$**: Berechnet die Ausgänge des Blocks.
+    $$ y(t) = g(t, x_c(t), x_d(t), u(t)) $$
+
+---
+
+### Erweiterter S-Function-Formalismus (3/3)
+
+3.  **Zero-Crossing-Funktion $z$**:
+    Eine Vektor-wertige Funktion, deren Nulldurchgänge Ereignisse signalisieren.
+    $$ z(t, x_c(t), x_d(t), u(t)) \in \mathbb{R}^{n_z} $$
+    Ein Ereignis tritt zum Zeitpunkt $t_e$ auf, wenn eine Komponente $z_i$ das Vorzeichen wechselt (d.h. $z_i(t_e) = 0$).
+
+4.  **Update-Funktion $h$**:
+    Wird zum Ereigniszeitpunkt $t_e$ aufgerufen und berechnet die neuen Zustände $x_c^+$ und $x_d^+$ unmittelbar nach dem Ereignis.
+    $$ (x_c(t_e^+), x_d(t_e^+)) = h(t_e, x_c(t_e^-), x_d(t_e^-), u(t_e)) $$
+    - $x_c(t_e^-), x_d(t_e^-)$: Zustände unmittelbar *vor* dem Ereignis.
+
+Dieser Formalismus erlaubt die Modellierung des komplexen Zusammenspiels von kontinuierlicher Entwicklung und sprunghaften Zustandsänderungen.
+
+---
+
 ![bg right:40%](./Illustrationen/Abschnitt_2.jpg)
 
 ## 6.2: Nulldurchgangsdetektion
