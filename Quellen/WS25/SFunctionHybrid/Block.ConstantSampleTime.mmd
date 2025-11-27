@@ -1,0 +1,20 @@
+classDiagram
+    direction TB
+
+    class Block {
+        <<Abstract>>
+    }
+
+    class ConstantSampleTime {
+    }
+
+    class ConstantBlock {
+        Value : double
+    }
+
+    Block <|-- ConstantBlock
+
+    ConstantBlock *-- "1" ConstantSampleTime
+
+    style Block fill:white
+    style ConstantSampleTime fill:white
