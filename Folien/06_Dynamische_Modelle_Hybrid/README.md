@@ -301,6 +301,8 @@ Das Konzept der Abtastzeit (`SampleTime`) wurde eingeführt, um dem Solver mitzu
 <div class="columns">
 <div class="three">
 
+TODO Überschrift
+
 ```csharp
 public abstract class SampleTime { }
 
@@ -351,17 +353,18 @@ public class InheritedSampleTime : SampleTime { }
 ---
 
 <div class="columns">
-<div class="two">
+<div class="three">
 
 ### Erweiterte Solver-Implementierungen
+
+TODO Text
 
 -   Sie berücksichtigt nun `DiscreteStates` bei der Initialisierung und Zustandsspeicherung.
 -   Die Logik zur Nulldurchgangsdetektion wurde erweitert und nutzt die `ZeroCrossings`-Deklarationen der Blöcke.
 -   Die `UpdateStates`-Methode des Solvers ruft nun die `UpdateStates`-Methode der Blöcke basierend auf ihren `SampleTime`-Eigenschaften (diskret, variabel) oder erkannten Zero-Crossings auf.
--   Neue Solver-Varianten wie `EulerExplicitLoopSolver` und `EulerImplicitLoopSolver` können algebraische Schleifen auflösen und unterstützen implizite Integration.
 
 </div>
-<div>
+<div class="two">
 
 ![Klassendiagramm Solver](../../Quellen/WS25/SFunctionHybrid/Solver.svg)
 
