@@ -26,6 +26,8 @@ namespace SFunctionHybrid
             {
                 Solver solution = new EulerImplicitSolver(example.Model);
 
+                Title += $" - {example.GetType().Name} / {solution.GetType().Name}";
+
                 solution.Solve(example.TimeStepMax, example.TimeMax);
             }
             catch (Exception e)

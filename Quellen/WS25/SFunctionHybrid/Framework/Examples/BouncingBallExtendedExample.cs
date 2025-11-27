@@ -4,12 +4,12 @@ namespace SFunctionHybrid.Framework.Examples
 {
     public class BouncingBallExtendedExample : Example
     {
-        public BouncingBallExtendedExample() : base(0.01, 20)
+        public BouncingBallExtendedExample() : base(0.1, 10)
         {
             Block g = new ConstantBlock("Gravity", -9.81);
-            Block v = new IntegrateWithResetBlock("Velocity", 10);
+            Block v = new IntegrateWithResetBlock("Velocity", 5);
             Block p = new IntegrateWithLowerLimitBlock("Position", 10, 0);
-            Block d = new GainBlock("Damping", -0.8);
+            Block d = new GainBlock("Damping", -0.5);
             Block h = new HitLowerLimitBlock("HitLowerLimit", 0);
             Block z = new ConstantBlock("Zero", 0);
             Block rv = new RecordBlock("RecordVelocity");
