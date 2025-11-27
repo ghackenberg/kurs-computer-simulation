@@ -1,0 +1,28 @@
+classDiagram
+    direction TB
+
+    class Block {
+        <<Abstract>>
+    }
+
+    class DiscreteSampleTime {
+        Offset : double
+        Period : double
+    }
+
+    class DiscreteTimeIntegratorBlock {
+        StartValue : double
+    }
+
+    class ZeroOrderHoldBlock {
+        StartValue : double
+    }
+
+    Block <|-- DiscreteTimeIntegratorBlock
+    Block <|-- ZeroOrderHoldBlock
+
+    DiscreteTimeIntegratorBlock *-- "1" DiscreteSampleTime
+    ZeroOrderHoldBlock *-- "1" DiscreteSampleTime
+
+    style Block fill:white
+    style DiscreteSampleTime fill:white
