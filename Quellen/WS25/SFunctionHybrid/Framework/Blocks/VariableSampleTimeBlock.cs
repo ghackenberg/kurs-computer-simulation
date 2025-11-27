@@ -10,12 +10,8 @@ namespace SFunctionHybrid.Framework.Blocks
     /// </summary>
     public class VariableSampleTimeBlock : Block
     {
-        public double InitialHitTime { get; }
-
         public VariableSampleTimeBlock(string name, double initialHitTime) : base(name, new VariableSampleTime(initialHitTime))
         {
-            InitialHitTime = initialHitTime;
-
             // Input to define the time delta for the next sample hit
             Inputs.Add(new InputDeclaration("NextDeltaT", false));
 
@@ -60,7 +56,7 @@ namespace SFunctionHybrid.Framework.Blocks
 
         public override string ToString()
         {
-            return $"{Name}\n(InitialHit = {InitialHitTime})";
+            return $"{Name}\n(InitialHit = {((VariableSampleTime)SampleTime).Offset})";
         }
     }
 }
