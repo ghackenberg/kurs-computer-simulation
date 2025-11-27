@@ -14,9 +14,11 @@ classDiagram
         Inputs : List~InputDeclaration~
         Outputs : List~OutputDeclaration~
         ZeroCrossings : List~ZeroCrossingDeclaration~
+        SampleTime : SampleTime
         InitializeStates(...) void
-        CalculateDerivatives(...) void
+        GetNextVariableHitTime(...) double
         CalculateOutputs(...) void
+        CalculateDerivatives(...) void
         CalculateZeroCrossings(...) void
         UpdateStates(...) void
     }
@@ -32,14 +34,20 @@ classDiagram
 
     class ZeroCrossingDeclaration {
     }
+    
+    class SampleTime {
+        <<Abstract>>
+    }
 
     Block *-- "*" StateDeclaration : ContinuousStates
     Block *-- "*" StateDeclaration : DiscreteStates
     Block *-- "*" InputDeclaration : Inputs
     Block *-- "*" OutputDeclaration : Outputs
     Block *-- "*" ZeroCrossingDeclaration : ZeroCrossings
+    Block *-- "1" SampleTime : SampleTime
 
     style StateDeclaration fill:white
     style InputDeclaration fill:white
     style OutputDeclaration fill:white
     style ZeroCrossingDeclaration fill:white
+    style SampleTime fill:white

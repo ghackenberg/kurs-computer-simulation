@@ -1,0 +1,34 @@
+classDiagram
+
+    direction LR
+
+    class SampleTime {
+        <<Abstract>>
+    }
+
+    class ContinuousSampleTime {
+    }
+    class DiscreteSampleTime {
+        Offset : double
+        Period : double
+    }
+    class ConstantSampleTime {
+    }
+    class InheritedSampleTime {
+    }
+    class VariableSampleTime {
+        Offset : double
+    }
+
+    SampleTime <|-- ContinuousSampleTime
+    SampleTime <|-- DiscreteSampleTime
+    SampleTime <|-- ConstantSampleTime
+    SampleTime <|-- InheritedSampleTime
+    SampleTime <|-- VariableSampleTime
+
+    style SampleTime fill:white
+    style ContinuousSampleTime fill:white
+    style DiscreteSampleTime fill:white
+    style ConstantSampleTime fill:white
+    style InheritedSampleTime fill:white
+    style VariableSampleTime fill:white
