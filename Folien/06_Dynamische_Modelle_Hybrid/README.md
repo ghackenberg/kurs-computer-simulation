@@ -220,7 +220,7 @@ Dieses System ist ein klassisches Beispiel für ein **zeitgesteuertes hybrides S
 </div>
 <div>
 
-TODO
+TODO Nano Banana Illustration eines digitalen Sensors. Weißer Hintergrund. Format 1 breit, 2 hoch.
 
 </div>
 </div>
@@ -319,7 +319,7 @@ Dies führt zu einem **ereignisgesteuerten hybriden System**, bei dem die Abtast
 </div>
 <div>
 
-TODO
+TODO Nano Banana Illustration. Weißer Hintergrund. Format 1 breit, 3 hoch
 
 </div>
 </div>
@@ -344,6 +344,10 @@ Die Zeit bis zur nächsten Abtastung wird umgekehrt proportional zur Änderungsr
 
 ---
 
+TODO Folie zur Illustration des Eingangssignals und des Steuer-Signals mit Tikz-Illustration
+
+---
+
 <div class="columns">
 <div class="two">
 
@@ -360,7 +364,7 @@ Die Zeit bis zur nächsten Abtastung wird umgekehrt proportional zur Änderungsr
 </div>
 <div>
 
-TODO
+TODO Illustration des variabel abgetasteten Signals mit Tikz
 
 </div>
 </div>
