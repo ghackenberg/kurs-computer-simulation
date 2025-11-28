@@ -478,14 +478,12 @@ TODO Kurze Übersicht der Inhalte
 
 ---
 
-### **Erweiterter** allgemeiner Formalismus (1/3)
+### **Erweiterter** allgemeiner Formalismus (1/4)
 
 <div class="columns top">
 <div class="two">
 
 **Bisheriger Formalismus (rein kontinuierlich)**
-
-Basierend auf der Zustandsraumdarstellung aus Kapitel 4:
 
 **Zustandsgleichung (Ableitungen):**
 $$ \dot{x}(t) = f(t, x(t), u(t)) $$
@@ -502,20 +500,20 @@ $$ y(t) = g(t, x(t), u(t)) $$
 
 **Erweiterung für hybride Systeme**
 
-Um hybride Systeme zu modellieren, erweitern wir diesen Formalismus um:
+1.  **Diskrete Zustände ($x_d$)**: Speichern von Zustandsinformation, die sich nur sprunghaft ändert.
 
-1.  **Diskrete Zustände ($x_d$)**: Speichern von Zustandsinformation, die sich nur sprunghaft ändert (z.B. der aktuelle Modus eines Schalters).
-
-2.  **Update-Funktion ($h$)**: Definiert die sprunghafte Änderung der Zustände bei einem Ereignis.
+2.  **Update-Funktion ($h$)**: Definiert die sprung-hafte Änderung der Zustände bei einem Ereignis.
 
 3.  **Zero-Crossing-Funktion ($z$)**: Erkennt, wann ein diskretes Ereignis eintritt (z.B. Kollision, Schwellwert erreicht).
+
+4.  **Funktion für Abtastzeitpunkte ($T_{next}$)**: Definiert den nächsten Zeitpunkt einer diskreten oder variablen Aktualisierung.
 
 </div>
 </div>
 
 ---
 
-### **Erweiterter** allgemeiner Formalismus (2/3)
+### **Erweiterter** allgemeiner Formalismus (2/4)
 
 **Zustände:**
 Ein hybrides System besitzt zwei Arten von Zuständen:
@@ -523,7 +521,7 @@ Ein hybrides System besitzt zwei Arten von Zuständen:
 - **Diskrete Zustände $x_d(t) \in \mathbb{R}^{n_d}$**: Ändern sich nur zu diskreten Zeitpunkten (z.B. Schaltzustand, Zähler).
 
 **Funktionen:**
-Die Dynamik wird durch vier Kernfunktionen beschrieben:
+Die Dynamik wird durch **fünf** Kernfunktionen beschrieben:
 
 1.  **Ableitungsfunktion $f$**: Definiert die kontinuierliche Dynamik.
     $$ \dot{x}_c(t) = f(t, x_c(t), x_d(t), u(t)) $$
@@ -533,7 +531,7 @@ Die Dynamik wird durch vier Kernfunktionen beschrieben:
 
 ---
 
-### **Erweiterter** allgemeiner Formalismus (3/3)
+### **Erweiterter** allgemeiner Formalismus (3/4)
 
 3.  **Zero-Crossing-Funktion $z$**:
     Eine Vektor-wertige Funktion, deren Nulldurchgänge Ereignisse signalisieren.
@@ -545,7 +543,18 @@ Die Dynamik wird durch vier Kernfunktionen beschrieben:
     $$ (x_c(t_e^+), x_d(t_e^+)) = h(t_e, x_c(t_e^-), x_d(t_e^-), u(t_e)) $$
     - $x_c(t_e^-), x_d(t_e^-)$: Zustände unmittelbar *vor* dem Ereignis.
 
-Dieser Formalismus erlaubt die Modellierung des komplexen Zusammenspiels von kontinuierlicher Entwicklung und sprunghaften Zustandsänderungen.
+---
+
+### **Erweiterter** allgemeiner Formalismus (4/4)
+
+5.  **Funktion für nächsten Abtastzeitpunkt $T_{next}$**:
+    Diese Funktion bestimmt den nächsten Zeitpunkt, zu dem der Block eine diskrete Aktion ausführen muss.
+    $$ t_{next} = T_{next}(t, x_c(t), x_d(t), u(t)) $$
+    - Für **kontinuierliche Blöcke** wird per Konvention der Wert `0` zurückgegeben, um anzuzeigen, dass keine explizite diskrete Abtastung erforderlich ist.
+    - Für **Blöcke mit fester Abtastzeit** ist der nächste Zeitpunkt deterministisch ($t_k = t_0 + k \cdot T_s$) und muss nicht über diese Funktion berechnet werden.
+    - Für **Blöcke mit variabler Abtastzeit** wird der nächste Zeitpunkt dynamisch in Abhängigkeit vom aktuellen Zustand und den Eingängen berechnet.
+
+Dieser erweiterte Formalismus, angelehnt an die S-Function-Spezifikation von MATLAB/Simulink, erlaubt die Modellierung des komplexen Zusammenspiels von kontinuierlicher Entwicklung und sprunghaften Zustandsänderungen.
 
 ---
 
