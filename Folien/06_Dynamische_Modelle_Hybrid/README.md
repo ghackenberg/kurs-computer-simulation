@@ -23,6 +23,9 @@ TODO Übersicht über den Abschnitt
 
 ---
 
+<div class="columns">
+<div class="five">
+
 ### Mathematische Beschreibung des Bouncing Balls
 
 Das System wird durch folgende Annahmen vereinfacht:
@@ -32,7 +35,18 @@ Das System wird durch folgende Annahmen vereinfacht:
 -   **Instantane Kollisionen:** Der Aufprall auf den Boden findet ohne Zeitverzögerung statt.
 -   **Restitutionskoeffizient:** Ein konstanter Wert $e \in [0, 1]$, der den Energieverlust bei jeder Kollision beschreibt.
 
+</div>
+<div class="four">
+
+TODO Tikz-basierte zeitdiagramm für die Position des Balles mit drei Freiflugphasen und zwei Aufprallereignissen dazwischen
+
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div>
 
 ### Differentialgleichungen der Bewegung
 
@@ -41,25 +55,46 @@ Während der Freiflugphase (kein Bodenkontakt) wird die Bewegung des Balls durch
 **Position ($y$):**
 $$ \frac{d^2y}{dt^2} = -g $$
 oder als System erster Ordnung:
-$$ \dot{y} = v $$
-$$ \dot{v} = -g $$
+$$ \dot{y} = v \text{ und } \dot{v} = -g $$
 
 -   $y(t)$: Position des Balls zur Zeit $t$.
 -   $v(t)$: Geschwindigkeit des Balls zur Zeit $t$.
--   $g$: Erdbeschleunigung (positiv angenommen, hier wird das Vorzeichen für die Beschleunigung verwendet).
+-   $g$: Erdbeschleunigung (positiv angenommen).
+
+</div>
+<div>
+
+TODO Tikz-basierte illustration der flugparabel in der freiflugphase
+
+</div>
+</div>
 
 ---
 
-### Bedingungen für den Aufprall (Zero-Crossing)
+<div class="columns">
+<div class="two">
+
+### Bedingungen für den Aufprall
 
 Ein Aufprall auf den Boden (bei $y=0$) wird durch folgende Bedingung detektiert:
 
--   **Position:** $y(t) \le 0$
--   **Geschwindigkeit:** $v(t) < 0$ (Ball bewegt sich nach unten)
+-   **Position:** $y(t) = 0$<br/>(Ball berührt den Boden)
+-   **Geschwindigkeit:** $v(t) < 0$<br/>(Ball bewegt sich nach unten)
 
-Diese Bedingungen definieren einen "Zero-Crossing"-Ereignis, bei dem die kontinuierliche Dynamik unterbrochen wird und eine diskrete Zustandsänderung (Kollision) stattfindet.
+Diese Bedingungen definieren ein sogenanntes *Nulldurchgangsereignis*, bei dem die kontinuierliche Dynamik unterbrochen wird und eine diskrete Zustandsänderung (Kollision) stattfindet.
+
+</div>
+<div class="three">
+
+TODO Tikz-basierte Illustration des Aufpralls mit negativem Geschwindigkeitsvektors
+
+</div>
+</div>
 
 ---
+
+<div class="columns">
+<div>
 
 ### Diskrete Zustandsänderung beim Aufprall
 
@@ -71,7 +106,18 @@ $$ v(t_e^+) = -e \cdot v(t_e^-) $$
 -   $v(t_e^+)$: Geschwindigkeit unmittelbar nach dem Aufprall.
 -   $e$: Restitutionskoeffizient ($0 \le e \le 1$). Für $e=1$ ist die Kollision elastisch (kein Energieverlust), für $e=0$ ist sie vollkommen unelastisch (Ball bleibt am Boden liegen).
 
+</div>
+<div>
+
+TODO Tikz-basierte illustration der Zustandsänderung mit den beiden Geschwindigkeitsvektoren vor und nach dem Aufprall
+
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div>
 
 ### Analytische Lösung: Freiflugphase
 
@@ -87,7 +133,18 @@ $$ y(t) = y_0 + v_0(t - t_0) - \frac{1}{2}g(t - t_0)^2 $$
 
 Diese Gleichungen gelten, solange der Ball sich in der Luft befindet ($y(t) > 0$).
 
+</div>
+<div>
+
+TODO Tikz-basierte illustration der geschwindigkeit und der flugparabel in der freiflugphase
+
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div class="two">
 
 ### Analytische Lösung: Zeitpunkt des Aufpralls
 
@@ -97,6 +154,14 @@ Ausgehend von $y_0, v_0$ zum Zeitpunkt $t_0$:
 $$ 0 = y_0 + v_0(t_e - t_0) - \frac{1}{2}g(t_e - t_0)^2 $$
 
 Dies ist eine quadratische Gleichung für $\Delta t = (t_e - t_0)$. Die positive Lösung (wenn der Ball nach unten fällt) ist der relevante Aufprallzeitpunkt.
+
+</div>
+<div class="three">
+
+TODO Tikz-basierte Illustration der flugparabel und des Aufprallzeitpunkts
+
+</div>
+</div>
 
 ---
 
@@ -112,9 +177,9 @@ Die Simulation des Bouncing Balls beinhaltet eine Abfolge von Freiflugphasen und
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_1.jpg)
+![bg right](./Illustrationen/Abschnitt_2.jpg)
 
-## 6.1: Einführung in Hybride Dynamische Modelle
+## 6.2: Allgemeine Definition
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -204,7 +269,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Erweiterter Formalismus (1/3)
+### **Erweiterter** allgemeiner Formalismus (1/3)
 
 <div class="columns top">
 <div class="two">
@@ -241,7 +306,7 @@ Um hybride Systeme zu modellieren, erweitern wir diesen Formalismus um:
 
 ---
 
-### Erweiterter Formalismus (2/3)
+### **Erweiterter** allgemeiner Formalismus (2/3)
 
 **Zustände:**
 Ein hybrides System besitzt zwei Arten von Zuständen:
@@ -259,7 +324,7 @@ Die Dynamik wird durch vier Kernfunktionen beschrieben:
 
 ---
 
-### Erweiterter Formalismus (3/3)
+### **Erweiterter** allgemeiner Formalismus (3/3)
 
 3.  **Zero-Crossing-Funktion $z$**:
     Eine Vektor-wertige Funktion, deren Nulldurchgänge Ereignisse signalisieren.
@@ -275,9 +340,9 @@ Dieser Formalismus erlaubt die Modellierung des komplexen Zusammenspiels von kon
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_2.jpg)
+![bg right](./Illustrationen/Abschnitt_3.jpg)
 
-## 6.2: Neue Softwarearchitektur
+## 6.3: Softwarearchitektur
 
 TODO Inhaltsübersicht
 
@@ -456,15 +521,25 @@ TODO Text
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_2.jpg)
+![bg right](./Illustrationen/Abschnitt_4.jpg)
 
-## 6.2: Nulldurchgangsdetektion
+## 6.4: Nulldurchgangsdetektion
 
 TODO Übersicht über den Abschnitt
 
 ---
 
 TODO Folien zum Algorithmus für Nulldurchgangsdetektion
+
+---
+
+TODO Einleitende Folien zum Beispiel IntegrateWithLowerLimit
+
+---
+
+![bg contain right](./Screenshots/IntegrateWithLowerLimit_Explizit.png)
+
+TODO Text (insbesondere Hinweis auf die engeren Abtastzeiten am Nullpunkt)
 
 ---
 
@@ -542,9 +617,9 @@ TODO Text
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_4.jpg)
+![bg right](./Illustrationen/Abschnitt_5.jpg)
 
-## 6.4: Diskrete Abtastzeiten
+## 6.5: Diskrete Abtastzeiten
 
 TODO Übersicht über den Abschnitt
 
@@ -554,9 +629,9 @@ TODO Folien zur Blöcken mit diskreter Abtastzeit (Offset und Periode)
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_5.jpg)
+![bg right](./Illustrationen/Abschnitt_6.jpg)
 
-## 6.5: Variable Abtastzeiten
+## 6.6: Variable Abtastzeiten
 
 TODO Übersicht über den Abschnitt
 
