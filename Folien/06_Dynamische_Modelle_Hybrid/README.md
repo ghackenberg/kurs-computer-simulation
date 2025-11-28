@@ -11,7 +11,9 @@ math: mathjax
 
 # Kapitel 6: Hybride Dynamische Modelle
 
-TODO Übersicht über das Kapitel
+Dieses Kapitekl beinhaltet Folgendes:
+
+TODO Kurze Übersicht über das Kapitel
 
 ---
 
@@ -19,7 +21,9 @@ TODO Übersicht über das Kapitel
 
 ## 6.1: Fallbeispiel: Der Bouncing Ball
 
-TODO Übersicht über den Abschnitt
+Dieser Abschnitt beinhaltet Folgendes:
+
+TODO Kurze Übersicht der Inhalte
 
 ---
 
@@ -192,11 +196,83 @@ Abfolge von Freiflugphasen und Kollisionsereignissen:
 
 ## 6.2: Fallbeispiel: Digitaler Sensor
 
-TODO Übersicht über den Abschnitt
+Dieser Abschnitt beinhaltet Folgendes:
+
+TODO Kurze Übersicht der Inhalte
 
 ---
 
-TODO Abschnitt zu einem weiteren Fallbeispiel mit diskreter abtastzeit (z.B. digitaler sensor) inklusive mathematischer beschreibung und analytischer lösung
+<div class="columns">
+<div>
+
+### Mathematische Beschreibung (1/2)
+
+**1. Kontinuierliches Eingangssignal**
+
+Das zu messende Signal sei eine sinusförmige Spannung $U(t)$:
+$$ U(t) = A \cdot \sin(\omega t + \phi) $$
+- $A$: Amplitude
+- $\omega = 2\pi f$: Kreisfrequenz
+- $\phi$: Phasenverschiebung
+
+Dieses Signal existiert und ändert sich kontinuierlich über die Zeit.
+
+</div>
+<div>
+
+![w:1000](./Diagramme/DigitalerSensor_Eingangssignal.tikz.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Mathematische Beschreibung (2/2)
+
+**2. Diskreter Abtastvorgang**
+
+Der Sensor misst den Wert von $U(t)$ nur zu bestimmten Zeitpunkten $t_k$:
+$$ t_k = k \cdot T_s, \quad k = 0, 1, 2, \dots $$
+- $T_s$: Abtastperiode (z.B. 100 ms)
+
+**3. Ausgangssignal (Zero-Order Hold)**
+
+Zwischen zwei Abtastungen hält der Sensor den zuletzt gemessenen Wert konstant. Dies wird als **Zero-Order Hold (ZOH)** bezeichnet. Das Ausgangssignal $U_{sens}(t)$ ist eine stückweise konstante Funktion:
+$$ U_{sens}(t) = U(t_k) \quad \text{für} \quad t_k \le t < t_{k+1} $$
+
+</div>
+<div>
+
+![w:700](./Diagramme/DigitalerSensor_Abtastung.tikz.svg)
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Hybride Eigenschaften des Systems
+
+Das Gesamtsystem ist ein klassisches hybrides System:
+
+- **Kontinuierliche Dynamik:** Das Eingangssignal $U(t)$ entwickelt sich kontinuierlich.
+- **Diskrete Ereignisse:** Die Abtastzeitpunkte $t_k$ sind diskrete Ereignisse, die periodisch auftreten.
+- **Diskrete Zustandsänderung:** Bei jedem Abtastereignis wird der interne Zustand des Sensors (der gespeicherte Messwert) aktualisiert. Dies führt zu einer sprunghaften Änderung des Ausgangssignals $U_{sens}(t)$.
+
+Im Gegensatz zum Bouncing Ball sind die Ereignisse hier **zeitgesteuert** (periodisch) und nicht **zustandsgesteuert** (abhängig von $y(t) \le 0$).
+
+</div>
+<div>
+
+![w:1000](./Diagramme/DigitalerSensor_Gesamtsystem.tikz.svg)
+
+</div>
+</div>
 
 ---
 
@@ -204,12 +280,9 @@ TODO Abschnitt zu einem weiteren Fallbeispiel mit diskreter abtastzeit (z.B. dig
 
 ## 6.3: Allgemeine Definition
 
-Dieser Abschnitt umfasst die folgenden Inhalte:
+Dieser Abschnitt beinhaltet Folgendes:
 
-- **Definition** hybrider dynamischer Modelle
-- **Abgrenzung** zu rein kontinuierlichen und rein diskreten Modellen
-- **Typische Anwendungsbeispiele** (z.B. Systeme mit Regelung, Schaltvorgängen, physikalischen Kontakten)
-- **Herausforderungen** bei der Simulation hybrider Systeme
+TODO Kurze Übersicht der Inhalte
 
 ---
 
@@ -367,7 +440,9 @@ Dieser Formalismus erlaubt die Modellierung des komplexen Zusammenspiels von kon
 
 ## 6.4: Softwarearchitektur
 
-TODO Inhaltsübersicht
+Dieser Abschnitt beinhaltet Folgendes:
+
+TODO Kurze Übersicht der Inhalte
 
 ---
 
@@ -548,7 +623,9 @@ TODO Text
 
 ## 6.5: Nulldurchgangsdetektion
 
-TODO Übersicht über den Abschnitt
+Dieser Abschnitt beinhaltet Folgendes:
+
+TODO Kurze Übersicht der Inhalte
 
 ---
 
@@ -644,7 +721,9 @@ TODO Text
 
 ## 6.6: Diskrete Abtastzeiten
 
-TODO Übersicht über den Abschnitt
+Dieser Abschnitt beinhaltet Folgendes:
+
+TODO Kurze Übersicht der Inhalte
 
 ---
 
@@ -656,7 +735,9 @@ TODO Folien zur Blöcken mit diskreter Abtastzeit (Offset und Periode)
 
 ## 6.7: Variable Abtastzeiten
 
-TODO Übersicht über den Abschnitt
+Dieser Abschnitt beinhaltet Folgendes:
+
+TODO Kurze Übersicht der Inhalte
 
 ---
 
