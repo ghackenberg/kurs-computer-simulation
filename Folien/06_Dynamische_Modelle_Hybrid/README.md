@@ -190,7 +190,19 @@ Abfolge von Freiflugphasen und Kollisionsereignissen:
 
 ![bg right](./Illustrationen/Abschnitt_2.jpg)
 
-## 6.2: Allgemeine Definition
+## 6.2: Fallbeispiel: Digitaler Sensor
+
+TODO Übersicht über den Abschnitt
+
+---
+
+TODO Abschnitt zu einem weiteren Fallbeispiel mit diskreter abtastzeit (z.B. digitaler sensor) inklusive mathematischer beschreibung und analytischer lösung
+
+---
+
+![bg right](./Illustrationen/Abschnitt_3.jpg)
+
+## 6.3: Allgemeine Definition
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -351,9 +363,9 @@ Dieser Formalismus erlaubt die Modellierung des komplexen Zusammenspiels von kon
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_3.jpg)
+![bg right](./Illustrationen/Abschnitt_4.jpg)
 
-## 6.3: Softwarearchitektur
+## 6.4: Softwarearchitektur
 
 TODO Inhaltsübersicht
 
@@ -532,9 +544,9 @@ TODO Text
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_4.jpg)
+![bg right](./Illustrationen/Abschnitt_5.jpg)
 
-## 6.4: Nulldurchgangsdetektion
+## 6.5: Nulldurchgangsdetektion
 
 TODO Übersicht über den Abschnitt
 
@@ -628,9 +640,9 @@ TODO Text
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_5.jpg)
+![bg right](./Illustrationen/Abschnitt_6.jpg)
 
-## 6.5: Diskrete Abtastzeiten
+## 6.6: Diskrete Abtastzeiten
 
 TODO Übersicht über den Abschnitt
 
@@ -640,9 +652,9 @@ TODO Folien zur Blöcken mit diskreter Abtastzeit (Offset und Periode)
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_6.jpg)
+![bg right](./Illustrationen/Abschnitt_7.jpg)
 
-## 6.6: Variable Abtastzeiten
+## 6.7: Variable Abtastzeiten
 
 TODO Übersicht über den Abschnitt
 
