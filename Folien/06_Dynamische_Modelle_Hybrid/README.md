@@ -11,17 +11,108 @@ math: mathjax
 
 # Kapitel 6: Hybride Dynamische Modelle
 
-Dieses Kapitel umfasst die folgenden Abschnitte:
-
-- 6.1: Einführung in Hybride Dynamische Modelle
-- 6.2: Nulldurchgangsdetektion
-- 6.3: Fallbeispiel: Der Bouncing Ball
-- 6.4: Diskrete Blöcke mit regelmäßiger Abtastzeit
-- 6.5: Diskrete Blöcke mit variabler Abtastzeit (Next Variable Hit Time)
+TODO Übersicht über das Kapitel
 
 ---
 
-![bg right:40%](./Illustrationen/Abschnitt_1.jpg)
+![bg right](./Illustrationen/Abschnitt_1.jpg)
+
+## 6.1: Fallbeispiel: Der Bouncing Ball
+
+TODO Übersicht über den Abschnitt
+
+---
+
+### Mathematische Beschreibung des Bouncing Balls
+
+Das System wird durch folgende Annahmen vereinfacht:
+-   **Ein-dimensionales System:** Bewegung nur entlang der y-Achse.
+-   **Konstante Erdbeschleunigung:** $g = 9.81 \, \text{m/s}^2$ (oder als positiv betrachtet für die Bewegung nach unten).
+-   **Kein Luftwiderstand.**
+-   **Instantane Kollisionen:** Der Aufprall auf den Boden findet ohne Zeitverzögerung statt.
+-   **Restitutionskoeffizient:** Ein konstanter Wert $e \in [0, 1]$, der den Energieverlust bei jeder Kollision beschreibt.
+
+---
+
+### Differentialgleichungen der Bewegung
+
+Während der Freiflugphase (kein Bodenkontakt) wird die Bewegung des Balls durch folgende Differentialgleichungen beschrieben:
+
+**Position ($y$):**
+$$ \frac{d^2y}{dt^2} = -g $$
+oder als System erster Ordnung:
+$$ \dot{y} = v $$
+$$ \dot{v} = -g $$
+
+-   $y(t)$: Position des Balls zur Zeit $t$.
+-   $v(t)$: Geschwindigkeit des Balls zur Zeit $t$.
+-   $g$: Erdbeschleunigung (positiv angenommen, hier wird das Vorzeichen für die Beschleunigung verwendet).
+
+---
+
+### Bedingungen für den Aufprall (Zero-Crossing)
+
+Ein Aufprall auf den Boden (bei $y=0$) wird durch folgende Bedingung detektiert:
+
+-   **Position:** $y(t) \le 0$
+-   **Geschwindigkeit:** $v(t) < 0$ (Ball bewegt sich nach unten)
+
+Diese Bedingungen definieren einen "Zero-Crossing"-Ereignis, bei dem die kontinuierliche Dynamik unterbrochen wird und eine diskrete Zustandsänderung (Kollision) stattfindet.
+
+---
+
+### Diskrete Zustandsänderung beim Aufprall
+
+Zum Zeitpunkt des Aufpralls $t_e$, wenn $y(t_e)=0$ und $v(t_e^-) < 0$, ändert sich die Geschwindigkeit des Balls sprunghaft:
+
+$$ v(t_e^+) = -e \cdot v(t_e^-) $$
+
+-   $v(t_e^-)$: Geschwindigkeit unmittelbar vor dem Aufprall.
+-   $v(t_e^+)$: Geschwindigkeit unmittelbar nach dem Aufprall.
+-   $e$: Restitutionskoeffizient ($0 \le e \le 1$). Für $e=1$ ist die Kollision elastisch (kein Energieverlust), für $e=0$ ist sie vollkommen unelastisch (Ball bleibt am Boden liegen).
+
+---
+
+### Analytische Lösung: Freiflugphase
+
+Die Bewegungsgleichungen $\dot{y} = v$ und $\dot{v} = -g$ können analytisch integriert werden.
+
+Mit den Anfangsbedingungen $y(t_0) = y_0$ und $v(t_0) = v_0$ sind die Lösungen:
+
+**Geschwindigkeit:**
+$$ v(t) = v_0 - g(t - t_0) $$
+
+**Position:**
+$$ y(t) = y_0 + v_0(t - t_0) - \frac{1}{2}g(t - t_0)^2 $$
+
+Diese Gleichungen gelten, solange der Ball sich in der Luft befindet ($y(t) > 0$).
+
+---
+
+### Analytische Lösung: Zeitpunkt des Aufpralls
+
+Um den Zeitpunkt des nächsten Aufpralls ($t_e$) zu finden, setzen wir $y(t_e) = 0$ und lösen die Positionsgleichung nach $t_e$ auf.
+
+Ausgehend von $y_0, v_0$ zum Zeitpunkt $t_0$:
+$$ 0 = y_0 + v_0(t_e - t_0) - \frac{1}{2}g(t_e - t_0)^2 $$
+
+Dies ist eine quadratische Gleichung für $\Delta t = (t_e - t_0)$. Die positive Lösung (wenn der Ball nach unten fällt) ist der relevante Aufprallzeitpunkt.
+
+---
+
+### Analytische Lösung: Simulation der Kollisionen
+
+Die Simulation des Bouncing Balls beinhaltet eine Abfolge von Freiflugphasen und Kollisionsereignissen.
+
+1.  **Initialisierung:** Startposition $y_0$ und Startgeschwindigkeit $v_0$ zum Zeitpunkt $t_0$.
+2.  **Berechnung der Freiflugphase:** Solange $y(t) > 0$, wird die Bewegung mit den analytischen Lösungen für $y(t)$ und $v(t)$ berechnet.
+3.  **Detektion des Aufpralls:** Bestimme den Zeitpunkt $t_e$ wann $y(t_e^-) = 0$ (unter der Bedingung $v(t_e^-) < 0$).
+4.  **Zustandsupdate:** Berechne die neue Geschwindigkeit $v(t_e^+) = -e \cdot v(t_e^-)$ und setze $y(t_e^+) = 0$.
+5.  **Iteration:** Setze $t_0 = t_e$, $y_0 = y(t_e^+)$, $v_0 = v(t_e^+)$ und wiederhole ab Schritt 2, bis die Simulationszeit endet oder der Ball zur Ruhe kommt ($v \approx 0$ und $y \approx 0$).
+
+---
+
+![bg right](./Illustrationen/Abschnitt_1.jpg)
 
 ## 6.1: Einführung in Hybride Dynamische Modelle
 
@@ -184,19 +275,11 @@ Dieser Formalismus erlaubt die Modellierung des komplexen Zusammenspiels von kon
 
 ---
 
-![bg right:40%](./Illustrationen/Abschnitt_2.jpg)
+![bg right](./Illustrationen/Abschnitt_2.jpg)
 
-## 6.2: Überarbeitete Softwarearchitektur
+## 6.2: Neue Softwarearchitektur
 
 TODO Inhaltsübersicht
-
----
-
-TODO Überschrift
-
-Die in Kapitel 4 vorgestellte Softwarearchitektur bildet die Grundlage für die Modellierung und Simulation kontinuierlicher dynamischer Systeme. Sie basierte auf den Kernkomponenten `Block`, `Connection` und `Model`, wobei jeder `Block` kontinuierliche Zustände (`ContinuousStates`), Eingänge (`Inputs`) und Ausgänge (`Outputs`) deklarierte. Der `Solver` war für die Initialisierung, die Berechnung von Ausgängen und Ableitungen sowie die Integration der kontinuierlichen Zustände zuständig.
-
-Um hybride Systeme zu unterstützen, die sowohl kontinuierliche als auch diskrete Dynamiken umfassen, wurde diese Architektur erweitert. Die zentralen Erweiterungen betreffen die `Block`-Klasse selbst, neue Deklarationstypen für Ereignisse, und ein umfassenderes Konzept für Abtastzeiten.
 
 ---
 
@@ -373,170 +456,19 @@ TODO Text
 
 ---
 
-![bg right:40%](./Illustrationen/Abschnitt_2.jpg)
+![bg right](./Illustrationen/Abschnitt_2.jpg)
 
 ## 6.2: Nulldurchgangsdetektion
 
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- **Konzept** des Nulldurchgangs (Zero-Crossing)
-- **Bedeutung** in hybriden Systemen (Ereignisdetektion)
-- **Algorithmus** zur Nulldurchgangslokalisierung (Iterative Bisektion im `EulerExplicitSolver`)
-- **Implementierung** im `Solver.cs` und `EulerExplicitSolver.cs`
-- **Zero-Crossing-Funktionen** in Blöcken (`Block.cs`, `HitLowerLimitBlock.cs`, `IntegrateWithLimitsBlock.cs`)
+TODO Übersicht über den Abschnitt
 
 ---
 
-<div class="columns">
-<div>
-
-### Konzept des Nulldurchgangs (Zero-Crossing)
-
-- Eine **Zero-Crossing-Funktion** $g(t, \vec{x}(t))$ ist eine Hilfsfunktion, deren Vorzeichenwechsel ein diskretes Ereignis signalisiert.
-- Der Zeitpunkt, an dem $g(t, \vec{x}(t)) = 0$ ist, ist der **Ereigniszeitpunkt**.
-- Das Vorzeichen von $g$ vor und nach dem Ereignis ist entscheidend (z.B. von positiv zu negativ).
-- **Beispiele:**
-    - $g = \text{Höhe} - \text{Bodenlinie}$ (Kollision)
-    - $g = \text{Temperatur} - \text{Schwellwert}$ (Thermostat schaltet)
-
-</div>
-<div>
-
-![Nulldurchgang w:1000](./Diagramme/Nulldurchgang.tikz.svg)
-
-</div>
-</div>
+TODO Folien zum Algorithmus für Nulldurchgangsdetektion
 
 ---
 
-<div class="columns">
-<div class="two">
-
-### Bedeutung in hybriden Systemen (Ereignisdetektion)
-
-- **Präzise Ereigniserkennung:** Ermöglicht die genaue Lokalisierung von diskreten Ereignissen, die die Systemdynamik ändern.
-- **Korrekte Zustandsübergänge:** Stellt sicher, dass Zustands-Resets oder -Modifikationen exakt zum Zeitpunkt des Ereignisses erfolgen.
-- **Vermeidung numerischer Fehler:** Ohne Nulldurchgangsdetektion könnten Ereignisse übersprungen oder ungenau behandelt werden, was zu falschen Simulationsergebnissen führt.
-- **Grundlage für hybride Solver:** Integriert die kontinuierliche Integration mit der diskreten Ereignisbehandlung.
-
-</div>
-<div>
-
-![](./Illustrationen/ObjektKollision.jpg)
-
-</div>
-</div>
-
----
-
-### Algorithmus zur Nulldurchgangslokalisierung (Iterative Bisektion)
-
-- **Problem:** Ein Ereignis ($g=0$) kann zwischen zwei Integrationsschritten $t_k$ und $t_{k+1}$ auftreten.
-- **Ansatz:** Wenn $g(t_k)$ und $g(t_{k+1})$ unterschiedliche Vorzeichen haben, liegt ein Nulldurchgang im Intervall $[t_k, t_{k+1}]$ vor.
-- **Iterative Bisektion:**
-    1.  Halbiere das Intervall.
-    2.  Berechne $g$ am Mittelpunkt.
-    3.  Wähle das Teilintervall, in dem der Vorzeichenwechsel stattfindet.
-    4.  Wiederhole, bis die gewünschte Genauigkeit (`ZeroCrossingValueThreshold`) erreicht ist oder die maximale Iterationsanzahl (`ZeroCrossingIterationCountLimit`) überschritten wird.
-- Implementiert in `EulerExplicitSolver.Solve` im `while (zeroCrossingValue > ZeroCrossingValueThreshold ...)`-Block.
-
----
-
-### Implementierung im `Solver.cs` und `EulerExplicitSolver.cs` (1/2)
-
-- **`Solver.cs`:**
-    - `ZeroCrossingValueThreshold`: Toleranz für die Nulldurchgangslokalisierung.
-    - `ZeroCrossingIterationCountLimit`: Maximale Iterationen für die Lokalisierung.
-    - `CalculateZeroCrossings(double t)`:
-        - Iteriert über alle Blöcke und deren `ZeroCrossingDeclaration`s.
-        - Ruft `Block.CalculateZeroCrossings` auf.
-        - Prüft auf Vorzeichenwechsel zwischen dem aktuellen und dem vorherigen Zeitschritt.
-        - Gibt den maximalen Absolutwert der Zero-Crossing-Funktionen zurück, die einen Vorzeichenwechsel hatten.
-
----
-
-<div class="columns">
-<div>
-
-### Implementierung im `Solver.cs` und `EulerExplicitSolver.cs` (2/2)
-
-- **`EulerExplicitSolver.cs`:**
-    - Die `Solve`-Methode enthält die Hauptschleife für die Simulation.
-    - Innerhalb dieser Schleife wird die iterative Bisektion angewendet, um Nulldurchgänge zu lokalisieren.
-    - Bei einem gefundenen Nulldurchgang wird `UpdateStates` aufgerufen, um die Zustände des Systems anzupassen.
-
-</div>
-<div>
-
-![Abstrakte Software-Architektur](./Diagramme/SoftwareArchitektur.svg)
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div>
-
-### Zero-Crossing-Funktionen in Blöcken (1/2)
-
-- **`Block.cs`:**
-    - Definiert eine virtuelle Methode `CalculateZeroCrossings(...)`, die von spezialisierten Blöcken überschrieben werden kann.
-    - Enthält eine Liste von `ZeroCrossingDeclaration`s, die die Zero-Crossing-Signale des Blocks beschreiben.
-- **`ZeroCrossingDeclaration.cs`:** Eine einfache Klasse zur Benennung eines Zero-Crossing-Signals.
-
-</div>
-<div>
-
-![Abstrakte Software-Architektur](./Diagramme/SoftwareArchitektur.svg)
-
-</div>
-</div>
-
----
-
-### Zero-Crossing-Funktionen in Blöcken (2/2)
-
-- **`HitLowerLimitBlock.cs`:**
-    - Ein Block, der ein Zero-Crossing erzeugt, wenn sein Eingang einen definierten unteren Grenzwert erreicht.
-    - `zeroCrossings[0] = inputs[0] - LowerLimit;`
-- **`IntegrateWithLimitsBlock.cs`:**
-    - Ein Integrator, der Zero-Crossings erzeugt, wenn sein integrierter Zustand obere oder untere Grenzen erreicht.
-    - `zeroCrossings[0] = continuousStates[0] - LowerLimit;`
-    - `zeroCrossings[1] = continuousStates[0] - UpperLimit;`
-
----
-
-![bg right:40%](./Illustrationen/Abschnitt_3.jpg)
-
-## 6.3: Fallbeispiel: Der Bouncing Ball
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- **Modellierung** des Bouncing Ball-Systems
-    - Kontinuierliche Zustände (Position, Geschwindigkeit)
-    - Diskret-Ereignisse (Aufprall auf den Boden)
-- **Implementierung** des Modells (`BouncingBallExample.cs`)
-    - `IntegrateWithResetBlock` für die Geschwindigkeit
-    - `HitLowerLimitBlock` für die Bodenerkennung
-- **Simulationsergebnisse** und Visualisierung
-- **Diskussion** der Genauigkeit und Stabilität
-
----
-
-### Modellierung des Bouncing Ball-Systems
-
-- **Kontinuierliche Zustände:**
-    - **Position $p(t)$:** Die Höhe des Balls über dem Boden.
-    - **Geschwindigkeit $v(t)$:** Die vertikale Geschwindigkeit des Balls.
-- **Differentialgleichungen (zwischen Ereignissen):**
-    - $\dot{p} = v$
-    - $\dot{v} = -g$ (wobei $g$ die Erdbeschleunigung ist, z.B. $9.81 \, \text{m/s}^2$)
-- **Diskret-Ereignis:**
-    - **Aufprall auf den Boden:** Tritt ein, wenn die Position $p(t)$ den Wert 0 erreicht oder unterschreitet.
-- **Zustands-Reset beim Aufprall:**
-    - Die Geschwindigkeit ändert ihr Vorzeichen und wird um einen Dämpfungsfaktor reduziert: $v \leftarrow -e \cdot v$ (wobei $e$ der Restitutionskoeffizient ist, $0 < e < 1$).
-    - Die Position wird auf 0 gesetzt, falls sie aufgrund numerischer Ungenauigkeiten leicht negativ wurde: $p \leftarrow \max(0, p)$.
+TODO Einleitende Folie zur Umsetzung des Bouncing Ball Beispiels mit der erweiterten Softwarearchitektur und dem Algorithmus für Nulldurchgangsdetektion
 
 ---
 
@@ -582,184 +514,52 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Simulationsergebnisse und Visualisierung
+![bg contain right](./Screenshots/Bouncing_Ball_Naive_Explizit.png)
 
-- **Position:** Zeigt eine parabolische Flugbahn zwischen den Aufprallen. Die maximale Höhe nimmt nach jedem Aufprall ab.
-- **Geschwindigkeit:** Zeigt eine lineare Abnahme zwischen den Aufprallen (konstante Beschleunigung). Beim Aufprall springt die Geschwindigkeit sprunghaft von einem negativen Wert zu einem positiven, kleineren Wert.
-- **Visualisierung mit `ScottPlot`:**
-    - Zeitverläufe von Position und Geschwindigkeit.
-    - Deutliche Darstellung der diskreten Ereignisse (Aufprallpunkte).
-- **Darstellung der Zero-Crossing-Ereignisse:**
-    - Die genauen Zeitpunkte der Nulldurchgänge sind kritisch für die korrekte Simulation.
-    - Die iterative Bisektion sorgt für die Präzision dieser Punkte.
+TODO Text
 
 ---
 
-### Diskussion der Genauigkeit und Stabilität (1/2)
+![bg contain right](./Screenshots/Bouncing_Ball_Naive_Implizit.png)
 
-- **Genauigkeit der Nulldurchgangslokalisierung:**
-    - Direkt abhängig von `ZeroCrossingValueThreshold` (wie nah an Null muss das Signal sein) und der maximalen Anzahl von Iterationen.
-    - Eine höhere Genauigkeit erfordert mehr Rechenzeit.
-- **Stabilität des Integrators:**
-    - Der verwendete `EulerExplicitSolver` ist ein einfacher Integrator.
-    - Bei sehr kleinen Zeitschrittweiten oder "steifen" Systemen (schnelle Dynamik) kann es zu numerischen Instabilitäten kommen.
-    - Die präzise Behandlung von Ereignissen hilft, diese Instabilitäten zu minimieren, da die Integration genau an den Ereignispunkten unterbrochen und neu gestartet wird.
+TODO Text (insbesondere, warum bricht der Ball durch die Nulllinie)
 
 ---
 
-### Diskussion der Genauigkeit und Stabilität (2/2)
-
-- **Einfluss des `TimeStepMax`:**
-    - Die maximale Schrittweite beeinflusst die Geschwindigkeit der Simulation und die initiale Genauigkeit der Nulldurchgangslokalisierung.
-    - Ein kleinerer `TimeStepMax` führt zu mehr Schritten und potenziell genaueren Ergebnissen, aber längerer Simulationszeit.
+TODO Folien zum erweiterten modell (BouncingBallExtendedExample)
 
 ---
 
-![bg right:40%](./Illustrationen/Abschnitt_4.jpg)
+![bg contain right](./Screenshots/Bouncing_Ball_Erweitert_Explizit.png)
 
-## 6.4: Diskrete Blöcke mit regelmäßiger Abtastzeit
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- **Definition** von diskreten Blöcken
-- **Konzept** der regelmäßigen Abtastzeit (Fixed-Step Discrete Blocks)
-- **Parameter** für Abtastzeit und Offset
-- **Anwendungsbeispiele** (z.B. digitale Regler, Zähler)
-- **Implementierung** (konzeptionell, da kein Code vorhanden)
-    - `UpdateStates` Methode
-    - Verwaltung der diskreten Zustände
+TODO Text
 
 ---
 
-### Definition von diskreten Blöcken
+![bg contain right](./Screenshots/Bouncing_Ball_Erweitert_Implizit.png)
 
-- **Funktionsweise:** Blöcke, deren Ausgaben und/oder interne Zustände nur zu bestimmten, vordefinierten diskreten Zeitpunkten aktualisiert werden.
-- **Gegensatz zu kontinuierlichen Blöcken:** Kontinuierliche Blöcke werden bei jedem Integrationsschritt des Solvers berechnet. Diskrete Blöcke nur zu ihren "Hit Times".
-- **Zustände:** Besitzen `DiscreteStates` (im Gegensatz zu `ContinuousStates`), die sprunghaft aktualisiert werden.
-- **Beispiel:** Ein Zähler, der seinen Wert nur jede Sekunde erhöht.
+TODO Text
 
 ---
 
-### Konzept der regelmäßigen Abtastzeit (Fixed-Step Discrete Blocks)
+![bg right](./Illustrationen/Abschnitt_4.jpg)
 
-- **Aktualisierungsintervall:** Die Aktualisierung des Blocks erfolgt in festen, periodischen Zeitintervallen.
-- **Abtastperiode ($T_s$):** Das konstante Zeitintervall zwischen zwei aufeinanderfolgenden Aktualisierungen.
-- **Offset ($T_o$):** Der Zeitpunkt der ersten Aktualisierung. Alle weiteren Aktualisierungen erfolgen bei $T_o + k \cdot T_s$, wobei $k$ eine positive ganze Zahl ist.
-- **Anwendung:** Ideal für die Modellierung von Hardware, die mit einem festen Takt arbeitet (z.B. Mikrocontroller, SPS).
+## 6.4: Diskrete Abtastzeiten
 
----
-
-### Parameter für Abtastzeit und Offset
-
-- **Abtastperiode ($T_s$):**
-    - Definiert, wie oft der Block seine Logik ausführt.
-    - Muss im Block selbst oder in seiner Konfiguration gespeichert werden.
-    - Beispiel: `SampleTime = 0.01` für 10ms Abtastzeit.
-- **Offset ($T_o$):**
-    - Definiert den Startzeitpunkt der Abtastung.
-    - Ermöglicht die Synchronisation oder Desynchronisation mehrerer diskreter Blöcke.
-    - Beispiel: `Offset = 0.005` für eine erste Aktualisierung nach 5ms.
-- **Implementierung:** Diese Parameter müssten als Eigenschaften in einer Basisklasse für diskrete Blöcke oder direkt in den Blöcken selbst hinterlegt werden.
+TODO Übersicht über den Abschnitt
 
 ---
 
-### Anwendungsbeispiele
-
-- **Digitale Regler:**
-    - PID-Regler, die in einem Mikrocontroller implementiert sind und mit einer festen Frequenz arbeiten.
-    - Zustandsregler, die diskrete Messwerte verarbeiten.
-- **Zähler und Timer:**
-    - Blöcke, die Ereignisse zählen oder nach einer bestimmten Zeit einen Trigger auslösen.
-- **Abtastsysteme:**
-    - Modellierung von Analog-Digital-Wandlern (ADCs) oder Digital-Analog-Wandlern (DACs).
-- **Kommunikationsprotokolle:**
-    - Zeitgesteuerte Übertragung von Datenpaketen in Netzwerken.
+TODO Folien zur Blöcken mit diskreter Abtastzeit (Offset und Periode)
 
 ---
 
-### Implementierung (konzeptionell)
+![bg right](./Illustrationen/Abschnitt_5.jpg)
 
-- **`UpdateStates` Methode:**
-    - Die `Block.UpdateStates` Methode (bereits vorhanden) wäre der ideale Ort für die Logik des diskreten Blocks.
-    - Sie würde nur aufgerufen, wenn die nächste Abtastzeit des Blocks erreicht ist.
-- **Verwaltung der diskreten Zustände:**
-    - `DiscreteStates` Array im `Block` würde die internen Zustände des diskreten Blocks speichern.
-    - Diese Zustände werden nur bei `UpdateStates` aktualisiert.
+## 6.5: Variable Abtastzeiten
+
+TODO Übersicht über den Abschnitt
 
 ---
 
-### Implementierung (konzeptionell)
-
-- **Solver-Logik:**
-    - Der Solver müsste für jeden diskreten Block die `NextHitTime` (nächste Abtastzeit) berechnen.
-    - Bei jedem Simulationsschritt würde der Solver prüfen, ob die aktuelle Simulationszeit die `NextHitTime` eines diskreten Blocks erreicht oder überschritten hat.
-    - Wenn ja, würde `UpdateStates` des Blocks aufgerufen und die `NextHitTime` für diesen Block neu berechnet.
-
----
-
-![bg right:40%](./Illustrationen/Abschnitt_5.jpg)
-
-## 6.5: Diskrete Blöcke mit variabler Abtastzeit (Next Variable Hit Time)
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- **Motivation** für variable Abtastzeiten
-- **Konzept** der "Next Variable Hit Time"
-- **Ereignisgesteuerte Simulation** für diskrete Ereignisse
-- **Anwendungsbeispiele** (z.B. Zustandsautomaten, ereignisbasierte Logik)
-- **Implementierung** (konzeptionell, da kein Code vorhanden)
-    - Ereignisliste
-    - Ereignisbehandlung
-
----
-
-### Motivation für variable Abtastzeiten
-
-- **Effizienz:** Nicht alle diskreten Ereignisse treten regelmäßig auf. Eine feste Abtastzeit kann zu unnötigen Berechnungen führen, wenn sich der Zustand des Blocks über lange Perioden nicht ändert.
-- **Ereignisorientierung:** Viele Systeme reagieren auf asynchrone Ereignisse (z.B. Benutzerinteraktion, Sensor-Trigger, Fehler). Eine feste Abtastzeit ist hier ungeeignet.
-- **Flexibilität:** Ermöglicht die Modellierung komplexer Logik, die nur bei Bedarf aktiv wird.
-- **Beispiel:** Ein Zustandsautomat, der nur bei einem bestimmten Eingangssignal seinen Zustand wechselt.
-
----
-
-### Konzept der "Next Variable Hit Time"
-
-- **Ereignisbasierte Aktualisierung:** Ein diskreter Block wird nur dann aktualisiert, wenn ein relevantes Ereignis eintritt oder seine interne Logik eine Aktualisierung erfordert.
-- **Selbstmeldung:** Jeder Block ist dafür verantwortlich, dem Solver den *nächsten* Zeitpunkt zu melden, zu dem er eine Aktualisierung benötigt.
-- **Solver-Steuerung:** Der Solver verwaltet eine Liste dieser "Next Variable Hit Times" und springt zur frühesten Zeit, um den entsprechenden Block zu aktualisieren.
-- **Dynamische Zeitplanung:** Die Zeitpunkte der Aktualisierung sind nicht fest, sondern ergeben sich aus der Systemdynamik und den Ereignissen.
-
----
-
-### Ereignisgesteuerte Simulation für diskrete Ereignisse
-
-- **Zentrale Ereignisliste:** Der Solver verwaltet eine nach Zeit sortierte Liste aller zukünftigen diskreten Ereignisse (ähnlich wie in Kapitel 5).
-- **Simulationsuhr:** Die Simulationsuhr springt direkt zum Zeitpunkt des nächsten Ereignisses in der Liste.
-- **Ereignisbehandlung:**
-    1.  Entnehme das nächste Ereignis aus der Liste.
-    2.  Setze die Simulationsuhr auf den Ereigniszeitpunkt.
-    3.  Führe die Logik des betroffenen Blocks aus (z.B. `UpdateStates`).
-    4.  Der Block kann neue zukünftige Ereignisse generieren und der Liste hinzufügen.
-- **Integration mit kontinuierlichen Systemen:** Der Solver muss sowohl kontinuierliche Integrationsschritte als auch diskrete Ereignisse (Zero-Crossings und Next Variable Hit Times) verwalten.
-
----
-
-### Implementierung (konzeptionell)
-
-- **Block-Methode `GetNextHitTime()`:**
-    - Jeder diskrete Block müsste eine Methode implementieren, die dem Solver den nächsten Zeitpunkt mitteilt, zu dem er aktiv werden muss.
-    - Dies könnte auf internen Timern, Zustandsbedingungen oder externen Triggern basieren.
-    - Rückgabe von `double.PositiveInfinity` wenn keine weitere Aktivierung geplant ist.
-
----
-
-### Implementierung (konzeptionell)
-
-- **Solver-Logik:**
-    - **Globale Ereignisliste:** Eine `PriorityQueue` (oder ähnliche Struktur) zur Verwaltung aller `NextHitTime`s von diskreten Blöcken und Zero-Crossing-Ereignissen.
-    - **Schrittweise Simulation:** Bei jedem Schritt wählt der Solver das Minimum aus:
-        1.  Nächster kontinuierlicher Integrationsschritt.
-        2.  Nächster Zero-Crossing-Zeitpunkt.
-        3.  Nächste `NextHitTime` eines diskreten Blocks.
-    - **Ereignis-Dispatcher:** Ruft die entsprechenden Block-Methoden auf, wenn ein Ereigniszeitpunkt erreicht ist.
-    - **Zeitmanagement:** Der Solver muss die Simulationszeit entsprechend vorrücken und die Zustände der Blöcke synchronisieren.
+TODO Folien zu Blöcken mit variabler Abtastzeit (GetNextVariableHitTime)
