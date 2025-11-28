@@ -198,11 +198,32 @@ Abfolge von Freiflugphasen und Kollisionsereignissen:
 
 Dieser Abschnitt beinhaltet Folgendes:
 
-TODO Kurze Übersicht der Inhalte
+- Mathematische Beschreibung eines digitalen Sensors mit diskreter Abtastzeit.
+- Diskussion der hybriden Systemeigenschaften.
+- Erweiterung des Modells auf eine variable, signalgesteuerte Abtastzeit.
 
 ---
 
-TODO Einleitende Folie zum Fallbeispiel "digitaler Sensor mit diskreter Abtastzeit".
+<div class="columns">
+<div class="two">
+
+### Fallbeispiel: Digitaler Sensor mit **diskreter Abtastzeit**
+
+In diesem Beispiel modellieren wir einen einfachen digitalen Sensor, der ein kontinuierliches physikalisches Signal (z.B. eine Spannung) in ein digitales, zeitdiskretes Signal umwandelt.
+
+- **Eingang:** Ein kontinuierliches, sich stetig änderndes Signal.
+- **Verarbeitung:** Der Sensor misst den Wert des Eingangs zu festen, periodischen Zeitpunkten (Abtastung).
+- **Ausgang:** Der zuletzt gemessene Wert wird bis zur nächsten Abtastung konstant gehalten (Zero-Order Hold).
+
+Dieses System ist ein klassisches Beispiel für ein **zeitgesteuertes hybrides System**, bei dem diskrete Ereignisse (die Abtastungen) in regelmäßigen Abständen auftreten.
+
+</div>
+<div>
+
+TODO
+
+</div>
+</div>
 
 ---
 
@@ -280,7 +301,69 @@ Im Gegensatz zum Bouncing Ball sind die Ereignisse hier **zeitgesteuert** (perio
 
 ---
 
-TODO Folien zu digitalem Sensor mit variabler Abtastzeit. Der sensor soll wieder ein sinusförmiges kontinuierliches Eingangssignal messen. Die Abtastzeit des Sensors soll durch ein zweites kontinuierliches Eingangssignal gesteuert werden. das zweite signal könnte der absolutwert des kosinus (= ableitung des sinus) sein. das ausgangssignal des sensors soll ebenfalls eine kontinuierliche sprungfunktion sein.
+<div class="columns">
+<div class="three">
+
+### Erweiterung: Digitaler Sensor mit **variabler Abtastzeit**
+
+Eine starre, periodische Abtastung kann ineffizient sein:
+-   **Zu langsame Abtastung:** Wichtige Signaländerungen werden verpasst (Aliasing).
+-   **Zu schnelle Abtastung:** Redundante Daten werden erzeugt, wenn sich das Signal kaum ändert.
+
+**Ansatz:** Die Abtastrate wird dynamisch angepasst:
+-   **Hohe Abtastrate** bei schnellen Änderungen.
+-   **Niedrige Abtastrate** bei langsamen Änderungen.
+
+Dies führt zu einem **ereignisgesteuerten hybriden System**, bei dem die Abtastereignisse nicht mehr rein zeitgesteuert, sondern auch vom Zustand des Systems abhängig sind.
+
+</div>
+<div>
+
+TODO
+
+</div>
+</div>
+
+---
+
+### Steuerung der Abtastrate
+
+Die Abtastrate wird durch ein zweites, kontinuierliches Signal gesteuert, das die Änderungsrate des Eingangssignals repräsentiert.
+
+**1. Eingangssignal $U(t)$:**
+$$ U(t) = A \cdot \sin(\omega t) $$
+
+**2. Steuer-Signal (Änderungsrate) $c(t)$:**
+Die Ableitung von $U(t)$ beschreibt, wie schnell es sich ändert. Wir verwenden den Absolutwert:
+$$ c(t) = \left| \frac{dU}{dt} \right| = |A \omega \cos(\omega t)| $$
+
+**3. Variable Abtastperiode $T_s(t)$:**
+Die Zeit bis zur nächsten Abtastung wird umgekehrt proportional zur Änderungsrate festgelegt:
+- **Schnelle Änderung (hohes $c(t)$) $\implies$ kurze Abtastperiode.**
+- **Langsame Änderung (niedriges $c(t)$) $\implies$ lange Abtastperiode.**
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Umsetzung der variablen Abtastung
+
+**Ablauf bei jedem Abtast-Schritt $t_k$:**
+1.  **Messen:** Der Wert des Eingangssignals $U(t_k)$ wird erfasst.
+2.  **Bestimmen der Änderungsrate:** Der Wert des Steuersignals $c(t_k)$ wird ermittelt.
+3.  **Berechnen des nächsten Zeitpunkts:** Die nächste Abtastperiode $\Delta t_k$ wird berechnet, z.B. über eine Formel wie:
+    $$ \Delta t_k = \frac{T_{max}}{1 + \text{gain} \cdot c(t_k)} $$
+    Der nächste Abtastzeitpunkt ist dann $t_{k+1} = t_k + \Delta t_k$.
+4.  **Halten des Werts:** Der Ausgang $U_{sens}(t)$ wird für das Intervall $[t_k, t_{k+1})$ auf den Wert $U(t_k)$ gesetzt.
+
+</div>
+<div>
+
+TODO
+
+</div>
+</div>
 
 ---
 
