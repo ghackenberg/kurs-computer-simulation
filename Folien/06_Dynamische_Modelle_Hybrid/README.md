@@ -344,7 +344,25 @@ Die Zeit bis zur nächsten Abtastung wird umgekehrt proportional zur Änderungsr
 
 ---
 
-TODO Folie zur Illustration des Eingangssignals und des Steuer-Signals mit Tikz-Illustration
+<div class="columns">
+<div>
+
+### Eingangssignal und Steuersignal
+
+- **Eingangssignal $U(t)$:** Das zu messende Signal. In diesem Fall eine Sinuswelle.
+- **Steuersignal $c(t)$:** Die Änderungsrate von $U(t)$, hier der Absolutwert der Ableitung. Hohe Werte von $c(t)$ bedeuten, dass sich $U(t)$ schnell ändert.
+
+Die variable Abtastlogik nutzt $c(t)$, um die Abtastrate anzupassen:
+- **Hoch** bei schnellen Änderungen (hohes $c(t)$).
+- **Niedrig** bei langsamen Änderungen (niedriges $c(t)$).
+
+</div>
+<div>
+
+![w:1000](./Diagramme/DigitalerSensor_Eingangs_und_Steuersignal.tikz.svg)
+
+</div>
+</div>
 
 ---
 
@@ -364,7 +382,7 @@ TODO Folie zur Illustration des Eingangssignals und des Steuer-Signals mit Tikz-
 </div>
 <div>
 
-TODO Illustration des variabel abgetasteten Signals mit Tikz
+![w:1000](./Diagramme/DigitalerSensor_VariableAbtastung.tikz.svg)
 
 </div>
 </div>
