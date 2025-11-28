@@ -720,6 +720,10 @@ public class InheritedSampleTime : SampleTime { }
 
 ---
 
+TODO Folien mit Implementierungsdetails der einzelnen neuen Block-Typen.
+
+---
+
 <div class="columns">
 <div class="three">
 
