@@ -220,7 +220,7 @@ Dieses System ist ein klassisches Beispiel für ein **zeitgesteuertes hybrides S
 </div>
 <div>
 
-TODO Nano Banana Illustration eines digitalen Sensors. Weißer Hintergrund. Format 1 breit, 2 hoch.
+TODO Nano Banana Illustration eines digitalen Prozessors, der ein kontinuierliches Eingangssignal in ein diskretes ausgangssignal verwandelt. Comic-artige technische Zeichnung. Weißer Hintergrund. Format 2 breit, 3 hoch.
 
 </div>
 </div>
@@ -319,7 +319,7 @@ Dies führt zu einem **ereignisgesteuerten hybriden System**, bei dem die Abtast
 </div>
 <div>
 
-TODO Nano Banana Illustration. Weißer Hintergrund. Format 1 breit, 3 hoch
+TODO Tikz-Illustration eines Signals, dass Phasen mit geringer Änderungsrate und Phasen mit hoher Änderungsrate hat. Markierungen für Phasen. Format 1 breit, 2 hoch.
 
 </div>
 </div>
