@@ -319,7 +319,7 @@ Dies führt zu einem **ereignisgesteuerten hybriden System**, bei dem die Abtast
 </div>
 <div>
 
-TODO Tikz-Illustration eines Signals, dass Phasen mit geringer Änderungsrate und Phasen mit hoher Änderungsrate hat. Markierungen für Phasen. Format 1 breit, 2 hoch.
+![w:1000](./Diagramme/DigitalerSensor_VariableAbtastrate_Signal.tikz.svg)
 
 </div>
 </div>
