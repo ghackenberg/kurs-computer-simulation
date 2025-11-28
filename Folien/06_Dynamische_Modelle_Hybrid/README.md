@@ -202,6 +202,10 @@ TODO Kurze Übersicht der Inhalte
 
 ---
 
+TODO Einleitende Folie zum Fallbeispiel "digitaler Sensor mit diskreter Abtastzeit".
+
+---
+
 <div class="columns">
 <div>
 
@@ -273,6 +277,10 @@ Im Gegensatz zum Bouncing Ball sind die Ereignisse hier **zeitgesteuert** (perio
 
 </div>
 </div>
+
+---
+
+TODO Folien zu digitalem Sensor mit variabler Abtastzeit. Der sensor soll wieder ein sinusförmiges kontinuierliches Eingangssignal messen. Die Abtastzeit des Sensors soll durch ein zweites kontinuierliches Eingangssignal gesteuert werden. das zweite signal könnte der absolutwert des kosinus (= ableitung des sinus) sein. das ausgangssignal des sensors soll ebenfalls eine kontinuierliche sprungfunktion sein.
 
 ---
 
