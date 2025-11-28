@@ -1,0 +1,21 @@
+\documentclass[tikz]{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}[>=stealth]
+    % Achsen
+    \draw[->] (0,0) -- (5,0) node[right] {$t$};
+    \draw[->] (0,0) -- (0,5) node[above] {$y(t)$};
+    \node[below left] at (0,0) {$0$};
+
+    % Flugbahn
+    \draw[blue, thick] (0.5, 4) parabola (3.5, 0);
+    
+    % Startpunkt
+    \fill (0.5,4) circle (2pt) node[above right] {$(t_0, y_0)$};
+    
+    % Aufprallpunkt
+    \fill (3.5,0) circle (2pt) node[below] {$t_e$};
+    \draw[dashed] (3.5,0) -- (3.5, 1) node[midway, right] {$y(t_e) = 0$};
+
+\end{tikzpicture}
+\end{document}

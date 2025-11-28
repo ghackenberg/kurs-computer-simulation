@@ -1,0 +1,16 @@
+\documentclass[tikz]{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}[>=stealth]
+    % Boden
+    \draw[thick] (-1.5,0) -- (1.5,0) node[below, midway] {Boden ($y=0$)};
+
+    % Ball
+    \draw (0, 0.5) circle (0.5cm);
+    \node at (0, 0.5) {Ball};
+
+    % Geschwindigkeitsvektor
+    \draw[->, red, very thick] (0, 0.5) -- (0, -0.5) node[right, black] {$v(t) < 0$};
+\end{tikzpicture}
+\end{document}
+

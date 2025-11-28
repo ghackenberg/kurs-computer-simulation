@@ -1,0 +1,18 @@
+\documentclass[tikz]{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}[>=stealth]
+    % Achsen
+    \draw[->] (0,0) -- (5,0) node[right] {$t$};
+    \draw[->] (0,0) -- (0,5) node[above] {$y(t)$};
+    \node[below left] at (0,0) {$0$};
+
+    % Flugbahn
+    \draw[blue, thick] (0.5, 4) parabola (3.5, 0) node[pos=0.8, above right] {$y(t)$};
+    
+    % Startpunkt
+    \fill (0.5,4) circle (2pt) node[above right] {$(t_0, y_0)$};
+    \draw[->, thick] (0.5,4) -- (1.2, 3.8) node[midway, above, sloped] {$v_0$};
+\end{tikzpicture}
+\end{document}
+

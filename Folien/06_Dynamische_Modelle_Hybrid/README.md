@@ -38,7 +38,7 @@ Das System wird durch folgende Annahmen vereinfacht:
 </div>
 <div class="four">
 
-TODO Tikz-basierte zeitdiagramm für die Position des Balles mit drei Freiflugphasen und zwei Aufprallereignissen dazwischen
+![w:1000](./Diagramme/BouncingBall_Zeit-Positions-Diagramm.tikz.svg)
 
 </div>
 </div>
@@ -64,7 +64,7 @@ $$ \dot{y} = v \text{ und } \dot{v} = -g $$
 </div>
 <div>
 
-TODO Tikz-basierte illustration der flugparabel in der freiflugphase
+![w:1000](./Diagramme/BouncingBall_Flugparabel.tikz.svg)
 
 </div>
 </div>
@@ -84,9 +84,9 @@ Ein Aufprall auf den Boden (bei $y=0$) wird durch folgende Bedingung detektiert:
 Diese Bedingungen definieren ein sogenanntes *Nulldurchgangsereignis*, bei dem die kontinuierliche Dynamik unterbrochen wird und eine diskrete Zustandsänderung (Kollision) stattfindet.
 
 </div>
-<div class="three">
+<div>
 
-TODO Tikz-basierte Illustration des Aufpralls mit negativem Geschwindigkeitsvektors
+![w:1000](./Diagramme/BouncingBall_Aufprall_Bedingung.tikz.svg)
 
 </div>
 </div>
@@ -109,7 +109,7 @@ $$ v(t_e^+) = -e \cdot v(t_e^-) $$
 </div>
 <div>
 
-TODO Tikz-basierte illustration der Zustandsänderung mit den beiden Geschwindigkeitsvektoren vor und nach dem Aufprall
+![w:1000](./Diagramme/BouncingBall_Aufprall_Zustandsaenderung.tikz.svg)
 
 </div>
 </div>
@@ -136,7 +136,7 @@ Diese Gleichungen gelten, solange der Ball sich in der Luft befindet ($y(t) > 0$
 </div>
 <div>
 
-TODO Tikz-basierte illustration der geschwindigkeit und der flugparabel in der freiflugphase
+![w:1000](./Diagramme/BouncingBall_Freiflug_Position_Geschwindigkeit.tikz.svg)
 
 </div>
 </div>
@@ -144,7 +144,7 @@ TODO Tikz-basierte illustration der geschwindigkeit und der flugparabel in der f
 ---
 
 <div class="columns">
-<div class="two">
+<div>
 
 ### Analytische Lösung: Zeitpunkt des Aufpralls
 
@@ -156,9 +156,9 @@ $$ 0 = y_0 + v_0(t_e - t_0) - \frac{1}{2}g(t_e - t_0)^2 $$
 Dies ist eine quadratische Gleichung für $\Delta t = (t_e - t_0)$. Die positive Lösung (wenn der Ball nach unten fällt) ist der relevante Aufprallzeitpunkt.
 
 </div>
-<div class="three">
+<div>
 
-TODO Tikz-basierte Illustration der flugparabel und des Aufprallzeitpunkts
+![w:1000](./Diagramme/BouncingBall_Aufprall_Zeitpunkt.tikz.svg)
 
 </div>
 </div>

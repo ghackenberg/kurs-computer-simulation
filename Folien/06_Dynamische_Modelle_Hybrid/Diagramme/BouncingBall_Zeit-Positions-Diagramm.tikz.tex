@@ -1,0 +1,25 @@
+\documentclass[tikz]{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}[>=stealth]
+    % Achsen
+    \draw[->] (0,0) -- (6,0) node[right] {$t$};
+    \draw[->] (0,0) -- (0,5) node[above] {$y(t)$};
+    \node[below left] at (0,0) {$0$};
+
+    % Boden
+    \draw[thick] (-0.2,0) -- (5.5,0);
+
+    % Flugbahnen
+    \draw[blue, thick] (0.5, 4) parabola (2,0);
+    \draw[blue, thick] (2, 0) parabola (3, 2.5);
+    \draw[blue, thick] (3, 2.5) parabola (4, 0);
+    \draw[blue, thick] (4, 0) parabola (4.5, 1);
+    \draw[blue, thick] (4.5, 1) parabola (5, 0);
+    
+    % Aufprallpunkte
+    \fill (2,0) circle (2pt) node[below] {$t_{e,1}$};
+    \fill (4,0) circle (2pt) node[below] {$t_{e,2}$};
+    \fill (5,0) circle (2pt) node[below] {$t_{e,3}$};
+\end{tikzpicture}
+\end{document}
