@@ -165,15 +165,26 @@ Dies ist eine quadratische Gleichung für $\Delta t = (t_e - t_0)$. Die positive
 
 ---
 
+<div class="columns">
+<div class="three">
+
 ### Analytische Lösung: Simulation der Kollisionen
 
-Die Simulation des Bouncing Balls beinhaltet eine Abfolge von Freiflugphasen und Kollisionsereignissen.
+Abfolge von Freiflugphasen und Kollisionsereignissen:
 
 1.  **Initialisierung:** Startposition $y_0$ und Startgeschwindigkeit $v_0$ zum Zeitpunkt $t_0$.
 2.  **Berechnung der Freiflugphase:** Solange $y(t) > 0$, wird die Bewegung mit den analytischen Lösungen für $y(t)$ und $v(t)$ berechnet.
 3.  **Detektion des Aufpralls:** Bestimme den Zeitpunkt $t_e$ wann $y(t_e^-) = 0$ (unter der Bedingung $v(t_e^-) < 0$).
 4.  **Zustandsupdate:** Berechne die neue Geschwindigkeit $v(t_e^+) = -e \cdot v(t_e^-)$ und setze $y(t_e^+) = 0$.
 5.  **Iteration:** Setze $t_0 = t_e$, $y_0 = y(t_e^+)$, $v_0 = v(t_e^+)$ und wiederhole ab Schritt 2, bis die Simulationszeit endet oder der Ball zur Ruhe kommt ($v \approx 0$ und $y \approx 0$).
+
+</div>
+<div>
+
+![](./Diagramme/BouncingBall_Simulation.svg)
+
+</div>
+</div>
 
 ---
 
