@@ -20,7 +20,13 @@ math: mathjax
 
 ---
 
+<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
+
 ## 1.1: Motivation: Warum simulieren wir?
+
+Dieser Abschnitt beinhaltet das Folgende:
+
+- TODO Kurze Übersicht über den Abschnitt
 
 ---
 
@@ -133,7 +139,13 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 
 ---
 
+<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
+
 ## 1.2: Arten von Modellen
+
+Dieser Abschnitt beinhaltet das Folgende:
+
+- TODO Kurze Übersicht über den Abschnitt
 
 ---
 
@@ -320,7 +332,13 @@ Diskrete Modelle können weiter unterteilt werden:
 
 ---
 
+<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
+
 ## 1.3: Lösungsmethoden
+
+Dieser Abschnitt beinhaltet das Folgende:
+
+- TODO Kurze Übersicht über den Abschnitt
 
 ---
 
@@ -391,7 +409,13 @@ Fast alle praxisrelevanten Simulationen basieren auf numerischen Methoden.
 
 ---
 
+<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
+
 ## 1.4: Visualisierung von Simulationsdaten
+
+Dieser Abschnitt beinhaltet das Folgende:
+
+- TODO Kurze Übersicht über den Abschnitt
 
 ---
 
@@ -538,7 +562,13 @@ Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, d
 
 ---
 
+<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
+
 ## 1.5: Der Digitale Zwilling
+
+Dieser Abschnitt beinhaltet das Folgende:
+
+- TODO Kurze Übersicht über den Abschnitt
 
 ---
 
@@ -592,7 +622,13 @@ Ein Digitaler Zwilling "lebt" und entwickelt sich mit seinem physischen Gegenst�
 
 ---
 
+<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
+
 ## 1.6: Simulation & Digitaler Zwilling
+
+Dieser Abschnitt beinhaltet das Folgende:
+
+- TODO Kurze Übersicht über den Abschnitt
 
 ---
 
