@@ -20,7 +20,7 @@ math: mathjax
 
 ---
 
-<!-- Abstrakte Illustration, die die Motivation zur Simulation darstellt. Ein stilisiertes menschliches Gehirn mit leuchtenden Linien, die zu verschiedenen Ingenieursymbolen (Zahnräder, Schaltungen, Brücken) führen. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+![bg right](./Illustrationen/Abschnitt_1.jpg)
 
 ## 1.1: Motivation
 
@@ -139,7 +139,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 
 ---
 
-<!-- Abstrakte Illustration, die verschiedene Arten von Modellen darstellt. Eine zentrale Kugel, die sich in verschiedene Pfade verzweigt, die jeweils einen anderen Stil zeigen (z. B. ein Pfad ist eine glatte durchgehende Linie, ein anderer eine Reihe von diskreten Blöcken, ein weiterer Pfad teilt sich zufällig). Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+![bg right](./Illustrationen/Abschnitt_2.jpg)
 
 ## 1.2: Arten von Modellen
 
@@ -332,7 +332,7 @@ Diskrete Modelle können weiter unterteilt werden:
 
 ---
 
-<!-- Abstrakte Illustration, die verschiedene Lösungsmethoden für Modelle darstellt. Ein komplexer, verworrener Knoten von Linien auf der einen Seite, der auf der anderen Seite durch eine stilisierte Lupe in eine saubere, gerade Linie entwirrt wird. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+![bg right](./Illustrationen/Abschnitt_3.jpg)
 
 ## 1.3: Lösungsmethoden
 
@@ -420,7 +420,7 @@ Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, d
 
 ---
 
-<!-- Abstrakte Illustration, die die Visualisierung von Simulationsdaten symbolisiert. Abstrakte geometrische Formen (Würfel, Kugeln), die sich von einer Wolke aus Datenpunkten in eine klare 3D-Struktur verwandeln. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+![bg right](./Illustrationen/Abschnitt_4.jpg)
 
 ## 1.4: Visualisierung von Simulationsdaten
 
@@ -573,7 +573,7 @@ Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, d
 
 ---
 
-<!-- Abstrakte Illustration, die das Konzept eines Digitalen Zwillings symbolisiert. Ein physisches Objekt (wie eine Windkraftanlage) auf der einen Seite und eine leuchtende, drahtgitterartige Version davon auf der anderen, zwischen denen Datenströme fließen. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+![bg right](./Illustrationen/Abschnitt_5.jpg)
 
 ## 1.5: Der Digitale Zwilling
 
@@ -633,7 +633,7 @@ Ein Digitaler Zwilling "lebt" und entwickelt sich mit seinem physischen Gegenst�
 
 ---
 
-<!-- Abstrakte Illustration, die die Integration von Simulation und Digitalem Zwilling darstellt. Ein Drahtgitter-Digitalzwilling einer Fabrik mit leuchtenden Partikeln, die durch die Produktionslinien fließen und die Simulation in Aktion zeigen. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+![bg right](./Illustrationen/Abschnitt_6.jpg)
 
 ## 1.6: Simulation & Digitaler Zwilling
 
