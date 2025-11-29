@@ -138,14 +138,22 @@ Dieses Repository ist nach folgendem Schema aufgebaut:
 
 - Der Ordner `./Folien` enthält die Foliensätze
 - Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]` enthält den Foliensatz für Kapitel `XX`
-- Die Datei `./Folien/[XX_Kapitel_Bezeichnung]/README.md` enthält den MARP-Markdown für den Foliensatz des Kapitels
+- Die Datei `./Folien/[XX_Kapitel_Bezeichnung]/Titelbild.jpg` ist das Titelbild zum Kapitel (mit Nano Banana generiert)
+- Die Datei `./Folien/[XX_Kapitel_Bezeichnung]/Folien.md` enthält den MARP-Markdown für den Foliensatz des Kapitels
+- Die Datei `./Folien/[XX_Kapitel_Bezeichnung]/Notizen.md` enthält Notizen zum Foliensatz (z.B. größere TODOs)
 - Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme` enthält die Tikz- und Mermaid-Diagramme
 - Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].tikz.tex` enthält den Quelltext einer Tikz-Grafik
 - Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].tikz.svg` enthält die kompilierte SVG-Datei für eine Tikz-Grafik
 - Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].mmd` enthält den Quelltext einer Mermaid.js-Grafik
 - Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Diagramme/[Diagrammname].svg` enthält die kompilierte SVG-Datei für eine Mermaid.js-Grafik
-- Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]/Illustrationen` enthält mit Imagen generierte Illustrationen
-- Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Illustrationen/[Illustrationsname].jpg` enthält eine mit Imagen generierte Illsutration
+- Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]/Illustrationen` enthält mit Nano Banana generierte Illustrationen
+- Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Illustrationen/[Illustrationsname].jpg` ist eine spezielle Illustration
+- Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]/Screenshots` enthält Screenshots von selbst entwickelten Simulationsprogrammen
+- Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Screenshots/[Screenshotname].jpg` ist ein spezieller Screenshot
+- Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]/Tafelbilder` enthält Fotografien von Tafelbildern, die während dem Unterricht entstanden sind
+- Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Tafelbilder/[Tafelbildname].jpg` ist ein spezielles Tafelbild
+- Der Ordner `./Folien/[XX_Kapitel_Bezeichnung]/Fotografien` enthält alle sonstigen Fotografien von Personen, Gegenständen, und Situationen
+- Der Datei `./Folien/[XX_Kapitel_Bezeichnung]/Fotografien/[Fotografiename].jpg` ist eine spezielles Fotografie
 - Der Ordner `./Quellen` enthält die zugehörigen C#-Implementierungen nach Semester und Thema geordnet
 - Der Ordner `./Quellen/[WSXX]` enthält die C#-Implementierung aus dem Wintersemester `XX`
 - Der Ordner `./Quellen/[SSXX]` enthält die C#-Implementierung aus dem Sommersemester `XX`

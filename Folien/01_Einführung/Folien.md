@@ -18,11 +18,7 @@ math: mathjax
 - 1.5: Der Digitale Zwilling
 - 1.6: Simulation & Digitaler Zwilling
 
----
-
-<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
-
-## 1.1: Motivation: Warum simulieren wir?
+<!-- Abstrakte Illustration, die die Motivation zur Simulation darstellt. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
 
 Dieser Abschnitt beinhaltet das Folgende:
 
@@ -139,7 +135,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 
 ---
 
-<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
+<!-- Abstrakte Illustration, die verschiedene Arten von Modellen darstellt. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
 
 ## 1.2: Arten von Modellen
 
@@ -332,7 +328,7 @@ Diskrete Modelle können weiter unterteilt werden:
 
 ---
 
-<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
+<!-- Abstrakte Illustration, die verschiedene Lösungsmethoden für Modelle darstellt. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
 
 ## 1.3: Lösungsmethoden
 
@@ -407,9 +403,20 @@ Es gibt zwei grundlegende Ansätze:
 
 Fast alle praxisrelevanten Simulationen basieren auf numerischen Methoden.
 
+### Die Grafik-Pipeline (vereinfacht)
+
+Der Weg von der 3D-Szene zum 2D-Bild auf dem Monitor.
+
+1.  **Vertex Processing**: Die 3D-Koordinaten der Eckpunkte (Vertices) werden in 2D-Bildschirmkoordinaten umgerechnet (Projektion).
+2.  **Rasterization**: Die Dreiecke werden in "Fragmente" zerlegt. Ein Fragment ist ein Kandidat für ein Pixel auf dem Bildschirm.
+3.  **Fragment Processing**: Für jedes Fragment wird die endgültige Farbe berechnet (unter Berücksichtigung von Texturen, Beleuchtung etc.).
+4.  **Testing & Blending**: Das Fragment wird auf den Bildschirm geschrieben (z.B. Z-Buffer-Test, um verdeckte Objekte zu entfernen).
+
+Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, den **Shadern**, zu steuern.
+
 ---
 
-<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
+<!-- Abstrakte Illustration, die die Visualisierung von Simulationsdaten symbolisiert. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
 
 ## 1.4: Visualisierung von Simulationsdaten
 
@@ -562,7 +569,7 @@ Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, d
 
 ---
 
-<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
+<!-- Abstrakte Illustration, die das Konzept eines Digitalen Zwillings symbolisiert, mit virtuellen und physischen Elementen, die durch Daten verbunden sind. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
 
 ## 1.5: Der Digitale Zwilling
 
@@ -622,7 +629,7 @@ Ein Digitaler Zwilling "lebt" und entwickelt sich mit seinem physischen Gegenst�
 
 ---
 
-<!-- Platzhalter für Beschreibung des Titelbildes für diesen Abschnitt-->
+<!-- Abstrakte Illustration, die die Integration von Simulation und Digitalem Zwilling darstellt. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
 
 ## 1.6: Simulation & Digitaler Zwilling
 
