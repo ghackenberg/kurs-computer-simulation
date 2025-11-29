@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Kapitel 4: Kontinuierliche Dynamische Modelle (2025-11-20)'
+header: 'Kapitel 4: Kontinuierliche Dynamische Modelle (2025-11-29)'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
