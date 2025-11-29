@@ -11,14 +11,18 @@ math: mathjax
 
 # Kapitel 1: Systemsimulation und den Digitalen Zwilling
 
-- 1.1: Motivation: Warum simulieren wir?
+- 1.1: Motivation
 - 1.2: Arten von Modellen
 - 1.3: Lösungsmethoden
 - 1.4: Visualisierung von Simulationsdaten
 - 1.5: Der Digitale Zwilling
 - 1.6: Simulation & Digitaler Zwilling
 
-<!-- Abstrakte Illustration, die die Motivation zur Simulation darstellt. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+---
+
+<!-- Abstrakte Illustration, die die Motivation zur Simulation darstellt. Ein stilisiertes menschliches Gehirn mit leuchtenden Linien, die zu verschiedenen Ingenieursymbolen (Zahnräder, Schaltungen, Brücken) führen. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+
+## 1.1: Motivation
 
 Dieser Abschnitt beinhaltet das Folgende:
 
@@ -135,7 +139,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 
 ---
 
-<!-- Abstrakte Illustration, die verschiedene Arten von Modellen darstellt. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+<!-- Abstrakte Illustration, die verschiedene Arten von Modellen darstellt. Eine zentrale Kugel, die sich in verschiedene Pfade verzweigt, die jeweils einen anderen Stil zeigen (z. B. ein Pfad ist eine glatte durchgehende Linie, ein anderer eine Reihe von diskreten Blöcken, ein weiterer Pfad teilt sich zufällig). Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
 
 ## 1.2: Arten von Modellen
 
@@ -328,7 +332,7 @@ Diskrete Modelle können weiter unterteilt werden:
 
 ---
 
-<!-- Abstrakte Illustration, die verschiedene Lösungsmethoden für Modelle darstellt. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+<!-- Abstrakte Illustration, die verschiedene Lösungsmethoden für Modelle darstellt. Ein komplexer, verworrener Knoten von Linien auf der einen Seite, der auf der anderen Seite durch eine stilisierte Lupe in eine saubere, gerade Linie entwirrt wird. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
 
 ## 1.3: Lösungsmethoden
 
@@ -416,7 +420,7 @@ Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, d
 
 ---
 
-<!-- Abstrakte Illustration, die die Visualisierung von Simulationsdaten symbolisiert. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+<!-- Abstrakte Illustration, die die Visualisierung von Simulationsdaten symbolisiert. Abstrakte geometrische Formen (Würfel, Kugeln), die sich von einer Wolke aus Datenpunkten in eine klare 3D-Struktur verwandeln. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
 
 ## 1.4: Visualisierung von Simulationsdaten
 
@@ -569,7 +573,7 @@ Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, d
 
 ---
 
-<!-- Abstrakte Illustration, die das Konzept eines Digitalen Zwillings symbolisiert, mit virtuellen und physischen Elementen, die durch Daten verbunden sind. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+<!-- Abstrakte Illustration, die das Konzept eines Digitalen Zwillings symbolisiert. Ein physisches Objekt (wie eine Windkraftanlage) auf der einen Seite und eine leuchtende, drahtgitterartige Version davon auf der anderen, zwischen denen Datenströme fließen. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
 
 ## 1.5: Der Digitale Zwilling
 
@@ -629,7 +633,7 @@ Ein Digitaler Zwilling "lebt" und entwickelt sich mit seinem physischen Gegenst�
 
 ---
 
-<!-- Abstrakte Illustration, die die Integration von Simulation und Digitalem Zwilling darstellt. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
+<!-- Abstrakte Illustration, die die Integration von Simulation und Digitalem Zwilling darstellt. Ein Drahtgitter-Digitalzwilling einer Fabrik mit leuchtenden Partikeln, die durch die Produktionslinien fließen und die Simulation in Aktion zeigen. Keine Beschriftung oder Text. Hintergrund ist eine dunkle Galaxie. -->
 
 ## 1.6: Simulation & Digitaler Zwilling
 
