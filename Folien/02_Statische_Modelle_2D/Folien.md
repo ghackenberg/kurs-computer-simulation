@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Kapitel 2: Statische Modelle 2D (2025-11-13)'
+header: 'Kapitel 2: Statische Modelle 2D (2025-11-29)'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax

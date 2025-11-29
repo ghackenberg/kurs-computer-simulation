@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: Prolog (2025-11-13)
+header: Prolog (2025-11-29)
 footer: Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme
 paginate: true
 math: mathjax
@@ -30,7 +30,7 @@ Für diesen Kurs in Computer-Simulation sollten Sie ausreichende Kenntnisse in d
 
 ---
 
-![bg right](./Logik.png)
+![bg right](./Illustrationen/Logik.png)
 
 ### Logik
 
@@ -44,7 +44,7 @@ Formalisierung der grundlegenden Prinzipien der mathematischen Beweisführung:
 
 ---
 
-![bg contain right:35%](./Mengenlehre.png)
+![bg contain right:35%](./Illustrationen/Mengenlehre.png)
 
 ### Mengenlehre
 
@@ -58,7 +58,7 @@ Untersuchung von Mengen, also Sammlungen von Objekten, und den Operationen auf d
 
 ---
 
-![bg right](./Zahlensysteme.png)
+![bg right](./Illustrationen/Zahlensysteme.png)
 
 ### Zahlensysteme
 
@@ -70,7 +70,7 @@ Darstellung von Zahlen abhängig zu einer definierten Basis (z.B. 2 und 10 sowie
 
 ---
 
-![bg right](./Zeichenkodierungen.png)
+![bg right](./Illustrationen/Zeichenkodierungen.png)
 
 ### Zeichenkodierungen
 
@@ -82,7 +82,7 @@ Darstellung von Zeichen und anderer Symbole aus der Schriftsprache verschiedener
 
 ---
 
-![bg right](./Rechnerarchitektur.png)
+![bg right](./Illustrationen/Rechnerarchitektur.png)
 
 ### Rechnerarchitekturen
 
@@ -93,7 +93,7 @@ Anordnung, Verknüpfung und Funktionsweise der Komponenten eines digitalen Rechn
 
 ---
 
-![bg right](./Flynn.png)
+![bg right](./Illustrationen/Flynn.png)
 
 ### Rechnerarchitekturen (cont'd)
 
@@ -105,7 +105,7 @@ Klassifizierung der unterschiedlichen Rechnerarchitekturen nach Michael J. Flynn
 
 ---
 
-![bg right](./Programmierparadigmen.png)
+![bg right](./Illustrationen/Programmierparadigmen.png)
 
 ### Programmierparadigmen
 
@@ -126,22 +126,24 @@ Die Teilnehmer*innen sollten nach erfolgreichem absolvieren dieses Kurses die fo
 
 ---
 
-![bg right](./Kursinhalte.png)
+![bg right](./Illustrationen/Kursinhalte.png)
 
 ## Kursinhalte
 
 Dieser Kurs umfasst daraus abgeleitet die folgenden Kapitel:
 
 1. [Einführung](../01_Einführung/)
-1. [Statische Modelle](../02_Statische_Modelle/)
+1. Statische Modelle
+   1. [2D](../02_Statische_Modelle_2D/)
+   1. [3D](../03_Statische_Modelle_3D/)
 1. Dynamische Modelle
-   1. [Kontinuierlich](../03_Kontinuierliche_Dynamische_Modelle/)
-   1. [Diskret](../04_Diskrete_Dynamische_Modelle/)
-
+   1. [Kontinuierlich](../04_Dynamische_Modelle_Kontinuierlich/)
+   1. [Diskret](../05_Dynamische_Modelle_Diskret/)
+   1. [Hybrid](../06_Dynamische_Modelle_Hybrid/)
 
 ---
 
-![bg right](./Notenrichtlinie.png)
+![bg right](./Illustrationen/Notenrichtlinie.png)
 
 ## Notenrichtlinie
 
@@ -155,7 +157,7 @@ Für die Benotung in diesem Kurs gelten die folgenden Modalitäten:
 
 ---
 
-![bg right](./Lektorenprofil.jpg)
+![bg right](./Fotografien/Lektorenprofil.jpg)
 
 ## Lektorenprofil
 

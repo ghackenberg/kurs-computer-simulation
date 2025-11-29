@@ -113,7 +113,7 @@ $$ m \ddot{y}(t) + d \dot{y}(t) + k y(t) = F(t) $$
 </div>
 <div>
 
-![width: 1000px](./Bewegungsgleichung.jpg)
+![width: 1000px](./Illustrationen/Bewegungsgleichung.jpg)
 
 </div>
 </div>
@@ -188,7 +188,7 @@ $$ x(t+h) \approx x(t) + h f(t, x(t)) $$
 </div>
 <div>
 
-![](./Numerische_Verfahren.jpg)
+![](./Illustrationen/Numerische_Verfahren.jpg)
 
 </div>
 </div>
@@ -242,7 +242,7 @@ $$ x_{k+1} = x_k + h \cdot f(t_{k+1}, x_{k+1}) $$
 
 ---
 
-![bg right:40%](./Wurfbeispiel.jpg)
+![bg right:40%](./Illustrationen/Wurfbeispiel.jpg)
 
 ## 4.2: Beispiel: Freier Fall / Vertikaler Wurf
 
@@ -490,7 +490,7 @@ Beide Methoden haben einen lokalen Fehler der Ordnung $O(h^2)$ und einen globale
 
 ---
 
-![bg contain right:40%](./Pendelbeispiel.jpg)
+![bg contain right:40%](./Illustrationen/Pendelbeispiel.jpg)
 
 ## 4.3: Beispiel: Ungedämpftes Federpendel
 
@@ -598,7 +598,7 @@ Dieses Verhalten ist typisch für den expliziten Euler bei oszillierenden System
 </div>
 <div>
 
-![](./Pendelsimulation.png)
+![](./Illustrationen/Pendelsimulation.png)
 
 </div>
 </div>

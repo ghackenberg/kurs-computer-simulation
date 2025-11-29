@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Kapitel 3: Statische Modelle 3D (2025-11-13)'
+header: 'Kapitel 3: Statische Modelle 3D (2025-11-29)'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -765,7 +765,7 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./OpenGL_Primitives_Points.png)
+![width:1000px](./Screenshots/OpenGL_Primitives_Points.png)
 
 </div>
 </div>
@@ -794,7 +794,7 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./OpenGL_Primitives_Lines.png)
+![width:1000px](./Screenshots/OpenGL_Primitives_Lines.png)
 
 </div>
 </div>
@@ -822,7 +822,7 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./OpenGL_Primitives_LineStrip.png)
+![width:1000px](./Screenshots/OpenGL_Primitives_LineStrip.png)
 
 </div>
 </div>
@@ -850,7 +850,7 @@ gl.End(); // Linie 4-1
 </div>
 <div>
 
-![width:1000px](./OpenGL_Primitives_LineLoop.png)
+![width:1000px](./Screenshots/OpenGL_Primitives_LineLoop.png)
 
 </div>
 </div>
@@ -881,7 +881,7 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./OpenGL_Primitives_Triangles.png)
+![width:1000px](./Screenshots/OpenGL_Primitives_Triangles.png)
 
 </div>
 </div>
@@ -910,7 +910,7 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./OpenGL_Primitives_TriangleStrip.png)
+![width:1000px](./Screenshots/OpenGL_Primitives_TriangleStrip.png)
 
 </div>
 </div>
@@ -939,7 +939,7 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./OpenGL_Primitives_TriangleFan.png)
+![width:1000px](./Screenshots/OpenGL_Primitives_TriangleFan.png)
 
 </div>
 </div>
@@ -967,7 +967,7 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./OpenGL_Primitives_Quads.png)
+![width:1000px](./Screenshots/OpenGL_Primitives_Quads.png)
 
 </div>
 </div>
@@ -997,7 +997,7 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./OpenGL_Primitives_QuadStrip.png)
+![width:1000px](./Screenshots/OpenGL_Primitives_QuadStrip.png)
 
 </div>
 </div>
