@@ -796,8 +796,10 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 
 In den nächsten Kapiteln werden wir uns die verschiedenen Modellarten im Detail ansehen und lernen, wie man sie praktisch umsetzt.
 
-- **Statische Modelle**: Analyse von Fachwerken.
+- **Statische Modelle 2D**: Analyse von 2D-Fachwerken und 2D-Visualisierung (WPF Canvas).
+- **Statische Modelle 3D**: Analyse von 3D-Fachwerken und 3D-Visualisierung (SharpGL).
 - **Dynamische, kontinuierliche Modelle**: Simulation von Bewegungsgleichungen (z.B. Federpendel).
 - **Dynamische, diskrete Modelle**: Simulation von Warteschlangen und Produktionssystemen.
+- **Dynamische, hybride Modelle**: Simulation von Kollisionen und digitalen Sensoren.
 
 Wir werden für jedes Beispiel die Mathematik, die numerische Lösung und die programmtechnische Umsetzung inklusive Visualisierung betrachten.
