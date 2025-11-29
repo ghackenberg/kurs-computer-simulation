@@ -147,7 +147,7 @@ Modelle können nach verschiedenen Kriterien klassifiziert werden. Die Wahl des 
 </div>
 <div>
 
-![Übersicht der Modellarten](./Modellarten%20WS24.jpg)
+![Übersicht der Modellarten](./Tafelbilder/Modellarten%20WS24.jpg)
 
 </div>
 </div>
