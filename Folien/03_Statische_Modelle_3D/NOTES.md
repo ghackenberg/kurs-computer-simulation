@@ -1,0 +1,8 @@
+- move visualization 3D to own chapter
+- add perspective and orthographic projection to chapter on visualization 3D
+- add flush method to chapter on visualization 3D
+- add texture mapping to chapter on visualization 3D
+- add geometry buffers to chapter on visualization 3D
+- add directional and spot light to chapter on visualization 3D
+- add shadow casting to chapter on visualization 3D 
+- merge static simulation 3D with static simulation 2D
