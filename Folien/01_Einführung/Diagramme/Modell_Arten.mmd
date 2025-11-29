@@ -1,0 +1,15 @@
+flowchart
+
+    Modell["<b>Modell</b>"]
+
+    Modell --> Statisch["<b>Statisch</b><br/>(Zeitpunkt)"]
+    Modell --> Dynamisch["<b>Dynamisch</b><br/>(Zeitinervall)"]
+
+    Dynamisch --> Kontinuierlich["<b>Kontinuierlich</b><br/>(Differentiell)"]
+    Dynamisch --> Diskret["<b>Diskret</b><br/>(Sprunghaft)"]
+    Dynamisch --> Hybrid["<b>Hybrid</b><br/>(Gemischt)"]
+
+    Diskret --> Zeit["<b>Zeit</b><br/>(Regelmäßig)"]
+    Diskret --> Ereignis["<b>Ereignis</b><br/>(Unregelmäßig)"]
+
+    style Modell fill:white

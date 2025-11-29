@@ -86,6 +86,8 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 <div class="columns top">
 <div class="one">
 
+![h:100](./Illustrationen/Branche_Maschinenbau.jpg)
+
 **Maschinenbau**
 - Wie verhält sich eine Brücke unter Last?
 - Wie kann der Energieverbrauch eines Roboters optimiert werden?
@@ -93,6 +95,8 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 
 </div>
 <div class="one">
+
+![h:100](./Illustrationen/Branche_Produktion_Logistik.jpg)
 
 **Produktion & Logistik**
 - Was ist der optimale Materialfluss in einer Fabrik?
@@ -109,6 +113,8 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 <div class="columns top">
 <div class="one">
 
+![h:100](./Illustrationen/Branche_Verfahrenstechnik.jpg)
+
 **Verfahrenstechnik**
 - Wie verteilt sich die Temperatur in einem Reaktor?
 - Wie kann der Schadstoffausstoß eines Kraftwerks minimiert werden?
@@ -116,12 +122,16 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 </div>
 <div class="one">
 
+![h:100](./Illustrationen/Branche_Elektrotechnik.jpg)
+
 **Elektrotechnik**
 - Wie verhält sich eine Schaltung bei Spannungs-schwankungen?
 - Wie ist das Abstrahlverhalten einer Antenne?
 
 </div>
 <div class="one">
+
+![h:100](./Illustrationen/Branche_Informatik.jpg)
 
 **Informatik**
 - Wie ist die Antwortzeit eines Servers unter Last?
@@ -131,6 +141,8 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 </div>
 
 ---
+
+![bg contain right:40%](./Illustrationen/Modell_Nutzen.jpg)
 
 ### Nutzen der Simulation
 
@@ -156,16 +168,26 @@ Dieser Abschnitt beinhaltet das Folgende:
 ---
 
 <div class="columns">
-<div>
+<div class="two">
 
 ### Klassifikation von Modellen
 
-Modelle können nach verschiedenen Kriterien klassifiziert werden. Die Wahl des Modelltyps hängt stark von der Problemstellung und dem zu untersuchenden System ab.
+Modelle können nach verschiedenen Kriterien klassifiziert werden:
+
+- Statisch
+- Dynamisch
+  - Kontinuierlich
+  - Diskret
+    - Zeit
+    - Ereignis
+  - Hybrid
+
+Die Wahl des Modelltyps hängt von der Problemstellung und dem zu untersuch-enden System ab.
 
 </div>
-<div>
+<div class="three">
 
-![Übersicht der Modellarten](./Tafelbilder/Modellarten%20WS24.jpg)
+![](./Diagramme/Modell_Arten.svg)
 
 </div>
 </div>
@@ -350,6 +372,8 @@ Dieser Abschnitt beinhaltet das Folgende:
 
 ---
 
+![bg contain right](./Illustrationen/Analytisch_Numerisch.jpg)
+
 ### Wie lösen wir die Modellgleichungen?
 
 Sobald das mathematische Modell aufgestellt ist (z.B. als Satz von Differentialgleichungen), muss es gelöst werden, um das Systemverhalten zu berechnen.
@@ -360,7 +384,7 @@ Es gibt zwei grundlegende Ansätze:
 
 ---
 
-### Analytische Lösung
+### **Analytische** Lösung
 
 - **Was ist das?** Eine exakte, geschlossene mathematische Formel für die Lösung.
 - **Beispiel (freier Fall):** Die Höhe $y(t)$ eines Objekts zum Zeitpunkt $t$ ist $y(t) = y_0 + v_0 t - \frac{1}{2} g t^2$.
@@ -373,7 +397,7 @@ Es gibt zwei grundlegende Ansätze:
 
 ---
 
-### Numerische Lösung
+### **Numerische** Lösung
 
 - **Was ist das?** Eine schrittweise, approximative Berechnung der Lösung.
 - **Beispiel (Euler-Verfahren für $y' = f(t, y)$):**
@@ -448,6 +472,8 @@ Visualisierung ist essenziell, um:
 <div class="columns top">
 <div class="one">
 
+![h:100](./Illustrationen/Visualisierung_Chart.jpg)
+
 **1. Einfache Diagramme (Plots)**
 - Darstellung von einer Größe über einer anderen (oft über die Zeit).
 - z.B. Temperaturverlauf, Position vs. Zeit.
@@ -455,6 +481,8 @@ Visualisierung ist essenziell, um:
 
 </div>
 <div class="one">
+
+![h:100](./Illustrationen/Visualisierung_2D.jpg)
 
 **2. 2D-Visualisierungen**
 - Darstellung von räumlichen Daten in einer Ebene.
@@ -464,6 +492,8 @@ Visualisierung ist essenziell, um:
 
 </div>
 <div class="one">
+
+![h:100](./Illustrationen/Visualisierung_3D.jpg)
 
 **3. 3D-Visualisierungen**
 - Darstellung von räumlichen Daten in einer dreidimensionalen Szene.
@@ -550,12 +580,23 @@ gl.End();
 
 ---
 
+<div class="columns">
+<div class="four">
+
 ### Schnittstelle zur Grafikkarte: OpenGL
 
 - **OpenGL** (Open Graphics Library) ist eine plattform- und programmiersprachenübergreifende API zur Entwicklung von 2D- und 3D-Grafikanwendungen.
 - Sie stellt einen standardisierten Weg bereit, um mit dem **Grafikprozessor (GPU)** zu kommunizieren.
 - Die Anwendung sendet Befehle an die GPU (z.B. "zeichne dieses Dreieck mit dieser Farbe"), und die GPU führt diese hochgradig parallel und extrem schnell aus.
 - Bibliotheken wie `SharpGL` sind "Wrapper" um OpenGL, die die Nutzung in C# vereinfachen.
+
+</div>
+<div class="three">
+
+![](./Illustrationen/OpenGL.jpg)
+
+</div>
+</div>
 
 ---
 
@@ -583,6 +624,8 @@ Dieser Abschnitt beinhaltet das Folgende:
 - Die Abgrenzung von reinen 3D-Modellen
 
 ---
+
+![bg contain right:40%](./Illustrationen/Digitaler_Zwilling.jpg)
 
 ### Was ist ein Digitaler Zwilling?
 
@@ -620,13 +663,14 @@ Es besteht aus drei Kernkomponenten:
 
 ---
 
+![bg right](./Illustrationen/Digitaler_Zwilling_Erweitert.jpg)
+
 ### Mehr als nur ein 3D-Modell
 
-Ein Digitaler Zwilling ist **nicht nur** ein CAD-Modell oder eine 3D-Visualisierung.
+Ein Digitaler Zwilling ist **nicht nur** ein CAD-Modell oder eine 3D-Visualisierung:
 
-Er umfasst:
 - **Geometrie**: 3D-Struktur.
-- **Physik**: Verhalten unter Last, thermische Eigenschaften, etc. (-> **Simulationsmodelle!**)
+- **Physik**: Verhalten unter Last, thermische Eigenschaften, etc. (-> **Simulations-modelle!**)
 - **Daten**: Live-Daten von Sensoren, historische Daten, Wartungsprotokolle.
 - **Logik**: Steuerungssoftware, Produktionsregeln.
 
@@ -646,6 +690,9 @@ Dieser Abschnitt beinhaltet das Folgende:
 
 ---
 
+<div class="columns">
+<div class="three">
+
 ### Wo passt die Simulation hinein?
 
 **Simulation ist die Kerntechnologie, die den Digitalen Zwilling zum Leben erweckt.**
@@ -657,6 +704,14 @@ Dieser Abschnitt beinhaltet das Folgende:
     - **Fehler zu diagnostizieren** und deren Ursachen zu finden.
     - **Wartungsbedarf** vorausschauend zu planen (Predictive Maintenance).
 
+</div>
+<div>
+
+![](./Illustrationen/Digitaler_Zwilling_Simulation.jpg)
+
+</div>
+</div>
+
 ---
 
 ### Der Lebenszyklus
@@ -666,6 +721,8 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 <div class="columns top">
 <div class="one">
 
+![h:75](./Illustrationen/Phase_Design_Entwicklung.jpg)
+
 **1. Design & Entwicklung**
 - Simulation zur Auslegung und Validierung des Produkts.
 - Das Ergebnis ist der "digitale Prototyp" oder "Digital Twin Prototype".
@@ -673,12 +730,16 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 </div>
 <div class="one">
 
+![h:75](./Illustrationen/Phase_Produktion_Inbetriebnahme.jpg)
+
 **2. Produktion & Inbetriebnahme**
 - Simulation zur Planung der Fertigung.
 - **Virtuelle Inbetriebnahme**: Test der Steuerungssoftware am digitalen Modell, bevor die reale Anlage existiert.
 
 </div>
 <div class="one">
+
+![h:75](./Illustrationen/Phase_Betrieb_Wartung.jpg)
 
 **3. Betrieb & Wartung**
 - Der "Digital Twin Instance" läuft parallel zum realen Produkt.
@@ -695,6 +756,8 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 <div class="columns top">
 <div class="one">
 
+![h:100](./Illustrationen/Inbetriebnahme_Klassisch.jpg)
+
 **Traditioneller Ansatz**
 1. Mechanik und Elektrik aufbauen.
 2. Software-Entwickler kommen zur Baustelle.
@@ -703,6 +766,8 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 
 </div>
 <div class="one">
+
+![h:100](./Illustrationen/Inbetriebnahme_Modern.jpg)
 
 **Ansatz mit Digitalem Zwilling**
 1. Parallel zum Aufbau der Mechanik wird ein kinematisches Simulationsmodell (Digitaler Zwilling) erstellt.
