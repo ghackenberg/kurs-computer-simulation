@@ -11,6 +11,8 @@ math: mathjax
 
 # Kapitel 1: Systemsimulation und den Digitalen Zwilling
 
+Dieses Kapitel umfasst das Folgende:
+
 - 1.1: Motivation
 - 1.2: Arten von Modellen
 - 1.3: Lösungsmethoden
@@ -26,7 +28,9 @@ math: mathjax
 
 Dieser Abschnitt beinhaltet das Folgende:
 
-- TODO Kurze Übersicht über den Abschnitt
+- Definition von Modell und Simulation
+- Praktische Anwendungsbeispiele aus verschiedenen Ingenieursdisziplinen
+- Den Nutzen der Simulation zur Kostenreduktion, Risikominimierung und Optimierung
 
 ---
 
@@ -145,7 +149,9 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 
 Dieser Abschnitt beinhaltet das Folgende:
 
-- TODO Kurze Übersicht über den Abschnitt
+- Klassifikation nach Zeitabhängigkeit (statisch vs. dynamisch)
+- Klassifikation nach Zustandsänderung (kontinuierlich vs. diskret)
+- Klassifikation nach Zufälligkeit (deterministisch vs. stochastisch)
 
 ---
 
@@ -338,7 +344,9 @@ Diskrete Modelle können weiter unterteilt werden:
 
 Dieser Abschnitt beinhaltet das Folgende:
 
-- TODO Kurze Übersicht über den Abschnitt
+- Den Unterschied zwischen analytischen (exakten) und numerischen (approximativen) Lösungen
+- Vor- und Nachteile der jeweiligen Methode
+- Die Relevanz numerischer Methoden für die Praxis
 
 ---
 
@@ -407,17 +415,6 @@ Es gibt zwei grundlegende Ansätze:
 
 Fast alle praxisrelevanten Simulationen basieren auf numerischen Methoden.
 
-### Die Grafik-Pipeline (vereinfacht)
-
-Der Weg von der 3D-Szene zum 2D-Bild auf dem Monitor.
-
-1.  **Vertex Processing**: Die 3D-Koordinaten der Eckpunkte (Vertices) werden in 2D-Bildschirmkoordinaten umgerechnet (Projektion).
-2.  **Rasterization**: Die Dreiecke werden in "Fragmente" zerlegt. Ein Fragment ist ein Kandidat für ein Pixel auf dem Bildschirm.
-3.  **Fragment Processing**: Für jedes Fragment wird die endgültige Farbe berechnet (unter Berücksichtigung von Texturen, Beleuchtung etc.).
-4.  **Testing & Blending**: Das Fragment wird auf den Bildschirm geschrieben (z.B. Z-Buffer-Test, um verdeckte Objekte zu entfernen).
-
-Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, den **Shadern**, zu steuern.
-
 ---
 
 ![bg right](./Illustrationen/Abschnitt_4.jpg)
@@ -426,7 +423,9 @@ Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, d
 
 Dieser Abschnitt beinhaltet das Folgende:
 
-- TODO Kurze Übersicht über den Abschnitt
+- Die Notwendigkeit der Visualisierung zum Verstehen und Kommunizieren von Ergebnissen
+- Verschiedene Arten der Darstellung: 2D-Plots, 2D- und 3D-Szenen
+- Einen kurzen Einblick in die Funktionsweise der Grafik-Pipeline und OpenGL
 
 ---
 
@@ -579,7 +578,9 @@ Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, d
 
 Dieser Abschnitt beinhaltet das Folgende:
 
-- TODO Kurze Übersicht über den Abschnitt
+- Das Konzept des Digitalen Zwillings nach Michael Grieves
+- Die drei Kernkomponenten: physisches Produkt, virtuelles Produkt und Datenverbindung
+- Die Abgrenzung von reinen 3D-Modellen
 
 ---
 
@@ -639,7 +640,9 @@ Ein Digitaler Zwilling "lebt" und entwickelt sich mit seinem physischen Gegenst�
 
 Dieser Abschnitt beinhaltet das Folgende:
 
-- TODO Kurze Übersicht über den Abschnitt
+- Die Rolle der Simulation als Kerntechnologie des Digitalen Zwillings
+- Die Anwendung über den gesamten Produktlebenszyklus
+- Das Praxisbeispiel der virtuellen Inbetriebnahme
 
 ---
 
