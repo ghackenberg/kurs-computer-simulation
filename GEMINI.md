@@ -130,7 +130,7 @@ Quelltext
 </div>
 ````
 
-Die Bilder selbst können mit Tikz, Asymptote, oder Mermaid.js erstellt werden. Die Quelldateien werden in Visual Studio Code mittels *RunOnSave* automatisch in SVG-Dateien kompiliert.
+Die Bilder selbst können als Fotografie und Screenshot oder mit Nano Banana, Tikz, und Mermaid.js erstellt werden. Die Quelldateien werden in Visual Studio Code mittels *RunOnSave* automatisch in SVG-Dateien kompiliert.
 
 ## Ordnerstruktur
 
