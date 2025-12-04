@@ -584,7 +584,13 @@ Die `Block`-Klasse, der zentrale Baustein unserer Simulationsumgebung, wurde erh
 <div class="columns">
 <div class="two">
 
-TODO Überschrift und Text
+### UML-Klassendiagramm
+
+Die Grafik auf der rechten Seite zeigt das UML-Klassendiagramm für die erweiterte `Block`-Klasse.
+
+Zu beachten sind vor allen die beiden neuen Verbindungen zwischen der Klasse `Block` und den Klassen `SampleTime` und `ZeroCrossingDeclaration`.
+
+Außerdem wurden die Methoden `CalcualteZeroCrossings` und `Update-States`eingefügt.
 
 </div>
 <div class="three">
@@ -654,7 +660,7 @@ namespace SFunctionHybrid.Framework.Declarations
 
 ---
 
-### Abtastzeiten (`SampleTime`)
+### Abtastzeiten (Klasse `SampleTime`)
 
 Das Konzept der Abtastzeit (`SampleTime`) wurde eingeführt, um dem Solver mitzuteilen, wie und wann ein Block seine Zustände aktualisieren und Ausgänge berechnen soll. Dies wird durch eine Klassenhierarchie abgebildet:
 
@@ -669,7 +675,7 @@ Das Konzept der Abtastzeit (`SampleTime`) wurde eingeführt, um dem Solver mitzu
 <div class="columns">
 <div class="three">
 
-TODO Überschrift
+### Umsetzung der `SampleTime`-Klassen
 
 ```csharp
 public abstract class SampleTime { }
@@ -704,23 +710,27 @@ public class InheritedSampleTime : SampleTime { }
 
 ---
 
-### Neue Block-Typen für Hybride Systeme
-
--   **Diskrete Zeitintegratoren und Zero-Order Holds:**
-    -   `DiscreteTimeIntegratorBlock`: Integriert ein Signal in festen diskreten Schritten.
-    -   `ZeroOrderHoldBlock`: Hält den letzten abgetasteten Wert eines kontinuierlichen Signals für eine definierte Abtastperiode.
-
--   **Zero-Crossing-Detektoren:**
-    -   `HitLowerLimitBlock`: Erzeugt ein Ereignis, wenn ein Signal einen unteren Grenzwert erreicht.
-    -   `HitUpperLimitBlock`: Erzeugt ein Ereignis, wenn ein Signal einen oberen Grenzwert erreicht.
-
--   **Variable Abtastzeit-Blöcke:**
-    -   `VariableSampleTimeBlock`: Ein Block, dessen Abtastzeitpunkte dynamisch durch ein Eingangssignal gesteuert werden.
-    -   `VariableZeroOrderHoldBlock`: Ein Zero-Order Hold, dessen Abtastrate variabel ist.
+TODO Folie zu ZeroOrderHoldBlock
 
 ---
 
-TODO Folien mit Implementierungsdetails der einzelnen neuen Block-Typen.
+TODO Folie zu DiscreteTimeIntegratorBlock
+
+---
+
+TODO Folie zu HitLowerLimitBlock
+
+---
+
+TODO Folie zu IntegrateWithReset
+
+---
+
+TODO Folie zu IntegrateWithLowerLimit
+
+---
+
+TODO Folie zu VariableSampleTimeBlock
 
 ---
 
@@ -729,7 +739,7 @@ TODO Folien mit Implementierungsdetails der einzelnen neuen Block-Typen.
 
 ### Erweiterte Solver-Implementierungen
 
-TODO Text
+Die ursprüngliche Solver-Implementierung (siehe Kapitel 4) wurde um die folgenden Punkte erweitert, um mit den diskreten Zustandsübergängen umgehen zu können:
 
 -   Sie berücksichtigt nun `DiscreteStates` bei der Initialisierung und Zustandsspeicherung.
 -   Die Logik zur Nulldurchgangsdetektion wurde erweitert und nutzt die `ZeroCrossings`-Deklarationen der Blöcke.
@@ -769,77 +779,35 @@ TODO Text (insbesondere Hinweis auf die engeren Abtastzeiten am Nullpunkt)
 
 ---
 
-TODO Einleitende Folie zur Umsetzung des Bouncing Ball Beispiels mit der erweiterten Softwarearchitektur und dem Algorithmus für Nulldurchgangsdetektion
-
----
-
-### Implementierung des Modells (`BouncingBallExample.cs`)
-
-- **`ConstantBlock("Gravity", -9.81)`:** Liefert die konstante Beschleunigung.
-- **`IntegrateWithResetBlock("Velocity", 10)`:**
-    - Integriert die Gravitationsbeschleunigung zur Geschwindigkeit.
-    - Besitzt eine Reset-Funktion, die bei einem Aufprall die Geschwindigkeit anpasst.
-- **`IntegrateBlock("Position", 10)`:**
-    - Integriert die Geschwindigkeit zur Position.
-- **`HitLowerLimitBlock("HitLowerLimit", 0)`:**
-    - Detektiert den Nulldurchgang, wenn die Position den Boden ($0$) erreicht.
-    - Sein Ausgang wird als Trigger für den Reset des Geschwindigkeits-Integrators verwendet.
-- **`GainBlock("Damping", -0.8)`:**
-    - Multipliziert die Geschwindigkeit mit dem negativen Restitutionskoeffizienten, um die neue Geschwindigkeit nach dem Aufprall zu berechnen.
-- **`RecordBlock`s:** Zum Aufzeichnen von Position und Geschwindigkeit für die Visualisierung.
-
----
-
-### `IntegrateWithResetBlock` für die Geschwindigkeit
-
-- **Zweck:** Ein Integrator, dessen Zustand (Geschwindigkeit) bei einem externen Signal (Aufprall) zurückgesetzt werden kann.
-- **Kontinuierlicher Zustand:** Speichert die aktuelle Geschwindigkeit.
-- **`CalculateDerivatives`:** Berechnet die Ableitung der Geschwindigkeit (die Beschleunigung).
-- **`UpdateStates` Methode:**
-    - Wird vom Solver aufgerufen, wenn ein Zero-Crossing (Aufprall) erkannt wurde.
-    - Prüft ein Eingangssignal (vom `HitLowerLimitBlock`).
-    - Wenn das Signal aktiv ist, wird der Geschwindigkeitszustand auf den gedämpften Wert gesetzt.
-    - `continuousStates[0] = inputs[2];` (wobei `inputs[2]` der gedämpfte Geschwindigkeitswert ist).
-
----
-
-### `HitLowerLimitBlock` für die Bodenerkennung
-
-- **Zweck:** Erzeugt ein Zero-Crossing-Signal, wenn ein Eingangswert (Position) einen definierten unteren Grenzwert (Boden bei 0) erreicht.
-- **`Inputs.Add(new InputDeclaration("U", true))`:** Nimmt die aktuelle Position als Eingang.
-- **`ZeroCrossings.Add(new ZeroCrossingDeclaration("Z"))`:** Deklariert ein Zero-Crossing-Signal.
-- **`CalculateZeroCrossings` Methode:**
-    - Berechnet die Zero-Crossing-Funktion: `zeroCrossings[0] = inputs[0] - LowerLimit;`
-    - Wenn `inputs[0]` (Position) kleiner oder gleich `LowerLimit` (0) wird, wechselt das Signal von positiv zu negativ (oder umgekehrt, je nach Start).
-    - Dieses Signal wird vom Solver verwendet, um den genauen Zeitpunkt des Aufpralls zu lokalisieren.
+TODO Einleitende Folien zum Beispiel Bouncing Ball (mit IntegrateWithReset)
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Naive_Explizit.png)
 
-TODO Text
+TODO Text (IntegrateWithReset funktioniert gut)
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Naive_Implizit.png)
 
-TODO Text (insbesondere, warum bricht der Ball durch die Nulllinie)
+TODO Text (Ball durchbricht Nulllinie)
 
 ---
 
-TODO Folien zum erweiterten modell (BouncingBallExtendedExample)
+TODO Einleitende Folien zum Beispiel Bouncing Ball (mit IntegrateWithLowerLimit)
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Erweitert_Explizit.png)
 
-TODO Text
+TODO Text (IntegrateWithLowerLimit funktioniert auch gut)
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Erweitert_Implizit.png)
 
-TODO Text
+TODO Text (Ball durchbricht Nulllinie nicht mehr)
 
 ---
 
