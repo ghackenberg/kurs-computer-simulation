@@ -710,27 +710,127 @@ public class InheritedSampleTime : SampleTime { }
 
 ---
 
-TODO Folie zu ZeroOrderHoldBlock
+### ZeroOrderHoldBlock
+
+Der `ZeroOrderHoldBlock` realisiert die klassische Abtastung und Haltefunktion (Sample & Hold):
+
+-   **Abtastzeit:** `DiscreteSampleTime`. Der Block wird nur zu diskreten Zeitpunkten $t_k = t_0 + k \cdot T_s$ aktiv.
+-   **Zustand:** Ein diskreter Zustand `X`, der den zuletzt abgetasteten Wert speichert.
+-   **Verhalten:**
+    -   Bei jedem Abtastschritt (`UpdateStates`) wird der aktuelle Eingangswert in den internen Zustand übernommen ($x_{diskret} = u$).
+    -   Der Ausgang (`CalculateOutputs`) ist immer der aktuelle Wert des Zustands.
+
+```csharp
+public override void UpdateStates(double time, double[] cStates, double[] dStates, double[] inputs)
+{
+    // Speichern des aktuellen Eingangswerts im diskreten Zustand
+    dStates[0] = inputs[0];
+}
+```
 
 ---
 
-TODO Folie zu DiscreteTimeIntegratorBlock
+### DiscreteTimeIntegratorBlock
+
+Der `DiscreteTimeIntegratorBlock` führt eine Integration über die Zeit in diskreten Schritten durch (Summation):
+
+-   **Abtastzeit:** `DiscreteSampleTime`.
+-   **Zustand:** Ein diskreter Zustand `X`, der das Integral akkumuliert.
+-   **Verhalten:**
+    -   Nutzt das explizite Euler-Verfahren für die diskrete Integration.
+    -   Bei jedem Schritt wird das Produkt aus Eingangswert und Periodendauer zum Zustand addiert.
+
+```csharp
+public override void UpdateStates(double time, double[] cStates, double[] dStates, double[] inputs)
+{
+    // Integration: Neuer Zustand = Alter Zustand + Eingang * Zeitschritt
+    double period = ((DiscreteSampleTime)SampleTime).Period;
+    dStates[0] += inputs[0] * period;
+}
+```
 
 ---
 
-TODO Folie zu HitLowerLimitBlock
+### HitLowerLimitBlock (Ereignisdetektion)
+
+Dieser Block dient der Detektion von Schwellwert-Unterschreitungen (Events), ohne den Zustand selbst zu ändern:
+
+-   **Funktion:** Meldet ein Ereignis, wenn das Eingangssignal eine untere Schranke unterschreitet.
+-   **Zero-Crossing:** Definiert eine Funktion $z$, deren Vorzeichenwechsel vom Solver überwacht wird.
+    $$ z = u - \text{Limit} $$
+-   Der Solver kann durch Interpolation den exakten Zeitpunkt $t_e$ des Nulldurchgangs ($z=0$) finden ("Zero Crossing Detection").
+
+```csharp
+public override void CalculateZeroCrossings(..., double[] inputs, double[] zeroCrossings)
+{
+    // Das Ereignis tritt auf, wenn diese Funktion das Vorzeichen wechselt
+    zeroCrossings[0] = inputs[0] - LowerLimit;
+}
+```
 
 ---
 
-TODO Folie zu IntegrateWithReset
+### IntegrateWithReset (Zustandsmanipulation)
+
+Ein kontinuierlicher Integrator, dessen Zustand durch ein diskretes Ereignis zurückgesetzt werden kann:
+
+-   **Kontinuierlicher Zustand:** $x_c$ (das Integral).
+-   **Zero-Crossing:** Überwacht ein Trigger-Signal (z.B. $u_{trigger} - 1$).
+-   **UpdateStates:** Wird ausgeführt, wenn der Solver einen Nulldurchgang detektiert. Setzt den Integrator-Zustand sprunghaft auf einen neuen Wert.
+
+```csharp
+public override void UpdateStates(double time, double[] cStates, ..., double[] inputs)
+{
+    // Wenn das Trigger-Signal aktiv ist (hier == 1)
+    if (inputs[1] == 1)
+    {
+        // ... wird der kontinuierliche Zustand hart zurückgesetzt
+        cStates[0] = inputs[2];
+    }
+}
+```
 
 ---
 
-TODO Folie zu IntegrateWithLowerLimit
+### IntegrateWithLowerLimit
+
+Ein Integrator mit einer harten unteren Schranke (wichtig z.B. beim Bouncing Ball, damit dieser nicht "durch den Boden" fällt):
+
+-   **Kombination:** Integriert kontinuierlich, überwacht aber gleichzeitig das Limit.
+-   **Zero-Crossing:** $z = x_c - \text{Limit}$. Ermöglicht dem Solver, den Zeitpunkt des Aufsetzens exakt zu finden.
+-   **UpdateStates:** Korrigiert den Zustand beim Erreichen oder Unterschreiten des Limits.
+
+```csharp
+public override void UpdateStates(double time, double[] cStates, ..., double[] inputs)
+{
+    // Falls der Zustand unter das Limit gefallen ist
+    if (cStates[0] < LowerLimit)
+    {
+        // ... wird er auf einen korrigierten Wert (z.B. Position beim Stoß) gesetzt
+        cStates[0] = inputs[1];
+    }
+}
+```
 
 ---
 
-TODO Folie zu VariableSampleTimeBlock
+### VariableSampleTimeBlock
+
+Ein Block, der seine Abtastzeit dynamisch anpassen kann (Ereignissteuerung):
+
+-   **Abtastzeit:** `VariableSampleTime`.
+-   **GetNextVariableHitTime:** Eine spezielle Methode, die vom Solver aufgerufen wird, um zu erfahren, wann dieser Block das nächste Mal berechnet werden *muss*.
+-   **Anwendung:** Ermöglicht adaptive Schrittweitensteuerung durch den Block selbst, z.B. häufige Abtastung bei schnellen Signaländerungen.
+
+```csharp
+public override double GetNextVariableHitTime(double time, ..., double[] inputs)
+{
+    // Der nächste Aufrufzeitpunkt wird dynamisch berechnet
+    // Hier: Aktuelle Zeit + ein durch den Eingang bestimmtes Delta
+    double deltaT = inputs[0];
+    return time + deltaT;
+}
+```
 
 ---
 
@@ -765,66 +865,120 @@ TODO Kurze Übersicht der Inhalte
 
 ---
 
-TODO Folien zum Algorithmus für Nulldurchgangsdetektion
+### Algorithmus zur Nulldurchgangsdetektion
+
+Der Solver nutzt einen iterativen Prozess, um den genauen Zeitpunkt eines Ereignisses zu finden:
+
+1.  **Erkennung:** Der Solver stellt am Ende eines Integrationsschritts fest, dass eine Zero-Crossing-Funktion $z$ das Vorzeichen gewechselt hat ($z(t) \cdot z(t+\Delta t) < 0$).
+2.  **Lokalisierung:** Der Zeitschritt wird iterativ halbiert (Bisektion), um den Zeitpunkt $t_e$ zu finden, an dem $z(t_e) \approx 0$ ist.
+3.  **Behandlung:**
+    -   Die Simulation wird bis exakt $t_e$ fortgeführt.
+    -   `UpdateStates` wird aufgerufen, um diskrete Zustandsänderungen durchzuführen.
+    -   Die Simulation wird von $t_e$ aus fortgesetzt (oft mit Neustart der Integrationsschrittweite).
 
 ---
 
-TODO Einleitende Folien zum Beispiel IntegrateWithLowerLimit
+```csharp
+// Vereinfachte Logik im Solver
+while (zeroCrossingValue > Threshold && iteration < Limit)
+{
+    // Zeitschritt halbieren, um näher an das Ereignis zu kommen
+    timeStep /= 2;
+    
+    // Zustand integrieren und Nulldurchgang neu prüfen
+    IntegrateContinuousStates(timeStep);
+    zeroCrossingValue = CalculateZeroCrossings(time + timeStep);
+}
+```
+
+---
+
+### Testfall: Integration mit unterem Limit
+
+Wir betrachten ein einfaches System, um die Ereignisbehandlung zu testen:
+
+-   Ein konstanter negativer Eingang ("Schwerkraft") zieht den Zustand nach unten.
+-   Ein `IntegrateWithLowerLimitBlock` integriert diesen Wert.
+-   Das Limit ist bei $0$.
+-   **Erwartung:** Der Zustand sinkt linear ab, trifft exakt auf 0, und bleibt dort (bzw. wird korrigiert), ohne signifikant negativ zu werden.
+
+Dies demonstriert die Fähigkeit des Solvers, harte physikalische Grenzen (Hard Stops) korrekt abzubilden.
 
 ---
 
 ![bg contain right](./Screenshots/IntegrateWithLowerLimit_Explizit.png)
 
-TODO Text (insbesondere Hinweis auf die engeren Abtastzeiten am Nullpunkt)
+**Beobachtung:**
+Die blauen Punkte markieren die Berechnungsschritte des Solvers. Man erkennt deutlich, wie der Solver sich an das Limit "herantastet":
+-   Große Schritte während der linearen Abwärtsbewegung.
+-   **Verdichtung der Schritte** unmittelbar vor dem Erreichen der Nulllinie.
+-   Der Solver findet den exakten Zeitpunkt des Aufpralls und verhindert ein Durchschlagen.
 
 ---
 
-TODO Einleitende Folien zum Beispiel Bouncing Ball (mit IntegrateWithReset)
+### Testfall: Bouncing Ball (Naive Implementierung)
+
+Implementierung des Bouncing Balls *ohne* spezielle Zero-Crossing-Unterstützung im Integrator selbst (nutzt `IntegrateWithReset` und externen `HitLowerLimit`):
+
+-   Die Position wird normal integriert.
+-   Ein separater Block prüft auf $y < 0$ und löst den Reset der Geschwindigkeit aus.
+-   **Problem:** Zwischen zwei Schritten kann der Ball bereits tief in den Boden eingedrungen sein, bevor das Ereignis erkannt wird. Die Rücksetzung erfolgt dann von einer falschen (negativen) Position aus, oder erst im nächsten Schritt.
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Naive_Explizit.png)
 
-TODO Text (IntegrateWithReset funktioniert gut)
+**Expliziter Solver:**
+Das Ergebnis sieht auf den ersten Blick akzeptabel aus. Der Reset greift, und der Ball springt zurück. Durch die kleinen Schritte des expliziten Solvers bleibt der Fehler klein.
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Naive_Implizit.png)
 
-TODO Text (Ball durchbricht Nulllinie)
+**Impliziter Solver (große Schritte):**
+Hier zeigt sich das Problem deutlich. Da der implizite Solver große Zeitschritte machen kann, "übersieht" er den Bodenkontakt zunächst oder dringt tief ein. Der Ball scheint die Nulllinie deutlich zu durchbrechen, bevor die Richtung umgekehrt wird. Dies ist physikalisch inkorrekt.
 
 ---
 
-TODO Einleitende Folien zum Beispiel Bouncing Ball (mit IntegrateWithLowerLimit)
+### Testfall: Bouncing Ball (Erweiterte Implementierung)
+
+Verwendung des `IntegrateWithLowerLimitBlock` für die Position:
+
+-   Der Integrator selbst kennt das Limit ($y=0$).
+-   Er meldet dem Solver proaktiv die Entfernung zum Limit via `CalculateZeroCrossings`.
+-   Der Solver kann den *exakten* Zeitpunkt des Aufpralls $t_e$ finden, *bevor* die Integration fortgesetzt wird.
+-   Beim Aufprall wird die Position hart auf 0 gehalten und die Geschwindigkeit (im anderen Integrator) invertiert.
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Erweitert_Explizit.png)
 
-TODO Text (IntegrateWithLowerLimit funktioniert auch gut)
+**Expliziter Solver:**
+Ähnlich wie zuvor gute Ergebnisse, aber mit garantierter Einhaltung der Randbedingung $y \ge 0$.
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Erweitert_Implizit.png)
 
-TODO Text (Ball durchbricht Nulllinie nicht mehr)
+**Impliziter Solver:**
+Trotz großer Schritte wird der Bodenkontakt präzise erkannt. Der Ball durchbricht die Nulllinie nicht mehr. Die Simulation ist physikalisch robust und numerisch stabil, auch bei variablen Schrittweiten.
 
 ---
 
 ![bg right](./Illustrationen/Abschnitt_6.jpg)
 
-## 6.6: Diskrete Abtastzeiten
+In diesem Abschnitt haben wir gesehen:
 
-Dieser Abschnitt beinhaltet Folgendes:
-
-TODO Kurze Übersicht der Inhalte
+-   Wie `DiscreteSampleTime` genutzt wird, um Blöcke zu definieren, die nur zu festen Zeitpunkten ($k \cdot T_s$) aktiv sind.
+-   Beispiele: `ZeroOrderHoldBlock` und `DiscreteTimeIntegratorBlock`.
+-   Diese Blöcke verhalten sich wie digitale Hardwarekomponenten (DSPs, Mikrocontroller) innerhalb einer kontinuierlichen Umgebung.
 
 ---
 
 ![bg right](./Illustrationen/Abschnitt_7.jpg)
 
-## 6.7: Variable Abtastzeiten
+In diesem Abschnitt haben wir gesehen:
 
-Dieser Abschnitt beinhaltet Folgendes:
-
-TODO Kurze Übersicht der Inhalte
+-   Wie `VariableSampleTime` eine flexible Zeitsteuerung ermöglicht.
+-   Der Block selbst bestimmt über `GetNextVariableHitTime`, wann er wieder aufgerufen werden muss.
+-   Dies erlaubt hochgradig effiziente Simulationen, die Rechenleistung nur dann anfordern, wenn sie tatsächlich benötigt wird (z.B. bei schnellen Signaländerungen), und Leerlaufzeiten überspringen.
