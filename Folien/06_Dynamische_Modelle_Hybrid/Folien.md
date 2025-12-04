@@ -220,7 +220,7 @@ Dieses System ist ein klassisches Beispiel für ein **zeitgesteuertes hybrides S
 </div>
 <div>
 
-TODO Nano Banana Illustration eines digitalen Prozessors, der ein kontinuierliches Eingangssignal in ein diskretes ausgangssignal verwandelt. Comic-artige technische Zeichnung. Weißer Hintergrund. Format 2 breit, 3 hoch.
+![](./Illustrationen/Analog_Digital.jpg)
 
 </div>
 </div>
