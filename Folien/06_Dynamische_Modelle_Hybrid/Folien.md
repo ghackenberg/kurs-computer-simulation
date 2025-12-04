@@ -1070,7 +1070,21 @@ In diesem Abschnitt haben wir gesehen:
 
 ---
 
-TODO Folie zur initialisierung der NextVariableHitTime für Blöcke mit diskreter Abtastzeit
+### Initialisierung der Abtastzeitpunkte
+
+Der Solver muss wissen, wann der *erste* diskrete Zeitschritt stattfindet. Dies geschieht in der `InitializeStates`-Methode.
+
+Für Blöcke mit **diskreter Abtastzeit** wird der Startzeitpunkt direkt aus der `Offset`-Eigenschaft übernommen.
+
+```csharp
+// In Solver.InitializeStates()
+
+if (f.SampleTime is DiscreteSampleTime)
+{
+    // Der erste "Hit" ist durch den statischen Offset definiert
+    NextVariableHitTimes[f] = ((DiscreteSampleTime)f.SampleTime).Offset;
+}
+```
 
 ---
 
@@ -1184,13 +1198,29 @@ In diesem Abschnitt haben wir gesehen:
 
 ---
 
-TODO Folie zur Initialisierung der NextVariableHitTime für Blöcke mit variabler Abtastzeit
+### Initialisierung des ersten Zeitpunkts
+
+Auch bei **variabler Abtastzeit** muss der erste Aufrufzeitpunkt bekannt sein, um die Ereigniskette zu starten.
+
+Da die Methode `GetNextVariableHitTime` oft von aktuellen Eingängen abhängt (die zu Beginn noch nicht vorliegen), wird der *erste* Zeitpunkt statisch über den `Offset` der `VariableSampleTime` definiert.
+
+```csharp
+// In Solver.InitializeStates()
+
+else if (f.SampleTime is VariableSampleTime)
+{
+    // Initialisierung des ersten variablen Zeitpunkts
+    NextVariableHitTimes[f] = ((VariableSampleTime)f.SampleTime).Offset;
+}
+```
 
 ---
 
 ### Berücksichtigung im Solver: **Max Time Step**
 
-TODO Folientext
+Der Solver behandelt variable Abtastzeiten bei der Schrittweitensteuerung identisch zu diskreten Abtastzeiten.
+
+Er prüft den Eintrag in `NextVariableHitTimes` (der dynamisch aktualisiert wurde) und reduziert bei Bedarf den Zeitschritt, um exakt auf dem Ereignis zu landen.
 
 ```csharp
 // In EulerExplicitSolver.Solve(...)
