@@ -1063,31 +1063,97 @@ Auch das Ergebnis des impliziten Solvers sieht gut besser aus, da die Randbeding
 
 In diesem Abschnitt haben wir gesehen:
 
-- TODO Kurze Übersicht über die Inhalte des Abschnitts 6.6
+- Wie **diskrete Abtastzeiten** (`DiscreteSampleTime`) im Framework definiert werden.
+- Wie der Solver die **Integrationsschrittweite** anpasst, um Abtastzeitpunkte exakt zu treffen.
+- Wie **Zustandsaktualisierungen** (`UpdateStates`) für diskrete Blöcke periodisch ausgeführt werden.
+- Ein konkretes Beispiel mit **Zero-Order Hold** und **diskretisiertem Integrator**.
 
 ---
 
-TODO Folie zur Berücksichtigung von diskreten Abtastzeiten im Solver (max time step)
+TODO Folie zur initialisierung der NextVariableHitTime für Blöcke mit diskreter Abtastzeit
 
 ---
 
-TODO Folie zur Berücksichtigung von diskreten Abtastzeiten bei der Aktualisierung von Zuständen
+### Berücksichtigung im Solver: **Max Time Step**
+
+Der Solver muss sicherstellen, dass er **exakt** auf einem diskreten Abtastzeitpunkt landet und nicht "darüber hinweg" integriert.
+
+Daher wird die maximale Schrittweite `timeStep` in jedem Schritt angepasst:
+
+```csharp
+// In EulerExplicitSolver.Solve(...)
+
+foreach (Block b in Blocks)
+{
+    if (b.SampleTime is DiscreteSampleTime)
+    {
+        // Reduziere den Zeitschritt, um den nächsten "Hit" nicht zu verpassen
+        timeStep = Math.Min(timeStep, NextVariableHitTimes[b] - time);
+    }
+}
+```
+
+`NextVariableHitTimes` speichert für jeden Block den absoluten Zeitpunkt der nächsten Ausführung.
 
 ---
 
-TODO Folie zur Berechnung des nächsten diskreten Abtastzeitpunkts
+### Berücksichtigung im Solver: **Update States**
+
+Nachdem der Integrationsschritt durchgeführt wurde (und die Zeit `t` erreicht ist), prüft der Solver, welche diskreten Blöcke "fällig" sind.
+
+```csharp
+// In Solver.UpdateStates(double t)
+
+else if (f.SampleTime is DiscreteSampleTime)
+{
+    // Prüfen, ob der aktuelle Zeitpunkt dem nächsten geplanten Hit entspricht
+    // (mit einer kleinen Toleranz für Fließkommaungenauigkeiten)
+    if (Math.Abs(t - NextVariableHitTimes[f]) < 1e-9)
+    {
+        // Führe die diskrete Zustandsaktualisierung aus
+        f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
+
+        // ... (Berechnung des nächsten Zeitpunkts, siehe nächste Folie)
+    }
+}
+```
+
+---
+
+### Berechnung des nächsten Abtastzeitpunkts
+
+Bei **diskreten** Abtastzeiten ist der nächste Zeitpunkt streng deterministisch und periodisch.
+
+Nach der Ausführung von `UpdateStates` wird der nächste Zeitpunkt einfach durch Addition der Periode berechnet:
+
+```csharp
+// In Solver.UpdateStates(double t)
+
+// Bestimmung der nächsten Abtastzeit
+NextVariableHitTimes[f] += ((DiscreteSampleTime)f.SampleTime).Period;
+```
+
+Dies garantiert ein festes Raster von Ausführungszeitpunkten:
+$t_{k+1} = t_k + T_{Period}$
 
 ---
 
 <div class="columns">
-<div>
+<div class="three">
 
-TODO Folie zu Beispiel mit diskreten Abtastzeiten
+### Beispiel: **Basic Discrete Example**
+
+Das Modell kombiniert kontinuierliche Integration mit diskreter Abtastung:
+
+1.  **Constant:** Liefert den Wert `1`.
+2.  **Integrate 1:** Integriert kontinuierlich $\to$ Rampe $t$.
+3.  **Integrate 2:** Integriert die Rampe $\to$ Parabel $0.5 t^2$.
+4.  **Zero Order Hold:** Tastet das Ergebnis von "Integrate 2" diskret ab (z.B. alle 1s) und hält den Wert.
 
 </div>
-<div>
+<div class="two">
 
-TODO Mermaid-Diagramm für Beispiel mit diskreten Abtastzeiten
+![](./Diagramme/Example_DiscreteSampleTime.svg)
 
 </div>
 </div>
@@ -1096,7 +1162,13 @@ TODO Mermaid-Diagramm für Beispiel mit diskreten Abtastzeiten
 
 ![bg contain right](./Screenshots/ZeroOrderHold_Explizit.png)
 
-TODO Folie zur Lösung des Beispiels für diskrete Abtastzeiten mit dem expliziten Verfahren
+### Lösung mit dem **expliziten** Solver
+
+Das Diagramm zeigt die kontinuierliche Parabel (blau/orange) und das **treppenförmige** Ausgangssignal des Zero-Order Holds (grün).
+
+- Der Solver verkleinert seine Schritte exakt so, dass er die Abtastzeitpunkte (1s, 2s, 3s...) trifft.
+- Zwischen den Abtastzeitpunkten bleibt das grüne Signal konstant.
+- Zum Abtastzeitpunkt springt es auf den aktuellen Wert der kontinuierlichen Eingabe.
 
 ---
 
@@ -1106,31 +1178,98 @@ TODO Folie zur Lösung des Beispiels für diskrete Abtastzeiten mit dem explizit
 
 In diesem Abschnitt haben wir gesehen:
 
-- TODO Kurze Übersicht über die Inhalte des Abschnitts 6.7
+- Wie **variable Abtastzeiten** (`VariableSampleTime`) definiert werden.
+- Die Rolle der Methode `GetNextVariableHitTime` zur dynamischen Planung.
+- Wie Blöcke ihre eigene Ausführungsfrequenz basierend auf Prozesseingängen steuern können.
 
 ---
 
-TODO Folie zur Berücksichtigung von variablen Abtastzeiten im Solver (max time step)
+TODO Folie zur Initialisierung der NextVariableHitTime für Blöcke mit variabler Abtastzeit
 
 ---
 
-TODO Folie zur Berücksichtigung von variablen Abtastzeiten bei der Aktualisierung von Zuständen
+### Berücksichtigung im Solver: **Max Time Step**
+
+TODO Folientext
+
+```csharp
+// In EulerExplicitSolver.Solve(...)
+
+foreach (Block b in Blocks)
+{
+    if (b.SampleTime is DiscreteSampleTime || b.SampleTime is VariableSampleTime)
+    {
+        // Reduziere den Zeitschritt, um den nächsten "Hit" nicht zu verpassen
+        timeStep = Math.Min(timeStep, NextVariableHitTimes[b] - time);
+    }
+}
+```
 
 ---
 
-TODO Folie zur Berechnung des nächsten variablen Abtastzeitpunktes
+### Berücksichtigung im Solver: **Update States**
+
+Auch hier ist die Logik analog, aber sie delegiert die Berechnung des nächsten Zeitpunkts an den Block selbst (*statt der Berechnung mittels Abtastperiode*).
+
+```csharp
+// In Solver.UpdateStates(double t)
+
+else if (f.SampleTime is VariableSampleTime)
+{
+    if (Math.Abs(t - NextVariableHitTimes[f]) < 1e-9)
+    {
+        // Diskrete Zustandsänderung ausführen
+        f.UpdateStates(t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
+
+        // Den Block fragen, wann er das nächste Mal aufgerufen werden möchte
+        NextVariableHitTimes[f] = f.GetNextVariableHitTime(
+            t, ContinuousStates[f], DiscreteStates[f], Inputs[f]);
+    }
+}
+```
+
+---
+
+### Berechnung des nächsten variablen Zeitpunkts
+
+Die Klasse `Block` stellt die virtuelle Methode `GetNextVariableHitTime` bereit, die von spezifischen Blöcken überschrieben werden kann.
+
+**Beispiel `VariableSampleTimeBlock`:**
+Der nächste Aufrufzeitpunkt wird durch ein Eingangssignal (`inputs[0]`) bestimmt.
+
+```csharp
+public override double GetNextVariableHitTime(double time, ..., double[] inputs)
+{
+    // Das Eingangssignal bestimmt das Delta bis zum nächsten Hit
+    double deltaT = inputs[0];
+
+    if (deltaT > 0)
+    {
+        return time + deltaT;
+    }
+
+    return double.MaxValue; // Keine weiteren Hits
+}
+```
 
 ---
 
 <div class="columns">
-<div>
+<div class="two">
 
-TODO Folie zu Beispiel mit variable Abtastzeiten
+### Beispiel: **Variable Sample Time**
+
+Ein System, bei dem die Abtastrate kontinuierlich abnimmt (d.h. das Zeitintervall $\Delta t$ nimmt zu).
+
+1.  **Slope (0.1):** Konstante Steigung, die durch den Integrator integriert wird.
+2.  **Integrator:** Integriert die Steigung $\to$ Linear ansteigendes Signal (das $\Delta t$).
+3.  **VariableSampler:** Ein Block, der nur zu den Zeitpunkten aktiv wird, die durch das Integral bestimmt werden. Er zeichnet den Zeitpunkt des "Hits" auf.
+    - Die Abtastzeiten werden in diesem Beispiel über die Zeit immer länge, da sie durch das Ausgangssignal des Integrators bestimmt werden.
 
 </div>
 <div>
 
-TODO Mermaid-Diagramm für Beispiel mit variable Abtastzeiten
+![](./Diagramme/Example_VariableSampleTime.svg)
 
 </div>
 </div>
@@ -1139,4 +1278,11 @@ TODO Mermaid-Diagramm für Beispiel mit variable Abtastzeiten
 
 ![bg contain right](./Screenshots/VariableSampleTime_Explizit.png)
 
-TODO Folie zu Lösung des Beispiels für variable Abtastzeiten mit dem expliziten Verfahren
+### Lösung mit dem **expliziten** Solver
+
+- **Orange Kurve:** Das kontinuierlich ansteigende $\Delta t$ (Ausgang des Integrators).
+- **Blaue Punkte:** Die Zeitpunkte, zu denen der `VariableSampler` das letzte Mal aktiv wurde.
+
+Man sieht deutlich, dass der zeitliche Abstand zwischen den blauen Punkten (Stufen) immer größer wird, da das $\Delta t$ (orange) ansteigt.
+
+Der Block steuert seine eigene Ausführungs-frequenz dynamisch basierend auf dem Systemzustand.

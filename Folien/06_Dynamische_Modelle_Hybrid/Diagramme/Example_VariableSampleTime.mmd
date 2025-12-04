@@ -1,0 +1,5 @@
+graph TD
+    S["<b>Constant Slope</b><br/>(Value = 0.1)"] --> I["<b>Integrator</b><br/>(Start = 0.2)"]
+    I -- Delta T --> VS["<b>Variable Sampler</b>"]
+    I --> R1["<b>Record Delta</b>"]
+    VS -- Hit Time --> R2["<b>Record Hits</b>"]

@@ -1,0 +1,7 @@
+graph TD
+    C["<b>Constant</b><br/>(Value = 1)"] --> I1[Integrate 1]
+    I1 --> I2[Integrate 2]
+    I2 --> Z["<b>Zero Order Hold</b><br/>(Period = 1s)"]
+    I1 --> R1[Record 1]
+    I2 --> R2[Record 2]
+    Z --> R3[Record 3]
