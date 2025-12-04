@@ -66,9 +66,6 @@ namespace SFunctionHybrid.Framework.Solvers
                     // Ausgaben berechnen
                     CalculateOutputs(time + timeStep);
 
-                    // Ableitungen berechnen
-                    CalculateDerivatives(time + timeStep);
-
                     // Nulldurchgänge berechnen
                     zeroCrossingValue = CalculateZeroCrossings(time + timeStep);
                 }
@@ -80,18 +77,17 @@ namespace SFunctionHybrid.Framework.Solvers
                     throw new Exception($"Nulldurchgang nicht gefunden ({time + timeStep}, {zeroCrossingValue})!");
                 }
 
-                // Diskreter Zustandsübergang (wegen Nulldurchgang oder diskreter/variabler Abtastzeit)?
-                if (UpdateStates(time + timeStep))
-                {
-                    // Ausgaben berechnen
-                    CalculateOutputs(time + timeStep);
+                // Zustände aktualisieren
+                UpdateStates(time + timeStep);
 
-                    // Ableitungen berechnen
-                    CalculateDerivatives(time + timeStep);
+                // Ausgaben berechnen
+                CalculateOutputs(time + timeStep);
 
-                    // Nulldurchgänge berechnen
-                    CalculateZeroCrossings(time + timeStep);
-                }
+                // Ableitungen berechnen
+                CalculateDerivatives(time + timeStep);
+
+                // Nulldurchgänge berechnen
+                CalculateZeroCrossings(time + timeStep);
 
                 // Zeit aktualisieren
                 time += timeStep;

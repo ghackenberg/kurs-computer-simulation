@@ -13,7 +13,6 @@ namespace SFunctionHybrid.Framework
         public List<Connection> Connections { get; }
 
         public Dictionary<Block, bool[]> InputReadyFlags { get; } = new Dictionary<Block, bool[]>();
-        public Dictionary<Block, bool> ZeroCrossingFlags { get; } = new Dictionary<Block, bool>();
         public Dictionary<Block, double> NextVariableHitTimes { get; } = new Dictionary<Block, double>();
 
         public Dictionary<Block, double[]> ContinuousStatesPrevious { get; } = new Dictionary<Block, double[]>();
@@ -163,12 +162,6 @@ namespace SFunctionHybrid.Framework
 
         protected double CalculateZeroCrossings(double t)
         {
-            // ZeroCrossing-Flags zurücksetzen
-            foreach (Block f in Model.Blocks)
-            {
-                ZeroCrossingFlags[f] = false;
-            }
-
             // Rückgabewert initialisieren
             double value = -1;
 
@@ -189,17 +182,13 @@ namespace SFunctionHybrid.Framework
                     // Wenn ja, prüfe, ob eines der Signale das Vorzeichen gewechselt hat
                     for (int i = 0; i < f.ZeroCrossings.Count; i++)
                     {
-                        if (z[i] >= 0 && ZeroCrossings[f][i] < 0)
+                        if (z[i] > 0 && ZeroCrossings[f][i] < 0)
                         {
                             value = Math.Max(value, +z[i]);
-                            // Nulldurchgang merken (wichtig für UpdateStates)
-                            ZeroCrossingFlags[f] = true;
                         }
-                        else if (z[i] <= 0 && ZeroCrossings[f][i] > 0)
+                        else if (z[i] < 0 && ZeroCrossings[f][i] > 0)
                         {
                             value = Math.Max(value, -z[i]);
-                            // Nulldurchgang merken (wichtig für UpdateStates)
-                            ZeroCrossingFlags[f] = true;
                         }
                     }
                 }

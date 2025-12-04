@@ -1,0 +1,15 @@
+flowchart
+
+    start([" "])
+    stop([" "])
+    init["Zeitschritt<br/>initialisieren"]
+    check{"Nulldurchgang<br/>lokalisiert?"}
+    half["Zeitschritt<br/>halbieren"]
+    update["Zustände<br/>aktualisieren"]
+
+    start --> init --> check --Nein--> half --> check
+
+    check --Ja--> update --> stop
+
+    style start fill:black
+    style stop fill:white

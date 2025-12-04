@@ -19,11 +19,11 @@ namespace SFunctionHybrid
 
             // Modell erstellen und lösen
 
-            Example example = new VariableZeroOrderHoldExample();
+            Example example = new BouncingBallExtendedExample();
 
             try
             {
-                Solver solution = new EulerImplicitSolver(example.Model);
+                Solver solution = new EulerExplicitSolver(example.Model);
 
                 Title += $" - {example.GetType().Name} / {solution.GetType().Name}";
 

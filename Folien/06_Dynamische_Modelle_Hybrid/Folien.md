@@ -13,7 +13,7 @@ math: mathjax
 
 Dieses Kapitekl beinhaltet Folgendes:
 
-TODO Kurze Übersicht über das Kapitel
+- TODO Kurze Übersicht über das Kapitel
 
 ---
 
@@ -23,7 +23,7 @@ TODO Kurze Übersicht über das Kapitel
 
 Dieser Abschnitt beinhaltet Folgendes:
 
-TODO Kurze Übersicht der Inhalte
+- TODO Kurze Übersicht der Inhalte des Abschnitts 6.1
 
 ---
 
@@ -395,7 +395,7 @@ Die variable Abtastlogik nutzt $c(t)$, um die Abtastrate anzupassen:
 
 Dieser Abschnitt beinhaltet Folgendes:
 
-TODO Kurze Übersicht der Inhalte
+- TODO Kurze Übersicht der Inhalte des Abschnitts 6.3
 
 ---
 
@@ -564,7 +564,7 @@ Dieser erweiterte Formalismus, angelehnt an die S-Function-Spezifikation von MAT
 
 Dieser Abschnitt beinhaltet Folgendes:
 
-TODO Kurze Übersicht der Inhalte
+- TODO Kurze Übersicht der Inhalte des Abschnitts 6.4
 
 ---
 
@@ -582,18 +582,18 @@ Die `Block`-Klasse, der zentrale Baustein unserer Simulationsumgebung, wurde erh
 ---
 
 <div class="columns">
-<div class="two">
+<div>
 
 ### UML-Klassendiagramm
 
 Die Grafik auf der rechten Seite zeigt das UML-Klassendiagramm für die erweiterte `Block`-Klasse.
 
-Zu beachten sind vor allen die beiden neuen Verbindungen zwischen der Klasse `Block` und den Klassen `SampleTime` und `ZeroCrossingDeclaration`.
+Zu beachten sind vor allen die beiden neuen Verbindungen zwischen der Klasse `Block` und den Klassen `ZeroCrossingDeclaration` und `SampleTime`.
 
 Außerdem wurden die Methoden `CalcualteZeroCrossings` und `Update-States`eingefügt.
 
 </div>
-<div class="three">
+<div>
 
 ![Klassendiagramm Block](../../Quellen/WS25/SFunctionHybrid/Block.svg)
 
@@ -861,9 +861,12 @@ Die ursprüngliche Solver-Implementierung (siehe Kapitel 4) wurde um die folgend
 
 Dieser Abschnitt beinhaltet Folgendes:
 
-TODO Kurze Übersicht der Inhalte
+- TODO Kurze Übersicht der Inhalte des Abschnitts 6.5
 
 ---
+
+<div class="columns">
+<div class="five">
 
 ### Algorithmus zur Nulldurchgangsdetektion
 
@@ -876,22 +879,54 @@ Der Solver nutzt einen iterativen Prozess, um den genauen Zeitpunkt eines Ereign
     -   `UpdateStates` wird aufgerufen, um diskrete Zustandsänderungen durchzuführen.
     -   Die Simulation wird von $t_e$ aus fortgesetzt (oft mit Neustart der Integrationsschrittweite).
 
+</div>
+<div>
+
+![w:1000](./Diagramme/Nulldurchgang.svg)
+
+</div>
+</div>
+
 ---
+
+### Vereinfachte Logik im Solver
+
+<div class="columns">
+<div class="three">
 
 ```csharp
-// Vereinfachte Logik im Solver
-while (zeroCrossingValue > Threshold && iteration < Limit)
+timeStep = timeStepMax * 2; RememberStates();
+
+while (zeroCrossingValue > Threshold && iteration++ < Limit)
 {
-    // Zeitschritt halbieren, um näher an das Ereignis zu kommen
-    timeStep /= 2;
-    
-    // Zustand integrieren und Nulldurchgang neu prüfen
+    timeStep /= 2; ResetStates();
+
     IntegrateContinuousStates(timeStep);
+
+    CalculateOutputs(time + timeStep);
+
     zeroCrossingValue = CalculateZeroCrossings(time + timeStep);
 }
+
+UpdateStates(time + timeStep);
+
+CalculateOutputs(time + timeStep);
+CalculateDerivatives(time + timeStep);
+CalculateZeroCrossings(time + timeStep);
 ```
 
+</div>
+<div>
+
+![](./Diagramme/Solver_Logik.svg)
+
+</div>
+</div>
+
 ---
+
+<div class="columns">
+<div class="three">
 
 ### Testfall: Integration mit unterem Limit
 
@@ -900,85 +935,142 @@ Wir betrachten ein einfaches System, um die Ereignisbehandlung zu testen:
 -   Ein konstanter negativer Eingang ("Schwerkraft") zieht den Zustand nach unten.
 -   Ein `IntegrateWithLowerLimitBlock` integriert diesen Wert.
 -   Das Limit ist bei $0$.
--   **Erwartung:** Der Zustand sinkt linear ab, trifft exakt auf 0, und bleibt dort (bzw. wird korrigiert), ohne signifikant negativ zu werden.
+-   Beim Erreichen des Limits, wird der Zustand auf einen Vorgabewert zurückgesetzt.
+-   **Erwartung:** Der Zustand sinkt linear ab, trifft exakt auf 0, und wird dann auf den Vorgabewert zurückgesetzt.
 
 Dies demonstriert die Fähigkeit des Solvers, harte physikalische Grenzen (Hard Stops) korrekt abzubilden.
+
+</div>
+<div>
+
+![](./Diagramme/Example_IntegrateWithLowerLimit.svg)
+
+</div>
+</div>
 
 ---
 
 ![bg contain right](./Screenshots/IntegrateWithLowerLimit_Explizit.png)
 
-**Beobachtung:**
+### Lösung mit dem **expliziten** Verfahren
+
 Die blauen Punkte markieren die Berechnungsschritte des Solvers. Man erkennt deutlich, wie der Solver sich an das Limit "herantastet":
 -   Große Schritte während der linearen Abwärtsbewegung.
 -   **Verdichtung der Schritte** unmittelbar vor dem Erreichen der Nulllinie.
--   Der Solver findet den exakten Zeitpunkt des Aufpralls und verhindert ein Durchschlagen.
+-   Der Solver findet den exakten Zeitpunkt des Aufpralls und setzt den Zustand auf den Vorgabewert zurück.
 
 ---
 
-### Testfall: Bouncing Ball (Naive Implementierung)
+<div class="columns">
+<div class="three">
+
+### Testfall: **Bouncing Ball** (*Naive* Implementierung)
 
 Implementierung des Bouncing Balls *ohne* spezielle Zero-Crossing-Unterstützung im Integrator selbst (nutzt `IntegrateWithReset` und externen `HitLowerLimit`):
 
--   Die Position wird normal integriert.
--   Ein separater Block prüft auf $y < 0$ und löst den Reset der Geschwindigkeit aus.
--   **Problem:** Zwischen zwei Schritten kann der Ball bereits tief in den Boden eingedrungen sein, bevor das Ereignis erkannt wird. Die Rücksetzung erfolgt dann von einer falschen (negativen) Position aus, oder erst im nächsten Schritt.
+-   Die Beschleunigung ist konstant (Erdbeschleunigung).
+-   Die Geschwindigkeit wird integriert und kann zurückgesetzt werden.
+-   Die Position wird normal integriert (kein Zurücksetzen möglich).
+-   Ein separater Block prüft auf $y \leq 0$ und löst den Reset der Geschwindigkeit aus.
+-   Bei einem Reset wird die aktuelle Geschwindigkeit mit einem negativen Dämpfungsfaktor multipliziert.
+
+</div>
+<div class="two">
+
+![](./Diagramme/Example_BouncingBallNaive.svg)
+
+</div>
+</div>
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Naive_Explizit.png)
 
-**Expliziter Solver:**
-Das Ergebnis sieht auf den ersten Blick akzeptabel aus. Der Reset greift, und der Ball springt zurück. Durch die kleinen Schritte des expliziten Solvers bleibt der Fehler klein.
+### Lösung mit dem **expliziten** Solver
+
+Das Ergebnis sieht auf den ersten Blick akzeptabel aus:
+
+- Die Geschwindigkeitkurve während der Freiflugphase entspricht einer Geraden.
+- Die Positionskurve während der Freiflugphase entspricht einer Parabel.
+- Wenn die Positionskurve Null erreicht, wird die Geschwindigkeit zurückgesetzt.
+- Die Sprünge werden immer kleiner, bis ein minimaler Wert erreicht ist.
+- **Ab dann wiederholt sich die Sprung-höhe immer wieder**.
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Naive_Implizit.png)
 
-**Impliziter Solver (große Schritte):**
-Hier zeigt sich das Problem deutlich. Da der implizite Solver große Zeitschritte machen kann, "übersieht" er den Bodenkontakt zunächst oder dringt tief ein. Der Ball scheint die Nulllinie deutlich zu durchbrechen, bevor die Richtung umgekehrt wird. Dies ist physikalisch inkorrekt.
+### Lösung mit dem **impliziten** Solver
+
+Hier zeigt sich ein Problem, das vielleicht nicht zu erwarten war:
+
+- Die **ersten drei Sprünge** werden normal und korrekt berechnet.
+- Beim **vierten Sprung** klebt der Ball auch noch korrekt am Boden.
+- Beim **fünften Sprung** durchbricht der Ball jedoch den Boden, da der Ball bereits am Boden ist (d.h. $y \leq 0$) und das implizite Verfahren für den nächsten Zeitpunkt eine negative Geschwindigkeit ($v < 0$) berechnet.
 
 ---
 
-### Testfall: Bouncing Ball (Erweiterte Implementierung)
+<div class="columns">
+<div class="three">
 
-Verwendung des `IntegrateWithLowerLimitBlock` für die Position:
+### Testfall: **Bouncing Ball** (*Erweiterte* Implementierung)
 
--   Der Integrator selbst kennt das Limit ($y=0$).
+Verwendung des `IntegrateWithLowerLimitBlock` für die Berechnung der Position:
+
+-   Der Integrator für die Position selbst kennt das Limit (d.h. $y=0$).
 -   Er meldet dem Solver proaktiv die Entfernung zum Limit via `CalculateZeroCrossings`.
 -   Der Solver kann den *exakten* Zeitpunkt des Aufpralls $t_e$ finden, *bevor* die Integration fortgesetzt wird.
 -   Beim Aufprall wird die Position hart auf 0 gehalten und die Geschwindigkeit (im anderen Integrator) invertiert.
+-   Das Zurücksetzen der Geschwindigkeit erfolgt wieder mit einem `HitLowerLimit` Block.
+
+</div>
+<div class="two">
+
+![](./Diagramme/Example_BouncingBallExtended.svg)
+
+</div>
+</div>
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Erweitert_Explizit.png)
 
-**Expliziter Solver:**
-Ähnlich wie zuvor gute Ergebnisse, aber mit garantierter Einhaltung der Randbedingung $y \ge 0$.
+### Lösung mit dem **expliziten** Solver
+
+Ähnlich wie zuvor gute Ergebnisse, aber mit garantierter Einhaltung der Randbedingung $y \ge 0$:
+
+- Bei der naiven Implementierung ist der Ball bei einem Nulldurchgang immer leicht unterhalb der Nulllinie.
+- Bei der erweiterten Implementierung wird die Position des Balls in diesem Fall auf Null zurückgesetzt.
+- Somit wird erzwungen, dass sich der Ball niemals unterhalb der Nulllinie befinden kann.
 
 ---
 
 ![bg contain right](./Screenshots/Bouncing_Ball_Erweitert_Implizit.png)
 
-**Impliziter Solver:**
-Trotz großer Schritte wird der Bodenkontakt präzise erkannt. Der Ball durchbricht die Nulllinie nicht mehr. Die Simulation ist physikalisch robust und numerisch stabil, auch bei variablen Schrittweiten.
+### Lösung mit dem **impliziten** Solver
+
+Auch das Ergebnis des impliziten Solvers sieht gut besser aus, da die Randbedingung eingehalten wird:
+
+- Der Ball durchbricht die Nulllinie nicht mehr (im Gegensatz zur naiven Implementierung).
+- Die Simulation ist physikalisch robust und numerisch stabil, auch bei variablen Schrittweiten.
+- Der Ball bleibt nach einer Weile tatsächlich am Boden liegen, und macht keine Srünge mehr.
 
 ---
 
 ![bg right](./Illustrationen/Abschnitt_6.jpg)
 
+## 6.6 Diskrete Abtastzeiten
+
 In diesem Abschnitt haben wir gesehen:
 
--   Wie `DiscreteSampleTime` genutzt wird, um Blöcke zu definieren, die nur zu festen Zeitpunkten ($k \cdot T_s$) aktiv sind.
--   Beispiele: `ZeroOrderHoldBlock` und `DiscreteTimeIntegratorBlock`.
--   Diese Blöcke verhalten sich wie digitale Hardwarekomponenten (DSPs, Mikrocontroller) innerhalb einer kontinuierlichen Umgebung.
+- TODO Kurze Übersicht über die Inhalte des Abschnitts 6.6
 
 ---
 
 ![bg right](./Illustrationen/Abschnitt_7.jpg)
 
+## 6.7 Variable Abtastzeiten
+
 In diesem Abschnitt haben wir gesehen:
 
--   Wie `VariableSampleTime` eine flexible Zeitsteuerung ermöglicht.
--   Der Block selbst bestimmt über `GetNextVariableHitTime`, wann er wieder aufgerufen werden muss.
--   Dies erlaubt hochgradig effiziente Simulationen, die Rechenleistung nur dann anfordern, wenn sie tatsächlich benötigt wird (z.B. bei schnellen Signaländerungen), und Leerlaufzeiten überspringen.
+- TODO Kurze Übersicht über die Inhalte des Abschnitts 6.7

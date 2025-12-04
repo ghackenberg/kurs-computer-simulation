@@ -134,18 +134,17 @@ namespace SFunctionHybrid.Framework.Solvers
                     throw new Exception($"Nulldurchgang nicht gefunden ({time + timeStep}, {zeroCrossingValue})!");
                 }
 
-                // Diskreter Zustandsübergang (wegen Nulldurchgang oder diskreter/variabler Abtastzeit)?
-                if (UpdateStates(time + timeStep))
-                {
-                    // Ausgaben noch einmal neu berechnen
-                    CalculateOutputs(time + timeStep);
+                // Zustände aktualisieren
+                UpdateStates(time + timeStep);
 
-                    // Ableitungen noch einmal neu berechnen
-                    CalculateDerivatives(time + timeStep);
+                // Ausgaben noch einmal neu berechnen
+                CalculateOutputs(time + timeStep);
 
-                    // Nulldurchgänge noch einmal neu berechnen
-                    CalculateZeroCrossings(time + timeStep);
-                }
+                // Ableitungen noch einmal neu berechnen
+                CalculateDerivatives(time + timeStep);
+
+                // Nulldurchgänge noch einmal neu berechnen
+                CalculateZeroCrossings(time + timeStep);
 
                 // Zeit aktualisieren
                 time += timeStep;

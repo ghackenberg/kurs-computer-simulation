@@ -1,0 +1,20 @@
+flowchart
+
+    Gravity --derivative--> Velocity
+    
+    Damping --reset state--> Velocity --> Damping
+
+    Velocity --derivative--> Position
+
+    Position --> HitLowerLimit --reset flag--> Velocity
+
+    Position ~~~ Ground
+
+    Ground --reset state--> Position
+
+    Ground["<b>Constant</b><br/>(Value = 0)"]
+    Gravity["<b>Constant</b><br/>(Value = -9.81)"]
+    Damping["<b>Gain</b><br/>(Factor = -0.5)"]
+    Velocity["<b>IntegrateWithReset</b><br/>(Velocity)"]
+    Position["<b>IntegrateWithLowerLimit</b><br/>(Position)"]
+    HitLowerLimit["<b>HitLowerLimit</b><br/>(Value = 0)"]
