@@ -821,10 +821,6 @@ TODO Kurze Übersicht der Inhalte
 
 ---
 
-TODO Folien zur Blöcken mit diskreter Abtastzeit (Offset und Periode)
-
----
-
 ![bg right](./Illustrationen/Abschnitt_7.jpg)
 
 ## 6.7: Variable Abtastzeiten
@@ -832,7 +828,3 @@ TODO Folien zur Blöcken mit diskreter Abtastzeit (Offset und Periode)
 Dieser Abschnitt beinhaltet Folgendes:
 
 TODO Kurze Übersicht der Inhalte
-
----
-
-TODO Folien zu Blöcken mit variabler Abtastzeit (GetNextVariableHitTime)
