@@ -1,0 +1,2 @@
+- Diskussion von Simscape- bzw. Modelica-artigen Modellen
+- Beschreibung deren Modellierungsansatz und Softwarearchitektur
