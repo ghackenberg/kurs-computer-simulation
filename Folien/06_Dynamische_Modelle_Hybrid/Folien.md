@@ -11,9 +11,13 @@ math: mathjax
 
 # Kapitel 6: Hybride Dynamische Modelle
 
-Dieses Kapitekl beinhaltet Folgendes:
+Dieses Kapitel beinhaltet Folgendes:
 
-- TODO Kurze Übersicht über das Kapitel
+- Fallbeispiel "Bouncing Ball" und "Digitaler Sensor".
+- Allgemeine Definition und Formalismus hybrider Systeme.
+- Erweiterung der Softwarearchitektur für hybride Simulationen.
+- Algorithmen zur Nulldurchgangs-detektion (Zero-Crossing Detection).
+- Implementierung diskreter und variabler Abtastzeiten.
 
 ---
 
@@ -23,7 +27,10 @@ Dieses Kapitekl beinhaltet Folgendes:
 
 Dieser Abschnitt beinhaltet Folgendes:
 
-- TODO Kurze Übersicht der Inhalte des Abschnitts 6.1
+- Mathematische Modellierung der Freiflugphase (kontinuierlich).
+- Modellierung des Aufpralls als diskretes Ereignis.
+- Herleitung der analytischen Lösung für die hybride Trajektorie.
+- Simulation der Abfolge von kontinuierlichen Phasen und diskreten Sprüngen.
 
 ---
 
@@ -395,7 +402,10 @@ Die variable Abtastlogik nutzt $c(t)$, um die Abtastrate anzupassen:
 
 Dieser Abschnitt beinhaltet Folgendes:
 
-- TODO Kurze Übersicht der Inhalte des Abschnitts 6.3
+- Definition und Abgrenzung hybrider Modelle.
+- Typische Anwendungsbereiche (z.B. Regelungstechnik, Kontaktmechanik).
+- Herausforderungen bei der Simulation (Ereignisbehandlung, Stabilität).
+- Erweiterung des mathematischen Formalismus um diskrete Zustände, Update-Funktionen und Nulldurchgangsfunktionen.
 
 ---
 
@@ -564,7 +574,10 @@ Dieser erweiterte Formalismus, angelehnt an die S-Function-Spezifikation von MAT
 
 Dieser Abschnitt beinhaltet Folgendes:
 
-- TODO Kurze Übersicht der Inhalte des Abschnitts 6.4
+- Erweiterung der `Block`-Klasse um `DiscreteStates` und `ZeroCrossings`.
+- Einführung des Konzepts der `SampleTime` (Diskret, Variabel, Kontinuierlich).
+- Vorstellung neuer Block-Typen (z.B. `ZeroOrderHold`, `HitLowerLimit`).
+- Anpassung der Solver-Architektur für hybride Schritte.
 
 ---
 
@@ -861,7 +874,10 @@ Die ursprüngliche Solver-Implementierung (siehe Kapitel 4) wurde um die folgend
 
 Dieser Abschnitt beinhaltet Folgendes:
 
-- TODO Kurze Übersicht der Inhalte des Abschnitts 6.5
+- Funktionsweise der Nulldurchgangsdetektion (Bisektionsverfahren).
+- Integration der Ereignisbehandlung in den Simulationsalgorithmus.
+- Vergleich naiver und robuster Implementierungen am Beispiel des Bouncing Balls.
+- Auswirkungen auf explizite und implizite Lösungsverfahren.
 
 ---
 
