@@ -1067,6 +1067,39 @@ In diesem Abschnitt haben wir gesehen:
 
 ---
 
+TODO Folie zur Berücksichtigung von diskreten Abtastzeiten im Solver (max time step)
+
+---
+
+TODO Folie zur Berücksichtigung von diskreten Abtastzeiten bei der Aktualisierung von Zuständen
+
+---
+
+TODO Folie zur Berechnung des nächsten diskreten Abtastzeitpunkts
+
+---
+
+<div class="columns">
+<div>
+
+TODO Folie zu Beispiel mit diskreten Abtastzeiten
+
+</div>
+<div>
+
+TODO Mermaid-Diagramm für Beispiel mit diskreten Abtastzeiten
+
+</div>
+</div>
+
+---
+
+![bg contain right](./Screenshots/ZeroOrderHold_Explizit.png)
+
+TODO Folie zur Lösung des Beispiels für diskrete Abtastzeiten mit dem expliziten Verfahren
+
+---
+
 ![bg right](./Illustrationen/Abschnitt_7.jpg)
 
 ## 6.7 Variable Abtastzeiten
@@ -1074,3 +1107,36 @@ In diesem Abschnitt haben wir gesehen:
 In diesem Abschnitt haben wir gesehen:
 
 - TODO Kurze Übersicht über die Inhalte des Abschnitts 6.7
+
+---
+
+TODO Folie zur Berücksichtigung von variablen Abtastzeiten im Solver (max time step)
+
+---
+
+TODO Folie zur Berücksichtigung von variablen Abtastzeiten bei der Aktualisierung von Zuständen
+
+---
+
+TODO Folie zur Berechnung des nächsten variablen Abtastzeitpunktes
+
+---
+
+<div class="columns">
+<div>
+
+TODO Folie zu Beispiel mit variable Abtastzeiten
+
+</div>
+<div>
+
+TODO Mermaid-Diagramm für Beispiel mit variable Abtastzeiten
+
+</div>
+</div>
+
+---
+
+![bg contain right](./Screenshots/VariableSampleTime_Explizit.png)
+
+TODO Folie zu Lösung des Beispiels für variable Abtastzeiten mit dem expliziten Verfahren
