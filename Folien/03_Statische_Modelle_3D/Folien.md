@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Kapitel 3: Statische Modelle 3D (2025-11-29)'
+header: 'Kapitel 3: Statische Modelle 3D (2025-12-05)'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax

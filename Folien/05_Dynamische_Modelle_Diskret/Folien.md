@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Kapitel 5: Diskrete Dynamische Modelle (2025-11-29)'
+header: 'Kapitel 5: Diskrete Dynamische Modelle (2025-12-05)'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
