@@ -4,7 +4,7 @@ namespace SimscapeSharp.Framework.Components.Electrical
 {
     public class ElectricalReference : Component
     {
-        public ElectricalNode V { get; } = new();
+        public ElectricalNode V { get; } = new("V");
 
         public Equation E1 { get; }
 

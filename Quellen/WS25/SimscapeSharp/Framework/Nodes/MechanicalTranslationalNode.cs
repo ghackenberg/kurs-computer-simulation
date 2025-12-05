@@ -8,5 +8,10 @@ namespace SimscapeSharp.Framework.Nodes
 
         [Balancing]
         public Variable F { get; } = new(0); // Force
+
+        public MechanicalTranslationalNode(string name) : base(name)
+        {
+
+        }
     }
 }

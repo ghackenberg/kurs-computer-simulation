@@ -8,5 +8,10 @@ namespace SimscapeSharp.Framework.Nodes
 
         [Balancing]
         public Variable I { get; } = new(0); // Current
+
+        public ElectricalNode(string name) : base(name)
+        {
+
+        }
     }
 }

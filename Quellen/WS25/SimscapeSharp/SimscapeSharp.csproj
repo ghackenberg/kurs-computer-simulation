@@ -13,4 +13,8 @@
     <Folder Include="Framework\Components\Thermal\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutomaticGraphLayout.WpfGraphControl" Version="1.1.12" />
+  </ItemGroup>
+
 </Project>

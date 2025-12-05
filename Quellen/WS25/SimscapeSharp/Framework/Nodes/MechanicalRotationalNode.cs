@@ -8,5 +8,10 @@ namespace SimscapeSharp.Framework.Nodes
 
         [Balancing]
         public Variable T { get; } = new(0); // Torque
+
+        public MechanicalRotationalNode(string name) : base(name)
+        {
+
+        }
     }
 }

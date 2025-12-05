@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimscapeSharp"
+        xmlns:mlsagl="http://mlsagl"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <mlsagl:AutomaticGraphLayoutControl x:Name="Graph"/>
     </Grid>
 </Window>

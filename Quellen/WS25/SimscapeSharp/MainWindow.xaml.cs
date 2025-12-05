@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using Microsoft.Msagl.Drawing;
+using SimscapeSharp.Framework;
+using SimscapeSharp.Framework.Examples;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +22,28 @@ namespace SimscapeSharp
         public MainWindow()
         {
             InitializeComponent();
+
+            Component c = new SimpleElectricalCircuit();
+
+            Graph graph = new Graph();
+
+            foreach (var child in c.GetComponents())
+            {
+                graph.AddNode($"{child.GetHashCode()}").LabelText = child.Name;
+
+                foreach (var node in child.GetNodes())
+                {
+                    graph.AddNode($"{node.GetHashCode()}").LabelText = node.Name;
+                    graph.AddEdge($"{child.GetHashCode()}", $"{node.GetHashCode()}");
+                }
+            }
+
+            foreach (var connection in c.Connections)
+            {
+                graph.AddEdge($"{connection.A.GetHashCode()}", $"{connection.B.GetHashCode()}");
+            }
+
+            Graph.Graph = graph;
         }
     }
 }

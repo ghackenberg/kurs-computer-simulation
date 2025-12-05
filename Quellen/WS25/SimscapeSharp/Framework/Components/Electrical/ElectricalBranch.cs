@@ -4,8 +4,8 @@ namespace SimscapeSharp.Framework.Components.Electrical
 {
     public class ElectricalBranch : Component
     {
-        public ElectricalNode P { get; } = new();
-        public ElectricalNode N { get; } = new();
+        public ElectricalNode P { get; } = new("P");
+        public ElectricalNode N { get; } = new("N");
 
         public Variable V { get; } = new(0); // Voltage
         public Variable I { get; } = new(0); // Current
