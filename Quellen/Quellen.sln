@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.11.35312.102
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VorlageVisualisierung2D", "WS24\VorlageVisualisierung2D\VorlageVisualisierung2D.csproj", "{693022B4-2592-4513-87BE-D935E15F976D}"
 EndProject
@@ -40,6 +40,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeispielWürfel3D", "WS25\BeispielWürfel3D\BeispielWürfel3D.csproj", "{99666B8B-DF26-8EDD-CA71-4D3411D96E90}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFunctionHybrid", "WS25\SFunctionHybrid\SFunctionHybrid.csproj", "{FB0A9AF8-D35F-E7DF-C77A-31662829CC95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimscapeSharp", "WS25\SimscapeSharp\SimscapeSharp.csproj", "{2358CC30-B799-46E6-885C-ECD25FE33C80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +117,10 @@ Global
 		{FB0A9AF8-D35F-E7DF-C77A-31662829CC95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB0A9AF8-D35F-E7DF-C77A-31662829CC95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB0A9AF8-D35F-E7DF-C77A-31662829CC95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2358CC30-B799-46E6-885C-ECD25FE33C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2358CC30-B799-46E6-885C-ECD25FE33C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2358CC30-B799-46E6-885C-ECD25FE33C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2358CC30-B799-46E6-885C-ECD25FE33C80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +143,7 @@ Global
 		{315F8C60-5169-0BCF-EB78-5AD1DFA65A4D} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 		{99666B8B-DF26-8EDD-CA71-4D3411D96E90} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 		{FB0A9AF8-D35F-E7DF-C77A-31662829CC95} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
+		{2358CC30-B799-46E6-885C-ECD25FE33C80} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B78BB052-30AD-4804-A50D-523BA6002BC8}
