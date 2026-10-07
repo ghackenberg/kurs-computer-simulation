@@ -737,12 +737,12 @@ Die Zufälligkeit fließt in die **Ereignisplanung** ein. Die Funktion $g$ häng
 
 Im Warteschlangen-Beispiel werden Zwischenankunfts- und Bedienzeiten aus Verteilungen gezogen:
 -   **Zwischenankunftszeit** $\sim \text{Exponential}(\lambda)$
--   **Bedienzeit** $\sim \text{Normal}(\mu, \sigma^2)$
+-   **Bedienzeit** $\sim \text{LogNormal}(\mu, \sigma^2)$ (strikt positiv, $T > 0$)
 
 ```csharp
-// Bedienzeit aus einer Normalverteilung mit µ=3min, σ=30s
-var serviceTime = NextNormal(mean: 3 * 60, stdDev: 0.5 * 60);
-Add(new DepartureEvent(Clock + serviceTime));
+// Bedienzeit aus Log-Normal-Verteilung mit Soll-Mittelwert m=3min, StdAbw s=30s
+var serviceTime = NextLogNormal(targetMean: 3 * 60, targetStdDev: 0.5 * 60);
+Add(new DepartureEvent(Clock + serviceTime)); // Garantiert t > Clock (Kausalität!)
 
 // Nächste Ankunft mit Exponentialverteilung (mittlere Ankunftsrate: 1 Kunde alle 2min)
 var interarrivalTime = NextExponential(lambda: 1.0 / (2 * 60));
@@ -951,7 +951,81 @@ Durch Einsetzen von $R$ und $\Theta$ in die Polarkoordinaten-Gleichungen erhalte
 **Anwendung:**
 -   Diese Methode erzeugt immer ein Paar von standardnormalverteilten Zufallszahlen.
 -   Man kann eine der Zahlen verwenden und die andere für den nächsten Bedarf speichern oder verwerfen, falls nur eine benötigt wird.
--   Um eine Normalverteilung mit Mittelwert $\mu$ und Standardabweichung $\sigma$ zu erhalten, skaliert man die standardnormalverteilte Zahl $Z$, sodass  $X = \mu + \sigma Z$
+---
+
+### Stochastische Kausalität bei Bedienzeiten
+
+In diskreten Ereignissimulatoren steuern Zufallsvariablen die Zeitdauer bis zum nächsten Ereignis ($t_{\text{Event}} = \text{Clock} + T$):
+
+- **Kausalitätsprinzip:** Ein zukünftiges Ereignis darf niemals in der Vergangenheit stattfinden: $T > 0$.
+- **Problem der Normalverteilung:**
+  - Der Träger der Normalverteilung ist ganz $\mathbb{R} = (-\infty, +\infty)$.
+  - Damit gilt stets $P(T < 0) > 0$!
+  - Fällt ein Zufallswert negativ aus ($T < 0$), wird das Ereignis **vor der aktuellen Simulationsuhr** geplant.
+  - Dies zerstört die zeitliche Monotonie der `PriorityQueue` und führt zu schwer auffindbaren Logikfehlern oder Deadlocks.
+- **Lösung:** Die **Log-Normal-Verteilung** besitzt den Träger $(0, \infty)$ und garantiert physikalische Kausalität ($T > 0$).
+
+---
+
+### Die Log-Normal-Verteilung: Parameterumrechnung
+
+Eine Zufallsvariable $X$ ist log-normalverteilt ($X \sim \text{LogNormal}(\mu, \sigma)$), wenn $\ln(X) \sim \mathcal{N}(\mu, \sigma^2)$ normalverteilt ist.
+
+<div class="columns">
+<div>
+
+**Gegeben in der Praxis:**
+- Gewünschter Soll-Mittelwert $m = E[X] > 0$ (z.B. $3\,\text{min}$)
+- Gewünschte Soll-Varianz $v = \text{Var}[X] = s^2$ (z.B. $(0{,}5\,\text{min})^2$)
+
+**Gesuchte Verteilungsparameter:**
+- $\mu$: Lageparameter im logarithmischen Raum
+- $\sigma$: Skalenparameter im logarithmischen Raum
+
+</div>
+<div>
+
+**Analytische Umrechnungsformeln:**
+
+$$\sigma^2 = \ln\left(1 + \frac{v}{m^2}\right) = \ln\left(1 + \frac{s^2}{m^2}\right)$$
+
+$$\sigma = \sqrt{\sigma^2}$$
+
+$$\mu = \ln(m) - \frac{1}{2} \sigma^2$$
+
+**Erzeugung:**
+Ist $Z \sim \mathcal{N}(0, 1)$ standardnormalverteilt (via Box-Muller), so ist:
+$$X = \exp(\mu + \sigma Z) > 0$$
+
+</div>
+</div>
+
+---
+
+### C#-Implementierung: Log-Normal-Verteilung
+
+```csharp
+/// <summary>
+/// Erzeugt eine strikt positive Log-Normal-verteilte Zeitdauer mit
+/// gewünschtem Soll-Mittelwert (targetMean) und Standardabweichung (targetStdDev).
+/// </summary>
+public static double NextLogNormal(Random random, double targetMean, double targetStdDev)
+{
+    // 1. Verteilungsparameter µ und σ berechnen
+    double variance = targetStdDev * targetStdDev;
+    double sigma2 = Math.Log(1.0 + variance / (targetMean * targetMean));
+    double sigma = Math.Sqrt(sigma2);
+    double mu = Math.Log(targetMean) - 0.5 * sigma2;
+
+    // 2. Standardnormalverteilte Zufallsvariable Z ~ N(0, 1) via Box-Muller
+    double u1 = 1.0 - random.NextDouble();
+    double u2 = 1.0 - random.NextDouble();
+    double z = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Cos(2.0 * Math.PI * u2);
+
+    // 3. Log-Normal-Transformation: Exponentiation garantiert strikt X > 0
+    return Math.Exp(mu + sigma * z);
+}
+```
 
 ---
 
@@ -1118,30 +1192,109 @@ Monte-Carlo-Replikationen sind vollständig unabhängig voneinander (*embarrassi
 
 ---
 
-### C#-Implementierung: Monte-Carlo & Konfidenzintervall
+### Problem der naiven 2-Pass-Varianzberechnung
+
+In vielen einfachen Implementierungen wird die Varianz über zwei Durchläufe berechnet:
+1. `double mean = results.Average();`
+2. `double variance = results.Sum(x => Math.Pow(x - mean, 2)) / (N - 1);`
+
+**Kritische Nachteile in der Praxis:**
+- **Massiver Speicherverbrauch & GC-Druck:** Alle $N = 10^5 \dots 10^7$ Replikationsergebnisse müssen im RAM gehalten werden (`ConcurrentBag<double>`).
+- **Zwei Speicher-Durchläufe:** Doppelter Lesezugriff bremst große Simulationsstudien aus.
+- **Instabile Alternative:** Die mathematische Formel $\sum x_i^2 - \frac{(\sum x_i)^2}{N}$ leidet unter **katastrophaler Auslöschung** (Subtraktion zweier fast gleicher großer Zahlen führt zu Bitverlust).
+
+---
+
+### Numerisch stabile 1-Pass-Varianz: Welford (1962)
+
+B. P. Welford formulierte einen numerisch exakten **Online-Algorithmus**, der Mittelwert $M_k$ und Quadratsumme $S_k = \sum_{i=1}^k (x_i - M_k)^2$ schrittweise aktualisiert:
+
+$$M_k = M_{k-1} + \frac{x_k - M_{k-1}}{k}$$
+
+$$S_k = S_{k-1} + (x_k - M_{k-1}) \cdot (x_k - M_k)$$
+
+- **Stichprobenvarianz:** $s^2 = \frac{S_N}{N - 1}$
+- **Standardfehler (Standard Error):** $\text{SE} = \frac{s}{\sqrt{N}}$
+- **Vorteile:**
+  - **Single Pass:** Jeder Messwert wird genau einmal verarbeitet und sofort verworfen.
+  - **Minimaler Speicherbedarf:** $\mathcal{O}(1)$ RAM statt $\mathcal{O}(N)$.
+  - **Numerisch robust:** Keine Subtraktion großer Quadratsummen.
+
+---
+
+### Parallele Aggregation: Chan-Merge-Formel (1979)
+
+Für parallele Monte-Carlo-Simulationen auf Multi-Core-CPUs leiteten Chan, Golub & LeVeque (1979) eine exakte Fusionsformel für zwei Teilstichproben $A$ und $B$ her:
+
+$$n = n_A + n_B, \quad \delta = M_B - M_A$$
+
+$$M = M_A + \delta \cdot \frac{n_B}{n}$$
+
+$$S = S_A + S_B + \delta^2 \cdot \frac{n_A \cdot n_B}{n}$$
+
+- **Konzept:** Jeder Thread berechnet mit Welford lokal für seine Replikationen.
+- Am Ende werden die Teilakkumulatoren mit der Chan-Formel verlustfrei zusammengeführt!
+
+---
+
+### C#-Implementierung: `ParallelWelfordAccumulator`
 
 ```csharp
-var results = new ConcurrentBag<double>();
-int N = 10_000;
-int baseSeed = 42;
-
-// 1. Parallele Durchführung aller Replikationen
-Parallel.For(0, N, i =>
+public class ParallelWelfordAccumulator
 {
-    var rnd = new Random(seed: baseSeed + i);
+    public long Count { get; private set; }
+    public double Mean { get; private set; }
+    public double M2 { get; private set; } // Summe der quadrierten Abweichungen
+
+    public void Add(double x)
+    {
+        Count++;
+        double delta = x - Mean;
+        Mean += delta / Count;
+        M2 += delta * (x - Mean);
+    }
+
+    public void Merge(ParallelWelfordAccumulator other)
+    {
+        if (other.Count == 0) return;
+        if (Count == 0) { Count = other.Count; Mean = other.Mean; M2 = other.M2; return; }
+        long newCount = Count + other.Count;
+        double delta = other.Mean - Mean;
+        Mean += delta * other.Count / newCount;
+        M2 += other.M2 + delta * delta * ((double)Count * other.Count / newCount);
+        Count = newCount;
+    }
+    public double Variance => Count > 1 ? M2 / (Count - 1) : 0.0;
+    public double StandardError => Math.Sqrt(Variance / Count);
+}
+```
+
+---
+
+### C#-Implementierung: Parallele Monte-Carlo-Simulation
+
+```csharp
+var globalAcc = new ParallelWelfordAccumulator();
+object syncLock = new object();
+int N = 10_000, baseSeed = 42;
+
+// 1. Thread-lokale Welford-Akkumulatoren in Parallel.For
+Parallel.For(0, N, () => new ParallelWelfordAccumulator(), 
+(i, loopState, localAcc) =>
+{
+    var rnd = new Random(seed: HashCode.Combine(baseSeed, i));
     var sim = new QueueSimulation(rnd);
     sim.Run();
-    results.Add(sim.AverageWaitTime);
+    localAcc.Add(sim.AverageWaitTime); // 1-Pass Welford Update
+    return localAcc;
+},
+localAcc =>
+{
+    lock (syncLock) { globalAcc.Merge(localAcc); } // Chan-Merge
 });
 
-// 2. Statistische Auswertung & 95%-Konfidenzintervall
-double mean = results.Average();
-double variance = results.Sum(x => Math.Pow(x - mean, 2)) / (results.Count - 1);
-double stdDev = Math.Sqrt(variance);
-double stdError = stdDev / Math.Sqrt(results.Count);
-
-double ciLower = mean - 1.960 * stdError;
-double ciUpper = mean + 1.960 * stdError;
-
-Console.WriteLine($"Mittelwert: {mean:F3} min,  95%-KI: [{ciLower:F3}; {ciUpper:F3}] min");
+// 2. Statistische Auswertung & 95%-Konfidenzintervall (Z = 1.960)
+double mean = globalAcc.Mean;
+double ciMargin = 1.960 * globalAcc.StandardError;
+Console.WriteLine($"Mittelwert: {mean:F3} min,  95%-KI: [{mean - ciMargin:F3}; {mean + ciMargin:F3}] min");
 ```

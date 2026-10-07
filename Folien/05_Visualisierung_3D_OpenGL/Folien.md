@@ -19,7 +19,8 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 - 5.1: Grundlagen der 3D-Visualisierung mit OpenGL
 - 5.2: Strukturierung mit einem Szenengraphen
-- 5.3: Interaktive Kameraführung
+- 5.3: Mechatronische Anwendung: Kinematische Ketten & Robotik
+- 5.4: Interaktive Kameraführung
 
 ---
 
@@ -491,19 +492,18 @@ gl.End();
 <div class="columns">
 <div>
 
-### `GL_LINES`
+### Linienprimitive: `GL_LINES`, `STRIP` & `LOOP`
 
-Zeichnet eine Serie von separaten Linien. Jeweils zwei aufeinanderfolgende Vertices definieren eine Linie. Ein dritter Vertex würde mit dem vierten eine neue, unabhängige Linie bilden.
+- **`GL_LINES`**: Zeichnet separate Liniensegmente paarweise (1-2, 3-4, ...).
+- **`GL_LINE_STRIP`**: Zusammenhängender Linienzug (1-2, 2-3, 3-4).
+- **`GL_LINE_LOOP`**: Geschlossener Streckenzug (verbindet zusätzlich das letzte mit dem ersten Vertex).
 
 ```csharp
-gl.Begin(OpenGL.GL_LINES);
-
+gl.LineWidth(2.0f);
+gl.Begin(OpenGL.GL_LINE_STRIP);
 gl.Vertex(1, 1, 0);
 gl.Vertex(2, 2, 0); // Linie 1-2
-
-gl.Vertex(3, 1, 0);
-gl.Vertex(4, 2, 0); // Linie 3-4
-
+gl.Vertex(3, 1, 0); // Linie 2-3
 gl.End();
 ```
 
@@ -511,62 +511,6 @@ gl.End();
 <div>
 
 ![width:1000px](./Screenshots/OpenGL_Primitives_Lines.png)
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div>
-
-### `GL_LINE_STRIP`
-
-Zeichnet eine zusammenhängende Kette von Linien. Der Endpunkt einer Linie ist der Startpunkt der nächsten.
-
-```csharp
-gl.Begin(OpenGL.GL_LINE_STRIP);
-
-gl.Vertex(1, 1, 0);
-gl.Vertex(2, 2, 0); // Linie 1-2
-gl.Vertex(3, 1, 0); // Linie 2-3
-gl.Vertex(4, 2, 0); // Linie 3-4
-
-gl.End();
-```
-
-</div>
-<div>
-
-![width:1000px](./Screenshots/OpenGL_Primitives_LineStrip.png)
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div>
-
-### `GL_LINE_LOOP`
-
-Funktioniert wie `GL_LINE_STRIP`, aber am Ende wird zusätzlich eine Linie vom letzten zum ersten Vertex gezeichnet, um die Form zu schließen.
-
-```csharp
-gl.Begin(OpenGL.GL_LINE_LOOP);
-
-gl.Vertex(1, 1, 0);
-gl.Vertex(2, 2, 0); // Linie 1-2
-gl.Vertex(3, 1, 0); // Linie 2-3
-gl.Vertex(4, 2, 0); // Linie 3-4
-
-gl.End(); // Linie 4-1
-```
-
-</div>
-<div>
-
-![width:1000px](./Screenshots/OpenGL_Primitives_LineLoop.png)
 
 </div>
 </div>
@@ -607,19 +551,16 @@ gl.End();
 <div class="columns">
 <div>
 
-### `GL_TRIANGLE_STRIP`
+### Verbundene Dreiecke: `STRIP` & `FAN`
 
-Zeichnet eine Kette von verbundenen Dreiecken. Jeder neue Vertex (ab dem dritten) bildet mit seinen beiden Vorgängern ein neues Dreieck. Dies ist effizienter als `GL_TRIANGLES`, da weniger Vertices übertragen werden müssen.
+- **`GL_TRIANGLE_STRIP`**: Jedes neue Vertex (ab dem 3.) bildet mit den beiden vorherigen ein Dreieck (1-2-3, 2-3-4, 3-4-5). Höhere Cache-Effizienz!
+- **`GL_TRIANGLE_FAN`**: Fächer um einen gemeinsamen Polpunkt (1-2-3, 1-3-4, 1-4-5). Ideal für Kreisflächen und Polkappen.
 
 ```csharp
 gl.Begin(OpenGL.GL_TRIANGLE_STRIP);
-
-gl.Vertex(1, 1, 0);
-gl.Vertex(2, 1, 0);
-gl.Vertex(1, 2, 0); // Dreieck 1: V1-V2-V3
-gl.Vertex(2, 2, 0); // Dreieck 2: V2-V3-V4
-gl.Vertex(3, 2, 0); // Dreieck 3: V3-V4-V5
-
+gl.Vertex(1, 1, 0); gl.Vertex(2, 1, 0);
+gl.Vertex(1, 2, 0); // Dreieck 1
+gl.Vertex(2, 2, 0); // Dreieck 2
 gl.End();
 ```
 
@@ -636,47 +577,15 @@ gl.End();
 <div class="columns">
 <div>
 
-### `GL_TRIANGLE_FAN`
+### Viereck-Primitive: `GL_QUADS` & `QUAD_STRIP`
 
-Zeichnet einen Fächer von Dreiecken, die sich alle den ersten Vertex teilen. Jeder neue Vertex (ab dem zweiten) bildet mit seinem Vorgänger und dem allerersten Vertex ein neues Dreieck. Ideal für Kreise oder Kegelspitzen.
-
-```csharp
-gl.Begin(OpenGL.GL_TRIANGLE_FAN);
-
-gl.Vertex(0, 0, 0);
-gl.Vertex(2, 0, 0);
-gl.Vertex(1, 1, 0); // Dreieck 1: V1-V2-V3
-gl.Vertex(0, 2, 0); // Dreieck 2: V1-V3-V4
-gl.Vertex(-1, 1, 0);// Dreieck 3: V1-V4-V5
-
-gl.End();
-```
-
-</div>
-<div>
-
-![width:1000px](./Screenshots/OpenGL_Primitives_TriangleFan.png)
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div>
-
-### `GL_QUADS`
-
-Zeichnet eine Serie von separaten, gefüllten Vierecken. Jeweils vier aufeinanderfolgende Vertices definieren ein Viereck. Die Vertices müssen konvex und koplanar sein.
+- **`GL_QUADS`**: Je vier Vertices bilden ein ebenes Viereck (1-2-3-4, 5-6-7-8).
+- **`GL_QUAD_STRIP`**: Aneinandergereihte Vierecke (1-2-4-3, 3-4-6-5). Klassiker zur Erzeugung von Zylindermänteln und Kugelbändern.
 
 ```csharp
 gl.Begin(OpenGL.GL_QUADS);
-
-gl.Vertex(1, 1, 0);
-gl.Vertex(2, 1, 0);
-gl.Vertex(2, 2, 0);
-gl.Vertex(1, 2, 0); // Viereck 1
-
+gl.Vertex(1, 1, 0); gl.Vertex(2, 1, 0);
+gl.Vertex(2, 2, 0); gl.Vertex(1, 2, 0);
 gl.End();
 ```
 
@@ -684,36 +593,6 @@ gl.End();
 <div>
 
 ![width:1000px](./Screenshots/OpenGL_Primitives_Quads.png)
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div>
-
-### `GL_QUAD_STRIP`
-
-Zeichnet eine Kette von verbundenen Vierecken. Jedes neue Paar von Vertices bildet mit dem vorherigen Paar ein neues Viereck.
-
-```csharp
-gl.Begin(OpenGL.GL_QUAD_STRIP);
-
-gl.Vertex(1, 1, 0);
-gl.Vertex(2, 1, 0);
-gl.Vertex(1, 2, 0);
-gl.Vertex(2, 2, 0); // Viereck 1: V1-V2-V4-V3
-gl.Vertex(1, 3, 0);
-gl.Vertex(2, 3, 0); // Viereck 2: V3-V4-V6-V5
-
-gl.End();
-```
-
-</div>
-<div>
-
-![width:1000px](./Screenshots/OpenGL_Primitives_QuadStrip.png)
 
 </div>
 </div>
@@ -1202,114 +1081,20 @@ Der folgende *Screenshot* zeigt Würfeldarstellungen mit unterschiedlichen Eigen
 
 ### Klasse `Sphere`
 
-Zeichnet eine Kugel.
+Approximiert eine Kugeloberfläche über ein Gitternetz aus Längen- und Breitengraden:
 
 - **Eigenschaften**:
-    - `Radius`: Der Radius der Kugel.
-    - `Slices`: Die Anzahl der Unterteilungen entlang des Umfangs (wie Längengrade).
-    - `Stacks`: Die Anzahl der Unterteilungen von Pol zu Pol (wie Breitengrade).
-- **`DrawLocal()`-Methode**:
-    - Die Kugel wird durch eine Serie von `GL_QUAD_STRIP`s (für die "Bauchbinden") und `GL_TRIANGLE_FAN`s (für die Polkappen) approximiert.
+    - `Radius`: Der Radius der Kugel $r$.
+    - `Slices`: Unterteilungen entlang des Umfangs ($\theta \in [0, 2\pi]$).
+    - `Stacks`: Unterteilungen von Pol zu Pol ($\phi \in [0, \pi]$).
+- **Intuitive Normalenformel**:
+    Da der Normalenvektor im Ursprung zentrierter Kugeln radial nach außen zeigt, entspricht er exakt dem normalisierten Ortsvektor der Einheitskugel:
+    $$\vec{n}_{\phi,\theta} = \frac{\vec{p}}{\|\vec{p}\|} = \begin{pmatrix} \sin(\phi) \cos(\theta) \\ \cos(\phi) \\ \sin(\phi) \sin(\theta) \end{pmatrix}$$
 
 </div>
 <div>
 
 ![width:1000px](./Illustrationen/Sphere_Slices_Stacks.png)
-
-</div>
-</div>
-
----
-
-### Berechnung der Kugel-**Koordinaten**
-
-Die Position der Eckpunkte einer Kugeloberfläche wird am einfachsten mit **Kugelkoordinaten** berechnet. Jeder Punkt wird durch einen Radius $r$ und zwei Winkel $\phi$ (phi) und $\theta$ (theta) beschrieben.
-
-- **$\phi$ (phi)**: Der polare Winkel (Breitengrad), der von der positiven Y-Achse aus gemessen wird. Er läuft von $0$ (Nordpol) bis $\pi$ (Südpol).
-- **$\theta$ (theta)**: Der azimutale Winkel (Längengrad), der in der XZ-Ebene gemessen wird. Er läuft von $0$ bis $2\pi$ (umfasst also den gesamten Kreis).
-
-**Formeln:**
-
-<div class="columns top">
-<div>
-
-Die Winkel werden aus den `stacks` ($i$) und `slices` ($j$) abgeleitet:
-
-$\phi = \frac{i}{\text{stacks}} \cdot \pi$
-$\theta = \frac{j}{\text{slices}} \cdot 2\pi$
-
-</div>
-<div>
-
-Die Umrechnung in kartesische Koordinaten erfolgt mittels Trigonometrie:
-
-$x = r \cdot \sin(\phi) \cdot \cos(\theta)$
-$y = r \cdot \cos(\phi)$
-$z = r \cdot \sin(\phi) \cdot \sin(\theta)$
-
-</div>
-</div>
-
----
-
-### Implementierung der **Koordinaten**-Berechnung in C#:
-
-Für die Berechnung nutzen wir die trigonometrischen Funktionen `Sin` und `Cos` der Klasse `Math`, welche von *Microsoft* standardmäßig bereitgestellt wird:
-
-```csharp
-private (float x, float y, float z) ComputeCoordinate(float radius, int i, int j)
-{
-    // Berechne zunächst die Winkel
-    float phi = i / (float)stacks * Math.PI;
-    float theta = j / (float)slices * 2 * Math.PI;
-
-    // Berechne dann die Koordinaten
-    float x = radius * (float)Math.Sin(phi) * (float)Math.Cos(theta);
-    float y = radius * (float)Math.Cos(phi);
-    float z = radius * (float)Math.Sin(phi) * (float)Math.Sin(theta);
-
-    // Gebe schließlich die berechneten Koordinaten zurück
-    return (x, y, z);
-}
-```
-
-</div>
-</div>
-
----
-
-### Berechnung der Kugel-**Normalen**
-
-Für eine korrekte Beleuchtung benötigt OpenGL an jedem Vertex einen **Normalenvektor**.
-
-- Bei einer im Ursprung zentrierten Kugel ist der Normalenvektor an einem Punkt $P$ auf der Oberfläche einfach der **normalisierte Vektor** vom Ursprung zu diesem Punkt $P$.
-- Das entspricht gleichzeitig dem Koordinatenvektor des Punktes auf einer **Einheitskugel** (einer Kugel mit Radius 1).
-
-**Formel:**
-
-Der Normalenvektor $N_{\phi,\theta}$ ist der normalisierte Ortsvektor $\vec{p}$:
-
-$N_{\phi,\theta} = \frac{\vec{p}}{|\vec{p}|} = \frac{1}{r} \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} \sin(\phi) \cos(\theta) \\ \cos(\phi) \\ \sin(\phi) \sin(\theta) \end{pmatrix}$
-
-</div>
-<div>
-
----
-
-### Implementierung der **Normalen**-Berechnung in C#
-
-Man berechnet die Koordinate einfach mit einem Radius von 1. Der resultierende Vektor ist bereits normalisiert und kann direkt als Normale verwendet werden.
-
-```csharp
-private void SphereVertexNormal(OpenGL gl, int i, int j)
-{
-    // Berechne die Koordinate auf einer Einheitskugel
-    (float nx, float ny, float nz) = ComputeCoordinate(1.0f, i, j);
-
-    // Setze den Normalenvektor
-    gl.Normal(nx, ny, nz);
-}
-```
 
 </div>
 </div>
@@ -1322,6 +1107,9 @@ Der folgende *Screenshot* zeigt Kugeldarstellungen mit unterschiedlichen Einstel
 
 ![](../../Quellen/WS25/BeispielKugel3D/Screenshot.png)
 
+> [!NOTE]
+> Die ausführliche mathematische Herleitung der Kugelkoordinaten sowie die C#-Triangulationsschleifen (`GL_QUAD_STRIP` und `GL_TRIANGLE_FAN`) sind im Begleitdokument [Folien_Anhang_3D_Normalen.md](./Folien_Anhang_3D_Normalen.md) dokumentiert.
+
 ---
 
 <div class="columns">
@@ -1329,15 +1117,14 @@ Der folgende *Screenshot* zeigt Kugeldarstellungen mit unterschiedlichen Einstel
 
 ### Klasse `Cylinder`
 
-Zeichnet einen Kegel, einen Zylinder oder einen Kegelstumpf.
+Modelliert einen Kreiszylinder, Kegel oder Kegelstumpf entlang der Y-Achse:
 
-- **Eigenschaften**:
-    - `Radius1`, `Radius2`: Radien an den beiden Enden. Wenn einer null ist, entsteht ein Kegel. Wenn sie gleich sind, ein Zylinder.
-    - `Height`: Die Höhe.
-    - `Slices`, `Stacks`: Unterteilungen.
-- **`DrawLocal()`-Methode**:
-    - Der Mantel wird mit `GL_QUAD_STRIP` gezeichnet.
-    - Die Deckel (falls `Radius > 0`) werden mit `GL_TRIANGLE_FAN` gezeichnet.
+- **Eigenschaften**: `Radius1` (unten), `Radius2` (oben), `Height`, `Slices`.
+- **Intuitive Normalenformel**:
+    - **Zylinder ($r_1 = r_2$):** Normalen zeigen rein horizontal vom Zentrum weg:
+      $$\vec{n} = \begin{pmatrix} \cos(\theta) & 0 & \sin(\theta) \end{pmatrix}^T$$
+    - **Kegel / Kegelstumpf ($r_1 \neq r_2$):** Die Mantelschräge bewirkt eine vertikale Komponente proportional zu $(r_1 - r_2)$:
+      $$\vec{n} \propto \begin{pmatrix} h \cdot \cos(\theta) \\ r_1 - r_2 \\ h \cdot \sin(\theta) \end{pmatrix}$$
 
 </div>
 <div>
@@ -1349,176 +1136,40 @@ Zeichnet einen Kegel, einen Zylinder oder einen Kegelstumpf.
 
 ---
 
-### Berechnung der Zylinder-**Koordinaten**
-
-Die Position der Eckpunkte auf der Zylinder- bzw. Kegel(stumpf)-Oberfläche wird mit einer Mischung aus Zylinder- und linearen Koordinaten berechnet.
-
-- **$\phi$ (phi)**: Ein Parameter, der die Position entlang der Höhe des Zylinders beschreibt. Er läuft von $0$ (unten, bei $r_1$) bis $1$ (oben, bei $r_2$).
-- **$\theta$ (theta)**: Der azimutale Winkel, der die Position auf dem Umfang beschreibt. Er läuft von $0$ bis $2\pi$.
-- **$r(\phi)$**: Der Radius an einer bestimmten Höhe $\phi$, der linear zwischen $r_1$ und $r_2$ interpoliert wird.
-
-**Formeln:**
-
-<div class="columns top">
-<div>
-
-Die Parameter werden aus den `stacks` ($i$) und `slices` ($j$) abgeleitet:
-
-$\phi = \frac{i}{\text{stacks}}$
-$\theta = \frac{j}{\text{slices}} \cdot 2\pi$
-$r(\phi) = r_1 + \phi \cdot (r_2 - r_1)$
-
-</div>
-<div>
-
-Die Umrechnung in kartesische Koordinaten erfolgt dann so:
-
-$x = r(\phi) \cdot \cos(\theta)$
-$y = h \cdot \phi$
-$z = r(\phi) \cdot \sin(\theta)$
-
-</div>
-</div>
-
----
-
-### Implementierung der **Koordinaten**-Berechnung in C#
-
-Die Berechnung wird auf zwei Schritte aufgeteilt. Der erste Schritt berechnet die Parameter `phi`, `theta` und `radius` aus den *Stack*- und *Slice*-Indizes, der zweite berechnet daraus die finalen Koordinaten.
-
-```csharp
-private (float x, float y, float z) ComputeCoordinate(int i, int j)
-{
-    // Schritt 1: Phi, Theta und Radius berechnen
-
-    float phi = i / (float)Stacks;
-    float theta = (float)Math.PI * 2 / Slices * j;
-    float radius = Radius1 + phi * (Radius2 - Radius1);
-
-    // Schritt 2: Koordinaten berechnen
-
-    float x = radius * (float)Math.Cos(theta);
-    float y = Length * phi;
-    float z = radius * (float)Math.Sin(theta);
-
-    return (x, y, z);
-}
-```
-
----
-
-<div class="columns">
-<div class="two">
-
-### Berechnung der Zylinder-**Normalen**
-
-Der Normalenvektor für die Mantelfläche ist entscheidend für die korrekte Beleuchtung, da er bestimmt, wie Licht von der Oberfläche reflektiert wird. Er muss senkrecht auf der Oberfläche stehen.
-
-- Für einen **perfekten Zylinder** ($r_1 = r_2$) ist die Normale einfach ein Vektor, der vom Mittelpunkt der Y-Achse nach außen zeigt. Die Y-Komponente ist 0.
-- Für einen **Kegel oder Kegelstumpf** ist die Normale geneigt. Die Neigung hängt vom Verhältnis der Radien-Differenz zur Höhe ab.
-
-Die Herleitung des Normalenvektors erfolgt geometrisch über einen 2D-Querschnitt.
-
-</div>
-<div>
-
-![width:1000px](./Diagramme/Zylindernormale%20-%20Querschnitt%20XY.svg)
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div class="two">
-
-### Herleitung der Zylinder-Normalen in **2D**
-
-Die Herleitung erfolgt über einen 2D-Querschnitt in der XY-Ebene (für $\theta=0$). Die Mantelfläche wird hier zu einer geraden Linie.
-
-1.  **Eckpunkte der Linie**: Die Linie verläuft vom Punkt $P_1 = (r_1, 0)$ zum Punkt $P_2 = (r_2, h)$.
-2.  **Richtungsvektor der Linie**: Der Vektor entlang der Linie ist $\vec{v} = P_2 - P_1 = \begin{pmatrix} r_2 - r_1 \\ h \end{pmatrix}$.
-3.  **Normalenvektor in 2D**: Ein Vektor, der senkrecht auf $\vec{v}$ steht, ist der Normalenvektor $\vec{n}_{2D}$. Man erhält ihn durch Vertauschen der Komponenten und Negieren einer davon.
-
-    $\vec{n} = \begin{pmatrix} h \\ -(r_2 - r_1) \end{pmatrix} = \begin{pmatrix} h \\ r_1 - r_2 \end{pmatrix}$
-
-</div>
-<div>
-
-![width:1000px](./Diagramme/Zylindernormale%20-%20Normalenvektor%20XY.svg)
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div class="two">
-
-### Herleitung der Zylinder-Normalen in **3D**
-
-Die 3D-Normale $\vec{P}_\theta$ entsteht durch Rotation des 2D-Normalenvektors $\vec{n}$ um die Y-Achse.
-
-- Der 2D-Vektor $\vec{n} = \begin{pmatrix} n_x \\ n_y \end{pmatrix} = \begin{pmatrix} h \\ r_1 - r_2 \end{pmatrix}$ liegt in der XY-Ebene.
-- Bei der Rotation um die Y-Achse bleibt die Y-Komponente unverändert.
-- Die X-Komponente $n_x$ wird zur radialen Komponente in der XZ-Ebene.
-
-**Zusammensetzung des 3D-Vektors:**
-
-<div class="columns">
-<div>
-
-$P_x = n_x \cdot \cos(\theta) = h \cdot \cos(\theta)$
-$P_y = n_y = r_1 - r_2$
-$P_z = n_x \cdot \sin(\theta) = h \cdot \sin(\theta)$
-
-</div>
-<div>
-
-$\implies \vec{P}_\theta = \begin{pmatrix} h \cdot \cos(\theta) \\ r_1 - r_2 \\ h \cdot \sin(\theta) \end{pmatrix}$
-
-</div>
-</div>
-
-</div>
-<div>
-
-![width:1000px](./Diagramme/Zylindernormale%20-%20Normalenvektor%20XZ.svg)
-
-</div>
-</div>
-
----
-
-### Implementierung der **Normalen**-Berechnung in C#
-
-Die Implementierung berechnet den Normalenvektor basierend auf der Formel, normalisiert ihn und gibt das Ergebnis zurück. Der `theta`-Winkel wird aus dem *Slice*-Index `j` berechnet.
-
-```csharp
-private (float nx, float ny, float nz) ComputeNormal(int j)
-{
-    // Schritt 1: Berechne den Theta-Winkel
-    float theta = (float)Math.PI * 2 / slices * j;
-
-    // Schritt 2: Berechne den unnormalisierten Normalenvektor
-    float nx = Length * (float)Math.Cos(theta);
-    float ny = Radius1 - Radius2;
-    float nz = Length * (float)Math.Sin(theta);
-
-    // Schritt 3: Normalisiere den Vektor
-    float norm = (float)Math.Sqrt(nx * nx + ny * ny + nz * nz);
-
-    return (nx / norm, ny / norm, nz / norm);
-}
-```
-
----
-
-### Darstellung eines **Zylinder** mit unterschiedlichen Einstellungen
+### Darstellung eines **Zylinders** mit unterschiedlichen Einstellungen
 
 Der folgende *Screenshot* zeigt Zylinderdarstellungen mit unterschiedlichen Einstellungen:
 
 ![](../../Quellen/WS25/BeispielZylinder3D/Screenshot.png)
+
+> [!NOTE]
+> Die analytische 2D-Querschnitts- und 3D-Rotationsherleitung der Zylinder- und Kegelnormalen sowie deren C#-Berechnung finden Sie im Anhangsdokument [Folien_Anhang_3D_Normalen.md](./Folien_Anhang_3D_Normalen.md).
+
+---
+
+### Fertige Geometriegeneratoren: `GeometryFactory`
+
+In der industriellen Simulationspraxis leitet man Meshes nicht manuell ab, sondern nutzt parametrische Generatoren (`GeometryFactory`):
+
+```csharp
+namespace SimulationEngine.Graphics3D
+{
+    public static class GeometryFactory
+    {
+        public static Volume CreateCylinder(float radius, float height, int slices = 32)
+            => new Cylinder("Cylinder", radius, radius, height, slices);
+
+        public static Volume CreateSphere(float radius, int slices = 32, int stacks = 16)
+            => new Sphere("Sphere", radius, slices, stacks);
+
+        public static Volume CreateBox(float sx, float sy, float sz)
+            => new Cube("Box", sx, sy, sz);
+    }
+}
+```
+
+- **Vorteil**: Kapselt vorberechnete Vertex- und Normalendaten für Standardkörper.
+- Erlaubt die volle Konzentration auf **Szenengraph-Architektur und Kinematik**.
 
 ---
 
@@ -1549,7 +1200,100 @@ _scene = new Scene(Color.WHITE, Color.DARKGRAY, root);
 
 ---
 
-## 5.3: Interaktive Kameraführung
+## 5.3: Mechatronische Anwendung: Kinematische Ketten & Robotik
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Serielle Kinematik und Roboterachsen im Szenengraphen
+- Hierarchische Transformationen (Basis $\to$ Achse 1 $\to$ Arm 1 $\to$ Achse 2 $\to$ Greifer)
+- Automatische Vorwärtskinematik über den Matrix-Stack
+- C#-Implementierung eines mechatronischen Knickarm-Roboters
+
+---
+
+<div class="columns">
+<div>
+
+### Serielle Kinematik im Szenengraphen
+
+In der Robotik und Mechatronik (z.B. KUKA, ABB, Fanuc, TwinCAT Kinematics) besteht ein Roboter aus einer Kette starrer Glieder (*Links*) und beweglicher Gelenke (*Joints*):
+
+- Jedes Gelenk $i$ bewegt alle nachfolgenden Glieder $i+1 \dots n$.
+- Die Position des Greifers (**Tool Center Point, TCP**) ist das Ergebnis der Verkettung aller Achsen.
+- Ein **Szenengraph** bildet diese Eltern-Kind-Beziehung perfekt und baumförmig ab!
+
+</div>
+<div>
+
+```
+BaseNode (Säule)
+ └── Rotate (Achse 1: Yaw um Y)
+      └── Arm1Node (Zylinder L1)
+           └── Translate (Armlänge L1)
+                └── Rotate (Achse 2: Pitch um Z)
+                     └── Arm2Node (Zylinder L2)
+                          └── ToolCenterPoint (Greifer)
+```
+
+</div>
+</div>
+
+---
+
+### C#-Implementierung: Kinematische Kette
+
+```csharp
+// 1. Basis des Roboters (Säule am Boden)
+Group robot = new Group("RobotBase");
+robot.Add(GeometryFactory.CreateCylinder(radius: 0.3f, height: 0.5f));
+
+// 2. Drehachse 1 (Yaw: Rotation um vertikale Y-Achse)
+Group axis1 = new Group("Axis1");
+axis1.Transforms.Add(new Rotate(angle: joint1Angle, 0, 1, 0));
+axis1.Transforms.Add(new Translate(0, 0.5f, 0)); // Auf Sockel platzieren
+axis1.Add(GeometryFactory.CreateBox(0.4f, 0.4f, 0.4f));
+
+// 3. Unterarm (Arm 1) mit Nickachse 2 (Pitch: Rotation um Z-Achse)
+Group arm1 = new Group("Arm1");
+arm1.Transforms.Add(new Rotate(angle: joint2Angle, 0, 0, 1));
+arm1.Add(GeometryFactory.CreateCylinder(radius: 0.15f, height: 2.0f));
+
+// 4. Oberarm (Arm 2) an der Spitze von Arm 1 anhängen (L = 2.0)
+Group arm2 = new Group("Arm2");
+arm2.Transforms.Add(new Translate(0, 2.0f, 0));
+arm2.Transforms.Add(new Rotate(angle: joint3Angle, 0, 0, 1));
+arm2.Add(GeometryFactory.CreateCylinder(radius: 0.1f, height: 1.5f));
+
+arm1.Add(arm2); axis1.Add(arm1); robot.Add(axis1);
+```
+
+---
+
+<div class="columns">
+<div>
+
+### Vorwärtskinematik & Matrix-Stack
+
+Die globale Pose des Greifers $\mathbf{T}_{\text{TCP}}$ berechnet sich durch Verkettung homogener Transformationsmatrizen:
+
+$$\mathbf{T}_{\text{TCP}} = \mathbf{T}_{\text{Base}} \cdot \mathbf{R}_1(\theta_1) \cdot \mathbf{T}_1 \cdot \mathbf{R}_2(\theta_2) \cdot \mathbf{T}_2$$
+
+- Durch `gl.PushMatrix()` und `gl.PopMatrix()` während der Baumtraversierung wird der ModelView-Matrix-Stack automatisch akkumuliert.
+- **Vorteil:** Die Visualisierung berechnet die Vorwärtskinematik implizit ohne manuelle Matrixmultiplikation!
+
+</div>
+<div>
+
+> [!TIP]
+> **Industrie-Standard (Denavit-Hartenberg):**  
+> Genau wie in TwinCAT Kinematics, ROS (URDF-Beschreibungen) oder MATLAB Simscape Multibody folgt die 3D-Szene dem Prinzip serieller Koordinatenvererbung. Verändert die Steuerung den Winkel von Achse 1, bewegen sich alle abhängigen Armsegmente und der Greifer automatisch physikalisch exakt mit.
+
+</div>
+</div>
+
+---
+
+## 5.4: Interaktive Kameraführung
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -1789,5 +1533,5 @@ private void OnMouseWheel(object sender, MouseWheelEventArgs e)
 - **Projektionsarten**:
   - `glOrtho`: Quaderförmiges Sichtvolumen mit parallelen Strahlen. Maßhaltig ohne Tiefenverzerrung für CAD und technische Ansichten.
   - `gluPerspective`: Pyramidenstumpf (Frustum) mit konvergierenden Strahlen. Perspektivische Tiefenverkürzung für realistische 3D-Simulationen und Digitale Zwillinge.
-- **Szenengraph**: Hierarchische Datenstruktur zur Verwaltung von Objekten, Geometrien und Transformationen mittels Matrix-Stack (`gl.PushMatrix` / `gl.PopMatrix`).
+- **Szenengraph & Kinematik**: Hierarchische Datenstruktur zur Verwaltung von Objekten, Geometrien (`GeometryFactory`) und seriellen Roboterkinematiken mittels Matrix-Stack (`gl.PushMatrix` / `gl.PopMatrix`).
 - **Interaktive Kameraführung**: Eine `OrbitCamera` auf Basis von Kugelkoordinaten ($\theta, \phi, r$) erlaubt intuitive 3D-Navigation per Maus über `gl.LookAt`.

@@ -20,6 +20,7 @@ math: mathjax
 - 8.3: Beispiel: Ungedämpftes Federpendel
 - 8.4: Softwarearchitektur für Simulation
 - 8.5: Lösungsalgorithmen für Simulation
+- 8.6: Höhere Integrationsverfahren (Heun & Runge-Kutta 4)
 
 ---
 
@@ -422,19 +423,31 @@ $$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k
 
 ---
 
-### Vertikaler Wurf: Numerische Lösung (**Impliziter Euler**)
+### Vertikaler Wurf: Numerische Lösung (**Semi-Impliziter Euler**)
 
-**Implizite Euler-Formel:**
-$$ x_{k+1} = x_k + h \cdot f(x_{k+1}) $$
+Aktualisiert man zuerst die Geschwindigkeit und nutzt den neuen Wert für den Ort:
 
-**Aufgeteilt in Komponenten:**
-$$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k \end{pmatrix} + h \cdot \begin{pmatrix} v_{k+1} \\ -g \end{pmatrix} $$
+$$ v_{k+1} = v_k - h \cdot g $$
+$$ y_{k+1} = y_k + h \cdot v_{k+1} $$
 
-**Das ergibt zwei Gleichungen:**
-1.  $y_{k+1} = y_k + h \cdot v_{k+1}$
-2.  $v_{k+1} = v_k - h \cdot g$
+**Mathematische Einordnung:**
+- Dies ist der **semi-implizite Euler** (auch bekannt als **Euler-Cromer**-Verfahren).
+- Die Geschwindigkeit wird explizit aktualisiert, der Ort hingegen semi-implizit mit der bereits vorauseilenden Geschwindigkeit $v_{k+1}$.
+- Beim freien Fall entkoppeln die Gleichungen, da die Erdbeschleunigung $g$ ortsunabhängig ist.
 
-Hier ist es einfach: Wir können zuerst $v_{k+1}$ berechnen und das Ergebnis dann in die erste Gleichung einsetzen.
+---
+
+### Symplektische Eigenschaft & Phasenraumvolumenerhaltung
+
+Warum ist Euler-Cromer in der mechatronischen Simulation so populär?
+
+- **Phasenraumvolumenerhaltung (Satz von Liouville):**
+  Die Jacobi-Matrix $\mathbf{J}$ der Transformation $(y_k, v_k) \mapsto (y_{k+1}, v_{k+1})$ erfüllt:
+  $$\det(\mathbf{J}) = \det \begin{pmatrix} 1 & h \\ 0 & 1 \end{pmatrix} = 1 \cdot 1 - 0 \cdot h \equiv 1$$
+- **Kontrast zum expliziten und echten impliziten Euler:**
+  - **Expliziter Euler:** $\det(\mathbf{J}) > 1$ $\implies$ führt künstlich Energie zu (System schaukelt auf).
+  - **Echter Impliziter Euler:** $\det(\mathbf{J}) < 1$ $\implies$ erzeugt künstliche numerische Dämpfung.
+  - **Euler-Cromer (symplektisch):** $\det(\mathbf{J}) \equiv 1$ $\implies$ volumenerhaltend! Die Energie oszilliert stabil um einen Schatten-Hamiltonian $\tilde{H} = H + \mathcal{O}(h)$ ohne Drift.
 
 ---
 
@@ -453,44 +466,45 @@ var v_k = 0.0;
 var y_kp1 = y_k + h * v_k;
 var v_kp1 = v_k - h * g;
 ```
-- Sehr einfach zu berechnen.
+- Standard explizit (Forward Euler).
+- Veraltete Geschwindigkeit $v_k$ für $y_{k+1}$.
 
 </div>
 <div class="two">
 
-**Impliziter Euler**
+**Semi-Impliziter Euler (Euler-Cromer)**
 ```csharp
 // Zustand (y, v) zum Zeitpunkt k
 var y_k = 100.0;
 var v_k = 0.0;
 
-// Berechnung für k+1
+// Berechnung für k+1 (v zuerst!)
 var v_kp1 = v_k - h * g;
 var y_kp1 = y_k + h * v_kp1;
 ```
-- In diesem speziellen Fall auch sehr einfach.
-- Man beachte die Reihenfolge der Berechnungen!
+- Symplektischer Integrator erster Ordnung.
+- Neue Geschwindigkeit $v_{k+1}$ für $y_{k+1}$.
 
 </div>
 </div>
 
-Interessanterweise liefert die implizite Methode für die Geschwindigkeit exakt das gleiche Ergebnis wie die explizite Methode, da $\dot{v} = -g$ eine Konstante ist. Für die Position ergibt sich jedoch ein Unterschied.
+Die Geschwindigkeit ist identisch, da $\dot{v} = -g$ konstant ist. Bei der Position nutzt Euler-Cromer bereits die Geschwindigkeit am Intervallende.
 
 ---
 
 ### Genauigkeit der Euler-Methoden
 
-Vergleichen wir die numerischen Ergebnisse mit der analytischen Lösung.
+Vergleichen wir die numerischen Ergebnisse mit der analytischen Lösung ($t = 0{,}1\,\text{s}$):
 
-**Analytische Lösung nach 0.1s:**
-- $v(0.1) = 0 - 9.81 \cdot 0.1 = -0.981\,m/s$
-- $y(0.1) = 100 + 0 \cdot 0.1 - 0.5 \cdot 9.81 \cdot (0.1)^2 = 99.95095\,m$
+**Analytische Lösung nach $0{,}1\,\text{s}$:**
+- $v(0.1) = 0 - 9{,}81 \cdot 0{,}1 = -0{,}981\,\text{m/s}$
+- $y(0.1) = 100 + 0 \cdot 0{,}1 - 0{,}5 \cdot 9{,}81 \cdot (0{,}1)^2 = 99{,}95095\,\text{m}$
 
-**Numerische Ergebnisse für $y_1$ (bei $t=0.1s$):**
-- **Expliziter Euler:** $y_1 = 100\,m$ (Fehler: -0.049 m)
-- **Impliziter Euler:** $y_1 = 100 + 0.1 \cdot (-0.981) = 99.9019\,m$ (Fehler: -0.049 m)
+**Numerische Ergebnisse für $y_1$ (bei $h = 0{,}1\,\text{s}$):**
+- **Expliziter Euler:** $y_1 = 100{,}0\,\text{m}$ (Fehler: $+0{,}04905\,\text{m}$)
+- **Semi-Impliziter Euler:** $y_1 = 100 + 0{,}1 \cdot (-0{,}981) = 99{,}9019\,\text{m}$ (Fehler: $-0{,}04905\,\text{m}$)
 
-Beide Methoden haben einen lokalen Fehler der Ordnung $O(h^2)$ und einen globalen Fehler der Ordnung $O(h)$. Sie sind Methoden erster Ordnung.
+Beide Methoden haben einen lokalen Fehler der Ordnung $\mathcal{O}(h^2)$ und einen globalen Fehler der Ordnung $\mathcal{O}(h)$ (Verfahren 1. Ordnung).
 
 ---
 
@@ -611,14 +625,14 @@ Dieses Verhalten ist typisch für den expliziten Euler bei oszillierenden System
 
 ### Federpendel: Numerische Lösung (Impliziter Euler)
 
-**Implizite Euler-Formel:** $x_{k+1} = x_k + h \cdot f(x_{k+1})$
+**Implizite Euler-Formel:** $\mathbf{x}_{k+1} = \mathbf{x}_k + h \cdot \mathbf{f}(\mathbf{x}_{k+1})$
 $$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k \end{pmatrix} + h \cdot \begin{pmatrix} v_{k+1} \\ -\frac{k}{m} y_{k+1} \end{pmatrix} $$
 
-**Gleichungssystem:**
-1.  $y_{k+1} = y_k + h \cdot v_{k+1}$
-2.  $v_{k+1} = v_k - h \frac{k}{m} y_{k+1}$
+**Gekoppeltes lineares Gleichungssystem:**
+1.  $y_{k+1} - h \cdot v_{k+1} = y_k$
+2.  $\frac{k \cdot h}{m} y_{k+1} + v_{k+1} = v_k$
 
-Dies ist ein lineares Gleichungssystem für die unbekannten Größen $y_{k+1}$ und $v_{k+1}$.
+Im Kontrast zum vertikalen Wurf sind hier beide Zustände wechselseitig gekoppelt: Die Berechnung erfordert in jedem Zeitschritt die Lösung eines Gleichungssystems (z.B. analytisch oder iterativ via **Banach-Fixpunktiteration**).
 
 
 ---
@@ -1174,14 +1188,14 @@ Dieser Solver erweitert den `EulerExplicitSolver`, um algebraische Schleifen auf
 
 ### **Lösung** von algebraischen Schleifen
 
-Der `EulerExplicitLoopSolver` löst die Schleife durch eine iterative Methode (Fixpunkt-Iteration).
+Der `EulerExplicitLoopSolver` löst die Schleife durch eine iterative Methode (**Banach-Fixpunktiteration**).
 
 1.  Wenn eine Schleife erkannt wird (kein Fortschritt in `open`), wähle einen Block aus der Schleife.
 2.  "Rate" den Wert für einen seiner noch nicht berechneten Eingänge (z.B. setze ihn auf 0). Markiere diesen als `InputGuessMaster`.
 3.  Berechne die Schleife mit diesem geratenen Wert.
 4.  Am Ende der Schleife wird der "geratene" Eingang selbst einen neuen Wert vom Vorgängerblock erhalten.
 5.  Vergleiche den neuen Wert mit dem geratenen Wert. Die Differenz ist der Fehler.
-6.  Wenn der Fehler zu groß ist, passe den geratenen Wert an (z.B. mit einer Lernrate) und wiederhole ab Schritt 3.
+6.  Wenn der Fehler zu groß ist, passe den geratenen Wert mit dem Relaxationsfaktor $\alpha = 0{,}1$ an:
     `guess = guess + (new_value - guess) * learning_rate`
 7.  Wenn der Fehler klein genug ist, ist die Schleife gelöst.
 
@@ -1272,7 +1286,9 @@ Diese transzendente Gleichung kann nicht analytisch nach $V_{out}$ umgeformt wer
 
 **Konsequenz für die Simulation:**
 
-Die Auflösung der algebraischen Schleife erfordert in jedem Zeitschritt ein numerisches Verfahren (wie das Newton-Raphson-Verfahren oder eine Fixpunkt-Iteration), um den Arbeitspunkt ($V_{out}$, $I$) zu finden, der beide Gleichungen (Maschenregel und Diodenkennlinie) erfüllt.
+Die Auflösung der algebraischen Schleife erfordert in jedem Zeitschritt ein numerisches Iterationsverfahren:
+- Unser Lehrframework nutzt eine **gedämpfte Banach-Fixpunktiteration (Picard-Iteration)** mit Relaxationsfaktor $\alpha = 0{,}1$.
+- Im industriellen Umfeld (Simulink, SPICE) wird für solche stark nichtlinearen Kennlinien das schnellere, quadratisch konvergente **Newton-Raphson-Verfahren** eingesetzt.
 
 ---
 
@@ -1323,12 +1339,12 @@ $$ m \cdot a = F_{Antrieb} - c \cdot v^2 - m_{Zusatz} \cdot a $$
 
 Implementiert den impliziten Euler-Algorithmus.
 
-- Die `Solve`-Methode enthält eine zusätzliche innere Schleife.
-- In jedem Zeitschritt wird iterativ nach der Ableitung $\dot{x}_{k+1}$ gesucht, die die implizite Euler-Gleichung erfüllt.
-- Dies macht den Solver numerisch stabiler, aber auch rechenintensiver.
-- Kann in seiner Basisimplementierung keine algebraischen Schleifen lösen.
-- Die Implementierung basiert auf einem einfachen Fixpunktverfahren.
-- Das Verfahren ist einfach, aber nicht besonders schnell und robust.
+- Die `Solve`-Methode enthält eine innere Iterationsschleife.
+- In jedem Zeitschritt wird iterativ nach der Ableitung $\dot{\mathbf{x}}_{k+1}$ gesucht, die $\mathbf{x}_{k+1} = \mathbf{x}_k + h \dot{\mathbf{x}}_{k+1}$ erfüllt.
+- **Lösungsverfahren:** Gedämpfte **Banach-Fixpunktiteration (Picard-Iteration)** mit Relaxationsfaktor $\alpha = \text{ImplicitLearningRate} = 0{,}1$:
+  $$\dot{\mathbf{x}}^{(m+1)} = \dot{\mathbf{x}}^{(m)} + \alpha \cdot \left(\mathbf{f}(t_{k+1}, \mathbf{x}^{(m)}) - \dot{\mathbf{x}}^{(m)}\right)$$
+- Konvergiert nach dem Banachschen Fixpunktsatz linear bei Kontraktion ($L \cdot h < 1$).
+- Benötigt im Gegensatz zum Newton-Raphson-Verfahren keine Jacobi-Matrix $\mathbf{J}$.
 
 </div>
 <div>
@@ -1389,12 +1405,224 @@ Kombiniert den impliziten Solver mit der Auflösung von algebraischen Schleifen.
 
 ---
 
+## 8.6: Höhere Integrationsverfahren (Heun & Runge-Kutta 4)
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Motivation von Mehrstufenverfahren (Ordnung vs. Rechenaufwand)
+- Das Prädiktor-Korrektor-Verfahren von Heun (RK2)
+- Das Butcher-Tableau als universelle Charakterisierung
+- Das klassische Runge-Kutta-Verfahren 4. Ordnung (RK4)
+- Dahlquist-Stabilitätsanalyse & Verhalten ungedämpfter Oszillatoren
+- Numerischer Konvergenzvergleich (Doppelt-logarithmischer Plot)
+- C#-Implementierung: `RungeKutta4Solver : Solver`
+
+---
+
+### Motivation für Mehrstufenverfahren
+
+Warum reicht der explizite Euler für mechatronische Simulationen meist nicht aus?
+
+- **Grenze der Verfahren 1. Ordnung:**
+  - Expliziter Euler besitzt globale Konvergenzordnung $\mathcal{O}(h^1)$.
+  - Um die Genauigkeit um den Faktor 10 zu verbessern, muss der Zeitschritt verzehnfacht verkleinert werden $\implies$ $10\times$ mehr Rechenschritte.
+- **Die Kernidee von Mehrstufenverfahren (Runge-Kutta):**
+  - Statt nur am Intervallanfang $t_k$ eine einzige Steigung zu berechnen, werden innerhalb des Schritts $[t_k, t_k + h]$ mehrere **Stützstellen (Stufen)** abgetastet.
+  - Eine gewichtete Mittelung eliminiert führende Taylor-Fehlerterme.
+  - **Vorteil:** Signifikant größere Zeitschritte bei identischer oder drastisch höherer Genauigkeit!
+
+---
+
+### Das Verfahren von Heun (RK2)
+
+Das Verfahren von Heun ist ein zweistufiges **Prädiktor-Korrektor-Verfahren**:
+
+- **Stufe 1 (Euler-Prädiktor):**
+  Steigung am Intervallanfang berechnen und Zwischenzustand schätzen:
+  $$\mathbf{k}_1 = \mathbf{f}(t_k, \mathbf{x}_k)$$
+  $$\mathbf{x}_{\text{pred}} = \mathbf{x}_k + h \cdot \mathbf{k}_1$$
+
+- **Stufe 2 (Korrektor via Trapezmittelung):**
+  Steigung am Intervallende auswerten und beide Steigungen mitteln:
+  $$\mathbf{k}_2 = \mathbf{f}(t_k + h, \mathbf{x}_{\text{pred}})$$
+  $$\mathbf{x}_{k+1} = \mathbf{x}_k + \frac{h}{2} (\mathbf{k}_1 + \mathbf{k}_2)$$
+
+- **Fehlerordnung:** Lokal $\mathcal{O}(h^3)$, globaler Verfahrensfehler $\mathcal{O}(h^2)$ (Verfahren 2. Ordnung).
+
+---
+
+### Das Butcher-Tableau
+
+Ein allgemeines $s$-stufiges explizites Runge-Kutta-Verfahren lautet:
+$$\mathbf{k}_i = \mathbf{f}\left(t_k + c_i h, \ \mathbf{x}_k + h \sum_{j=1}^{i-1} a_{ij} \mathbf{k}_j\right), \quad \mathbf{x}_{k+1} = \mathbf{x}_k + h \sum_{i=1}^s b_i \mathbf{k}_i$$
+
+Dargestellt im standardisierten **Butcher-Tableau**:
+
+<div class="columns top">
+<div class="two">
+
+**Allgemeines Butcher-Schema**
+$$\begin{array}{c|c}
+\mathbf{c} & \mathbf{A} \\
+\hline
+& \mathbf{b}^T
+\end{array}
+\iff
+\begin{array}{c|cccc}
+0 & 0 & 0 & \dots & 0 \\
+c_2 & a_{21} & 0 & \dots & 0 \\
+\vdots & \vdots & \ddots & \ddots & \vdots \\
+c_s & a_{s1} & \dots & a_{s,s-1} & 0 \\
+\hline
+& b_1 & b_2 & \dots & b_s
+\end{array}$$
+
+</div>
+<div class="two">
+
+**Verfahren von Heun (RK2)**
+$$\begin{array}{c|cc}
+0 & 0 & 0 \\
+1 & 1 & 0 \\
+\hline
+& 1/2 & 1/2
+\end{array}$$
+
+- $c_i$: Stützstellen im Zeitschritt
+- $a_{ij}$: Kopplungsgewichte der Stufen
+- $b_i$: Integrationsgewichte
+
+</div>
+</div>
+
+---
+
+### Klassisches Runge-Kutta 4. Ordnung (RK4)
+
+Das Standard-Arbeitspferd der Ingenieursimulation (TwinCAT, Simulink, FMI):
+
+- **Vier Stufen (Simpson-Quadratur-Prinzip):**
+  $$\mathbf{k}_1 = \mathbf{f}(t_k, \mathbf{x}_k)$$
+  $$\mathbf{k}_2 = \mathbf{f}\left(t_k + \frac{h}{2}, \mathbf{x}_k + \frac{h}{2} \mathbf{k}_1\right), \quad \mathbf{k}_3 = \mathbf{f}\left(t_k + \frac{h}{2}, \mathbf{x}_k + \frac{h}{2} \mathbf{k}_2\right)$$
+  $$\mathbf{k}_4 = \mathbf{f}(t_k + h, \mathbf{x}_k + h \mathbf{k}_3)$$
+
+- **Butcher-Tableau und Simpson-Zusammensetzung:**
+  $$\begin{array}{c|cccc}
+  0 & 0 & 0 & 0 & 0 \\
+  1/2 & 1/2 & 0 & 0 & 0 \\
+  1/2 & 0 & 1/2 & 0 & 0 \\
+  1 & 0 & 0 & 1 & 0 \\
+  \hline
+  & 1/6 & 1/3 & 1/3 & 1/6
+  \end{array}
+  \quad
+  \mathbf{x}_{k+1} = \mathbf{x}_k + \frac{h}{6} (\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4)$$
+- **Fehlerordnung:** Global $\mathcal{O}(h^4)$ (Halbierung $h \to h/2 \implies$ Fehler sinkt um Faktor 16!).
+
+---
+
+### Stabilitätsanalyse: Die Dahlquist-Testgleichung
+
+Zur Stabilitätsprüfung dient die lineare Testgleichung $\dot{x} = \lambda x$ mit $\lambda \in \mathbb{C}$:
+$$x_{k+1} = R(z) \cdot x_k, \quad z = \lambda \cdot h \in \mathbb{C}$$
+Das Stabilitätsgebiet $\mathcal{S}$ umfasst alle $z \in \mathbb{C}$, für die der Betrag $|R(z)| \le 1$ gilt:
+
+| Verfahren | Stabilitätsfunktion $R(z)$ | Ordnung | Reelles Stabilitätsintervall |
+| :--- | :--- | :---: | :--- |
+| **Expliziter Euler (RK1)** | $1 + z$ | 1 | $[-2{,}0 \ ; \ 0]$ |
+| **Heun (RK2)** | $1 + z + \frac{z^2}{2}$ | 2 | $[-2{,}0 \ ; \ 0]$ |
+| **Klassisches RK4** | $1 + z + \frac{z^2}{2} + \frac{z^3}{6} + \frac{z^4}{24}$ | 4 | $[-2{,}785 \ ; \ 0]$ |
+
+Reell negative Eigenwerte (gedämpfte Systeme) erfordern die Einhaltung dieser Schranken für den Zeitschritt $h$.
+
+---
+
+### Oszillatoren auf der Imaginärachse ($\lambda = \pm i\omega$)
+
+Beim ungedämpften Federpendel liegen die Eigenwerte rein imaginär: $\lambda = \pm i\omega_0$.
+Setzt man $z = i\beta$ mit $\beta = \omega_0 h > 0$ in die Stabilitätsfunktionen ein:
+
+- **Expliziter Euler:**
+  $$|R(i\beta)| = |1 + i\beta| = \sqrt{1 + \beta^2} > 1 \quad \forall \beta > 0$$
+  $\implies$ **Immer instabil!** Die Schwingung schaukelt sich unweigerlich künstlich auf.
+
+- **Heun (RK2):**
+  $$|R(i\beta)| = \left|1 - \frac{\beta^2}{2} + i\beta\right| = \sqrt{1 + \frac{\beta^4}{4}} > 1 \quad \forall \beta > 0$$
+  $\implies$ **Ebenfalls immer instabil!** Wächst langsamer als Euler, divergiert jedoch stets.
+
+- **Klassisches RK4:**
+  $$|R(i\beta)| \le 1 \quad \text{für} \quad |\beta| \le 2\sqrt{2} \approx 2{,}828$$
+  $\implies$ **Bedingt stabil!** Für $h \le \frac{2{,}828}{\omega_0}$ bleibt die Simulation ungedämpfter Schwingungen stabil!
+
+---
+
+### Konvergenzordnung im Vergleich (Log-Log-Plot)
+
+![bg right:55% width:650px](./Illustrationen/Solver_Konvergenzordnung.png)
+
+- **Doppelt-logarithmische Skala:**
+  $$\log_{10}(\text{Fehler}) = p \cdot \log_{10}(h) + C$$
+  Die Steigung der Kurven entspricht exakt der Konvergenzordnung $p$!
+- **Euler (Rot):** Steigung $p = 1$.
+- **Heun (Blau):** Steigung $p = 2$.
+- **RK4 (Grün):** Steigung $p = 4$.
+- Bei $h = 0{,}01\,\text{s}$ ist RK4 um mehr als **7 Zehnerpotenzen** präziser als der explizite Euler!
+
+---
+
+### C#-Implementierung: `RungeKutta4Solver` (Stufen)
+
+```csharp
+// Stufe 1: Steigung bei t
+CalculateOutputs(time);
+CalculateDerivatives(time);
+CopyDerivativesTo(_k1);
+
+// Stufe 2: Vorschritt mit k1 auf t + dt/2
+ApplyIntermediateStates(0.5 * timeStep, _k1);
+CalculateOutputs(time + 0.5 * timeStep);
+CalculateDerivatives(time + 0.5 * timeStep);
+CopyDerivativesTo(_k2);
+
+// Stufe 3: Vorschritt mit k2 auf t + dt/2
+ApplyIntermediateStates(0.5 * timeStep, _k2);
+CalculateOutputs(time + 0.5 * timeStep);
+CalculateDerivatives(time + 0.5 * timeStep);
+CopyDerivativesTo(_k3);
+```
+- Vier Stufen pro Zeitschritt; Hilfszustände werden isoliert im Blockgraphen berechnet.
+
+---
+
+### C#-Implementierung: `RungeKutta4Solver` (Finalisierung)
+
+```csharp
+// Stufe 4: Vorschritt mit k3 auf t + dt
+ApplyIntermediateStates(timeStep, _k3);
+CalculateOutputs(time + timeStep);
+CalculateDerivatives(time + timeStep);
+CopyDerivativesTo(_k4);
+
+// Finale Zusammensetzung nach Simpson-Regel
+foreach (var b in Blocks)
+{
+    for (int i = 0; i < b.ContinuousStates.Count; i++)
+    {
+        ContinuousStates[b][i] = _statesBackup[b][i] + (timeStep / 6.0) * (
+            _k1[b][i] + 2.0 * _k2[b][i] + 2.0 * _k3[b][i] + _k4[b][i]
+        );
+    }
+}
+```
+- Gewichtet die Stufen exakt mit $\frac{1}{6}(1 + 2 + 2 + 1)$ und sichert globale Ordnung $\mathcal{O}(h^4)$.
+
+---
+
 # Zusammenfassung Kapitel 8
 
 - **Kontinuierliche dynamische Modelle** beschreiben Systeme mit kontinuierlicher Zeitentwicklung mittels **Differentialgleichungen**.
-- Die **Zustandsraumdarstellung** ($\dot{x}=f(x,u), y=g(x,u)$) ist eine Standardform.
-- **Analytische Lösungen** sind exakt, aber selten findbar. **Numerische Lösungen** sind Approximationen und universell einsetzbar.
-- **Expliziter Euler** ist einfach, aber oft instabil.
-- **Impliziter Euler** ist stabil, erfordert aber die Lösung von (oft nichtlinearen) Gleichungssystemen in jedem Schritt.
-- Die **Schrittweite `h`** ist ein kritischer Parameter, der Genauigkeit und Rechenaufwand steuert.
-- **S-Funktionen** bieten eine modulare Architektur, um komplexe Systeme zu modellieren, die von einem zentralen **Solver** gelöst werden.
+- Die **Zustandsraumdarstellung** ($\dot{\mathbf{x}}=\mathbf{f}(\mathbf{x},\mathbf{u})$) ist der mathematische Standard.
+- **Semi-impliziter Euler (Euler-Cromer)** ist symplektisch ($\det(\mathbf{J})\equiv 1$) und erhält die Energie ungedämpfter Oszillatoren im Mittel.
+- **Banach-Fixpunktiteration** löst implizite Gleichungen und algebraische Schleifen iterativ ohne Berechnung einer Jacobi-Matrix.
+- **Mehrstufenverfahren (Heun RK2, klassisches RK4)** bieten dramatisch höhere Genauigkeit ($\mathcal{O}(h^2)$, $\mathcal{O}(h^4)$).
+- **Stabilität auf der Imaginärachse:** Erst ab RK4 können ungedämpfte Schwingungssysteme mit expliziten Verfahren stabil integriert werden ($h\omega_0 \le 2\sqrt{2}$).

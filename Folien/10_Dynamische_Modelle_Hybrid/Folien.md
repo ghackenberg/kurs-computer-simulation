@@ -203,6 +203,66 @@ Abfolge von Freiflugphasen und Kollisionsereignissen:
 
 ---
 
+### Das Zeno-Phänomen (Zeno-Effekt)
+
+Beim hüpfenden Ball verringern sich Sprunghöhe $h_k$ und Flugdauer $\Delta t_k$ mit jedem Aufprall exponentiell (Stoßzahl $e \in [0, 1)$):
+
+$$\Delta t_k = 2 \frac{v_k}{g} = 2 \frac{v_0}{g} e^k$$
+
+<div class="columns">
+<div>
+
+**Mathematische Zeno-Grenzzeit:**
+
+Die Summe aller unendlich vielen Hüpfzeiten konvergiert als **geometrische Reihe** gegen eine endliche Zeit $t_\infty$:
+
+$$t_\infty = t_0 + \sum_{k=0}^{\infty} \Delta t_k = t_0 + \frac{2 v_0}{g} \sum_{k=0}^{\infty} e^k$$
+
+$$t_\infty = t_0 + \frac{2 v_0}{g (1 - e)} < \infty$$
+
+</div>
+<div>
+
+**Konsequenz für numerische Solver:**
+- Unendlich viele Ereignisse in endlicher Zeit!
+- Für $t \to t_\infty$ strebt $\Delta t_k \to 0$.
+- Der Solver löst unendlich viele Nulldurchgänge aus (**Chattering**).
+- **Simulationsuhr friert ein:** Der Solver kommt nicht über $t_\infty$ hinaus (*Zeno-Kollaps*).
+
+</div>
+</div>
+
+---
+
+### Auflösung des Zeno-Effekts: Sticking Mode
+
+In der physikalischen Realität geht der elastische Stoßkontakt bei geringer kinetischer Energie in einen **Haftkontakt** (*Sticking*) über:
+
+<div class="columns">
+<div>
+
+**Haftkontaktschwelle (Sticking Threshold):**
+Unterschreiten Aufprallgeschwindigkeit $|v^-|$ und Bodenabstand $|y|$ feste Toleranzschwellen:
+
+$$|v^-| < v_{\text{sticking}} \quad \text{und} \quad |y| < y_{\text{tol}}$$
+
+erzwingt der Hybridsolver einen **diskreten Moduswechsel** in den Haftkontakt (*Contact Mode*).
+
+</div>
+<div>
+
+**Gleichungen im Contact Mode:**
+
+$$y(t) \equiv 0, \quad v(t) \equiv 0, \quad \dot{v}(t) = 0$$
+
+- Die dynamische Integration des Balles wird deaktiviert ($a = 0$, Normalkraft kompensiert Schwerkraft).
+- **Vorteil:** Das Chattering bricht ab, und die Simulationszeit kann mit normalen Zeitschritten fortgeführt werden!
+
+</div>
+</div>
+
+---
+
 ![bg right](./Illustrationen/Abschnitt_2.jpg)
 
 ## 10.2: Fallbeispiel: Digitaler Sensor
@@ -911,31 +971,39 @@ Der Solver nutzt einen iterativen Prozess, um den genauen Zeitpunkt eines Ereign
 
 ---
 
-### Vereinfachte Logik im Solver
+### Grenzen der naiven Schrittweitenhalbierung
+
+In vereinfachten Lehr-Implementierungen wird bei Detektion eines Nulldurchgangs oft lediglich $\Delta t$ halbiert:
+
+```csharp
+while (zeroCrossingValue > Threshold && iteration++ < Limit) {
+    timeStep /= 2; ResetStates();
+    IntegrateContinuousStates(timeStep);
+    zeroCrossingValue = CalculateZeroCrossings(time + timeStep);
+}
+```
+
+**Mathematische & numerische Schwachstellen:**
+1. **Keine echte Bisektion:** Die Schleife testet $t + \frac{1}{2}\Delta t$, $t + \frac{1}{4}\Delta t$, $t + \frac{1}{8}\Delta t$. Liegt die Nullstelle jedoch bei $t + 0{,}75\Delta t$, entfernt sich der Solver bei jeder Iteration weiter vom gesuchten Punkt!
+2. **Vorzeichen-Asymmetrie:** Die Bedingung `zeroCrossingValue > Threshold` versagt vollständig, wenn sich die Funktion von unten ($z < 0$) der Null nähert oder ins Negative wechselt.
+
+---
 
 <div class="columns">
 <div class="three">
 
-```csharp
-timeStep = timeStepMax * 2; RememberStates();
+### Echte Vorzeichenwechsel-Bisektion
 
-while (zeroCrossingValue > Threshold && iteration++ < Limit)
-{
-    timeStep /= 2; ResetStates();
+Ein Nulldurchgang liegt exakt dann vor, wenn an den Intervallgrenzen ein **Vorzeichenwechsel** auftritt:
 
-    IntegrateContinuousStates(timeStep);
+$$\text{sgn}(z(t_a)) \neq \text{sgn}(z(t_b)) \iff z(t_a) \cdot z(t_b) \le 0$$
 
-    CalculateOutputs(time + timeStep);
-
-    zeroCrossingValue = CalculateZeroCrossings(time + timeStep);
-}
-
-UpdateStates(time + timeStep);
-
-CalculateOutputs(time + timeStep);
-CalculateDerivatives(time + timeStep);
-CalculateZeroCrossings(time + timeStep);
-```
+**Bisektionsalgorithmus auf $[t_{\text{left}}, t_{\text{right}}]$:**
+1. Initialisiere $t_{\text{left}} = t_k$ und $t_{\text{right}} = t_k + \Delta t$.
+2. Berechne Mittelpunkt $t_{\text{mid}} = \frac{1}{2}(t_{\text{left}} + t_{\text{right}})$.
+3. Integriere bis $t_{\text{mid}}$ und evaluiere $z_{\text{mid}} = z(t_{\text{mid}})$.
+4. Falls $|z_{\text{mid}}| \le \varepsilon_z$ oder $(t_{\text{right}} - t_{\text{left}}) \le \varepsilon_t$: **Gefunden!**
+5. Falls $\text{sgn}(z_{\text{mid}}) == \text{sgn}(z_{\text{left}})$: Setze $t_{\text{left}} = t_{\text{mid}}$, andernfalls $t_{\text{right}} = t_{\text{mid}}$.
 
 </div>
 <div>
@@ -944,6 +1012,61 @@ CalculateZeroCrossings(time + timeStep);
 
 </div>
 </div>
+
+---
+
+### C#-Implementierung: Robuste Intervall-Bisektion
+
+```csharp
+// 1. Probesprung & Vorzeichenwechsel detektieren
+double zStart = CalculateZeroCrossings(time);
+IntegrateContinuousStates(timeStep);
+double zEnd = CalculateZeroCrossings(time + timeStep);
+
+if (Math.Sign(zStart) != Math.Sign(zEnd))
+{
+    double tLeft = time, tRight = time + timeStep;
+    double tMid = tRight, zMid = zEnd;
+    int iter = 0;
+
+    // 2. Echte Bisektion auf [tLeft, tRight]
+    while ((tRight - tLeft) > TimeTol && Math.Abs(zMid) > ZeroTol && iter++ < MaxIter)
+    {
+        tMid = 0.5 * (tLeft + tRight);
+        ResetStates();
+        IntegrateContinuousStates(tMid - time);
+        CalculateOutputs(tMid);
+        zMid = CalculateZeroCrossings(tMid);
+
+        if (Math.Sign(zMid) == Math.Sign(zStart)) tLeft = tMid;
+        else tRight = tMid;
+    }
+```
+
+---
+
+### C#-Implementierung: Zeno-Schwelle & Restschritt
+
+```csharp
+    // 3. Zeno-Abfangbedingung: Haftzustand bei geringer kinetischer Energie
+    if (Math.Abs(velocity) < StickingVelocityTol && Math.Abs(position) < ZeroTol)
+    {
+        EnterContactMode(); // Moduswechsel: v = 0, y = 0, a = 0
+    }
+    else
+    {
+        UpdateStates(tMid); // Diskretes Stoßereignis ausführen (v = -e * v)
+    }
+
+    // 4. Restliches Intervall [tMid, time + timeStep] fertig integrieren
+    double dtRemaining = (time + timeStep) - tMid;
+    if (dtRemaining > 1e-9)
+    {
+        IntegrateContinuousStates(dtRemaining);
+        CalculateOutputs(time + timeStep);
+    }
+}
+```
 
 ---
 

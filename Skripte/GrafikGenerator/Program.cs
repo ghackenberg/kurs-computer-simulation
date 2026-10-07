@@ -23,6 +23,7 @@ namespace GrafikGenerator
             GenerateQueuePlots(root);
             GenerateHeatmapPlot(root);
             GenerateSignalPlot(root);
+            GenerateConvergencePlot(root);
 
             Console.WriteLine("=== Alle Grafiken erfolgreich erzeugt ===");
         }
@@ -153,6 +154,133 @@ namespace GrafikGenerator
 
             var outFile = Path.Combine(targetDir, "ScottPlot_Signal_Example.png");
             plot.SavePng(outFile, 800, 450);
+            Console.WriteLine($"Erzeugt: {outFile}");
+        }
+
+        static void GenerateConvergencePlot(string root)
+        {
+            var targetDir = Path.Combine(root, "Folien", "08_Dynamische_Modelle_Kontinuierlich", "Illustrationen");
+            Directory.CreateDirectory(targetDir);
+
+            // Testmodell: Gedämpftes Federpendel d²x/dt² + 2*zeta*w0*dx/dt + w0²*x = 0
+            // mit w0 = 2*PI, zeta = 0.05
+            double w0 = 2.0 * Math.PI;
+            double zeta = 0.05;
+            double wd = w0 * Math.Sqrt(1.0 - zeta * zeta);
+            double tEnd = 1.0;
+
+            double ExactX(double t)
+            {
+                return Math.Exp(-zeta * w0 * t) * (Math.Cos(wd * t) + (zeta * w0 / wd) * Math.Sin(wd * t));
+            }
+
+            void Derivatives(double t, double[] x, double[] dxdt)
+            {
+                dxdt[0] = x[1];
+                dxdt[1] = -w0 * w0 * x[0] - 2.0 * zeta * w0 * x[1];
+            }
+
+            double[] hValues = [0.05, 0.025, 0.0125, 0.00625, 0.003125, 0.0015625];
+            double[] logH = new double[hValues.Length];
+            double[] logErrEuler = new double[hValues.Length];
+            double[] logErrHeun = new double[hValues.Length];
+            double[] logErrRk4 = new double[hValues.Length];
+
+            double exactEnd = ExactX(tEnd);
+
+            for (int i = 0; i < hValues.Length; i++)
+            {
+                double h = hValues[i];
+                logH[i] = Math.Log10(h);
+                int steps = (int)Math.Round(tEnd / h);
+
+                // 1. Expliziter Euler
+                double[] xE = [1.0, 0.0];
+                double[] dE = new double[2];
+                double t = 0;
+                for (int s = 0; s < steps; s++)
+                {
+                    Derivatives(t, xE, dE);
+                    xE[0] += h * dE[0];
+                    xE[1] += h * dE[1];
+                    t += h;
+                }
+                logErrEuler[i] = Math.Log10(Math.Max(1e-16, Math.Abs(xE[0] - exactEnd)));
+
+                // 2. Heun (RK2)
+                double[] xH = [1.0, 0.0];
+                double[] k1 = new double[2];
+                double[] k2 = new double[2];
+                double[] xTemp = new double[2];
+                t = 0;
+                for (int s = 0; s < steps; s++)
+                {
+                    Derivatives(t, xH, k1);
+                    xTemp[0] = xH[0] + h * k1[0];
+                    xTemp[1] = xH[1] + h * k1[1];
+                    Derivatives(t + h, xTemp, k2);
+                    xH[0] += 0.5 * h * (k1[0] + k2[0]);
+                    xH[1] += 0.5 * h * (k1[1] + k2[1]);
+                    t += h;
+                }
+                logErrHeun[i] = Math.Log10(Math.Max(1e-16, Math.Abs(xH[0] - exactEnd)));
+
+                // 3. RK4
+                double[] xR = [1.0, 0.0];
+                double[] rk1 = new double[2];
+                double[] rk2 = new double[2];
+                double[] rk3 = new double[2];
+                double[] rk4 = new double[2];
+                t = 0;
+                for (int s = 0; s < steps; s++)
+                {
+                    Derivatives(t, xR, rk1);
+
+                    xTemp[0] = xR[0] + 0.5 * h * rk1[0];
+                    xTemp[1] = xR[1] + 0.5 * h * rk1[1];
+                    Derivatives(t + 0.5 * h, xTemp, rk2);
+
+                    xTemp[0] = xR[0] + 0.5 * h * rk2[0];
+                    xTemp[1] = xR[1] + 0.5 * h * rk2[1];
+                    Derivatives(t + 0.5 * h, xTemp, rk3);
+
+                    xTemp[0] = xR[0] + h * rk3[0];
+                    xTemp[1] = xR[1] + h * rk3[1];
+                    Derivatives(t + h, xTemp, rk4);
+
+                    xR[0] += (h / 6.0) * (rk1[0] + 2.0 * rk2[0] + 2.0 * rk3[0] + rk4[0]);
+                    xR[1] += (h / 6.0) * (rk1[1] + 2.0 * rk2[1] + 2.0 * rk3[1] + rk4[1]);
+                    t += h;
+                }
+                logErrRk4[i] = Math.Log10(Math.Max(1e-16, Math.Abs(xR[0] - exactEnd)));
+            }
+
+            var plot = new Plot();
+            var sEuler = plot.Add.Scatter(logH, logErrEuler);
+            sEuler.LegendText = "Expliziter Euler (Steigung 1 ~ O(h¹))";
+            sEuler.Color = Colors.Crimson;
+            sEuler.LineWidth = 2.5f;
+            sEuler.MarkerSize = 8f;
+
+            var sHeun = plot.Add.Scatter(logH, logErrHeun);
+            sHeun.LegendText = "Heun / RK2 (Steigung 2 ~ O(h²))";
+            sHeun.Color = Colors.RoyalBlue;
+            sHeun.LineWidth = 2.5f;
+            sHeun.MarkerSize = 8f;
+
+            var sRk4 = plot.Add.Scatter(logH, logErrRk4);
+            sRk4.LegendText = "Runge-Kutta 4 (Steigung 4 ~ O(h⁴))";
+            sRk4.Color = Colors.SeaGreen;
+            sRk4.LineWidth = 2.5f;
+            sRk4.MarkerSize = 8f;
+
+            plot.Title("Konvergenzordnung numerischer Solver (Log-Log-Plot)");
+            plot.XLabel("log₁₀(Schrittweite h [s])");
+            plot.YLabel("log₁₀(Globaler Fehler ||x(T) - x_analytisch(T)||)");
+            plot.ShowLegend(Alignment.LowerRight);
+
+            var outFile = Path.Combine(targetDir, "Solver_Konvergenzordnung.png");
+            plot.SavePng(outFile, 850, 480);
             Console.WriteLine($"Erzeugt: {outFile}");
         }
     }

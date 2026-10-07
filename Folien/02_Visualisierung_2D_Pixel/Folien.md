@@ -456,10 +456,14 @@ $$\frac{\partial T}{\partial t} = \alpha \cdot \Delta T + Q(x, y, t)$$
 Wir diskretisieren Raum und Zeit auf einem gleichmäßigen 2D-Gitter mit Schrittweite $\Delta x = \Delta y = h$:
 
 - **Zweite räumliche Ableitungen (5-Punkt-Stern):**
-  $$\Delta T_{i,j} \approx \frac{T_{i+1,j} + T_{i-1,j} + T_{i,j+1} + T_{i,j-1} - 4 T_{i,j}}{h^2}$$
+  $$\nabla^2 T_{i,j} \approx \frac{T_{i+1,j} + T_{i-1,j} + T_{i,j+1} + T_{i,j-1} - 4 T_{i,j}}{h^2}$$
 
 - **Explizites Euler-Verfahren für die Zeit:**
-  $$T_{i,j}^{n+1} = T_{i,j}^n + \Delta t \cdot \left[ \frac{\alpha}{h^2} \Delta T_{i,j} + Q_{i,j} \right]$$
+  $$T_{i,j}^{n+1} = T_{i,j}^n + \Delta t \cdot \left[ \alpha \nabla^2 T_{i,j} + Q_{i,j} \right]$$
+
+- **Implementierungsform mit Vorfaktor $s = \frac{\alpha \Delta t}{h^2}$:**
+  $$L_{i,j} = T_{i+1,j} + T_{i-1,j} + T_{i,j+1} + T_{i,j-1} - 4 T_{i,j}$$
+  $$T_{i,j}^{n+1} = T_{i,j}^n + s \cdot L_{i,j} + \Delta t \cdot Q_{i,j}$$
 
 </div>
 <div class="one">
@@ -480,16 +484,19 @@ Temperatur am Punkt $(i, j)$ diffundiert zu den 4 direkten Nachbarn.
 
 ---
 
-### Numerische Stabilitätsbedingung (CFL)
+### Numerische Stabilität (Von-Neumann-Kriterium)
 
-Das explizite Euler-Verfahren ist nur bedingt stabil:
+Das explizite Euler-Verfahren ist für parabolische Diffusionsgleichungen bedingt stabil:
 
-- **Stabilitätsgrenze (Von-Neumann-Analyse):**
-  $$s = \frac{\alpha \cdot \Delta t}{h^2} \le \frac{1}{4} = 0.25$$
+- **Von-Neumann-Stabilitätsanalyse & Diskretes Maximumprinzip:**
+  $$s = \frac{\alpha \cdot \Delta t}{h^2} \le \frac{1}{4} = 0{,}25$$
 
-- **Bedeutung:**
-  - Wählt man $\Delta t$ zu groß, oszilliert die Simulation und explodiert numerisch ($T \to \pm \infty$).
-  - Für $s \le 0.25$ ist das System strikt stabil und erfüllt das Maximumprinzip (Wärme fließt nur von warm nach kalt).
+- **Diskretes Maximumprinzip (Physikalische Plausibilität):**
+  $$T_{i,j}^{n+1} = (1 - 4s) T_{i,j}^n + s \left( T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n \right)$$
+  Nur für $1 - 4s \ge 0 \iff s \le 0{,}25$ bleibt $T_{i,j}^{n+1}$ eine konvexe Kombination (gewichtetes Mittel ohne negative Gewichte; keine unphysikalischen Unter-/Überschwinger).
+
+> [!NOTE]
+> Im Ingenieursprachgebrauch wird diese Grenze umgangssprachlich oft als „CFL-Bedingung“ bezeichnet. Mathematisch exakt gilt die CFL-Bedingung ($c \Delta t / h \le 1$) jedoch für *hyperbolische* Wellengleichungen, während Diffusionsprobleme parabolisch sind und dem Von-Neumann-Kriterium $s \le 0{,}25$ unterliegen.
 
 ---
 
