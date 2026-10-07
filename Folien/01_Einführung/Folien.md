@@ -506,112 +506,28 @@ Visualisierung ist essenziell, um:
 ---
 
 <div class="columns">
-<div>
+<div class="two">
 
-### 2D-Visualisierung
+### Formen der Visualisierung im Überblick
 
-- Basiert auf dem Zeichnen von geometrischen Primitiven (Linien, Kreise, Polygone) in einem 2D-Koordinatensystem.
-- Transformationen sind notwendig, um von "Weltkoordinaten" (z.B. Meter) zu "Bildschirmkoordinaten" (z.B. Pixel) zu kommen.
-    - **Skalierung**: Vergrößern/Verkleinern
-    - **Translation**: Verschieben
-    - **Rotation**: Drehen
+In diesem Kurs lernen wir die Visualisierung entlang der folgenden Dimensionen kennen:
 
-</div>
-<div>
-
-```csharp
-// Beispiel: Zeichnen einer Linie
-// in 2D mit WPF Canvas
-
-var line = new Line
-{
-    X1 = worldToScreenX(0.0),
-    Y1 = worldToScreenY(0.0),
-    X2 = worldToScreenX(1.0),
-    Y2 = worldToScreenY(2.5),
-    Stroke = Brushes.Red,
-    StrokeThickness = 2
-};
-
-myCanvas.Children.Add(line);
-```
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div>
-
-### 3D-Visualisierung
-
-- Deutlich komplexer als 2D.
-- Eine 3D-Szene besteht aus:
-    - **Objekten**: Definierte durch Vertices (Eckpunkte) und Flächen (Polygone, meist Dreiecke).
-    - **Materialien**: Wie reflektiert das Objekt Licht? (Farbe, Textur, Glanz)
-    - **Lichtquellen**: Ohne Licht ist alles schwarz.
-    - **Kamera**: Definiert den Blickpunkt, die Blickrichtung und das Sichtfeld.
-
-</div>
-<div>
-
-```csharp
-// Beispiel: Zeichnen einer Linie
-// in 3D mit SharpGL/OpenGL
-
-var gl = openGLControl.OpenGL;
-
-gl.Begin(OpenGL.GL_LINES);
-
-// Startpunkt der Linie
-gl.Color(1.0f, 0.0f, 0.0f); // Rot
-gl.Vertex(0.0f, 0.0f, 0.0f);
-
-// Endpunkt der Linie
-gl.Color(0.0f, 1.0f, 0.0f); // Grün
-gl.Vertex(1.0f, 1.0f, 1.0f);
-
-gl.End();
-```
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div class="four">
-
-### Schnittstelle zur Grafikkarte: OpenGL
-
-- **OpenGL** (Open Graphics Library) ist eine plattform- und programmiersprachenübergreifende API zur Entwicklung von 2D- und 3D-Grafikanwendungen.
-- Sie stellt einen standardisierten Weg bereit, um mit dem **Grafikprozessor (GPU)** zu kommunizieren.
-- Die Anwendung sendet Befehle an die GPU (z.B. "zeichne dieses Dreieck mit dieser Farbe"), und die GPU führt diese hochgradig parallel und extrem schnell aus.
-- Bibliotheken wie `SharpGL` sind "Wrapper" um OpenGL, die die Nutzung in C# vereinfachen.
+- **1D/2D-Diagramme:** Zeitverläufe, Signale und Histogramme (Kapitel 4 mit `ScottPlot`).
+- **2D-Rastergrafik:** Direkte Pixelberechnung für Skalar- und Dichtefelder (Kapitel 2 mit `WriteableBitmap`).
+- **2D-Vektorgrafik:** Geometrische Formen, Freiheitsgrade und Kräfte (Kapitel 3 mit `WPF Canvas`).
+- **Netzwerkgraphen:** Blockschaltbilder und Signalflusstopologien (Kapitel 4 mit `MSAGL`).
+- **3D-Szenen:** Räumliche Körper, Beleuchtung und Kameraführung (Kapitel 5 mit `SharpGL`).
 
 </div>
 <div class="three">
 
-![](./Illustrationen/OpenGL.jpg)
+![Visualisierungsformen](./Diagramme/Visualisierungsformen.svg)
 
 </div>
 </div>
 
 ---
 
-### Die Grafik-Pipeline (vereinfacht)
-
-Der Weg von der 3D-Szene zum 2D-Bild auf dem Monitor.
-
-1.  **Vertex Processing**: Die 3D-Koordinaten der Eckpunkte (Vertices) werden in 2D-Bildschirmkoordinaten umgerechnet (Projektion).
-2.  **Rasterization**: Die Dreiecke werden in "Fragmente" zerlegt. Ein Fragment ist ein Kandidat für ein Pixel auf dem Bildschirm.
-3.  **Fragment Processing**: Für jedes Fragment wird die endgültige Farbe berechnet (unter Berücksichtigung von Texturen, Beleuchtung etc.).
-4.  **Testing & Blending**: Das Fragment wird auf den Bildschirm geschrieben (z.B. Z-Buffer-Test, um verdeckte Objekte zu entfernen).
-
-Moderne GPUs erlauben es, die Schritte 1 und 3 mit eigenen kleinen Programmen, den **Shadern**, zu steuern.
-
----
 
 ![bg right](./Illustrationen/Abschnitt_5.jpg)
 

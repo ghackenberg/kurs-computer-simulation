@@ -1,3 +1,5 @@
-- Signal-Plots in ScottPlot für sehr große Datenreihen (1Mio+ Punkte) ergänzen
-- Interaktive Node-Editoren (wie Nodify) als Ausblick für Blockschaltbild-Editoren erwähnen
-- Titelbild generieren
+- [x] Signal-Plots in ScottPlot für sehr große Datenreihen (1Mio+ Punkte) ergänzen (inkl. Min/Max-Decimation, Signal vs. SignalXY)
+- [x] Live-Streaming / Telemetrie mit Ringpuffer und DispatcherTimer ergänzen
+- [x] MSAGL automatische Layouts & Hervorhebung algebraischer Schleifen mit SVG-Diagramm einbinden
+- [x] Interaktive Node-Editoren (wie Nodify) als Ausblick für Blockschaltbild-Editoren erwähnen
+- [ ] Titelbild generieren

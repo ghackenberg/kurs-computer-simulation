@@ -1,4 +1,4 @@
-﻿---
+---
 marp: true
 theme: fhooe
 header: 'Kapitel 5: 3D-Visualisierung mit OpenGL'
@@ -15,6 +15,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 - 5.1: Grundlagen der 3D-Visualisierung mit OpenGL
 - 5.2: Strukturierung mit einem Szenengraphen
+- 5.3: Interaktive Kameraführung
 
 ---
 
@@ -25,6 +26,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Grundkonzepte von OpenGL (Zustandsmaschine, Grafik-Pipeline)
 - Verwendung von Buffern (Color, Depth)
 - Koordinatensysteme und Transformationen (Projection, ModelView)
+- Projektionsarten (glOrtho vs. gluPerspective, Clipping-Ebenen)
 - Zeichnen von Primitiven und Beleuchtung
 
 ---
@@ -757,6 +759,143 @@ gl.PopMatrix(); // Zurück zum Sonnen-Koordinatensystem
 
 ---
 
+### Die Transformations-Pipeline in OpenGL
+
+OpenGL überführt 3D-Objektkoordinaten in mehreren aufeinanderfolgenden Schritten in 2D-Bildschirmpixel:
+
+$$\vec{v}_{\text{world}} = M_{\text{model}} \cdot \vec{v}_{\text{obj}} \quad \longrightarrow \quad \vec{v}_{\text{eye}} = M_{\text{view}} \cdot \vec{v}_{\text{world}} \quad \longrightarrow \quad \vec{v}_{\text{clip}} = M_{\text{proj}} \cdot \vec{v}_{\text{eye}}$$
+
+- **Model-Matrix**: Platziert und transformiert Objekte in der virtuellen Welt (Translation, Rotation, Skalierung).
+- **View-Matrix**: Verschiebt und rotiert die Welt relativ zum Betrachterstandpunkt (Kamera). In OpenGL klassisch zusammengefasst als **ModelView-Matrix** (`GL_MODELVIEW`).
+- **Projection-Matrix (`GL_PROJECTION`)**: Definiert die Projektionsart und bildet den sichtbaren 3D-Kameraraum auf kanonische Clipping-Koordinaten ab.
+- **Perspektivische Division**: Division durch homogene Koordinate $w$ liefert *Normalized Device Coordinates* (NDC $[-1, 1]^3$).
+- **Viewport-Transformation**: Skaliert die NDC-Koordinaten auf die physikalischen Pixel des Fensters (`gl.Viewport`).
+
+---
+
+### Projektionsarten: Orthogonal vs. Perspektivisch
+
+Die Wahl der Projektionsmatrix bestimmt die geometrische Form des Sichtvolumens (View Volume) und den Strahlengang:
+
+![width:1080px](./Diagramme/Projektionsarten.svg)
+
+---
+
+<div class="columns">
+<div>
+
+### Orthogonale Projektion: `glOrtho`
+
+Die orthogonale (parallele) Projektion projiziert 3D-Punkte entlang paralleler Strahlen senkrecht auf die Bildebene:
+
+- **Sichtvolumen**: Ein achsenparalleler Quader begrenzt durch $[left, right] \times [bottom, top] \times [near, far]$.
+- **Kein Fluchtpunkt**: Parallele Kanten der Welt bleiben im 2D-Bild exakt parallel.
+- **Größenkonstanz**: Ein Objekt behält immer seine Größe, unabhängig von der Distanz zur Kamera ($z$).
+
+```csharp
+// Aufruf in SharpGL (Projektionsmodus):
+gl.Ortho(left, right, bottom, top, near, far);
+```
+
+</div>
+<div>
+
+### Mathematische Abbildung
+
+Die Projektionsmatrix bildet den Quader linear in das normierte Sichtvolumen $[-1, 1]^3$ ab:
+
+$$x_{\text{ndc}} = \frac{2}{right - left} x - \frac{right + left}{right - left}$$
+$$y_{\text{ndc}} = \frac{2}{top - bottom} y - \frac{top + bottom}{top - bottom}$$
+$$z_{\text{ndc}} = \frac{-2}{far - near} z - \frac{far + near}{far - near}$$
+
+- Es erfolgt **keine Division** durch die Tiefe $z$.
+- Dadurch bleiben geometrische Abstände, Winkel und Längenverhältnisse unverzerrt und maßhaltig erhalten.
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+### Perspektivische Projektion: `gluPerspective`
+
+Die perspektivische Projektion entspricht der natürlichen Abbildung des menschlichen Auges sowie einer Fotokamera:
+
+- **Sichtvolumen**: Ein Pyramidenstumpf (**Frustum**) mit der Spitze im Augpunkt (Center of Projection).
+- **Konvergierende Strahlen**: Alle Projektionsstrahlen schneiden sich im Kameraursprung $(0,0,0)$.
+- **Tiefenverkürzung**: Weiter entfernte Objekte erscheinen im Bild kleiner als nahe Objekte identischer Größe.
+
+```csharp
+// Aufruf in SharpGL (Projektionsmodus):
+gl.Perspective(fovy, aspect, zNear, zFar);
+```
+
+</div>
+<div>
+
+### Mathematische Erklärung
+
+Punkte werden über Strahlensätze auf die Bildebene bei $z_{\text{near}}$ projiziert:
+
+$$x_{\text{proj}} = x \cdot \frac{z_{\text{near}}}{-z}, \quad y_{\text{proj}} = y \cdot \frac{z_{\text{near}}}{-z}$$
+
+- Die **perspektivische Division** durch $-z$ erzeugt den natürlichen Fluchtpunkt-Effekt.
+- **Parameter von `gl.Perspective`**:
+  - `fovy`: Vertikaler Öffnungswinkel in Grad (z.B. $45^\circ \dots 60^\circ$).
+  - `aspect`: Seitenverhältnis $\frac{\text{Breite}}{\text{Höhe}}$ der Zeichenfläche.
+  - `zNear`, `zFar`: Vordere und hintere Clipping-Ebene ($0 < z_{\text{near}} < z_{\text{far}}$).
+
+</div>
+</div>
+
+---
+
+### Vergleich und Einsatzbereiche der Projektionsarten
+
+| Kriterium | Orthogonale Projektion (`glOrtho`) | Perspektivische Projektion (`gluPerspective`) |
+| :--- | :--- | :--- |
+| **Sichtvolumen** | Quader (Box) | Pyramidenstumpf (Frustum) |
+| **Projektionsstrahlen** | Parallel (Projektionszentrum im Unendlichen) | Konvergierend im Kameraschnittpunkt (COP) |
+| **Objektgröße** | Distanzunabhängig ($h \neq f(z)$) | Nimmt mit der Distanz ab ($h \propto 1/z$) |
+| **Fluchtpunkte** | Keine (Parallelen bleiben parallel) | 1 bis 3 Fluchtpunkte je nach Objektlage |
+| **Typische Einsatzbereiche** | **CAD / CAE-Systeme**, technische Zeichnungen, Grundrisse, Schnittansichten, 2D-HUDs | **3D-Systemsimulation**, Digitale Zwillinge, Robotik, Virtual Reality, fotorealistische 3D-Grafik |
+| **Vorteil** | Exakt maßhaltig, Maße direkt ablesbar | Realistischer plastischer Raumeindruck |
+| **Nachteil** | Fehlende Tiefenstaffelung (Raumlage mehrdeutig) | Entfernungen und Winkel perspektivisch verzerrt |
+
+---
+
+### Projektion und Viewport im Resize-Handler
+
+Bei jeder Änderung der Fenstergröße muss das Seitenverhältnis (*Aspect Ratio*) aktualisiert werden, um Verzerrungen zu vermeiden:
+
+```csharp
+private void OpenGLControl_Resized(object sender, OpenGLRoutedEventArgs args)
+{
+    OpenGL gl = args.OpenGL;
+    int width = (int)openGLControl.ActualWidth;
+    int height = (int)openGLControl.ActualHeight;
+    if (height == 0) height = 1; // Division durch Null verhindern
+
+    // 1. Viewport auf die volle Fenstergröße setzen
+    gl.Viewport(0, 0, width, height);
+
+    // 2. In den Projektionsmodus wechseln und Matrix zurücksetzen
+    gl.MatrixMode(OpenGL.GL_PROJECTION);
+    gl.LoadIdentity();
+
+    // 3. Perspektivische Projektion mit korrektem Seitenverhältnis definieren
+    double aspect = (double)width / height;
+    gl.Perspective(45.0, aspect, 0.1, 1000.0);
+
+    // 4. Zurück in den ModelView-Modus für alle nachfolgenden Zeichenbefehle
+    gl.MatrixMode(OpenGL.GL_MODELVIEW);
+}
+```
+
+---
+
 ## 5.2: Strukturierung mit einem Szenengraphen
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -1406,9 +1545,245 @@ _scene = new Scene(Color.WHITE, Color.DARKGRAY, root);
 
 ---
 
+## 5.3: Interaktive Kameraführung
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Motivation und Grundlagen der virtuellen Kameraführung
+- Das Kameramodell mit `gl.LookAt`
+- Kugelkoordinaten (Azimut, Elevation, Distanz) für Orbit-Kameras
+- Mathematische Koordinatenumrechnung (Kugel $\to$ Kartesisch)
+- Interaktive Maussteuerung in WPF (Rotation und Zoom)
+- Vollständige Implementierung der Klasse `OrbitCamera` in C#
+
+---
+
+<div class="columns">
+<div>
+
+### Bedarf an interaktiver Kamerasteuerung
+
+In 3D-Simulationen und Digitalen Zwillingen reicht eine starre Kameraperspektive selten aus:
+
+- **Detailinspektion**: Maschinenkomponenten müssen aus verschiedenen Blickwinkeln betrachtet werden.
+- **Verdeckungen auflösen**: Im 3D-Raum verdecken vordere Bauteile dahinterliegende Prozesse.
+- **Benutzererlebnis**: Natürliche Navigation wie in modernen CAD- und Simulationswerkzeugen (z.B. Siemens NX, SolidWorks, Blender).
+
+Die **Orbit-Kamera** (Drehkamera um ein Fokusobjekt) ist der Standard für die Modellinspektion.
+
+</div>
+<div>
+
+### Die virtuelle Kamera: `gl.LookAt`
+
+Die `LookAt`-Funktion definiert die View-Matrix über drei 3D-Vektoren:
+
+- **$\vec{eye} = (x_e, y_e, z_e)$**: Standpunkt der Kamera im Raum (Augpunkt).
+- **$\vec{center} = (x_c, y_c, z_c)$**: Zielpunkt, den die Kamera anvisiert (Fokuspunkt).
+- **$\vec{up} = (x_u, y_u, z_u)$**: Aufwärtsvektor der Kamera (meist $(0, 1, 0)$).
+
+```csharp
+// Aufruf in OnDraw vor dem Rendern der Szene:
+gl.LookAt(eyeX, eyeY, eyeZ, 
+          centerX, centerY, centerZ, 
+          upX, upY, upZ);
+```
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+### Orbit-Kamera mit Kugelkoordinaten
+
+Anstatt $(x, y, z)$ direkt zu manipulieren, beschreibt eine Orbit-Kamera die Position auf einer Kugelschale um das Ziel:
+
+1. **Azimutwinkel $\theta$ (horizontaler Orbit)**:
+   - Drehung um die vertikale $Y$-Achse ($0^\circ \dots 360^\circ$).
+   - Bestimmt die Himmelsrichtung des Betrachters.
+2. **Elevationswinkel $\phi$ (vertikale Neigung)**:
+   - Blickwinkel über/unter dem Äquator ($-89^\circ \dots +89^\circ$).
+   - Vogelperspektive ($>0$) bis Froschperspektive ($<0$).
+3. **Distanz $r$ (Kameraabstand / Zoom)**:
+   - Radius der Orbit-Kugelschale ($r > 0$).
+
+</div>
+<div>
+
+### Vermeidung von Gimbal Lock
+
+Blickt die Kamera exakt senkrecht von oben ($\phi = +90^\circ$) oder unten ($\phi = -90^\circ$):
+
+- Blickvektor $\vec{view}$ und Up-Vektor $\vec{up} = (0, 1, 0)$ werden parallel.
+- Das Kreuzprodukt $\vec{view} \times \vec{up}$ wird zum Nullvektor $\vec{0}$.
+- Die Kamera verliert ihre eindeutige Orientierung und kippt unkontrolliert um.
+- **Lösung**: Der Elevationswinkel $\phi$ wird per Software auf $[-89^\circ, +89^\circ]$ begrenzt (*Clamping*):
+
+```csharp
+Elevation = Math.Clamp(Elevation, -89.0, 89.0);
+```
+
+</div>
+</div>
+
+---
+
+### Mathematische Koordinatenumrechnung
+
+Aus den Kugelkoordinaten $(\theta, \phi, r)$ und dem Fokuspunkt $\vec{center} = (x_c, y_c, z_c)$ wird der Augpunkt $\vec{eye}$ bestimmt:
+
+<div class="columns">
+<div>
+
+**Formeln (Winkel im Bogenmaß):**
+
+$$\theta_{\text{rad}} = \theta \cdot \frac{\pi}{180^\circ}, \quad \phi_{\text{rad}} = \phi \cdot \frac{\pi}{180^\circ}$$
+
+$$x_e = x_c + r \cdot \cos(\phi_{\text{rad}}) \cdot \sin(\theta_{\text{rad}})$$
+$$y_e = y_c + r \cdot \sin(\phi_{\text{rad}})$$
+$$z_e = z_c + r \cdot \cos(\phi_{\text{rad}}) \cdot \cos(\theta_{\text{rad}})$$
+
+- Bei $\theta = 0^\circ$ und $\phi = 0^\circ$ blickt die Kamera von $+Z$ in Richtung Ursprung.
+- Positive $\theta$-Werte drehen die Kamera im Uhrzeigersinn um das Objekt.
+
+</div>
+<div>
+
+**C#-Berechnungsmethode:**
+
+```csharp
+double radAzimuth = Azimuth * Math.PI / 180.0;
+double radElevation = Elevation * Math.PI / 180.0;
+
+double eyeX = TargetX + Distance 
+    * Math.Cos(radElevation) * Math.Sin(radAzimuth);
+double eyeY = TargetY + Distance 
+    * Math.Sin(radElevation);
+double eyeZ = TargetZ + Distance 
+    * Math.Cos(radElevation) * Math.Cos(radAzimuth);
+
+gl.LookAt(eyeX, eyeY, eyeZ, 
+          TargetX, TargetY, TargetZ, 
+          0.0, 1.0, 0.0);
+```
+
+</div>
+</div>
+
+---
+
+### Interaktive Maussteuerung in WPF
+
+Die intuitive Bedienung der Orbit-Kamera wird über drei WPF-Mausereignisse des `OpenGLControl` umgesetzt:
+
+| Mausaktion | WPF-Ereignis | Kamera-Wirkung | Formel / Update |
+| :--- | :--- | :--- | :--- |
+| **Linke Taste + Ziehen** | `MouseMove` (bei gedrückter linker Taste) | Horizontaler Orbit (Azimut) & vertikale Neigung (Elevation) | $\Delta \theta = \Delta x \cdot s_{\text{rot}}$<br>$\Delta \phi = -\Delta y \cdot s_{\text{rot}}$ |
+| **Mausrad drehen** | `MouseWheel` | Stufenloser Zoom (Distanz verändern) | $r_{\text{neu}} = r_{\text{alt}} - \Delta_{\text{wheel}} \cdot s_{\text{zoom}}$ |
+| **Rechte Taste / Shift** (optional) | `MouseMove` (bei rechter Taste) | Panning (Verschiebung des Zielpunkts $\vec{center}$) | Verschiebung parallel zur Bildebene |
+
+- **Mausfang (`CaptureMouse()`)**: Beim Klick wird der Mauszeiger an das Control gebunden, sodass Drehbewegungen auch außerhalb des Fensters flüssig weiterlaufen.
+- **Neuzeichnen auslösen**: Nach jeder Parameteränderung wird `openGLControl.DoRender()` aufgerufen.
+
+---
+
+### Implementierung der Klasse `OrbitCamera` (Teil 1)
+
+```csharp
+public class OrbitCamera
+{
+    public double TargetX { get; set; } = 0.0;
+    public double TargetY { get; set; } = 0.0;
+    public double TargetZ { get; set; } = 0.0;
+
+    public double Azimuth { get; set; } = 45.0;    // Drehung um Y-Achse in Grad
+    public double Elevation { get; set; } = 30.0;  // Neigung in Grad [-89, +89]
+    public double Distance { get; set; } = 15.0;   // Abstand zum Zielpunkt
+
+    public double MinDistance { get; set; } = 1.0;
+    public double MaxDistance { get; set; } = 500.0;
+
+    public void Rotate(double deltaAzimuth, double deltaElevation)
+    {
+        Azimuth = (Azimuth + deltaAzimuth) % 360.0;
+        Elevation = Math.Clamp(Elevation + deltaElevation, -89.0, 89.0);
+    }
+
+    public void Zoom(double deltaZoom)
+    {
+        Distance = Math.Clamp(Distance - deltaZoom, MinDistance, MaxDistance);
+    }
+```
+
+---
+
+### Implementierung der Klasse `OrbitCamera` (Teil 2)
+
+```csharp
+    public void Apply(OpenGL gl)
+    {
+        // 1. Umrechnung der Kugelkoordinaten in das Bogenmaß (Radians)
+        double radAzimuth = Azimuth * Math.PI / 180.0;
+        double radElevation = Elevation * Math.PI / 180.0;
+
+        // 2. Berechnung der Kameraposition (Eye) im kartesischen Raum
+        double eyeX = TargetX + Distance * Math.Cos(radElevation) * Math.Sin(radAzimuth);
+        double eyeY = TargetY + Distance * Math.Sin(radElevation);
+        double eyeZ = TargetZ + Distance * Math.Cos(radElevation) * Math.Cos(radAzimuth);
+
+        // 3. View-Matrix in OpenGL setzen (Kamera blickt auf Target)
+        gl.LookAt(eyeX, eyeY, eyeZ,
+                  TargetX, TargetY, TargetZ,
+                  0.0, 1.0, 0.0);
+    }
+}
+```
+
+---
+
+### Einbindung in Render-Loop und WPF-Events
+
+```csharp
+private OrbitCamera _camera = new OrbitCamera { Distance = 10.0, Elevation = 25.0 };
+private Point _lastMousePosition;
+
+private void OnMouseDown(object sender, MouseButtonEventArgs e)
+{
+    if (e.LeftButton == MouseButtonState.Pressed) {
+        _lastMousePosition = e.GetPosition(openGLControl);
+        openGLControl.CaptureMouse();
+    }
+}
+private void OnMouseMove(object sender, MouseEventArgs e)
+{
+    if (openGLControl.IsMouseCaptured && e.LeftButton == MouseButtonState.Pressed) {
+        Point current = e.GetPosition(openGLControl);
+        double dx = current.X - _lastMousePosition.X;
+        double dy = current.Y - _lastMousePosition.Y;
+        _camera.Rotate(dx * 0.4, -dy * 0.4);
+        _lastMousePosition = current;
+        openGLControl.DoRender();
+    }
+}
+private void OnMouseUp(object sender, MouseButtonEventArgs e) => openGLControl.ReleaseMouseCapture();
+
+private void OnMouseWheel(object sender, MouseWheelEventArgs e)
+{
+    _camera.Zoom(e.Delta * 0.01);
+    openGLControl.DoRender();
+}
+```
+
+---
+
 # Zusammenfassung Kapitel 5
 
-- Die Erweiterung statischer Modelle auf **3D** ist mathematisch eine Erweiterung der Vektoren und Matrizen um eine Dimension.
-- Die **Visualisierung** wird deutlich komplexer und erfordert eine **Grafik-Pipeline** wie die von OpenGL.
-- Ein **Szenengraph** ist eine essentielle Datenstruktur, um komplexe 3D-Szenen hierarchisch zu organisieren und Transformationen logisch zu vererben.
-- Die Traversierung des Graphen mit `glPushMatrix` und `glPopMatrix` sorgt für die korrekte Anwendung der Transformationen auf die jeweiligen Objekte und deren Kinder.
+- **3D-Grafik-Pipeline**: OpenGL überführt 3D-Geometrie über Transformationsmatrizen (Model, View, Projection), Clipping und Rasterung auf den 2D-Bildschirm.
+- **Projektionsarten**:
+  - `glOrtho`: Quaderförmiges Sichtvolumen mit parallelen Strahlen. Maßhaltig ohne Tiefenverzerrung für CAD und technische Ansichten.
+  - `gluPerspective`: Pyramidenstumpf (Frustum) mit konvergierenden Strahlen. Perspektivische Tiefenverkürzung für realistische 3D-Simulationen und Digitale Zwillinge.
+- **Szenengraph**: Hierarchische Datenstruktur zur Verwaltung von Objekten, Geometrien und Transformationen mittels Matrix-Stack (`gl.PushMatrix` / `gl.PopMatrix`).
+- **Interaktive Kameraführung**: Eine `OrbitCamera` auf Basis von Kugelkoordinaten ($\theta, \phi, r$) erlaubt intuitive 3D-Navigation per Maus über `gl.LookAt`.

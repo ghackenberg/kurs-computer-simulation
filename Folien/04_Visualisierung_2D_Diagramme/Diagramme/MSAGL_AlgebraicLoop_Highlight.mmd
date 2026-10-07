@@ -1,0 +1,15 @@
+graph LR
+    In["Eingang u(t)"] --> Sum1["+"]
+    Sum1 -->|"e(t)"| Gain1["Gain K1"]
+    Gain1 -->|"v(t)"| Gain2["Gain K2"]
+    Gain2 -->|"Rückführung (Schleife)"| Sum1
+    Gain1 -->|"v(t)"| Int["Integrator 1/s"]
+    Int -->|"x(t)"| Plant["Streckendynamik"]
+    Plant -->|"y(t)"| Out["Ausgang y(t)"]
+
+    style Sum1 fill:#ffcdd2,stroke:#d32f2f,stroke-width:3px
+    style Gain1 fill:#ffcdd2,stroke:#d32f2f,stroke-width:3px
+    style Gain2 fill:#ffcdd2,stroke:#d32f2f,stroke-width:3px
+    linkStyle 1 stroke:#d32f2f,stroke-width:3px
+    linkStyle 2 stroke:#d32f2f,stroke-width:3px
+    linkStyle 3 stroke:#d32f2f,stroke-width:3px

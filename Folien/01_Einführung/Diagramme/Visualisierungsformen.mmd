@@ -1,0 +1,11 @@
+flowchart TD
+    Vis["Visualisierung von Simulationsdaten"] --> D1["Diagramme & Charts (1D/2D)"]
+    Vis --> D2["Räumliche 2D-Grafik"]
+    Vis --> D3["Strukturen & Netzwerke"]
+    Vis --> D4["3D-Szenen"]
+
+    D1 --> C1["Zeitreihen & Histogramme<br/>(ScottPlot - Kap. 4)"]
+    D2 --> C2A["Raster / Skalarfelder<br/>(WriteableBitmap - Kap. 2)"]
+    D2 --> C2B["Vektoren & Geometrie<br/>(WPF Canvas - Kap. 3)"]
+    D3 --> C3["Topologien & Signalflüsse<br/>(MSAGL - Kap. 4)"]
+    D4 --> C4["Körper, Licht & Szenengraph<br/>(SharpGL / OpenGL - Kap. 5)"]

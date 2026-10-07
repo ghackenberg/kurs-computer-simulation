@@ -1,0 +1,33 @@
+﻿flowchart TD
+    subgraph UI ["UI-Thread (WPF Dispatcher / SynchronizationContext)"]
+        direction TB
+        UI_Event["Benutzerinteraktion<br/>(Button 'Start')"]
+        UI_Handler["async Button_Click(...)<br/>(UI blockiert nicht)"]
+        CTS["CancellationTokenSource<br/>(Abbruchsteuerung)"]
+        Prog_Inst["Progress&lt;T&gt;<br/>(Instanz im UI-Kontext)"]
+        UI_Update["UI-Aktualisierung<br/>(ProgressBar, ScottPlot, Canvas)"]
+    end
+
+    subgraph Pool ["ThreadPool (Hintergrund-Worker)"]
+        direction TB
+        Worker["Task.Run(...)<br/>(Rechenintensive Simulation)"]
+        SimLoop["Simulationsschritte / Parallel.For<br/>(Euler, Runge-Kutta, Monte-Carlo)"]
+        TokenCheck{"Abbruch erbeten?<br/>token.ThrowIf...()"}
+        Prog_Call["progress.Report(value)<br/>(IProgress&lt;T&gt;)"]
+    end
+
+    UI_Event --> UI_Handler
+    UI_Handler -->|"1. Instanz erzeugen"| CTS
+    UI_Handler -->|"2. Instanz mit Callback erzeugen"| Prog_Inst
+    UI_Handler ==>|"3. await Task.Run(...)"| Worker
+    CTS -.->|"Token uebergeben"| Worker
+
+    Worker --> SimLoop
+    SimLoop --> TokenCheck
+    SimLoop -->|"4. Fortschritt melden"| Prog_Call
+
+    Prog_Call ==>|"5. Asynchrones Marshalling via SynchronizationContext"| Prog_Inst
+    Prog_Inst -->|"6. Callback im UI-Thread aufrufen"| UI_Update
+
+    Worker ==>|"7. Abschluss / Ergebnis"| UI_Handler
+    UI_Handler -->|"8. UI bereit fuer Folgeaktionen"| UI_Update

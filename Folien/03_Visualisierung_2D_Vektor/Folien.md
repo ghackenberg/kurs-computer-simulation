@@ -12,8 +12,10 @@ math: mathjax
 Dieses Kapitel umfasst die folgenden Abschnitte:
 
 - 3.1: Grundlagen der Vektorgrafik und WPF Canvas
-- 3.2: Transformation: Welt zu Bildschirm
+- 3.2: Transformation: Welt- zu Bildschirmkoordinaten
 - 3.3: Vektordarstellung geometrischer Elemente und Kräfte
+- 3.4: Interaktive Steuerung im Canvas (Pan & Zoom)
+- 3.5: Performance & Architektur: Shapes vs. DrawingVisual
 
 ---
 
@@ -30,9 +32,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ### Was ist Vektorgrafik?
 
 - **Objektorientierte Repräsentation**: Bilder werden nicht als Ansammlung einzelner Pixel gespeichert, sondern als mathematisch definierte geometrische Formen (Punkte, Linien, Kurven, Polygone).
-- **Auflösungsunabhängigkeit**: Vektorgrafiken lassen sich ohne Qualitätsverlust beliebig skalieren (keine Treppenstufen oder Pixelartefakte).
+- **Auflösungsunabhängigkeit**: Vektorgrafiken lassen sich ohne Qualitätsverlust beliebig skalieren (keine Treppenstufen oder Pixelartefakte beim Hineinzoomen).
 - **Zustandsbehaftet**: Jedes Element ist ein eigenes Objekt im UI-Baum (Visual Tree) mit Eigenschaften wie Position, Farbe, Strichstärke und Transformationen.
-- **Einsatzbereich**: Technische Zeichnungen, Pläne, Schemata, Struktur- und Kraftvisualisierungen (z.B. Fachwerke, Gelenkgetriebe).
+- **Einsatzbereich**: Technische Zeichnungen, Pläne, Schemata, Struktur- und Kraftvisualisierungen (z.B. Fachwerke, Gelenkgetriebe, Schaltungen).
 
 ---
 
@@ -92,70 +94,150 @@ myCanvas.Children.Add(line);
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Die Herausforderung: Transformation von Welt- zu Bildschirmkoordinaten
-- Schritte der Transformation: Skalierung, Translation, Y-Invertierung
-- Praktische Umsetzung in C#
+- Die Herausforderung: Welt- vs. Bildschirmkoordinaten
+- Geometrische Bemaßung, Bounding Box und Sicherheitsabstand (`margin`)
+- Erhalt des Seitenverhältnisses (Aspect Ratio / Uniform Scaling)
+- Zentrierung und Invertierung der Y-Achse
+- Mathematische Formulierung und saubere C#-Implementierung
 
 ---
 
-<div class="columns">
-<div>
+<div class="columns top">
+<div class="one">
 
-### 2D-Visualisierung: Die Herausforderung
+### 1. Weltkoordinatensystem (Physik)
 
-- Das physikalische System existiert in **Weltkoordinaten** (z.B. in Metern, mit Ursprung $(0,0)$ links unten oder im Schwerpunkt).
-- Der Computerbildschirm (z.B. ein `WPF Canvas`) verwendet **Bildschirmkoordinaten** (in Pixel / Device Independent Pixels, Ursprung $(0,0)$ links oben).
-- Wir benötigen eine Transformation, um unsere Welt auf den Bildschirm abzubilden.
-
-</div>
-<div>
-
-![](../../Quellen/WS24/StatischFachwerkIdeal2D/Visualisierung_Fachwerkskoordinaten.jpg)
+- **Modellraum**: Reale physikalische Geometrie
+- **Kontinuierlich**: Reelle Koordinaten $x_w, y_w \in \mathbb{R}$
+- **Einheit**: Physikalische Größen (z.B. Meter $[m]$)
+- **Orientierung**: Die $+Y$-Achse zeigt nach **oben**!
+- **Ursprung $(0,0)$**: Beliebig im Raum platziert (z.B. linker Auflagerpunkt oder Schwerpunkt).
 
 </div>
-</div>
+<div class="one">
 
----
+### 2. Bildschirmkoordinaten (WPF Canvas)
 
-<div class="columns">
-<div>
-
-### Transformation: Welt -> Bildschirm
-
-Die Transformation besteht meist aus drei Schritten:
-
-1. **Skalierung**: Das Modell muss so vergrößert oder verkleinert werden, dass es gut auf den Canvas passt (unter Beibehaltung des Seitenverhältnisses).
-2. **Translation (Verschiebung)**: Der Ursprung des Modells soll an eine bestimmte Stelle auf dem Canvas verschoben werden (z.B. zentriert mit Randabstand).
-3. **Invertierung der Y-Achse**: In der Mathematik und Physik zeigt die Y-Achse nach oben, bei 2D-Grafiksystemen (WPF) standardmäßig nach unten.
-
-</div>
-<div>
-
-![Bildkoordinaten](../../Quellen/WS24/StatischFachwerkIdeal2D/Visualisierung_Bildkoordinaten.jpg)
+- **Anzeigeraum**: Viewport auf dem Monitor
+- **Diskret**: Pixel bzw. Device Independent Pixels $[px]$
+- **Einheit**: $1/96$ Zoll pro Pixel
+- **Orientierung**: Die $+Y$-Achse zeigt nach **unten**!
+- **Ursprung $(0,0)$**: Fest in der **linken oberen Ecke** des Steuerelements fixiert.
 
 </div>
 </div>
 
 ---
 
-### Umrechnung im Detail
+### Visualisierung der Koordinatentransformation
+
+![width:1050px](./Diagramme/Koordinatentransformation.svg)
+
+---
+
+### Bounding Box & Bemaßung des Modells
+
+Bevor transformiert werden kann, muss die Ausdehnung des Modells in Weltkoordinaten ermittelt werden:
+
+<div class="columns top">
+<div class="one">
+
+**Extremwerte aller Punkte ermitteln:**
+$$X_{min} = \min_{i} (x_i), \quad X_{max} = \max_{i} (x_i)$$
+$$Y_{min} = \min_{i} (y_i), \quad Y_{max} = \max_{i} (y_i)$$
+
+**Breite und Höhe des Modells:**
+$$W_{world} = X_{max} - X_{min}$$
+$$H_{world} = Y_{max} - Y_{min}$$
+
+</div>
+<div class="one">
+
+**Nutzbare Bildschirmfläche (Canvas):**
+- Ein Randabstand `margin` verhindert das Abschneiden von Rändern, Knotenpunkten oder Linienstärken:
+$$W_{draw} = W_{canvas} - 2 \cdot \text{margin}$$
+$$H_{draw} = H_{canvas} - 2 \cdot \text{margin}$$
+
+</div>
+</div>
+
+---
+
+### Erhalt des Seitenverhältnisses (Aspect Ratio)
+
+<div class="columns top">
+<div class="one">
+
+**Naive Skalierung (Verzerrung!):**
+$$s_x = \frac{W_{draw}}{W_{world}}, \quad s_y = \frac{H_{draw}}{H_{world}}$$
+- Wenn $s_x \ne s_y$, wird das Modell gestreckt oder gestaucht.
+- Kreise werden zu Ellipsen, quadratische Fachwerke verzerrt, Winkel verfälscht!
+
+</div>
+<div class="one">
+
+**Uniform Scaling (Isotrop):**
+$$s = \min(s_x, s_y)$$
+- Der kleinere Faktor stellt sicher, dass das Modell vollständig auf den Canvas passt.
+- **Alle geometrischen Proportionen und Winkel bleiben physikalisch exakt erhalten.**
+
+</div>
+</div>
+
+---
+
+### Zentrierung und Invertierung der Y-Achse
+
+<div class="columns top">
+<div class="one">
+
+**Zentrierungs-Offset:**
+Durch $s = \min(s_x, s_y)$ bleibt in einer Dimension Freiraum. Dieser wird halbiert:
+$$x_{offset} = \text{margin} + \frac{W_{draw} - W_{world} \cdot s}{2}$$
+$$y_{offset} = \text{margin} + \frac{H_{draw} - H_{world} \cdot s}{2}$$
+
+</div>
+<div class="one">
+
+**Y-Achsen-Invertierung:**
+Da die Bildschirmachse nach unten verläuft, wird vom oberen Rand $Y_{max}$ abgezogen:
+$$x_{screen} = x_{offset} + (x_w - X_{min}) \cdot s$$
+$$y_{screen} = y_{offset} + (Y_{max} - y_w) \cdot s$$
+
+- Für $y_w = Y_{max} \implies y_{screen} = y_{offset}$ (oben).
+- Für $y_w = Y_{min} \implies y_{screen} = y_{offset} + H_{world} \cdot s$ (unten).
+
+</div>
+</div>
+
+---
+
+### C#-Implementierung: `CoordinateTransformer`
 
 ```csharp
-// Annahmen:
-// canvasWidth, canvasHeight: Größe des Canvas in Pixel
-// worldRect: Bounding Box des Modells in Weltkoordinaten
-// margin: Rand in Pixel
+public class CoordinateTransformer
+{
+    private double _scale, _xOffset, _yOffset, _xMin, _yMax;
 
-// 1. Skalierungsfaktor berechnen (Uniform Scaling)
-double scaleX = (canvasWidth - 2 * margin) / worldRect.Width;
-double scaleY = (canvasHeight - 2 * margin) / worldRect.Height;
-double scale = Math.Min(scaleX, scaleY);
+    public void Update(Rect worldBounds, double canvasWidth, double canvasHeight, double margin)
+    {
+        _xMin = worldBounds.Left;
+        _yMax = worldBounds.Top; // Höchster Y-Wert im kartesischen Raum
 
-// 2. Transformation für einen Punkt (worldX, worldY)
-double screenX = margin + (worldX - worldRect.Left) * scale;
-double screenY = margin + (worldRect.Top - worldY) * scale; // Y-Achse invertiert!
+        double drawW = Math.Max(0, canvasWidth - 2 * margin);
+        double drawH = Math.Max(0, canvasHeight - 2 * margin);
 
-return new Point(screenX, screenY);
+        _scale = Math.Min(drawW / worldBounds.Width, drawH / worldBounds.Height);
+
+        _xOffset = margin + (drawW - worldBounds.Width * _scale) / 2.0;
+        _yOffset = margin + (drawH - worldBounds.Height * _scale) / 2.0;
+    }
+
+    public Point WorldToScreen(Point w) => new(
+        _xOffset + (w.X - _xMin) * _scale,
+        _yOffset + (_yMax - w.Y) * _scale // Y-Invertierung
+    );
+}
 ```
 
 ---
@@ -164,7 +246,7 @@ return new Point(screenX, screenY);
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Darstellung gerichteter physikalischer Größen (z.B. Kräfte, Geschwindigkeiten)
+- Darstellung gerichteter physikalischer Größen (z.B. Kräfte, Momente, Geschwindigkeiten)
 - Konstruktion zusammengesetzter Formen (Pfeilschaft + Pfeilspitze)
 - Berechnung der Eckpunkte einer Pfeilspitze über Orthogonalvektoren
 
@@ -176,39 +258,54 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ### Visualisierung der Kräfte: Pfeile
 
 - Berechnete Größen wie Kräfte (Zug/Druck) oder Geschwindigkeiten sollen als Pfeile dargestellt werden.
-- Ein Pfeil besteht aus einem **Pfeilkörper** (eine Linie) und einer **Pfeilspitze** (ein Dreieck oder Polygon).
-- Die Pfeilspitze sitzt am Endpunkt der Linie und muss korrekt zur Richtung des Pfeils ausgerichtet sein.
+- Ein Pfeil besteht aus einem **Pfeilkörper** (eine Linie) und einer **Pfeilspitze** (ein geschlossenes Polygon).
+- Die Pfeilspitze sitzt am Endpunkt der Linie und muss korrekt zur Richtung des Vektors ausgerichtet sein.
 - Die Koordinaten der Pfeilspitze lassen sich analytisch über Vektorgeometrie ermitteln.
 
 </div>
 <div>
 
-![Visualisierung](../../Quellen/WS25/IdealesFachwerk2D/Tafelbild_Visualisierung_Pfeilspitze_2D.jpg)
+![Visualisierung](../../Quellen/WS25/FachwerkIdeal2D/Tafelbild_Visualisierung_Pfeilspitze_2D.jpg)
 
 </div>
 </div>
 
 ---
 
-### Berechnung der Pfeilspitze
+### Analytische Berechnung der Pfeilspitze
+
+Gegeben sei der Endpunkt (Spitze) $\vec{P}_{tip}$ und der gerichtete Kraftvektor $\vec{F} = (F_x, F_y)^T$.
+
+1. **Normalisierter Richtungsvektor**:
+   $$\vec{u} = \frac{\vec{F}}{\|\vec{F}\|} = \frac{1}{\sqrt{F_x^2 + F_y^2}} \begin{pmatrix} F_x \\ F_y \end{pmatrix}$$
+
+2. **Orthogonalvektor (Normalenvektor, $90^\circ$ gedreht)**:
+   $$\vec{u}^\perp = \begin{pmatrix} -u_y \\ u_x \end{pmatrix}$$
+
+3. **Eckpunkte des Dreiecks (Länge $L$, Basisbreite $W$)**:
+   $$\vec{P}_1 = \vec{P}_{tip} - L \cdot \vec{u} + \frac{W}{2} \cdot \vec{u}^\perp$$
+   $$\vec{P}_2 = \vec{P}_{tip} - L \cdot \vec{u} - \frac{W}{2} \cdot \vec{u}^\perp$$
+
+---
+
+### Berechnung der Pfeilspitze in C#
 
 ```csharp
 /// <summary>
 /// Berechnet die Eckpunkte für ein Pfeilspitzen-Dreieck.
 /// </summary>
-/// <param name="tip">Die Position der Pfeilspitze.</param>
-/// <param name="direction">Der normalisierte Richtungsvektor des Pfeils.</param>
-/// <param name="size">Die Größe der Pfeilspitze in Pixeln.</param>
-/// <returns>Ein Array von Punkten für das Polygon der Pfeilspitze.</returns>
-public Point[] GetArrowhead(Point tip, Vector direction, double size)
+public Point[] GetArrowhead(Point tip, Vector direction, double length, double width)
 {
-    // Vektor, der 90° zur Richtung steht (Orthogonalvektor)
+    direction.Normalize(); // Richtungs-Einheitsvektor u
+    
+    // Orthogonalvektor u_perp (um 90 Grad gegen den Uhrzeigersinn gedreht)
     var perpendicular = new Vector(-direction.Y, direction.X);
 
-    // Eckpunkte der Pfeilspitze berechnen:
-    // Entlang der Richtung zurück und jeweils seitlich abspreizen
-    var p1 = tip - (size * direction) + (size / 2 * perpendicular);
-    var p2 = tip - (size * direction) - (size / 2 * perpendicular);
+    // Basis des Pfeildreiecks hinter der Spitze
+    Point basePoint = tip - (length * direction);
+
+    Point p1 = basePoint + (width / 2.0 * perpendicular);
+    Point p2 = basePoint - (width / 2.0 * perpendicular);
 
     return new Point[] { tip, p1, p2 };
 }
@@ -216,9 +313,335 @@ public Point[] GetArrowhead(Point tip, Vector direction, double size)
 
 ---
 
+## 3.4: Interaktive Steuerung im Canvas (Pan & Zoom)
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Anforderung: Navigation in großen Simulationsmodellen
+- Architekturansätze: Naives Neuzeichnen vs. Matrix-Transformation
+- Stufenloses Zoomen auf die aktuelle Mauszeiger-Position (`ScaleAt`)
+- Verschieben der Arbeitsfläche per Drag & Drop (`Pan`)
+- Rücktransformation für Interaktion und Selektion (`ScreenToWorld`)
+
+---
+
+### Navigationskonzept: Zwei Architekturansätze
+
+<div class="columns top">
+<div class="one">
+
+**Ansatz A: Naives Neuzeichnen**
+- Bei jeder Mausbewegung werden alle Weltkoordinaten neu berechnet.
+- Alle WPF-Shapes werden im Canvas verschoben (`Canvas.SetLeft`).
+- **Nachteile**:
+  - Extrem rechenintensiv bei vielen Objekten.
+  - Flackern bei schnellen Bewegungen.
+  - Koppelt Navigationszustand unnötig an Modelldaten.
+
+</div>
+<div class="one">
+
+**Ansatz B: GPU-`MatrixTransform`**
+- Modell wird einmalig auf den Canvas gezeichnet.
+- Navigation erfolgt über eine einzige **`MatrixTransform`** am Canvas.
+- **Vorteile**:
+  - Hardwarebeschleunigt über DirectX / GPU.
+  - 60+ FPS selbst bei Tausenden Linien.
+  - Vollständige Entkopplung: Modellgeometrie bleibt unverändert.
+
+</div>
+</div>
+
+---
+
+### XAML-Struktur für Pan & Zoom
+
+Ein übergeordneter Container (`Border` oder `Grid`) mit `ClipToBounds="True"` fängt die Maus-Events ab:
+
+```xml
+<Border ClipToBounds="True" Background="White"
+        MouseWheel="OnMouseWheel"
+        MouseDown="OnMouseDown"
+        MouseMove="OnMouseMove"
+        MouseUp="OnMouseUp">
+    <Canvas x:Name="SimulationCanvas">
+        <Canvas.RenderTransform>
+            <MatrixTransform x:Name="CanvasMatrixTransform" />
+        </Canvas.RenderTransform>
+    </Canvas>
+</Border>
+```
+
+- `ClipToBounds="True"`: Verhindert, dass herausgezoomte Elemente über den Rand hinausragen.
+- `CanvasMatrixTransform`: Steuert Pan (Translation) und Zoom (Skalierung) kombiniert in einer $3 \times 3$ Affinen Transformationsmatrix.
+
+---
+
+### Zoom zentriert auf den Mauszeiger
+
+**Problem**: Ein naiver Zoom skaliert um den Ursprung $(0,0)$. Der anvisierte Punkt "springt" weg.
+**Lösung**: Der Punkt unter dem Cursor soll während des Zoomens an derselben Bildschirmposition verbleiben (`ScaleAt`):
+
+```csharp
+private void OnMouseWheel(object sender, MouseWheelEventArgs e)
+{
+    Point mousePos = e.GetPosition(SimulationCanvas);
+    
+    // Zoomfaktor bestimmen (z.B. +15% bzw. -13%)
+    double zoom = e.Delta > 0 ? 1.15 : 1.0 / 1.15;
+
+    Matrix m = CanvasMatrixTransform.Matrix;
+    
+    // Skaliert um die exakte Position des Mauszeigers
+    m.ScaleAt(zoom, zoom, mousePos.X, mousePos.Y);
+    
+    CanvasMatrixTransform.Matrix = m;
+}
+```
+
+---
+
+### Verschieben (Pan / Dragging) per Maus
+
+Damit die Maus bei schnellen Bewegungen nicht "abreißt", wird **`CaptureMouse()`** genutzt:
+
+```csharp
+private Point _lastMousePos;
+private bool _isPanning;
+
+private void OnMouseDown(object sender, MouseButtonEventArgs e)
+{
+    if (e.MiddleButton == MouseButtonState.Pressed || e.LeftButton == MouseButtonState.Pressed)
+    {
+        _lastMousePos = e.GetPosition(this);
+        _isPanning = true;
+        ((IInputElement)sender).CaptureMouse();
+    }
+}
+
+private void OnMouseUp(object sender, MouseButtonEventArgs e)
+{
+    _isPanning = false;
+    ((IInputElement)sender).ReleaseMouseCapture();
+}
+```
+
+---
+
+### Verschieben: Die `MouseMove`-Logik
+
+In `MouseMove` wird die Differenz zur vorherigen Mausposition direkt auf die Matrix addiert:
+
+```csharp
+private void OnMouseMove(object sender, MouseEventArgs e)
+{
+    if (!_isPanning) return;
+
+    Point currentPos = e.GetPosition(this);
+    Vector delta = currentPos - _lastMousePos;
+    _lastMousePos = currentPos;
+
+    Matrix m = CanvasMatrixTransform.Matrix;
+    
+    // Verschiebt den Canvas um die Mausdifferenz
+    m.Translate(delta.X, delta.Y);
+    
+    CanvasMatrixTransform.Matrix = m;
+}
+```
+
+- Funktioniert nahtlos in jedem beliebigen Zoomzustand.
+
+---
+
+### Rücktransformation: Bildschirm zu Welt (`ScreenToWorld`)
+
+Für Benutzerinteraktionen (z.B. Anklicken eines Knotens oder Einzeichnen einer Last) muss die Klickposition wieder in physikalische Weltkoordinaten umgerechnet werden:
+
+```csharp
+public Point ScreenToWorld(Point screenPixel, Matrix canvasMatrix, CoordinateTransformer trans)
+{
+    // 1. Pan- und Zoom-Matrix invertieren
+    Matrix invMatrix = canvasMatrix;
+    invMatrix.Invert();
+    Point unzoomedCanvasPoint = invMatrix.Transform(screenPixel);
+
+    // 2. Koordinatentransformation (Welt -> Screen) invertieren:
+    double worldX = _xMin + (unzoomedCanvasPoint.X - _xOffset) / _scale;
+    double worldY = _yMax - (unzoomedCanvasPoint.Y - _yOffset) / _scale; // Y-Invertierung!
+
+    return new Point(worldX, worldY);
+}
+```
+
+---
+
+## 3.5: Performance & Architektur: Shapes vs. DrawingVisual
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Das Performance-Bottleneck von WPF `Shape`-Elementen
+- Der interne Aufbau: `UIElement`-Overhead und Layout-Pass
+- High-Performance Vektorgrafik mit `DrawingVisual` & `DrawingContext`
+- Erstellung eines benutzerdefinierten `VisualHost`-Controls
+- Architektur- und Performancevergleich
+
+---
+
+### Das Problem mit WPF `Shape`-Elementen
+
+`Line`, `Rectangle`, `Ellipse` und `Path` sind sehr komfortabel, stoßen aber schnell an Grenzen:
+
+<div class="columns top">
+<div class="one">
+
+**Der `UIElement`-Overhead:**
+- Jedes `Shape` erbt von:
+  `Visual` $\rightarrow$ `UIElement` $\rightarrow$ `FrameworkElement` $\rightarrow$ `Shape`.
+- Hunderte Dependency Properties, Focus-Handling, Event-Routing, Styling, Animations-Slots.
+- Hoher Speicherverbrauch (mehrere KB pro Shape-Instanz).
+
+</div>
+<div class="one">
+
+**Der Layout-Pass (`Measure`/`Arrange`):**
+- Jede Änderung oder jedes Hinzufügen triggert den WPF-Layout-Cycle.
+- **Konsequenz**:
+  - Bis 1.000 Shapes: Flüssig (60 FPS).
+  - Ab 2.000 Shapes: Merkbare Verzögerungen.
+  - Ab 5.000 Shapes: Frame-Einbrüche (< 10 FPS), UI friert bei Resize ein.
+
+</div>
+</div>
+
+---
+
+### Die Lösung: `DrawingVisual`
+
+`DrawingVisual` ist ein extrem leichtgewichtiger Visual-Knoten ohne UI-Ballast:
+
+- Erbt direkt von `Visual` (kein `UIElement`, kein `FrameworkElement`).
+- **Kein** Layout-Pass, kein Data Binding, keine separaten Event-Handler pro Vektorelement.
+- Vektorbefehle werden direkt in einen kompakten **`DrawingContext`** geschrieben.
+- Die Zeichenbefehle werden hardwarebeschleunigt als serialisierte Vektor-Streams direkt an die GPU übergeben.
+
+```
+UIElement-Hierarchie (Schwergewicht):
+[Shape] ---> [FrameworkElement] ---> [UIElement] ---> [Visual]
+
+Leichtgewicht-Hierarchie:
+[DrawingVisual] ------------------------------------> [Visual]
+```
+
+---
+
+### Zeichnen im `DrawingContext`
+
+```csharp
+var visual = new DrawingVisual();
+
+using (DrawingContext dc = visual.RenderOpen())
+{
+    // Golden Rule für WPF-Performance: Brushes und Pens FREEZEN!
+    var pen = new Pen(Brushes.SteelBlue, 2.0);
+    pen.Freeze();
+    var nodeBrush = Brushes.Crimson;
+    nodeBrush.Freeze();
+
+    // 10.000 Stäbe zeichnen:
+    foreach (var rod in rods)
+    {
+        dc.DrawLine(pen, rod.ScreenP1, rod.ScreenP2);
+    }
+
+    // 10.000 Knoten zeichnen:
+    foreach (var node in nodes)
+    {
+        dc.DrawEllipse(nodeBrush, null, node.ScreenPos, 3.0, 3.0);
+    }
+}
+```
+
+---
+
+### Das `VisualHost`-Control
+
+Um `DrawingVisual`-Objekte im WPF-Fenster anzuzeigen, erstellen wir ein schlankes Control:
+
+```csharp
+public class FastDrawingCanvas : FrameworkElement
+{
+    private readonly VisualCollection _children;
+    private readonly DrawingVisual _drawingVisual = new();
+
+    public FastDrawingCanvas()
+    {
+        _children = new VisualCollection(this) { _drawingVisual };
+    }
+
+    protected override int VisualChildrenCount => _children.Count;
+    protected override Visual GetVisualChild(int index) => _children[index];
+
+    public void Render(Action<DrawingContext> renderAction)
+    {
+        using (DrawingContext dc = _drawingVisual.RenderOpen())
+        {
+            renderAction(dc);
+        }
+    }
+}
+```
+
+---
+
+### Alternative: Direktes Überschreiben von `OnRender`
+
+Wenn kein selektives Hit-Testing oder Multi-Layer-Visuals benötigt werden, kann auch direkt `OnRender` überschrieben werden:
+
+```csharp
+public class SimpleRenderCanvas : FrameworkElement
+{
+    public SimulationData? Data { get; set; }
+
+    protected override void OnRender(DrawingContext dc)
+    {
+        base.OnRender(dc);
+        if (Data == null) return;
+
+        var pen = new Pen(Brushes.Black, 1.0);
+        pen.Freeze();
+
+        foreach (var bar in Data.Bars)
+        {
+            dc.DrawLine(pen, bar.P1, bar.P2);
+        }
+    }
+}
+```
+
+- Neuzeichnen wird gezielt über `this.InvalidateVisual()` ausgelöst.
+
+---
+
+### Technologie- und Performancevergleich
+
+| Kriterium | WPF `Shapes` (`Canvas`) | `DrawingVisual` / `OnRender` | `WriteableBitmap` (Pixel) |
+| :--- | :--- | :--- | :--- |
+| **Grafiktyp** | Vektor (High-Level) | Vektor (Low-Level) | Rastergrafik (Pixel) |
+| **Max. Elementanzahl** | $\approx 1.000 - 2.000$ | $\mathbf{> 100.000}$ | Unbegrenzt (pixelweise) |
+| **Speicherverbrauch** | Sehr hoch ($\approx$ KB / Shape) | Sehr gering ($\approx$ Bytes) | Fest ($W \times H \times 4$ Bytes) |
+| **Zoom-Verhalten** | Stufenlos scharf | **Stufenlos scharf** | Pixelig beim Hineinzoomen |
+| **Interaktivität** | Direkt (`Click`, `Hover`) | Hit-Testing (`HitTest()`) | Koordinatenberechnung |
+| **Typischer Einsatz** | UI-Icons, kleine Schemata | **Fachwerke, CAD, FE-Netze** | Wärmebilder, Partikelfelder |
+
+---
+
 # Zusammenfassung Kapitel 3
 
-- **Vektorgrafiken** stellen visuelle Inhalte durch mathematisch definierte Grundformen dar und sind auflösungsunabhängig skalierbar.
-- Das WPF-Control **`Canvas`** bietet eine flexible Arbeitsfläche für die absolute Platzierung geometrischer Formen (`Line`, `Polygon`, `Path`).
-- Eine präzise **Koordinatentransformation** (Skalierung mit Erhalt des Seitenverhältnisses, Verschiebung und Invertierung der Y-Achse) bildet physikalische Weltkoordinaten auf Bildschirmkoordinaten ab.
-- Mittels einfacher **Vektoralgebra** (z.B. Orthogonalvektoren) können komplexe technische Grafikelemente wie ausgerichtete Kraftpfeile dynamisch generiert werden.
+- **Vektorgrafiken** bieten auflösungsunabhängige, stufenlos skalierbare Darstellungen für technische Simulationsmodelle.
+- Die **Koordinatentransformation** bildet kontinuierliche Weltkoordinaten ($+Y$ nach oben, Meter) auf diskrete Canvas-Koordinaten ($+Y$ nach unten, Pixel) ab:
+  - **Uniform Scaling** ($s = \min(s_x, s_y)$) verhindert Verzerrungen.
+  - Zentrierungs-Offsets und `margin` garantieren eine saubere, vollständige Platzierung.
+- Mittels **Vektoralgebra** (Richtungs- und Orthogonalvektoren) werden Pfeilschäfte und Pfeilspitzen analytisch konstruiert.
+- Eine **`MatrixTransform`** am Canvas ermöglicht flüssiges, hardwarebeschleunigtes **Pan & Zoom** mit Zentrierung auf den Mauszeiger (`ScaleAt`).
+- Bei großen Datenmengen ($> 2.000$ Elemente) bricht der WPF `Shape`-Baum ein. **`DrawingVisual` / `DrawingContext`** bietet professionelle High-Performance-Vektorgrafik für komplexe Engineering-Anwendungen.

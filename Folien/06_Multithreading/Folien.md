@@ -16,6 +16,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 - 6.3: Threadsichere Datenstrukturen (`ConcurrentBag<T>`)
 - 6.4: Synchronisation & Race Conditions (`lock`)
 - 6.5: Parallele Zufallszahlen & thread-lokale Zustände
+- 6.6: Multithreading in WPF-Anwendungen
 
 ---
 
@@ -271,6 +272,266 @@ Parallel.For(0, numberOfRuns, i =>
 
 ---
 
+## 6.6: Multithreading in WPF-Anwendungen
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Das Problem des blockierten UI-Threads (UI-Freeze)
+- Asynchrone Ausführung mit `async`/`await` und `Task.Run`
+- Zusammenspiel von UI-Thread und Hintergrund-Worker (Architektur)
+- Thread-sichere UI-Aktualisierung: `IProgress<T>` vs. `Dispatcher.Invoke`
+- Kooperativer Abbruch mit `CancellationTokenSource`
+
+---
+
+### Das Problem des UI-Einfrierens (UI-Freeze)
+
+WPF-Anwendungen basieren auf einem **Single-Threaded Apartment (STA)**:
+- Ein einziger Thread (der **UI-Thread / Dispatcher**) wickelt alle Nutzerinteraktionen (Klicks, Eingaben) sowie das Rendering und Layout ab.
+- Wird eine rechenintensive Simulation direkt in einem Event-Handler aufgerufen, blockiert der UI-Thread vollständig.
+
+<div class="columns top">
+<div class="one">
+
+**Symptome des UI-Freeze:**
+- Fenster reagiert nicht mehr ("Keine Rückmeldung")
+- Animationen und Fortschrittsbalken frieren ein
+- Abbruch über die GUI unmöglich
+
+</div>
+<div class="one">
+
+**Lösungsmuster:**
+- Rechenlast auf **ThreadPool-Worker** auslagern (`Task.Run`)
+- UI-Thread während der Berechnung freigeben (`await`)
+- Ergebnisse thread-sicher zurückführen
+
+</div>
+</div>
+
+---
+
+### Asynchrone Ausführung: `async`/`await` & `Task.Run`
+
+Mit `async`/`await` und `Task.Run` wird die Simulation im Hintergrund berechnet, ohne das UI zu blockieren:
+
+<div class="columns top">
+<div class="one">
+
+**Blockierend (UI friert ein):**
+```csharp
+private void Start_Click(
+    object sender, RoutedEventArgs e)
+{
+    // Blockiert UI-Thread!
+    var res = RunSimulation();
+    ResultText.Text = $"Wert: {res}";
+}
+```
+
+</div>
+<div class="one">
+
+**Asynchron (UI bleibt reaktiv):**
+```csharp
+private async void Start_Click(
+    object sender, RoutedEventArgs e)
+{
+    StartBtn.IsEnabled = false;
+
+    // Auf ThreadPool auslagern
+    var res = await Task.Run(
+        () => RunSimulation());
+
+    // Rückkehr auf UI-Thread!
+    ResultText.Text = $"Wert: {res}";
+    StartBtn.IsEnabled = true;
+}
+```
+
+</div>
+</div>
+
+---
+
+### Architektur: UI-Thread & Hintergrund-Worker
+
+<div class="columns top">
+<div class="two">
+
+![WPF Multithreading Architektur](./Diagramme/Multithreading_WPF_Architektur.svg)
+
+</div>
+<div class="one">
+
+**Architekturprinzipien:**
+- **Entkopplung:** Der UI-Thread bleibt reaktiv für Nutzerinteraktionen.
+- **ThreadPool-Worker:** Führt die rechenintensive Simulation parallel aus.
+- **`IProgress<T>`:** Thread-sichere Entkopplung für Zwischenstände via `SynchronizationContext`.
+- **`CancellationToken`:** Ermöglicht den geordneten Abbruch aus der UI.
+
+</div>
+</div>
+
+---
+
+### Thread-sichere UI-Aktualisierung: `IProgress<T>`
+
+Der Hintergrund-Worker darf **nicht** direkt auf UI-Elemente zugreifen (`InvalidOperationException: Der aufrufende Thread kann nicht auf dieses Objekt zugreifen...`).
+
+<div class="columns top">
+<div class="one">
+
+**Warum kein unbedachtes `Dispatcher.Invoke`?**
+- `Dispatcher.Invoke` blockiert den Worker synchron bis das UI zeichnet $\to$ Performanceverlust & Deadlock-Gefahr.
+- Koppelt die Simulationslogik fest an WPF-Klassen (keine Wiederverwendbarkeit in CLI/Tests).
+
+</div>
+<div class="one">
+
+**Best Practice: `IProgress<T>` & `Progress<T>`**
+- `Progress<T>` erfasst bei Instanziierung den `SynchronizationContext` des UI-Threads.
+- `progress.Report(...)` ist nicht-blockierend und ruft den Callback automatisch im UI-Thread auf.
+- Simulationslogik bleibt unabhängig von WPF!
+
+</div>
+</div>
+
+---
+
+### Code-Beispiel: Fortschrittsmeldung mit `Progress<T>`
+
+<div class="columns top">
+<div class="one">
+
+**WPF-Schicht (UI-Thread):**
+```csharp
+private async void Start_Click(
+    object sender, RoutedEventArgs e)
+{
+    var progress = 
+        new Progress<SimulationStatus>(s =>
+    {
+        // Läuft sicher im UI-Thread!
+        ProgressBar.Value = s.Percent;
+        StatusText.Text = $"Schritt {s.Step}";
+    });
+
+    await Task.Run(() => 
+        RunSimulation(progress));
+}
+```
+
+</div>
+<div class="one">
+
+**Simulationsmodell (WPF-unabhängig):**
+```csharp
+public void RunSimulation(
+    IProgress<SimulationStatus> progress)
+{
+    for (int i = 0; i < totalSteps; i++)
+    {
+        StepPhysics();
+
+        // UI nicht überfluten!
+        if (i % 50 == 0)
+        {
+            progress?.Report(
+                new SimulationStatus(i, totalSteps));
+        }
+    }
+}
+```
+
+</div>
+</div>
+
+---
+
+### Abbrechen langer Simulationen: `CancellationToken`
+
+Lange Simulationen müssen vom Benutzer vorzeitig gestoppt werden können:
+- `Thread.Abort()` ist veraltet und gefährlich (führt in modernem .NET zu Ausnahmen und inkonsistenten Zuständen).
+- In modernem .NET erfolgt der Abbruch **kooperativ** über `CancellationTokenSource` (CTS).
+
+<div class="columns top">
+<div class="one">
+
+**Rolle der `CancellationTokenSource`**
+- Wird im UI-Thread erzeugt und verwaltet.
+- `cts.Cancel()` signalisiert allen assoziierten Tokens den Abbruchwunsch.
+- Kann bei Bedarf auch ein Zeitlimit definieren (`CancelAfter(timeout)`).
+
+</div>
+<div class="one">
+
+**Rolle des `CancellationToken`**
+- Wird als leichtgewichtige Struktur an den Worker übergeben.
+- Der Worker prüft regelmäßig:
+  - `token.IsCancellationRequested` oder
+  - `token.ThrowIfCancellationRequested()`
+- Ermöglicht sauberes Freigeben von Ressourcen.
+
+</div>
+</div>
+
+---
+
+### Code-Beispiel: Kooperativer Abbruch mit `CancellationToken`
+
+<div class="columns top">
+<div class="one">
+
+**UI-Ereignisbehandlung & Abbruch:**
+```csharp
+private CancellationTokenSource _cts;
+
+private async void Start_Click(
+    object s, RoutedEventArgs e)
+{
+    _cts = new CancellationTokenSource();
+    CancelBtn.IsEnabled = true;
+    try
+    {
+        await Task.Run(() => 
+            Simulate(_cts.Token), _cts.Token);
+        Status.Text = "Fertiggestellt.";
+    }
+    catch (OperationCanceledException)
+    {
+        Status.Text = "Simulation abgebrochen.";
+    }
+    finally { CancelBtn.IsEnabled = false; }
+}
+
+private void Cancel_Click(
+    object s, RoutedEventArgs e) => _cts?.Cancel();
+```
+
+</div>
+<div class="one">
+
+**Simulationsschleife mit Token-Prüfung:**
+```csharp
+public void Simulate(CancellationToken token)
+{
+    for (int step = 0; step < maxSteps; step++)
+    {
+        // Prüft auf Benutzerabbruch
+        token.ThrowIfCancellationRequested();
+
+        // Numerischer Zeitschritt
+        IntegrateStep();
+    }
+}
+```
+
+</div>
+</div>
+
+---
+
 # Zusammenfassung Kapitel 6
 
 - Multithreading ist der Schlüssel zur vollen Auslastung moderner Mehrkern-CPUs bei rechenintensiven Simulationen.
@@ -278,3 +539,4 @@ Parallel.For(0, numberOfRuns, i =>
 - **Race Conditions** entstehen beim gleichzeitigen Schreiben auf geteilte Ressourcen; sie lassen sich durch `lock` (gegenseitigen Ausschluss) verhindern.
 - **`ConcurrentBag<T>`** bietet eine threadsichere Lösung zum Sammeln paralleler Simulationsergebnisse.
 - Zufallszahlengeneratoren (`System.Random`) müssen strikt thread-lokal und mit individuellem Seed betrieben werden, um Korruption zu vermeiden und Reproduzierbarkeit zu wahren.
+- In **WPF-Anwendungen** entkoppelt `await Task.Run(...)` die Simulation vom UI-Thread; **`IProgress<T>`** garantiert thread-sichere Zwischenstände und **`CancellationToken`** ermöglicht den kontrollierten Benutzerabbruch.

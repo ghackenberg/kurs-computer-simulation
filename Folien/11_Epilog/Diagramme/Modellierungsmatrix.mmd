@@ -1,0 +1,37 @@
+flowchart TB
+    subgraph Matrix ["Taxonomie & Modellierungsmatrix"]
+        direction TB
+
+        subgraph Dimensionen ["Klassifikationsachsen"]
+            direction LR
+            Zeit["<b>Zeitachse (t)</b><br/>Statisch &bull; Kontinuierlich (t &isin; ℝ) &bull; Diskret (t<sub>k</sub>, t<sub>e</sub>)"]
+            Zustand["<b>Zustandsraum (x, s)</b><br/>Kontinuierlich (ℝⁿ) &bull; Diskret (S) &bull; Hybrid (ℝⁿ &times; S)"]
+        end
+
+        subgraph Quadranten ["Die 4 Modellierungsarten im Kurs"]
+            direction TB
+
+            subgraph Row1 ["Kontinuierlicher Zustandsraum"]
+                direction LR
+                M_Stat["<b>Statische Modelle (Kap. 7)</b><br/>• <i>Zeit:</i> Zeitinvariant / Stationär<br/>• <i>Zustand:</i> Stetig x &isin; ℝⁿ (z.B. Stabkräfte, Spannungen)<br/>• <i>Mathematik:</i> Gleichungssysteme f(x, u) = 0, A&middot;x = b<br/>• <i>Solver:</i> LU-Zerlegung, Iterativ (Math.NET)"]
+                M_Kont["<b>Kontinuierliche dynamische Modelle (Kap. 8)</b><br/>• <i>Zeit:</i> Kontinuierlich t &isin; ℝ<br/>• <i>Zustand:</i> Stetig x(t) &isin; ℝⁿ (z.B. Position, Strom)<br/>• <i>Mathematik:</i> DGL-Systeme dx/dt = f(x, u, t)<br/>• <i>Solver:</i> Explizit/Implizit Euler, Runge-Kutta RK4"]
+            end
+
+            subgraph Row2 ["Diskreter & Hybrider Zustandsraum"]
+                direction LR
+                M_Disk["<b>Diskrete dynamische Modelle (Kap. 9)</b><br/>• <i>Zeit:</i> Diskret getaktet t<sub>k</sub> oder Ereigniszeit t<sub>e</sub><br/>• <i>Zustand:</i> Diskret / Zählbar s &isin; S (z.B. Warteschlange)<br/>• <i>Mathematik:</i> s<sub>k+1</sub> = &delta;(s<sub>k</sub>, e), Ereignislisten<br/>• <i>Solver:</i> Next-Event-Time-Advance, DEVS"]
+                M_Hybr["<b>Hybride dynamische Modelle (Kap. 10)</b><br/>• <i>Zeit:</i> Stetige Phasen mit diskreten Event-Sprüngen<br/>• <i>Zustand:</i> Gemischt (x(t), m) &isin; ℝⁿ &times; M<br/>• <i>Mathematik:</i> DGLs + Schaltbedingungen / Kollisionen<br/>• <i>Solver:</i> ODE-Integrator mit Zero-Crossing Detection"]
+            end
+        end
+    end
+
+    Dimensionen --> Quadranten
+
+    style Matrix fill:#fafafa,stroke:#333,stroke-width:1px
+    style Dimensionen fill:#f0f4f8,stroke:#004B96,stroke-width:2px
+    style Quadranten fill:#ffffff,stroke:#bbb,stroke-width:1px
+
+    style M_Stat fill:#e8f4fd,stroke:#004B96,stroke-width:2px
+    style M_Kont fill:#e8f8f5,stroke:#00897b,stroke-width:2px
+    style M_Disk fill:#fff8e1,stroke:#f57f17,stroke-width:2px
+    style M_Hybr fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px

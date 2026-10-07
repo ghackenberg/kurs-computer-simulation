@@ -1,4 +1,4 @@
-﻿---
+---
 marp: true
 theme: fhooe
 header: 'Kapitel 9: Diskrete Dynamische Modelle'
@@ -541,48 +541,80 @@ else if (next is DepartureEvent)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- **Sammeln von Daten** während der Simulation (z.B. Warteschlangenlänge)
-- **Speicherung** der Daten in Listen für die spätere Auswertung
-- **Visualisierung** der Ergebnisse als Verlaufsdiagramme und Histogramme mittels `ScottPlot`
+- **Datenerfassung:** Aufzeichnung von Zeitreihen und Ereigniskennzahlen im Simulationslauf
+- **Verlaufsdiagramm:** Zeitlicher Verlauf der Warteschlangenlänge $L(t)$
+- **Häufigkeitsverteilung:** Histogramm der Kundenwartezeiten $W_i$
+- **Visualisierung mit ScottPlot:** Konkrete Auswertung (ScottPlot-Grundlagen siehe Kapitel 4)
 
 ---
 
-![bg contain right](../../Quellen/WS24/DynamischWarteschlange/Screenshot.png)
+### Datenerfassung im Simulationslauf
 
-### Analyse und Visualisierung
+Während der Simulation werden zwei Kategorien von Daten aufgezeichnet:
 
-Während der Simulation werden Daten wie die Belegung der Station, die Länge der Warteschlange und die Wartezeiten der Kunden gesammelt.
+<div class="columns">
+<div class="two">
+
+1. **Zustandsbeobachtung über die Zeit:**
+   - Erfassung bei jedem diskreten Zustandsübergang ($e_A, e_D$).
+   - Protokolliert Zeitstempel und aktuellen Zustand (z.B. Warteschlangenlänge $L(t)$, Status der Station).
+2. **Ereignisbezogene Kennzahlen:**
+   - Erfassung pro Kunde beim Verlassen der Warteschlange.
+   - Wartezeit: $W_i = t_{\text{Bedienbeginn}} - t_{\text{Ankunft}}$
+
+> [!NOTE]
+> Für die allgemeinen Grundlagen der Diagrammbibliothek `ScottPlot` (z.B. WPF-Steuerelemente `WpfPlot`, Achsenkonfiguration, Styling und Performance) wird auf **Kapitel 4 (Visualisierung 2D: Diagramme)** verwiesen.
+
+</div>
+<div>
 
 ```csharp
-// Listen für die Visualisierung
-public List<double> ChartTime = new List<double>();
-public List<bool> ChartBusy = new List<bool>();
-public List<int> ChartLength = new List<int>();
-public List<double> WaitTime = new List<double>();
+// Zeitreihen für Zustandsverläufe
+public List<double> ChartTime = new();
+public List<int> ChartLength = new();
+
+// Kennzahlen pro Kunde
+public List<double> WaitTimes = new();
+
+// Bei jeder Zustandsänderung:
+ChartTime.Add(CurrentTime);
+ChartLength.Add(Queue.Count);
+
+// Bei Bedienbeginn eines Kunden:
+WaitTimes.Add(CurrentTime - customer.ArrivalTime);
 ```
 
-Nach dem Simulationslauf werden diese Daten verwendet, um Verläufe und Histogramme zu erstellen, z.B. mit der Bibliothek `ScottPlot`.
+</div>
+</div>
 
 ---
 
 <div class="columns">
 <div class="two">
 
-### Visualisierung mit ScottPlot
+### Auswertung 1: Verlauf der Warteschlangenlänge $L(t)$
 
-`ScottPlot` ist eine freie und quelloffene Bibliothek für .NET zur Erstellung von Diagrammen.
+Das Verlaufsdiagramm zeigt die dynamische Systembelastung über die Simulationsdauer:
 
-- **Einfache API:** Erlaubt das schnelle Erstellen von Diagrammen mit wenigen Codezeilen.
-- **Performant:** Optimiert für die interaktive Darstellung großer Datenmengen.
-- **Vielseitig:** Unterstützt eine Vielzahl von Diagrammtypen wie Linien-, Streu-, Balkendiagramme und Histogramme.
-- **Interaktiv:** Diagramme in WPF- und WinForms-Anwendungen sind standardmäßig interaktiv (zoomen, verschieben).
+- **Treppenfunktion:** Diskrete Ereignisse verändern die Länge sprunghaft um $\pm 1$.
+- **Erkenntnis:** Identifikation von Spitzenlasten, Stauphasen und Leerlaufzeiten der Bedienstation.
 
-Ideal für die schnelle Visualisierung von Simulationsergebnissen.
+```csharp
+var plot = new ScottPlot.Plot();
+var line = plot.Add.ScatterLine(times, lengths);
+line.Color = Colors.SteelBlue;
+line.LineWidth = 3f;
+
+plot.Title("Verlauf der Warteschlangenlänge L(t)");
+plot.XLabel("Simulationszeit t [min]");
+plot.YLabel("Kunden in der Warteschlange");
+plot.SavePng("Queue_Laenge_Verlauf.png", 800, 450);
+```
 
 </div>
-<div>
+<div class="two">
 
-![](https://scottplot.net/images/brand/favicon.svg)
+![](./Illustrationen/Queue_Laenge_Verlauf.png)
 
 </div>
 </div>
@@ -590,92 +622,68 @@ Ideal für die schnelle Visualisierung von Simulationsergebnissen.
 ---
 
 <div class="columns">
-<div class="three">
+<div class="two">
 
-### ScottPlot API: **Grundlagen**
+### Auswertung 2: Wartezeiten-Histogramm
 
-Die zentrale Klasse in ScottPlot ist `ScottPlot.Plot`. Eine Instanz davon repräsentiert ein Diagramm.
+Das Histogramm aggregiert die individuellen Wartezeiten in Klassenintervalle (Bins):
 
-**Typischer Workflow:**
-1.  **Plot-Objekt erhalten:** Entweder über ein `FormsPlot` (WinForms) oder `WpfPlot` (WPF) Control oder direkt `new Plot()`.
-2.  **Daten hinzufügen:** Mit Methoden wie `Plot.Add.Scatter()`, `Plot.Add.Line()`, `Plot.Add.Bar()`.
-3.  **Diagramm konfigurieren:** Achsenbeschriftungen (`Plot.XLabel()`, `Plot.YLabel()`), Titel (`Plot.Title()`), Legende (`Plot.Legend.IsVisible = true`).
-4.  **Rendern/Aktualisieren:** Das Diagramm neu zeichnen lassen (z.B. `WpfPlot.Plot.Render()`)
-
-</div>
-<div>
+- **Verteilungsform:** Bei Markov'schen Systemen (M/M/1) zeigt sich eine charakteristisch exponentiell abfallende Häufigkeit.
+- **Erkenntnis:** Ein Großteil der Kunden wartet kurz; seltene Extremwartezeiten ("Long Tail") werden sichtbar.
 
 ```csharp
-// Ein Plot-Objekt erhalten
-var myPlot = WpfPlotControl.Plot;
+var hist = ScottPlot.Statistics.Histogram
+    .WithBinCount(15, 0, 15);
+hist.AddRange(waitTimes);
 
-// Daten hinzufügen
-myPlot.Add.Scatter(xs, ys);
-
-// Achsen beschriften
-myPlot.XLabel("Zeit [s]");
-myPlot.YLabel("Wert");
-
-// Diagramm aktualisieren
-WpfPlotControl.Refresh();
+var bars = hist.Bins.Zip(hist.Counts, (pos, cnt) => 
+    new ScottPlot.Bar {
+        Position = pos, Value = cnt,
+        Size = hist.FirstBinSize * 0.85,
+        FillColor = Colors.SeaGreen.WithAlpha(0.7f),
+        LineColor = Colors.SeaGreen,
+        LineWidth = 1.2f
+    }).ToList();
+plot.Add.Bars(bars);
 ```
+
+</div>
+<div class="two">
+
+![](./Illustrationen/Queue_Wartezeit_Histogramm.png)
 
 </div>
 </div>
 
 ---
 
-### ScottPlot API: **Linien- und Streudiagramme**
+### Statistische Kennzahlen des Simulationslaufs
 
-```csharp
-// Daten für X- und Y-Achse
-double[] xs = { 1, 2, 3, 4, 5 };
-double[] ys1 = { 10, 12, 15, 13, 18 };
-double[] ys2 = { 8, 11, 13, 16, 14 };
+Aus den gesammelten Rohdaten lassen sich die zentralen Leistungsindikatoren berechnen:
 
-// Linien- und Streudiagramm hinzufügen
-var scatter1 = myPlot.Add.Scatter(xs, ys1);
-scatter1.Label = "Messreihe 1";
-scatter1.Color = ScottPlot.Colors.Blue;
-scatter1.MarkerSize = 5; // Punkte anzeigen
+<div class="columns">
+<div class="two">
 
-var scatter2 = myPlot.Add.Scatter(xs, ys2);
-scatter2.Label = "Messreihe 2";
-scatter2.Color = ScottPlot.Colors.Red;
-scatter2.LineStyle = ScottPlot.LineStyle.Dash; // Gestrichelte Linie
+#### 1. Mittlere Warteschlangenlänge $\bar{L}_q$
+Zeitgewichtetes Mittel über die Gesamtsimulationsdauer $T$:
+$$\bar{L}_q = \frac{1}{T} \int_0^T L(t) \, dt \approx \frac{1}{T} \sum_{k=1}^K L(t_{k-1}) \cdot (t_k - t_{k-1})$$
 
-// Legende anzeigen
-myPlot.Legend.IsVisible = true;
+#### 2. Mittlere Wartezeit $\bar{W}_q$
+Arithmetisches Mittel über alle $N$ bedienten Kunden:
+$$\bar{W}_q = \frac{1}{N} \sum_{i=1}^N W_i$$
 
-// Achsen automatisch anpassen
-myPlot.Axes.AutoScale();
-```
+</div>
+<div class="two">
 
----
+#### 3. Gesetz von Little (Plausibilitätsprüfung)
+Im stationären Zustand gilt bei mittlerer Ankunftsrate $\lambda$:
+$$\bar{L}_q = \lambda \cdot \bar{W}_q$$
 
-### ScottPlot API: **Histogramme**
+- Dient in der Praxis als elementarer Plausibilitätscheck: Stimmen simulierte Schlangenlänge und simulierte Wartezeit überein?
+- Abweichungen weisen auf Einschwingphasen (*Warm-up Period*) oder Modellierungsfehler hin.
 
-```csharp
-// Beispiel: Wartezeiten aus einer Simulation
-double[] waitTimes = { 1.2, 2.5, 1.8, 3.1, 2.0, 1.5, 2.8, 3.5, 2.2, 1.9 };
-
-// Histogramm-Daten berechnen
-// bins: Anzahl der Intervalle
-var hist = new ScottPlot.Statistics.Histogram(waitTimes, min: 0, max: 5, binCount: 10);
-
-// Histogramm zum Plot hinzufügen
-var bar = myPlot.Add.Bar(hist.Counts, hist.BinCenters);
-bar.Label = "Verteilung der Wartezeiten";
-bar.FillColor = ScottPlot.Colors.Green.WithAlpha(0.7);
-bar.BorderColor = ScottPlot.Colors.Green;
-
-// Achsen beschriften
-myPlot.XLabel("Wartezeit [min]");
-myPlot.YLabel("Häufigkeit");
-
-// Achsen automatisch anpassen
-myPlot.Axes.AutoScale();
-```
+</div>
+</div>
 
 ---
 
@@ -970,78 +978,131 @@ Das Ergebnis (z.B. mittlere Wartezeit = 4.7 min) ist nicht repräsentativ für d
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Grundprinzip der Monte-Carlo-Simulation
-- Monte-Carlo-Algorithmus
-- Parallelisierung zur Performance-Verbesserung
-- Task Parallel Library (`Parallel.For`)
-- Threadsichere Sammlungen (`ConcurrentBag<T>`)
-- Race Conditions und deren Vermeidung
-- Threadsicherheit von `System.Random`
+- **Grundidee:** Stochastische Simulation und Gesetz der großen Zahlen
+- **Zufallszahlen & Seeds:** Reproduzierbarkeit und statistische Unabhängigkeit
+- **Replikationsmethodik:** Schätzung von Erwartungswert, Varianz und Standardfehler
+- **Konfidenzintervalle:** Quantifizierung der Schätzgenauigkeit und Konvergenz $\mathcal{O}(1/\sqrt{N})$
+- **Parallele Replikation:** Skalierung mit `Parallel.For` (Verweis auf Kapitel 6)
 
 ---
 
-### Monte-Carlo-Simulation
+### Monte-Carlo-Simulation: Motivation & Methodik
 
-Die **Monte-Carlo-Methode** ist ein numerisches Verfahren, um statistische Eigenschaften eines Systems durch wiederholte Simulation zu schätzen.
+In stochastischen Modellen ist das Resultat eines einzelnen Simulationslaufs eine **Zufallsvariable**:
 
-**Grundprinzip:**
-1.  Führe die Simulation sehr oft durch ($N$ **Replikationen**).
-2.  Jede Replikation muss mit **unabhängigen Zufallszahlen** laufen (d.h. anderer Startwert / "Seed" für den Zufallszahlengenerator).
-3.  Sammle die Ergebnis-Kennzahl (z.B. mittlere Wartezeit) aus jeder einzelnen Replikation.
-4.  Werte die gesammelten Ergebnisse statistisch aus (z.B. Mittelwert, Varianz, Konfidenzintervall).
+- Ein einzelner Lauf liefert lediglich eine Stichprobe $X_1$ – keine Aussage über Streuung oder Schätzgüte möglich.
+- **Monte-Carlo-Prinzip:** Wiederhole das Experiment $N$-mal (**Replikationen**) unter identischen Systemparametern, aber mit **statistisch unabhängigen Zufallszahlen**.
+- Aus jeder Replikation $k$ wird die interessierende Kennzahl $X_k$ (z.B. mittlere Wartezeit $\bar{W}_k$) erhoben.
 
-Nach dem **Gesetz der großen Zahlen** nähert sich der Mittelwert der Ergebnisse mit steigendem $N$ dem wahren Erwartungswert der Kennzahl an.
+Nach dem **Gesetz der großen Zahlen** konvergiert der Stichprobenmittelwert $\bar{X}_N$ für $N \to \infty$ gegen den wahren Erwartungswert $\mu = \mathbb{E}[X]$:
+$$\lim_{N \to \infty} P(|\bar{X}_N - \mu| < \varepsilon) = 1 \quad \forall \varepsilon > 0$$
 
 ---
 
 <div class="columns">
 <div class="two">
 
-### Monte-Carlo-Algorithmus
+### Pseudo-Zufall & Seed-Management
+
+Computer erzeugen Zufallszahlen über deterministische Algorithmen (PRNG), gesteuert durch einen Initialisierungswert (**Seed**):
+
+- **Reproduzierbarkeit (Debugging & Validierung):**
+  - Identischer Seed $\rightarrow$ identische Zufallszahlenfolge $\rightarrow$ exakt reproduzierbares Systemverhalten.
+  - Essenziell für Regressionstests und wissenschaftliche Dokumentation.
+- **Statistische Unabhängigkeit:**
+  - Jede Replikation $k$ benötigt eine unabhängige Zufallssequenz: Eindeutiger Seed $s_k = s_{\text{base}} + k$.
+- **Multithreading:**
+  - `System.Random` ist **nicht threadsicher**! Geteilte Instanzen führen zu Race Conditions und verzerrten Verteilungen.
+  - *Lösung:* Eigene `Random`-Instanz pro Replikation/Thread mit individuellem Seed.
 
 </div>
-<div>
-
-![](./Illustrationen/MonteCarlo.jpg)
-
-</div>
-</div>
+<div class="two">
 
 ```csharp
-var results = new List<double>();
+// Ungeeignet: Eine globale Random-Instanz
+// führt im Multithreading zu Race Conditions!
+static Random sharedRnd = new Random();
+
+// Best Practice: Eindeutiger Seed pro Lauf
 int numberOfReplications = 1000;
+int baseSeed = 42;
 
 for (int i = 0; i < numberOfReplications; i++)
 {
-    // Wichtig: Jede Replikation braucht einen anderen Seed!
-    var simulation = new Simulation(seed: i); 
-    simulation.Run();
-    // Sammle die relevante Kenngröße aus dem Simulationslauf
-    if (simulation.WaitTimes.Any())
-    {
-        var averageWaitTime = simulation.WaitTimes.Average();
-        results.Add(averageWaitTime);
-    }
+    // Eindeutig deterministischer Seed:
+    var rnd = new Random(seed: baseSeed + i);
+    var sim = new QueueSimulation(rnd);
+    sim.Run();
 }
-
-// Werte die Ergebnisse aller Replikationen statistisch aus
-var overallMeanWaitTime = results.Average();
-var variance = results.Sum(d => Math.Pow(d - overallMeanWaitTime, 2)) / (results.Count - 1);
-var stdDev = Math.Sqrt(variance);
 ```
+
+</div>
+</div>
+
+---
+
+### Statistische Auswertung von Replikationen
+
+Seien $X_1, X_2, \dots, X_N$ die Kennzahlen aus $N$ unabhängigen Replikationen (i.i.d.):
+
+<div class="columns">
+<div class="two">
+
+#### 1. Stichprobenmittelwert (Punktschätzer)
+Unverzerrte Schätzung des Erwartungswerts $\mu = \mathbb{E}[X]$:
+$$\bar{X} = \frac{1}{N} \sum_{k=1}^N X_k$$
+
+#### 2. Empirische Stichprobenvarianz
+Unverzerrte Schätzung der Varianz $\sigma^2$:
+$$s^2 = \frac{1}{N-1} \sum_{k=1}^N (X_k - \bar{X})^2, \quad s = \sqrt{s^2}$$
+
+</div>
+<div class="two">
+
+#### 3. Standardfehler des Mittelwerts ($SE$)
+Gibt die Streuung des Schätzers $\bar{X}$ um den wahren Erwartungswert $\mu$ an:
+$$SE = \frac{s}{\sqrt{N}}$$
+
+> [!IMPORTANT]
+> **Konvergenzrate $\mathcal{O}(1/\sqrt{N})$:**
+> Um den Schätzfehler zu halbieren, muss die Anzahl der Replikationen $N$ **vervierfacht** ($4 \times N$) werden! Für eine Dezimalstelle mehr Genauigkeit sind $100 \times N$ Läufe erforderlich.
+
+</div>
+</div>
+
+---
+
+### Konfidenzintervalle
+
+Ein Punktschätzer $\bar{X}$ quantifiziert die Genauigkeit noch nicht. Das **Konfidenzintervall** liefert den Bereich, der den wahren Erwartungswert $\mu$ mit der Wahrscheinlichkeit $(1-\alpha)$ überdeckt:
+
+- **Zentraler Grenzwertsatz:** Für hinreichend großes $N$ ($N \ge 30$) ist der Mittelwert $\bar{X}$ näherungsweise normalverteilt: $\bar{X} \sim \mathcal{N}\left(\mu, \frac{\sigma^2}{N}\right)$.
+- **$(1-\alpha)$-Konfidenzintervall:**
+  $$KI_{1-\alpha} = \left[ \bar{X} - z_{1-\alpha/2} \cdot \frac{s}{\sqrt{N}}, \quad \bar{X} + z_{1-\alpha/2} \cdot \frac{s}{\sqrt{N}} \right]$$
+  - Für ein $95\%$-Konfidenzintervall ($\alpha = 0.05$): $z_{0.975} \approx 1.960$
+  - Für ein $99\%$-Konfidenzintervall ($\alpha = 0.01$): $z_{0.995} \approx 2.576$
+  - Für kleine Stichproben ($N < 30$): Student-$t$-Quantil $t_{N-1, 1-\alpha/2}$ anstelle von $z$ verwenden.
+
+> [!NOTE]
+> **Interpretation:** Wird das Gesamtexperiment aus $N$ Replikationen $100$-mal wiederholt, überdecken im statistischen Mittel $95$ der berechneten Konfidenzintervalle den wahren Parameter $\mu$.
 
 ---
 
 <div class="columns">
-<div>
+<div class="two">
 
-### Parallelisierung der Monte-Carlo-Simulation
+### Parallele Replikationen mit der TPL
 
-Da jede Replikation einer Monte-Carlo-Simulation **unabhängig** von den anderen ist, können alle Replikationen **parallel** ausgeführt werden.
+Monte-Carlo-Replikationen sind vollständig unabhängig voneinander (*embarrassingly parallel*) und skalieren nahezu ideal über alle CPU-Kerne:
 
-- Dies ist ein klassischer "Embarrassingly Parallel"-Anwendungsfall.
-- Auf modernen Multi-Core-CPUs kann dies zu einer massiven Beschleunigung führen.
-- Anstatt 10.000 Replikationen nacheinander auszuführen, kann man z.B. auf 8 Kernen jeweils 1.250 Replikationen gleichzeitig berechnen.
+- **Parallelisierung mit `Parallel.For`:**
+  - Automatische Verteilung der Schleifeniterationen auf ThreadPool-Worker.
+  - Aggregation der Replikationsergebnisse in einer threadsicheren Sammlung `ConcurrentBag<double>`.
+- **Zufallsisolierung:**
+  - Jede Iteration instanziiert ihre eigene `Random`-Instanz mit disjunktem Seed.
+
+> [!TIP]
+> Für die theoretischen Grundlagen zu Multi-Threading, Race Conditions, Synchronisation (`lock`) und der Task Parallel Library wird auf **Kapitel 6 (Multithreading)** verwiesen.
 
 </div>
 <div>
@@ -1053,185 +1114,30 @@ Da jede Replikation einer Monte-Carlo-Simulation **unabhängig** von den anderen
 
 ---
 
-### Implementierung der Parallelisierung
+### C#-Implementierung: Monte-Carlo & Konfidenzintervall
 
 ```csharp
-// Threadsichere Sammlung für die Ergebnisse
 var results = new ConcurrentBag<double>();
-int numberOfReplications = 10000;
+int N = 10_000;
+int baseSeed = 42;
 
-Parallel.For(0, numberOfReplications, i =>
+// 1. Parallele Durchführung aller Replikationen
+Parallel.For(0, N, i =>
 {
-    // Wichtig: Jeder Thread braucht eine eigene Random-Instanz,
-    // initialisiert mit einem eindeutigen Seed.
-    var threadLocalRandom = new Random(i);
-
-    // Simulation mit der thread-lokalen Random-Instanz durchführen
-    var simulation = new Simulation(random: threadLocalRandom); 
-    simulation.Run();
-    
-    if (simulation.WaitTimes.Any())
-    {
-        var averageWaitTime = simulation.WaitTimes.Average();
-        results.Add(averageWaitTime);
-    }
-});
-```
-
----
-
-### Task Parallel Library: `Parallel.For`
-
-`Parallel.For` ist eine Methode aus der Task Parallel Library (TPL) in .NET, die eine `for`-Schleife parallelisiert.
-
-- Die TPL kümmert sich automatisch um die Erstellung und Verwaltung von Threads und die Aufteilung der Arbeit auf die verfügbaren CPU-Kerne.
-- Der Schleifenkörper wird als *Lambda*-Ausdruck übergeben, der für jede Iteration ausgeführt wird – potenziell auf einem anderen Thread.
-
-<div class="columns">
-<div>
-
-**Sequentiell:**
-```csharp
-for (int i = 0; i < 100; i++)
-{
-    DoWork(i);
-}
-```
-
-</div>
-<div>
-
-**Parallel:**
-```csharp
-Parallel.For(0, 100, i =>
-{
-    DoWork(i);
-});
-```
-
-</div>
-</div>
-
----
-
-### Threadsichere Sammlungen: `ConcurrentBag<T>`
-
-Wenn mehrere Threads gleichzeitig auf eine Standard-Collection wie `List<T>` schreibend zugreifen, kann dies zu Datenkorruption (*Race Conditions*) führen.
-
-- `ConcurrentBag<T>` ist eine threadsichere Collection, die für Szenarien optimiert ist, in denen die Reihenfolge der Elemente keine Rolle spielt.
-- Sie erlaubt das gleichzeitige Hinzufügen von Elementen durch mehrere Threads ohne explizite `lock`-Anweisungen.
-
-<div class="columns">
-<div>
-
-**Nicht threadsicher:**
-```csharp
-var list = new List<double>();
-
-// Führt zu Fehlern!
-Parallel.For(0, 100, i =>
-{
-    list.Add(i * 2.0);
-});
-```
-
-</div>
-<div>
-
-**Threadsicher:**
-```csharp
-var bag = new ConcurrentBag<double>();
-
-// Sicher!
-Parallel.For(0, 100, i =>
-{
-    bag.Add(i * 2.0);
-});
-```
-
-</div>
-</div>
-
----
-
-### Exkurs: **Race Conditions**
-
-Eine **Race Condition** (Wettlaufsituation) tritt auf, wenn mehrere Threads gleichzeitig auf dieselben gemeinsam genutzten Daten zugreifen und versuchen, diese zu ändern. Das Endergebnis hängt dann von der unvorhersehbaren Reihenfolge ab, in der die Threads ausgeführt werden.
-
-**Konsequenzen:**
-- **Falsche Ergebnisse:** Die Daten können inkonsistent oder fehlerhaft sein.
-- **Datenkorruption:** Der Zustand des Programms kann unbrauchbar werden.
-- **Schwer zu debuggen:** Da Race Conditions nicht deterministisch sind, treten sie oft nur sporadisch auf und sind schwer zu reproduzieren.
-
-**Beispiel:** Zwei Threads inkrementieren einen gemeinsamen Zähler. Wenn der Zugriff nicht synchronisiert ist, kann der Zähler einen falschen Endwert haben, da eine Inkrementierung die andere überschreiben könnte.
-
----
-
-### Code-Beispiel: Race Condition mit Zähler
-
-Dieses Beispiel zeigt, wie ein gemeinsam genutzter Zähler bei parallelem Zugriff ohne Synchronisation zu falschen Ergebnissen führen kann und wie dies mit einem `lock`-Statement behoben wird.
-
-<div class="columns top">
-<div>
-
-**Falsches Ergebnis (ohne `lock`):**
-```csharp
-int counter = 0;
-
-Parallel.For(0, 10000, _ =>
-{
-    // Mehrere Threads versuchen gleichzeitig,
-    // 'counter' zu lesen, zu inkrementieren und
-    // zu schreiben. Dies führt zu Datenverlust.
-    counter++; // Nicht threadsicher!
+    var rnd = new Random(seed: baseSeed + i);
+    var sim = new QueueSimulation(rnd);
+    sim.Run();
+    results.Add(sim.AverageWaitTime);
 });
 
-Console.WriteLine($"Ergebnis (falsch): {counter}");
-// Erwartet: 10000, Tatsächlich: < 10000
-```
+// 2. Statistische Auswertung & 95%-Konfidenzintervall
+double mean = results.Average();
+double variance = results.Sum(x => Math.Pow(x - mean, 2)) / (results.Count - 1);
+double stdDev = Math.Sqrt(variance);
+double stdError = stdDev / Math.Sqrt(results.Count);
 
-</div>
-<div>
+double ciLower = mean - 1.960 * stdError;
+double ciUpper = mean + 1.960 * stdError;
 
-**Korrigiertes Ergebnis (mit `lock`):**
-```csharp
-int counter = 0;
-
-// Ein Objekt, das als Sperre dient.
-// Nur ein Thread kann gleichzeitig den
-// Code im 'lock'-Block ausführen.
-object lockObject = new object();
-
-Parallel.For(0, 10000, _ =>
-{
-    lock (lockObject) // Threadsicher!
-    {
-        counter++;
-    }
-});
-
-Console.WriteLine($"Ergebnis (korrekt): {counter}");
-// Erwartet: 10000, Tatsächlich: 10000
-```
-
-</div>
-</div>
-
----
-
-### Threadsicherheit von `System.Random`
-
-Die Klasse `System.Random` ist **nicht threadsicher**. Wenn mehrere Threads dieselbe `Random`-Instanz verwenden, kann deren interner Zustand beschädigt werden. Dies führt zu fehlerhaften oder nicht mehr zufälligen Zahlenfolgen.
-
-**Lösung:** Jeder Thread muss seine eigene, unabhängige `Random`-Instanz erhalten.
-- In einer `Parallel.For`-Schleife wird dies erreicht, indem man die Instanz *innerhalb* des Schleifenkörpers erstellt.
-- Um sicherzustellen, dass jede Instanz eine andere Zahlenfolge erzeugt, muss sie mit einem eindeutigen **Seed** initialisiert werden. Die Schleifenvariable `i` ist dafür gut geeignet.
-
-```csharp
-Parallel.For(0, numberOfReplications, i =>
-{
-    // Jede Iteration (potenziell in einem anderen Thread)
-    // erhält eine eigene, eindeutig initialisierte Random-Instanz.
-    var localRandom = new Random(seed: i);
-});
+Console.WriteLine($"Mittelwert: {mean:F3} min,  95%-KI: [{ciLower:F3}; {ciUpper:F3}] min");
 ```
