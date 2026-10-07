@@ -93,7 +93,7 @@ Das Zusammenspiel von **Zeitachse** und **Zustandsraum** spannt den mathematisch
 </div>
 <div class="two">
 
-![w:1000](./Diagramme/Modellierungsmatrix.svg)
+![h:440px](./Diagramme/Modellierungsmatrix.svg)
 
 </div>
 </div>
@@ -602,7 +602,7 @@ Bevor eine Sondermaschine physisch gebaut wird, spart die virtuelle Inbetriebnah
 </div>
 <div>
 
-![w:540](./Diagramme/VIBN_Systemarchitektur.svg)
+![h:380px](./Diagramme/VIBN_Systemarchitektur.svg)
 
 > **Nutzen:** Test von Not-Aus-Szenarien und Fehlsituationen ohne Beschädigungsgefahr für reale Maschinen!
 
@@ -775,7 +775,7 @@ Mit dem Abschluss dieses Kurses besitzen Sie ein fundamentales Verständnis:
 </div>
 <div>
 
-![w:540](./Diagramme/Simulationsprozess_Synthese.svg)
+![h:380px](./Diagramme/Simulationsprozess_Synthese.svg)
 
 </div>
 </div>

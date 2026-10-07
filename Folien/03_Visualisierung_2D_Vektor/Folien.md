@@ -278,10 +278,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Visualisierung der Kräfte: Pfeile
+
 <div class="columns">
 <div>
-
-### Visualisierung der Kräfte: Pfeile
 
 - Berechnete Größen wie Kräfte (Zug/Druck) oder Geschwindigkeiten sollen als Pfeile dargestellt werden.
 - Ein Pfeil besteht aus einem **Pfeilkörper** (eine Linie) und einer **Pfeilspitze** (ein geschlossenes Polygon).

@@ -39,10 +39,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Grundlagen und Konzepte
+
 <div class="columns">
 <div class="two">
-
-### Grundlagen und Konzepte
 
 Diskrete dynamische Modelle beschreiben Systeme, deren Zustand sich nur zu diskreten Zeitpunkten ändert. Diese Zustandsänderungen werden durch **Ereignisse** ausgelöst.
 
@@ -64,10 +64,10 @@ Typische Anwendungsbeispiele sind:
 
 ---
 
+### Anwendungsbeispiel: Warteschlangensysteme
+
 <div class="columns">
 <div class="two">
-
-### Anwendungsbeispiel: Warteschlangensysteme
 
 Systeme, in denen "Kunden" auf eine oder mehrere "Bedienstationen" warten.
 
@@ -87,10 +87,10 @@ Systeme, in denen "Kunden" auf eine oder mehrere "Bedienstationen" warten.
 
 ---
 
+### Anwendungsbeispiel: Produktions- & Logistiksysteme
+
 <div class="columns">
 <div class="five">
-
-### Anwendungsbeispiel: Produktions- & Logistiksysteme
 
 Systeme, die den Fluss von Material, Teilen und Produkten durch eine Reihe von Prozessen (z.B. Maschinen, Lager, Transport) modellieren.
 
@@ -103,17 +103,17 @@ Systeme, die den Fluss von Material, Teilen und Produkten durch eine Reihe von P
 </div>
 <div>
 
-![](./Diagramme/Produktionssystem.svg)
+![h:440px](./Diagramme/Produktionssystem.svg)
 
 </div>
 </div>
 
 ---
 
+### Anwendungsbeispiel: Computernetzwerke
+
 <div class="columns">
 <div class="three">
-
-### Anwendungsbeispiel: Computernetzwerke
 
 Systeme zur Übertragung von Datenpaketen zwischen verschiedenen Knoten (z.B. Clients, Server, Router).
 
@@ -126,7 +126,7 @@ Systeme zur Übertragung von Datenpaketen zwischen verschiedenen Knoten (z.B. Cl
 </div>
 <div>
 
-![](./Diagramme/Computernetzwerk.svg)
+![h:440px](./Diagramme/Computernetzwerk.svg)
 
 </div>
 </div>
@@ -171,10 +171,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Mathematische Beschreibung
+
 <div class="columns">
 <div class="two">
-
-### Mathematische Beschreibung
 
 Anwendung des Formalismus auf das Warteschlangensystem:
 
@@ -199,10 +199,10 @@ Anwendung des Formalismus auf das Warteschlangensystem:
 
 ---
 
+### Ereignisroutine für **Ankunft**
+
 <div class="columns">
 <div>
-
-### Ereignisroutine für **Ankunft**
 
 Wenn ein Kunde ankommt, wird geprüft, ob die Bedienstation frei ist.
 
@@ -231,10 +231,10 @@ Wenn ein Kunde ankommt, wird geprüft, ob die Bedienstation frei ist.
 
 ---
 
+### Ereignisroutine für **Abfahrt**
+
 <div class="columns">
 <div>
-
-### Ereignisroutine für **Abfahrt**
 
 Wenn ein Kunde fertig bedient ist, wird geprüft, ob weitere Kunden warten.
 
@@ -287,10 +287,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Konkretes Beispiel: Simulationsablauf
+
 <div class="columns">
 <div>
-
-### Konkretes Beispiel: Simulationsablauf
 
 Annahmen für das Beispiel:
 - **Kunde 1:** Ankunft bei t=1, Bedienzeit=3
@@ -341,10 +341,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Modellierung eines Warteschlangensystems
+
 <div class="columns">
 <div class="two">
-
-### Modellierung eines Warteschlangensystems
 
 Wir betrachten ein einfaches System mit einer einzigen Bedienstation (Server) und einer Warteschlange.
 
@@ -409,10 +409,10 @@ namespace DynamischWarteschlange.Model
 
 ---
 
+### Die `Simulation`-Klasse
+
 <div class="columns">
 <div class="three">
-
-### Die `Simulation`-Klasse
 
 Die `Simulation`-Klasse steuert den Ablauf:
 - **`Clock`**: Aktuelle Simulationsuhr
@@ -446,10 +446,10 @@ internal class Simulation
 
 ---
 
+### Die Simulationsschleife (`Run`)
+
 <div class="columns">
 <div class="three">
-
-### Die Simulationsschleife (`Run`)
 
 Die `Run()`-Methode implementiert die diskrete Simulationsschleife:
 - Entnimmt stets das zeitlich nächste Ereignis (`Dequeue()`).
@@ -616,10 +616,10 @@ WaitTimes.Add(CurrentTime - customer.ArrivalTime);
 
 ---
 
+### Auswertung 1: Verlauf der Warteschlangenlänge $L(t)$
+
 <div class="columns">
 <div class="two">
-
-### Auswertung 1: Verlauf der Warteschlangenlänge $L(t)$
 
 Das Verlaufsdiagramm zeigt die dynamische Systembelastung über die Simulationsdauer:
 
@@ -648,10 +648,10 @@ plot.SavePng("Queue_Laenge_Verlauf.png", 800, 450);
 
 ---
 
+### Auswertung 2: Wartezeiten-Histogramm
+
 <div class="columns">
 <div class="two">
-
-### Auswertung 2: Wartezeiten-Histogramm
 
 Das Histogramm aggregiert die individuellen Wartezeiten in Klassenintervalle (Bins):
 
@@ -691,18 +691,18 @@ Aus den gesammelten Rohdaten lassen sich die zentralen Leistungsindikatoren bere
 <div class="columns">
 <div class="two">
 
-#### 1. Mittlere Warteschlangenlänge $\bar{L}_q$
+**1. Mittlere Warteschlangenlänge** $\bar{L}_q$
 Zeitgewichtetes Mittel über die Gesamtsimulationsdauer $T$:
 $$\bar{L}_q = \frac{1}{T} \int_0^T L(t) \, dt \approx \frac{1}{T} \sum_{k=1}^K L(t_{k-1}) \cdot (t_k - t_{k-1})$$
 
-#### 2. Mittlere Wartezeit $\bar{W}_q$
+**2. Mittlere Wartezeit** $\bar{W}_q$
 Arithmetisches Mittel über alle $N$ bedienten Kunden:
 $$\bar{W}_q = \frac{1}{N} \sum_{i=1}^N W_i$$
 
 </div>
 <div class="two">
 
-#### 3. Gesetz von Little (Plausibilitätsprüfung)
+**3. Gesetz von Little (Plausibilitätsprüfung)**
 Im stationären Zustand gilt bei mittlerer Ankunftsrate $\lambda$:
 $$\bar{L}_q = \lambda \cdot \bar{W}_q$$
 
@@ -727,10 +727,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Probabilistische vs. Deterministische Modelle
+
 <div class="columns">
 <div class="two">
-
-### Probabilistische vs. Deterministische Modelle
 
 Bisher waren unsere Modelle **deterministisch**: Bei gleichem Input kommt immer der gleiche Output heraus.
 
@@ -835,10 +835,10 @@ private double NextExponential(Random random, double lambda)
 
 ---
 
+### Herleitung mittels Inversionsmethode (1/2) - **Prinzip**
+
 <div class="columns">
 <div class="three">
-
-### Herleitung mittels Inversionsmethode (1/2) - **Prinzip**
 
 Die **Inversionsmethode** (Inverse Transform Sampling) ist ein Verfahren zur Erzeugung von Zufallszahlen nach einer beliebigen Verteilung, deren kumulative Verteilungsfunktion (CDF) $F_X(x)$ bekannt und analytisch invertierbar ist.
 
@@ -849,7 +849,7 @@ Die **Inversionsmethode** (Inverse Transform Sampling) ist ein Verfahren zur Erz
 </div>
 <div class="two">
 
-![width:1000](./Diagramme/Inversionsmethode_Prinzip.tikz.svg)
+![w:500](./Diagramme/Inversionsmethode_Prinzip.tikz.svg)
 
 </div>
 </div>
@@ -1049,10 +1049,10 @@ public static double NextLogNormal(Random rnd, double mean, double stdDev)
 
 ---
 
+### Das Problem mit der Einzelsimulation
+
 <div class="columns">
 <div>
-
-### Das Problem mit der Einzelsimulation
 
 Ein einzelner Simulationslauf (eine **Replikation**) ist nur *ein möglicher* Systemverlauf ("Sample Path").
 
@@ -1097,10 +1097,10 @@ $$\lim_{N \to \infty} P(|\bar{X}_N - \mu| < \varepsilon) = 1 \quad \forall \vare
 
 ---
 
+### Pseudo-Zufall & Seed-Management
+
 <div class="columns">
 <div class="two">
-
-### Pseudo-Zufall & Seed-Management
 
 Computer erzeugen Zufallszahlen über deterministische Algorithmen (PRNG), gesteuert durch einen Initialisierungswert (**Seed**):
 
@@ -1146,11 +1146,11 @@ Seien $X_1, X_2, \dots, X_N$ die Kennzahlen aus $N$ unabhängigen Replikationen 
 <div class="columns">
 <div class="two">
 
-#### 1. Stichprobenmittelwert (Punktschätzer)
+**1. Stichprobenmittelwert (Punktschätzer)**
 Unverzerrte Schätzung des Erwartungswerts $\mu = \mathbb{E}[X]$:
 $$\bar{X} = \frac{1}{N} \sum_{k=1}^N X_k$$
 
-#### 2. Empirische Stichprobenvarianz
+**2. Empirische Stichprobenvarianz**
 Unverzerrte Schätzung der Varianz $\sigma^2$:
 $$s^2 = \frac{1}{N-1} \sum_{k=1}^N (X_k - \bar{X})^2, \quad s = \sqrt{s^2}$$
 
@@ -1186,10 +1186,10 @@ Ein Punktschätzer $\bar{X}$ quantifiziert die Genauigkeit noch nicht. Das **Kon
 
 ---
 
+### Parallele Replikationen mit der TPL
+
 <div class="columns">
 <div class="two">
-
-### Parallele Replikationen mit der TPL
 
 Monte-Carlo-Replikationen sind vollständig unabhängig voneinander (*embarrassingly parallel*) und skalieren nahezu ideal über alle CPU-Kerne:
 

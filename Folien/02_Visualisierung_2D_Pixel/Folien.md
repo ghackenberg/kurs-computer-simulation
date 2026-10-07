@@ -539,10 +539,10 @@ Jede partielle Differentialgleichung benötigt zwingend definierte Bedingungen a
 
 ---
 
+### Diskrete Randbehandlung im Pixel-Puffer
+
 <div class="columns">
 <div class="two">
-
-### Diskrete Randbehandlung im Pixel-Puffer
 
 Vergleich der beiden Randmodelle in C#:
 

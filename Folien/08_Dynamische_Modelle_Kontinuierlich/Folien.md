@@ -65,10 +65,10 @@ $$ \frac{d\mathbf{x}}{dt} = \dot{\mathbf{x}}(t) = \mathbf{f}(t, \mathbf{x}(t), \
 
 ---
 
+### Zustandsraumdarstellung
+
 <div class="columns">
 <div class="three">
-
-### Zustandsraumdarstellung
 
 Eine übliche Methode zur Darstellung von dynamischen Systemen.
 
@@ -98,10 +98,10 @@ Beschreibt, wie die beobachtbaren Ausgänge $\mathbf{y}(t)$ aus den Zuständen $
 
 ---
 
+### Von höheren Ordnungen zur ersten Ordnung
+
 <div class="columns">
 <div class="three">
-
-### Von höheren Ordnungen zur ersten Ordnung
 
 Differentialgleichungen höherer Ordnung können immer in ein System von Differentialgleichungen erster Ordnung umgewandelt werden.
 
@@ -174,10 +174,10 @@ Dies entspricht der Form $\dot{\mathbf{x}} = \mathbf{A}\mathbf{x} + \mathbf{B}\m
 
 ---
 
+### Numerische Integrationsverfahren
+
 <div class="columns">
 <div class="three">
-
-### Numerische Integrationsverfahren
 
 **Grundidee:** Approximiere den kontinuierlichen Verlauf von `x(t)` durch eine Folge von Werten $x_k \approx x(t_k)$ an diskreten Zeitpunkten $t_k = t_0 + k \cdot h$.
 
@@ -201,10 +201,10 @@ $$ x(t+h) \approx x(t) + h f(t, x(t)) $$
 
 ---
 
+### Die explizite Euler-Methode
+
 <div class="columns">
 <div>
-
-### Die explizite Euler-Methode
 
 Auch "Euler-Vorwärts" genannt. Die einfachste numerische Methode.
 
@@ -217,17 +217,17 @@ $$ x_{k+1} = x_k + h \cdot f(t_k, x_k) $$
 </div>
 <div>
 
-![width:2000px](./Diagramme/Euler%20-%20Explizit.svg)
+![w:500](./Diagramme/Euler%20-%20Explizit.svg)
 
 </div>
 </div>
 
 ---
 
+### Die implizite Euler-Methode
+
 <div class="columns">
 <div>
-
-### Die implizite Euler-Methode
 
 Auch "Euler-Rückwärts" genannt.
 
@@ -241,7 +241,7 @@ $$ x_{k+1} = x_k + h \cdot f(t_{k+1}, x_{k+1}) $$
 </div>
 <div>
 
-![width:1000px](./Diagramme/Euler%20-%20Implizit.svg)
+![w:500](./Diagramme/Euler%20-%20Implizit.svg)
 
 </div>
 </div>
@@ -349,10 +349,10 @@ $$ y(t) = y_0 + v_0 t - \frac{1}{2} g t^2 $$
 
 ---
 
+### Vertikaler Wurf: Analytische Lösung (Zusammenfassung)
+
 <div class="columns">
 <div>
-
-### Vertikaler Wurf: Analytische Lösung (Zusammenfassung)
 
 Für die Anfangsbedingungen $x(0) = \begin{pmatrix} y_0 \\ v_0 \end{pmatrix}$ lautet die exakte, analytische Lösung:
 
@@ -391,10 +391,10 @@ $$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k
 
 ---
 
+### Beispielrechnung: Expliziter Euler
+
 <div class="columns">
 <div class="three">
-
-### Beispielrechnung: Expliziter Euler
 
 **Parameter:**
 - $y_0 = 100\,\mathrm{m}$, $v_0 = 0\,\mathrm{m/s}$
@@ -600,10 +600,10 @@ $$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k
 
 ---
 
+### Problem des expliziten Eulers: Instabilität
+
 <div class="columns">
 <div>
-
-### Problem des expliziten Eulers: Instabilität
 
 Was passiert mit der Energie des Systems bei der numerischen Simulation? Die Gesamtenergie ist:
 
@@ -649,10 +649,10 @@ Dieser Abschnitt beschreibt eine flexible, blockbasierte Architektur für die Si
 
 ---
 
+### Die Kernklassen der Architektur
+
 <div class="columns">
 <div class="two">
-
-### Die Kernklassen der Architektur
 
 Die Architektur basiert auf drei zentralen Klassen, um ein block-basiertes Modell zu erstellen:
 
@@ -692,10 +692,10 @@ public abstract class Block
 
 ---
 
+### Deklaration von Schnittstellen
+
 <div class="columns">
 <div class="two">
-
-### Deklaration von Schnittstellen
 
 Jeder Block deklariert seine Zustände, Ein- und Ausgänge im Konstruktor.
 
@@ -713,10 +713,10 @@ Jeder Block deklariert seine Zustände, Ein- und Ausgänge im Konstruktor.
 
 ---
 
+### Quelle- und Senkenblöcke
+
 <div class="columns">
 <div class="two">
-
-### Quelle- und Senkenblöcke
 
 - **Quellen** sind Blöcke ohne Eingänge, die Signale erzeugen.
     - **`ConstantBlock`**: Eine Signalquelle, die einen konstanten Wert ausgibt.
@@ -771,10 +771,10 @@ public class ConstantBlock : Block
 
 ---
 
+### Algebraische Blöcke
+
 <div class="columns">
 <div>
-
-### Algebraische Blöcke
 
 Algebraische Blöcke haben keine Zustände. Ihr Ausgang `y` hängt direkt von den Eingängen `u` ab (`DirectFeedThrough = true`).
 
@@ -794,10 +794,10 @@ Algebraische Blöcke haben keine Zustände. Ihr Ausgang `y` hängt direkt von de
 
 ---
 
+### Beispiel: `GainBlock`
+
 <div class="columns">
 <div class="two">
-
-### Beispiel: `GainBlock`
 
 Ein Block, der einen Eingang mit einem konstanten Faktor multipliziert.
 
@@ -832,10 +832,10 @@ public class GainBlock : Block
 
 ---
 
+### Beispiel: `AddBlock`
+
 <div class="columns">
 <div class="two">
-
-### Beispiel: `AddBlock`
 
 Ein Block, der zwei Eingänge addiert.
 
@@ -870,10 +870,10 @@ public class AddBlock : Block
 
 ---
 
+### Der `IntegrateBlock`
+
 <div class="columns">
 <div class="two">
-
-### Der `IntegrateBlock`
 
 Der `IntegrateBlock` ist der entscheidende Baustein zur Modellierung dynamischer Systeme.
 
@@ -918,10 +918,10 @@ public class IntegrateBlock : Block
 
 ---
 
+### `IntegrateBlock`: Implementierung
+
 <div class="columns">
 <div class="">
-
-### `IntegrateBlock`: Implementierung
 
 Und das machen die Methoden des Blocks:
 
@@ -1017,10 +1017,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Die `Solver`-Klasse
+
 <div class="columns">
 <div class="two">
-
-### Die `Solver`-Klasse
 
 Die `Solver`-Klasse ist für die Durchführung der Simulation verantwortlich.
 
@@ -1042,10 +1042,10 @@ Die `Solver`-Klasse ist für die Durchführung der Simulation verantwortlich.
 
 ---
 
+### Der `EulerExplicitSolver`
+
 <div class="columns">
 <div class="two">
-
-### Der `EulerExplicitSolver`
 
 Implementiert den expliziten Euler-Algorithmus.
 
@@ -1064,10 +1064,10 @@ Implementiert den expliziten Euler-Algorithmus.
 
 ---
 
+### Simulationsschleife in `EulerExplicitSolver`
+
 <div class="columns">
 <div class="three">
-
-### Simulationsschleife in `EulerExplicitSolver`
 
 Die Klasse `EulerExplicitSolver` implementiert einen einfachen Algorithmus für die Berechnung des Modells. Der Algorithmus umfasst die folgenden Schritte und Unterschritte:
 
@@ -1083,7 +1083,7 @@ Die Klasse `EulerExplicitSolver` implementiert einen einfachen Algorithmus für 
 </div>
 <div>
 
-![](./Diagramme/Simulationsschleife_Explizit.svg)
+![h:440px](./Diagramme/Simulationsschleife_Explizit.svg)
 
 </div>
 </div>
@@ -1158,10 +1158,10 @@ Ein Modell mit einer direkten algebraischen Schleife.
 
 ---
 
+### Der `EulerExplicitLoopSolver`
+
 <div class="columns">
 <div class="two">
-
-### Der `EulerExplicitLoopSolver`
 
 Dieser Solver erweitert den `EulerExplicitSolver`, um algebraische Schleifen aufzulösen.
 
@@ -1227,10 +1227,10 @@ Der Ausgang $V_{out}$ hängt direkt von sich selbst ab.
 
 ---
 
+### Praktische Anwendung: **Nichtlineares elektrisches Netzwerk** (2/2)
+
 <div class="columns">
 <div class="three">
-
-### Praktische Anwendung: **Nichtlineares elektrisches Netzwerk** (2/2)
 
 **Blockdiagramm der Schleife:**
 
@@ -1245,7 +1245,7 @@ Die Auflösung erfordert einen iterativen Prozess in jedem einzelnen Simulations
 </div>
 <div>
 
-![width:1000px](./Diagramme/Algebraische_Schleife_Praxis.svg)
+![h:440px](./Diagramme/Algebraische_Schleife_Praxis.svg)
 
 </div>
 </div>
@@ -1305,10 +1305,10 @@ $$ m \cdot a = F_{Antrieb} - c \cdot v^2 - m_{Zusatz} \cdot a $$
 
 ---
 
+### Praktische Anwendung: Beschleunigung im Fluid (2/2)
+
 <div class="columns">
 <div class="two">
-
-### Praktische Anwendung: Beschleunigung im Fluid (2/2)
 
 **Blockdiagramm der Schleife:**
 
@@ -1328,10 +1328,10 @@ $$ m \cdot a = F_{Antrieb} - c \cdot v^2 - m_{Zusatz} \cdot a $$
 
 ---
 
+### Der `EulerImplicitSolver`
+
 <div class="columns">
 <div class="two">
-
-### Der `EulerImplicitSolver`
 
 Implementiert den impliziten Euler-Algorithmus.
 
@@ -1354,10 +1354,10 @@ Implementiert den impliziten Euler-Algorithmus.
 
 ---
 
+### Simulationsschleife in `EulerImplicitSolver`
+
 <div class="columns">
 <div class="three">
-
-### Simulationsschleife in `EulerImplicitSolver`
 
 1.  **Initialisierung**: Wie beim expliziten Solver.
 2.  **Zeitschleife** (`while t <= tmax`):
@@ -1375,17 +1375,17 @@ Implementiert den impliziten Euler-Algorithmus.
 </div>
 <div>
 
-![](./Diagramme/Simulationsschleife_Implizit.svg)
+![h:440px](./Diagramme/Simulationsschleife_Implizit.svg)
 
 </div>
 </div>
 
 ---
 
+### Der `EulerImplicitLoopSolver`
+
 <div class="columns">
 <div class="two">
-
-### Der `EulerImplicitLoopSolver`
 
 Kombiniert den impliziten Solver mit der Auflösung von algebraischen Schleifen.
 
@@ -1627,10 +1627,10 @@ Dieser Abschnitt demonstriert die Systemsimulation an einem Kernproblem der Auto
 
 ---
 
+### DC-Servomotor: Kontinuierliches Streckenmodell
+
 <div class="columns">
 <div class="three">
-
-### DC-Servomotor: Kontinuierliches Streckenmodell
 
 Die Drehzahl $\omega(t)$ und Position $\theta(t)$ folgen dem DGL-System:
 
@@ -1647,7 +1647,7 @@ Die Endstufe begrenzt die Spannung auf $u(t) \in [-10\,\mathrm{V}, +10\,\mathrm{
 </div>
 <div class="two">
 
-![w:480](./Diagramme/Blockschaltbild_DCServo.svg)
+![w:520](./Diagramme/Blockschaltbild_DCServo.svg)
 
 $$\mathbf{x}_{\text{Strecke}} = \begin{pmatrix} \theta \\ \omega \end{pmatrix}, \quad \dot{\mathbf{x}}_{\text{Strecke}} = \mathbf{A}\mathbf{x} + \mathbf{b}u$$
 
@@ -1656,10 +1656,10 @@ $$\mathbf{x}_{\text{Strecke}} = \begin{pmatrix} \theta \\ \omega \end{pmatrix}, 
 
 ---
 
+### Sättigung & Anti-Windup (Clamping)
+
 <div class="columns">
 <div class="two">
-
-### Sättigung & Anti-Windup (Clamping)
 
 Wird ein Sollwertsprung $w(t) = \theta_{\text{soll}}$ vorgegeben:
 
@@ -1727,10 +1727,10 @@ public override void CalculateDerivatives(double time)
 
 ---
 
+### Simulation mit `RungeKutta4Solver`
+
 <div class="columns">
 <div class="three">
-
-### Simulation mit `RungeKutta4Solver`
 
 Der mechatronische Regelkreis wird mit unserem RK4-Solver simuliert:
 

@@ -36,10 +36,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Was ist OpenGL?
+
 <div class="columns">
 <div>
-
-### Was ist OpenGL?
 
 - **Open Graphics Library**
 - Eine plattform- und programmiersprachenübergreifende **API** zur Erzeugung von 2D- und 3D-Computergrafik.
@@ -103,10 +103,10 @@ private void OnInitialize(object sender, OpenGLRoutedEventArgs args)
 
 ---
 
+### Hintergrundfarbe festlegen
+
 <div class="columns">
 <div>
-
-### Hintergrundfarbe festlegen
 
 Die `ClearColor`-Methode definiert die Farbe, mit der der Bildschirm bei jedem Frame geleert wird.
 
@@ -124,17 +124,17 @@ gl.ClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 </div>
 <div>
 
-![width:1000px](./Illustrationen/RGB_Cube.png)
+![w:500](./Illustrationen/RGB_Cube.png)
 
 </div>
 </div>
 
 ---
 
+### Beleuchtung & Material aktivieren
+
 <div class="columns">
 <div>
-
-### Beleuchtung & Material aktivieren
 
 Damit Objekte auf Licht reagieren, muss die Lichtberechnung zunächst global aktiviert werden:
 
@@ -152,17 +152,17 @@ gl.Enable(OpenGL.GL_LIGHTING);
 </div>
 <div>
 
-![width:1000px](./Illustrationen/OpenGL_Pipeline_Image77.gif)
+![w:500](./Illustrationen/OpenGL_Pipeline_Image77.gif)
 
 </div>
 </div>
 
 ---
 
+### Das Phong-Beleuchtungsmodell
+
 <div class="columns">
 <div>
-
-### Das Phong-Beleuchtungsmodell
 
 Die Farbe eines Punktes auf einer Oberfläche wird als Summe von drei Komponenten berechnet:
 
@@ -177,7 +177,7 @@ Jede dieser Komponenten wird für jede Lichtquelle berechnet und aufsummiert.
 </div>
 <div>
 
-![width:900px](./Diagramme/Phong%20-%20Gesamt.svg)
+![w:500](./Diagramme/Phong%20-%20Gesamt.svg)
 
 </div>
 </div>
@@ -218,10 +218,10 @@ gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE, lightDiffuse);
 
 ---
 
+### Vektoren für die Beleuchtungsrechnung
+
 <div class="columns">
 <div>
-
-### Vektoren für die Beleuchtungsrechnung
 
 Für die Berechnung werden an jedem Punkt der Oberfläche vier Vektoren benötigt:
 
@@ -233,17 +233,17 @@ Für die Berechnung werden an jedem Punkt der Oberfläche vier Vektoren benötig
 </div>
 <div>
 
-![width:1000px](./Diagramme/Phong%20-%20Vektoren.svg)
+![w:500](./Diagramme/Phong%20-%20Vektoren.svg)
 
 </div>
 </div>
 
 ---
 
+### **Ambient**-Komponente
+
 <div class="columns">
 <div>
-
-### **Ambient**-Komponente
 
 Die Ambient-Komponente ist am einfachsten. Sie ist das Produkt aus der Lichtfarbe und der Materialfarbe für Umgebungslicht.
 
@@ -257,17 +257,17 @@ Diese Komponente ist für jeden Punkt eines Objekts gleich und sorgt für eine G
 </div>
 <div>
 
-![width:1000px](./Diagramme/Phong%20-%20Vektoren.svg)
+![w:500](./Diagramme/Phong%20-%20Vektoren.svg)
 
 </div>
 </div>
 
 ---
 
+### **Diffuse**-Komponente
+
 <div class="columns">
 <div>
-
-### **Diffuse**-Komponente
 
 Die Diffuse-Komponente hängt vom Winkel zwischen dem Normalenvektor $N$ und dem Lichtvektor $L$ ab. Je direkter das Licht auf die Oberfläche trifft, desto heller ist sie.
 
@@ -279,17 +279,17 @@ $I_{d} = \text{light}_{d} \cdot \text{material}_{d} \cdot \max(0, N \cdot L)$
 </div>
 <div>
 
-![width:1000px](./Diagramme/Phong%20-%20Diffuse.svg)
+![w:500](./Diagramme/Phong%20-%20Diffuse.svg)
 
 </div>
 </div>
 
 ---
 
+### **Specular**-Komponente
+
 <div class="columns">
 <div>
-
-### **Specular**-Komponente
 
 Die Specular-Komponente erzeugt ein Glanzlicht und hängt vom Winkel zwischen dem Reflexionsvektor $R$ und dem Betrachtervektor $V$ ab.
 
@@ -301,17 +301,17 @@ $I_{s} = \text{light}_{s} \cdot \text{material}_{s} \cdot (\max(0, R \cdot V))^{
 </div>
 <div>
 
-![width:1000px](./Diagramme/Phong%20-%20Specular.svg)
+![w:500](./Diagramme/Phong%20-%20Specular.svg)
 
 </div>
 </div>
 
 ---
 
+### Kombination für **mehrere** Lichtquellen
+
 <div class="columns">
 <div>
-
-### Kombination für **mehrere** Lichtquellen
 
 Die finale Farbe eines Punktes ist die Summe der Ambient-Komponente (global) und der Summe der Diffuse- und Specular-Komponenten für *jede* aktive Lichtquelle.
 
@@ -326,17 +326,17 @@ In klassischem OpenGL wird diese Berechnung für bis zu 8 Lichtquellen (`GL_LIGH
 </div>
 <div>
 
-![width:1000px](./Diagramme/Phong%20-%20Kombiniert.svg)
+![w:500](./Diagramme/Phong%20-%20Kombiniert.svg)
 
 </div>
 </div>
 
 ---
 
+### Schattierungsmodus festlegen
+
 <div class="columns">
 <div>
-
-### Schattierungsmodus festlegen
 
 Der Schattierungsmodus bestimmt, wie die Farben zwischen den Eckpunkten eines Polygons interpoliert werden.
 - `GL_FLAT`: Das gesamte Polygon hat eine einzige Farbe.
@@ -352,17 +352,17 @@ gl.ShadeModel(OpenGL.GL_SMOOTH);
 </div>
 <div>
 
-![width:1000px](./Illustrationen/OpenGL_Normalen.png)
+![w:500](./Illustrationen/OpenGL_Normalen.png)
 
 </div>
 </div>
 
 ---
 
+### Flat Shading
+
 <div class="columns">
 <div>
-
-### Flat Shading
 
 - Die Beleuchtungsrechnung wird nur **einmal pro Polygon** (z.B. Dreieck) durchgeführt.
 - Das gesamte Polygon wird mit einer einzigen, konstanten Farbe gefüllt.
@@ -372,17 +372,17 @@ gl.ShadeModel(OpenGL.GL_SMOOTH);
 </div>
 <div>
 
-![width:1000px](./Diagramme/ShadeModel_Flat.svg)
+![w:500](./Diagramme/ShadeModel_Flat.svg)
 
 </div>
 </div>
 
 ---
 
+### Smooth Shading (Gouraud Shading)
+
 <div class="columns">
 <div>
-
-### Smooth Shading (Gouraud Shading)
 
 - Die Beleuchtungsrechnung wird **für jeden Vertex** des Polygons einzeln durchgeführt.
 - Dabei wird die individuelle Normale jedes Vertex (`Vertex Normal`) verwendet.
@@ -392,17 +392,17 @@ gl.ShadeModel(OpenGL.GL_SMOOTH);
 </div>
 <div>
 
-![width:1000px](./Diagramme/ShadeModel_Smooth.svg)
+![w:500](./Diagramme/ShadeModel_Smooth.svg)
 
 </div>
 </div>
 
 ---
 
+### Tiefentest aktivieren
+
 <div class="columns">
 <div class="two">
-
-### Tiefentest aktivieren
 
 Der Tiefentest (Depth Test) sorgt dafür, dass Objekte, die weiter von der Kamera entfernt sind, von näheren Objekten verdeckt werden.
 
@@ -416,7 +416,7 @@ gl.Enable(OpenGL.GL_DEPTH_TEST);
 </div>
 <div>
 
-![](./Illustrationen/OpenGL_Light_Components.png)
+![h:440px](./Illustrationen/OpenGL_Light_Components.png)
 
 </div>
 </div>
@@ -464,10 +464,10 @@ Geometrie wird innerhalb von `gl.Begin()` und `gl.End()` definiert. Der Paramete
 
 ---
 
+### `GL_POINTS`
+
 <div class="columns">
 <div>
-
-### `GL_POINTS`
 
 Zeichnet für jeden übergebenen Vertex einen einzelnen Punkt. Die Größe der Punkte kann mit `gl.PointSize()` eingestellt werden.
 
@@ -484,17 +484,17 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./Screenshots/OpenGL_Primitives_Points.png)
+![w:500](./Screenshots/OpenGL_Primitives_Points.png)
 
 </div>
 </div>
 
 ---
 
+### Linienprimitive: `GL_LINES`, `STRIP` & `LOOP`
+
 <div class="columns">
 <div>
-
-### Linienprimitive: `GL_LINES`, `STRIP` & `LOOP`
 
 - **`GL_LINES`**: Zeichnet separate Liniensegmente paarweise (1-2, 3-4, ...).
 - **`GL_LINE_STRIP`**: Zusammenhängender Linienzug (1-2, 2-3, 3-4).
@@ -512,17 +512,17 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./Screenshots/OpenGL_Primitives_Lines.png)
+![w:500](./Screenshots/OpenGL_Primitives_Lines.png)
 
 </div>
 </div>
 
 ---
 
+### `GL_TRIANGLES`
+
 <div class="columns">
 <div>
-
-### `GL_TRIANGLES`
 
 Zeichnet eine Serie von separaten, gefüllten Dreiecken. Jeweils drei aufeinanderfolgende Vertices definieren ein Dreieck.
 
@@ -543,17 +543,17 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./Screenshots/OpenGL_Primitives_Triangles.png)
+![w:500](./Screenshots/OpenGL_Primitives_Triangles.png)
 
 </div>
 </div>
 
 ---
 
+### Verbundene Dreiecke: `STRIP` & `FAN`
+
 <div class="columns">
 <div>
-
-### Verbundene Dreiecke: `STRIP` & `FAN`
 
 - **`GL_TRIANGLE_STRIP`**: Jedes neue Vertex (ab dem 3.) bildet mit den beiden vorherigen ein Dreieck (1-2-3, 2-3-4, 3-4-5). Höhere Cache-Effizienz!
 - **`GL_TRIANGLE_FAN`**: Fächer um einen gemeinsamen Polpunkt (1-2-3, 1-3-4, 1-4-5). Ideal für Kreisflächen und Polkappen.
@@ -569,17 +569,17 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./Screenshots/OpenGL_Primitives_TriangleStrip.png)
+![w:500](./Screenshots/OpenGL_Primitives_TriangleStrip.png)
 
 </div>
 </div>
 
 ---
 
+### Viereck-Primitive: `GL_QUADS` & `QUAD_STRIP`
+
 <div class="columns">
 <div>
-
-### Viereck-Primitive: `GL_QUADS` & `QUAD_STRIP`
 
 - **`GL_QUADS`**: Je vier Vertices bilden ein ebenes Viereck (1-2-3-4, 5-6-7-8).
 - **`GL_QUAD_STRIP`**: Aneinandergereihte Vierecke (1-2-4-3, 3-4-6-5). Klassiker zur Erzeugung von Zylindermänteln und Kugelbändern.
@@ -594,7 +594,7 @@ gl.End();
 </div>
 <div>
 
-![width:1000px](./Screenshots/OpenGL_Primitives_Quads.png)
+![w:500](./Screenshots/OpenGL_Primitives_Quads.png)
 
 </div>
 </div>
@@ -666,10 +666,10 @@ Die Wahl der Projektionsmatrix bestimmt die geometrische Form des Sichtvolumens 
 
 ---
 
+### Orthogonale Projektion: `glOrtho`
+
 <div class="columns">
 <div>
-
-### Orthogonale Projektion: `glOrtho`
 
 Die orthogonale (parallele) Projektion projiziert 3D-Punkte entlang paralleler Strahlen senkrecht auf die Bildebene:
 
@@ -685,7 +685,7 @@ gl.Ortho(left, right, bottom, top, near, far);
 </div>
 <div>
 
-### Mathematische Abbildung
+**Mathematische Abbildung:**
 
 Die Projektionsmatrix bildet den Quader linear in das normierte Sichtvolumen $[-1, 1]^3$ ab:
 
@@ -701,10 +701,10 @@ $$z_{\text{ndc}} = \frac{-2}{far - near} z - \frac{far + near}{far - near}$$
 
 ---
 
+### Perspektivische Projektion: `gluPerspective`
+
 <div class="columns">
 <div>
-
-### Perspektivische Projektion: `gluPerspective`
 
 Die perspektivische Projektion entspricht der natürlichen Abbildung des menschlichen Auges sowie einer Fotokamera:
 
@@ -720,7 +720,7 @@ gl.Perspective(fovy, aspect, zNear, zFar);
 </div>
 <div>
 
-### Mathematische Erklärung
+**Mathematische Erklärung:**
 
 Punkte werden über Strahlensätze auf die Bildebene bei $z_{\text{near}}$ projiziert:
 
@@ -787,10 +787,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Die Herausforderung: Komplexe Szenen
+
 <div class="columns">
 <div>
-
-### Die Herausforderung: Komplexe Szenen
 
 - Direkte OpenGL-Aufrufe für hunderte Objekte werden schnell unübersichtlich.
 - Wie lassen sich Objekte gruppieren (z.B. ein Tisch mit vier Beinen)?
@@ -820,10 +820,10 @@ Ein Szenengraph ist eine hierarchische Struktur (ein Baum), die alle Elemente ei
 
 ---
 
+### Umsetzung: Die Klassenstruktur
+
 <div class="columns">
 <div>
-
-### Umsetzung: Die Klassenstruktur
 
 - **`Scene`**: Das Hauptobjekt. Enthält den `Root`-Knoten und globale Einstellungen wie Lichter und Hintergrundfarbe.
 - **`Node`**: Die abstrakte Basisklasse für alle Knoten. Definiert eine Liste von `Transforms` und eine `Draw`-Methode.
@@ -865,10 +865,10 @@ public void Draw(OpenGL gl)
 
 ---
 
+### Klasse `Transform`
+
 <div class="columns">
 <div class="two">
-
-### Klasse `Transform`
 
 Die abstrakte Klasse `Transform` ist die Basis für alle Transformationen im Szenengraphen.
 
@@ -948,10 +948,10 @@ Durch diesen rekursiven Aufruf (`Group.Draw` -> `Child.Draw` -> ...) werden die 
 
 ---
 
+### Klasse `Primitive`
+
 <div class="columns">
 <div class="two">
-
-### Klasse `Primitive`
 
 Die abstrakte Klasse `Primitive` ist die Basis für alle 2D-Grundformen, die aus einer Liste von Vertices bestehen.
 
@@ -1021,10 +1021,10 @@ Die Klasse `Quads` erbt von `Primitive` und zeichnet eine Menge von gefüllten V
 
 ---
 
+### Klasse `Volume`
+
 <div class="columns">
 <div class="two">
-
-### Klasse `Volume`
 
 Die abstrakte Klasse `Volume` ist die Basisklasse für alle 3D-Volumenkörper.
 
@@ -1043,10 +1043,10 @@ Die abstrakte Klasse `Volume` ist die Basisklasse für alle 3D-Volumenkörper.
 
 ---
 
+### Klasse `Cube`
+
 <div class="columns">
 <div class="two">
-
-### Klasse `Cube`
 
 Zeichnet einen Würfel oder Quader.
 
@@ -1058,7 +1058,7 @@ Zeichnet einen Würfel oder Quader.
 </div>
 <div>
 
-![width:1000px](./Illustrationen/Geometry_Triangles.png)
+![w:500](./Illustrationen/Geometry_Triangles.png)
 
 </div>
 </div>
@@ -1073,10 +1073,10 @@ Der folgende *Screenshot* zeigt Würfeldarstellungen mit unterschiedlichen Eigen
 
 ---
 
+### Klasse `Sphere`
+
 <div class="columns">
 <div class="two">
-
-### Klasse `Sphere`
 
 Approximiert eine Kugeloberfläche über ein Gitternetz aus Längen- und Breitengraden:
 
@@ -1091,7 +1091,7 @@ Approximiert eine Kugeloberfläche über ein Gitternetz aus Längen- und Breiten
 </div>
 <div>
 
-![width:1000px](./Illustrationen/Sphere_Slices_Stacks.png)
+![h:440px](./Illustrationen/Sphere_Slices_Stacks.png)
 
 </div>
 </div>
@@ -1109,10 +1109,10 @@ Der folgende *Screenshot* zeigt Kugeldarstellungen mit unterschiedlichen Einstel
 
 ---
 
+### Klasse `Cylinder`
+
 <div class="columns">
 <div class="two">
-
-### Klasse `Cylinder`
 
 Modelliert einen Kreiszylinder, Kegel oder Kegelstumpf entlang der Y-Achse:
 
@@ -1126,7 +1126,7 @@ Modelliert einen Kreiszylinder, Kegel oder Kegelstumpf entlang der Y-Achse:
 </div>
 <div>
 
-![width:1000px](./Illustrationen/Cylinder_Slices.png)
+![w:500](./Illustrationen/Cylinder_Slices.png)
 
 </div>
 </div>
@@ -1204,10 +1204,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Serielle Kinematik im Szenengraphen
+
 <div class="columns">
 <div>
-
-### Serielle Kinematik im Szenengraphen
 
 In der Robotik und Mechatronik (z.B. KUKA, ABB, Fanuc, TwinCAT Kinematics) besteht ein Roboter aus einer Kette starrer Glieder (*Links*) und beweglicher Gelenke (*Joints*):
 
@@ -1218,7 +1218,7 @@ In der Robotik und Mechatronik (z.B. KUKA, ABB, Fanuc, TwinCAT Kinematics) beste
 </div>
 <div>
 
-![w:520](./Diagramme/Szenengraph_Roboterarm.svg)
+![w:540](./Diagramme/Szenengraph_Roboterarm.svg)
 
 </div>
 </div>
@@ -1248,10 +1248,10 @@ arm1.Add(arm2); axis1.Add(arm1); robot.Add(axis1);
 
 ---
 
+### Vorwärtskinematik & Matrix-Stack
+
 <div class="columns">
 <div>
-
-### Vorwärtskinematik & Matrix-Stack
 
 Die globale Pose des Greifers $\mathbf{T}_{\text{TCP}}$ berechnet sich durch Verkettung homogener Transformationsmatrizen:
 
@@ -1285,10 +1285,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Bedarf an interaktiver Kamerasteuerung
+
 <div class="columns">
 <div>
-
-### Bedarf an interaktiver Kamerasteuerung
 
 In 3D-Simulationen und Digitalen Zwillingen reicht eine starre Kameraperspektive selten aus:
 
@@ -1301,7 +1301,7 @@ Die **Orbit-Kamera** (Drehkamera um ein Fokusobjekt) ist der Standard für die M
 </div>
 <div>
 
-### Die virtuelle Kamera: `gl.LookAt`
+**Die virtuelle Kamera: `gl.LookAt`**
 
 Die `LookAt`-Funktion definiert die View-Matrix über drei 3D-Vektoren:
 
@@ -1321,10 +1321,10 @@ gl.LookAt(eyeX, eyeY, eyeZ,
 
 ---
 
+### Orbit-Kamera mit Kugelkoordinaten
+
 <div class="columns">
 <div>
-
-### Orbit-Kamera mit Kugelkoordinaten
 
 Anstatt $(x, y, z)$ direkt zu manipulieren, beschreibt eine Orbit-Kamera die Position auf einer Kugelschale um das Ziel:
 
@@ -1345,7 +1345,7 @@ Anstatt $(x, y, z)$ direkt zu manipulieren, beschreibt eine Orbit-Kamera die Pos
 </div>
 <div>
 
-### Vermeidung von Gimbal Lock
+**Vermeidung von Gimbal Lock:**
 
 Blickt die Kamera exakt senkrecht von oben ($\theta_{\text{elev}} = +90^\circ$) oder unten ($\theta_{\text{elev}} = -90^\circ$):
 

@@ -38,10 +38,10 @@ Dieser Abschnitt beinhaltet das Folgende:
 
 ---
 
+### Was ist ein Modell?
+
 <div class="columns">
 <div>
-
-### Was ist ein Modell?
 
 Ein **Modell** ist eine vereinfachte, abstrakte Darstellung eines realen Systems oder Prozesses.
 
@@ -60,10 +60,10 @@ Es erfasst die wesentlichen Aspekte, die für eine bestimmte Fragestellung relev
 
 ---
 
+### Was ist eine Simulation?
+
 <div class="columns">
 <div class="two">
-
-### Was ist eine Simulation?
 
 Eine **Simulation** ist das Durchführen von Experimenten mit einem Modell.
 
@@ -171,10 +171,10 @@ Dieser Abschnitt beinhaltet das Folgende:
 
 ---
 
+### Klassifikation von Modellen
+
 <div class="columns">
 <div class="two">
-
-### Klassifikation von Modellen
 
 Modelle können nach verschiedenen Kriterien klassifiziert werden:
 
@@ -510,10 +510,10 @@ Visualisierung ist essenziell, um:
 
 ---
 
+### Formen der Visualisierung im Überblick
+
 <div class="columns">
 <div class="two">
-
-### Formen der Visualisierung im Überblick
 
 In diesem Kurs lernen wir die Visualisierung entlang der folgenden Dimensionen kennen:
 
@@ -611,10 +611,10 @@ Dieser Abschnitt beinhaltet das Folgende:
 
 ---
 
+### Wo passt die Simulation hinein?
+
 <div class="columns">
 <div class="three">
-
-### Wo passt die Simulation hinein?
 
 **Simulation ist die Kerntechnologie, die den Digitalen Zwilling zum Leben erweckt.**
 

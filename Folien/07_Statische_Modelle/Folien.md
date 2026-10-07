@@ -45,17 +45,17 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Das Fachwerk als klassisches Beispiel
+
 <div class="columns">
 <div>
-
-### Das Fachwerk als klassisches Beispiel
 
 Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist, die an ihren Enden durch Knoten (Gelenke) miteinander verbunden sind.
 
 </div>
 <div>
 
-![width:700px](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Beispiel.png)
+![w:500](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Beispiel.png)
 
 </div>
 </div>
@@ -116,10 +116,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Annahmen des idealen Fachwerks
+
 <div class="columns">
 <div>
-
-### Annahmen des idealen Fachwerks
 
 1.  Die Stäbe sind **gerade** und haben ein **vernachlässigbares Eigengewicht**.
 2.  Die Stäbe sind an ihren Enden durch **reibungsfreie Gelenke** (Knoten) verbunden.
@@ -347,10 +347,10 @@ $S = \frac{E \cdot A}{L_0} \cdot \Delta L$
 
 ---
 
+### Von der Knotenverschiebung zur Längenänderung
+
 <div class="columns">
 <div class="three">
-
-### Von der Knotenverschiebung zur Längenänderung
 
 - Die Längenänderung $\Delta L$ eines Stabes hängt von den Verschiebungen seiner beiden Endknoten ab.
 - Für einen Stab zwischen Knoten $i$ und $j$ mit Verschiebungsvektoren $\vec{u}_i$ und $\vec{u}_j$.
@@ -365,17 +365,17 @@ Diese Formel ist nichtlinear. Für die **Finite-Elemente-Methode** wird sie übl
 </div>
 <div>
 
-![width:700px](./Diagramme/Stablaengenaenderung.tikz.svg)
+![w:500](./Diagramme/Stablaengenaenderung.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Herleitung der Näherungsformel (1/2)
+
 <div class="columns">
 <div class="two">
-
-### Herleitung der Näherungsformel (1/2)
 
 Um die exakte, nichtlineare Formel zu linearisieren, betrachten wir das Quadrat der neuen Länge $L'^2$. Sei $\Delta \vec{u} = \vec{u}_j - \vec{u}_i$.
 
@@ -393,17 +393,17 @@ $L' = \sqrt{L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2}$
 </div>
 <div>
 
-![width:700px](./Diagramme/Stablaengenaenderung.tikz.svg)
+![w:500](./Diagramme/Stablaengenaenderung.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Herleitung der Näherungsformel (2/2)
+
 <div class="columns">
 <div class="two">
-
-### Herleitung der Näherungsformel (2/2)
 
 $L' = L \sqrt{1 + \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2} + \frac{|\Delta \vec{u}|^2}{L^2}}$
 
@@ -422,17 +422,17 @@ $\Delta L \approx \frac{\vec{L} \cdot \Delta \vec{u}}{L} = \left(\frac{\vec{L}}{
 </div>
 <div>
 
-![width:700px](./Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
+![w:500](./Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Stab-Steifigkeitsbeziehung
+
 <div class="columns">
 <div>
-
-### Stab-Steifigkeitsbeziehung
 
 Kombiniert man Hooke'sches Gesetz und die Längenänderungs-Beziehung, erhält man eine Beziehung zwischen den Kräften, die auf die Knoten eines Stabes wirken, und den Verschiebungen dieser Knoten.
 
@@ -532,10 +532,10 @@ $$\mathbf{K} \mathbf{u} = \mathbf{f}$$
 
 ---
 
+### Einbau der Randbedingungen
+
 <div class="columns">
 <div>
-
-### Einbau der Randbedingungen
 
 - Das bisherige System $\mathbf{K} \mathbf{u} = \mathbf{f}$ ist singulär (nicht lösbar), da das Fachwerk noch "frei im Raum schwebt".
 - Wir müssen die **Lagerungen** (Randbedingungen) einbauen.
@@ -599,10 +599,10 @@ Die grundlegenden physikalischen Prinzipien (Kräftegleichgewicht, Hooke\'sches 
 
 ---
 
+### **Ideales** Fachwerk in 3D
+
 <div class="columns">
 <div>
-
-### **Ideales** Fachwerk in 3D
 
 - **Knotenpunktverfahren**: An jedem Knoten werden nun **drei** Gleichgewichtsgleichungen aufgestellt.
 - Für ein Fachwerk mit $k$ Knoten, $s$ Stäben und $l$ Lagerreaktionen muss gelten: $3k = s + l$ (statische Bestimmtheit).
@@ -632,10 +632,10 @@ $\sum_{j} F_j + F_{ext,i} = 0 \implies \begin{cases} \sum_j S_j \cdot e_{j,x} + 
 
 ---
 
+### Matrixdarstellung für einen Knoten
+
 <div class="columns">
 <div class="two">
-
-### Matrixdarstellung für einen Knoten
 
 Die drei Gleichgewichtsgleichungen für einen Knoten lassen sich in Matrixform schreiben. Für einen Knoten, an dem die Stäbe 1, 2 und 3 angreifen, sieht das so aus:
 
@@ -662,7 +662,7 @@ $$
 </div>
 <div>
 
-![width:800px](./Diagramme/Kraeftegleichgewicht_2D.tikz.svg)
+![w:450](./Diagramme/Kraeftegleichgewicht_2D.tikz.svg)
 
 </div>
 </div>
@@ -683,10 +683,10 @@ Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A
 
 ---
 
+### **Elastisches** Fachwerk in 3D
+
 <div class="columns">
 <div>
-
-### **Elastisches** Fachwerk in 3D
 
 - **Knotenverschiebungen**: Der Vektor $\mathbf{u}$ enthält nun für jeden Knoten drei Komponenten ($u_x, u_y, u_z$).
 - **Stab-Steifigkeitsmatrix**: Die $\mathbf{k}_{\text{Stab}}$ ist nun eine $6 \times 6$-Matrix, da sie die 3 Verschiebungen an beiden Enden des Stabes in Beziehung setzt.
@@ -703,10 +703,10 @@ Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A
 
 ---
 
+### Stablängenänderung durch Knotenverschiebung
+
 <div class="columns">
 <div class="two">
-
-### Stablängenänderung durch Knotenverschiebung
 
 Die Längenänderung $\Delta L$ eines Stabes zwischen den Knoten $i$ und $j$ hängt von deren Verschiebungen $\vec{u}_i$ und $\vec{u}_j$ ab.
 
@@ -721,17 +721,17 @@ Die exakte Längenänderung ist die Differenz zwischen der neuen Länge $L'$ (na
 </div>
 <div>
 
-![width:800px](./Diagramme/Stablaengenaenderung.tikz.svg)
+![w:500](./Diagramme/Stablaengenaenderung.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### **Exakte** Berechnung der Stablängenänderung
+
 <div class="columns">
 <div class="three">
-
-### **Exakte** Berechnung der Stablängenänderung
 
 Die exakte Längenänderung ist: $\Delta L = L' - L = |\vec{L}_{ij} + \vec{u}_j - \vec{u}_i| - |\vec{L}_{ij}|$.
 
@@ -751,17 +751,17 @@ $L' = \sqrt{L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2} = L \sqr
 </div>
 <div>
 
-![width:800px](./Diagramme/Stablaengenaenderung.tikz.svg)
+![w:500](./Diagramme/Stablaengenaenderung.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### **Näherungsweise** Berechnung der Stablängenänderung
+
 <div class="columns">
 <div class="three">
-
-### **Näherungsweise** Berechnung der Stablängenänderung
 
 Für die in der Praxis übliche Annahme **kleiner Verschiebungen** gilt $|\Delta \vec{u}| \ll L$. Daher kann der quadratische Term $\frac{|\Delta \vec{u}|^2}{L^2}$ vernachlässigt werden.
 
@@ -780,7 +780,7 @@ Dies führt direkt zur linearisierten, näherungsweisen Berechnung.
 </div>
 <div>
 
-![width:800px](./Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
+![w:500](./Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
 
 </div>
 </div>
@@ -889,10 +889,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Programmtechnische Umsetzung: Datenstrukturen für das ideale 2D-Fachwerk
+
 <div class="columns">
 <div class="five">
-
-### Programmtechnische Umsetzung: Datenstrukturen für das ideale 2D-Fachwerk
 
 Das UML-Diagramm zeigt die drei zentralen Klassen zur Modellierung des statischen Gleichgewichts starrer Stäbe:
 - **`Truss`**: Die Hauptklasse, die das gesamte Fachwerk repräsentiert. Sie enthält eine Liste aller `Node` (Knoten) und `Rod` (Stäbe). Die `Solve`-Methode kapselt die Berechnung.
@@ -902,17 +902,17 @@ Das UML-Diagramm zeigt die drei zentralen Klassen zur Modellierung des statische
 </div>
 <div>
 
-![](./Diagramme/Model.svg)
+![h:440px](./Diagramme/Model.svg)
 
 </div>
 </div>
 
 ---
 
+### Die `Node`-Klasse
+
 <div class="columns">
 <div>
-
-### Die `Node`-Klasse
 
 Die `Node`-Klasse speichert alle relevanten Informationen für einen einzelnen Knotenpunkt:
 - **`Name`**: Ein Bezeichner für den Knoten.
@@ -947,10 +947,10 @@ public class Node
 
 ---
 
+### Die `Rod`-Klasse
+
 <div class="columns">
 <div>
-
-### Die `Rod`-Klasse
 
 Die `Rod`-Klasse ist die einfachste Struktur:
 - Sie verbindet zwei Knoten (`NodeA`, `NodeB`).
@@ -975,10 +975,10 @@ public class Rod
 
 ---
 
+### Die `Truss`-Klasse
+
 <div class="columns">
 <div>
-
-### Die `Truss`-Klasse
 
 Die `Truss`-Klasse orchestriert das Modell:
 - Sie hält Listen für alle Knoten und Stäbe.
@@ -1011,10 +1011,10 @@ public class Truss
 
 ---
 
+### Erweiterung: Datenmodell für das elastische Fachwerk (FEM)
+
 <div class="columns">
 <div>
-
-### Erweiterung: Datenmodell für das elastische Fachwerk (FEM)
 
 Für die FEM-Berechnung des elastischen Fachwerks werden die Datenstrukturen um Material- und Verschiebungsdaten erweitert:
 
@@ -1038,11 +1038,11 @@ public class ElasticRod : Rod {
     public double Elasticity { get; set; } // E [Pa]
     public double Area { get; set; }       // A [m^2]
     public double ComputeNormalForce() {
-        double dx = NodeB.PositionX - NodeA.PositionX;
-        double dy = NodeB.PositionY - NodeA.PositionY, L = Math.Sqrt(dx*dx + dy*dy);
-        var (eA, eB) = ((ElasticNode)NodeA, (ElasticNode)NodeB);
-        double du = (eB.DisplacementX - eA.DisplacementX) * (dx / L)
-                  + (eB.DisplacementY - eA.DisplacementY) * (dy / L);
+        var (a, b) = ((ElasticNode)NodeA, (ElasticNode)NodeB);
+        double dx = b.PositionX - a.PositionX, dy = b.PositionY - a.PositionY;
+        double L = Math.Sqrt(dx * dx + dy * dy);
+        double du = (b.DisplacementX - a.DisplacementX) * (dx / L)
+                  + (b.DisplacementY - a.DisplacementY) * (dy / L);
         return (Elasticity * Area / L) * du;
     }
 }

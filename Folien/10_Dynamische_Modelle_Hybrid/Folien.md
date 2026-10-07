@@ -38,10 +38,10 @@ Dieser Abschnitt beinhaltet Folgendes:
 
 ---
 
+### Mathematische Beschreibung des Bouncing Balls
+
 <div class="columns">
 <div class="five">
-
-### Mathematische Beschreibung des Bouncing Balls
 
 Das System wird durch folgende Annahmen vereinfacht:
 -   **Ein-dimensionales System:** Bewegung nur entlang der y-Achse.
@@ -53,17 +53,17 @@ Das System wird durch folgende Annahmen vereinfacht:
 </div>
 <div class="four">
 
-![w:1000](./Diagramme/BouncingBall_Zeit-Positions-Diagramm.tikz.svg)
+![w:500](./Diagramme/BouncingBall_Zeit-Positions-Diagramm.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Differentialgleichungen der Bewegung
+
 <div class="columns">
 <div>
-
-### Differentialgleichungen der Bewegung
 
 Während der Freiflugphase (kein Bodenkontakt) wird die Bewegung des Balls durch folgende Differentialgleichungen beschrieben:
 
@@ -79,17 +79,17 @@ $$ \dot{y} = v \text{ und } \dot{v} = -g $$
 </div>
 <div>
 
-![w:1000](./Diagramme/BouncingBall_Flugparabel.tikz.svg)
+![w:500](./Diagramme/BouncingBall_Flugparabel.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Bedingungen für den Aufprall
+
 <div class="columns">
 <div class="two">
-
-### Bedingungen für den Aufprall
 
 Ein Aufprall auf den Boden (bei $y=0$) wird durch folgende Bedingung detektiert:
 
@@ -101,17 +101,17 @@ Diese Bedingungen definieren ein sogenanntes *Nulldurchgangsereignis*, bei dem d
 </div>
 <div>
 
-![w:1000](./Diagramme/BouncingBall_Aufprall_Bedingung.tikz.svg)
+![w:500](./Diagramme/BouncingBall_Aufprall_Bedingung.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Diskrete Zustandsänderung beim Aufprall
+
 <div class="columns">
 <div>
-
-### Diskrete Zustandsänderung beim Aufprall
 
 Zum Zeitpunkt des Aufpralls $t_e$, wenn $y(t_e)=0$ und $v(t_e^-) < 0$, ändert sich die Geschwindigkeit des Balls sprunghaft:
 
@@ -124,17 +124,17 @@ $$ v(t_e^+) = -e \cdot v(t_e^-) $$
 </div>
 <div>
 
-![w:1000](./Diagramme/BouncingBall_Aufprall_Zustandsaenderung.tikz.svg)
+![w:500](./Diagramme/BouncingBall_Aufprall_Zustandsaenderung.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Analytische Lösung: Freiflugphase
+
 <div class="columns">
 <div>
-
-### Analytische Lösung: Freiflugphase
 
 Die Bewegungsgleichungen $\dot{y} = v$ und $\dot{v} = -g$ können analytisch integriert werden.
 
@@ -151,17 +151,17 @@ Diese Gleichungen gelten, solange der Ball sich in der Luft befindet ($y(t) > 0$
 </div>
 <div>
 
-![w:1000](./Diagramme/BouncingBall_Freiflug_Position_Geschwindigkeit.tikz.svg)
+![w:500](./Diagramme/BouncingBall_Freiflug_Position_Geschwindigkeit.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Analytische Lösung: Zeitpunkt des Aufpralls
+
 <div class="columns">
 <div>
-
-### Analytische Lösung: Zeitpunkt des Aufpralls
 
 Um den Zeitpunkt des nächsten Aufpralls ($t_e$) zu finden, setzen wir $y(t_e) = 0$ und lösen die Positionsgleichung nach $t_e$ auf.
 
@@ -173,17 +173,17 @@ Dies ist eine quadratische Gleichung für $\Delta t = (t_e - t_0)$. Die positive
 </div>
 <div>
 
-![w:1000](./Diagramme/BouncingBall_Aufprall_Zeitpunkt.tikz.svg)
+![w:500](./Diagramme/BouncingBall_Aufprall_Zeitpunkt.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Analytische Lösung: Simulation der Kollisionen
+
 <div class="columns">
 <div class="three">
-
-### Analytische Lösung: Simulation der Kollisionen
 
 Abfolge von Freiflugphasen und Kollisionsereignissen:
 
@@ -275,10 +275,10 @@ Dieser Abschnitt beinhaltet Folgendes:
 
 ---
 
+### Fallbeispiel: Digitaler Sensor mit **diskreter Abtastzeit**
+
 <div class="columns">
 <div class="two">
-
-### Fallbeispiel: Digitaler Sensor mit **diskreter Abtastzeit**
 
 In diesem Beispiel modellieren wir einen einfachen digitalen Sensor, der ein kontinuierliches physikalisches Signal (z.B. eine Spannung) in ein digitales, zeitdiskretes Signal umwandelt.
 
@@ -298,10 +298,10 @@ Dieses System ist ein klassisches Beispiel für ein **zeitgesteuertes hybrides S
 
 ---
 
+### Mathematische Beschreibung (1/2)
+
 <div class="columns">
 <div>
-
-### Mathematische Beschreibung (1/2)
 
 **1. Kontinuierliches Eingangssignal**
 
@@ -316,17 +316,17 @@ Dieses Signal existiert und ändert sich kontinuierlich über die Zeit.
 </div>
 <div>
 
-![w:1000](./Diagramme/DigitalerSensor_Eingangssignal.tikz.svg)
+![w:500](./Diagramme/DigitalerSensor_Eingangssignal.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Mathematische Beschreibung (2/2)
+
 <div class="columns">
 <div class="two">
-
-### Mathematische Beschreibung (2/2)
 
 **2. Diskreter Abtastvorgang**
 
@@ -342,17 +342,17 @@ $$ U_{sens}(t) = U(t_k) \quad \text{für} \quad t_k \le t < t_{k+1} $$
 </div>
 <div>
 
-![w:700](./Diagramme/DigitalerSensor_Abtastung.tikz.svg)
+![w:500](./Diagramme/DigitalerSensor_Abtastung.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Hybride Eigenschaften des Systems
+
 <div class="columns">
 <div class="two">
-
-### Hybride Eigenschaften des Systems
 
 Das Gesamtsystem ist ein klassisches hybrides System:
 
@@ -365,17 +365,17 @@ Im Gegensatz zum Bouncing Ball sind die Ereignisse hier **zeitgesteuert** (perio
 </div>
 <div>
 
-![w:1000](./Diagramme/DigitalerSensor_Gesamtsystem.tikz.svg)
+![w:500](./Diagramme/DigitalerSensor_Gesamtsystem.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Erweiterung: Digitaler Sensor mit **variabler Abtastzeit**
+
 <div class="columns">
 <div class="three">
-
-### Erweiterung: Digitaler Sensor mit **variabler Abtastzeit**
 
 Eine starre, periodische Abtastung kann ineffizient sein:
 -   **Zu langsame Abtastung:** Wichtige Signaländerungen werden verpasst (Aliasing).
@@ -390,7 +390,7 @@ Dies führt zu einem **ereignisgesteuerten hybriden System**, bei dem die Abtast
 </div>
 <div>
 
-![w:1000](./Diagramme/DigitalerSensor_VariableAbtastrate_Signal.tikz.svg)
+![w:500](./Diagramme/DigitalerSensor_VariableAbtastrate_Signal.tikz.svg)
 
 </div>
 </div>
@@ -415,10 +415,10 @@ Die Zeit bis zur nächsten Abtastung wird umgekehrt proportional zur Änderungsr
 
 ---
 
+### Eingangssignal und Steuersignal
+
 <div class="columns">
 <div>
-
-### Eingangssignal und Steuersignal
 
 - **Eingangssignal $U(t)$:** Das zu messende Signal. In diesem Fall eine Sinuswelle.
 - **Steuersignal $c(t)$:** Die Änderungsrate von $U(t)$, hier der Absolutwert der Ableitung. Hohe Werte von $c(t)$ bedeuten, dass sich $U(t)$ schnell ändert.
@@ -430,17 +430,17 @@ Die variable Abtastlogik nutzt $c(t)$, um die Abtastrate anzupassen:
 </div>
 <div>
 
-![w:1000](./Diagramme/DigitalerSensor_Eingangs_und_Steuersignal.tikz.svg)
+![w:500](./Diagramme/DigitalerSensor_Eingangs_und_Steuersignal.tikz.svg)
 
 </div>
 </div>
 
 ---
 
+### Umsetzung der variablen Abtastung
+
 <div class="columns">
 <div class="two">
-
-### Umsetzung der variablen Abtastung
 
 **Ablauf bei jedem Abtast-Schritt $t_k$:**
 1.  **Messen:** Der Wert des Eingangssignals $U(t_k)$ wird erfasst.
@@ -453,7 +453,7 @@ Die variable Abtastlogik nutzt $c(t)$, um die Abtastrate anzupassen:
 </div>
 <div>
 
-![w:1000](./Diagramme/DigitalerSensor_VariableAbtastung.tikz.svg)
+![w:500](./Diagramme/DigitalerSensor_VariableAbtastung.tikz.svg)
 
 </div>
 </div>
@@ -473,10 +473,10 @@ Dieser Abschnitt beinhaltet Folgendes:
 
 ---
 
+### Definition hybrider dynamischer Modelle
+
 <div class="columns">
 <div>
-
-### Definition hybrider dynamischer Modelle
 
 - **Kombination** aus kontinuierlichen und diskreten Dynamiken.
 - **Zustandsänderungen** können kontinuierlich (beschrieben durch Differentialgleichungen) oder sprunghaft (ausgelöst durch Ereignisse) sein.
@@ -493,10 +493,10 @@ Dieser Abschnitt beinhaltet Folgendes:
 
 ---
 
+### Abgrenzung zu rein kontinuierlichen und rein diskreten Modellen
+
 <div class="columns">
 <div class="three">
-
-### Abgrenzung zu rein kontinuierlichen und rein diskreten Modellen
 
 - **Rein kontinuierliche Modelle:**
     - Zustand ändert sich stetig über die Zeit.
@@ -658,10 +658,10 @@ Die `Block`-Klasse, der zentrale Baustein unserer Simulationsumgebung, wurde erh
 
 ---
 
+### UML-Klassendiagramm
+
 <div class="columns">
 <div>
-
-### UML-Klassendiagramm
 
 Die Grafik auf der rechten Seite zeigt das UML-Klassendiagramm für die erweiterte `Block`-Klasse.
 
@@ -730,10 +730,10 @@ virtual public void UpdateStates(
 
 ---
 
+### Deklaration von Schnittstellen und Ereignissen
+
 <div class="columns">
 <div class="three">
-
-### Deklaration von Schnittstellen und Ereignissen
 
 Neben den bereits bekannten Deklarationen für Zustände (`StateDeclaration`), Eingänge (`InputDeclaration`) und Ausgänge (`OutputDeclaration`) wurde eine neue `ZeroCrossingDeclaration` hinzugefügt, um die Zero-Crossing-Signale eines Blocks zu beschreiben.
 
@@ -772,10 +772,10 @@ Das Konzept der Abtastzeit (`SampleTime`) wurde eingeführt, um dem Solver mitzu
 
 ---
 
+### Umsetzung der `SampleTime`-Klassen
+
 <div class="columns">
 <div class="three">
-
-### Umsetzung der `SampleTime`-Klassen
 
 ```csharp
 public abstract class SampleTime { }
@@ -935,10 +935,10 @@ public override double GetNextVariableHitTime(double time, ..., double[] inputs)
 
 ---
 
+### Erweiterte Solver-Implementierungen
+
 <div class="columns">
 <div class="three">
-
-### Erweiterte Solver-Implementierungen
 
 Die ursprüngliche kontinuierliche Solver-Architektur (**siehe Kapitel 8**) wurde um folgende Schnittstellen erweitert, um kontinuierliche Dynamik und diskrete Zustandsübergänge synchron zu integrieren:
 
@@ -969,10 +969,10 @@ Dieser Abschnitt beinhaltet Folgendes:
 
 ---
 
+### Algorithmus zur Nulldurchgangsdetektion
+
 <div class="columns">
 <div class="five">
-
-### Algorithmus zur Nulldurchgangsdetektion
 
 Der Solver nutzt einen iterativen Prozess, um den genauen Zeitpunkt eines Ereignisses zu finden:
 
@@ -986,7 +986,7 @@ Der Solver nutzt einen iterativen Prozess, um den genauen Zeitpunkt eines Ereign
 </div>
 <div>
 
-![w:1000](./Diagramme/Nulldurchgang.svg)
+![h:440px](./Diagramme/Nulldurchgang.svg)
 
 </div>
 </div>
@@ -1011,10 +1011,10 @@ while (zeroCrossingValue > Threshold && iteration++ < Limit) {
 
 ---
 
+### Echte Vorzeichenwechsel-Bisektion
+
 <div class="columns">
 <div class="three">
-
-### Echte Vorzeichenwechsel-Bisektion
 
 Ein Nulldurchgang liegt exakt dann vor, wenn an den Intervallgrenzen ein **Vorzeichenwechsel** auftritt:
 
@@ -1035,7 +1035,7 @@ $$\text{sgn}(z(t_a)) \neq \text{sgn}(z(t_b)) \iff z(t_a) \cdot z(t_b) \le 0$$
 </div>
 <div>
 
-![](./Diagramme/Solver_Logik.svg)
+![h:440px](./Diagramme/Solver_Logik.svg)
 
 </div>
 </div>
@@ -1090,10 +1090,10 @@ if (dtRemaining > 1e-9)
 
 ---
 
+### Testfall: Integration mit unterem Limit
+
 <div class="columns">
 <div class="three">
-
-### Testfall: Integration mit unterem Limit
 
 Wir betrachten ein einfaches System, um die Ereignisbehandlung zu testen:
 
@@ -1126,10 +1126,10 @@ Die blauen Punkte markieren die Berechnungsschritte des Solvers. Man erkennt deu
 
 ---
 
+### Testfall: **Bouncing Ball** (*Naive* Implementierung)
+
 <div class="columns">
 <div class="three">
-
-### Testfall: **Bouncing Ball** (*Naive* Implementierung)
 
 Implementierung des Bouncing Balls *ohne* spezielle Zero-Crossing-Unterstützung im Integrator selbst (nutzt `IntegrateWithReset` und externen `HitLowerLimit`):
 
@@ -1175,10 +1175,10 @@ Hier zeigt sich ein Problem, das vielleicht nicht zu erwarten war:
 
 ---
 
+### Testfall: **Bouncing Ball** (*Erweiterte* Implementierung)
+
 <div class="columns">
 <div class="three">
-
-### Testfall: **Bouncing Ball** (*Erweiterte* Implementierung)
 
 Verwendung des `IntegrateWithLowerLimitBlock` für die Berechnung der Position:
 
@@ -1317,10 +1317,10 @@ $t_{k+1} = t_k + T_{Period}$
 
 ---
 
+### Beispiel: **Basic Discrete Example**
+
 <div class="columns">
 <div class="three">
-
-### Beispiel: **Basic Discrete Example**
 
 Das Modell kombiniert kontinuierliche Integration mit diskreter Abtastung:
 
@@ -1450,10 +1450,10 @@ public override double GetNextVariableHitTime(double time, ..., double[] inputs)
 
 ---
 
+### Beispiel: **Variable Sample Time**
+
 <div class="columns">
 <div class="two">
-
-### Beispiel: **Variable Sample Time**
 
 Ein System, bei dem die Abtastrate kontinuierlich abnimmt (d.h. das Zeitintervall $\Delta t$ nimmt zu).
 

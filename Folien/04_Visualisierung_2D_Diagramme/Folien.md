@@ -87,10 +87,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### Visualisierung mit ScottPlot
+
 <div class="columns">
 <div class="two">
-
-### Visualisierung mit ScottPlot
 
 `ScottPlot` ist eine freie und quelloffene Bibliothek für .NET zur Erstellung interaktiver Diagramme.
 
@@ -109,10 +109,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
+### ScottPlot API: **Grundlagen**
+
 <div class="columns">
 <div class="three">
-
-### ScottPlot API: **Grundlagen**
 
 Die zentrale Klasse in ScottPlot ist `ScottPlot.Plot`. Eine Instanz davon repräsentiert ein Diagramm.
 
@@ -163,10 +163,10 @@ WpfPlot1.Refresh();
 
 ---
 
+### High-Performance Zeitreihen mit `Plot.Add.Signal`
+
 <div class="columns">
 <div class="two">
-
-### High-Performance Zeitreihen mit `Plot.Add.Signal`
 
 In physikalischen Simulationen liegen Messdaten fast immer mit **konstanter Schrittweite** vor:
 $$t_i = t_0 + i \cdot \Delta t$$
@@ -488,10 +488,10 @@ GraphControl.Graph = graph;
 
 ---
 
+### Visualisierung algebraischer Schleifen
+
 <div class="columns">
 <div class="two">
-
-### Visualisierung algebraischer Schleifen
 
 - **Was ist eine algebraische Schleife?**
   Ein geschlossener Signalpfad ohne speicherndes Element (wie einen Integrator $\frac{1}{s}$ oder ein Verzögerungsglied $z^{-1}$).
@@ -553,10 +553,10 @@ GraphControl.Graph = graph;
 
 ---
 
+### Ausblick: Interaktive Node-Editoren
+
 <div class="columns">
 <div class="two">
-
-### Ausblick: Interaktive Node-Editoren
 
 - **MSAGL:**
   - Hervorragend geeignet für die **automatische Generierung, Inspektion und das Debugging** von Topologien.
