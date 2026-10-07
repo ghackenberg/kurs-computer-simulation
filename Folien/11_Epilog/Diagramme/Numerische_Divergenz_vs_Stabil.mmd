@@ -1,16 +1,19 @@
+%%{init: {'themeVariables': {'fontSize': '22px'}}}%%
 flowchart TD
-    subgraph DIV["1. Numerische Divergenz (Expliziter Euler, Schrittweite Δt zu groß)"]
+    subgraph DIV["1. Numerische Divergenz (Δt zu groß / instabil)"]
         direction LR
-        D1["Anfangszustand x₀"] --> D2["Oszillation schaukelt auf<br/>|x₁| &lt; |x₂| &lt; |x₃|"] --> D3["Exponentielles Anwachsen<br/>|x| &gt;&gt; x_max"] --> D4["Simulation explodiert<br/>(Overflow / NaN)"]
+        D1["Anfangszustand<br/><b>x₀</b>"] --> D2["Aufschaukeln<br/><b>|x₁| &lt; |x₂| &lt; |x₃|</b>"] --> D3["Exponentielles Anwachsen<br/><b>|x| &gt;&gt; x_max</b>"] --> D4["Simulation explodiert<br/><b>Overflow / NaN</b>"]
     end
 
-    subgraph STAB["2. Stabile Lösung (Adäquates Schrittweiten-Limit Δt oder RK4)"]
+    DIV ~~~ STAB
+
+    subgraph STAB["2. Stabile Lösung (Δt adäquat / RK4)"]
         direction LR
-        S1["Anfangszustand x₀"] --> S2["Physikalische Dämpfung greift<br/>|x₁| &gt; |x₂| &gt; |x₃|"] --> S3["Gedämpftes Einschwingen<br/>Phasentrajektorie konvergiert"] --> S4["Stabiler Endzustand<br/>x(t) &rarr; Ruhelage"]
+        S1["Anfangszustand<br/><b>x₀</b>"] --> S2["Dämpfung greift<br/><b>|x₁| &gt; |x₂| &gt; |x₃|</b>"] --> S3["Gedämpftes Einschwingen<br/><b>Phasentrajektorie konvergiert</b>"] --> S4["Stabiler Endzustand<br/><b>x(t) &rarr; Ruhelage</b>"]
     end
 
-    style DIV fill:#fff5f5,stroke:#c62828,stroke-width:1.5px
-    style STAB fill:#f1f8e9,stroke:#2e7d32,stroke-width:1.5px
+    style DIV fill:#fff5f5,stroke:#c62828,stroke-width:2px
+    style STAB fill:#f1f8e9,stroke:#2e7d32,stroke-width:2px
     style D1 fill:#ffffff,stroke:#c62828,stroke-width:1px
     style D2 fill:#ffffff,stroke:#c62828,stroke-width:1px
     style D3 fill:#ffffff,stroke:#c62828,stroke-width:1px

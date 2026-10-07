@@ -1,33 +1,25 @@
-﻿flowchart TD
-    subgraph UI ["UI-Thread (WPF Dispatcher / SynchronizationContext)"]
+%%{init: {'themeVariables': {'fontSize': '22px'}}}%%
+flowchart LR
+    subgraph UI ["<b>UI-Thread (WPF Dispatcher)</b>"]
         direction TB
-        UI_Event["Benutzerinteraktion<br/>(Button 'Start')"]
-        UI_Handler["async Button_Click(...)<br/>(UI blockiert nicht)"]
-        CTS["CancellationTokenSource<br/>(Abbruchsteuerung)"]
-        Prog_Inst["Progress&lt;T&gt;<br/>(Instanz im UI-Kontext)"]
-        UI_Update["UI-Aktualisierung<br/>(ProgressBar, ScottPlot, Canvas)"]
+        Start["<b>1. async Button_Click(...)</b><br/>Erzeugt CancellationTokenSource &amp; Progress&lt;T&gt;"]
+        Update["<b>4. UI-Aktualisierung</b><br/>Callback via SynchronizationContext<br/>(Plots, ProgressBars, Canvas)"]
     end
 
-    subgraph Pool ["ThreadPool (Hintergrund-Worker)"]
+    subgraph Pool ["<b>ThreadPool (Hintergrund-Worker)</b>"]
         direction TB
-        Worker["Task.Run(...)<br/>(Rechenintensive Simulation)"]
-        SimLoop["Simulationsschritte / Parallel.For<br/>(Euler, Runge-Kutta, Monte-Carlo)"]
-        TokenCheck{"Abbruch erbeten?<br/>token.ThrowIf...()"}
-        Prog_Call["progress.Report(value)<br/>(IProgress&lt;T&gt;)"]
+        Worker["<b>2. await Task.Run(...)</b><br/>Rechenintensive Simulation<br/>(Euler / Parallel.For / Monte-Carlo)"]
+        Report["<b>3. progress.Report(val)</b><br/>token.ThrowIfCancellationRequested()"]
     end
 
-    UI_Event --> UI_Handler
-    UI_Handler -->|"1. Instanz erzeugen"| CTS
-    UI_Handler -->|"2. Instanz mit Callback erzeugen"| Prog_Inst
-    UI_Handler ==>|"3. await Task.Run(...)"| Worker
-    CTS -.->|"Token uebergeben"| Worker
+    Start ==>|"Task starten (Token uebergeben)"| Worker
+    Worker --> Report
+    Report ==>|"Thread-sicheres Marshalling"| Update
+    Worker -.->|"Abschluss / Ergebnis"| Update
 
-    Worker --> SimLoop
-    SimLoop --> TokenCheck
-    SimLoop -->|"4. Fortschritt melden"| Prog_Call
-
-    Prog_Call ==>|"5. Asynchrones Marshalling via SynchronizationContext"| Prog_Inst
-    Prog_Inst -->|"6. Callback im UI-Thread aufrufen"| UI_Update
-
-    Worker ==>|"7. Abschluss / Ergebnis"| UI_Handler
-    UI_Handler -->|"8. UI bereit fuer Folgeaktionen"| UI_Update
+    style UI fill:#e8f4fd,stroke:#004B96,stroke-width:2px
+    style Pool fill:#fff8e1,stroke:#ffa000,stroke-width:2px
+    style Start fill:#ffffff,stroke:#004B96,stroke-width:1.5px
+    style Update fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
+    style Worker fill:#ffffff,stroke:#ffa000,stroke-width:1.5px
+    style Report fill:#ffffff,stroke:#ffa000,stroke-width:1.5px

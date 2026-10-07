@@ -121,21 +121,21 @@
        <g id="id3">
         <rect class="BoundingBox" stroke="none" fill="none" x="1500" y="4000" width="1001" height="1001"/>
         <path fill="rgb(255,255,255)" stroke="none" d="M 2000,5000 L 1500,5000 1500,4000 2500,4000 2500,5000 2000,5000 Z "/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1850" y="4582"><tspan font-family="Courier New, monospace" font-size="318px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="191" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">L</tspan></tspan><tspan class="TextPosition" y="4617"><tspan font-family="Courier New, monospace" font-size="184px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="109" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">1</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1850" y="4582"><tspan font-family="Courier New, monospace" font-size="318px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="191" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">L</tspan></tspan><tspan class="TextPosition" y="4617"><tspan font-family="Courier New, monospace" font-size="240px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="109" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">1</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id4">
         <rect class="BoundingBox" stroke="none" fill="none" x="5625" y="3000" width="1001" height="1001"/>
         <path fill="rgb(255,255,255)" stroke="none" d="M 6125,4000 L 5625,4000 5625,3000 6625,3000 6625,4000 6125,4000 Z "/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="5975" y="3582"><tspan font-family="Courier New, monospace" font-size="318px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="191" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">L</tspan></tspan><tspan class="TextPosition" y="3617"><tspan font-family="Courier New, monospace" font-size="184px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="109" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">2</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="5975" y="3582"><tspan font-family="Courier New, monospace" font-size="318px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="191" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">L</tspan></tspan><tspan class="TextPosition" y="3617"><tspan font-family="Courier New, monospace" font-size="240px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="109" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">2</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id5">
         <rect class="BoundingBox" stroke="none" fill="none" x="2500" y="7000" width="1001" height="1001"/>
         <path fill="rgb(255,255,255)" stroke="none" d="M 3000,8000 L 2500,8000 2500,7000 3500,7000 3500,8000 3000,8000 Z "/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2850" y="7582"><tspan font-family="Courier New, monospace" font-size="318px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="191" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">L</tspan></tspan><tspan class="TextPosition" x="3040" y="7617"><tspan font-family="Courier New, monospace" font-size="184px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="109" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">3</tspan></tspan></tspan></text>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2850" y="7582"><tspan font-family="Courier New, monospace" font-size="318px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="191" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">L</tspan></tspan><tspan class="TextPosition" x="3040" y="7617"><tspan font-family="Courier New, monospace" font-size="240px" font-weight="400" lengthAdjust="spacingAndGlyphs" textLength="109" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">3</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.LineShape">

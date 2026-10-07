@@ -1,23 +1,20 @@
-graph TB
+flowchart LR
+    A([Start]) --> B["Zust‰nde initialisieren<br/>Ausg‰nge & Ableitungen"]
+    B --> E{Weiter?}
     
-    A(Start) --> B(Zust√§nde initialisieren<br/>Ausg√§nge berechnen<br/>Ableitungen berechnen);
-
-    subgraph Zeitschleife
-        E{Weiter?};
-        E -- Ja --> H;
-        
-        subgraph "Ableitungsschleife"
-            G{Fehler?};
-            G -- Ja --> H(Ableitungen aktualisieren<br/>Zust√§nde integrieren<br/>Ausg√§nge berechnen<br/>Ableitungen berechnen<br/>Fehler berechnen);
-            H --> G;
+    subgraph Zeitschleife ["Zeitschleife (t = t_max)"]
+        direction LR
+        E -- Ja --> H
+        subgraph Ableitungsschleife ["Ableitungsschleife"]
+            direction TB
+            H["Zust‰nde integrieren<br/>Ausg‰nge & Ableitungen<br/>Fehler berechnen"] --> G{Konvergenz?}
+            G -- Nein --> H
         end
-
-        G -- Nein --> M(Zeit erh√∂hen);
-        M --> E;
+        G -- Ja --> M["Zeit erhˆhen: t += h"]
+        M --> E
     end
+    
+    E -- Nein --> N([Ende])
 
-    B --> E;
-    E -- Nein --> N(Ende);
-
-    style A fill:black,stroke:black,color:white
-    style N fill:black,stroke:black,color:white
+    style A fill:#333,stroke:#333,color:#fff
+    style N fill:#333,stroke:#333,color:#fff

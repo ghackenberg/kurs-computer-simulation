@@ -1,7 +1,5 @@
-graph TD
+graph LR
     subgraph Materialfluss
-        Rohmaterial --> Bearbeitung;
-        Bearbeitung --> Puffer;
-        Puffer --> Montage;
-        Montage --> Endprodukt;
+        direction LR
+        Rohmaterial --> Bearbeitung --> Puffer --> Montage --> Endprodukt
     end

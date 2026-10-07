@@ -50,25 +50,25 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ### Architektur: Simulation und UI-Kopplung
 
 <div class="columns">
-<div class="two">
+<div class="one">
 
-- **Model-View-ViewModel (MVVM):**
-  - **Simulations-Engine:** Berechnet Zustände $\dot{x} = f(x, u, t)$ in diskreten Zeitschritten $\Delta t$.
-  - **Datenpuffer:** Sammelt Messwerte und Trajektorien zeitdiskret an.
-  - **Visualisierung:** WPF-View kapselt spezialisierte Controls (`WpfPlot`, `AutomaticGraphLayoutControl`).
-- **Anforderungen in der Praxis:**
-  - **Minimaler Allokationsaufwand:** Vermeidung von GC-Pauses bei langen Läufen.
-  - **Hohe Framerate:** Flüssiges Zoomen und Verschieben auch bei Millionen Punkten.
+- **MVVM-Architektur:**
+  - **Engine:** Berechnet Zustände $\dot{x} = f(x, u, t)$.
+  - **Puffer:** Sammelt Daten zeitdiskret ohne GC-Druck.
+  - **View:** Bindet `WpfPlot` und Graph-Controls ein.
+- **Praxisanforderungen:**
+  - **Allokationsarm:** Keine GC-Pauses bei Langzeitläufen.
+  - **Hohe Framerate:** Flüssiges Pan & Zoom bei $>10^6$ Punkten.
 
 </div>
-<div class="three">
+<div class="one">
 
 | Anforderung | Low-Level Canvas | ScottPlot / MSAGL |
 |---|---|---|
-| **Zeitaufwand Achsen/Gitter** | Sehr hoch | Integriert |
-| **Performance bei $10^6$ Punkten** | Bricht ein (WPF Shape) | Hardwarebeschleunigt |
-| **Automatisches Layout** | Manuell zu lösen | Sugiyama / Force |
-| **Interaktivität (Zoom/Pan)** | Selbst zu programmieren | Out-of-the-Box |
+| **Achsen & Gitter** | Hoher Aufwand | Integriert |
+| **Performance ($10^6$ Pkt.)** | Bricht ein (Shapes) | Hardwarebeschleunigt |
+| **Automatisches Layout** | Manuell | Sugiyama / Force |
+| **Interaktivität** | Selbstbau | Out-of-the-Box |
 
 </div>
 </div>
@@ -200,20 +200,29 @@ ScottPlot nutzt dies mit `Plot.Add.Signal(ys)` radikal aus:
 
 ### Methodenvergleich: `Scatter` vs. `Signal` vs. `SignalXY`
 
-| Merkmal | `Plot.Add.Scatter(xs, ys)` | `Plot.Add.Signal(ys)` | `Plot.Add.SignalXY(xs, ys)` |
+| Merkmal | `Scatter(xs, ys)` | `Signal(ys)` | `SignalXY(xs, ys)` |
 |---|---|---|---|
-| **Abtastung** | Beliebig (auch ungeordnet) | **Streng äquidistant** ($\Delta t = \text{const}$)| Monoton steigendes $x$ (adaptiv) |
-| **Speicher** | $2 \times N$ Werte ($xs$ und $ys$) | **$1 \times N$ Werte** ($ys$ genügt) | $2 \times N$ Werte ($xs$ und $ys$) |
-| **Suchaufwand** | $O(N)$ (jeder Punkt gezeichnet) | **$O(1)$ direkte Indexberechnung** | $O(\log N)$ (binäre Suche / Pixel) |
-| **Max. Punkte** | $\approx 10^4$ Punkte flüssig | **$> 10^7$ Punkte flüssig (60 FPS)** | $\approx 10^6$ Punkte flüssig |
-| **Typischer Einsatz** | Phasenraumtrajektorien $x_2(x_1)$ | Feste Zeitschritte (Euler, Heun) | Adaptive Solver (RK45, Dormand-P.) |
+| **Abtastung** | Beliebig (ungeordnet) | **Streng äquidistant** ($\Delta t = \text{const}$) | Monoton steigend (adaptiv) |
+| **Speicher** | $2 \times N$ ($xs$ und $ys$) | **$1 \times N$** ($ys$ genügt) | $2 \times N$ ($xs$ und $ys$) |
+| **Suchaufwand** | $O(N)$ (jeder Punkt gezeichnet) | **$O(1)$** (direkter Index) | $O(\log N)$ (binäre Suche) |
+| **Max. Punkte** | $\approx 10^4$ flüssig | **$> 10^7$ flüssig (60 FPS)** | $\approx 10^6$ flüssig |
+| **Typischer Einsatz** | Phasenraum $x_2(x_1)$ | Feste Schritte (Euler, Heun) | Adaptive Solver (RK45) |
+
+---
+
+### Konfiguration von Signal-Plots
+
+Für zeitdiskrete Simulationen mit festem Zeitschritt bietet `Signal` maximale Performance:
 
 ```csharp
-// Signal-Plot konfigurieren
+// Äquidistant abgetastete Messreihe konfigurieren
 var sig = WpfPlot1.Plot.Add.Signal(ys);
 sig.Data.Period = 0.001; // dt = 1 ms (1 kHz Abtastrate)
 sig.Data.XOffset = 0.0;   // Startzeit t0 = 0 s
 ```
+
+- **Keine $x$-Allokation:** Das $x$-Array entfällt vollständig; Zeitstempel werden dynamisch berechnet.
+- **Min/Max-Decimation:** Pro Pixelspalte wird nur das Minimum und Maximum gerendert.
 
 ---
 
@@ -443,16 +452,27 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### MSAGL: Einbindung in WPF
 
+<div class="columns">
+<div class="one">
+
+**XAML-Deklaration:**
 ```xaml
 <Window ...
-  xmlns:msagl="clr-namespace:Microsoft.Msagl.WpfGraphControl;
-    assembly=Microsoft.Msagl.WpfGraphControl">
+  xmlns:msagl="clr-namespace:
+    Microsoft.Msagl.WpfGraphControl;
+    assembly=
+    Microsoft.Msagl.WpfGraphControl">
   <Grid>
-    <msagl:AutomaticGraphLayoutControl x:Name="GraphControl" />
+    <msagl:AutomaticGraphLayoutControl 
+      x:Name="GraphControl" />
   </Grid>
 </Window>
 ```
 
+</div>
+<div class="two">
+
+**C#-Code-Behind:**
 ```csharp
 // 1. Graph-Objekt erstellen
 var graph = new Microsoft.Msagl.Drawing.Graph("Simulationsmodell");
@@ -467,9 +487,12 @@ graph.AddEdge("Sum", "e(t)", "Integrator");
 graph.AddEdge("Integrator", "x(t)", "Gain");
 graph.AddEdge("Gain", "Feedback", "Sum");
 
-// 4. Dem Control übergeben (Layout automatisch berechnet)
+// 4. Dem Control übergeben
 GraphControl.Graph = graph;
 ```
+
+</div>
+</div>
 
 ---
 
@@ -490,24 +513,21 @@ GraphControl.Graph = graph;
 
 ### Visualisierung algebraischer Schleifen
 
-<div class="columns">
-<div class="two">
-
 - **Was ist eine algebraische Schleife?**
   Ein geschlossener Signalpfad ohne speicherndes Element (wie einen Integrator $\frac{1}{s}$ oder ein Verzögerungsglied $z^{-1}$).
 - **Numerische Konsequenz:**
   Führt zu einer impliziten algebraischen Gleichung im Zeitschritt:
   $$y(t) = g(y(t), u(t))$$
-  Erfordert zeitaufwändige Nullstellensuche (z.B. Newton-Raphson) oder divergiert.
-- **Diagnose:** MSAGL markiert identifizierte Zyklen farblich im Modellgraphen!
+  Erfordert zeitaufwändige Nullstellensuche (z.B. Newton-Raphson) oder divergiert im expliziten Solver.
+- **Diagnose:** MSAGL markiert identifizierte Zyklen farblich und hebt betroffene Kanten hervor.
 
-</div>
-<div class="three">
+---
 
-![width:560px](./Diagramme/MSAGL_AlgebraicLoop_Highlight.svg)
+### Hervorhebung algebraischer Schleifen in MSAGL
 
-</div>
-</div>
+![center w:1100](./Diagramme/MSAGL_AlgebraicLoop_Highlight.svg)
+
+*Erkennung: Die rote Schleife (Sum1 ➔ Gain1 ➔ Gain2 ➔ Sum1) enthält kein speicherndes Element und muss numerisch gelöst oder algebraisch aufgelöst werden.*
 
 ---
 
@@ -559,37 +579,47 @@ GraphControl.Graph = graph;
 <div class="two">
 
 - **MSAGL:**
-  - Hervorragend geeignet für die **automatische Generierung, Inspektion und das Debugging** von Topologien.
-  - Zeichnet Graphen statisch oder semi-interaktiv neu.
-- **Moderne interaktive Node-Editoren:**
-  - Für visuelle Modellierungswerkzeuge (wie Simulink oder Game-Engine Blueprint-Editoren).
-  - Bibliotheken wie **`Nodify`** für WPF erlauben freies Drag & Drop von Pins, Verbindungsdrähten und Blöcken.
-- **Kombination:** MSAGL berechnet das Initial-Layout, der interaktive Editor speichert manuelle Feinjustierungen des Anwenders.
+  - Automatische Generierung, Inspektion und Debugging von Topologien.
+  - Berechnet Graphen-Layout statisch oder semi-interaktiv.
+- **Moderne Node-Editoren (z.B. Nodify):**
+  - Für interaktive Werkzeuge (wie Simulink oder Blueprint-Editoren).
+  - Erlauben freies Drag & Drop von Pins, Verbindungen und Blöcken.
+- **Kombination:** MSAGL liefert das Initial-Layout, der Editor speichert manuelle Justierungen.
 
 </div>
 <div class="two">
 
 | Kriterium | MSAGL | Nodify / Node-Editor |
 |---|---|---|
-| **Fokus** | Graph-Visualisierung & Layout | Interaktive Modell-Erstellung |
-| **Kantenführung** | Vollautomatisch (Splines) | Bezier-Kurven durch Pins |
-| **Zyklenanalyse** | Integriert | Modell-Logik erforderlich |
-| **UI-Interaktion** | Zoom, Pan, Drag-Nodes | Block-Erstellung, Wire-Connecting |
+| **Fokus** | Layout & Visualisierung | Interaktive Modellierung |
+| **Kantenführung** | Automatisch (Splines) | Bezier-Kurven / Pins |
+| **Zyklenanalyse** | Integriert | Modell-Logik nötig |
+| **Interaktion** | Zoom, Pan, Drag | Wire-Connecting, Edit |
 
 </div>
 </div>
 
 ---
 
-# Zusammenfassung Kapitel 4
+### Zusammenfassung Kapitel 4
 
-- Für standardisierte Visualisierungsaufgaben bieten spezialisierte Bibliotheken drastische Performance- und Entwicklungsvorteile.
+<div class="columns">
+<div class="one">
+
 - **ScottPlot (`Plot.Add.Signal`):**
-  - Äquidistante Abtastung und Min/Max-Säulendecimation ermöglichen flüssiges Rendering von $>10^6$ Punkten bei stabilen 60 FPS.
-  - `SignalXY` deckt monotone Zeitreihen mit adaptiver Schrittweite ab; `Scatter` eignet sich für beliebige Phasenraumdiagramme.
+  - Äquidistante Abtastung und Min/Max-Decimation ermöglichen flüssiges Rendering von $>10^6$ Punkten bei 60 FPS.
+  - `SignalXY` deckt monotone Zeitreihen mit adaptiver Schrittweite ab; `Scatter` eignet sich für Phasenraumdiagramme.
 - **Statistische Auswertung:**
   - `Histogram` und `Bar` visualisieren Verweilzeiten, Rauschdaten und Monte-Carlo-Streuungen.
+
+</div>
+<div class="one">
+
 - **Live-Streaming:**
-  - Vorallokierte Ringpuffer verhindern Garbage-Collection-Latenzen; Entkopplung via `DispatcherTimer` schont den UI-Thread.
+  - Vorallokierte Ringpuffer verhindern Garbage-Collection-Latenzen; Entkopplung via Timer schont den UI-Thread.
 - **MSAGL:**
-  - Berechnet automatische Layouts (Sugiyama, Force-Directed) und macht kritische Modellstrukturen (z.B. algebraische Schleifen) durch gezieltes Kanten-Styling sofort diagnostizierbar.
+  - Berechnet automatische Layouts (Sugiyama, Force-Directed).
+  - Macht kritische Modellstrukturen (z.B. algebraische Schleifen) durch gezieltes Kanten-Styling sofort diagnostizierbar.
+
+</div>
+</div>

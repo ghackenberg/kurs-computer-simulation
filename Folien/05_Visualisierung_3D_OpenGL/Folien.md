@@ -822,22 +822,19 @@ Ein Szenengraph ist eine hierarchische Struktur (ein Baum), die alle Elemente ei
 
 ### Umsetzung: Die Klassenstruktur
 
-<div class="columns">
-<div>
+Die objektorientierte Architektur des Szenengraphen gliedert sich in folgende Rollen:
 
 - **`Scene`**: Das Hauptobjekt. Enthält den `Root`-Knoten und globale Einstellungen wie Lichter und Hintergrundfarbe.
 - **`Node`**: Die abstrakte Basisklasse für alle Knoten. Definiert eine Liste von `Transforms` und eine `Draw`-Methode.
 - **`Group`**: Ein `Node`, der eine Liste von Kindern (`Node`s) besitzt. Erzeugt die Baumstruktur.
 - **`Primitive` / `Volume`**: Konkrete `Node`-Typen, die Geometrie darstellen (Blattknoten).
-- **`Transform`**: Basisklasse für `Translate`, `Rotate`, `Scale`.
+- **`Transform`**: Basisklasse für konkrete Transformationen (`Translate`, `Rotate`, `Scale`).
 
-</div>
-<div>
+---
 
-![UML-Diagramm des Szenengraphen](../../Quellen/WS25/VorlageSzenengraph3D/Model.Scene.svg)
+### Klassendiagramm: Szenengraph-Architektur
 
-</div>
-</div>
+![w:1150 center UML-Diagramm des Szenengraphen](../../Quellen/WS25/VorlageSzenengraph3D/Model.Scene.svg)
 
 ---
 
@@ -868,16 +865,16 @@ public void Draw(OpenGL gl)
 ### Klasse `Transform`
 
 <div class="columns">
-<div class="two">
+<div class="one">
 
 Die abstrakte Klasse `Transform` ist die Basis für alle Transformationen im Szenengraphen.
 
-- Sie definiert eine einzige abstrakte Methode: `Apply(OpenGL gl)`.
-- Jede konkrete Transformations-Klasse (`Translate`, `Rotate`, `Scale`) implementiert diese Methode, um den entsprechenden OpenGL-Befehl aufzurufen.
-- Ein `Node` im Szenengraphen besitzt eine Liste von `Transform`-Objekten.
+- Abstrakte Methode `Apply(OpenGL gl)` zur Modifikation der ModelView-Matrix.
+- Jede konkrete Klasse (`Translate`, `Rotate`, `Scale`) ruft den passenden OpenGL-Befehl auf.
+- Ein `Node` besitzt eine Liste geordneter `Transform`-Objekte.
 
 </div>
-<div>
+<div class="two">
 
 ![](../../Quellen/WS25/VorlageSzenengraph3D/Model.Transform.svg)
 
@@ -951,16 +948,17 @@ Durch diesen rekursiven Aufruf (`Group.Draw` -> `Child.Draw` -> ...) werden die 
 ### Klasse `Primitive`
 
 <div class="columns">
-<div class="two">
+<div class="one">
 
-Die abstrakte Klasse `Primitive` ist die Basis für alle 2D-Grundformen, die aus einer Liste von Vertices bestehen.
+Die abstrakte Klasse `Primitive` ist die Basis für alle 2D-Grundformen:
 
 - **Erbt von**: `Node`.
-- **Speichert**: Jeweils eine Liste von `Vertex`-, `Normal`- und `Material`-Objekten.
-- **Funktionsweise**: Die `DrawLocal`-Methode zeichnet die Geometrie, indem sie für jeden Vertex das zugehörige Material, die Normale und dann den Vertex selbst an OpenGL übergibt. Der `_beginMode` (z.B. `GL_POINTS`, `GL_LINES`) bestimmt, wie die Daten interpretiert werden.
+- **Speichert**: Listen für `Vertex`-, `Normal`- und `Material`-Objekte.
+- **Funktionsweise**: `DrawLocal` übergibt pro Vertex Material, Normale und Punktkoordinaten an OpenGL.
+- **Modus**: `_beginMode` (z.B. `GL_POINTS`, `GL_LINES`, `GL_TRIANGLES`) steuert die geometrische Interpretation.
 
 </div>
-<div>
+<div class="two">
 
 ![](../../Quellen/WS25/VorlageSzenengraph3D/Model.Primitive.svg)
 
@@ -1024,17 +1022,17 @@ Die Klasse `Quads` erbt von `Primitive` und zeichnet eine Menge von gefüllten V
 ### Klasse `Volume`
 
 <div class="columns">
-<div class="two">
+<div class="one">
 
-Die abstrakte Klasse `Volume` ist die Basisklasse für alle 3D-Volumenkörper.
+Die abstrakte Klasse `Volume` ist die Basisklasse für alle 3D-Volumenkörper:
 
-- Erbt von `Node`.
-- Definiert Eigenschaften, die alle Volumenkörper teilen, z.B. `Material`.
-- Die `DrawLocal()`-Methode wird von den konkreten Klassen (`Cube`, `Sphere`, `Cone`) implementiert, um die Geometrie des Körpers zu zeichnen.
-- Im Gegensatz zu `Primitive` müssen hier die Normalenvektoren für jede Fläche bzw. jeden Vertex korrekt berechnet und gesetzt werden, um eine realistische Beleuchtung zu erzielen.
+- **Erbt von**: `Node`.
+- **Eigenschaften**: Gemeinsame Attribute wie `Material`.
+- **Methoden**: `DrawLocal()` wird von den konkreten Klassen (`Cube`, `Sphere`, `Cone`) implementiert.
+- **Normalenvektoren**: Werden für jeden Vertex passend zur Geometrie für Phong-Beleuchtung berechnet.
 
 </div>
-<div>
+<div class="two">
 
 ![](../../Quellen/WS25/VorlageSzenengraph3D/Model.Volume.svg)
 
@@ -1102,7 +1100,7 @@ Approximiert eine Kugeloberfläche über ein Gitternetz aus Längen- und Breiten
 
 Der folgende *Screenshot* zeigt Kugeldarstellungen mit unterschiedlichen Einstellungen:
 
-![w:1100px](../../Quellen/WS25/BeispielKugel3D/Screenshot.png)
+![h:330px center](../../Quellen/WS25/BeispielKugel3D/Screenshot.png)
 
 > [!NOTE]
 > Die ausführliche mathematische Herleitung der Kugelkoordinaten sowie die C#-Triangulationsschleifen (`GL_QUAD_STRIP` und `GL_TRIANGLE_FAN`) sind im Begleitdokument [Folien_Anhang_3D_Normalen.md](./Folien_Anhang_3D_Normalen.md) dokumentiert.
@@ -1137,7 +1135,7 @@ Modelliert einen Kreiszylinder, Kegel oder Kegelstumpf entlang der Y-Achse:
 
 Der folgende *Screenshot* zeigt Zylinderdarstellungen mit unterschiedlichen Einstellungen:
 
-![w:1100px](../../Quellen/WS25/BeispielZylinder3D/Screenshot.png)
+![h:380px center](../../Quellen/WS25/BeispielZylinder3D/Screenshot.png)
 
 > [!NOTE]
 > Die analytische 2D-Querschnitts- und 3D-Rotationsherleitung der Zylinder- und Kegelnormalen sowie deren C#-Berechnung finden Sie im Anhangsdokument [Folien_Anhang_3D_Normalen.md](./Folien_Anhang_3D_Normalen.md).
@@ -1149,21 +1147,16 @@ Der folgende *Screenshot* zeigt Zylinderdarstellungen mit unterschiedlichen Eins
 In der industriellen Simulationspraxis leitet man Meshes nicht manuell ab, sondern nutzt parametrische Generatoren (`GeometryFactory`):
 
 ```csharp
-namespace SimulationEngine.Graphics3D
+public static class GeometryFactory
 {
-    public static class GeometryFactory
-    {
-        public static Volume CreateCylinder(
-            float r, float h, int slices = 32) => 
-            new Cylinder("Cylinder", r, r, h, slices);
+    public static Volume CreateCylinder(float r, float h, int slices = 32) => 
+        new Cylinder("Cylinder", r, r, h, slices);
 
-        public static Volume CreateSphere(
-            float r, int slices = 32, int stacks = 16) => 
-            new Sphere("Sphere", r, slices, stacks);
+    public static Volume CreateSphere(float r, int slices = 32, int stacks = 16) => 
+        new Sphere("Sphere", r, slices, stacks);
 
-        public static Volume CreateBox(float sx, float sy, float sz) => 
-            new Cube("Box", sx, sy, sz);
-    }
+    public static Volume CreateBox(float sx, float sy, float sz) => 
+        new Cube("Box", sx, sy, sz);
 }
 ```
 
@@ -1206,22 +1199,18 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Serielle Kinematik im Szenengraphen
 
-<div class="columns">
-<div>
-
 In der Robotik und Mechatronik (z.B. KUKA, ABB, Fanuc, TwinCAT Kinematics) besteht ein Roboter aus einer Kette starrer Glieder (*Links*) und beweglicher Gelenke (*Joints*):
 
 - Jedes Gelenk $i$ bewegt alle nachfolgenden Glieder $i+1 \dots n$.
-- Die Position des Greifers (**Tool Center Point, TCP**) ist das Ergebnis der Verkettung aller Achsen.
+- Die Position des Greifers (**Tool Center Point, TCP**) ist das Ergebnis der seriellen Verkettung aller Achsen.
 - Ein **Szenengraph** bildet diese Eltern-Kind-Beziehung perfekt und baumförmig ab!
+- Transformationen wie Drehung und Verschiebung werden durch die Baumhierarchie automatisch akkumuliert.
 
-</div>
-<div>
+---
 
-![w:540](./Diagramme/Szenengraph_Roboterarm.svg)
+### Szenengraph einer Roboter-Kinematik
 
-</div>
-</div>
+![w:1150 center](./Diagramme/Szenengraph_Roboterarm.svg)
 
 ---
 
@@ -1323,43 +1312,33 @@ gl.LookAt(eyeX, eyeY, eyeZ,
 
 ### Orbit-Kamera mit Kugelkoordinaten
 
-<div class="columns">
-<div>
+Eine Orbit-Kamera beschreibt die Position auf einer Kugelschale um den Fokuspunkt:
 
-Anstatt $(x, y, z)$ direkt zu manipulieren, beschreibt eine Orbit-Kamera die Position auf einer Kugelschale um das Ziel:
-
-1. **Azimutwinkel $\theta$ (horizontaler Orbit)**:
-   - Drehung um die vertikale $Y$-Achse ($0^\circ \dots 360^\circ$).
-   - Bestimmt die Himmelsrichtung des Betrachters.
-2. **Elevationswinkel $\theta_{\text{elev}}$ (vertikale Neigung)**:
-   - Blickwinkel über/unter dem Äquator ($-89^\circ \dots +89^\circ$).
-   - Vogelperspektive ($>0$) bis Froschperspektive ($<0$).
-3. **Distanz $r$ (Kameraabstand / Zoom)**:
-   - Radius der Orbit-Kugelschale ($r > 0$).
+- **Azimutwinkel $\theta$ (horizontaler Orbit)**: Drehung um die vertikale $Y$-Achse ($0^\circ \dots 360^\circ$, Himmelsrichtung).
+- **Elevationswinkel $\theta_{\text{elev}}$ (vertikale Neigung)**: Blickwinkel über/unter dem Äquator ($-89^\circ \dots +89^\circ$, Vogel- bis Froschperspektive).
+- **Distanz $r$ (Kameraabstand / Zoom)**: Radius der Orbit-Kugelschale ($r > 0$).
 
 > [!NOTE]
-> **Terminologie-Hinweis (Kugel- vs. Orbit-Koordinaten):**
-> Bei `Sphere` bezeichnet $\phi \in [0, \pi]$ den **Polarwinkel** von der Polachse (Zenit).
-> Bei der Kamera bezeichnet $\theta_{\text{elev}} \in [-89^\circ, +89^\circ]$ den **Elevationswinkel** vom Äquator: $\theta_{\text{elev}} = 90^\circ - \phi_{\text{polar}}$.
+> **Terminologie:** Bei `Sphere` bezeichnet $\phi \in [0, \pi]$ den Polarwinkel vom Zenit. Bei der Kamera bezeichnet $\theta_{\text{elev}} \in [-89^\circ, +89^\circ]$ den Elevationswinkel vom Äquator: $\theta_{\text{elev}} = 90^\circ - \phi_{\text{polar}}$.
 
-</div>
-<div>
+---
 
-**Vermeidung von Gimbal Lock:**
+### Vermeidung von Gimbal Lock & Clamping
 
 Blickt die Kamera exakt senkrecht von oben ($\theta_{\text{elev}} = +90^\circ$) oder unten ($\theta_{\text{elev}} = -90^\circ$):
 
-- Blickvektor $\vec{view}$ und Up-Vektor $\vec{up} = (0, 1, 0)$ werden parallel.
+- Blickvektor $\vec{view}$ und Up-Vektor $\vec{up} = (0, 1, 0)$ werden linear abhängig (parallel).
 - Das Kreuzprodukt $\vec{view} \times \vec{up}$ wird zum Nullvektor $\vec{0}$.
-- Die Kamera verliert ihre eindeutige Orientierung und kippt unkontrolliert um.
-- **Lösung**: Der Elevationswinkel $\theta_{\text{elev}}$ wird per Software auf $[-89^\circ, +89^\circ]$ begrenzt (*Clamping*):
+- Die Kamera verliert ihre eindeutige Orientierung und kippt unkontrolliert um (*Gimbal Lock*).
+
+**Lösung: Clamping des Elevationswinkels**
+
+Der Elevationswinkel $\theta_{\text{elev}}$ wird per Software auf $[-89^\circ, +89^\circ]$ begrenzt:
 
 ```csharp
+// Clamping verhindert das Durchschlagen des Up-Vektors am Pol
 Elevation = Math.Clamp(Elevation, -89.0, 89.0);
 ```
-
-</div>
-</div>
 
 ---
 

@@ -362,22 +362,20 @@ private async void Start_Click(
 
 ### Architektur: UI-Thread & Hintergrund-Worker
 
-<div class="columns top">
-<div class="two">
+Die Entkopplung von Simulation und Benutzeroberfläche erfordert eine klare Thread-Architektur:
 
-![WPF Multithreading Architektur](./Diagramme/Multithreading_WPF_Architektur.svg)
+- **Reaktivität:** Der UI-Thread bleibt stets frei für Nutzerinteraktionen, Fenster-Rendering und Event-Handling.
+- **ThreadPool-Worker:** Führt die rechenintensive Simulation parallel aus (`Task.Run`), ohne das UI zu blockieren.
+- **`IProgress<T>`:** Ermöglicht thread-sicheres Reporting von Zwischenständen via automatischem `SynchronizationContext`-Marshalling.
+- **`CancellationToken`:** Erlaubt den sofortigen, geordneten Abbruch laufender Berechnungen aus der Benutzeroberfläche heraus.
 
-</div>
-<div class="one">
+---
 
-**Architekturprinzipien:**
-- **Entkopplung:** Der UI-Thread bleibt reaktiv für Nutzerinteraktionen.
-- **ThreadPool-Worker:** Führt die rechenintensive Simulation parallel aus.
-- **`IProgress<T>`:** Thread-sichere Entkopplung für Zwischenstände via `SynchronizationContext`.
-- **`CancellationToken`:** Ermöglicht den geordneten Abbruch aus der UI.
+### Signal- & Datenfluss: UI & Hintergrund-Worker
 
-</div>
-</div>
+![center w:1100](./Diagramme/Multithreading_WPF_Architektur.svg)
+
+*Ablauf: 1. Start aus UI ➔ 2. Simulation auf ThreadPool ➔ 3. Thread-sicheres Progress-Reporting ➔ 4. UI-Aktualisierung im SynchronizationContext.*
 
 ---
 

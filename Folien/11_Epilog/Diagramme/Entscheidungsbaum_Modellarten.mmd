@@ -1,12 +1,13 @@
+%%{init: {'themeVariables': {'fontSize': '20px'}}}%%
 flowchart TD
     Q{"Fragestellung im Projekt"}
-    Q -->|"Zeitunabhängig / Gleichgewicht?"| M1["Statische Modelle<br/><b>(Kapitel 7)</b><br/>LGS, Fachwerk, FEM"]
-    Q -->|"Kontinuierliche Physik / ODE?"| M2["Kontinuierliche Modelle<br/><b>(Kapitel 8)</b><br/>Euler, Heun, RK4"]
-    Q -->|"Diskrete Ereignisse / Warteschlange?"| M3["Diskrete Modelle<br/><b>(Kapitel 9)</b><br/>DES, PriorityQueue, MC"]
-    Q -->|"Gekoppelte Dynamik / Events?"| M4["Hybride Modelle<br/><b>(Kapitel 10)</b><br/>S-Functions, Zero-Crossing"]
+    Q -->|"Zeitunabhängig / Gleichgewicht?"| M1["<b>Statische Modelle (Kap. 7)</b><br/>LGS, Fachwerk, FEM"]
+    Q -->|"Kontinuierliche Physik / ODE?"| M2["<b>Kontinuierliche Modelle (Kap. 8)</b><br/>Euler, Heun, RK4"]
+    Q -->|"Diskrete Ereignisse / Takt?"| M3["<b>Diskrete Modelle (Kap. 9)</b><br/>DES, PriorityQueue, MC"]
+    Q -->|"Gekoppelte Dynamik / Stöße?"| M4["<b>Hybride Modelle (Kap. 10)</b><br/>S-Functions, Zero-Crossing"]
 
     style Q fill:#e8f4fd,stroke:#004B96,stroke-width:2px
-    style M1 fill:#f9f9f9,stroke:#004B96,stroke-width:1px
-    style M2 fill:#f9f9f9,stroke:#00897b,stroke-width:1px
-    style M3 fill:#f9f9f9,stroke:#f57f17,stroke-width:1px
-    style M4 fill:#f9f9f9,stroke:#8e24aa,stroke-width:1px
+    style M1 fill:#f9f9f9,stroke:#004B96,stroke-width:1.5px
+    style M2 fill:#f9f9f9,stroke:#00897b,stroke-width:1.5px
+    style M3 fill:#f9f9f9,stroke:#f57f17,stroke-width:1.5px
+    style M4 fill:#f9f9f9,stroke:#8e24aa,stroke-width:1.5px

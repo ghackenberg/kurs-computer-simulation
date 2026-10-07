@@ -2,13 +2,13 @@
   <defs>
     <style>
       .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1e293b; }
-      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #64748b; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #64748b; }
       .section-hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #0f172a; }
-      .cell-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #334155; text-anchor: middle; dominant-baseline: middle; }
-      .cell-text-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #0f172a; text-anchor: middle; dominant-baseline: middle; }
+      .cell-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; dominant-baseline: middle; }
+      .cell-text-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #0f172a; text-anchor: middle; dominant-baseline: middle; }
       .math-text { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 14px; fill: #0f172a; }
       .math-bold { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 15px; font-weight: bold; fill: #0284c7; }
-      .badge-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: middle; }
+      .badge-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: middle; }
       .code-font { font-family: 'Consolas', 'Courier New', monospace; font-size: 13px; fill: #0f172a; }
       .arrow { stroke: #0284c7; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
       .arrow-dash { stroke: #f59e0b; stroke-width: 2; stroke-dasharray: 4,4; fill: none; marker-end: url(#arrowhead-amber); }
@@ -72,7 +72,7 @@
       <rect x="220" y="0" width="70" height="35" fill="#f1f5f9" stroke="#cbd5e1" rx="3" />
       <text x="255" y="17.5" class="cell-text">(W-1, 0)</text>
 
-      <text x="320" y="17.5" class="cell-text" style="fill: #94a3b8; font-size: 11px;">Zeile 0</text>
+      <text x="320" y="17.5" class="cell-text" style="fill: #94a3b8; font-size: 13px;">Zeile 0</text>
     </g>
 
     <!-- Zeile 1 -->
@@ -91,7 +91,7 @@
       <rect x="220" y="0" width="70" height="35" fill="#f1f5f9" stroke="#cbd5e1" rx="3" />
       <text x="255" y="17.5" class="cell-text">(W-1, 1)</text>
 
-      <text x="320" y="17.5" class="cell-text" style="fill: #94a3b8; font-size: 11px;">Zeile 1</text>
+      <text x="320" y="17.5" class="cell-text" style="fill: #94a3b8; font-size: 13px;">Zeile 1</text>
     </g>
 
     <!-- Vertikale Auslassungspunkte -->
@@ -116,7 +116,7 @@
       <rect x="220" y="0" width="70" height="40" fill="#f8fafc" stroke="#94a3b8" rx="3" />
       <text x="255" y="20" class="cell-text">(W-1, y)</text>
 
-      <text x="320" y="20" class="cell-text" style="fill: #0284c7; font-weight: bold; font-size: 12px;">Zeile y</text>
+      <text x="320" y="20" class="cell-text" style="fill: #0284c7; font-weight: bold; font-size: 13px;">Zeile y</text>
     </g>
 
     <!-- Vertikale Auslassungspunkte -->
@@ -134,13 +134,13 @@
       <text x="195" y="17.5" class="cell-text" style="font-size: 16px;">…</text>
 
       <rect x="220" y="0" width="70" height="35" fill="#f1f5f9" stroke="#cbd5e1" rx="3" />
-      <text x="255" y="17.5" class="cell-text" style="font-size: 10px;">(W-1, H-1)</text>
+      <text x="255" y="17.5" class="cell-text" style="font-size: 13px;">(W-1, H-1)</text>
 
-      <text x="320" y="17.5" class="cell-text" style="fill: #94a3b8; font-size: 11px;">Zeile H-1</text>
+      <text x="320" y="17.5" class="cell-text" style="fill: #94a3b8; font-size: 13px;">Zeile H-1</text>
     </g>
 
     <!-- Legende unten links -->
-    <text x="20" y="322" class="cell-text" style="text-anchor: start; fill: #64748b; font-size: 11px;">
+    <text x="20" y="322" class="cell-text" style="text-anchor: start; fill: #64748b; font-size: 13px;">
       Höhe H: Zeilen 0 bis H-1 | Pro Pixel: 4 Bytes (32 Bit Farbtiefe)
     </text>
   </g>
@@ -157,9 +157,9 @@
       <rect x="0" y="0" width="310" height="28" fill="#e2e8f0" stroke="#94a3b8" rx="3" />
       <text x="145" y="14" class="cell-text">Zeile 0 (Pixel 0 … W-1)</text>
       <rect x="310" y="0" width="40" height="28" fill="#cbd5e1" stroke="#94a3b8" stroke-dasharray="2,2" rx="2" />
-      <text x="330" y="14" class="cell-text" style="font-size: 9px; fill: #64748b;">Pad</text>
+      <text x="330" y="14" class="cell-text" style="font-size: 13px; fill: #64748b;">Pad</text>
 
-      <text x="365" y="14" class="cell-text" style="text-anchor: start; font-size: 11px; fill: #64748b;">Offset: 0</text>
+      <text x="365" y="14" class="cell-text" style="text-anchor: start; font-size: 13px; fill: #64748b;">Offset: 0</text>
     </g>
 
     <!-- Speicherbalken Zeile 1 -->
@@ -167,9 +167,9 @@
       <rect x="0" y="0" width="310" height="28" fill="#e2e8f0" stroke="#94a3b8" rx="3" />
       <text x="145" y="14" class="cell-text">Zeile 1 (Pixel 0 … W-1)</text>
       <rect x="310" y="0" width="40" height="28" fill="#cbd5e1" stroke="#94a3b8" stroke-dasharray="2,2" rx="2" />
-      <text x="330" y="14" class="cell-text" style="font-size: 9px; fill: #64748b;">Pad</text>
+      <text x="330" y="14" class="cell-text" style="font-size: 13px; fill: #64748b;">Pad</text>
 
-      <text x="365" y="14" class="cell-text" style="text-anchor: start; font-size: 11px; fill: #64748b;">Offset: 1 · Stride</text>
+      <text x="365" y="14" class="cell-text" style="text-anchor: start; font-size: 13px; fill: #64748b;">Offset: 1 · Stride</text>
     </g>
 
     <!-- Vertikale Pünktchen -->
@@ -179,19 +179,19 @@
     <line x1="390" y1="50" x2="390" y2="78" stroke="#0284c7" stroke-width="1.5" />
     <line x1="385" y1="50" x2="395" y2="50" stroke="#0284c7" stroke-width="1.5" />
     <line x1="385" y1="78" x2="395" y2="78" stroke="#0284c7" stroke-width="1.5" />
-    <text x="402" y="66" class="cell-text" style="text-anchor: start; fill: #0284c7; font-weight: bold; font-size: 11px;">Stride (Bytes)</text>
+    <text x="402" y="66" class="cell-text" style="text-anchor: start; fill: #0284c7; font-weight: bold; font-size: 13px;">Stride (Bytes)</text>
 
     <!-- Zeile y - aktiv im Detail -->
     <g transform="translate(20, 145)">
       <!-- Umrandung Zeile y -->
       <rect x="0" y="0" width="420" height="135" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" rx="6" />
-      <text x="12" y="20" class="cell-text-bold" style="text-anchor: start; fill: #166534; font-size: 12px;">
+      <text x="12" y="20" class="cell-text-bold" style="text-anchor: start; fill: #166534; font-size: 13px;">
         Zeile y (Startadresse: pBackBuffer + y · Stride)
       </text>
 
       <!-- Sub-Puffer vor Pixel x -->
       <rect x="15" y="32" width="70" height="30" fill="#ffffff" stroke="#cbd5e1" rx="3" />
-      <text x="50" y="47" class="cell-text" style="font-size: 10px;">Pixel 0 … x-1</text>
+      <text x="50" y="47" class="cell-text" style="font-size: 13px;">Pixel 0 … x-1</text>
 
       <text x="95" y="47" class="cell-text" style="font-size: 13px;">➔</text>
 
@@ -200,38 +200,38 @@
         <!-- 4 Byte Blöcke BGRA -->
         <rect x="0" y="0" width="55" height="34" fill="#3b82f6" rx="3" />
         <text x="27.5" y="12" class="badge-text">Byte 0</text>
-        <text x="27.5" y="24" class="badge-text" style="font-size: 9px;">Blau (B)</text>
+        <text x="27.5" y="24" class="badge-text" style="font-size: 13px;">B (Blau)</text>
 
         <rect x="60" y="0" width="55" height="34" fill="#22c55e" rx="3" />
         <text x="87.5" y="12" class="badge-text">Byte 1</text>
-        <text x="87.5" y="24" class="badge-text" style="font-size: 9px;">Grün (G)</text>
+        <text x="87.5" y="24" class="badge-text" style="font-size: 13px;">G (Grün)</text>
 
         <rect x="120" y="0" width="55" height="34" fill="#ef4444" rx="3" />
         <text x="147.5" y="12" class="badge-text">Byte 2</text>
-        <text x="147.5" y="24" class="badge-text" style="font-size: 9px;">Rot (R)</text>
+        <text x="147.5" y="24" class="badge-text" style="font-size: 13px;">R (Rot)</text>
 
         <rect x="180" y="0" width="55" height="34" fill="#475569" rx="3" />
         <text x="207.5" y="12" class="badge-text">Byte 3</text>
-        <text x="207.5" y="24" class="badge-text" style="font-size: 9px;">Alpha (A)</text>
+        <text x="207.5" y="24" class="badge-text" style="font-size: 13px;">A (Alpha)</text>
       </g>
 
       <!-- Sub-Puffer nach Pixel x -->
       <text x="355" y="47" class="cell-text" style="font-size: 13px;">➔</text>
       <rect x="370" y="32" width="40" height="30" fill="#ffffff" stroke="#cbd5e1" rx="3" />
-      <text x="390" y="47" class="cell-text" style="font-size: 9px;">…</text>
+      <text x="390" y="47" class="cell-text" style="font-size: 13px;">…</text>
 
       <!-- Beschriftung des Target-Pixels im Speicher -->
       <rect x="110" y="72" width="235" height="24" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" rx="3" />
-      <text x="227.5" y="84" class="cell-text-bold" style="fill: #92400e; font-size: 11px;">
+      <text x="227.5" y="84" class="cell-text-bold" style="fill: #92400e; font-size: 13px;">
         Exakter Offset = y · Stride + x · 4 Bytes
       </text>
 
       <!-- 32-Bit Darstellung (uint) -->
-      <text x="15" y="118" class="code-font" style="font-size: 11px; fill: #334155;">
+      <text x="15" y="118" class="code-font" style="font-size: 13px; fill: #334155;">
         Als 32-Bit Integer (Little Endian):
       </text>
       <rect x="220" y="104" width="180" height="22" fill="#1e293b" rx="3" />
-      <text x="310" y="115" class="code-font" style="fill: #38bdf8; font-size: 11px; text-anchor: middle; dominant-baseline: middle;">
+      <text x="310" y="115" class="code-font" style="fill: #38bdf8; font-size: 13px; text-anchor: middle; dominant-baseline: middle;">
         uint pixel = 0xAARRGGBB;
       </text>
     </g>
@@ -240,7 +240,7 @@
     <g transform="translate(20, 295)">
       <rect x="0" y="0" width="310" height="28" fill="#e2e8f0" stroke="#94a3b8" rx="3" />
       <text x="145" y="14" class="cell-text">Zeile H-1 (Letzte Bildzeile)</text>
-      <text x="365" y="14" class="cell-text" style="text-anchor: start; font-size: 11px; fill: #64748b;">(H-1) · Stride</text>
+      <text x="365" y="14" class="cell-text" style="text-anchor: start; font-size: 13px; fill: #64748b;">(H-1) · Stride</text>
     </g>
   </g>
 

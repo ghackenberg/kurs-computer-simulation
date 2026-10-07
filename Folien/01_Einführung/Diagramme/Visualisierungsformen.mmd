@@ -1,11 +1,17 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'primaryColor': '#ffffff', 'primaryBorderColor': '#1d3557', 'lineColor': '#1d3557' }}}%%
 flowchart TD
-    Vis["Visualisierung von Simulationsdaten"] --> D1["Diagramme & Charts (1D/2D)"]
-    Vis --> D2["Räumliche 2D-Grafik"]
-    Vis --> D3["Strukturen & Netzwerke"]
-    Vis --> D4["3D-Szenen"]
+    Vis["<b>Visualisierung von Simulationsdaten</b>"]
 
-    D1 --> C1["Zeitreihen & Histogramme<br/>(ScottPlot - Kap. 4)"]
-    D2 --> C2A["Raster / Skalarfelder<br/>(WriteableBitmap - Kap. 2)"]
-    D2 --> C2B["Vektoren & Geometrie<br/>(WPF Canvas - Kap. 3)"]
-    D3 --> C3["Topologien & Signalflüsse<br/>(MSAGL - Kap. 4)"]
-    D4 --> C4["Körper, Licht & Szenengraph<br/>(SharpGL / OpenGL - Kap. 5)"]
+    subgraph B1 ["1D / 2D Visualisierung"]
+        C1["<b>Diagramme & Charts</b><br/>Zeitreihen & Signale (ScottPlot · Kap. 4)"]
+        C2["<b>2D-Rastergrafik</b><br/>Skalar- & Dichtefelder (WriteableBitmap · Kap. 2)"]
+    end
+
+    subgraph B2 ["Geometrie, Netzwerke & 3D"]
+        C3["<b>2D-Vektorgrafik</b><br/>Geometrie & Kräfte (WPF Canvas · Kap. 3)"]
+        C4["<b>Netzwerkgraphen</b><br/>Topologien & Signalfluss (MSAGL · Kap. 4)"]
+        C5["<b>3D-Szenen</b><br/>Körper & Licht (SharpGL / OpenGL · Kap. 5)"]
+    end
+
+    Vis --> B1
+    Vis --> B2

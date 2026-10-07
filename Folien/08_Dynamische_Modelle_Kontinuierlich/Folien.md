@@ -1069,21 +1069,21 @@ Implementiert den expliziten Euler-Algorithmus.
 <div class="columns">
 <div class="three">
 
-Die Klasse `EulerExplicitSolver` implementiert einen einfachen Algorithmus für die Berechnung des Modells. Der Algorithmus umfasst die folgenden Schritte und Unterschritte:
+Die Klasse `EulerExplicitSolver` implementiert einen einfachen Algorithmus für die Berechnung des Modells:
 
-1.  **Initialisierung**: `InitializeStates` aller Blöcke aufrufen.
+1. **Initialisierung**: `InitializeStates` aller Blöcke aufrufen.
 2. **Ausgänge berechnen**: `CalculateOutputs` für alle Blöcke aufrufen.
-3. **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke 
-4.  **Zeitschleife** (`while t <= tmax`):
+3. **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke.
+4. **Zeitschleife** (`while t <= tmax`):
     a. **Zustände integrieren**: $x_{k+1} = x_k + h \cdot \dot{x}_k$.
-    b. **Ausgänge berechnen**: `CalculateOutputs` für alle Blöcke aufrufen.
-    c. **Ableitungen berechnen**: `CalculateDerivatives` für alle Blöcke aufrufen.
-    e. **Zeit erhöhen**: $t = t + h$.
+    b. **Ausgänge berechnen**: `CalculateOutputs` aufrufen.
+    c. **Ableitungen berechnen**: `CalculateDerivatives` aufrufen.
+    d. **Zeit erhöhen**: $t = t + h$.
 
 </div>
-<div>
+<div class="two">
 
-![h:440px](./Diagramme/Simulationsschleife_Explizit.svg)
+![h:470px center](./Diagramme/Simulationsschleife_Explizit.svg)
 
 </div>
 </div>
@@ -1229,26 +1229,15 @@ Der Ausgang $V_{out}$ hängt direkt von sich selbst ab.
 
 ### Praktische Anwendung: **Nichtlineares elektrisches Netzwerk** (2/2)
 
-<div class="columns">
-<div class="three">
+Die Auflösung der algebraischen Schleife erfordert eine Fixpunktiteration in jedem Zeitschritt:
 
-**Blockdiagramm der Schleife:**
+1. **Schätze** einen Wert für $V_{out}$.
+2. Berechne den Strom $I = f(V_{out})$.
+3. Berechne einen neuen Wert für $V_{out}' = V_{in} - I \cdot R_1$.
+4. Vergleiche $V_{out}'$ mit dem geschätzten $V_{out}$.
+5. Wenn $|V_{out}' - V_{out}| > \text{Toleranz}$, passe Schätzung an und wiederhole ab Schritt 2.
 
-Die Auflösung erfordert einen iterativen Prozess in jedem einzelnen Simulationsschritt:
-
-1.  **Schätze** einen Wert für $V_{out}$.
-2.  Berechne den Strom $I = f(V_{out})$.
-3.  Berechne einen neuen Wert für $V_{out}' = V_{in} - I \cdot R_1$.
-4.  Vergleiche $V_{out}'$ mit dem geschätzten $V_{out}$.
-5.  Wenn die Differenz zu groß ist, passe die Schätzung an und wiederhole ab Schritt 2.
-
-</div>
-<div>
-
-![h:440px](./Diagramme/Algebraische_Schleife_Praxis.svg)
-
-</div>
-</div>
+![w:950 center](./Diagramme/Algebraische_Schleife_Praxis.svg)
 
 ---
 
@@ -1307,24 +1296,19 @@ $$ m \cdot a = F_{Antrieb} - c \cdot v^2 - m_{Zusatz} \cdot a $$
 
 ### Praktische Anwendung: Beschleunigung im Fluid (2/2)
 
-<div class="columns">
-<div class="two">
+Die algebraische Schleife entsteht durch die wechselseitige Abhängigkeit von Kraft und Beschleunigung:
 
-**Blockdiagramm der Schleife:**
+1. Ein Solver (wie `EulerExplicitLoopSolver`) **schätzt** einen Startwert für die Beschleunigung $a$.
+2. Mit diesem $a$ wird die Zusatzkraft berechnet: $F_{Zusatz} = m_{Zusatz} \cdot a$.
+3. Die Nettokraft wird bestimmt: $F_{Netto} = F_{Antrieb} - F_{Widerstand} - F_{Zusatz}$.
+4. Daraus ergibt sich die neue Beschleunigung: $a' = F_{Netto} / m$.
+5. Der Solver vergleicht $a'$ mit der Schätzung $a$ und iteriert, bis $|a' - a| \le \text{Toleranz}$.
 
-1.  Ein Solver (wie `EulerExplicitLoopSolver`) **schätzt** einen Startwert für die Beschleunigung `a`.
-2.  Mit diesem `a` wird die Zusatzkraft $F_{Zusatz} = m_{Zusatz} \cdot a$ berechnet.
-3.  Die Nettokraft wird berechnet: $F_{Netto} = F_{Antrieb} - F_{Widerstand} - F_{Zusatz}$.
-4.  Daraus ergibt sich ein neuer Wert für die Beschleunigung: $a' = F_{Netto} / m$.
-5.  Der Solver vergleicht $a'$ mit der Schätzung `a` und passt die Schätzung an, bis die Differenz unter einer Toleranzschwelle liegt.
+---
 
-</div>
-<div>
+### Beschleunigung im Fluid: Blockdiagramm mit Added Mass
 
-![](./Diagramme/Algebraische_Schleife_Mechanik.svg)
-
-</div>
-</div>
+![w:1150 center](./Diagramme/Algebraische_Schleife_Mechanik.svg)
 
 ---
 
@@ -1356,29 +1340,25 @@ Implementiert den impliziten Euler-Algorithmus.
 
 ### Simulationsschleife in `EulerImplicitSolver`
 
-<div class="columns">
-<div class="three">
+Der implizite Euler löst in jedem Zeitschritt eine Fixpunktiteration:
 
-1.  **Initialisierung**: Wie beim expliziten Solver.
-2.  **Zeitschleife** (`while t <= tmax`):
-    a. **Merke Zustände**: Speichere den aktuellen Zustand $x_k$.
-    b. Setze die Ableitung $\dot{x}_{k+1}$ auf die bekannte Ableitung $\dot{x}_k$.
-    c. **Wiederhole bis Konvergenz:**
-    - Berechne den neuen Zustand $x_{k+1} = x_k + h \cdot \dot{x}_{k+1}$.
-    - Berechne die Ausgänge $y_{k+1}$ mit dem neuen Zustand $x_{k+1}$.
-    - Berechne die neue Ableitung $\dot{x}'_{k+1}$ mit den neuen Ausgängen.
-    - Wenn sich die Ableitung kaum noch ändert, dann beende.
-    - Ansonsten, passe $\dot{x}_{k+1}$ an und wiederhole.
+1. **Initialisierung**: `InitializeStates`, `CalculateOutputs` und `CalculateDerivatives`.
+2. **Zeitschleife** (`while t <= tmax`):
+   a. **Merke Zustände**: Speichere den aktuellen Zustand $x_k$.
+   b. **Schätze Ableitung**: Setze Startwert $\dot{x}_{k+1} = \dot{x}_k$.
+   c. **Fixpunkt-Iteration bis Konvergenz:**
+      - Berechne den neuen Zustand: $x_{k+1} = x_k + h \cdot \dot{x}_{k+1}$
+      - Berechne die Ausgänge $y_{k+1}$ mit $x_{k+1}$ (`CalculateOutputs`).
+      - Berechne die neue Ableitung $\dot{x}'_{k+1}$ (`CalculateDerivatives`).
+      - Wenn $|\dot{x}'_{k+1} - \dot{x}_{k+1}| < \epsilon$, beende die innere Schleife.
+      - Andernfalls aktualisiere $\dot{x}_{k+1}$ und wiederhole Schritt c.
+   d. **Zeit erhöhen**: $t = t + h$.
 
-    d. **Zeit erhöhen**: $t = t + h$.
+---
 
-</div>
-<div>
+### Simulationsschleife in `EulerImplicitSolver` (Ablauf)
 
-![h:440px](./Diagramme/Simulationsschleife_Implizit.svg)
-
-</div>
-</div>
+![w:1180 center](./Diagramme/Simulationsschleife_Implizit.svg)
 
 ---
 
@@ -1540,16 +1520,13 @@ Reell negative Eigenwerte (gedämpfte Systeme) erfordern die Einhaltung dieser S
 Beim ungedämpften Federpendel liegen die Eigenwerte rein imaginär: $\lambda = \pm i\omega_0$.
 Setzt man $z = i\beta$ mit $\beta = \omega_0 h > 0$ in die Stabilitätsfunktionen ein:
 
-- **Expliziter Euler:**
-  $$|R(i\beta)| = |1 + i\beta| = \sqrt{1 + \beta^2} > 1 \quad \forall \beta > 0$$
+- **Expliziter Euler:** $|R(i\beta)| = |1 + i\beta| = \sqrt{1 + \beta^2} > 1 \quad \forall \beta > 0$  
   $\implies$ **Immer instabil!** Die Schwingung schaukelt sich unweigerlich künstlich auf.
 
-- **Heun (RK2):**
-  $$|R(i\beta)| = \left|1 - \frac{\beta^2}{2} + i\beta\right| = \sqrt{1 + \frac{\beta^4}{4}} > 1 \quad \forall \beta > 0$$
+- **Heun (RK2):** $|R(i\beta)| = \left|1 - \frac{\beta^2}{2} + i\beta\right| = \sqrt{1 + \frac{\beta^4}{4}} > 1 \quad \forall \beta > 0$  
   $\implies$ **Ebenfalls immer instabil!** Wächst langsamer als Euler, divergiert jedoch stets.
 
-- **Klassisches RK4:**
-  $$|R(i\beta)| \le 1 \quad \text{für} \quad |\beta| \le 2\sqrt{2} \approx 2{,}828$$
+- **Klassisches RK4:** $|R(i\beta)| \le 1 \quad \text{für} \quad |\beta| \le 2\sqrt{2} \approx 2{,}828$  
   $\implies$ **Bedingt stabil!** Für $h \le \frac{2{,}828}{\omega_0}$ bleibt die Simulation ungedämpfter Schwingungen stabil!
 
 ---
@@ -1630,7 +1607,7 @@ Dieser Abschnitt demonstriert die Systemsimulation an einem Kernproblem der Auto
 ### DC-Servomotor: Kontinuierliches Streckenmodell
 
 <div class="columns">
-<div class="three">
+<div class="two">
 
 Die Drehzahl $\omega(t)$ und Position $\theta(t)$ folgen dem DGL-System:
 
@@ -1642,17 +1619,28 @@ $$\dot{\theta}(t) = \omega(t), \quad \dot{\omega}(t) = -\frac{1}{T_m} \omega(t) 
 - $T_m = 0{,}05\,\mathrm{s}$: Mechanische Zeitkonstante
 - $K_m = 2{,}5\,\mathrm{rad/(s \cdot V)}$: Übertragungsbeiwert
 
-Die Endstufe begrenzt die Spannung auf $u(t) \in [-10\,\mathrm{V}, +10\,\mathrm{V}]$.
+Die Endstufe begrenzt die Motorspannung auf $u(t) \in [-10\,\mathrm{V}, +10\,\mathrm{V}]$.
 
 </div>
 <div class="two">
 
-![w:520](./Diagramme/Blockschaltbild_DCServo.svg)
+**Zustandsraumdarstellung der Strecke:**
 
-$$\mathbf{x}_{\text{Strecke}} = \begin{pmatrix} \theta \\ \omega \end{pmatrix}, \quad \dot{\mathbf{x}}_{\text{Strecke}} = \mathbf{A}\mathbf{x} + \mathbf{b}u$$
+$$\mathbf{x}_{\text{Strecke}} = \begin{pmatrix} \theta \\ \omega \end{pmatrix}, \quad \dot{\mathbf{x}} = \mathbf{A}\mathbf{x} + \mathbf{b}u$$
+
+$$\mathbf{A} = \begin{pmatrix} 0 & 1 \\ 0 & -\frac{1}{T_m} \end{pmatrix}, \quad \mathbf{b} = \begin{pmatrix} 0 \\ \frac{K_m}{T_m} \end{pmatrix}$$
+
+- **Eigenwerte der Strecke:** $\lambda_1 = 0$ (Integrator), $\lambda_2 = -\frac{1}{T_m} = -20\,\mathrm{s}^{-1}$
+- Reell negative Polstelle erfordert $h \le \frac{2}{20} = 0{,}1\,\mathrm{s}$ für explizites Eulerverfahren.
 
 </div>
 </div>
+
+---
+
+### DC-Servomotor: Blockschaltbild des Regelkreises
+
+![w:1150 center](./Diagramme/Blockschaltbild_DCServo.svg)
 
 ---
 

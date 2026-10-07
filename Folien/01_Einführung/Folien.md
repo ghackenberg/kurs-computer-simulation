@@ -512,24 +512,10 @@ Visualisierung ist essenziell, um:
 
 ### Formen der Visualisierung im Überblick
 
-<div class="columns">
-<div class="two">
+In diesem Kurs lernen wir die Visualisierung entlang von vier komplementären Dimensionen kennen:
 
-In diesem Kurs lernen wir die Visualisierung entlang der folgenden Dimensionen kennen:
+![w:1150](./Diagramme/Visualisierungsformen.svg)
 
-- **1D/2D-Diagramme:** Zeitverläufe, Signale und Histogramme (Kapitel 4 mit `ScottPlot`).
-- **2D-Rastergrafik:** Direkte Pixelberechnung für Skalar- und Dichtefelder (Kapitel 2 mit `WriteableBitmap`).
-- **2D-Vektorgrafik:** Geometrische Formen, Freiheitsgrade und Kräfte (Kapitel 3 mit `WPF Canvas`).
-- **Netzwerkgraphen:** Blockschaltbilder und Signalflusstopologien (Kapitel 4 mit `MSAGL`).
-- **3D-Szenen:** Räumliche Körper, Beleuchtung und Kameraführung (Kapitel 5 mit `SharpGL`).
-
-</div>
-<div class="three">
-
-![Visualisierungsformen](./Diagramme/Visualisierungsformen.svg)
-
-</div>
-</div>
 
 ---
 
@@ -713,15 +699,28 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 
 ---
 
-## Ausblick
+## Ausblick auf die Kursinhalte
 
-In den folgenden Kapiteln erarbeiten wir zunächst die technischen und methodischen Werkzeuge zur Visualisierung und Parallelisierung, bevor wir die verschiedenen Modellarten im Detail vertiefen:
+In den folgenden Kapiteln erarbeiten wir zunächst die Werkzeuge und vertiefen anschließend die physikalischen Modellarten:
 
-- **2D-Visualisierung (Pixel, Vektor, Diagramme & Graphen):** Von `WriteableBitmap` über `WPF Canvas` bis zu `ScottPlot` und `MSAGL`.
-- **3D-Visualisierung (OpenGL):** Hardwarenahes 3D-Rendering mit `SharpGL` und Strukturierung mittels Szenengraphen.
-- **Multithreading:** Parallele Ausführung und Threadsicherheit zur Beschleunigung rechenintensiver Simulationen.
-- **Simulationsmodelle:**
-  - **Statische Modelle:** 2D- und 3D-Fachwerke, LGS-Lösung und Steifigkeitsmatrizen.
-  - **Dynamische, kontinuierliche Modelle:** Differentialgleichungen, numerische Integratoren und blockbasierte S-Functions.
-  - **Dynamische, diskrete Modelle:** Ereignisorientierte Simulation, Warteschlangensysteme und Monte-Carlo-Verfahren.
-  - **Dynamische, hybride Modelle:** Zusammenspiel aus kontinuierlicher Dynamik und diskreten Ereignissen (Bouncing Ball, Sensorik).
+<div class="columns">
+<div class="one">
+
+**Teil 1: Visualisierung & Performance**
+- **2D-Raster & Vektor (Kap. 2–3):** `WriteableBitmap` & `WPF Canvas`
+- **Plots & Netzwerke (Kap. 4):** `ScottPlot` & `MSAGL`
+- **3D-Rendering (Kap. 5):** OpenGL mit `SharpGL` & Szenengraph
+- **Multithreading (Kap. 6):** Task Parallel Library (`Parallel.For`)
+
+</div>
+<div class="one">
+
+**Teil 2: Simulationsmodelle**
+- **Statische Modelle (Kap. 7):** Elastische Fachwerke in 2D/3D & LGS
+- **Kontinuierliche Modelle (Kap. 8):** ODEs, Integratoren & S-Functions
+- **Diskrete Modelle (Kap. 9):** Warteschlangen & Monte-Carlo
+- **Hybride Modelle (Kap. 10):** State Events & Zeno-Effekt
+
+</div>
+</div>
+

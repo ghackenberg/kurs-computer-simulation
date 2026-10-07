@@ -540,14 +540,23 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Die Lösung: `DrawingVisual`
 
+<div class="columns">
+<div class="one">
+
 `DrawingVisual` ist ein extrem leichtgewichtiger Visual-Knoten ohne UI-Ballast:
 
 - Erbt direkt von `Visual` (kein `UIElement`, kein `FrameworkElement`).
 - **Kein** Layout-Pass, kein Data Binding, keine separaten Event-Handler pro Vektorelement.
 - Vektorbefehle werden direkt in einen kompakten **`DrawingContext`** geschrieben.
-- Die Zeichenbefehle werden hardwarebeschleunigt als serialisierte Vektor-Streams direkt an die GPU übergeben.
+- Hardwarebeschleunigte Übergabe der Vektor-Streams an die GPU.
 
-![w:700](./Diagramme/WPF_Visual_Hierarchie.svg)
+</div>
+<div class="one">
+
+![center w:450](./Diagramme/WPF_Visual_Hierarchie.svg)
+
+</div>
+</div>
 
 ---
 

@@ -1,24 +1,20 @@
-graph LR
-    subgraph "Modell"
-        F_ext(F<sub>Antrieb</sub>)
-        S2 -- F<sub>Netto</sub> --> G1
-        subgraph Algebraische Schleife
-            direction RL
-            G1[Gain <br> 1/m]
-            S2[Subtract]
-            AM[Added Mass <br> m<sub>Zusatz</sub> * a]
-            
-            G1 -- a --> AM
-            AM -- F<sub>Zusatz</sub> --> S2
-        end
-        I_v[Integrator <br> v]
-        Drag[Drag <br> c * v²]
-        S1[Subtract]
-        
-        Drag -- F<sub>Widerstand</sub> --> S1
-        F_ext --> S1
-        S1 -- F<sub>ext</sub> - F<sub>Widerstand</sub> --> S2
-
-        G1 -- a --> I_v
-        I_v -- v --> Drag
+﻿flowchart LR
+    F_ext["<b>F<sub>Antrieb</sub></b>"] --> S1(( - ))
+    Drag["<b>Strömungswiderstand</b><br/>Drag: c · v²"] -->|"F<sub>Widerstand</sub>"| S1
+    S1 -->|"F<sub>vor</sub>"| S2(( - ))
+    
+    subgraph Loop ["Algebraische Schleife (Added Mass)"]
+        direction LR
+        S2 -->|"F<sub>Netto</sub>"| G1["<b>Masse</b><br/>Gain: 1 / m"]
+        G1 -->|"Beschleunigung a"| AM["<b>Added Mass</b><br/>F<sub>Zusatz</sub> = m<sub>Zusatz</sub> · a"]
+        AM -->|"F<sub>Zusatz</sub>"| S2
     end
+    
+    G1 -->|"a"| Iv["<b>Geschwindigkeit</b><br/>Integrator: v"]
+    Iv -->|"v"| Drag
+
+    style Loop fill:#fff9db,stroke:#f59f00,stroke-width:1.5px
+    style AM fill:#ffe3e3,stroke:#e03131,stroke-width:1.5px
+    style G1 fill:#e7f5ff,stroke:#1971c2,stroke-width:1.5px
+    style S1 fill:#f8f9fa,stroke:#495057,stroke-width:1.5px
+    style S2 fill:#f8f9fa,stroke:#495057,stroke-width:1.5px

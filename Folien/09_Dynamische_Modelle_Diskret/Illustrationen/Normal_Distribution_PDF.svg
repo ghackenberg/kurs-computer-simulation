@@ -91,14 +91,14 @@
          points="73,126 73,140 87,140 87,126 73,126 " />
     </clipPath>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:SVGTimes"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:SVGTimes"
        id="text8876"
        y="137"
        x="74">-</text>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:Times New Roman"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:Times New Roman"
        id="text8878"
        y="137"
        x="80.5">3</text>
@@ -114,14 +114,14 @@
          points="73,126 73,140 87,140 87,126 73,126 " />
     </clipPath>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:SVGTimes"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:SVGTimes"
        id="text8900"
        y="137"
        x="74">-</text>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:Times New Roman"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:Times New Roman"
        id="text8902"
        y="137"
        x="80.5">2</text>
@@ -137,14 +137,14 @@
          points="73,126 73,140 87,140 87,126 73,126 " />
     </clipPath>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:SVGTimes"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:SVGTimes"
        id="text8924"
        y="137"
        x="74">-</text>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:Times New Roman"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:Times New Roman"
        id="text8926"
        y="137"
        x="80.5">1</text>
@@ -469,8 +469,8 @@
          points="73,126 73,140 80,140 80,126 73,126 " />
     </clipPath>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:Times New Roman"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:Times New Roman"
        id="text10234"
        y="137"
        x="74">1</text>
@@ -486,8 +486,8 @@
          points="73,126 73,140 80,140 80,126 73,126 " />
     </clipPath>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:Times New Roman"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:Times New Roman"
        id="text10256"
        y="137"
        x="74">2</text>
@@ -503,8 +503,8 @@
          points="73,126 73,140 80,140 80,126 73,126 " />
     </clipPath>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:Times New Roman"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:Times New Roman"
        id="text10278"
        y="137"
        x="74">3</text>
@@ -520,14 +520,14 @@
          points="73,126 73,140 87,140 87,126 73,126 " />
     </clipPath>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:SVGTimes"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:SVGTimes"
        id="text10302"
        y="137"
        x="74">-</text>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:Times New Roman"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:Times New Roman"
        id="text10304"
        y="137"
        x="80.5">3</text>
@@ -543,14 +543,14 @@
          points="73,126 73,140 87,140 87,126 73,126 " />
     </clipPath>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:SVGTimes"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:SVGTimes"
        id="text10326"
        y="137"
        x="74">-</text>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:Times New Roman"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:Times New Roman"
        id="text10328"
        y="137"
        x="80.5">2</text>
@@ -566,14 +566,14 @@
          points="73,126 73,140 87,140 87,126 73,126 " />
     </clipPath>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:SVGTimes"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:SVGTimes"
        id="text10350"
        y="137"
        x="74">-</text>
     <text
-       font-size="10px"
-       style="font-size:10px;fill:#000000;font-family:Times New Roman"
+       font-size="16px"
+       style="font-size:16px;fill:#000000;font-family:Times New Roman"
        id="text10352"
        y="137"
        x="80.5">1</text>
@@ -863,7 +863,7 @@
          y="31">μ,σ</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial;-inkscape-font-specification:Arial"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial;-inkscape-font-specification:Arial"
        x="-215"
        y="27"
        id="text4323"
@@ -873,7 +873,7 @@
          id="tspan4325"
          x="-215"
          y="27"
-         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">2</tspan></text>
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">2</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times New Roman;-inkscape-font-specification:Times New Roman"
@@ -1293,7 +1293,7 @@
          id="g3578">
         <text
            xml:space="preserve"
-           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+           style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
            x="595"
            y="57.5"
            id="text5386"
@@ -1344,7 +1344,7 @@
            id="text3590"
            y="81.5"
            x="595"
-           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+           style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
            xml:space="preserve"><tspan
              y="81.5"
              x="595"
@@ -1389,7 +1389,7 @@
          id="g3654">
         <text
            xml:space="preserve"
-           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+           style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
            x="595"
            y="107.5"
            id="text3628"
@@ -1440,7 +1440,7 @@
            id="text3666"
            y="133.5"
            x="595"
-           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+           style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
            xml:space="preserve"><tspan
              y="133.5"
              x="595"

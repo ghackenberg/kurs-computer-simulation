@@ -36,7 +36,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Die 4 Simulationsmodellarten im Überblick
+### Die 4 Simulationsmodellarten im Überblick (1/2)
 
 Im Verlauf des Semesters haben wir vier grundlegende Paradigmen der mathematischen Modellierung kennengelernt:
 
@@ -47,26 +47,44 @@ Im Verlauf des Semesters haben wir vier grundlegende Paradigmen der mathematisch
 - Zeitinvariantes Verhalten
 - Zustand im statischen Gleichgewicht
 - Algebraische Gleichungssysteme ($A \cdot x = b$)
+- Direkte Lösungsverfahren (Gauß, LU)
 - Bsp.: Statisches Fachwerk, Widerstandsnetzwerk
+
+</div>
+<div>
 
 **2. Kontinuierliche Modelle (Kap. 8)**
 - Zeit stetig: $t \in \mathbb{R}$
 - Zustand stetig: $x(t) \in \mathbb{R}^n$
 - Gewöhnliche Differentialgleichungen ($\dot{x} = f(x, u, t)$)
+- Numerische Integratoren (Euler, Heun, RK4)
 - Bsp.: Vertikaler Wurf, Federpendel
 
 </div>
+</div>
+
+---
+
+### Die 4 Simulationsmodellarten im Überblick (2/2)
+
+<div class="columns top">
 <div>
 
 **3. Diskrete Modelle (Kap. 9)**
 - Zeit getaktet ($t_k$) oder ereignisbasiert ($t_e$)
 - Zustand zählbar/diskret: $s \in S$
 - Zustandsübergangsfunktionen ($s_{k+1} = \delta(s_k, e)$)
+- Ereignisorientierte Simulation (DES, Queues)
 - Bsp.: Warteschlangen, Fördertechnik, Logistik
+
+</div>
+<div>
 
 **4. Hybride Modelle (Kap. 10)**
 - Kopplung kontinuierlicher Dynamik mit diskreten Sprüngen
 - Phasen stetiger Bewegung + Events (Zero-Crossing)
+- Schaltbedingungen und Strukturwechsel
+- S-Funktions-Architektur für hybride Solver
 - Bsp.: Bouncing Ball (Stoß), Thermostat mit Hysterese
 
 </div>
@@ -76,46 +94,39 @@ Im Verlauf des Semesters haben wir vier grundlegende Paradigmen der mathematisch
 
 ### Die Modellierungsmatrix
 
-<div class="columns top">
-<div>
+Das Zusammenspiel von **Zeitachse** (statisch, kontinuierlich, diskret) und **Zustandsraum** (kontinuierlich, diskret, hybrid) spannt das Spektrum aller Modellierungsarten auf:
 
-Das Zusammenspiel von **Zeitachse** und **Zustandsraum** spannt den mathematischen Raum aller Modellierungsarten auf:
-
-- **Zeit:**
-  - Statisch (keine Zeitabhängigkeit)
-  - Kontinuierlich ($t \in \mathbb{R}$)
-  - Diskret ($t_k = k \cdot \Delta t$ oder Next-Event $t_e$)
-- **Zustand:**
-  - Kontinuierlich ($x \in \mathbb{R}^n$)
-  - Diskret ($s \in S$)
-  - Gemischt / Hybrid ($(x, m) \in \mathbb{R}^n \times M$)
-
-</div>
-<div class="two">
-
-![h:440px](./Diagramme/Modellierungsmatrix.svg)
-
-</div>
-</div>
+![w:1150 center](./Diagramme/Modellierungsmatrix.svg)
 
 ---
 
-### Vergleichende Taxonomie der Modellarten
+### Vergleichende Taxonomie der Modellarten (1/2)
+
+Mathematische Grundlagen und Modellierungscharakteristik der vier Paradigmen:
 
 | Kriterium | Statisch (Kap. 7) | Kontinuierlich (Kap. 8) | Diskret (Kap. 9) | Hybrid (Kap. 10) |
 | :--- | :--- | :--- | :--- | :--- |
 | **Zeitverhalten** | Zeitinvariant / Stationär | Kontinuierlich ($t \in \mathbb{R}$) | Diskrete Schritte / Ereignisse | Stetige Phasen + diskrete Events |
 | **Zustandsraum** | Kontinuierlich ($x \in \mathbb{R}^n$) | Kontinuierlich ($x(t) \in \mathbb{R}^n$) | Abzählbar ($s \in S$) | Gemischt ($x \in \mathbb{R}^n, m \in M$) |
 | **Mathematik** | $f(x, u) = 0$ bzw. $A \cdot x = b$ | $\dot{x}(t) = f(x, u, t)$ | $s_{k+1} = \delta(s_k, e_k)$ | $\dot{x} = f_m(x, u), g(x)=0 \implies x^+$ |
+
+---
+
+### Vergleichende Taxonomie der Modellarten (2/2)
+
+Numerische Lösungsverfahren, Software-Tools und typische Anwendungsgebiete:
+
+| Kriterium | Statisch (Kap. 7) | Kontinuierlich (Kap. 8) | Diskret (Kap. 9) | Hybrid (Kap. 10) |
+| :--- | :--- | :--- | :--- | :--- |
 | **Lösungsverfahren** | Gauß, LU-Zerlegung, CG | Euler, Heun, Runge-Kutta 4 | Next-Event-Time-Advance | Integrator mit Zero-Crossing |
 | **C#-Bibliotheken** | `Math.NET Numerics` | Eigene Integratoren, Simulink-Arch. | Eigene Event-Queue / PriorityQueue | S-Function Hybrid Solver |
 | **Typische Anwendung** | Tragwerke, Strömungsfeld | Regelungstechnik, Mechanik | Fertigungslinien, Logistik | Roboter mit Kontakt, Leistungselektronik |
 
 ---
 
-### Die 4 Visualisierungsarten im Überblick
+### Die 4 Visualisierungsarten im Überblick (1/2)
 
-Simulation ohne verständliche Visualisierung bleibt eine Black Box. Wir haben vier Grafikparadigmen in C# erarbeitet:
+Simulation ohne verständliche Visualisierung bleibt eine Black Box. Zwei grundlegende 2D-Grafikparadigmen:
 
 <div class="columns top">
 <div>
@@ -123,28 +134,47 @@ Simulation ohne verständliche Visualisierung bleibt eine Black Box. Wir haben v
 **1. Pixelgrafik (Kap. 2)**
 - Technologie: `WriteableBitmap` (WPF)
 - Direkter Speicherzugriff via Pointer (`Lock()`)
+- Höchste Performance für flächige Daten
 - Darstellung von 2D-Skalar- und Vektorfeldern
 - Bsp.: Temperaturverteilung, Druckfelder
+
+</div>
+<div>
 
 **2. Vektorgrafik (Kap. 3)**
 - Technologie: `Canvas`, `Shape`, `Path` (WPF)
 - Auflösungsunabhängig, Matrixtransformationen
-- Geometrische 2D-Objekte, Zooming & Panning
+- Interaktive 2D-Objekte, Zooming & Panning
+- Schnelle Realisierung mechatronischer Schemata
 - Bsp.: Kinematische Mechanismen, Fachwerke
 
 </div>
+</div>
+
+---
+
+### Die 4 Visualisierungsarten im Überblick (2/2)
+
+Ergänzende Paradigmen für Systemanalyse und räumliche Darstellung:
+
+<div class="columns top">
 <div>
 
 **3. Diagramme & Graphen (Kap. 4)**
 - Technologie: `ScottPlot` (1D/2D Charts) & `MSAGL`
 - Schnelle Zeitreihen, Phasenporträts, Histogramme
 - Topologische Graphen, Signalflüsse, Zustandsnetze
-- Bsp.: Trajektorien $y(t)$, Petri-Netze, Flussdiagramme
+- Direkte visuelle Validierung von DGL-Lösungen
+- Bsp.: Trajektorien $y(t)$, Petri-Netze, Signalbäume
+
+</div>
+<div>
 
 **4. 3D-Visualisierung (Kap. 5)**
 - Technologie: `SharpGL` / OpenGL
 - Szenengraph, Vertices, Normalen, Beleuchtung
 - Räumliche Immersion und Kameraprojektion
+- Realistische Validierung komplexer Geometrien
 - Bsp.: 3D-Roboterarm, räumliche Mehrkörpersysteme
 
 </div>
@@ -152,7 +182,7 @@ Simulation ohne verständliche Visualisierung bleibt eine Black Box. Wir haben v
 
 ---
 
-### Die optimale Paarung von Modell und Visualisierung
+### Die optimale Paarung von Modell und Visualisierung (1/2)
 
 Nicht jede Visualisierung passt zu jedem Modell. Eine fundierte Architektur wählt gezielt die informative Darstellung:
 
@@ -165,6 +195,10 @@ Nicht jede Visualisierung passt zu jedem Modell. Eine fundierte Architektur wäh
 - **Kinematik & Mechanismen:**
   - Modell: Kontinuierlich (Kap. 8) oder Hybrid (Kap. 10)
   - Vis: **Vektorgrafik** oder **3D-Szenengraph**
+
+</div>
+<div>
+
 - **Systemdynamik & Regleranalyse:**
   - Modell: Kontinuierlich (Kap. 8)
   - Vis: **ScottPlot** (Signalverläufe, Bode-Diagramme)
@@ -173,20 +207,21 @@ Nicht jede Visualisierung passt zu jedem Modell. Eine fundierte Architektur wäh
   - Vis: **MSAGL** (Netzwerktopologien) & Canvas
 
 </div>
-<div>
+</div>
 
-| Anwendungsfall | Geeignete Visualisierung |
-| :--- | :--- |
-| Kontinuierliche Schwingung | **ScottPlot** (Zeitreihe) |
-| Räumliches Fachwerk | **Canvas** / **SharpGL 3D** |
-| Fertigungs-Materialfluss | **MSAGL** / **Canvas** (Topologie) |
-| Kontaktmechanik (Ball) | **ScottPlot** + **Canvas-Anim.** |
-| 2D-Wärmeleitung | **WriteableBitmap** (Pixel) |
+---
+
+### Die optimale Paarung von Modell und Visualisierung (2/2)
+
+| Anwendungsfall | Modellart | Geeignete Visualisierung |
+| :--- | :--- | :--- |
+| Kontinuierliche Schwingung | Kontinuierlich (Kap. 8) | **ScottPlot** (Zeitreihe, Phasendiagramm) |
+| Räumliches Fachwerk | Statisch (Kap. 7) | **Canvas** (2D) / **SharpGL 3D** |
+| Fertigungs-Materialfluss | Diskret (Kap. 9) | **MSAGL** / **Canvas** (Topologie) |
+| Kontaktmechanik (Bouncing Ball) | Hybrid (Kap. 10) | **ScottPlot** + **Canvas-Animation** |
+| 2D-Wärmeleitung / Strömung | Statisch / DGL | **WriteableBitmap** (Pixel-Farbkarte) |
 
 > **Leitsatz:** Die Visualisierung muss den Erkenntnisgewinn maximieren – Ästhetik dient der didaktischen Klarheit, nicht dem Selbstzweck!
-
-</div>
-</div>
 
 ---
 
@@ -261,64 +296,85 @@ Jede Modellierungsentscheidung in der Industrie bewegt sich in einem Zielkonflik
 
 ---
 
-### Entscheidungsbaum: Welches Paradigma wählen?
+### Entscheidungsbaum: Welches Paradigma wählen? (1/2)
+
+Leitfragen für Ihr Industrieprojekt zur Identifikation des passenden Modellierungsparadigmas:
 
 <div class="columns top">
 <div>
 
-**Leitfragen für Ihr Industrieprojekt:**
-
 1. **Ändert sich das System über die Zeit?**
    - *Nein:* $\implies$ **Statisches Modell** (Kap. 7)
-2. **Dominieren kontinuierliche physikalische Fluss- und Speichergrößen?**
+   - Algebraische Gleichungssysteme, Gleichgewichtszustand
+2. **Dominieren kontinuierliche physikalische Größen?**
    - *Ja:* $\implies$ **Kontinuierliches Modell** (Kap. 8)
-   - Weiter: Sind hohe Steifigkeiten vorhanden? (Wahl expliziter vs. impliziter Solver)
-3. **Wird das System durch diskrete Ereignisse, Takte oder Stückgut getrieben?**
-   - *Ja:* $\implies$ **Diskretes Modell** (Kap. 9)
-4. **Treten signifikante Anschläge, Strukturwechsel oder Reibungshysteresen auf?**
-   - *Ja:* $\implies$ **Hybrides Modell** (Kap. 10)
+   - DGL-Systeme, Schrittweitenwahl (Euler vs. RK4)
 
 </div>
 <div>
 
-![w:540](./Diagramme/Entscheidungsbaum_Modellarten.svg)
-
-> **Praxis-Tipp:** Beginnen Sie immer mit dem einfachsten Modell (z.B. kontinuierliche Punktmasse). Erweitern Sie erst dann auf diskrete Zustände oder hybride Kontakte, wenn die Validierung Lücken zeigt.
+3. **Wird das System durch diskrete Ereignisse getrieben?**
+   - *Ja:* $\implies$ **Diskretes Modell** (Kap. 9)
+   - Warteschlangen, diskrete Event-Queue
+4. **Treten signifikante Anschläge oder Hysteresen auf?**
+   - *Ja:* $\implies$ **Hybrides Modell** (Kap. 10)
+   - Zustandswechsel mit Zero-Crossing
 
 </div>
 </div>
 
 ---
 
-### Multi-Fidelity-Modellierung im Lebenszyklus
+### Entscheidungsbaum: Welches Paradigma wählen? (2/2)
 
-In modernen Industrieunternehmen (Automotive, Maschinenbau, Luftfahrt) existiert selten nur ein einziges Modell:
+![w:1000 center](./Diagramme/Entscheidungsbaum_Modellarten.svg)
+
+> **Praxis-Tipp:** Beginnen Sie immer mit dem einfachsten Modell (z.B. kontinuierliche Punktmasse). Erweitern Sie erst dann auf diskrete Zustände oder hybride Kontakte, wenn die Validierung Lücken zeigt.
+
+---
+
+### Multi-Fidelity-Modellierung im Lebenszyklus (1/2)
+
+In modernen Industrieunternehmen existiert selten nur ein einziges Modell für ein Produkt:
 
 <div class="columns top">
 <div>
 
-**Konzeptphase (Low-Fidelity):**
-- 1D-Systemsimulation (z.B. konzentrierte Massen, ideale Quellen)
+**1. Konzeptphase (Low-Fidelity):**
+- 1D-Systemsimulation (konzentrierte Massen, ideale Quellen)
 - Grobe Abschätzung der Hauptabmessungen, Motordimensionierung
-- Rechenzeit im Millisekundenbereich $\implies$ Optimierungsschleifen
+- Rechenzeit im Millisekundenbereich $\implies$ Schnelle Optimierungsschleifen
 
-**Detailentwurf & Absicherung (High-Fidelity):**
+**2. Detailentwurf & Absicherung (High-Fidelity):**
 - 3D-FEM (Strukturmechanik) und CFD (Strömungssimulation)
 - Hohe Genauigkeit, Rechenzeit Stunden bis Tage
-- Validierung kritischer Bauteile
+- Validierung kritischer Bauteilbelastungen
 
 </div>
 <div>
 
-**Virtuelle Inbetriebnahme & Betrieb (Real-Time):**
+**3. Virtuelle Inbetriebnahme & Betrieb (Real-Time):**
 - Zurückführung auf echtzeitfähige Zustandsraummodelle
-- Surrogatmodelle oder Co-Simulation (FMI/FMU)
-- Synchronisation mit SPS-Taktzeiten (1 ms)
+- Surrogatmodelle (ROM) oder Co-Simulation (FMI/FMU)
+- Synchronisation mit SPS-Taktzeiten ($1\,\text{ms}$)
+- Modellprädiktive Regelung und Fehlerdiagnose am Digitalen Zwilling
 
-![w:540](./Diagramme/Detailgrad_Projektfortschritt.svg)
+> **Kernprinzip:** Das Modell wächst im Projektlebenszyklus mit den Anforderungen und der verfügbaren Rechnerleistung!
 
 </div>
 </div>
+
+---
+
+### Multi-Fidelity-Modellierung im Lebenszyklus (2/2)
+
+Die Modellkette im Projektfortschritt von der Konzeption bis zum digitalen Zwilling:
+
+![w:1100 center](./Diagramme/Detailgrad_Projektfortschritt.svg)
+
+- **Konzeptphase:** Geringe Ordnung, maximale Iterationsgeschwindigkeit
+- **Detailphase:** Höchste physikalische Wiedergabetreue für Zulassung und Absicherung
+- **Betriebsphase:** Reduktion auf deterministische Echtzeitfähigkeit für Steuerung und Überwachung
 
 ---
 
@@ -388,88 +444,123 @@ public class RungeKutta4Solver : IContinuousSolver {
 
 ---
 
-### Numerische Fallstricke: Floating-Point-Präzision
+### Numerische Fallstricke: Floating-Point-Präzision (1/2)
 
-Numerische Simulationen basieren auf IEEE 754 Gleitkommaarithmetik. Unbedachte Implementierungen führen schnell zu gravierenden Fehlern:
+Numerische Simulationen basieren auf IEEE 754 Gleitkommaarithmetik. Typische Fehlerquellen in der Praxis:
 
 <div class="columns top">
 <div>
 
 **`float` vs. `double`:**
 - Für physikalische Simulationen in C# grundsätzlich `double` (64-Bit) verwenden!
-- `float` (32-Bit) hat nur ca. 7 Dezimalstellen Mantissenpräzision $\implies$ Rundungsfehler akkumulieren rasch bei kleinen Zeitschritten.
-
-**Akkumulationsfehler bei Zeitschritten:**
-- Schlecht: $t = t + \Delta t$ über Millionen Schritte.
-- Besser: $t_k = t_0 + k \cdot \Delta t$ mit ganzzahligem Schrittzähler $k$.
+- `float` (32-Bit) hat nur ca. 7 Dezimalstellen Mantissenpräzision.
+- Rundungsfehler akkumulieren bei kleinen Zeitschritten ($\Delta t \le 10^{-4}\,\text{s}$) innerhalb von Sekunden zu signifikanten Fehlern.
 
 </div>
+<div>
+
+**Akkumulationsfehler bei Zeitschritten:**
+- *Problem:* Wiederholtes Inkrementieren $t = t + \Delta t$ über Millionen Schritte führt zu Zeitdrift.
+- *Best Practice:* Ganzzahliger Schrittzähler:
+$$ t_k = t_0 + k \cdot \Delta t \quad (k \in \mathbb{N}) $$
+- Verhindert das Auseinanderdriften von Simulationszeit und Solverzustand.
+
+</div>
+</div>
+
+---
+
+### Numerische Fallstricke: Floating-Point-Präzision (2/2)
+
+<div class="columns top">
 <div>
 
 **Auslöschung (Catastrophic Cancellation):**
 - Tritt auf, wenn zwei fast gleich große Zahlen voneinander subtrahiert werden:
 $$ x - y \quad \text{mit} \quad x \approx y $$
-- Führt zum fast vollständigen Verlust signifikanter Stellen.
-- *Lösung:* Algebraische Umformung der Formeln vor der Berechnung!
+- Führt zum fast vollständigen Verlust signifikanter Stellen in der Mantisse.
+- *Lösung:* Algebraische Umformung der Formeln vor der Implementierung!
+
+</div>
+<div>
 
 **Division durch Null bei Kontakten:**
-- Z.B. bei Gravitationsgesetzen $F = G \frac{m_1 m_2}{r^2}$: Wenn $r \to 0$, divergiert die Kraft ins Unendliche.
-- *Best Practice:* Regularisierung einführen: $r_{\text{reg}} = \sqrt{r^2 + \epsilon^2}$.
+- Z.B. Gravitation oder Coulomb-Kräfte: $F \propto \frac{1}{r^2}$.
+- Wenn Abstand $r \to 0$, divergiert die Kraft ins Unendliche $\implies$ `NaN` / Solver-Absturz.
+- *Best Practice:* Regularisierung einführen:
+$$ r_{\text{reg}} = \sqrt{r^2 + \epsilon^2} \quad (\epsilon \ll 1) $$
 
 </div>
 </div>
 
 ---
 
-### Steifigkeit (Stiffness) & Stabilitätsgrenzen
+### Steifigkeit (Stiffness) & Stabilitätsgrenzen (1/2)
+
+Ein DGL-System heißt **steif**, wenn Prozesse auf extrem unterschiedlichen Zeitskalen gleichzeitig ablaufen (z.B. harte Kontaktfeder gekoppelt an langsame Pendelbewegung):
 
 <div class="columns top">
 <div>
 
-Ein DGL-System heißt **steif**, wenn Prozesse auf extrem unterschiedlichen Zeitskalen gleichzeitig ablaufen (z.B. sehr harte Feder mit schneller Schwingung gekoppelt an langsame Bewegung):
-
 - Bei expliziten Verfahren (z.B. Euler, RK4) bestimmt die **schnellste** Eigenkreisfrequenz $\omega_{\max}$ die maximale Schrittweite:
 $$ \Delta t < \frac{2}{\omega_{\max}} $$
-- Wird $\Delta t$ minimal zu groß gewählt, explodiert die Simulation numerisch gegen $\pm \infty$!
-- *Lösung in der Industrie:* Implizite Integrationsverfahren (z.B. BDF, impliziter Euler/Trapezmethode) oder algebraische Reduktion steifer Teilsysteme.
+- Wird $\Delta t$ minimal zu groß gewählt, explodiert die Simulation numerisch!
 
 </div>
 <div>
 
-![w:540](./Diagramme/Numerische_Divergenz_vs_Stabil.svg)
-
-> **Faustregel:** Wählen Sie die Schrittweite mindestens um den Faktor 10 bis 20 kleiner als die kleinste Systemzeitkonstante: $\Delta t \le \frac{T_{\min}}{10}$.
+- *Lösungsstrategien in der Industrie:*
+  - Implizite Integrationsverfahren (z.B. BDF, impliziter Euler, Trapezmethode)
+  - Algebraische Reduktion extrem steifer Teilsysteme (quasistatische Annahme)
+- **Faustregel:** Wählen Sie $\Delta t \le \frac{T_{\min}}{10}$ bezogen auf die kleinste Systemzeitkonstante!
 
 </div>
 </div>
 
 ---
 
-### Multithreading: Trennung von Physik & Rendering
+### Steifigkeit (Stiffness) & Stabilitätsgrenzen (2/2)
 
-In interaktiven Simulationen (wie unserem WPF-Simulator) müssen Berechnungslogik und Visualisierung nebenläufig betrieben werden:
+Vergleich zwischen numerischer Divergenz und stabiler Lösung bei DGL-Integration:
+
+![w:1000 center](./Diagramme/Numerische_Divergenz_vs_Stabil.svg)
+
+> **Merksatz:** Numerische Instabilität ist kein Fehler der Modellphysik, sondern eine Eigenschaft des diskreten Lösungsalgorithmus bei ungeeigneter Schrittweite!
+
+---
+
+### Multithreading: Trennung von Physik & Rendering (1/2)
+
+In interaktiven Simulationsprogrammen müssen Berechnungslogik und Visualisierung strikt nebenläufig betrieben werden:
 
 <div class="columns top">
 <div>
 
 **Der Simulationsthread (Hintergrund):**
-- Läuft in einer eigenständigen Task oder Timer-Schleife mit festem $\Delta t$ (z.B. 1 ms = 1000 Hz).
-- Garantiert physikalisch konstante Zeitschritte, unabhängig von der Bildschirmwiederholrate.
+- Läuft in einer eigenständigen Task oder Timer-Schleife mit festem $\Delta t$ (z.B. $1\,\text{ms} = 1000\,\text{Hz}$).
+- Garantiert physikalisch konstante Zeitschritte, völlig unabhängig von der GUI-Last.
 - Nutzt für rechenintensive Vektoroperationen die Task Parallel Library (`Parallel.For`).
-
-**Der UI-Thread (WPF Dispatcher):**
-- Rendert den aktuellen Zustand mit z.B. 60 FPS ($\approx 16.6\,\text{ms}$).
-- Synchronisation über thread-sichere Datenübergabe (Snapshot-Pattern oder Lock-Free Ringbuffer).
 
 </div>
 <div>
 
-![w:540](./Diagramme/Thread_Architektur_Simulation.svg)
-
-> **Wichtig:** Niemals rechenintensive `for`-Schleifen direkt im WPF-UI-Thread ausführen! Das führt zum sofortigen Einfrieren der GUI.
+**Der UI-Thread (WPF Dispatcher):**
+- Rendert den aktuellen Zustand mit z.B. 60 FPS ($\approx 16.6\,\text{ms}$).
+- Synchronisation über thread-sichere Datenübergabe (Snapshot-Pattern oder Double-Buffer).
+- Darf niemals durch aufwändige Physikschleifen blockiert werden.
 
 </div>
 </div>
+
+---
+
+### Multithreading: Trennung von Physik & Rendering (2/2)
+
+Architektur der thread-sicheren Entkopplung von Physikschleife und WPF-Rendering:
+
+![w:1150 center](./Diagramme/Thread_Architektur_Simulation.svg)
+
+> **Wichtig:** Niemals rechenintensive Integrationsschleifen direkt im WPF-UI-Thread ausführen! Das führt zum sofortigen Einfrieren der GUI und unkontrollierbaren Zeitschritten.
 
 ---
 
@@ -542,9 +633,9 @@ Ein Simulationsmodell allein ist noch kein Digitaler Zwilling. Erst die Verknüp
 <div>
 
 **3. Digitaler Zwilling (Digital Twin)**
-- **Bidirektionaler, geschlossener Datenfluss!**
-- Messdaten kalibrieren kontinuierlich das Modell.
-- Das Modell berechnet optimale Stellgrößen oder prädiziert Ausfälle und steuert die reale Anlage aktiv nach.
+- **Bidirektionaler, geschlossener Regelkreis!**
+- Messdaten kalibrieren kontinuierlich das physikalische Modell.
+- Modell berechnet optimierte Sollwerte oder prädiziert Ausfälle und steuert aktiv nach.
 
 ![w:540](./Diagramme/Kopplung_Realsystem_DigitalerZwilling.svg)
 
@@ -553,61 +644,89 @@ Ein Simulationsmodell allein ist noch kein Digitaler Zwilling. Erst die Verknüp
 
 ---
 
-### Co-Simulation mit FMI / FMU
+### Co-Simulation mit FMI / FMU (1/2)
 
-In realen Industrieanlagen stammen Teilsysteme aus unterschiedlichen Domänen und Entwicklungswerkzeugen:
+In realen Industrieanlagen stammen Teilsysteme aus unterschiedlichen Domänen und Werkzeugen:
 
 <div class="columns top">
 <div>
 
-- Mechanik in CAD/Multi-Body (z.B. Adams, Simpack)
-- Hydraulik & Thermik in Modelica / Dymola
-- Regelungstechnik in MATLAB / Simulink
-- Übergeordnete Logik & Visualisierung in C# / .NET
+- **Mechanik:** CAD / Multi-Body (z.B. Adams, Simpack)
+- **Hydraulik & Thermik:** Modelica / Dymola
+- **Regelungstechnik:** MATLAB / Simulink
+- **Leitebene & Visualisierung:** C# / .NET
 
 **Der Standard: Functional Mock-up Interface (FMI)**
-- Ein offener, werkzeugunabhängiger Schnittstellenstandard.
-- Exportiert Teilmodelle als **FMU (Functional Mock-up Unit)**: ZIP-Archiv mit C-Code/Binaries und XML-Beschreibung.
+- Offener, werkzeugunabhängiger Schnittstellenstandard.
+- Kapselt Teilmodelle in eine **FMU (Functional Mock-up Unit)**: ZIP-Archiv mit C-Code/Binaries und XML-Beschreibung.
 
 </div>
 <div>
 
-**Zwei FMI-Modi:**
-1. **Model Exchange (ME):** Die FMU enthält nur die Modellgleichungen; der Master-Simulator steuert die numerische Integration.
-2. **Co-Simulation (CS):** Jede FMU bringt ihren eigenen internen Solver mit; der Master synchronisiert lediglich Ein- und Ausgänge an diskreten Kommunikationspunkten.
+**Zwei standardisierte FMI-Betriebsmodi:**
 
-![w:540](./Diagramme/FMI_CoSimulation_Architektur.svg)
+1. **Model Exchange (ME):**
+   - FMU enthält nur die Modellgleichungen.
+   - Der Master-Simulator steuert die numerische Integration zentral.
+
+2. **Co-Simulation (CS):**
+   - Jede FMU bringt ihren eigenen internen Solver mit.
+   - Der Master synchronisiert Ein- und Ausgänge an diskreten Kommunikationspunkten.
 
 </div>
 </div>
 
 ---
 
-### Virtuelle Inbetriebnahme (VIBN) & HiL
+### Co-Simulation mit FMI / FMU (2/2)
 
-Bevor eine Sondermaschine physisch gebaut wird, spart die virtuelle Inbetriebnahme enorme Kosten und Risiken:
+Master-Slave-Architektur bei der Co-Simulation mechatronischer Gesamtsysteme:
+
+![w:680 center](./Diagramme/FMI_CoSimulation_Architektur.svg)
+
+- **Master-Aufgaben:** Zeitschritt-Koordination, Signalverteilung und Fehlerüberwachung
+- **Vorteil:** Jede Teildomäne rechnet mit dem optimal angepassten Solver (z.B. implizit für Hydraulik, RK4 für Mechanik)
+
+---
+
+### Virtuelle Inbetriebnahme (VIBN) & HiL (1/2)
+
+Bevor eine Sondermaschine physisch gebaut wird, spart die virtuelle Inbetriebnahme enorme Kosten und Projektrisiken:
 
 <div class="columns top">
 <div>
 
 **MiL (Model-in-the-Loop):**
 - Steuerungsalgorithmus und Anlagenmodell laufen gemeinsam in der Simulationsumgebung.
+- Schnelle Algorithmenentwicklung im Entwurfsstadium.
 
 **SiL (Software-in-the-Loop):**
-- Der compilierte SPS-Code (z.B. B&R Automation Studio, Siemens TIA) wird auf einem Soft-SPS-Emulator ausgeführt und mit dem Simulationsmodell gekoppelt.
-
-**HiL (Hardware-in-the-Loop):**
-- Die reale physische SPS wird über Feldbus (EtherCAT, PROFINET) an einen Echtzeitrechner angeschlossen, der das Anlagenmodell berechnet.
+- Der kompilierte SPS-Code (z.B. B&R Automation Studio, Siemens TIA) wird auf einem Soft-SPS-Emulator ausgeführt.
+- Validierung der Steuerungslogik ohne Hardware.
 
 </div>
 <div>
 
-![h:380px](./Diagramme/VIBN_Systemarchitektur.svg)
+**HiL (Hardware-in-the-Loop):**
+- Die reale physische SPS wird über Feldbus (EtherCAT, PROFINET) an einen Echtzeitrechner angeschlossen.
+- Modell berechnet Sensorik und Kinematik in harter Echtzeit ($1\,\text{ms}$).
 
-> **Nutzen:** Test von Not-Aus-Szenarien und Fehlsituationen ohne Beschädigungsgefahr für reale Maschinen!
+> **Hauptnutzen:** Test von Not-Aus-Szenarien und Fehlsituationen ohne Beschädigungsgefahr für Mensch und Maschine!
 
 </div>
 </div>
+
+---
+
+### Virtuelle Inbetriebnahme (VIBN) & HiL (2/2)
+
+Hardware-in-the-Loop Systemarchitektur für die industrielle Maschinenabnahme:
+
+![w:1150 center](./Diagramme/VIBN_Systemarchitektur.svg)
+
+- **Reale SPS:** Unveränderter Serien-Steuerungscode auf Original-Zielhardware
+- **Echtzeit-Simulationsrechner:** Emuliert Motoren, Zylinder, Sensoren und Lastprofile
+- **3D-Visualisierung:** Kollisionsprüfung und interaktives Beobachten des Anlagenverhaltens
 
 ---
 
@@ -647,7 +766,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Kriterien für eine erfolgreiche Projektarbeit
+### Kriterien für eine erfolgreiche Projektarbeit (1/2)
 
 Für die Umsetzung Ihrer simulationsbezogenen Semesteraufgabe gelten folgende Qualitätsmaßstäbe:
 
@@ -658,22 +777,41 @@ Für die Umsetzung Ihrer simulationsbezogenen Semesteraufgabe gelten folgende Qu
 - Formulieren Sie das System zuerst auf Papier!
 - Klären Sie: Welche Zustandsvariablen bilden den Vektor $\mathbf{x}$?
 - Welche Vereinfachungen und Annahmen wurden getroffen?
+- Definition der Systemgrenzen und externen Eingänge $\mathbf{u}(t)$.
+
+</div>
+<div>
 
 **2. Software-Architektur**
 - Konsequente Entkopplung von `Model`, `Solver` und `View`.
-- Keine "God-Objects" oder 2000-Zeilen-Codeblocks im Code-Behind der WPF-Fenster.
+- Keine "God-Objects" oder gigantische Code-Behind-Blöcke.
 - Verständliche Variablenbenennung (Physikalische Größen und Einheiten in XML-Kommentaren dokumentieren).
+- Saubere Kapselung ohne globale statische Variablen.
 
 </div>
+</div>
+
+---
+
+### Kriterien für eine erfolgreiche Projektarbeit (2/2)
+
+<div class="columns top">
 <div>
 
 **3. Numerische Robustheit**
 - Begründete Wahl des Solvers (z.B. RK4 statt reinem Euler bei Schwingungssystemen).
 - Nachweis der Schrittweitenkonvergenz (Vergleich mit kleinerem $\Delta t$).
+- Saubere Behandlung möglicher Divisionen durch Null.
+- Zero-Crossing-Detektion bei Schalt- und Stoßvorgängen.
+
+</div>
+<div>
 
 **4. Visuelle Aussagekraft**
-- Nicht nur Zahlenwerte in Textboxen!
+- Nicht nur isolierte Zahlenwerte in Textboxen!
 - Flüssige Animation der Mechanik (Canvas / 3D) kombiniert mit ScottPlot-Zeitverläufen für relevante Zustände.
+- Klare Skalen, Achsenbeschriftungen und physikalische Einheiten.
+- Benutzerfreundliche Parameter-Eingabe zur Laufzeit.
 
 </div>
 </div>
@@ -709,24 +847,46 @@ $$ \text{Fehler}(t) = \|x_{\text{num}}(t) - x_{\text{analytisch}}(t)\| $$
 
 ---
 
-### Typische Fallstricke vermeiden
+### Typische Fallstricke vermeiden (1/2)
+
+Häufige Fehlerquellen in Studierendenprojekten und wie Sie diese vermeiden:
 
 <div class="columns top">
 <div>
 
-**Häufige Fehler in Studierendenprojekten:**
-
-- **Zu ambitionierter Start:** Beginn mit einem komplexen 3D-Mehrkörpersystem mit Reibung und Kontakt $\implies$ Nach Wochen noch kein lauffähiger Code.
-  - *Gegenmittel:* **Agile Modellierung!** Minimal funktionsfähiges 1D-System zum Laufen bringen, dann schrittweise verfeinern.
-- **Zeitschritt-Katastrophen:** $\Delta t$ wird im Code hart verdrahtet und unreflektiert vergrößert, wenn die Simulation ruckelt.
-- **Rundungsfehler bei Kollisionen:** Bei Hybrid-Systemen sinkt der Ball in den Boden ein, weil kein Zero-Crossing verwendet wird.
+**Zu ambitionierter Start:**
+- Beginn mit einem hochkomplexen 3D-Mehrkörpersystem mit Reibung und Kontakt $\implies$ Nach Wochen noch kein lauffähiger Code.
+- *Gegenmittel:* **Agile Modellierung!** Minimal funktionsfähiges 1D-System zum Laufen bringen, dann schrittweise verfeinern.
 
 </div>
 <div>
 
+**Zeitschritt- & Kontaktfehler:**
+- **Zeitschritt-Katastrophen:** $\Delta t$ wird im Code hart verdrahtet und unreflektiert vergrößert, wenn die Simulation ruckelt.
+- **Rundungsfehler bei Kollisionen:** Bei Hybrid-Systemen sinkt der Ball in den Boden ein, weil kein Zero-Crossing verwendet wird.
+
+</div>
+</div>
+
+---
+
+### Typische Fallstricke vermeiden (2/2)
+
+<div class="columns top">
+<div>
+
 ![w:540](./Diagramme/Teufelskreis_Numerische_Instabilitaet.svg)
 
-> **Die Lösung:** Solver-Schrittweite $\Delta t$ klein halten, Berechnungs-Schleife optimieren und Render-Frequenz entkoppeln!
+</div>
+<div>
+
+**Der Teufelskreis der Instabilität:**
+- Simulation läuft zu langsam $\implies$ Zeitschritt $\Delta t$ wird vergrößert $\implies$ Solver divergiert $\implies$ Verzweifelte Code-Bastelei.
+
+**Die drei goldenen Lösungsregeln:**
+1. Solver-Schrittweite $\Delta t$ stabil halten ($\le T_{\min}/10$).
+2. Berechnungs-Schleife optimieren (keine Allokationen im Loop).
+3. Physik-Update und Rendering in getrennten Threads betreiben!
 
 </div>
 </div>
@@ -761,24 +921,43 @@ Für die mündliche/schriftliche Prüfung im Fach Systemsimulation / Digitaler Z
 
 ---
 
-### Zusammenfassung: Ihr Werkzeugkasten als Ingenieur
+### Zusammenfassung: Ihr Werkzeugkasten als Ingenieur (1/2)
+
+Mit dem Abschluss dieses Kurses besitzen Sie ein fundamentales Methoden- und Softwarewissen:
 
 <div class="columns top">
 <div>
 
-Mit dem Abschluss dieses Kurses besitzen Sie ein fundamentales Verständnis:
+**1. Modelle verstehen & formulieren**
+- Übersetzung realer mechatronischer Problemstellungen in statische, kontinuierliche, diskrete oder hybride Formalismen.
+- Zweckmäßige Abstraktion ohne physikalisches Over-Engineering.
 
-1. **Modelle verstehen:** Sie können reale mechatronische Systeme in statische, kontinuierliche, diskrete oder hybride Formalismen übersetzen.
-2. **Algorithmen beherrschen:** Sie wissen, welcher numerische Lösungsansatz stabil und effizient zum Ziel führt.
-3. **Software bauen:** Sie können performante Simulationsprogramme in C# mit moderner Benutzeroberfläche und flüssiger Visualisierung entwickeln.
+**2. Algorithmen & Numerik beherrschen**
+- Treffsichere Wahl des Lösungsverfahrens (LGS-Solver, Euler, RK4, DEVS).
+- Beherrschung von Stabilitätsgrenzen, Zeitschrittweiten und Steifigkeit.
 
 </div>
 <div>
 
-![h:380px](./Diagramme/Simulationsprozess_Synthese.svg)
+**3. Professionelle Simulationssoftware bauen**
+- Saubere Architekturmuster (Trennung von Modell, Solver und Benutzeroberfläche).
+- Multithreading mit getrennten Zyklen für Physik (1000 Hz) und Rendering (60 FPS).
+- Flüssige, aussagekräftige 2D- und 3D-Visualisierungen in C# und WPF.
+- Verständnis von Schnittstellenstandards (FMI/FMU) und Digitalen Zwillingen.
 
 </div>
 </div>
+
+---
+
+### Zusammenfassung: Ihr Werkzeugkasten als Ingenieur (2/2)
+
+Der durchgängige Weg von der Problemstellung zur simulationsgestützten Erkenntnis:
+
+![w:1150 center](./Diagramme/Simulationsprozess_Synthese.svg)
+
+- **Systemsimulation ist die Schlüsseltechnologie** moderner Mechatronik und Automatisierungstechnik.
+- Sie ermöglicht gefahrloses Testen, frühe Optimierung und fehlerfreie Inbetriebnahme komplexer Anlagen!
 
 ---
 

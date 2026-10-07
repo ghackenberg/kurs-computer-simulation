@@ -544,11 +544,9 @@ Jede partielle Differentialgleichung benötigt zwingend definierte Bedingungen a
 <div class="columns">
 <div class="two">
 
-Vergleich der beiden Randmodelle in C#:
-
 **Dirichlet-Randbedingung:**
 ```csharp
-// Randpixel behalten ihren Initialwert (z.B. 0.0 °C)
+// Randzeilen/-spalten in Schleife auslassen
 Parallel.For(1, Height - 1, y => {
     for (int x = 1; x < Width - 1; x++) {
         // Normaler 5-Punkt-Stern
@@ -558,21 +556,21 @@ Parallel.For(1, Height - 1, y => {
 
 **Homogene Neumann-Randbedingung (Isoliert):**
 ```csharp
-// Vor Zeitschritt: Randpixel auf Nachbarwerte spiegeln (dT/dn = 0)
+// Vor Zeitschritt: Randpixel auf Nachbarn spiegeln (dT/dn = 0)
 for (int y = 0; y < Height; y++) {
-    _tempPrev[0, y] = _tempPrev[1, y];             // Linker Rand
-    _tempPrev[Width - 1, y] = _tempPrev[Width - 2, y]; // Rechter Rand
+    _tempPrev[0, y] = _tempPrev[1, y];
+    _tempPrev[Width - 1, y] = _tempPrev[Width - 2, y];
 }
 for (int x = 0; x < Width; x++) {
-    _tempPrev[x, 0] = _tempPrev[x, 1];             // Oberer Rand
-    _tempPrev[x, Height - 1] = _tempPrev[x, Height - 2]; // Unterer Rand
+    _tempPrev[x, 0] = _tempPrev[x, 1];
+    _tempPrev[x, Height - 1] = _tempPrev[x, Height - 2];
 }
 ```
 
 </div>
 <div class="two">
 
-![w:420](./Illustrationen/Randbedingungen_Vergleich.png)
+![w:340](./Illustrationen/Randbedingungen_Vergleich.png)
 
 *Oben: Dirichlet (Wärme entweicht über kalte Ränder). Unten: Neumann (Wärme wird an den Kanten reflektiert und akkumuliert im Innenraum).*
 

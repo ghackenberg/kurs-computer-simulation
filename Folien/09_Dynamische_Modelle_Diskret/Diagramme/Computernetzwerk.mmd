@@ -1,18 +1,21 @@
-graph TD
-    subgraph "Clients"
+graph LR
+    subgraph Clients
+        direction TB
         C1[Client A]
         C2[Client B]
     end
-    subgraph "Netzwerk"
+    subgraph Netzwerk
+        direction TB
         R1[Router]
         R2[Switch]
     end
-    subgraph "Server"
+    subgraph Server
+        direction TB
         S1[Web Server]
         S2[Database]
     end
-    C1 --> R1;
-    C2 --> R1;
-    R1 --> R2;
-    R2 --> S1;
-    S1 --> S2;
+    C1 --> R1
+    C2 --> R1
+    R1 --> R2
+    R2 --> S1
+    S1 --> S2

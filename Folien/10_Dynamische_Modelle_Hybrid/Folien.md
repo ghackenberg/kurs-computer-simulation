@@ -1011,10 +1011,7 @@ while (zeroCrossingValue > Threshold && iteration++ < Limit) {
 
 ---
 
-### Echte Vorzeichenwechsel-Bisektion
-
-<div class="columns">
-<div class="three">
+### Echte Vorzeichenwechsel-Bisektion: Theorie & Kriterien
 
 Ein Nulldurchgang liegt exakt dann vor, wenn an den Intervallgrenzen ein **Vorzeichenwechsel** auftritt:
 
@@ -1029,13 +1026,28 @@ $$\text{sgn}(z(t_a)) \neq \text{sgn}(z(t_b)) \iff z(t_a) \cdot z(t_b) \le 0$$
 
 > [!WARNING]
 > **Abtasttheorem für Zero-Crossing-Events:**
-> Das Vorzeichenwechsel-Kriterium $z(t_a) \cdot z(t_b) \le 0$ detektiert nur eine ungerade Anzahl von Nulldurchgängen. Zwei Ereignisse innerhalb von $\Delta t$ löschen sich gegenseitig aus!
-> **Regel:** Die maximale Schrittweite $\Delta t$ des Solvers muss kleiner sein als das kürzeste physikalische Schaltintervall des Gesamtsystems: $\Delta t < \Delta t_{\text{event,min}}$.
+> Das Vorzeichenwechsel-Kriterium detektiert nur eine ungerade Anzahl von Nulldurchgängen. Zwei Ereignisse innerhalb von $\Delta t$ löschen sich gegenseitig aus!
+> **Regel:** Maximale Solver-Schrittweite $\Delta t < \Delta t_{\text{event,min}}$.
+
+---
+
+### Echte Vorzeichenwechsel-Bisektion: Ablaufdiagramm
+
+<div class="columns">
+<div>
+
+Das Flussdiagramm verdeutlicht die Entscheidungslogik des Solvers bei der Ereignislokalisierung:
+
+- **Schritt 1:** Regulärer Integrationsschritt $\Delta t$.
+- **Schritt 2:** Überprüfung auf Vorzeichenwechsel:
+  $z(t_k) \cdot z(t_k + \Delta t) \le 0$.
+- **Schritt 3:** Bisektionsschleife zur Eingrenzung des Nulldurchgangszeitpunkts.
+- **Schritt 4:** Diskretes Zustandsupdate bei $t_{\text{event}}$ und Integration des Restschritts.
 
 </div>
 <div>
 
-![h:440px](./Diagramme/Solver_Logik.svg)
+![h:460px](./Diagramme/Solver_Logik.svg)
 
 </div>
 </div>

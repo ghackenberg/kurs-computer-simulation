@@ -1,5 +1,6 @@
+%%{init: {'themeVariables': {'fontSize': '20px'}}}%%
 flowchart TD
-    M["<b>Master-Simulator / C# Coordinator</b><br/>(Schrittweiten- & Zeitmanagement, Datenverteilung)"]
+    M["<b>Master-Simulator / C# Coordinator</b><br/>(Schrittweiten- & Zeitmanagement, Signalverteilung)"]
 
     F1["<b>FMU 1 (Co-Simulation)</b><br/>Mehrkörper-Mechanik"]
     F2["<b>FMU 2 (Co-Simulation)</b><br/>Fluidik & Hydraulik"]
@@ -14,6 +15,6 @@ flowchart TD
     F3 -.->|"outputs"| M
 
     style M fill:#e8f4fd,stroke:#004B96,stroke-width:2px
-    style F1 fill:#ffffff,stroke:#333,stroke-width:1px
-    style F2 fill:#ffffff,stroke:#333,stroke-width:1px
-    style F3 fill:#ffffff,stroke:#333,stroke-width:1px
+    style F1 fill:#ffffff,stroke:#333,stroke-width:1.5px
+    style F2 fill:#ffffff,stroke:#333,stroke-width:1.5px
+    style F3 fill:#ffffff,stroke:#333,stroke-width:1.5px

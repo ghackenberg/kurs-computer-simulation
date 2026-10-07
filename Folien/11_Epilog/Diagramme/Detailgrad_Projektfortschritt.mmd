@@ -1,18 +1,19 @@
+%%{init: {'themeVariables': {'fontSize': '20px'}}}%%
 flowchart LR
-    subgraph P1["Konzept- & Auslegungsphase"]
+    subgraph P1["1. Konzept- & Auslegungsphase"]
         D1["<b>Echtzeit-Digital-Twin</b><br/>Zykluszeit: ms<br/>Ordnung: 1D / Blockschaltbild"]
     end
-    subgraph P2["Systemoptimierungsphase"]
+    subgraph P2["2. Systemoptimierungsphase"]
         D2["<b>1D-Systemsimulation</b><br/>Zykluszeit: Sekunden<br/>Ordnung: Nichtlineare ODEs"]
     end
-    subgraph P3["Detail- & Validierungsphase"]
+    subgraph P3["3. Detail- & Validierungsphase"]
         D3["<b>3D-FEM / CFD-Simulation</b><br/>Rechenzeit: Stunden bis Tage<br/>Ordnung: Hochgradige PDEs"]
     end
     D1 ==> D2 ==> D3
 
-    style P1 fill:#f0f4f8,stroke:#004B96,stroke-width:1px
-    style P2 fill:#f0f4f8,stroke:#004B96,stroke-width:1px
-    style P3 fill:#f0f4f8,stroke:#004B96,stroke-width:1px
+    style P1 fill:#f0f4f8,stroke:#004B96,stroke-width:1.5px
+    style P2 fill:#f0f4f8,stroke:#004B96,stroke-width:1.5px
+    style P3 fill:#f0f4f8,stroke:#004B96,stroke-width:1.5px
     style D1 fill:#ffffff,stroke:#333,stroke-width:1px
     style D2 fill:#ffffff,stroke:#333,stroke-width:1px
     style D3 fill:#ffffff,stroke:#333,stroke-width:1px

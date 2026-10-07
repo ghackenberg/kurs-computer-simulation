@@ -454,19 +454,13 @@ $$
 
 ### Herleitung der Stab-Steifigkeitsmatrix (1/2)
 
-Ziel ist es, eine Matrix $\mathbf{k}_{\text{Stab}}$ zu finden, die die Knotenverschiebungen $\mathbf{u}$ direkt mit den resultierenden Knotenkäften $\mathbf{f}_{\text{Stab}}$ in Beziehung setzt: $\mathbf{f}_{\text{Stab}} = \mathbf{k}_{\text{Stab}} \mathbf{u}$.
+Gesucht ist die Matrix $\mathbf{k}_{\text{Stab}}$ mit $\mathbf{f}_{\text{Stab}} = \mathbf{k}_{\text{Stab}} \mathbf{u}$:
 
-1.  **Kräfte am Stab**: Die Stabkraft $S$ erzeugt an den Knoten $i$ und $j$ die Gegenkräfte $\mathbf{f}_i = -S \cdot \mathbf{e}$ und $\mathbf{f}_j = S \cdot \mathbf{e}$.
-2.  **Zusammenfassen**:
-    $$
-    \mathbf{f}_{\text{Stab}} = \begin{pmatrix} \mathbf{f}_i \\ \mathbf{f}_j \end{pmatrix} = S \begin{pmatrix} -\mathbf{e} \\ \mathbf{e} \end{pmatrix} = \frac{EA}{L} \Delta L \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}
-    $$
-3.  **Längenänderung**: $\Delta L \approx e_x(u_{jx} - u_{ix}) + e_y(u_{jy} - u_{iy})$
-
-In Matrixschreibweise:
-$$
-\Delta L \approx \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix} = \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \mathbf{u}
-$$
+1. **Kräfte am Stab**: Die Stabkraft $S$ wirkt an den Knoten $i$ und $j$: $\mathbf{f}_i = -S \mathbf{e}$, $\mathbf{f}_j = S \mathbf{e}$.
+2. **Knotenkraftvektor**:
+   $$\mathbf{f}_{\text{Stab}} = \begin{pmatrix} \mathbf{f}_i \\ \mathbf{f}_j \end{pmatrix} = S \begin{pmatrix} -\mathbf{e} \\ \mathbf{e} \end{pmatrix} = \frac{EA}{L} \Delta L \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix}^T$$
+3. **Längenänderung in Matrixform**:
+   $$\Delta L \approx \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \mathbf{u} \quad \text{mit} \quad \mathbf{u} = \begin{pmatrix} u_{ix} & u_{iy} & u_{jx} & u_{jy} \end{pmatrix}^T$$
 
 ---
 
@@ -497,18 +491,14 @@ Diese Matrix beschreibt den linearen Zusammenhang zwischen den 4 Verschiebungs-F
 
 In der Finiten-Elemente-Methode (FEM) wird die globale Matrix standardmäßig über eine **Transformationsmatrix $\mathbf{T}$** aus dem lokalen 1D-Stab abgeleitet:
 
-1. **Lokale Elementsteifigkeit:** Im mitrotierenden System ($\xi$-Achse entlang Stab):
+1. **Lokale Elementsteifigkeit:** Im mitrotierenden Stab-System ($\xi$-Achse):
    $$\mathbf{f}^{loc} = \mathbf{k}_e^{loc} \mathbf{u}^{loc} \quad \text{mit} \quad \mathbf{k}_e^{loc} = \frac{EA}{L} \begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix}$$
-
-2. **Kinematische Transformation:** Globale 2D-Verschiebungen $\to$ Lokale 1D-Verformung:
-   $$\mathbf{u}^{loc} = \mathbf{T} \mathbf{u} \quad \text{mit} \quad \mathbf{T} = \begin{pmatrix} e_x & e_y & 0 & 0 \\ 0 & 0 & e_x & e_y \end{pmatrix}, \quad e_x = \cos\alpha, \; e_y = \sin\alpha$$
-
+2. **Kinematische Transformation:** $\mathbf{u}^{loc} = \mathbf{T} \mathbf{u}$ mit $\mathbf{T} = \begin{pmatrix} e_x & e_y & 0 & 0 \\ 0 & 0 & e_x & e_y \end{pmatrix}$ ($e_x = \cos\alpha, e_y = \sin\alpha$)
 3. **Globale Elementsteifigkeit via Kontragredienz:**
-   $$\mathbf{f} = \mathbf{T}^T \mathbf{f}^{loc} = \mathbf{T}^T (\mathbf{k}_e^{loc} \mathbf{T} \mathbf{u}) \implies \mathbf{k}_e^{glob} = \mathbf{T}^T \mathbf{k}_e^{loc} \mathbf{T}$$
+   $$\mathbf{f} = \mathbf{T}^T \mathbf{f}^{loc} = \mathbf{T}^T (\mathbf{k}_e^{loc} \mathbf{T} \mathbf{u}) \implies \mathbf{k}_e^{glob} = \mathbf{T}^T \mathbf{k}_e^{loc} \mathbf{T} \equiv \mathbf{k}_{\text{Stab}}$$
 
 > [!NOTE]
-> Beide Wege führen zum identischen Resultat: $\mathbf{T}^T \mathbf{k}_e^{loc} \mathbf{T} \equiv \frac{EA}{L} (\mathbf{d} \mathbf{d}^T) = \mathbf{k}_{\text{Stab}}$.
-> Die Transformationsmatrix-Methode ist der universelle Standard für Balken, Schalen und 3D-Volumenelemente.
+> Beide Wege führen zum identischen Resultat. Die Transformationsmatrix-Methode $\mathbf{T}^T \mathbf{k}_e^{loc} \mathbf{T}$ ist der universelle FEM-Standard für Balken, Schalen und 3D-Volumenelemente.
 
 ---
 
@@ -892,17 +882,18 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ### Programmtechnische Umsetzung: Datenstrukturen für das ideale 2D-Fachwerk
 
 <div class="columns">
-<div class="five">
+<div class="one">
 
-Das UML-Diagramm zeigt die drei zentralen Klassen zur Modellierung des statischen Gleichgewichts starrer Stäbe:
-- **`Truss`**: Die Hauptklasse, die das gesamte Fachwerk repräsentiert. Sie enthält eine Liste aller `Node` (Knoten) und `Rod` (Stäbe). Die `Solve`-Methode kapselt die Berechnung.
-- **`Node`**: Repräsentiert einen einzelnen Knotenpunkt mit seiner Position, Lagerung (fix/frei) und den an ihm angreifenden externen Kräften.
-- **`Rod`**: Repräsentiert einen einzelnen Stab, der zwei `Node`-Objekte verbindet. Nach der Berechnung enthält er die ermittelte Stabkraft (`Force`).
+Das Modell umfasst drei zentrale Klassen:
+
+- **`Truss`**: Gesamtes Fachwerk mit `Node`- und `Rod`-Listen. `Solve()` berechnet das Gleichgewicht.
+- **`Node`**: Koordinaten, Lagerung (`FixX`, `FixY`) und Lasten (`ForceX`, `ForceY`).
+- **`Rod`**: Stab zwischen zwei Knoten; speichert die Stabkraft `Force`.
 
 </div>
-<div>
+<div class="two">
 
-![h:440px](./Diagramme/Model.svg)
+![w:620](./Diagramme/Model.svg)
 
 </div>
 </div>
@@ -1016,15 +1007,12 @@ public class Truss
 <div class="columns">
 <div>
 
-Für die FEM-Berechnung des elastischen Fachwerks werden die Datenstrukturen um Material- und Verschiebungsdaten erweitert:
+Für die FEM-Berechnung werden die Datenstrukturen erweitert:
 
-- **`ElasticNode`**: Erhält Felder für die berechneten Knotenverschiebungen:
-  - `DisplacementX`, `DisplacementY` ($u_x, u_y$ in $\mathrm{m}$)
-- **`ElasticRod`**: Physikalische Querschnitts- und Materialkonstanten:
-  - `Elasticity` ($E$ in $\mathrm{N/m^2}$), `Area` ($A$ in $\mathrm{m^2}$)
-- **Schnittkraftberechnung (Post-Processing):**
-  Nach Lösen von $\mathbf{K}_{BB} \mathbf{u}_B = \mathbf{f}_B'$ wird die Stabkraft berechnet:
-  $$S = \frac{EA}{L} \cdot \left[ \mathbf{e} \cdot (\mathbf{u}_j - \mathbf{u}_i) \right]$$
+- **`ElasticNode`**: Verschiebungen `DisplacementX`, `DisplacementY` ($u_x, u_y$).
+- **`ElasticRod`**: Elastizitätsmodul `Elasticity` ($E$) und Querschnittsfläche `Area` ($A$).
+- **Schnittkraft (Post-Processing):** Nach Lösen von $\mathbf{K}_{BB} \mathbf{u}_B = \mathbf{f}_B'$:
+  $$S = \frac{EA}{L} \left[ \mathbf{e} \cdot (\mathbf{u}_j - \mathbf{u}_i) \right]$$
 
 </div>
 <div>
@@ -1041,8 +1029,7 @@ public class ElasticRod : Rod {
         var (a, b) = ((ElasticNode)NodeA, (ElasticNode)NodeB);
         double dx = b.PositionX - a.PositionX, dy = b.PositionY - a.PositionY;
         double L = Math.Sqrt(dx * dx + dy * dy);
-        double du = (b.DisplacementX - a.DisplacementX) * (dx / L)
-                  + (b.DisplacementY - a.DisplacementY) * (dy / L);
+        double du = (b.DisplacementX - a.DisplacementX) * (dx / L) + (b.DisplacementY - a.DisplacementY) * (dy / L);
         return (Elasticity * Area / L) * du;
     }
 }

@@ -1,13 +1,11 @@
-graph LR
-    subgraph "Algebraische Schleife"
-        Vout(V_out) --> NLE;
-        NLE("Nichtlineares<br>Element I=f(V_out)") --> I(Strom I);
-        I --> Gain(Gain R1);
-        Vin(Vin) --> Subtract;
-        Gain --> Subtract(Subtraktion);
-        Subtract --> Vout;
-    end
+flowchart LR
+    Vin["<b>V_in</b><br/>Eingang"] --> Subtract(( - ))
+    Subtract --> Vout["<b>V_out</b><br/>Knoten"]
+    Vout --> NLE["<b>Nichtlinear</b><br/>I = f(V_out)"]
+    NLE -->|"I"| Gain["<b>Gain R1</b><br/>V = I·R1"]
+    Gain -->|"-"| Subtract
 
-    style NLE fill:#f9f,stroke:#333,stroke-width:2px
-    style Subtract fill:#f9f,stroke:#333,stroke-width:2px
-    style Gain fill:#f9f,stroke:#333,stroke-width:2px
+    style NLE fill:#fff3cd,stroke:#ff9800,stroke-width:2px
+    style Subtract fill:#f8f9fa,stroke:#333,stroke-width:1.5px
+    style Gain fill:#e8f4fd,stroke:#004B96,stroke-width:2px
+    style Vout fill:#d1e7dd,stroke:#0f5132,stroke-width:2px

@@ -89,9 +89,6 @@ Systeme, in denen "Kunden" auf eine oder mehrere "Bedienstationen" warten.
 
 ### Anwendungsbeispiel: Produktions- & Logistiksysteme
 
-<div class="columns">
-<div class="five">
-
 Systeme, die den Fluss von Material, Teilen und Produkten durch eine Reihe von Prozessen (z.B. Maschinen, Lager, Transport) modellieren.
 
 **Typische Fragestellungen:**
@@ -100,36 +97,20 @@ Systeme, die den Fluss von Material, Teilen und Produkten durch eine Reihe von P
 - Wie groß müssen Pufferlager dimensioniert werden?
 - Wie wirkt sich der Ausfall einer Maschine auf die Gesamtleistung aus?
 
-</div>
-<div>
-
-![h:440px](./Diagramme/Produktionssystem.svg)
-
-</div>
-</div>
+![](./Diagramme/Produktionssystem.svg)
 
 ---
 
 ### Anwendungsbeispiel: Computernetzwerke
 
-<div class="columns">
-<div class="three">
-
 Systeme zur Übertragung von Datenpaketen zwischen verschiedenen Knoten (z.B. Clients, Server, Router).
 
 **Typische Fragestellungen:**
-- Wie hoch ist die durchschnittliche Netzwerkauslastung?
-- Wie groß sind die Latenzzeiten (Verzögerungen) für Datenpakete?
+- Wie hoch ist die durchschnittliche Netzwerkauslastung und Latenzzeit?
 - Was ist der maximale Datendurchsatz zwischen zwei Punkten?
 - Wie robust ist das Netzwerk gegen den Ausfall von Verbindungen oder Knoten?
 
-</div>
-<div>
-
-![h:440px](./Diagramme/Computernetzwerk.svg)
-
-</div>
-</div>
+![](./Diagramme/Computernetzwerk.svg)
 
 ---
 
@@ -655,29 +636,25 @@ plot.SavePng("Queue_Laenge_Verlauf.png", 800, 450);
 
 Das Histogramm aggregiert die individuellen Wartezeiten in Klassenintervalle (Bins):
 
-- **Verteilungsform:** Bei Markov'schen Systemen (M/M/1) zeigt sich eine charakteristisch exponentiell abfallende Häufigkeit.
+- **Verteilungsform:** Bei Markov'schen Systemen (M/M/1) zeigt sich eine exponentiell abfallende Häufigkeit.
 - **Erkenntnis:** Ein Großteil der Kunden wartet kurz; seltene Extremwartezeiten ("Long Tail") werden sichtbar.
 
 ```csharp
-var hist = ScottPlot.Statistics.Histogram
-    .WithBinCount(15, 0, 15);
+var hist = ScottPlot.Statistics.Histogram.WithBinCount(15, 0, 15);
 hist.AddRange(waitTimes);
 
-var bars = hist.Bins.Zip(hist.Counts, (pos, cnt) => 
-    new ScottPlot.Bar {
-        Position = pos, Value = cnt,
-        Size = hist.FirstBinSize * 0.85,
-        FillColor = Colors.SeaGreen.WithAlpha(0.7f),
-        LineColor = Colors.SeaGreen,
-        LineWidth = 1.2f
-    }).ToList();
+var bars = hist.Bins.Zip(hist.Counts, (pos, cnt) => new ScottPlot.Bar {
+    Position = pos, Value = cnt, Size = hist.FirstBinSize * 0.85,
+    FillColor = Colors.SeaGreen.WithAlpha(0.7f),
+    LineColor = Colors.SeaGreen, LineWidth = 1.2f
+}).ToList();
 plot.Add.Bars(bars);
 ```
 
 </div>
 <div class="two">
 
-![](./Illustrationen/Queue_Wartezeit_Histogramm.png)
+![h:380px](./Illustrationen/Queue_Wartezeit_Histogramm.png)
 
 </div>
 </div>
@@ -799,14 +776,14 @@ Die folgenden beiden Diagramme zeigen den Verlauf der Wahrscheinlichkeitsdichtef
 
 **Wahrscheinlichkeitsdichtefunktion**
 
-![width:350](./Illustrationen/ExpDichteF.svg)
+![width:395](./Illustrationen/ExpDichteF.svg)
 
 </div>
 <div>
 
 **Kumulative Verteilungsfunktion**
 
-![width:350](./Illustrationen/ExpVerteilungF.svg)
+![width:395](./Illustrationen/ExpVerteilungF.svg)
 
 </div>
 </div>
@@ -1097,24 +1074,35 @@ $$\lim_{N \to \infty} P(|\bar{X}_N - \mu| < \varepsilon) = 1 \quad \forall \vare
 
 ---
 
-### Pseudo-Zufall & Seed-Management
-
-<div class="columns">
-<div class="two">
+### Pseudo-Zufall & Seed-Management: Grundlagen
 
 Computer erzeugen Zufallszahlen über deterministische Algorithmen (PRNG), gesteuert durch einen Initialisierungswert (**Seed**):
 
 - **Reproduzierbarkeit (Debugging & Validierung):**
   - Identischer Seed $\rightarrow$ identische Zufallszahlenfolge $\rightarrow$ exakt reproduzierbares Systemverhalten.
-  - Essenziell für Regressionstests und wissenschaftliche Dokumentation.
+  - Essenziell für Regressionstests, Fehlersuche und wissenschaftliche Dokumentation.
 - **Statistische Unabhängigkeit:**
   - Jede Replikation $k$ benötigt eine unabhängige Zufallssequenz: Eindeutiger Seed $s_k = s_{\text{base}} + k$.
 - **Multithreading:**
   - `System.Random` ist **nicht threadsicher**! Geteilte Instanzen führen zu Race Conditions und verzerrten Verteilungen.
   - *Lösung:* Eigene `Random`-Instanz pro Replikation/Thread mit individuellem Seed.
 
+---
+
+### Pseudo-Zufall & Seed-Management: Umsetzung in C#
+
+<div class="columns">
+<div>
+
+**Anti-Pattern (Globale Instanz):**
+- Geteiltes `Random`-Objekt führt im Multithreading zu Dateninkonsistenzen und Deadlocks.
+
+**Best Practice:**
+- Jede Replikation erhält ihre eigene `Random`-Instanz mit disjunktem, deterministischem Seed.
+- Gewährleistet exakte Reproduzierbarkeit und volle Thread-Sicherheit.
+
 </div>
-<div class="two">
+<div>
 
 ```csharp
 // Ungeeignet: Eine globale Random-Instanz
@@ -1200,12 +1188,12 @@ Monte-Carlo-Replikationen sind vollständig unabhängig voneinander (*embarrassi
   - Jede Iteration instanziiert ihre eigene `Random`-Instanz mit disjunktem Seed.
 
 > [!TIP]
-> Für die theoretischen Grundlagen zu Multi-Threading, Race Conditions, Synchronisation (`lock`) und der Task Parallel Library wird auf **Kapitel 6 (Multithreading)** verwiesen.
+> Grundlagen zu Multithreading, Race Conditions und TPL siehe **Kapitel 6 (Multithreading)**.
 
 </div>
 <div>
 
-![](./Illustrationen/MonteCarloParallel.jpg)
+![h:400px](./Illustrationen/MonteCarloParallel.jpg)
 
 </div>
 </div>
@@ -1352,12 +1340,22 @@ Console.WriteLine(
 
 # Zusammenfassung Kapitel 9
 
-- **Diskrete Ereignissimulation (DES):** Das System springt von Ereignis zu Ereignis (*Next-Event Time Advance*). Die Simulationszeit wird durch eine prioritätsgesteuerte Warteschlange (`PriorityQueue`) getaktet.
-- **Kausalität bei Zeitdauern:** Die Normalverteilung $\mathcal{N}(\mu, \sigma^2)$ ist für Bedienzeiten unphysikalisch ($P(T < 0) > 0$). Kausalität erfordert streng positive Verteilungen wie die **Log-Normal-** oder **Exponentialverteilung**.
-- **Zufallsvariablen-Erzeugung:** Kontinuierliche Verteilungen werden über die **Inversionsmethode** ($X = F^{-1}(U)$) oder Spezialverfahren wie die **Box-Muller-Transformation** aus Standardzufallszahlen gewonnen.
-- **Deterministische Parallelität:** Bei Multithreading mit `Parallel.For` darf kein gemeinsames `Random`-Objekt genutzt werden. Sicheres Seeding erfolgt via `HashCode.Combine(baseSeed, i)`.
-- **Welford-Algorithmus & Chan-Merge:** Ermöglicht numerisch stabile 1-Pass-Berechnung von Mittelwert und Varianz ohne Datenspeicherung ($O(1)$ Speicher) und fehlerfreie parallele Reduktion.
-- **Statistische Aussagekraft:** Einzelne Simulationsläufe sind Zufallsexperimente. Belastbare Aussagen erfordern Monte-Carlo-Replikationen ($N \gg 1$) und die Angabe von **Konfidenzintervallen**.
+<div class="columns">
+<div>
+
+- **Diskrete Ereignissimulation (DES):** Sprung von Ereignis zu Ereignis (*Next-Event Advance*) via prioritätsgesteuerter Warteschlange (`PriorityQueue`).
+- **Kausalität bei Zeitdauern:** Normalverteilung ist für Bedienzeiten unphysikalisch ($P(T < 0) > 0$). Kausalität erfordert streng positive Verteilungen (**Log-Normal**, **Exponential**).
+- **Zufallsgenerierung:** Gewinnung kontinuierlicher Verteilungen mittels **Inversionsmethode** ($X = F^{-1}(U)$) oder **Box-Muller**.
+
+</div>
+<div>
+
+- **Deterministische Parallelität:** Bei Multithreading mit `Parallel.For` disjunktes Seeding pro Thread via `HashCode.Combine(baseSeed, i)`.
+- **Welford- & Chan-Algorithmus:** Numerisch stabile 1-Pass-Berechnung von Mittelwert/Varianz ($O(1)$ Speicher) mit exakter paralleler Reduktion.
+- **Statistische Signifikanz:** Monte-Carlo-Replikationen ($N \gg 1$) und Angabe von **Konfidenzintervallen** für belastbare Aussagen.
+
+</div>
+</div>
 
 ---
 

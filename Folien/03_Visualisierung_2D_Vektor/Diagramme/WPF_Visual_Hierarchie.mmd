@@ -1,14 +1,15 @@
-flowchart TD
-    subgraph LW["<b>1. Hochperformante Vektor-Pipeline (Retained Mode)</b>"]
-        direction LR
-        DV["<b>DrawingVisual</b><br/>(Reiner Vektor-Befehlsstream)"] -->|erbt direkt von| Vis2["<b>Visual</b><br/>(Kein Layout/Event-Ballast!)"]
+%%{init: {'themeVariables': {'fontSize': '22px'}}}%%
+flowchart LR
+    subgraph LW["<b>1. Vektor-Pipeline (DrawingVisual)</b>"]
+        direction TB
+        DV["<b>DrawingVisual</b><br/>(Reiner Vektor-Befehlsstream)"] -->|erbt direkt von| Vis2["<b>Visual</b><br/>(Kein UI/Layout-Ballast)"]
     end
 
-    subgraph HW["<b>2. Schwergewichtige Standard-Hierarchie (WPF UI-Tree)</b>"]
-        direction LR
-        Shape["<b>Shape</b><br/>(Rectangle, Path, ...)"] -->|erbt von| FE["<b>FrameworkElement</b><br/>(Styles, Data Binding)"]
-        FE -->|erbt von| UI["<b>UIElement</b><br/>(Layout-Pass, Input-Events)"]
-        UI -->|erbt von| Vis1["<b>Visual</b><br/>(GDI+/DirectX-Knoten)"]
+    subgraph HW["<b>2. Standard-Hierarchie (WPF UI-Tree)</b>"]
+        direction TB
+        Shape["<b>Shape</b> (Path, Line, ...)"] -->|erbt von| FE["<b>FrameworkElement</b><br/>(Styles, DataBinding)"]
+        FE -->|erbt von| UI["<b>UIElement</b><br/>(Layout, Input-Events)"]
+        UI -->|erbt von| Vis1["<b>Visual</b><br/>(Grafik-Knoten)"]
     end
 
     LW ~~~ HW

@@ -1,27 +1,32 @@
-flowchart TD
-    subgraph ST["Simulations-Thread (Hintergrund / High-Speed)"]
+%%{init: {'themeVariables': {'fontSize': '20px'}}}%%
+flowchart LR
+    subgraph ST["Simulations-Thread (1 kHz Hintergrund)"]
+        direction TB
         S1["Step(dt)"] --> S2["Step(dt)"] --> S3["Step(dt)"]
     end
 
-    subgraph BUF["Thread-sicherer Zustandspuffer (Entkopplung)"]
-        B["Intervall-Snapshot / Double-Buffer / Ringpuffer<br/>(lock / volatile / Interlocked)"]
+    subgraph BUF["Thread-Sicherer Puffer (Entkopplung)"]
+        direction TB
+        B1["Intervall-Snapshot / Double-Buffer"]
+        B2["Lock-free / Interlocked Exchange"]
+        B1 --- B2
     end
 
     subgraph UI["WPF UI-Thread (60 Hz Rendering)"]
+        direction TB
         R1["Render Frame"] --> R2["Render Frame"]
     end
 
-    S1 -.->|"Zustandskopie (1 kHz)"| B
-    S2 -.->|"Zustandskopie (1 kHz)"| B
-    B ==>|"Visualisierungsdaten (60 fps)"| R1
-    B ==>|"Visualisierungsdaten (60 fps)"| R2
+    ST ==>|"Zustandskopie (1000 Hz)"| BUF
+    BUF ==>|"Visualisierung (60 FPS)"| UI
 
-    style ST fill:#f0f4f8,stroke:#004B96,stroke-width:1.5px
-    style BUF fill:#fff8e1,stroke:#f57f17,stroke-width:1.5px
-    style UI fill:#e8f8f5,stroke:#00897b,stroke-width:1.5px
+    style ST fill:#f0f4f8,stroke:#004B96,stroke-width:2px
+    style BUF fill:#fff8e1,stroke:#f57f17,stroke-width:2px
+    style UI fill:#e8f8f5,stroke:#00897b,stroke-width:2px
     style S1 fill:#ffffff,stroke:#004B96,stroke-width:1px
     style S2 fill:#ffffff,stroke:#004B96,stroke-width:1px
     style S3 fill:#ffffff,stroke:#004B96,stroke-width:1px
-    style B fill:#ffffff,stroke:#f57f17,stroke-width:1px
+    style B1 fill:#ffffff,stroke:#f57f17,stroke-width:1px
+    style B2 fill:#ffffff,stroke:#f57f17,stroke-width:1px
     style R1 fill:#ffffff,stroke:#00897b,stroke-width:1px
     style R2 fill:#ffffff,stroke:#00897b,stroke-width:1px
