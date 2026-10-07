@@ -22,8 +22,10 @@ namespace GrafikGenerator
 
             GenerateQueuePlots(root);
             GenerateHeatmapPlot(root);
+            GenerateBoundaryConditionsPlot(root);
             GenerateSignalPlot(root);
             GenerateConvergencePlot(root);
+            GenerateAusblickImages(root);
 
             Console.WriteLine("=== Alle Grafiken erfolgreich erzeugt ===");
         }
@@ -282,6 +284,152 @@ namespace GrafikGenerator
             var outFile = Path.Combine(targetDir, "Solver_Konvergenzordnung.png");
             plot.SavePng(outFile, 850, 480);
             Console.WriteLine($"Erzeugt: {outFile}");
+        }
+
+        static void GenerateBoundaryConditionsPlot(string root)
+        {
+            var targetDir = Path.Combine(root, "Folien", "02_Visualisierung_2D_Pixel", "Illustrationen");
+            Directory.CreateDirectory(targetDir);
+
+            int w = 180, h = 180;
+            float[,] dirichlet = new float[w, h];
+            float[,] neumann = new float[w, h];
+
+            for (int y = 0; y < h; y++)
+            {
+                for (int x = 0; x < w; x++)
+                {
+                    double dx = x - 50;
+                    double dy = y - 50;
+                    float val = (float)Math.Exp(-(dx * dx + dy * dy) / 350.0);
+                    dirichlet[x, y] = val;
+                    neumann[x, y] = val;
+                }
+            }
+
+            float alpha = 0.2f;
+            int steps = 120;
+
+            float[,] nextD = new float[w, h];
+            float[,] nextN = new float[w, h];
+
+            for (int step = 0; step < steps; step++)
+            {
+                for (int y = 1; y < h - 1; y++)
+                {
+                    for (int x = 1; x < w - 1; x++)
+                    {
+                        float laplace = dirichlet[x + 1, y] + dirichlet[x - 1, y] +
+                                        dirichlet[x, y + 1] + dirichlet[x, y - 1] - 4.0f * dirichlet[x, y];
+                        nextD[x, y] = dirichlet[x, y] + alpha * laplace;
+                    }
+                }
+                Array.Copy(nextD, dirichlet, dirichlet.Length);
+
+                for (int y = 0; y < h; y++)
+                {
+                    neumann[0, y] = neumann[1, y];
+                    neumann[w - 1, y] = neumann[w - 2, y];
+                }
+                for (int x = 0; x < w; x++)
+                {
+                    neumann[x, 0] = neumann[x, 1];
+                    neumann[x, h - 1] = neumann[x, h - 2];
+                }
+                for (int y = 1; y < h - 1; y++)
+                {
+                    for (int x = 1; x < w - 1; x++)
+                    {
+                        float laplace = neumann[x + 1, y] + neumann[x - 1, y] +
+                                        neumann[x, y + 1] + neumann[x, y - 1] - 4.0f * neumann[x, y];
+                        nextN[x, y] = neumann[x, y] + alpha * laplace;
+                    }
+                }
+                Array.Copy(nextN, neumann, neumann.Length);
+            }
+
+            int totalW = 420;
+            int totalH = 460;
+            using var bmp = new SKBitmap(totalW, totalH, SKColorType.Bgra8888, SKAlphaType.Premul);
+            using var canvas = new SKCanvas(bmp);
+            canvas.Clear(SKColors.White);
+
+            using var paintText = new SKPaint
+            {
+                Color = new SKColor(20, 20, 20),
+                TextSize = 15,
+                IsAntialias = true,
+                FakeBoldText = true
+            };
+            using var paintSub = new SKPaint
+            {
+                Color = new SKColor(80, 80, 80),
+                TextSize = 12,
+                IsAntialias = true
+            };
+
+            SKColor ColorMap(float temp)
+            {
+                temp = Math.Clamp(temp, 0f, 1f);
+                byte r = (byte)(255 * Math.Clamp(2 * temp - 0.5f, 0f, 1f));
+                byte g = (byte)(255 * (1.0f - Math.Abs(2 * temp - 1.0f)));
+                byte b = (byte)(255 * Math.Clamp(1.5f - 2 * temp, 0f, 1f));
+                return new SKColor(r, g, b);
+            }
+
+            canvas.DrawText("Dirichlet-Rand: Wärme entweicht", 20, 22, paintText);
+            canvas.DrawText("T = 0 °C an Systemgrenzen", 20, 38, paintSub);
+            for (int y = 0; y < h; y++)
+            {
+                for (int x = 0; x < w; x++)
+                {
+                    bmp.SetPixel(20 + x, 45 + y, ColorMap(dirichlet[x, y]));
+                }
+            }
+
+            canvas.DrawText("Neumann-Rand: Adiabatisch isoliert", 20, 245, paintText);
+            canvas.DrawText("dT/dn = 0 (Ghost Cells, Wärmereflexion)", 20, 261, paintSub);
+            for (int y = 0; y < h; y++)
+            {
+                for (int x = 0; x < w; x++)
+                {
+                    bmp.SetPixel(20 + x, 268 + y, ColorMap(neumann[x, y]));
+                }
+            }
+
+            using var image = SKImage.FromBitmap(bmp);
+            using var data = image.Encode(SKEncodedImageFormat.Png, 100);
+            var outFile = Path.Combine(targetDir, "Randbedingungen_Vergleich.png");
+            using var stream = File.OpenWrite(outFile);
+            data.SaveTo(stream);
+            Console.WriteLine($"Erzeugt: {outFile}");
+        }
+
+        static void GenerateAusblickImages(string root)
+        {
+            var hybridSrc = Path.Combine(root, "Folien", "10_Dynamische_Modelle_Hybrid", "Illustrationen", "HybrideModelle.jpg");
+            var hybridDst = Path.Combine(root, "Folien", "09_Dynamische_Modelle_Diskret", "Illustrationen", "Ausblick_Hybrid.png");
+            if (File.Exists(hybridSrc))
+            {
+                using var bmp = SKBitmap.Decode(hybridSrc);
+                using var img = SKImage.FromBitmap(bmp);
+                using var data = img.Encode(SKEncodedImageFormat.Png, 100);
+                using var stream = File.OpenWrite(hybridDst);
+                data.SaveTo(stream);
+                Console.WriteLine($"Erzeugt: {hybridDst}");
+            }
+
+            var epilogSrc = Path.Combine(root, "Folien", "11_Epilog", "Titelbild.jpg");
+            var epilogDst = Path.Combine(root, "Folien", "10_Dynamische_Modelle_Hybrid", "Illustrationen", "Ausblick_Epilog.png");
+            if (File.Exists(epilogSrc))
+            {
+                using var bmp = SKBitmap.Decode(epilogSrc);
+                using var img = SKImage.FromBitmap(bmp);
+                using var data = img.Encode(SKEncodedImageFormat.Png, 100);
+                using var stream = File.OpenWrite(epilogDst);
+                data.SaveTo(stream);
+                Console.WriteLine($"Erzeugt: {epilogDst}");
+            }
         }
     }
 }

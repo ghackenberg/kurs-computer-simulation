@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimscapeSharp", "WS25\Simsc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationMvvmPattern", "WS25\SimulationMvvmPattern\SimulationMvvmPattern.csproj", "{B710B101-97E4-43F8-B7CF-03F84568D268}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationTests", "WS25\SimulationTests\SimulationTests.csproj", "{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -283,6 +285,18 @@ Global
 		{B710B101-97E4-43F8-B7CF-03F84568D268}.Release|x64.Build.0 = Release|Any CPU
 		{B710B101-97E4-43F8-B7CF-03F84568D268}.Release|x86.ActiveCfg = Release|Any CPU
 		{B710B101-97E4-43F8-B7CF-03F84568D268}.Release|x86.Build.0 = Release|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Debug|x64.Build.0 = Debug|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Debug|x86.Build.0 = Debug|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Release|x64.ActiveCfg = Release|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Release|x64.Build.0 = Release|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Release|x86.ActiveCfg = Release|Any CPU
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -307,6 +321,7 @@ Global
 		{FB0A9AF8-D35F-E7DF-C77A-31662829CC95} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 		{2358CC30-B799-46E6-885C-ECD25FE33C80} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 		{B710B101-97E4-43F8-B7CF-03F84568D268} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
+		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B78BB052-30AD-4804-A50D-523BA6002BC8}

@@ -1347,3 +1347,41 @@ Console.WriteLine($"Standardfehler: {stderr:F4} min");
 Console.WriteLine(
     $"95%-KI: [{mean - ciMargin:F3}; {mean + ciMargin:F3}] min");
 ```
+
+---
+
+# Zusammenfassung Kapitel 9
+
+- **Diskrete Ereignissimulation (DES):** Das System springt von Ereignis zu Ereignis (*Next-Event Time Advance*). Die Simulationszeit wird durch eine prioritätsgesteuerte Warteschlange (`PriorityQueue`) getaktet.
+- **Kausalität bei Zeitdauern:** Die Normalverteilung $\mathcal{N}(\mu, \sigma^2)$ ist für Bedienzeiten unphysikalisch ($P(T < 0) > 0$). Kausalität erfordert streng positive Verteilungen wie die **Log-Normal-** oder **Exponentialverteilung**.
+- **Zufallsvariablen-Erzeugung:** Kontinuierliche Verteilungen werden über die **Inversionsmethode** ($X = F^{-1}(U)$) oder Spezialverfahren wie die **Box-Muller-Transformation** aus Standardzufallszahlen gewonnen.
+- **Deterministische Parallelität:** Bei Multithreading mit `Parallel.For` darf kein gemeinsames `Random`-Objekt genutzt werden. Sicheres Seeding erfolgt via `HashCode.Combine(baseSeed, i)`.
+- **Welford-Algorithmus & Chan-Merge:** Ermöglicht numerisch stabile 1-Pass-Berechnung von Mittelwert und Varianz ohne Datenspeicherung ($O(1)$ Speicher) und fehlerfreie parallele Reduktion.
+- **Statistische Aussagekraft:** Einzelne Simulationsläufe sind Zufallsexperimente. Belastbare Aussagen erfordern Monte-Carlo-Replikationen ($N \gg 1$) und die Angabe von **Konfidenzintervallen**.
+
+---
+
+<div class="columns">
+<div class="three">
+
+## Ausblick: Hybride dynamische Systeme
+
+In der industriellen Praxis existieren kontinuierliche Physik und diskrete Ereignisse selten isoliert voneinander:
+
+- **Kontinuierliche Welt (Kapitel 8):** Massen, Strömungen, Geschwindigkeiten und Temperaturen gehorchen Differentialgleichungen ($\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}, \mathbf{u})$).
+- **Diskrete Welt (Kapitel 9):** Regler-Abtasttakte, Schaltzustände von Ventilen, Endlagensensoren und digitale Telegramme schalten instantan.
+- **Die mechatronische Realität:**
+  - Ein Druckluftzylinder fährt kontinuierlich aus, bis er hart auf einen mechanischen Anschlag prallt (*Stoß / Kontakt*).
+  - Ein kontinuierlicher Füllstand löst bei Erreichen eines Schwellwerts einen Alarm aus (*Zero-Crossing / Schwellwert*).
+  - Eine digitale SPS tastet kontinuierliche Motordrehzahlen mit festem Zyklus $\Delta t$ ab (*Sample-and-Hold*).
+
+**Kapitel 10 führt beide Welten zusammen:** Die **Hybride Systemsimulation** mit S-Functions, Ereignisdetektion via Bisektion und der Beherrschung des gefürchteten Zeno-Phänomens!
+
+</div>
+<div class="two">
+
+![bg right:40% contain](./Illustrationen/Ausblick_Hybrid.png)
+
+</div>
+</div>
+

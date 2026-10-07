@@ -466,8 +466,8 @@ Die zeitliche und räumliche Ausbreitung von Wärme in einem homogenen Medium wi
 
 $$\frac{\partial T}{\partial t} = \alpha \cdot \Delta T + Q(x, y, t)$$
 
-- $T(x, y, t)$: Temperaturfeld [K]
-- $\alpha = \frac{\lambda}{\rho \cdot c}$: Temperaturleitfähigkeit [$\text{m}^2/\text{s}$]
+- $T(x, y, t)$: Temperaturfeld [$\mathrm{K}$]
+- $\alpha = \frac{\lambda}{\rho \cdot c}$: Temperaturleitfähigkeit [$\mathrm{m^2/s}$]
 - $\Delta = \nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2}$: Laplace-Operator
 - $Q(x, y, t)$: Externe Wärmequellen bzw. Wärmesenken
 
@@ -522,6 +522,78 @@ Das explizite Euler-Verfahren ist für parabolische Diffusionsgleichungen beding
 
 > [!NOTE]
 > Im Ingenieursprachgebrauch wird diese Grenze umgangssprachlich oft als „CFL-Bedingung“ bezeichnet. Mathematisch exakt gilt die CFL-Bedingung ($c \Delta t / h \le 1$) jedoch für *hyperbolische* Wellengleichungen, während Diffusionsprobleme parabolisch sind und dem Von-Neumann-Kriterium $s \le 0{,}25$ unterliegen.
+
+---
+
+### Physikalische Randbedingungen: Dirichlet vs. Neumann
+
+Jede partielle Differentialgleichung benötigt zwingend definierte Bedingungen an den Systemgrenzen $\partial\Omega$:
+
+<div class="columns">
+<div class="two">
+
+**1. Dirichlet-Rand (Feste Temperatur):**
+- Die Temperatur am Rand ist konstant vorgeschrieben:
+  $$T(\mathbf{x}, t) = T_{\text{Wand}} = \text{const.}$$
+- **Physik:** Gekühlter Kühlkörper, Eisbad ($0^\circ\mathrm{C}$).
+- **Umsetzung im Gitter:** Die Randzeilen ($y=0, H-1$) und Randspalten ($x=0, W-1$) werden in der Berechnungsschleife ausgelassen:
+  `Parallel.For(1, Height - 1, ...)`
+
+</div>
+<div class="two">
+
+**2. Neumann-Rand (Adiabatisch / Isoliert):**
+- Der Wärmestrom über die Normale $\vec{n}$ ist Null:
+  $$\frac{\partial T}{\partial n} = 0 \iff -\lambda \nabla T \cdot \vec{n} = 0$$
+- **Physik:** Perfekt gedämmte Gehäusewand.
+- **Diskrete Ghost-Cell:** Aus $\frac{T_{1,j} - T_{-1,j}}{2h} = 0$ folgt $T_{-1,j} = T_{1,j}$:
+  $$L_{0,j} = 2 T_{1,j} + T_{0,j+1} + T_{0,j-1} - 4 T_{0,j}$$
+- Wärme staut sich am Rand und fließt nicht ab!
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Diskrete Randbehandlung im Pixel-Puffer
+
+Vergleich der beiden Randmodelle in C#:
+
+**Dirichlet-Randbedingung:**
+```csharp
+// Randpixel behalten ihren Initialwert (z.B. 0.0 °C)
+Parallel.For(1, Height - 1, y => {
+    for (int x = 1; x < Width - 1; x++) {
+        // Normaler 5-Punkt-Stern
+    }
+});
+```
+
+**Homogene Neumann-Randbedingung (Isoliert):**
+```csharp
+// Vor Zeitschritt: Randpixel auf Nachbarwerte spiegeln (dT/dn = 0)
+for (int y = 0; y < Height; y++) {
+    _tempPrev[0, y] = _tempPrev[1, y];             // Linker Rand
+    _tempPrev[Width - 1, y] = _tempPrev[Width - 2, y]; // Rechter Rand
+}
+for (int x = 0; x < Width; x++) {
+    _tempPrev[x, 0] = _tempPrev[x, 1];             // Oberer Rand
+    _tempPrev[x, Height - 1] = _tempPrev[x, Height - 2]; // Unterer Rand
+}
+```
+
+</div>
+<div class="two">
+
+![w:420](./Illustrationen/Randbedingungen_Vergleich.png)
+
+*Oben: Dirichlet (Wärme entweicht über kalte Ränder). Unten: Neumann (Wärme wird an den Kanten reflektiert und akkumuliert im Innenraum).*
+
+</div>
+</div>
 
 ---
 

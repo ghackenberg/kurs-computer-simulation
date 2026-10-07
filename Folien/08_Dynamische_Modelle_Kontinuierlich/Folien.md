@@ -52,12 +52,12 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 **Formale Darstellung:**
 
 Eine gewöhnliche Differentialgleichung (ODE) erster Ordnung:
-$$ \frac{dx}{dt} = \dot{x}(t) = f(t, x(t), u(t)) $$
+$$ \frac{d\mathbf{x}}{dt} = \dot{\mathbf{x}}(t) = \mathbf{f}(t, \mathbf{x}(t), \mathbf{u}(t)) $$
 
-- `t`: Zeit
-- `x(t)`: Vektor der Zustandsvariablen zum Zeitpunkt `t`
-- `u(t)`: Vektor der Eingangssignale zum Zeitpunkt `t`
-- `f`: Funktion, die die Änderungsrate des Zustands beschreibt
+- $t$: Zeit
+- $\mathbf{x}(t)$: Vektor der Zustandsvariablen zum Zeitpunkt $t$
+- $\mathbf{u}(t)$: Vektor der Eingangssignale zum Zeitpunkt $t$
+- $\mathbf{f}$: Vektorwertige Funktion, die die Änderungsrate des Zustands beschreibt
 
 </div>
 </div>
@@ -73,19 +73,19 @@ Eine übliche Methode zur Darstellung von dynamischen Systemen.
 
 **Zustandsgleichung:**
 
-$$ \dot{x}(t) = f(t, x(t), u(t)) $$
+$$ \dot{\mathbf{x}}(t) = \mathbf{f}(t, \mathbf{x}(t), \mathbf{u}(t)) $$
 
 Beschreibt die Dynamik des Systems.
 
 **Ausgangsgleichung:**
 
-$$ y(t) = g(t, x(t), u(t)) $$
+$$ \mathbf{y}(t) = \mathbf{g}(t, \mathbf{x}(t), \mathbf{u}(t)) $$
 
-Beschreibt, wie die beobachtbaren Ausgänge `y(t)` aus den Zuständen `x(t)` und Eingängen `u(t)` berechnet werden.
+Beschreibt, wie die beobachtbaren Ausgänge $\mathbf{y}(t)$ aus den Zuständen $\mathbf{x}(t)$ und Eingängen $\mathbf{u}(t)$ berechnet werden.
 
 **Legende:**
 
-*`x`: Zustandsvektor,  `u`: Eingangsvektor, `y`: Ausgangsvektor*
+*$\mathbf{x}$: Zustandsvektor, $\mathbf{u}$: Eingangsvektor, $\mathbf{y}$: Ausgangsvektor*
 
 </div>
 <div>
@@ -141,7 +141,7 @@ $$
 \begin{pmatrix} 0 \\ \frac{1}{m} \end{pmatrix}
 F(t)
 $$
-Dies entspricht der Form $\dot{x} = Ax + Bu$.
+Dies entspricht der Form $\dot{\mathbf{x}} = \mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u}$.
 
 ---
 
@@ -396,26 +396,26 @@ $$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k
 ### Beispielrechnung: Expliziter Euler
 
 **Parameter:**
-- $y_0 = 100\,m$, $v_0 = 0\,m/s$
-- $g \approx 9.81\,m/s^2$
-- Schrittweite $h = 0.1\,s$
+- $y_0 = 100\,\mathrm{m}$, $v_0 = 0\,\mathrm{m/s}$
+- $g = 9{,}81\,\mathrm{m/s^2}$
+- Schrittweite $h = 0{,}1\,\mathrm{s}$
 
-**Schritt 0 -> 1 (t=0s -> t=0.1s):**
-- $y_1 = y_0 + h \cdot v_0 = 100 + 0.1 \cdot 0 = 100\,m$
-- $v_1 = v_0 - h \cdot g = 0 - 0.1 \cdot 9.81 = -0.981\,m/s$
+**Schritt 0 -> 1 ($t = 0\,\mathrm{s} \to t = 0{,}1\,\mathrm{s}$):**
+- $y_1 = y_0 + h \cdot v_0 = 100 + 0{,}1 \cdot 0 = 100\,\mathrm{m}$
+- $v_1 = v_0 - h \cdot g = 0 - 0{,}1 \cdot 9{,}81 = -0{,}981\,\mathrm{m/s}$
 
-**Schritt 1 -> 2 (t=0.1s -> t=0.2s):**
-- $y_2 = y_1 + h \cdot v_1 = 100 + 0.1 \cdot (-0.981) = 99.9019\,m$
-- $v_2 = v_1 - h \cdot g = -0.981 - 0.1 \cdot 9.81 = -1.962\,m/s$
+**Schritt 1 -> 2 ($t = 0{,}1\,\mathrm{s} \to t = 0{,}2\,\mathrm{s}$):**
+- $y_2 = y_1 + h \cdot v_1 = 100 + 0{,}1 \cdot (-0{,}981) = 99{,}9019\,\mathrm{m}$
+- $v_2 = v_1 - h \cdot g = -0{,}981 - 0{,}1 \cdot 9{,}81 = -1{,}962\,\mathrm{m/s}$
 
 </div>
 <div>
 
 | $i$ | $a_i$ | $v_i$ | $y_i$ |
 |-|-|-|-|
-| 0 | -9.81 | 0 | 100 |
-| 1 | -9.81 | -0.981 | 100 |
-| 2 | -9.81 | -1.962 | 00.9019 |
+| 0 | -9{,}81 | 0 | 100 |
+| 1 | -9{,}81 | -0{,}981 | 100 |
+| 2 | -9{,}81 | -1{,}962 | 99{,}9019 |
 | ... | ... | ... | ... |
 
 </div>
@@ -494,15 +494,15 @@ Die Geschwindigkeit ist identisch, da $\dot{v} = -g$ konstant ist. Bei der Posit
 
 ### Genauigkeit der Euler-Methoden
 
-Vergleichen wir die numerischen Ergebnisse mit der analytischen Lösung ($t = 0{,}1\,\text{s}$):
+Vergleichen wir die numerischen Ergebnisse mit der analytischen Lösung ($t = 0{,}1\,\mathrm{s}$):
 
-**Analytische Lösung nach $0{,}1\,\text{s}$:**
-- $v(0.1) = 0 - 9{,}81 \cdot 0{,}1 = -0{,}981\,\text{m/s}$
-- $y(0.1) = 100 + 0 \cdot 0{,}1 - 0{,}5 \cdot 9{,}81 \cdot (0{,}1)^2 = 99{,}95095\,\text{m}$
+**Analytische Lösung nach $0{,}1\,\mathrm{s}$:**
+- $v(0{,}1) = 0 - 9{,}81 \cdot 0{,}1 = -0{,}981\,\mathrm{m/s}$
+- $y(0{,}1) = 100 + 0 \cdot 0{,}1 - 0{,}5 \cdot 9{,}81 \cdot (0{,}1)^2 = 99{,}95095\,\mathrm{m}$
 
-**Numerische Ergebnisse für $y_1$ (bei $h = 0{,}1\,\text{s}$):**
-- **Expliziter Euler:** $y_1 = 100{,}0\,\text{m}$ (Fehler: $+0{,}04905\,\text{m}$)
-- **Semi-Impliziter Euler:** $y_1 = 100 + 0{,}1 \cdot (-0{,}981) = 99{,}9019\,\text{m}$ (Fehler: $-0{,}04905\,\text{m}$)
+**Numerische Ergebnisse für $y_1$ (bei $h = 0{,}1\,\mathrm{s}$):**
+- **Expliziter Euler:** $y_1 = 100{,}0\,\mathrm{m}$ (Fehler: $+0{,}04905\,\mathrm{m}$)
+- **Semi-Impliziter Euler:** $y_1 = 100 + 0{,}1 \cdot (-0{,}981) = 99{,}9019\,\mathrm{m}$ (Fehler: $-0{,}04905\,\mathrm{m}$)
 
 Beide Methoden haben einen lokalen Fehler der Ordnung $\mathcal{O}(h^2)$ und einen globalen Fehler der Ordnung $\mathcal{O}(h)$ (Verfahren 1. Ordnung).
 
@@ -1334,17 +1334,19 @@ $$ m \cdot a = F_{Antrieb} - c \cdot v^2 - m_{Zusatz} \cdot a $$
 
 Implementiert den impliziten Euler-Algorithmus.
 
-- Die `Solve`-Methode enthält eine innere Iterationsschleife.
-- In jedem Zeitschritt wird iterativ nach der Ableitung $\dot{\mathbf{x}}_{k+1}$ gesucht, die $\mathbf{x}_{k+1} = \mathbf{x}_k + h \dot{\mathbf{x}}_{k+1}$ erfüllt.
-- **Lösungsverfahren:** Gedämpfte **Banach-Fixpunktiteration (Picard-Iteration)** mit Relaxationsfaktor $\alpha = \text{ImplicitLearningRate} = 0{,}1$:
+- In jedem Zeitschritt wird iterativ nach dem Zustand $\mathbf{x}_{k+1}$ gesucht, der die implizite Gleichung $\mathbf{x}_{k+1} = \mathbf{x}_k + h \mathbf{f}(t_{k+1}, \mathbf{x}_{k+1})$ erfüllt.
+- **Lösungsverfahren in unserem Solver:** Gedämpfte **Banach-Fixpunktiteration (Picard-Iteration)** mit $\alpha = 0{,}1$:
   $$\dot{\mathbf{x}}^{(m+1)} = \dot{\mathbf{x}}^{(m)} + \alpha \cdot \left(\mathbf{f}(t_{k+1}, \mathbf{x}^{(m)}) - \dot{\mathbf{x}}^{(m)}\right)$$
-- Konvergiert nach dem Banachschen Fixpunktsatz linear bei Kontraktion ($L \cdot h < 1$).
-- Benötigt im Gegensatz zum Newton-Raphson-Verfahren keine Jacobi-Matrix $\mathbf{J}$.
+- **Vorteil:** Extrem leicht zu implementieren; erfordert keine Jacobi-Matrix $\mathbf{J}$ und keine Matrixinversion.
 
 </div>
-<div>
+<div class="two">
 
-![](../../Quellen/WS25/SFunctionContinuous/Solver.Implicit.svg)
+> [!WARNING]
+> **Achtung vor dem Steifigkeits-Paradoxon!**  
+> Die Banach-Iteration konvergiert nur, wenn die Abbildung eine Kontraktion ist ($h \cdot L < 1$, mit Lipschitz-Konstante $L = \|\mathbf{J}\|$).  
+> Bei **steifen Systemen** ($L \gg 1$) zwingt dies zu winzigen Schritten ($h < 1/L$). Dadurch geht der Hauptvorteil des impliziten Eulers – die unbedingte A-Stabilität – verloren!  
+> **Industrie-Solver** (z.B. MATLAB `ode15s`) nutzen daher stets das **Newton-Raphson-Verfahren** mit Jacobi-Matrix $(\mathbf{I} - h\mathbf{J})$, welches ohne Schrittweitenbeschränkung konvergiert.
 
 </div>
 </div>
@@ -1568,17 +1570,16 @@ Setzt man $z = i\beta$ mit $\beta = \omega_0 h > 0$ in die Stabilitätsfunktione
 ### C#-Implementierung: `RungeKutta4Solver` (Stufen)
 
 ```csharp
+BackupStates(); // Ausgangszustände x(t) sichern
 // Stufe 1: Steigung bei t
 CalculateOutputs(time);
 CalculateDerivatives(time);
 CopyDerivativesTo(_k1);
-
 // Stufe 2: Vorschritt mit k1 auf t + dt/2
 ApplyIntermediateStates(0.5 * timeStep, _k1);
 CalculateOutputs(time + 0.5 * timeStep);
 CalculateDerivatives(time + 0.5 * timeStep);
 CopyDerivativesTo(_k2);
-
 // Stufe 3: Vorschritt mit k2 auf t + dt/2
 ApplyIntermediateStates(0.5 * timeStep, _k2);
 CalculateOutputs(time + 0.5 * timeStep);

@@ -45,7 +45,7 @@ Dieser Abschnitt beinhaltet Folgendes:
 
 Das System wird durch folgende Annahmen vereinfacht:
 -   **Ein-dimensionales System:** Bewegung nur entlang der y-Achse.
--   **Konstante Erdbeschleunigung:** $g = 9.81 \, \text{m/s}^2$ (oder als positiv betrachtet für die Bewegung nach unten).
+-   **Konstante Erdbeschleunigung:** $g = 9{,}81 \, \mathrm{m/s^2}$ (oder als positiv betrachtet für die Bewegung nach unten).
 -   **Kein Luftwiderstand.**
 -   **Instantane Kollisionen:** Der Aufprall auf den Boden findet ohne Zeitverzögerung statt.
 -   **Restitutionskoeffizient:** Ein konstanter Wert $e \in [0, 1]$, der den Energieverlust bei jeder Kollision beschreibt.
@@ -591,39 +591,39 @@ $$ y(t) = g(t, x(t), u(t)) $$
 
 **Zustände:**
 Ein hybrides System besitzt zwei Arten von Zuständen:
-- **Kontinuierliche Zustände $x_c(t) \in \mathbb{R}^{n_c}$**: Ändern sich stetig (z.B. Position, Geschwindigkeit).
-- **Diskrete Zustände $x_d(t) \in \mathbb{R}^{n_d}$**: Ändern sich nur zu diskreten Zeitpunkten (z.B. Schaltzustand, Zähler).
+- **Kontinuierliche Zustände $\mathbf{x}_c(t) \in \mathbb{R}^{n_c}$**: Ändern sich stetig (z.B. Position, Geschwindigkeit).
+- **Diskrete Zustände $\mathbf{x}_d(t) \in \mathbb{R}^{n_d}$**: Ändern sich nur zu diskreten Zeitpunkten (z.B. Schaltzustand, Zähler).
 
 **Funktionen:**
 Die Dynamik wird durch **fünf** Kernfunktionen beschrieben:
 
-1.  **Ableitungsfunktion $f$**: Definiert die kontinuierliche Dynamik.
-    $$ \dot{x}_c(t) = f(t, x_c(t), x_d(t), u(t)) $$
+1.  **Ableitungsfunktion $\mathbf{f}$**: Definiert die kontinuierliche Dynamik.
+    $$ \dot{\mathbf{x}}_c(t) = \mathbf{f}(t, \mathbf{x}_c(t), \mathbf{x}_d(t), \mathbf{u}(t)) $$
 
-2.  **Ausgangsfunktion $g$**: Berechnet die Ausgänge des Blocks.
-    $$ y(t) = g(t, x_c(t), x_d(t), u(t)) $$
+2.  **Ausgangsfunktion $\mathbf{g}$**: Berechnet die Ausgänge des Blocks.
+    $$ \mathbf{y}(t) = \mathbf{g}(t, \mathbf{x}_c(t), \mathbf{x}_d(t), \mathbf{u}(t)) $$
 
 ---
 
 ### **Erweiterter** allgemeiner Formalismus (3/4)
 
-3.  **Zero-Crossing-Funktion $z$**:
-    Eine Vektor-wertige Funktion, deren Nulldurchgänge Ereignisse signalisieren.
-    $$ z(t, x_c(t), x_d(t), u(t)) \in \mathbb{R}^{n_z} $$
+3.  **Zero-Crossing-Funktion $\mathbf{z}$**:
+    Eine vektorwertige Funktion, deren Nulldurchgänge Ereignisse signalisieren.
+    $$ \mathbf{z}(t, \mathbf{x}_c(t), \mathbf{x}_d(t), \mathbf{u}(t)) \in \mathbb{R}^{n_z} $$
     Ein Ereignis tritt zum Zeitpunkt $t_e$ auf, wenn eine Komponente $z_i$ das Vorzeichen wechselt (d.h. $z_i(t_e) = 0$).
 
-4.  **Update-Funktion $h$**:
-    Wird zum Ereigniszeitpunkt $t_e$ aufgerufen und berechnet die neuen Zustände $x_c^+$ und $x_d^+$ unmittelbar nach dem Ereignis.
-    $$ (x_c(t_e^+), x_d(t_e^+)) = h(t_e, x_c(t_e^-), x_d(t_e^-), u(t_e)) $$
-    - $x_c(t_e^-), x_d(t_e^-)$: Zustände unmittelbar *vor* dem Ereignis.
+4.  **Update-Funktion $\mathbf{h}$**:
+    Wird zum Ereigniszeitpunkt $t_e$ aufgerufen und berechnet die neuen Zustände $\mathbf{x}_c^+$ und $\mathbf{x}_d^+$ unmittelbar nach dem Ereignis.
+    $$ (\mathbf{x}_c(t_e^+), \mathbf{x}_d(t_e^+)) = \mathbf{h}(t_e, \mathbf{x}_c(t_e^-), \mathbf{x}_d(t_e^-), \mathbf{u}(t_e)) $$
+    - $\mathbf{x}_c(t_e^-), \mathbf{x}_d(t_e^-)$: Zustände unmittelbar *vor* dem Ereignis.
 
 ---
 
 ### **Erweiterter** allgemeiner Formalismus (4/4)
 
-5.  **Funktion für nächsten Abtastzeitpunkt $T_{next}$**:
+5.  **Funktion für nächsten Abtastzeitpunkt $T_{\text{next}}$**:
     Diese Funktion bestimmt den nächsten Zeitpunkt, zu dem der Block eine diskrete Aktion ausführen muss.
-    $$ t_{next} = T_{next}(t, x_c(t), x_d(t), u(t)) $$
+    $$ t_{\text{next}} = T_{\text{next}}(t, \mathbf{x}_c(t), \mathbf{x}_d(t), \mathbf{u}(t)) $$
     - Für **kontinuierliche Blöcke** wird per Konvention der Wert `0` zurückgegeben, um anzuzeigen, dass keine explizite diskrete Abtastung erforderlich ist.
     - Für **Blöcke mit fester Abtastzeit** ist der nächste Zeitpunkt deterministisch ($t_k = t_0 + k \cdot T_s$) und muss nicht über diese Funktion berechnet werden.
     - Für **Blöcke mit variabler Abtastzeit** wird der nächste Zeitpunkt dynamisch in Abhängigkeit vom aktuellen Zustand und den Eingängen berechnet.
@@ -940,11 +940,11 @@ public override double GetNextVariableHitTime(double time, ..., double[] inputs)
 
 ### Erweiterte Solver-Implementierungen
 
-Die ursprüngliche Solver-Implementierung (siehe Kapitel 4) wurde um die folgenden Punkte erweitert, um mit den diskreten Zustandsübergängen umgehen zu können:
+Die ursprüngliche kontinuierliche Solver-Architektur (**siehe Kapitel 8**) wurde um folgende Schnittstellen erweitert, um kontinuierliche Dynamik und diskrete Zustandsübergänge synchron zu integrieren:
 
--   Sie berücksichtigt nun `DiscreteStates` bei der Initialisierung und Zustandsspeicherung.
--   Die Logik zur Nulldurchgangsdetektion wurde erweitert und nutzt die `ZeroCrossings`-Deklarationen der Blöcke.
--   Die `UpdateStates`-Methode des Solvers ruft nun die `UpdateStates`-Methode der Blöcke basierend auf ihren `SampleTime`-Eigenschaften (diskret, variabel) oder erkannten Zero-Crossings auf.
+- **Zustandsvektoren:** Verwaltung von `DiscreteStates` parallel zu `ContinuousStates`.
+- **Ereignis-Monitoring:** Kontinuierliche Überwachung deklarierter Nulldurchgangsfunktionen (`ZeroCrossings`).
+- **Ereignisgesteuertes State-Update:** Auslösen von `UpdateStates` bei Erreichen von `SampleTime`-Hits oder erfolgreicher Nullstellen-Bisektion.
 
 </div>
 <div class="two">
@@ -1474,6 +1474,43 @@ Ein System, bei dem die Abtastrate kontinuierlich abnimmt (d.h. das Zeitinterval
 - **Orange Kurve:** Das kontinuierlich ansteigende $\Delta t$ (Ausgang des Integrators).
 - **Blaue Punkte:** Die Zeitpunkte, zu denen der `VariableSampler` das letzte Mal aktiv wurde.
 
-Man sieht deutlich, dass der zeitliche Abstand zwischen den blauen Punkten (Stufen) immer größer wird, da das $\Delta t$ (orange) ansteigt.
-
 Der Block steuert seine eigene Ausführungs-frequenz dynamisch basierend auf dem Systemzustand.
+
+---
+
+# Zusammenfassung Kapitel 10
+
+- **Hybrides Paradigma:** Kombiniert kontinuierliche Dynamik ($\dot{\mathbf{x}}_c = \mathbf{f}(\mathbf{x}_c, \mathbf{x}_d, \mathbf{u}, t)$) mit diskreten Zustandsübergängen ($\mathbf{x}_d^+ = \mathbf{g}(\mathbf{x}_c, \mathbf{x}_d, \mathbf{u}, t)$).
+- **S-Function-Architektur:** Etablierter Industriestandard zur modularen Kapselung von kontinuierlichen Ableitungen, getakteten Updates (`SampleTime`) und Zustands-Ereignissen (`ZeroCrossings`).
+- **Nulldurchgangsdetektion (Zero-Crossings):** Schaltfunktionen $z(\mathbf{x}_c) = 0$ erkennen Ereignisse unabhängig vom festen Zeitschrittgitter.
+- **Intervall-Bisektion:** Garantiert robuste Nullstelleneinkreisung über Vorzeichenwechsel ($\text{sgn}(z(t_a)) \neq \text{sgn}(z(t_b))$) und synchronisiert die verbleibende Restzeit $\Delta t_{\text{remaining}}$ exakt.
+- **Zeno-Phänomen & Haftkontakt:** Unendliche Stoßhäufungen in endlicher Zeit ($dt \to 0$) werden numerisch durch energetische Haftschwellen (`nearZero` $\implies$ Umschaltung in Sticking-Modus) beherrscht.
+- **Abtastraten-Koordination:** Diskrete und kontinuierliche Blöcke mit unterschiedlichen Tasks (Periodisch, Multirate, Variable Sample Time) koexistieren in einer gemeinsamen Simulations-Engine.
+
+---
+
+<div class="columns">
+<div class="three">
+
+## Ausblick: Synthese, VIBN & Digitaler Zwilling
+
+Mit Abschluss der vier Modellklassen verfügen Sie über das komplette theoretische und softwaretechnische Rüstzeug:
+
+1. **Statisch kontinuierlich / diskret (Kapitel 2 & 7):** Stationäre Skalarfelder und elastische Fachwerke via LGS.
+2. **Dynamisch kontinuierlich (Kapitel 8):** Physikalische Bewegungsgleichungen via ODE und RK4.
+3. **Dynamisch diskret (Kapitel 9):** Stochastische Ereignisprozesse via Next-Event-Queues.
+4. **Dynamisch hybrid (Kapitel 10):** Gekoppelte CPS-Systeme via S-Functions und Zero-Crossings.
+
+**Im finalen Kapitel 11 (Epilog) vollenden wir den Bogen:**
+- Wie werden diese Simulationsmodelle zur **Virtuellen Inbetriebnahme (VIBN)** von Sondermaschinen eingesetzt?
+- Wie erfolgt der standardisierte Modellaustausch über **FMI / FMU** in industriellen Co-Simulationen?
+- Leitfaden zur optimalen Vorbereitung auf die **Gesamtprüfung** im Fach Systemsimulation.
+
+</div>
+<div class="two">
+
+![bg right:40% contain](./Illustrationen/Ausblick_Epilog.png)
+
+</div>
+</div>
+

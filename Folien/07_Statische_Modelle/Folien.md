@@ -106,7 +106,6 @@ Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist
 - **Optimierung**: Wie kann das Fachwerk mit minimalem Materialeinsatz (Gewicht) für eine gegebene Last entworfen werden?
 
 ---
----
 ## 7.2: Das ideale Fachwerk in 2D
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -305,8 +304,16 @@ Iterative Löser nähern sich der Lösung schrittweise an. Sie sind besonders f�
 5.  Starte mit einem Schätzwert $x^{(0)}$ und wiederhole die Iteration, bis die Änderung $\|x^{(k+1)} - x^{(k)}\|$ klein genug ist.
 
 ---
----
 ## 7.3: Das elastische Fachwerk in 2D
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Grenzen des idealen Fachwerks (Verformungen)
+- Hooke'sches Gesetz & Stabsteifigkeitsmatrix in lokalen Koordinaten
+- Koordinatentransformation & globale Stabsteifigkeit
+- Assemblierung der globalen Gesamtsteifigkeitsmatrix
+- Einbau von Randbedingungen & statische Kondensation
+- Numerische Lösung und Schnittkraftberechnung
 
 ---
 
@@ -445,10 +452,10 @@ $\begin{pmatrix} F_{ix} \\ F_{iy} \\ F_{jx} \\ F_{jy} \end{pmatrix} = k_{stab} \
 
 ### Herleitung der Stab-Steifigkeitsmatrix (1/2)
 
-Ziel ist es, eine Matrix $k_{Stab}$ zu finden, die die Knotenverschiebungen $\vec{u}$ direkt mit den resultierenden Knotenkäften $\vec{f}_{Stab}$ in Beziehung setzt: $\vec{f}_{Stab} = k_{Stab} \cdot \vec{u}$.
+Ziel ist es, eine Matrix $\mathbf{k}_{\text{Stab}}$ zu finden, die die Knotenverschiebungen $\mathbf{u}$ direkt mit den resultierenden Knotenkäften $\mathbf{f}_{\text{Stab}}$ in Beziehung setzt: $\mathbf{f}_{\text{Stab}} = \mathbf{k}_{\text{Stab}} \cdot \mathbf{u}$.
 
-1.  **Kräfte am Stab**: Die Stabkraft $S$ erzeugt an den Knoten $i$ und $j$ die Gegenkräfte $\vec{f}_i = -S \cdot \vec{e}$ und $\vec{f}_j = S \cdot \vec{e}$.
-2.  **Zusammenfassen**: $\vec{f}_{Stab} = \begin{pmatrix} \vec{f}_i \\ \vec{f}_j \end{pmatrix} = S \begin{pmatrix} -\vec{e} \\ \vec{e} \end{pmatrix} = \frac{EA}{L} \Delta L \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}$
+1.  **Kräfte am Stab**: Die Stabkraft $S$ erzeugt an den Knoten $i$ und $j$ die Gegenkräfte $\mathbf{f}_i = -S \cdot \mathbf{e}$ und $\mathbf{f}_j = S \cdot \mathbf{e}$.
+2.  **Zusammenfassen**: $\mathbf{f}_{\text{Stab}} = \begin{pmatrix} \mathbf{f}_i \\ \mathbf{f}_j \end{pmatrix} = S \begin{pmatrix} -\mathbf{e} \\ \mathbf{e} \end{pmatrix} = \frac{EA}{L} \Delta L \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}$
 3.  **Längenänderung**: $\Delta L \approx e_x(u_{jx} - u_{ix}) + e_y(u_{jy} - u_{iy})$
 
 In Matrixschreibweise: $\Delta L \approx \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \cdot \begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix}$
@@ -457,13 +464,13 @@ In Matrixschreibweise: $\Delta L \approx \begin{pmatrix} -e_x & -e_y & e_x & e_y
 
 ### Herleitung der Stab-Steifigkeitsmatrix (2/2)
 
-Setzt man die Matrixform für $\Delta L$ in die Gleichung für $\vec{f}_{Stab}$ ein, erhält man:
+Setzt man die Matrixform für $\Delta L$ in die Gleichung für $\mathbf{f}_{\text{Stab}}$ ein, erhält man:
 
-$\vec{f}_{Stab} = \frac{EA}{L} \left( \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \cdot \vec{u} \right) \cdot \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}$
+$\mathbf{f}_{\text{Stab}} = \frac{EA}{L} \left( \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \cdot \mathbf{u} \right) \cdot \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}$
 
-Durch Ausmultiplizieren der Vektoren (äußeres Produkt) ergibt sich die **4x4-Stab-Steifigkeitsmatrix** $k_{Stab}$:
+Durch Ausmultiplizieren der Vektoren (äußeres Produkt) ergibt sich die **4x4-Stab-Steifigkeitsmatrix** $\mathbf{k}_{\text{Stab}}$:
 
-$k_{Stab} = \frac{EA}{L} \begin{pmatrix}
+$\mathbf{k}_{\text{Stab}} = \frac{EA}{L} \begin{pmatrix}
 e_x^2 & e_x e_y & -e_x^2 & -e_x e_y \\
 e_y e_x & e_y^2 & -e_y e_x & -e_y^2 \\
 -e_x^2 & -e_x e_y & e_x^2 & e_x e_y \\
@@ -476,7 +483,7 @@ Diese Matrix beschreibt den linearen Zusammenhang zwischen den 4 Verschiebungs-F
 
 ### Assemblierung der globalen Steifigkeitsmatrix
 
-- Der entscheidende Schritt ist die "Assemblierung": Die einzelnen Stab-Steifigkeitsmatrizen werden zu einer **globalen Steifigkeitsmatrix** $K$ für das gesamte Fachwerk zusammengesetzt.
+- Der entscheidende Schritt ist die "Assemblierung": Die einzelnen Stab-Steifigkeitsmatrizen werden zu einer **globalen Steifigkeitsmatrix** $\mathbf{K}$ für das gesamte Fachwerk zusammengesetzt.
 - Das Prinzip lautet: Die globale Steifigkeit an einem Knoten ist die Summe der Steifigkeiten aller Stäbe, die an diesem Knoten zusammentreffen.
 - Dieser Prozess folgt einem festen Algorithmus und lässt sich gut programmieren.
 
@@ -486,11 +493,11 @@ Diese Matrix beschreibt den linearen Zusammenhang zwischen den 4 Verschiebungs-F
 
 Das Ergebnis ist wieder ein lineares Gleichungssystem, diesmal für das elastische Fachwerk:
 
-$K \cdot u = f$
+$$\mathbf{K} \mathbf{u} = \mathbf{f}$$
 
-- $K$: Die **globale Steifigkeitsmatrix**. Sie hängt von der Geometrie und den Materialeigenschaften (E, A) ab. Sie ist quadratisch, symmetrisch und (für stabile Fachwerke) positiv definit.
-- $u$: Der Vektor der unbekannten **Knotenverschiebungen**.
-- $f$: Der Vektor der bekannten **externen Knotenkräfte**.
+- $\mathbf{K}$: Die **globale Steifigkeitsmatrix**. Sie hängt von der Geometrie und den Materialeigenschaften (E, A) ab. Sie ist quadratisch, symmetrisch und (für stabile Fachwerke) positiv definit.
+- $\mathbf{u}$: Der Vektor der unbekannten **Knotenverschiebungen**.
+- $\mathbf{f}$: Der Vektor der bekannten **externen Knotenkräfte**.
 
 ---
 
@@ -499,7 +506,7 @@ $K \cdot u = f$
 
 ### Einbau der Randbedingungen
 
-- Das bisherige System $K \cdot u = f$ ist singulär (nicht lösbar), da das Fachwerk noch "frei im Raum schwebt".
+- Das bisherige System $\mathbf{K} \mathbf{u} = \mathbf{f}$ ist singulär (nicht lösbar), da das Fachwerk noch "frei im Raum schwebt".
 - Wir müssen die **Lagerungen** (Randbedingungen) einbauen.
 - An einem gelagerten Knoten ist die Verschiebung bekannt (meistens Null).
 - z.B. $u_{1x} = 0$, $u_{1y} = 0$.
@@ -524,7 +531,6 @@ $K \cdot u = f$
 
 Das elastische Modell liefert uns also sowohl die **Verformungen** als auch die **Kräfte**!
 
----
 ---
 ## 7.4: Erweiterung der Berechnungsmodelle auf 3D
 
@@ -970,7 +976,7 @@ public class Truss
 
 - Numerische Bibliotheken bieten hochoptimierte und stabile LGS-Löser.
 - **Ideales Fachwerk:** Direkte Lösung via `A.Solve(b)` (LU-Zerlegung)
-- **Elastisches Fachwerk:** Cholesky-Zerlegung `kBB.Cholesky().Solve(...)`
+- **Elastisches Fachwerk:** Cholesky-Zerlegung `kBB.Cholesky().Solve(...)` ($\mathbf{K}_{BB}$)
 
 ```csharp
 using MathNet.Numerics.LinearAlgebra;
@@ -989,13 +995,12 @@ try {
 ```
 
 ---
----
 
 # Zusammenfassung Kapitel 7
 
 - **Statische Modelle** beschreiben Systeme im Kräfte- und Momentengleichgewicht.
-- Das **ideale Fachwerk (2D und 3D)** beruht auf reinen Zug- und Druckstäben mit gelenkigen Knoten und führt zu einem linearen Gleichungssystem $A \cdot s = f$.
-- Das **elastische Fachwerk (2D und 3D)** berücksichtigt die Dehnbarkeit der Stäbe nach dem Hooke'schen Gesetz. Die Linearisierung für kleine Verformungen führt zur Stab-Steifigkeitsmatrix $k_{Stab}$.
-- Durch **Assemblierung** aller Stabsteifigkeiten und Einbau der Randbedingungen entsteht das globale Gleichungssystem $K \cdot u = f$.
+- Das **ideale Fachwerk (2D und 3D)** beruht auf reinen Zug- und Druckstäben mit gelenkigen Knoten und führt zu einem linearen Gleichungssystem $\mathbf{A} \mathbf{s} = \mathbf{f}$.
+- Das **elastische Fachwerk (2D und 3D)** berücksichtigt die Dehnbarkeit der Stäbe nach dem Hooke'schen Gesetz. Die Linearisierung für kleine Verformungen führt zur Stab-Steifigkeitsmatrix $\mathbf{k}_{\text{Stab}}$.
+- Durch **Assemblierung** aller Stabsteifigkeiten und Einbau der Randbedingungen entsteht das globale Gleichungssystem $\mathbf{K} \mathbf{u} = \mathbf{f}$.
 - Für die **programmtechnische Lösung** des LGS eignen sich direkte Verfahren (Gauß, LU) und iterative Methoden (z.B. mit `Math.NET Numerics`).
 - Die Visualisierung der berechneten Verformungen und Kräfte erfolgt über 2D-Vektorgrafiken (Kapitel 3) bzw. 3D-OpenGL (Kapitel 5).

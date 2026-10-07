@@ -5,7 +5,10 @@ namespace SFunctionHybrid.Framework
     public abstract class Solver
     {
         public double ZeroCrossingValueThreshold { get; set; } = 1e-6;
-        public int ZeroCrossingIterationCountLimit { get; set; } = 100000;
+        public double TimeTolerance { get; set; } = 1e-8;
+        public double StickingVelocityThreshold { get; set; } = 1e-3;
+        public double StickingThreshold { get => StickingVelocityThreshold; set => StickingVelocityThreshold = value; }
+        public int ZeroCrossingIterationCountLimit { get; set; } = 100;
 
         public Model Model { get; }
 
@@ -204,7 +207,7 @@ namespace SFunctionHybrid.Framework
             return value;
         }
 
-        protected void IntegrateContinuousStates(double step)
+        protected virtual void IntegrateContinuousStates(double step)
         {
             foreach (Block f in Model.Blocks)
             {
@@ -213,6 +216,23 @@ namespace SFunctionHybrid.Framework
                     ContinuousStates[f][i] += Derivatives[f][i] * step;
                 }
             }
+        }
+
+        protected bool HasSignChange(Dictionary<Block, double[]> zStart, Dictionary<Block, double[]> zEnd)
+        {
+            foreach (Block f in Model.Blocks)
+            {
+                double[] start = zStart[f];
+                double[] end = zEnd[f];
+                for (int i = 0; i < start.Length; i++)
+                {
+                    if ((start[i] > 0 && end[i] <= 0) || (start[i] < 0 && end[i] >= 0))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         protected void RememberInternalVariables()
@@ -236,3 +256,4 @@ namespace SFunctionHybrid.Framework
         }
     }
 }
+

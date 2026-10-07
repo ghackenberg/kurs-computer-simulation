@@ -148,6 +148,7 @@ Dieser Kurs umfasst daraus abgeleitet die folgenden Kapitel:
    1. [Dynamische Modelle (Kontinuierlich)](../08_Dynamische_Modelle_Kontinuierlich/)
    1. [Dynamische Modelle (Diskret)](../09_Dynamische_Modelle_Diskret/)
    1. [Dynamische Modelle (Hybrid)](../10_Dynamische_Modelle_Hybrid/)
+1. [Epilog & Synthese](../11_Epilog/)
 
 ---
 

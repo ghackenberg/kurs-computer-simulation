@@ -10,6 +10,7 @@ namespace SimulationMvvmPattern
     /// Code-Behind für die MainWindow View.
     /// Kapselt ausschließlich View-spezifische Rendering-Logik für ScottPlot 5.
     /// Keine Domänen- oder Simulationsberechnung im Code-Behind (strikte MVVM-Trennung).
+    /// Garantiert Zero-Allocation im 60-FPS-Timer durch persistente Pufferbindung.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -17,7 +18,7 @@ namespace SimulationMvvmPattern
         private readonly DispatcherTimer _renderTimer = new();
         private readonly double[] _renderX = new double[2000];
         private readonly double[] _renderY = new double[2000];
-        private Scatter? _scatterPlot;
+        private readonly Scatter _scatterPlot;
 
         public MainWindow()
         {
@@ -29,41 +30,43 @@ namespace SimulationMvvmPattern
             TrajectoryPlot.Plot.XLabel("Zeit t [s]");
             TrajectoryPlot.Plot.YLabel("Auslenkung x [m]");
 
+            // Feste Bindung der vorallokierten Puffer (Zero-Allocation-Rendering)
+            _scatterPlot = TrajectoryPlot.Plot.Add.Scatter(_renderX, _renderY);
+            _scatterPlot.LineWidth = 2;
+            _scatterPlot.Color = new ScottPlot.Color(0, 90, 156); // FH OÖ Blau
+            _scatterPlot.MarkerSize = 0;                          // Reine Kurvendarstellung
+            _scatterPlot.IsVisible = false;
+
             // 60-FPS UI-Render-Timer (ca. 16 ms) zur entkoppelten Visualisierung
             _renderTimer.Interval = TimeSpan.FromMilliseconds(16);
-            _renderTimer.Tick += OnRenderTick;
+            _renderTimer.Tick += OnTelemetryTick;
             _renderTimer.Start();
         }
 
-        private void OnRenderTick(object? sender, EventArgs e)
+        private void OnTelemetryTick(object? sender, EventArgs e)
         {
-            if (_vm.Buffer.Count == 0)
+            // Atomarer Snapshot in vorallokierte Arrays ohne Heap-Allokation
+            int count = _vm.Buffer.CopySnapshot(_renderX, _renderY);
+
+            if (count == 0)
             {
-                if (_scatterPlot != null)
+                if (_scatterPlot.IsVisible)
                 {
-                    TrajectoryPlot.Plot.Clear();
-                    _scatterPlot = null;
-                    TrajectoryPlot.Plot.Title("Masse-Feder-Dämpfer Trajektorie x(t)");
-                    TrajectoryPlot.Plot.XLabel("Zeit t [s]");
-                    TrajectoryPlot.Plot.YLabel("Auslenkung x [m]");
+                    _scatterPlot.IsVisible = false;
                     TrajectoryPlot.Refresh();
                 }
-                return;
             }
-
-            int count = _vm.Buffer.CopySnapshot(_renderX, _renderY);
-            if (count > 1)
+            else
             {
-                double[] xs = _renderX.AsSpan(0, count).ToArray();
-                double[] ys = _renderY.AsSpan(0, count).ToArray();
+                // Begrenze das Rendering strikt auf die tatsächlich gefüllten Punkte
+                _scatterPlot.Data.MinRenderIndex = 0;
+                _scatterPlot.Data.MaxRenderIndex = count - 1;
+                _scatterPlot.IsVisible = true;
 
-                TrajectoryPlot.Plot.Clear();
-                _scatterPlot = TrajectoryPlot.Plot.Add.Scatter(xs, ys);
-                _scatterPlot.LineWidth = 2;
-                _scatterPlot.Color = new ScottPlot.Color(0, 90, 156); // FH OÖ Blau
                 TrajectoryPlot.Plot.Axes.AutoScale();
                 TrajectoryPlot.Refresh();
             }
         }
     }
 }
+

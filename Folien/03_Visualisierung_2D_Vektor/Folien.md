@@ -115,7 +115,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - **Modellraum**: Reale physikalische Geometrie
 - **Kontinuierlich**: Reelle Koordinaten $x_w, y_w \in \mathbb{R}$
-- **Einheit**: Physikalische Größen (z.B. Meter $[m]$)
+- **Einheit**: Physikalische Größen (z.B. Meter [$\mathrm{m}$])
 - **Orientierung**: Die $+Y$-Achse zeigt nach **oben**!
 - **Ursprung $(0,0)$**: Beliebig im Raum platziert (z.B. linker Auflagerpunkt oder Schwerpunkt).
 
@@ -125,7 +125,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ### 2. Bildschirmkoordinaten (WPF Canvas)
 
 - **Anzeigeraum**: Viewport auf dem Monitor
-- **Diskret**: Pixel bzw. Device Independent Pixels $[px]$
+- **Diskret**: Pixel bzw. Device Independent Pixels [px]
 - **Einheit**: $1/96$ Zoll pro Pixel
 - **Orientierung**: Die $+Y$-Achse zeigt nach **unten**!
 - **Ursprung $(0,0)$**: Fest in der **linken oberen Ecke** des Steuerelements fixiert.

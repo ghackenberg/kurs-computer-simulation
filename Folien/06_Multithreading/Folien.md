@@ -539,3 +539,33 @@ public void Simulate(CancellationToken token)
 - **`ConcurrentBag<T>`** bietet eine threadsichere Lösung zum Sammeln paralleler Simulationsergebnisse.
 - Zufallszahlengeneratoren (`System.Random`) müssen strikt thread-lokal und mit individuellem Seed betrieben werden, um Korruption zu vermeiden und Reproduzierbarkeit zu wahren.
 - In **WPF-Anwendungen** entkoppelt `await Task.Run(...)` die Simulation vom UI-Thread; **`IProgress<T>`** garantiert thread-sichere Zwischenstände und **`CancellationToken`** ermöglicht den kontrollierten Benutzerabbruch.
+
+---
+
+### Kursdramaturgie: Übergang zum Modellierungsblock
+
+<div class="columns top">
+<div class="one">
+
+**Was wir bisher gelernt haben (Werkzeuge):**
+- **Kapitel 01:** Einführung & Begriffswelt des Digitalen Zwillings
+- **Kapitel 02–04:** 2D-Rendering (Pixel-Heatmaps, Vektoren, Diagramme)
+- **Kapitel 05:** 3D-Szenengraphen & Hardware-Rendering mit OpenGL
+- **Kapitel 06:** Parallele Rechenleistung & reaktive UI-Entkopplung
+
+*Die Software- und Visualisierungs-Infrastruktur steht vollständig bereit.*
+
+</div>
+<div class="one">
+
+**Was nun folgt (Physikalische Simulation):**
+- **Kapitel 07:** Statische Gleichgewichtsmodelle & FEM-Fachwerke (LGS)
+- **Kapitel 08:** Kontinuierliche Dynamik & Schwingungssysteme (DGL / ODE)
+- **Kapitel 09:** Diskrete Ereignissysteme & Warteschlangen (DES / MC)
+- **Kapitel 10:** Hybride Dynamik & Co-Simulation (S-Functions)
+- **Kapitel 11:** Epilog: Synthese zum industriellen Digitalen Zwilling
+
+*Ab Kapitel 07 hauchen wir den Grafiken physikalisches Leben ein!*
+
+</div>
+</div>

@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionHybrid.Framework.Solvers
@@ -5,6 +8,7 @@ namespace SFunctionHybrid.Framework.Solvers
     public class EulerExplicitSolver : Solver
     {
         private Block[] _sortedExecutionOrder = [];
+        private readonly HashSet<Block> _stuckBlocks = new();
 
         public EulerExplicitSolver(Model composition) : base(composition)
         {
@@ -77,8 +81,8 @@ namespace SFunctionHybrid.Framework.Solvers
 
         public sealed override void Solve(double timeStepMax, double timeMax)
         {
-            // Zeit initialisieren
             double time = 0;
+            _stuckBlocks.Clear();
 
             // Zustände initialisieren
             InitializeStates();
@@ -95,12 +99,8 @@ namespace SFunctionHybrid.Framework.Solvers
             // Simulationsschleife
             while (time <= timeMax)
             {
-                // Interne Variablen merken
-                RememberInternalVariables();
-
-                // Zeitschritt initialieren
+                // 1. Maximale Schrittweite ermitteln
                 double timeStep = timeStepMax;
-
                 foreach (Block b in Blocks)
                 {
                     if (b.SampleTime is DiscreteSampleTime || b.SampleTime is VariableSampleTime)
@@ -109,54 +109,157 @@ namespace SFunctionHybrid.Framework.Solvers
                     }
                 }
 
-                timeStep *= 2;
+                // 2. Anfangszustand dieses Schritts sichern
+                RememberInternalVariables();
 
-                // Nulldurchgängswert initialisieren
-                double zeroCrossingValue = 1;
-
-                // Schleifenzähler initialisieren
-                int zeroCrossingIterationCount = 0;
-
-                // Mindestens einmal iterieren und wenn Nulldurchgang existiert, iterieren und die Nullstelle lokalisieren
-                while (zeroCrossingValue > ZeroCrossingValueThreshold && zeroCrossingIterationCount++ < ZeroCrossingIterationCountLimit)
-                {
-                    // Zeitschritt aktualisieren
-                    timeStep /= 2;
-
-                    // Interne Variablen zurücksetzen
-                    RestoreInternalVariables();
-
-                    // Kontnuierliche Zustände integrieren
-                    IntegrateContinuousStates(timeStep);
-
-                    // Ausgaben berechnen
-                    CalculateOutputs(time + timeStep);
-
-                    // Nulldurchgänge berechnen
-                    zeroCrossingValue = CalculateZeroCrossings(time + timeStep);
-                }
-
-                // Nulldurchgang existiert, aber nicht gefunden?
-                if (zeroCrossingValue > ZeroCrossingValueThreshold)
-                {
-                    // Fehler ausgeben
-                    throw new Exception($"Nulldurchgang nicht gefunden ({time + timeStep}, {zeroCrossingValue})!");
-                }
-
-                // Zustände aktualisieren
-                UpdateStates(time + timeStep);
-
-                // Ausgaben berechnen
+                // 3. Probesprung mit vollem timeStep
+                IntegrateContinuousStates(timeStep);
                 CalculateOutputs(time + timeStep);
+                double zProbe = CalculateZeroCrossings(time + timeStep);
 
-                // Ableitungen berechnen
-                CalculateDerivatives(time + timeStep);
+                // Wenn kein Vorzeichenwechsel stattfand, vollen Schritt akzeptieren
+                if (zProbe < 0)
+                {
+                    UpdateStates(time + timeStep);
+                    CalculateOutputs(time + timeStep);
+                    CalculateDerivatives(time + timeStep);
+                    time += timeStep;
+                    continue;
+                }
 
-                // Nulldurchgänge berechnen
-                CalculateZeroCrossings(time + timeStep);
+                // 4. Echte Intervall-Bisektion auf [tLeft, tRight] (Folie 10.49)
+                double tLeft = time;
+                double tRight = time + timeStep;
+                double zRight = zProbe;
+                int iteration = 0;
 
-                // Zeit aktualisieren
+                while ((tRight - tLeft) > TimeTolerance && zRight > ZeroCrossingValueThreshold && iteration++ < ZeroCrossingIterationCountLimit)
+                {
+                    double tMid = 0.5 * (tLeft + tRight);
+
+                    // Vom Schrittstart (time) nach tMid integrieren
+                    RestoreInternalVariables();
+                    IntegrateContinuousStates(tMid - time);
+                    CalculateOutputs(tMid);
+                    double zMid = CalculateZeroCrossings(tMid);
+
+                    if (zMid >= 0)
+                    {
+                        // Nullstelle liegt im linken Teilintervall [tLeft, tMid]
+                        tRight = tMid;
+                        zRight = zMid;
+                    }
+                    else
+                    {
+                        // Nullstelle liegt im rechten Teilintervall [tMid, tRight]
+                        tLeft = tMid;
+                    }
+                }
+
+                // 5. Zustand exakt am detektierten Ereigniszeitpunkt fixieren
+                RestoreInternalVariables();
+                IntegrateContinuousStates(tRight - time);
+                CalculateOutputs(tRight);
+                CalculateZeroCrossings(tRight);
+
+                // 6. Diskretes Ereignis behandeln (mit Zeno-Haftbedingung)
+                ApplyZenoStickingOrUpdate(tRight);
+
+                // 7. Restschritt-Integration fertigstellen (Folie 10.50)
+                double dtRemaining = (time + timeStep) - tRight;
+                if (dtRemaining > TimeTolerance)
+                {
+                    CalculateDerivatives(tRight);
+                    IntegrateContinuousStates(dtRemaining);
+                    CalculateOutputs(time + timeStep);
+                    CalculateDerivatives(time + timeStep);
+                    CalculateZeroCrossings(time + timeStep);
+                }
+
                 time += timeStep;
+            }
+        }
+
+        private void ApplyZenoStickingOrUpdate(double eventTime)
+        {
+            // Prüfe auf Zeno-Schwelle: Wenn Geschwindigkeit nahe Null, verhindere unendliches Prellen
+            bool stuck = false;
+
+            // Fall 1: Mehrdimensionale Zustandsblöcke (State[0] = Position, State[1] = Geschwindigkeit)
+            foreach (Block b in Model.Blocks)
+            {
+                if (b.ContinuousStates.Count >= 2)
+                {
+                    double pos = ContinuousStates[b][0];
+                    double vel = ContinuousStates[b][1];
+
+                    if (Math.Abs(vel) < StickingVelocityThreshold && Math.Abs(pos) < Math.Max(ZeroCrossingValueThreshold * 10, 1e-4))
+                    {
+                        ContinuousStates[b][0] = 0.0;
+                        ContinuousStates[b][1] = 0.0;
+                        Derivatives[b][0] = 0.0;
+                        Derivatives[b][1] = 0.0;
+                        _stuckBlocks.Add(b);
+                        stuck = true;
+                    }
+                }
+            }
+
+            // Fall 2: Modulare 1D-Blöcke (z.B. BouncingBall: getrennte Blöcke für Velocity und Position)
+            foreach (Block b in Model.Blocks)
+            {
+                if (b.ContinuousStates.Count == 1 && (b.Name.Contains("Velocity", StringComparison.OrdinalIgnoreCase) || b.GetType().Name.Contains("Reset")))
+                {
+                    double vel = ContinuousStates[b][0];
+                    if (Math.Abs(vel) < StickingVelocityThreshold)
+                    {
+                        ContinuousStates[b][0] = 0.0;
+                        Derivatives[b][0] = 0.0;
+                        _stuckBlocks.Add(b);
+
+                        foreach (Block pb in Model.Blocks)
+                        {
+                            if (pb.ContinuousStates.Count == 1 && (pb.Name.Contains("Position", StringComparison.OrdinalIgnoreCase) || pb.GetType().Name.Contains("Limit")))
+                            {
+                                ContinuousStates[pb][0] = 0.0;
+                                Derivatives[pb][0] = 0.0;
+                                _stuckBlocks.Add(pb);
+                            }
+                        }
+                        stuck = true;
+                    }
+                }
+            }
+
+            if (stuck)
+            {
+                CalculateOutputs(eventTime);
+            }
+            else
+            {
+                // Reguläres diskretes Update für alle Blöcke ausführen
+                UpdateStates(eventTime);
+            }
+        }
+
+        protected override void IntegrateContinuousStates(double step)
+        {
+            foreach (Block f in Model.Blocks)
+            {
+                if (_stuckBlocks.Contains(f))
+                {
+                    for (int i = 0; i < f.ContinuousStates.Count; i++)
+                    {
+                        ContinuousStates[f][i] = 0.0;
+                        Derivatives[f][i] = 0.0;
+                    }
+                    continue;
+                }
+
+                for (int i = 0; i < f.ContinuousStates.Count; i++)
+                {
+                    ContinuousStates[f][i] += Derivatives[f][i] * step;
+                }
             }
         }
 
@@ -172,3 +275,4 @@ namespace SFunctionHybrid.Framework.Solvers
         }
     }
 }
+

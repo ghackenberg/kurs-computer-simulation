@@ -1065,11 +1065,11 @@ Zeichnet einen Würfel oder Quader.
 
 ---
 
-### Darstellung eines **Würfel** mit unterschiedlichen Eigenschaften
+### Darstellung eines **Würfels** mit unterschiedlichen Eigenschaften
 
 Der folgende *Screenshot* zeigt Würfeldarstellungen mit unterschiedlichen Eigenschaften:
 
-![](../../Quellen/WS25/BeispielWürfel3D/Screenshot.png)
+![w:1100px](../../Quellen/WS25/BeispielWürfel3D/Screenshot.png)
 
 ---
 
@@ -1102,7 +1102,7 @@ Approximiert eine Kugeloberfläche über ein Gitternetz aus Längen- und Breiten
 
 Der folgende *Screenshot* zeigt Kugeldarstellungen mit unterschiedlichen Einstellungen:
 
-![](../../Quellen/WS25/BeispielKugel3D/Screenshot.png)
+![w:1100px](../../Quellen/WS25/BeispielKugel3D/Screenshot.png)
 
 > [!NOTE]
 > Die ausführliche mathematische Herleitung der Kugelkoordinaten sowie die C#-Triangulationsschleifen (`GL_QUAD_STRIP` und `GL_TRIANGLE_FAN`) sind im Begleitdokument [Folien_Anhang_3D_Normalen.md](./Folien_Anhang_3D_Normalen.md) dokumentiert.
@@ -1137,7 +1137,7 @@ Modelliert einen Kreiszylinder, Kegel oder Kegelstumpf entlang der Y-Achse:
 
 Der folgende *Screenshot* zeigt Zylinderdarstellungen mit unterschiedlichen Einstellungen:
 
-![](../../Quellen/WS25/BeispielZylinder3D/Screenshot.png)
+![w:1100px](../../Quellen/WS25/BeispielZylinder3D/Screenshot.png)
 
 > [!NOTE]
 > Die analytische 2D-Querschnitts- und 3D-Rotationsherleitung der Zylinder- und Kegelnormalen sowie deren C#-Berechnung finden Sie im Anhangsdokument [Folien_Anhang_3D_Normalen.md](./Folien_Anhang_3D_Normalen.md).

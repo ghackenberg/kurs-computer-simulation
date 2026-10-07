@@ -13,8 +13,8 @@ section {
     padding: 40px 60px;
 }
 
-/* FH-Logo: Nur auf Inhaltsfolien anzeigen, Deckblätter (Title & Lead) schützen */
-section:not(.title):not(.lead)::before {
+/* FH-Logo: Nur auf Inhaltsfolien anzeigen, Deckblätter (Title & Lead & Folie 1) schützen */
+section:not(.title):not(.lead):not(:first-of-type)::before {
     content: "";
 
     display: block;
@@ -35,6 +35,13 @@ section:not(.title):not(.lead)::before {
     background-repeat: no-repeat;
     background-size: 65%;
     background-position: center;
+}
+
+/* Deckblätter und Folien mit Title-/Lead-Klasse strikt vom FH-Logo befreien */
+section:first-of-type::before,
+section.title::before,
+section.lead::before {
+    display: none !important;
 }
 
 /* Spalten-Layout: Saubere Bündigkeit an der Oberkante */
