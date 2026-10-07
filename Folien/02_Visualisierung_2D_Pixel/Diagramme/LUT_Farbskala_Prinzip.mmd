@@ -1,0 +1,14 @@
+flowchart TD
+    U["<b>Normierter Wert</b><br/><code>u ∈ [0.0, 1.0]</code>"]
+    IDX["<b>Indexberechnung</b><br/><code>index = (int)(u * 255)</code>"]
+    LUT["<b>Farbtabelle (Lookup Table)</b><br/><code>LUT[index] (256 Einträge)</code>"]
+    COL["<b>32-Bit BGRA Pixelwert</b><br/><code>0xAARRGGBB (uint)</code>"]
+
+    U --> IDX
+    IDX --> LUT
+    LUT -->|"Array-Lookup O(1)"| COL
+
+    style U fill:#f9f9f9,stroke:#333333,stroke-width:1px
+    style IDX fill:#e8f4fd,stroke:#004B96,stroke-width:1.5px
+    style LUT fill:#e8f4fd,stroke:#004B96,stroke-width:2px
+    style COL fill:#d1e7dd,stroke:#0f5132,stroke-width:1.5px

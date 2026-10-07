@@ -1,0 +1,17 @@
+flowchart TD
+    TOP["<b>T(i, j+1)</b><br/><i>Norden (y + h)</i>"]
+    LEFT["<b>T(i-1, j)</b><br/><i>Westen (x - h)</i>"]
+    CENTER["<b>T(i, j)</b><br/><i>Zentrum</i>"]
+    RIGHT["<b>T(i+1, j)</b><br/><i>Osten (x + h)</i>"]
+    BOTTOM["<b>T(i, j-1)</b><br/><i>Süden (y - h)</i>"]
+
+    TOP <-->|Wärmefluss q_y| CENTER
+    LEFT <-->|Wärmefluss q_x| CENTER
+    CENTER <-->|Wärmefluss q_x| RIGHT
+    CENTER <-->|Wärmefluss q_y| BOTTOM
+
+    style CENTER fill:#e8f4fd,stroke:#004B96,stroke-width:2.5px
+    style TOP fill:#f9f9f9,stroke:#555555,stroke-width:1px
+    style LEFT fill:#f9f9f9,stroke:#555555,stroke-width:1px
+    style RIGHT fill:#f9f9f9,stroke:#555555,stroke-width:1px
+    style BOTTOM fill:#f9f9f9,stroke:#555555,stroke-width:1px

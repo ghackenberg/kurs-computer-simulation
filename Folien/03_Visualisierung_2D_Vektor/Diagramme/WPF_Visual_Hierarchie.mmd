@@ -1,0 +1,21 @@
+flowchart TD
+    subgraph HW["<b>Schwergewichtige Standard-Hierarchie (WPF UI-Tree)</b>"]
+        direction LR
+        Shape["<b>Shape</b><br/>(Rectangle, Path, ...)"] -->|erbt von| FE["<b>FrameworkElement</b><br/>(Styles, Data Binding)"]
+        FE -->|erbt von| UI["<b>UIElement</b><br/>(Layout-Pass, Input-Events)"]
+        UI -->|erbt von| Vis1["<b>Visual</b><br/>(GDI+/DirectX-Knoten)"]
+    end
+
+    subgraph LW["<b>Hochperformante Vektor-Pipeline (Retained Mode)</b>"]
+        direction LR
+        DV["<b>DrawingVisual</b><br/>(Reiner Vektor-Befehlsstream)"] -->|erbt direkt von| Vis2["<b>Visual</b><br/>(Kein Layout/Event-Ballast!)"]
+    end
+
+    style HW fill:#fff8e1,stroke:#ffa000,stroke-width:1.5px
+    style LW fill:#e8f4fd,stroke:#004B96,stroke-width:2px
+    style DV fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
+    style Shape fill:#ffffff,stroke:#555,stroke-width:1px
+    style FE fill:#ffffff,stroke:#555,stroke-width:1px
+    style UI fill:#ffffff,stroke:#555,stroke-width:1px
+    style Vis1 fill:#ffffff,stroke:#555,stroke-width:1px
+    style Vis2 fill:#ffffff,stroke:#004B96,stroke-width:1.5px

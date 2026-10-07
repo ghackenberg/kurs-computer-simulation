@@ -4,7 +4,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
-    <NoWarn>$(NoWarn);NU1701</NoWarn>
+    <NoWarn>$(NoWarn);NU1701;NU1904</NoWarn>
   </PropertyGroup>
 
 
@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\WS24\DynamischWarteschlange\DynamischWarteschlange.csproj" />
+    <ProjectReference Include="..\SFunctionContinuous\SFunctionContinuous.csproj" />
     <ProjectReference Include="..\SFunctionHybrid\SFunctionHybrid.csproj" />
+    <ProjectReference Include="..\VorlageSzenengraph3D\VorlageSzenengraph3D.csproj" />
   </ItemGroup>
 </Project>

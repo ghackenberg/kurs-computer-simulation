@@ -1,4 +1,4 @@
-﻿using SharpGL;
+using SharpGL;
 
 namespace VorlageSzenengraph3D.Model
 {
@@ -11,6 +11,8 @@ namespace VorlageSzenengraph3D.Model
         public List<Light> Lights = new List<Light>();
 
         public Node Root { get; set; }
+
+        public OrbitCamera? Camera { get; set; }
 
         public Scene(Node root) : this(new Color(0.25f, 0.25f, 0.25f), root)
         {
@@ -70,6 +72,10 @@ namespace VorlageSzenengraph3D.Model
             // Modell-Transformation zurücksetzen
 
             gl.LoadIdentity();
+
+            // Kamera-Transformation anwenden (falls vorhanden)
+
+            Camera?.Apply(gl);
 
             // Wurzelknoten zeichnen
 

@@ -1,0 +1,23 @@
+flowchart TD
+    Base["<b>BaseNode (Säule)</b><br/>Zylinder-Geometrie"]
+    R1["<b>Rotate (Achse 1)</b><br/>Yaw um Y: θ₁"]
+    Arm1["<b>Arm1Node (Unterarm)</b><br/>Zylinder L₁"]
+    T1["<b>Translate (0, L₁, 0)</b><br/>Armlängen-Offset"]
+    R2["<b>Rotate (Achse 2)</b><br/>Pitch um Z: θ₂"]
+    Arm2["<b>Arm2Node (Oberarm)</b><br/>Zylinder L₂"]
+    TCP["<b>ToolCenterPoint (TCP)</b><br/>Greifer / Effektor"]
+
+    Base --> R1
+    R1 --> Arm1
+    Arm1 --> T1
+    T1 --> R2
+    R2 --> Arm2
+    Arm2 --> TCP
+
+    style Base fill:#e8f4fd,stroke:#004B96,stroke-width:2px
+    style R1 fill:#fff3cd,stroke:#ff9800,stroke-width:1.5px
+    style Arm1 fill:#f9f9f9,stroke:#333333,stroke-width:1px
+    style T1 fill:#fff3cd,stroke:#ff9800,stroke-width:1.5px
+    style R2 fill:#fff3cd,stroke:#ff9800,stroke-width:1.5px
+    style Arm2 fill:#f9f9f9,stroke:#333333,stroke-width:1px
+    style TCP fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
