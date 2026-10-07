@@ -1,0 +1,3 @@
+- Interaktive Steuerung (Pan & Zoom mit Mouse-Wheel und Dragging auf dem Canvas) ergänzen
+- Performance-Diskussion: Canvas mit Shapes vs. DrawingVisual bei sehr vielen Elementen (> 5.000)
+- Titelbild generieren

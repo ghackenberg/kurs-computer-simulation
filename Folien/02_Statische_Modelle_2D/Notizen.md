@@ -1,2 +1,0 @@
-- move visualization 2D to own chapter
-- merge static simulation 2D with statis simulation 3D

@@ -1,7 +1,7 @@
----
+﻿---
 marp: true
 theme: fhooe
-header: 'Kapitel 6: Hybride Dynamische Modelle (2025-12-05)'
+header: 'Kapitel 10: Hybride Dynamische Modelle'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -9,7 +9,7 @@ math: mathjax
 
 ![bg right](./Titelbild.jpg)
 
-# Kapitel 6: Hybride Dynamische Modelle
+# Kapitel 10: Hybride Dynamische Modelle
 
 Dieses Kapitel beinhaltet Folgendes:
 
@@ -23,7 +23,7 @@ Dieses Kapitel beinhaltet Folgendes:
 
 ![bg right](./Illustrationen/Abschnitt_1.jpg)
 
-## 6.1: Fallbeispiel: Der Bouncing Ball
+## 10.1: Fallbeispiel: Der Bouncing Ball
 
 Dieser Abschnitt beinhaltet Folgendes:
 
@@ -201,7 +201,7 @@ Abfolge von Freiflugphasen und Kollisionsereignissen:
 
 ![bg right](./Illustrationen/Abschnitt_2.jpg)
 
-## 6.2: Fallbeispiel: Digitaler Sensor
+## 10.2: Fallbeispiel: Digitaler Sensor
 
 Dieser Abschnitt beinhaltet Folgendes:
 
@@ -398,7 +398,7 @@ Die variable Abtastlogik nutzt $c(t)$, um die Abtastrate anzupassen:
 
 ![bg right](./Illustrationen/Abschnitt_3.jpg)
 
-## 6.3: Allgemeine Definition
+## 10.3: Allgemeine Definition
 
 Dieser Abschnitt beinhaltet Folgendes:
 
@@ -570,7 +570,7 @@ Dieser erweiterte Formalismus, angelehnt an die S-Function-Spezifikation von MAT
 
 ![bg right](./Illustrationen/Abschnitt_4.jpg)
 
-## 6.4: Softwarearchitektur
+## 10.4: Softwarearchitektur
 
 Dieser Abschnitt beinhaltet Folgendes:
 
@@ -870,7 +870,7 @@ Die ursprüngliche Solver-Implementierung (siehe Kapitel 4) wurde um die folgend
 
 ![bg right](./Illustrationen/Abschnitt_5.jpg)
 
-## 6.5: Nulldurchgangsdetektion
+## 10.5: Nulldurchgangsdetektion
 
 Dieser Abschnitt beinhaltet Folgendes:
 
@@ -1075,7 +1075,7 @@ Auch das Ergebnis des impliziten Solvers sieht gut besser aus, da die Randbeding
 
 ![bg right](./Illustrationen/Abschnitt_6.jpg)
 
-## 6.6 Diskrete Abtastzeiten
+## 10.6: Diskrete Abtastzeiten
 
 In diesem Abschnitt haben wir gesehen:
 
@@ -1204,7 +1204,7 @@ Das Diagramm zeigt die kontinuierliche Parabel (blau/orange) und das **treppenf�
 
 ![bg right](./Illustrationen/Abschnitt_7.jpg)
 
-## 6.7 Variable Abtastzeiten
+## 10.7: Variable Abtastzeiten
 
 In diesem Abschnitt haben wir gesehen:
 

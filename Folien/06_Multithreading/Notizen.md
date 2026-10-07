@@ -1,0 +1,3 @@
+- Asynchrone Programmierung (async/await) für UI-Responsiveness bei Hintergrundsimulationen ergänzen
+- `ThreadLocal<T>` und `Parallel.For` mit lokalem Initialisierer vertiefen
+- Titelbild generieren

@@ -1,7 +1,7 @@
----
+﻿---
 marp: true
 theme: fhooe
-header: 'Kapitel 4: Kontinuierliche Dynamische Modelle (2025-12-05)'
+header: 'Kapitel 8: Kontinuierliche Dynamische Modelle'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -9,17 +9,17 @@ math: mathjax
 
 ![bg right](./Titelbild.jpg)
 
-# Kapitel 4: Kontinuierliche Dynamische Modelle
+# Kapitel 8: Kontinuierliche Dynamische Modelle
 
-- 4.1: Grundlagen und Definitionen
-- 4.2: Beispiel: Freier Fall / Vertikaler Wurf
-- 4.3: Beispiel: Ungedämpftes Federpendel
-- 4.4: Softwarearchitektur für Simulation
-- 4.5: Lösungsalgorithmen für Simulation
+- 8.1: Grundlagen und Definitionen
+- 8.2: Beispiel: Freier Fall / Vertikaler Wurf
+- 8.3: Beispiel: Ungedämpftes Federpendel
+- 8.4: Softwarearchitektur für Simulation
+- 8.5: Lösungsalgorithmen für Simulation
 
 ---
 
-## 4.1: Grundlagen und Definitionen
+## 8.1: Grundlagen und Definitionen
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -244,7 +244,7 @@ $$ x_{k+1} = x_k + h \cdot f(t_{k+1}, x_{k+1}) $$
 
 ![bg right:40%](./Illustrationen/Wurfbeispiel.jpg)
 
-## 4.2: Beispiel: Freier Fall / Vertikaler Wurf
+## 8.2: Beispiel: Freier Fall / Vertikaler Wurf
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -492,7 +492,7 @@ Beide Methoden haben einen lokalen Fehler der Ordnung $O(h^2)$ und einen globale
 
 ![bg contain right:40%](./Illustrationen/Pendelbeispiel.jpg)
 
-## 4.3: Beispiel: Ungedämpftes Federpendel
+## 8.3: Beispiel: Ungedämpftes Federpendel
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -619,7 +619,7 @@ Dies ist ein lineares Gleichungssystem für die unbekannten Größen $y_{k+1}$ u
 
 ---
 
-## 4.4: Softwarearchitektur für Simulation
+## 8.4: Softwarearchitektur für Simulation
 
 Dieser Abschnitt beschreibt eine flexible, blockbasierte Architektur für die Simulation von dynamischen Systemen, die stark an das Konzept von **Simulink S-Functions** angelehnt ist.
 
@@ -992,7 +992,7 @@ class Connection
 
 ---
 
-## 4.5: Lösungsalgorithmen für Simulationen
+## 8.5: Lösungsalgorithmen für Simulationen
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -1385,7 +1385,7 @@ Kombiniert den impliziten Solver mit der Auflösung von algebraischen Schleifen.
 
 ---
 
-# Zusammenfassung Kapitel 4
+# Zusammenfassung Kapitel 8
 
 - **Kontinuierliche dynamische Modelle** beschreiben Systeme mit kontinuierlicher Zeitentwicklung mittels **Differentialgleichungen**.
 - Die **Zustandsraumdarstellung** ($\dot{x}=f(x,u), y=g(x,u)$) ist eine Standardform.

@@ -133,13 +133,17 @@ Die Teilnehmer*innen sollten nach erfolgreichem absolvieren dieses Kurses die fo
 Dieser Kurs umfasst daraus abgeleitet die folgenden Kapitel:
 
 1. [Einführung](../01_Einführung/)
-1. Statische Modelle
-   1. [2D](../02_Statische_Modelle_2D/)
-   1. [3D](../03_Statische_Modelle_3D/)
-1. Dynamische Modelle
-   1. [Kontinuierlich](../04_Dynamische_Modelle_Kontinuierlich/)
-   1. [Diskret](../05_Dynamische_Modelle_Diskret/)
-   1. [Hybrid](../06_Dynamische_Modelle_Hybrid/)
+1. Technische & methodische Grundlagen:
+   1. [2D-Visualisierung (Pixel)](../02_Visualisierung_2D_Pixel/)
+   1. [2D-Visualisierung (Vektor)](../03_Visualisierung_2D_Vektor/)
+   1. [2D-Visualisierung (Diagramme & Graphen)](../04_Visualisierung_2D_Diagramme/)
+   1. [3D-Visualisierung (OpenGL)](../05_Visualisierung_3D_OpenGL/)
+   1. [Multithreading](../06_Multithreading/)
+1. Simulationsmodelle:
+   1. [Statische Modelle](../07_Statische_Modelle/)
+   1. [Dynamische Modelle (Kontinuierlich)](../08_Dynamische_Modelle_Kontinuierlich/)
+   1. [Dynamische Modelle (Diskret)](../09_Dynamische_Modelle_Diskret/)
+   1. [Dynamische Modelle (Hybrid)](../10_Dynamische_Modelle_Hybrid/)
 
 ---
 

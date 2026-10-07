@@ -28,7 +28,7 @@ Bei den Softwarearchitekturen lehnen wir uns an etablierte Strukturen (wie z.B. 
 
 Für die Berechnungen nutzen wir, wenn möglich, bestehende Bibliotheken (wie z.B. `Math.NET Numerics` für die Lösung von linearen Gleichungssystemen).
 
-Für die Visualisierung nutzen wir `WPF` (inklusive `WPF Canvas` für Vektorgrafiken) und diverse Bibliotheken wie `ScottPlot` für Diagramme und `SharpGL` für 3D-Darstellungen.
+Für die Visualisierung nutzen wir `WPF` (inklusive `WriteableBitmap` für Rastergrafiken und `WPF Canvas` für Vektorgrafiken) und diverse Bibliotheken wie `ScottPlot` für Diagramme, `MSAGL` für Netzwerkgraphen und `SharpGL` für 3D-Darstellungen. Für rechenintensive Berechnungen setzen wir auf Multithreading mit der Task Parallel Library (`Parallel.For`).
 
 ## Präsentationstechnik
 

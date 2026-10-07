@@ -1,0 +1,3 @@
+- Signal-Plots in ScottPlot für sehr große Datenreihen (1Mio+ Punkte) ergänzen
+- Interaktive Node-Editoren (wie Nodify) als Ausblick für Blockschaltbild-Editoren erwähnen
+- Titelbild generieren

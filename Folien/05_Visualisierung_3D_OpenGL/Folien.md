@@ -1,7 +1,7 @@
----
+﻿---
 marp: true
 theme: fhooe
-header: 'Kapitel 3: Statische Modelle 3D (2025-12-05)'
+header: 'Kapitel 5: 3D-Visualisierung mit OpenGL'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -9,306 +9,16 @@ math: mathjax
 
 ![bg right](./Titelbild.jpg)
 
-# Kapitel 3: Statische Modelle in 3D
+# Kapitel 5: 3D-Visualisierung mit OpenGL
 
-Dieses Kapitel umfasst die folgenden Inhalte:
+Dieses Kapitel umfasst die folgenden Abschnitte:
 
-- 3.1: Erweiterung der Berechnungsmodelle auf 3D
-- 3.2: Grundlagen der 3D-Visualisierung mit OpenGL
-- 3.3: Strukturierung komplexer Szenen mit Szenengraphen
-
----
-
-## 3.1: Erweiterung der Berechnungsmodelle auf 3D
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Erweiterung der Freiheitsgrade von 2D auf 3D
-- Anpassung des idealen Fachwerk-Modells für 3D
-- Anpassung des elastischen Fachwerk-Modells für 3D
+- 5.1: Grundlagen der 3D-Visualisierung mit OpenGL
+- 5.2: Strukturierung mit einem Szenengraphen
 
 ---
 
-### Vom 2D- zum 3D-Fachwerk
-
-Die grundlegenden physikalischen Prinzipien (Kräftegleichgewicht, Hooke\'sches Gesetz) bleiben exakt gleich. Die Mathematik wird lediglich um eine Dimension erweitert:
-
-<div class="columns top">
-<div class="one">
-
-**2D**
-- Knoten haben 2 Freiheitsgrade (DOF): $u_x, u_y$.
-- Gleichgewicht in 2 Richtungen: $\sum F_x = 0, \sum F_y = 0$.
-- Geometrie durch Vektoren in $\mathbb{R}^2$.
-
-</div>
-<div class="one">
-
-**3D**
-- Knoten haben 3 Freiheitsgrade (DOF): $u_x, u_y, u_z$.
-- Gleichgewicht in 3 Richtungen: $\sum F_x = 0, \sum F_y = 0, \sum F_z = 0$.
-- Geometrie durch Vektoren in $\mathbb{R}^3$.
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div>
-
-### **Ideales** Fachwerk in 3D
-
-- **Knotenpunktverfahren**: An jedem Knoten werden nun **drei** Gleichgewichtsgleichungen aufgestellt.
-- Für ein Fachwerk mit $k$ Knoten, $s$ Stäben und $l$ Lagerreaktionen muss gelten: $3k = s + l$ (statische Bestimmtheit).
-- Das LGS $A \cdot x = b$ wird entsprechend größer, das Prinzip ist aber identisch. Die Koeffizienten in $A$ sind nun die Richtungskosinusse der Stäbe im 3D-Raum.
-
-</div>
-<div>
-
-![](../../Quellen/WS25/FachwerkIdeal3D/Screenshot.png)
-
-</div>
-</div>
-
----
-
-### Kräftegleichgewicht im 3D-Knoten
-
-Für jeden freien Knoten im Fachwerk muss die Summe aller Kräfte in jeder Raumrichtung null ergeben. Ein Stab $j$, der am Knoten $i$ angreift, übt eine Kraft $S_j$ aus, die entlang der Stabachse wirkt.
-
-- **Stabvektor**: $L_j = P_k - P_i$ (Vektor von Knoten $i$ zu Knoten $k$)
-- **Einheitsvektor**: $e_j = \frac{L_j}{|L_j|}$
-- **Kraftvektor**: $F_j = S_j \cdot e_j = S_j \cdot \begin{pmatrix} e_{j,x} \\ e_{j,y} \\ e_{j,z} \end{pmatrix}$
-
-Das Gleichgewicht am Knoten $i$ lautet dann:
-
-$\sum_{j} F_j + F_{ext,i} = 0 \implies \begin{cases} \sum_j S_j \cdot e_{j,x} + F_{ext,i,x} = 0 \\ \sum_j S_j \cdot e_{j,y} + F_{ext,i,y} = 0 \\ \sum_j S_j \cdot e_{j,z} + F_{ext,i,z} = 0 \end{cases}$
-
----
-
-<div class="columns">
-<div class="two">
-
-### Matrixdarstellung für einen Knoten
-
-Die drei Gleichgewichtsgleichungen für einen Knoten lassen sich in Matrixform schreiben. Für einen Knoten, an dem die Stäbe 1, 2 und 3 angreifen, sieht das so aus:
-
-$$
-\begin{pmatrix}
-e_{1,x} & e_{2,x} & e_{3,x} \\
-e_{1,y} & e_{2,y} & e_{3,y} \\
-e_{1,z} & e_{2,z} & e_{3,z}
-\end{pmatrix}
-\cdot
-\begin{pmatrix}
-S_1 \\ S_2 \\ S_3
-\end{pmatrix}
-=
-\begin{pmatrix}
--F_{ext,x} \\ -F_{ext,y} \\ -F_{ext,z}
-\end{pmatrix}
-$$
-
-- Die Matrix enthält die x-, y- und z-Komponenten der Einheitsvektoren der Stäbe.
-- Der Vektor $S$ enthält die unbekannten Stabkräfte.
-- Der Vektor auf der rechten Seite enthält die externen Kräfte.
-
-</div>
-<div>
-
-![width:800px](./Diagramme/Kraeftegleichgewicht_2D.tikz.svg)
-
-</div>
-</div>
-
----
-
-### Globales Gleichungssystem
-
-Stellt man die Gleichungen für alle $k$ Knoten auf, erhält man ein großes lineares Gleichungssystem mit $3k$ Gleichungen.
-
-$A \cdot s = f_{ext}$
-
-- **$A$ (Geometriematrix)**: Eine $3k \times s$ Matrix, die die Geometrie des Fachwerks beschreibt (die Richtungskosinusse der Stäbe). Jede Spalte entspricht einem Stab, jede Zeile einer Gleichgewichtsrichtung an einem Knoten.
-- **$s$ (Stabkraftvektor)**: Ein Vektor der Länge $s$ mit den unbekannten Stabkräften.
-- **$f_{ext}$ (Lastvektor)**: Ein Vektor der Länge $3k$, der die externen Kräfte an allen Knoten enthält.
-
-Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A$ quadratisch ($s \times s$) und kann gelöst werden.
-
----
-
-<div class="columns">
-<div>
-
-### **Elastisches** Fachwerk in 3D
-
-- **Knotenverschiebungen**: Der Vektor $u$ enthält nun für jeden Knoten drei Komponenten ($u_x, u_y, u_z$).
-- **Stab-Steifigkeitsmatrix**: Die $k_{stab}$ ist nun eine 6x6-Matrix, da sie die 3 Verschiebungen an beiden Enden des Stabes in Beziehung setzt.
-- **Globale Steifigkeitsmatrix $K$**: Wird analog zum 2D-Fall assembliert, wird aber deutlich größer. Für ein Fachwerk mit $k$ Knoten ist $K$ eine $3k \times 3k$ Matrix.
-- Die Lösung $K \cdot u = f$ folgt dem gleichen Schema.
-
-</div>
-<div>
-
-![](../../Quellen/WS25/FachwerkElastisch3D/Screenshot.png)
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div class="two">
-
-### Stablängenänderung durch Knotenverschiebung
-
-Die Längenänderung $\Delta L$ eines Stabes zwischen den Knoten $i$ und $j$ hängt von deren Verschiebungen $\vec{u}_i$ und $\vec{u}_j$ ab.
-
-- **Verschiebungsvektoren**: $\vec{u}_i = (u_{ix}, u_{iy}, u_{iz})$ und $\vec{u}_j = (u_{jx}, u_{jy}, u_{jz})$.
-- **Ursprünglicher Stabvektor**: $\vec{L}_{ij} = \vec{p}_j - \vec{p}_i$
-
-Die exakte Längenänderung ist die Differenz zwischen der neuen Länge $L'$ (nach der Verformung) und der ursprünglichen Länge $L$.
-
-- **Neuer Stabvektor**: $\vec{L}'_{ij} = (\vec{p}_j + \vec{u}_j) - (\vec{p}_i + \vec{u}_i) = \vec{L}_{ij} + (\vec{u}_j - \vec{u}_i)$
-- **Neue Länge**: $L' = |\vec{L}'_{ij}|$
-
-</div>
-<div>
-
-![width:800px](./Diagramme/Stablaengenaenderung.tikz.svg)
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div class="three">
-
-### **Exakte** Berechnung der Stablängenänderung
-
-Die exakte Längenänderung ist: $\Delta L = L' - L = |\vec{L}_{ij} + \vec{u}_j - \vec{u}_i| - |\vec{L}_{ij}|$.
-
-Um die Wurzel zu eliminieren, betrachten wir das Quadrat der neuen Länge $L'^2$. Sei $\Delta \vec{u} = \vec{u}_j - \vec{u}_i$.
-
-$L'^2 = |\vec{L} + \Delta \vec{u}|^2 = (\vec{L} + \Delta \vec{u}) \cdot (\vec{L} + \Delta \vec{u})$
-
-Ausmultiplizieren des Skalarprodukts ergibt:
-
-$L'^2 = \vec{L} \cdot \vec{L} + 2(\vec{L} \cdot \Delta \vec{u}) + \Delta \vec{u} \cdot \Delta \vec{u}$
-$L'^2 = L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2$
-
-Die neue Länge ist somit:
-
-$L' = \sqrt{L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2} = L \sqrt{1 + \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2} + \frac{|\Delta \vec{u}|^2}{L^2}}$
-
-</div>
-<div>
-
-![width:800px](./Diagramme/Stablaengenaenderung.tikz.svg)
-
-</div>
-</div>
-
----
-
-<div class="columns">
-<div class="three">
-
-### **Näherungsweise** Berechnung der Stablängenänderung
-
-Für die in der Praxis übliche Annahme **kleiner Verschiebungen** gilt $|\Delta \vec{u}| \ll L$. Daher kann der quadratische Term $\frac{|\Delta \vec{u}|^2}{L^2}$ vernachlässigt werden.
-
-$L' \approx L \sqrt{1 + \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2}}$
-
-Mit der Taylor-Näherung $\sqrt{1+x} \approx 1 + \frac{x}{2}$ für kleine $x$ erhalten wir:
-
-$L' \approx L \left(1 + \frac{1}{2} \cdot \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2}\right) = L \left(1 + \frac{\vec{L} \cdot \Delta \vec{u}}{L^2}\right) = L + \frac{\vec{L} \cdot \Delta \vec{u}}{L}$
-
-Die Längenänderung $\Delta L = L' - L$ ist damit:
-
-$\Delta L \approx \frac{\vec{L} \cdot \Delta \vec{u}}{L} = \left(\frac{\vec{L}}{L}\right) \cdot \Delta \vec{u} = \vec{e} \cdot (\vec{u}_j - \vec{u}_i)$
-
-Dies führt direkt zur linearisierten, näherungsweisen Berechnung.
-
-</div>
-<div>
-
-![width:800px](./Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
-
-</div>
-</div>
-
----
-
-### Stabkräfte und Steifigkeitsbeziehung
-
-Nach dem **Hooke'schen Gesetz** ist die Kraft $S$ im Stab proportional zur Längenänderung $\Delta L$.
-
-$S = \frac{E \cdot A}{L} \cdot \Delta L$
-
-- $E$: Elastizitätsmodul (Materialeigenschaft)
-- $A$: Querschnittsfläche des Stabes
-- $L$: Ursprüngliche Länge des Stabes
-
-Die Stabkraft $S$ erzeugt an den Knoten $i$ und $j$ die Gegenkräfte $\vec{f}_i$ und $\vec{f}_j$:
-
-$\vec{f}_j = S \cdot \vec{e}$
-$\vec{f}_i = -S \cdot \vec{e}$
-
-Diese Kräfte halten das Gleichgewicht mit den externen Kräften.
-
----
-
-### Die 3D-Stab-Steifigkeitsmatrix (1/2)
-
-Ziel ist es, eine Matrix $k_{Stab}$ zu finden, die die Knotenverschiebungen $\vec{u}$ direkt mit den resultierenden Knotenkäften $\vec{f}_{Stab}$ in Beziehung setzt: $\vec{f}_{Stab} = k_{Stab} \cdot \vec{u}$.
-
-- **Vektor der Knotenverschiebungen**: $\vec{u} = (u_{ix}, u_{iy}, u_{iz}, u_{jx}, u_{jy}, u_{jz})^T$
-- **Vektor der Stabkräfte**: $\vec{f}_{Stab} = (\vec{f}_i^T, \vec{f}_j^T)^T$
-
-Setzt man die Formeln für $\Delta L$ und $S$ in die Kraftgleichungen ein, erhält man:
-
-$\vec{f}_{Stab} = \frac{EA}{L} \cdot \Delta L \cdot \begin{pmatrix} -e_x \\ -e_y \\ -e_z \\ e_x \\ e_y \\ e_z \end{pmatrix} = \frac{EA}{L} \cdot \left( \begin{pmatrix} -e_x & -e_y & -e_z & e_x & e_y & e_z \end{pmatrix} \cdot \vec{u} \right) \cdot \begin{pmatrix} -e_x \\ -e_y \\ -e_z \\ e_x \\ e_y \\ e_z \end{pmatrix}$
-
----
-
-### Die 3D-Stab-Steifigkeitsmatrix (2/2)
-
-Das Ausmultiplizieren der Vektoren führt zur **6x6-Stab-Steifigkeitsmatrix** $k_{Stab}$:
-
-$k_{Stab} = \frac{EA}{L} \begin{pmatrix}
-e_x^2 & e_x e_y & e_x e_z & -e_x^2 & -e_x e_y & -e_x e_z \\
-e_y e_x & e_y^2 & e_y e_z & -e_y e_x & -e_y^2 & -e_y e_z \\
-e_z e_x & e_z e_y & e_z^2 & -e_z e_x & -e_z e_y & -e_z^2 \\
--e_x^2 & -e_x e_y & -e_x e_z & e_x^2 & e_x e_y & e_x e_z \\
--e_y e_x & -e_y^2 & -e_y e_z & e_y e_x & e_y^2 & e_y e_z \\
--e_z e_x & -e_z e_y & -e_z^2 & e_z e_x & e_z e_y & e_z^2
-\end{pmatrix}$
-
-Diese Matrix beschreibt den Zusammenhang zwischen den 6 Verschiebungs-Freiheitsgraden eines Stabes und den daraus resultierenden 6 Knotenkräften im globalen Koordinatensystem.
-
----
-
-### Globales Gleichungssystem
-
-Die globale Steifigkeitsmatrix $K$ des gesamten Fachwerks wird durch "Assemblierung" der einzelnen Stab-Steifigkeitsmatrizen $k_{Stab}$ aufgebaut.
-
-- Für jeden Stab werden die 36 Elemente seiner $k_{Stab}$-Matrix an die richtigen Positionen in der globalen Matrix $K$ addiert. Die Positionen ergeben sich aus den globalen Freiheitsgraden der beiden Knoten des Stabes.
-- Dieser Prozess wird als **Direkte Steifigkeitsmethode** bezeichnet.
-
-Das resultierende globale Gleichungssystem lautet:
-
-$K \cdot \vec{u} = \vec{f}$
-
-- $K$: Globale Steifigkeitsmatrix (Größe $3k \times 3k$ für $k$ Knoten)
-- $\vec{u}$: Globaler Vektor der unbekannten Knotenverschiebungen
-- $\vec{f}$: Globaler Vektor der externen Kräfte
-
----
-
-## 3.2: Grundlagen der 3D-Visualisierung mit OpenGL
+## 5.1: Grundlagen der 3D-Visualisierung mit OpenGL
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -1047,7 +757,7 @@ gl.PopMatrix(); // Zurück zum Sonnen-Koordinatensystem
 
 ---
 
-## 3.3: Strukturierung mit einem Szenengraphen
+## 5.2: Strukturierung mit einem Szenengraphen
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -1696,7 +1406,7 @@ _scene = new Scene(Color.WHITE, Color.DARKGRAY, root);
 
 ---
 
-# Zusammenfassung Kapitel 3
+# Zusammenfassung Kapitel 5
 
 - Die Erweiterung statischer Modelle auf **3D** ist mathematisch eine Erweiterung der Vektoren und Matrizen um eine Dimension.
 - Die **Visualisierung** wird deutlich komplexer und erfordert eine **Grafik-Pipeline** wie die von OpenGL.

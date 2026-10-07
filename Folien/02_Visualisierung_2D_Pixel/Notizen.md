@@ -1,0 +1,3 @@
+- Beispielprojekt mit 2D-Diffusions- oder Wärmeleitungssimulation auf Pixelbasis erstellen
+- Farbskalen-Galerie (Jet, Viridis, Plasma) als Hilfsklasse bereitstellen
+- Titelbild generieren

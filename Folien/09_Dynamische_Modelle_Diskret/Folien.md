@@ -1,7 +1,7 @@
----
+﻿---
 marp: true
 theme: fhooe
-header: 'Kapitel 5: Diskrete Dynamische Modelle (2025-12-05)'
+header: 'Kapitel 9: Diskrete Dynamische Modelle'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -9,23 +9,23 @@ math: mathjax
 
 ![bg right](./Titelbild.jpg)
 
-# Kapitel 5: Diskrete Dynamische Modelle
+# Kapitel 9: Diskrete Dynamische Modelle
 
 Dieses Kapitel umfasst die folgenden Abschnitte:
 
-- 5.1: Grundlagen und Konzepte
-- 5.2: Warteschlangensystem
-- 5.3: Simulationsalgorithmus
-- 5.4: Implementierung in C#
-- 5.5: Analyse und Visualisierung
-- 5.6: Probabilistische Modelle
-- 5.7: Monte-Carlo-Simulation
+- 9.1: Grundlagen und Konzepte
+- 9.2: Warteschlangensystem
+- 9.3: Simulationsalgorithmus
+- 9.4: Implementierung in C#
+- 9.5: Analyse und Visualisierung
+- 9.6: Probabilistische Modelle
+- 9.7: Monte-Carlo-Simulation
 
 ---
 
 ![bg right](./Illustrationen/Abschnitt_1.jpg)
 
-## 5.1: Grundlagen und Konzepte
+## 9.1: Grundlagen und Konzepte
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -156,7 +156,7 @@ Für jedes Ereignis $e_i$ gibt es eine **Ereignisroutine**, die beim Eintreten d
 
 ![bg right](./Illustrationen/Abschnitt_2.jpg)
 
-## 5.2: Warteschlangensystem
+## 9.2: Warteschlangensystem
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -261,7 +261,7 @@ Wenn ein Kunde fertig bedient ist, wird geprüft, ob weitere Kunden warten.
 
 ![bg right](./Illustrationen/Abschnitt_3.jpg)
 
-## 5.3: Simulationsalgorithmus
+## 9.3: Simulationsalgorithmus
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -326,7 +326,7 @@ Die folgende Tabelle zeigt die Werte der `Clock`, des `State` und der `EventQueu
 
 ![bg right](./Illustrationen/Abschnitt_4.jpg)
 
-## 5.4: Implementierung in C#
+## 9.4: Implementierung in C#
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -537,7 +537,7 @@ else if (next is DepartureEvent)
 
 ![bg right](./Illustrationen/Abschnitt_5.jpg)
 
-## 5.5: Analyse und Visualisierung
+## 9.5: Analyse und Visualisierung
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -681,7 +681,7 @@ myPlot.Axes.AutoScale();
 
 ![bg right](./Illustrationen/Abschnitt_6.jpg)
 
-## 5.6: Probabilistische Modelle
+## 9.6: Probabilistische Modelle
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -966,7 +966,7 @@ Das Ergebnis (z.B. mittlere Wartezeit = 4.7 min) ist nicht repräsentativ für d
 
 ![bg right](./Illustrationen/Abschnitt_7.jpg)
 
-## 5.7: Monte-Carlo-Simulation
+## 9.7: Monte-Carlo-Simulation
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 

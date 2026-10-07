@@ -1,0 +1,2 @@
+- Weitere 3D-Beispiele ergänzen (z.B. Brücken- und Raumfachwerke)
+- Vergleichende Betrachtung von direkten vs. iterativen Solvern bei großen Freiheitsgraden
