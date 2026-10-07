@@ -1,4 +1,4 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace FachwerkIdeal.Model
 {
@@ -99,7 +99,7 @@ namespace FachwerkIdeal.Model
 
             // Stab- und Lagerkräfte berechnen
 
-            var x = A.Inverse().Multiply(b);
+            var x = A.Solve(b);
 
             // Stabkräfte übertragen
 

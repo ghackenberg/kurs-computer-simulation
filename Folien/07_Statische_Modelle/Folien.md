@@ -533,6 +533,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Erweiterung der Freiheitsgrade von 2D auf 3D
 - Anpassung des idealen Fachwerk-Modells für 3D
 - Anpassung des elastischen Fachwerk-Modells für 3D
+- Numerische Lösungsverfahren (LU vs. Cholesky)
 
 ---
 
@@ -814,6 +815,25 @@ $K \cdot \vec{u} = \vec{f}$
 - $\vec{f}$: Globaler Vektor der externen Kräfte
 
 ---
+
+### Numerische Lösung des Gleichungssystems
+
+Für die Auflösung nach den freien Verschiebungen $\vec{u}_B$ gilt:
+
+$k_{BB} \cdot \vec{u}_B = \vec{f}_B - k_{BA} \cdot \vec{u}_A$
+
+- **Ideales Fachwerk ($A \cdot x = b$):** Regulär, nicht symmetrisch $\to$ LU-Faktorisierung mit partieller Pivotisierung:
+  ```csharp
+  Vector<double> x = A.Solve(b); // O(2/3 n^3) statt O(2 n^3) Inversion
+  ```
+- **Elastisches Fachwerk ($k_{BB} \cdot u_B = f_B'$):** Die Matrix $k_{BB}$ ist **symmetrisch positiv-definit (SPD)** $\to$ **Cholesky-Zerlegung** ($k_{BB} = L L^T$):
+  ```csharp
+  // Cholesky ist 2x schneller als LU; robuster Fallback bei Singularität
+  var uB = kBB.Cholesky().Solve(fB);
+  ```
+- **Numerische Best Practice:** Keine explizite Invertierung (`A.Inverse().Multiply(b)` ist numerisch instabil und ineffizient)!
+
+---
 ## 7.5: Programmtechnische Umsetzung
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -954,23 +974,26 @@ public class Truss
 
 ---
 
-### Verwendung von Bibliotheken
+### Verwendung von Bibliotheken (`Math.NET Numerics`)
 
-- Das Rad muss nicht neu erfunden werden.
-- Numerische Bibliotheken bieten hochoptimierte und stabile Implementierungen dieser Algorithmen.
-- **Beispiel für .NET**: `Math.NET Numerics`
+- Numerische Bibliotheken bieten hochoptimierte und stabile LGS-Löser.
+- **Ideales Fachwerk:** Direkte Lösung via `A.Solve(b)` (LU-Zerlegung)
+- **Elastisches Fachwerk:** Cholesky-Zerlegung `kBB.Cholesky().Solve(...)`
 
 ```csharp
 using MathNet.Numerics.LinearAlgebra;
 
-// Erstelle Matrix A und Vektor b
-var A = Matrix<double>.Build.DenseOfArray(new double[,] { ... });
-var b = Vector<double>.Build.Dense(new double[] { ... });
+// Ideales Fachwerk: Direkte LU-Lösung mit partieller Pivotisierung
+Vector<double> x = A.Solve(b);
 
-// Löse das Gleichungssystem A*x = b
-var x = A.Solve(b);
-
-// x enthält jetzt die Stab- und Lagerkräfte
+// Elastisches Fachwerk: Cholesky-Zerlegung (LL^T) mit LU-Fallback
+var rhs = fKnown - kBA * uKnown;
+Vector<double> uUnknown;
+try {
+    uUnknown = kBB.Cholesky().Solve(rhs);
+} catch (Exception) {
+    uUnknown = kBB.LU().Solve(rhs);
+}
 ```
 
 ---

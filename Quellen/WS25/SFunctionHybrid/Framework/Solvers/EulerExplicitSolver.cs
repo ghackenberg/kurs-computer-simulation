@@ -1,12 +1,78 @@
-﻿using SFunctionHybrid.Framework.SampleTimes;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionHybrid.Framework.Solvers
 {
     public class EulerExplicitSolver : Solver
     {
+        private Block[] _sortedExecutionOrder = [];
+
         public EulerExplicitSolver(Model composition) : base(composition)
         {
+            CompileExecutionOrder();
+        }
 
+        private void CompileExecutionOrder()
+        {
+            // 1. Berechnung des In-Degrees bezüglich direkter Durchgriffe
+            Dictionary<Block, int> inDegrees = new();
+            Dictionary<Block, List<Block>> directSuccessors = new();
+
+            foreach (var b in Blocks)
+            {
+                inDegrees[b] = 0;
+                directSuccessors[b] = new List<Block>();
+            }
+
+            foreach (var c in Connections)
+            {
+                Block source = c.Source;
+                Block target = c.Target;
+                int targetInputIdx = c.Input;
+
+                // Hat der Zielblock an diesem Eingang direkten Durchgriff?
+                if (target.Inputs[targetInputIdx].DirectFeedThrough)
+                {
+                    directSuccessors[source].Add(target);
+                    inDegrees[target]++;
+                }
+            }
+
+            // 2. Initialisiere Queue mit Blöcken ohne Abhängigkeiten
+            Queue<Block> readyQueue = new();
+            foreach (var b in Blocks)
+            {
+                if (inDegrees[b] == 0)
+                {
+                    readyQueue.Enqueue(b);
+                }
+            }
+
+            // 3. Kahn's Algorithmus
+            List<Block> order = new(Blocks.Count);
+            while (readyQueue.Count > 0)
+            {
+                Block u = readyQueue.Dequeue();
+                order.Add(u);
+
+                foreach (Block v in directSuccessors[u])
+                {
+                    inDegrees[v]--;
+                    if (inDegrees[v] == 0)
+                    {
+                        readyQueue.Enqueue(v);
+                    }
+                }
+            }
+
+            // 4. Prüfung auf algebraische Schleifen
+            if (order.Count != Blocks.Count)
+            {
+                var cyclicBlocks = Blocks.Where(b => inDegrees[b] > 0).Select(b => b.GetType().Name);
+                throw new InvalidOperationException(
+                    $"Algebraische Schleife im Blockdiagramm erkannt! Zyklen involvieren: {string.Join(", ", cyclicBlocks)}");
+            }
+
+            _sortedExecutionOrder = order.ToArray();
         }
 
         public sealed override void Solve(double timeStepMax, double timeMax)
@@ -96,44 +162,12 @@ namespace SFunctionHybrid.Framework.Solvers
 
         protected override void CalculateOutputs(double time)
         {
-            // Bereitschaft zurücksetzen
-            ResetFlags();
-
-            // Alle Funktion als "zu berechnen" markieren
-            List<Block> open = [.. Blocks];
-
-            // Solange arbeiten, bis alle Funktionen berechnet sind
-            while (open.Count > 0)
+            // Linearer, vorberechneter O(N) Durchlauf ohne Allokationen und ohne Listenänderungen
+            for (int i = 0; i < _sortedExecutionOrder.Length; i++)
             {
-                // Zahl der zu berechnenden Funktionen merken
-                int count = open.Count;
-
-                // Zu berechnende Funktionen durchlaufen
-                for (int i = 0; i < open.Count; i++)
-                {
-                    // Nächste zu berechnende Funktion auswählen
-                    Block f = open[i];
-
-                    // Bereitschaft der Funktion prüfen
-                    if (AreAllInputsReady(f))
-                    {
-                        // Ausgaben der Funktion berechnen
-                        f.CalculateOutputs(time, ContinuousStates[f], DiscreteStates[f], Inputs[f], Outputs[f]);
-
-                        // Ausgaben der Funktion weiterleiten
-                        ForwardOutputs(f);
-
-                        // Funktion als erledigt markieren
-                        open.RemoveAt(i--);
-                    }
-                }
-
-                // Prüfen, ob die Anzahl der offenen Funktionen gleich geblieben ist
-                if (count == open.Count)
-                {
-                    // Fehlermeldung ausgeben
-                    throw new Exception("Algebraische Schleife erkannt!");
-                }
+                Block f = _sortedExecutionOrder[i];
+                f.CalculateOutputs(time, ContinuousStates[f], DiscreteStates[f], Inputs[f], Outputs[f]);
+                ForwardOutputs(f);
             }
         }
     }

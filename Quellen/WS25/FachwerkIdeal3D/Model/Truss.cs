@@ -1,4 +1,4 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace IdealesFachwerk3D.Model
 {
@@ -132,9 +132,7 @@ namespace IdealesFachwerk3D.Model
 
             // Gleichungssystem lösen
 
-            Matrix<double> Ai = A.Inverse();
-
-            Vector<double> x = Ai.Multiply(b);
+            Vector<double> x = A.Solve(b);
 
             // Stabkräfte auslesen
 

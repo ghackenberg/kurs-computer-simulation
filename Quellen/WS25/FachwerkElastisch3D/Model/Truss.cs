@@ -1,4 +1,4 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace ElastischesFachwerk3D.Model
 {
@@ -241,8 +241,17 @@ namespace ElastischesFachwerk3D.Model
             }
 
             // Schritt 8: Knotenverschiebungen berechnen
+ 
+            var rhs = fKnown - kBA * uKnown;
 
-            uUnknown = kBB.Inverse() * (fKnown - kBA * uKnown);
+            try
+            {
+                uUnknown = kBB.Cholesky().Solve(rhs);
+            }
+            catch (Exception)
+            {
+                uUnknown = kBB.LU().Solve(rhs);
+            }
 
             if (uUnknown.Count != uUnknownCount)
             {

@@ -1,4 +1,4 @@
-﻿using SFunctionHybrid.Framework.SampleTimes;
+using SFunctionHybrid.Framework.SampleTimes;
 
 namespace SFunctionHybrid.Framework
 {
@@ -24,6 +24,7 @@ namespace SFunctionHybrid.Framework
         public Dictionary<Block, double[]> Outputs { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> ZeroCrossingsPrevious { get; } = new Dictionary<Block, double[]>();
         public Dictionary<Block, double[]> ZeroCrossings { get; } = new Dictionary<Block, double[]>();
+        public Dictionary<Block, double[]> ZeroCrossingsScratch { get; } = new Dictionary<Block, double[]>();
 
         public Solver(Model model)
         {
@@ -45,6 +46,7 @@ namespace SFunctionHybrid.Framework
                 Outputs[f] = new double[f.Outputs.Count];
                 ZeroCrossingsPrevious[f] = new double[f.ZeroCrossings.Count];
                 ZeroCrossings[f] = new double[f.ZeroCrossings.Count];
+                ZeroCrossingsScratch[f] = new double[f.ZeroCrossings.Count];
             }
         }
 
@@ -165,13 +167,10 @@ namespace SFunctionHybrid.Framework
             // Rückgabewert initialisieren
             double value = -1;
 
-            // Berechne die ZeroCrossing-Signale für alle Funktionen und prüfe auf ZeroCrossings
-            Dictionary<Block, double[]> cache = new Dictionary<Block, double[]>();
-
+            // Phase 1: Berechne Werte in den vorallokierten Scratch-Puffer
             foreach (Block f in Model.Blocks)
             {
-                // Initialisiere den Speicher für die neuen Werte
-                double[] z = new double[f.ZeroCrossings.Count];
+                double[] z = ZeroCrossingsScratch[f];
 
                 // Berechne die neuen Werte der ZeroCrossing-Signale
                 f.CalculateZeroCrossings(t, ContinuousStates[f], DiscreteStates[f], Inputs[f], z);
@@ -179,28 +178,26 @@ namespace SFunctionHybrid.Framework
                 // Prüfe, ob bereits zuvor ein ZeroCrossing-Signal berechnet wurde
                 if (t > 0)
                 {
+                    double[] prev = ZeroCrossings[f];
                     // Wenn ja, prüfe, ob eines der Signale das Vorzeichen gewechselt hat
-                    for (int i = 0; i < f.ZeroCrossings.Count; i++)
+                    for (int i = 0; i < z.Length; i++)
                     {
-                        if (z[i] > 0 && ZeroCrossings[f][i] < 0)
+                        if (z[i] > 0 && prev[i] < 0)
                         {
                             value = Math.Max(value, +z[i]);
                         }
-                        else if (z[i] < 0 && ZeroCrossings[f][i] > 0)
+                        else if (z[i] < 0 && prev[i] > 0)
                         {
                             value = Math.Max(value, -z[i]);
                         }
                     }
                 }
-
-                // Speichere die neu berechneten Werte der ZeroCrossing-Signale
-                cache[f] = z;
             }
 
-            // Merke die Werte der ZeroCrossing-Signale für den nächsten Durchlauf
+            // Phase 2: Werte in ZeroCrossings übernehmen (In-Place Array.Copy, keine Dictionary-Allokation!)
             foreach (Block f in Model.Blocks)
             {
-                ZeroCrossings[f] = cache[f];
+                Array.Copy(ZeroCrossingsScratch[f], ZeroCrossings[f], f.ZeroCrossings.Count);
             }
 
             // Rückgabewerte zurückgeben

@@ -1,0 +1,111 @@
+<Window x:Class="SimulationMvvmPattern.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimulationMvvmPattern"
+        xmlns:vm="clr-namespace:SimulationMvvmPattern.ViewModel"
+        xmlns:sp="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+        mc:Ignorable="d"
+        Title="Systemsimulation - MVVM &amp; Multithreading Referenz" 
+        Height="720" Width="1100" MinHeight="600" MinWidth="900"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid Margin="16">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="340"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Parameter- und Steuerungspanel -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,16,0">
+            <StackPanel>
+                <!-- Modellparameter mit Schiebereglern -->
+                <GroupBox Header="Modellparameter (Masse-Feder-Dämpfer)" Padding="10" Margin="0,0,0,12">
+                    <StackPanel>
+                        <!-- Masse Slider -->
+                        <DockPanel Margin="0,0,0,4">
+                            <TextBlock Text="Masse m:" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding Mass, StringFormat='{}{0:F2} kg'}" HorizontalAlignment="Right" Foreground="#005A9C"/>
+                        </DockPanel>
+                        <Slider Minimum="0.1" Maximum="10.0" SmallChange="0.1" LargeChange="1.0"
+                                Value="{Binding Mass, UpdateSourceTrigger=PropertyChanged}"
+                                IsEnabled="{Binding CanStart}" Margin="0,0,0,12"/>
+
+                        <!-- Federsteifigkeit Slider -->
+                        <DockPanel Margin="0,0,0,4">
+                            <TextBlock Text="Federsteifigkeit c:" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding SpringConstant, StringFormat='{}{0:F1} N/m'}" HorizontalAlignment="Right" Foreground="#005A9C"/>
+                        </DockPanel>
+                        <Slider Minimum="1.0" Maximum="100.0" SmallChange="1.0" LargeChange="10.0"
+                                Value="{Binding SpringConstant, UpdateSourceTrigger=PropertyChanged}"
+                                IsEnabled="{Binding CanStart}" Margin="0,0,0,12"/>
+
+                        <!-- Dämpfung Slider -->
+                        <DockPanel Margin="0,0,0,4">
+                            <TextBlock Text="Dämpfungskonstante d:" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding Damping, StringFormat='{}{0:F2} Ns/m'}" HorizontalAlignment="Right" Foreground="#005A9C"/>
+                        </DockPanel>
+                        <Slider Minimum="0.0" Maximum="5.0" SmallChange="0.05" LargeChange="0.5"
+                                Value="{Binding Damping, UpdateSourceTrigger=PropertyChanged}"
+                                IsEnabled="{Binding CanStart}" Margin="0,0,0,12"/>
+
+                        <!-- Zeitschritt dt -->
+                        <DockPanel Margin="0,0,0,4">
+                            <TextBlock Text="Integrationsschritt dt:" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding TimeStep, StringFormat='{}{0:F4} s'}" HorizontalAlignment="Right" Foreground="#555555"/>
+                        </DockPanel>
+                        <Slider Minimum="0.001" Maximum="0.05" SmallChange="0.001" LargeChange="0.005"
+                                Value="{Binding TimeStep, UpdateSourceTrigger=PropertyChanged}"
+                                IsEnabled="{Binding CanStart}" Margin="0,0,0,4"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Simulationssteuerung -->
+                <GroupBox Header="Steuerung" Padding="10" Margin="0,0,0,12">
+                    <UniformGrid Columns="3">
+                        <Button Content="Start" Command="{Binding StartCommand}" Padding="6,8" Margin="3" FontWeight="Bold" Background="#E1F5FE"/>
+                        <Button Content="Stopp" Command="{Binding StopCommand}" Padding="6,8" Margin="3" FontWeight="Bold" Background="#FFEBEE"/>
+                        <Button Content="Reset" Command="{Binding ResetCommand}" Padding="6,8" Margin="3" Background="#F5F5F5"/>
+                    </UniformGrid>
+                </GroupBox>
+
+                <!-- Live-Telemetrie -->
+                <GroupBox Header="Live-Telemetrie (Dual-Rate Taktung)" Padding="10">
+                    <StackPanel>
+                        <DockPanel Margin="0,3">
+                            <TextBlock Text="Status:" Foreground="#666666"/>
+                            <TextBlock Text="{Binding StatusMessage}" FontWeight="Bold" HorizontalAlignment="Right"/>
+                        </DockPanel>
+                        <Separator Margin="0,4"/>
+                        <DockPanel Margin="0,3">
+                            <TextBlock Text="Zeit t:" Foreground="#666666"/>
+                            <TextBlock Text="{Binding CurrentTime, StringFormat='{}{0:F3} s'}" HorizontalAlignment="Right" FontFamily="Consolas"/>
+                        </DockPanel>
+                        <DockPanel Margin="0,3">
+                            <TextBlock Text="Position x(t):" Foreground="#666666"/>
+                            <TextBlock Text="{Binding CurrentPosition, StringFormat='{}{0:F4} m'}" HorizontalAlignment="Right" FontFamily="Consolas"/>
+                        </DockPanel>
+                        <DockPanel Margin="0,3">
+                            <TextBlock Text="Geschwindigkeit v(t):" Foreground="#666666"/>
+                            <TextBlock Text="{Binding CurrentVelocity, StringFormat='{}{0:F4} m/s'}" HorizontalAlignment="Right" FontFamily="Consolas"/>
+                        </DockPanel>
+                        <DockPanel Margin="0,3">
+                            <TextBlock Text="Berechnungsschritte:" Foreground="#666666"/>
+                            <TextBlock Text="{Binding StepCount, StringFormat='{}{0:N0}'}" HorizontalAlignment="Right" FontFamily="Consolas"/>
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ScottPlot 5 WpfPlot -->
+        <Border Grid.Column="1" BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="4" ClipToBounds="True">
+            <sp:WpfPlot x:Name="TrajectoryPlot"/>
+        </Border>
+    </Grid>
+</Window>
