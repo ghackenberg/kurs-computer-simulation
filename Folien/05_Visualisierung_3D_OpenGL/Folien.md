@@ -1331,23 +1331,28 @@ Anstatt $(x, y, z)$ direkt zu manipulieren, beschreibt eine Orbit-Kamera die Pos
 1. **Azimutwinkel $\theta$ (horizontaler Orbit)**:
    - Drehung um die vertikale $Y$-Achse ($0^\circ \dots 360^\circ$).
    - Bestimmt die Himmelsrichtung des Betrachters.
-2. **Elevationswinkel $\phi$ (vertikale Neigung)**:
+2. **Elevationswinkel $\theta_{\text{elev}}$ (vertikale Neigung)**:
    - Blickwinkel über/unter dem Äquator ($-89^\circ \dots +89^\circ$).
    - Vogelperspektive ($>0$) bis Froschperspektive ($<0$).
 3. **Distanz $r$ (Kameraabstand / Zoom)**:
    - Radius der Orbit-Kugelschale ($r > 0$).
+
+> [!NOTE]
+> **Terminologie-Hinweis (Kugel- vs. Orbit-Koordinaten):**
+> Bei `Sphere` bezeichnet $\phi \in [0, \pi]$ den **Polarwinkel** von der Polachse (Zenit).
+> Bei der Kamera bezeichnet $\theta_{\text{elev}} \in [-89^\circ, +89^\circ]$ den **Elevationswinkel** vom Äquator: $\theta_{\text{elev}} = 90^\circ - \phi_{\text{polar}}$.
 
 </div>
 <div>
 
 ### Vermeidung von Gimbal Lock
 
-Blickt die Kamera exakt senkrecht von oben ($\phi = +90^\circ$) oder unten ($\phi = -90^\circ$):
+Blickt die Kamera exakt senkrecht von oben ($\theta_{\text{elev}} = +90^\circ$) oder unten ($\theta_{\text{elev}} = -90^\circ$):
 
 - Blickvektor $\vec{view}$ und Up-Vektor $\vec{up} = (0, 1, 0)$ werden parallel.
 - Das Kreuzprodukt $\vec{view} \times \vec{up}$ wird zum Nullvektor $\vec{0}$.
 - Die Kamera verliert ihre eindeutige Orientierung und kippt unkontrolliert um.
-- **Lösung**: Der Elevationswinkel $\phi$ wird per Software auf $[-89^\circ, +89^\circ]$ begrenzt (*Clamping*):
+- **Lösung**: Der Elevationswinkel $\theta_{\text{elev}}$ wird per Software auf $[-89^\circ, +89^\circ]$ begrenzt (*Clamping*):
 
 ```csharp
 Elevation = Math.Clamp(Elevation, -89.0, 89.0);
@@ -1360,20 +1365,20 @@ Elevation = Math.Clamp(Elevation, -89.0, 89.0);
 
 ### Mathematische Koordinatenumrechnung
 
-Aus den Kugelkoordinaten $(\theta, \phi, r)$ und dem Fokuspunkt $\vec{center} = (x_c, y_c, z_c)$ wird der Augpunkt $\vec{eye}$ bestimmt:
+Aus den Kugelkoordinaten $(\theta, \theta_{\text{elev}}, r)$ und dem Fokuspunkt $\vec{center} = (x_c, y_c, z_c)$ wird der Augpunkt $\vec{eye}$ bestimmt:
 
 <div class="columns">
 <div>
 
 **Formeln (Winkel im Bogenmaß):**
 
-$$\theta_{\text{rad}} = \theta \cdot \frac{\pi}{180^\circ}, \quad \phi_{\text{rad}} = \phi \cdot \frac{\pi}{180^\circ}$$
+$$\theta_{\text{rad}} = \theta \cdot \frac{\pi}{180^\circ}, \quad \theta_{\text{elev,rad}} = \theta_{\text{elev}} \cdot \frac{\pi}{180^\circ}$$
 
-$$x_e = x_c + r \cdot \cos(\phi_{\text{rad}}) \cdot \sin(\theta_{\text{rad}})$$
-$$y_e = y_c + r \cdot \sin(\phi_{\text{rad}})$$
-$$z_e = z_c + r \cdot \cos(\phi_{\text{rad}}) \cdot \cos(\theta_{\text{rad}})$$
+$$x_e = x_c + r \cdot \cos(\theta_{\text{elev,rad}}) \cdot \sin(\theta_{\text{rad}})$$
+$$y_e = y_c + r \cdot \sin(\theta_{\text{elev,rad}})$$
+$$z_e = z_c + r \cdot \cos(\theta_{\text{elev,rad}}) \cdot \cos(\theta_{\text{rad}})$$
 
-- Bei $\theta = 0^\circ$ und $\phi = 0^\circ$ blickt die Kamera von $+Z$ in Richtung Ursprung.
+- Bei $\theta = 0^\circ$ und $\theta_{\text{elev}} = 0^\circ$ blickt die Kamera von $+Z$ in Richtung Ursprung.
 - Positive $\theta$-Werte drehen die Kamera im Uhrzeigersinn um das Objekt.
 
 </div>
@@ -1408,7 +1413,7 @@ Die intuitive Bedienung der Orbit-Kamera wird über drei WPF-Mausereignisse des 
 
 | Mausaktion | WPF-Ereignis | Kamera-Wirkung | Formel / Update |
 | :--- | :--- | :--- | :--- |
-| **Linke Taste + Ziehen** | `MouseMove` (bei gedrückter linker Taste) | Horizontaler Orbit (Azimut) & vertikale Neigung (Elevation) | $\Delta \theta = \Delta x \cdot s_{\text{rot}}$<br>$\Delta \phi = -\Delta y \cdot s_{\text{rot}}$ |
+| **Linke Taste + Ziehen** | `MouseMove` (bei gedrückter linker Taste) | Horizontaler Orbit (Azimut) & vertikale Neigung (Elevation) | $\Delta \theta = \Delta x \cdot s_{\text{rot}}$<br>$\Delta \theta_{\text{elev}} = -\Delta y \cdot s_{\text{rot}}$ |
 | **Mausrad drehen** | `MouseWheel` | Stufenloser Zoom (Distanz verändern) | $r_{\text{neu}} = r_{\text{alt}} - \Delta_{\text{wheel}} \cdot s_{\text{zoom}}$ |
 | **Rechte Taste / Shift** (optional) | `MouseMove` (bei rechter Taste) | Panning (Verschiebung des Zielpunkts $\vec{center}$) | Verschiebung parallel zur Bildebene |
 

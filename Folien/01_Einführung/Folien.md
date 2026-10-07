@@ -434,9 +434,10 @@ Es gibt zwei grundlegende Ansätze:
 <div class="one">
 
 **Numerische Lösung (mit Luftwiderstand)**
-- Luftwiderstand $F_R \propto v^2$ macht die DGL nichtlinear.
-- Keine einfache geschlossene Formel mehr.
-- Lösung durch schrittweise Berechnung von Position und Geschwindigkeit unter Berücksichtigung von Schwerkraft und Luftwiderstand.
+- Luftwiderstand $\vec{F}_R = -\frac{1}{2} c_w \rho A \|\vec{v}\| \vec{v}$ wirkt antiparallel zur Bahn:
+  $$F_{Rx} \propto -\sqrt{v_x^2 + v_y^2} \cdot v_x, \quad F_{Ry} \propto -\sqrt{v_x^2 + v_y^2} \cdot v_y$$
+- Die nichtlineare Kopplung verhindert eine einfache geschlossene Stammfunktion.
+- Lösung durch schrittweise numerische Integration von Position und Geschwindigkeit.
 
 </div>
 </div>

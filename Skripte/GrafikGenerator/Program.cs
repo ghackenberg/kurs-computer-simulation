@@ -11,7 +11,7 @@ namespace GrafikGenerator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("=== GrafikGenerator gestartet ===");
+            Console.WriteLine("=== HiDPI-GrafikGenerator (Stream B) gestartet ===");
             var dir = new DirectoryInfo(AppContext.BaseDirectory);
             while (dir != null && !Directory.Exists(Path.Combine(dir.FullName, "Folien")))
             {
@@ -28,7 +28,19 @@ namespace GrafikGenerator
             GenerateAusblickImages(root);
             GenerateMotorPlots(root);
 
-            Console.WriteLine("=== Alle Grafiken erfolgreich erzeugt ===");
+            Console.WriteLine("=== Alle HiDPI-Grafiken erfolgreich erzeugt ===");
+        }
+
+        // Hilfsmethode zur einheitlichen HiDPI-Typografie
+        static void ApplyHiDpiTypography(Plot plot, int titleSize = 22, int labelSize = 18, int tickSize = 14, int legendSize = 16)
+        {
+            plot.Axes.Title.Label.FontSize = titleSize;
+            plot.Axes.Title.Label.Bold = true;
+            plot.Axes.Bottom.Label.FontSize = labelSize;
+            plot.Axes.Left.Label.FontSize = labelSize;
+            plot.Axes.Bottom.TickLabelStyle.FontSize = tickSize;
+            plot.Axes.Left.TickLabelStyle.FontSize = tickSize;
+            plot.Legend.FontSize = legendSize;
         }
 
         static void GenerateQueuePlots(string root)
@@ -36,29 +48,30 @@ namespace GrafikGenerator
             var targetDir = Path.Combine(root, "Folien", "09_Dynamische_Modelle_Diskret", "Illustrationen");
             Directory.CreateDirectory(targetDir);
 
-            // 1. Warteschlangenlänge über Zeit
+            // 1. Warteschlangenlänge über Zeit (HiDPI: 1600x900)
             var plot1 = new Plot();
             double[] t = { 0, 1.2, 1.2, 2.5, 2.5, 3.8, 4.1, 4.1, 5.0, 6.2, 6.2, 7.5, 8.0, 9.1, 9.1, 10.0 };
             double[] q = { 0, 0,   1,   1,   2,   2,   2,   1,   1,   1,   0,   0,   1,   1,   0,   0 };
 
             var line = plot1.Add.ScatterLine(t, q);
             line.Color = Colors.SteelBlue;
-            line.LineWidth = 3f;
+            line.LineWidth = 4f;
             plot1.Title("Verlauf der Warteschlangenlänge L(t)");
             plot1.XLabel("Simulationszeit t [min]");
             plot1.YLabel("Kunden in der Warteschlange");
             plot1.Axes.SetLimits(0, 10, -0.2, 3.5);
-            var file1 = Path.Combine(targetDir, "Queue_Laenge_Verlauf.png");
-            plot1.SavePng(file1, 800, 450);
-            Console.WriteLine($"Erzeugt: {file1}");
+            ApplyHiDpiTypography(plot1);
 
-            // 2. Wartezeiten-Histogramm
+            var file1 = Path.Combine(targetDir, "Queue_Laenge_Verlauf.png");
+            plot1.SavePng(file1, 1600, 900);
+            Console.WriteLine($"Erzeugt (HiDPI): {file1}");
+
+            // 2. Wartezeiten-Histogramm (HiDPI: 1600x900)
             var plot2 = new Plot();
             var rand = new Random(42);
             var waitTimes = new double[500];
             for (int i = 0; i < waitTimes.Length; i++)
             {
-                // Exponentialverteilte Wartezeiten
                 waitTimes[i] = -2.5 * Math.Log(1.0 - rand.NextDouble());
             }
 
@@ -75,7 +88,7 @@ namespace GrafikGenerator
                     Size = hist.FirstBinSize * 0.85,
                     FillColor = Colors.SeaGreen.WithAlpha(0.7f),
                     LineColor = Colors.SeaGreen,
-                    LineWidth = 1.2f
+                    LineWidth = 2.0f
                 });
             }
             plot2.Add.Bars(bars);
@@ -84,9 +97,11 @@ namespace GrafikGenerator
             plot2.XLabel("Wartezeit [min]");
             plot2.YLabel("Absolute Häufigkeit");
             plot2.Axes.AutoScale();
+            ApplyHiDpiTypography(plot2);
+
             var file2 = Path.Combine(targetDir, "Queue_Wartezeit_Histogramm.png");
-            plot2.SavePng(file2, 800, 450);
-            Console.WriteLine($"Erzeugt: {file2}");
+            plot2.SavePng(file2, 1600, 900);
+            Console.WriteLine($"Erzeugt (HiDPI): {file2}");
         }
 
         static void GenerateHeatmapPlot(string root)
@@ -94,26 +109,25 @@ namespace GrafikGenerator
             var targetDir = Path.Combine(root, "Folien", "02_Visualisierung_2D_Pixel", "Illustrationen");
             Directory.CreateDirectory(targetDir);
 
-            int width = 400;
-            int height = 300;
+            // Verdopplung auf 800x600 für Retina-Qualität
+            int width = 800;
+            int height = 600;
             using var bitmap = new SKBitmap(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
 
-            // Simulation eines 2D-Temperaturfeldes mit 2 Wärmequellen und 1 Wärmesenke
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
-                    double dx1 = (x - 120) / 40.0;
-                    double dy1 = (y - 100) / 40.0;
+                    double dx1 = (x - 240) / 80.0;
+                    double dy1 = (y - 200) / 80.0;
                     double t1 = Math.Exp(-(dx1 * dx1 + dy1 * dy1));
 
-                    double dx2 = (x - 280) / 60.0;
-                    double dy2 = (y - 180) / 60.0;
+                    double dx2 = (x - 560) / 120.0;
+                    double dy2 = (y - 360) / 120.0;
                     double t2 = 0.8 * Math.Exp(-(dx2 * dx2 + dy2 * dy2));
 
                     double temp = Math.Clamp(t1 + t2, 0.0, 1.0);
 
-                    // Colormap Cool-Warm: Blau (kalt) -> Cyan -> Gelb -> Rot (heiß)
                     byte r = (byte)(255 * Math.Clamp(2 * temp - 0.5, 0.0, 1.0));
                     byte g = (byte)(255 * (1.0 - Math.Abs(2 * temp - 1.0)));
                     byte b = (byte)(255 * Math.Clamp(1.5 - 2 * temp, 0.0, 1.0));
@@ -127,7 +141,7 @@ namespace GrafikGenerator
             var outFile = Path.Combine(targetDir, "Heatmap_Temperaturfeld.png");
             using var stream = File.OpenWrite(outFile);
             data.SaveTo(stream);
-            Console.WriteLine($"Erzeugt: {outFile}");
+            Console.WriteLine($"Erzeugt (HiDPI): {outFile}");
         }
 
         static void GenerateSignalPlot(string root)
@@ -148,16 +162,17 @@ namespace GrafikGenerator
 
             var sig = plot.Add.Signal(data, 0.001);
             sig.Color = Colors.DarkOrange;
-            sig.LineWidth = 1.5f;
+            sig.LineWidth = 3.0f;
 
             plot.Title("High-Performance Signal-Plot (100.000 Messpunkte bei 60 FPS)");
             plot.XLabel("Zeit [s]");
             plot.YLabel("Zustand x(t)");
             plot.Axes.AutoScale();
+            ApplyHiDpiTypography(plot);
 
             var outFile = Path.Combine(targetDir, "ScottPlot_Signal_Example.png");
-            plot.SavePng(outFile, 800, 450);
-            Console.WriteLine($"Erzeugt: {outFile}");
+            plot.SavePng(outFile, 1600, 900);
+            Console.WriteLine($"Erzeugt (HiDPI): {outFile}");
         }
 
         static void GenerateConvergencePlot(string root)
@@ -165,8 +180,6 @@ namespace GrafikGenerator
             var targetDir = Path.Combine(root, "Folien", "08_Dynamische_Modelle_Kontinuierlich", "Illustrationen");
             Directory.CreateDirectory(targetDir);
 
-            // Testmodell: Gedämpftes Federpendel d²x/dt² + 2*zeta*w0*dx/dt + w0²*x = 0
-            // mit w0 = 2*PI, zeta = 0.05
             double w0 = 2.0 * Math.PI;
             double zeta = 0.05;
             double wd = w0 * Math.Sqrt(1.0 - zeta * zeta);
@@ -262,29 +275,30 @@ namespace GrafikGenerator
             var sEuler = plot.Add.Scatter(logH, logErrEuler);
             sEuler.LegendText = "Expliziter Euler (Steigung 1 ~ O(h¹))";
             sEuler.Color = Colors.Crimson;
-            sEuler.LineWidth = 2.5f;
-            sEuler.MarkerSize = 8f;
+            sEuler.LineWidth = 3.5f;
+            sEuler.MarkerSize = 12f;
 
             var sHeun = plot.Add.Scatter(logH, logErrHeun);
             sHeun.LegendText = "Heun / RK2 (Steigung 2 ~ O(h²))";
             sHeun.Color = Colors.RoyalBlue;
-            sHeun.LineWidth = 2.5f;
-            sHeun.MarkerSize = 8f;
+            sHeun.LineWidth = 3.5f;
+            sHeun.MarkerSize = 12f;
 
             var sRk4 = plot.Add.Scatter(logH, logErrRk4);
             sRk4.LegendText = "Runge-Kutta 4 (Steigung 4 ~ O(h⁴))";
             sRk4.Color = Colors.SeaGreen;
-            sRk4.LineWidth = 2.5f;
-            sRk4.MarkerSize = 8f;
+            sRk4.LineWidth = 3.5f;
+            sRk4.MarkerSize = 12f;
 
             plot.Title("Konvergenzordnung numerischer Solver (Log-Log-Plot)");
             plot.XLabel("log₁₀(Schrittweite h [s])");
             plot.YLabel("log₁₀(Globaler Fehler ||x(T) - x_analytisch(T)||)");
             plot.ShowLegend(Alignment.LowerRight);
+            ApplyHiDpiTypography(plot, titleSize: 24, labelSize: 20, tickSize: 16, legendSize: 18);
 
             var outFile = Path.Combine(targetDir, "Solver_Konvergenzordnung.png");
-            plot.SavePng(outFile, 850, 480);
-            Console.WriteLine($"Erzeugt: {outFile}");
+            plot.SavePng(outFile, 1700, 960);
+            Console.WriteLine($"Erzeugt (HiDPI): {outFile}");
         }
 
         static void GenerateBoundaryConditionsPlot(string root)
@@ -292,13 +306,14 @@ namespace GrafikGenerator
             var targetDir = Path.Combine(root, "Folien", "02_Visualisierung_2D_Pixel", "Illustrationen");
             Directory.CreateDirectory(targetDir);
 
-            int w = 180, h = 180;
-            float[,] dirichlet = new float[w, h];
-            float[,] neumann = new float[w, h];
+            // Simulationsgitter
+            int simW = 180, simH = 180;
+            float[,] dirichlet = new float[simW, simH];
+            float[,] neumann = new float[simW, simH];
 
-            for (int y = 0; y < h; y++)
+            for (int y = 0; y < simH; y++)
             {
-                for (int x = 0; x < w; x++)
+                for (int x = 0; x < simW; x++)
                 {
                     double dx = x - 50;
                     double dy = y - 50;
@@ -311,14 +326,14 @@ namespace GrafikGenerator
             float alpha = 0.2f;
             int steps = 120;
 
-            float[,] nextD = new float[w, h];
-            float[,] nextN = new float[w, h];
+            float[,] nextD = new float[simW, simH];
+            float[,] nextN = new float[simW, simH];
 
             for (int step = 0; step < steps; step++)
             {
-                for (int y = 1; y < h - 1; y++)
+                for (int y = 1; y < simH - 1; y++)
                 {
-                    for (int x = 1; x < w - 1; x++)
+                    for (int x = 1; x < simW - 1; x++)
                     {
                         float laplace = dirichlet[x + 1, y] + dirichlet[x - 1, y] +
                                         dirichlet[x, y + 1] + dirichlet[x, y - 1] - 4.0f * dirichlet[x, y];
@@ -327,19 +342,19 @@ namespace GrafikGenerator
                 }
                 Array.Copy(nextD, dirichlet, dirichlet.Length);
 
-                for (int y = 0; y < h; y++)
+                for (int y = 0; y < simH; y++)
                 {
                     neumann[0, y] = neumann[1, y];
-                    neumann[w - 1, y] = neumann[w - 2, y];
+                    neumann[simW - 1, y] = neumann[simW - 2, y];
                 }
-                for (int x = 0; x < w; x++)
+                for (int x = 0; x < simW; x++)
                 {
                     neumann[x, 0] = neumann[x, 1];
-                    neumann[x, h - 1] = neumann[x, h - 2];
+                    neumann[x, simH - 1] = neumann[x, simH - 2];
                 }
-                for (int y = 1; y < h - 1; y++)
+                for (int y = 1; y < simH - 1; y++)
                 {
-                    for (int x = 1; x < w - 1; x++)
+                    for (int x = 1; x < simW - 1; x++)
                     {
                         float laplace = neumann[x + 1, y] + neumann[x - 1, y] +
                                         neumann[x, y + 1] + neumann[x, y - 1] - 4.0f * neumann[x, y];
@@ -349,8 +364,9 @@ namespace GrafikGenerator
                 Array.Copy(nextN, neumann, neumann.Length);
             }
 
-            int totalW = 420;
-            int totalH = 460;
+            // HiDPI Bitmap: 840 x 920 px (2x Retina)
+            int totalW = 840;
+            int totalH = 920;
             using var bmp = new SKBitmap(totalW, totalH, SKColorType.Bgra8888, SKAlphaType.Premul);
             using var canvas = new SKCanvas(bmp);
             canvas.Clear(SKColors.White);
@@ -358,14 +374,14 @@ namespace GrafikGenerator
             using var paintText = new SKPaint
             {
                 Color = new SKColor(20, 20, 20),
-                TextSize = 15,
+                TextSize = 28,
                 IsAntialias = true,
                 FakeBoldText = true
             };
             using var paintSub = new SKPaint
             {
                 Color = new SKColor(80, 80, 80),
-                TextSize = 12,
+                TextSize = 22,
                 IsAntialias = true
             };
 
@@ -378,23 +394,40 @@ namespace GrafikGenerator
                 return new SKColor(r, g, b);
             }
 
-            canvas.DrawText("Dirichlet-Rand: Wärme entweicht", 20, 22, paintText);
-            canvas.DrawText("T = 0 °C an Systemgrenzen", 20, 38, paintSub);
-            for (int y = 0; y < h; y++)
+            // Zeichnen von Block 1 (Dirichlet)
+            canvas.DrawText("Dirichlet-Rand: Wärme entweicht", 40, 44, paintText);
+            canvas.DrawText("T = 0 °C an Systemgrenzen (Homogen)", 40, 76, paintSub);
+
+            // 2x Skalierung beim Rendern der Pixel
+            for (int y = 0; y < simH; y++)
             {
-                for (int x = 0; x < w; x++)
+                for (int x = 0; x < simW; x++)
                 {
-                    bmp.SetPixel(20 + x, 45 + y, ColorMap(dirichlet[x, y]));
+                    var color = ColorMap(dirichlet[x, y]);
+                    int px = 40 + x * 2;
+                    int py = 90 + y * 2;
+                    bmp.SetPixel(px, py, color);
+                    bmp.SetPixel(px + 1, py, color);
+                    bmp.SetPixel(px, py + 1, color);
+                    bmp.SetPixel(px + 1, py + 1, color);
                 }
             }
 
-            canvas.DrawText("Neumann-Rand: Adiabatisch isoliert", 20, 245, paintText);
-            canvas.DrawText("dT/dn = 0 (Ghost Cells, Wärmereflexion)", 20, 261, paintSub);
-            for (int y = 0; y < h; y++)
+            // Zeichnen von Block 2 (Neumann)
+            canvas.DrawText("Neumann-Rand: Adiabatisch isoliert", 40, 490, paintText);
+            canvas.DrawText("dT/dn = 0 (Ghost Cells, Wärmereflexion)", 40, 522, paintSub);
+
+            for (int y = 0; y < simH; y++)
             {
-                for (int x = 0; x < w; x++)
+                for (int x = 0; x < simW; x++)
                 {
-                    bmp.SetPixel(20 + x, 268 + y, ColorMap(neumann[x, y]));
+                    var color = ColorMap(neumann[x, y]);
+                    int px = 40 + x * 2;
+                    int py = 536 + y * 2;
+                    bmp.SetPixel(px, py, color);
+                    bmp.SetPixel(px + 1, py, color);
+                    bmp.SetPixel(px, py + 1, color);
+                    bmp.SetPixel(px + 1, py + 1, color);
                 }
             }
 
@@ -403,7 +436,7 @@ namespace GrafikGenerator
             var outFile = Path.Combine(targetDir, "Randbedingungen_Vergleich.png");
             using var stream = File.OpenWrite(outFile);
             data.SaveTo(stream);
-            Console.WriteLine($"Erzeugt: {outFile}");
+            Console.WriteLine($"Erzeugt (HiDPI): {outFile}");
         }
 
         static void GenerateAusblickImages(string root)
@@ -447,7 +480,6 @@ namespace GrafikGenerator
             double[] thetaWithAW = new double[n];
             double[] uWithAW = new double[n];
 
-            // Simulation Helper
             void Simulate(bool antiWindup, double[] outTheta, double[]? outU)
             {
                 double theta = 0.0, omega = 0.0, xI = 0.0;
@@ -489,21 +521,21 @@ namespace GrafikGenerator
             Simulate(false, thetaNoAW, null);
             Simulate(true, thetaWithAW, uWithAW);
 
-            // 1. AntiWindup_Vergleich.png
+            // 1. AntiWindup_Vergleich.png (HiDPI: 1600x960)
             var plot1 = new Plot();
             var targetLine = plot1.Add.HorizontalLine(1.0);
             targetLine.Color = Colors.Gray;
             targetLine.LinePattern = LinePattern.Dashed;
-            targetLine.LineWidth = 1.5f;
+            targetLine.LineWidth = 2.0f;
 
             var lineNoAW = plot1.Add.ScatterLine(time, thetaNoAW);
             lineNoAW.Color = Colors.Crimson;
-            lineNoAW.LineWidth = 2.5f;
+            lineNoAW.LineWidth = 3.5f;
             lineNoAW.LegendText = "Ohne Anti-Windup (Überschwingen 60%)";
 
             var lineAW = plot1.Add.ScatterLine(time, thetaWithAW);
             lineAW.Color = Colors.ForestGreen;
-            lineAW.LineWidth = 3.0f;
+            lineAW.LineWidth = 4.0f;
             lineAW.LegendText = "Mit Anti-Windup Clamping (aperiodisch)";
 
             plot1.Title("DC-Servomotor Schrittantwort: Anti-Windup Clamping");
@@ -511,27 +543,28 @@ namespace GrafikGenerator
             plot1.YLabel("Wellenposition θ(t) [rad]");
             plot1.ShowLegend();
             plot1.Axes.SetLimits(0, 0.6, -0.1, 1.8);
-            var file1 = Path.Combine(illustrDir, "AntiWindup_Vergleich.png");
-            plot1.SavePng(file1, 800, 480);
-            Console.WriteLine($"Erzeugt: {file1}");
+            ApplyHiDpiTypography(plot1, titleSize: 24, labelSize: 20, tickSize: 16, legendSize: 18);
 
-            // 2. ClosedLoop_RK4_StepResponse.png
+            var file1 = Path.Combine(illustrDir, "AntiWindup_Vergleich.png");
+            plot1.SavePng(file1, 1600, 960);
+            Console.WriteLine($"Erzeugt (HiDPI): {file1}");
+
+            // 2. ClosedLoop_RK4_StepResponse.png (HiDPI: 1600x960)
             var plot2 = new Plot();
             var lineTarget2 = plot2.Add.HorizontalLine(1.0);
             lineTarget2.Color = Colors.Gray;
             lineTarget2.LinePattern = LinePattern.Dashed;
-            lineTarget2.LineWidth = 1.5f;
+            lineTarget2.LineWidth = 2.0f;
 
             var lineTheta = plot2.Add.ScatterLine(time, thetaWithAW);
             lineTheta.Color = Colors.SteelBlue;
-            lineTheta.LineWidth = 3.0f;
+            lineTheta.LineWidth = 4.0f;
             lineTheta.LegendText = "Position θ(t) [rad]";
 
-            // Normalize u / 10 to show on same axis with ±1.0 V/10V
             double[] uNorm = uWithAW.Select(u => u / 10.0).ToArray();
             var lineU = plot2.Add.ScatterLine(time, uNorm);
             lineU.Color = Colors.OrangeRed;
-            lineU.LineWidth = 2.0f;
+            lineU.LineWidth = 3.0f;
             lineU.LegendText = "Stellspannung u(t) / 10 [normiert]";
 
             plot2.Title("Geschlossener Regelkreis: RK4-Simulation (dt = 0.5 ms)");
@@ -539,9 +572,11 @@ namespace GrafikGenerator
             plot2.YLabel("Amplitude (Position [rad] / normierte Spannung)");
             plot2.ShowLegend();
             plot2.Axes.SetLimits(0, 0.6, -0.2, 1.3);
+            ApplyHiDpiTypography(plot2, titleSize: 24, labelSize: 20, tickSize: 16, legendSize: 18);
+
             var file2 = Path.Combine(screensDir, "ClosedLoop_RK4_StepResponse.png");
-            plot2.SavePng(file2, 800, 480);
-            Console.WriteLine($"Erzeugt: {file2}");
+            plot2.SavePng(file2, 1600, 960);
+            Console.WriteLine($"Erzeugt (HiDPI): {file2}");
         }
     }
 }

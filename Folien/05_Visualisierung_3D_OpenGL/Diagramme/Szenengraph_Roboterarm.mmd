@@ -1,23 +1,19 @@
-flowchart TD
-    Base["<b>BaseNode (Säule)</b><br/>Zylinder-Geometrie"]
-    R1["<b>Rotate (Achse 1)</b><br/>Yaw um Y: θ₁"]
-    Arm1["<b>Arm1Node (Unterarm)</b><br/>Zylinder L₁"]
-    T1["<b>Translate (0, L₁, 0)</b><br/>Armlängen-Offset"]
-    R2["<b>Rotate (Achse 2)</b><br/>Pitch um Z: θ₂"]
-    Arm2["<b>Arm2Node (Oberarm)</b><br/>Zylinder L₂"]
-    TCP["<b>ToolCenterPoint (TCP)</b><br/>Greifer / Effektor"]
+flowchart LR
+    RobotBase["<b>RobotBase</b><br/>Group-Knoten"] --> BaseGeo["<b>Zylinder</b><br/>Basis-Geometrie"]
+    RobotBase --> Axis1["<b>Axis1</b><br/>Rotate(θ₁) Yaw"]
+    Axis1 --> Axis1Geo["<b>Box</b><br/>Gelenk-Geometrie"]
+    Axis1 --> Arm1["<b>Arm1</b><br/>Rotate(θ₂) Pitch"]
+    Arm1 --> Arm1Geo["<b>Zylinder L₁</b><br/>Unterarm-Geometrie"]
+    Arm1 --> Arm2["<b>Arm2</b><br/>Translate + Rotate(θ₃)"]
+    Arm2 --> Arm2Geo["<b>Zylinder L₂</b><br/>Oberarm-Geometrie"]
+    Arm2 --> TCP["<b>TCP</b><br/>Greifer / Effektor"]
 
-    Base --> R1
-    R1 --> Arm1
-    Arm1 --> T1
-    T1 --> R2
-    R2 --> Arm2
-    Arm2 --> TCP
-
-    style Base fill:#e8f4fd,stroke:#004B96,stroke-width:2px
-    style R1 fill:#fff3cd,stroke:#ff9800,stroke-width:1.5px
-    style Arm1 fill:#f9f9f9,stroke:#333333,stroke-width:1px
-    style T1 fill:#fff3cd,stroke:#ff9800,stroke-width:1.5px
-    style R2 fill:#fff3cd,stroke:#ff9800,stroke-width:1.5px
-    style Arm2 fill:#f9f9f9,stroke:#333333,stroke-width:1px
+    style RobotBase fill:#e8f4fd,stroke:#004B96,stroke-width:2px
+    style Axis1 fill:#fff3cd,stroke:#ff9800,stroke-width:1.5px
+    style Arm1 fill:#fff3cd,stroke:#ff9800,stroke-width:1.5px
+    style Arm2 fill:#fff3cd,stroke:#ff9800,stroke-width:1.5px
     style TCP fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
+    style BaseGeo fill:#f9f9f9,stroke:#333333,stroke-width:1px
+    style Axis1Geo fill:#f9f9f9,stroke:#333333,stroke-width:1px
+    style Arm1Geo fill:#f9f9f9,stroke:#333333,stroke-width:1px
+    style Arm2Geo fill:#f9f9f9,stroke:#333333,stroke-width:1px

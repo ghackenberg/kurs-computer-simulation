@@ -330,7 +330,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Die Stäbe sind nicht mehr starr, sondern **elastisch**. Ihr Verhalten wird durch das **Hooke'sche Gesetz** beschrieben.
 - Die Knoten sind weiterhin **gelenkig**.
-- Die entscheidende neue Unbekannte sind nicht die Stabkräfte, sondern die **Knotenverschiebungen** $\vec{u}$.
+- Die entscheidende neue Unbekannte sind nicht die Stabkräfte, sondern die **Knotenverschiebungen** $\mathbf{u}$.
 
 ---
 
@@ -436,9 +436,11 @@ $\Delta L \approx \frac{\vec{L} \cdot \Delta \vec{u}}{L} = \left(\frac{\vec{L}}{
 
 Kombiniert man Hooke'sches Gesetz und die Längenänderungs-Beziehung, erhält man eine Beziehung zwischen den Kräften, die auf die Knoten eines Stabes wirken, und den Verschiebungen dieser Knoten.
 
-Dies lässt sich als **Stab-Steifigkeitsmatrix** $k_{stab}$ formulieren:
+Dies lässt sich als **Stab-Steifigkeitsmatrix** $\mathbf{k}_{\text{Stab}}$ formulieren:
 
-$\begin{pmatrix} F_{ix} \\ F_{iy} \\ F_{jx} \\ F_{jy} \end{pmatrix} = k_{stab} \cdot \begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix}$
+$$
+\begin{pmatrix} F_{ix} \\ F_{iy} \\ F_{jx} \\ F_{jy} \end{pmatrix} = \mathbf{k}_{\text{Stab}} \begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix}
+$$
 
 </div>
 <div>
@@ -452,13 +454,19 @@ $\begin{pmatrix} F_{ix} \\ F_{iy} \\ F_{jx} \\ F_{jy} \end{pmatrix} = k_{stab} \
 
 ### Herleitung der Stab-Steifigkeitsmatrix (1/2)
 
-Ziel ist es, eine Matrix $\mathbf{k}_{\text{Stab}}$ zu finden, die die Knotenverschiebungen $\mathbf{u}$ direkt mit den resultierenden Knotenkäften $\mathbf{f}_{\text{Stab}}$ in Beziehung setzt: $\mathbf{f}_{\text{Stab}} = \mathbf{k}_{\text{Stab}} \cdot \mathbf{u}$.
+Ziel ist es, eine Matrix $\mathbf{k}_{\text{Stab}}$ zu finden, die die Knotenverschiebungen $\mathbf{u}$ direkt mit den resultierenden Knotenkäften $\mathbf{f}_{\text{Stab}}$ in Beziehung setzt: $\mathbf{f}_{\text{Stab}} = \mathbf{k}_{\text{Stab}} \mathbf{u}$.
 
 1.  **Kräfte am Stab**: Die Stabkraft $S$ erzeugt an den Knoten $i$ und $j$ die Gegenkräfte $\mathbf{f}_i = -S \cdot \mathbf{e}$ und $\mathbf{f}_j = S \cdot \mathbf{e}$.
-2.  **Zusammenfassen**: $\mathbf{f}_{\text{Stab}} = \begin{pmatrix} \mathbf{f}_i \\ \mathbf{f}_j \end{pmatrix} = S \begin{pmatrix} -\mathbf{e} \\ \mathbf{e} \end{pmatrix} = \frac{EA}{L} \Delta L \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}$
+2.  **Zusammenfassen**:
+    $$
+    \mathbf{f}_{\text{Stab}} = \begin{pmatrix} \mathbf{f}_i \\ \mathbf{f}_j \end{pmatrix} = S \begin{pmatrix} -\mathbf{e} \\ \mathbf{e} \end{pmatrix} = \frac{EA}{L} \Delta L \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}
+    $$
 3.  **Längenänderung**: $\Delta L \approx e_x(u_{jx} - u_{ix}) + e_y(u_{jy} - u_{iy})$
 
-In Matrixschreibweise: $\Delta L \approx \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \cdot \begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix}$
+In Matrixschreibweise:
+$$
+\Delta L \approx \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix} = \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \mathbf{u}
+$$
 
 ---
 
@@ -466,18 +474,41 @@ In Matrixschreibweise: $\Delta L \approx \begin{pmatrix} -e_x & -e_y & e_x & e_y
 
 Setzt man die Matrixform für $\Delta L$ in die Gleichung für $\mathbf{f}_{\text{Stab}}$ ein, erhält man:
 
-$\mathbf{f}_{\text{Stab}} = \frac{EA}{L} \left( \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \cdot \mathbf{u} \right) \cdot \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}$
+$$
+\mathbf{f}_{\text{Stab}} = \frac{EA}{L} \left( \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \mathbf{u} \right) \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}
+$$
 
 Durch Ausmultiplizieren der Vektoren (äußeres Produkt) ergibt sich die **4x4-Stab-Steifigkeitsmatrix** $\mathbf{k}_{\text{Stab}}$:
 
-$\mathbf{k}_{\text{Stab}} = \frac{EA}{L} \begin{pmatrix}
+$$
+\mathbf{k}_{\text{Stab}} = \frac{EA}{L} \begin{pmatrix}
 e_x^2 & e_x e_y & -e_x^2 & -e_x e_y \\
 e_y e_x & e_y^2 & -e_y e_x & -e_y^2 \\
 -e_x^2 & -e_x e_y & e_x^2 & e_x e_y \\
 -e_y e_x & -e_y^2 & e_y e_x & e_y^2
-\end{pmatrix}$
+\end{pmatrix}
+$$
 
 Diese Matrix beschreibt den linearen Zusammenhang zwischen den 4 Verschiebungs-Freiheitsgraden eines Stabes und den daraus resultierenden 4 Knotenkräften im globalen Koordinatensystem.
+
+---
+
+### Alternative FEM-Sicht: Koordinatentransformation
+
+In der Finiten-Elemente-Methode (FEM) wird die globale Matrix standardmäßig über eine **Transformationsmatrix $\mathbf{T}$** aus dem lokalen 1D-Stab abgeleitet:
+
+1. **Lokale Elementsteifigkeit:** Im mitrotierenden System ($\xi$-Achse entlang Stab):
+   $$\mathbf{f}^{loc} = \mathbf{k}_e^{loc} \mathbf{u}^{loc} \quad \text{mit} \quad \mathbf{k}_e^{loc} = \frac{EA}{L} \begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix}$$
+
+2. **Kinematische Transformation:** Globale 2D-Verschiebungen $\to$ Lokale 1D-Verformung:
+   $$\mathbf{u}^{loc} = \mathbf{T} \mathbf{u} \quad \text{mit} \quad \mathbf{T} = \begin{pmatrix} e_x & e_y & 0 & 0 \\ 0 & 0 & e_x & e_y \end{pmatrix}, \quad e_x = \cos\alpha, \; e_y = \sin\alpha$$
+
+3. **Globale Elementsteifigkeit via Kontragredienz:**
+   $$\mathbf{f} = \mathbf{T}^T \mathbf{f}^{loc} = \mathbf{T}^T (\mathbf{k}_e^{loc} \mathbf{T} \mathbf{u}) \implies \mathbf{k}_e^{glob} = \mathbf{T}^T \mathbf{k}_e^{loc} \mathbf{T}$$
+
+> [!NOTE]
+> Beide Wege führen zum identischen Resultat: $\mathbf{T}^T \mathbf{k}_e^{loc} \mathbf{T} \equiv \frac{EA}{L} (\mathbf{d} \mathbf{d}^T) = \mathbf{k}_{\text{Stab}}$.
+> Die Transformationsmatrix-Methode ist der universelle Standard für Balken, Schalen und 3D-Volumenelemente.
 
 ---
 
@@ -657,10 +688,10 @@ Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A
 
 ### **Elastisches** Fachwerk in 3D
 
-- **Knotenverschiebungen**: Der Vektor $u$ enthält nun für jeden Knoten drei Komponenten ($u_x, u_y, u_z$).
-- **Stab-Steifigkeitsmatrix**: Die $k_{stab}$ ist nun eine 6x6-Matrix, da sie die 3 Verschiebungen an beiden Enden des Stabes in Beziehung setzt.
-- **Globale Steifigkeitsmatrix $K$**: Wird analog zum 2D-Fall assembliert, wird aber deutlich größer. Für ein Fachwerk mit $k$ Knoten ist $K$ eine $3k \times 3k$ Matrix.
-- Die Lösung $K \cdot u = f$ folgt dem gleichen Schema.
+- **Knotenverschiebungen**: Der Vektor $\mathbf{u}$ enthält nun für jeden Knoten drei Komponenten ($u_x, u_y, u_z$).
+- **Stab-Steifigkeitsmatrix**: Die $\mathbf{k}_{\text{Stab}}$ ist nun eine $6 \times 6$-Matrix, da sie die 3 Verschiebungen an beiden Enden des Stabes in Beziehung setzt.
+- **Globale Steifigkeitsmatrix $\mathbf{K}$**: Wird analog zum 2D-Fall assembliert, wird aber deutlich größer. Für ein Fachwerk mit $k$ Knoten ist $\mathbf{K}$ eine $3k \times 3k$-Matrix.
+- Die Lösung $\mathbf{K} \mathbf{u} = \mathbf{f}$ folgt dem gleichen Schema.
 
 </div>
 <div>
@@ -777,29 +808,33 @@ Diese Kräfte halten das Gleichgewicht mit den externen Kräften.
 
 ### Die 3D-Stab-Steifigkeitsmatrix (1/2)
 
-Ziel ist es, eine Matrix $k_{Stab}$ zu finden, die die Knotenverschiebungen $\vec{u}$ direkt mit den resultierenden Knotenkäften $\vec{f}_{Stab}$ in Beziehung setzt: $\vec{f}_{Stab} = k_{Stab} \cdot \vec{u}$.
+Ziel ist es, eine Matrix $\mathbf{k}_{\text{Stab}}$ zu finden, die die Knotenverschiebungen $\mathbf{u}$ direkt mit den resultierenden Knotenkäften $\mathbf{f}_{\text{Stab}}$ in Beziehung setzt: $\mathbf{f}_{\text{Stab}} = \mathbf{k}_{\text{Stab}} \mathbf{u}$.
 
-- **Vektor der Knotenverschiebungen**: $\vec{u} = (u_{ix}, u_{iy}, u_{iz}, u_{jx}, u_{jy}, u_{jz})^T$
-- **Vektor der Stabkräfte**: $\vec{f}_{Stab} = (\vec{f}_i^T, \vec{f}_j^T)^T$
+- **Vektor der Knotenverschiebungen**: $\mathbf{u} = (u_{ix}, u_{iy}, u_{iz}, u_{jx}, u_{jy}, u_{jz})^T$
+- **Vektor der Stabkräfte**: $\mathbf{f}_{\text{Stab}} = (\mathbf{f}_i^T, \mathbf{f}_j^T)^T$
 
 Setzt man die Formeln für $\Delta L$ und $S$ in die Kraftgleichungen ein, erhält man:
 
-$\vec{f}_{Stab} = \frac{EA}{L} \cdot \Delta L \cdot \begin{pmatrix} -e_x \\ -e_y \\ -e_z \\ e_x \\ e_y \\ e_z \end{pmatrix} = \frac{EA}{L} \cdot \left( \begin{pmatrix} -e_x & -e_y & -e_z & e_x & e_y & e_z \end{pmatrix} \cdot \vec{u} \right) \cdot \begin{pmatrix} -e_x \\ -e_y \\ -e_z \\ e_x \\ e_y \\ e_z \end{pmatrix}$
+$$
+\mathbf{f}_{\text{Stab}} = \frac{EA}{L} \cdot \Delta L \begin{pmatrix} -e_x \\ -e_y \\ -e_z \\ e_x \\ e_y \\ e_z \end{pmatrix} = \frac{EA}{L} \left( \begin{pmatrix} -e_x & -e_y & -e_z & e_x & e_y & e_z \end{pmatrix} \mathbf{u} \right) \begin{pmatrix} -e_x \\ -e_y \\ -e_z \\ e_x \\ e_y \\ e_z \end{pmatrix}
+$$
 
 ---
 
 ### Die 3D-Stab-Steifigkeitsmatrix (2/2)
 
-Das Ausmultiplizieren der Vektoren führt zur **6x6-Stab-Steifigkeitsmatrix** $k_{Stab}$:
+Das Ausmultiplizieren der Vektoren führt zur **6x6-Stab-Steifigkeitsmatrix** $\mathbf{k}_{\text{Stab}}$:
 
-$k_{Stab} = \frac{EA}{L} \begin{pmatrix}
+$$
+\mathbf{k}_{\text{Stab}} = \frac{EA}{L} \begin{pmatrix}
 e_x^2 & e_x e_y & e_x e_z & -e_x^2 & -e_x e_y & -e_x e_z \\
 e_y e_x & e_y^2 & e_y e_z & -e_y e_x & -e_y^2 & -e_y e_z \\
 e_z e_x & e_z e_y & e_z^2 & -e_z e_x & -e_z e_y & -e_z^2 \\
 -e_x^2 & -e_x e_y & -e_x e_z & e_x^2 & e_x e_y & e_x e_z \\
 -e_y e_x & -e_y^2 & -e_y e_z & e_y e_x & e_y^2 & e_y e_z \\
 -e_z e_x & -e_z e_y & -e_z^2 & e_z e_x & e_z e_y & e_z^2
-\end{pmatrix}$
+\end{pmatrix}
+$$
 
 Diese Matrix beschreibt den Zusammenhang zwischen den 6 Verschiebungs-Freiheitsgraden eines Stabes und den daraus resultierenden 6 Knotenkräften im globalen Koordinatensystem.
 
@@ -807,32 +842,36 @@ Diese Matrix beschreibt den Zusammenhang zwischen den 6 Verschiebungs-Freiheitsg
 
 ### Globales Gleichungssystem
 
-Die globale Steifigkeitsmatrix $K$ des gesamten Fachwerks wird durch "Assemblierung" der einzelnen Stab-Steifigkeitsmatrizen $k_{Stab}$ aufgebaut.
+Die globale Steifigkeitsmatrix $\mathbf{K}$ des gesamten Fachwerks wird durch "Assemblierung" der einzelnen Stab-Steifigkeitsmatrizen $\mathbf{k}_{\text{Stab}}$ aufgebaut.
 
-- Für jeden Stab werden die 36 Elemente seiner $k_{Stab}$-Matrix an die richtigen Positionen in der globalen Matrix $K$ addiert. Die Positionen ergeben sich aus den globalen Freiheitsgraden der beiden Knoten des Stabes.
+- Für jeden Stab werden die 36 Elemente seiner $\mathbf{k}_{\text{Stab}}$-Matrix an die richtigen Positionen in der globalen Matrix $\mathbf{K}$ addiert. Die Positionen ergeben sich aus den globalen Freiheitsgraden der beiden Knoten des Stabes.
 - Dieser Prozess wird als **Direkte Steifigkeitsmethode** bezeichnet.
 
 Das resultierende globale Gleichungssystem lautet:
 
-$K \cdot \vec{u} = \vec{f}$
+$$
+\mathbf{K} \mathbf{u} = \mathbf{f}
+$$
 
-- $K$: Globale Steifigkeitsmatrix (Größe $3k \times 3k$ für $k$ Knoten)
-- $\vec{u}$: Globaler Vektor der unbekannten Knotenverschiebungen
-- $\vec{f}$: Globaler Vektor der externen Kräfte
+- $\mathbf{K}$: Globale Steifigkeitsmatrix (Größe $3k \times 3k$ für $k$ Knoten)
+- $\mathbf{u}$: Globaler Vektor der unbekannten Knotenverschiebungen
+- $\mathbf{f}$: Globaler Vektor der externen Kräfte
 
 ---
 
 ### Numerische Lösung des Gleichungssystems
 
-Für die Auflösung nach den freien Verschiebungen $\vec{u}_B$ gilt:
+Für die Auflösung nach den freien Verschiebungen $\mathbf{u}_B$ gilt:
 
-$k_{BB} \cdot \vec{u}_B = \vec{f}_B - k_{BA} \cdot \vec{u}_A$
+$$
+\mathbf{K}_{BB} \mathbf{u}_B = \mathbf{f}_B - \mathbf{K}_{BA} \mathbf{u}_A
+$$
 
-- **Ideales Fachwerk ($A \cdot x = b$):** Regulär, nicht symmetrisch $\to$ LU-Faktorisierung mit partieller Pivotisierung:
+- **Ideales Fachwerk ($\mathbf{A} \mathbf{x} = \mathbf{b}$):** Regulär, nicht symmetrisch $\to$ LU-Faktorisierung mit partieller Pivotisierung:
   ```csharp
   Vector<double> x = A.Solve(b); // O(2/3 n^3) statt O(2 n^3) Inversion
   ```
-- **Elastisches Fachwerk ($k_{BB} \cdot u_B = f_B'$):** Die Matrix $k_{BB}$ ist **symmetrisch positiv-definit (SPD)** $\to$ **Cholesky-Zerlegung** ($k_{BB} = L L^T$):
+- **Elastisches Fachwerk ($\mathbf{K}_{BB} \mathbf{u}_B = \mathbf{f}_B'$):** Die Matrix $\mathbf{K}_{BB}$ ist **symmetrisch positiv-definit (SPD)** $\to$ **Cholesky-Zerlegung** ($\mathbf{K}_{BB} = \mathbf{L} \mathbf{L}^T$):
   ```csharp
   // Cholesky ist 2x schneller als LU; robuster Fallback bei Singularität
   var uB = kBB.Cholesky().Solve(fB);
@@ -853,9 +892,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 <div class="columns">
 <div class="five">
 
-### Programmtechnische Umsetzung: Datenstrukturen
+### Programmtechnische Umsetzung: Datenstrukturen für das ideale 2D-Fachwerk
 
-Das UML-Diagramm zeigt die drei zentralen Klassen:
+Das UML-Diagramm zeigt die drei zentralen Klassen zur Modellierung des statischen Gleichgewichts starrer Stäbe:
 - **`Truss`**: Die Hauptklasse, die das gesamte Fachwerk repräsentiert. Sie enthält eine Liste aller `Node` (Knoten) und `Rod` (Stäbe). Die `Solve`-Methode kapselt die Berechnung.
 - **`Node`**: Repräsentiert einen einzelnen Knotenpunkt mit seiner Position, Lagerung (fix/frei) und den an ihm angreifenden externen Kräften.
 - **`Rod`**: Repräsentiert einen einzelnen Stab, der zwei `Node`-Objekte verbindet. Nach der Berechnung enthält er die ermittelte Stabkraft (`Force`).
@@ -964,6 +1003,48 @@ public class Truss
     public Rod AddRod(Node a, Node b) => /* Stab registrieren */;
 
     public void Solve() => /* LGS A*x = b aufbauen und lösen */;
+}
+```
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+### Erweiterung: Datenmodell für das elastische Fachwerk (FEM)
+
+Für die FEM-Berechnung des elastischen Fachwerks werden die Datenstrukturen um Material- und Verschiebungsdaten erweitert:
+
+- **`ElasticNode`**: Erhält Felder für die berechneten Knotenverschiebungen:
+  - `DisplacementX`, `DisplacementY` ($u_x, u_y$ in $\mathrm{m}$)
+- **`ElasticRod`**: Physikalische Querschnitts- und Materialkonstanten:
+  - `Elasticity` ($E$ in $\mathrm{N/m^2}$), `Area` ($A$ in $\mathrm{m^2}$)
+- **Schnittkraftberechnung (Post-Processing):**
+  Nach Lösen von $\mathbf{K}_{BB} \mathbf{u}_B = \mathbf{f}_B'$ wird die Stabkraft berechnet:
+  $$S = \frac{EA}{L} \cdot \left[ \mathbf{e} \cdot (\mathbf{u}_j - \mathbf{u}_i) \right]$$
+
+</div>
+<div>
+
+```csharp
+public class ElasticNode : Node {
+    public double DisplacementX { get; set; }
+    public double DisplacementY { get; set; }
+}
+public class ElasticRod : Rod {
+    public double Elasticity { get; set; } // E [Pa]
+    public double Area { get; set; }       // A [m^2]
+    public double ComputeNormalForce() {
+        double dx = NodeB.PositionX - NodeA.PositionX;
+        double dy = NodeB.PositionY - NodeA.PositionY, L = Math.Sqrt(dx*dx + dy*dy);
+        var (eA, eB) = ((ElasticNode)NodeA, (ElasticNode)NodeB);
+        double du = (eB.DisplacementX - eA.DisplacementX) * (dx / L)
+                  + (eB.DisplacementY - eA.DisplacementY) * (dy / L);
+        return (Elasticity * Area / L) * du;
+    }
 }
 ```
 

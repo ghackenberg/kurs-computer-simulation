@@ -1,14 +1,24 @@
-flowchart LR
-    W["Sollwert w(t)<br>θ_soll = 1 rad"] -->|"+"| Sum1(( ))
-    Sum1 -->|"e(t)"| PID["PID-Regler<br>Kp + Ki/s + Kd·s"]
-    PID -->|"u_raw"| Sat["Sättigung & Clamping<br>±10 V"]
-    Sat -->|"u(t)"| Motor["DC-Motor (PT1)<br>Tm·ω' + ω = Km·u"]
-    Motor -->|"ω(t)"| Int["Wegintegrator (1/s)<br>θ' = ω"]
-    Int -->|"θ(t)"| Y["Istwert y(t)"]
-    Y -->|"-"| Sum1
-    Sat -.->|"Anti-Windup Freeze"| PID
+flowchart TD
+    subgraph Row1 ["Vorwärtspfad 1: Sollwert & Regler"]
+        direction LR
+        W["<b>Sollwert w(t)</b><br/>θ_soll = 1 rad"] -->|"+"| Sum1((+))
+        Sum1 -->|"e(t)"| PID["<b>PID-Regler</b><br/>Kp + Ki/s + Kd·s"]
+        PID -->|"u_raw"| Sat["<b>Sättigung ±10V</b><br/>& Clamping"]
+        Sat -.->|"Anti-Windup Freeze"| PID
+    end
+
+    subgraph Row2 ["Vorwärtspfad 2: Aktor & Regelstrecke"]
+        direction LR
+        Motor["<b>DC-Motor (PT1)</b><br/>Tm·ω' + ω = Km·u"] -->|"ω(t)"| Int["<b>Wegintegrator (1/s)</b><br/>θ' = ω"]
+        Int -->|"θ(t)"| Y["<b>Istwert θ(t)</b><br/>Winkelposition"]
+    end
+
+    Row1 -->|"u(t) Stellgröße"| Row2
+    Row2 -.->|"y(t) Rückführung (-)"| Row1
 
     style PID fill:#E8F0FE,stroke:#1A73E8,stroke-width:2px;
     style Sat fill:#FCE8E6,stroke:#D93025,stroke-width:2px;
     style Motor fill:#E6F4EA,stroke:#1E8E3E,stroke-width:2px;
     style Int fill:#FEF7E0,stroke:#F9AB00,stroke-width:2px;
+    style Row1 fill:#f8f9fa,stroke:#004B96,stroke-width:1.5px;
+    style Row2 fill:#f8f9fa,stroke:#004B96,stroke-width:1.5px;

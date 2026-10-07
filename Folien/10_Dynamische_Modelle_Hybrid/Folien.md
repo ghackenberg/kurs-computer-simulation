@@ -1027,6 +1027,11 @@ $$\text{sgn}(z(t_a)) \neq \text{sgn}(z(t_b)) \iff z(t_a) \cdot z(t_b) \le 0$$
 4. Falls $|z_{\text{mid}}| \le \varepsilon_z$ oder $(t_{\text{right}} - t_{\text{left}}) \le \varepsilon_t$: **Gefunden!**
 5. Falls $\text{sgn}(z_{\text{mid}}) == \text{sgn}(z_{\text{left}})$: Setze $t_{\text{left}} = t_{\text{mid}}$, andernfalls $t_{\text{right}} = t_{\text{mid}}$.
 
+> [!WARNING]
+> **Abtasttheorem für Zero-Crossing-Events:**
+> Das Vorzeichenwechsel-Kriterium $z(t_a) \cdot z(t_b) \le 0$ detektiert nur eine ungerade Anzahl von Nulldurchgängen. Zwei Ereignisse innerhalb von $\Delta t$ löschen sich gegenseitig aus!
+> **Regel:** Die maximale Schrittweite $\Delta t$ des Solvers muss kleiner sein als das kürzeste physikalische Schaltintervall des Gesamtsystems: $\Delta t < \Delta t_{\text{event,min}}$.
+
 </div>
 <div>
 

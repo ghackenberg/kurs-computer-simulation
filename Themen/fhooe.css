@@ -13,6 +13,12 @@ section {
     padding: 40px 60px;
 }
 
+/* 1. Globaler Schutz gegen Bild- und Diagrammüberlauf */
+section img {
+    max-height: 480px;
+    object-fit: contain;
+}
+
 /* FH-Logo: Nur auf Inhaltsfolien anzeigen, Deckblätter (Title & Lead & Folie 1) schützen */
 section:not(.title):not(.lead):not(:first-of-type)::before {
     content: "";
@@ -38,7 +44,12 @@ section:not(.title):not(.lead):not(:first-of-type)::before {
 }
 
 /* Deckblätter und Folien mit Title-/Lead-Klasse strikt vom FH-Logo befreien */
+/* Inklusive Marpit Advanced Background Wrapper für Folie 1 und bg-Splits */
 section:first-of-type::before,
+section[data-marpit-advanced-background]::before,
+section[data-marpit-advanced-background-split]::before,
+section[id="1"]::before,
+section#\31::before,
 section.title::before,
 section.lead::before {
     display: none !important;
@@ -62,6 +73,15 @@ section div.columns.top {
 section div.columns > div {
     flex-basis: 1rem;
     flex-grow: 1;
+    min-width: 0;
+}
+
+/* Bildbegrenzung innerhalb von Flex-Spalten */
+section div.columns img,
+section div.columns svg {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 section div.columns > div.two {
     flex-grow: 2;
