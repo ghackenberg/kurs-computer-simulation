@@ -493,26 +493,19 @@ Lange Simulationen müssen vom Benutzer vorzeitig gestoppt werden können:
 ```csharp
 private CancellationTokenSource _cts;
 
-private async void Start_Click(
-    object s, RoutedEventArgs e)
+private async void Start_Click(object s, RoutedEventArgs e)
 {
     _cts = new CancellationTokenSource();
     CancelBtn.IsEnabled = true;
     try
     {
-        await Task.Run(() => 
-            Simulate(_cts.Token), _cts.Token);
+        await Task.Run(() => Simulate(_cts.Token), _cts.Token);
         Status.Text = "Fertiggestellt.";
     }
-    catch (OperationCanceledException)
-    {
-        Status.Text = "Simulation abgebrochen.";
-    }
+    catch (OperationCanceledException) { Status.Text = "Abbruch."; }
     finally { CancelBtn.IsEnabled = false; }
 }
-
-private void Cancel_Click(
-    object s, RoutedEventArgs e) => _cts?.Cancel();
+private void Cancel_Click(object s, RoutedEventArgs e) => _cts?.Cancel();
 ```
 
 </div>

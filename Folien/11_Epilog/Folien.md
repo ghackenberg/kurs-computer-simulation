@@ -377,11 +377,10 @@ public interface IContinuousSolver {
     void Step(IContinuousModel model, double t, double[] x, double dt);
 }
 
-// 3. Konkrete Implementierung: Z.B. Runge-Kutta 4. Ordnung
+// 3. Konkreter Solver: z.B. Runge-Kutta 4. Ordnung
 public class RungeKutta4Solver : IContinuousSolver {
-    public void Step(IContinuousModel model, double t, double[] x, double dt) {
-        // Berechnung von k1, k2, k3, k4 ohne Kenntnis des konkreten Physiksystems!
-    }
+    public void Step(IContinuousModel m, double t, double[] x, double dt) =>
+        /* RK4-Berechnung (k1..k4) unabhängig vom Physikmodell */;
 }
 ```
 

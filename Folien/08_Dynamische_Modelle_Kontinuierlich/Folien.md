@@ -758,8 +758,7 @@ public class ConstantBlock : Block
     }
 
     public override void CalculateOutputs(double time, 
-        double[] continuousStates, double[] discreteStates, 
-        double[] inputs, double[] outputs)
+        double[] cStates, double[] dStates, double[] inputs, double[] outputs)
     {
         outputs[0] = Value;
     }
@@ -812,7 +811,6 @@ Ein Block, der einen Eingang mit einem konstanten Faktor multipliziert.
 public class GainBlock : Block
 {
     public double Factor;
-
     public GainBlock(string name, double factor) : base(name)
     {
         Factor = factor;
@@ -821,8 +819,7 @@ public class GainBlock : Block
     }
 
     public override void CalculateOutputs(double time, 
-        double[] continuousStates, double[] inputs, 
-        double[] outputs)
+        double[] cStates, double[] inputs, double[] outputs)
     {
         outputs[0] = Factor * inputs[0];
     }
@@ -943,10 +940,9 @@ Und das machen die Methoden des Blocks:
 <div>
 
 ```csharp
-public override void InitializeStates(
-    double[] continuousStates)
+public override void InitializeStates(double[] cStates)
 {
-    continuousStates[0] = StartValue;
+    cStates[0] = StartValue;
 }
 
 public override void CalculateDerivatives(..., 
@@ -956,10 +952,9 @@ public override void CalculateDerivatives(...,
 }
 
 public override void CalculateOutputs(...,
-    double[] continuousStates, ...,
-    double[] outputs)
+    double[] cStates, ..., double[] outputs)
 {
-    outputs[0] = continuousStates[0];
+    outputs[0] = cStates[0];
 }
 ```
 

@@ -143,22 +143,19 @@ Die zentrale Klasse in ScottPlot ist `ScottPlot.Plot`. Eine Instanz davon reprä
 ### ScottPlot API: **Linien- und Streudiagramme**
 
 ```csharp
-// Daten für Zeitachse (t) und Signalwert (y)
 double[] xs = { 0.0, 0.1, 0.2, 0.3, 0.4, 0.5 };
 double[] ys1 = { 0.0, 0.8, 1.2, 1.1, 0.9, 1.0 };
 double[] ys2 = { 0.0, 0.5, 0.9, 1.3, 1.5, 1.4 };
 
-// Streudiagramme zum Plot hinzufügen
-var scatter1 = WpfPlot1.Plot.Add.Scatter(xs, ys1);
-scatter1.Label = "Zustand x1(t)";
-scatter1.Color = ScottPlot.Colors.Blue;
-scatter1.MarkerSize = 5;
+var s1 = WpfPlot1.Plot.Add.Scatter(xs, ys1);
+s1.Label = "Zustand x1(t)";
+s1.Color = ScottPlot.Colors.Blue;
+s1.MarkerSize = 5;
 
-var scatter2 = WpfPlot1.Plot.Add.Scatter(xs, ys2);
-scatter2.Label = "Zustand x2(t)";
-scatter2.Color = ScottPlot.Colors.Red;
-scatter2.LineStyle = ScottPlot.LineStyle.Dash;
-
+var s2 = WpfPlot1.Plot.Add.Scatter(xs, ys2);
+s2.Label = "Zustand x2(t)";
+s2.Color = ScottPlot.Colors.Red;
+s2.LineStyle = ScottPlot.LineStyle.Dash;
 WpfPlot1.Plot.Legend.IsVisible = true;
 WpfPlot1.Plot.Axes.AutoScale();
 WpfPlot1.Refresh();
@@ -247,18 +244,17 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ### ScottPlot API: **Histogramme und Bins**
 
 ```csharp
-// 1. Rohdaten aus einer Simulation (z.B. 10.000 simulierte Wartezeiten)
+// 1. Rohdaten & Histogramm berechnen (20 Bins in [0..10 s])
 double[] durations = Simulation.RunMonteCarloRuns(10000);
+var hist = new ScottPlot.Statistics.Histogram(
+    durations, min: 0, max: 10, binCount: 20);
 
-// 2. Histogramm berechnen (20 Klassen/Bins im Bereich von 0 bis 10 Sekunden)
-var hist = new ScottPlot.Statistics.Histogram(durations, min: 0, max: 10, binCount: 20);
-
-// 3. Balkendiagramm aus den berechneten Klassen erzeugen
+// 2. Balkendiagramm aus berechneten Klassen erzeugen
 var bar = WpfPlot1.Plot.Add.Bar(hist.Counts, hist.BinCenters);
 bar.Label = "Simulierte Häufigkeit";
 bar.FillColor = ScottPlot.Colors.SteelBlue.WithAlpha(0.7);
 
-// 4. Achsen und Layout konfigurieren
+// 3. Achsen und Layout konfigurieren
 WpfPlot1.Plot.XLabel("Verweildauer [s]");
 WpfPlot1.Plot.YLabel("Absolute Häufigkeit");
 WpfPlot1.Plot.Legend.IsVisible = true;
@@ -293,8 +289,10 @@ WpfPlot1.Refresh();
 
 ```csharp
 // Beispiel: Box-Plot für zwei Parametrierungsvarianten
-var box1 = new ScottPlot.Box { Position = 1, BoxMiddle = 2.4, BoxMin = 1.8, BoxMax = 3.1 };
-var box2 = new ScottPlot.Box { Position = 2, BoxMiddle = 3.8, BoxMin = 2.9, BoxMax = 4.6 };
+var box1 = new ScottPlot.Box 
+    { Position = 1, BoxMiddle = 2.4, BoxMin = 1.8, BoxMax = 3.1 };
+var box2 = new ScottPlot.Box 
+    { Position = 2, BoxMiddle = 3.8, BoxMin = 2.9, BoxMax = 4.6 };
 WpfPlot1.Plot.Add.Box(new[] { box1, box2 });
 ```
 
@@ -328,50 +326,84 @@ Ein Digitaler Zwilling oder eine Hardware-in-the-Loop-Simulation liefert kontinu
 
 ### Das Ringpuffer-Muster (Circular Buffer)
 
+<div class="columns">
+<div class="one">
+
+**Puffer-Definition & Enqueue:**
 ```csharp
 public class SimulationRingBuffer
 {
     private readonly double[] _data;
-    private int _head = 0;
-    private readonly object _syncLock = new();
-
-    public SimulationRingBuffer(int capacity) => _data = new double[capacity];
-
-    public void Enqueue(double value)
+    private int _head;
+    private readonly object _lock = new();
+    public SimulationRingBuffer(int cap) =>
+        _data = new double[cap];
+    public void Enqueue(double val)
     {
-        lock (_syncLock)
+        lock (_lock)
         {
-            _data[_head] = value;
+            _data[_head] = val;
             _head = (_head + 1) % _data.Length;
         }
-    }
-
-    public void CopyTo(double[] destination)
-    {
-        lock (_syncLock) { Array.Copy(_data, destination, _data.Length); }
     }
 }
 ```
 
-- **Vorteile:** Feste Array-Größe im Speicher, $O(1)$-Enqueue, keine Speicherbereinigung nötig.
+</div>
+<div class="one">
+
+**Kopie für Rendering:**
+```csharp
+public void CopyTo(double[] dest)
+{
+    lock (_lock)
+    {
+        Array.Copy(_data, dest, _data.Length);
+    }
+}
+```
+
+- **Vorteile:**
+  - Feste Array-Größe im Speicher.
+  - $O(1)$-Enqueue ohne Allokationen.
+  - Keine GC-Pausen im Simulationstakt.
+
+</div>
+</div>
 
 ---
 
 ### UI-Refresh-Strategie mit `DispatcherTimer`
 
+<div class="columns">
+<div class="one">
+
+**Setup im Window / ViewModel:**
 ```csharp
-// Initialisierung im WPF Window / ViewModel
-private readonly SimulationRingBuffer _buffer = new(capacity: 2000);
-private readonly double[] _renderCopy = new double[2000];
+private readonly SimulationRingBuffer 
+    _buffer = new(capacity: 2000);
+private readonly double[] 
+    _renderCopy = new double[2000];
 private ScottPlot.Plottables.Signal _livePlot;
 
-private void SetupTelemetryPlot()
+private void InitPlot()
 {
-    _livePlot = WpfPlot1.Plot.Add.Signal(_renderCopy);
-    _livePlot.Data.Period = 0.001; // 1 ms pro Abtastwert
+    _livePlot = 
+        WpfPlot1.Plot.Add.Signal(_renderCopy);
+    _livePlot.Data.Period = 0.001; // 1 ms dt
+}
+```
 
-    // DispatcherTimer feuert auf dem UI-Thread (~30 FPS = alle 33 ms)
-    var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(33) };
+</div>
+<div class="one">
+
+**Timer-Taktung (~30 FPS):**
+```csharp
+private void StartTimer()
+{
+    var timer = new DispatcherTimer { 
+        Interval = TimeSpan.FromMilliseconds(33) 
+    };
     timer.Tick += (s, e) =>
     {
         _buffer.CopyTo(_renderCopy);
@@ -381,6 +413,9 @@ private void SetupTelemetryPlot()
     timer.Start();
 }
 ```
+
+</div>
+</div>
 
 ---
 
@@ -410,7 +445,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ```xaml
 <Window ...
-  xmlns:msagl="clr-namespace:Microsoft.Msagl.WpfGraphControl;assembly=Microsoft.Msagl.WpfGraphControl">
+  xmlns:msagl="clr-namespace:Microsoft.Msagl.WpfGraphControl;
+    assembly=Microsoft.Msagl.WpfGraphControl">
   <Grid>
     <msagl:AutomaticGraphLayoutControl x:Name="GraphControl" />
   </Grid>
@@ -418,22 +454,20 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ```
 
 ```csharp
-using Microsoft.Msagl.Drawing;
-
 // 1. Graph-Objekt erstellen
-var graph = new Graph("Simulationsmodell");
+var graph = new Microsoft.Msagl.Drawing.Graph("Simulationsmodell");
 
 // 2. Knoten hinzufügen
 graph.AddNode("Integrator").LabelText = "Integrator [1/s]";
 graph.AddNode("Gain").LabelText = "Gain [k=2.5]";
 graph.AddNode("Sum").LabelText = "Sum [+ -]";
 
-// 3. Gerichtete Kanten (Verbindungen) definieren
+// 3. Gerichtete Kanten definieren
 graph.AddEdge("Sum", "e(t)", "Integrator");
 graph.AddEdge("Integrator", "x(t)", "Gain");
 graph.AddEdge("Gain", "Feedback", "Sum");
 
-// 4. Dem Control übergeben (Layout wird automatisch berechnet!)
+// 4. Dem Control übergeben (Layout automatisch berechnet)
 GraphControl.Graph = graph;
 ```
 
@@ -477,25 +511,35 @@ GraphControl.Graph = graph;
 
 ---
 
-### MSAGL API: Zyklen farblich hervorheben
+### MSAGL API: Graph-Aufbau mit Schleife
 
 ```csharp
 var graph = new Microsoft.Msagl.Drawing.Graph("Blockschaltbild");
 
-// Kanten definieren
-var eIn   = graph.AddEdge("In", "Sum1");
+// Signalverbindungen definieren
+var eIn    = graph.AddEdge("In", "Sum1");
 var eLoop1 = graph.AddEdge("Sum1", "Gain1");
 var eLoop2 = graph.AddEdge("Gain1", "Gain2");
-var eLoop3 = graph.AddEdge("Gain2", "Sum1"); // Rückkopplung ohne Integrator!
-var eInt  = graph.AddEdge("Gain1", "Integrator");
+var eLoop3 = graph.AddEdge("Gain2", "Sum1"); // Schleife ohne Integrator!
+var eInt   = graph.AddEdge("Gain1", "Integrator");
 
+GraphControl.Graph = graph;
+```
+
+- Kante `eLoop3` schließt den Pfad direkt auf `Sum1` zurück (algebraische Schleife).
+
+---
+
+### MSAGL API: Zyklus-Hervorhebung (Highlighting)
+
+```csharp
 // Kanten der algebraischen Schleife auffällig rot färben:
-eLoop1.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
-eLoop1.Attr.LineWidth = 3;
-eLoop2.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
-eLoop2.Attr.LineWidth = 3;
-eLoop3.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
-eLoop3.Attr.LineWidth = 3;
+var loopEdges = new[] { eLoop1, eLoop2, eLoop3 };
+foreach (var edge in loopEdges)
+{
+    edge.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+    edge.Attr.LineWidth = 3;
+}
 
 // Knoten der algebraischen Schleife hervorheben:
 var sumNode = graph.FindNode("Sum1");
@@ -504,6 +548,8 @@ sumNode.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
 
 GraphControl.Graph = graph;
 ```
+
+- Visuelle Diagnose verhindert numerische Divergenzen vor Simulationsstart.
 
 ---
 

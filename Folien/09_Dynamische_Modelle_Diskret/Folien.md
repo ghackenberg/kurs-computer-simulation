@@ -398,16 +398,12 @@ namespace DynamischWarteschlange.Model
     internal abstract class Event
     {
         public double Timestamp { get; set; }
-
-        public Event(double timestamp)
-        {
-            Timestamp = timestamp;
-        }
+        public Event(double timestamp) => Timestamp = timestamp;
     }
-    // Ankunft eines Kunden
-    internal class ArrivalEvent : Event { ... }
-    // Abfahrt eines Kunden
-    internal class DepartureEvent : Event { ... }
+
+    // Ankunft und Abfahrt eines Kunden
+    internal class ArrivalEvent : Event { /* ... */ }
+    internal class DepartureEvent : Event { /* ... */ }
 }
 ```
 
@@ -416,11 +412,12 @@ namespace DynamischWarteschlange.Model
 <div class="columns">
 <div class="three">
 
-### Implementierung in C#
+### Die `Simulation`-Klasse
 
-Die `Simulation`-Klasse steuert den Ablauf und enthält die Simulationsuhr (`Clock`), den Systemzustand (`State`) und die Ereignisliste (`EventQueue`).
-
-Die `Run()`-Methode implementiert die Haupt-Simulationsschleife. Sie verarbeitet Ereignisse aus der `PriorityQueue`, bis diese leer ist. Die `PriorityQueue` stellt sicher, dass immer das Ereignis mit dem kleinsten Zeitstempel als nächstes behandelt wird.
+Die `Simulation`-Klasse steuert den Ablauf:
+- **`Clock`**: Aktuelle Simulationsuhr
+- **`State`**: Systemzustand (Kassenstatus & Warteschlange)
+- **`EventQueue`**: `PriorityQueue<Event, double>` für die zeitlich sortierte Ereignisabarbeitung.
 
 </div>
 <div class="three">
@@ -432,22 +429,48 @@ internal class Simulation
     public State State { get; set; } = new State();
     private PriorityQueue<Event, double> EventQueue { get; }
 
+    public Simulation()
+    {
+        EventQueue = new PriorityQueue<Event, double>();
+    }
+
     public void Run()
     {
-        while (EventQueue.Count > 0)
-        {
-            Event next = EventQueue.Dequeue();
-            Clock = next.Timestamp;
+        // Ereignisschleife verarbeiten
+    }
+}
+```
 
-            if (next is ArrivalEvent)
-            {
-                // ...
-            }
-            else if (next is DepartureEvent)
-            {
-                // ...
-            }
-        }
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="three">
+
+### Die Simulationsschleife (`Run`)
+
+Die `Run()`-Methode implementiert die diskrete Simulationsschleife:
+- Entnimmt stets das zeitlich nächste Ereignis (`Dequeue()`).
+- Schaltet die Simulationsuhr auf den Ereigniszeitpunkt fort (`Clock = next.Timestamp`).
+- Übergibt das Ereignis an die entsprechende Behandlungsroutine.
+
+</div>
+<div class="three">
+
+```csharp
+public void Run()
+{
+    while (EventQueue.Count > 0)
+    {
+        Event next = EventQueue.Dequeue();
+        Clock = next.Timestamp;
+
+        if (next is ArrivalEvent)
+            HandleArrival(next);
+        else if (next is DepartureEvent)
+            HandleDeparture(next);
     }
 }
 ```
@@ -740,11 +763,12 @@ Im Warteschlangen-Beispiel werden Zwischenankunfts- und Bedienzeiten aus Verteil
 -   **Bedienzeit** $\sim \text{LogNormal}(\mu, \sigma^2)$ (strikt positiv, $T > 0$)
 
 ```csharp
-// Bedienzeit aus Log-Normal-Verteilung mit Soll-Mittelwert m=3min, StdAbw s=30s
+// Bedienzeit aus Log-Normal-Verteilung (Soll: m = 3 min, s = 30 s)
 var serviceTime = NextLogNormal(targetMean: 3 * 60, targetStdDev: 0.5 * 60);
-Add(new DepartureEvent(Clock + serviceTime)); // Garantiert t > Clock (Kausalität!)
+// Garantiert t > Clock (Kausalitätsbedingung)
+Add(new DepartureEvent(Clock + serviceTime));
 
-// Nächste Ankunft mit Exponentialverteilung (mittlere Ankunftsrate: 1 Kunde alle 2min)
+// Nächste Ankunft via Exponentialverteilung (Rate: 1 Kunde alle 2 min)
 var interarrivalTime = NextExponential(lambda: 1.0 / (2 * 60));
 Add(new ArrivalEvent(Clock + interarrivalTime));
 ```
@@ -1005,24 +1029,20 @@ $$X = \exp(\mu + \sigma Z) > 0$$
 ### C#-Implementierung: Log-Normal-Verteilung
 
 ```csharp
-/// <summary>
-/// Erzeugt eine strikt positive Log-Normal-verteilte Zeitdauer mit
-/// gewünschtem Soll-Mittelwert (targetMean) und Standardabweichung (targetStdDev).
-/// </summary>
-public static double NextLogNormal(Random random, double targetMean, double targetStdDev)
+// Erzeugt Log-Normal-Verteilung mit Soll-Mittelwert und Standardabweichung
+public static double NextLogNormal(Random rnd, double mean, double stdDev)
 {
     // 1. Verteilungsparameter µ und σ berechnen
-    double variance = targetStdDev * targetStdDev;
-    double sigma2 = Math.Log(1.0 + variance / (targetMean * targetMean));
+    double sigma2 = Math.Log(1.0 + (stdDev * stdDev) / (mean * mean));
     double sigma = Math.Sqrt(sigma2);
-    double mu = Math.Log(targetMean) - 0.5 * sigma2;
+    double mu = Math.Log(mean) - 0.5 * sigma2;
 
-    // 2. Standardnormalverteilte Zufallsvariable Z ~ N(0, 1) via Box-Muller
-    double u1 = 1.0 - random.NextDouble();
-    double u2 = 1.0 - random.NextDouble();
+    // 2. Standardnormalverteilung Z ~ N(0, 1) via Box-Muller
+    double u1 = 1.0 - rnd.NextDouble();
+    double u2 = 1.0 - rnd.NextDouble();
     double z = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Cos(2.0 * Math.PI * u2);
 
-    // 3. Log-Normal-Transformation: Exponentiation garantiert strikt X > 0
+    // 3. Transformation: garantiert strikt X > 0
     return Math.Exp(mu + sigma * z);
 }
 ```
@@ -1237,14 +1257,16 @@ $$S = S_A + S_B + \delta^2 \cdot \frac{n_A \cdot n_B}{n}$$
 
 ---
 
-### C#-Implementierung: `ParallelWelfordAccumulator`
+### `ParallelWelfordAccumulator`: Lokale Akkumulation
+
+Ermöglicht die numerisch stabile Ein-Pass-Berechnung von Mittelwert und Varianz für jeden Thread:
 
 ```csharp
 public class ParallelWelfordAccumulator
 {
     public long Count { get; private set; }
     public double Mean { get; private set; }
-    public double M2 { get; private set; } // Summe der quadrierten Abweichungen
+    public double M2 { get; private set; } // Summe quadrierter Abweichungen
 
     public void Add(double x)
     {
@@ -1253,17 +1275,6 @@ public class ParallelWelfordAccumulator
         Mean += delta / Count;
         M2 += delta * (x - Mean);
     }
-
-    public void Merge(ParallelWelfordAccumulator other)
-    {
-        if (other.Count == 0) return;
-        if (Count == 0) { Count = other.Count; Mean = other.Mean; M2 = other.M2; return; }
-        long newCount = Count + other.Count;
-        double delta = other.Mean - Mean;
-        Mean += delta * other.Count / newCount;
-        M2 += other.M2 + delta * delta * ((double)Count * other.Count / newCount);
-        Count = newCount;
-    }
     public double Variance => Count > 1 ? M2 / (Count - 1) : 0.0;
     public double StandardError => Math.Sqrt(Variance / Count);
 }
@@ -1271,30 +1282,68 @@ public class ParallelWelfordAccumulator
 
 ---
 
-### C#-Implementierung: Parallele Monte-Carlo-Simulation
+### `ParallelWelfordAccumulator`: Chan-Merge
+
+Führt die Teilakkumulatoren zweier Threads exakt und verlustfrei zusammen:
+
+```csharp
+public void Merge(ParallelWelfordAccumulator other)
+{
+    if (other.Count == 0) return;
+    if (Count == 0)
+    {
+        Count = other.Count; Mean = other.Mean; M2 = other.M2;
+        return;
+    }
+
+    long newCount = Count + other.Count;
+    double delta = other.Mean - Mean;
+    Mean += delta * other.Count / newCount;
+    M2 += other.M2 + delta * delta * 
+          ((double)Count * other.Count / newCount);
+    Count = newCount;
+}
+```
+
+---
+
+### Parallele Monte-Carlo-Simulation: Replikation
+
+Parallele Ausführung von $N$ Replikationen mit thread-lokalen Akkumulatoren und anschließendem Chan-Merge:
 
 ```csharp
 var globalAcc = new ParallelWelfordAccumulator();
 object syncLock = new object();
 int N = 10_000, baseSeed = 42;
 
-// 1. Thread-lokale Welford-Akkumulatoren in Parallel.For
+// Thread-lokale Welford-Akkumulatoren in Parallel.For
 Parallel.For(0, N, () => new ParallelWelfordAccumulator(), 
 (i, loopState, localAcc) =>
 {
     var rnd = new Random(seed: HashCode.Combine(baseSeed, i));
     var sim = new QueueSimulation(rnd);
     sim.Run();
-    localAcc.Add(sim.AverageWaitTime); // 1-Pass Welford Update
+    localAcc.Add(sim.AverageWaitTime);
     return localAcc;
 },
-localAcc =>
-{
-    lock (syncLock) { globalAcc.Merge(localAcc); } // Chan-Merge
-});
+localAcc => { lock (syncLock) { globalAcc.Merge(localAcc); } });
+```
 
-// 2. Statistische Auswertung & 95%-Konfidenzintervall (Z = 1.960)
+---
+
+### Statistische Auswertung & Konfidenzintervall
+
+Berechnung des 95%-Konfidenzintervalls aus dem aggregierten `ParallelWelfordAccumulator`:
+
+```csharp
+// Statistische Auswertung & 95%-Konfidenzintervall (Z = 1.960)
 double mean = globalAcc.Mean;
-double ciMargin = 1.960 * globalAcc.StandardError;
-Console.WriteLine($"Mittelwert: {mean:F3} min,  95%-KI: [{mean - ciMargin:F3}; {mean + ciMargin:F3}] min");
+double stderr = globalAcc.StandardError;
+double ciMargin = 1.960 * stderr;
+
+Console.WriteLine($"Stichprobenumfang N = {globalAcc.Count}");
+Console.WriteLine($"Mittelwert: {mean:F3} min");
+Console.WriteLine($"Standardfehler: {stderr:F4} min");
+Console.WriteLine(
+    $"95%-KI: [{mean - ciMargin:F3}; {mean + ciMargin:F3}] min");
 ```

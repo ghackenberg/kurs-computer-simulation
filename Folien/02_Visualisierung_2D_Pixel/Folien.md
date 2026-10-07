@@ -193,10 +193,11 @@ Kombiniert mit einer einzigen
 
 ### Initialisierung im C#-Code-Behind
 
-```csharp
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+<div class="columns">
+<div class="one">
 
+**Felder und Konstruktor:**
+```csharp
 public partial class MainWindow : Window
 {
     private WriteableBitmap _bitmap;
@@ -206,18 +207,31 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-
-        // WriteableBitmap erzeugen (32 Bit BGRA, 96 DPI)
-        _bitmap = new WriteableBitmap(
-            Width, Height, 96.0, 96.0, 
-            PixelFormats.Bgra32, null
-        );
-
-        // Dem XAML-Image-Control zuweisen
-        SimulationImage.Source = _bitmap;
+        InitBitmap();
     }
 }
 ```
+
+</div>
+<div class="one">
+
+**Bitmap-Setup (`InitBitmap`):**
+```csharp
+private void InitBitmap()
+{
+    // WriteableBitmap (32-Bit BGRA, 96 DPI)
+    _bitmap = new WriteableBitmap(
+        Width, Height, 96.0, 96.0, 
+        PixelFormats.Bgra32, null
+    );
+
+    // XAML-Image-Control zuweisen
+    SimulationImage.Source = _bitmap;
+}
+```
+
+</div>
+</div>
 
 ---
 
@@ -235,24 +249,21 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ### Der Aktualisierungs-Lebenszyklus
 
 ```csharp
-// 1. Zugriff sperren (blockiert den Render-Thread vor Inkonsistenzen)
+// 1. Zugriff sperren (blockiert Render-Thread)
 _bitmap.Lock();
 try
 {
-    // 2. Zeiger auf den Pufferanfang und Zeilenschrittweite abfragen
+    // 2. Zeiger & Zeilenschrittweite abfragen
     IntPtr pBuffer = _bitmap.BackBuffer;
     int stride = _bitmap.BackBufferStride;
-
     // 3. Pixel direkt über native Zeiger manipulieren
     UpdatePixelData(pBuffer, stride, Width, Height);
-
-    // 4. Den modifizierten Bildbereich als 'dirty' deklarieren
+    // 4. Modifizierten Bildbereich als dirty deklarieren
     _bitmap.AddDirtyRect(new Int32Rect(0, 0, Width, Height));
 }
 finally
 {
-    // 5. Freigabe: MilCore überträgt geänderte Pixel zur GPU
-    _bitmap.Unlock();
+    _bitmap.Unlock(); // 5. Freigabe an MilCore
 }
 ```
 
@@ -261,22 +272,19 @@ finally
 ### Direkter Zeigerzugriff: Byte- für Byte-Schreiben
 
 ```csharp
-private unsafe void UpdatePixelData(IntPtr pBackBuffer, int stride, int w, int h)
+private unsafe void UpdatePixelData(IntPtr pBuf, int stride, int w, int h)
 {
-    byte* ptr = (byte*)pBackBuffer.ToPointer();
-
+    byte* ptr = (byte*)pBuf.ToPointer();
     for (int y = 0; y < h; y++)
     {
         byte* row = ptr + (y * stride);
-
         for (int x = 0; x < w; x++)
         {
             int offset = x * 4;
-
             row[offset + 0] = 255; // Blau  (0..255)
             row[offset + 1] = 128; // Grün  (0..255)
             row[offset + 2] = 0;   // Rot   (0..255)
-            row[offset + 3] = 255; // Alpha (255 = deckend)
+            row[offset + 3] = 255; // Alpha (deckend)
         }
     }
 }
@@ -289,15 +297,15 @@ private unsafe void UpdatePixelData(IntPtr pBackBuffer, int stride, int w, int h
 Statt 4 separaten Byte-Schreiboperationen kann ein Pixel als einzelnes 32-Bit-Wort geschrieben werden:
 
 ```csharp
-private unsafe void UpdatePixelFast(IntPtr pBackBuffer, int stride, int w, int h)
+private unsafe void UpdatePixelFast(
+    IntPtr pBackBuffer, int stride, int w, int h)
 {
     uint* ptr = (uint*)pBackBuffer.ToPointer();
-    int strideWords = stride / 4; // Schrittweite in 32-Bit Einheiten
+    int strideWords = stride / 4; // Schrittweite in 32-Bit
 
     for (int y = 0; y < h; y++)
     {
         uint* row = ptr + (y * strideWords);
-
         for (int x = 0; x < w; x++)
         {
             // Format 0xAARRGGBB (Alpha=0xFF, Rot=0xFF, Grün=0x80, Blau=0x00)
@@ -395,7 +403,7 @@ Normierter Wert u ∈ [0, 1]
 
 ---
 
-### C#-Implementierung einer Farbskalen-LUT
+### C#-Implementierung einer Farbskalen-LUT: Tabellenaufbau
 
 ```csharp
 public static class ColorMaps
@@ -408,19 +416,36 @@ public static class ColorMaps
         for (int i = 0; i < steps; i++)
         {
             double t = (double)i / (steps - 1);
-            // Polynomielle Annäherung an die Viridis-Farbpalette
-            byte r = (byte)(255 * Math.Clamp(1.89 * t - 0.70, 0.0, 1.0));
-            byte g = (byte)(255 * Math.Clamp(1.39 * t - 0.10, 0.0, 1.0));
-            byte b = (byte)(255 * Math.Clamp(0.55 + 0.8 * Math.Sin(Math.PI * t), 0.0, 1.0));
-            byte a = 255;
-
-            // Als Bgra32 packen: (A << 24) | (R << 16) | (G << 8) | B
-            lut[i] = ((uint)a << 24) | ((uint)r << 16) | ((uint)g << 8) | (uint)b;
+            lut[i] = SampleViridis(t);
         }
         return lut;
     }
 }
 ```
+
+- Vorberechnetes Array für direkten Tabellenzugriff in konstanter Zeit $O(1)$.
+- Parameter $t \in [0, 1]$ wird in 256 diskrete Stufen zerlegt.
+
+---
+
+### C#-Implementierung einer Farbskalen-LUT: Farbkanäle
+
+```csharp
+private static uint SampleViridis(double t)
+{
+    // Polynomielle Annäherung an die Viridis-Farbpalette
+    byte r = (byte)(255 * Math.Clamp(1.89 * t - 0.70, 0.0, 1.0));
+    byte g = (byte)(255 * Math.Clamp(1.39 * t - 0.10, 0.0, 1.0));
+    byte b = (byte)(255 * Math.Clamp(
+        0.55 + 0.8 * Math.Sin(Math.PI * t), 0.0, 1.0));
+    byte a = 255;
+
+    // Als Bgra32 packen: (A << 24) | (R << 16) | (G << 8) | B
+    return ((uint)a << 24) | ((uint)r << 16) | ((uint)g << 8) | (uint)b;
+}
+```
+
+- Farbkanäle werden zu einem 32-Bit-Pixel (`0xAARRGGBB`) bitweise kombiniert.
 
 ---
 
@@ -538,31 +563,51 @@ _tempCurr[350, 250] = 80.0f;
 
 ### Pufferübertragung in die WriteableBitmap
 
+<div class="columns">
+<div class="one">
+
+**Puffer-Verwaltung:**
 ```csharp
-public unsafe void RenderToBitmap(WriteableBitmap bmp, float[,] field, uint[] lut)
+public unsafe void RenderToBitmap(
+    WriteableBitmap bmp, float[,] f, uint[] lut)
 {
     bmp.Lock();
     try
     {
         uint* pBuf = (uint*)bmp.BackBuffer.ToPointer();
-        int strideWords = bmp.BackBufferStride / 4;
+        int stride = bmp.BackBufferStride / 4;
 
-        Parallel.For(0, Height, y =>
-        {
-            uint* row = pBuf + (y * strideWords);
-            for (int x = 0; x < Width; x++)
-            {
-                // Temperatur [0..100 °C] auf LUT-Index [0..255] abbilden
-                int lutIndex = (int)Math.Clamp(field[x, y] * 2.55f, 0f, 255f);
-                row[x] = lut[lutIndex];
-            }
-        });
-
-        bmp.AddDirtyRect(new Int32Rect(0, 0, Width, Height));
+        RenderKernel(pBuf, stride, f, lut);
+        bmp.AddDirtyRect(
+            new Int32Rect(0, 0, Width, Height));
     }
     finally { bmp.Unlock(); }
 }
 ```
+
+</div>
+<div class="one">
+
+**Paralleler Kernel:**
+```csharp
+private unsafe void RenderKernel(
+    uint* pBuf, int stride, float[,] f, uint[] lut)
+{
+    Parallel.For(0, Height, y =>
+    {
+        uint* row = pBuf + (y * stride);
+        for (int x = 0; x < Width; x++)
+        {
+            int idx = (int)Math.Clamp(
+                f[x, y] * 2.55f, 0f, 255f);
+            row[x] = lut[idx];
+        }
+    });
+}
+```
+
+</div>
+</div>
 
 ---
 

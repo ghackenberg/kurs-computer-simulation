@@ -949,23 +949,15 @@ public class Truss
     public List<Node> Nodes = new List<Node>();
     public List<Rod> Rods = new List<Rod>();
 
-    public Node AddNode(
-            double positionX, double positionY,
-            bool fixX, bool fixY,
-            double forceX, double forceY)
+    public Node AddNode(double posX, double posY,
+        bool fixX, bool fixY, double fx, double fy)
     {
-        // ... Implementierung ...
+        // Knoten erzeugen, registrieren und zurückgeben
     }
 
-    public Rod AddRod(Node a, Node b)
-    {
-        // ... Implementierung ...
-    }
+    public Rod AddRod(Node a, Node b) => /* Stab registrieren */;
 
-    public void Solve()
-    {
-        // Hier wird das LGS aufgebaut und gelöst
-    }
+    public void Solve() => /* LGS A*x = b aufbauen und lösen */;
 }
 ```
 

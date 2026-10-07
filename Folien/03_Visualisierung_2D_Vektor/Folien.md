@@ -218,33 +218,53 @@ $$y_{screen} = y_{offset} + (Y_{max} - y_w) \cdot s$$
 
 ---
 
-### C#-Implementierung: `CoordinateTransformer`
+### C#-Implementierung: CoordinateTransformer (Setup & Skalierung)
 
 ```csharp
 public class CoordinateTransformer
 {
     private double _scale, _xOffset, _yOffset, _xMin, _yMax;
 
-    public void Update(Rect worldBounds, double canvasWidth, double canvasHeight, double margin)
+    public void Update(Rect w, double cW, double cH, double margin)
     {
-        _xMin = worldBounds.Left;
-        _yMax = worldBounds.Top; // Höchster Y-Wert im kartesischen Raum
+        _xMin = w.Left;
+        _yMax = w.Top; // Höchster Y-Wert kartesisch
+        double drawW = Math.Max(0, cW - 2 * margin);
+        double drawH = Math.Max(0, cH - 2 * margin);
+        _scale = Math.Min(drawW / w.Width, drawH / w.Height);
 
-        double drawW = Math.Max(0, canvasWidth - 2 * margin);
-        double drawH = Math.Max(0, canvasHeight - 2 * margin);
-
-        _scale = Math.Min(drawW / worldBounds.Width, drawH / worldBounds.Height);
-
-        _xOffset = margin + (drawW - worldBounds.Width * _scale) / 2.0;
-        _yOffset = margin + (drawH - worldBounds.Height * _scale) / 2.0;
+        _xOffset = margin + (drawW - w.Width * _scale) / 2.0;
+        _yOffset = margin + (drawH - w.Height * _scale) / 2.0;
     }
+}
+```
+
+- Passt Maßstab und Offsets dynamisch an Fenstergrößenänderungen an.
+- Hält das physikalische Seitenverhältnis (Uniform Scaling) verzerrungsfrei ein.
+
+---
+
+### C#-Implementierung: CoordinateTransformer (Transformation)
+
+```csharp
+public class CoordinateTransformer
+{
+    // ... Zustand aus Update() ...
 
     public Point WorldToScreen(Point w) => new(
         _xOffset + (w.X - _xMin) * _scale,
         _yOffset + (_yMax - w.Y) * _scale // Y-Invertierung
     );
+
+    public Point ScreenToWorld(Point s) => new(
+        _xMin + (s.X - _xOffset) / _scale,
+        _yMax - (s.Y - _yOffset) / _scale // Y-Rücktransformation
+    );
 }
 ```
+
+- $Y$-Achsen-Invertierung: Bildschirmursprung $(0,0)$ liegt links oben.
+- `ScreenToWorld` bildet Klickpositionen auf physikalische Modellkoordinaten ab.
 
 ---
 
@@ -297,21 +317,18 @@ Gegeben sei der Endpunkt (Spitze) $\vec{P}_{tip}$ und der gerichtete Kraftvektor
 ### Berechnung der Pfeilspitze in C#
 
 ```csharp
-/// <summary>
-/// Berechnet die Eckpunkte für ein Pfeilspitzen-Dreieck.
-/// </summary>
-public Point[] GetArrowhead(Point tip, Vector direction, double length, double width)
+// Berechnet die Eckpunkte für ein Pfeilspitzen-Dreieck
+public Point[] GetArrowhead(
+    Point tip, Vector dir, double length, double width)
 {
-    direction.Normalize(); // Richtungs-Einheitsvektor u
+    dir.Normalize(); // Richtungs-Einheitsvektor u
     
-    // Orthogonalvektor u_perp (um 90 Grad gegen den Uhrzeigersinn gedreht)
-    var perpendicular = new Vector(-direction.Y, direction.X);
+    // Orthogonalvektor u_perp (90° gegen den Uhrzeigersinn)
+    var perp = new Vector(-dir.Y, dir.X);
 
-    // Basis des Pfeildreiecks hinter der Spitze
-    Point basePoint = tip - (length * direction);
-
-    Point p1 = basePoint + (width / 2.0 * perpendicular);
-    Point p2 = basePoint - (width / 2.0 * perpendicular);
+    Point basePoint = tip - (length * dir);
+    Point p1 = basePoint + (width / 2.0 * perp);
+    Point p2 = basePoint - (width / 2.0 * perp);
 
     return new Point[] { tip, p1, p2 };
 }
@@ -412,23 +429,21 @@ private void OnMouseWheel(object sender, MouseWheelEventArgs e)
 Damit die Maus bei schnellen Bewegungen nicht "abreißt", wird **`CaptureMouse()`** genutzt:
 
 ```csharp
-private Point _lastMousePos;
+private Point _lastPos;
 private bool _isPanning;
 
-private void OnMouseDown(object sender, MouseButtonEventArgs e)
+private void OnMouseDown(object s, MouseButtonEventArgs e)
 {
-    if (e.MiddleButton == MouseButtonState.Pressed || e.LeftButton == MouseButtonState.Pressed)
-    {
-        _lastMousePos = e.GetPosition(this);
-        _isPanning = true;
-        ((IInputElement)sender).CaptureMouse();
-    }
+    if (e.MiddleButton != MouseButtonState.Pressed && 
+        e.LeftButton != MouseButtonState.Pressed) return;
+    _lastPos = e.GetPosition(this);
+    _isPanning = true;
+    ((IInputElement)s).CaptureMouse();
 }
-
-private void OnMouseUp(object sender, MouseButtonEventArgs e)
+private void OnMouseUp(object s, MouseButtonEventArgs e)
 {
     _isPanning = false;
-    ((IInputElement)sender).ReleaseMouseCapture();
+    ((IInputElement)s).ReleaseMouseCapture();
 }
 ```
 
@@ -465,16 +480,17 @@ private void OnMouseMove(object sender, MouseEventArgs e)
 Für Benutzerinteraktionen (z.B. Anklicken eines Knotens oder Einzeichnen einer Last) muss die Klickposition wieder in physikalische Weltkoordinaten umgerechnet werden:
 
 ```csharp
-public Point ScreenToWorld(Point screenPixel, Matrix canvasMatrix, CoordinateTransformer trans)
+public Point ScreenToWorld(
+    Point screenPixel, Matrix canvasMatrix, CoordinateTransformer trans)
 {
     // 1. Pan- und Zoom-Matrix invertieren
     Matrix invMatrix = canvasMatrix;
     invMatrix.Invert();
-    Point unzoomedCanvasPoint = invMatrix.Transform(screenPixel);
+    Point unzoomed = invMatrix.Transform(screenPixel);
 
     // 2. Koordinatentransformation (Welt -> Screen) invertieren:
-    double worldX = _xMin + (unzoomedCanvasPoint.X - _xOffset) / _scale;
-    double worldY = _yMax - (unzoomedCanvasPoint.Y - _yOffset) / _scale; // Y-Invertierung!
+    double worldX = _xMin + (unzoomed.X - _xOffset) / _scale;
+    double worldY = _yMax - (unzoomed.Y - _yOffset) / _scale; // Invertiert
 
     return new Point(worldX, worldY);
 }
@@ -543,30 +559,48 @@ Leichtgewicht-Hierarchie:
 
 ### Zeichnen im `DrawingContext`
 
+<div class="columns">
+<div class="one">
+
+**Setup & Freezing:**
 ```csharp
 var visual = new DrawingVisual();
 
-using (DrawingContext dc = visual.RenderOpen())
+using (DrawingContext dc = 
+       visual.RenderOpen())
 {
-    // Golden Rule für WPF-Performance: Brushes und Pens FREEZEN!
+    // Golden Rule: Pens & Brushes FREEZEN!
     var pen = new Pen(Brushes.SteelBlue, 2.0);
     pen.Freeze();
-    var nodeBrush = Brushes.Crimson;
-    nodeBrush.Freeze();
+    var brush = Brushes.Crimson;
+    brush.Freeze();
 
+    DrawScene(dc, rods, nodes, pen, brush);
+}
+```
+
+</div>
+<div class="one">
+
+**Zeichenschleifen:**
+```csharp
+private void DrawScene(
+    DrawingContext dc, List<Rod> rods, 
+    List<Node> nodes, Pen pen, Brush brush)
+{
     // 10.000 Stäbe zeichnen:
     foreach (var rod in rods)
-    {
-        dc.DrawLine(pen, rod.ScreenP1, rod.ScreenP2);
-    }
+        dc.DrawLine(pen, rod.P1, rod.P2);
 
     // 10.000 Knoten zeichnen:
     foreach (var node in nodes)
-    {
-        dc.DrawEllipse(nodeBrush, null, node.ScreenPos, 3.0, 3.0);
-    }
+        dc.DrawEllipse(brush, null, 
+            node.Pos, 3.0, 3.0);
 }
 ```
+
+</div>
+</div>
 
 ---
 
@@ -579,21 +613,16 @@ public class FastDrawingCanvas : FrameworkElement
 {
     private readonly VisualCollection _children;
     private readonly DrawingVisual _drawingVisual = new();
-
-    public FastDrawingCanvas()
-    {
+    public FastDrawingCanvas() =>
         _children = new VisualCollection(this) { _drawingVisual };
-    }
 
     protected override int VisualChildrenCount => _children.Count;
     protected override Visual GetVisualChild(int index) => _children[index];
 
     public void Render(Action<DrawingContext> renderAction)
     {
-        using (DrawingContext dc = _drawingVisual.RenderOpen())
-        {
-            renderAction(dc);
-        }
+        using DrawingContext dc = _drawingVisual.RenderOpen();
+        renderAction(dc);
     }
 }
 ```
@@ -618,9 +647,7 @@ public class SimpleRenderCanvas : FrameworkElement
         pen.Freeze();
 
         foreach (var bar in Data.Bars)
-        {
             dc.DrawLine(pen, bar.P1, bar.P2);
-        }
     }
 }
 ```

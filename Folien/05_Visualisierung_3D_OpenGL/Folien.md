@@ -69,7 +69,9 @@ Und so wird das `OpenGLControl`-Steuerelement in ein WPF-Fenster eingebunden (be
 ```xml
 <Window xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF">
     <Grid>
-        <sharpGL:OpenGLControl  OpenGLInitialized="OnInitialize" OpenGLDraw="OnDraw"/>
+        <sharpGL:OpenGLControl 
+            OpenGLInitialized="OnInitialize" 
+            OpenGLDraw="OnDraw" />
     </Grid>
 </Window>
 ```
@@ -207,7 +209,7 @@ Eine Punktlichtquelle strahlt von einer Position im Raum Licht ab. Man kann ihre
 gl.Enable(OpenGL.GL_LIGHT0);
 
 // Definiert die Eigenschaften von GL_LIGHT0
-float[] lightPosition = { 2, 2, 5, 1 }; // Position (x, y, z, w=1 für Punktlicht)
+float[] lightPosition = { 2, 2, 5, 1 }; // Position (x, y, z, w=1)
 float[] lightDiffuse = { 1, 1, 1, 1 };  // Helles, weißes diffuses Licht
 
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, lightPosition);
@@ -757,22 +759,17 @@ Bei jeder Änderung der Fenstergröße muss das Seitenverhältnis (*Aspect Ratio
 private void OpenGLControl_Resized(object sender, OpenGLRoutedEventArgs args)
 {
     OpenGL gl = args.OpenGL;
-    int width = (int)openGLControl.ActualWidth;
-    int height = (int)openGLControl.ActualHeight;
-    if (height == 0) height = 1; // Division durch Null verhindern
-
-    // 1. Viewport auf die volle Fenstergröße setzen
-    gl.Viewport(0, 0, width, height);
-
-    // 2. In den Projektionsmodus wechseln und Matrix zurücksetzen
+    int w = (int)openGLControl.ActualWidth;
+    int h = Math.Max(1, (int)openGLControl.ActualHeight);
+    // 1. Viewport & Projektionsmatrix initialisieren
+    gl.Viewport(0, 0, w, h);
     gl.MatrixMode(OpenGL.GL_PROJECTION);
     gl.LoadIdentity();
 
-    // 3. Perspektivische Projektion mit korrektem Seitenverhältnis definieren
-    double aspect = (double)width / height;
-    gl.Perspective(45.0, aspect, 0.1, 1000.0);
+    // 2. Perspektive mit Aspect Ratio setzen (FOV 45°, Near 0.1, Far 1000)
+    gl.Perspective(45.0, (double)w / h, 0.1, 1000.0);
 
-    // 4. Zurück in den ModelView-Modus für alle nachfolgenden Zeichenbefehle
+    // 3. Zurück in den ModelView-Modus für Objekt-Transformationen
     gl.MatrixMode(OpenGL.GL_MODELVIEW);
 }
 ```
@@ -1156,14 +1153,16 @@ namespace SimulationEngine.Graphics3D
 {
     public static class GeometryFactory
     {
-        public static Volume CreateCylinder(float radius, float height, int slices = 32)
-            => new Cylinder("Cylinder", radius, radius, height, slices);
+        public static Volume CreateCylinder(
+            float r, float h, int slices = 32) => 
+            new Cylinder("Cylinder", r, r, h, slices);
 
-        public static Volume CreateSphere(float radius, int slices = 32, int stacks = 16)
-            => new Sphere("Sphere", radius, slices, stacks);
+        public static Volume CreateSphere(
+            float r, int slices = 32, int stacks = 16) => 
+            new Sphere("Sphere", r, slices, stacks);
 
-        public static Volume CreateBox(float sx, float sy, float sz)
-            => new Cube("Box", sx, sy, sz);
+        public static Volume CreateBox(float sx, float sy, float sz) => 
+            new Cube("Box", sx, sy, sz);
     }
 }
 ```
@@ -1178,23 +1177,17 @@ namespace SimulationEngine.Graphics3D
 So wird in der Vorlage eine einfache Szene aufgebaut:
 
 ```csharp
-// 1. Wurzelknoten erstellen
+// 1. Wurzelknoten & globale Transformationen
 Group root = new Group("Root");
+root.Transforms.Add(new Translate(0, 0, -5)); // Nach hinten schieben
+root.Transforms.Add(_rotate);                  // Globale Rotation
 
-// 2. Transformationen auf die ganze Szene anwenden
-root.Transforms.Add(new Translate(0, 0, -5)); // Alles nach hinten schieben
-root.Transforms.Add(_rotate); // Eine globale Rotation hinzufügen
-
-// 3. Geometrie-Knoten erstellen
+// 2. Geometrie-Knoten mit lokaler Transformation
 Cube cube1 = new Cube("Cube1", 1, 1, 1, Material.RED);
-
-// 4. Lokale Transformation auf den Würfel anwenden
 cube1.Transforms.Add(new Translate(0, 0, -2));
 
-// 5. Würfel als Kind zum Wurzelknoten hinzufügen
+// 3. Kindknoten hinzufügen & Szene erstellen
 root.Add(cube1);
-
-// 6. Szene mit dem Wurzelknoten erstellen
 _scene = new Scene(Color.WHITE, Color.DARKGRAY, root);
 ```
 
@@ -1243,27 +1236,21 @@ BaseNode (Säule)
 ### C#-Implementierung: Kinematische Kette
 
 ```csharp
-// 1. Basis des Roboters (Säule am Boden)
+// Basis (Säule) & Achse 1 (Yaw um Y)
 Group robot = new Group("RobotBase");
-robot.Add(GeometryFactory.CreateCylinder(radius: 0.3f, height: 0.5f));
-
-// 2. Drehachse 1 (Yaw: Rotation um vertikale Y-Achse)
+robot.Add(GeometryFactory.CreateCylinder(0.3f, 0.5f));
 Group axis1 = new Group("Axis1");
-axis1.Transforms.Add(new Rotate(angle: joint1Angle, 0, 1, 0));
-axis1.Transforms.Add(new Translate(0, 0.5f, 0)); // Auf Sockel platzieren
+axis1.Transforms.Add(new Rotate(joint1Angle, 0, 1, 0));
+axis1.Transforms.Add(new Translate(0, 0.5f, 0));
 axis1.Add(GeometryFactory.CreateBox(0.4f, 0.4f, 0.4f));
-
-// 3. Unterarm (Arm 1) mit Nickachse 2 (Pitch: Rotation um Z-Achse)
+// Unterarm (Arm 1) & Oberarm (Arm 2)
 Group arm1 = new Group("Arm1");
-arm1.Transforms.Add(new Rotate(angle: joint2Angle, 0, 0, 1));
-arm1.Add(GeometryFactory.CreateCylinder(radius: 0.15f, height: 2.0f));
-
-// 4. Oberarm (Arm 2) an der Spitze von Arm 1 anhängen (L = 2.0)
+arm1.Transforms.Add(new Rotate(joint2Angle, 0, 0, 1));
+arm1.Add(GeometryFactory.CreateCylinder(0.15f, 2.0f));
 Group arm2 = new Group("Arm2");
 arm2.Transforms.Add(new Translate(0, 2.0f, 0));
-arm2.Transforms.Add(new Rotate(angle: joint3Angle, 0, 0, 1));
-arm2.Add(GeometryFactory.CreateCylinder(radius: 0.1f, height: 1.5f));
-
+arm2.Transforms.Add(new Rotate(joint3Angle, 0, 0, 1));
+arm2.Add(GeometryFactory.CreateCylinder(0.1f, 1.5f));
 arm1.Add(arm2); axis1.Add(arm1); robot.Add(axis1);
 ```
 
@@ -1443,27 +1430,20 @@ Die intuitive Bedienung der Orbit-Kamera wird über drei WPF-Mausereignisse des 
 ```csharp
 public class OrbitCamera
 {
-    public double TargetX { get; set; } = 0.0;
-    public double TargetY { get; set; } = 0.0;
-    public double TargetZ { get; set; } = 0.0;
+    public double TargetX { get; set; }
+    public double TargetY { get; set; }
+    public double TargetZ { get; set; }
+    public double Azimuth { get; set; } = 45.0;   // Drehung um Y in Grad
+    public double Elevation { get; set; } = 30.0; // Neigung [-89, +89]
+    public double Distance { get; set; } = 15.0;  // Radius
 
-    public double Azimuth { get; set; } = 45.0;    // Drehung um Y-Achse in Grad
-    public double Elevation { get; set; } = 30.0;  // Neigung in Grad [-89, +89]
-    public double Distance { get; set; } = 15.0;   // Abstand zum Zielpunkt
-
-    public double MinDistance { get; set; } = 1.0;
-    public double MaxDistance { get; set; } = 500.0;
-
-    public void Rotate(double deltaAzimuth, double deltaElevation)
+    public void Rotate(double dAzimuth, double dElevation)
     {
-        Azimuth = (Azimuth + deltaAzimuth) % 360.0;
-        Elevation = Math.Clamp(Elevation + deltaElevation, -89.0, 89.0);
+        Azimuth = (Azimuth + dAzimuth) % 360.0;
+        Elevation = Math.Clamp(Elevation + dElevation, -89.0, 89.0);
     }
-
-    public void Zoom(double deltaZoom)
-    {
-        Distance = Math.Clamp(Distance - deltaZoom, MinDistance, MaxDistance);
-    }
+    public void Zoom(double deltaZoom) =>
+        Distance = Math.Clamp(Distance - deltaZoom, 1.0, 500.0);
 ```
 
 ---
@@ -1473,57 +1453,69 @@ public class OrbitCamera
 ```csharp
     public void Apply(OpenGL gl)
     {
-        // 1. Umrechnung der Kugelkoordinaten in das Bogenmaß (Radians)
-        double radAzimuth = Azimuth * Math.PI / 180.0;
-        double radElevation = Elevation * Math.PI / 180.0;
+        // 1. Kugelkoordinaten in Bogenmaß (Radians)
+        double radAz = Azimuth * Math.PI / 180.0;
+        double radEl = Elevation * Math.PI / 180.0;
 
-        // 2. Berechnung der Kameraposition (Eye) im kartesischen Raum
-        double eyeX = TargetX + Distance * Math.Cos(radElevation) * Math.Sin(radAzimuth);
-        double eyeY = TargetY + Distance * Math.Sin(radElevation);
-        double eyeZ = TargetZ + Distance * Math.Cos(radElevation) * Math.Cos(radAzimuth);
+        // 2. Kameraposition (Eye) im kartesischen Raum
+        double eyeX = TargetX + Distance * Math.Cos(radEl) * Math.Sin(radAz);
+        double eyeY = TargetY + Distance * Math.Sin(radEl);
+        double eyeZ = TargetZ + Distance * Math.Cos(radEl) * Math.Cos(radAz);
 
-        // 3. View-Matrix in OpenGL setzen (Kamera blickt auf Target)
-        gl.LookAt(eyeX, eyeY, eyeZ,
-                  TargetX, TargetY, TargetZ,
-                  0.0, 1.0, 0.0);
+        // 3. View-Matrix in OpenGL setzen
+        gl.LookAt(eyeX, eyeY, eyeZ, TargetX, TargetY, TargetZ, 0, 1, 0);
     }
 }
 ```
 
 ---
 
-### Einbindung in Render-Loop und WPF-Events
+### Einbindung in WPF-Events: Drag & Zoom
 
 ```csharp
-private OrbitCamera _camera = new OrbitCamera { Distance = 10.0, Elevation = 25.0 };
-private Point _lastMousePosition;
+private OrbitCamera _cam = new() { Distance = 10.0, Elevation = 25.0 };
+private Point _lastPos;
 
-private void OnMouseDown(object sender, MouseButtonEventArgs e)
+private void OnMouseDown(object s, MouseButtonEventArgs e)
 {
-    if (e.LeftButton == MouseButtonState.Pressed) {
-        _lastMousePosition = e.GetPosition(openGLControl);
-        openGLControl.CaptureMouse();
-    }
+    if (e.LeftButton != MouseButtonState.Pressed) return;
+    _lastPos = e.GetPosition(openGLControl);
+    openGLControl.CaptureMouse();
 }
-private void OnMouseMove(object sender, MouseEventArgs e)
+private void OnMouseUp(object s, MouseButtonEventArgs e) => 
+    openGLControl.ReleaseMouseCapture();
+private void OnMouseWheel(object s, MouseWheelEventArgs e)
 {
-    if (openGLControl.IsMouseCaptured && e.LeftButton == MouseButtonState.Pressed) {
-        Point current = e.GetPosition(openGLControl);
-        double dx = current.X - _lastMousePosition.X;
-        double dy = current.Y - _lastMousePosition.Y;
-        _camera.Rotate(dx * 0.4, -dy * 0.4);
-        _lastMousePosition = current;
-        openGLControl.DoRender();
-    }
-}
-private void OnMouseUp(object sender, MouseButtonEventArgs e) => openGLControl.ReleaseMouseCapture();
-
-private void OnMouseWheel(object sender, MouseWheelEventArgs e)
-{
-    _camera.Zoom(e.Delta * 0.01);
+    _cam.Zoom(e.Delta * 0.01);
     openGLControl.DoRender();
 }
 ```
+
+- `CaptureMouse()` garantiert kontinuierliche Verfolgung über Fensterränder hinaus.
+- `openGLControl.DoRender()` stößt den Neuzeichen-Zyklus sofort an.
+
+---
+
+### Einbindung in WPF-Events: MouseMove & Drehung
+
+```csharp
+private void OnMouseMove(object sender, MouseEventArgs e)
+{
+    if (!openGLControl.IsMouseCaptured || 
+        e.LeftButton != MouseButtonState.Pressed) return;
+
+    Point current = e.GetPosition(openGLControl);
+    double dx = current.X - _lastPos.X;
+    double dy = current.Y - _lastPos.Y;
+
+    _camera.Rotate(dx * 0.4, -dy * 0.4);
+    _lastPos = current;
+    openGLControl.DoRender();
+}
+```
+
+- Skalierungsfaktor ($0{,}4$) passt die Drehgeschwindigkeit an die Mausauflösung an.
+- Vertikale Bewegung ($\Delta y$) steuert Elevation, horizontale ($\Delta x$) Azimuth.
 
 ---
 

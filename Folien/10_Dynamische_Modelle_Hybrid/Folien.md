@@ -679,33 +679,54 @@ Außerdem wurden die Methoden `CalcualteZeroCrossings` und `Update-States`eingef
 
 ---
 
-### Softwarearchitektur: Die Basisklasse Block
+### Softwarearchitektur: Die Basisklasse `Block`
+
+<div class="columns">
+<div class="one">
 
 ```csharp
 public abstract class Block
 {
-    public List<StateDeclaration> ContinuousStates { get; }
-    public List<StateDeclaration> DiscreteStates { get; }
-    public List<InputDeclaration> Inputs { get; }
-    public List<OutputDeclaration> Outputs { get; }
-    public List<ZeroCrossingDeclaration> ZeroCrossings { get; }
+    // Deklarationen der Schnittstellen
+    public List<StateDeclaration> 
+        ContinuousStates { get; }
+    public List<StateDeclaration> 
+        DiscreteStates { get; }
+    public List<InputDeclaration> 
+        Inputs { get; }
+    public List<OutputDeclaration> 
+        Outputs { get; }
+    public List<ZeroCrossingDeclaration> 
+        ZeroCrossings { get; }
 
     public SampleTime SampleTime { get; }
-
-    virtual public void InitializeStates(
-        double[] cStates, double[] dStates);
-    virtual public double GetNextVariableHitTime(
-        double time, double[] cStates, double[] dStates, double[] inputs);
-    virtual public void CalculateOutputs(
-        double time, double[] cStates, double[] dStates, double[] inputs, double[] outputs);
-    virtual public void CalculateDerivatives(
-        double time, double[] cStates, double[] dStates, double[] inputs, double[] derivatives);
-    virtual public void CalculateZeroCrossings(
-        double time, double[] cStates, double[] dStates, double[] inputs, double[] zeroCrossings);
-    virtual public void UpdateStates(
-        double time, double[] cStates, double[] dStates, double[] inputs);
 }
 ```
+
+</div>
+<div class="one">
+
+```csharp
+// Lifecycle- & Berechnungs-Methoden
+virtual public void InitializeStates(
+    double[] cStates, double[] dStates);
+virtual public double GetNextVariableHitTime(
+    double t, double[] c, double[] d, double[] u);
+virtual public void CalculateOutputs(
+    double t, double[] c, double[] d, 
+    double[] u, double[] y);
+virtual public void CalculateDerivatives(
+    double t, double[] c, double[] d, 
+    double[] u, double[] dx);
+virtual public void CalculateZeroCrossings(
+    double t, double[] c, double[] d, 
+    double[] u, double[] zc);
+virtual public void UpdateStates(
+    double t, double[] c, double[] d, double[] u);
+```
+
+</div>
+</div>
 
 ---
 
@@ -758,25 +779,21 @@ Das Konzept der Abtastzeit (`SampleTime`) wurde eingeführt, um dem Solver mitzu
 
 ```csharp
 public abstract class SampleTime { }
-
 public class ContinuousSampleTime : SampleTime { }
+public class ConstantSampleTime : SampleTime { }
+public class InheritedSampleTime : SampleTime { }
 
 public class DiscreteSampleTime : SampleTime
 {
     public double Offset { get; }
     public double Period { get; }
-    public DiscreteSampleTime(double offset, double period) { /* ... */ }
+    public DiscreteSampleTime(double o, double p) { Offset = o; Period = p; }
 }
-
 public class VariableSampleTime : SampleTime
 {
     public double Offset { get; }
-    public VariableSampleTime(double offset) { /* ... */ }
+    public VariableSampleTime(double o) { Offset = o; }
 }
-
-public class ConstantSampleTime : SampleTime { }
-
-public class InheritedSampleTime : SampleTime { }
 ```
 
 </div>
@@ -800,7 +817,8 @@ Der `ZeroOrderHoldBlock` realisiert die klassische Abtastung und Haltefunktion (
     -   Der Ausgang (`CalculateOutputs`) ist immer der aktuelle Wert des Zustands.
 
 ```csharp
-public override void UpdateStates(double time, double[] cStates, double[] dStates, double[] inputs)
+public override void UpdateStates(double time, 
+    double[] cStates, double[] dStates, double[] inputs)
 {
     // Speichern des aktuellen Eingangswerts im diskreten Zustand
     dStates[0] = inputs[0];
@@ -820,7 +838,8 @@ Der `DiscreteTimeIntegratorBlock` führt eine Integration über die Zeit in disk
     -   Bei jedem Schritt wird das Produkt aus Eingangswert und Periodendauer zum Zustand addiert.
 
 ```csharp
-public override void UpdateStates(double time, double[] cStates, double[] dStates, double[] inputs)
+public override void UpdateStates(double time, 
+    double[] cStates, double[] dStates, double[] inputs)
 {
     // Integration: Neuer Zustand = Alter Zustand + Eingang * Zeitschritt
     double period = ((DiscreteSampleTime)SampleTime).Period;
@@ -840,7 +859,8 @@ Dieser Block dient der Detektion von Schwellwert-Unterschreitungen (Events), ohn
 -   Der Solver kann durch Interpolation den exakten Zeitpunkt $t_e$ des Nulldurchgangs ($z=0$) finden ("Zero Crossing Detection").
 
 ```csharp
-public override void CalculateZeroCrossings(..., double[] inputs, double[] zeroCrossings)
+public override void CalculateZeroCrossings(
+    ..., double[] inputs, double[] zeroCrossings)
 {
     // Das Ereignis tritt auf, wenn diese Funktion das Vorzeichen wechselt
     zeroCrossings[0] = inputs[0] - LowerLimit;
@@ -858,7 +878,8 @@ Ein kontinuierlicher Integrator, dessen Zustand durch ein diskretes Ereignis zur
 -   **UpdateStates:** Wird ausgeführt, wenn der Solver einen Nulldurchgang detektiert. Setzt den Integrator-Zustand sprunghaft auf einen neuen Wert.
 
 ```csharp
-public override void UpdateStates(double time, double[] cStates, ..., double[] inputs)
+public override void UpdateStates(
+    double time, double[] cStates, ..., double[] inputs)
 {
     // Wenn das Trigger-Signal aktiv ist (hier == 1)
     if (inputs[1] == 1)
@@ -880,12 +901,13 @@ Ein Integrator mit einer harten unteren Schranke (wichtig z.B. beim Bouncing Bal
 -   **UpdateStates:** Korrigiert den Zustand beim Erreichen oder Unterschreiten des Limits.
 
 ```csharp
-public override void UpdateStates(double time, double[] cStates, ..., double[] inputs)
+public override void UpdateStates(
+    double time, double[] cStates, ..., double[] inputs)
 {
     // Falls der Zustand unter das Limit gefallen ist
     if (cStates[0] < LowerLimit)
     {
-        // ... wird er auf einen korrigierten Wert (z.B. Position beim Stoß) gesetzt
+        // ... korrigierter Wert (z.B. Position beim Stoß)
         cStates[0] = inputs[1];
     }
 }
@@ -1017,54 +1039,47 @@ $$\text{sgn}(z(t_a)) \neq \text{sgn}(z(t_b)) \iff z(t_a) \cdot z(t_b) \le 0$$
 
 ### C#-Implementierung: Robuste Intervall-Bisektion
 
+Findet den Nulldurchgangs-Zeitpunkt $t_{mid}$ im Intervall $[t, t + \Delta t]$:
+
 ```csharp
-// 1. Probesprung & Vorzeichenwechsel detektieren
+// 1. Vorzeichenwechsel nach Probesprung prüfen
 double zStart = CalculateZeroCrossings(time);
 IntegrateContinuousStates(timeStep);
 double zEnd = CalculateZeroCrossings(time + timeStep);
-
-if (Math.Sign(zStart) != Math.Sign(zEnd))
+if (Math.Sign(zStart) == Math.Sign(zEnd)) return;
+// 2. Bisektion auf [tLeft, tRight] zur Nullstellensuche
+double tLeft = time, tRight = time + timeStep, tMid = tRight, zMid = zEnd;
+while ((tRight - tLeft) > TimeTol && Math.Abs(zMid) > ZeroTol)
 {
-    double tLeft = time, tRight = time + timeStep;
-    double tMid = tRight, zMid = zEnd;
-    int iter = 0;
-
-    // 2. Echte Bisektion auf [tLeft, tRight]
-    while ((tRight - tLeft) > TimeTol && Math.Abs(zMid) > ZeroTol && iter++ < MaxIter)
-    {
-        tMid = 0.5 * (tLeft + tRight);
-        ResetStates();
-        IntegrateContinuousStates(tMid - time);
-        CalculateOutputs(tMid);
-        zMid = CalculateZeroCrossings(tMid);
-
-        if (Math.Sign(zMid) == Math.Sign(zStart)) tLeft = tMid;
-        else tRight = tMid;
-    }
+    tMid = 0.5 * (tLeft + tRight);
+    ResetStates();
+    IntegrateContinuousStates(tMid - time);
+    zMid = CalculateZeroCrossings(tMid);
+    if (Math.Sign(zMid) == Math.Sign(zStart)) tLeft = tMid;
+    else tRight = tMid;
+}
 ```
 
 ---
 
 ### C#-Implementierung: Zeno-Schwelle & Restschritt
 
-```csharp
-    // 3. Zeno-Abfangbedingung: Haftzustand bei geringer kinetischer Energie
-    if (Math.Abs(velocity) < StickingVelocityTol && Math.Abs(position) < ZeroTol)
-    {
-        EnterContactMode(); // Moduswechsel: v = 0, y = 0, a = 0
-    }
-    else
-    {
-        UpdateStates(tMid); // Diskretes Stoßereignis ausführen (v = -e * v)
-    }
+Behandelt das detektierte Ereignis bei $t_{mid}$ und integriert das Restintervall:
 
-    // 4. Restliches Intervall [tMid, time + timeStep] fertig integrieren
-    double dtRemaining = (time + timeStep) - tMid;
-    if (dtRemaining > 1e-9)
-    {
-        IntegrateContinuousStates(dtRemaining);
-        CalculateOutputs(time + timeStep);
-    }
+```csharp
+// 3. Zeno-Abfangbedingung: Haftzustand bei minimaler Energie
+bool nearZero = Math.Abs(velocity) < StickingTol && Math.Abs(pos) < ZeroTol;
+if (nearZero)
+    EnterContactMode(); // Moduswechsel: v = 0, y = 0, a = 0
+else
+    UpdateStates(tMid); // Diskretes Stoßereignis (v = -e * v)
+
+// 4. Restliches Intervall [tMid, time + dt] fertig integrieren
+double dtRemaining = (time + timeStep) - tMid;
+if (dtRemaining > 1e-9)
+{
+    IntegrateContinuousStates(dtRemaining);
+    CalculateOutputs(time + timeStep);
 }
 ```
 
@@ -1372,9 +1387,10 @@ Er prüft den Eintrag in `NextVariableHitTimes` (der dynamisch aktualisiert wurd
 
 foreach (Block b in Blocks)
 {
-    if (b.SampleTime is DiscreteSampleTime || b.SampleTime is VariableSampleTime)
+    if (b.SampleTime is DiscreteSampleTime || 
+        b.SampleTime is VariableSampleTime)
     {
-        // Reduziere den Zeitschritt, um den nächsten "Hit" nicht zu verpassen
+        // Reduziere Zeitschritt, um nächsten "Hit" nicht zu verpassen
         timeStep = Math.Min(timeStep, NextVariableHitTimes[b] - time);
     }
 }
