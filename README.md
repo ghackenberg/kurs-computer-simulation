@@ -11,8 +11,6 @@ Der Kurs vermittelt den Studierenden des Bachelor-Studiengangs *Automatisierungs
 
 Alle Konzepte werden von vollständigen, lauffähigen C#-Implementierungen in **WPF** und **.NET 8/.NET 10** begleitet.
 
----
-
 ## Kursinhalte
 
 | Kapitel | Inhalt |
@@ -29,8 +27,6 @@ Alle Konzepte werden von vollständigen, lauffähigen C#-Implementierungen in **
 | <img src="./Folien/09_Dynamische_Modelle_Diskret/Titelbild.jpg" width="240"> | **[Kapitel 9: Diskrete Dynamische Modelle](./Folien/09_Dynamische_Modelle_Diskret/Folien.md)**<br>Ereignisdiskrete Simulation (DES) von Warteschlangen und Produktionssystemen, Zufallsvariablen (Inversionsmethode, Box-Muller), parallele Monte-Carlo-Simulation und numerisch stabiler Welford-Akkumulator. |
 | <img src="./Folien/10_Dynamische_Modelle_Hybrid/Titelbild.jpg" width="240"> | **[Kapitel 10: Hybride Dynamische Modelle](./Folien/10_Dynamische_Modelle_Hybrid/Folien.md)**<br>Kopplung kontinuierlicher Dynamik mit diskreten Zustandsübergängen, exakte Nullstellensuche (Vorzeichenwechsel-Bisektion), Zeno-Effekt mit Sticking-Threshold und hybride S-Functions. |
 | <img src="./Folien/11_Epilog/Titelbild.jpg" width="240"> | **[Kapitel 11: Epilog & Synthese](./Folien/11_Epilog/Folien.md)**<br>Vergleichende Modell-Taxonomie, Multi-Fidelity-Simulation im Produktlebenszyklus, Co-Simulation nach dem FMI/FMU-Standard, Virtuelle Inbetriebnahme (VIBN / HiL) und ingenieurmäßiger Werkzeugkasten. |
-
----
 
 ## Software-Architektur & Quellcode
 
@@ -52,8 +48,6 @@ dotnet build Quellen/Quellen.sln -c Release
 # Ausführen der Unit-Testsuite (14/14 Tests)
 dotnet test Quellen/Quellen.sln -c Release
 ```
-
----
 
 ## Qualitätssicherung & Folienvalidierung
 
