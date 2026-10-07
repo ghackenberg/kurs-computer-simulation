@@ -547,13 +547,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Vektorbefehle werden direkt in einen kompakten **`DrawingContext`** geschrieben.
 - Die Zeichenbefehle werden hardwarebeschleunigt als serialisierte Vektor-Streams direkt an die GPU übergeben.
 
-```
-UIElement-Hierarchie (Schwergewicht):
-[Shape] ---> [FrameworkElement] ---> [UIElement] ---> [Visual]
-
-Leichtgewicht-Hierarchie:
-[DrawingVisual] ------------------------------------> [Visual]
-```
+![w:700](./Diagramme/WPF_Visual_Hierarchie.svg)
 
 ---
 

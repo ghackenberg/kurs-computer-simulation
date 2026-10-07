@@ -1,0 +1,14 @@
+flowchart LR
+    W["Sollwert w(t)<br>θ_soll = 1 rad"] -->|"+"| Sum1(( ))
+    Sum1 -->|"e(t)"| PID["PID-Regler<br>Kp + Ki/s + Kd·s"]
+    PID -->|"u_raw"| Sat["Sättigung & Clamping<br>±10 V"]
+    Sat -->|"u(t)"| Motor["DC-Motor (PT1)<br>Tm·ω' + ω = Km·u"]
+    Motor -->|"ω(t)"| Int["Wegintegrator (1/s)<br>θ' = ω"]
+    Int -->|"θ(t)"| Y["Istwert y(t)"]
+    Y -->|"-"| Sum1
+    Sat -.->|"Anti-Windup Freeze"| PID
+
+    style PID fill:#E8F0FE,stroke:#1A73E8,stroke-width:2px;
+    style Sat fill:#FCE8E6,stroke:#D93025,stroke-width:2px;
+    style Motor fill:#E6F4EA,stroke:#1E8E3E,stroke-width:2px;
+    style Int fill:#FEF7E0,stroke:#F9AB00,stroke-width:2px;

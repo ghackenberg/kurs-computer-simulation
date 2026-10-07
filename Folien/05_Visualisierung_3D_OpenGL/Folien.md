@@ -177,7 +177,7 @@ Jede dieser Komponenten wird für jede Lichtquelle berechnet und aufsummiert.
 </div>
 <div>
 
-![width:900px](./Diagramme/Phong - Gesamt.svg)
+![width:900px](./Diagramme/Phong%20-%20Gesamt.svg)
 
 </div>
 </div>
@@ -1218,15 +1218,7 @@ In der Robotik und Mechatronik (z.B. KUKA, ABB, Fanuc, TwinCAT Kinematics) beste
 </div>
 <div>
 
-```
-BaseNode (Säule)
- └── Rotate (Achse 1: Yaw um Y)
-      └── Arm1Node (Zylinder L1)
-           └── Translate (Armlänge L1)
-                └── Rotate (Achse 2: Pitch um Z)
-                     └── Arm2Node (Zylinder L2)
-                          └── ToolCenterPoint (Greifer)
-```
+![w:520](./Diagramme/Szenengraph_Roboterarm.svg)
 
 </div>
 </div>
@@ -1473,7 +1465,7 @@ public class OrbitCamera
 ### Einbindung in WPF-Events: Drag & Zoom
 
 ```csharp
-private OrbitCamera _cam = new() { Distance = 10.0, Elevation = 25.0 };
+private OrbitCamera _camera = new() { Distance = 10.0, Elevation = 25.0 };
 private Point _lastPos;
 
 private void OnMouseDown(object s, MouseButtonEventArgs e)
@@ -1486,7 +1478,7 @@ private void OnMouseUp(object s, MouseButtonEventArgs e) =>
     openGLControl.ReleaseMouseCapture();
 private void OnMouseWheel(object s, MouseWheelEventArgs e)
 {
-    _cam.Zoom(e.Delta * 0.01);
+    _camera.Zoom(e.Delta * 0.01);
     openGLControl.DoRender();
 }
 ```

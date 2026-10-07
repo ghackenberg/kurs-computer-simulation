@@ -21,6 +21,7 @@ math: mathjax
 - 8.4: Softwarearchitektur für Simulation
 - 8.5: Lösungsalgorithmen für Simulation
 - 8.6: Höhere Integrationsverfahren (Heun & Runge-Kutta 4)
+- 8.7: Mechatronisches Leitbeispiel: Geschlossener Regelkreis
 
 ---
 
@@ -1614,6 +1615,150 @@ foreach (var b in Blocks)
 
 ---
 
+## 8.7: Mechatronisches Leitbeispiel: Geschlossener Regelkreis
+
+Dieser Abschnitt demonstriert die Systemsimulation an einem Kernproblem der Automatisierungstechnik:
+
+- Modellierung eines DC-Servomotors als kontinuierliche PT1-I-Strecke
+- Entwurf eines PID-Reglers mit Sollwertsprung
+- Nichtlineare Stellgrößenbegrenzung (Sättigung der Motorspannung)
+- Beherrschung des Integrator-Windup durch dynamisches Anti-Windup (Clamping)
+- Gekoppelte Lösung des 3-Zustandssystems mittels `RungeKutta4Solver`
+
+---
+
+<div class="columns">
+<div class="three">
+
+### DC-Servomotor: Kontinuierliches Streckenmodell
+
+Die Drehzahl $\omega(t)$ und Position $\theta(t)$ folgen dem DGL-System:
+
+$$\dot{\theta}(t) = \omega(t), \quad \dot{\omega}(t) = -\frac{1}{T_m} \omega(t) + \frac{K_m}{T_m} u(t)$$
+
+- $\theta(t)$: Position der Abtriebswelle [$\mathrm{rad}$]
+- $\omega(t)$: Drehzahl / Winkelgeschwindigkeit [$\mathrm{rad/s}$]
+- $u(t)$: Vom Verstärker angelegte Spannung [$\mathrm{V}$]
+- $T_m = 0{,}05\,\mathrm{s}$: Mechanische Zeitkonstante
+- $K_m = 2{,}5\,\mathrm{rad/(s \cdot V)}$: Übertragungsbeiwert
+
+Die Endstufe begrenzt die Spannung auf $u(t) \in [-10\,\mathrm{V}, +10\,\mathrm{V}]$.
+
+</div>
+<div class="two">
+
+![w:480](./Diagramme/Blockschaltbild_DCServo.svg)
+
+$$\mathbf{x}_{\text{Strecke}} = \begin{pmatrix} \theta \\ \omega \end{pmatrix}, \quad \dot{\mathbf{x}}_{\text{Strecke}} = \mathbf{A}\mathbf{x} + \mathbf{b}u$$
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div class="two">
+
+### Sättigung & Anti-Windup (Clamping)
+
+Wird ein Sollwertsprung $w(t) = \theta_{\text{soll}}$ vorgegeben:
+
+1. **Integrator-Windup:** Der Motor kann wegen $u_{\max} = 10\,\mathrm{V}$ nicht schneller beschleunigen. Der Integrator akkumuliert den Fehler $e(t)$ unbegrenzt weiter!
+2. **Überschwingen:** Am Ziel ($e=0$) ist der Integrator überladen und baut Ladung erst nach starkem Überschwingen ab.
+3. **Lösung: Anti-Windup Clamping:**
+   $$\dot{x}_I = \begin{cases} 0, & |u_{\text{raw}}| \ge u_{\max} \land e \cdot u_{\text{raw}} > 0 \\ K_i \cdot e(t), & \text{sonst} \end{cases}$$
+   Der Integrator stoppt sofort, solange der Aktor am Anschlag steht!
+
+</div>
+<div class="two">
+
+![w:480](./Illustrationen/AntiWindup_Vergleich.png)
+
+*Mit Anti-Windup Clamping (grün) reagiert die Achse aperiodisch stabil ohne 60% Überschwingen (rot).*
+
+</div>
+</div>
+
+---
+
+### C#-Implementierung: `ClosedLoopMotorBlock` (Setup)
+
+```csharp
+public class ClosedLoopMotorBlock : Block
+{
+    public double Kp = 15.0, Ki = 40.0, Kd = 0.5;
+    public double Tm = 0.05, Km = 2.5, UMax = 10.0;
+    public double TargetPosition = 1.0; // Sollwert: 1 Radian Sprung
+
+    public ClosedLoopMotorBlock()
+    {
+        // 3 kontinuierliche Zustände: theta, omega, x_I
+        ContinuousStates.AddRange(new[] { 0.0, 0.0, 0.0 });
+    }
+}
+```
+
+- Kapselt die Streckenparameter, Reglerverstärkungen und Begrenzungsschranken.
+- Drei Zustandsvariablen werden im gemeinsamen Vektor des Modells registriert.
+
+---
+
+### C#-Implementierung: `ClosedLoopMotorBlock` (Dynamik)
+
+```csharp
+public override void CalculateDerivatives(double time)
+{
+    double theta = ContinuousStates[0], omega = ContinuousStates[1];
+    double xI = ContinuousStates[2], error = TargetPosition - theta;
+    double uRaw = Kp * error + xI - Kd * omega; // D-Anteil auf Istwert
+    double uSat = Math.Clamp(uRaw, -UMax, UMax);
+
+    // Anti-Windup Clamping: Einfrieren bei Übersteuerung
+    bool isSat = Math.Abs(uRaw) >= UMax, sameSign = (error * uRaw) > 0.0;
+    double dxI = (isSat && sameSign) ? 0.0 : Ki * error;
+
+    Derivatives[0] = omega;
+    Derivatives[1] = (-1.0 / Tm) * omega + (Km / Tm) * uSat;
+    Derivatives[2] = dxI;
+}
+```
+
+- Clamping verhindert Integrator-Überladung ohne Beeinflussung des P-Anteils.
+
+---
+
+<div class="columns">
+<div class="three">
+
+### Simulation mit `RungeKutta4Solver`
+
+Der mechatronische Regelkreis wird mit unserem RK4-Solver simuliert:
+
+```csharp
+var model = new Model();
+var motor = new ClosedLoopMotorBlock();
+model.Blocks.Add(motor);
+
+var solver = new RungeKutta4Solver(model) { TimeStep = 0.0005 };
+while (solver.Time <= 0.6) // 600 ms Regelung
+{
+    solver.Step();
+}
+```
+
+- **Zeitschritt $h = 0{,}5\,\mathrm{ms}$:** Löst die Polstelle $T_m = 50\,\mathrm{ms}$ mit $100$ Schritten ab.
+- RK4 bewältigt die Nichtlinearität der Sättigung mit aperiodischem Einschwingen.
+
+</div>
+<div class="two">
+
+![w:460](./Screenshots/ClosedLoop_RK4_StepResponse.png)
+
+</div>
+</div>
+
+---
+
 # Zusammenfassung Kapitel 8
 
 - **Kontinuierliche dynamische Modelle** beschreiben Systeme mit kontinuierlicher Zeitentwicklung mittels **Differentialgleichungen**.
@@ -1622,3 +1767,4 @@ foreach (var b in Blocks)
 - **Banach-Fixpunktiteration** löst implizite Gleichungen und algebraische Schleifen iterativ ohne Berechnung einer Jacobi-Matrix.
 - **Mehrstufenverfahren (Heun RK2, klassisches RK4)** bieten dramatisch höhere Genauigkeit ($\mathcal{O}(h^2)$, $\mathcal{O}(h^4)$).
 - **Stabilität auf der Imaginärachse:** Erst ab RK4 können ungedämpfte Schwingungssysteme mit expliziten Verfahren stabil integriert werden ($h\omega_0 \le 2\sqrt{2}$).
+- **Mechatronischer Regelkreis & Anti-Windup:** Reale Aktorbegrenzung erfordert Clamping-Logik zur Verhinderung von Integrator-Windup; RK4 löst gekoppelte Zustände mit hoher Robustheit.

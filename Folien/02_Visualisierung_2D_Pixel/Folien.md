@@ -386,17 +386,7 @@ In der physikalischen Simulation repräsentiert ein Pixel eine Messgröße $v$ (
 </div>
 <div class="one">
 
-```
-Normierter Wert u ∈ [0, 1]
-         │
-         ▼
-  Index = (int)(u * 255)
-         │
-         ▼
- ┌───────────────┐
- │ LUT[Index]    │ ➔ 0xAARRGGBB
- └───────────────┘
-```
+![w:380](./Diagramme/LUT_Farbskala_Prinzip.svg)
 
 </div>
 </div>
@@ -493,13 +483,7 @@ Wir diskretisieren Raum und Zeit auf einem gleichmäßigen 2D-Gitter mit Schritt
 </div>
 <div class="one">
 
-```
-          T(i, j+1)
-              │
-T(i-1, j) ── T(i, j) ── T(i+1, j)
-              │
-          T(i, j-1)
-```
+![w:340](./Diagramme/FDM_5_Punkt_Stern.svg)
 
 **5-Punkt-Differenzenstern:**
 Temperatur am Punkt $(i, j)$ diffundiert zu den 4 direkten Nachbarn.

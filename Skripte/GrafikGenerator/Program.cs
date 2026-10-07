@@ -26,6 +26,7 @@ namespace GrafikGenerator
             GenerateSignalPlot(root);
             GenerateConvergencePlot(root);
             GenerateAusblickImages(root);
+            GenerateMotorPlots(root);
 
             Console.WriteLine("=== Alle Grafiken erfolgreich erzeugt ===");
         }
@@ -430,6 +431,117 @@ namespace GrafikGenerator
                 data.SaveTo(stream);
                 Console.WriteLine($"Erzeugt: {epilogDst}");
             }
+        }
+
+        static void GenerateMotorPlots(string root)
+        {
+            var illustrDir = Path.Combine(root, "Folien", "08_Dynamische_Modelle_Kontinuierlich", "Illustrationen");
+            var screensDir = Path.Combine(root, "Folien", "08_Dynamische_Modelle_Kontinuierlich", "Screenshots");
+            Directory.CreateDirectory(illustrDir);
+            Directory.CreateDirectory(screensDir);
+
+            double dt = 0.0005;
+            int n = 1200; // 0.6 seconds
+            double[] time = new double[n];
+            double[] thetaNoAW = new double[n];
+            double[] thetaWithAW = new double[n];
+            double[] uWithAW = new double[n];
+
+            // Simulation Helper
+            void Simulate(bool antiWindup, double[] outTheta, double[]? outU)
+            {
+                double theta = 0.0, omega = 0.0, xI = 0.0;
+                double Kp = 15.0, Ki = 40.0, Kd = 0.5;
+                double Tm = 0.05, Km = 2.5, UMax = 10.0;
+                double target = 1.0;
+
+                (double dTheta, double dOmega, double dxI, double uSat) Calc(double th, double om, double xi)
+                {
+                    double e = target - th;
+                    double uRaw = Kp * e + xi - Kd * om;
+                    double uSat = Math.Clamp(uRaw, -UMax, UMax);
+                    bool isSat = Math.Abs(uRaw) >= UMax;
+                    bool sameSign = (e * uRaw) > 0.0;
+                    double dxi = (antiWindup && isSat && sameSign) ? 0.0 : Ki * e;
+                    double dth = om;
+                    double dom = (-1.0 / Tm) * om + (Km / Tm) * uSat;
+                    return (dth, dom, dxi, uSat);
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    time[i] = i * dt;
+                    outTheta[i] = theta;
+
+                    var k1 = Calc(theta, omega, xI);
+                    if (outU != null) outU[i] = k1.uSat;
+
+                    var k2 = Calc(theta + 0.5 * dt * k1.dTheta, omega + 0.5 * dt * k1.dOmega, xI + 0.5 * dt * k1.dxI);
+                    var k3 = Calc(theta + 0.5 * dt * k2.dTheta, omega + 0.5 * dt * k2.dOmega, xI + 0.5 * dt * k2.dxI);
+                    var k4 = Calc(theta + dt * k3.dTheta, omega + dt * k3.dOmega, xI + dt * k3.dxI);
+
+                    theta += (dt / 6.0) * (k1.dTheta + 2 * k2.dTheta + 2 * k3.dTheta + k4.dTheta);
+                    omega += (dt / 6.0) * (k1.dOmega + 2 * k2.dOmega + 2 * k3.dOmega + k4.dOmega);
+                    xI += (dt / 6.0) * (k1.dxI + 2 * k2.dxI + 2 * k3.dxI + k4.dxI);
+                }
+            }
+
+            Simulate(false, thetaNoAW, null);
+            Simulate(true, thetaWithAW, uWithAW);
+
+            // 1. AntiWindup_Vergleich.png
+            var plot1 = new Plot();
+            var targetLine = plot1.Add.HorizontalLine(1.0);
+            targetLine.Color = Colors.Gray;
+            targetLine.LinePattern = LinePattern.Dashed;
+            targetLine.LineWidth = 1.5f;
+
+            var lineNoAW = plot1.Add.ScatterLine(time, thetaNoAW);
+            lineNoAW.Color = Colors.Crimson;
+            lineNoAW.LineWidth = 2.5f;
+            lineNoAW.LegendText = "Ohne Anti-Windup (Überschwingen 60%)";
+
+            var lineAW = plot1.Add.ScatterLine(time, thetaWithAW);
+            lineAW.Color = Colors.ForestGreen;
+            lineAW.LineWidth = 3.0f;
+            lineAW.LegendText = "Mit Anti-Windup Clamping (aperiodisch)";
+
+            plot1.Title("DC-Servomotor Schrittantwort: Anti-Windup Clamping");
+            plot1.XLabel("Zeit t [s]");
+            plot1.YLabel("Wellenposition θ(t) [rad]");
+            plot1.ShowLegend();
+            plot1.Axes.SetLimits(0, 0.6, -0.1, 1.8);
+            var file1 = Path.Combine(illustrDir, "AntiWindup_Vergleich.png");
+            plot1.SavePng(file1, 800, 480);
+            Console.WriteLine($"Erzeugt: {file1}");
+
+            // 2. ClosedLoop_RK4_StepResponse.png
+            var plot2 = new Plot();
+            var lineTarget2 = plot2.Add.HorizontalLine(1.0);
+            lineTarget2.Color = Colors.Gray;
+            lineTarget2.LinePattern = LinePattern.Dashed;
+            lineTarget2.LineWidth = 1.5f;
+
+            var lineTheta = plot2.Add.ScatterLine(time, thetaWithAW);
+            lineTheta.Color = Colors.SteelBlue;
+            lineTheta.LineWidth = 3.0f;
+            lineTheta.LegendText = "Position θ(t) [rad]";
+
+            // Normalize u / 10 to show on same axis with ±1.0 V/10V
+            double[] uNorm = uWithAW.Select(u => u / 10.0).ToArray();
+            var lineU = plot2.Add.ScatterLine(time, uNorm);
+            lineU.Color = Colors.OrangeRed;
+            lineU.LineWidth = 2.0f;
+            lineU.LegendText = "Stellspannung u(t) / 10 [normiert]";
+
+            plot2.Title("Geschlossener Regelkreis: RK4-Simulation (dt = 0.5 ms)");
+            plot2.XLabel("Zeit t [s]");
+            plot2.YLabel("Amplitude (Position [rad] / normierte Spannung)");
+            plot2.ShowLegend();
+            plot2.Axes.SetLimits(0, 0.6, -0.2, 1.3);
+            var file2 = Path.Combine(screensDir, "ClosedLoop_RK4_StepResponse.png");
+            plot2.SavePng(file2, 800, 480);
+            Console.WriteLine($"Erzeugt: {file2}");
         }
     }
 }
