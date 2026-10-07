@@ -2,13 +2,19 @@
 
 @import 'default';
 
+:root {
+    --fhooe-blue: #004B96;
+}
+
 section {
     position: relative;
 
     font-size: 1.5rem;
+    padding: 40px 60px;
 }
 
-section::before {
+/* FH-Logo: Nur auf Inhaltsfolien anzeigen, Deckblätter (Title & Lead) schützen */
+section:not(.title):not(.lead)::before {
     content: "";
 
     display: block;
@@ -20,24 +26,26 @@ section::before {
 
     z-index: 100;
 
-    width: 5rem;
-    height: 5rem;
+    width: 4.5rem;
+    height: 4.5rem;
 
-    background-color: #004B96;    
-    background-image: url(../../Themen/fhooe.svg);
+    background-color: var(--fhooe-blue);    
+    /* Portables SVG-Signet via Data-URI */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='20,20 80,20 80,80 50,80 50,50 20,50' fill='white'/></svg>");
     background-repeat: no-repeat;
-    background-size: 66%;
+    background-size: 65%;
     background-position: center;
 }
 
+/* Spalten-Layout: Saubere Bündigkeit an der Oberkante */
 section div.columns {
     display: flex;
 
     flex-direction: row;
 
-    align-items: center;
+    align-items: flex-start;
 
-    gap: 2rem;
+    gap: 30px;
 }
 
 section div.columns.top {
@@ -62,6 +70,19 @@ section div.columns > div.five {
 }
 section div.columns > div.six {
     flex-grow: 6;
+}
+
+/* Typografie für Code-Blöcke */
+section pre {
+    font-size: 0.72em;
+    line-height: 1.35;
+    max-height: 500px;
+    overflow-x: auto;
+    border-radius: 4px;
+}
+
+section code {
+    font-family: 'Consolas', 'Cascadia Code', 'Courier New', monospace;
 }
 
 ins.fk {

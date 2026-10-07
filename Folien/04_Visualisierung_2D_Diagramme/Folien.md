@@ -7,6 +7,12 @@ paginate: true
 math: mathjax
 ---
 
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
+
+![bg right](./Titelbild.jpg)
+
 # Kapitel 4: 2D-Visualisierung (Diagramme & Graphen)
 
 Dieses Kapitel umfasst die folgenden Abschnitte:
@@ -96,7 +102,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div>
 
-![](https://scottplot.net/images/brand/favicon.svg)
+![](./Illustrationen/ScottPlot_Logo.svg)
 
 </div>
 </div>

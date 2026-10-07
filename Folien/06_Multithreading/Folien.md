@@ -7,6 +7,12 @@ paginate: true
 math: mathjax
 ---
 
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
+
+![bg right](./Titelbild.jpg)
+
 # Kapitel 6: Multithreading & Parallele Simulation
 
 Dieses Kapitel umfasst die folgenden Abschnitte:

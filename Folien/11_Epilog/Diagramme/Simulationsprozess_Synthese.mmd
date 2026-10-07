@@ -1,0 +1,16 @@
+flowchart TD
+    R["<b>1. Reales Industriesystem</b><br/>Physisches mechatronisches Problem"]
+    M["<b>2. Mathematisches Modell</b> (Kap. 7–10)<br/>DGL, DAE, FEM, Diskrete Ereignisse"]
+    S["<b>3. Numerik & Solver in C#</b> (.NET 8)<br/>Euler, Heun, RK4, Math.NET, S-Functions"]
+    D["<b>4. Berechnungsdaten</b><br/>Zeitreihen, Zustandsvektoren, Histogramme"]
+    V["<b>5. Interaktive Visualisierung</b> (Kap. 2–5)<br/>WriteableBitmap, DrawingVisual, ScottPlot, SharpGL"]
+    Z["<b>6. Digitaler Zwilling & Erkenntnis</b><br/>Virtuelle Inbetriebnahme, Optimierung, Closed-Loop"]
+
+    R ==> M ==> S ==> D ==> V ==> Z
+
+    style R fill:#e8f4fd,stroke:#004B96,stroke-width:1.5px
+    style M fill:#f0f4f8,stroke:#004B96,stroke-width:1.5px
+    style S fill:#e8f8f5,stroke:#00897b,stroke-width:1.5px
+    style D fill:#fff8e1,stroke:#f57f17,stroke-width:1.5px
+    style V fill:#f3e5f5,stroke:#8e24aa,stroke-width:1.5px
+    style Z fill:#e8f4fd,stroke:#004B96,stroke-width:2px

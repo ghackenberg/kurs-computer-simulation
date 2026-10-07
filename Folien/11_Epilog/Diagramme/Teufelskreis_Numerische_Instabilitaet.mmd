@@ -1,0 +1,15 @@
+flowchart TD
+    A["Simulation läuft im Hörsaal/Praxis zu langsam"]
+    B["Schrittweite dt wird unbedacht drastisch erhöht"]
+    C["Numerische Instabilität / Lösungs-Explosion"]
+    D["Fehlannahme: 'Die Physik oder das Modell ist falsch!'"]
+
+    A --> B
+    B --> C
+    C --> D
+    D -.->|"Verzweifelte Modell-Veränderung"| A
+
+    style A fill:#fff8e1,stroke:#f57f17,stroke-width:1.5px
+    style B fill:#ffe0b2,stroke:#e65100,stroke-width:1.5px
+    style C fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style D fill:#fce4ec,stroke:#ad1457,stroke-width:1.5px

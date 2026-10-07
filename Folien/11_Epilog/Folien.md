@@ -7,6 +7,10 @@ paginate: true
 math: mathjax
 ---
 
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
+
 ![bg right](./Titelbild.jpg)
 
 # Kapitel 11: Epilog
@@ -171,17 +175,13 @@ Nicht jede Visualisierung passt zu jedem Modell. Eine fundierte Architektur wäh
 </div>
 <div>
 
-```
-+-------------------------------------------------------+
-|                   Anwendungsfall                      |
-+---------------------------+---------------------------+
-| Kontinuierliche Schwingung| ScottPlot (Zeitreihe)     |
-| Räumliches Fachwerk       | Canvas / SharpGL 3D       |
-| Fertigungs-Materialfluss  | MSAGL / Canvas (Topologie)|
-| Kontaktmechanik (Ball)    | ScottPlot + Canvas-Anim.  |
-| 2D-Wärmeleitung           | WriteableBitmap (Pixel)   |
-+---------------------------+---------------------------+
-```
+| Anwendungsfall | Geeignete Visualisierung |
+| :--- | :--- |
+| Kontinuierliche Schwingung | **ScottPlot** (Zeitreihe) |
+| Räumliches Fachwerk | **Canvas** / **SharpGL 3D** |
+| Fertigungs-Materialfluss | **MSAGL** / **Canvas** (Topologie) |
+| Kontaktmechanik (Ball) | **ScottPlot** + **Canvas-Anim.** |
+| 2D-Wärmeleitung | **WriteableBitmap** (Pixel) |
 
 > **Leitsatz:** Die Visualisierung muss den Erkenntnisgewinn maximieren – Ästhetik dient der didaktischen Klarheit, nicht dem Selbstzweck!
 
@@ -281,17 +281,7 @@ Jede Modellierungsentscheidung in der Industrie bewegt sich in einem Zielkonflik
 </div>
 <div>
 
-```
-Fragestellung im Projekt
-       |
-       +- Zeitunabhängig? ----> STATISCH (Kap. 7)
-       |
-       +- Stetige Physik? ----> KONTINUIERLICH (Kap. 8)
-       |
-       +- Diskrete Events? ---> DISKRET (Kap. 9)
-       |
-       +- Beides gekoppelt? --> HYBRID (Kap. 10)
-```
+![w:540](./Diagramme/Entscheidungsbaum_Modellarten.svg)
 
 > **Praxis-Tipp:** Beginnen Sie immer mit dem einfachsten Modell (z.B. kontinuierliche Punktmasse). Erweitern Sie erst dann auf diskrete Zustände oder hybride Kontakte, wenn die Validierung Lücken zeigt.
 
@@ -325,17 +315,7 @@ In modernen Industrieunternehmen (Automotive, Maschinenbau, Luftfahrt) existiert
 - Surrogatmodelle oder Co-Simulation (FMI/FMU)
 - Synchronisation mit SPS-Taktzeiten (1 ms)
 
-```
-Detailgrad ^
-           |       3D-FEM / CFD (Tage)
-           |         /
-           |        /
-           |   1D-Systemsimulation (Sek.)
-           |      /
-           |  Echtzeit-Digital-Twin (ms)
-           +----------------------------->
-                     Projektfortschritt
-```
+![w:540](./Diagramme/Detailgrad_Projektfortschritt.svg)
 
 </div>
 </div>
@@ -457,23 +437,7 @@ $$ \Delta t < \frac{2}{\omega_{\max}} $$
 </div>
 <div>
 
-```
-Numerische Divergenz bei explizitem Euler:
-
-Zustand x
-   ^
-   |        /\
-   |       /  \    /\
-   |  /\  /    \  /  \  -> Simulation
-   | /  \/      \/    \    explodiert!
-   +-----------------------> Zeit t
-   
-Stabile Lösung (kleines dt oder RK4):
-   ^
-   |  ~--__
-   |       ~~--__
-   +-----------------------> Zeit t
-```
+![w:540](./Diagramme/Numerische_Divergenz_vs_Stabil.svg)
 
 > **Faustregel:** Wählen Sie die Schrittweite mindestens um den Faktor 10 bis 20 kleiner als die kleinste Systemzeitkonstante: $\Delta t \le \frac{T_{\min}}{10}$.
 
@@ -501,21 +465,7 @@ In interaktiven Simulationen (wie unserem WPF-Simulator) müssen Berechnungslogi
 </div>
 <div>
 
-```
-[Simulation Thread]
-+----------+      +----------+
-| Step(dt) | ---> | Step(dt) | ---> ...
-+----+-----+      +----+-----+
-     |                 |  (Zustandskopie)
-     v                 v
-[Intervall-Snapshot / Thread-Safe Buffer]
-     |
-     v
-[UI Thread - WPF CompositionTarget.Rendering]
-+--------------------+      +--------------------+
-| Render Frame (60Hz)|      | Render Frame (60Hz)|
-+--------------------+      +--------------------+
-```
+![w:540](./Diagramme/Thread_Architektur_Simulation.svg)
 
 > **Wichtig:** Niemals rechenintensive `for`-Schleifen direkt im WPF-UI-Thread ausführen! Das führt zum sofortigen Einfrieren der GUI.
 
@@ -597,13 +547,7 @@ Ein Simulationsmodell allein ist noch kein Digitaler Zwilling. Erst die Verknüp
 - Messdaten kalibrieren kontinuierlich das Modell.
 - Das Modell berechnet optimale Stellgrößen oder prädiziert Ausfälle und steuert die reale Anlage aktiv nach.
 
-```
-+------------+   Sensordaten   +------------+
-|  Reales    | --------------> |  Digitaler |
-|  System    | <-------------- |  Zwilling  |
-+------------+   Optimierte    +------------+
-                 Stellgrößen
-```
+![w:540](./Diagramme/Kopplung_Realsystem_DigitalerZwilling.svg)
 
 </div>
 </div>
@@ -633,15 +577,7 @@ In realen Industrieanlagen stammen Teilsysteme aus unterschiedlichen Domänen un
 1. **Model Exchange (ME):** Die FMU enthält nur die Modellgleichungen; der Master-Simulator steuert die numerische Integration.
 2. **Co-Simulation (CS):** Jede FMU bringt ihren eigenen internen Solver mit; der Master synchronisiert lediglich Ein- und Ausgänge an diskreten Kommunikationspunkten.
 
-```
-       [ Master-Simulator / C# Coordinator ]
-           /                |               \
-          v                 v                v
-   +------------+    +------------+    +------------+
-   | FMU 1 (CS) |    | FMU 2 (CS) |    | FMU 3 (CS) |
-   | Mechanik   |    | Hydraulik  |    | SPS-Code   |
-   +------------+    +------------+    +------------+
-```
+![w:540](./Diagramme/FMI_CoSimulation_Architektur.svg)
 
 </div>
 </div>
@@ -667,20 +603,7 @@ Bevor eine Sondermaschine physisch gebaut wird, spart die virtuelle Inbetriebnah
 </div>
 <div>
 
-```
-[ Reale SPS-Hardware (z.B. B&R / Siemens) ]
-                 |
-        Feldbus / IO (z.B. EtherCAT)
-                 v
-[ Echtzeit-Simulationsrechner (C# / C++) ]
-- Physikalisches Maschinenmodell (1 ms Takt)
-- Sensorik-Emulation (Encoder, Endschalter)
-- Aktorik-Reaktion (Servomotoren, Ventile)
-                 |
-                 v
-[ 3D-Visualisierung (WPF / SharpGL) ]
-- Visuelle Kollisionsprüfung & Ablaufüberwachung
-```
+![w:540](./Diagramme/VIBN_Systemarchitektur.svg)
 
 > **Nutzen:** Test von Not-Aus-Szenarien und Fehlsituationen ohne Beschädigungsgefahr für reale Maschinen!
 
@@ -780,9 +703,7 @@ Ein Modell, dessen Ergebnisse nicht hinterfragt werden, ist wertlos. Wenden Sie 
 **3. Analytischer Abgleich:**
 - Lösen Sie einen vereinfachten Spezialfall analytisch (z.B. ungedämpftes Federpendel ohne Reibung) und vergleichen Sie den numerischen Verlauf direkt mit der exakten Sinusfunktion.
 
-```
-Fehler = |x_num(t) - x_analytisch(t)|
-```
+$$ \text{Fehler}(t) = \|x_{\text{num}}(t) - x_{\text{analytisch}}(t)\| $$
 
 </div>
 </div>
@@ -804,19 +725,7 @@ Fehler = |x_num(t) - x_analytisch(t)|
 </div>
 <div>
 
-```
-[ Typischer Teufelskreis ]
-Simulation läuft langsam
-        |
-        v
-Schrittweite dt drastisch erhöht
-        |
-        v
-Numerische Instabilität / Explosion
-        |
-        v
-"Physik funktioniert nicht!"
-```
+![w:540](./Diagramme/Teufelskreis_Numerische_Instabilitaet.svg)
 
 > **Die Lösung:** Solver-Schrittweite $\Delta t$ klein halten, Berechnungs-Schleife optimieren und Render-Frequenz entkoppeln!
 
@@ -867,21 +776,7 @@ Mit dem Abschluss dieses Kurses besitzen Sie ein fundamentales Verständnis:
 </div>
 <div>
 
-```
-    [ Reales Industriesystem ]
-               |
-        Modellierung (Kap. 7-10)
-               v
-    [ Mathematisches Modell ]
-               |
-         Numerik & Solver (C#)
-               v
-    [ Berechnungsdaten (t, x) ]
-               |
-     Visualisierung (Kap. 2-5)
-               v
- [ Erkenntnis & Digitaler Zwilling ]
-```
+![w:540](./Diagramme/Simulationsprozess_Synthese.svg)
 
 </div>
 </div>

@@ -7,6 +7,10 @@ paginate: true
 math: mathjax
 ---
 
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
+
 ![bg right](./Titelbild.jpg)
 
 # Kapitel 5: 3D-Visualisierung mit OpenGL
@@ -45,7 +49,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div>
 
-![](https://upload.wikimedia.org/wikipedia/commons/e/e9/Opengl-logo.svg)
+![](./Illustrationen/OpenGL_Logo.svg)
 
 </div>
 </div>
@@ -117,7 +121,7 @@ gl.ClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 </div>
 <div>
 
-![width:1000px](https://upload.wikimedia.org/wikipedia/commons/8/83/RGB_Cube_Show_lowgamma_cutout_b.png)
+![width:1000px](./Illustrationen/RGB_Cube.png)
 
 </div>
 </div>
@@ -145,7 +149,7 @@ gl.Enable(OpenGL.GL_LIGHTING);
 </div>
 <div>
 
-![width:1000px](https://www.dca.ufrn.br/~lmarcos/courses/compgraf/redbook/images/Image77.gif)
+![width:1000px](./Illustrationen/OpenGL_Pipeline_Image77.gif)
 
 </div>
 </div>
@@ -170,7 +174,7 @@ Jede dieser Komponenten wird für jede Lichtquelle berechnet und aufsummiert.
 </div>
 <div>
 
-![width:900px](https://upload.wikimedia.org/wikipedia/commons/6/6b/Phong_components_version_4.png)
+![width:900px](./Diagramme/Phong - Gesamt.svg)
 
 </div>
 </div>
@@ -345,7 +349,7 @@ gl.ShadeModel(OpenGL.GL_SMOOTH);
 </div>
 <div>
 
-![width:1000px](https://xoax.net/sub_cpp/crs_opengl/Lesson5/Image2.png)
+![width:1000px](./Illustrationen/OpenGL_Normalen.png)
 
 </div>
 </div>
@@ -409,7 +413,7 @@ gl.Enable(OpenGL.GL_DEPTH_TEST);
 </div>
 <div>
 
-![](https://i.sstatic.net/uZhIF.png)
+![](./Illustrationen/OpenGL_Light_Components.png)
 
 </div>
 </div>
@@ -1178,7 +1182,7 @@ Zeichnet einen Würfel oder Quader.
 </div>
 <div>
 
-![width:1000px](https://machinethink.net/images/3d-rendering/Geometry@2x.png)
+![width:1000px](./Illustrationen/Geometry_Triangles.png)
 
 </div>
 </div>
@@ -1210,7 +1214,7 @@ Zeichnet eine Kugel.
 </div>
 <div>
 
-![width:1000px](https://www.mbsoftworks.sk/tutorials/opengl4/022-cylinder-and-sphere/8_sllices_stacks_sphere.png)
+![width:1000px](./Illustrationen/Sphere_Slices_Stacks.png)
 
 </div>
 </div>
@@ -1338,7 +1342,7 @@ Zeichnet einen Kegel, einen Zylinder oder einen Kegelstumpf.
 </div>
 <div>
 
-![width:1000px](https://www.songho.ca/opengl/files/gl_cylinder03.png)
+![width:1000px](./Illustrationen/Cylinder_Slices.png)
 
 </div>
 </div>

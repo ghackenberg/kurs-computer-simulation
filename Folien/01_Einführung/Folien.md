@@ -1,11 +1,15 @@
 ---
 marp: true
 theme: fhooe
-header: 'Kapitel 1: Einführung (2025-12-05)'
+header: 'Kapitel 1: Einführung'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
 ---
+
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
 
 ![bg right](./Titelbild.jpg)
 

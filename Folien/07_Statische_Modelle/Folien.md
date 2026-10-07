@@ -1,4 +1,4 @@
-﻿---
+---
 marp: true
 theme: fhooe
 header: 'Kapitel 7: Statische Modelle'
@@ -6,6 +6,10 @@ footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
 ---
+
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
 
 ![bg right](./Titelbild.jpg)
 
@@ -354,7 +358,7 @@ Diese Formel ist nichtlinear. Für die **Finite-Elemente-Methode** wird sie übl
 </div>
 <div>
 
-![width:700px](../03_Statische_Modelle_3D/Diagramme/Stablaengenaenderung.tikz.svg)
+![width:700px](./Diagramme/Stablaengenaenderung.tikz.svg)
 
 </div>
 </div>
@@ -382,7 +386,7 @@ $L' = \sqrt{L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2}$
 </div>
 <div>
 
-![width:700px](../03_Statische_Modelle_3D/Diagramme/Stablaengenaenderung.tikz.svg)
+![width:700px](./Diagramme/Stablaengenaenderung.tikz.svg)
 
 </div>
 </div>
@@ -411,7 +415,7 @@ $\Delta L \approx \frac{\vec{L} \cdot \Delta \vec{u}}{L} = \left(\frac{\vec{L}}{
 </div>
 <div>
 
-![width:700px](../03_Statische_Modelle_3D/Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
+![width:700px](./Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
 
 </div>
 </div>

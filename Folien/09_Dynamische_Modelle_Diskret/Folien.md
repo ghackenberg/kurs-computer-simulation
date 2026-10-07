@@ -7,6 +7,10 @@ paginate: true
 math: mathjax
 ---
 
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
+
 ![bg right](./Titelbild.jpg)
 
 # Kapitel 9: Diskrete Dynamische Modelle
@@ -771,14 +775,14 @@ Die folgenden beiden Diagramme zeigen den Verlauf der Wahrscheinlichkeitsdichtef
 
 **Wahrscheinlichkeitsdichtefunktion**
 
-![width:350](https://upload.wikimedia.org/wikipedia/commons/a/af/ExpDichteF.svg)
+![width:350](./Illustrationen/ExpDichteF.svg)
 
 </div>
 <div>
 
 **Kumulative Verteilungsfunktion**
 
-![width:350](https://upload.wikimedia.org/wikipedia/commons/b/ba/ExpVerteilungF.svg)
+![width:350](./Illustrationen/ExpVerteilungF.svg)
 
 </div>
 </div>
@@ -866,14 +870,14 @@ Die folgenden beiden Diagramme zeigen den Verlauf der Wahrscheinlichkeitsdichtef
 
 **Wahrscheinlichkeitsdichtefunktion**
 
-![](https://upload.wikimedia.org/wikipedia/commons/7/74/Normal_Distribution_PDF.svg)
+![](./Illustrationen/Normal_Distribution_PDF.svg)
 
 </div>
 <div>
 
 **Kumulative Verteilungsfunktion**
 
-![](https://upload.wikimedia.org/wikipedia/commons/1/14/Normal-distribution-cumulative-distribution-function-many.svg)
+![](./Illustrationen/Normal_Distribution_CDF.svg)
 
 </div>
 </div>

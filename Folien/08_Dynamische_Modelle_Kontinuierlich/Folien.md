@@ -1,4 +1,4 @@
-﻿---
+---
 marp: true
 theme: fhooe
 header: 'Kapitel 8: Kontinuierliche Dynamische Modelle'
@@ -6,6 +6,10 @@ footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
 ---
+
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
 
 ![bg right](./Titelbild.jpg)
 

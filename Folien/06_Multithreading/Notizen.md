@@ -1,3 +1,3 @@
 - [x] Asynchrone Programmierung (async/await) für UI-Responsiveness bei Hintergrundsimulationen ergänzen (Abschnitt 6.6, IProgress<T>, CancellationToken, Architektur-Diagramm)
 - [ ] `ThreadLocal<T>` und `Parallel.For` mit lokalem Initialisierer vertiefen
-- [ ] Titelbild generieren
+- [x] Titelbild generieren

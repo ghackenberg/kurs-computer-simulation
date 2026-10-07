@@ -1,0 +1,14 @@
+flowchart TD
+    PLC["<b>Reale SPS-Hardware</b> (z.B. B&R / Siemens)<br/>Steuerungs- & Regelungscode (IEC 61131-3)"]
+    BUS["<b>Feldbus / Industrial Ethernet</b> (z.B. EtherCAT, PROFINET)"]
+    SIM["<b>Echtzeit-Simulationsrechner</b> (.NET / C#)<br/>• Mechatronisches Modell (1 ms Zyklus)<br/>• Sensor-Emulation (Encoder, Endschalter)<br/>• Aktor-Reaktion (Servomotoren, Ventile)"]
+    VIS["<b>3D-Visualisierung</b> (WPF / SharpGL)<br/>Visuelle Kollisionsprüfung & interaktive Bedienung"]
+
+    PLC <==>|"E/A-Signale"| BUS
+    BUS <==>|"Feldbus-Telegramme"| SIM
+    SIM ==>|"Geometrie-Transformationen"| VIS
+
+    style PLC fill:#e8f4fd,stroke:#004B96,stroke-width:1.5px
+    style BUS fill:#fff8e1,stroke:#f57f17,stroke-width:1.5px
+    style SIM fill:#e8f8f5,stroke:#00897b,stroke-width:1.5px
+    style VIS fill:#f3e5f5,stroke:#8e24aa,stroke-width:1.5px

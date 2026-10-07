@@ -2,4 +2,4 @@
 - [x] Live-Streaming / Telemetrie mit Ringpuffer und DispatcherTimer ergänzen
 - [x] MSAGL automatische Layouts & Hervorhebung algebraischer Schleifen mit SVG-Diagramm einbinden
 - [x] Interaktive Node-Editoren (wie Nodify) als Ausblick für Blockschaltbild-Editoren erwähnen
-- [ ] Titelbild generieren
+- [x] Titelbild generieren

@@ -1,0 +1,9 @@
+flowchart LR
+    RS["<b>Reales Industriesystem</b><br/>(Maschine, Roboter, Anlage)"]
+    DT["<b>Digitaler Zwilling</b><br/>(Physikalisches Modell & Solver)"]
+
+    RS -- "Echtzeit-Sensordaten<br/>(Position, Druck, Temperatur)" --> DT
+    DT -- "Optimierte Stellgrößen /<br/>Prädiktive Regelparameter" --> RS
+
+    style RS fill:#e8f4fd,stroke:#004B96,stroke-width:2px
+    style DT fill:#e8f8f5,stroke:#00897b,stroke-width:2px

@@ -1,0 +1,21 @@
+flowchart TD
+    subgraph DIV["1. Numerische Divergenz (Expliziter Euler, Schrittweite Δt zu groß)"]
+        direction LR
+        D1["Anfangszustand x₀"] --> D2["Oszillation schaukelt auf<br/>|x₁| &lt; |x₂| &lt; |x₃|"] --> D3["Exponentielles Anwachsen<br/>|x| &gt;&gt; x_max"] --> D4["Simulation explodiert<br/>(Overflow / NaN)"]
+    end
+
+    subgraph STAB["2. Stabile Lösung (Adäquates Schrittweiten-Limit Δt oder RK4)"]
+        direction LR
+        S1["Anfangszustand x₀"] --> S2["Physikalische Dämpfung greift<br/>|x₁| &gt; |x₂| &gt; |x₃|"] --> S3["Gedämpftes Einschwingen<br/>Phasentrajektorie konvergiert"] --> S4["Stabiler Endzustand<br/>x(t) &rarr; Ruhelage"]
+    end
+
+    style DIV fill:#fff5f5,stroke:#c62828,stroke-width:1.5px
+    style STAB fill:#f1f8e9,stroke:#2e7d32,stroke-width:1.5px
+    style D1 fill:#ffffff,stroke:#c62828,stroke-width:1px
+    style D2 fill:#ffffff,stroke:#c62828,stroke-width:1px
+    style D3 fill:#ffffff,stroke:#c62828,stroke-width:1px
+    style D4 fill:#ffebee,stroke:#b71c1c,stroke-width:2px
+    style S1 fill:#ffffff,stroke:#2e7d32,stroke-width:1px
+    style S2 fill:#ffffff,stroke:#2e7d32,stroke-width:1px
+    style S3 fill:#ffffff,stroke:#2e7d32,stroke-width:1px
+    style S4 fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px

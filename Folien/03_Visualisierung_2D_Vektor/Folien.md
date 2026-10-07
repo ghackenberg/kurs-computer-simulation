@@ -7,6 +7,12 @@ paginate: true
 math: mathjax
 ---
 
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
+
+![bg right](./Titelbild.jpg)
+
 # Kapitel 3: 2D-Visualisierung (WPF/Vektor)
 
 Dieses Kapitel umfasst die folgenden Abschnitte:

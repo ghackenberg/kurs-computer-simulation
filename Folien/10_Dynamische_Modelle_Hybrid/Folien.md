@@ -1,4 +1,4 @@
-﻿---
+---
 marp: true
 theme: fhooe
 header: 'Kapitel 10: Hybride Dynamische Modelle'
@@ -6,6 +6,10 @@ footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
 ---
+
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
 
 ![bg right](./Titelbild.jpg)
 
@@ -614,6 +618,8 @@ Außerdem wurden die Methoden `CalcualteZeroCrossings` und `Update-States`eingef
 </div>
 
 ---
+
+### Softwarearchitektur: Die Basisklasse Block
 
 ```csharp
 public abstract class Block

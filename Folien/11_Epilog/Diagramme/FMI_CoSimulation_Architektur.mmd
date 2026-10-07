@@ -1,0 +1,19 @@
+flowchart TD
+    M["<b>Master-Simulator / C# Coordinator</b><br/>(Schrittweiten- & Zeitmanagement, Datenverteilung)"]
+
+    F1["<b>FMU 1 (Co-Simulation)</b><br/>Mehrkörper-Mechanik"]
+    F2["<b>FMU 2 (Co-Simulation)</b><br/>Fluidik & Hydraulik"]
+    F3["<b>FMU 3 (Co-Simulation)</b><br/>Virtuelle SPS-Steuerung"]
+
+    M -->|"t, inputs"| F1
+    M -->|"t, inputs"| F2
+    M -->|"t, inputs"| F3
+
+    F1 -.->|"outputs"| M
+    F2 -.->|"outputs"| M
+    F3 -.->|"outputs"| M
+
+    style M fill:#e8f4fd,stroke:#004B96,stroke-width:2px
+    style F1 fill:#ffffff,stroke:#333,stroke-width:1px
+    style F2 fill:#ffffff,stroke:#333,stroke-width:1px
+    style F3 fill:#ffffff,stroke:#333,stroke-width:1px

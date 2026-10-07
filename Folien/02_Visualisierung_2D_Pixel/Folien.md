@@ -7,6 +7,10 @@ paginate: true
 math: mathjax
 ---
 
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
+
 ![bg right](./Titelbild.jpg)
 
 # Kapitel 2: 2D-Visualisierung (WPF/Pixel)

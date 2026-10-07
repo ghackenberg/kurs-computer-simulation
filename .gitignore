@@ -1,11 +1,11 @@
-# Visual Studio temporary files
-
-.vs
-
-bin
-obj
-
+# Visual Studio & .NET Build Output
+.vs/
+[Bb]in/
+[Oo]bj/
+bin/
+obj/
 *.user
+*.suo
 
 # Asymptote generated files
 

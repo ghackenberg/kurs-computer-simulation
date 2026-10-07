@@ -1,0 +1,27 @@
+flowchart TD
+    subgraph ST["Simulations-Thread (Hintergrund / High-Speed)"]
+        S1["Step(dt)"] --> S2["Step(dt)"] --> S3["Step(dt)"]
+    end
+
+    subgraph BUF["Thread-sicherer Zustandspuffer (Entkopplung)"]
+        B["Intervall-Snapshot / Double-Buffer / Ringpuffer<br/>(lock / volatile / Interlocked)"]
+    end
+
+    subgraph UI["WPF UI-Thread (60 Hz Rendering)"]
+        R1["Render Frame"] --> R2["Render Frame"]
+    end
+
+    S1 -.->|"Zustandskopie (1 kHz)"| B
+    S2 -.->|"Zustandskopie (1 kHz)"| B
+    B ==>|"Visualisierungsdaten (60 fps)"| R1
+    B ==>|"Visualisierungsdaten (60 fps)"| R2
+
+    style ST fill:#f0f4f8,stroke:#004B96,stroke-width:1.5px
+    style BUF fill:#fff8e1,stroke:#f57f17,stroke-width:1.5px
+    style UI fill:#e8f8f5,stroke:#00897b,stroke-width:1.5px
+    style S1 fill:#ffffff,stroke:#004B96,stroke-width:1px
+    style S2 fill:#ffffff,stroke:#004B96,stroke-width:1px
+    style S3 fill:#ffffff,stroke:#004B96,stroke-width:1px
+    style B fill:#ffffff,stroke:#f57f17,stroke-width:1px
+    style R1 fill:#ffffff,stroke:#00897b,stroke-width:1px
+    style R2 fill:#ffffff,stroke:#00897b,stroke-width:1px

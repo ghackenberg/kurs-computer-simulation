@@ -1,11 +1,15 @@
 ---
 marp: true
 theme: fhooe
-header: Prolog (2025-12-05)
-footer: Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme
+header: 'Prolog'
+footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
 ---
+
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
 
 ![bg right](./Titelbild.png)
 
