@@ -1,6 +1,6 @@
 %%{init: {'themeVariables': {'fontSize': '20px'}}}%%
 flowchart LR
-    Vin["<b>V_in</b><br/>Eingang"] --> Subtract(( - ))
+    Vin["<b>V_in</b><br/>Eingang"] --> Subtract(( + / - ))
     Subtract --> Vout["<b>V_out</b><br/>Knoten"]
     Vout --> NLE["<b>Nichtlinear</b><br/>I = f(V_out)"]
     NLE -->|"I"| Gain["<b>Gain R1</b><br/>V = I · R1"]

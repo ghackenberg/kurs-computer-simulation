@@ -26,3 +26,6 @@ obj/
 # MARP/Latex/Tikz build files
 
 *.pdf
+
+# Temporary audit artifacts
+.tmp_raster_svg/

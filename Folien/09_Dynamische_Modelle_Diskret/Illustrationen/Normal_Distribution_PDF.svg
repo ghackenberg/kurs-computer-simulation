@@ -9,8 +9,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="720"
-   height="460">
+   viewBox="0 0 720 460"
+   width="100%"
+   height="100%">
   <defs
      id="defs2102">
     <clipPath
@@ -458,126 +459,7 @@
        id="polyline10212"
        points="253.5,124 253.5,120 " />
   </g>
-  <g
-     clip-path="url(#cp11)"
-     id="g10229"
-     transform="translate(943.992,62.9753)">
-    <clipPath
-       id="clipPath10541">
-      <polygon
-         id="polygon10232"
-         points="73,126 73,140 80,140 80,126 73,126 " />
-    </clipPath>
-    <text
-       font-size="16px"
-       style="font-size:16px;fill:#000000;font-family:Times New Roman"
-       id="text10234"
-       y="137"
-       x="74">1</text>
-  </g>
-  <g
-     clip-path="url(#cp13)"
-     id="g10251"
-     transform="translate(996.984,62.9753)">
-    <clipPath
-       id="clipPath10555">
-      <polygon
-         id="polygon10254"
-         points="73,126 73,140 80,140 80,126 73,126 " />
-    </clipPath>
-    <text
-       font-size="16px"
-       style="font-size:16px;fill:#000000;font-family:Times New Roman"
-       id="text10256"
-       y="137"
-       x="74">2</text>
-  </g>
-  <g
-     clip-path="url(#cp15)"
-     id="g10273"
-     transform="translate(1049.976,62.9753)">
-    <clipPath
-       id="clipPath10569">
-      <polygon
-         id="polygon10276"
-         points="73,126 73,140 80,140 80,126 73,126 " />
-    </clipPath>
-    <text
-       font-size="16px"
-       style="font-size:16px;fill:#000000;font-family:Times New Roman"
-       id="text10278"
-       y="137"
-       x="74">3</text>
-  </g>
-  <g
-     clip-path="url(#cp17)"
-     id="g10297"
-     transform="translate(878.5,142.67554)">
-    <clipPath
-       id="clipPath10584">
-      <polygon
-         id="polygon10300"
-         points="73,126 73,140 87,140 87,126 73,126 " />
-    </clipPath>
-    <text
-       font-size="16px"
-       style="font-size:16px;fill:#000000;font-family:SVGTimes"
-       id="text10302"
-       y="137"
-       x="74">-</text>
-    <text
-       font-size="16px"
-       style="font-size:16px;fill:#000000;font-family:Times New Roman"
-       id="text10304"
-       y="137"
-       x="80.5">3</text>
-  </g>
-  <g
-     clip-path="url(#cp19)"
-     id="g10321"
-     transform="translate(878.5,113.10879)">
-    <clipPath
-       id="clipPath10599">
-      <polygon
-         id="polygon10324"
-         points="73,126 73,140 87,140 87,126 73,126 " />
-    </clipPath>
-    <text
-       font-size="16px"
-       style="font-size:16px;fill:#000000;font-family:SVGTimes"
-       id="text10326"
-       y="137"
-       x="74">-</text>
-    <text
-       font-size="16px"
-       style="font-size:16px;fill:#000000;font-family:Times New Roman"
-       id="text10328"
-       y="137"
-       x="80.5">2</text>
-  </g>
-  <g
-     clip-path="url(#cp21)"
-     id="g10345"
-     transform="translate(878.5,83.54204)">
-    <clipPath
-       id="clipPath10614">
-      <polygon
-         id="polygon10348"
-         points="73,126 73,140 87,140 87,126 73,126 " />
-    </clipPath>
-    <text
-       font-size="16px"
-       style="font-size:16px;fill:#000000;font-family:SVGTimes"
-       id="text10350"
-       y="137"
-       x="74">-</text>
-    <text
-       font-size="16px"
-       style="font-size:16px;fill:#000000;font-family:Times New Roman"
-       id="text10352"
-       y="137"
-       x="80.5">1</text>
-  </g>
+
   <g
      inkscape:label="Grid"
      style="display:inline"

@@ -83,7 +83,7 @@ namespace GrafikGenerator
             {
                 bars.Add(new ScottPlot.Bar
                 {
-                    Position = hist.Bins[i],
+                    Position = hist.Bins[i] + hist.FirstBinSize * 0.5,
                     Value = hist.Counts[i],
                     Size = hist.FirstBinSize * 0.85,
                     FillColor = Colors.SeaGreen.WithAlpha(0.7f),
@@ -94,9 +94,9 @@ namespace GrafikGenerator
             plot2.Add.Bars(bars);
 
             plot2.Title("Verteilung der Wartezeiten W (Histogramm)");
-            plot2.XLabel("Wartezeit [min]");
+            plot2.XLabel("Wartezeit W [min]");
             plot2.YLabel("Absolute Häufigkeit");
-            plot2.Axes.AutoScale();
+            plot2.Axes.SetLimits(0, 15, 0, hist.Counts.Max() * 1.15);
             ApplyHiDpiTypography(plot2);
 
             var file2 = Path.Combine(targetDir, "Queue_Wartezeit_Histogramm.png");
@@ -311,26 +311,30 @@ namespace GrafikGenerator
             float[,] dirichlet = new float[simW, simH];
             float[,] neumann = new float[simW, simH];
 
+            // Wärmequelle direkt an der linken Begrenzungswand platziert (x0 = 15, y0 = 90),
+            // damit der fundamentale Unterschied zwischen Dirichlet (Wärme entweicht ins Eisbad)
+            // und Neumann (Wärme wird an der isolierten Wand reflektiert) deutlich sichtbar wird.
             for (int y = 0; y < simH; y++)
             {
                 for (int x = 0; x < simW; x++)
                 {
-                    double dx = x - 50;
-                    double dy = y - 50;
-                    float val = (float)Math.Exp(-(dx * dx + dy * dy) / 350.0);
+                    double dx = x - 15;
+                    double dy = y - 90;
+                    float val = (float)Math.Exp(-(dx * dx + dy * dy) / 450.0);
                     dirichlet[x, y] = val;
                     neumann[x, y] = val;
                 }
             }
 
-            float alpha = 0.2f;
-            int steps = 120;
+            float alpha = 0.22f;
+            int steps = 400;
 
             float[,] nextD = new float[simW, simH];
             float[,] nextN = new float[simW, simH];
 
             for (int step = 0; step < steps; step++)
             {
+                // 1. Dirichlet: Feste Randbedingung T = 0 (Rand wird nie aktualisiert)
                 for (int y = 1; y < simH - 1; y++)
                 {
                     for (int x = 1; x < simW - 1; x++)
@@ -342,6 +346,7 @@ namespace GrafikGenerator
                 }
                 Array.Copy(nextD, dirichlet, dirichlet.Length);
 
+                // 2. Neumann: Adiabatisch (dT/dn = 0 via Ghost-Cells)
                 for (int y = 0; y < simH; y++)
                 {
                     neumann[0, y] = neumann[1, y];
@@ -362,6 +367,16 @@ namespace GrafikGenerator
                     }
                 }
                 Array.Copy(nextN, neumann, neumann.Length);
+                for (int y = 0; y < simH; y++)
+                {
+                    neumann[0, y] = neumann[1, y];
+                    neumann[simW - 1, y] = neumann[simW - 2, y];
+                }
+                for (int x = 0; x < simW; x++)
+                {
+                    neumann[x, 0] = neumann[x, 1];
+                    neumann[x, simH - 1] = neumann[x, simH - 2];
+                }
             }
 
             // HiDPI Bitmap: 840 x 920 px (2x Retina)
@@ -474,7 +489,7 @@ namespace GrafikGenerator
             Directory.CreateDirectory(screensDir);
 
             double dt = 0.0005;
-            int n = 1200; // 0.6 seconds
+            int n = 1600; // 0.8 Sekunden
             double[] time = new double[n];
             double[] thetaNoAW = new double[n];
             double[] thetaWithAW = new double[n];
@@ -483,8 +498,8 @@ namespace GrafikGenerator
             void Simulate(bool antiWindup, double[] outTheta, double[]? outU)
             {
                 double theta = 0.0, omega = 0.0, xI = 0.0;
-                double Kp = 15.0, Ki = 40.0, Kd = 0.5;
-                double Tm = 0.05, Km = 2.5, UMax = 10.0;
+                double Kp = 10.0, Ki = 48.0, Kd = 0.4;
+                double Tm = 0.08, Km = 2.0, UMax = 3.0;
                 double target = 1.0;
 
                 (double dTheta, double dOmega, double dxI, double uSat) Calc(double th, double om, double xi)
@@ -536,13 +551,13 @@ namespace GrafikGenerator
             var lineAW = plot1.Add.ScatterLine(time, thetaWithAW);
             lineAW.Color = Colors.ForestGreen;
             lineAW.LineWidth = 4.0f;
-            lineAW.LegendText = "Mit Anti-Windup Clamping (aperiodisch)";
+            lineAW.LegendText = "Mit Anti-Windup Clamping (aperiodisch stabil)";
 
             plot1.Title("DC-Servomotor Sprungantwort: Anti-Windup Clamping");
             plot1.XLabel("Zeit t [s]");
             plot1.YLabel("Wellenposition θ(t) [rad]");
             plot1.ShowLegend();
-            plot1.Axes.SetLimits(0, 0.6, -0.1, 1.8);
+            plot1.Axes.SetLimits(0, 0.8, -0.05, 1.75);
             ApplyHiDpiTypography(plot1, titleSize: 24, labelSize: 20, tickSize: 16, legendSize: 18);
 
             var file1 = Path.Combine(illustrDir, "AntiWindup_Vergleich.png");
@@ -561,17 +576,17 @@ namespace GrafikGenerator
             lineTheta.LineWidth = 4.0f;
             lineTheta.LegendText = "Position θ(t) [rad]";
 
-            double[] uNorm = uWithAW.Select(u => u / 10.0).ToArray();
+            double[] uNorm = uWithAW.Select(u => u / 3.0).ToArray();
             var lineU = plot2.Add.ScatterLine(time, uNorm);
             lineU.Color = Colors.OrangeRed;
             lineU.LineWidth = 3.0f;
-            lineU.LegendText = "Stellspannung u(t) / 10 [normiert]";
+            lineU.LegendText = "Stellspannung u(t) / U_max [normiert]";
 
             plot2.Title("Geschlossener Regelkreis: RK4-Simulation (dt = 0.5 ms)");
             plot2.XLabel("Zeit t [s]");
             plot2.YLabel("Amplitude (Position [rad] / normierte Spannung)");
             plot2.ShowLegend();
-            plot2.Axes.SetLimits(0, 0.6, -0.2, 1.3);
+            plot2.Axes.SetLimits(0, 0.8, -0.2, 1.25);
             ApplyHiDpiTypography(plot2, titleSize: 24, labelSize: 20, tickSize: 16, legendSize: 18);
 
             var file2 = Path.Combine(screensDir, "ClosedLoop_RK4_StepResponse.png");

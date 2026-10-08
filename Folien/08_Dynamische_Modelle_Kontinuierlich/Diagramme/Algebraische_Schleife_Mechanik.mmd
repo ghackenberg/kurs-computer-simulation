@@ -1,8 +1,8 @@
-%%{init: {'themeVariables': {'fontSize': '20px'}}}%%
+%%{init: {'themeVariables': {'fontSize': '22px', 'edgeLabelFontSize': '18px', 'subGraphTitleFontSize': '20px'}}}%%
 flowchart LR
-    F_ext["<b>F<sub>Antrieb</sub></b>"] --> S1(( - ))
+    F_ext["<b>F<sub>Antrieb</sub></b>"] --> S1(( &Sigma; ))
     Drag["<b>Strömungswiderstand</b><br/>Drag: c · v²"] -->|"F<sub>Widerstand</sub>"| S1
-    S1 -->|"F<sub>vor</sub>"| S2(( - ))
+    S1 -->|"F<sub>vor</sub>"| S2(( &Sigma; ))
     
     subgraph Loop ["Algebraische Schleife (Added Mass)"]
         direction LR

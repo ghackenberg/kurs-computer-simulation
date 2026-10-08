@@ -64,8 +64,9 @@ function parseSvgMetrics(svgPath) {
     }
   }
 
-  // Find font sizes in SVG
-  const fontMatches = content.match(/font-size:\s*([0-9.]+)(px|pt)?|font-size=["']([0-9.]+)(px|pt)?["']/gi) || [];
+  // Find font sizes in SVG (excluding unrendered tooltip CSS rules)
+  const cleanContent = content.replace(/div\.mermaidTooltip\s*\{[^}]*\}/gi, '');
+  const fontMatches = cleanContent.match(/font-size:\s*([0-9.]+)(px|pt)?|font-size=["']([0-9.]+)(px|pt)?["']/gi) || [];
   const sizes = [];
   fontMatches.forEach(m => {
     const num = parseFloat(m.replace(/[^0-9.]/g, ''));
