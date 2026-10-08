@@ -68,7 +68,7 @@ Angehende Automatisierer nutzen Simulationen nicht als theoretischen Selbstzweck
 
 Das an österreichischen Fachhochschulen etablierte Format der **Integrierten Lehrveranstaltung (ILV)** hebt die klassische Trennung zwischen Vorlesung (Frontaltheorie) und Übung (Labor am Nachmittag) auf.
 - **Einheitlicher Raum:** Der Unterricht findet in multimedial ausgestatteten Seminarräumen oder PC-Pools statt; die Studierenden arbeiten auf eigenen Entwicklungs-Laptops (Bring Your Own Device) oder Pool-PCs.
-- **Fließende Übergänge:** Theorie-Impulse, Live-Coding-Demonstrationen des Dozierenden und betreute hands-on Programmierphasen wechseln dynamisch innerhalb desselben Blocks ab.
+- **Fließende Übergänge:** Theorie-Impulse, strukturierte Code-Walkthroughs und betreute hands-on Programmierphasen wechseln dynamisch innerhalb desselben Blocks ab.
 - **Prüfungsimmanenter Charakter:** Es gibt keine isolierte Abschluss-Schriftklausur; die Gesamtnote speist sich aus kontinuierlichen Teilleistungen (Moodle-MCQ-Tests, praktische Übungsmeilensteine im Labor, Semesterprojekt mit Video-Präsentation).
 
 ### 1.3 Workload-Kalkulation nach ECTS-Richtlinien
@@ -95,14 +95,14 @@ Die Lehrveranstaltung ist mit **3 ECTS-Punkten** (entsprechend einem Gesamt-Work
 
 Das Curriculum folgt dem Prinzip des **Constructive Alignment** (John Biggs):
 1. **Intended Learning Outcomes (ILOs):** Die Studierenden können physikalisch-technische Systeme als mathematische Modelle formulieren, numerische Algorithmen (LGS, ODE, DES, Hybride Solver) in modernem C# (.NET 8) ohne vorgefertigte Blackbox-Simulatoren implementieren, echtzeitfähige 2D/3D-Dashboards realisieren und Simulationslösungen im Fachdiskurs kritisch analysieren und verteidigen.
-2. **Teaching/Learning Activities (TLAs):** Interaktiver Theorieimpuls ➔ Dozenten-Live-Coding ➔ In-Class Hands-on Entwicklung im 2er-Team (Sprint) ➔ **Showcase, Peer Review & Plenumsdiskussion (Track A vs. Track B)** ➔ Micro-Defense & Homework Extension.
+2. **Teaching/Learning Activities (TLAs):** Interaktiver Theorieimpuls ➔ Strukturierte Code- und Architektur-Analyse ➔ In-Class Hands-on Entwicklung im 2er-Team (Sprint) ➔ **Showcase, Peer Review & Plenumsdiskussion (Track A vs. Track B)** ➔ Micro-Defense & Homework Extension.
 3. **Assessment Tasks (ATs):** Moodle-MCQ-Tests prüfen das theoretische und numerische Fundament; Labor-Meilensteine inklusive **Showcase-Präsentation und qualifiziertem Peer-Review-Fragenstellen** fordern und bewerten sauberen Code sowie Diskursfähigkeit; das Semesterprojekt verlangt die ganzheitliche Synthese, Code-Qualität und videobasierte Demonstration.
 
 ### 2.2 Active Learning & Just-in-Time Teaching
 
 Frontalunterricht über 150 Minuten führt bei technisch komplexen Themen nachweislich zu Ermüdung und kognitiver Überlastung. Deshalb setzt der Kurs auf **Active Learning**:
 - Maximale Länge eines theoretischen Inputs: **45 Minuten**.
-- Kein theoretischer Block ohne anschließendes **Live-Coding**, bei dem der Dozent bewusst auch typische Fallstricke (Compilerfehler, Zeigerarithmetik, numerische Instabilitäten, Race Conditions) demonstriert und live debuggt.
+- Kein theoretischer Block ohne anschließenden **Code-Walkthrough**, bei dem typische Fallstricke (Compilerfehler, Zeigerarithmetik, numerische Instabilitäten, Race Conditions) anhand prägnanter Code-Beispiele auf den Folien im Detail analysiert werden.
 - Unmittelbarer Übergang in die **Laborphase** ("Learn by Doing"), solange das Konzept im Kurzzeitgedächtnis präsent ist.
 
 ### 2.3 Scaffolding: Vom In-Class-Sprint zur autonomen Homework Extension
@@ -222,10 +222,10 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide Aufgaben bearbeiten! Beide Tracks führen zu denselben Lernergebnissen und erfordern denselben Arbeitsaufwand.
   - *Track A (Industrie):* Thermisches Abkühlmodell eines Pt100-Temperatursensors / Dämpfung eines Pneumatikzylinders.
   - *Track B (Gaming / Arcade):* **„Artillery 1D/2D – Kanonenspiel im Terminal“:** Schiefer Wurf unter Gravitation und Newton-Luftwiderstand. Der Spieler gibt Startwinkel und Geschwindigkeit ein, um ein Ziel in Entfernung $d$ zu treffen.
-- **Theorie-Impuls & Live-Coding (45 min):**
+- **Theorie-Impuls & Code-Analyse (45 min):**
   - Das Modell nach George Box; Digital Model vs. Digital Shadow vs. Digital Twin.
   - Mathematische Herleitung: Vom Differenzenquotienten $\frac{dx}{dt} \approx \frac{x_{k+1}-x_k}{\Delta t}$ zum expliziten Euler-Schritt.
-  - Live-Coding: Aufsetzen einer Clean Solution `SystemSimulationWorkshop.sln`, Trennung in `Simulation.Core` (Klassenbibliothek), `Simulation.ConsoleApp` und `Simulation.Tests` (MSTest).
+  - Code-Walkthrough: Aufsetzen einer Clean Solution `SystemSimulationWorkshop.sln`, Trennung in `Simulation.Core` (Klassenbibliothek), `Simulation.ConsoleApp` und `Simulation.Tests` (MSTest).
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (im gewählten Track A oder B):**
     - *Track A:* Implementierung des Euler-Schritts für das thermische Sensor-Abkühlverhalten bzw. Zylinderdämpfung mit automatisierter MSTest-Validierung.
@@ -260,11 +260,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Es müssen **NICHT** beide bearbeitet werden!
   - *Track A (Industrie):* Thermischer Hotspot auf einer Leistungselektronik-Leiterplatte (PCB) mit Kühlkörperzone.
   - *Track B (Gaming / Arcade):* **„Falling Sand & Retro Doom Fire“:** Interaktive Simulation von herabfallenden Sandkörnern oder einer 90er-Jahre-Lava-Pixelwelt im Rohspeicher.
-- **Theorie-Impuls & Live-Coding (45 min):**
+- **Theorie-Impuls & Code-Analyse (45 min):**
   - Warum der WPF-Visual-Tree bei $100.000$ Elementen kollabiert.
   - Zeigerarithmetik in C#: `IntPtr`, `uint*`, Bit-Shifting `(r << 16) | (g << 8) | b`.
   - Mathematische Herleitung: Laplace-Operator $\Delta T = \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2}$, 5-Punkt-Stern-Diskretisierung und Stabilitätsbedingung $s = \frac{a \cdot \Delta t}{\Delta x^2} \le 0{,}25$.
-  - Live-Coding: Look-Up-Table (LUT) Farbtabellen-Generator (Kaltes Blau $\to$ Grün $\to$ Heißes Rot).
+  - Code-Walkthrough: Look-Up-Table (LUT) Farbtabellen-Generator (Kaltes Blau $\to$ Grün $\to$ Heißes Rot).
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Erstellung eines WPF-Fensters mit `Image`-Control ($128 \times 128$ Pixel). Berechnung der FDM-Diffusionsschleife (PCB-Kühlkörper in Track A oder Sand/Lava in Track B) und Rendern im `WriteableBitmap`-BackBuffer.
@@ -297,11 +297,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide Aufgaben bearbeiten! Beide Tracks vermitteln dieselben geometrisch-visuellen Grundlagen bei identischem Arbeitsaufwand.
   - *Track A (Industrie):* **„Hallenkran-Träger CAD-Viewer“:** Rein geometrische und maßstäbliche Visualisierung eines Trägerfachwerks auf dem WPF Canvas. Interaktives Verschieben von Trag- und Lastknoten per Maus-Dragging, dynamische DIN-Bemaßung der Trägerabstände und Darstellung fest vorgegebener Lastvektoren (Pfeilgeometrie) – *völlig ohne Statikberechnung*.
   - *Track B (Gaming / Arcade):* **„Poly Bridge CAD / Brücken-Geometrie-Editor“:** Interaktiver 2D-Geometrie-Editor für Brückenprofile. Stäbe per Mausklick zwischen Rasterpunkten aufspannen, Knoten per Maus verschieben (Dragging), Bounding Box dynamisch nachführen und fest vorgegebene Gewichtskraft-Pfeile visualisieren. *(Wichtig: Die echte physikalische Statikberechnung und der Bruchtest folgen kausal erst in Termin 07!)*
-- **Theorie-Impuls & Live-Coding (45 min):**
+- **Theorie-Impuls & Code-Analyse (45 min):**
   - Mathematische Formulierung: Bounding-Box, Uniform-Scaling $s = \min(s_x, s_y)$, Translation und Zentrierungs-Offset.
   - Orthonormale Pfeilspitzen-Geometrie aus Richtungsvektor $\vec{u}$ und Normalenvektor $\vec{u}^\perp = (-u_y, u_x)^T$.
   - Interaktives Maus-Dragging: Hit-Testing, Erfassen von Knotenpunkten und inverse Screen-zu-Welt-Transformation.
-  - Live-Coding: Implementierung der Klasse `WorldToScreenTransformer` und Zeichnen maßstäblicher Pfeile und DIN-Bemaßungen auf einem WPF `Canvas`.
+  - Code-Walkthrough: Implementierung der Klasse `WorldToScreenTransformer` und Zeichnen maßstäblicher Pfeile und DIN-Bemaßungen auf einem WPF `Canvas`.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Konstruktion eines interaktiven Canvas-Viewers für das Träger-/Brückengebilde (Knoten, Stäbe, fest vorgegebene Lastpfeile).
@@ -339,11 +339,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide Aufgaben bearbeiten! Beide Tracks führen zu denselben Lernergebnissen bei identischem Workload.
   - *Track A (Industrie):* **„Industrie-4.0-Leitstand“:** 1-kHz-Vibrationsmonitoring mit Grenzwertüberwachung, allokationsfreiem ScottPlot 5 Signal-Plot und MSAGL-Systemzustandsgraph.
   - *Track B (Gaming / Arcade):* **„Retro Space-Lander HUD & Telemetrie-Arcade“:** Live-Diagramme für Flughöhe, Triebwerksschub, Treibstoffverbrauch und Welford-Jitter-Statistik in Echtzeit (60 FPS).
-- **Theorie-Impuls & Live-Coding (45 min):**
+- **Theorie-Impuls & Code-Analyse (45 min):**
   - Garbage Collection als Feind industrieller Echtzeit-Dashboards: Vermeidungsstrategien.
   - Ringpuffer-Mathematik: Modulo-Arithmetik vs. Bit-Maskierung bei Zweierpotenzen (`index & (capacity - 1)`).
   - ScottPlot 5 Signal-Plot-Architektur: Allokationsfreies Rendern vorallokierter Arrays.
-  - Live-Coding: Aufbau eines WPF-MVVM-Dashboards mit `ObservableProperty` und `DispatcherTimer`.
+  - Code-Walkthrough: Aufbau eines WPF-MVVM-Dashboards mit `ObservableProperty` und `DispatcherTimer`.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Ein simulierter Sinus-/Messdatengenerator (Vibration bei Track A bzw. Telemetriedaten bei Track B) schreibt kontinuierlich in einen `CircularBuffer<double>`. ScottPlot 5 rendert den Signalverlauf butterweich; ein MSAGL-Graph visualisiert die Systemtopologie.
@@ -376,11 +376,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Es müssen **NICHT** beide bearbeitet werden!
   - *Track A (Industrie):* **„3D-Industrieroboter Digital Twin“:** Digitaler Zwilling eines 3-Achs-Industrieroboters mit Gelenkwinkeln, hierarchischem Szenengraph und TCP-Trajektorie (Tool Center Point).
   - *Track B (Gaming / Arcade):* **„3D Arcade Claw Machine (Jahrmarkt-Greifautomat)“:** Interaktives Steuern eines 3D-Seilgreifers mit Tastatur, hierarchischem Ausleger, Orbit-Kamera und Greifraum-Begrenzung.
-- **Theorie-Impuls & Live-Coding (45 min):**
+- **Theorie-Impuls & Code-Analyse (45 min):**
   - Warum 3D für den Digitalen Zwilling? Räumliche Kollisionsprüfung und Ergonomie.
   - Kardanfehlerfreie Kameraführung über Azimut $\theta$, Elevation $\phi$ und Distanz $r$.
   - Der Szenengraph als Composite-Muster: Eltern-Kind-Relationen mechatronischer Baugruppen.
-  - Live-Coding: Aufbau einer 3-teiligen Roboterachse mit SharpGL.
+  - Code-Walkthrough: Aufbau einer 3-teiligen Roboterachse mit SharpGL.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Einbinden des SharpGL `OpenGLControl` in ein WPF-Fenster. Erstellen einer 3D-Baugruppe via `GeometryFactory`; Bewegen zweier Rotationsachsen über UI-Schieberegler im gewählten Track-Szenario.
@@ -414,11 +414,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide Aufgaben bearbeiten!
   - *Track A (Industrie):* **„Parallele Getriebe-Toleranzanalyse“:** Parallele Monte-Carlo-Toleranzanalyse eines Industriegetriebes ($100.000$ Bauteil-Varianten zeitgleich auf allen CPU-Kernen gerechnet).
   - *Track B (Gaming / Arcade):* **„100.000 Boids – Die Partikel-Schwarm-Schlacht“:** Flocking-Simulation à la Craig Reynolds. Single-Thread kollabiert bei 12 FPS; mit `Parallel.For` flüssige 60 FPS auf allen Kernen!
-- **Theorie-Impuls & Live-Coding (45 min):**
+- **Theorie-Impuls & Code-Analyse (45 min):**
   - Das Amdahlsche Gesetz und die Grenzen der Skalierung.
   - Atomare Operationen vs. Sperrmechanismen: `Interlocked.Increment` vs. `lock(obj)`.
   - Das WPF-Dispatcher-Problem: Warum `Dispatcher.Invoke` im Simulationsloop das Programm einfriert.
-  - Live-Coding: Benchmark-Vergleich: Serielle vs. parallele Laplace-Feldglättung mit CPU-Kern-Auslastungsanzeige.
+  - Code-Walkthrough: Benchmark-Vergleich: Serielle vs. parallele Laplace-Feldglättung mit CPU-Kern-Auslastungsanzeige.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Entkopplung einer rechenintensiven Simulation (Toleranzanalyse bei Track A bzw. Schwarm bei Track B): Der Solver rechnet asynchron in `Task.Run` mit `Parallel.For`; das UI bleibt butterweich bedienbar; ein Not-Aus-Button bricht den Lauf sauber via `CancellationToken` ab.
@@ -452,11 +452,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide bearbeiten! Beide Tracks erwecken das in T03 rein geometrisch gezeichnete Modell mit der echten Math.NET-Cholesky-Engine zum Leben.
   - *Track A (Industrie):* **„Portalkran FEM-Statik-Engine“:** Das in T03 rein geometrisch dargestellte Hallenkran-Trägerwerk erwacht zum Leben: Assemblierung der Steifigkeitsmatrix $\mathbf{K}$, Cholesky-Lösung für Knotenverschiebungen $\mathbf{u}$, Ermittlung realer Stab- und Lagerkräfte sowie farbige Visualisierung elastischer Verformungen (Zug blau, Druck rot).
   - *Track B (Gaming / Arcade):* **„Destructible Truss / Poly Bridge Physik-Engine“:** Das in T03 als reiner Vektorentwurf gezeichnete Brückenmodell wird mit echter FEM-Statik lebendig: Reale Stabbelastungsberechnung via Cholesky; bei Überschreiten der Bruchspannung ($S \ge S_{\text{krit}}$) bricht der überlastete Stab, das System wird re-assembliert und kollabiert spektakulär!
-- **Theorie-Impuls & Live-Coding (45 min):**
+- **Theorie-Impuls & Code-Analyse (45 min):**
   - Vom Kräftegleichgewicht $\sum \vec{F} = \vec{0}$ zum linearen Gleichungssystem $\mathbf{K} \mathbf{u} = \mathbf{f}$.
   - Einarbeitung der Lagerbedingungen durch Zeilen- und Spaltenkondensation oder Penalty-Ansatz.
   - Numerik: Wann ist $\mathbf{K}$ symmetrisch positiv definit (SPD)? Warum Cholesky doppelt so schnell ist wie LU-Zerlegung.
-  - Live-Coding: Aufbau einer Fachwerk-Klasse mit Knoten, Stäben und Math.NET `Matrix<double>`.
+  - Code-Walkthrough: Aufbau einer Fachwerk-Klasse mit Knoten, Stäben und Math.NET `Matrix<double>`.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Kopplung des geometrischen Canvas-Viewers aus T03 mit der neuen Math.NET-Cholesky-Statik-Engine. Berechnung der realen Knotenverschiebungen $\mathbf{u}$ und maßstäblich überhöhte Darstellung der Verformung auf dem Canvas.
@@ -490,7 +490,7 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Es müssen **NICHT** beide bearbeitet werden! Beide Tracks fordern dieselbe ODE-Zustandsraummodellierung und RK4-Integration.
   - *Track A (Industrie):* Drehzahl- und Stromregelung eines permanenterregten DC-Servomotors an einer Werkzeugmaschinen-Vorschubachse.
   - *Track B (Gaming / Arcade):* **„Inverted Pendulum Balancer / Falcon Booster Landing“:** Interaktives Arcade-Spiel: Der Spieler versucht mit den Pfeiltasten eine schwebende Rakete aufrecht zu balancieren – gegen den unbestechlichen RK4-PID-Autopiloten!
-- **Theorie-Impuls & Live-Coding (45 min):**
+- **Theorie-Impuls & Code-Analyse (45 min):**
   - Konsistenzordnung im Detail: Lokaler Diskretisierungsfehler $\mathcal{O}(h^{p+1})$ vs. globaler Fehler $\mathcal{O}(h^p)$.
   - Mechatronisches Modell des DC-Motors: Elektrische DGL $\frac{di}{dt} = \frac{1}{L}(u - R i - k_e \omega)$, mechanische DGL $\frac{d\omega}{dt} = \frac{1}{J}(k_m i - d \omega - M_L)$.
   - Die Simulink-analoge S-Function-Schnittstelle in C#:
@@ -528,12 +528,12 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Es müssen **NICHT** beide bearbeitet werden! Beide Tracks basieren auf ereignisdiskreten Warteschlangen und stochastischen Monte-Carlo-Analysen.
   - *Track A (Industrie):* M/M/c-Warteschlangensimulation einer automatisierten Automobil-Lackierstraße mit stochastischen Maschinenausfällen (MTBF/MTTR).
   - *Track B (Gaming / Arcade):* **„Factory Tycoon / Fast-Food Rush“:** Ein diskreter Rush-Hour-Simulator: Kunden stürmen die Theke, Warteschlangen wachsen; der Spieler investiert in schnellere Service-Stationen, um den stochastischen Game-Over-Kollaps abzuwenden.
-- **Theorie-Impuls & Live-Coding (45 min):**
+- **Theorie-Impuls & Code-Analyse (45 min):**
   - Kontinuierlich vs. Diskret: Zeitschrittsteuerung vs. ereignisbasierter Fortschritt.
   - Erzeugung nicht-uniformer Zufallszahlen: Inversionsmethode $X = -\frac{1}{\lambda} \ln(1 - U)$ und Box-Muller-Transformation.
   - Numerische Katastrophen: Warum $\sum (x_i - \bar{x})^2$ bei float-Zahlen zu Auslöschung führt – und warum Welford die Lösung ist:
     $$M_k = M_{k-1} + \frac{x_k - M_{k-1}}{k}, \quad S_k = S_{k-1} + (x_k - M_{k-1})(x_k - M_k)$$
-  - Live-Coding: Warteschlangensimulator mit `PriorityQueue` und ScottPlot-Balkendiagramm.
+  - Code-Walkthrough: Warteschlangensimulator mit `PriorityQueue` und ScottPlot-Balkendiagramm.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Simulation einer Fertigungszelle bzw. Servicestation mit Puffergröße $N=5$. Ermittlung der Pufferüberlauf-Wahrscheinlichkeit über $10.000$ Monte-Carlo-Läufe mit paralleler TPL-Berechnung.
@@ -594,7 +594,7 @@ gantt
     dateFormat X
     axisFormat %s min
     section Phase 1 (45m)
-    Theorie-Impuls & Live-Coding : 0, 45
+    Theorie-Impuls & Code-Analyse : 0, 45
     section Phase 2 (60m)
     Hands-on Laborphase (In-Class Sprint) : 45, 105
     section Phase 3 (30m)
@@ -605,7 +605,7 @@ gantt
 
 | Phase | Zeitfenster | Dauer | Didaktische Funktion | Aktivitäten & Methoden |
 | :---: | :---: | :---: | :--- | :--- |
-| **Phase 1** | 00:00 – 00:45 | **45 min** | **Theorie-Impuls & Live-Coding** | - Interaktive Folienpräsentation (Problemstellung, mathematische Modellierung, physikalische Gesetze)<br>- Live-Coding durch Dozierenden: Konstruktion des Architekturgerüsts in Visual Studio<br>- Fehler provozieren & live debuggen |
+| **Phase 1** | 00:00 – 00:45 | **45 min** | **Theorie-Impuls & Code-Analyse** | - Interaktive Folienpräsentation (Problemstellung, mathematische Modellierung, physikalische Gesetze)<br>- Strukturierte Code- und Architektur-Analyse der Simulationsvorlagen<br>- Diskussion typischer numerischer und softwaretechnischer Fallstricke |
 | *Pause* | *integriert* | *5 min* | *Kurzes Durchatmen / Rechner vorbereiten* | *Puffer für Raumlüftung und Vorbereitung der IDE* |
 | **Phase 2** | 00:45 – 01:45 | **60 min** | **Hands-on Laborphase (In-Class Sprint)** | - Studierende arbeiten in festen 2er-Teams am Laptop (im gewählten Track: Track A Industrie ODER Track B Game)<br>- Ausfüllen der vorbereiteten Lücken-Schnittstellen (Scaffolding)<br>- Erreichen des "Minimal Viable Product" (lauffähige Mini-Simulation / Gameloop)<br>- Dozent fungiert als aktiver "Floor Coach" |
 | **Phase 3** | 01:45 – 02:15 | **25–30 min** | **Showcase, Peer Review & Plenumsdiskussion** | - **Live-Showcase Track A:** 1x Team Industrie stellt Lösung live am Beamer vor (5–7 min)<br>- **Live-Showcase Track B:** 1x Team Simulation Game stellt Lösung live vor (5–7 min)<br>- **Peer Review & Plenumsdiskussion:** Gezielte Fachfragen aus dem Plenum (ca. 10 min)<br>- **Dozenten-Feedback & Stresstest:** Live-Ad-hoc-Parameterstresstest (ca. 5 min)<br>- *An Test-Terminen (T04, T07, T10):* 15 min Moodle-MCQ-Test + gestraffter 15-min-Showcase |
@@ -863,7 +863,7 @@ Zur organisatorischen und technischen Vorbereitung vor dem ersten Präsenztermin
     - `CommunityToolkit.Mvvm` $\to$ Version 8.2.x
     - `AutomaticGraphLayout.WpfGraphControl` $\to$ Version 1.1.x
 - [ ] **Didaktische Materialien vorbereiten:**
-  - Live-Coding-Spickzettel („Failures to demonstrate“) für typische Pitfalls (z. B. fehlendes `WriteableBitmap.Unlock()`, Deadlocks in TPL, Integrator-Windup).
+  - Code-Diskussionsleitfaden („Pitfalls to highlight“) für typische Fallstricke (z. B. fehlendes `WriteableBitmap.Unlock()`, Deadlocks in TPL, Integrator-Windup).
   - Gameloop-Assets für die Arcade-Pendants (z. B. Partikeltexturen, Sound-Effekte optional).
 
 ---
