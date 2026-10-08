@@ -1,0 +1,67 @@
+<Window x:Class="HybridZeroCrossing.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Termin 10: Hybride Dynamik &amp; Zero-Crossing Bisektion" Height="700" Width="950"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Steuerungspanel -->
+        <Border Grid.Row="0" Background="#F4F6F8" Padding="12" CornerRadius="6" Margin="0,0,0,10">
+            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Methode:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <ComboBox x:Name="MethodSelector" Width="200" SelectedIndex="0" Margin="0,0,20,0">
+                    <ComboBoxItem Content="Bisektion (Zero-Crossing exakt)"/>
+                    <ComboBoxItem Content="Naiver Festschritt (h = 0.05 s)"/>
+                </ComboBox>
+
+                <TextBlock Text="Stoßzahl e:" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <Slider x:Name="RestitutionSlider" Minimum="0.2" Maximum="0.95" Value="0.8" Width="100" 
+                        ValueChanged="RestitutionSlider_ValueChanged" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBlock x:Name="RestitutionText" Text="0.80" FontWeight="SemiBold" Width="40" VerticalAlignment="Center" Margin="0,0,15,0"/>
+
+                <TextBlock Text="Starthöhe h_0 [m]:" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <Slider x:Name="HeightSlider" Minimum="1.0" Maximum="8.0" Value="5.0" Width="100"
+                        ValueChanged="HeightSlider_ValueChanged" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBlock x:Name="HeightText" Text="5.0 m" FontWeight="SemiBold" Width="45" VerticalAlignment="Center" Margin="0,0,20,0"/>
+
+                <Button x:Name="StartPauseBtn" Content="Start" Click="StartPause_Click" Padding="14,5" FontWeight="Bold" Margin="0,0,8,0"/>
+                <Button Content="Reset" Click="Reset_Click" Padding="12,5"/>
+            </WrapPanel>
+        </Border>
+
+        <!-- Simulations-Canvas -->
+        <Border Grid.Row="1" BorderBrush="#D0D7DE" BorderThickness="1" CornerRadius="4" Background="#1E1E2E" ClipToBounds="True">
+            <Canvas x:Name="SimCanvas" ClipToBounds="True" SizeChanged="SimCanvas_SizeChanged">
+                <!-- Bodenlinie -->
+                <Line x:Name="GroundLine" Stroke="#50FA7B" StrokeThickness="4"/>
+                <!-- Ball -->
+                <Ellipse x:Name="BallVisual" Width="40" Height="40" Fill="#FF5555" Stroke="#F8F8F2" StrokeThickness="2"/>
+                <!-- Interaktiver Bumper (Stoßkörper / Hindernis) -->
+                <Rectangle x:Name="BumperVisual" Width="80" Height="14" Fill="#BD93F9" RadiusX="4" RadiusY="4"/>
+            </Canvas>
+        </Border>
+
+        <!-- Status & Telemetrie -->
+        <Border Grid.Row="2" Background="#F6F8FA" Padding="10" Margin="0,10,0,0" CornerRadius="4" BorderBrush="#D0D7DE" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="TimeText" Grid.Column="0" Text="Zeit t: 0.00 s" FontWeight="SemiBold"/>
+                <TextBlock x:Name="PosText" Grid.Column="1" Text="Höhe y: 5.00 m"/>
+                <TextBlock x:Name="VelText" Grid.Column="2" Text="Geschw. v: 0.00 m/s"/>
+                <TextBlock x:Name="BouncesText" Grid.Column="3" Text="Stöße: 0"/>
+                <TextBlock x:Name="EnergyText" Grid.Column="4" Text="E_tot: 0.0 J" FontWeight="SemiBold"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

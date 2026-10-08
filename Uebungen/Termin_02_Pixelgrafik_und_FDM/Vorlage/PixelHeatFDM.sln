@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelHeatFDM", "PixelHeatFDM\PixelHeatFDM.csproj", "{0E397A64-C6D6-47D2-A72F-1249451F3E38}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeatGridTests", "Tests\HeatGridTests.csproj", "{13CE468D-C83D-4350-9836-961D483B8BBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Debug|x64.Build.0 = Debug|Any CPU
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Debug|x86.Build.0 = Debug|Any CPU
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Release|x64.ActiveCfg = Release|Any CPU
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Release|x64.Build.0 = Release|Any CPU
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Release|x86.ActiveCfg = Release|Any CPU
+		{0E397A64-C6D6-47D2-A72F-1249451F3E38}.Release|x86.Build.0 = Release|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Debug|x64.Build.0 = Debug|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Debug|x86.Build.0 = Debug|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Release|x64.ActiveCfg = Release|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Release|x64.Build.0 = Release|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Release|x86.ActiveCfg = Release|Any CPU
+		{13CE468D-C83D-4350-9836-961D483B8BBE}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{13CE468D-C83D-4350-9836-961D483B8BBE} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+	EndGlobalSection
+EndGlobal

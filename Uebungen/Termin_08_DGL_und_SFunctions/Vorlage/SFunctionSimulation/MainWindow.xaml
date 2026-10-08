@@ -1,0 +1,58 @@
+<Window x:Class="SFunctionSimulation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+        Title="Termin 08: S-Function DC-Motor mit RK4 &amp; Anti-Windup Clamping" Height="700" Width="1050"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Steuerungspanel -->
+        <Border Grid.Row="0" Background="#F4F6F9" Padding="12" CornerRadius="6" Margin="0,0,0,10">
+            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Sollwinkel w [rad]:" VerticalAlignment="Center" Margin="0,0,6,0" FontWeight="SemiBold"/>
+                <TextBox x:Name="TargetAngleBox" Text="10.0" Width="55" VerticalContentAlignment="Center" Margin="0,0,16,0"/>
+
+                <TextBlock Text="Störlast M_last [Nm]:" VerticalAlignment="Center" Margin="0,0,6,0" FontWeight="SemiBold"/>
+                <TextBox x:Name="LoadTorqueBox" Text="2.5" Width="55" VerticalContentAlignment="Center" Margin="0,0,16,0"/>
+
+                <CheckBox x:Name="AntiWindupCheck" Content="Anti-Windup Clamping aktiv" IsChecked="True" 
+                          FontWeight="Bold" Foreground="#1A5FB4" VerticalAlignment="Center" Margin="0,0,20,0"/>
+
+                <Button Content="Simulation starten" Click="StartSimulation_Click" Padding="16,6" FontWeight="Bold" Background="#0D6EFD" Foreground="White"/>
+            </WrapPanel>
+        </Border>
+
+        <!-- Diagramme: 2 Plots untereinander -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Plot 1: Position theta(t) vs w(t) -->
+            <Border Grid.Row="0" Margin="0,0,0,5" BorderBrush="#D0D7DE" BorderThickness="1" CornerRadius="4">
+                <ScottPlot:WpfPlot x:Name="PlotPosition" />
+            </Border>
+
+            <!-- Plot 2: Spannung u(t) und Integrator xi(t) -->
+            <Border Grid.Row="1" Margin="0,5,0,0" BorderBrush="#D0D7DE" BorderThickness="1" CornerRadius="4">
+                <ScottPlot:WpfPlot x:Name="PlotActuator" />
+            </Border>
+        </Grid>
+
+        <!-- Telemetrie / Auswertung -->
+        <Border Grid.Row="2" Background="#FFFFFF" Padding="10" Margin="0,10,0,0" CornerRadius="4" BorderBrush="#D0D7DE" BorderThickness="1">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="OvershootText" Text="Überschwingen: -" Margin="0,0,30,0" FontWeight="SemiBold"/>
+                <TextBlock x:Name="MaxXiText" Text="Max. I-Anteil x_i: -" Margin="0,0,30,0"/>
+                <TextBlock x:Name="SettlingText" Text="Einschwingzeit: -" Margin="0,0,30,0"/>
+                <TextBlock x:Name="StatusNote" Text="Bereit" Foreground="DarkGreen" FontWeight="SemiBold"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

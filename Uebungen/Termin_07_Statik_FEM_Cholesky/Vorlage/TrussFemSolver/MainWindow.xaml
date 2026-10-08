@@ -1,0 +1,58 @@
+<Window x:Class="TrussFemSolver.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Termin 07: 2D-Fachwerk FEM-Solver (Cholesky &amp; MathNet)" Height="650" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header & Steuerung -->
+        <Border Grid.Row="0" Background="#F0F4F8" Padding="12" CornerRadius="6" Margin="0,0,0,10">
+            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Modell:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <ComboBox x:Name="ModelSelector" Width="220" SelectedIndex="0" SelectionChanged="ModelSelector_SelectionChanged" Margin="0,0,20,0">
+                    <ComboBoxItem Content="Stufe A: 3-Knoten-Dreiecksträger"/>
+                    <ComboBoxItem Content="Track A: Portalkran (Wahlaufgabe)"/>
+                    <ComboBoxItem Content="Track B: Bridge Truss (Wahlaufgabe)"/>
+                </ComboBox>
+
+                <TextBlock Text="Punktlast F_y [kN]:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <Slider x:Name="LoadSlider" Minimum="-50" Maximum="0" Value="-10" Width="120"
+                        TickFrequency="5" IsSnapToTickEnabled="False" ValueChanged="LoadSlider_ValueChanged" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <TextBlock x:Name="LoadText" Text="-10.0 kN" FontWeight="SemiBold" Width="65" VerticalAlignment="Center" Margin="0,0,20,0"/>
+
+                <TextBlock Text="Überhöhungsfaktor:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <Slider x:Name="DeformScaleSlider" Minimum="100" Maximum="3000" Value="1000" Width="120"
+                        ValueChanged="DeformScaleSlider_ValueChanged" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <TextBlock x:Name="ScaleText" Text="1000x" FontWeight="SemiBold" Width="55" VerticalAlignment="Center" Margin="0,0,15,0"/>
+
+                <Button Content="Neu berechnen" Click="Recalculate_Click" Padding="12,5" FontWeight="SemiBold"/>
+            </WrapPanel>
+        </Border>
+
+        <!-- Canvas Visualisierung -->
+        <Border Grid.Row="1" BorderBrush="#D0D7DE" BorderThickness="1" CornerRadius="4" ClipToBounds="True" Background="#FFFFFF">
+            <Canvas x:Name="TrussCanvas" ClipToBounds="True" SizeChanged="TrussCanvas_SizeChanged"/>
+        </Border>
+
+        <!-- Statusleiste / Telemetrie -->
+        <Border Grid.Row="2" Background="#F6F8FA" Padding="10" Margin="0,10,0,0" CornerRadius="4" BorderBrush="#D0D7DE" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="DispStatus" Grid.Column="0" Text="Max. Verschiebung: -" FontWeight="SemiBold"/>
+                <TextBlock x:Name="ReactionStatus" Grid.Column="1" Text="Auflagerkräfte: -"/>
+                <TextBlock x:Name="StressStatus" Grid.Column="2" Text="Max. Spannung: -"/>
+                <TextBlock x:Name="EquilibriumStatus" Grid.Column="3" Text="Gleichgewicht: -" Foreground="Green"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
