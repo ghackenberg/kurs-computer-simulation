@@ -25,6 +25,33 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+### Showcase & Peer-Challenge: Termin 02
+
+Präsentation der Ergebnisse aus Termin 02 ([Aufgabenblatt 02](../../Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.md)):
+
+<div class="columns">
+<div class="two">
+
+#### Track A: Industrie (CPU-Kühlkörper)
+- **FDM-Modell:** Inhomogene Materialien (Si, Cu, Al) & Robin-Randbedingungen an Finnen.
+- **Numerik:** Stabilitätsgrenze $\Delta t \le \frac{\Delta x^2}{4 a_{\max}}$ für Kupfer nachweisen.
+- **Stresstest:** Lüfterausfall live schalten ($h: 250 \to 20\,\text{W/m}^2\text{K}$) oder $\Delta t$ verdoppeln.
+
+</div>
+<div class="two">
+
+#### Track B: Game (Doom Fire & Lava)
+- **Hybrid-Gitter:** 5-Punkt-FDM Wärmefeld gekoppelt mit zellulärem Sand-/Lava-Automat.
+- **Performance:** Allokationsfreier Render-Loop auf `WriteableBitmap.BackBuffer` ($\ge 45\,\text{FPS}$).
+- **Stresstest:** Diffusionsfaktor überkriechen lassen oder Großbrand live auslösen.
+
+</div>
+</div>
+
+> **Peer-Challenge (Säule 2b):** Prüfung auf physikalisches Double-Buffering (kein In-Place-Überschreiben) und 0 B GC-Allokationen im Render-Tick.
+
+---
+
 ## 3.1: Grundlagen der Vektorgrafik und WPF Canvas
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -696,3 +723,37 @@ public class SimpleRenderCanvas : FrameworkElement
 - Mittels **Vektoralgebra** (Richtungs- und Orthogonalvektoren) werden Pfeilschäfte und Pfeilspitzen analytisch konstruiert.
 - Eine **`MatrixTransform`** am Canvas ermöglicht flüssiges, hardwarebeschleunigtes **Pan & Zoom** mit Zentrierung auf den Mauszeiger (`ScaleAt`).
 - Bei großen Datenmengen ($> 2.000$ Elemente) bricht der WPF `Shape`-Baum ein. **`DrawingVisual` / `DrawingContext`** bietet professionelle High-Performance-Vektorgrafik für komplexe Engineering-Anwendungen.
+
+---
+
+### Laborübung Termin 03: Vektorgrafik auf Canvas
+
+Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details siehe [Aufgabenblatt 03](../../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md):
+
+<div class="columns">
+<div class="two">
+
+#### Track A: Industrie & Mechatronik
+**2D-CAD Fachwerkträger-Viewer (Rein geometrisch!)**
+- Pratt-/Warren-Träger (min. 8 Knoten, 13 Stäbe)
+- Auto-Fit BoundingBox mit isotroper Skalierung
+- Normgerechte DIN-406 Bemaßungsketten
+- Lager- und Lastpfeile (analytische Geometrie)
+- Drag-and-Drop der Knoten mit Maustracking
+- *(Hinweis: Statische FEM-Berechnung folgt in Termin 07!)*
+
+</div>
+<div class="two">
+
+#### Track B: Simulation Game
+**Space Radar ODER Blueprint Sketcher**
+- **Option B.1 Space Radar:** Vektorschiff mit Pfeilspitzen für $\vec{v}$ und $\vec{a}$, Distanzringe, Kursprädiktor
+- **Option B.2 Blueprint Sketcher:** Interaktiver CAD-Editor mit Grid-Snapping, Stab-Aufspannen & Lagern
+- Stufenloses Pan & Zoom via `MatrixTransform`
+- *(Hinweis: Reine CAD-/Vektorgeometrie ohne FEM-Solver!)*
+
+</div>
+</div>
+
+> Saubere WPF Canvas / `DrawingVisual` Architektur – Wahlmodell: Track A oder Track B.
+

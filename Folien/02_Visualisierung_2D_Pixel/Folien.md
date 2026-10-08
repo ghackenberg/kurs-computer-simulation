@@ -25,6 +25,33 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+### Showcase & Peer-Challenge: Termin 01
+
+Präsentation der Ergebnisse aus Termin 01 ([Aufgabenblatt 01](../../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md)):
+
+<div class="columns">
+<div class="two">
+
+#### Track A: Industrie (Hydraulikzylinder)
+- **Modell:** Viskose vs. quadratische Blendenreibung, harter Anschlag mit Federkraft.
+- **Numerik:** Euler vs. Heun (RK2). Ab welcher Schrittweite $\Delta t$ explodiert Euler?
+- **Stresstest:** $\Delta t$ live verzehnfachen.
+
+</div>
+<div class="two">
+
+#### Track B: Game (Artillery Duel)
+- **Modell:** Ballistik mit quadratischem Newton-Drag, stochastischem Wind & Terrain.
+- **Numerik:** Schnittpunkt-Interpolation bei Kollision, KI-Winkelsuche ($\pm 1{,}5\,\text{m}$).
+- **Stresstest:** Gegenwind live auf $+25\,\text{m/s}$ setzen.
+
+</div>
+</div>
+
+> **Peer-Challenge (Säule 2b):** Fragen aus dem Plenum zu Stabilitätsgrenzen, Energieerhaltung und linearer Schnittpunkt-Interpolation.
+
+---
+
 ## 2.1: Speicherlayout digitaler Rasterbilder
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -687,3 +714,35 @@ private unsafe void RenderKernel(
 - **High-Performance:** Mit C#-Pointern (`unsafe`), 32-Bit Wortschreiben (`uint*`) und `Parallel.For` wird nahezu die theoretische Speicherbandbreite der CPU ausgeschöpft.
 - **Look-Up-Tables (LUT):** Kontinuierliche Feldgrößen werden über vorberechnete Farbpaletten (Viridis, Cool-Warm) in $O(1)$-Zeit ohne teure Funktionsaufrufe farbkodiert.
 - **Simulation auf Pixeln:** Finite-Differenzen-Modelle (wie die 2D-Wärmeleitungsgleichung) lassen sich direkt auf 2D-Arrays berechnen und ohne Zwischenschritte visualisieren.
+
+---
+
+### Laborübung Termin 02: Pixelgrafik & FDM
+
+Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details siehe [Aufgabenblatt 02](../../Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.md):
+
+<div class="columns">
+<div class="two">
+
+#### Track A: Industrie & Mechatronik
+**CPU- & Server-Blade Kühlkörper-Optimizer**
+- Inhomogenes Gitter ($a_{\text{Si}}, a_{\text{TIM}}, a_{\text{Cu}}, a_{\text{Al}}$)
+- 10 Kühlrippen mit Robin-Randbedingung
+- Forcierte Konvektion vs. Lüfterausfall ($h = 250 \to 20\,\text{W/m}^2\text{K}$)
+- Stabilitätsgrenze $\Delta t \le \frac{\Delta x^2}{4 a_{\max}}$ experimentell nachweisen
+
+</div>
+<div class="two">
+
+#### Track B: Simulation Game
+**Falling Sand & Doom Fire / Lava-Simulator**
+- Doppellagiges Gitter ($200 \times 200$): FDM-Wärmefeld + Zellulärer Automat
+- Gravitation für Sand- und Lava-Pixel
+- Doom-Fire Konvektion & Asche-Zerfall
+- Flüssiges Rendering ($\ge 45\,\text{FPS}$) via `WriteableBitmap.BackBuffer`
+
+</div>
+</div>
+
+> High-Performance WPF-Applikation (`unsafe uint*`, 0 B GC Alloc) – Wahlmodell: Track A oder B.
+

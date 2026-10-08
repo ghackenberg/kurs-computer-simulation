@@ -21,7 +21,7 @@ Dieses abschließende Kapitel umfasst die folgenden Abschnitte:
 - 11.2: Leitfaden zur Modellauswahl in Industrieprojekten
 - 11.3: Softwarearchitektur & Best Practices für Simulationscode
 - 11.4: Der Digitale Zwilling in der industriellen Praxis
-- 11.5: Hinweise zur Projektarbeit und Prüfung
+- 11.5: Kolloquium, Präsentation der Abschlussprojekte & Feedback
 
 ---
 
@@ -755,14 +755,15 @@ Komplexe FEM- oder CFD-Simulationen benötigen oft Stunden – unmöglich für d
 
 ---
 
-## 11.5: Hinweise zur Projektarbeit und Prüfung
+## 11.5: Kolloquium, Präsentation der Abschlussprojekte & Feedback
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Kriterien für herausragende Simulationsprojekte
-- Validierungsstrategien und Plausibilitätsprüfungen
-- Typische Fallstricke bei der Abgabe
-- Prüfungsrelevanz und Kernkompetenzen für Ihren Werdegang
+- Validierungsstrategien und typische Fallstricke
+- Abschluss-Kolloquium: Ablauf, 7-Minuten-Pitch & Live-Demos
+- Oral Defense: Bewertungsdimensionen & Stresstest
+- Feedback, Reflexion & industrieller Ausblick
 
 ---
 
@@ -918,6 +919,103 @@ Für die mündliche/schriftliche Prüfung im Fach Systemsimulation / Digitaler Z
 
 </div>
 </div>
+
+---
+
+### Abschluss-Kolloquium: Ablauf & Pitch-Format
+
+Die Präsentation der Semesterprojekte ("Digital Twin Challenge") erfolgt im Kolloquium:
+
+<div class="columns">
+<div class="two">
+
+**Pitch-Struktur (7 Minuten pro Team):**
+- **3 min: Modell & Mathematik**
+  - Problemstellung & Systemgrenzen
+  - DGL- / LGS-Herleitung auf Folien
+  - Zustandsraumvektor $\mathbf{x}$ & Solver-Wahl
+- **3 min: Live-Demo des Zwillings**
+  - Vorführung des lauffähigen C#-WPF-Zwillings
+  - Interaktion & Parametervariation live
+
+</div>
+<div class="two">
+
+**Q&A & Stresstest (1 Minute):**
+- **1 min: Fachgespräch & Peer Review**
+  - Spontane Dozenten- & Plenumsfragen
+  - Ad-hoc-Parametertest (z.B. Lastsprung, $\Delta t$)
+- **Hörsaal-Diskussion:**
+  - Jedes Team stellt aktiv Peer-Review-Fragen
+  - Mündliche Verteidigung der Codebasis
+
+</div>
+</div>
+
+> [!NOTE]
+> **Pitch-Regel:** Straffes Timing! Die Live-Demo muss auf Knopfdruck startklar sein. Keine Folienorgien – der lauffähige Code steht im Mittelpunkt.
+
+---
+
+### Oral Defense: Bewertungsdimensionen
+
+Die Endabnahme bewertet die ganzheitliche Synthese von Theorie und Software:
+
+<div class="columns">
+<div class="two">
+
+**1. Modellierung & Numerik (40 %):**
+- Physikalisch plausible Gleichungen
+- Treffsichere Solver- & Zeitschrittwahl
+- Konvergenz & Energieerhaltung
+- MSTest-Unit-Tests zur Verifikation
+
+**2. Software-Architektur (30 %):**
+- Saubere Entkopplung (Model / Solver / View)
+- TPL-Multithreading ohne UI-Blockade
+
+</div>
+<div class="two">
+
+**3. Visualisierung & UX (15 %):**
+- Aussagekräftiges Dashboard (WPF/ScottPlot/3D)
+- Klare Einheiten, Skalen & Farbleitsysteme
+
+**4. Mündliche Verteidigung (15 %):**
+- Verständnis jeder Codezeile (Vibe-Coding-Doktrin)
+- Souveräne Reaktion auf Randfall-Stresstests
+
+</div>
+</div>
+
+> [!IMPORTANT]
+> **Vibe-Coding-Doktrin:** KI-Assistenten sind Werkzeuge – in der Oral Defense haften Sie persönlich für jede Zeile Code und jede physikalische Randbedingung!
+
+---
+
+### Feedback, Reflexion & Industrieller Ausblick
+
+<div class="columns">
+<div class="two">
+
+**Reflexion & Peer-Feedback:**
+- **Konstruktive Kritik:** Stärken & Ausbaupotenziale
+- **Fehlerkultur:** Aus Divergenz und Instabilitäten lernen
+- **Evaluation:** Semester-Feedback zur Lehrveranstaltung
+
+</div>
+<div class="two">
+
+**Ausblick auf Praxis & Forschung:**
+- **Virtuelle Inbetriebnahme:** HiL & SPS-Kopplung
+- **Industrie 4.0:** Echtzeit-Zwillinge mit OPC UA
+- **Abschlussarbeiten:** Forschungsthemen am Campus Wels
+
+</div>
+</div>
+
+> [!TIP]
+> **Ihr Wettbewerbsvorteil:** Sie beherrschen die Brücke zwischen Mechatronik, Physik, numerischer Mathematik und modernem High-Performance C# (.NET 8).
 
 ---
 

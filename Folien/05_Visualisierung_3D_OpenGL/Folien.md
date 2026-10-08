@@ -24,6 +24,33 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+### Showcase & Peer-Challenge: Termin 04
+
+Präsentation der Ergebnisse aus Termin 04 ([Aufgabenblatt 04](../../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md)):
+
+<div class="columns">
+<div class="two">
+
+#### Track A: Industrie (Antriebsprüfstand)
+- **Signal-Streaming:** Drehzahl $n(t)$ & Moment $M(t)$ mit dynamischen $\pm 3\sigma$-Toleranzbändern.
+- **Topologie:** MSAGL-Antriebsstrang mit visueller Kavitations-/Alarmanzeige.
+- **Stresstest:** Abtastfrequenz drastisch erhöhen & Welford-Hüllkurven im Betrieb prüfen.
+
+</div>
+<div class="two">
+
+#### Track B: Game (Racing HUD)
+- **Cockpit-Telemetrie:** Speed/RPM mit Shift-Flash & G-Kräfte (Kamm'scher Kreis).
+- **Statistik:** Rundenzeiten-Histogramm & Streckenabschnitts-Topologie (MSAGL).
+- **Stresstest:** Grenzbereich-Fahrt mit Haftungsabriss ($a_{\text{res}} > \mu \cdot g$) provozieren.
+
+</div>
+</div>
+
+> **Peer-Challenge (Säule 2b):** Prüfung auf allokationsfreies Streaming (keine GC-Spikes im Diagnostic Tool), Single-Pass-Welford und UI-Entkopplung.
+
+---
+
 ## 5.1: Grundlagen der 3D-Visualisierung mit OpenGL
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -1511,3 +1538,37 @@ private void OnMouseMove(object sender, MouseEventArgs e)
   - `gluPerspective`: Pyramidenstumpf (Frustum) mit konvergierenden Strahlen. Perspektivische Tiefenverkürzung für realistische 3D-Simulationen und Digitale Zwillinge.
 - **Szenengraph & Kinematik**: Hierarchische Datenstruktur zur Verwaltung von Objekten, Geometrien (`GeometryFactory`) und seriellen Roboterkinematiken mittels Matrix-Stack (`gl.PushMatrix` / `gl.PopMatrix`).
 - **Interaktive Kameraführung**: Eine `OrbitCamera` auf Basis von Kugelkoordinaten ($\theta, \phi, r$) erlaubt intuitive 3D-Navigation per Maus über `gl.LookAt`.
+
+---
+
+### Laborübung Termin 05: 3D-OpenGL & Szenengraph
+
+Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details: [Aufgabenblatt 05](../../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md):
+
+<div class="columns">
+<div class="two">
+
+#### Track A: Industrie & Mechatronik
+**SCARA-Roboterarm mit TCP-Check**
+- 4 Achsen: $\theta_1, \theta_2$ (Rotation), $d_3$ (Hub), $\theta_4$ (Greifer)
+- Szenengraph (`glPushMatrix` / `glPopMatrix`)
+- Analytische Vorwärtskinematik für TCP
+- Gelbe Kontrollkugel deckt sich mit Greifer
+- Interaktives Teach-In (Slider & Preset-Posen)
+
+</div>
+<div class="two">
+
+#### Track B: Simulation Game
+**3D Arcade Claw Crane (Greifarm)**
+- 3D-Gehäuse mit Preisen & Auswurfschacht
+- 3-Achs-Portalbrücke & Seilwinde
+- Schließender 3D-Greifmechanismus
+- Tastatursteuerung & Kollisionsprüfung
+- Physikalisches Greifen und Ablegen
+
+</div>
+</div>
+
+> Flüssiges 3D-Rendering mit SharpGL & OrbitCamera ($\ge 30\,\text{FPS}$) – Wahlmodell: Track A oder B.
+

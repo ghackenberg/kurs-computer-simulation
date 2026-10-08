@@ -25,6 +25,36 @@ math: mathjax
 
 ---
 
+### Showcase & Peer Review: Termin 07 (Statik & Cholesky-FEM)
+
+<div class="columns">
+<div class="two">
+
+**Track A: Portalkran-FEM-Statik (Industrie)**
+- Erweckung der T03-Geometrie via Cholesky
+- Wandernde Kranlast ($F_{\text{Last}} = 50\,\text{kN}$)
+- Überhöhte Verformungsdarstellung im Canvas
+- Reale Normalkräfte (Zug blau, Druck rot)
+- *Peer Review:* Euler-Knicknachweis & Kondition
+
+</div>
+<div class="two">
+
+**Track B: Bridge Constructor Engine (Game)**
+- Interaktive Fachwerkbrücke mit LKW-Überfahrt
+- Schrittweise Cholesky-LGS-Lösung
+- Bauteilversagen bei Grenzspannung $S_{\text{krit}}$
+- Physikalischer Kollaps & Trägerwerk-Einsturz
+- *Peer Review:* Singularität bei Stab-Ausfall
+
+</div>
+</div>
+
+> [!NOTE]
+> **Showcase & Plenumsdiskussion:** Live-Demonstration beider Tracks auf der Beamer-Bühne. Fokus: Numerische Stabilität, Konditionszahl $\kappa(\mathbf{K})$ und Cholesky-Performance. Details: [Aufgabenblatt Termin 07](../../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md).
+
+---
+
 ## 8.1: Grundlagen und Definitionen
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -1779,3 +1809,35 @@ while (solver.Time <= 0.6) // 600 ms Regelung
 - **Mehrstufenverfahren (Heun RK2, klassisches RK4)** bieten dramatisch höhere Genauigkeit ($\mathcal{O}(h^2)$, $\mathcal{O}(h^4)$).
 - **Stabilität auf der Imaginärachse:** Erst ab RK4 können ungedämpfte Schwingungssysteme mit expliziten Verfahren stabil integriert werden ($h\omega_0 \le 2\sqrt{2}$).
 - **Mechatronischer Regelkreis & Anti-Windup:** Reale Aktorbegrenzung erfordert Clamping-Logik zur Verhinderung von Integrator-Windup; RK4 löst gekoppelte Zustände mit hoher Robustheit.
+
+---
+
+### Hands-on Labor: Termin 08 – Pick your Track!
+
+<div class="columns">
+<div class="two">
+
+**Track A: DC-Servomotor (Industrie)**
+- **Szenario:** Vorschubachse Werkzeugmaschine
+- DGL-System: Strom $i(t)$, Drehzahl $\omega(t)$, Winkel $\theta(t)$
+- 4-stufiger RK4-Solver ($h = 1\,\text{ms}$)
+- Lastsprung bei Fräskontakt ($M_{\text{Last}} = 0{,}5\,\text{Nm}$)
+- Anti-Windup Clamping gegen Überschwingen
+
+</div>
+<div class="two">
+
+**Track B: SpaceX Falcon Hop (Game)**
+- **Szenario:** Raketen-Schwebeflug & Landung
+- Gekoppelte Translation ($y, v$) & Rotation ($\phi, \omega$)
+- RK4-Flugphysik mit Gravitation & Trägheit
+- Kaskadierter PID & Schubvektor-Gimbal
+- Balancer gegen Inverted-Pendulum-Kippen
+
+</div>
+</div>
+
+> [!TIP]
+> **Arbeitsauftrag:** Bearbeiten Sie im 2er-Team **GENAU EINEN** der beiden Tracks!
+> Aufgabenstellung & Vorlagen: [Aufgabenblatt Termin 08](../../Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.md).
+

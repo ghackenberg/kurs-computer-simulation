@@ -27,6 +27,36 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+### Showcase & Peer Review: Termin 08 (Kontinuierliche Dynamik & RK4)
+
+<div class="columns">
+<div class="two">
+
+**Track A: DC-Servomotor (Industrie)**
+- Zustandsraum-Modellierung ($i, \omega, \theta$)
+- 4-stufige RK4-Integration ($h = 1\,\text{ms}$)
+- PI-Lageregelung mit Lastsprung
+- Anti-Windup Clamping gegen Überschwingen
+- *Peer Review:* Verhalten bei Aktor-Sättigung
+
+</div>
+<div class="two">
+
+**Track B: SpaceX Falcon Hop (Game)**
+- Raketen-Schwebeflug & dynamische Landung
+- Gekoppelte Translation & Drehträgheit
+- Kaskadierter PID & Schubvektor-Gimbal
+- Balancer gegen Inverted-Pendulum-Kippen
+- *Peer Review:* RK4-Stabilität & Regelparameter
+
+</div>
+</div>
+
+> [!NOTE]
+> **Showcase & Plenumsdiskussion:** Live-Demonstration beider Tracks auf der Beamer-Bühne. Fokus: Anti-Windup Clamping unter Lastsprung und RK4-Schrittweitenwahl. Details: [Aufgabenblatt Termin 08](../../Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.md).
+
+---
+
 ![bg right](./Illustrationen/Abschnitt_1.jpg)
 
 ## 9.1: Grundlagen und Konzepte
@@ -1391,4 +1421,36 @@ In der Praxis existieren kontinuierliche Physik und diskrete Ereignisse selten g
   - SPS tastet periodisch mit $\Delta t$ ab (*Sample-and-Hold*)
 
 ➔ **Kapitel 10:** S-Functions, Bisektion & Zeno-Beherrschung!
+
+---
+
+### Hands-on Labor: Termin 09 – Pick your Track!
+
+<div class="columns">
+<div class="two">
+
+**Track A: Lackierstraße M/M/c (Industrie)**
+- **Szenario:** Automobil-Lackierstraße ($c = 3$)
+- Puffer mit Blocking ($K = 25$) & Abweisung
+- Prioritätswarteschlange (Express vs. Standard)
+- Exponential-Ankünfte & Log-Normal-Service
+- Statistische Validierung über Little's Gesetz
+
+</div>
+<div class="two">
+
+**Track B: Theme Park Queue (Game)**
+- **Szenario:** Achterbahn-Warteschlangen-Rush
+- Kundenströme mit stochastischen Spitzen
+- VIP-Fastpass-Prio mit `PriorityQueue`
+- Welford-Online-Akkumulator für Wartezeiten
+- Interaktives Dashboard gegen Queue-Kollaps
+
+</div>
+</div>
+
+> [!TIP]
+> **Arbeitsauftrag:** Bearbeiten Sie im 2er-Team **GENAU EINEN** der beiden Tracks!
+> Aufgabenstellung & Vorlagen: [Aufgabenblatt Termin 09](../../Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.md).
+
 

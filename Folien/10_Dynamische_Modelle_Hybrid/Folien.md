@@ -25,6 +25,36 @@ Dieses Kapitel beinhaltet Folgendes:
 
 ---
 
+### Showcase & Peer Review: Termin 09 (Diskrete Systeme & DES)
+
+<div class="columns">
+<div class="two">
+
+**Track A: Lackierstraße M/M/c (Industrie)**
+- Automobil-Lackierstraße mit 3 Kabinen
+- Puffer mit Blocking ($K = 25$) & Abweisung
+- Prioritätswarteschlange (Express vs. Standard)
+- Numerische Verifikation via Little's Gesetz
+- *Peer Review:* Welford-Varianz & Konfidenz
+
+</div>
+<div class="two">
+
+**Track B: Theme Park Queue (Game)**
+- Achterbahn-Warteschlangen-Rush
+- Stochastische Peaks & Zwischenankünfte
+- VIP-Fastpass mit `PriorityQueue`
+- Interaktives Dashboard gegen Queue-Kollaps
+- *Peer Review:* Stochastische Kausalität & Seeds
+
+</div>
+</div>
+
+> [!NOTE]
+> **Showcase & Plenumsdiskussion:** Live-Demonstration beider Tracks auf der Beamer-Bühne. Fokus: Little's Gesetz, Pufferüberlauf-Wahrscheinlichkeiten und Welford-Akkumulation. Details: [Aufgabenblatt Termin 09](../../Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.md).
+
+---
+
 ![bg right](./Illustrationen/Abschnitt_1.jpg)
 
 ## 10.1: Fallbeispiel: Der Bouncing Ball
@@ -1564,4 +1594,36 @@ Das gesamte Methodenspektrum steht nun zur Verfügung:
 - **Virtuelle Inbetriebnahme (VIBN)** von Sondermaschinen
 - **FMI / FMU:** Standard für Co-Simulationen
 - **Synthese:** Leitfaden zur erfolgreichen Projektarbeit
+
+---
+
+### Hands-on Labor: Termin 10 – Pick your Track!
+
+<div class="columns">
+<div class="two">
+
+**Track A: VIBN Pneumatikzylinder (Industrie)**
+- **Szenario:** Virtuelle Inbetriebnahme Taktvorschub
+- Kontinuierliche Kammer-Druckdynamik ($p_1, p_2$)
+- Anschlag bei $x_{\max}$ mit Zero-Crossing-Bisektion
+- Zeno-Schutz durch Übergang in Haftreibung
+- Virtuelle Endschalter & Kopplung an SPS-Takt
+
+</div>
+<div class="two">
+
+**Track B: Arcade Pinball Wizard (Game)**
+- **Szenario:** Flipper-Kugel-Dynamik & Bumper
+- Stetige Gravitations- & Rampentrajektorie
+- Bisektion verhindert Hindernis-Durchtunneln
+- Energetische Restitution an Banden & Flipper
+- Zeno-Threshold für Kugel-Ruhelage in Rinne
+
+</div>
+</div>
+
+> [!TIP]
+> **Arbeitsauftrag:** Bearbeiten Sie im 2er-Team **GENAU EINEN** der beiden Tracks!
+> Aufgabenstellung & Vorlagen: [Aufgabenblatt Termin 10](../../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.md).
+
 

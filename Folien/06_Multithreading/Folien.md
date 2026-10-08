@@ -26,6 +26,36 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+### Showcase & Peer Review: Termin 05 (3D & Szenengraph)
+
+<div class="columns">
+<div class="two">
+
+**Track A: SCARA-Roboterarm (Industrie)**
+- Hierarchischer Szenengraph mit SharpGL
+- Vorwärtskinematik mit Rotationsachsen
+- Kardanfehlerfreie Orbit-Kameraführung
+- Werkstück-Greifbereich & TCP-Validierung
+- *Peer Review:* Matrix-Stack (`glPushMatrix`)
+
+</div>
+<div class="two">
+
+**Track B: Arcade Claw Machine (Game)**
+- Interaktiver Jahrmarkt-Greifautomat
+- Mehrgliedrige Seil- und Greifer-Kinematik
+- Kugelkoordinaten-Kamerasteuerung
+- Physikalischer Kollisions-Snap für Greifobjekt
+- *Peer Review:* Achs-Hierarchie & Tasten-Steuerung
+
+</div>
+</div>
+
+> [!NOTE]
+> **Showcase & Plenumsdiskussion:** Live-Demonstration auf der Beamer-Bühne im Rotationsprinzip. Auditorium hinterfragt Gelenkhierarchien und Kardanfehler. Details: [Aufgabenblatt Termin 05](../../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md).
+
+---
+
 ## 6.1: Grundlagen: Prozesse, Threads & Parallelität
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -606,3 +636,35 @@ public void Simulate(CancellationToken token)
 
 </div>
 </div>
+
+---
+
+### Hands-on Labor: Termin 06 – Pick your Track!
+
+<div class="columns">
+<div class="two">
+
+**Track A: Toleranzanalyse (Industrie)**
+- **Szenario:** Getriebe-Passungsspiel mit Maßketten
+- $N = 10\,000\,000$ Bauteilvarianten parallel berechnen
+- Parallele TPL-Verteilung mit `Parallel.For`
+- Thread-sichere Aggregation (`Interlocked`)
+- Entkopplung vom UI via `Progress<T>` & Not-Aus
+
+</div>
+<div class="two">
+
+**Track B: Zombie-Horde & Boids (Game)**
+- **Szenario:** Schwarm-Simulation à la Craig Reynolds
+- $100\,000$ Boids/Zombies mit Nachbarschaftssuche
+- Single-Thread bricht bei 12 FPS ein
+- Mit `Parallel.For` flüssige 60 FPS auf allen Kernen
+- Reaktives WPF-Dashboard mit Live-FPS-Zähler
+
+</div>
+</div>
+
+> [!TIP]
+> **Arbeitsauftrag:** Bearbeiten Sie im 2er-Team **GENAU EINEN** der beiden Tracks!
+> Aufgabenstellung & Vorlagen: [Aufgabenblatt Termin 06](../../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md).
+

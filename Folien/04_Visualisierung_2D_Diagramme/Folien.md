@@ -25,6 +25,33 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+### Showcase & Peer-Challenge: Termin 03
+
+Präsentation der Ergebnisse aus Termin 03 ([Aufgabenblatt 03](../../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md)):
+
+<div class="columns">
+<div class="two">
+
+#### Track A: Industrie (2D-CAD Fachwerkträger)
+- **Geometrie:** Normgerechte Bemaßungsketten (DIN 406), Auto-Fit BoundingBox mit Randabstand.
+- **Interaktion:** Drag-and-Drop der Knoten, mitgeführte Stäbe & Lastpfeile.
+- **Stresstest:** Extremes Fensterformat (21:9) & Knoten-Verschiebung im Live-Test.
+
+</div>
+<div class="two">
+
+#### Track B: Game (Radar / Blueprint)
+- **Vektorgrafik:** Space-Radar mit Distanzringen & $\vec{v}/\vec{a}$-Pfeilen ODER Blueprint Sketcher.
+- **Interaktion:** Stufenloser Pan & Zoom mit Maus-Zentrierung (`MatrixTransform`).
+- **Stresstest:** Maximaler Zoom-In/Out & viele Stäbe/Vektoren live einzeichnen.
+
+</div>
+</div>
+
+> **Peer-Challenge (Säule 2b):** Prüfung auf exakte Koordinatentransformation (Welt $\leftrightarrow$ Screen), Isotropie und Kausalität (reine Geometrie, keine Statik!).
+
+---
+
 ## 4.1: Einführung in 2D-Diagramme und Datenstrukturen
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -675,3 +702,36 @@ GraphControl.Graph = graph;
 
 </div>
 </div>
+
+---
+
+### Laborübung Termin 04: Telemetrie & ScottPlot
+
+Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details siehe [Aufgabenblatt 04](../../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md):
+
+<div class="columns">
+<div class="two">
+
+#### Track A: Industrie & Mechatronik
+**Antriebsprüfstand & Schwingungsüberwachung**
+- Live-Streamer für Drehzahl $n(t)$ und Moment $M(t)$
+- Welford-Algorithmus: $\bar{M} \pm 3\sigma_M$ Toleranzbänder
+- Phasenraum-Kennfeld ($M$ vs. $n$) mit $P_{\max}$-Grenze
+- Schwingungs-Histogramm mit Gauß-Kurve
+- MSAGL-Antriebsstrang mit Sensor-Alarmanzeige
+
+</div>
+<div class="two">
+
+#### Track B: Simulation Game
+**Retro Arcade Racing HUD & G-Force Telemetrie**
+- Live Speed- & RPM-Streamer mit Shift-Flash
+- Welford-Statistik für optimale Ausdreh-Drehzahl
+- Kamm'scher Kreis (Phasenplot $a_x$ vs. $a_y$ mit Haftungslimit $\mu \cdot g$)
+- Rundenzeit-Histogramm & Strecken-Topologie (MSAGL)
+
+</div>
+</div>
+
+> Performance-Dashboard mit ScottPlot 5 & MSAGL (0 B GC-Druck) – Wahlmodell: Track A oder B.
+

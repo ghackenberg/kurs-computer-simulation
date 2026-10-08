@@ -731,3 +731,37 @@ In den folgenden Kapiteln erarbeiten wir zunächst die Werkzeuge und vertiefen a
 </div>
 </div>
 
+---
+
+### Laborübung Termin 01: Kinematik & Expliziter Euler
+
+Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details siehe [Aufgabenblatt 01](../../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md):
+
+<div class="columns">
+<div class="two">
+
+#### Track A: Industrie & Mechatronik
+**Hydraulikzylinder-Endlagendämpfung**
+- $m \ddot{x} = F_{\text{vor}} - F_{\text{dämpf}}(x,v) - F_{\text{anschlag}}(x)$
+- Nichtlineare viskose & Blendenreibung
+- Fester Anschlag mit Kontaktfederkraft
+- **Euler vs. Heun (RK2):** Stabilitätsanalyse & Schrittweitenstudie ($10\,\mu\text{s} \dots 2\,\text{ms}$)
+- Trajektorien-Export als CSV & Konsole
+
+</div>
+<div class="two">
+
+#### Track B: Simulation Game
+**Retro Artillery Duel mit Newton-Drag**
+- $\ddot{\mathbf{r}} = \mathbf{g} - \frac{\rho c_{\text{w}} A}{2m} \|\mathbf{v}_{\text{rel}}\| \mathbf{v}_{\text{rel}}$
+- Stochastischer Wind $\vec{w} = [w_x, 0]^\top$
+- Nichtlineares Terrain $y_{\text{terrain}}(x)$
+- **Bodenkollision:** Schnittpunkt-Interpolation
+- **KI-Zielrechner:** Schusswinkel-Finder
+- Stochastische Runden & ASCII-Plot
+
+</div>
+</div>
+
+> Reine C#-Konsolenapplikation (.NET 8/10, `Vector2`) – Keine GUI! Freie Wahl zwischen Track A und B.
+

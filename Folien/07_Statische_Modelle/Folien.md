@@ -24,6 +24,36 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 - 7.5: Programmtechnische Umsetzung
 
 ---
+
+### Showcase & Peer Review: Termin 06 (Multithreading & TPL)
+
+<div class="columns">
+<div class="two">
+
+**Track A: Monte-Carlo-Toleranzanalyse (Industrie)**
+- Getriebe-Passungsspiel mit Maßketten
+- $10\,000\,000$ Bauteile parallel berechnet
+- Datenparallelität mit `Parallel.For` & TPL
+- Thread-sichere Aggregation (`Interlocked`)
+- *Peer Review:* Skalierung & UI-Entkopplung
+
+</div>
+<div class="two">
+
+**Track B: 100.000 Boids & Zombie-Horde (Game)**
+- Schwarm-Simulation à la Craig Reynolds
+- $100\,000$ Boids mit Nachbarschaftssuche
+- CPU-Skalierung: Von 12 FPS auf flüssige 60 FPS
+- Asynchroner Task-Loop mit `CancellationToken`
+- *Peer Review:* Race Conditions & Not-Aus-Stresstest
+
+</div>
+</div>
+
+> [!NOTE]
+> **Showcase & Plenumsdiskussion:** Live-Vorführung beider Tracks auf der Beamer-Bühne. Stresstest des Not-Aus-Abbruchs unter Volllast. Details: [Aufgabenblatt Termin 06](../../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md).
+
+---
 ## 7.1: Einführung und historische Entwicklung
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -1117,3 +1147,35 @@ try {
 - Durch **Assemblierung** aller Stabsteifigkeiten und Einbau der Randbedingungen entsteht das globale Gleichungssystem $\mathbf{K} \mathbf{u} = \mathbf{f}$.
 - Für die **programmtechnische Lösung** des LGS eignen sich direkte Verfahren (Gauß, LU) und iterative Methoden (z.B. mit `Math.NET Numerics`).
 - Die Visualisierung der berechneten Verformungen und Kräfte erfolgt über 2D-Vektorgrafiken (Kapitel 3) bzw. 3D-OpenGL (Kapitel 5).
+
+---
+
+### Hands-on Labor: Termin 07 – Pick your Track!
+
+<div class="columns">
+<div class="two">
+
+**Track A: Portalkran-FEM (Industrie)**
+- **Verheiratung mit T03:** 2D-WPF-Canvas
+- Reale Hallenkran-Geometrie ($24\,\text{m}$)
+- Wanderlast $F_{\text{Last}} = 50\,\text{kN}$ (Laufkatze)
+- Math.NET Cholesky-Lösung für $\mathbf{u}$
+- Farbgradient (Zug blau, Druck rot)
+
+</div>
+<div class="two">
+
+**Track B: Bridge Constructor (Game)**
+- **Verheiratung mit T03:** Interaktive Brücke
+- LKW-Überfahrt mit dynamischer Achslast
+- Cholesky-Statik in jedem Zeitschritt
+- Knicknachweis & Bruch ($S \ge S_{\text{krit}}$)
+- Dynamischer Einsturz kollabierender Stäbe
+
+</div>
+</div>
+
+> [!TIP]
+> **Arbeitsauftrag:** Bearbeiten Sie im 2er-Team **GENAU EINEN** der beiden Tracks!
+> Aufgabenstellung & Vorlagen: [Aufgabenblatt Termin 07](../../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md).
+

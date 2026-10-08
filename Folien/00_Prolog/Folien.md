@@ -20,7 +20,7 @@ Dieser erste Foliensatz umfasst die folgenden Inhalte:
 1. Voraussetzungen
 1. Lernziele
 1. Kursinhalte
-1. Notenrichtlinie
+1. Kursstruktur & Notenmodell
 1. Lektorenprofil
 
 ---
@@ -160,17 +160,98 @@ Dieser Kurs umfasst die folgenden Themenblöcke:
 
 ---
 
-![bg right](./Illustrationen/Notenrichtlinie.png)
+## Kursstruktur & Arbeitsweise
 
-## Notenrichtlinie
+Die Lehrveranstaltung ist eine **Integrierte Lehrveranstaltung (ILV)** mit 3 ECTS (75 h Workload):
 
-Für die Benotung in diesem Kurs gelten die folgenden Modalitäten:
+- **Theorie & Live-Hacking (45 min):** Kompakte Vermittlung der mathematischen & technischen Grundlagen.
+- **In-Class Sprint (60 min):** Betreute Paarprogrammierung an einem lauffähigen Minimal Viable Product (MVP).
+- **Homework Extension (1 Woche):** Autonome Vertiefung im 2er-Team im gewählten Track (Industrie vs. Game).
+- **Showcase & Peer-Challenge (20 min):** Rotierende Beamer-Präsentationen und Plenumsdiskussion.
 
-- Projektarbeit alleine oder in Zweiergruppen
-- Bewertungskriterien
-  - Umfang und Schwierigkeit der Aufgabenstellung
-  - Güte der Umsetzung
-  - Güte der Dokumentation
+---
+
+### Freie Track-Wahl: Industrie vs. Simulation Game
+
+Für die vertiefenden Laboraufgaben (Stufe B) wählen Sie im 2er-Team frei zwischen zwei gleichwertigen Pfaden:
+
+<div class="columns">
+<div class="two">
+
+#### Track A: Industrie & Mechatronik
+- Reale Sondermaschinen, Prüfstände und Digitale Zwillinge.
+- *Themen:* Hydraulikzylinder, CPU-Kühler, CAD-Fachwerke, Prüfstände, SCARA-Roboter.
+
+</div>
+<div class="two">
+
+#### Track B: Simulation Game
+- Interaktive Physik-Spiele, Arcade-Klassiker und visuelle Effekte.
+- *Themen:* Retro Artillery Duel, Doom Fire & Lava, Space Radar, Racing HUD, Claw Crane.
+
+</div>
+</div>
+
+> Beide Tracks basieren auf identischen mathematisch-numerischen Prinzipien (je 10 Punkte).
+
+---
+
+## Das 3-Säulen-Notenmodell
+
+Transparente Beurteilung von Theorie, praktischer Implementierung und wissenschaftlichem Diskurs:
+
+<div class="columns">
+<div class="two">
+
+**Säule 1: Theorie & Numerik (30 %)**
+- 4 Moodle-Präsenztests (je 7,5 %)
+- Fehlerdiagnose & Stabilitätsgrenzen
+- Formelverständnis & Berechnungsfragen
+
+**Säule 2: Praxis & Diskurs (30 %)**
+- 4 Übungsmeilensteine (je 3,75 %)
+- 15 % Showcase-Demo & Stresstest
+- 15 % Peer-Review & Plenumsfragen
+
+</div>
+<div class="two">
+
+**Säule 3: Semesterprojekt (40 %)**
+- Ganzheitlicher Digitaler Zwilling im 2er-Team
+- 10 % Software-Architektur (Goldene Regel)
+- 10 % Physikalische Validierung
+- 20 % Mündliche Teamverteidigung (Oral Defense)
+
+**Bestehenskriterium:**
+- Gesamtnote $\ge 50\,\%$ sowie mind. $50\,\%$ in jeder Säule.
+
+</div>
+</div>
+
+---
+
+### Showcase-Kultur & Peer-Challenge
+
+Zu Beginn jedes Folgetermins demonstrieren zwei zufällig ausgewählte Teams ihre Lösung live am Beamer:
+
+<div class="columns">
+<div class="two">
+
+#### Showcase & Micro-Defense (Säule 2a)
+- **Live-Demonstration:** Flüssig laufende Simulation ($\ge 30\,\text{FPS}$) im Hörsaal.
+- **Code-Inspection:** Exakte Begründung jeder Codezeile (kein blindes „Vibe Coding“!).
+- **Live-Parameter-Stresstest:** Ad-hoc-Modifikation (z. B. Schrittweite verzehnfachen).
+
+</div>
+<div class="two">
+
+#### Peer-Review & Fragenkultur (Säule 2b)
+- **Kritisches Auditorium:** Das Plenum prüft Konsistenz, Erhaltungssätze und Stabilität.
+- **Enttarnung von Schein-Animationen:** Echte Physik-DGL statt reiner UI-Animation!
+- **Aktive Beteiligung:** Fundierte Fachfragen fließen direkt in die Teilnote von Säule 2b ein.
+
+</div>
+</div>
 
 ---
 
