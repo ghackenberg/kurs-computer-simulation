@@ -538,7 +538,7 @@ namespace GrafikGenerator
             lineAW.LineWidth = 4.0f;
             lineAW.LegendText = "Mit Anti-Windup Clamping (aperiodisch)";
 
-            plot1.Title("DC-Servomotor Schrittantwort: Anti-Windup Clamping");
+            plot1.Title("DC-Servomotor Sprungantwort: Anti-Windup Clamping");
             plot1.XLabel("Zeit t [s]");
             plot1.YLabel("Wellenposition θ(t) [rad]");
             plot1.ShowLegend();

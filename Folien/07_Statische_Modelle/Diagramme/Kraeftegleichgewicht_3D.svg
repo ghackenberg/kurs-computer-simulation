@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 340" width="100%" height="100%">
+  <defs>
+    <!-- Pfeilspitze für Koordinatenachsen -->
+    <marker id="arrow-axis" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B" />
+    </marker>
+    <!-- Pfeilspitze für Stabkräfte (Blau) -->
+    <marker id="arrow-force-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284C7" />
+    </marker>
+    <!-- Pfeilspitze für externe Kraft (Rot) -->
+    <marker id="arrow-force-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#DC2626" />
+    </marker>
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <style>
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+  </style>
+
+  <!-- Rahmen & Hintergrund -->
+  <rect x="5" y="5" width="370" height="330" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#card-shadow)" />
+
+  <!-- Titelbanner -->
+  <rect x="5" y="5" width="370" height="36" rx="12" fill="#F1F5F9" />
+  <rect x="5" y="29" width="370" height="12" fill="#F1F5F9" />
+  <line x1="5" y1="41" x2="375" y2="41" stroke="#E2E8F0" stroke-width="1.5" />
+  <text x="18" y="27" font-size="16" font-weight="700" fill="#004B96">3D-Kräfte am Knoten i</text>
+
+  <!-- 3D-KOORDINATENACHSEN (grau, dezent) -->
+  <!-- Knoten i liegt bei (170, 175) -->
+  <!-- x-Achse (schräg nach links unten) -->
+  <line x1="170" y1="175" x2="75" y2="232" stroke="#94A3B8" stroke-width="1.8" stroke-dasharray="4,4" marker-end="url(#arrow-axis)" />
+  <text x="60" y="245" font-size="16" font-weight="700" fill="#64748B">x</text>
+
+  <!-- y-Achse (nach rechts) -->
+  <line x1="170" y1="175" x2="315" y2="175" stroke="#94A3B8" stroke-width="1.8" stroke-dasharray="4,4" marker-end="url(#arrow-axis)" />
+  <text x="325" y="180" font-size="16" font-weight="700" fill="#64748B">y</text>
+
+  <!-- z-Achse (nach oben) -->
+  <line x1="170" y1="175" x2="170" y2="52" stroke="#94A3B8" stroke-width="1.8" stroke-dasharray="4,4" marker-end="url(#arrow-axis)" />
+  <text x="170" y="46" font-size="16" font-weight="700" fill="#64748B" text-anchor="middle">z</text>
+
+  <!-- STABACHSEN (3D-Stäbe) -->
+  <!-- Stab 1 -->
+  <line x1="170" y1="175" x2="305" y2="95" stroke="#E2E8F0" stroke-width="4.5" stroke-linecap="round" />
+  <!-- Stab 2 -->
+  <line x1="170" y1="175" x2="70" y2="98" stroke="#E2E8F0" stroke-width="4.5" stroke-linecap="round" />
+  <!-- Stab 3 -->
+  <line x1="170" y1="175" x2="295" y2="250" stroke="#E2E8F0" stroke-width="4.5" stroke-linecap="round" />
+
+  <!-- STABKRÄFTE (Vektoren S_j · e_j) -->
+  <!-- Kraft Stab 1 -->
+  <line x1="170" y1="175" x2="265" y2="119" stroke="#0284C7" stroke-width="3" marker-end="url(#arrow-force-blue)" />
+  <text x="240" y="105" font-size="15" font-weight="700" fill="#0284C7">S1 · e1</text>
+
+  <!-- Kraft Stab 2 -->
+  <line x1="170" y1="175" x2="98" y2="120" stroke="#0284C7" stroke-width="3" marker-end="url(#arrow-force-blue)" />
+  <text x="65" y="135" font-size="15" font-weight="700" fill="#0284C7">S2 · e2</text>
+
+  <!-- Kraft Stab 3 -->
+  <line x1="170" y1="175" x2="255" y2="227" stroke="#0284C7" stroke-width="3" marker-end="url(#arrow-force-blue)" />
+  <text x="250" y="215" font-size="15" font-weight="700" fill="#0284C7">S3 · e3</text>
+
+  <!-- EXTERNE LAST (F_ext) -->
+  <line x1="170" y1="175" x2="128" y2="255" stroke="#DC2626" stroke-width="3.5" marker-end="url(#arrow-force-red)" />
+  <text x="95" y="272" font-size="16" font-weight="700" fill="#DC2626">F_ext</text>
+
+  <!-- KNOTEN i (Zentrum) -->
+  <circle cx="170" cy="175" r="8" fill="#FFFFFF" stroke="#004B96" stroke-width="3" />
+  <text x="185" y="170" font-size="15" font-weight="700" fill="#004B96">Knoten i</text>
+
+  <!-- GLEICHGEWICHTS-INFOBOX UNTEN -->
+  <rect x="15" y="285" width="350" height="38" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+  <text x="190" y="309" font-size="15" font-weight="700" fill="#1E293B" text-anchor="middle">
+    Σ (S_j · e_j) + F_ext = 0
+  </text>
+</svg>

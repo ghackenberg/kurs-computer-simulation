@@ -1,15 +1,18 @@
 %%{init: {'themeVariables': {'fontSize': '20px'}}}%%
-flowchart LR
-    PLC["<b>Reale SPS-Hardware</b><br/>(B&R / Siemens)<br/>IEC 61131-3 Code"]
-    BUS["<b>Feldbus</b><br/>(EtherCAT /<br/>PROFINET)"]
-    SIM["<b>Echtzeit-Simulation</b><br/>(C# / .NET, 1 ms Zyklus)<br/>Mechatronik & Sensoren"]
-    VIS["<b>3D-Visualisierung</b><br/>(WPF / SharpGL)<br/>Kollisionskontrolle"]
-
-    PLC <==>|"E/A-Signale"| BUS
-    BUS <==>|"Telegramme"| SIM
-    SIM ==>|"Geometrie"| VIS
+flowchart TD
+    subgraph Row1 ["Reale Steuerung & Kommunikation"]
+        direction LR
+        PLC["<b>Reale SPS-Hardware</b><br/>(B&R / Siemens)"] <==>|"E/A-Signale"| BUS["<b>Feldbus / Gateway</b><br/>(EtherCAT / PROFINET)"]
+    end
+    subgraph Row2 ["Virtuelle Absicherung (Digitaler Zwilling)"]
+        direction LR
+        SIM["<b>Echtzeit-Simulation</b><br/>(C# / .NET, 1 ms)"] ==>|"Geometrie"| VIS["<b>3D-Visualisierung</b><br/>(WPF / SharpGL)"]
+    end
+    Row1 <==>|"Echtzeit-Telegramme"| Row2
 
     style PLC fill:#e8f4fd,stroke:#004B96,stroke-width:2px
     style BUS fill:#fff8e1,stroke:#f57f17,stroke-width:2px
     style SIM fill:#e8f8f5,stroke:#00897b,stroke-width:2px
     style VIS fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px
+    style Row1 fill:#f8fafc,stroke:#cbd5e1,stroke-width:1.5px
+    style Row2 fill:#f8fafc,stroke:#cbd5e1,stroke-width:1.5px

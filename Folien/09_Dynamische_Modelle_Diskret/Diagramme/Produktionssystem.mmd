@@ -1,5 +1,22 @@
-graph LR
-    subgraph Materialfluss
+%%{init: {'themeVariables': {'fontSize': '20px'}}}%%
+flowchart TD
+    subgraph Row1 ["Ebene 1: Vorfertigung"]
         direction LR
-        Rohmaterial --> Bearbeitung --> Puffer --> Montage --> Endprodukt
+        Rohmaterial["<b>Rohmaterial</b><br/>Lager"] --> Bearbeitung["<b>Bearbeitung</b><br/>CNC / Fräsen"]
     end
+    Puffer["<b>Pufferlager</b><br/>Warteschlange (FIFO)"]
+    subgraph Row2 ["Ebene 2: Endmontage"]
+        direction LR
+        Montage["<b>Montage</b><br/>Montagezelle"] --> Endprodukt["<b>Endprodukt</b><br/>Fertigteillager"]
+    end
+
+    Row1 ==>|"Halbzeuge"| Puffer
+    Puffer ==>|"Werkstücke"| Row2
+
+    style Rohmaterial fill:#e8f4fd,stroke:#004B96,stroke-width:2px
+    style Bearbeitung fill:#fff3cd,stroke:#ff9800,stroke-width:2px
+    style Puffer fill:#fff8e1,stroke:#f57f17,stroke-width:2px
+    style Montage fill:#fff3cd,stroke:#ff9800,stroke-width:2px
+    style Endprodukt fill:#d1e7dd,stroke:#0f5132,stroke-width:2px
+    style Row1 fill:#f8fafc,stroke:#cbd5e1,stroke-width:1.5px
+    style Row2 fill:#f8fafc,stroke:#cbd5e1,stroke-width:1.5px

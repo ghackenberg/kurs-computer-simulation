@@ -70,3 +70,29 @@ ch10Diagrams.forEach(p => {
     [/font-size:12px/g, 'font-size:16px']
   ]);
 });
+
+// 5. Chapter 08 Diagrams
+const ch8Diagrams = [
+  'Folien/08_Dynamische_Modelle_Kontinuierlich/Diagramme/Algebraische_Schleife_Mechanik.svg',
+  'Folien/08_Dynamische_Modelle_Kontinuierlich/Diagramme/Algebraische_Schleife_Praxis.svg',
+  'Folien/08_Dynamische_Modelle_Kontinuierlich/Diagramme/Simulationsschleife_Implizit.svg'
+];
+ch8Diagrams.forEach(p => {
+  fixSvg(p, [
+    [/font-size:12px/g, 'font-size:20px'],
+    [/font-size:\s*12px/g, 'font-size: 20px']
+  ]);
+});
+
+// 6. Chapter 11 Diagrams
+const ch11Diagrams = [
+  'Folien/11_Epilog/Diagramme/Simulationsprozess_Synthese.svg',
+  'Folien/11_Epilog/Diagramme/VIBN_Systemarchitektur.svg'
+];
+ch11Diagrams.forEach(p => {
+  fixSvg(p, [
+    [/font-size:12px/g, 'font-size:20px'],
+    [/font-size:\s*12px/g, 'font-size: 20px']
+  ]);
+});
+

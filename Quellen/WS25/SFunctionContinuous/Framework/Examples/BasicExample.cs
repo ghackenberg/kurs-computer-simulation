@@ -1,4 +1,4 @@
-﻿using SFunctionContinuous.Framework.Blocks;
+using SFunctionContinuous.Framework.Blocks;
 
 namespace SFunctionContinuous.Framework.Examples
 {
@@ -7,7 +7,7 @@ namespace SFunctionContinuous.Framework.Examples
         public BasicExample()
         {
             Block c = new ConstantBlock("Constant1", 1);
-            Block i1 = new IntegrateBlock("Intergate1", 0);
+            Block i1 = new IntegrateBlock("Integrate1", 0);
             Block i2 = new IntegrateBlock("Integrate2", 0);
             Block r1 = new RecordBlock("Record1");
             Block r2 = new RecordBlock("Record2");

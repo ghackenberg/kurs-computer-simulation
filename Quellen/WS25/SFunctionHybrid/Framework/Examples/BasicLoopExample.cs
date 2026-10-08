@@ -1,4 +1,4 @@
-﻿using SFunctionHybrid.Framework.Blocks;
+using SFunctionHybrid.Framework.Blocks;
 
 namespace SFunctionHybrid.Framework.Examples
 {
@@ -6,7 +6,7 @@ namespace SFunctionHybrid.Framework.Examples
     {
         public BasicLoopExample()
         {
-            Block i = new IntegrateBlock("Intergate", 1);
+            Block i = new IntegrateBlock("Integrate", 1);
             Block r = new RecordBlock("Record");
 
             Model.AddBlock(i);

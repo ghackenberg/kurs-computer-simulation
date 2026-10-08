@@ -1,5 +1,5 @@
 flowchart LR
-    A([Start]) --> B["Zust‰nde initialisieren<br/>Ausg‰nge & Ableitungen"]
+    A([Start]) --> B["Zust√§nde initialisieren<br/>Ausg√§nge & Ableitungen"]
     B --> E{Weiter?}
     
     subgraph Zeitschleife ["Zeitschleife (t = t_max)"]
@@ -7,10 +7,10 @@ flowchart LR
         E -- Ja --> H
         subgraph Ableitungsschleife ["Ableitungsschleife"]
             direction TB
-            H["Zust‰nde integrieren<br/>Ausg‰nge & Ableitungen<br/>Fehler berechnen"] --> G{Konvergenz?}
+            H["Zust√§nde integrieren<br/>Ausg√§nge & Ableitungen<br/>Fehler berechnen"] --> G{Konvergenz?}
             G -- Nein --> H
         end
-        G -- Ja --> M["Zeit erhˆhen: t += h"]
+        G -- Ja --> M["Zeit erh√∂hen: t += h"]
         M --> E
     end
     

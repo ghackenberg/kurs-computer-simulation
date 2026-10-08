@@ -29,23 +29,23 @@
     text {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
-    .main-title { font-size: 20px; font-weight: 700; fill: #004B96; }
-    .main-subtitle { font-size: 13px; fill: #64748B; font-weight: 500; }
+    .main-title { font-size: 22px; font-weight: 700; fill: #004B96; }
+    .main-subtitle { font-size: 14px; fill: #64748B; font-weight: 500; }
     .card-bg { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.2; rx: 10px; }
     .card-header-ortho { fill: #EFF6FF; stroke: #BFDBFE; stroke-width: 1; }
     .card-header-persp { fill: #F5F3FF; stroke: #DDD6FE; stroke-width: 1; }
-    .panel-title { font-size: 16px; font-weight: 700; }
-    .panel-subtitle { font-size: 11.5px; fill: #64748B; font-weight: 500; }
-    .badge-code { font-family: "Consolas", "Fira Code", monospace; font-size: 11px; font-weight: 600; }
+    .panel-title { font-size: 18px; font-weight: 700; }
+    .panel-subtitle { font-size: 13px; fill: #64748B; font-weight: 500; }
+    .badge-code { font-family: "Consolas", "Fira Code", monospace; font-size: 12.5px; font-weight: 600; }
     .axis-line { stroke: #64748B; stroke-width: 1.5; stroke-dasharray: 4,3; }
-    .axis-label { font-size: 11px; font-weight: 600; fill: #475569; }
+    .axis-label { font-size: 12.5px; font-weight: 600; fill: #475569; }
     .frustum-edge { stroke: #0284C7; stroke-width: 1.5; stroke-dasharray: 5,4; fill: none; }
     .frustum-edge-persp { stroke: #7C3AED; stroke-width: 1.5; stroke-dasharray: 5,4; fill: none; }
     .frustum-volume-ortho { fill: rgba(2, 132, 199, 0.04); }
     .frustum-volume-persp { fill: rgba(124, 58, 237, 0.04); }
     .near-plane { fill: rgba(16, 185, 129, 0.20); stroke: #059669; stroke-width: 1.8; }
     .far-plane { fill: rgba(239, 68, 68, 0.15); stroke: #DC2626; stroke-width: 1.8; stroke-dasharray: 4,3; }
-    .plane-label { font-size: 11px; font-weight: 700; }
+    .plane-label { font-size: 12.5px; font-weight: 700; }
     .proj-ray { stroke: #0284C7; stroke-width: 1.2; stroke-dasharray: 3,3; }
     .proj-ray-persp { stroke: #7C3AED; stroke-width: 1.2; stroke-dasharray: 3,3; }
     .cube-front { fill: #38BDF8; stroke: #0284C7; stroke-width: 1.2; }
@@ -53,10 +53,10 @@
     .cube-side { fill: #0284C7; stroke: #0369A1; stroke-width: 1.2; }
     .proj-screen-rect { stroke-width: 1.8; rx: 1px; }
     .dim-line { stroke: #64748B; stroke-width: 1; }
-    .dim-text { font-size: 10px; font-weight: 600; fill: #475569; text-anchor: middle; }
-    .info-label { font-size: 11px; font-weight: 700; fill: #1E293B; }
-    .info-val { font-size: 11px; fill: #475569; }
-    .tag { font-size: 10px; font-weight: 700; padding: 2px 6px; }
+    .dim-text { font-size: 12.5px; font-weight: 600; fill: #475569; text-anchor: middle; }
+    .info-label { font-size: 13px; font-weight: 700; fill: #1E293B; }
+    .info-val { font-size: 12px; fill: #475569; }
+    .tag { font-size: 12.5px; font-weight: 700; padding: 2px 6px; }
   </style>
 
   <!-- Gesamt-Hintergrund -->
@@ -107,8 +107,8 @@
       <line x1="56" y1="22" x2="68" y2="22" stroke="#004B96" stroke-width="2" marker-end="url(#arrow-blue)" />
       <line x1="56" y1="28" x2="68" y2="28" stroke="#004B96" stroke-width="2" marker-end="url(#arrow-blue)" />
       <line x1="56" y1="34" x2="68" y2="34" stroke="#004B96" stroke-width="2" marker-end="url(#arrow-blue)" />
-      <text x="35" y="10" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle">Betrachter</text>
-      <text x="35" y="52" font-size="8.5" fill="#64748B" text-anchor="middle">(im Unendlichen)</text>
+      <text x="35" y="10" font-size="12.5" font-weight="700" fill="#475569" text-anchor="middle">Betrachter</text>
+      <text x="35" y="52" font-size="12" fill="#64748B" text-anchor="middle">(im Unendlichen)</text>
     </g>
 
     <!-- Quaderkanten (Sichtvolumen) -->
@@ -124,16 +124,16 @@
       <polygon points="357.3,289.2 385.1,292.6 385.1,264.6 357.3,261.2" fill="#60A5FA" stroke="#2563EB" stroke-width="1.2" />
       <polygon points="370.3,253.0 357.3,261.2 385.1,264.6 398.1,256.4" fill="#BFDBFE" stroke="#2563EB" stroke-width="1.2" />
       <polygon points="398.1,284.4 385.1,292.6 385.1,264.6 398.1,256.4" fill="#2563EB" stroke="#1D4ED8" stroke-width="1.2" />
-      <text x="393.1" y="276.6" font-size="10" font-weight="700" fill="#1E3A8A">Objekt B (fern)</text>
-      <text x="393.1" y="288.6" font-size="9" fill="#475569">Kantenlänge s</text>
+      <text x="393.1" y="276.6" font-size="12.5" font-weight="700" fill="#1E3A8A">Objekt B (fern)</text>
+      <text x="393.1" y="291.6" font-size="12" fill="#475569">Kantenlänge s</text>
     </g>
     <!-- Objekt A (naher Würfel) -->
     <g id="ortho-cube-a">
       <polygon points="223.3,272.7 251.1,276.1 251.1,248.1 223.3,244.7" fill="#38BDF8" stroke="#0284C7" stroke-width="1.2" />
       <polygon points="236.3,236.5 223.3,244.7 251.1,248.1 264.1,240.0" fill="#BAE6FD" stroke="#0284C7" stroke-width="1.2" />
       <polygon points="264.1,268.0 251.1,276.1 251.1,248.1 264.1,240.0" fill="#0284C7" stroke="#0369A1" stroke-width="1.2" />
-      <text x="259.1" y="260.1" font-size="10" font-weight="700" fill="#0369A1">Objekt A (nah)</text>
-      <text x="259.1" y="272.1" font-size="9" fill="#475569">Kantenlänge s</text>
+      <text x="259.1" y="260.1" font-size="12.5" font-weight="700" fill="#0369A1">Objekt A (nah)</text>
+      <text x="259.1" y="275.1" font-size="12" fill="#475569">Kantenlänge s</text>
     </g>
     <!-- Parallele Projektionsstrahlen (Ortho) -->
     <line class="proj-ray" x1="385.1" y1="264.6" x2="152.8" y2="236.0" />
@@ -151,10 +151,10 @@
     <text class="dim-text" x="184.8" y="253.0" fill="#B45309" font-weight="700">h_A' = h_B'</text>
     
     <!-- Info-Badge auf Bildebene -->
-    <g transform="translate(95.30000000000001, 287.9)">
-      <rect x="0" y="0" width="135" height="34" rx="4" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1" />
-      <text x="67" y="14" font-size="10" font-weight="700" fill="#1D4ED8" text-anchor="middle">Exakt gleiche Bildgröße!</text>
-      <text x="67" y="27" font-size="9" fill="#475569" text-anchor="middle">Keine Tiefenverkürzung</text>
+    <g transform="translate(80.3, 287.9)">
+      <rect x="0" y="0" width="160" height="38" rx="4" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1" />
+      <text x="80" y="15" font-size="12.5" font-weight="700" fill="#1D4ED8" text-anchor="middle">Exakt gleiche Bildgröße!</text>
+      <text x="80" y="30" font-size="12" fill="#475569" text-anchor="middle">Keine Tiefenverkürzung</text>
     </g>
 
     <!-- Bemaßung z_near und z_far -->
@@ -169,7 +169,7 @@
     <g transform="translate(18, 335)">
       <rect x="0" y="0" width="490" height="185" rx="7" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2" />
       
-      <text class="info-label" x="14" y="24">Mathematik & Eigenschaften:</text>
+      <text class="info-label" x="14" y="24">Mathematik &amp; Eigenschaften:</text>
       <text class="info-val" x="14" y="44">• <tspan font-weight="600">Sichtvolumen:</tspan> Axenparalleler Quader [left, right] × [bottom, top] × [-far, -near]</text>
       <text class="info-val" x="14" y="63">• <tspan font-weight="600">Projektion:</tspan> x' = 2·(x - left)/(right - left) - 1,  y' = 2·(y - bottom)/(top - bottom) - 1</text>
       <text class="info-val" x="14" y="82">• <tspan font-weight="600">Keine Division durch Z:</tspan> Parallele Linien bleiben immer strikt parallel</text>
@@ -178,7 +178,7 @@
       <line x1="14" y1="114" x2="476" y2="114" stroke="#CBD5E1" stroke-width="1" />
       
       <text class="info-label" x="14" y="134" fill="#004B96">Einsatzbereiche:</text>
-      <text class="info-val" x="14" y="153">✓ CAD-Software & technische Konstruktionszeichnungen (exakte Maße ablesbar)</text>
+      <text class="info-val" x="14" y="153">✓ CAD-Software &amp; technische Konstruktionszeichnungen (exakte Maße ablesbar)</text>
       <text class="info-val" x="14" y="171">✓ 2D-Benutzeroberflächen, HUDs (Head-up-Displays), Diagrammachsen, Grundrisse</text>
     </g>
   </g>
@@ -220,14 +220,14 @@
       <!-- Small lens cone -->
       <path d="M 44 13 L 52 8 L 52 27 L 44 22 Z" fill="#7C3AED" />
       <circle cx="52" cy="17.5" r="2.5" fill="#EF4444" />
-      <text x="23" y="42" font-size="9.5" font-weight="700" fill="#5B21B6" text-anchor="middle">COP (Auge)</text>
-      <text x="23" y="52" font-size="8.5" fill="#64748B" text-anchor="middle">(0, 0, 0)</text>
+      <text x="23" y="42" font-size="12.5" font-weight="700" fill="#5B21B6" text-anchor="middle">COP (Auge)</text>
+      <text x="23" y="52" font-size="12" fill="#64748B" text-anchor="middle">(0, 0, 0)</text>
     </g>
 
 
     <!-- FOV Winkelbogen -->
     <path d="M 98.0 220.0 A 30 30 0 0 1 98.0 240.0" fill="none" stroke="#D97706" stroke-width="1.8" />
-    <text x="108.0" y="234.0" font-size="10" font-weight="700" fill="#D97706">FOV_y</text>
+    <text x="108.0" y="234.0" font-size="12.5" font-weight="700" fill="#D97706">FOV_y</text>
 
     <!-- Pyramidenkanten (Frustum) -->
     <line class="frustum-edge-persp" x1="70.0" y1="230.0" x2="488.2" y2="178.7" />
@@ -243,16 +243,16 @@
       <polygon points="367.2,290.4 395.0,293.8 395.0,265.8 367.2,262.4" fill="#C4B5FD" stroke="#7C3AED" stroke-width="1.2" />
       <polygon points="380.2,254.2 367.2,262.4 395.0,265.8 408.0,257.6" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.2" />
       <polygon points="408.0,285.6 395.0,293.8 395.0,265.8 408.0,257.6" fill="#7C3AED" stroke="#6D28D9" stroke-width="1.2" />
-      <text x="403.0" y="277.8" font-size="10" font-weight="700" fill="#5B21B6">Objekt B (fern)</text>
-      <text x="403.0" y="289.8" font-size="9" fill="#475569">Kantenlänge s</text>
+      <text x="403.0" y="277.8" font-size="12.5" font-weight="700" fill="#5B21B6">Objekt B (fern)</text>
+      <text x="403.0" y="292.8" font-size="12" fill="#475569">Kantenlänge s</text>
     </g>
     <!-- Objekt A (naher Würfel, 3D identische Größe) -->
     <g id="persp-cube-a">
       <polygon points="223.3,272.7 251.1,276.1 251.1,248.1 223.3,244.7" fill="#A78BFA" stroke="#6D28D9" stroke-width="1.2" />
       <polygon points="236.3,236.5 223.3,244.7 251.1,248.1 264.1,240.0" fill="#DDD6FE" stroke="#6D28D9" stroke-width="1.2" />
       <polygon points="264.1,268.0 251.1,276.1 251.1,248.1 264.1,240.0" fill="#6D28D9" stroke="#5B21B6" stroke-width="1.2" />
-      <text x="259.1" y="260.1" font-size="10" font-weight="700" fill="#5B21B6">Objekt A (nah)</text>
-      <text x="259.1" y="272.1" font-size="9" fill="#475569">Kantenlänge s</text>
+      <text x="259.1" y="260.1" font-size="12.5" font-weight="700" fill="#5B21B6">Objekt A (nah)</text>
+      <text x="259.1" y="275.1" font-size="12" fill="#475569">Kantenlänge s</text>
     </g>
     <!-- Konvergierende Projektionsstrahlen zum Augpunkt COP -->
     <line class="proj-ray-persp" x1="395.0" y1="265.8" x2="70.0" y2="230.0" />
@@ -273,10 +273,10 @@
     <text class="dim-text" x="188.0" y="248.60000000000002" fill="#B45309" font-weight="700">h_A' &gt;&gt; h_B'</text>
     
     <!-- Info-Badge auf Bildebene -->
-    <g transform="translate(84.6, 274.6)">
-      <rect x="0" y="0" width="135" height="34" rx="4" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1" />
-      <text x="67" y="14" font-size="10" font-weight="700" fill="#6D28D9" text-anchor="middle">Perspektivisch verkleinert!</text>
-      <text x="67" y="27" font-size="9" fill="#475569" text-anchor="middle">Ferne Objekte wirken kleiner</text>
+    <g transform="translate(68.6, 274.6)">
+      <rect x="0" y="0" width="168" height="38" rx="4" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1" />
+      <text x="84" y="15" font-size="12.5" font-weight="700" fill="#6D28D9" text-anchor="middle">Perspektivisch verkleinert!</text>
+      <text x="84" y="30" font-size="12" fill="#475569" text-anchor="middle">Ferne Objekte wirken kleiner</text>
     </g>
 
     <!-- Bemaßung z_near und z_far -->
@@ -291,7 +291,7 @@
     <g transform="translate(18, 335)">
       <rect x="0" y="0" width="490" height="185" rx="7" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2" />
       
-      <text class="info-label" x="14" y="24">Mathematik & Eigenschaften:</text>
+      <text class="info-label" x="14" y="24">Mathematik &amp; Eigenschaften:</text>
       <text class="info-val" x="14" y="44">• <tspan font-weight="600">Sichtvolumen:</tspan> Pyramidenstumpf (Frustum) mit Spitzenwinkel FOV_y</text>
       <text class="info-val" x="14" y="63">• <tspan font-weight="600">Perspektivische Division:</tspan> x' = x · (near / z),  y' = y · (near / z)  (Division durch -z)</text>
       <text class="info-val" x="14" y="82">• <tspan font-weight="600">Fluchtpunkt-Effekt:</tspan> Parallele Kanten in die Tiefe konvergieren im Fluchtpunkt</text>
@@ -300,7 +300,7 @@
       <line x1="14" y1="114" x2="476" y2="114" stroke="#CBD5E1" stroke-width="1" />
       
       <text class="info-label" x="14" y="134" fill="#6D28D9">Einsatzbereiche:</text>
-      <text class="info-val" x="14" y="153">✓ 3D-Simulationen, Digitale Zwillinge & Virtuelle Inbetriebnahmen</text>
+      <text class="info-val" x="14" y="153">✓ 3D-Simulationen, Digitale Zwillinge &amp; Virtuelle Inbetriebnahmen</text>
       <text class="info-val" x="14" y="171">✓ Fotorealistische Szenen, Virtual Reality (VR), 3D-Roboteranimationen</text>
     </g>
   </g>

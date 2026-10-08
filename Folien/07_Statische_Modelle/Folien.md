@@ -55,7 +55,7 @@ Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist
 </div>
 <div>
 
-![w:500](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Beispiel.png)
+![w:520](./Diagramme/Fachwerk_Topologie_2D.svg)
 
 </div>
 </div>
@@ -130,7 +130,18 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div>
 
-![Elemente eines Fachwerks](../../Quellen/WS24/StatischFachwerkIdeal2D/Fachwerk_Elemente.png)
+**Modellelemente eines 2D-Fachwerks**:
+
+- **Knoten** (Gelenke)
+  - Geometrische Position $\vec{p}_i = (x_i, y_i)$
+- **Stäbe** (Verbindungselemente)
+  - Übertragen reine Normalkräfte
+  - *Gesucht*: Stabkräfte $S_j$ (Zug / Druck)
+- **Lasten** (Äußere Kräfte)
+  - Vektor $\vec{F}_{\text{ext}}$ mit Betrag, Richtung & Angriffspunkt an Knoten
+- **Lager** (Randbedingungen)
+  - Fixieren Freiheitsgrade
+  - *Gesucht*: Lagerreaktionskräfte ($A_x, A_y, C_y$)
 
 </div>
 </div>
@@ -434,18 +445,36 @@ $\Delta L \approx \frac{\vec{L} \cdot \Delta \vec{u}}{L} = \left(\frac{\vec{L}}{
 <div class="columns">
 <div>
 
-Kombiniert man Hooke'sches Gesetz und die Längenänderungs-Beziehung, erhält man eine Beziehung zwischen den Kräften, die auf die Knoten eines Stabes wirken, und den Verschiebungen dieser Knoten.
-
-Dies lässt sich als **Stab-Steifigkeitsmatrix** $\mathbf{k}_{\text{Stab}}$ formulieren:
+Kombiniert man Hooke'sches Gesetz und die Längenänderung, erhält man die Beziehung zwischen Knotenverschiebungen $\mathbf{u}_e$ und Knotenkräften $\mathbf{f}_e$:
 
 $$
-\begin{pmatrix} F_{ix} \\ F_{iy} \\ F_{jx} \\ F_{jy} \end{pmatrix} = \mathbf{k}_{\text{Stab}} \begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix}
+\mathbf{k}_e \cdot \mathbf{u}_e = \mathbf{f}_e
 $$
+
+- $\mathbf{u}_e = (u_{ix}, u_{iy}, u_{jx}, u_{jy})^T$
+- $\mathbf{f}_e = (f_{ix}, f_{iy}, f_{jx}, f_{jy})^T$
+- $\mathbf{k}_e$: Symmetrische $4 \times 4$-Elementsteifigkeitsmatrix
 
 </div>
 <div>
 
-![Stabgleichungssystem](../../Quellen/WS24/StatischFachwerkElastisch2D/Stabgleichungssystem.jpg)
+$$
+\frac{EA}{L}
+\begin{pmatrix}
+ e_x^2 & e_x e_y & -e_x^2 & -e_x e_y \\
+ e_x e_y & e_y^2 & -e_x e_y & -e_y^2 \\
+-e_x^2 & -e_x e_y & e_x^2 & e_x e_y \\
+-e_x e_y & -e_y^2 & e_x e_y & e_y^2
+\end{pmatrix}
+\begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix}
+=
+\begin{pmatrix} f_{ix} \\ f_{iy} \\ f_{jx} \\ f_{jy} \end{pmatrix}
+$$
+
+**$2 \times 2$-Blockstruktur** mit dyadischem Produkt $\vec{e}\vec{e}^T$:
+$$
+\mathbf{k}_e = \begin{pmatrix} \mathbf{k}_{ii} & \mathbf{k}_{ij} \\ \mathbf{k}_{ji} & \mathbf{k}_{jj} \end{pmatrix} = \frac{EA}{L}\begin{pmatrix} \vec{e}\vec{e}^T & -\vec{e}\vec{e}^T \\ -\vec{e}\vec{e}^T & \vec{e}\vec{e}^T \end{pmatrix}
+$$
 
 </div>
 </div>
@@ -527,16 +556,36 @@ $$\mathbf{K} \mathbf{u} = \mathbf{f}$$
 <div class="columns">
 <div>
 
-- Das bisherige System $\mathbf{K} \mathbf{u} = \mathbf{f}$ ist singulär (nicht lösbar), da das Fachwerk noch "frei im Raum schwebt".
+- Das unbeschränkte System $\mathbf{K} \mathbf{u} = \mathbf{f}$ ist singulär, da das Fachwerk als Starrkörper verschiebbar ist.
 - Wir müssen die **Lagerungen** (Randbedingungen) einbauen.
-- An einem gelagerten Knoten ist die Verschiebung bekannt (meistens Null).
-- z.B. $u_{1x} = 0$, $u_{1y} = 0$.
-- Dies führt zur Modifikation des Gleichungssystems (z.B. durch Streichen von Zeilen/Spalten oder Setzen von großen Diagonalelementen).
+- An gelagerten Freiheitsgraden ist die Verschiebung bekannt ($u_p = 0$).
+- Das Gleichungssystem wird nach **freien** ($f$) und **festgehaltenen** ($p$, prescribed) Freiheitsgraden partitioniert.
 
 </div>
 <div>
 
-![Gleichungssystem mit Randbedingungen](../../Quellen/WS24/StatischFachwerkElastisch2D/Allgemeines%20Gleichungssystem%20mit%20Randbedingungen.jpg)
+**Blockpartitionierung des Gesamtsystems**:
+
+$$
+\begin{pmatrix}
+\mathbf{K}_{ff} & \mathbf{K}_{fp} \\
+\mathbf{K}_{pf} & \mathbf{K}_{pp}
+\end{pmatrix}
+\begin{pmatrix}
+\mathbf{u}_f \\
+\mathbf{u}_p
+\end{pmatrix}
+=
+\begin{pmatrix}
+\mathbf{f}_f \\
+\mathbf{f}_p
+\end{pmatrix}
+$$
+
+1. Mit $\mathbf{u}_p = \mathbf{0}$ vereinfacht sich Zeile 1 zu:
+   $$\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f \implies \mathbf{u}_f = \mathbf{K}_{ff}^{-1} \mathbf{f}_f$$
+2. Unbekannte Lagerreaktionen folgen aus Zeile 2:
+   $$\mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f$$
 
 </div>
 </div>
@@ -652,7 +701,7 @@ $$
 </div>
 <div>
 
-![w:450](./Diagramme/Kraeftegleichgewicht_2D.tikz.svg)
+![](./Diagramme/Kraeftegleichgewicht_3D.svg)
 
 </div>
 </div>

@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 370" width="100%" height="100%">
+  <defs>
+    <!-- Pfeilspitze Last / Kraft -->
+    <marker id="arrow-force" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#DC2626" />
+    </marker>
+    <!-- Pfeilspitze Lagerreaktion -->
+    <marker id="arrow-reaction" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#059669" />
+    </marker>
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <style>
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+  </style>
+
+  <!-- Karte & Hintergrund -->
+  <rect x="5" y="5" width="530" height="360" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#card-shadow)" />
+
+  <!-- Titelbanner -->
+  <rect x="5" y="5" width="530" height="40" rx="12" fill="#F1F5F9" />
+  <rect x="5" y="33" width="530" height="12" fill="#F1F5F9" />
+  <line x1="5" y1="45" x2="535" y2="45" stroke="#E2E8F0" stroke-width="1.5" />
+  <text x="20" y="30" font-size="17" font-weight="700" fill="#004B96">Topologie eines 2D-Fachwerks (5 Knoten, 7 Stäbe)</text>
+
+  <!-- STÄBE (Truss Members) -->
+  <!-- S1: 1 -> 2 -->
+  <line x1="95" y1="240" x2="265" y2="240" stroke="#004B96" stroke-width="4.5" stroke-linecap="round" />
+  <!-- S2: 2 -> 3 -->
+  <line x1="265" y1="240" x2="435" y2="240" stroke="#004B96" stroke-width="4.5" stroke-linecap="round" />
+  <!-- S3: 4 -> 5 -->
+  <line x1="180" y1="120" x2="350" y2="120" stroke="#004B96" stroke-width="4.5" stroke-linecap="round" />
+  <!-- S4: 1 -> 4 -->
+  <line x1="95" y1="240" x2="180" y2="120" stroke="#004B96" stroke-width="4.5" stroke-linecap="round" />
+  <!-- S5: 2 -> 4 -->
+  <line x1="265" y1="240" x2="180" y2="120" stroke="#004B96" stroke-width="4.5" stroke-linecap="round" />
+  <!-- S6: 2 -> 5 -->
+  <line x1="265" y1="240" x2="350" y2="120" stroke="#004B96" stroke-width="4.5" stroke-linecap="round" />
+  <!-- S7: 3 -> 5 -->
+  <line x1="435" y1="240" x2="350" y2="120" stroke="#004B96" stroke-width="4.5" stroke-linecap="round" />
+
+  <!-- STAB-BESCHRIFTUNGEN (Badges, font-size: 16px) -->
+  <!-- S1 -->
+  <rect x="162" y="227" width="36" height="26" rx="5" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" />
+  <text x="180" y="245" font-size="16" font-weight="700" fill="#1D4ED8" text-anchor="middle">S1</text>
+
+  <!-- S2 -->
+  <rect x="332" y="227" width="36" height="26" rx="5" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" />
+  <text x="350" y="245" font-size="16" font-weight="700" fill="#1D4ED8" text-anchor="middle">S2</text>
+
+  <!-- S3 -->
+  <rect x="247" y="107" width="36" height="26" rx="5" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" />
+  <text x="265" y="125" font-size="16" font-weight="700" fill="#1D4ED8" text-anchor="middle">S3</text>
+
+  <!-- S4 -->
+  <rect x="115" y="167" width="36" height="26" rx="5" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" />
+  <text x="133" y="185" font-size="16" font-weight="700" fill="#1D4ED8" text-anchor="middle">S4</text>
+
+  <!-- S5 -->
+  <rect x="202" y="167" width="36" height="26" rx="5" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" />
+  <text x="220" y="185" font-size="16" font-weight="700" fill="#1D4ED8" text-anchor="middle">S5</text>
+
+  <!-- S6 -->
+  <rect x="292" y="167" width="36" height="26" rx="5" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" />
+  <text x="310" y="185" font-size="16" font-weight="700" fill="#1D4ED8" text-anchor="middle">S6</text>
+
+  <!-- S7 -->
+  <rect x="380" y="167" width="36" height="26" rx="5" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" />
+  <text x="398" y="185" font-size="16" font-weight="700" fill="#1D4ED8" text-anchor="middle">S7</text>
+
+  <!-- LAGERUNGEN -->
+  <!-- Festlager bei Knoten 1 (95, 240) -->
+  <polygon points="95,240 82,260 108,260" fill="#E2E8F0" stroke="#475569" stroke-width="1.8" />
+  <line x1="72" y1="260" x2="118" y2="260" stroke="#475569" stroke-width="2.5" />
+  <line x1="76" y1="260" x2="71" y2="268" stroke="#64748B" stroke-width="1.5" />
+  <line x1="86" y1="260" x2="81" y2="268" stroke="#64748B" stroke-width="1.5" />
+  <line x1="96" y1="260" x2="91" y2="268" stroke="#64748B" stroke-width="1.5" />
+  <line x1="106" y1="260" x2="101" y2="268" stroke="#64748B" stroke-width="1.5" />
+  <line x1="116" y1="260" x2="111" y2="268" stroke="#64748B" stroke-width="1.5" />
+  <!-- Lagerreaktionskräfte Ax, Ay -->
+  <line x1="25" y1="240" x2="78" y2="240" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-reaction)" />
+  <text x="45" y="232" font-size="16" font-weight="700" fill="#059669">A_x</text>
+
+  <line x1="95" y1="305" x2="95" y2="268" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-reaction)" />
+  <text x="105" y="295" font-size="16" font-weight="700" fill="#059669">A_y</text>
+  <text x="35" y="278" font-size="15" font-weight="600" fill="#475569">Festlager</text>
+
+  <!-- Loslager bei Knoten 3 (435, 240) -->
+  <polygon points="435,240 422,258 448,258" fill="#E2E8F0" stroke="#475569" stroke-width="1.8" />
+  <!-- Rollen -->
+  <circle cx="428" cy="263" r="3.5" fill="#FFFFFF" stroke="#475569" stroke-width="1.5" />
+  <circle cx="442" cy="263" r="3.5" fill="#FFFFFF" stroke="#475569" stroke-width="1.5" />
+  <!-- Bodenlinie -->
+  <line x1="412" y1="268" x2="458" y2="268" stroke="#475569" stroke-width="2.5" />
+  <line x1="416" y1="268" x2="411" y2="276" stroke="#64748B" stroke-width="1.5" />
+  <line x1="426" y1="268" x2="421" y2="276" stroke="#64748B" stroke-width="1.5" />
+  <line x1="436" y1="268" x2="431" y2="276" stroke="#64748B" stroke-width="1.5" />
+  <line x1="446" y1="268" x2="441" y2="276" stroke="#64748B" stroke-width="1.5" />
+  <line x1="456" y1="268" x2="451" y2="276" stroke="#64748B" stroke-width="1.5" />
+  <!-- Lagerreaktionskraft Cy -->
+  <line x1="435" y1="305" x2="435" y2="276" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow-reaction)" />
+  <text x="445" y="295" font-size="16" font-weight="700" fill="#059669">C_y</text>
+  <text x="465" y="265" font-size="15" font-weight="600" fill="#475569">Loslager</text>
+
+  <!-- ÄUSSERE LASTEN -->
+  <!-- Last F bei Knoten 5 (350, 120) -->
+  <line x1="350" y1="52" x2="350" y2="105" stroke="#DC2626" stroke-width="3" marker-end="url(#arrow-force)" />
+  <text x="362" y="75" font-size="18" font-weight="700" fill="#DC2626">F</text>
+  <text x="362" y="93" font-size="15" fill="#DC2626">(Last)</text>
+
+  <!-- KNOTEN -->
+  <!-- Knoten 1 -->
+  <circle cx="95" cy="240" r="14" fill="#FFFFFF" stroke="#004B96" stroke-width="3" />
+  <text x="95" y="246" font-size="16" font-weight="700" fill="#004B96" text-anchor="middle">1</text>
+
+  <!-- Knoten 2 -->
+  <circle cx="265" cy="240" r="14" fill="#FFFFFF" stroke="#004B96" stroke-width="3" />
+  <text x="265" y="246" font-size="16" font-weight="700" fill="#004B96" text-anchor="middle">2</text>
+
+  <!-- Knoten 3 -->
+  <circle cx="435" cy="240" r="14" fill="#FFFFFF" stroke="#004B96" stroke-width="3" />
+  <text x="435" y="246" font-size="16" font-weight="700" fill="#004B96" text-anchor="middle">3</text>
+
+  <!-- Knoten 4 -->
+  <circle cx="180" cy="120" r="14" fill="#FFFFFF" stroke="#004B96" stroke-width="3" />
+  <text x="180" y="126" font-size="16" font-weight="700" fill="#004B96" text-anchor="middle">4</text>
+
+  <!-- Knoten 5 -->
+  <circle cx="350" cy="120" r="14" fill="#FFFFFF" stroke="#004B96" stroke-width="3" />
+  <text x="350" y="126" font-size="16" font-weight="700" fill="#004B96" text-anchor="middle">5</text>
+
+  <!-- LEGENDE / STATIK-INFO BOX -->
+  <rect x="20" y="320" width="500" height="36" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+  <text x="270" y="343" font-size="15" fill="#1E293B" text-anchor="middle">
+    <tspan font-weight="700" fill="#004B96">5 Knoten</tspan>  •  
+    <tspan font-weight="700" fill="#004B96">7 Stäbe</tspan>  •  
+    <tspan font-weight="700" fill="#059669">3 Lagerreaktionen</tspan>  •  
+    <tspan font-weight="700">2k = s + l</tspan>
+  </text>
+</svg>

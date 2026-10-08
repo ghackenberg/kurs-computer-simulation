@@ -89,6 +89,9 @@ Systeme, in denen "Kunden" auf eine oder mehrere "Bedienstationen" warten.
 
 ### Anwendungsbeispiel: Produktions- & Logistiksysteme
 
+<div class="columns">
+<div class="two">
+
 Systeme, die den Fluss von Material, Teilen und Produkten durch eine Reihe von Prozessen (z.B. Maschinen, Lager, Transport) modellieren.
 
 **Typische Fragestellungen:**
@@ -97,7 +100,13 @@ Systeme, die den Fluss von Material, Teilen und Produkten durch eine Reihe von P
 - Wie groß müssen Pufferlager dimensioniert werden?
 - Wie wirkt sich der Ausfall einer Maschine auf die Gesamtleistung aus?
 
+</div>
+<div>
+
 ![](./Diagramme/Produktionssystem.svg)
+
+</div>
+</div>
 
 ---
 

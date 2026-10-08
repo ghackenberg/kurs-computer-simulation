@@ -722,7 +722,7 @@ Bevor eine Sondermaschine physisch gebaut wird, spart die virtuelle Inbetriebnah
 
 Hardware-in-the-Loop Systemarchitektur für die industrielle Maschinenabnahme:
 
-![w:1150 center](./Diagramme/VIBN_Systemarchitektur.svg)
+![w:540 center](./Diagramme/VIBN_Systemarchitektur.svg)
 
 - **Reale SPS:** Unveränderter Serien-Steuerungscode auf Original-Zielhardware
 - **Echtzeit-Simulationsrechner:** Emuliert Motoren, Zylinder, Sensoren und Lastprofile
@@ -954,7 +954,7 @@ Mit dem Abschluss dieses Kurses besitzen Sie ein fundamentales Methoden- und Sof
 
 Der durchgängige Weg von der Problemstellung zur simulationsgestützten Erkenntnis:
 
-![w:1150 center](./Diagramme/Simulationsprozess_Synthese.svg)
+![w:640 center](./Diagramme/Simulationsprozess_Synthese.svg)
 
 - **Systemsimulation ist die Schlüsseltechnologie** moderner Mechatronik und Automatisierungstechnik.
 - Sie ermöglicht gefahrloses Testen, frühe Optimierung und fehlerfreie Inbetriebnahme komplexer Anlagen!

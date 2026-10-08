@@ -291,7 +291,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div>
 
-![Visualisierung](../../Quellen/WS25/FachwerkIdeal2D/Tafelbild_Visualisierung_Pfeilspitze_2D.jpg)
+![Pfeilspitzengeometrie](./Diagramme/Pfeilspitzengeometrie_2D.svg)
 
 </div>
 </div>
