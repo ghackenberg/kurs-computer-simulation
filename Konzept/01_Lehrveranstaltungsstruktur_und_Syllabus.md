@@ -39,11 +39,10 @@
    - 5.1 Nahtloser Übergang: In-Class Sprint ➔ Homework Extension
    - 5.2 Kollaborationsmodell: 2er-Teams, Pair Programming & Git-Workflow
    - 5.3 Leitfaden für "Vibe Coding" & KI-Engineering (Copilots als Junior-Entwickler)
-6. [Meilenstein- und Projektzeitplan](#6-meilenstein--und-projektzeitplan)
-   - 6.1 Semesterprojekt „Digital Twin Challenge“: Konzeption, Meilensteine M1–M3 & Pitch
-   - 6.2 Industrielle Szenarien und simulationsspielerische Gegenstücke
-   - 6.3 Die 3-Säulen-Assessment-Architektur (Harmonisierung mit Benotungskonzept)
-   - 6.4 Benotungsrichtlinie & Bewertungsrubrik
+6. [Meilenstein-Plan & 2-Säulen-Assessment-Architektur (Variante 1)](#6-meilenstein-plan--2-säulen-assessment-architektur-variante-1)
+   - 6.1 Das 10-teilige C#-Simulations-Portfolio als Leistungsnachweis
+   - 6.2 Die 2-Säulen-Assessment-Architektur (40 % Theorie / 60 % Praxis & Diskurs)
+   - 6.3 Notenschlüssel & Mindestanforderungen nach FH OÖ Standard
 7. [Checkliste für Dozierende zur Semestervorbereitung](#7-checkliste-für-dozierende-zur-semestervorbereitung)
 
 ---
@@ -70,7 +69,7 @@ Angehende Automatisierer nutzen Simulationen nicht als theoretischen Selbstzweck
 Das an österreichischen Fachhochschulen etablierte Format der **Integrierten Lehrveranstaltung (ILV)** hebt die klassische Trennung zwischen Vorlesung (Frontaltheorie) und Übung (Labor am Nachmittag) auf.
 - **Einheitlicher Raum:** Der Unterricht findet in multimedial ausgestatteten Seminarräumen oder PC-Pools statt; die Studierenden arbeiten auf eigenen Entwicklungs-Laptops (Bring Your Own Device) oder Pool-PCs.
 - **Fließende Übergänge:** Theorie-Impulse, Live-Coding-Demonstrationen des Dozierenden und betreute hands-on Programmierphasen wechseln dynamisch innerhalb desselben Blocks ab.
-- **Prüfungsimmanenter Charakter:** Es gibt keine isolierte Abschluss-Schriftklausur; die Gesamtnote speist sich aus kontinuierlichen Teilleistungen (Moodle-MCQ-Tests, praktische Übungsmeilensteine im Labor, Semesterprojekt und mündliche Verteidigung).
+- **Prüfungsimmanenter Charakter:** Es gibt keine isolierte Abschluss-Schriftklausur; die Gesamtnote speist sich aus kontinuierlichen Teilleistungen (Moodle-MCQ-Tests, praktische Übungsmeilensteine im Labor, Semesterprojekt mit Video-Präsentation).
 
 ### 1.3 Workload-Kalkulation nach ECTS-Richtlinien
 
@@ -80,9 +79,8 @@ Die Lehrveranstaltung ist mit **3 ECTS-Punkten** (entsprechend einem Gesamt-Work
 | :--- | :--- | :---: | :---: |
 | **Präsenzlehre (ILV)** | 10 Termine à 150 Minuten (Theorie, In-Class Sprint, Showcase, Peer Review & Laborbetreuung) | **25,0 h** | 33,3 % |
 | **Vor- & Nachbereitung** | Vorbereitung der Termine, Studium von Skriptum, Notizen & Online-Dokus | **10,0 h** | 13,3 % |
-| **Übungsmeilensteine & Labor** | 4 vertiefende Übungsmeilensteine / Extensions (je 3,75 h im gewählten Track A oder B) | **15,0 h** | 20,0 % |
-| **Moodle-Assessments** | 3 formativ/summative Moodle-Tests (Vorbereitung & Durchführung) | **5,0 h** | 6,7 % |
-| **Semesterprojekt & Kolloquium** | Entwicklung des Digitalen Zwillings im 2er-Team & Oral Defense (20 h pro Person) | **20,0 h** | 26,7 % |
+| **Wöchentliche Übungen & C#-Code-Portfolio** | 10 Aufgabenblätter (Stufe B Homework Extensions im gewählten Track A oder B) | **32,0 h** | 42,7 % |
+| **Moodle-Assessments** | 4 summative Moodle-Tests (Vorbereitung & Durchführung) | **8,0 h** | 10,7 % |
 | **Gesamtsumme** | **1 ECTS = 25 Echtstunden** | **75,0 h** | **100,0 %** |
 
 > [!IMPORTANT]
@@ -98,7 +96,7 @@ Die Lehrveranstaltung ist mit **3 ECTS-Punkten** (entsprechend einem Gesamt-Work
 Das Curriculum folgt dem Prinzip des **Constructive Alignment** (John Biggs):
 1. **Intended Learning Outcomes (ILOs):** Die Studierenden können physikalisch-technische Systeme als mathematische Modelle formulieren, numerische Algorithmen (LGS, ODE, DES, Hybride Solver) in modernem C# (.NET 8) ohne vorgefertigte Blackbox-Simulatoren implementieren, echtzeitfähige 2D/3D-Dashboards realisieren und Simulationslösungen im Fachdiskurs kritisch analysieren und verteidigen.
 2. **Teaching/Learning Activities (TLAs):** Interaktiver Theorieimpuls ➔ Dozenten-Live-Coding ➔ In-Class Hands-on Entwicklung im 2er-Team (Sprint) ➔ **Showcase, Peer Review & Plenumsdiskussion (Track A vs. Track B)** ➔ Micro-Defense & Homework Extension.
-3. **Assessment Tasks (ATs):** Moodle-MCQ-Tests prüfen das theoretische und numerische Fundament; Labor-Meilensteine inklusive **Showcase-Präsentation und qualifiziertem Peer-Review-Fragenstellen** fordern und bewerten sauberen Code sowie Diskursfähigkeit; das Semesterprojekt verlangt die ganzheitliche Synthese und Verteidigung.
+3. **Assessment Tasks (ATs):** Moodle-MCQ-Tests prüfen das theoretische und numerische Fundament; Labor-Meilensteine inklusive **Showcase-Präsentation und qualifiziertem Peer-Review-Fragenstellen** fordern und bewerten sauberen Code sowie Diskursfähigkeit; das Semesterprojekt verlangt die ganzheitliche Synthese, Code-Qualität und videobasierte Demonstration.
 
 ### 2.2 Active Learning & Just-in-Time Teaching
 
@@ -195,13 +193,13 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 | **T01** | **Einführung & Modellbegriff** | `00_Prolog`<br>`01_Einführung` | C#-Grundlagen, Schulmathematik | .NET 8 SDK, Console, MSTest, Git | Thermisches Sensormodell / Zylinderdämpfung | **Artillery 1D/2D:** Konsolen-Kanonenspiel mit Euler-Luftreibung | Setup-Check, Teambildung |
 | **T02** | **2D-Pixelgrafik & FDM-Feld** | `02_Visualisierung_2D_Pixel` | C#-Arrays, Konsole, Euler 1. Ord. | WPF `Image`, `WriteableBitmap`, `unsafe` Pointer, Stride | PCB-Leiterplatten-Hotspot (Wärmeableitung) | **Falling Sand & Doom Fire:** Interaktive Lava-/Sand-Pixelwelt | **Labor-MS 1 Ausgabe** (2D-Simulation) |
 | **T03** | **2D-Vektorgrafik & Transformation**<br>*(Rein geometrisch & visuell)* | `03_Visualisierung_2D_Vektor` | WPF-Basics, `WriteableBitmap`, Vektorgeometrie | WPF `Canvas`, `DrawingVisual`, Uniform Scaling, BoundingBox | Hallenkran-Träger: Rein geometrischer Canvas-Viewer mit DIN-Bemaßung, festen Kraftpfeilen & Knoten-Dragging *(keine Statik!)* | **Poly Bridge CAD:** Interaktiver 2D-Brücken-Geometrie-Editor (Knoten setzen/verschieben, feste Lastvektoren; *Statik/Bruch erst in T07!*) | Vorbereitung Labor-MS 1 |
-| **T04** | **Echtzeit-Telemetrie & Graphen** | `04_Visualisierung_2D_Diagramme` | WPF Canvas, Pixel, Vektoren | **ScottPlot 5**, `CircularBuffer`, MVVM Toolkit, **MSAGL** | Industrie-4.0-Leitstand: 1-kHz-Vibrationsmonitoring | **Retro Space-Lander HUD:** Flugbahn-Plot & Welford-Statistik | **Moodle-Test 1** (Kap 01–04)<br>**Labor-MS 1 Abgabe** |
-| **T05** | **3D-OpenGL & Szenengraphen** | `05_Visualisierung_3D_OpenGL` | WPF MVVM, ScottPlot 5, Canvas | **SharpGL.WPF**, OrbitCamera, Transformations-Hierarchie | SCARA-Roboterarm (Vorwärtskinematik) | **3D Arcade Crane:** Jahrmarkt-Greifautomat mit Box-Kollision | **Projekt-Themenpool offen**<br>**Labor-MS 2 Ausgabe** |
-| **T06** | **Multithreading & TPL** | `06_Multithreading` | 3D-OpenGL, ScottPlot 5, WPF | **Task Parallel Library (TPL)**, `Parallel.For`, `IProgress<T>` | Parallele Toleranzanalyse eines Getriebes | **100.000 Boids:** Massive Schwarm-Schlacht (Multi-Core 60 FPS) | **Projekt-Kickoff & Exposé** |
-| **T07** | **Statische Systeme & Cholesky**<br>*(Erweckt T03 zum Leben)* | `07_Statische_Modelle` | TPL Multithreading, 2D/3D-Grafik | **Math.NET Numerics**, FEM-Steifigkeitsmatrix $\mathbf{K}$, Cholesky | FEM-Verformung schwerer Portalkran-Fachwerke *(erweckt T03-Geometrie mit echter Cholesky-Statik)* | **Destructible Truss / Poly Bridge Physik:** Einsturz & Stabbruch durch echte Math.NET-Cholesky-LGS-Lösung auf T03-Modell | **Moodle-Test 2** (Kap 05–07)<br>**Labor-MS 2 Abgabe**<br>**Labor-MS 3 Ausgabe** |
-| **T08** | **Kontinuierliche Dynamik & ODEs** | `08_Dynamische_Modelle_Kontinuierlich` | Math.NET, TPL, ScottPlot 5 | **S-Functions**, **Heun & RK4**, Anti-Windup Clamping | Geregelter DC-Servomotor mit Strombegrenzung | **Inverted Pendulum Balancer:** SpaceX-Booster-Landegame | **Projekt-Meilenstein M1** (Solver & MSTests) |
-| **T09** | **Diskrete Systeme & Monte-Carlo** | `09_Dynamische_Modelle_Diskret` | RK4 Solver, S-Functions, TPL | `PriorityQueue`, Box-Muller, **Welford-Akkumulator** | M/M/c-Warteschlange: Automobil-Taktstraße | **Factory Tycoon:** Fast-Food-Rush mit Kundenansturm | **Labor-MS 3 Abgabe**<br>**Labor-MS 4 Ausgabe**<br>**Projekt-Meilenstein M2** (GUI) |
-| **T10** | **Hybride Dynamik, VIBN & Kolloquium** | `10_Dynamische_Modelle_Hybrid`<br>`11_Epilog` | Vollständiger Kurs-Stack | **Zero-Crossing Bisektion**, Sticking-Schwelle, FMI/FMU, VIBN | VIBN einer Sortieranlage mit SPS-Kopplung | **Pinball Wizard:** Flipper-Physik ohne Tunneling | **Moodle-Test 3** (Kap 08–10)<br>**Labor-MS 4 Abgabe**<br>**Projekt-Endabgabe & Pitch** |
+| **T04** | **Echtzeit-Telemetrie & Graphen** | `04_Visualisierung_2D_Diagramme` | WPF Canvas, Pixel, Vektoren | **ScottPlot 5**, `CircularBuffer`, MVVM Toolkit, **MSAGL** | Industrie-4.0-Leitstand: 1-kHz-Vibrationsmonitoring | **Retro Space-Lander HUD:** Flugbahn-Plot & Welford-Statistik | **Labor-MS 1 Abgabe** (T02/T03) |
+| **T05** | **3D-OpenGL & Szenengraphen** | `05_Visualisierung_3D_OpenGL` | WPF MVVM, ScottPlot 5, Canvas | **SharpGL.WPF**, OrbitCamera, Transformations-Hierarchie | SCARA-Roboterarm (Vorwärtskinematik) | **3D Arcade Crane:** Jahrmarkt-Greifautomat mit Box-Kollision | **Moodle-Test 2** (Kap 03–05)<br>**Labor-MS 2 Ausgabe** |
+| **T06** | **Multithreading & TPL** | `06_Multithreading` | 3D-OpenGL, ScottPlot 5, WPF | **Task Parallel Library (TPL)**, `Parallel.For`, `IProgress<T>` | Parallele Toleranzanalyse eines Getriebes | **100.000 Boids:** Massive Schwarm-Schlacht (Multi-Core 60 FPS) | **TPL High-Performance Sprint** |
+| **T07** | **Statische Systeme & Cholesky**<br>*(Erweckt T03 zum Leben)* | `07_Statische_Modelle` | TPL Multithreading, 2D/3D-Grafik | **Math.NET Numerics**, FEM-Steifigkeitsmatrix $\mathbf{K}$, Cholesky | FEM-Verformung schwerer Portalkran-Fachwerke *(erweckt T03-Geometrie mit echter Cholesky-Statik)* | **Destructible Truss / Poly Bridge Physik:** Einsturz & Stabbruch durch echte Math.NET-Cholesky-LGS-Lösung auf T03-Modell | **Labor-MS 2 Abgabe** (T04/T05)<br>**Labor-MS 3 Ausgabe** |
+| **T08** | **Kontinuierliche Dynamik & ODEs** | `08_Dynamische_Modelle_Kontinuierlich` | Math.NET, TPL, ScottPlot 5 | **S-Functions**, **Heun & RK4**, Anti-Windup Clamping | Geregelter DC-Servomotor mit Strombegrenzung | **Inverted Pendulum Balancer:** SpaceX-Booster-Landegame | **Moodle-Test 3** (Kap 06–08) |
+| **T09** | **Diskrete Systeme & Monte-Carlo** | `09_Dynamische_Modelle_Diskret` | RK4 Solver, S-Functions, TPL | `PriorityQueue`, Box-Muller, **Welford-Akkumulator** | M/M/c-Warteschlange: Automobil-Taktstraße | **Factory Tycoon:** Fast-Food-Rush mit Kundenansturm | **Labor-MS 3 Abgabe** (T06/T07)<br>**Labor-MS 4 Ausgabe** |
+| **T10** | **Hybride Dynamik, VIBN & Synthese** | `10_Dynamische_Modelle_Hybrid`<br>`11_Epilog` | Vollständiger Kurs-Stack | **Zero-Crossing Bisektion**, Sticking-Schwelle, FMI/FMU, VIBN | VIBN einer Sortieranlage mit SPS-Kopplung | **Pinball Wizard:** Flipper-Physik ohne Tunneling | **Moodle-Test 4** (Kap 09–11)<br>**Labor-MS 4 Abgabe** (T08/T09)<br>**Semester-Portfolio-Abschluss** |
 
 ---
 
@@ -395,7 +393,7 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Suchbegriffe:* `"SharpGL WPF tutorial"`, `"OpenGL modelview projection matrix hierarchy"`, `"spherical coordinates orbit camera C#"`.
   - *Doku-Link:* [Khronos OpenGL 3.3 Reference Manual](https://registry.khronos.org/OpenGL-Refpages/gl4/)
 - **Synthese & Ausblick (15 min):**
-  - **Veröffentlichung des Semesterprojekt-Themenkatalogs („Digital Twin Challenge“).**
+  - **Halbzeit-Review & Portfolio-Zwischenstand:** Reflexion über die bisherigen 5 Module (T01–T05) und Ausblick auf dynamische Solvern & Multithreading.
   - **Ausgabe Labor-Meilenstein 2 (Wahl Track A oder Track B):** 3D-Kinematik mit integriertem ScottPlot-Telemetrie-Dashboard.
 
 ---
@@ -554,7 +552,7 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 
 ---
 
-#### Termin T10: Hybride Dynamik, VIBN & Abschluss-Kolloquium
+#### Termin T10: Hybride Dynamik, VIBN & Synthese
 - **Kapitel:** [10_Dynamische_Modelle_Hybrid](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/10_Dynamische_Modelle_Hybrid/Folien.md) & [11_Epilog](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/11_Epilog/Folien.md)
 - **Kausale Vorkenntnisse (Tabu-Grenze):**
   - Vollständiger Werkzeug- und Methoden-Stack des gesamten Semesters (Kapitel 01 bis 10).
@@ -563,23 +561,24 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 - **Lernziele (Bloom):**
   - *Verstehen:* State Events, Zero-Crossing-Detektion via Vorzeichenwechsel-Bisektion und den Zeno-Effekt mit Sticking-Threshold.
   - *Synthetisieren:* Den ganzheitlichen Bogen vom mathematischen Modell über den Code zum Digitalen Zwilling schlagen (FMI/FMU, Co-Simulation, Virtuelle Inbetriebnahme).
-  - *Evaluieren:* Das eigene Semesterprojekt präsentieren, im Fachgespräch („Oral Defense“) verteidigen und Peer-Feedback bewerten.
+  - *Dokumentieren & Reflektieren:* Das eigene 10-teilige C#-Simulations-Portfolio finalisieren, testen und im Plenum zur Diskussion stellen.
 - **Themen-Duo – Wahlmodell „Pick your Track“ (Track A ODER Track B):**
   > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide Aufgaben bearbeiten!
   - *Track A (Industrie):* Virtuelle Inbetriebnahme (VIBN) einer taktgesteuerten Sortieranlage mit Endanschlägen, Teileverzählung und SPS-Kopplung.
   - *Track B (Gaming / Arcade):* **„Arcade Pinball Wizard / Flipper-Physik“:** Perfekte hybride Ball-Kollisionen an Bumpern und Banden: Bisektion verhindert das Durchtunneln von Hindernissen („Bullet through Paper“); Schwerkraft-Ruhelage dank Sticking-Threshold.
-- **Theorie-Impuls: Hybride Systeme & VIBN-Synthese (40 min):**
+- **Theorie-Impuls: Hybride Systeme & VIBN-Synthese (45 min):**
   - Das Wesen hybrider Dynamik: Stetige Trajektorie trifft auf unstetige Zustandsübergänge (Stöße, Reibschwellen, Ventile).
   - Zero-Crossing-Algorithmus: Detektion des Vorzeichenwechsels einer Indikatorfunktion $g(\mathbf{x}) = 0$ und iterative Intervallhalbierung (Bisektion) bis auf Zeittoleranz $\epsilon_t \le 10^{-6}\,\text{s}$.
   - Der Zeno-Kollaps beim unelastischen Bouncing Ball und dessen Beherrschung via Velocity-Threshold ($v < v_{\text{stick}} \implies \text{Haftreibung / Auflage}$).
   - Synthese des Digitalen Zwillings: Co-Simulation mit dem Functional Mock-up Interface (FMI) und Kopplung mit SPS-Steuerungen (OPC UA / TwinCAT / TIA Portal) für die Virtuelle Inbetriebnahme.
 - **Moodle-Quiz 4 (20 min):**
-  - **Moodle-Quiz 4:** Diskrete Simulation (DES, Box-Muller, Welford), Hybride Systeme (Zero-Crossing, Sticking, VIBN) und Synthese (Kapitel 09–11).
-- **Abschluss-Kolloquium: Projekt-Präsentationen & Live-Demos (80 min):**
-  - **Abgabe Labor-Meilenstein 4 (im gewählten Track A oder B).**
-  - **Abschlussprojekt „Digital Twin Challenge“ – Live-Pitches & Oral Defense:** Jedes Team präsentiert in einem straffen **7-Minuten-Pitch** (3 min Folien/Mathematik + 3 min Live-Demo des Zwillings + 1 min Q&A und Ad-hoc-Stresstest durch Dozierende).
-- **Semesterabschluss & Noten-Ausblick (10 min):**
-  - Zusammenfassung der Lehrveranstaltung, Feedback-Runde, Verabschiedung.
+  - Diskrete Simulation (DES, Box-Muller, Welford), Hybride Systeme (Zero-Crossing, Sticking, VIBN) und Synthese (Kapitel 09–11).
+- **In-Class Laborphase T10: Hands-on Bisektions-Sprint (60 min):**
+  - Praktische Implementierung der Bisektionsschleife für Stoßkontakte im C#-WPF-Projekt.
+  - Abgabe Meilenstein 4 (Track A oder Track B).
+- **Synthese, Semesterabschluss & Portfolio-Finalisierung (25 min):**
+  - Kriterien für die finale Portfolio-Abnahme (MSTest-Suite, Golden Rule Check, Git-Konsistenz).
+  - Feedback-Runde zur Lehrveranstaltung und Ausblick auf weiterführende Simulations- und Automatisierungsprojekte.
 
 ---
 
@@ -748,115 +747,80 @@ Die Integration moderner generativer KI (GitHub Copilot, JetBrains AI Assistant,
 
 ---
 
-## 6. Meilenstein- und Projektzeitplan
+## 6. Meilenstein-Plan & 2-Säulen-Assessment-Architektur (Variante 1)
 
-### 6.1 Semesterprojekt „Digital Twin Challenge“: Konzeption, Meilensteine M1–M3 & Pitch
+### 6.1 Das 10-teilige C#-Simulations-Portfolio als Leistungsnachweis
 
-Das Herzstück der Leistungsbeurteilung ist das **Semesterprojekt**. In 2er-Teams entwickeln die Studierenden einen voll funktionsfähigen, interaktiven **Digitalen Zwilling** eines mechatronischen Systems.
+Anstelle eines künstlich aufgesetzten Einzel-Abschlussprojekts bildet das **kontinuierlich aufgebaute C#-Simulations-Portfolio** aus den 10 Terminen den zentralen praktischen Leistungsnachweis der Lehrveranstaltung. In 2er-Teams erarbeiten die Studierenden Woche für Woche eine vollwertige, lauffähige Simulationskomponente im gewählten Track (Track A Industrie ODER Track B Game):
 
 ```mermaid
 timeline
-    title Meilenstein-Zeitplan des Semesterprojekts
-    Termin 05 : Veröffentlichung Themenkatalog & Teambildung
-    Termin 06 : Offizieller Kickoff & Exposé-Genehmigung
-    Termin 08 : Meilenstein M1: Mathematisches Modell & Solver (MSTests)
-    Termin 09 : Meilenstein M2: 2D/3D-Visualisierung & Telemetrie
-    Termin 10 : Meilenstein M3: Projektabgabe, Live-Demo (7-min Pitch) & Defense
+    title Meilenstein-Zeitplan des Semesters
+    Termin 03 : Quiz 1 (Kap 00–02)
+    Termin 04 : Labor-MS 1 Abgabe (T02/T03)
+    Termin 05 : Quiz 2 (Kap 03–05)
+    Termin 07 : Labor-MS 2 Abgabe (T04/T05)
+    Termin 08 : Quiz 3 (Kap 06–08)
+    Termin 09 : Labor-MS 3 Abgabe (T06/T07)
+    Termin 10 : Quiz 4 (Kap 09–11) & Labor-MS 4 Abgabe (T08/T09) & Portfolio-Abschluss
 ```
 
-- **Termin 05 (Woche 5):** Themenausgabe. Teams wählen aus dem industriellen Vorlagenkatalog oder reichen einen begründeten Eigenvorschlag ein.
-- **Termin 06 (Woche 6):** **Exposé-Abgabe:** Einreichung eines 1–2-seitigen PDFs mit Systembeschreibung, DGLn, Schnittstellen und Zeitplan.
-- **Termin 08 (Woche 8):** **Meilenstein M1 (Core & Physics):** Die mathematische Physikbibliothek läuft in C# und ist durch mindestens 4 automatisierte MSTest-Fälle (Grenzfälle, Energieerhaltung) abgesichert.
-- **Termin 09 (Woche 9):** **Meilenstein M2 (Integration & UI):** Die Physik ist an das WPF-UI angebunden; ScottPlot-Diagramme oder der 3D-Szenengraph stellen den Systemzustand in Echtzeit dar.
-- **Termin 10 (Woche 10):** **Meilenstein M3 (Final Pitch & Oral Defense):** Endabgabe von Quellcode und Validierungsbericht (6–8 Seiten). Live-Präsentation im Kolloquium (7 Minuten pro Team) mit mündlicher Verteidigung.
+- **Kontinuierlicher Kompetenzaufbau:** Jedes Modul demonstriert eine Schlüsselkompetenz moderner Simulationssysteme (FDM, Canvas, ScottPlot 5, SharpGL, TPL Multithreading, Math.NET Cholesky, S-Functions RK4, DES Warteschlangen, Zero-Crossing Bisektion).
+- **Entlastung am Semesterende:** Durch die kontinuierliche Abnahme entfällt jeder Abschluss- und Prüfungsstress. Die Endnote steht unmittelbar mit Ende von Termin 10 fest.
 
 ---
 
-### 6.2 Industrielle Szenarien und simulationsspielerische Gegenstücke
-
-Die Projekte decken typische Herausforderungen mechatronischer Anlagen ab und spiegeln den Themen-Mix wider:
-
-1. **Projekt A: Digitaler Zwilling eines automatisierten Hochregallager-Regalbediengeräts (RBG)**
-   - *Industrie-Aspekt:* 2-Achs-Fahr- und Hubwerk, Massenträgheit, ruckbegrenzte Fahrprofile (S-Kurve), Seilschwingung der Lastgabel.
-   - *Gaming-Pendant:* „Warehouse Logistics Tycoon“ – Interaktive Einlager-Challenge auf Zeit mit Kollisionsvermeidung.
-2. **Projekt B: Thermo-elektrischer Mehrzonen-Extruder für Hochleistungskunststoffe**
-   - *Industrie-Aspekt:* 2D-FDM-Temperaturfeld mit Heizzonen, konvektiver Abkühlung und schmelzdruckabhängiger Viskosität.
-   - *Gaming-Pendant:* „Plastic Melt Factory“ – Balancieren von Extrusionsdruck und Wärmestau gegen Verstopfung.
-3. **Projekt C: 3-Achs-Portalroboter mit mechatronischen Servoantrieben & Trajektorienoptimierung**
-   - *Industrie-Aspekt:* Elastische 2-Massen-Kupplungen, Getriebespiel (Backlash), Strom- und Drehzahlsättigung im RK4-Solver.
-   - *Gaming-Pendant:* „Precision Laser Cutter 3D“ – Fahren komplexer Schnittkonturen unter Vermeidung von Konturfehlern.
-4. **Projekt D: Flexible Fertigungszelle (FMS) mit fahrerlosem Transportsystem (AGV) & Pufferlogistik**
-   - *Industrie-Aspekt:* Ereignisdiskrete Warteschlangen, stochastische Maschinenausfälle (MTBF/MTTR), parallele Monte-Carlo-Engpassanalyse.
-   - *Gaming-Pendant:* „AGV Delivery Rush“ – Flottensteuerung mit Stauvermeidung und Ladestations-Management.
-5. **Projekt E: Pneumatisch getaktete Sortier- und Vereinzelungsanlage mit elastischem Teileaufprall**
-   - *Industrie-Aspekt:* Hybride Dynamik, Zero-Crossing-Detektion für Stoßkontakte, Sticking-Threshold, VIBN mit SPS-Schnittstelle.
-   - *Gaming-Pendant:* „Pneumatic Pinball Sorter“ – Kaskadierende Sortierwippen mit Flipper-Physik.
-
----
-
-### 6.3 Die 3-Säulen-Assessment-Architektur (Harmonisierung mit Benotungskonzept)
+### 6.2 Die 2-Säulen-Assessment-Architektur (Harmonisierung mit Benotungskonzept)
 
 Das Benotungsschema ist zu 100 % mit dem Dokument `Konzept/03_Benotung_Moodle_Tests_und_Vibe_Coding_Assessment.md` harmonisiert:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                                GESAMTNOTE (100 %)                                      │
-├────────────────────────────┬────────────────────────────┬──────────────────────────────┤
-│    SÄULE 1: 30 %           │    SÄULE 2: 30 %           │    SÄULE 3: 40 %             │
-│    Moodle MCQ-Tests        │    Übungsmeilensteine,     │    Abschlussprojekt &        │
-│    (kontinuierliche        │    Showcases & Peer-Review │    Oral Defense              │
-│     Theorie & Numerik)     │    • 15 % Showcase-Demo    │    (10% Architektur, 10%     │
-│                            │    • 15 % Plenumsfragen    │     Validierung, 20% Defense)│
-└────────────────────────────┴────────────────────────────┴──────────────────────────────┘
+├────────────────────────────────────────────┬───────────────────────────────────────────┤
+│    SÄULE 1: 40 %                           │    SÄULE 2: 60 %                          │
+│    Moodle Multiple-Choice-Tests            │    Kontinuierlicher Übungsbetrieb         │
+│    (Theorie, Stabilität & Code-Mutationen) │    • 30 % C#-Code-Portfolio (10 Module)   │
+│    • 4 Tests à 10 % (Q1, Q2, Q3, Q4)       │    • 15 % Showcase-Demos (Rotationsbasis) │
+│                                            │    • 15 % Peer-Review & Plenumsfragen     │
+└────────────────────────────────────────────┴───────────────────────────────────────────┘
 ```
 
-#### Säule 1: Moodle Multiple-Choice-Tests (30 %)
-- **Test 1 (nach Termin 04):** Grundlagen, Modellarten, Stride, 2D-FDM-Stabilität, affine Koordinatentransformation (Kapitel 01–04).
-- **Test 2 (nach Termin 07):** 3D-Computergrafik, Szenengraphen, Multithreading (TPL, Race Conditions), FEM-Fachwerke, Cholesky (Kapitel 05–07).
-- **Test 3 (nach Termin 10):** Kontinuierliche Solver (Heun, RK4, Anti-Windup), Diskrete Systeme (DES, Welford), Hybride Dynamik (Zero-Crossing, VIBN) (Kapitel 08–10).
-- *Charakteristik:* 10–12 Fragen in 15–20 Minuten; visuelle Fehlerdiagnosen, algorithmische Berechnungsfragen mit Zufallsvariablen, subtile Bug-Identifikation in C#-Snippets.
+#### Säule 1: Moodle Multiple-Choice-Tests (40 %)
+- **Test 1 (nach Termin 03):** Grundlagen, Modellarten, Stride, 2D-FDM-Stabilität, Fünfpunktstern ($s \le 0{,}25$) (Kapitel 00–02) [10 %].
+- **Test 2 (nach Termin 05):** 2D-Vektorgrafik (Canvas, Welt-Screen-Transformation), ScottPlot 5 Datenstreaming, 3D-Szenengraph (Kapitel 03–05) [10 %].
+- **Test 3 (nach Termin 08):** Multithreading (TPL, Amdahl), FEM-Fachwerke, Cholesky, Kontinuierliche Solver (Heun, RK4, Anti-Windup) (Kapitel 06–08) [10 %].
+- **Test 4 (nach Termin 10):** Diskrete Systeme (DES, Little's Gesetz), Hybride Dynamik (Zero-Crossing, Sticking, VIBN) und Synthese (Kapitel 09–11) [10 %].
+- *Charakteristik:* 4 kurze Tests mit je 4–5 fundierten Fragen; visuelle Fehlerdiagnosen, algorithmische Berechnungsfragen, subtile Bug-Identifikation in C#-Snippets.
 
-#### Säule 2: Übungsmeilensteine, Showcases & Plenumsfragen (30 %)
+#### Säule 2: Kontinuierlicher Übungsbetrieb & Diskurskultur (60 %)
 
 Säule 2 verbindet praktisches Software-Engineering mit einer universitären Diskussions- und Reviewkultur:
-- **15 % Showcase-Präsentation & Lösungsgüte (Säule 2a):** Live-Vorführung der Meilensteinlösung am Beamer im Rahmen des verbindlichen **Rotationsprinzips** (über das Semester kommt jedes 2er-Team mindestens einmal mit 5–7 min Showcase auf die Beamer-Bühne), spontane Code-Inspection und Bestehen des Live-Parameter-Stresstests des Dozenten.
-- **15 % Fachliche Plenumsbeteiligung & Peer-Review (Säule 2b):** Kontinuierliches, qualifiziertes und konstruktiv-kritisches Fragenstellen aus dem Plenum bei den Showcases anderer Teams (kritische Analyse, Stabilitätsgrenzen, Randfallbetrachtung, GC-Allokationsfreiheit und Code-Design).
+- **30 % C#-Code-Portfolio (Säule 2a):** Bewertung des gesamten Git-Repositories mit den 10 wöchentlichen Übungen (im gewählten Track A oder B). Kriterien: Saubere Entkopplung nach der Goldenen Regel, Vermeidung von GC-Allokationen im Zeitschritt, Thread-Sicherheit und automatisierte MSTest-Unit-Tests.
+- **15 % Showcase-Präsentation & Lösungsgüte (Säule 2b):** Live-Vorführung ausgewählter Meilensteinlösungen am Beamer im Rahmen des verbindlichen **Rotationsprinzips** (über das Semester kommt jedes 2er-Team mindestens einmal mit 5–7 min Showcase auf die Beamer-Bühne), spontane Code-Inspection und Bestehen des Live-Parameter-Stresstests des Dozenten.
+- **15 % Fachliche Plenumsbeteiligung & Peer-Review (Säule 2c):** Kontinuierliches, qualifiziertes und konstruktiv-kritisches Fragenstellen aus dem Plenum bei den Showcases anderer Teams (kritische Analyse, Stabilitätsgrenzen, Randfallbetrachtung, GC-Allokationsfreiheit und Code-Design).
 - **Verbindlichkeitsklausel:** Sowohl die eigene **Showcase-Präsentation** als auch das **qualifizierte Fragenstellen im Peer Review** sind verbindliche Prüfungsteile der Lehrveranstaltung. Eine rein passive Hörsaal-Anwesenheit ohne qualifizierte Wortmeldungen reicht für eine positive Beurteilung dieser Säule nicht aus.
 
 > [!NOTE]
 > **Wahlmodell („Pick your Track: Industrie vs. Gaming“):**  
-> Die Studierenden müssen **NICHT** beide Aufgaben bearbeiten! Jedes 2er-Team wählt für jeden Meilenstein **GENAU EINE** der beiden Aufgaben (**Track A: Industrie ODER Track B: Game**). Beide Tracks führen zu denselben Lernergebnissen (ILOs), erfordern dieselbe Software-Architektur und besitzen denselben Workload.
+> Die Studierenden müssen **NICHT** beide Aufgaben bearbeiten! Jedes 2er-Team wählt für jede Woche **GENAU EINE** der beiden Aufgaben (**Track A: Industrie ODER Track B: Game**). Beide Tracks führen zu denselben Lernergebnissen (ILOs), erfordern dieselbe Software-Architektur und besitzen denselben Workload.
 
-- Vier praktische Meilensteine (begleitend zu den Laborblöcken, je 3,75 % für den Showcase):
-  - **Meilenstein 1 (nach T02/T03, fällig T04):** 2D-Visualisierung & Simulation  
-    *Wahl:* Track A (FDM-Kühlkörper mit Neumann-RB & Wärmestrom-Vektorpfeilen) **ODER** Track B (Zelluläre Waldbrand-/Lava-Pixelwelt mit Windvektoren).  
-    *(Hinweis: Vektorpfeile in T03 sind rein geometrisch & visuell; keine Statik!)*
-  - **Meilenstein 2 (nach T04/T05, fällig T07):** Echtzeit-Dashboard & 3D-Kinematik  
-    *Wahl:* Track A (SCARA-Roboterarm & ScottPlot-Leitstand) **ODER** Track B (3D Arcade Claw Machine & Retro Space HUD).
-  - **Meilenstein 3 (nach T06/T07, fällig T09):** High-Performance & Statik  
-    *Wahl:* Track A (Portalkran Cholesky-Statik & parallele Getriebe-Toleranzanalyse) **ODER** Track B (Poly Bridge Einsturz-/Bruch-Engine via Cholesky & 100.000 Boids TPL-Schwarm).  
-    *(Hinweis: Erst hier in T07 erweckt die Math.NET Cholesky-Engine die T03-Geometrie zum statischen Leben!)*
-  - **Meilenstein 4 (nach T08/T09, fällig T10):** Dynamische Systeme & Stochastik  
-    *Wahl:* Track A (S-Functions DC-Motor mit PID Anti-Windup & M/M/c-Fertigungslinie) **ODER** Track B (Falcon Booster Balancer mit RK4 & Fast-Food Tycoon DES).
-- *Durchführung von Showcase & Micro-Defense:*
-  1. Live-Vorführung des Programms im gewählten Track am Beamer oder Laborplatz ($\ge 30\,\text{FPS}$).
-  2. Spontane Code-Inspection: *„Erklären Sie Zeile 42 und warum hier keine GC-Allokation entsteht.“*
-  3. Live-Parameter-Stresstest: *„Verdoppeln Sie die Schrittweite $h$ bzw. Parameter $X$ – was passiert im Phasenraum?“*
-  4. Plenums-Q&A: Beantwortung fundierter Peer-Fragen aus dem Auditorium.
-
-#### Säule 3: Abschlussprojekt „Digital Twin Challenge“ & Oral Defense (40 %)
-- **10 % Softwarearchitektur & C#-Codequalität:** Strikt entkoppelte Architektur (keine GUI-Aufrufe im Solver), saubere S-Functions, Git-Historie.
-- **10 % Physikalische Validierung & Dokumentation:** 6–8-seitiger Bericht mit analytischem Grenzfallvergleich, Energiebilanz und Konvergenznachweis.
-- **20 % Mündliche Verteidigung & Live-Pitch (Termin 10):**
-  - 3 Minuten prägnante Folien-Präsentation (Problem, Physik, Solver).
-  - 3 Minuten flüssige Live-Demo des WPF-Zwillings.
-  - 1 Minute intensives Fachgespräch mit Ad-hoc-Parameteränderung.
+- Vier gebündelte Labor-Meilensteine zur Zwischenabnahme (je 3,75 % für den Showcase):
+  - **Meilenstein 1 (nach T02/T03, fällig T04):** 2D-Visualisierung & Simulation (FDM-Kühlkörper vs. Falling Sand/Lava).
+  - **Meilenstein 2 (nach T04/T05, fällig T07):** Echtzeit-Dashboard & 3D-Kinematik (SCARA-Arm vs. 3D Arcade Claw Crane).
+  - **Meilenstein 3 (nach T06/T07, fällig T09):** High-Performance & Statik (Portalkran Cholesky vs. Bridge Constructor Cholesky & Boids).
+  - **Meilenstein 4 (nach T08/T09, fällig T10):** Dynamische Systeme & Stochastik (DC-Motor Anti-Windup vs. Falcon Lander & Factory Tycoon).
 
 ---
 
-### 6.4 Benotungsrichtlinie & Bewertungsrubrik
+### 6.3 Benotungsrichtlinie & Bewertungsrubrik
 
-$$\text{Gesamtprozent } P = 0{,}30 \cdot P_{\text{Moodle}} + 0{,}15 \cdot P_{\text{Showcase}} + 0{,}15 \cdot P_{\text{Plenum}} + 0{,}40 \cdot P_{\text{Projekt}}$$
+$$\text{Gesamtprozent } P = 0{,}40 \cdot P_{\text{Moodle}} + 0{,}30 \cdot P_{\text{Portfolio}} + 0{,}15 \cdot P_{\text{Showcase}} + 0{,}15 \cdot P_{\text{Plenum}}$$
+
+#### Bestehenskriterien (Hürden):
+- Gesamtnote $\ge 50\,\%$
+- Mindestens $50\,\%$ in Säule 1 (Theoretisches Fundament: mind. 20 von 40 Punkten)
+- Mindestens $50\,\%$ in Säule 2 (Praktischer Übungsbetrieb: mind. 30 von 60 Punkten)
 
 #### Notenschlüssel (Standard FH Oberösterreich):
 - **Sehr Gut (1):** $\ge 90\,\%$
@@ -881,10 +845,10 @@ $$\text{Gesamtprozent } P = 0{,}30 \cdot P_{\text{Moodle}} + 0{,}15 \cdot P_{\te
 Zur organisatorischen und technischen Vorbereitung vor dem ersten Präsenztermin:
 
 - [ ] **GitHub Classroom / GitLab Organisation einrichten:**
-  - Repository-Templates für *In-Class Sprints*, *Labor-Meilensteine* und die *Digital Twin Challenge* mit vorkonfigurierten `.NET 8`-Solution-Dateien bereitstellen.
+  - Repository-Templates für *In-Class Sprints*, *Labor-Meilensteine* und das *C#-Simulations-Portfolio* mit vorkonfigurierten `.NET 8`-Solution-Dateien bereitstellen.
   - Automatisierte CI-Pipeline (`dotnet test --configuration Release`) zur schnellen Überprüfung von Grenzfall-Tests aktivieren.
 - [ ] **Moodle-Kursraum konfigurieren:**
-  - Anlegen der 3 summativen Moodle-MCQ-Tests mit Fragenpools (inklusive Zufallsparametern und Bild-Diagnosen).
+  - Anlegen der 4 summativen Moodle-MCQ-Tests mit Fragenpools (inklusive Zufallsparametern und Bild-Diagnosen).
   - Freischaltung der MARP-Vorlesungsfolien (PDF und Markdown) jeweils termingerecht vor der Einheit.
   - Bereitstellung der Abgabe-Ordner für die 4 Labor-Meilensteine mit klaren Bewertungsrastern.
 - [ ] **Hardware- & Software-Voraussetzungen im Hörsaal / Rechnerraum prüfen:**

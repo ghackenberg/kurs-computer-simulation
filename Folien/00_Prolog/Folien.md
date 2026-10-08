@@ -196,34 +196,31 @@ Für die vertiefenden Laboraufgaben (Stufe B) wählen Sie im 2er-Team frei zwisc
 
 ---
 
-## Das 3-Säulen-Notenmodell
+## Das 2-Säulen-Notenmodell
 
 Transparente Beurteilung von Theorie, praktischer Implementierung und wissenschaftlichem Diskurs:
 
 <div class="columns">
 <div class="two">
 
-**Säule 1: Theorie & Numerik (30 %)**
-- 4 Moodle-Präsenztests (je 7,5 %)
-- Fehlerdiagnose & Stabilitätsgrenzen
-- Formelverständnis & Berechnungsfragen
+**Säule 1: Moodle-Quizzes (40 %)**
+- 4 Moodle-Präsenztests (je 10 %)
+- Q1 (T03), Q2 (T05), Q3 (T08), Q4 (T10)
+- Fehlerdiagnose & Stabilitätsgrenzen (CFL)
+- Formelverständnis & Code-Mutationen
 
-**Säule 2: Praxis & Diskurs (30 %)**
-- 4 Übungsmeilensteine (je 3,75 %)
-- 15 % Showcase-Demo & Stresstest
-- 15 % Peer-Review & Plenumsfragen
+**Bestehenskriterium:**
+- Gesamtnote $\ge 50\,\%$
+- Mind. $50\,\%$ in Säule 1 (Theorie)
+- Mind. $50\,\%$ in Säule 2 (Praxis)
 
 </div>
 <div class="two">
 
-**Säule 3: Semesterprojekt (40 %)**
-- Ganzheitlicher Digitaler Zwilling im 2er-Team
-- 10 % Software-Architektur (Goldene Regel)
-- 10 % Physikalische Validierung
-- 20 % Mündliche Teamverteidigung (Oral Defense)
-
-**Bestehenskriterium:**
-- Gesamtnote $\ge 50\,\%$ sowie mind. $50\,\%$ in jeder Säule.
+**Säule 2: Übungen & Diskurs (60 %)**
+- **30 % C#-Code-Portfolio:** 10 wöchentliche Übungsabgaben (Track A oder B)
+- **15 % Showcase-Demo:** Live-Vorführung & Ad-hoc-Stresstest am Beamer
+- **15 % Peer-Review:** Kritische Fachfragen aus dem Plenum
 
 </div>
 </div>
@@ -237,7 +234,7 @@ Zu Beginn jedes Folgetermins demonstrieren zwei zufällig ausgewählte Teams ihr
 <div class="columns">
 <div class="two">
 
-#### Showcase & Micro-Defense (Säule 2a)
+#### Showcase & Micro-Defense (Säule 2b)
 - **Live-Demonstration:** Flüssig laufende Simulation ($\ge 30\,\text{FPS}$) im Hörsaal.
 - **Code-Inspection:** Exakte Begründung jeder Codezeile (kein blindes „Vibe Coding“!).
 - **Live-Parameter-Stresstest:** Ad-hoc-Modifikation (z. B. Schrittweite verzehnfachen).
@@ -245,10 +242,10 @@ Zu Beginn jedes Folgetermins demonstrieren zwei zufällig ausgewählte Teams ihr
 </div>
 <div class="two">
 
-#### Peer-Review & Fragenkultur (Säule 2b)
+#### Peer-Review & Fragenkultur (Säule 2c)
 - **Kritisches Auditorium:** Das Plenum prüft Konsistenz, Erhaltungssätze und Stabilität.
 - **Enttarnung von Schein-Animationen:** Echte Physik-DGL statt reiner UI-Animation!
-- **Aktive Beteiligung:** Fundierte Fachfragen fließen direkt in die Teilnote von Säule 2b ein.
+- **Aktive Beteiligung:** Fundierte Fachfragen fließen direkt in die Teilnote von Säule 2c ein.
 
 </div>
 </div>

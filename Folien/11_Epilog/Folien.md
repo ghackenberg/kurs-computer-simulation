@@ -21,7 +21,7 @@ Dieses abschließende Kapitel umfasst die folgenden Abschnitte:
 - 11.2: Leitfaden zur Modellauswahl in Industrieprojekten
 - 11.3: Softwarearchitektur & Best Practices für Simulationscode
 - 11.4: Der Digitale Zwilling in der industriellen Praxis
-- 11.5: Kolloquium, Präsentation der Abschlussprojekte & Feedback
+- 11.5: Semesterrückblick, Portfolio-Synthese & Feedback
 
 ---
 
@@ -755,14 +755,14 @@ Komplexe FEM- oder CFD-Simulationen benötigen oft Stunden – unmöglich für d
 
 ---
 
-## 11.5: Kolloquium, Präsentation der Abschlussprojekte & Feedback
+## 11.5: Semesterrückblick, Portfolio-Synthese & Feedback
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Kriterien für herausragende Simulationsprojekte
+- Kriterien für herausragenden Simulationscode
 - Validierungsstrategien und typische Fallstricke
-- Abschluss-Kolloquium: Ablauf, 7-Minuten-Pitch & Live-Demos
-- Oral Defense: Bewertungsdimensionen & Stresstest
+- Das 10-teilige C#-Simulations-Portfolio
+- Semesterabschluss & transparente Notenfeststellung
 - Feedback, Reflexion & industrieller Ausblick
 
 ---
@@ -894,9 +894,9 @@ Häufige Fehlerquellen in Studierendenprojekten und wie Sie diese vermeiden:
 
 ---
 
-### Kompetenzprofil: Was müssen Sie beherrschen?
+### Kompetenzprofil: Was haben Sie erreicht?
 
-Für die Moodle-Quizzes und die mündliche Projektverteidigung im Kolloquium:
+Für die Moodle-Quizzes und Ihr praktisches C#-Simulations-Portfolio:
 
 <div class="columns top">
 <div>
@@ -922,74 +922,68 @@ Für die Moodle-Quizzes und die mündliche Projektverteidigung im Kolloquium:
 
 ---
 
-### Abschluss-Kolloquium: Ablauf & Pitch-Format
+### Ihr C#-Simulations-Portfolio: 10 Meilensteine
 
-Die Präsentation der Semesterprojekte ("Digital Twin Challenge") erfolgt im Kolloquium:
+Über das Semester hinweg haben Sie ein vollständiges Portfolio aus 10 mechatronischen Modulen aufgebaut:
 
 <div class="columns">
 <div class="two">
 
-**Pitch-Struktur (7 Minuten pro Team):**
-- **3 min: Modell & Mathematik**
-  - Problemstellung & Systemgrenzen
-  - DGL- / LGS-Herleitung auf Folien
-  - Zustandsraumvektor $\mathbf{x}$ & Solver-Wahl
-- **3 min: Live-Demo des Zwillings**
-  - Vorführung des lauffähigen C#-WPF-Zwillings
-  - Interaktion & Parametervariation live
+**Grundlagen & Visualisierung:**
+- **T01:** Kinematik, DGL & Expliziter Euler
+- **T02:** 2D-Pixel & FDM-Wärmeleitung (`WriteableBitmap`)
+- **T03:** 2D-Vektorgrafik & Bemaßung (`WPF Canvas`)
+- **T04:** High-Speed Telemetrie & Charts (`ScottPlot 5`)
+- **T05:** 3D-Computergrafik & Kinematik (`SharpGL`)
 
 </div>
 <div class="two">
 
-**Q&A & Stresstest (1 Minute):**
-- **1 min: Fachgespräch & Peer Review**
-  - Spontane Dozenten- & Plenumsfragen
-  - Ad-hoc-Parametertest (z.B. Lastsprung, $\Delta t$)
-- **Hörsaal-Diskussion:**
-  - Jedes Team stellt aktiv Peer-Review-Fragen
-  - Mündliche Verteidigung der Codebasis
+**Numerik, Statik & Dynamik:**
+- **T06:** Multithreading & Speedup (`Parallel.For`, TPL)
+- **T07:** FEM-Fachwerke & Cholesky (`Math.NET`)
+- **T08:** S-Functions, RK4 & PID Anti-Windup
+- **T09:** Diskrete Simulation (DES) & Little's Gesetz
+- **T10:** Hybride Systeme & Zero-Crossing Bisektion
 
 </div>
 </div>
 
 > [!NOTE]
-> **Pitch-Regel:** Straffes Timing! Die Live-Demo muss auf Knopfdruck startklar sein. Keine Folienorgien – der lauffähige Code steht im Mittelpunkt.
+> **Vollwertiges Ingenieur-Portfolio:** Sie beherrschen die gesamte Kette vom mathematischen Modell über die numerische Lösung bis zur echtzeitfähigen Visualisierung!
 
 ---
 
-### Oral Defense: Bewertungsdimensionen
+### Semesterabschluss & Leistungsbeurteilung
 
-Die Endabnahme bewertet die ganzheitliche Synthese von Theorie und Software:
+Die Benotung erfolgt vollständig semesterbegleitend aus zwei transparenten Säulen:
 
 <div class="columns">
 <div class="two">
 
-**1. Modellierung & Numerik (40 %):**
-- Physikalisch plausible Gleichungen
-- Treffsichere Solver- & Zeitschrittwahl
-- Konvergenz & Energieerhaltung
-- MSTest-Unit-Tests zur Verifikation
+**Säule 1: Moodle-Quizzes (40 %)**
+- 4 summative Quizzes (je 10 %)
+- Q1 (T03), Q2 (T05), Q3 (T08), Q4 (T10)
+- Manipulationssicheres Fundament: Theorie, Stabilitätskriterien (CFL), Fehlersuche
 
-**2. Software-Architektur (30 %):**
-- Saubere Entkopplung (Model / Solver / View)
-- TPL-Multithreading ohne UI-Blockade
+**Bestehenskriterium:**
+- Gesamtnote $\ge 50\,\%$
+- Mind. $50\,\%$ in Säule 1 (Theorie)
+- Mind. $50\,\%$ in Säule 2 (Praxis)
 
 </div>
 <div class="two">
 
-**3. Visualisierung & UX (15 %):**
-- Aussagekräftiges Dashboard (WPF/ScottPlot/3D)
-- Klare Einheiten, Skalen & Farbleitsysteme
-
-**4. Mündliche Verteidigung (15 %):**
-- Verständnis jeder Codezeile (Vibe-Coding-Doktrin)
-- Souveräne Reaktion auf Randfall-Stresstests
+**Säule 2: Übungen & Diskurs (60 %)**
+- **30 % C#-Code-Portfolio:** 10 wöchentliche Übungen (Track A oder B, Goldene Regel, MSTests)
+- **15 % Showcase-Präsentationen:** Live-Vorführung der Lösungen im Rotationsprinzip
+- **15 % Peer-Review:** Konstruktiv-kritische Fachfragen aus dem Plenum
 
 </div>
 </div>
 
 > [!IMPORTANT]
-> **Vibe-Coding-Doktrin:** KI-Assistenten sind Werkzeuge – in der Oral Defense haften Sie persönlich für jede Zeile Code und jede physikalische Randbedingung!
+> **Keine Abschlussklausur & kein Projektdruck:** Die kontinuierliche Arbeit im Semester sichert Ihren Lernerfolg direkt und nachhaltig ab!
 
 ---
 
@@ -1065,6 +1059,6 @@ Der durchgängige Weg von der Problemstellung zur simulationsgestützten Erkennt
 
 > *"Die Simulation ist die Kunst, die Konsequenzen von Entscheidungen zu erforschen, bevor diese in der Realität teure oder fatale Fehler verursachen."*
 
-Viel Erfolg bei Ihrer Projektarbeit und der Projektverteidigung im Kolloquium!
+Viel Erfolg bei Ihren zukünftigen Simulations- und Automatisierungsprojekten!
 
 Nutzen Sie die erlernten Fähigkeiten für Ihre Bachelorarbeit und Ihre zukünftigen Aufgaben als Entwickler moderner Automatisierungs- und Industriesysteme!

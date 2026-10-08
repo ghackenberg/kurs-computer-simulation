@@ -30,9 +30,9 @@ Neues Assessment-Paradigma (Systemsimulation):
                                                                                 │
    ┌────────────────────────────────────────────────────────────────────────────┴────────┐
    ▼                                            ▼                                        ▼
-[Physikalische Konsistenz]            [Numerische Stabilität]               [Mündliche Verteidigung]
+[Physikalische Konsistenz]            [Numerische Stabilität]               [Auskunft & Demonstration]
 • Energie- & Impulserhaltung          • Eigenwerte & Schrittweite           • "Warum genau diese Zeile?"
-• Grenzfall- & Sensitivitätsanalyse   • Steifigkeit & Lösungsverfahren      • Live-Parameteränderung im Labor
+• Grenzfall- & Sensitivitätsanalyse   • Steifigkeit & Lösungsverfahren      • Live-Demonstration & Video-Review
 ```
 
 ---
@@ -86,82 +86,72 @@ Die Prüfungs- und Benotungsphilosophie verschiebt sich von den unteren Stufen d
 
 ## 2. Aufbau des Benotungsschemas (Gewichtung & Säulen)
 
-Um Fairness, Transparenz und Manipulationssicherheit bei vollständiger KI-Erlaubnis zu garantieren, basiert die Gesamtnote auf einer **Drei-Säulen-Architektur**. Jede Säule deckt ein eigenständiges didaktisches Ziel ab.
+Um Fairness, Transparenz und kontinuierlichen Lernerfolg bei vollständiger KI-Erlaubnis zu garantieren, basiert die Gesamtnote auf einer **Zwei-Säulen-Architektur (Variante 1: 40 % Theorie / 60 % Praxis & Diskurs)**. Anstelle eines künstlichen, am Semesterende aufgesetzten Einzel-Abschlussprojekts bildet das kontinuierlich aufgebaute **C#-Simulations-Portfolio aus den 10 wöchentlichen Übungen** den zentralen praktischen Leistungsnachweis.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                GESAMTNOTE (100 %)                                      │
-├────────────────────────────┬────────────────────────────┬──────────────────────────────┤
-│    SÄULE 1: 30 %           │    SÄULE 2: 30 %           │    SÄULE 3: 40 %             │
-│    4 Moodle MCQ-Tests      │    Übungsmeilensteine,     │    Abschlussprojekt &        │
-│    (Kontinuierliche        │    Showcases & Peer-Review │    Oral Defense              │
-│     Theorie- & Fehler-     │    • 15 % Showcase-Demo    │    (Gesamtsystem, Validierung│
-│     analyse)               │    • 15 % Plenumsfragen    │     & Teamverteidigung)      │
-└────────────────────────────┴────────────────────────────┴──────────────────────────────┘
+│                        GESAMTNOTE: 2-SÄULEN-MODELL (100 %)                             │
+├────────────────────────────────────────┬───────────────────────────────────────────────┤
+│    SÄULE 1: THEORIE & NUMERIK (40 %)    │    SÄULE 2: PRAXIS, PORTFOLIO & DISKURS (60 %)│
+├────────────────────────────────────────┼───────────────────────────────────────────────┤
+│    4 Moodle Multiple-Choice-Tests      │    • 30 % C#-Code-Portfolio (10 Übungen)      │
+│    à 10 % = 40 %                       │    • 15 % Showcase-Demos (Rotationsprinzip)   │
+│    (Q1: T03, Q2: T05, Q3: T08, Q4: T10)│    • 15 % Fachliche Plenumsfragen & Reviews   │
+└────────────────────────────────────────┴───────────────────────────────────────────────┘
 ```
 
-### 2.1 Säule 1: Moodle Multiple-Choice-Tests (30 %)
+### 2.1 Säule 1: Moodle Multiple-Choice-Tests (40 %)
 * **Ziel:** Kontinuierliche Überprüfung des fundierten theoretischen, numerischen und algorithmischen Grundlagenwissens.
-* **Umfang:** **4 formatgebundene Moodle-Tests** über das Semester verteilt (je 7,5 % der Gesamtnote; ca. 15–20 Minuten pro Test).
-* **Durchführung:** In Präsenz zu Beginn der jeweiligen Vorlesungseinheiten auf Moodle im Safe Exam Browser oder kontrollierten PC-Pool-Setting.
+* **Umfang:** **4 formatgebundene Moodle-Tests** über das Semester verteilt (**je 10 %** der Gesamtnote; ca. 15–20 Minuten pro Test).
+* **Durchführung:** In Präsenz zu Beginn der jeweiligen Vorlesungseinheiten (T03, T05, T08, T10) auf Moodle im Safe Exam Browser oder kontrollierten PC-Pool-Setting.
 * **Chronologische Bindung:** Ein Test darf **ausschließlich** Stoff abfragen, der bis zum jeweiligen Termin in der Vorlesung und den vorangegangenen Übungen vermittelt wurde.
 * **Fokus:** Bildgestützte Fehleranalysen, numerische Parametrisierungsaufgaben mit individuellen Zufallsvariablen, Interpretation von Phasenraumkurven und Identifikation subtiler Bugs in Codefragmenten, die nicht durch reines Copy-Paste gelöst werden können.
 
-### 2.2 Säule 2: Übungsmeilensteine, Showcases & Plenumsbeteiligung (30 %)
+### 2.2 Säule 2: Kontinuierlicher Übungsbetrieb, Portfolio & Diskurs (60 %)
 * **Ziel:** Laufende Überprüfung der praktischen Implementierungsfähigkeit, Recherchekompetenz und spontanen Erklärungsfähigkeit im C#/.NET-Umfeld sowie Etablierung einer aktiven, hochschulgerechten ingenieurwissenschaftlichen Diskussions- und Review-Kultur (Peer-Review).
-* **Verbindliche Aufteilung von Säule 2 (30 %):**
-  - **15 % Showcase-Präsentation & Lösungsgüte (Säule 2a):** Live-Vorführung der eigenen Lösung (Track A Industrie-Zwilling oder Track B Simulationsspiel), fundierte Code-Erklärung am Beamer bzw. Laborplatz und Bestehen des Live-Parameter-Stresstests.
-  - **15 % Fachliche Plenumsbeteiligung & Peer-Review (Fragenkultur, Säule 2b):** Aktive, fundierte Fragestellungen und kritische Reviews während der Vorstellungen anderer Teams über das gesamte Semester hinweg (z. B. Aufdecken von physikalischen Widersprüchen, Fragen zur numerischen Schrittweite/CFL-Grenzen oder Threading-/UI-Entkopplung).
+* **Verbindliche Aufteilung von Säule 2 (60 %):**
+  - **30 % C#-Code-Portfolio (10 Übungsabgaben, Säule 2a):** Kontinuierliche Entwicklung und wöchentliche Abgabe von 10 lauffähigen Simulationsmodulen im gewählten Track (Track A Industrie ODER Track B Game). Bewertet werden Kapselung nach der Goldenen Regel, numerische Stabilität, allokationsfreie Schleifen, automatisierte MSTests und saubere Git-Historie.
+  - **15 % Showcase-Präsentationen & Lösungsgüte (Säule 2b):** Live-Vorführung der eigenen Lösung im Rotationsverfahren am Beamer bzw. Laborplatz, fundierte Code-Erklärung und Bestehen des Ad-hoc-Parameter-Stresstests.
+  - **15 % Fachliche Plenumsbeteiligung & Peer-Review (Fragenkultur, Säule 2c):** Aktive, fundierte Fragestellungen und kritische Reviews während der Vorstellungen anderer Teams über das gesamte Semester hinweg (Aufdecken physikalischer Widersprüche, Fragen zur numerischen Schrittweite/CFL-Grenzen oder Threading-/UI-Entkopplung).
 
-#### 2.2.1 Säule 2a: Showcase-Präsentation & Lösungsgüte (15 %)
-* **Umfang & chronologische Staffelung:** **4 praktische Labor-Meilensteine** (begleitend zu den Einheiten 01–10; je 3,75 % der Gesamtnote):
-  - **Meilenstein 1 (Abnahme T04, Stoff aus T02/T03):** 2D-Visualisierung & Simulation. Kombination aus 2D-Pixel-FDM (Kühlkörper-Heatmap in `WriteableBitmap`) und 2D-Vektorgrafik auf dem WPF `Canvas` (affine Koordinatentransformation Welt $\leftrightarrow$ Screen, Viewport-Zentrierung, Y-Achsen-Inversion, Vektorpfeile und technische Bemaßung).  
-    *(Kausalitätsgarantie: In Meilenstein 1 und Termin 3 werden **keinerlei** FE-Gleichungssysteme oder Cholesky-Zerlegungen verlangt!)*
-  - **Meilenstein 2 (Abnahme T07, Stoff aus T04/T05):** Echtzeit-Telemetrie & 3D-Kinematik. High-Performance-Datenstreaming mit `ScottPlot 5` und ringförmigen Puffern (`CircularBuffer<double>`) gekoppelt mit SharpGL 3D-Szenengraph-Transformationen.
-  - **Meilenstein 3 (Abnahme T09, Stoff aus T06/T07):** High-Performance & Statische FEM-Fachwerke. Multithreading mit TPL (`Parallel.For`) sowie Aufstellung des statischen Gleichungssystems $\mathbf{K}\mathbf{u}=\mathbf{f}$ mit Cholesky-Zerlegung ($\mathbf{L}\mathbf{L}^\top$) in `Math.NET Numerics`. *(Erst hier werden LGS und Cholesky implementiert und abgeprüft!)*
-  - **Meilenstein 4 (Abnahme T10, Stoff aus T08/T09):** Dynamische Systeme & Stochastische Ereignissimulation. Kontinuierliche DGL-Integration via S-Functions (RK4 mit Anti-Windup Clamping) sowie diskrete Ereignissimulation (DES-Warteschlangen, Monte-Carlo-Simulation mit Welford-Statistik).
-* **Durchführung („Showcase & Micro-Defense“):**
-  1. **Live-Vorführung am Beamer / Laborplatz (Plenum & Tischabnahme):** Jedes Studierendenteam präsentiert im Rotationsverfahren verbindlich ausgewählte Meilensteine direkt am Beamer vor der gesamten Kohorte sowie alle Meilensteine im Labor-Setting. Das C#/WPF-Programm läuft flüssig und stabil ($\ge 30\,\text{FPS}$) mit korrekter physikalischer Dynamik.
-  2. **Code-Inspection & Auskunftsfähigkeit:** Die Lehrperson bzw. das Plenum hinterfragt gezielt konkrete Codezeilen (z. B. unsafe Zeiger in `WriteableBitmap`, Matrix-Transformationen, Cholesky-Faktorisierung in `Math.NET`, Zero-Crossing-Bisektion, lock-freier Ringpuffer): *„Erklären Sie exakt die Funktionsweise und begründen Sie, warum hier keine Race Condition, kein Speicherleck und kein unphysikalischer Zustand entsteht.“*
-  3. **Live-Parameter-Stresstest (Ad-hoc-Modifikation):** Das Team muss live im Editor einen Parameter verändern oder eine Randbedingung modifizieren:
-     * *„Erhöhen Sie die Zeitschrittweite $h$ um den Faktor 10. Was passiert im Phasenraum-Plot und warum wird der Integrator instabil?“*
-     * *„Verdoppeln Sie die Masse $m$ und halbieren Sie die Federkonstante $c$. Stimmt die neue Eigenfrequenz exakt mit der theoretischen Formel überein?“*
-     * *„Skalieren Sie das WPF-Fenster auf ein extremes 21:9-Breitbild. Bleiben die Vektordarstellung isotrop und sitzen die Bemaßungspfeile noch exakt an den Knotenpunkten?“*
+#### 2.2.1 Säule 2a: C#-Code-Portfolio (30 %)
+* **Umfang:** 10 wöchentliche Übungsabgaben in 2er-Teams (T01 bis T10). Jedes Team wählt pro Termin verbindlich **Track A (Industrie)** ODER **Track B (Simulationsspiel)**.
+* **Portfolio-Architektur:** Ein zentrales Git-Repository pro Team, strukturiert nach Modulen `Termin_01` bis `Termin_10`.
+* **Kernkriterien:**
+  1. *Einhaltung der Goldenen Regel:* Vollständige Entkopplung der Simulations- und Physiklogik von WPF/UI.
+  2. *Numerische Solidität:* Mathematisch begründete Zeitschrittweiten, Stabilitätskontrollen, keine KI-Schein-Animationen.
+  3. *Performance & Allokationsfreiheit:* Keine Heap-Allokationen in zeitkritischen Simulations- oder Render-Schleifen.
+  4. *Automatisierte Tests:* Mindestens eine aussagekräftige MSTest-Klasse pro Meilenstein/Modul (z. B. analytischer Grenzfallabgleich, Invarianzprüfungen).
 
-#### 2.2.2 Säule 2b: Fachliche Plenumsbeteiligung & Peer-Review (Fragenkultur) (15 %)
-* **Ziel & Ingenieurkompetenz:** In der industriellen Entwicklung mechatronischer Systeme ist das kritische Hinterfragen fremder Simulationsmodelle, das Erkennen versteckter Modellannahmen und das Enttarnen unphysikalischen Verhaltens (z. B. versteckte Schein-Animationen) eine Kernqualifikation. Säule 2b belohnt Studierende, die als aufmerksame Peer-Reviewer agieren.
+#### 2.2.2 Säule 2b: Showcase-Präsentation & Lösungsgüte (15 %)
+* **Durchführung:** In jedem Termin stellen ausgewählte Teams (rotierend je 1x Track A und 1x Track B) ihre Lösung live am Beamer vor. Begleitend finden 4 Tischabnahmen an den Labor-Meilensteinen (T04, T07, T09, T10) statt:
+  - **Meilenstein 1 (Abnahme T04, Stoff aus T02/T03):** 2D-Visualisierung (Pixel-FDM & Canvas-Vektorgrafik). *(Kausalitätsgarantie: Noch KEINE FE-Gleichungssysteme oder Cholesky!)*
+  - **Meilenstein 2 (Abnahme T07, Stoff aus T04/T05):** Telemetrie & 3D-Kinematik (ScottPlot 5 Ringpuffer & SharpGL 3D-Szenengraph).
+  - **Meilenstein 3 (Abnahme T09, Stoff aus T06/T07):** High-Performance & Statik (TPL Parallel.For & Math.NET Cholesky-Fachwerklöser).
+  - **Meilenstein 4 (Abnahme T10, Stoff aus T08/T09):** Kontinuierliche DGLn & Diskrete Ereignissysteme (S-Functions, RK4 Anti-Windup, DES-Warteschlangen).
+* **Elemente der Abnahme:**
+  1. *Live-Vorführung:* Flüssiges Programm ($\ge 30\,\text{FPS}$), korrekte Physik, saubere UX.
+  2. *Code-Inspection:* Präzise Erklärung jeder Codezeile ("Warum genau dieses Konstrukt?").
+  3. *Ad-hoc-Parameterstresstest:* Spontane Modifikation von Parametern (z.B. $h \times 10$, Masse verdoppeln) mit Vorhersage und Interpretation der Systemreaktion.
+
+#### 2.2.3 Säule 2c: Fachliche Plenumsbeteiligung & Peer-Review (Fragenkultur, 15 %)
+* **Ziel & Ingenieurkompetenz:** In der industriellen Entwicklung mechatronischer Systeme ist das kritische Hinterfragen fremder Simulationsmodelle, das Erkennen versteckter Modellannahmen und das Enttarnen unphysikalischen Verhaltens (z. B. versteckte Schein-Animationen) eine Kernqualifikation. Säule 2c belohnt Studierende, die als aufmerksame Peer-Reviewer agieren.
 * **Modus & Erfassung:**
-  - Während der Showcase-Sessions an den Meilenstein-Terminen (T04, T07, T09, T10) sowie bei Zwischendemonstrationen fungiert das gesamte Auditorium als **aktives Review-Board**.
+  - Während der Showcase-Sessions fungiert das gesamte Auditorium als **aktives Review-Board**.
   - Jeder Studierende ist angehalten, über das Semester hinweg fundierte, anspruchsvolle Fachfragen an die vortragenden Teams zu richten.
   - Die Lehrperson führt ein semesterbegleitendes Bewertungslogbuch (über ein strukturiertes Moodle-Bewertungsraster), in dem Qualität, Schärfe und Relevanz der Plenumsfragen erfasst werden (Richtwert für eine Bestnote: mind. 4–6 substanzielle, fachlich tiefgehende Plenumsbeiträge über das Semester verteilt).
-* **Fokus & Typologie exzellenter Peer-Fragen:**
-  - **Aufdecken physikalischer Widersprüche & Erhaltungssätze:** *„In eurem Stoßmodell springt der Ball nach 10 Sekunden höher als zu Beginn – habt ihr die Energieerhaltung mitgeplottet oder erzeugt euer Integrator künstlich Energie?“*, *„Woher stammt die negative Dämpfung in eurer Bewegungsgleichung?“*
-  - **Numerische Schrittweite, Stabilität & CFL-Kriterium:** *„Wie verhält sich euer Diffusionsgitter, wenn die Gitterauflösung verdoppelt wird, ohne $\Delta t$ anzupassen? Habt ihr das CFL-Stabilitätslimit $r \le 1/4$ analytisch geprüft?“*, *„Warum habt ihr für dieses steife DGL-System expliziten Euler gewählt statt Heun oder RK4?“*
-  - **Softwarearchitektur & Multithreading:** *„Ihr greift in der Schleife direkt auf WPF-Elemente zu – warum blockiert das UI nicht, oder droht bei hoher Systemlast eine `InvalidOperationException`?“*, *„Wie ist der Ringpuffer gegen parallele Schreib- und Lesezugriffe geschützt?“*
-  - **API-Best-Practices & Modellgrenzen:** *„Warum allokiert ihr bei jedem Frame neue Datenarrays im Plotter, anstatt den vorallokierten `DataStreamer` von ScottPlot 5 zu nutzen?“*
 
-### 2.3 Säule 3: Abschlussprojekt & mündliche Verteidigung (40 %)
-* **Ziel:** Ganzheitliche Konzeption und Realisierung eines mechatronischen Digitalen Zwillings oder eines physikalisch fundierten Simulationsspiels im 2er-Team mit anschließender individueller Verteidigung.
-* **Aufteilung der 40 Prozentpunkte:**
-  * **10 % Softwarearchitektur & C#-Codequalität:** Saubere Trennung nach der Goldenen Regel (Modell / ViewModel / View), Multithreading (TPL / Ringpuffer), saubere Einbindung externer APIs via NuGet, saubere Git-Historie.
-  * **10 % Physikalische Validierung & Plausibilitätsnachweis:** Nachweis der physikalischen Konsistenz (analytischer Grenzfall, Energieerhaltung bei Hamilton-Systemen, Konvergenztest der Schrittweite $h \to h/2$).
-  * **20 % Mündliche Team- und Einzelverteidigung (15 Minuten pro Team im Abschluss-Kolloquium):**
-    * 5 Min. Live-Demonstration des Gesamtsystems (inkl. Interaktivität & UX).
-    * 10 Min. intensives Kreuzverhör pro Studierendem: Deep-Dive in Algorithmen, Begründung von Lösungsverfahren, ad-hoc Deaktivierung von Schutzmechanismen, Demaskierung von KI-generierten Zeilen.
-
-### 2.4 Zusammenfassendes Master-Board der Leistungsbeurteilung
+### 2.3 Zusammenfassendes Master-Board der Leistungsbeurteilung
 
 Das folgende Master-Board bietet eine vollständige, transparente Übersicht aller Prüfungsmodalitäten, Gewichtungen, Termine, Formate und Mindestanforderungen der Lehrveranstaltung:
 
 | Säule & Anteil | Teilkomponente | Gewicht (LV-Note) | Termine / Taktung | Prüfungsformat & Setting | Kernkriterien & Gegenstand | Mindestanforderung (Hürde) |
 | :--- | :--- | :---: | :--- | :--- | :--- | :--- |
-| **Säule 1 (30 %)**<br>Theoretische & numerische Grundlagen | **Moodle MCQ-Tests 1–4** | **30 %**<br>*(4 × 7,5 %)* | • Q1: T02/T03<br>• Q2: T05<br>• Q3: T08<br>• Q4: T10 | Präsenz-Moodle-Quiz (15–20 min)<br>Safe Exam Browser / PC-Pool | • Bildgestützte Fehlerdiagnose<br>• CFL-Stabilitätsgrenzen & Schrittweiten<br>• LGS-Konditionierung, Cholesky<br>• ODEs, Anti-Windup, Zero-Crossing, DES<br>• Berechnungsfragen mit Zufallsvariablen | Mind. **50 %** in Säule 1<br>(mind. 15 von 30 Pkt.) |
-| **Säule 2 (30 %)**<br>Übungsmeilensteine, Showcases & Peer-Review | **Säule 2a: Showcase-Präsentation & Lösungsgüte** | **15 %**<br>*(4 × 3,75 %)* | • M1: T04 (Kap. 02/03)<br>• M2: T07 (Kap. 04/05)<br>• M3: T09 (Kap. 06/07)<br>• M4: T10 (Kap. 08/09) | Live-Showcase am Beamer (rotierend) & Tischabnahme im Labor (Rechnerraum) | • Lauffähige Lösung ($\ge 30\,\text{FPS}$)<br>• Saubere physikalische Modellierung (DGL/LGS)<br>• Code-Inspection (Erklärung jeder Zeile)<br>• Ad-hoc Live-Parameter-Stresstest | Mind. **50 %** in Säule 2a<br>(mind. 7,5 von 15 Pkt.) |
-| | **Säule 2b: Fachliche Plenumsbeteiligung & Peer-Review** | **15 %** | Fortlaufend an T04, T07, T09, T10 (Showcase-Sessions & Laborreflexion) | Aktives Peer-Review im Plenum (Fragenkultur & fachlicher Diskurs) | • Schärfe & Tiefe mechatronischer Fragen<br>• Aufdecken physikalischer Widersprüche<br>• Prüfen von Stabilität, CFL & Entkopplung<br>• Aufdecken von KI-Schein-Animationen | Mind. **50 %** in Säule 2b<br>(mind. 7,5 von 15 Pkt.) |
-| **Säule 3 (40 %)**<br>Abschlussprojekt & Oral Defense | **Softwarearchitektur & C#-Codequalität (K1)** | **10 %** | Semesterende / Kolloquium (T11/T12) | Git-Repository-Review & statische Code-Analyse | • Goldene Regel (Physik $\leftrightarrow$ MVVM $\leftrightarrow$ GUI)<br>• Multithreading / TPL / Ringpuffer<br>• Saubere NuGet-Pakete (keine Deprecations) | Gesamtes Projekt:<br>Mind. **50 %** in Säule 3<br>(mind. 20 von 40 Pkt.) |
-| | **Physikalische Validierung & Plausibilität (K2–K5)** | **10 %** | Semesterende / Kolloquium (T11/T12) | Technische Projektdokumentation & Validierungsbericht | • Analytischer Grenzfallabgleich ($e_{\text{rel}} < 1\,\%$)<br>• Energieerhaltung bei Hamilton-Systemen<br>• Solver-Konvergenztest ($h \to h/2$)<br>• Interaktivität, Live-Tuning & flüssige UX | Keine KI-Schein-Animation<br>(K.O.-Kriterium K2) |
-| | **Mündliche Team- & Einzelverteidigung (K6)** | **20 %** | Abschluss-Kolloquium (15 min pro 2er-Team) | Präsenz-Kolloquium am Prüfungsrechner mit Beamer | • 5 min Live-Demonstration des Gesamtsystems<br>• 10 min Fachliches Kreuzverhör pro Kandidat<br>• Live-Parameter-Stresstest im Kolloquium<br>• AI-Disclosure & Reflexion | Vollständige Auskunftsfähigkeit<br>(kein Totalausfall) |
-| **GESAMT** | **Alle 3 Säulen** | **100 %** | **Semesterbegleitend** | **Trianguliertes Assessment** | **Theorie (30 %) + Praxis & Diskurs (30 %) + Synthese & Defense (40 %)** | **Gesamtnote $\ge 50\,\%$ + Hürden** |
+| **Säule 1 (40 %)**<br>Theoretische & numerische Grundlagen | **Moodle MCQ-Tests 1–4** | **40 %**<br>*(4 × 10 %)* | • Q1: T03 (Kap. 00–02)<br>• Q2: T05 (Kap. 03–05)<br>• Q3: T08 (Kap. 06–08)<br>• Q4: T10 (Kap. 09–11) | Präsenz-Moodle-Quiz (15–20 min)<br>Safe Exam Browser / PC-Pool | • Bildgestützte Fehlerdiagnose<br>• CFL-Stabilitätsgrenzen & Schrittweiten<br>• LGS-Konditionierung, Cholesky<br>• ODEs, Anti-Windup, Zero-Crossing, DES<br>• Berechnungsfragen mit Zufallsvariablen | Mind. **50 %** in Säule 1<br>(mind. 20 von 40 Pkt.) |
+| **Säule 2 (60 %)**<br>Kontinuierlicher Übungsbetrieb & Diskurs | **Säule 2a: C#-Code-Portfolio** | **30 %**<br>*(10 Module)* | Wöchentlich T01–T10 | Git-Repository-Review & automatisierte Testabnahme | • Goldene Regel (Physik $\leftrightarrow$ MVVM $\leftrightarrow$ GUI)<br>• Numerische Solidität & Stabilität<br>• Allokationsfreie Schleifen, MSTests<br>• Git-Historie & Code-Konsistenz | Mind. **50 %** in Säule 2a<br>(mind. 15 von 30 Pkt.) |
+| | **Säule 2b: Showcase-Präsentationen** | **15 %**<br>*(4 Meilensteine)* | • M1: T04 (Kap. 02/03)<br>• M2: T07 (Kap. 04/05)<br>• M3: T09 (Kap. 06/07)<br>• M4: T10 (Kap. 08/09) | Live-Showcase am Beamer (rotierend) & Labor-Tischabnahmen | • Lauffähige Lösung ($\ge 30\,\text{FPS}$)<br>• Saubere physikalische Modellierung (DGL/LGS)<br>• Code-Inspection (Erklärung jeder Zeile)<br>• Ad-hoc Live-Parameter-Stresstest | Mind. **50 %** in Säule 2b<br>(mind. 7,5 von 15 Pkt.) |
+| | **Säule 2c: Plenumsbeteiligung & Peer-Review** | **15 %** | Fortlaufend T02–T10 (Showcase-Sessions & Diskurs) | Aktives Peer-Review im Plenum (Fragenkultur & fachlicher Diskurs) | • Schärfe & Tiefe mechatronischer Fragen<br>• Aufdecken physikalischer Widersprüche<br>• Prüfen von Stabilität, CFL & Entkopplung<br>• Aufdecken von KI-Schein-Animationen | Mind. **50 %** in Säule 2c<br>(mind. 7,5 von 15 Pkt.) |
+| **GESAMT** | **2 Säulen** | **100 %** | **Semesterbegleitend** | **Trianguliertes Assessment** | **Theorie & Numerik (40 %) + Praxis, Portfolio & Diskurs (60 %)** | **Gesamtnote $\ge 50\,\%$ + Hürden** |
 
 ---
 
@@ -474,11 +464,11 @@ Welche gravierenden physikalischen und numerischen Phänomene treten bei diesem 
 
 ## 4. Bewertungsrubrik für Vibe-Coding-Projekte (Ingenieurtechnik & Simulationsspiele)
 
-Für das Abschlussprojekt (Säule 3) und die Übungsmeilensteine (Säule 2) kommt eine transparente, kompetenzorientierte Bewertungsrubrik zum Einsatz. Sie unterscheidet explizit zwischen **reiner KI-Generierung (Schein-Animation)** und **echter ingenieurwissenschaftlicher Beherrschung (Physik-Engine auf Basis diskretisierter DGLs/LGS)**.
+Für das C#-Code-Portfolio (Säule 2a) und die Übungsmeilensteine / Showcases (Säule 2b) kommt eine transparente, kompetenzorientierte Bewertungsrubrik zum Einsatz. Sie unterscheidet explizit zwischen **reiner KI-Generierung (Schein-Animation)** und **echter ingenieurwissenschaftlicher Beherrschung (Physik-Engine auf Basis diskretisierter DGLs/LGS)**.
 
 ### 4.1 Das Wahlmodell („Pick your Track“): Industrieller Zwilling (Track A) vs. Simulationsspiel (Track B)
 
-Im Abschlussprojekt (Säule 3) wählen die Studierendenteams verbindlich eines von zwei thematischen Profilen:
+Im kontinuierlichen Übungsbetrieb wählen die Studierendenteams pro Termin verbindlich eines von zwei thematischen Profilen:
 * **Track A: Industrieller Digitaler Zwilling (Industrial Digital Twin):**  
   Fokus auf mechatronische Industrieanlagen, Fertigungsprozesse, Antriebsstränge oder verfahrenstechnische Aggregate (z. B. Hochregallager-Kran mit Seilschwingung, Thermo-elektrischer Mehrzonen-Extruder, 3-Achs-Portalroboter, Flexible Fertigungszelle FMS, pneumatische Taktanlage).
 * **Track B: Interaktives Mechatronik-Simulationsspiel (Mechatronic Simulation Game):**  
@@ -496,11 +486,11 @@ Beide Tracks werden daher nach **denselben 6 Qualitätsmaßstäben** bewertet:
 | **K3: Numerik & Stabilität (15 %)** | Mathematisch begründeter Solver (RK4, Stabilitätsgebiete); Konvergenznachweis $h \to h/2$; Schutz vor Singularitäten. | Mathematisch begründete Zeitschrittwahl; Zero-Crossing-Bisektion gegen Tunneling; Energieerhaltungsnachweis ($E_{\text{tot}} \approx \text{const}$). |
 | **K4: UX, Interaktivität & Dynamics (15 %)** | Industrielles Dashboard; unterbrechungsfreies Live-Tuning von Reglerparametern (Slider) bei laufender Simulation; flüssig ($\ge 30\,\text{FPS}$). | Intuitive Steuerung (Tastatur/Maus); Live-Einflussnahme auf physikalische Parameter (Schwerkraft, Reibung); flüssig ($\ge 30\,\text{FPS}$). |
 | **K5: Recherche & API-Integration (10 %)** | Saubere Einbindung moderner NuGet-Pakete (ScottPlot 5, Math.NET, SharpGL); keine veralteten APIs. | Saubere Einbindung moderner NuGet-Pakete (SharpGL, ScottPlot 5, Sound/Input-APIs); keine veralteten APIs. |
-| **K6: Oral Defense & KI-Transparenz (20 %)** | Vollständige Erklärung jeder Codezeile; Bestehen des Live-Parameterstresstests im Kolloquium; AI-Disclosure. | Vollständige Erklärung jeder Codezeile; Bestehen des Live-Parameterstresstests im Kolloquium; AI-Disclosure. |
+| **K6: Testabdeckung, Performance & Verifikation (15 % des Portfolios)** | Automatisierte MSTest-Suite (Grenzfallabgleich, Invarianten); allokationsfreie Schleifen im Zeitschritt; saubere Git-Historie. | Automatisierte MSTest-Suite (Grenzfallabgleich, Invarianten); allokationsfreie Schleifen im Zeitschritt; saubere Git-Historie. |
 
 > [!IMPORTANT]
-> **Kausalitätsvermerk für Labor-Meilensteine vs. Abschlussprojekt:**  
-> Während das Abschlussprojekt die vollständige Synthese aller Disziplinen fordert, gilt für die vorgelagerten Meilensteine (Säule 2) eine strikte thematische Kausalität:  
+> **Kausalitätsvermerk für Labor-Meilensteine & Vorlesungsprogression:**  
+> Während das C#-Code-Portfolio am Semesterende die Gesamtheit aller Disziplinen abbildet, gilt für die vorgelagerten Meilensteine (Säule 2) eine strikte thematische Kausalität:  
 > In **Termin 3 / Meilenstein 1 (Teil B)** werden bezüglich K2 und K3 **ausschließlich 2D-Vektorgrafik, Koordinatentransformationen (Welt $\leftrightarrow$ Screen), Viewport-Skalierung und Bemaßungen** bewertet. Es werden **keinerlei Fachwerk-Gleichungssysteme oder Cholesky-Zerlegungen** abgeprüft – diese sind erst Gegenstand von Meilenstein 3 (Termin 7)!
 
 ### 4.2 Die 6 Bewertungsdimensionen
@@ -512,13 +502,13 @@ Beide Tracks werden daher nach **denselben 6 Qualitätsmaßstäben** bewertet:
 | **K3: Numerik, Sensitivität & Stabilität** | 15 % | Wurde die Wahl von Integrator und Schrittweite begründet? Werden CFL-Bedingungen, Butcher-Tableaus oder Stabilitätsgebiete eingehalten? Bleibt das System bei Parametervariation stabil? |
 | **K4: User Experience (UX), Interaktivität & Game Dynamics** | 15 % | Reagiert die Simulation flüssig ($\ge 30\,\text{FPS}$) und intuitiv auf Benutzereingaben? Stimmt die Spiel-/Anlagenmechanik mit den DGLs überein? Sind Parameter über UI-Regler im Betrieb stufenlos verstellbar? |
 | **K5: Recherchekompetenz & API-Integration** | 10 % | Wie selbstständig und sauber wurden externe Bibliotheken (ScottPlot 5, SharpGL, Math.NET, MSAGL) via NuGet recherchiert und integriert? Wurden veraltete APIs vermieden und Dokumentationen verstanden? |
-| **K6: Mündliche Verteidigung (Oral Defense) & KI-Transparenz** | 20 % | Kann das Team jede Zeile Code erklären? Gelingt die Live-Modifikation mechatronischer Parameter im Kolloquium? Wurde der KI-Einsatz im AI-Disclosure-Bericht transparent und kritisch reflektiert? |
+| **K6: Testabdeckung, Performance & Verifikation** | 15 % (Portfolio) | Liegen automatisierte MSTests vor? Werden Grenzfälle numerisch validiert? Ist der Zeitschritt frei von Heap-Allokationen? Ist die Git-Historie nachvollziehbar? |
 
 ---
 
 ### 4.3 Leitfaden zur Unterscheidung: „KI-Animation“ vs. „Echte Numerische Simulation“
 
-Im Rahmen der Laborabnahmen und des Abschlusskolloquiums führt die Lehrperson gezielte **Prüfmethoden** durch, um rein optische KI-Tricks von echten numerischen Physikmodellen zu unterscheiden:
+Im Rahmen der Laborabnahmen und des Video-Reviews führt die Lehrperson gezielte **Prüfmethoden** durch, um rein optische KI-Tricks von echten numerischen Physikmodellen zu unterscheiden:
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -603,15 +593,15 @@ Bewertungsstufen:
 * **[1] Ausreichend:** Schwierigkeiten beim Einbinden externer Pakete; redundante Hilfsklassen wurden manuell nachgebaut, obwohl Standardbibliotheken verfügbar gewesen wären.
 * **[0] Nicht genügend:** Völlig fehlerhafte Paketkonfiguration; Projekt lässt sich auf Standard-Rechnern nicht fehlerfrei restoren/bauen; unkritische Nutzung fehlerhafter Dritthersteller-Snippets.
 
-#### K6: Mündliche Verteidigung (Oral Defense) & KI-Transparenz (Gewicht: 20 %)
-* **[4] Exzellent:** Souveräne intellektuelle Beherrschung:
-  1. *Code-Durchdringung:* Beide Teammitglieder können jede Zeile, jede Schleife und jedes numerische Verfahren präzise erklären.
-  2. *Live-Stresstest:* Auf Aufforderung der Prüfenden modifiziert das Team innerhalb von 3 Minuten Parameter oder baut eine Störgröße ein und interpretiert das Ergebnis im Diagramm sofort korrekt.
-  3. *AI Disclosure:* Vollständige, ehrliche Dokumentation der genutzten KI-Prompts mit kritischer Reflexion über mindestens zwei Fälle, in denen die KI fehlerhaften Code vorgeschlagen hat und wie dieser korrigiert wurde.
-* **[3] Gut:** Erklärt den Großteil des Codes sicher. Live-Parameteränderung gelingt mit minimaler Hilfestellung. KI-Einsatz transparent deklariert.
-* **[2] Befriedigend:** Grundverständnis vorhanden, aber bei komplexen KI-generierten Konstrukten wird gezögert. Live-Modifikation dauert länger.
-* **[1] Ausreichend:** Große Unsicherheit. Kann Standardabläufe erklären, offenbart aber deutliche Wissenslücken bei von der KI generierten Codeblöcken.
-* **[0] Nicht genügend (K.O.-Kriterium):** Kann fundamentale Codeabschnitte nicht erklären; reagiert auf Fragen mit *„Das hat Cursor/Copilot so generiert, ich weiß nicht, was das tut“*; scheitert am Live-Stresstest; Verschleierung der KI-Nutzung.
+#### K6: Testabdeckung, Performance & Verifikation (Gewicht: 15 % des Portfolios)
+* **[4] Exzellent:** Vollständige und belastbare automatisierte Verifikation:
+  1. *Automatisierte Tests:* Saubere MSTest-Suite pro Modul, die physikalische Invarianten (Energieerhaltung, Massenerhaltung, Symmetrie) und analytische Grenzfalllösungen mit $e_{\text{rel}} < 1\,\%$ verifiziert.
+  2. *Allokationsfreiheit:* Zeitkritische Schleifen (`CalculateDerivatives`, FDM-Laplace-Stern, Matrix-Vektor-Updates) laufen vollständig ohne Heap-Allokationen (`new` in der Schleife); Null-GC-Druck im stationären Betrieb.
+  3. *Git-Historie & AI-Disclosure:* Nachvollziehbare, kontinuierliche Commits beider Partner; vollständiges AI-Disclosure-Statement mit kritischer Dokumentation von behobenen KI-Fehlern.
+* **[3] Gut:** Aussagekräftige MSTests vorhanden; Grenzfälle größtenteils abgedeckt; Zeitschleifen weitgehend allokationsfrei; saubere Git-Historie.
+* **[2] Befriedigend:** Elementare Unittests vorhanden, prüfen jedoch nur Trivialfälle; gelegentliche Allokationen in der Schleife; AI-Disclosure unvollständig.
+* **[1] Ausreichend:** Nur minimale Tests; keine Prüfung von Invarianten; spürbare GC-Pausen; unstrukturierte Git-Historie.
+* **[0] Nicht genügend (K.O.-Kriterium):** Keine Tests vorhanden; Code kompiliert nicht oder stürzt ab; Verschleierung der KI-Nutzung.
 
 ---
 
@@ -693,12 +683,12 @@ In Säule 2b wird die aktive Rolle als kritischer, konstruktiver Reviewer währe
 
 Die Leistungsbeurteilung erfolgt gemäß der offiziellen Notenskala der FH Oberösterreich:
 
-$$\text{Gesamtprozent } P = 0{,}30 \cdot P_{\text{MCQ}} + 0{,}15 \cdot P_{\text{Showcase}} + 0{,}15 \cdot P_{\text{Plenum}} + 0{,}40 \cdot P_{\text{Projekt}}$$
+$\text{Gesamtprozent } P = 0{,}40 \cdot P_{\text{MCQ}} + 0{,}30 \cdot P_{\text{Portfolio}} + 0{,}15 \cdot P_{\text{Showcase}} + 0{,}15 \cdot P_{\text{Plenum}}$
 
 wobei sich $P_{\text{MCQ}}$ als arithmetisches Mittel aus den 4 Moodle-Tests berechnet:
-$$P_{\text{MCQ}} = \frac{1}{4} \sum_{i=1}^{4} P_{\text{Quiz}, i}$$
-und sich Säule 2 aus den 4 Meilenstein-Showcases ($P_{\text{Showcase}} = \frac{1}{4}\sum_{k=1}^4 P_{\text{Meilenstein}, k}$) und der semesterbegleitenden Plenumsbeteiligung ($P_{\text{Plenum}}$) zusammensetzt:
-$$P_{\text{Übung}} = 0{,}50 \cdot P_{\text{Showcase}} + 0{,}50 \cdot P_{\text{Plenum}}$$
+$P_{\text{MCQ}} = \frac{1}{4} \sum_{i=1}^{4} P_{\text{Quiz}, i}$
+und sich Säule 2 aus dem C#-Code-Portfolio ($P_{\text{Portfolio}}$), den 4 Meilenstein-Showcases ($P_{\text{Showcase}} = \frac{1}{4}\sum_{k=1}^4 P_{\text{Meilenstein}, k}$) und der semesterbegleitenden Plenumsbeteiligung ($P_{\text{Plenum}}$) zusammensetzt:
+$P_{\text{Praxis}} = \frac{0{,}30 \cdot P_{\text{Portfolio}} + 0{,}15 \cdot P_{\text{Showcase}} + 0{,}15 \cdot P_{\text{Plenum}}}{0{,}60}$
 
 | Note | Bezeichnung | Prozentbereich | Definition nach FH OÖ Standard |
 | :---: | :--- | :---: | :--- |
@@ -714,18 +704,18 @@ $$P_{\text{Übung}} = 0{,}50 \cdot P_{\text{Showcase}} + 0{,}50 \cdot P_{\text{P
 
 Um zu verhindern, dass Studierende Säulen oder Teilkomponenten vollständig abwählen, gelten folgende **strikte Mindesterfordernisse**:
 
-1. **Teilbereichs-Hürde:** In **jeder der drei Teilsäulen** müssen mindestens **50 % der erreichbaren Punkte** erzielt werden:
-   * **Säule 1 (Theorie):** $P_{\text{MCQ}} \ge 50\,\%$ (mind. 15 von 30 Säulenpunkten)
-   * **Säule 2 (Übung & Diskurs):** $P_{\text{Übung}} \ge 50\,\%$ (mind. 15 von 30 Säulenpunkten), wobei in **beiden Teilbereichen** von Säule 2 jeweils die Mindestgrenze von 50 % gilt:
+1. **Teilbereichs-Hürde:** In **beiden Hauptsäulen** müssen mindestens **50 % der erreichbaren Punkte** erzielt werden:
+   * **Säule 1 (Theorie & Numerik):** $P_{\text{MCQ}} \ge 50\,\%$ (mind. 20 von 40 Säulenpunkten).
+   * **Säule 2 (Praxis, Portfolio & Diskurs):** $P_{\text{Praxis}} \ge 50\,\%$ (mind. 30 von 60 Säulenpunkten), wobei in **allen drei Teilbereichen** von Säule 2 jeweils die Mindestgrenze von 50 % gilt:
+     - $P_{\text{Portfolio}} \ge 50\,\%$ (mind. 15 von 30 Prozentpunkten für die 10 C#-Übungsmodule)
      - $P_{\text{Showcase}} \ge 50\,\%$ (mind. 7,5 von 15 Prozentpunkten für Live-Demo, Code-Erklärung & Stresstests)
      - $P_{\text{Plenum}} \ge 50\,\%$ (mind. 7,5 von 15 Prozentpunkten für aktive Fachfragen & Peer-Review)
-     - *Ein Ausgleich von vollständiger Plenums-Passivität durch die Meilenstein-Abgabe ist didaktisch ausgeschlossen.*
-   * **Säule 3 (Abschlussprojekt):** $P_{\text{Projekt}} \ge 50\,\%$ (mind. 20 von 40 Säulenpunkten)
-   * *Wird in einer Teilsäule bzw. Teilbereichshürde weniger als 50 % erreicht, wird die Lehrveranstaltung unabhängig von der rechnerischen Gesamtsumme mit „Nicht genügend“ (5) beurteilt.*
+     - *Ein Ausgleich von vollständiger Plenums-Passivität oder fehlenden Portfolio-Abgaben durch die jeweils anderen Bereiche ist didaktisch ausgeschlossen.*
+   * *Wird in einer Säule bzw. Teilbereichshürde weniger als 50 % erreicht, wird die Lehrveranstaltung unabhängig von der rechnerischen Gesamtsumme mit „Nicht genügend“ (5) beurteilt.*
 2. **Anwesenheitspflicht:** In den Labor- und Übungseinheiten gilt die studiengangsübliche Anwesenheitspflicht von **mindestens 80 %**.
 3. **Die K.O.-Kriterien:**
-   * **Reine KI-Animation statt Simulation:** Wird im Projekt oder in Meilensteinen eine Schein-Simulation ohne DGLs/LGS abgegeben (siehe Abschnitt 1.2 und 4.2), wird das Kriterium K2 mit 0 Punkten bewertet und das Projekt kann nicht positiv beurteilt werden.
-   * **Totalausfall in der mündlichen Verteidigung oder Verweigerung des Live-Parameter-Stresstests:** Kann ein Studierender fundamentale Teile seines Codes nicht erklären, wird der Verdacht erhärtet, dass der Code weder verstanden noch geistig beherrscht wird (Totalausfall in Kriterium K6/2a.2), oder wird die Durchführung des Live-Parameter-Stresstests verweigert, wird der betreffende Prüfungsteil mit **0 Punkten** bewertet. Bei schwerwiegender Leistungsverweigerung greift § 14 der Prüfungsordnung (Erschleichung von Leistungen).
+   * **Reine KI-Animation statt Simulation:** Wird im Portfolio oder in Meilensteinen eine Schein-Simulation ohne DGLs/LGS abgegeben (siehe Abschnitt 1.2 und 4.2), wird das Kriterium K2 mit 0 Punkten bewertet und das Projekt kann nicht positiv beurteilt werden.
+   * **Totalausfall bei der Code-Erklärung oder Verweigerung des Live-Parameter-Stresstests:** Kann ein Studierender fundamentale Teile seines Codes nicht erklären, wird der Verdacht erhärtet, dass der Code weder verstanden noch geistig beherrscht wird (Totalausfall in Kriterium 2a.2/K6), oder wird die Durchführung des Live-Parameter-Stresstests verweigert, wird der betreffende Prüfungsteil mit **0 Punkten** bewertet. Bei schwerwiegender Leistungsverweigerung greift § 14 der Prüfungsordnung (Erschleichung von Leistungen).
 
 ---
 
@@ -754,7 +744,7 @@ Für die Lehrveranstaltung *Systemsimulation / Digitaler Zwilling* gilt der Grun
 * Ausreden der Art *„Das hat ChatGPT so vorgeschlagen“*, *„Ich wusste nicht, was dieser Algorithmus macht“* oder *„Der Bug stammt aus dem Copilot-Autocomplete“* werden als **fachliches Unvermögen** gewertet und führen zu sofortigem Punkteabzug in den Kriterien K2 und K6.
 
 #### 2. Deklarationspflicht (AI Disclosure Statement)
-Jeder Meilenstein- und Projektabgabe ist eine schriftliche Erklärung beizufügen:
+Jeder Portfolio- und Meilenstein-Abgabe ist eine schriftliche Erklärung beizufügen:
 * Verwendete KI-Tools und Modelle (z. B. *Cursor Version 0.42 mit Claude 3.5 Sonnet*, *GitHub Copilot Chat*, *ChatGPT-4o*).
 * Beschreibung des Einsatzbereichs (z. B. *„Erstellung des WPF-XAML-Layouts und Scaffolding der S-Function-Klassenstruktur; numerische DGLs, Stabilitätsanalyse und Anti-Windup wurden manuell implementiert und validiert“*).
 * **Kritische Reflexion:** Kurze Dokumentation von mindestens zwei Fällen, in denen die KI fehlerhaften, unphysikalischen oder instabilen Code vorgeschlagen hat, und wie dieser vom Team analysiert und korrigiert wurde.
@@ -766,10 +756,10 @@ Jeder Meilenstein- und Projektabgabe ist eine schriftliche Erklärung beizufüge
   * Nutzung von KI-Tools zum Refactoring, zur Code-Optimierung und zur Fehlersuche.
 * **Täuschungshandlungen (Note 5 & Disziplinarverfahren):**
   * Unerlaubte Absprachen oder Nutzung fremder Hilfe während der Moodle-Präsenztests (Säule 1).
-  * Einreichen von Projekten Dritter (Plagiat von Studierenden früherer Semester).
+  * Einreichen von Portfolio-Lösungen Dritter (Plagiat von Studierenden früherer Semester).
   * Fälschen von Validierungsplots (z. B. Zeichnen von gefakten Sinuskurven in `ScottPlot` anstelle echter Integrator-Ausgaben, um Stabilität vorzutäuschen).
   * Abgabe einer reinen Keyframe-Animation unter Vortäuschung einer numerischen Physik-Simulation.
-  * Unfähigkeit, in der mündlichen Verteidigung nachzuweisen, dass man geistiger Urheber und Beherrscher der eingereichten Lösung ist.
+  * Unfähigkeit, in der Code-Erklärung oder im Live-Showcase nachzuweisen, dass man geistiger Urheber und Beherrscher der eingereichten Lösung ist.
 
 ---
 
@@ -778,5 +768,5 @@ Jeder Meilenstein- und Projektabgabe ist eine schriftliche Erklärung beizufüge
 Das vorliegende Assessment-Konzept harmonisiert die Anforderungen industrieller Automatisierungstechnik mit der hohen Motivation interaktiver Simulationsspiele im Zeitalter des Vibe Coding:
 
 1. **Didaktische Kongruenz:** Der Mix aus Ingenieurstechnik und Simulationsspielen fordert identische mathematisch-numerische Kernkompetenzen (Erhaltungssätze, Diskretisierung, numerische Stabilität, Performance). Die Bewertungsrubrik stellt sicher, dass hinter jeder ansprechenden Visualisierung eine echte, belastbare Physik-Engine steht.
-2. **Manipulationssicherheit durch Triangulation:** Durch die Kombination aus manipuliersicheren Moodle-Tests (Theorie), Meilenstein-Showcases mit Live-Parameter-Stresstests (Handwerk & Auskunft), kritischer Plenumsbeteiligung (Peer-Review- und Fragenkultur) sowie mündlicher Projektverteidigung (Systemsynthese) ist ein Bestehen durch reines „Prompt-Glück“ mathematisch und praktisch ausgeschlossen.
+2. **Manipulationssicherheit durch Triangulation:** Durch die Kombination aus manipuliersicheren Moodle-Tests (Theorie), Meilenstein-Showcases mit Live-Parameter-Stresstests (Handwerk & Auskunft), kritischer Plenumsbeteiligung (Peer-Review- und Fragenkultur) sowie kontinuierlichem C#-Code-Portfolio-Review (10 Meilensteine) ist ein Bestehen durch reines „Prompt-Glück“ mathematisch und praktisch ausgeschlossen.
 3. **Zukunftsfähigkeit, Diskurs & Recherchekompetenz:** Studierende lernen, KI und Online-Ressourcen professionell als Produktivitätsmultiplikator einzusetzen, behalten jedoch die kritische, prüfende und validierende Rolle des verantwortlichen Ingenieurs – sowohl für den eigenen Code als auch im fachlichen Peer-Review fremder Simulationsmodelle.

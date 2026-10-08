@@ -1,9 +1,9 @@
-# Modulkonzept: Übungskatalog & Abschlussprojekt („Digital Twin & Simulation Game Challenge“)
+# Modulkonzept: Übungskatalog & C#-Simulations-Portfolio (Track A Industrie & Track B Game)
 ## Fachhochschule Oberösterreich – Campus Wels | Studiengang Automatisierungstechnik
 ### Lehrveranstaltung: Systemsimulation / Digitaler Zwilling
 
 **Dokument-ID:** `Konzept/02_Uebungskatalog_und_Abschlussprojekt.md`  
-**Geltungsbereich:** Vorlesungsbegleitende Laborübungen (Einheiten 01 bis 10) und semesterbegleitendes Abschlussprojekt  
+**Geltungsbereich:** Vorlesungsbegleitende Laborübungen (Einheiten 01 bis 10) und 10-teiliges C#-Simulations-Portfolio  
 **Referenzdokumente:** `GEMINI.md`, `Planung/Plan_01_Notationsstandard_und_Harmonisierung.md`, `Planung/03_Plan_Softwarearchitektur_und_Code.md`  
 **Zielgruppe:** Studierende im 5. Semester B.Sc. Automatisierungstechnik, Dozenten und Laborleiter  
 **Technologie-Stack:** C# 12 / .NET 8 & .NET 10, WPF, ScottPlot 5, SharpGL, Math.NET Numerics, MSAGL, Task Parallel Library (TPL)
@@ -30,21 +30,11 @@
    - [Einheit 08: „Segway-Balancer vs. SpaceX Falcon Hop“ (S-Function, RK4 & PID Anti-Windup)](#einheit-08-segway-balancer-vs-spacex-falcon-hop-s-function-rk4--pid-anti-windup)
    - [Einheit 09: „Fertigungslogistik vs. Freizeitpark-Express-Pass“ (Diskrete Ereignissimulation DES)](#einheit-09-fertigungslogistik-vs-freizeitpark-express-pass-diskrete-ereignissimulation-des)
    - [Einheit 10: „Pneumatischer Taktvorschub vs. Flipperautomat Pinball“ (Hybride Systeme & Zero-Crossing)](#einheit-10-pneumatischer-taktvorschub-vs-flipperautomat-pinball-hybride-systeme--zero-crossing)
-3. [Das große Abschlussprojekt: „Digital Twin & Simulation Game Challenge“](#3-das-große-abschlussprojekt-digital-twin--simulation-game-challenge)
+3. [Das 10-teilige C#-Simulations-Portfolio (Säule 2a, 30 %)](#3-das-10-teilige-c-simulations-portfolio-säule-2a-30-)
    - 3.1 Zielsetzung & didaktischer Anspruch
-   - 3.2 Verbindliche Kernkriterien (Die 5 Säulen des digitalen Zwillings)
-   - 3.3 Acht Projektszenarien zur Auswahl (Industrie-Zwillinge & Simulationsspiele)
-     - *Projekt A: Hochregallager-Kran (RBG) mit aktiver Schwingungskompensation*
-     - *Projekt B: Thermo-elektrischer Mehrzonen-Extruder für Hochleistungskunststoffe*
-     - *Projekt C: 3-Achs-Portalroboter mit Servoantrieben & Trajektorienoptimierung*
-     - *Projekt D: Flexible Fertigungszelle (FMS) mit AGV-Flotte & Pufferlogistik*
-     - *Projekt E: Pneumatisch getaktete Sortier- und Vereinzelungsanlage*
-     - *Projekt F (Simulation Game): „Apollo Lunar Lander 3D“ (3D-Kollision & Schubvektor)*
-     - *Projekt G (Simulation Game): „Pinball Arcade / Pachinko Physics Engine“ (Hybride Mechanik)*
-     - *Projekt H (Simulation Game): „Autonomous Drone Obstacle Challenge“ (6-DOF Quadrocopter & PID)*
-   - 3.4 Software-Architekturrahmen („Goldene Regel der Simulationsarchitektur“)
-   - 3.5 Meilenstein- und Abgabeplan
-   - 3.6 Bewertungsrubrik nach Hochschulstandard
+   - 3.2 Software-Architekturrahmen („Goldene Regel der Simulationsarchitektur“)
+   - 3.3 Die 4 gebündelten Labor-Meilensteine
+   - 3.4 Bewertungsrubrik für das C#-Code-Portfolio
 4. [Abnahme-, KI- und Prüfungsrichtlinien](#4-abnahme--ki--und-prüfungsrichtlinien)
 
 ---
@@ -62,11 +52,11 @@ Die Lehrveranstaltung *Systemsimulation / Digitaler Zwilling* am Campus Wels der
 flowchart LR
     VL["Theoretische Fundierung\n(Vorlesung, 90 min)\nMathematik, Physik, DGL"] --> Sprint["Stufe A: In-Class Sprint\n(Labor, 60 min)\nKernalgorithmus, C# Engine"]
     Sprint --> Ext["Stufe B: Homework Extension\n(Teamarbeit, 1 Woche)\nGamification, UI, Benchmarks"]
-    Ext --> Twin["Digital Twin Challenge\n(Semesterprojekt)\nIndustrie-Zwilling & Sim-Games"]
+    Ext --> Portfolio["C#-Simulations-Portfolio\n(10 Module, 30 %)\nIndustrie-Zwillinge & Sim-Games"]
     style VL fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
     style Sprint fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
     style Ext fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
-    style Twin fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+    style Portfolio fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
 ```
 
 > [!TIP]
@@ -137,7 +127,7 @@ Alle anderen Studierenden im Raum sind ausdrücklich **keine passiven Zuschauer*
   - *Physikalischer Realismus vs. Fake-Animation:* „Löst die Anwendung tatsächlich das DGL-System oder wird eine vorberechnete Kurve/Spline abgefahren?“
   - *Code-Architektur & Performance:* „Werden im Render-Loop Objekte auf dem Managed Heap allokiert? Wie ist die Thread-Sicherheit bei Datenübergaben gelöst?“
   - *Grenzfall-Konsistenz:* „Entspricht das numerische Ergebnis im stationären Grenzfall exakt der theoretischen Formel?“
-- **Didaktischer Mehrwert:** Konstruktive, fachlich anspruchsvolle Fragen aus dem Plenum fließen positiv in die mündliche Mitarbeit ein. Für die vortragenden Teams ist dieses Format die ideale Vorbereitung auf das finale Kolloquium im Meilenstein M4.
+- **Didaktischer Mehrwert:** Konstruktive, fachlich anspruchsvolle Fragen aus dem Plenum fließen positiv in die mündliche Mitarbeit ein. Für die vortragenden Teams ist dieses Format die ideale Vorbereitung auf die spätere Video-Präsentation und die souveräne Diskussion mechatronischer Systeme.
 
 ---
 
@@ -994,201 +984,71 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-## 3. Das große Abschlussprojekt: „Digital Twin & Simulation Game Challenge“
+## 3. Das 10-teilige C#-Simulations-Portfolio (Säule 2a, 30 %)
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│             DIGITAL TWIN & SIMULATION GAME CHALLENGE                   │
+│               DAS 10-TEILIGE C#-SIMULATIONSPORTFOLIO                   │
 │                                                                        │
 │   ┌────────────────────┐   ┌────────────────────┐   ┌──────────────┐   │
-│   │ Industrielles      │   │ Multithreaded      │   │ Responsive   │   │
-│   │ Physik-/Logik-     │──>│ Simulations-Engine │──>│ 2D/3D-WPF    │   │
-│   │ Modell (DGL / DES) │   │ (TPL, Ringpuffer)  │   │ Visualisier. │   │
+│   │ 10 Wöchentliche    │   │ Multithreaded      │   │ Responsive   │   │
+│   │ Aufgabenblätter    │──>│ Simulations-Engine │──>│ 2D/3D-WPF    │   │
+│   │ (Track A oder B)   │   │ (TPL, Ringpuffer)  │   │ Dashboards   │   │
 │   └────────────────────┘   └────────────────────┘   └──────────────┘   │
 │             │                        │                      │          │
 │             ▼                        ▼                      ▼          │
-│   Mathematische Validierung & Analytischer Grenzfallabgleich           │
+│   Mathematische Validierung, MSTests & Analytischer Grenzfallabgleich  │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### 3.1 Zielsetzung & didaktischer Anspruch
 
-Das Abschlussprojekt führt alle im Semester erlernten Kompetenzen zu einem anspruchsvollen Softwareprodukt zusammen. In 2er-Teams konzipieren, modellieren, implementieren und validieren die Studierenden einen voll funktionsfähigen **Digitalen Zwilling** einer komplexen Maschine oder ein **hochpräzises physikbasiertes Simulationsspiel**.
+Anstelle eines künstlich aufgesetzten Einzel-Abschlussprojekts bildet das **kontinuierlich aufgebaute C#-Simulations-Portfolio** aus den 10 Terminen den zentralen praktischen Leistungsnachweis der Lehrveranstaltung. In 2er-Teams erarbeiten die Studierenden Woche für Woche eine vollwertige, lauffähige Simulationskomponente im gewählten Track (Track A Industrie ODER Track B Game).
 
-Das Projekt demonstriert den realen Mehrwert mechatronischer Systemsimulation:
-- Virtuelle Inbetriebnahme (VIBN),
-- Vorhersage dynamischen Systemverhaltens vor dem Bau physischer Prototypen,
-- Echtzeit-Telemetrie und Predictive Maintenance.
-
----
-
-### 3.2 Verbindliche Kernkriterien (Die 5 Säulen des digitalen Zwillings)
-
-Jedes Projekt muss ausnahmslos folgende fünf Kernkriterien erfüllen:
-
-1. **Nicht-triviales Physik-/Logik-Modell:**
-   - Mindestens ein gekoppeltes kontinuierliches DGL-System (Ordnung $n \ge 3$), oder ein diskretes Ereignismodell (DES mit stochastischen Prozessen), oder ein hybrides Modell mit Zero-Crossing-Events.
-2. **Saubere Simulationsarchitektur nach der „Goldenen Regel“:**
-   - Vollständige Entkopplung von Physik-Engine und Benutzeroberfläche (WPF/MVVM).
-   - Kein einziger Verweis auf `System.Windows` in den Modellklassen.
-3. **Multithreaded High-Performance Execution:**
-   - Asynchrone Ausführung des Solvers (`Task.Run`) mit sauberer `CancellationToken`-Unterstützung.
-   - Entkopplung der Datenübertragung über thread-sichere Ringpuffer (`CircularBuffer<T>`) oder lock-freie Snapshots.
-4. **Anspruchsvolle Visualisierung (2D oder 3D):**
-   - Echte interaktive Visualisierung über einfache Diagramme hinaus:
-     - *Entweder:* 3D-Visualisierung mit SharpGL (Szenengraph, hierarchische Kinematik, Orbit-Kamera, Beleuchtung),
-     - *Oder:* High-Performance 2D-Vektorgrafik (WPF Canvas mit geometrischen Transformationen) bzw. 2D-Pixel-Rendering (WriteableBitmap Heatmap).
-   - Ergänzt durch ein ScottPlot-5-Telemetriedashboard für Zustandsgrößen.
-5. **Mathematische Validierung & Verifikation:**
-   - Automatisierte Unit-Tests (`SimulationTests`).
-   - Abgleich gegen mindestens einen analytischen Grenzfall oder eine Referenzlösung mit exakter Angabe des relativen Fehlers.
+Das Portfolio demonstriert die gesamte mechatronische Simulationskette:
+- **T01–T03:** Grundlagen, Numerische Diskretisierung, 2D-Pixel-FDM und 2D-Vektorgrafik
+- **T04–T05:** Echtzeit-Telemetrie mit ScottPlot 5 und 3D-Computergrafik mit SharpGL
+- **T06–T07:** High-Performance Multithreading mit TPL und Statische FEM-Systeme mit Cholesky
+- **T08–T10:** Kontinuierliche DGL-Systeme (S-Functions, RK4), Diskrete Ereignissimulation (DES) und Hybride Systeme mit Zero-Crossing Bisektion
 
 ---
 
-### 3.3 Acht Projektszenarien zur Auswahl (Industrie-Zwillinge & Simulationsspiele)
+### 3.2 Software-Architekturrahmen („Goldene Regel der Simulationsarchitektur“)
 
-Die Teams wählen eines der folgenden Szenarien oder reichen einen gleichwertigen, durch den Dozenten genehmigten Eigenvorschlag ein:
+Alle Module des Portfolios müssen zwingend der **Goldenen Regel** folgen:
 
----
-
-#### Projekt A: Hochregallager-Kran (RBG) mit aktiver Schwingungskompensation
-- **Domäne:** Intralogistik, Mehrkörperdynamik, Schwingungsdämpfung, diskrete Materialfluss-Steuerung.
-- **Physik & Modell:** Gekoppeltes DGL-System des Kranträgers mit elastischem Seilpendel bei variabler Seillänge $L(t)$:
-  $$\ddot{\theta} = -\frac{g}{L}\sin\theta - \frac{2\dot{L}}{L}\dot{\theta} - \frac{\ddot{x}_{\text{Wagen}}}{L}\cos\theta - \frac{d_{\text{p}}}{m L^2}\dot{\theta}$$
-- **Steuerung & Regelung:** Trajektoriengenerierung mit Ruckbegrenzung (S-Kurve) und Input-Shaping-Filter zur aktiven Dämpfung des Lastpendelns.
-- **Visualisierung:** SharpGL 3D-Hochregal mit beweglichem Mast und schwingender Last + ScottPlot-Telemetrie.
-- **Validierung:** Grenzfall $\dot{L}=0, \sin\theta \approx \theta \implies \omega_0 = \sqrt{g/L}$.
-
----
-
-#### Projekt B: Thermo-elektrischer Mehrzonen-Extruder für Hochleistungskunststoffe
-- **Domäne:** Kunststofftechnik, Verfahrenstechnik, Wärmetransport (PDE), Kaskadenregelung.
-- **Physik & Modell:** 1D/2D-FDM-Modell der Konvektions-Diffusions-Gleichung mit Dissipationswärme der rotierenden Schnecke:
-  $$\frac{\partial T}{\partial t} = a \frac{\partial^2 T}{\partial z^2} - v_{\text{Förder}} \frac{\partial T}{\partial z} + \frac{\dot{q}_{\text{Heiz}} + \dot{q}_{\text{Dissipation}}}{\rho c_{\text{p}}}$$
-- **Steuerung & Regelung:** 4 getrennte PID-Zonenregler mit PWM-Heizbändern und Anti-Windup Clamping.
-- **Visualisierung:** Echtzeit-Heatmap des Extruderquerschnitts via `WriteableBitmap` + ScottPlot Temperaturkurven.
-- **Validierung:** Stationärer Grenzfall $t \to \infty$ ohne Transport ($v=0$): Linearer Temperaturabfall nach Fourier.
+1. **Strikte Entkopplung von Physik und UI:**
+   - Die Physik- und Numerik-Engines sind reine .NET-Klassenbibliotheken ohne jede Abhängigkeit von `System.Windows` oder WPF.
+   - Der Simulations-Loop läuft in einem dedizierten Worker-Thread (`Task.Run` / `CancellationTokenSource`).
+2. **Allokationsfreie Zeitschrittberechnung:**
+   - Im Simulations-Loop (`Step()`) dürfen keine Heap-Allokationen (`new`) stattfinden (GC-Freiheit).
+   - Zur Datenübergabe an die GUI dienen vorallokierte Ringpuffer oder atomare Snapshots.
+3. **Automatisierte Testbarkeit:**
+   - Jedes Modul enthält automatisierte MSTest-Unit-Tests zur Absicherung analytischer Grenzfälle und Erhaltungssätze.
 
 ---
 
-#### Projekt C: 3-Achs-Portalroboter mit Servoantrieben & Trajektorienoptimierung
-- **Domäne:** Robotik, Motion Control, Mehrkörperkinematik, Aktorik.
-- **Physik & Modell:** 3 gekoppelte DC-Servomotoren 3. Ordnung (Strom, Drehzahl, Position) inklusive Stribeck-Reibung und Lastmassen.
-- **Steuerung & Regelung:** Kartesische Bahnplanung (Linear- und Zirkularsegmente) mit Ruckbegrenzung und Schleppfehlerüberwachung.
-- **Visualisierung:** SharpGL 3D-Portal mit beweglichen Achsenschlitten und Werkzeugbahn-Spur + ScottPlot Schleppfehler-Plot.
-- **Validierung:** Exakter Abgleich der Soll- und Ist-Positionen bei Leerlauf gegen analytische Bewegungsprofile.
+### 3.3 Die 4 gebündelten Labor-Meilensteine
 
----
+Die 10 Aufgaben werden über das Semester in 4 logischen Meilensteinen zur Zwischenabnahme und für die Showcases gebündelt:
 
-#### Projekt D: Flexible Fertigungszelle (FMS) mit AGV-Flotte & Pufferlogistik
-- **Domäne:** Produktionslogistik, Diskrete Ereignissimulation (DES), Agentenbasierte Modellierung.
-- **Physik & Modell:** DES-Event-Queue für Teileankünfte, Bearbeitungszeiten und Rüstvorgänge kombiniert mit 2D-Differentialantriebskinematik für 2 AGVs.
-- **Stochastik & Analyse:** Log-Normal-verteilte Fertigungszeiten, Ausfälle nach Weibull, Welford-Streaming für OEE-Kennzahlen.
-- **Visualisierung:** WPF-Canvas Draufsicht der Fabrikhalle mit dynamisch bewegten AGVs + ScottPlot Durchlaufzeit-Histogramme.
-- **Validierung:** Abgleich der Durchlaufzeiten gegen das analytische Jackson-Netzwerk.
-
----
-
-#### Projekt E: Pneumatisch getaktete Sortier- und Vereinzelungsanlage
-- **Domäne:** Montageautomatisierung, Fluidik, hybride Kontaktmechanik.
-- **Physik & Modell:** Thermofluiddynamik von 2 Zylinderkammern (subsonische/choked Gasströmung) gekoppelt mit elastischem Stoß (Zero-Crossing Bisektion) auf Werkstücke.
-- **Steuerung & Logik:** Lichtschranken-Triggerung, SPS-Taktsteuerung und Schrottteile-Ausschleusung.
-- **Visualisierung:** WPF-Canvas mit animiertem Pneumatikzylinder, Ventilstellungen und fallenden Werkstücken + ScottPlot Druckkurven.
-- **Validierung:** Stationäre Endkraft $F = p_{\text{Netz}} \cdot A_1$ und Impulserhaltung beim Stoß.
-
----
-
-#### Projekt F (Simulation Game): „Apollo Lunar Lander 3D“ (3D-Kollision & Schubvektor)
-- **Domäne:** Raumfahrt-Physik, Flugsimulation, Mechatronik, Gamification.
-- **Physik & Modell:** 3D-Starrkörperdynamik eines Mondlanders (Masseveränderung durch Treibstoff, Gravitation $g_{\text{Mond}} = 1{,}62\,\text{m/s}^2$). Kardanisch gelagertes Triebwerk mit 2-Achs-Schubvektorsteuerung.
-- **Hybride Ereignisse:** 3D-Terrain-Kollision der Landebeine via Zero-Crossing Bisektion. Elastisch-plastischer Kontakt mit Feder-Dämpfer-Beinen; Umkipp-Kriterium bei zu hoher Horizontalgeschwindigkeit.
-- **Visualisierung:** SharpGL 3D-Mondlandschaft mit schattiertem Lander, Partikel-Triebwerksstrahl und Cockpit-Head-Up-Display + ScottPlot-Telemetrie (Höhe, Treibstoff, Sinkrate).
-- **Validierung:** Raketengrundgleichung nach Ziolkowski ($\Delta v = I_{\text{sp}} g_0 \ln \frac{m_0}{m_{\text{end}}}$) als Unit-Test.
-
----
-
-#### Projekt G (Simulation Game): „Pinball Arcade / Pachinko Physics Engine“ (Hybride Mechanik)
-- **Domäne:** Gaming-Physik, Mehrkörper-Kontaktmechanik, Akustik/Sensorik.
-- **Physik & Modell:** Hybride 2D-Mehrkugelsimulation (Multiball) auf geneigtem Tisch mit Gravitationsbeschleunigung, viskoser Luftdämpfung und Rollreibung.
-- **Hybride Ereignisse:** Zero-Crossing-Kollisionspipeline mit Bisektion für bewegliche Flipperfinger, elastische Bumper (Energieimpuls), Slingshots, Fallziele und Rampen. Zeno-Vermeidung für ruhende Kugeln im Auswurfkanal.
-- **Visualisierung:** WPF Canvas mit flüssigen Vektoranpassungen, Lichteffekten bei Treffern + ScottPlot Punktestatistik und Highscore-Welford-Verteilung.
-- **Validierung:** Impuls- und Energieerhaltung bei vollkommen elastischem Stoß zweier identischer Kugeln.
-
----
-
-#### Projekt H (Simulation Game): „Autonomous Drone Obstacle Challenge“ (6-DOF Quadrocopter & PID)
-- **Domäne:** Autonome Flugroboter, Navigation, Mehrgrößenregelung.
-- **Physik & Modell:** 6-DOF Starrkörper-Dynamik eines Quadrocopters (Newton-Euler-Gleichungen mit 4 Rotor-Auftriebskräften und Reaktionsmomenten). Aerodynamischer Widerstand und stochastische Windböen.
-- **Regelung:** Kaskadierter PID-Regler (Positionsregler $\to$ Lageregler für Roll/Nick/Gier $\to$ Motordrehzahlen) mit Anti-Windup Clamping.
-- **Visualisierung:** SharpGL 3D-Hindernisparcours (Tore, Säulen) mit bewegtem Drohnenmodell und Trail-Trajektorie + ScottPlot für Motorströme, Neigungswinkel und Position.
-- **Validierung:** Analytische Schwebeflug-Bedingung ($4 \cdot F_{\text{Rotor}} = m \cdot g$) und Frequenzanalyse der geschlossenen Lageregelung.
-
----
-
-### 3.4 Software-Architekturrahmen („Goldene Regel der Simulationsarchitektur“)
-
-Jedes Projekt muss folgende Schichtenarchitektur strikt einhalten:
-
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                   GUI- & Primitives-Schicht (WPF)                      │
-│   MainWindow.xaml / UserControls / Views                              │
-│   ├── ScottPlot.WpfPlot (Echtzeit-Telemetrie & Dashboard)              │
-│   ├── SharpGL.OpenGLControl (3D-Rendering & Szenengraph)               │
-│   └── WPF Canvas / WriteableBitmap (2D-Visualisierung)                │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ DataBinding / INotifyPropertyChanged
-┌───────────────────────────────────▼────────────────────────────────────┐
-│                        ViewModel-Schicht (MVVM)                        │
-│   MainViewModel.cs                                                     │
-│   ├── Start/Pause/Stop/Reset Commands                                  │
-│   ├── DispatcherTimer / Render-Loop (z.B. 30–60 Hz UI-Aktualisierung)  │
-│   └── Thread-sicherer Austausch via unveränderliche DTO-Snapshots      │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ IProgress<SimulationTelemetry> / RingBuffer
-┌───────────────────────────────────▼────────────────────────────────────┐
-│                    Simulations-Engine & Worker-Thread                  │
-│   SimulationHost.cs (Task.Run / CancellationToken)                     │
-│   ├── Numerischer Solver (RK4, Heun, Euler, EventQueue)               │
-│   ├── Schrittweiten- & Zero-Crossing-Bisektions-Controller             │
-│   └── Performance-Optimierung (Parallel.For, speicherallokationsfrei)  │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Direkte Aufrufe (Pure Interfaces)
-┌───────────────────────────────────▼────────────────────────────────────┐
-│                     Physik- & Domänen-Modell                           │
-│   (Reine .NET Standard / C# Klassen - Absolut GUI-unabhängig!)         │
-│   ├── IContinuousModel / IDiscreteModel / IHybridModel                 │
-│   ├── Zustandsvektor x, Ableitungsvektor f(t, x, u)                   │
-│   └── Physikalische Parameter & Konstanten                             │
-└────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-### 3.5 Meilenstein- und Abgabeplan
-
-Das Abschlussprojekt erstreckt sich semesterbegleitend über 14 Wochen:
-
-| Meilenstein | Semesterwoche | Liefergegenstand & Teilleistung | Feedback & Bewertung |
+| Meilenstein | Fälligkeit | Inhalt & Fokus | Prüfungsmodus |
 | :--- | :---: | :--- | :--- |
-| **M1: Proposal & Konzept** | Woche 04 | Schriftliches Exposé (2–3 Seiten Markdown): Projektauswahl, Systemabgrenzung, Skizze der DGLn/Events, GUI-Mockup. | Freigabe durch Dozenten (Go / Re-Scope) |
-| **M2: Physikmodell & Tests** | Woche 08 | Lauffähige reine Physik-Engine mit automatisierten Unit-Tests (`SimulationTests`), Validierung des analytischen Grenzfalls. | 25 % der Projektnote (Zwischen-Review) |
-| **M3: Integration & GUI** | Woche 11 | Asynchrone Kopplung der Engine mit WPF-GUI, 2D/3D-Visualisierung und ScottPlot-Streaming. | 25 % der Projektnote (Alpha-Demo im Labor) |
-| **M4: Final Release & Präsentation** | Woche 14 | Vollständiges GitHub-Repository mit Quellcode, sauberer Dokumentation (`README.md`), Benchmark-Auswertung und 15-minütiger Live-Präsentation im Kolloquium. | 50 % der Projektnote (Abschlusskolloquium) |
+| **Meilenstein 1 (MS1)** | Termin 04 | **2D-Visualisierung & Simulation (T02/T03):** FDM-Wärmeleitung (`WriteableBitmap`) und CAD-Vektoren (`WPF Canvas`). | Showcase-Demo & Code-Inspection |
+| **Meilenstein 2 (MS2)** | Termin 07 | **Telemetrie & 3D-Grafik (T04/T05):** ScottPlot 5 Datenstreaming und SharpGL 3D-Szenengraph. | Showcase-Demo & Code-Inspection |
+| **Meilenstein 3 (MS3)** | Termin 09 | **High Performance & Statik (T06/T07):** TPL Parallel.For Speedup und Math.NET Cholesky-Fachwerklöser. | Showcase-Demo & Code-Inspection |
+| **Meilenstein 4 (MS4)** | Termin 10 | **Dynamische Systeme & Synthese (T08/T09/T10):** S-Functions RK4 Anti-Windup, DES Warteschlangen und Zero-Crossing Bisektion. | Showcase-Demo & Endabnahme |
 
 ---
 
-### 3.6 Bewertungsrubrik nach Hochschulstandard
-
-Die Bewertung des Abschlussprojekts erfolgt nach transparenten Kriterien (Total: 100 Punkte):
+### 3.4 Bewertungsrubrik für das C#-Code-Portfolio (Säule 2a, 30 %)
 
 | Dimension | Max. Pkt. | Hervorragend (100–90 %) | Gut (89–75 %) | Befriedigend / Genügend (74–50 %) | Nicht Genügend (< 50 %) |
 | :--- | :---: | :--- | :--- | :--- | :--- |
-| **1. Modellbildung & Numerik** | **25 P.** | Physikalisch exakte Herleitung; saubere Zustandsraum-/Event-Formulierung; adäquate Solver-Wahl (RK4, Zero-Crossing); keine instabilen Schrittweiten. | Modell vollständig; kleine Ungenauigkeiten bei Randbedingungen oder Näherungen; stabiler Solver. | Modell stark vereinfacht; unpassender Basissolver (z. B. naiver Euler ohne Begründung); gelegentliche numerische Drift. | Gravierende physikalische Modellfehler; divergierende Simulation; keine DGL-Konsistenz. |
-| **2. Softwarearchitektur & C#** | **25 P.** | Konsequente Einhaltung der „Goldenen Regel“; sauberes MVVM; kein UI-Lag; Worker-Thread mit `CancellationToken`; sauberes OOP/Interfaces. | Architektur sauber entkoppelt; MVVM weitgehend eingehalten; Multithreading korrekt, minimale Redundanzen. | Vermischung von Modell und UI in Teilbereichen; Blockieren des UI-Threads bei hoher Last; mangelhafte Kapselung. | Vollständiger Spaghetticode; Simulationsberechnung direkt in Event-Handlern des XAML-Codes; Abstürze. |
-| **3. Visualisierung & UI/UX** | **20 P.** | Herausragende 2D/3D-Grafik (SharpGL/Canvas); flüssiges ScottPlot-Dashboard; intuitive Steuerung; Echtzeit-Framerate ($\ge 30\,\text{FPS}$). | Gute grafische Repräsentation; flüssige Diagramme; funktionale Benutzeroberfläche; solide Steuerung. | Einfache Visualisierung ohne geometrische Details; gelegentliche Ruckler; unübersichtliche Parameter-Eingabe. | Mangelhafte Darstellung; unvollständige Achsen; fehlerhafte Koordinatentransformation; unbrauchbare UI. |
-| **4. Validierung & Testing** | **15 P.** | Systematische Unit-Tests mit xUnit/MSTest; exakter quantitativer Abgleich mit analytischem Grenzfall ($e_{\text{rel}} < 1\,\%$); Stabilitätsanalyse. | Plausible Validierung; Grenzfall erfolgreich nachgerechnet; grundlegende Unit-Tests vorhanden. | Nur oberflächlicher visueller Plausibilitätsabgleich; unvollständige Tests; keine Fehlerquantifizierung. | Keine Validierung; keine Unit-Tests; grobe Widersprüche zu analytischen Naturgesetzen ignoriert. |
-| **5. Dokumentation & Präsentation** | **15 P.** | Professionelles Markdown-Skriptum mit Diagrammen (Mermaid), Quellcode-Links, Konvergenzplots; souveräne, überzeugende Live-Demo im Kolloquium. | Vollständige Dokumentation; nachvollziehbarer Aufbau; gute Demonstration der Funktionen im Kolloquium. | Lückenhafte Dokumentation; unvollständige Setup-Instruktionen; unsichere Präsentation bei Fragen. | Keine Dokumentation vorhanden; Code nicht kompilierbar; Vorführung im Kolloquium schlägt fehl. |
+| **1. Modellbildung & Numerik** | **25 P.** | Physikalisch exakte Gleichungen; saubere Zustandsraum-Formulierung; korrekte Solver-Wahl (Euler, RK4, Cholesky, Bisektion); numerisch stabil. | Physik korrekt; kleinere Ungenauigkeiten bei Randbedingungen; Solver stabil. | Modell stark vereinfacht; unpassender Solver ohne Begründung; gelegentliche numerische Drift. | Gravierende physikalische Modellfehler; divergierende Simulation; keine DGL-Konsistenz. |
+| **2. Softwarearchitektur & C#** | **25 P.** | Konsequente Einhaltung der „Goldenen Regel“; sauberes MVVM; kein UI-Lag; TPL Worker-Thread; allokationsfreie Schleifen. | Architektur sauber entkoppelt; MVVM weitgehend eingehalten; Multithreading korrekt, minimale Redundanzen. | Vermischung von Modell und UI in Teilbereichen; gelegentliches Blockieren des UI-Threads; mangelhafte Kapselung. | Spaghetticode; Simulationsberechnung direkt in XAML-Event-Handlern; Abstürze. |
+| **3. Visualisierung & UI/UX** | **25 P.** | Flüssige Framerate ($\ge 30\,\text{FPS}$); präzise Koordinatentransformation (Welt $\leftrightarrow$ Screen); responsive Steuerung; klare Skalen und Einheiten. | Gute Visualisierung; funktionale Benutzeroberfläche; flüssige Diagramme; solide Steuerung. | Einfache Visualisierung ohne geometrische Details; gelegentliche Ruckler; unübersichtliche UI. | Mangelhafte Darstellung; fehlerhafte Koordinatentransformation; unbrauchbare Benutzeroberfläche. |
+| **4. Validierung & Tests** | **25 P.** | Systematische MSTest-Unit-Tests; exakter Abgleich gegen analytische Grenzfälle ($e_{\text{rel}} < 1\,\%$); Nachweis von Erhaltungssätzen. | Solide Validierung; Grenzfall nachgerechnet; grundlegende Unit-Tests vorhanden. | Nur visueller Plausibilitätsabgleich; unvollständige Tests; keine Fehlerquantifizierung. | Keine Validierung; keine Unit-Tests; grobe Widersprüche zu Naturgesetzen ignoriert. |
 
 #### Notenschlüssel (FH Oberösterreich)
 - **Sehr Gut (1):** $90\text{--}100$ Punkte
@@ -1203,9 +1063,9 @@ Die Bewertung des Abschlussprojekts erfolgt nach transparenten Kriterien (Total:
 
 1. **Vibe Coding & Deklaration von KI-Assistenten:**
    - Der Einsatz moderner KI-Werkzeuge (GitHub Copilot, Claude, ChatGPT, Gemini) ist ausdrücklich gestattet und wird als berufsrelevante Zukunftskompetenz gewertet.
-   - **Transparenzpflicht:** Im Projektbericht (`README.md`) muss ein eigener Abschnitt *„Declaration of Generative AI Usage“* enthalten sein. Dort sind die verwendeten Tools, exemplarische Prompts und kritisch reflektierte Korrekturen von KI-Halluzinationen darzulegen.
+   - **Transparenzpflicht:** Im Repository (`README.md`) muss ein eigener Abschnitt *„Declaration of Generative AI Usage“* enthalten sein. Dort sind die verwendeten Tools, exemplarische Prompts und kritisch reflektierte Korrekturen von KI-Halluzinationen darzulegen.
 2. **Plagiatsprüfung & Eigenleistung:**
-   - Jede Quellcodezeile muss von beiden Gruppenmitgliedern im Detail mathematisch und softwaretechnisch erklärt werden können. Im Kolloquium werden tiefergehende Fachfragen zum Solver und zur Thread-Synchronisation gestellt.
+   - Jede Quellcodezeile des Portfolios muss von beiden Gruppenmitgliedern im Detail mathematisch und softwaretechnisch erklärt werden können. In den Labor-Showcases und Tischabnahmen werden gezielte Code-Inspektionen und Live-Parameter-Stresstests durchgeführt.
 3. **Reproduzierbarkeit & Build:**
    - Die Lösung muss sich im Visual Studio 2022 / JetBrains Rider per Klick auf „Build Solution“ fehler- und warnungsfrei für .NET 8 / .NET 10 kompilieren lassen.
    - Alle externen Bibliotheken müssen ausschließlich als offizielle NuGet-Pakete eingebunden sein (`ScottPlot.WPF`, `SharpGL.WPF`, `MathNet.Numerics`, `AutomaticGraphLayout.WpfGraphControl`).
