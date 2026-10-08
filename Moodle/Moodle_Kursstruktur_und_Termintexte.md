@@ -9,6 +9,10 @@
 
 ### Allgemeiner Kurs-Kopfbereich (Willkommen & Organisation)
 
+![Kurs-Übersichtsbanner: Systemsimulation & Digitaler Zwilling](./Bilder/Kurs_Uebersicht.jpg)
+
+*(Hinweis für Kurs-Einstellungen: Das Kachel-Vorschaubild für das Moodle-Dashboard liegt unter `./Bilder/Kurs_Vorschau_Dashboard.jpg`)*
+
 **Herzlich willkommen zu Systemsimulation / Digitaler Zwilling!**
 
 In dieser Lehrveranstaltung erlernen Sie das mechatronische Modellieren, numerische Simulieren und performante Visualisieren dynamischer und statischer Systeme mit **C# und .NET 8**. Wir schlagen den Bogen vom mathematischen Differentialgleichungssystem bis zum interaktiven Digitalen Zwilling.
