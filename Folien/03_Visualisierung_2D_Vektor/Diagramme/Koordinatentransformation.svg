@@ -7,14 +7,17 @@
     <marker id="arrow-axis-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#004B96" />
     </marker>
-    <marker id="arrow-trans" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284C7" />
-    </marker>
     <marker id="arrow-dim" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
       <path d="M 0 2 L 6 5 L 0 8 z" fill="#D97706" />
     </marker>
     <marker id="arrow-dim-rev" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path d="M 6 2 L 0 5 L 6 8 z" fill="#D97706" />
+    </marker>
+    <marker id="arrow-dim-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 2 L 6 5 L 0 8 z" fill="#0284C7" />
+    </marker>
+    <marker id="arrow-dim-blue-rev" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 6 2 L 0 5 L 6 8 z" fill="#0284C7" />
     </marker>
     <marker id="arrow-margin" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
       <path d="M 0 2 L 6 5 L 0 8 z" fill="#64748B" />
@@ -32,15 +35,14 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     .panel-bg { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 10px; }
-    .panel-header-bg { fill: #F1F5F9; }
-    .title { font-size: 18px; font-weight: 700; fill: #004B96; }
-    .subtitle { font-size: 13px; fill: #64748B; font-weight: 500; }
+    .title { font-size: 17px; font-weight: 700; fill: #004B96; }
+    .subtitle { font-size: 12.5px; fill: #64748B; font-weight: 500; }
     .axis { stroke: #1E293B; stroke-width: 2; }
-    .axis-label { font-size: 14px; font-weight: 700; fill: #1E293B; }
+    .axis-label { font-size: 13.5px; font-weight: 700; fill: #1E293B; }
     .grid-line { stroke: #E2E8F0; stroke-width: 1; stroke-dasharray: 4,4; }
     .bbox { stroke: #D97706; stroke-width: 1.8; stroke-dasharray: 6,4; fill: rgba(245, 158, 11, 0.05); rx: 4px; }
     .canvas-bg { fill: #F8FAFC; stroke: #94A3B8; stroke-width: 1.5; }
-    .margin-zone { fill: rgba(226, 232, 240, 0.5); stroke: #94A3B8; stroke-width: 1; stroke-dasharray: 3,3; }
+    .margin-zone { fill: rgba(226, 232, 240, 0.4); stroke: #94A3B8; stroke-width: 1; stroke-dasharray: 3,3; }
     .truss-bar { stroke: #004B96; stroke-width: 3.5; stroke-linecap: round; }
     .truss-node { fill: #FFFFFF; stroke: #004B96; stroke-width: 2.5; }
     .point-highlight { fill: #EF4444; stroke: #FFFFFF; stroke-width: 2; }
@@ -58,204 +60,213 @@
   <!-- LINKE SPALTE: WELTKOORDINATENSYSTEM        -->
   <!-- ========================================== -->
   <g transform="translate(25, 20)">
-    <rect class="panel-bg" x="0" y="0" width="460" height="525" filter="url(#shadow)" />
+    <rect class="panel-bg" x="0" y="0" width="465" height="530" filter="url(#shadow)" />
     
     <!-- Header -->
-    <path d="M 0 10 Q 0 0 10 0 L 450 0 Q 460 0 460 10 L 460 48 L 0 48 Z" fill="#E2E8F0" />
+    <path d="M 0 10 Q 0 0 10 0 L 455 0 Q 465 0 465 10 L 465 48 L 0 48 Z" fill="#E2E8F0" />
     <circle cx="24" cy="24" r="12" fill="#004B96" />
     <text x="24" y="29" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
     <text class="title" x="48" y="24">Weltkoordinatensystem (Physik)</text>
-    <text class="subtitle" x="48" y="40">Kartesisch, kontinuierlich in Metern [m] • Y zeigt NACH OBEN</text>
+    <text class="subtitle" x="48" y="40">Kartesisch [m] • Y zeigt NACH OBEN</text>
 
-    <!-- Achsenkreuz (Ursprung ca. bei x=70, y=360) -->
     <!-- Grid -->
-    <line class="grid-line" x1="70" y1="360" x2="420" y2="360" />
-    <line class="grid-line" x1="70" y1="280" x2="420" y2="280" />
-    <line class="grid-line" x1="70" y1="200" x2="420" y2="200" />
-    <line class="grid-line" x1="70" y1="120" x2="420" y2="120" />
+    <line class="grid-line" x1="65" y1="350" x2="370" y2="350" />
+    <line class="grid-line" x1="65" y1="275" x2="370" y2="275" />
+    <line class="grid-line" x1="65" y1="200" x2="370" y2="200" />
+    <line class="grid-line" x1="65" y1="125" x2="370" y2="125" />
     
-    <line class="grid-line" x1="70" y1="360" x2="70" y2="90" />
-    <line class="grid-line" x1="160" y1="360" x2="160" y2="90" />
-    <line class="grid-line" x1="260" y1="360" x2="260" y2="90" />
-    <line class="grid-line" x1="360" y1="360" x2="360" y2="90" />
+    <line class="grid-line" x1="65" y1="350" x2="65" y2="90" />
+    <line class="grid-line" x1="145" y1="350" x2="145" y2="90" />
+    <line class="grid-line" x1="240" y1="350" x2="240" y2="90" />
+    <line class="grid-line" x1="335" y1="350" x2="335" y2="90" />
 
     <!-- Achsen -->
     <!-- X-Achse -->
-    <line class="axis" x1="50" y1="360" x2="430" y2="360" marker-end="url(#arrow-axis)" />
-    <text class="axis-label" x="435" y="364">+X_world [m]</text>
+    <line class="axis" x1="50" y1="350" x2="385" y2="350" marker-end="url(#arrow-axis)" />
+    <g transform="translate(388, 340)">
+      <rect x="0" y="0" width="70" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+      <text class="axis-label" x="35" y="14" text-anchor="middle">+X [m]</text>
+    </g>
     
     <!-- Y-Achse nach oben -->
-    <line class="axis" x1="70" y1="380" x2="70" y2="80" marker-end="url(#arrow-axis)" />
-    <text class="axis-label" x="65" y="70" text-anchor="middle">+Y_world [m]</text>
+    <line class="axis" x1="65" y1="365" x2="65" y2="80" marker-end="url(#arrow-axis)" />
+    <g transform="translate(30, 56)">
+      <rect x="0" y="0" width="70" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+      <text class="axis-label" x="35" y="14" text-anchor="middle">+Y [m]</text>
+    </g>
     
-    <!-- Ursprung Label -->
-    <text x="56" y="375" font-size="13" font-weight="600" fill="#64748B">(0, 0)</text>
+    <!-- Ursprung Label (mit Shield) -->
+    <g transform="translate(36, 355)">
+      <rect x="0" y="0" width="46" height="18" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+      <text x="23" y="13" font-size="12.5" font-weight="600" fill="#64748B" text-anchor="middle">(0, 0)</text>
+    </g>
 
     <!-- Bounding Box (worldRect) -->
-    <!-- Model Node 1: (130, 310) -> x=1m, y=1m -->
-    <!-- Model Node 2: (370, 310) -> x=5m, y=1m -->
-    <!-- Model Node 3: (250, 150) -> x=3m, y=4m -->
-    <!-- BBox: Left=130, Top=150, Width=240, Height=160 -->
-    <rect class="bbox" x="130" y="150" width="240" height="160" />
-    
-    <!-- BBox Labels & Dimensioning -->
-    <!-- Width Bemaßung oben -->
-    <line class="dim-line" x1="130" y1="135" x2="370" y2="135" marker-start="url(#arrow-dim-rev)" marker-end="url(#arrow-dim)" />
-    <line x1="130" y1="145" x2="130" y2="130" stroke="#D97706" stroke-width="1" />
-    <line x1="370" y1="145" x2="370" y2="130" stroke="#D97706" stroke-width="1" />
-    <text class="dim-text" x="250" y="128">worldRect.Width (X_max - X_min)</text>
+    <rect class="bbox" x="120" y="150" width="220" height="160" />
 
-    <!-- Height Bemaßung links -->
-    <line class="dim-line" x1="115" y1="150" x2="115" y2="310" marker-start="url(#arrow-dim-rev)" marker-end="url(#arrow-dim)" />
-    <line x1="125" y1="150" x2="110" y2="150" stroke="#D97706" stroke-width="1" />
-    <line x1="125" y1="310" x2="110" y2="310" stroke="#D97706" stroke-width="1" />
-    <text class="dim-text" x="-230" y="107" transform="rotate(-90)">worldRect.Height (Y_max - Y_min)</text>
+    <!-- Width Bemaßung unten (mit Shield) -->
+    <line class="dim-line" x1="120" y1="380" x2="340" y2="380" marker-start="url(#arrow-dim-rev)" marker-end="url(#arrow-dim)" />
+    <g transform="translate(145, 370)">
+      <rect x="0" y="0" width="170" height="20" rx="3" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1" />
+      <text class="dim-text" x="85" y="14">worldRect.Width (X_span)</text>
+    </g>
 
     <!-- Modell (2D Fachwerk) -->
-    <line class="truss-bar" x1="130" y1="310" x2="370" y2="310" />
-    <line class="truss-bar" x1="130" y1="310" x2="250" y2="150" />
-    <line class="truss-bar" x1="370" y1="310" x2="250" y2="150" />
-    <line class="truss-bar" x1="250" y1="310" x2="250" y2="150" stroke-dasharray="2,2" stroke-width="2" />
+    <line class="truss-bar" x1="120" y1="310" x2="340" y2="310" />
+    <line class="truss-bar" x1="120" y1="310" x2="230" y2="150" />
+    <line class="truss-bar" x1="340" y1="310" x2="230" y2="150" />
+    <line class="truss-bar" x1="230" y1="310" x2="230" y2="150" stroke-dasharray="2,2" stroke-width="2" />
 
     <!-- Last / Kraftpfeil -->
-    <line x1="250" y1="95" x2="250" y2="145" stroke="#DC2626" stroke-width="3" marker-end="url(#arrow-force)" />
-    <text x="260" y="115" font-size="13" font-weight="700" fill="#DC2626">F = 10 kN</text>
+    <line x1="230" y1="95" x2="230" y2="145" stroke="#DC2626" stroke-width="3" marker-end="url(#arrow-force)" />
+    <g transform="translate(238, 102)">
+      <rect x="0" y="0" width="82" height="18" rx="3" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+      <text x="41" y="13" font-size="12.5" font-weight="700" fill="#DC2626" text-anchor="middle">F = 10 kN</text>
+    </g>
 
     <!-- Knoten -->
-    <circle class="truss-node" cx="130" cy="310" r="6" />
-    <circle class="truss-node" cx="370" cy="310" r="6" />
-    <circle class="truss-node" cx="250" cy="310" r="4" fill="#94A3B8" />
+    <circle class="truss-node" cx="120" cy="310" r="6" />
+    <circle class="truss-node" cx="340" cy="310" r="6" />
+    <circle class="truss-node" cx="230" cy="310" r="4" fill="#94A3B8" />
 
-    <!-- Markierter Beispielpunkt P (Knoten C oben) -->
-    <circle class="point-highlight" cx="250" cy="150" r="7" />
+    <!-- Markierter Punkt P (Spitze oben) -->
+    <circle class="point-highlight" cx="230" cy="150" r="7" />
     
     <!-- Label für P -->
-    <rect x="265" y="145" width="165" height="38" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
-    <text x="272" y="161" font-size="13" font-weight="700" fill="#DC2626">Punkt P (x_w, y_w)</text>
-    <text x="272" y="176" font-size="13" fill="#7F1D1D">z.B. Spitze (3.0 m, 4.0 m)</text>
+    <g transform="translate(250, 155)">
+      <rect x="0" y="0" width="155" height="36" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+      <text x="77.5" y="15" font-size="13" font-weight="700" fill="#DC2626" text-anchor="middle">Punkt P (x_w, y_w)</text>
+      <text x="77.5" y="29" font-size="12.5" fill="#7F1D1D" text-anchor="middle">z.B. (3.0 m, 4.0 m)</text>
+    </g>
 
-    <!-- Bounding Box Referenz-Punkte Labels -->
-    <text x="133" y="164" font-size="13" font-weight="700" fill="#B45309">(X_min, Y_max)</text>
-    <text x="133" y="325" font-size="13" font-weight="700" fill="#B45309">(X_min, Y_min)</text>
-    <text x="315" y="325" font-size="13" font-weight="700" fill="#B45309">(X_max, Y_min)</text>
+    <!-- BBox Referenzpunkte (mit Shield) -->
+    <g transform="translate(95, 316)">
+      <rect x="0" y="0" width="100" height="18" rx="3" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1" />
+      <text x="50" y="13" font-size="12" font-weight="700" fill="#B45309" text-anchor="middle">(X_min, Y_min)</text>
+    </g>
 
     <!-- Info-Box Unten Welt -->
-    <rect class="code-box" x="20" y="420" width="420" height="85" />
-    <text class="code-text" x="32" y="442" font-weight="700" fill="#004B96">// 1. Bounding Box &amp; Skalierungsfaktoren</text>
-    <text class="code-text" x="32" y="462">double scaleX = (canvasWidth - 2 * margin) / worldRect.Width;</text>
-    <text class="code-text" x="32" y="480">double scaleY = (canvasHeight - 2 * margin) / worldRect.Height;</text>
-    <text class="code-text" x="32" y="498" font-weight="700" fill="#D97706">double scale  = Math.Min(scaleX, scaleY); // Uniform!</text>
+    <rect class="code-box" x="15" y="420" width="435" height="92" />
+    <text class="code-text" x="25" y="440" font-weight="700" fill="#004B96">// 1. Skalierungsfaktoren berechnen</text>
+    <text class="code-text" x="25" y="460">double sX = (wCanvas - 2*margin) / wRect.Width;</text>
+    <text class="code-text" x="25" y="478">double sY = (hCanvas - 2*margin) / wRect.Height;</text>
+    <text class="code-text" x="25" y="498" font-weight="700" fill="#D97706">double scale = Math.Min(sX, sY); // Isotrop</text>
   </g>
 
   <!-- ========================================== -->
   <!-- MITTE: TRANSFORMATIONSPFEIL & STEPS       -->
   <!-- ========================================== -->
-  <g transform="translate(495, 120)">
-    <!-- Großer Transformations-Pfeil -->
-    <path d="M 0 80 Q 45 40 85 80" fill="none" stroke="#0284C7" stroke-width="4" stroke-dasharray="6,4" />
-    <path d="M 10 130 L 75 130" stroke="#004B96" stroke-width="3" marker-end="url(#arrow-axis-blue)" />
-    <text x="45" y="118" font-size="13" font-weight="700" fill="#004B96" text-anchor="middle">TRANSFORMATION</text>
+  <g transform="translate(500, 130)">
+    <path d="M 0 65 Q 40 30 75 65" fill="none" stroke="#0284C7" stroke-width="3.5" stroke-dasharray="5,4" />
+    <path d="M 5 105 L 70 105" stroke="#004B96" stroke-width="3" marker-end="url(#arrow-axis-blue)" />
+    <text x="38" y="95" font-size="12" font-weight="700" fill="#004B96" text-anchor="middle">TRANSFORM</text>
     
     <!-- 3 Schritte Badge -->
-    <g transform="translate(-10, 160)">
-      <rect class="formula-tag" x="-5" y="0" width="120" height="85" />
-      <text x="55" y="18" font-size="13" font-weight="700" fill="#004B96" text-anchor="middle">3 Schritte:</text>
-      <text x="5" y="38" font-size="13" fill="#1E293B">1. Verschieben</text>
-      <text x="5" y="56" font-size="13" fill="#1E293B">2. Skalieren (s)</text>
-      <text x="5" y="74" font-size="13" font-weight="700" fill="#DC2626">3. Y invertieren!</text>
+    <g transform="translate(-15, 130)">
+      <rect class="formula-tag" x="0" y="0" width="110" height="85" />
+      <text x="55" y="18" font-size="12.5" font-weight="700" fill="#004B96" text-anchor="middle">3 Schritte:</text>
+      <text x="10" y="38" font-size="12" fill="#1E293B">1. Shift (-Xmin)</text>
+      <text x="10" y="56" font-size="12" fill="#1E293B">2. Scale (*s)</text>
+      <text x="10" y="74" font-size="12" font-weight="700" fill="#DC2626">3. Y-Invert!</text>
     </g>
   </g>
 
   <!-- ========================================== -->
   <!-- RECHTE SPALTE: BILDSCHIRM (WPF CANVAS)    -->
   <!-- ========================================== -->
-  <g transform="translate(595, 20)">
-    <rect class="panel-bg" x="0" y="0" width="460" height="525" filter="url(#shadow)" />
+  <g transform="translate(590, 20)">
+    <rect class="panel-bg" x="0" y="0" width="465" height="530" filter="url(#shadow)" />
     
     <!-- Header -->
-    <path d="M 0 10 Q 0 0 10 0 L 450 0 Q 460 0 460 10 L 460 48 L 0 48 Z" fill="#E2E8F0" />
+    <path d="M 0 10 Q 0 0 10 0 L 455 0 Q 465 0 465 10 L 465 48 L 0 48 Z" fill="#E2E8F0" />
     <circle cx="24" cy="24" r="12" fill="#004B96" />
     <text x="24" y="29" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
-    <text class="title" x="48" y="24">Bildschirmkoordinaten (WPF Canvas)</text>
-    <text class="subtitle" x="48" y="40">Diskrete Pixel / DIPs [px] • Y zeigt NACH UNTEN</text>
+    <text class="title" x="48" y="24">Bildschirm (WPF Canvas)</text>
+    <text class="subtitle" x="48" y="40">Pixel [px] • Y zeigt NACH UNTEN</text>
 
-    <!-- Canvas Fläche (x=45, y=70, w=370, h=310) -->
-    <rect class="canvas-bg" x="45" y="75" width="370" height="310" rx="4" />
-    <text x="55" y="93" font-size="13" font-weight="700" fill="#64748B">WPF Canvas (canvasWidth × canvasHeight)</text>
-
+    <!-- Canvas Fläche -->
+    <rect class="canvas-bg" x="40" y="75" width="385" height="315" rx="4" />
+    
     <!-- Ursprung (0, 0) oben links -->
-    <circle cx="45" cy="75" r="5" fill="#1E293B" />
-    <text x="54" y="68" font-size="13" font-weight="700" fill="#1E293B">(0, 0) Canvas Ursprung</text>
+    <circle cx="40" cy="75" r="4.5" fill="#1E293B" />
+    <g transform="translate(48, 55)">
+      <rect x="0" y="0" width="100" height="18" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+      <text x="50" y="13" font-size="12" font-weight="700" fill="#1E293B" text-anchor="middle">(0, 0) Ursprung</text>
+    </g>
 
     <!-- Canvas Achsen -->
     <!-- X-Achse nach rechts -->
-    <line class="axis" x1="45" y1="75" x2="200" y2="75" marker-end="url(#arrow-axis)" />
-    <text class="axis-label" x="205" y="79">+X_screen [px]</text>
+    <line class="axis" x1="40" y1="75" x2="200" y2="75" marker-end="url(#arrow-axis)" />
+    <g transform="translate(205, 65)">
+      <rect x="0" y="0" width="80" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+      <text class="axis-label" x="40" y="14" text-anchor="middle">+X_scr [px]</text>
+    </g>
     
-    <!-- Y-Achse nach UNTEN -->
-    <line class="axis" x1="45" y1="75" x2="45" y2="190" marker-end="url(#arrow-axis)" />
-    <text class="axis-label" x="40" y="210" text-anchor="end">+Y_screen [px]</text>
+    <!-- Y-Achse nach UNTEN (Beschriftung rechts der Achse!) -->
+    <line class="axis" x1="40" y1="75" x2="40" y2="200" marker-end="url(#arrow-axis)" />
+    <g transform="translate(48, 190)">
+      <rect x="0" y="0" width="80" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+      <text class="axis-label" x="40" y="14" text-anchor="middle">+Y_scr [px]</text>
+    </g>
 
-    <!-- Margin Rahmen (Margin = 35) -->
-    <!-- Inner Area: x=80, y=110, w=300, h=240 -->
-    <rect class="margin-zone" x="80" y="110" width="300" height="240" rx="2" />
+    <!-- Margin Zone -->
+    <rect class="margin-zone" x="75" y="110" width="315" height="245" rx="2" />
     
-    <!-- Margin Bemaßungen -->
-    <!-- Margin Top -->
-    <line x1="80" y1="92" x2="80" y2="110" stroke="#64748B" stroke-width="1" stroke-dasharray="2,2" />
-    <line x1="95" y1="75" x2="95" y2="110" stroke="#64748B" stroke-width="1.2" marker-start="url(#arrow-margin)" marker-end="url(#arrow-margin)" />
-    <text x="100" y="97" font-size="13" fill="#475569" font-weight="600">margin</text>
+    <!-- Margin Bemaßung -->
+    <line x1="90" y1="75" x2="90" y2="110" stroke="#64748B" stroke-width="1.2" marker-start="url(#arrow-margin)" marker-end="url(#arrow-margin)" />
+    <text x="96" y="96" font-size="12" fill="#475569" font-weight="600">margin</text>
 
-    <!-- Margin Left -->
-    <line x1="45" y1="125" x2="80" y2="125" stroke="#64748B" stroke-width="1.2" marker-start="url(#arrow-margin)" marker-end="url(#arrow-margin)" />
-    <text x="62" y="140" font-size="13" fill="#475569" font-weight="600" text-anchor="middle">margin</text>
-
-    <text x="230" y="125" font-size="13" font-weight="600" fill="#0284C7" text-anchor="middle">Zeichenbereich (canvasWidth - 2*margin)</text>
+    <!-- Zeichenbereich Bemaßung unten (mit Shield) -->
+    <line x1="75" y1="380" x2="390" y2="380" stroke="#0284C7" stroke-width="1.2" marker-start="url(#arrow-dim-blue-rev)" marker-end="url(#arrow-dim-blue)" />
+    <g transform="translate(130, 370)">
+      <rect x="0" y="0" width="200" height="20" rx="3" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1" />
+      <text class="dim-text" style="fill: #0284C7;" x="100" y="14">Zeichenbereich (wCanvas - 2*m)</text>
+    </g>
 
     <!-- Transformiertes Modell im Canvas -->
-    <!-- Berechnete Punkte mit Uniform Scale:
-         Model Node 1 (Links unten):   x_s = 80 + 0 = 80,  y_s = 110 + 160*1.15 = 294
-         Model Node 2 (Rechts unten):  x_s = 80 + 240*1.15 = 356, y_s = 294
-         Model Node 3 (Spitze oben):   x_s = 80 + 120*1.15 = 218, y_s = 110 (da Y_max = Spitze!)
-    -->
-    <line class="truss-bar" x1="110" y1="310" x2="350" y2="310" />
-    <line class="truss-bar" x1="110" y1="310" x2="230" y2="150" />
-    <line class="truss-bar" x1="350" y1="310" x2="230" y2="150" />
-    <line class="truss-bar" x1="230" y1="310" x2="230" y2="150" stroke-dasharray="2,2" stroke-width="2" />
+    <line class="truss-bar" x1="105" y1="310" x2="345" y2="310" />
+    <line class="truss-bar" x1="105" y1="310" x2="225" y2="150" />
+    <line class="truss-bar" x1="345" y1="310" x2="225" y2="150" />
+    <line class="truss-bar" x1="225" y1="310" x2="225" y2="150" stroke-dasharray="2,2" stroke-width="2" />
 
     <!-- Transformierte Kraft -->
-    <line x1="230" y1="95" x2="230" y2="145" stroke="#DC2626" stroke-width="3" marker-end="url(#arrow-force)" />
-    <text x="240" y="110" font-size="13" font-weight="700" fill="#DC2626">F (vektoriell)</text>
+    <line x1="225" y1="95" x2="225" y2="145" stroke="#DC2626" stroke-width="3" marker-end="url(#arrow-force)" />
+    <g transform="translate(235, 102)">
+      <rect x="0" y="0" width="75" height="18" rx="3" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+      <text x="37.5" y="13" font-size="12" font-weight="700" fill="#DC2626" text-anchor="middle">F (Vektor)</text>
+    </g>
 
     <!-- Knoten -->
-    <circle class="truss-node" cx="110" cy="310" r="6" />
-    <circle class="truss-node" cx="350" cy="310" r="6" />
-    <circle class="truss-node" cx="230" cy="310" r="4" fill="#94A3B8" />
+    <circle class="truss-node" cx="105" cy="310" r="6" />
+    <circle class="truss-node" cx="345" cy="310" r="6" />
+    <circle class="truss-node" cx="225" cy="310" r="4" fill="#94A3B8" />
 
     <!-- Transformierter Punkt P' (Spitze) -->
-    <circle class="point-highlight" cx="230" cy="150" r="7" />
+    <circle class="point-highlight" cx="225" cy="150" r="7" />
     
-    <!-- Koordinaten Hilfslinien zu den Achsen -->
-    <line x1="45" y1="150" x2="230" y2="150" stroke="#EF4444" stroke-width="1.2" stroke-dasharray="3,3" />
-    <line x1="230" y1="75" x2="230" y2="150" stroke="#EF4444" stroke-width="1.2" stroke-dasharray="3,3" />
-    <text x="48" y="145" font-size="13" font-weight="700" fill="#DC2626">screenY</text>
-    <text x="233" y="88" font-size="13" font-weight="700" fill="#DC2626">screenX</text>
+    <!-- Koordinaten-Hilfslinien -->
+    <line x1="40" y1="150" x2="225" y2="150" stroke="#EF4444" stroke-width="1.2" stroke-dasharray="3,3" />
+    <line x1="225" y1="75" x2="225" y2="150" stroke="#EF4444" stroke-width="1.2" stroke-dasharray="3,3" />
 
-    <!-- Label für P' -->
-    <rect x="250" y="155" width="185" height="46" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
-    <text x="258" y="172" font-size="13" font-weight="700" fill="#DC2626">Transformiert P' (x_s, y_s)</text>
-    <text x="258" y="190" font-size="13" fill="#7F1D1D">x_s = margin + (x_w - X_min) * s</text>
+    <!-- Label für P' (Shielded) -->
+    <g transform="translate(240, 155)">
+      <rect x="0" y="0" width="180" height="42" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+      <text x="90" y="16" font-size="12.5" font-weight="700" fill="#DC2626" text-anchor="middle">Transformiert P' (x_s, y_s)</text>
+      <text x="90" y="32" font-size="12" fill="#7F1D1D" text-anchor="middle">x_s = m + (x_w - X_min) * s</text>
+    </g>
     
-    <!-- Y-Invertierung Hinweis Box -->
-    <rect x="250" y="210" width="185" height="46" rx="4" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1" />
-    <text x="258" y="227" font-size="13" font-weight="700" fill="#B45309">Y-Achsen Invertierung:</text>
-    <text x="258" y="245" font-size="13" font-weight="700" fill="#B45309">y_s = margin + (Y_max - y_w) * s</text>
+    <!-- Y-Invertierung Hinweis Box (Shielded) -->
+    <g transform="translate(240, 205)">
+      <rect x="0" y="0" width="180" height="42" rx="4" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1" />
+      <text x="90" y="16" font-size="12.5" font-weight="700" fill="#B45309" text-anchor="middle">Y-Invertierung:</text>
+      <text x="90" y="32" font-size="12" font-weight="700" fill="#B45309" text-anchor="middle">y_s = m + (Y_max - y_w) * s</text>
+    </g>
 
     <!-- Info-Box Unten Bildschirm -->
-    <rect class="code-box" x="20" y="420" width="420" height="85" />
-    <text class="code-text" x="32" y="442" font-weight="700" fill="#004B96">// 2. Exakte Punkt-Transformation (C#)</text>
-    <text class="code-text" x="32" y="462">double screenX = margin + (worldX - worldRect.Left) * scale;</text>
-    <text class="code-text" x="32" y="480" font-weight="700" fill="#DC2626">double screenY = margin + (worldRect.Top - worldY) * scale;</text>
-    <text class="code-text" x="32" y="498" fill="#64748B">// worldRect.Top ist Y_max! -> Dreht Y-Richtung um</text>
+    <rect class="code-box" x="15" y="420" width="435" height="92" />
+    <text class="code-text" x="25" y="440" font-weight="700" fill="#004B96">// 2. Punkt-Transformation (C#)</text>
+    <text class="code-text" x="25" y="460">double scrX = margin + (wX - wRect.Left) * scale;</text>
+    <text class="code-text" x="25" y="478" font-weight="700" fill="#DC2626">double scrY = margin + (wRect.Top - wY) * scale;</text>
+    <text class="code-text" x="25" y="498" fill="#64748B">// wRect.Top ist Y_max! Invertiert die Y-Achse</text>
   </g>
 </svg>

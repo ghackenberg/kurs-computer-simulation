@@ -154,32 +154,32 @@
 
     <!-- Speicherbalken Zeile 0 -->
     <g transform="translate(20, 50)">
-      <rect x="0" y="0" width="310" height="28" fill="#e2e8f0" stroke="#94a3b8" rx="3" />
-      <text x="145" y="14" class="cell-text">Zeile 0 (Pixel 0 … W-1)</text>
-      <rect x="310" y="0" width="40" height="28" fill="#cbd5e1" stroke="#94a3b8" stroke-dasharray="2,2" rx="2" />
-      <text x="330" y="14" class="cell-text" style="font-size: 13px; fill: #64748b;">Pad</text>
+      <rect x="0" y="0" width="250" height="28" fill="#e2e8f0" stroke="#94a3b8" rx="3" />
+      <text x="125" y="14" class="cell-text">Zeile 0 (Pixel 0 … W-1)</text>
+      <rect x="250" y="0" width="35" height="28" fill="#cbd5e1" stroke="#94a3b8" stroke-dasharray="2,2" rx="2" />
+      <text x="267" y="14" class="cell-text" style="font-size: 13px; fill: #64748b;">Pad</text>
 
-      <text x="365" y="14" class="cell-text" style="text-anchor: start; font-size: 13px; fill: #64748b;">Offset: 0</text>
+      <text x="295" y="14" class="cell-text" style="text-anchor: start; font-size: 13px; fill: #64748b;">Offset: 0</text>
     </g>
 
     <!-- Speicherbalken Zeile 1 -->
     <g transform="translate(20, 85)">
-      <rect x="0" y="0" width="310" height="28" fill="#e2e8f0" stroke="#94a3b8" rx="3" />
-      <text x="145" y="14" class="cell-text">Zeile 1 (Pixel 0 … W-1)</text>
-      <rect x="310" y="0" width="40" height="28" fill="#cbd5e1" stroke="#94a3b8" stroke-dasharray="2,2" rx="2" />
-      <text x="330" y="14" class="cell-text" style="font-size: 13px; fill: #64748b;">Pad</text>
+      <rect x="0" y="0" width="250" height="28" fill="#e2e8f0" stroke="#94a3b8" rx="3" />
+      <text x="125" y="14" class="cell-text">Zeile 1 (Pixel 0 … W-1)</text>
+      <rect x="250" y="0" width="35" height="28" fill="#cbd5e1" stroke="#94a3b8" stroke-dasharray="2,2" rx="2" />
+      <text x="267" y="14" class="cell-text" style="font-size: 13px; fill: #64748b;">Pad</text>
 
-      <text x="365" y="14" class="cell-text" style="text-anchor: start; font-size: 13px; fill: #64748b;">Offset: 1 · Stride</text>
+      <text x="295" y="14" class="cell-text" style="text-anchor: start; font-size: 13px; fill: #64748b;">Offset: 1·Stride</text>
     </g>
 
     <!-- Vertikale Pünktchen -->
-    <text x="155" y="130" class="cell-text" style="font-size: 16px;">⋮</text>
+    <text x="135" y="130" class="cell-text" style="font-size: 16px;">⋮</text>
 
     <!-- Stride Klammer / Maßlinie -->
-    <line x1="390" y1="50" x2="390" y2="78" stroke="#0284c7" stroke-width="1.5" />
-    <line x1="385" y1="50" x2="395" y2="50" stroke="#0284c7" stroke-width="1.5" />
-    <line x1="385" y1="78" x2="395" y2="78" stroke="#0284c7" stroke-width="1.5" />
-    <text x="402" y="66" class="cell-text" style="text-anchor: start; fill: #0284c7; font-weight: bold; font-size: 13px;">Stride (Bytes)</text>
+    <line x1="410" y1="50" x2="410" y2="113" stroke="#0284c7" stroke-width="1.5" />
+    <line x1="405" y1="50" x2="415" y2="50" stroke="#0284c7" stroke-width="1.5" />
+    <line x1="405" y1="113" x2="415" y2="113" stroke="#0284c7" stroke-width="1.5" />
+    <text x="420" y="85" class="cell-text" style="text-anchor: start; fill: #0284c7; font-weight: bold; font-size: 13px;">Stride</text>
 
     <!-- Zeile y - aktiv im Detail -->
     <g transform="translate(20, 145)">
@@ -221,26 +221,26 @@
       <text x="390" y="47" class="cell-text" style="font-size: 13px;">…</text>
 
       <!-- Beschriftung des Target-Pixels im Speicher -->
-      <rect x="110" y="72" width="235" height="24" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" rx="3" />
-      <text x="227.5" y="84" class="cell-text-bold" style="fill: #92400e; font-size: 13px;">
+      <rect x="95" y="72" width="250" height="24" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" rx="3" />
+      <text x="220" y="84" class="cell-text-bold" style="fill: #92400e; font-size: 13px;">
         Exakter Offset = y · Stride + x · 4 Bytes
       </text>
 
       <!-- 32-Bit Darstellung (uint) -->
       <text x="15" y="118" class="code-font" style="font-size: 13px; fill: #334155;">
-        Als 32-Bit Integer (Little Endian):
+        Als 32-Bit uint:
       </text>
-      <rect x="220" y="104" width="180" height="22" fill="#1e293b" rx="3" />
-      <text x="310" y="115" class="code-font" style="fill: #38bdf8; font-size: 13px; text-anchor: middle; dominant-baseline: middle;">
+      <rect x="170" y="104" width="230" height="22" fill="#1e293b" rx="3" />
+      <text x="285" y="115" class="code-font" style="fill: #38bdf8; font-size: 13px; text-anchor: middle; dominant-baseline: middle;">
         uint pixel = 0xAARRGGBB;
       </text>
     </g>
 
     <!-- Zeile H-1 ganz unten im Speicher -->
     <g transform="translate(20, 295)">
-      <rect x="0" y="0" width="310" height="28" fill="#e2e8f0" stroke="#94a3b8" rx="3" />
-      <text x="145" y="14" class="cell-text">Zeile H-1 (Letzte Bildzeile)</text>
-      <text x="365" y="14" class="cell-text" style="text-anchor: start; font-size: 13px; fill: #64748b;">(H-1) · Stride</text>
+      <rect x="0" y="0" width="250" height="28" fill="#e2e8f0" stroke="#94a3b8" rx="3" />
+      <text x="125" y="14" class="cell-text">Zeile H-1 (Letzte Zeile)</text>
+      <text x="295" y="14" class="cell-text" style="text-anchor: start; font-size: 13px; fill: #64748b;">(H-1)·Stride</text>
     </g>
   </g>
 

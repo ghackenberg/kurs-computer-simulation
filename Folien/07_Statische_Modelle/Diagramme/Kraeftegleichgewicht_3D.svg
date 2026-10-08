@@ -59,9 +59,12 @@
   <line x1="170" y1="175" x2="265" y2="119" stroke="#0284C7" stroke-width="3" marker-end="url(#arrow-force-blue)" />
   <text x="240" y="105" font-size="15" font-weight="700" fill="#0284C7">S1 · e1</text>
 
-  <!-- Kraft Stab 2 -->
+  <!-- Kraft Stab 2 (mit Shield-Badge) -->
   <line x1="170" y1="175" x2="98" y2="120" stroke="#0284C7" stroke-width="3" marker-end="url(#arrow-force-blue)" />
-  <text x="65" y="135" font-size="15" font-weight="700" fill="#0284C7">S2 · e2</text>
+  <g transform="translate(50, 95)">
+    <rect x="0" y="0" width="62" height="22" rx="3" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1" />
+    <text x="31" y="16" font-size="14" font-weight="700" fill="#0284C7" text-anchor="middle">S2 · e2</text>
+  </g>
 
   <!-- Kraft Stab 3 -->
   <line x1="170" y1="175" x2="255" y2="227" stroke="#0284C7" stroke-width="3" marker-end="url(#arrow-force-blue)" />
@@ -71,9 +74,12 @@
   <line x1="170" y1="175" x2="128" y2="255" stroke="#DC2626" stroke-width="3.5" marker-end="url(#arrow-force-red)" />
   <text x="95" y="272" font-size="16" font-weight="700" fill="#DC2626">F_ext</text>
 
-  <!-- KNOTEN i (Zentrum) -->
+  <!-- KNOTEN i (Zentrum, mit Shield-Badge) -->
   <circle cx="170" cy="175" r="8" fill="#FFFFFF" stroke="#004B96" stroke-width="3" />
-  <text x="185" y="170" font-size="15" font-weight="700" fill="#004B96">Knoten i</text>
+  <g transform="translate(185, 150)">
+    <rect x="0" y="0" width="68" height="22" rx="3" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1" />
+    <text x="34" y="16" font-size="14" font-weight="700" fill="#004B96" text-anchor="middle">Knoten i</text>
+  </g>
 
   <!-- GLEICHGEWICHTS-INFOBOX UNTEN -->
   <rect x="15" y="285" width="350" height="38" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />

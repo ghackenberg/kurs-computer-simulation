@@ -2,16 +2,13 @@
   <defs>
     <!-- Pfeilspitzen -->
     <marker id="arrow-axis" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1E293B" />
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" />
     </marker>
     <marker id="arrow-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#004B96" />
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284C7" />
     </marker>
-    <marker id="arrow-amber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#D97706" />
-    </marker>
-    <marker id="arrow-ray" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-      <path d="M 0 2 L 7 5 L 0 8 z" fill="#0284C7" />
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#7C3AED" />
     </marker>
     <marker id="dim-arrow-start" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path d="M 7 2 L 1 5 L 7 8 z" fill="#64748B" />
@@ -19,9 +16,15 @@
     <marker id="dim-arrow-end" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path d="M 1 2 L 7 5 L 1 8 z" fill="#64748B" />
     </marker>
+    <marker id="dim-arrow-amber-start" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 7 2 L 1 5 L 7 8 z" fill="#D97706" />
+    </marker>
+    <marker id="dim-arrow-amber-end" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 1 2 L 7 5 L 1 8 z" fill="#D97706" />
+    </marker>
     <!-- Drop Shadow Filter -->
-    <filter id="card-shadow" x="-5%" y="-3%" width="110%" height="108%">
-      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.07" />
+    <filter id="card-shadow" x="-3%" y="-2%" width="106%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.08" />
     </filter>
   </defs>
 
@@ -35,151 +38,155 @@
     .card-header-ortho { fill: #EFF6FF; stroke: #BFDBFE; stroke-width: 1; }
     .card-header-persp { fill: #F5F3FF; stroke: #DDD6FE; stroke-width: 1; }
     .panel-title { font-size: 19px; font-weight: 700; }
-    .panel-subtitle { font-size: 13.5px; fill: #64748B; font-weight: 500; }
+    .panel-subtitle { font-size: 14px; fill: #64748B; font-weight: 500; }
     .badge-code { font-family: "Consolas", "Fira Code", monospace; font-size: 13px; font-weight: 600; }
-    .axis-line { stroke: #64748B; stroke-width: 1.5; stroke-dasharray: 4,3; }
-    .axis-label { font-size: 13px; font-weight: 600; fill: #475569; }
-    .frustum-edge { stroke: #0284C7; stroke-width: 1.5; stroke-dasharray: 5,4; fill: none; }
+    .axis-line { stroke: #94A3B8; stroke-width: 1.5; stroke-dasharray: 4,3; }
+    .axis-label { font-size: 13.5px; font-weight: 600; fill: #475569; }
+    .frustum-edge-ortho { stroke: #0284C7; stroke-width: 1.5; stroke-dasharray: 5,4; fill: none; }
     .frustum-edge-persp { stroke: #7C3AED; stroke-width: 1.5; stroke-dasharray: 5,4; fill: none; }
     .frustum-volume-ortho { fill: rgba(2, 132, 199, 0.04); }
     .frustum-volume-persp { fill: rgba(124, 58, 237, 0.04); }
-    .near-plane { fill: rgba(16, 185, 129, 0.20); stroke: #059669; stroke-width: 1.8; }
-    .far-plane { fill: rgba(239, 68, 68, 0.15); stroke: #DC2626; stroke-width: 1.8; stroke-dasharray: 4,3; }
-    .plane-label { font-size: 13px; font-weight: 700; }
-    .proj-ray { stroke: #0284C7; stroke-width: 1.2; stroke-dasharray: 3,3; }
-    .proj-ray-persp { stroke: #7C3AED; stroke-width: 1.2; stroke-dasharray: 3,3; }
-    .cube-front { fill: #38BDF8; stroke: #0284C7; stroke-width: 1.2; }
-    .cube-top { fill: #BAE6FD; stroke: #0284C7; stroke-width: 1.2; }
-    .cube-side { fill: #0284C7; stroke: #0369A1; stroke-width: 1.2; }
-    .proj-screen-rect { stroke-width: 1.8; rx: 1px; }
-    .dim-line { stroke: #64748B; stroke-width: 1; }
-    .dim-text { font-size: 13px; font-weight: 600; fill: #475569; text-anchor: middle; }
-    .info-label { font-size: 13.5px; font-weight: 700; fill: #1E293B; }
-    .info-val { font-size: 13px; fill: #475569; }
-    .tag { font-size: 13px; font-weight: 700; padding: 2px 6px; }
+    .near-plane { fill: rgba(16, 185, 129, 0.22); stroke: #059669; stroke-width: 1.8; }
+    .far-plane { fill: rgba(239, 68, 68, 0.14); stroke: #DC2626; stroke-width: 1.8; stroke-dasharray: 4,3; }
+    .plane-label { font-size: 13.5px; font-weight: 700; }
+    .proj-ray-ortho { stroke: #0284C7; stroke-width: 1.3; stroke-dasharray: 3,3; }
+    .proj-ray-persp { stroke: #7C3AED; stroke-width: 1.3; stroke-dasharray: 3,3; }
+    .dim-line { stroke: #64748B; stroke-width: 1.2; }
+    .dim-text { font-size: 13.5px; font-weight: 600; fill: #475569; text-anchor: middle; }
+    .badge-label { font-size: 14px; font-weight: 700; }
+    .badge-sub { font-size: 13px; fill: #475569; }
   </style>
 
   <!-- Gesamt-Hintergrund -->
   <rect x="0" y="0" width="1170" height="630" fill="#F8FAFC" rx="12" />
 
   <!-- Kopfzeile -->
-  <g transform="translate(30, 20)">
+  <g transform="translate(30, 22)">
     <text class="main-title" x="0" y="20">3D-Projektionsarten in OpenGL: Orthogonal vs. Perspektivisch</text>
-    <text class="main-subtitle" x="0" y="38">Sichtvolumen (Clipping-Ebenen), Strahlengang und Größenwirkung auf die 2D-Bildebene</text>
+    <text class="main-subtitle" x="0" y="40">Sichtvolumen (Clipping-Ebenen), Strahlengang und Größenabbildung auf die 2D-Bildebene</text>
   </g>
-
 
   <!-- ========================================== -->
   <!-- PANEL 1: ORTHOGONALE PROJEKTION            -->
   <!-- ========================================== -->
-  <g transform="translate(25, 75)">
-    <rect class="card-bg" x="0" y="0" width="525" height="535" filter="url(#card-shadow)" />
+  <g transform="translate(25, 80)">
+    <rect class="card-bg" x="0" y="0" width="545" height="525" filter="url(#card-shadow)" />
     
     <!-- Panel Header -->
-    <path d="M 0 10 Q 0 0 10 0 L 515 0 Q 525 0 525 10 L 525 50 L 0 50 Z" class="card-header-ortho" />
-    <circle cx="26" cy="25" r="14" fill="#004B96" />
-    <text x="26" y="30" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">A</text>
-    <text class="panel-title" x="50" y="24" fill="#004B96">Orthogonale Projektion (glOrtho)</text>
-    <text class="panel-subtitle" x="50" y="42">Paralleles Sichtvolumen (Quader) • Parallele Projektionsstrahlen • Maßhaltig</text>
+    <path d="M 0 10 Q 0 0 10 0 L 535 0 Q 545 0 545 10 L 545 52 L 0 52 Z" class="card-header-ortho" />
+    <circle cx="26" cy="26" r="14" fill="#004B96" />
+    <text x="26" y="31" font-size="13.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">A</text>
+    <text class="panel-title" x="48" y="24" fill="#004B96">Orthogonale Projektion</text>
+    <text class="panel-subtitle" x="48" y="42">Paralleles Sichtvolumen (Quader) • Maßhaltig</text>
     
-    <g transform="translate(320, 14)">
-      <rect x="0" y="0" width="190" height="22" rx="4" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1" />
-      <text class="badge-code" x="95" y="15" fill="#004B96" text-anchor="middle">gl.Ortho(l, r, b, t, n, f)</text>
+    <g transform="translate(355, 14)">
+      <rect x="0" y="0" width="175" height="24" rx="4" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.2" />
+      <text class="badge-code" x="87" y="16" fill="#004B96" text-anchor="middle">gl.Ortho(l, r, b, t, n, f)</text>
     </g>
 
     <!-- 3D SZENE ORTHO -->
-
     <!-- Quader-Volumen (semi-transparent) -->
-    <polygon points="180.3,189.9 138.3,216.1 426.2,251.4 468.2,225.2" class="frustum-volume-ortho" />
-    <polygon points="180.3,265.9 138.3,292.1 426.2,327.4 468.2,301.2" class="frustum-volume-ortho" />
-    <polygon points="138.3,216.1 138.3,292.1 426.2,327.4 426.2,251.4" class="frustum-volume-ortho" />
+    <polygon points="160,180 120,210 400,250 440,220" class="frustum-volume-ortho" />
+    <polygon points="160,340 120,370 400,410 440,380" class="frustum-volume-ortho" />
+    <polygon points="120,210 120,370 400,410 400,250" class="frustum-volume-ortho" />
+
     <!-- Optische Achse (Blickrichtung Z) -->
-    <line class="axis-line" x1="79.9" y1="231.2" x2="486.9" y2="281.2" marker-end="url(#arrow-axis)" />
-    <text class="axis-label" x="491.9" y="285.2">+Z (Blick)</text>
+    <line class="axis-line" x1="60" y1="290" x2="475" y2="345" marker-end="url(#arrow-axis)" />
+    <g transform="translate(478, 340)">
+      <rect x="0" y="-12" width="60" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+      <text class="axis-label" x="30" y="2" text-anchor="middle">+Z Blick</text>
+    </g>
 
     <!-- Beobachter / Kamera (im Unendlichen, parallele Blickstrahlen) -->
-    <g transform="translate(18, 140)">
-      <rect x="0" y="0" width="70" height="42" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2" />
+    <g transform="translate(14, 175)">
+      <rect x="0" y="0" width="68" height="46" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2" />
       <!-- Camera icon -->
-      <path d="M 12 18 L 20 18 L 24 14 L 36 14 L 40 18 L 48 18 Q 52 18 52 22 L 52 34 Q 52 38 48 38 L 12 38 Q 8 38 8 34 L 8 22 Q 8 18 12 18 Z" fill="#475569" />
-      <circle cx="30" cy="27" r="6" fill="#FFFFFF" stroke="#475569" stroke-width="1.5" />
+      <path d="M 12 20 L 19 20 L 23 16 L 35 16 L 39 20 L 48 20 Q 52 20 52 24 L 52 36 Q 52 40 48 40 L 12 40 Q 8 40 8 36 L 8 24 Q 8 20 12 20 Z" fill="#475569" />
+      <circle cx="30" cy="29" r="6" fill="#FFFFFF" stroke="#475569" stroke-width="1.5" />
       <!-- Parallel rays out -->
-      <line x1="56" y1="22" x2="68" y2="22" stroke="#004B96" stroke-width="2" marker-end="url(#arrow-blue)" />
-      <line x1="56" y1="28" x2="68" y2="28" stroke="#004B96" stroke-width="2" marker-end="url(#arrow-blue)" />
-      <line x1="56" y1="34" x2="68" y2="34" stroke="#004B96" stroke-width="2" marker-end="url(#arrow-blue)" />
-      <text x="35" y="10" font-size="13.5" font-weight="700" fill="#475569" text-anchor="middle">Betrachter</text>
-      <text x="35" y="52" font-size="13" fill="#64748B" text-anchor="middle">(im Unendlichen)</text>
+      <line x1="54" y1="23" x2="65" y2="23" stroke="#0284C7" stroke-width="2" marker-end="url(#arrow-blue)" />
+      <line x1="54" y1="29" x2="65" y2="29" stroke="#0284C7" stroke-width="2" marker-end="url(#arrow-blue)" />
+      <line x1="54" y1="35" x2="65" y2="35" stroke="#0284C7" stroke-width="2" marker-end="url(#arrow-blue)" />
+      <text x="34" y="-6" font-size="13.5" font-weight="700" fill="#334155" text-anchor="middle">Betrachter</text>
+      <text x="34" y="58" font-size="13" fill="#64748B" text-anchor="middle">(unendlich)</text>
     </g>
 
     <!-- Quaderkanten (Sichtvolumen) -->
-    <line class="frustum-edge" x1="180.3" y1="189.9" x2="468.2" y2="225.2" />
-    <line class="frustum-edge" x1="180.3" y1="265.9" x2="468.2" y2="301.2" />
-    <line class="frustum-edge" x1="138.3" y1="216.1" x2="426.2" y2="251.4" />
-    <line class="frustum-edge" x1="138.3" y1="292.1" x2="426.2" y2="327.4" />
+    <line class="frustum-edge-ortho" x1="160" y1="180" x2="440" y2="220" />
+    <line class="frustum-edge-ortho" x1="160" y1="340" x2="440" y2="380" />
+    <line class="frustum-edge-ortho" x1="120" y1="210" x2="400" y2="250" />
+    <line class="frustum-edge-ortho" x1="120" y1="370" x2="400" y2="410" />
+
     <!-- Far Clipping Plane -->
-    <polygon points="468.2,225.2 426.2,251.4 426.2,327.4 468.2,301.2" class="far-plane" />
-    <text class="plane-label" x="458.2" y="217.2" fill="#DC2626">Far Plane (z_far)</text>
-    <!-- Objekt B (ferner Würfel) -->
+    <polygon points="440,220 400,250 400,410 440,380" class="far-plane" />
+    <g transform="translate(365, 195)">
+      <rect x="0" y="0" width="115" height="22" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+      <text class="plane-label" x="57" y="15" fill="#DC2626" text-anchor="middle">Far Plane (z_far)</text>
+    </g>
+
+    <!-- Objekt B (ferner Würfel, Kantenlänge s) -->
     <g id="ortho-cube-b">
-      <polygon points="357.3,289.2 385.1,292.6 385.1,264.6 357.3,261.2" fill="#60A5FA" stroke="#2563EB" stroke-width="1.2" />
-      <polygon points="370.3,253.0 357.3,261.2 385.1,264.6 398.1,256.4" fill="#BFDBFE" stroke="#2563EB" stroke-width="1.2" />
-      <polygon points="398.1,284.4 385.1,292.6 385.1,264.6 398.1,256.4" fill="#2563EB" stroke="#1D4ED8" stroke-width="1.2" />
-      <text x="393.1" y="276.6" font-size="13.5" font-weight="700" fill="#1E3A8A">Objekt B (fern)</text>
-      <text x="393.1" y="291.6" font-size="13" fill="#475569">Kantenlänge s</text>
+      <polygon points="340,345 372,349 372,317 340,313" fill="#60A5FA" stroke="#1D4ED8" stroke-width="1.3" />
+      <polygon points="355,302 340,313 372,317 387,306" fill="#BFDBFE" stroke="#1D4ED8" stroke-width="1.3" />
+      <polygon points="387,338 372,349 372,317 387,306" fill="#2563EB" stroke="#1D4ED8" stroke-width="1.3" />
+      <!-- Objekt B Label Badge (Shielded!) -->
+      <g transform="translate(330, 260)">
+        <rect x="0" y="0" width="105" height="34" rx="4" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.2" />
+        <text class="badge-label" x="52" y="15" fill="#1E3A8A" text-anchor="middle">Objekt B (fern)</text>
+        <text class="badge-sub" x="52" y="28" text-anchor="middle">Kantenlänge s</text>
+      </g>
     </g>
-    <!-- Objekt A (naher Würfel) -->
+
+    <!-- Objekt A (naher Würfel, gleiche Kantenlänge s) -->
     <g id="ortho-cube-a">
-      <polygon points="223.3,272.7 251.1,276.1 251.1,248.1 223.3,244.7" fill="#38BDF8" stroke="#0284C7" stroke-width="1.2" />
-      <polygon points="236.3,236.5 223.3,244.7 251.1,248.1 264.1,240.0" fill="#BAE6FD" stroke="#0284C7" stroke-width="1.2" />
-      <polygon points="264.1,268.0 251.1,276.1 251.1,248.1 264.1,240.0" fill="#0284C7" stroke="#0369A1" stroke-width="1.2" />
-      <text x="259.1" y="260.1" font-size="13.5" font-weight="700" fill="#0369A1">Objekt A (nah)</text>
-      <text x="259.1" y="275.1" font-size="13" fill="#475569">Kantenlänge s</text>
+      <polygon points="210,325 242,329 242,297 210,293" fill="#38BDF8" stroke="#0284C7" stroke-width="1.3" />
+      <polygon points="225,282 210,293 242,297 257,286" fill="#BAE6FD" stroke="#0284C7" stroke-width="1.3" />
+      <polygon points="257,318 242,329 242,297 257,286" fill="#0284C7" stroke="#0369A1" stroke-width="1.3" />
+      <!-- Objekt A Label Badge (Shielded!) -->
+      <g transform="translate(195, 238)">
+        <rect x="0" y="0" width="105" height="34" rx="4" fill="#FFFFFF" stroke="#7DD3FC" stroke-width="1.2" />
+        <text class="badge-label" x="52" y="15" fill="#0369A1" text-anchor="middle">Objekt A (nah)</text>
+        <text class="badge-sub" x="52" y="28" text-anchor="middle">Kantenlänge s</text>
+      </g>
     </g>
+
     <!-- Parallele Projektionsstrahlen (Ortho) -->
-    <line class="proj-ray" x1="385.1" y1="264.6" x2="152.8" y2="236.0" />
-    <line class="proj-ray" x1="385.1" y1="292.6" x2="152.8" y2="264.0" />
-    <line class="proj-ray" x1="251.1" y1="248.1" x2="152.8" y2="236.0" />
-    <line class="proj-ray" x1="251.1" y1="276.1" x2="152.8" y2="264.0" />
+    <line class="proj-ray-ortho" x1="372" y1="317" x2="135" y2="283" />
+    <line class="proj-ray-ortho" x1="372" y1="349" x2="135" y2="315" />
+    <line class="proj-ray-ortho" x1="242" y1="297" x2="135" y2="283" />
+    <line class="proj-ray-ortho" x1="242" y1="329" x2="135" y2="315" />
 
     <!-- Near Clipping Plane (Bildebene) -->
-    <polygon points="180.3,189.9 138.3,216.1 138.3,292.1 180.3,265.9" class="near-plane" />
-    <text class="plane-label" x="165.3" y="181.9" fill="#059669">Near Plane (z_near) = Bildebene</text>
-    <!-- Projizierte Flächen auf Bildebene -->
-    <polygon points="165.9,227.9 152.8,236.0 152.8,264.0 165.9,255.9" fill="rgba(245, 158, 11, 0.45)" stroke="#D97706" stroke-width="2" />
-    <!-- Dimension marker for projected height -->
-    <line class="dim-line" x1="158.8" y1="236.0" x2="158.8" y2="264.0" marker-start="url(#dim-arrow-start)" marker-end="url(#dim-arrow-end)" />
-    <text class="dim-text" x="184.8" y="253.0" fill="#B45309" font-weight="700">h_A' = h_B'</text>
-    
-    <!-- Info-Badge auf Bildebene -->
-    <g transform="translate(80.3, 287.9)">
-      <rect x="0" y="0" width="160" height="38" rx="4" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1" />
-      <text x="80" y="15" font-size="13.5" font-weight="700" fill="#1D4ED8" text-anchor="middle">Exakt gleiche Bildgröße!</text>
-      <text x="80" y="30" font-size="13" fill="#475569" text-anchor="middle">Keine Tiefenverkürzung</text>
+    <polygon points="160,180 120,210 120,370 160,340" class="near-plane" />
+    <g transform="translate(70, 142)">
+      <rect x="0" y="0" width="170" height="22" rx="4" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1" />
+      <text class="plane-label" x="85" y="15" fill="#047857" text-anchor="middle">Near Plane = Bildebene</text>
     </g>
 
-    <!-- Bemaßung z_near und z_far -->
-    <line class="dim-line" x1="94.9" y1="285" x2="180.3" y2="285" marker-start="url(#dim-arrow-start)" marker-end="url(#dim-arrow-end)" />
-    <text class="dim-text" x="137.60000000000002" y="280">near</text>
+    <!-- Projizierte Fläche auf Bildebene -->
+    <polygon points="148,273 135,283 135,315 148,305" fill="rgba(245, 158, 11, 0.55)" stroke="#D97706" stroke-width="2" />
     
-    <line class="dim-line" x1="94.9" y1="305" x2="468.2" y2="305" marker-start="url(#dim-arrow-start)" marker-end="url(#dim-arrow-end)" />
-    <text class="dim-text" x="281.55" y="300">far</text>
+    <!-- Höhenvergleich-Bemaßung auf Bildebene -->
+    <line class="dim-line" x1="140" y1="283" x2="140" y2="315" marker-start="url(#dim-arrow-amber-start)" marker-end="url(#dim-arrow-amber-end)" stroke="#D97706" stroke-width="1.8" />
+    <g transform="translate(148, 287)">
+      <rect x="0" y="0" width="90" height="24" rx="3" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1" />
+      <text font-size="13" font-weight="700" fill="#B45309" x="45" y="16" text-anchor="middle">h_A' = h_B'</text>
+    </g>
 
+    <!-- Bemaßung z_near und z_far (unten separat platziert) -->
+    <g transform="translate(0, 420)">
+      <line class="dim-line" x1="80" y1="14" x2="140" y2="14" marker-start="url(#dim-arrow-start)" marker-end="url(#dim-arrow-end)" />
+      <text class="dim-text" x="110" y="9">near</text>
+      
+      <line class="dim-line" x1="80" y1="36" x2="420" y2="36" marker-start="url(#dim-arrow-start)" marker-end="url(#dim-arrow-end)" />
+      <text class="dim-text" x="250" y="31">far</text>
+    </g>
 
-    <!-- Merkmale Orthogonal -->
-    <g transform="translate(18, 335)">
-      <rect x="0" y="0" width="490" height="185" rx="7" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2" />
-      
-      <text class="info-label" x="14" y="24">Mathematik &amp; Eigenschaften:</text>
-      <text class="info-val" x="14" y="44">• <tspan font-weight="600">Sichtvolumen:</tspan> Axenparalleler Quader [left, right] × [bottom, top] × [-far, -near]</text>
-      <text class="info-val" x="14" y="63">• <tspan font-weight="600">Projektion:</tspan> x' = 2·(x - left)/(right - left) - 1,  y' = 2·(y - bottom)/(top - bottom) - 1</text>
-      <text class="info-val" x="14" y="82">• <tspan font-weight="600">Keine Division durch Z:</tspan> Parallele Linien bleiben immer strikt parallel</text>
-      <text class="info-val" x="14" y="101">• <tspan font-weight="600">Größenkonstanz:</tspan> Objektabmessungen sind unabhängig vom Abstand zur Kamera</text>
-      
-      <line x1="14" y1="114" x2="476" y2="114" stroke="#CBD5E1" stroke-width="1" />
-      
-      <text class="info-label" x="14" y="134" fill="#004B96">Einsatzbereiche:</text>
-      <text class="info-val" x="14" y="153">✓ CAD-Software &amp; technische Konstruktionszeichnungen (exakte Maße ablesbar)</text>
-      <text class="info-val" x="14" y="171">✓ 2D-Benutzeroberflächen, HUDs (Head-up-Displays), Diagrammachsen, Grundrisse</text>
+    <!-- Didaktische Kernaussage (Bottom Banner) -->
+    <g transform="translate(18, 470)">
+      <rect x="0" y="0" width="509" height="42" rx="6" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.2" />
+      <text class="badge-label" x="254" y="18" fill="#15803D" text-anchor="middle">Exakt gleiche Bildgröße: h_A' = h_B'</text>
+      <text class="badge-sub" x="254" y="33" fill="#166534" text-anchor="middle">Keine Tiefenverkürzung • Parallele Linien bleiben strikt parallel</text>
     </g>
   </g>
 
@@ -187,121 +194,133 @@
   <!-- ========================================== -->
   <!-- PANEL 2: PERSPEKTIVISCHE PROJEKTION        -->
   <!-- ========================================== -->
-  <g transform="translate(565, 75)">
-    <rect class="card-bg" x="0" y="0" width="525" height="535" filter="url(#card-shadow)" />
+  <g transform="translate(595, 80)">
+    <rect class="card-bg" x="0" y="0" width="545" height="525" filter="url(#card-shadow)" />
     
     <!-- Panel Header -->
-    <path d="M 0 10 Q 0 0 10 0 L 515 0 Q 525 0 525 10 L 525 50 L 0 50 Z" class="card-header-persp" />
-    <circle cx="26" cy="25" r="14" fill="#7C3AED" />
-    <text x="26" y="30" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">B</text>
-    <text class="panel-title" x="50" y="24" fill="#6D28D9">Perspektivische Projektion (gluPerspective)</text>
-    <text class="panel-subtitle" x="50" y="42">Pyramidenstumpf (Frustum) • Konvergierende Strahlen • Realistischer Tiefeneindruck</text>
+    <path d="M 0 10 Q 0 0 10 0 L 535 0 Q 545 0 545 10 L 545 52 L 0 52 Z" class="card-header-persp" />
+    <circle cx="26" cy="26" r="14" fill="#7C3AED" />
+    <text x="26" y="31" font-size="13.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">B</text>
+    <text class="panel-title" x="48" y="24" fill="#6D28D9">Perspektivische Projektion</text>
+    <text class="panel-subtitle" x="48" y="42">Pyramidenstumpf • Konvergierende Strahlen</text>
     
-    <g transform="translate(310, 14)">
-      <rect x="0" y="0" width="200" height="22" rx="4" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1" />
-      <text class="badge-code" x="100" y="15" fill="#6D28D9" text-anchor="middle">gl.Perspective(fovy, asp, n, f)</text>
+    <g transform="translate(345, 14)">
+      <rect x="0" y="0" width="185" height="24" rx="4" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.2" />
+      <text class="badge-code" x="92" y="16" fill="#6D28D9" text-anchor="middle">gl.Perspective(fovy, asp, n, f)</text>
     </g>
 
     <!-- 3D SZENE PERSPEKTIVISCH -->
-
     <!-- Frustum Volumen (semi-transparent) -->
-    <polygon points="70.0,230.0 488.2,178.7 406.1,230.0" class="frustum-volume-persp" />
-    <polygon points="70.0,230.0 406.1,230.0 406.1,374.0" class="frustum-volume-persp" />
-    <polygon points="70.0,230.0 488.2,322.7 406.1,374.0" class="frustum-volume-persp" />
+    <polygon points="65,290 440,190 380,240" class="frustum-volume-persp" />
+    <polygon points="65,290 380,240 380,410" class="frustum-volume-persp" />
+    <polygon points="65,290 440,360 380,410" class="frustum-volume-persp" />
+
     <!-- Optische Achse (Blickrichtung Z) -->
-    <line class="axis-line" x1="70.0" y1="230.0" x2="486.9" y2="281.2" marker-end="url(#arrow-axis)" />
-    <text class="axis-label" x="491.9" y="285.2">+Z (Blick)</text>
+    <line class="axis-line" x1="65" y1="290" x2="475" y2="345" marker-end="url(#arrow-axis)" />
+    <g transform="translate(478, 340)">
+      <rect x="0" y="-12" width="60" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+      <text class="axis-label" x="30" y="2" text-anchor="middle">+Z Blick</text>
+    </g>
 
     <!-- Kamera / Augpunkt (Center of Projection COP) -->
-    <g transform="translate(22.0, 212.0)">
-      <!-- Camera Body -->
-      <path d="M 6 8 L 14 8 L 17 5 L 29 5 L 32 8 L 40 8 Q 44 8 44 12 L 44 26 Q 44 30 40 30 L 6 30 Q 2 30 2 26 L 2 12 Q 2 8 6 8 Z" fill="#6D28D9" />
-      <circle cx="23" cy="19" r="6" fill="#EDE9FE" stroke="#5B21B6" stroke-width="1.5" />
-      <!-- Small lens cone -->
-      <path d="M 44 13 L 52 8 L 52 27 L 44 22 Z" fill="#7C3AED" />
-      <circle cx="52" cy="17.5" r="2.5" fill="#EF4444" />
-      <text x="23" y="42" font-size="13.5" font-weight="700" fill="#5B21B6" text-anchor="middle">COP (Auge)</text>
-      <text x="23" y="52" font-size="13" fill="#64748B" text-anchor="middle">(0, 0, 0)</text>
+    <g transform="translate(14, 255)">
+      <path d="M 6 12 L 14 12 L 18 8 L 30 8 L 34 12 L 44 12 Q 48 12 48 16 L 48 30 Q 48 34 44 34 L 6 34 Q 2 34 2 30 L 2 16 Q 2 12 6 12 Z" fill="#6D28D9" />
+      <circle cx="25" cy="23" r="6" fill="#EDE9FE" stroke="#5B21B6" stroke-width="1.5" />
+      <path d="M 48 17 L 56 12 L 56 31 L 48 26 Z" fill="#7C3AED" />
+      <circle cx="56" cy="21.5" r="2.5" fill="#EF4444" />
+      <!-- COP Label sauber unterhalb der Kamera platziert -->
+      <g transform="translate(-10, 44)">
+        <rect x="0" y="0" width="86" height="22" rx="4" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.2" />
+        <text class="badge-label" x="43" y="15" fill="#5B21B6" text-anchor="middle">COP (0, 0, 0)</text>
+      </g>
     </g>
-
-
-    <!-- FOV Winkelbogen -->
-    <path d="M 98.0 220.0 A 30 30 0 0 1 98.0 240.0" fill="none" stroke="#D97706" stroke-width="1.8" />
-    <text x="108.0" y="234.0" font-size="13.5" font-weight="700" fill="#D97706">FOV_y</text>
 
     <!-- Pyramidenkanten (Frustum) -->
-    <line class="frustum-edge-persp" x1="70.0" y1="230.0" x2="488.2" y2="178.7" />
-    <line class="frustum-edge-persp" x1="70.0" y1="230.0" x2="488.2" y2="322.7" />
-    <line class="frustum-edge-persp" x1="70.0" y1="230.0" x2="406.1" y2="230.0" />
-    <line class="frustum-edge-persp" x1="70.0" y1="230.0" x2="406.1" y2="374.0" />
+    <line class="frustum-edge-persp" x1="65" y1="290" x2="440" y2="190" />
+    <line class="frustum-edge-persp" x1="65" y1="290" x2="440" y2="360" />
+    <line class="frustum-edge-persp" x1="65" y1="290" x2="380" y2="240" />
+    <line class="frustum-edge-persp" x1="65" y1="290" x2="380" y2="410" />
+
+    <!-- FOV Winkelbogen & Beschriftung (nach Linien gerendert, sauber im Öffnungswinkel) -->
+    <path d="M 98 281 A 35 35 0 0 1 98 299" fill="none" stroke="#D97706" stroke-width="2" />
+    <g transform="translate(105, 252)">
+      <rect x="0" y="0" width="48" height="22" rx="3" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1.2" />
+      <text font-size="13" font-weight="700" fill="#B45309" x="24" y="15" text-anchor="middle">FOV_y</text>
+    </g>
 
     <!-- Far Clipping Plane (groß) -->
-    <polygon points="488.2,178.7 406.1,230.0 406.1,374.0 488.2,322.7" class="far-plane" />
-    <text class="plane-label" x="478.2" y="170.7" fill="#DC2626">Far Plane (z_far)</text>
-    <!-- Objekt B (ferner Würfel, 3D identische Größe) -->
+    <polygon points="440,190 380,240 380,410 440,360" class="far-plane" />
+    <g transform="translate(365, 165)">
+      <rect x="0" y="0" width="115" height="22" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+      <text class="plane-label" x="57" y="15" fill="#DC2626" text-anchor="middle">Far Plane (z_far)</text>
+    </g>
+
+    <!-- Objekt B (ferner Würfel, identische 3D-Kantenlänge s) -->
     <g id="persp-cube-b">
-      <polygon points="367.2,290.4 395.0,293.8 395.0,265.8 367.2,262.4" fill="#C4B5FD" stroke="#7C3AED" stroke-width="1.2" />
-      <polygon points="380.2,254.2 367.2,262.4 395.0,265.8 408.0,257.6" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.2" />
-      <polygon points="408.0,285.6 395.0,293.8 395.0,265.8 408.0,257.6" fill="#7C3AED" stroke="#6D28D9" stroke-width="1.2" />
-      <text x="403.0" y="277.8" font-size="13.5" font-weight="700" fill="#5B21B6">Objekt B (fern)</text>
-      <text x="403.0" y="292.8" font-size="13" fill="#475569">Kantenlänge s</text>
+      <polygon points="340,345 372,349 372,317 340,313" fill="#C4B5FD" stroke="#6D28D9" stroke-width="1.3" />
+      <polygon points="355,302 340,313 372,317 387,306" fill="#EDE9FE" stroke="#6D28D9" stroke-width="1.3" />
+      <polygon points="387,338 372,349 372,317 387,306" fill="#7C3AED" stroke="#5B21B6" stroke-width="1.3" />
+      <!-- Objekt B Label Badge (Shielded!) -->
+      <g transform="translate(330, 260)">
+        <rect x="0" y="0" width="105" height="34" rx="4" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.2" />
+        <text class="badge-label" x="52" y="15" fill="#5B21B6" text-anchor="middle">Objekt B (fern)</text>
+        <text class="badge-sub" x="52" y="28" text-anchor="middle">Kantenlänge s</text>
+      </g>
     </g>
-    <!-- Objekt A (naher Würfel, 3D identische Größe) -->
+
+    <!-- Objekt A (naher Würfel, identische 3D-Kantenlänge s) -->
     <g id="persp-cube-a">
-      <polygon points="223.3,272.7 251.1,276.1 251.1,248.1 223.3,244.7" fill="#A78BFA" stroke="#6D28D9" stroke-width="1.2" />
-      <polygon points="236.3,236.5 223.3,244.7 251.1,248.1 264.1,240.0" fill="#DDD6FE" stroke="#6D28D9" stroke-width="1.2" />
-      <polygon points="264.1,268.0 251.1,276.1 251.1,248.1 264.1,240.0" fill="#6D28D9" stroke="#5B21B6" stroke-width="1.2" />
-      <text x="259.1" y="260.1" font-size="13.5" font-weight="700" fill="#5B21B6">Objekt A (nah)</text>
-      <text x="259.1" y="275.1" font-size="13" fill="#475569">Kantenlänge s</text>
+      <polygon points="210,325 242,329 242,297 210,293" fill="#A78BFA" stroke="#6D28D9" stroke-width="1.3" />
+      <polygon points="225,282 210,293 242,297 257,286" fill="#DDD6FE" stroke="#6D28D9" stroke-width="1.3" />
+      <polygon points="257,318 242,329 242,297 257,286" fill="#6D28D9" stroke="#5B21B6" stroke-width="1.3" />
+      <!-- Objekt A Label Badge (Shielded!) -->
+      <g transform="translate(195, 238)">
+        <rect x="0" y="0" width="105" height="34" rx="4" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.2" />
+        <text class="badge-label" x="52" y="15" fill="#6D28D9" text-anchor="middle">Objekt A (nah)</text>
+        <text class="badge-sub" x="52" y="28" text-anchor="middle">Kantenlänge s</text>
+      </g>
     </g>
+
     <!-- Konvergierende Projektionsstrahlen zum Augpunkt COP -->
-    <line class="proj-ray-persp" x1="395.0" y1="265.8" x2="70.0" y2="230.0" />
-    <line class="proj-ray-persp" x1="395.0" y1="293.8" x2="70.0" y2="230.0" />
-    <line class="proj-ray-persp" x1="251.1" y1="248.1" x2="70.0" y2="230.0" />
-    <line class="proj-ray-persp" x1="251.1" y1="276.1" x2="70.0" y2="230.0" />
+    <line class="proj-ray-persp" x1="372" y1="317" x2="65" y2="290" />
+    <line class="proj-ray-persp" x1="372" y1="349" x2="65" y2="290" />
+    <line class="proj-ray-persp" x1="242" y1="297" x2="65" y2="290" />
+    <line class="proj-ray-persp" x1="242" y1="329" x2="65" y2="290" />
 
-    <!-- Near Clipping Plane (klein, Frustum-Schnitt) -->
-    <polygon points="169.6,216.6 149.1,229.4 149.1,265.4 169.6,252.6" class="near-plane" />
-    <text class="plane-label" x="154.6" y="208.6" fill="#059669">Near Plane (z_near)</text>
-    <!-- Projizierte Fläche Objekt A (groß) -->
-    <polygon points="162.7,234.2 156.0,238.4 156.0,252.8 162.7,248.6" fill="rgba(245, 158, 11, 0.5)" stroke="#D97706" stroke-width="1.8" />
-    <!-- Projizierte Fläche Objekt B (deutlich kleiner!) -->
-    <polygon points="161.2,237.3 157.5,239.6 157.5,247.5 161.2,245.2" fill="rgba(239, 68, 68, 0.7)" stroke="#B91C1C" stroke-width="1.8" />
-    
-    <!-- Dimension marker for projected heights comparing h_A' vs h_B' -->
-    <line class="dim-line" x1="162.0" y1="238.4" x2="162.0" y2="252.8" marker-start="url(#dim-arrow-start)" marker-end="url(#dim-arrow-end)" />
-    <text class="dim-text" x="188.0" y="248.60000000000002" fill="#B45309" font-weight="700">h_A' &gt;&gt; h_B'</text>
-    
-    <!-- Info-Badge auf Bildebene -->
-    <g transform="translate(68.6, 274.6)">
-      <rect x="0" y="0" width="168" height="38" rx="4" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1" />
-      <text x="84" y="15" font-size="13.5" font-weight="700" fill="#6D28D9" text-anchor="middle">Perspektivisch verkleinert!</text>
-      <text x="84" y="30" font-size="13" fill="#475569" text-anchor="middle">Ferne Objekte wirken kleiner</text>
+    <!-- Near Clipping Plane (klein, Schnitt durch Pyramide) -->
+    <polygon points="155,270 135,280 135,320 155,310" class="near-plane" />
+    <g transform="translate(70, 215)">
+      <rect x="0" y="0" width="150" height="22" rx="4" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1" />
+      <text class="plane-label" x="75" y="15" fill="#047857" text-anchor="middle">Near Plane (Bildebene)</text>
     </g>
 
-    <!-- Bemaßung z_near und z_far -->
-    <line class="dim-line" x1="70.0" y1="285" x2="169.6" y2="285" marker-start="url(#dim-arrow-start)" marker-end="url(#dim-arrow-end)" />
-    <text class="dim-text" x="119.8" y="280">near</text>
-    
-    <line class="dim-line" x1="70.0" y1="305" x2="488.2" y2="305" marker-start="url(#dim-arrow-start)" marker-end="url(#dim-arrow-end)" />
-    <text class="dim-text" x="279.1" y="300">far</text>
+    <!-- Projizierte Flächen auf Near Plane -->
+    <!-- Objekt A Projektion (deutlich größer) -->
+    <polygon points="152,284 144,288 144,307 152,303" fill="rgba(245, 158, 11, 0.55)" stroke="#D97706" stroke-width="1.8" />
+    <!-- Objekt B Projektion (deutlich kleiner, da weiter entfernt) -->
+    <polygon points="150,288 145,291 145,301 150,298" fill="rgba(239, 68, 68, 0.65)" stroke="#B91C1C" stroke-width="1.5" />
 
+    <!-- Höhenvergleich-Bemaßung auf Bildebene -->
+    <line class="dim-line" x1="148" y1="288" x2="148" y2="307" marker-start="url(#dim-arrow-amber-start)" marker-end="url(#dim-arrow-amber-end)" stroke="#D97706" stroke-width="1.8" />
+    <g transform="translate(155, 287)">
+      <rect x="0" y="0" width="90" height="24" rx="3" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1" />
+      <text font-size="13" font-weight="700" fill="#B45309" x="45" y="16" text-anchor="middle">h_A' &gt; h_B'</text>
+    </g>
 
-    <!-- Merkmale Perspektivisch -->
-    <g transform="translate(18, 335)">
-      <rect x="0" y="0" width="490" height="185" rx="7" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2" />
+    <!-- Bemaßung z_near und z_far (unten separat platziert) -->
+    <g transform="translate(0, 420)">
+      <line class="dim-line" x1="65" y1="14" x2="145" y2="14" marker-start="url(#dim-arrow-start)" marker-end="url(#dim-arrow-end)" />
+      <text class="dim-text" x="105" y="9">near</text>
       
-      <text class="info-label" x="14" y="24">Mathematik &amp; Eigenschaften:</text>
-      <text class="info-val" x="14" y="44">• <tspan font-weight="600">Sichtvolumen:</tspan> Pyramidenstumpf (Frustum) mit Spitzenwinkel FOV_y</text>
-      <text class="info-val" x="14" y="63">• <tspan font-weight="600">Perspektivische Division:</tspan> x' = x · (near / z),  y' = y · (near / z)  (Division durch -z)</text>
-      <text class="info-val" x="14" y="82">• <tspan font-weight="600">Fluchtpunkt-Effekt:</tspan> Parallele Kanten in die Tiefe konvergieren im Fluchtpunkt</text>
-      <text class="info-val" x="14" y="101">• <tspan font-weight="600">Seitenverhältnis:</tspan> Aspect Ratio = Breite / Höhe verhindert Verzerrung</text>
-      
-      <line x1="14" y1="114" x2="476" y2="114" stroke="#CBD5E1" stroke-width="1" />
-      
-      <text class="info-label" x="14" y="134" fill="#6D28D9">Einsatzbereiche:</text>
-      <text class="info-val" x="14" y="153">✓ 3D-Simulationen, Digitale Zwillinge &amp; Virtuelle Inbetriebnahmen</text>
-      <text class="info-val" x="14" y="171">✓ Fotorealistische Szenen, Virtual Reality (VR), 3D-Roboteranimationen</text>
+      <line class="dim-line" x1="65" y1="36" x2="410" y2="36" marker-start="url(#dim-arrow-start)" marker-end="url(#dim-arrow-end)" />
+      <text class="dim-text" x="238" y="31">far</text>
+    </g>
+
+    <!-- Didaktische Kernaussage (Bottom Banner) -->
+    <g transform="translate(18, 470)">
+      <rect x="0" y="0" width="509" height="42" rx="6" fill="#FAF5FF" stroke="#D8B4FE" stroke-width="1.2" />
+      <text class="badge-label" x="254" y="18" fill="#7E22CE" text-anchor="middle">Perspektivische Verkleinerung: h_A' &gt; h_B'</text>
+      <text class="badge-sub" x="254" y="33" fill="#6B21A8" text-anchor="middle">Ferne Objekte wirken kleiner • Division durch Z erzeugt Tiefeneffekt</text>
     </g>
   </g>
 
