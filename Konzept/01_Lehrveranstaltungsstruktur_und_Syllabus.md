@@ -573,8 +573,8 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - Zero-Crossing-Algorithmus: Detektion des Vorzeichenwechsels einer Indikatorfunktion $g(\mathbf{x}) = 0$ und iterative Intervallhalbierung (Bisektion) bis auf Zeittoleranz $\epsilon_t \le 10^{-6}\,\text{s}$.
   - Der Zeno-Kollaps beim unelastischen Bouncing Ball und dessen Beherrschung via Velocity-Threshold ($v < v_{\text{stick}} \implies \text{Haftreibung / Auflage}$).
   - Synthese des Digitalen Zwillings: Co-Simulation mit dem Functional Mock-up Interface (FMI) und Kopplung mit SPS-Steuerungen (OPC UA / TwinCAT / TIA Portal) für die Virtuelle Inbetriebnahme.
-- **Moodle-Abschlusstest (20 min):**
-  - **Moodle-Test 3:** ODE-Numerik (Heun, RK4, Anti-Windup), Diskrete Simulation (DES, Box-Muller, Welford), Hybride Systeme (Zero-Crossing, Sticking, VIBN) (Kapitel 08–10).
+- **Moodle-Quiz 4 (20 min):**
+  - **Moodle-Quiz 4:** Diskrete Simulation (DES, Box-Muller, Welford), Hybride Systeme (Zero-Crossing, Sticking, VIBN) und Synthese (Kapitel 09–11).
 - **Abschluss-Kolloquium: Projekt-Präsentationen & Live-Demos (80 min):**
   - **Abgabe Labor-Meilenstein 4 (im gewählten Track A oder B).**
   - **Abschlussprojekt „Digital Twin Challenge“ – Live-Pitches & Oral Defense:** Jedes Team präsentiert in einem straffen **7-Minuten-Pitch** (3 min Folien/Mathematik + 3 min Live-Demo des Zwillings + 1 min Q&A und Ad-hoc-Stresstest durch Dozierende).

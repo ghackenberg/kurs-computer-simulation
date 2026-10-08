@@ -894,9 +894,9 @@ Häufige Fehlerquellen in Studierendenprojekten und wie Sie diese vermeiden:
 
 ---
 
-### Prüfungsrelevanz: Was müssen Sie beherrschen?
+### Kompetenzprofil: Was müssen Sie beherrschen?
 
-Für die mündliche/schriftliche Prüfung im Fach Systemsimulation / Digitaler Zwilling:
+Für die Moodle-Quizzes und die mündliche Projektverteidigung im Kolloquium:
 
 <div class="columns top">
 <div>
@@ -1065,6 +1065,6 @@ Der durchgängige Weg von der Problemstellung zur simulationsgestützten Erkennt
 
 > *"Die Simulation ist die Kunst, die Konsequenzen von Entscheidungen zu erforschen, bevor diese in der Realität teure oder fatale Fehler verursachen."*
 
-Viel Erfolg bei Ihrer Projektarbeit und der bevorstehenden Prüfung!
+Viel Erfolg bei Ihrer Projektarbeit und der Projektverteidigung im Kolloquium!
 
 Nutzen Sie die erlernten Fähigkeiten für Ihre Bachelorarbeit und Ihre zukünftigen Aufgaben als Entwickler moderner Automatisierungs- und Industriesysteme!
