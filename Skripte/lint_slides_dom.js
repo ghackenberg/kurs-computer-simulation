@@ -126,8 +126,8 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const sections = Array.from(document.querySelectorAll('section'));
 
     sections.forEach((sec, idx) => {
-      const isAdvancedBg = sec.hasAttribute('data-marpit-advanced-background');
-      if (isAdvancedBg) return;
+      const bgType = sec.getAttribute('data-marpit-advanced-background');
+      if (bgType === 'background' || bgType === 'pseudo') return;
 
       const pagination = sec.getAttribute('data-marpit-pagination') || `${idx + 1}`;
       const clientHeight = sec.clientHeight;

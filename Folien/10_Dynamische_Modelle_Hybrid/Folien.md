@@ -1506,28 +1506,19 @@ Der Block steuert seine eigene Ausführungs-frequenz dynamisch basierend auf dem
 
 ---
 
-<div class="columns">
-<div class="three">
+![bg right:35% contain](./Illustrationen/Ausblick_Epilog.png)
 
-## Ausblick: Synthese, VIBN & Digitaler Zwilling
+## Ausblick: Synthese & Epilog
 
-Mit Abschluss der vier Modellklassen verfügen Sie über das komplette theoretische und softwaretechnische Rüstzeug:
+Das gesamte Methodenspektrum steht nun zur Verfügung:
 
-1. **Statisch kontinuierlich / diskret (Kapitel 2 & 7):** Stationäre Skalarfelder und elastische Fachwerke via LGS.
-2. **Dynamisch kontinuierlich (Kapitel 8):** Physikalische Bewegungsgleichungen via ODE und RK4.
-3. **Dynamisch diskret (Kapitel 9):** Stochastische Ereignisprozesse via Next-Event-Queues.
-4. **Dynamisch hybrid (Kapitel 10):** Gekoppelte CPS-Systeme via S-Functions und Zero-Crossings.
+1. **Statisch (Kap. 2 & 7):** Stationäre Felder & Fachwerke via LGS.
+2. **Kontinuierlich (Kap. 8):** Bewegungsgleichungen via ODE & RK4.
+3. **Diskret (Kap. 9):** Stochastische Ereignisse via Queues.
+4. **Hybrid (Kap. 10):** S-Functions, Bisektion & Zeno-Beherrschung.
 
-**Im finalen Kapitel 11 (Epilog) vollenden wir den Bogen:**
-- Wie werden diese Simulationsmodelle zur **Virtuellen Inbetriebnahme (VIBN)** von Sondermaschinen eingesetzt?
-- Wie erfolgt der standardisierte Modellaustausch über **FMI / FMU** in industriellen Co-Simulationen?
-- Leitfaden zur optimalen Vorbereitung auf die **Gesamtprüfung** im Fach Systemsimulation.
-
-</div>
-<div class="two">
-
-![bg right:40% contain](./Illustrationen/Ausblick_Epilog.png)
-
-</div>
-</div>
+**Kapitel 11 (Epilog) vollendet den Bogen:**
+- **Virtuelle Inbetriebnahme (VIBN)** von Sondermaschinen
+- **FMI / FMU:** Standard für Co-Simulationen
+- **Synthese:** Leitfaden zur erfolgreichen Projektarbeit
 

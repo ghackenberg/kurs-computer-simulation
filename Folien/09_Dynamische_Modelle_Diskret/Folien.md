@@ -1368,27 +1368,18 @@ Console.WriteLine(
 
 ---
 
-<div class="columns">
-<div class="three">
+![bg right:35% contain](./Illustrationen/Ausblick_Hybrid.png)
 
-## Ausblick: Hybride dynamische Systeme
+## Ausblick: Hybride Systeme
 
-In der industriellen Praxis existieren kontinuierliche Physik und diskrete Ereignisse selten isoliert voneinander:
+In der Praxis existieren kontinuierliche Physik und diskrete Ereignisse selten getrennt:
 
-- **Kontinuierliche Welt (Kapitel 8):** Massen, Strömungen, Geschwindigkeiten und Temperaturen gehorchen Differentialgleichungen ($\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}, \mathbf{u})$).
-- **Diskrete Welt (Kapitel 9):** Regler-Abtasttakte, Schaltzustände von Ventilen, Endlagensensoren und digitale Telegramme schalten instantan.
-- **Die mechatronische Realität:**
-  - Ein Druckluftzylinder fährt kontinuierlich aus, bis er hart auf einen mechanischen Anschlag prallt (*Stoß / Kontakt*).
-  - Ein kontinuierlicher Füllstand löst bei Erreichen eines Schwellwerts einen Alarm aus (*Zero-Crossing / Schwellwert*).
-  - Eine digitale SPS tastet kontinuierliche Motordrehzahlen mit festem Zyklus $\Delta t$ ab (*Sample-and-Hold*).
+- **Kontinuierlich (Kapitel 8):** Differentialgleichungen $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}, \mathbf{u})$ (Massen, Strömungen, Temperatur).
+- **Diskret (Kapitel 9):** Diskrete Ereignisse (Reglertakt, Ventile, Telegramme).
+- **Mechatronische Kopplung:**
+  - Zylinder trifft harten Anschlag (*Stoß / Kontakt*)
+  - Füllstand löst Alarm aus (*Zero-Crossing*)
+  - SPS tastet periodisch mit $\Delta t$ ab (*Sample-and-Hold*)
 
-**Kapitel 10 führt beide Welten zusammen:** Die **Hybride Systemsimulation** mit S-Functions, Ereignisdetektion via Bisektion und der Beherrschung des gefürchteten Zeno-Phänomens!
-
-</div>
-<div class="two">
-
-![bg right:40% contain](./Illustrationen/Ausblick_Hybrid.png)
-
-</div>
-</div>
+➔ **Kapitel 10:** S-Functions, Bisektion & Zeno-Beherrschung!
 

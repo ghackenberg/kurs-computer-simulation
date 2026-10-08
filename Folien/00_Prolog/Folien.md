@@ -132,23 +132,30 @@ Die Teilnehmer*innen sollten nach erfolgreichem absolvieren dieses Kurses die fo
 
 ![bg right](./Illustrationen/Kursinhalte.png)
 
-## Kursinhalte
+## Kursinhalte (1/2)
 
-Dieser Kurs umfasst daraus abgeleitet die folgenden Kapitel:
+Dieser Kurs umfasst die folgenden Themenblöcke:
 
 1. [Einführung](../01_Einführung/)
-1. Technische & methodische Grundlagen:
-   1. [2D-Visualisierung (Pixel)](../02_Visualisierung_2D_Pixel/)
-   1. [2D-Visualisierung (Vektor)](../03_Visualisierung_2D_Vektor/)
-   1. [2D-Visualisierung (Diagramme & Graphen)](../04_Visualisierung_2D_Diagramme/)
-   1. [3D-Visualisierung (OpenGL)](../05_Visualisierung_3D_OpenGL/)
-   1. [Multithreading](../06_Multithreading/)
-1. Simulationsmodelle:
-   1. [Statische Modelle](../07_Statische_Modelle/)
-   1. [Dynamische Modelle (Kontinuierlich)](../08_Dynamische_Modelle_Kontinuierlich/)
-   1. [Dynamische Modelle (Diskret)](../09_Dynamische_Modelle_Diskret/)
-   1. [Dynamische Modelle (Hybrid)](../10_Dynamische_Modelle_Hybrid/)
-1. [Epilog & Synthese](../11_Epilog/)
+2. Technische & methodische Grundlagen:
+   - [2D-Visualisierung (Pixel)](../02_Visualisierung_2D_Pixel/)
+   - [2D-Visualisierung (Vektor)](../03_Visualisierung_2D_Vektor/)
+   - [2D-Visualisierung (Diagramme & Graphen)](../04_Visualisierung_2D_Diagramme/)
+   - [3D-Visualisierung (OpenGL)](../05_Visualisierung_3D_OpenGL/)
+   - [Multithreading](../06_Multithreading/)
+
+---
+
+![bg right](./Illustrationen/Kursinhalte.png)
+
+## Kursinhalte (2/2)
+
+3. Simulationsmodelle:
+   - [Statische Modelle](../07_Statische_Modelle/)
+   - [Dynamische Modelle (Kontinuierlich)](../08_Dynamische_Modelle_Kontinuierlich/)
+   - [Dynamische Modelle (Diskret)](../09_Dynamische_Modelle_Diskret/)
+   - [Dynamische Modelle (Hybrid)](../10_Dynamische_Modelle_Hybrid/)
+4. [Epilog & Synthese](../11_Epilog/)
 
 ---
 
