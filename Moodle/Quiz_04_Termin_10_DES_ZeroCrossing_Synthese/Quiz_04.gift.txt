@@ -1,0 +1,75 @@
+// ==============================================================================
+// Moodle GIFT Quiz 04: Diskrete Ereignissimulation, Hybride Dynamik & Synthese
+// Lehrveranstaltung: Systemsimulation / Digitaler Zwilling (FH OÖ, Campus Wels)
+// Stoff: Kapitel 09 bis 11 (Termin 9 bis 10/11)
+// ==============================================================================
+
+$CATEGORY: $course$/Quiz_04_DES_ZeroCrossing_Synthese
+
+::Q4_1_Littles_Gesetz_Berechnung::[markdown]Eine automatisierte Prüfstation in einer flexiblen Fertigungszelle wird als stationäres $M/M/1$-Warteschlangensystem betrieben\:
+* Mittlere Ankunftsrate neuer Werkstücke\: $\lambda \= 24\,\frac\{\mathrm\{Teile\}\}\{\mathrm\{h\}\}$ (Poisson-Prozess)
+* Mittlere Prüfdauer an der Station\: $\bar\{t\}_s \= 2{,}0\,\mathrm\{Minuten\} \= \frac\{1\}\{30\}\,\mathrm\{h\}$ (exponentialverteilt mit Servicerate $\mu \= 30\,\frac\{\mathrm\{Teile\}\}\{\mathrm\{h\}\}$)
+
+Die mittlere Verweildauer eines Werkstücks im Gesamtsystem (Warteschlange + Prüfvorgang) beträgt\:
+$$W \= \frac\{1\}\{\mu - \lambda\} \= \frac\{1\}\{30 - 24\}\,\mathrm\{h\} \= \frac\{1\}\{6\}\,\mathrm\{h\} \= 10{,}0\,\mathrm\{Minuten\}$$
+
+Berechnen Sie die **mittlere Anzahl an Bauteilen $L$ im Gesamtsystem** (Puffer + Prüfstation) unter Anwendung von **Little's Gesetz**\:
+$$L \= \lambda \cdot W$$
+
+*(Geben Sie die Bauteilanzahl als Dezimalzahl ohne Einheit an)*
+{#4.0:0.1#Exakt 4.0 Bauteile! Berechnung: L = lambda * W = 24 h^(-1) * (1/6) h = 4.0 Bauteile. Alternativ über die Systemauslastung rho = 24/30 = 0.80: L = rho / (1 - rho) = 0.80 / 0.20 = 4.0.}
+
+
+::Q4_2_Stochastik_Inversionsmethode::[markdown]Zur Generierung stochastischer Zwischenankunftszeiten $\Delta t$ eines Poisson-Prozesses mit Rate $\lambda$ wird die analytische **Inversionsmethode** verwendet. Die Verteilungsfunktion der Exponentialverteilung lautet $F(t) \= 1 - e^\{-\lambda t\}$. Durch Inversion mit $U \sim \mathcal\{U\}(0,1)$ folgt\:
+$$t \= -\frac\{1\}\{\lambda\} \ln(1 - U)$$
+
+In professionellen Simulations-Engines findet man im C\#-Code jedoch häufig folgende Zeile\:
+```csharp
+double dt \= -Math.Log(random.NextDouble()) / lambda;
+```
+Hier wird direkt `Math.Log(U)` anstelle von `Math.Log(1.0 - U)` berechnet.
+
+Warum ist diese Codezeile **mathematisch exakt äquivalent** und führt zur identischen Verteilung? {
+=Wenn U auf dem offenen Intervall (0, 1) standard-gleichverteilt ist, dann ist auch V = (1 - U) identisch standard-gleichverteilt auf (0, 1). Da beide Variablen dieselbe Wahrscheinlichkeitsdichte besitzen, erzeugen beide Formeln exakt dieselbe Exponentialverteilung, spart jedoch eine Gleitkomma-Subtraktion ein. #Richtig! Die Symmetrie der kontinuierlichen Gleichverteilung U(0,1) bewirkt, dass U und 1 - U statistisch ununterscheidbar sind.
+~Der natürliche Logarithmus kehrt das Vorzeichen von (1 - U) im Prozessor automatisch um, sodass 1 - U = U gilt. #Falsch. Mathematisch gilt ln(1-x) != ln(x).
+~Die Methode random.NextDouble() liefert nur negative Zahlen, weshalb das Vorzeichen vor dem Logarithmus wegfällt. #Falsch. NextDouble() liefert positive Zahlen zwischen 0.0 und 1.0.
+~Dies ist ein bekannter KI-Halluzinationsfehler; der Code erzeugt eine Poisson-Verteilung statt einer Exponentialverteilung. #Falsch. Der Code erzeugt exakt eine Exponentialverteilung.
+}
+
+
+::Q4_3_ZeroCrossing_Bisektion_Tunneling::[markdown]In einer hybriden mechatronischen Simulation prallt ein Körper (Radius $R$, Masse $m$) mit hoher Geschwindigkeit $v$ auf eine starre Wand bei $x \= x_{\text\{Wand\}}$. Die Kontakt-Schaltfunktion lautet $z(\mathbf\{x\}) \= x(t) + R - x_{\text\{Wand\}}$.
+
+Ein naiver Festschritt-Simulator prüft die Kollision erst am Ende jedes Zeitschritts $h$\:
+```csharp
+if (x + R >= x_Wand)
+\{
+    vx \= -e * vx; // Stoßumkehr
+\}
+```
+
+Welche gravierenden physikalischen Fehler treten bei diesem naiven Ansatz auf, und wie löst ein **hybrider Simulator mit Zero-Crossing-Bisektion** das Problem? {
+=Tunneling und falsche Energiebilanz: Bei hohem v * h durchdringt der Ball die Wand unbemerkt (Tunneling) oder kehrt tief im Material um, was künstliche Energie erzeugt. Die Zero-Crossing-Bisektion überwacht Vorzeichenwechsel von z(x), stoppt den Integrator, sucht den exakten Kontaktzeitpunkt t* via Bisektion bis |z| < eps, führt den Stoß exakt an der Oberfläche aus und setzt die Integration neu auf. #Hervorragend! Zero-Crossing mit Bisektion garantiert exakte Impulsübertragung an der geometrischen Berührfläche ohne numerisches Tunneling oder Geisterhaftung.
+~Der naive Ansatz funktioniert exakt; Zero-Crossing wird in der Praxis nur verwendet, um DirectX-Grafiken zu glätten. #Falsch. Der naive Ansatz zerstört die physikalische Erhaltung und führt zu Tunneling.
+~Das Tunneling lässt sich ohne Bisektion verhindern, indem man die Stoßzahl e auf Werte größer als 1.0 anhebt. #Falsch. e > 1 würde dem System bei jedem Stoß Energie zuführen (Explosion).
+~Bei Festschritt-Simulationen tritt Tunneling prinzipiell niemals auf, da Computer keine kontinuierlichen Räume kennen. #Falsch. Diskrete Schritte überspringen dünne Barrieren gerade bei hohen Geschwindigkeiten.
+}
+
+
+::Q4_4_Zeno_Effekt_Chattering::[markdown]Ein elastischer Ball fällt unter Erdbeschleunigung $g$ auf eine Bodenplatte und prallt mit einer Stoßzahl $e \= 0{,}8$ wiederholt ab ($v^+ \= -e \cdot v^-$).  
+Welche Aussagen zum **Zeno-Effekt (Chattering)** und dessen mechatronischer Beherrschung in Simulationsmodellen sind **fachlich zutreffend**? *(Wählen Sie alle richtigen Aussagen)* {
+~%33.33333%Die Zeitintervalle zwischen aufeinanderfolgenden Stößen bilden eine geometrische Folge (dt_k = e * dt_{k-1}), deren unendliche Summe gegen eine endliche Zeit konvergiert: Unendlich viele Stöße finden in endlicher Zeit statt. #Richtig! Dies ist die mathematische Ursache des Zeno-Phänomens.
+~%33.33333%Ein rein ereignisgesteuerter Zero-Crossing-Simulator ohne Schutzlogik friert ein (Zeno-Kollaps), weil die Schrittweiten gegen Null streben und die Simulationszeit nicht mehr voranschreitet. #Richtig! Der Integrator bleibt in unendlich kleinen Zeitschritten stecken.
+~%33.33333%In der Praxis wird Chattering durch einen Geschwindigkeits-Schwellwert v_thresh vermieden: Fällt |v| < v_thresh, schaltet das System von Prellen auf statischen Kontakt (Haften: v=0, a=0, FN=mg) um. #Richtig! Die Modusumschaltung auf algebraische Zwangsbedingungen beendet die Zeno-Schleife.
+~%-50%Der Zeno-Effekt tritt ausschließlich dann auf, wenn die Stoßzahl e > 1.0 beträgt und das System unendlich viel Energie erzeugt. #Falsch. Bei e > 1 wachsen die Zeitintervalle; Zeno erfordert e < 1.
+~%-50%Das Zeno-Problem lässt sich vollständig lösen, indem man den RK4-Solver durch einen Runge-Kutta 8. Ordnung ersetzt. #Falsch. Höhere Integratorordnung löst keine unendliche Folge diskreter Events.
+}
+
+
+::Q4_5_FMI_ModelExchange_vs_CoSimulation::[markdown]Bei der Virtuellen Inbetriebnahme (VIBN) und Co-Simulation mechatronischer Digitaler Zwillinge ist das **Functional Mock-up Interface (FMI)** der weltweite Industriestandard. Eine Simulationskomponente wird als **FMU (Functional Mock-up Unit)** bereitgestellt.
+
+Was ist der **fundamentale softwaretechnische und numerische Unterschied** zwischen **FMI for Model Exchange (ME)** und **FMI for Co-Simulation (CS)**? {
+=Model Exchange: Die FMU enthält ausschließlich die Modellgleichungen (Zustandsableitungen); der übergeordnete Master-Simulator stellt den Integrator bereit. Co-Simulation: Die FMU kapselt das Modell zusammen mit einem eigenen numerischen Solver und führt eigenständig Zeitschritte aus; mit dem Master werden nur Kopplungsvariablen ausgetauscht. #Exakt! ME überlässt die Zeitintegration dem Master (starke Kopplung), während CS autonome Solver in jeder FMU voraussetzt (lose Kopplung, IP-Schutz).
+~Model Exchange funktioniert nur unter Linux, während Co-Simulation ausschließlich für Windows spezifiziert ist. #Falsch. FMI ist plattformunabhängig und unterstützt Windows, Linux und macOS.
+~Bei Model Exchange dürfen nur diskrete Warteschlangen simuliert werden, während Co-Simulation ausschließlich 3D-CAD-Grafiken streamt. #Falsch. Beide Standards bedienen kontinuierliche und hybride physikalische Modelle.
+~Model Exchange erfordert zwingend eine Internetverbindung zur Cloud, während Co-Simulation offline auf der SPS läuft. #Falsch. Beide Ausprägungen laufen vollständig offline lokal oder in Echtzeit-Zielsystemen.
+}

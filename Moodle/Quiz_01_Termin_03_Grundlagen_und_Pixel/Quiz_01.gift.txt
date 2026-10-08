@@ -1,0 +1,105 @@
+// ==============================================================================
+// Moodle GIFT Quiz 01: Grundlagen, Modelltheorie & 2D-Pixelgrafik
+// Lehrveranstaltung: Systemsimulation / Digitaler Zwilling (FH OÖ, Campus Wels)
+// Stoff: Kapitel 00 bis 02 (Termin 1 bis 2/3)
+// ==============================================================================
+
+$CATEGORY: $course$/Quiz_01_Grundlagen_und_Pixel
+
+::Q1_1_CFL_Stabilitaetsgrenze::[markdown]Sie simulieren die instationäre 2D-Wärmeleitung in einer Aluminium-Kühlplatte mittels Finite-Differenzen-Methode (FDM, expliziter 5-Punkt-Differenzenstern auf einem quadratischen Pixelgitter). Die parabolische Differentialgleichung lautet\:
+
+$$\frac\{\partial T\}\{\partial t\} \= \alpha \left( \frac\{\partial^2 T\}\{\partial x^2\} + \frac\{\partial^2 T\}\{\partial y^2\} \right)$$
+
+Gegeben sind folgende Parameter\:
+* Temperaturleitfähigkeit des Werkstoffs\: $\alpha \= 1{,}25 \cdot 10^{-4}\,\mathrm\{m^2/s\}$
+* Räumliche Gitterweite (Pixelabstand)\: $\Delta x \= \Delta y \= 2{,}0\,\mathrm\{mm\} \= 2{,}0 \cdot 10^{-3}\,\mathrm\{m\}$
+
+Berechnen Sie die **theoretische maximale Zeitschrittweite $\Delta t_{\max}$** (Von-Neumann- / CFL-Stabilitätsgrenze) in **Millisekunden [ms]**, bis zu welcher das explizite Euler-FDM-Verfahren numerisch stabil bleibt. *(Geben Sie die Zahl in Millisekunden [ms] ohne Einheit an)*
+{#8.0:0.1#Richtig! Aus s = alpha * dt / dx^2 <= 0.25 folgt dt_max = dx^2 / (4 * alpha) = (2.0e-3)^2 / (4 * 1.25e-4) s = 4.0e-6 / 5.0e-4 s = 0.008 s = 8.0 ms.}
+
+
+::Q1_2_Stride_Fehlerdiagnose::[markdown]Ein Entwickler möchte ein Graustufen-Simulationsfeld auf einer WPF `WriteableBitmap` (Breite\: $W \= 640\,\mathrm\{px\}$, Höhe\: $H \= 480\,\mathrm\{px\}$, Format\: `PixelFormats.Bgra32`) darstellen\:
+
+```csharp
+int width \= 640;
+int height \= 480;
+int stride \= width * 3; // Bildbreite mal Kanäle
+byte[] pixelData \= new byte[stride * height];
+
+for (int y \= 0; y < height; y++)
+\{
+    for (int x \= 0; x < width; x++)
+    \{
+        int index \= y * stride + x * 4;
+        byte intensity \= GetSimulationIntensity(x, y);
+        pixelData[index + 0] \= intensity; // Blau
+        pixelData[index + 1] \= intensity; // Grün
+        pixelData[index + 2] \= intensity; // Rot
+        pixelData[index + 3] \= 255;       // Alpha
+    \}
+\}
+bitmap.WritePixels(new Int32Rect(0, 0, width, height), pixelData, stride, 0);
+```
+
+Beim Start der Applikation stürzt das Programm mit einer `IndexOutOfRangeException` ab bzw. zeigt ein zerrissenes Bild. Was ist die **exakte Ursache** dieses Fehlers? {
+=Das Format Bgra32 belegt 4 Bytes pro Pixel (32 Bit). Der Stride wurde fälschlich mit width * 3 initialisiert. Dadurch verschiebt sich jede Zeile im Array und bei x = width - 1 greift index + 3 weit über die Arraygrenzen hinaus. #Exakt! Bgra32 besitzt 4 Bytes pro Pixel. Stride muss width * 4 betragen.
+~In WPF müssen Pixelwerte im Bgra32-Format zwingend als normalisierte float-Werte (0.0 bis 1.0) übergeben werden; byte wirft eine Exception. #Falsch. Bgra32 verwendet ganzzahlige 8-Bit Bytes pro Kanal (0..255).
+~Die Methode WritePixels darf nur direkt innerhalb eines GPU-Pixel-Shaders aufgerufen werden. #Falsch. WritePixels ist eine reguläre CPU-basierte WPF-Methode.
+~Die Schleifenordnung (y außen, x innen) verletzt die Row-Major-Konvention von WPF und führt zum Speicherüberlauf. #Falsch. Zeilenweise Iteration (y außen, x innen) ist exakt das hardwarenahe Row-Major-Muster.
+}
+
+
+::Q1_3_CFL_Bilddiagnose_Instabilitaet::[markdown]Ein Simulationsingenieur verdoppelt in der 2D-Wärmeleitungssimulation die Zeitschrittweite $\Delta t$ von $6\,\mathrm\{ms\}$ auf $12\,\mathrm\{ms\}$, während das Gitter unverändert bleibt ($\Delta x \= 2\,\mathrm\{mm\}$, $\alpha \= 1{,}25 \cdot 10^{-4}\,\mathrm\{m^2/s\}$, Stabilitätsgrenze $\Delta t_{\max} \= 8\,\mathrm\{ms\}$). Dadurch wird $s \= 0{,}375 > 0{,}25$.
+
+Welches **spezifische Phänomen** tritt in der Heatmap-Darstellung unmittelbar auf? {
+=Es entsteht eine räumlich alternierende Schachbrettmuster-Instabilität (Checkerboard-Artefakt): Da das zentrale Gewicht (1 - 4s) negativ wird, kippen benachbarte Pixel periodisch um und explodieren exponentiell zu Überläufen (NaN/Infinity). #Richtig! Bei s > 0.25 wird (1 - 4s) < 0, die konvexe Mittelwertbildung bricht zusammen und es entsteht das klassische Schachbrett-Oszillieren.
+~Das System kühlt harmonisch und gleichmäßig ab, lediglich die Simulationsgeschwindigkeit verlangsamt sich proportional zum Zeitschritt. #Falsch. Das System wird numerisch instabil und divergiert.
+~Die Wärmeleitung kehrt sich um, sodass Wärme von kalten Zonen zu heißen Zonen fließt, das Rasterbild bleibt jedoch absolut glatt und stetig. #Falsch. Es entstehen hochfrequente Gitteroszillationen und keine glatte Strömung.
+~Es tritt der Tunneling-Effekt auf, sodass Wärmepakete die Dirichlet-Randbedingungen ohne Energieübertrag durchdringen. #Falsch. Tunneling ist ein Phänomen diskreter Partikel bei fehlender Kontaktdetektion, nicht der FDM-Diffusion.
+}
+
+
+::Q1_4_Modelltheorie_und_Digitaler_Zwilling::[markdown]Welche der folgenden Aussagen zur allgemeinen Modelltheorie nach Herbert Stachowiak und zur industriellen Definition des Digitalen Zwillings nach Michael Grieves sind **fachlich zutreffend**? *(Wählen Sie alle richtigen Aussagen)* {
+~%25%Abbildungsmerkmal (Stachowiak): Ein Modell ist stets ein Repräsentant oder ein Abbild eines natürlichen oder künstlichen Originals. #Richtig! Erstes Hauptmerkmal nach Stachowiak.
+~%25%Verkürzungsmerkmal (Stachowiak): Ein Modell erfasst im Allgemeinen nicht alle Attribute des Originals, sondern nur diejenigen, die dem Modellierer relevant erscheinen. #Richtig! Zweites Hauptmerkmal nach Stachowiak.
+~%25%Pragmatisches Merkmal (Stachowiak): Ein Modell erfüllt eine Ersetzungsfunktion für bestimmte Subjekte, innerhalb bestimmter Zeitintervalle und für bestimmte Zwecke. #Richtig! Drittes Hauptmerkmal nach Stachowiak.
+~%25%Digitaler Zwilling (Grieves): Besteht aus physischem Produkt, virtuellem Produkt und der automatisierten bidirektionalen Datenverbindung zwischen beiden. #Richtig! Dies ist die maßgebliche 3-Säulen-Definition nach Grieves.
+~%-50%Eine statische 3D-CAD-Zeichnung ohne dynamisches Verhaltensmodell und ohne Sensordaten-Anbindung erfüllt bereits alle Kriterien eines industriellen Digitalen Zwillings. #Falsch! Ein reines CAD-Modell ist ein Digital Model, besitzt aber keinen bidirektionalen Datenaustausch mit der Realität.
+}
+
+
+::Q1_5_Unsafe_Pointer_BGRA_Speicherordnung::[markdown]Für maximale Performance greift eine FDM-Schleife über unmanaged C\#-Pointer direkt auf den Back-Buffer einer `WriteableBitmap` zu\:
+
+```csharp
+bitmap.Lock();
+unsafe
+\{
+    byte* pBackBuffer \= (byte*)bitmap.BackBuffer;
+    int stride \= bitmap.BackBufferStride;
+
+    for (int y \= 0; y < height; y++)
+    \{
+        byte* row \= pBackBuffer + (y * stride);
+        for (int x \= 0; x < width; x++)
+        \{
+            byte heat \= GetTemperatureByte(x, y); // 0 = kalt (0°C), 255 = heiß (100°C)
+            
+            // Entwickler schreibt:
+            row[x * 4 + 0] \= heat;               // Byte-Offset 0
+            row[x * 4 + 1] \= 0;                  // Byte-Offset 1
+            row[x * 4 + 2] \= (byte)(255 - heat); // Byte-Offset 2
+            row[x * 4 + 3] \= 255;                // Byte-Offset 3
+        \}
+    \}
+\}
+bitmap.AddDirtyRect(new Int32Rect(0, 0, width, height));
+bitmap.Unlock();
+```
+
+Der Entwickler beabsichtigte, dass heißes Metall **Rot** ($R\=255, B\=0$) und kaltes Metall **Blau** ($B\=255, R\=0$) dargestellt wird.  
+Welche Darstellung erscheint stattdessen auf dem Monitor und warum? {
+=Die Farben sind vertauscht: Da das Format Bgra32 an Byte-Offset 0 Blau und an Offset 2 Rot speichert, erscheinen heiße Bereiche tiefblau und kalte Bereiche rot. #Exakt! Bgra32 speichert in Little-Endian Byte 0=Blue, Byte 1=Green, Byte 2=Red, Byte 3=Alpha.
+~Das gesamte Bild bleibt schwarz, weil der Alpha-Wert 255 in WPF vollständige Transparenz erzwingt. #Falsch. Alpha 255 bedeutet 100% Deckkraft (vollständig sichtbar), 0 wäre transparent.
+~Das Programm wirft zur Laufzeit eine AccessViolationException, da unsafe-Pointer in WPF nicht auf BackBuffer zugreifen dürfen. #Falsch. Zwischen Lock() und Unlock() ist dieser unsafe-Zugriff auf den BackBuffer offiziell dokumentiert und extrem performant.
+~Das Bild wird korrekt rot/blau dargestellt, da DirectX Farbkanäle bei der Shader-Übergabe immer automatisch spiegelt. #Falsch. Die GPU interpretiert den Puffer exakt nach dem deklarierten Bgra32-Format.
+}

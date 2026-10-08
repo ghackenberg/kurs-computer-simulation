@@ -1,0 +1,89 @@
+// ==============================================================================
+// Moodle GIFT Quiz 03: Multithreading, Statische Fachwerke, ODEs & S-Functions
+// Lehrveranstaltung: Systemsimulation / Digitaler Zwilling (FH OÖ, Campus Wels)
+// Stoff: Kapitel 06 bis 08 (Termin 6 bis 8)
+// ==============================================================================
+
+$CATEGORY: $course$/Quiz_03_Multithreading_Statik_DGL
+
+::Q3_1_Amdahl_Speedup_Berechnung::[markdown]Ein simulationsgestützter Finite-Elemente-Algorithmus verbringt $20\,\%$ seiner gesamten Rechenzeit in sequentiellen Ein-/Ausgabe- und Vorbereitungsroutinen ($s \= 0{,}20$). Der verbleibende Anteil von $80\,\%$ ($p \= 0{,}80$) kann perfekt auf parallele CPU-Threads aufgeteilt werden.
+
+Berechnen Sie den **theoretisch maximal erreichbaren Speedup $S(N)$** bei Ausführung des Algorithmus auf einer CPU mit **$N \= 4$ Prozessorkernen** nach Amdahls Gesetz\:
+$$S(N) \= \frac\{1\}\{s + \frac\{1 - s\}\{N\}\}$$
+
+*(Geben Sie den Beschleunigungsfaktor als Dezimalzahl ohne Einheit an)*
+{#2.5:0.05#Richtig! Berechnung: S(4) = 1 / (0.20 + 0.80 / 4) = 1 / (0.20 + 0.20) = 1 / 0.40 = 2.50. Beachten Sie, dass das theoretische Asymptotenmaximum für unendlich viele Kerne 1 / 0.20 = 5.0 beträgt.}
+
+
+::Q3_2_TPL_RaceCondition_Akkumulation::[markdown]Ein Entwickler möchte die gesamte kinetische Energie eines Teilchensystems ($N \= 1\,000\,000$ Partikel) parallel mit der .NET Task Parallel Library (TPL) berechnen\:
+
+```csharp
+double totalKineticEnergy \= 0.0;
+
+Parallel.For(0, particles.Length, i =>
+\{
+    double e \= 0.5 * particles[i].Mass * particles[i].VelocitySquared;
+    totalKineticEnergy += e; // Summation über alle Partikel
+\});
+
+Console.WriteLine($"Gesamtenergie\: \{totalKineticEnergy\} J");
+```
+
+Bei jedem Testlauf gibt das Programm einen völlig anderen, deutlich zu geringen Energiewert aus. Was ist die **exakte Ursache** und wie lautet die professionelle C\#/.NET-Lösung? {
+=Auf die Variable totalKineticEnergy greifen mehrere Threads unkoordiniert schreibend zu (Race Condition / Data Race), da += nicht atomar ist. Die Lösung nutzt die thread-lokale Überladung von Parallel.For mit lokalem Akkumulator und synchronisiertem Interlocked.Add / lock im localFinally, oder PLINQs AsParallel().Sum(). #Exzellent! Bei parallelen Schleifen führen shared-memory Schreibzugriffe zu Lost Updates. Thread-lokale Reduktion ist das Standardmuster.
+~Parallel.For bricht bei großen Arrays automatisch nach dem ersten Core ab; man muss stattdessen eine while-Schleife mit Thread.Sleep(1) verwenden. #Falsch. Parallel.For skaliert über den ThreadPool auf alle Kerne.
+~Fließkommazahlen (double) dürfen in C# nicht im Arbeitsspeicher addiert werden; Berechnungen müssen im Grafikspeicher als Vektoren deklariert werden. #Falsch. Double-Additionen auf der CPU sind Standard.
+~Das Array particles muss vor der Schleife mit Array.Reverse invertiert werden, um Cache-Konflikte zu vermeiden. #Falsch. Das Invertieren löst keine Race Condition.
+}
+
+
+::Q3_3_Statik_FEM_Cholesky_Bedingungen::[markdown]Bei der statischen FE-Berechnung eines 2D-Fachwerks mit der Knoten-Freiwertmethode wird das Gleichungssystem für die freien Freiheitsgrade aufgestellt\:
+$$\mathbf\{K\}_\{ff\} \cdot \mathbf\{u\}_f \= \mathbf\{f\}_f$$
+Zur Lösung soll die **Cholesky-Zerlegung** ($\mathbf\{K\}_\{ff\} \= \mathbf\{L\} \cdot \mathbf\{L\}^\top$) mit `Math.NET Numerics` verwendet werden.
+
+Welche Bedingungen müssen **zwingend erfüllt sein**, damit die Cholesky-Zerlegung mathematisch existiert und numerisch stabil durchläuft? *(Wählen Sie alle richtigen Aussagen)* {
+~%33.33333%Die reduzierte Steifigkeitsmatrix K_ff muss symmetrisch und positiv definit (SPD) sein, d. h. x^T * K_ff * x > 0 für alle x \!= 0. #Richtig! Positive Definitheit ist die fundamentale mathematische Voraussetzung für Cholesky (keine Wurzeln aus negativen Zahlen).
+~%33.33333%Alle Starrkörperbewegungen in der Ebene (zwei Translationen und eine Rotation) müssen durch mindestens 3 linear unabhängige Lagerbedingungen gesperrt sein. #Richtig! Ungestützte Starrkörpermoden führen zu Eigenwerten von 0 und machen die Matrix singulär.
+~%33.33333%Die Struktur darf keine kinematischen Mechanismen enthalten (z. B. Viereck ohne Diagonale), da sonst det(K_ff) = 0 wird und die Zerlegung mit Division durch Null abbricht. #Richtig! Innere Mechanismen erzeugen Nulldurchgänge im Spektrum.
+~%-50%Die Diagonalelemente der Matrix müssen alle identisch groß sein, da Cholesky sonst eine Fourier-Transformation verlangt. #Falsch. Diagonalelemente dürfen beliebig variieren, solange sie strikt positiv sind.
+~%-50%Der Lastvektor f_f darf an keinem Knoten Null sein, da die Cholesky-Zerlegung sonst auf singuläre Lasten stößt. #Falsch. Die Cholesky-Zerlegung faktorisiert ausschließlich K_ff; der Lastvektor f_f spielt bei der Faktorisierung keine Rolle.
+}
+
+
+::Q3_4_ODE_Euler_vs_RK4_Stabilitaet::[markdown]Ein ungedämpfter harmonischer Oszillator ($m \ddot\{x\} + c x \= 0$) wird als Zustandsraummodell 1. Ordnung formuliert. Die Eigenwerte der Systemmatrix liegen exakt auf der imaginären Achse\: $\lambda_\{1,2\} \= \pm i \omega_0$.
+
+Was geschieht bei der numerischen Integration dieses Systems mit dem **expliziten Euler-Verfahren** im Vergleich zu **Runge-Kutta-4 (RK4)** bei fester Schrittweite $h \= 0{,}02\,\mathrm\{s\}$? {
+=Der explizite Euler destabilisiert das System künstlich: Da sein Stabilitätsgebiet die imaginäre Achse außer bei 0 nicht umfasst, gilt |1 +- i*omega*h| > 1; der Integrator pumpt unphysikalische Energie ins System und die Amplitude wächst exponentiell an. RK4 hingegen schließt Teile der imaginären Achse stabil ein und integriert phasenstabil mit Fehlerordnung O(h^4). #Exakt! Der explizite Euler erzeugt künstliche negative Dämpfung bei rein oszillierenden Systemen. RK4 umschließt die imaginäre Achse bis ca. 2.83.
+~Der explizite Euler ist absolut exakt, während RK4 die Schwingung sofort bis zum Stillstand abbremst. #Falsch. RK4 ist um vier Ordnungen genauer als Euler.
+~Beide Solver erzeugen exakt dieselbe Trajektorie; RK4 benötigt lediglich viermal mehr Speicher auf der Festplatte. #Falsch. Die Lösungsbahnen driften fundamental auseinander (Euler explodiert, RK4 bleibt auf dem Orbit).
+~Der explizite Euler friert die Simulation ein, weil rein imaginäre Eigenwerte von C# nicht als double dargestellt werden können. #Falsch. Die Zustandsvariablen x und v sind rein reelle Zahlen.
+}
+
+
+::Q3_5_SFunction_AntiWindup_Clamping::[markdown]In der kontinuierlichen Simulation eines geregelten mechatronischen Antriebs ($m \ddot\{x\} \= F_{\text\{Aktor\}} - d \dot\{x\}$) wird ein PID-Positionsregler eingesetzt. Der Aktor verfügt über eine physikalische Begrenzung\:
+$$F_{\text\{Aktor\}} \= \mathrm\{clamp\}(u_{\text\{PID\}}, -F_{\max}, +F_{\max})$$
+
+Im Ableitungs-Schritt der S-Function (`CalculateDerivatives`) ist folgende Logik implementiert\:
+```csharp
+// x[2] ist der Integrator-Zustand des I-Anteils (xi)
+double error \= setpoint - x[0];
+double u_pid \= Kp * error + Ki * x[2] - Kd * x[1];
+double thrust \= Math.Clamp(u_pid, -F_max, F_max);
+
+// Anti-Windup: Conditional Integration (Clamping)
+if (thrust \=\= u_pid || (thrust >= F_max && error < 0) || (thrust <= -F_max && error > 0))
+\{
+    dxdt[2] \= error; // Normal integrieren
+\}
+else
+\{
+    dxdt[2] \= 0.0;   // Integrator einfrieren!
+\}
+```
+
+Welches mechatronische Problem wird durch dieses **Clamping** verhindert? {
+=Es verhindert den Integrator-Windup: Wenn der Aktor gesättigt ist, würde der I-Anteil ohne Clamping den Regelfehler ungebremst weiter aufintegrieren. Nach Erreichen des Sollwerts bleibt der Regler aufgrund des riesigen gespeicherten I-Werts noch lange in der Sättigung hängen, was zu massivem Überschwingen führt. Clamping friert den Integrator gezielt ein. #Hervorragend! Clamping stoppt die Akkumulation des I-Anteils genau dann, wenn der Fehler den Aktor noch tiefer in die Begrenzung treiben würde.
+~Es verhindert, dass die Masse des Objekts durch Rundungsfehler negativ wird. #Falsch. Masse ist ein konstanter physikalischer Modellparameter.
+~Es schützt den Prozessor vor einer Division durch Null bei der Berechnung der Stellgröße. #Falsch. Bei der PID-Berechnung tritt gar keine Division auf.
+~Es sorgt dafür, dass die Zeitschrittweite h automatisch auf Null gesetzt wird, sobald der Motor warm läuft. #Falsch. Die Zeitschrittweite wird vom numerischen Integrator gesteuert, nicht vom Clamping.
+}

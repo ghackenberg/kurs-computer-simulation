@@ -1,0 +1,96 @@
+// ==============================================================================
+// Moodle GIFT Quiz 02: 2D-Vektorgrafik, Telemetrie & 3D-Szenengraph
+// Lehrveranstaltung: Systemsimulation / Digitaler Zwilling (FH OÖ, Campus Wels)
+// Stoff: Kapitel 03 bis 05 (Termin 3 bis 5)
+// ==============================================================================
+
+$CATEGORY: $course$/Quiz_02_Vektor_Charts_3D
+
+::Q2_1_Koordinatentransformation_Y_Inversion::[markdown]Ein mechatronischer Versuchsstand soll aus dem physikalischen Weltkoordinatensystem (Meter $[\mathrm\{m\}]$, $Y$-Achse nach oben) verzerrungsfrei auf ein WPF-Canvas-Fenster (Bildschirmkoordinaten $[\mathrm\{px\}]$, $Y$-Achse nach unten) abgebildet werden.
+
+Gegeben sind\:
+* Abmessungen des WPF-Canvas\: $W_{\text\{canvas\}} \= 800\,\mathrm\{px\}$, $H_{\text\{canvas\}} \= 600\,\mathrm\{px\}$
+* Bounding-Box der Welt\: $x_{\min} \= 0{,}0\,\mathrm\{m\}$, $x_{\max} \= 10{,}0\,\mathrm\{m\}$, $y_{\min} \= 0{,}0\,\mathrm\{m\}$, $y_{\max} \= 4{,}0\,\mathrm\{m\}$
+
+Zur Vermeidung von Verzerrungen wird ein **isotroper Skalierungsfaktor** (Uniform Aspect Ratio) mit Zentrierungs-Offset verwendet\:
+```csharp
+double scaleX \= canvasWidth / (xMax - xMin);
+double scaleY \= canvasHeight / (yMax - yMin);
+double s \= Math.Min(scaleX, scaleY);
+
+double offsetX \= (canvasWidth - (xMax - xMin) * s) / 2.0;
+double offsetY \= (canvasHeight - (yMax - yMin) * s) / 2.0;
+
+// Y-Inversion für Bildschirm-Pixel:
+double ys \= canvasHeight - (offsetY + (yw - yMin) * s);
+```
+
+Berechnen Sie die resultierende **Screen-Koordinate $y_s$ in Pixeln $[\mathrm\{px\}]$** für einen Sensorpunkt in der Welt mit der vertikalen Koordinate **$y_w \= 2{,}5\,\mathrm\{m\}$**. *(Geben Sie den Pixelwert ohne Einheit an)*
+{#260.0:1.0#Exakt 260.0 px! Berechnung: sx = 800/10 = 80 px/m, sy = 600/4 = 150 px/m -> s = min(80, 150) = 80 px/m. offsetY = (600 - 4*80)/2 = 140 px. ys = 600 - (140 + 2.5 * 80) = 600 - 340 = 260.0 px.}
+
+
+::Q2_2_ScottPlot_Streaming_Architektur::[markdown]Ein Studierendenteam bindet `ScottPlot 5` zur Echtzeit-Anzeige eines Drehmomentsensors ($1000\,\mathrm\{Hz\}$ Abtastrate) in ein WPF-Dashboard ein\:
+
+```csharp
+private readonly List<double> _timestamps \= new List<double>();
+private readonly List<double> _values \= new List<double>();
+
+public void OnSensorSampleReceived(double time, double torque)
+\{
+    _timestamps.Add(time);
+    _values.Add(torque);
+
+    Application.Current.Dispatcher.Invoke(() =>
+    \{
+        WpfPlot1.Plot.Clear();
+        WpfPlot1.Plot.Add.Scatter(_timestamps.ToArray(), _values.ToArray());
+        WpfPlot1.Plot.Axes.AutoScale();
+        WpfPlot1.Refresh();
+    \});
+\}
+```
+
+Bereits nach wenigen Minuten friert die Anwendung periodisch ein, die CPU-Last des Render-Threads erreicht $100\,\%$ und die GUI reagiert nicht mehr.  
+Welche Architekturmaßnahme löst dieses Performance-Problem **nachhaltig und professionell**? {
+=Man entkoppelt Messung und Visualisierung: Messwerte werden in einen thread-sicheren Ringpuffer fester Größe (CircularBuffer) oder ScottPlots DataStreamer geschrieben. Das Neuzeichnen (Refresh) wird über einen getakteten UI-Timer auf maximal 30 Hz bis 60 Hz gedrosselt und ToArray()-Allokationen werden eliminiert. #Hervorragend! Dies entspricht der Goldenen Regel: Trennung von Takt und UI-Rendering, Vermeidung von GC-Allokationen im Messzyklus.
+~Man erhöht die Priorität des Dispatchers mit DispatcherPriority.Send, damit der UI-Thread die Punkte schneller zeichnen kann. #Falsch. Das blockiert das UI nur noch aggressiver.
+~Man ruft GC.Collect() nach jedem zehnten Messwert manuell auf, um den Speicher des Garbage Collectors sofort freizugeben. #Falsch. GC.Collect() erzwingt Stop-the-World-Pausen und verschlimmert das Ruckeln dramatisch.
+~Man ersetzt ScottPlot durch ein Standard WPF Canvas und zeichnet jeden Datenpunkt als separates Path-Objekt. #Falsch. Tausende WPF-UI-Elemente auf einem Canvas führen zum sofortigen Performancekollaps.
+}
+
+
+::Q2_3_Homogene_Matrizen_3D_Szenengraph::[markdown]In einer 3D-Simulation eines Zwei-Achs-Industrieroboters (SharpGL / OpenGL) soll der Greifer am Ende des zweiten Armsegments positioniert werden. Gegeben sind die homogenen $4 \times 4$-Matrizen\:
+* $\mathbf\{T\}_1$\: Verschiebung vom Ursprung zu Gelenk 1
+* $\mathbf\{R\}_1$\: Drehung um Gelenkachse 1
+* $\mathbf\{T\}_2$\: Verschiebung entlang Arm 1 zu Gelenk 2
+* $\mathbf\{R\}_2$\: Drehung um Gelenkachse 2
+* $\mathbf\{T\}_G$\: Verschiebung entlang Arm 2 zum Greifpunkt (TCP)
+
+Welche Aussagen zur Verknüpfung und Funktionsweise der Transformationen sind **mathematisch und technisch zutreffend**? *(Wählen Sie alle richtigen Aussagen)* {
+~%25%Bei spaltenweiser Vektorkonvention lautet die Gesamttransformation des Greifers im Weltkoordinatensystem M_Welt \= T1 * R1 * T2 * R2 * TG. #Richtig! Transformationen verketten sich von der Wurzel zu den Blättern.
+~%25%Die Multiplikation von Transformationsmatrizen ist im Allgemeinen nicht kommutativ (T * R \!= R * T). #Richtig! Eine Vertauschung führt dazu, dass die Translation im rotierten System ausgeführt wird.
+~%25%Durch Nutzung eines Matrix-Stacks (glPushMatrix / glPopMatrix) erben alle Kindknoten automatisch die Position und Orientierung ihrer Elternsegmente. #Richtig! Dies ist das Kernprinzip des hierarchischen Szenengraphen.
+~%25%Homogene 4x4-Matrizen ermöglichen es, affine Transformationen (Translation, Rotation, Skalierung) und perspektivische Projektionen einheitlich abzubilden. #Richtig! Homogene Koordinaten vereinheitlichen Translation und lineare Abbildungen.
+~%-50%Im 3D-Raum können aufeinanderfolgende Rotationen um unterschiedliche Raumachsen ohne Informationsverlust durch einfache Addition der skalaren Drehwinkel berechnet werden. #Falsch! Rotationen im 3D-Raum sind nicht kommutativ und können nicht skalar addiert werden (Gimbal-Lock-Problem bei Euler-Winkeln).
+}
+
+
+::Q2_4_Geometrische_Bemassung_Screen_Space::[markdown]In einer technischen 2D-Visualisierung auf dem WPF `Canvas` soll die lichte Weite eines Bauteils mit Maßlinie, Maßhilfslinien und Pfeilspitzen dargestellt werden.  
+Warum müssen die **Pfeilspitzen** (z. B. Schenkel fester Länge $12\,\mathrm\{px\}$ unter einem Öffnungswinkel von $30^\circ$) im **Screen Space (Pixelkoordinaten)** und **nicht als reale Geometrie im World Space (Meter)** konstruiert werden? {
+=Werden Pfeile im World Space definiert, skaliert ihre geometrische Größe mit dem Zoom mit: Bei Zoom-In würden sie riesig werden und das Modell verdecken; bei Zoom-Out schrumpfen sie zu unsichtbaren Punkten. Im Screen Space bleiben Pfeile und Schriften typografisch konstant lesbar. #Exakt! Bemaßungs- und Beschriftungselemente müssen im Screen Space gerendert werden, um normgerechte Lesbarkeit unabhängig vom Viewport-Zoom zu garantieren.
+~Im World Space können ausschließlich geschlossene Polygone gezeichnet werden; offene Linien mit Spitzen werden vom Grafikkartentreiber verworfen. #Falsch. Grafiktreiber können beliebige Linienzüge im World Space zeichnen.
+~WPF unterstützt trigonometrische Funktionen wie Math.Sin und Math.Cos nur bei Pixelkoordinaten. #Falsch. Math-Funktionen sind koordinatensystem-agnostisch.
+~Die Berechnung im Screen Space verhindert, dass die Pfeile durch die Y-Inversion auf den Kopf gestellt werden. #Falsch. Die Orientierung lässt sich in beiden Räumen mathematisch konsistent halten; der Grund ist rein die Zoom-Invarianz der Darstellungsgröße.
+}
+
+
+::Q2_5_Orbitkamera_Kugelkoordinaten_Singularitaet::[markdown]In einer 3D-Simulation (SharpGL) wird eine Orbitkamera implementiert, die sich auf einer Kugelfläche um den Ursprung $(0,0,0)$ bewegt. Die Kameraposition $\mathbf\{C\} \= (x, y, z)$ wird aus Azimutwinkel $\theta$, Elevationswinkel $\phi$ und Kameraabstand $R$ berechnet\:
+$$x \= R \cos(\phi) \sin(\theta), \quad y \= R \sin(\phi), \quad z \= R \cos(\phi) \cos(\theta)$$
+Der Up-Vektor der Kamera ist als $\mathbf\{u\} \= (0, 1, 0)$ fest definiert.
+
+Warum muss der Elevationswinkel $\phi$ im Programmcode zwingend auf einen Wertebereich wie $[-89^\circ, +89^\circ]$ begrenzt (geclampt) werden? {
+=Bei phi \= +-90° wird der Sichtvektor der Kamera kollinear zum Up-Vektor (0, 1, 0). Das Kreuzprodukt aus Sicht- und Up-Vektor wird Null, wodurch das Koordinatensystem der Kamera kollabiert (Pol-Singularität) und die Ansicht unkontrolliert kippt. #Richtig! Beim Blick exakt von oben/unten ist das Kreuzprodukt zur Bestimmung des Kamera-Rechts-Vektors unbestimmt (0,0,0). Clamping verhindert diese Singularität.
+~Bei phi > 89° verbraucht der Kosinus im Prozessor zu viele Gleitkomma-Register, was einen StackOverflow auslöst. #Falsch. Trigonometrische Berechnungen haben festen Registerbedarf.
+~OpenGL kann negative Koordinaten in der Y-Achse generell nicht schattieren. #Falsch. OpenGL beherrscht negative Koordinaten uneingeschränkt.
+~Der Abstand R würde bei phi \= 90° mathematisch gegen Unendlich streben. #Falsch. Der Abstand R ist unabhängig von den Winkeln konstant.
+}
