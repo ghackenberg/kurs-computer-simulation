@@ -32,8 +32,9 @@
    - 3.2 Detaillierte Steckbriefe der Termine T01 bis T10
 4. [Ablaufstruktur eines 150-Minuten-Präsenztermins](#4-ablaufstruktur-eines-150-minuten-präsenztermins)
    - 4.1 Die 4-Phasen-Taktung
-   - 4.2 Rollenprofile von Lehrendem und Studierenden
-   - 4.3 Umgang mit Heterogenität: Differenzierung & Fast-Track Challenges
+   - 4.2 Phase 3 im Detail: Showcase, Peer Review & Plenumsdiskussion
+   - 4.3 Rollenprofile von Lehrendem und Studierenden
+   - 4.4 Umgang mit Heterogenität: Differenzierung & Fast-Track Challenges
 5. [Didaktische Verzahnung von Präsenzzeit und Heimarbeit](#5-didaktische-verzahnung-von-präsenzzeit-und-heimarbeit)
    - 5.1 Nahtloser Übergang: In-Class Sprint ➔ Homework Extension
    - 5.2 Kollaborationsmodell: 2er-Teams, Pair Programming & Git-Workflow
@@ -77,12 +78,16 @@ Die Lehrveranstaltung ist mit **3 ECTS-Punkten** (entsprechend einem Gesamt-Work
 
 | Kategorie | Aktivität | Zeitaufwand (h) | Anteil (%) |
 | :--- | :--- | :---: | :---: |
-| **Präsenzlehre (ILV)** | 10 Termine à 150 Minuten (inkl. Kurzpausen & Laborbetreuung) | **25,0 h** | 33,3 % |
+| **Präsenzlehre (ILV)** | 10 Termine à 150 Minuten (Theorie, In-Class Sprint, Showcase, Peer Review & Laborbetreuung) | **25,0 h** | 33,3 % |
 | **Vor- & Nachbereitung** | Vorbereitung der Termine, Studium von Skriptum, Notizen & Online-Dokus | **10,0 h** | 13,3 % |
 | **Übungsmeilensteine & Labor** | 4 vertiefende Übungsmeilensteine / Extensions (je 3,75 h im gewählten Track A oder B) | **15,0 h** | 20,0 % |
 | **Moodle-Assessments** | 3 formativ/summative Moodle-Tests (Vorbereitung & Durchführung) | **5,0 h** | 6,7 % |
 | **Semesterprojekt & Kolloquium** | Entwicklung des Digitalen Zwillings im 2er-Team & Oral Defense (20 h pro Person) | **20,0 h** | 26,7 % |
 | **Gesamtsumme** | **1 ECTS = 25 Echtstunden** | **75,0 h** | **100,0 %** |
+
+> [!IMPORTANT]
+> **Verbindliche Verankerung von Showcase & Plenumsdiskussion im Workload:**  
+> Sowohl das **Präsentieren der eigenen Lösung auf der Beamer-Bühne (Showcase im Rotationsprinzip)** als auch das **qualifizierte, fundierte Fragenstellen im Peer Review während der Plenumsdiskussion** sind verbindliche, prüfungsrelevante Bestandteile der Lehrveranstaltung. Sie sind direkt im Notenschema (Säule 2) verankert; eine rein passive Hörsaal-Anwesenheit genügt den Leistungsanforderungen nicht.
 
 ---
 
@@ -91,9 +96,9 @@ Die Lehrveranstaltung ist mit **3 ECTS-Punkten** (entsprechend einem Gesamt-Work
 ### 2.1 Constructive Alignment nach Biggs
 
 Das Curriculum folgt dem Prinzip des **Constructive Alignment** (John Biggs):
-1. **Intended Learning Outcomes (ILOs):** Die Studierenden können physikalisch-technische Systeme als mathematische Modelle formulieren, numerische Algorithmen (LGS, ODE, DES, Hybride Solver) in modernem C# (.NET 8) ohne vorgefertigte Blackbox-Simulatoren implementieren und echtzeitfähige 2D/3D-Dashboards realisieren.
-2. **Teaching/Learning Activities (TLAs):** Interaktiver Theorieimpuls ➔ Dozenten-Live-Coding ➔ In-Class Hands-on Entwicklung im 2er-Team (Sprint) ➔ Peer-Review & Micro-Defense.
-3. **Assessment Tasks (ATs):** Moodle-MCQ-Tests prüfen das theoretische und numerische Fundament; Labor-Meilensteine fordern sauberen, lauffähigen Code; das Semesterprojekt verlangt die ganzheitliche Synthese und Verteidigung.
+1. **Intended Learning Outcomes (ILOs):** Die Studierenden können physikalisch-technische Systeme als mathematische Modelle formulieren, numerische Algorithmen (LGS, ODE, DES, Hybride Solver) in modernem C# (.NET 8) ohne vorgefertigte Blackbox-Simulatoren implementieren, echtzeitfähige 2D/3D-Dashboards realisieren und Simulationslösungen im Fachdiskurs kritisch analysieren und verteidigen.
+2. **Teaching/Learning Activities (TLAs):** Interaktiver Theorieimpuls ➔ Dozenten-Live-Coding ➔ In-Class Hands-on Entwicklung im 2er-Team (Sprint) ➔ **Showcase, Peer Review & Plenumsdiskussion (Track A vs. Track B)** ➔ Micro-Defense & Homework Extension.
+3. **Assessment Tasks (ATs):** Moodle-MCQ-Tests prüfen das theoretische und numerische Fundament; Labor-Meilensteine inklusive **Showcase-Präsentation und qualifiziertem Peer-Review-Fragenstellen** fordern und bewerten sauberen Code sowie Diskursfähigkeit; das Semesterprojekt verlangt die ganzheitliche Synthese und Verteidigung.
 
 ### 2.2 Active Learning & Just-in-Time Teaching
 
@@ -152,6 +157,9 @@ Ein wesentliches didaktisches Prinzip dieser Lehrveranstaltung ist das **duale A
 > - **Identischer Workload & identische Lernergebnisse:** Beide Tracks basieren auf exakt denselben mathematischen Grundlagen, numerischen Algorithmen und C#-Softwarearchitekturen (z. B. FDM-Diffusionsmatrix bei Kühlkörper vs. Lavafeld; Math.NET-Cholesky-LGS bei Portalkran vs. einstürzender Brücke; RK4 bei DC-Motor vs. Raketenlandung).  
 > - Beide Tracks führen zu denselben Intended Learning Outcomes (ILOs) und werden nach exakt derselben Bewertungsrubrik beurteilt.  
 > - Teams dürfen ihren Track je nach persönlicher Motivation pro Termin neu wählen oder das Semester über in einer Schiene bleiben.
+
+#### Didaktischer Brückenschlag im Showcase:
+Obwohl die Teams pro Termin nur einen der beiden Tracks aktiv implementieren, verhindert das Konzept eine fachliche Silobildung: In der **Showcase- und Diskussionsphase (Phase 3)** präsentiert an jedem Termin ein Team aus Track A und ein Team aus Track B seine Lösung live am Beamer. Dadurch profitiert das gesamte Plenum von beiden Perspektiven: Industrie-Teams erkennen, wie Gameloops und interaktive Physik dieselben Differentialgleichungen nutzen, während Gaming-Teams den industriellen Bezug (Toleranzen, Normen, Reglergrenzen) verinnerlichen.
 
 ### 2.7 Das Prinzip der strikten chronologischen Kausalität
 
@@ -225,8 +233,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
     - *Track A:* Implementierung des Euler-Schritts für das thermische Sensor-Abkühlverhalten bzw. Zylinderdämpfung mit automatisierter MSTest-Validierung.
     - *Track B:* Implementierung des Euler-Schritts für das 2D-Wurfmodell mit Luftwiderstand $F_w = \frac{1}{2} \rho c_w A v^2$. Konsolenausgabe von Flugbahn, Reichweite und Trefferabfrage auf Zielplattform.
   - Unit-Test (für beide Tracks): Automatisierter Vergleich mit der analytischen Lösung für den fehlerfreien Grenzfall.
-- **Micro-Review & Reflexion (30 min):**
-  - Plenumsdiskussion: Warum weicht der Euler-Schritt bei zu großem $\Delta t$ dramatisch von der Physik ab?
+- **Showcase, Peer Review & Plenumsdiskussion (25–30 min):**
+  - *Showcase Track A (5–7 min):* 1x Team stellt Pt100-Sensormodell / Zylinderdämpfung live am Beamer vor (C#-Klassenbibliothek, MSTests).
+  - *Showcase Track B (5–7 min):* 1x Team führt das Artillery-Kanonenspiel im Terminal vor (Euler-Flugbahn unter Newton-Luftreibung).
+  - *Peer Review & Plenumsdiskussion (ca. 10 min):* Gezielte Fachfragen aus dem Plenum: Warum weicht der Euler-Schritt bei zu großem $\Delta t$ dramatisch von der analytischen Lösung ab? Wo kippt die Stabilität?
+  - *Dozenten-Feedback & Stresstest (ca. 5 min):* Spontane Verzehnfachung der Zeitschrittweite $\Delta t$ am Beamer ➔ Demonstration numerischer Überschwinger.
 - **Online-Recherche-Tipp:**
   - *Suchstrategie:* Microsoft Learn C# CLI-Tools: `"dotnet new sln"`, `"dotnet add reference"`.
   - *Doku-Link:* [Microsoft Learn: .NET CLI-Übersicht](https://learn.microsoft.com/de-de/dotnet/core/tools/)
@@ -259,8 +270,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Erstellung eines WPF-Fensters mit `Image`-Control ($128 \times 128$ Pixel). Berechnung der FDM-Diffusionsschleife (PCB-Kühlkörper in Track A oder Sand/Lava in Track B) und Rendern im `WriteableBitmap`-BackBuffer.
-- **Micro-Review & Reflexion (30 min):**
-  - Live-Stresstest: Gezielte Erhöhung von $\Delta t$ über die Stabilitätsgrenze ($s = 0{,}28$) ➔ Demonstration der numerischen Gitterexplosion im Plenum.
+- **Showcase, Peer Review & Plenumsdiskussion (25–30 min):**
+  - *Showcase Track A (5–7 min):* 1x Team zeigt 2D-Temperaturfeldsimulation des PCB-Kühlkörpers mit `WriteableBitmap` und Farbverlauf.
+  - *Showcase Track B (5–7 min):* 1x Team führt Falling-Sand- / Doom-Fire-Pixelwelt vor (Pointerarithmetik, allokationsfreie BackBuffer-Updates).
+  - *Peer Review & Plenumsdiskussion (ca. 10 min):* Plenumsfragen zu Speicherlinearisierung, Stride-Padding und Von-Neumann-Stabilitätsgrenze ($s = \frac{a \cdot \Delta t}{\Delta x^2} \le 0{,}25$).
+  - *Dozenten-Feedback & Stresstest (ca. 5 min):* Erhöhung von $\Delta t$ auf $s = 0{,}28$ direkt im Code ➔ Demonstration der numerischen Gitterexplosion im Plenum.
 - **Online-Recherche-Tipp:**
   - *Suchbegriffe:* `"WriteableBitmap Lock BackBuffer unsafe C#" site:learn.microsoft.com`, `"Von Neumann stability heat equation 2D"`.
   - *Doku-Link:* [Microsoft Learn: WriteableBitmap-Klasse](https://learn.microsoft.com/de-de/dotnet/api/system.windows.media.imaging.writeablebitmap)
@@ -295,8 +309,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
     - Konstruktion eines interaktiven Canvas-Viewers für das Träger-/Brückengebilde (Knoten, Stäbe, fest vorgegebene Lastpfeile).
     - Verzerrungsfreie Skalierung bei Fensteränderung (Uniform Scaling, Bounding Box).
     - Implementierung von interaktivem Maus-Dragging: Beim Verschieben eines Knotens passen sich die angrenzenden Stäbe, Bounding Box und Maßketten in Echtzeit an – *rein geometrisch und visuell, ohne Statik- oder LGS-Löser!*
-- **Micro-Review & Reflexion (30 min):**
-  - Peer-Review: Überprüfung der Pfeilspitzen-Orthonormalität, der verzerrungsfreien Skalierung und des flüssigen Maus-Draggings bei asymmetrischen Fenstern.
+- **Showcase, Peer Review & Plenumsdiskussion (25–30 min):**
+  - *Showcase Track A (5–7 min):* 1x Team präsentiert den Hallenkran-CAD-Viewer auf dem WPF `Canvas` (Uniform Scaling, Bounding Box, DIN-Bemaßung, Vektorpfeile).
+  - *Showcase Track B (5–7 min):* 1x Team zeigt den Poly-Bridge-Geometrie-Editor (interaktives Dragging von Fachwerkknoten per Maus).
+  - *Peer Review & Plenumsdiskussion (ca. 10 min):* Fachfragen aus dem Plenum zur Welt-zu-Screen-Transformation, Orthonormalität der Pfeilspitzen und verzerrungsfreien Skalierung bei Fenster-Resizing.
+  - *Dozenten-Feedback & Stresstest (ca. 5 min):* Extremes Seitenverhältnis (z. B. 32:9 Ultrawide) einstellen ➔ Bleiben Geometrie und Pfeilspitzen formstabil?
 - **Online-Recherche-Tipp:**
   - *Suchbegriffe:* `"WPF Canvas Zoom Pan MatrixTransform"`, `"DrawingVisual DrawGeometry vs Shape performance"`, `"WPF Canvas drag and drop shapes mouse coordinates"`.
   - *Doku-Link:* [Microsoft Learn: Übersicht über Zeichnungen mit DrawingVisual](https://learn.microsoft.com/de-de/dotnet/desktop/wpf/graphics-multimedia/using-drawingvisual-objects)
@@ -332,9 +349,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Ein simulierter Sinus-/Messdatengenerator (Vibration bei Track A bzw. Telemetriedaten bei Track B) schreibt kontinuierlich in einen `CircularBuffer<double>`. ScottPlot 5 rendert den Signalverlauf butterweich; ein MSAGL-Graph visualisiert die Systemtopologie.
-- **Micro-Review & Assessment (30 min):**
-  - **Moodle-Test 1 (15 min):** Grundlagen Systemsimulation, Taxonomie, Pixel-Stride, FDM-Stabilität, affine Koordinatentransformation (Kapitel 01–04).
-  - 15 min gemeinsame Auswertung und Feedback.
+- **Showcase, Peer Review & Plenumsdiskussion (25–30 min):**
+  - *Moodle-Test 1 (15 min):* Grundlagen Systemsimulation, Taxonomie, Pixel-Stride, FDM-Stabilität, affine Koordinatentransformation (Kapitel 01–04).
+  - *Showcase & Plenums-Review (15 min):*
+    - *Track A & B Showcases (je 3–4 min):* Live-Demo von Industrie-4.0-Leitstand (Vibrationen) bzw. Space-Lander HUD mit ScottPlot 5 und `CircularBuffer<double>`.
+    - *Plenums-Peer-Review & Dozenten-Feedback (ca. 7 min):* Diskussion von GC-Allokationsfreiheit, Ringpuffer-Kapazitäten und MSAGL-Graphentopologie.
 - **Online-Recherche-Tipp:**
   - *Suchbegriffe:* `"ScottPlot 5 WPF quickstart" site:scottplot.net`, `"CommunityToolkit.Mvvm ObservableProperty source generators"`.
   - *Doku-Link:* [ScottPlot 5 Cookbook & Documentation](https://scottplot.net/cookbook/5.0/)
@@ -367,8 +386,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Einbinden des SharpGL `OpenGLControl` in ein WPF-Fenster. Erstellen einer 3D-Baugruppe via `GeometryFactory`; Bewegen zweier Rotationsachsen über UI-Schieberegler im gewählten Track-Szenario.
-- **Micro-Review & Reflexion (30 min):**
-  - Code-Inspection: Warum führt das Weglassen von `glPopMatrix()` zu unkontrollierten Drehungen abhängiger Teile?
+- **Showcase, Peer Review & Plenumsdiskussion (25–30 min):**
+  - *Showcase Track A (5–7 min):* 1x Team demonstriert den SCARA-Roboterarm im SharpGL-3D-Viewport (Szenengraph-Hierarchie, Gelenkachsen).
+  - *Showcase Track B (5–7 min):* 1x Team präsentiert die 3D Arcade Claw Machine (Jahrmarkt-Greifer, Kugelkoordinaten-OrbitCamera, Tastensteuerung).
+  - *Peer Review & Plenumsdiskussion (ca. 10 min):* Plenum hinterfragt Matrix-Stacks (`glPushMatrix` / `glPopMatrix`), Kardanfehler-Vermeidung und Vorwärtskinematik.
+  - *Dozenten-Feedback & Stresstest (ca. 5 min):* Spontane Vertauschung von Drehachsen im Szenengraphen ➔ Sichtbarmachung fehlerhafter Relativtransformationen.
 - **Online-Recherche-Tipp:**
   - *Suchbegriffe:* `"SharpGL WPF tutorial"`, `"OpenGL modelview projection matrix hierarchy"`, `"spherical coordinates orbit camera C#"`.
   - *Doku-Link:* [Khronos OpenGL 3.3 Reference Manual](https://registry.khronos.org/OpenGL-Refpages/gl4/)
@@ -402,8 +424,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Entkopplung einer rechenintensiven Simulation (Toleranzanalyse bei Track A bzw. Schwarm bei Track B): Der Solver rechnet asynchron in `Task.Run` mit `Parallel.For`; das UI bleibt butterweich bedienbar; ein Not-Aus-Button bricht den Lauf sauber via `CancellationToken` ab.
-- **Micro-Review & Reflexion (30 min):**
-  - Live-Code-Review: Aufdecken von Race Conditions in studentischen Zwischenspeicher-Akkumulatoren.
+- **Showcase, Peer Review & Plenumsdiskussion (25–30 min):**
+  - *Showcase Track A (5–7 min):* 1x Team stellt die parallele Getriebe-Toleranzanalyse mit `Parallel.For` vor (CPU-Auslastung aller Kerne, `IProgress<T>`).
+  - *Showcase Track B (5–7 min):* 1x Team zeigt die 100.000-Boids-Schwarm-Schlacht (flüssige 60 FPS durch Multithreading).
+  - *Peer Review & Plenumsdiskussion (ca. 10 min):* Plenumsanalyse von Race Conditions, Thread-Sicherheit und Dispatcher-Entkopplung: Wurden atomare Operationen (`Interlocked`) korrekt genutzt?
+  - *Dozenten-Feedback & Stresstest (ca. 5 min):* Betätigung des Not-Aus-Buttons während Vollast ➔ Sauberes Abbrechen via `CancellationToken` prüfen.
 - **Online-Recherche-Tipp:**
   - *Suchbegriffe:* `"Parallel.For local variables C#" site:learn.microsoft.com`, `"WPF Dispatcher background task progress reporting"`.
   - *Doku-Link:* [Microsoft Learn: Datenparallelität (Task Parallel Library)](https://learn.microsoft.com/de-de/dotnet/standard/parallel-programming/data-parallelism-task-parallel-library)
@@ -437,9 +462,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Kopplung des geometrischen Canvas-Viewers aus T03 mit der neuen Math.NET-Cholesky-Statik-Engine. Berechnung der realen Knotenverschiebungen $\mathbf{u}$ und maßstäblich überhöhte Darstellung der Verformung auf dem Canvas.
-- **Micro-Review & Assessment (30 min):**
-  - **Moodle-Test 2 (15 min):** 3D-Computergrafik, Szenengraphen, Multithreading (Race Conditions, TPL), LGS, Cholesky, Konditionszahl (Kapitel 05–07).
-  - 15 min gemeinsame Auswertung und Besprechung singulärer Matrizen (Mechanismen).
+- **Showcase, Peer Review & Plenumsdiskussion (25–30 min):**
+  - *Moodle-Test 2 (15 min):* 3D-Computergrafik, Szenengraphen, Multithreading (Race Conditions, TPL), LGS, Cholesky, Konditionszahl (Kapitel 05–07).
+  - *Showcase & Plenums-Review (15 min):*
+    - *Track A & B Showcases (je 3–4 min):* Live-Demo der Erweckung der T03-Geometrie durch Math.NET-Cholesky (Portalkran-Verformung bzw. Destructible-Bridge-Einsturz).
+    - *Plenums-Peer-Review & Dozenten-Feedback (ca. 7 min):* Diskussion singulärer Matrizen (statische Unterbestimmtheit), Konditionszahl $\kappa(\mathbf{K})$ und Cholesky-Performance vs. LU-Zerlegung.
 - **Online-Recherche-Tipp:**
   - *Suchbegriffe:* `"Math.NET Numerics Cholesky solve linear system C#"`, `"Direct stiffness method truss assembly C#"`.
   - *Doku-Link:* [Math.NET Numerics Linear Algebra Documentation](https://numerics.mathdotnet.com/LinearEquations)
@@ -474,8 +501,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Zusammenschalten von Dynamik-Block und PID-Controller-Block. Sprungantwort unter Euler vs. RK4 vergleichen und im ScottPlot 5 darstellen (DC-Motor bei Track A bzw. Booster-Lageregelung bei Track B).
-- **Micro-Review & Reflexion (30 min):**
-  - Live-Experiment: Erhöhung der Last $M_L$ bis zur Motorsättigung ➔ Demonstration des Windup-Effekts mit und ohne Clamping.
+- **Showcase, Peer Review & Plenumsdiskussion (25–30 min):**
+  - *Showcase Track A (5–7 min):* 1x Team stellt geregelten DC-Servomotor mit S-Functions und RK4 vor (Closed-Loop Sprungantwort, Anti-Windup Clamping).
+  - *Showcase Track B (5–7 min):* 1x Team präsentiert den Falcon Booster Landing Balancer (interaktive Lageregelung gegen invertiertes Pendel).
+  - *Peer Review & Plenumsdiskussion (ca. 10 min):* Kritische Plenumsfragen zu Integrator-Windup, Aktor-Sättigung und numerischer Schrittweitenstabilität (Euler vs. Heun vs. RK4).
+  - *Dozenten-Feedback & Stresstest (ca. 5 min):* Deaktivierung des Anti-Windup Clamping unter Lastsprung ➔ Live-Demonstration des Windup-Überschwingens.
 - **Online-Recherche-Tipp:**
   - *Suchbegriffe:* `"Runge Kutta 4 implementation C# butcher tableau"`, `"Anti windup clamping PID controller simulation"`.
   - *Doku-Link:* [MATLAB Simulink S-Function Concept Overview](https://de.mathworks.com/help/simulink/sfg/what-is-an-s-function.html)
@@ -509,9 +539,12 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
   - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
     - Simulation einer Fertigungszelle bzw. Servicestation mit Puffergröße $N=5$. Ermittlung der Pufferüberlauf-Wahrscheinlichkeit über $10.000$ Monte-Carlo-Läufe mit paralleler TPL-Berechnung.
-- **Micro-Review & Reflexion (30 min):**
-  - **Abgabe Labor-Meilenstein 3 (Micro-Defense, im gewählten Track A oder B).**
-  - Code-Review der Monte-Carlo-Aggregation: Wurde der Welford-Akkumulator thread-sicher gekapselt?
+- **Showcase, Peer Review & Plenumsdiskussion (25–30 min):**
+  - *Showcase Track A (5–7 min):* 1x Team zeigt M/M/c-Warteschlangensimulation der Lackierstraße (PriorityQueue, Box-Muller, Welford-Statistik).
+  - *Showcase Track B (5–7 min):* 1x Team führt den Fast-Food Rush Tycoon vor (stochastische Kundenströme, Engpass-Visualisierung).
+  - *Peer Review & Plenumsdiskussion (ca. 10 min):* Plenum prüft Thread-Sicherheit der parallelen Monte-Carlo-Aggregation und die numerische Stabilität des Welford-Akkumulators.
+  - *Dozenten-Feedback & Stresstest (ca. 5 min):* Verzehnfachung der Ankunftsrate $\lambda$ ➔ Demonstration des Warteschlangen-Kollapses nach Little's Gesetz.
+  - *Parallel:* **Abgabe Labor-Meilenstein 3 (Micro-Defense, im gewählten Track A oder B).**
 - **Online-Recherche-Tipp:**
   - *Suchbegriffe:* `"PriorityQueue C# .NET 8"`, `"Box Muller transform C# normal distribution"`, `"Welford's algorithm online variance calculation"`.
   - *Doku-Link:* [Microsoft Learn: PriorityQueue-Klasse](https://learn.microsoft.com/de-de/dotnet/api/system.collections.generic.priorityqueue-2)
@@ -552,7 +585,7 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 
 ## 4. Ablaufstruktur eines 150-Minuten-Präsenztermins
 
-Das 150-Minuten-Format (2,5 Zeitstunden) ist didaktisch straff getaktet, um kognitive Ermüdung zu verhindern und ein optimales Verhältnis zwischen Wissensaufnahme, aktiver Konstruktion und Reflexion zu gewährleisten.
+Das 150-Minuten-Format (2,5 Zeitstunden) ist didaktisch straff getaktet, um kognitive Ermüdung zu verhindern und ein optimales Verhältnis zwischen Wissensaufnahme, aktiver Konstruktion, Peer-Review-Diskurs und Reflexion zu gewährleisten.
 
 ### 4.1 Die 4-Phasen-Taktung
 
@@ -566,7 +599,7 @@ gantt
     section Phase 2 (60m)
     Hands-on Laborphase (In-Class Sprint) : 45, 105
     section Phase 3 (30m)
-    Micro-Review, Moodle-Test & Defense : 105, 135
+    Showcase, Peer Review & Plenumsdiskussion : 105, 135
     section Phase 4 (15m)
     Synthese, Ausblick & HW-Briefing : 135, 150
 ```
@@ -576,23 +609,68 @@ gantt
 | **Phase 1** | 00:00 – 00:45 | **45 min** | **Theorie-Impuls & Live-Coding** | - Interaktive Folienpräsentation (Problemstellung, mathematische Modellierung, physikalische Gesetze)<br>- Live-Coding durch Dozierenden: Konstruktion des Architekturgerüsts in Visual Studio<br>- Fehler provozieren & live debuggen |
 | *Pause* | *integriert* | *5 min* | *Kurzes Durchatmen / Rechner vorbereiten* | *Puffer für Raumlüftung und Vorbereitung der IDE* |
 | **Phase 2** | 00:45 – 01:45 | **60 min** | **Hands-on Laborphase (In-Class Sprint)** | - Studierende arbeiten in festen 2er-Teams am Laptop (im gewählten Track: Track A Industrie ODER Track B Game)<br>- Ausfüllen der vorbereiteten Lücken-Schnittstellen (Scaffolding)<br>- Erreichen des "Minimal Viable Product" (lauffähige Mini-Simulation / Gameloop)<br>- Dozent fungiert als aktiver "Floor Coach" |
-| **Phase 3** | 01:45 – 02:15 | **30 min** | **Micro-Review, Assessment & Micro-Defense** | - An Terminen mit Test: 15 min Moodle-MCQ-Test (T04, T07, T10)<br>- An Meilenstein-Terminen: Micro-Defenses (Live-Code-Inspektion & Parameter-Stresstest am Tisch)<br>- Gemeinsame Reflexion im Plenum: Aufdecken von Fehlkonzepten |
+| **Phase 3** | 01:45 – 02:15 | **25–30 min** | **Showcase, Peer Review & Plenumsdiskussion** | - **Live-Showcase Track A:** 1x Team Industrie stellt Lösung live am Beamer vor (5–7 min)<br>- **Live-Showcase Track B:** 1x Team Simulation Game stellt Lösung live vor (5–7 min)<br>- **Peer Review & Plenumsdiskussion:** Gezielte Fachfragen aus dem Plenum (ca. 10 min)<br>- **Dozenten-Feedback & Stresstest:** Live-Ad-hoc-Parameterstresstest (ca. 5 min)<br>- *An Test-Terminen (T04, T07, T10):* 15 min Moodle-MCQ-Test + gestraffter 15-min-Showcase |
 | **Phase 4** | 02:15 – 02:30 | **15 min** | **Synthese & Homework Briefing** | - Zusammenfassung der Kernbotschaft & Online-Recherche-Tipps<br>- Briefing der weiterführenden Homework Extension<br>- Beantwortung offener organisatorischer Fragen |
 
-### 4.2 Rollenprofile von Lehrendem und Studierenden
+### 4.2 Phase 3 im Detail: Showcase, Peer Review & Plenumsdiskussion
+
+Phase 3 bildet das didaktische Herzstück der aktiven Reflexion und des Peer-Learnings. Nach Abschluss des 60-minütigen In-Class Sprints versammelt sich das gesamte Plenum zur strukturierten Präsentations- und Diskussionsrunde.
+
+```mermaid
+flowchart TD
+    subgraph Phase_3["Phase 3: Showcase, Peer Review & Plenumsdiskussion (25–30 min)"]
+        direction TB
+        A["1. Showcase Track A: Industrie (5–7 min)\nLive-Demo am Beamer, DGL/LGS-Herleitung, C#-Code"]
+        B["2. Showcase Track B: Simulation Game (5–7 min)\nLive-Gameloop, FPS/GC-Check, interaktive Steuerung"]
+        C["3. Peer Review & Plenumsdiskussion (ca. 10 min)\nKritische Fragen der anderen Teams: Stabilität, Grenzfälle, Code-Design"]
+        D["4. Dozenten-Feedback & Ad-hoc-Stresstest (ca. 5 min)\nSpontane Parameter-Modifikation am Beamer, Noten-Feedback"]
+        A --> B --> C --> D
+    end
+```
+
+#### 4.2.1 Die vier Schritte der Showcase-Session
+
+1. **Schritt 1: Live-Showcase Track A – Industrie (ca. 5–7 min):**
+   - Ein vorab eingeteiltes 2er-Team aus Track A projiziert seinen lauffähigen C#/WPF-Code an die Hörsaalwand.
+   - Das Team demonstriert das erreichte Minimal Viable Product (MVP), erläutert die mathematische Formulierung (z. B. FDM-Diffusionsmatrix, Cholesky-Kräftegleichgewicht, RK4-Zustandsraum) und zeigt die saubere architektonische Trennung zwischen Physik und UI.
+2. **Schritt 2: Live-Showcase Track B – Arcade / Simulation Game (ca. 5–7 min):**
+   - Ein eingeteiltes 2er-Team aus Track B stellt das spielerische Gegenstück vor.
+   - Fokus: Flüssiger Gameloop (60 FPS), allokationsfreie Datenstrukturen zur Vermeidung von Garbage-Collection-Rucklern, responsive Benutzerinteraktion und physikalisch plausibles Verhalten (z. B. Partikelkollisionen, Anti-Tunneling).
+3. **Schritt 3: Peer Review & Plenumsdiskussion (ca. 10 min):**
+   - Das Auditorium (die anderen Teams) hört keineswegs passiv zu, sondern agiert als **kritisches Peer-Review-Gremium**.
+   - Die Studierenden stellen gezielte, anspruchsvolle Fachfragen zu:
+     - **Kritische Analyse & Randfälle:** *„Wie verhält sich euer Solver, wenn die Masse gegen Null strebt oder die Dämpfung negativ wird?“*
+     - **Stabilitätsgrenzen & Numerik:** *„Wo liegt bei eurem Gitterabstand die Von-Neumann- bzw. CFL-Stabilitätsgrenze? Was passiert, wenn ihr den Zeitschritt $h$ verdoppelt?“*
+     - **Code-Verständnis & Software-Architektur:** *„Warum habt ihr an dieser Stelle `WriteableBitmap` statt eines `Canvas` gewählt? Entstehen in der inneren Schleife versteckte Heap-Allokationen?“*
+4. **Schritt 4: Dozenten-Feedback & Ad-hoc-Stresstest (ca. 5 min):**
+   - Der Dozent fasst Stärken und Optimierungspotenziale der beiden Lösungen zusammen.
+   - Zur Verifikation fordert der Lehrende einen **Live-Ad-hoc-Stresstest**: Eine spontane Parameteränderung direkt im Quellcode am Beamer (z. B. Schrittweite $h \times 5$, asymmetrische Last, Deaktivierung von Anti-Windup), um die Grenzen des Modells transparent zu demonstrieren.
+
+#### 4.2.2 Das verbindliche Rotationsprinzip
+- Über das Semester hinweg kommt **jedes 2er-Team mindestens einmal als Showcase-Präsentator auf die Bühne**.
+- Ein transparenter Rotationsplan (auf Moodle bereitgestellt) legt zu Semesterbeginn fest, welches Team an welchem Termin für Track A bzw. Track B vorträgt.
+- Bei 10 Terminen und ca. 12–16 Teams im Jahrgang wird garantiert, dass jedes Team einmal im Rampenlicht steht und seinen Code öffentlich verteidigt.
+
+#### 4.2.3 Verbindliche Verankerung im Syllabus & Notenschema
+- **Doppelte Verpflichtung:**
+  1. **Präsentationsleistung:** Das souveräne Präsentieren der eigenen Lösung auf der Beamer-Bühne im zugewiesenen Termin ist eine **verbindliche Prüfungsvorleistung**.
+  2. **Plenumsbeteiligung & Peer Review:** Das Einbringen von fundierten, qualifizierten Fachfragen aus dem Plenum ist kein optionales Extra, sondern **fester Bestandteil der Beurteilung von Säule 2 (Übungsmeilensteine & Micro-Defenses)**.
+- Teams, die passiv im Hörsaal verweilen, ohne fundierte Fragen zu stellen oder ihre Showcase-Pflicht zu erfüllen, können in Säule 2 keine positive Beurteilung erreichen.
+
+### 4.3 Rollenprofile von Lehrendem und Studierenden
 
 ```mermaid
 flowchart LR
     subgraph Lehrender
         L1[Phase 1: Impulsgeber & Live-Coder]
         L2[Phase 2: Floor Coach & Debug-Mentor]
-        L3[Phase 3: Prüfer Micro-Defense & Feedback-Geber]
+        L3[Phase 3: Moderator, Stresstester & Reviewer]
         L4[Phase 4: Syntheseur & Meilenstein-Leiter]
     end
     subgraph Studierende
         S1[Phase 1: Aktives Mitdenken & Mitschreiben]
         S2[Phase 2: Pair Programming: Driver & Navigator]
-        S3[Phase 3: Test-Bearbeitung & Code-Verteidigung]
+        S3[Phase 3: Showcase-Präsentator A/B & Plenum-Peer-Review]
         S4[Phase 4: Aufgabenklärung & Sprint-Planung]
     end
     L1 --> S1
@@ -603,9 +681,10 @@ flowchart LR
 
 - **In Phase 1:** Der Dozierende liefert nicht nur Folien ab, sondern entwickelt Schlüsselcode interaktiv im Editor. Studierende stellen Zwischenfragen und skizzieren Lösungswege mit.
 - **In Phase 2:** Der Lehrende wechselt von der Dozentenbühne an die Tische. Er prüft aktiv Code-Architekturen, hinterfragt numerische Parameter und unterstützt beim Troubleshooting.
-- **In Phase 3:** Die Studierenden verteidigen ihren Code in Micro-Defenses oder bearbeiten Moodle-Tests. Typische Fehler werden im Plenum ohne Bloßstellung anonymisiert diskutiert.
+- **In Phase 3:** Die eingeteilten Teams präsentieren auf der Bühne (Showcase); das Plenum führt das strukturierte Peer Review mit fundierten Fachfragen; der Lehrende moderiert und führt den Ad-hoc-Stresstest durch.
+- **In Phase 4:** Der Dozierende resümiert die Lernergebnisse und brieft die Homework Extension; die Studierenden planen ihre Arbeitsteilung im 2er-Team.
 
-### 4.3 Umgang mit Heterogenität: Differenzierung & Fast-Track Challenges
+### 4.4 Umgang mit Heterogenität: Differenzierung & Fast-Track Challenges
 
 Da Programmier- und Mathematikfähigkeiten in ILVs variieren, wird das Material zweistufig differenziert:
 1. **Scaffolding für solide Basis:**
@@ -724,10 +803,10 @@ Das Benotungsschema ist zu 100 % mit dem Dokument `Konzept/03_Benotung_Moodle_Te
 │                                GESAMTNOTE (100 %)                                      │
 ├────────────────────────────┬────────────────────────────┬──────────────────────────────┤
 │    SÄULE 1: 30 %           │    SÄULE 2: 30 %           │    SÄULE 3: 40 %             │
-│    Moodle MCQ-Tests        │    Übungsmeilensteine &    │    Abschlussprojekt &        │
-│    (3 Tests à 10 %,        │    Micro-Defenses          │    Oral Defense              │
-│     kontinuierliche         │    (4 Meilensteine à 7,5 %,│    (10% Architektur, 10%     │
-│     Theorie & Numerik)     │     Präsenz-Stresstests)   │     Bericht, 20% Pitch/Demo) │
+│    Moodle MCQ-Tests        │    Übungsmeilensteine,     │    Abschlussprojekt &        │
+│    (kontinuierliche        │    Showcases & Peer-Review │    Oral Defense              │
+│     Theorie & Numerik)     │    • 15 % Showcase-Demo    │    (10% Architektur, 10%     │
+│                            │    • 15 % Plenumsfragen    │     Validierung, 20% Defense)│
 └────────────────────────────┴────────────────────────────┴──────────────────────────────┘
 ```
 
@@ -737,13 +816,18 @@ Das Benotungsschema ist zu 100 % mit dem Dokument `Konzept/03_Benotung_Moodle_Te
 - **Test 3 (nach Termin 10):** Kontinuierliche Solver (Heun, RK4, Anti-Windup), Diskrete Systeme (DES, Welford), Hybride Dynamik (Zero-Crossing, VIBN) (Kapitel 08–10).
 - *Charakteristik:* 10–12 Fragen in 15–20 Minuten; visuelle Fehlerdiagnosen, algorithmische Berechnungsfragen mit Zufallsvariablen, subtile Bug-Identifikation in C#-Snippets.
 
-#### Säule 2: 4 Übungsmeilensteine & Micro-Defenses (30 %)
+#### Säule 2: Übungsmeilensteine, Showcases & Plenumsfragen (30 %)
+
+Säule 2 verbindet praktisches Software-Engineering mit einer universitären Diskussions- und Reviewkultur:
+- **15 % Showcase-Präsentation & Lösungsgüte (Säule 2a):** Live-Vorführung der Meilensteinlösung am Beamer im Rahmen des verbindlichen **Rotationsprinzips** (über das Semester kommt jedes 2er-Team mindestens einmal mit 5–7 min Showcase auf die Beamer-Bühne), spontane Code-Inspection und Bestehen des Live-Parameter-Stresstests des Dozenten.
+- **15 % Fachliche Plenumsbeteiligung & Peer-Review (Säule 2b):** Kontinuierliches, qualifiziertes und konstruktiv-kritisches Fragenstellen aus dem Plenum bei den Showcases anderer Teams (kritische Analyse, Stabilitätsgrenzen, Randfallbetrachtung, GC-Allokationsfreiheit und Code-Design).
+- **Verbindlichkeitsklausel:** Sowohl die eigene **Showcase-Präsentation** als auch das **qualifizierte Fragenstellen im Peer Review** sind verbindliche Prüfungsteile der Lehrveranstaltung. Eine rein passive Hörsaal-Anwesenheit ohne qualifizierte Wortmeldungen reicht für eine positive Beurteilung dieser Säule nicht aus.
 
 > [!NOTE]
 > **Wahlmodell („Pick your Track: Industrie vs. Gaming“):**  
 > Die Studierenden müssen **NICHT** beide Aufgaben bearbeiten! Jedes 2er-Team wählt für jeden Meilenstein **GENAU EINE** der beiden Aufgaben (**Track A: Industrie ODER Track B: Game**). Beide Tracks führen zu denselben Lernergebnissen (ILOs), erfordern dieselbe Software-Architektur und besitzen denselben Workload.
 
-- Vier praktische Meilensteine (begleitend zu den Laborblöcken, je 7,5 %):
+- Vier praktische Meilensteine (begleitend zu den Laborblöcken, je 3,75 % für den Showcase):
   - **Meilenstein 1 (nach T02/T03, fällig T04):** 2D-Visualisierung & Simulation  
     *Wahl:* Track A (FDM-Kühlkörper mit Neumann-RB & Wärmestrom-Vektorpfeilen) **ODER** Track B (Zelluläre Waldbrand-/Lava-Pixelwelt mit Windvektoren).  
     *(Hinweis: Vektorpfeile in T03 sind rein geometrisch & visuell; keine Statik!)*
@@ -754,10 +838,11 @@ Das Benotungsschema ist zu 100 % mit dem Dokument `Konzept/03_Benotung_Moodle_Te
     *(Hinweis: Erst hier in T07 erweckt die Math.NET Cholesky-Engine die T03-Geometrie zum statischen Leben!)*
   - **Meilenstein 4 (nach T08/T09, fällig T10):** Dynamische Systeme & Stochastik  
     *Wahl:* Track A (S-Functions DC-Motor mit PID Anti-Windup & M/M/c-Fertigungslinie) **ODER** Track B (Falcon Booster Balancer mit RK4 & Fast-Food Tycoon DES).
-- *Durchführung der Micro-Defense:* Direkte Abnahme am Arbeitsplatz im Rechnerraum:
-  1. Live-Vorführung des Programms im gewählten Track.
+- *Durchführung von Showcase & Micro-Defense:*
+  1. Live-Vorführung des Programms im gewählten Track am Beamer oder Laborplatz ($\ge 30\,\text{FPS}$).
   2. Spontane Code-Inspection: *„Erklären Sie Zeile 42 und warum hier keine GC-Allokation entsteht.“*
-  3. Live-Stresstest: *„Verdoppeln Sie die Schrittweite $h$ bzw. Parameter $X$ – was passiert im Phasenraum?“*
+  3. Live-Parameter-Stresstest: *„Verdoppeln Sie die Schrittweite $h$ bzw. Parameter $X$ – was passiert im Phasenraum?“*
+  4. Plenums-Q&A: Beantwortung fundierter Peer-Fragen aus dem Auditorium.
 
 #### Säule 3: Abschlussprojekt „Digital Twin Challenge“ & Oral Defense (40 %)
 - **10 % Softwarearchitektur & C#-Codequalität:** Strikt entkoppelte Architektur (keine GUI-Aufrufe im Solver), saubere S-Functions, Git-Historie.
@@ -771,7 +856,7 @@ Das Benotungsschema ist zu 100 % mit dem Dokument `Konzept/03_Benotung_Moodle_Te
 
 ### 6.4 Benotungsrichtlinie & Bewertungsrubrik
 
-$$\text{Gesamtnote} = 0{,}30 \cdot \text{Moodle} + 0{,}30 \cdot \text{Labor-Meilensteine} + 0{,}40 \cdot \text{Abschlussprojekt}$$
+$$\text{Gesamtprozent } P = 0{,}30 \cdot P_{\text{Moodle}} + 0{,}15 \cdot P_{\text{Showcase}} + 0{,}15 \cdot P_{\text{Plenum}} + 0{,}40 \cdot P_{\text{Projekt}}$$
 
 #### Notenschlüssel (Standard FH Oberösterreich):
 - **Sehr Gut (1):** $\ge 90\,\%$

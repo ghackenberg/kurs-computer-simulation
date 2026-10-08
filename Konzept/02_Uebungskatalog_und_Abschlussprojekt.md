@@ -15,9 +15,10 @@
 1. [Didaktisches Gesamtkonzept & Labororganisation](#1-didaktisches-gesamtkonzept--labororganisation)
    - 1.1 Verzahnung von Vorlesung, Hands-on-Labor und Vibe-Coding / KI-gestütztem Arbeiten
    - 1.2 Das 2-Stufen-Übungsmodell mit Wahlkonzept („Pick your Track: Industrie vs. Gaming“)
-   - 1.3 Matrix der chronologischen Technologie-Freigabe (Strikte Konsistenz!)
-   - 1.4 Architektur- und Software-Qualitätsstandards („Goldene Regel“)
-   - 1.5 Test-Driven Simulation & CI-Workflows
+   - 1.3 Wöchentliches „Showcase & Peer-Challenge“-Format (Live-Vorführung & Peer-Questioning)
+   - 1.4 Matrix der chronologischen Technologie-Freigabe (Strikte Konsistenz!)
+   - 1.5 Architektur- und Software-Qualitätsstandards („Goldene Regel“)
+   - 1.6 Test-Driven Simulation & CI-Workflows
 2. [Kapitelweiser Aufgabenkatalog (Einheit 01 bis 10)](#2-kapitelweiser-aufgabenkatalog-einheit-01-bis-10)
    - [Einheit 01: „Industrie-Löschmonitor vs. Retro Tank Duel“ (Ballistik & Luftwiderstand)](#einheit-01-industrie-löschmonitor-vs-retro-tank-duel-ballistik--luftwiderstand)
    - [Einheit 02: „Gamer-PC Kühlkörper-Optimizer vs. Waldbrand-Ausbreitung“ (WriteableBitmap FDM)](#einheit-02-gamer-pc-kühlkörper-optimizer-vs-waldbrand-ausbreitung-writeablebitmap-fdm)
@@ -97,7 +98,50 @@ Jede der Einheiten 01 bis 10 folgt einer strikten Zweistufigkeit:
 
 ---
 
-### 1.3 Matrix der chronologischen Technologie-Freigabe (Strikte Konsistenz!)
+### 1.3 Wöchentliches „Showcase & Peer-Challenge“-Format (Live-Vorführung & Peer-Questioning)
+
+Um die fachliche Diskussionskultur, die Kritikfähigkeit und den ingenieurmäßigen Code-Review-Prozess im Laboralltag zu verankern, startet jede Laborübung (ab Einheit 02) mit dem **„Showcase & Peer-Challenge“-Format** (Gesamtdauer: ca. 15–20 Minuten):
+
+```mermaid
+flowchart TD
+    subgraph Showcase ["Wöchentlicher Laborstart: Showcase & Peer-Challenge (15–20 min)"]
+        direction TB
+        Pick["Zufallsauswahl / Rotationsliste\n1 Team aus Track A (Industrie)\n1 Team aus Track B (Simulation Game)"]
+        LiveDemo["Live-Vorführung am Beamer (je 5 min)\n1. Live-Ausführung & Parameter-Stresstest\n2. Code-Walkthrough & Architektur-Check\n3. Validierung & analytischer Grenzfall"]
+        Plenum["Peer-Questioning durch das Auditorium\nKritische Fachfragen zu Numerik, Stabilitätsgrenzen,\nSpeicherallokation & physikalischem Realismus"]
+        Pick --> LiveDemo
+        LiveDemo --> Plenum
+    end
+    style Showcase fill:#fff8e1,stroke:#ffa000,stroke-width:2px;
+    style Pick fill:#e1f5fe,stroke:#0288d1;
+    style LiveDemo fill:#e8f5e9,stroke:#388e3c;
+    style Plenum fill:#fce4ec,stroke:#c2185b;
+```
+
+#### 1. Zufallsauswahl & Rotationsprinzip
+- Zu Beginn jedes Folgetermins werden per Zufall oder transparenter Rotationsliste **genau zwei Teams** an das Dozentenpult aufgerufen:
+  - **Ein Team aus Track A (Industrie & Mechatronik)**
+  - **Ein Team aus Track B (Simulation Game & Gaming-Physik)**
+- Im Verlauf des Semesters kommt jedes Team mindestens einmal für eine Live-Vorführung am Beamer an die Reihe.
+
+#### 2. Live-Präsentation am Beamer (5 Minuten pro Team)
+Das aufgerufene 2er-Team führt seine Homework Extension live in der Entwicklungsumgebung (Visual Studio / JetBrains Rider) vor:
+1. **Live-Ausführung & Stresstest:** Starten der Anwendung, Demonstration des Kernverhaltens und gezieltes Ausreizen der Parameter (z. B. extreme Schrittweiten, Lastsprünge, Windstöße oder Gitterfeinheiten).
+2. **Architektur- & Solver-Check:** Kurzer Blick in den Quellcode: Saubere Entkopplung von Physik-Engine und UI nach der *Goldenen Regel*, Vermeidung von GC-Allokationen im Render-/Simulations-Loop, saubere Kapselung der DGLn/Zustände.
+3. **Validierung & Grenzen:** Erläuterung der Konvergenz und des quantitativen Abgleichs mit dem analytischen Grenzfall.
+
+#### 3. Peer-Questioning & Fach-Challenge durch das Plenum
+Alle anderen Studierenden im Raum sind ausdrücklich **keine passiven Zuschauer**, sondern agieren als technische Gutachter und Auditoren:
+- **Aufforderung zum Peer-Questioning:** Das Auditorium ist gefordert, kritische, fachlich fundierte Fragen einzubringen und Schwachstellen aufzudecken:
+  - *Numerische Stabilität & Solver-Wahl:* „Was passiert, wenn die Schrittweite verdoppelt wird? Explodiert das System oder konvergiert es stabil?“
+  - *Physikalischer Realismus vs. Fake-Animation:* „Löst die Anwendung tatsächlich das DGL-System oder wird eine vorberechnete Kurve/Spline abgefahren?“
+  - *Code-Architektur & Performance:* „Werden im Render-Loop Objekte auf dem Managed Heap allokiert? Wie ist die Thread-Sicherheit bei Datenübergaben gelöst?“
+  - *Grenzfall-Konsistenz:* „Entspricht das numerische Ergebnis im stationären Grenzfall exakt der theoretischen Formel?“
+- **Didaktischer Mehrwert:** Konstruktive, fachlich anspruchsvolle Fragen aus dem Plenum fließen positiv in die mündliche Mitarbeit ein. Für die vortragenden Teams ist dieses Format die ideale Vorbereitung auf das finale Kolloquium im Meilenstein M4.
+
+---
+
+### 1.4 Matrix der chronologischen Technologie-Freigabe (Strikte Konsistenz!)
 
 > [!CAUTION]
 > **Verbindliche Didaktik-Regel: KEIN Vorgreifen auf spätere Vorlesungsinhalte!**  
@@ -118,7 +162,7 @@ Jede der Einheiten 01 bis 10 folgt einer strikten Zweistufigkeit:
 
 ---
 
-### 1.4 Architektur- und Software-Qualitätsstandards
+### 1.5 Architektur- und Software-Qualitätsstandards
 
 Alle studentischen Lösungen müssen der im Skriptum definierten **Goldenen Regel der Simulationsarchitektur** ([Kapitel 11, Folie 356](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/11_Epilog/Folien.md#L356)) genügen:
 
@@ -130,7 +174,7 @@ Alle studentischen Lösungen müssen der im Skriptum definierten **Goldenen Rege
 
 ---
 
-### 1.5 Test-Driven Simulation & CI-Workflows
+### 1.6 Test-Driven Simulation & CI-Workflows
 
 Für alle numerischen Modelle sind begleitende Unit-Tests mit `xUnit` oder `MSTest` Pflicht (Referenzprojekt: [`Quellen/WS25/SimulationTests`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS25/SimulationTests)):
 - **Energieerhaltungstests:** Für ungedämpfte Systeme (freies Pendel, elastischer Ball) muss die Gesamtenergie $E_{\text{tot}} = E_{\text{kin}} + E_{\text{pot}}$ im Zeitverlauf bis auf Integrationsfehlerordnung $\mathcal{O}(\Delta t^p)$ konstant bleiben.
@@ -209,6 +253,15 @@ Konstanten: $g = 9{,}81\,\text{m/s}^2$, Luftdichte $\rho = 1{,}225\,\text{kg/m}^
 
 ---
 
+#### 🔍 Peer-Review & Leitfragen für das Plenum
+Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
+- **Fake-Physik vs. echte DGL:** Wird der Luftwiderstand in jedem Zeitschritt vektoriell aus der *Relativgeschwindigkeit* $\|\mathbf{v} - \mathbf{w}\|$ berechnet, oder handelt es sich um eine vereinfachte analytische Parabel mit aufgesetztem Offset?
+- **Schrittweiten-Explosion bei Euler:** Was passiert, wenn die Schrittweite $\Delta t$ live am Beamer verdoppelt oder auf $0{,}5\,\text{s}$ gesetzt wird? Zeigt der explizite Euler die theoretisch erwartete Energieexplosion, während das Heun-Verfahren noch robust konvergiert?
+- **Kollisions-Tunneling & Schnittpunkt:** Taucht das Projektil bei größeren Zeitschritten sichtbar in das Höhenprofil ein (Bodenpenetration), oder wird der Aufschlagspunkt über eine lineare Schnittpunkt-Interpolation exakt bestimmt?
+- **Vorzeichenkonsistenz der Winddrift:** Wirkt Gegenwind ($w_x < 0$) physikalisch bremsend und steilt die Flugbahn ab, oder führt ein Vorzeichenfehler im Relativwindvektor $\mathbf{v}_{\text{rel}} = \mathbf{v} - \mathbf{w}$ zu unphysikalischem Vorwärtsschub?
+
+---
+
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 01)
 - **Empfohlene Suchbegriffe:** `Euler vs Heun method C# implementation`, `projectile motion quadratic drag relative wind`, `System.Numerics Vector2 trajectory simulation`.
 - **Offizielle Dokumentation:** [Microsoft Learn: System.Numerics.Vector2](https://learn.microsoft.com/de-de/dotnet/api/system.numerics.vector2), [Wikipedia: Heun's method](https://en.wikipedia.org/wiki/Heun%27s_method).
@@ -274,6 +327,15 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
   - [3 P.] Effiziente `WriteableBitmap`-Pixelmanipulation ohne Speicherlecks.
   - [2 P.] Experimenteller Nachweis der numerischen Instabilität bei $\Delta t > \Delta t_{\text{krit}}$.
   - [2 P.] Dokumentation: Analyse der Maximaltemperaturen und anschauliche Screenshots.
+
+---
+
+#### 🔍 Peer-Review & Leitfragen für das Plenum
+Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
+- **Gitterexplosion & Von-Neumann-Stabilität:** Was passiert, wenn die Schrittweite $\Delta t$ live am Beamer über das theoretische Limit $\Delta t_{\text{krit}} = \frac{\Delta x^2}{4 a_{\max}}$ angehoben wird? Zeigt das Gitter das charakteristische oszillierende Schachbrettmuster und divergiert zu $\pm \infty$ bzw. `NaN`, oder wurde die Instabilität künstlich durch ein unzulässiges `Math.Clamp` maskiert?
+- **Render-Performance & UI-Thread:** Bleibt die Benutzeroberfläche flüssig oder friert das Fenster ein? Werden die Pixel tatsächlich im unmanaged Speicher über `WriteableBitmap.Lock()` und direkten Zeigerzugriff/`Marshal.Copy` aktualisiert oder über langsame `SetPixel`-Aufrufe?
+- **Double-Buffering des FDM-Gitters:** Werden für $T^{k}$ und $T^{k+1}$ zwei getrennte Puffer verwendet, oder wird das Gitter in-place überschrieben? *(In-place-Überschreibung erzeugt eine unphysikalische asymmetrische Ausbreitungsrichtung!)*
+- **Physikalische Randbedingungen:** Werden an den Kühlfinnen echte konvektive Robin-Randbedingungen (Wärmeübergangskoeffizient $h$) bzw. Winddriften realistisch diskretisiert, oder nur statische Dirichlet-Randtemperaturen gehalten?
 
 ---
 
@@ -375,6 +437,15 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
 
 ---
 
+#### 🔍 Peer-Review & Leitfragen für das Plenum
+Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
+- **Verzerrung des Seitenverhältnisses (Aspect Ratio Distortion):** Was passiert, wenn das Anwendungsfenster stark in die Breite oder Höhe gezogen wird? Verzerren sich Trägerdreiecke, Kreise oder Raumschiffe unphysikalisch, oder skaliert der `CoordinateTransformer` mit einem einheitlichen isotropen Maßstab $s = \min(s_x, s_y)$ unter automatischer Randzentrierung?
+- **Y-Achseninversion der Grafikausgabe:** Zeigen Vektoren mit positiver vertikaler Komponente nach oben (mathematisches Welt-Koordinatensystem), oder wurde die hardwareseitige WPF-Achsenrichtung (Y positiv nach unten) fälschlicherweise nicht invertiert?
+- **Skalierungsinvarianz der Pfeilspitzen:** Behalten die Pfeilspitzen bei jeder Zoomstufe und Ausrichtung ihre konstante Pixelgröße und ihren definierten Öffnungswinkel $\beta$, oder wachsen/schrumpfen die Spitzen mit der Vektorlänge?
+- **Vorgreif-Sperre & Architektur-Integrität:** Wurden die Vorgreif-Regeln strikt eingehalten (kein ScottPlot, keine voreilige FEM-Statikberechnung vor T07)? Bleibt das Drag-and-Drop der Knoten auch bei schnellen Mausbewegungen ohne Render-Artefakte und Memory Leaks flüssig?
+
+---
+
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 03)
 - **Empfohlene Suchbegriffe:** `WPF Canvas world to screen matrix transformation`, `WPF Polygon arrowhead calculation vector`, `WPF Canvas Drag and Drop shape manipulation`.
 - **Offizielle Dokumentation:** [Microsoft Learn: Shapes and Basic Drawing in WPF](https://learn.microsoft.com/de-de/dotnet/desktop/wpf/graphics-multimedia/shapes-and-basic-drawing-in-wpf-overview).
@@ -439,6 +510,15 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
   - [3 P.] Exakte Realisierung der Welford-Statistik mit mathematischer Verifikation.
   - [2 P.] Ansprechendes Dashboard-Design mit synchronisierten Diagrammachsen.
   - [2 P.] Einbindung des System-/Streckengraphen via MSAGL.
+
+---
+
+#### 🔍 Peer-Review & Leitfragen für das Plenum
+Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
+- **GC-Druck & Speicherallokationen im Render-Loop:** Allokiert der Timer-Tick bei jedem Frame neue `double[]`-Arrays oder LINQ-Abfragen auf dem Heap (überprüfbar mit dem Diagnostic Tools Profiler / `GC.GetTotalMemory(false)`), was zu spürbaren Mikrorucklern führt, oder wird strikt in vorallokierte Ringpuffer geschrieben?
+- **Welford-Rekursion vs. naive Summation:** Werden Mittelwert und Varianz tatsächlich online nach der Welford-Formel ohne Vergangenheits-Array aktualisiert, oder wird naiv mit `Sum()` und $\sum x^2$ gerechnet (Gefahr von Auslöschung und Gleitkomma-Überlauf bei langen Messreihen)?
+- **ScottPlot-API-Konsistenz (Version 5 vs. Version 4):** Werden moderne ScottPlot-5-Methoden (`Plot.Add.DataStreamer`, `Plot.Axes`) eingesetzt, oder schleichen sich veraltete, von LLMs halluzinierte ScottPlot-4-Aufrufe (`AddSignal`, alter Achsen-Zugriff) ein?
+- **Achsensynchronisation bei Benutzerinteraktion:** Bleiben die $X$-Zeitachsen aller drei Diagrammpanels synchron gekoppelt, wenn der Benutzer in einem Plot horizontal scrollt oder zoomt?
 
 ---
 
@@ -516,6 +596,15 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
 
 ---
 
+#### 🔍 Peer-Review & Leitfragen für das Plenum
+Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
+- **Hierarchischer Szenengraph & Matrix-Stack:** Bewegen sich die Subkomponenten (Laufkatze, Teleskophubwerk, Greiffinger) rein über lokale Transformationen via `glPushMatrix()` und `glPopMatrix()` mit, oder wurden Weltkoordinaten manuell errechnet? *(Schwachstellentest: Portal verfahren – bleibt der Greifer am Portal oder löst er sich ab?)*
+- **Kardanfehler & Gimbal Lock der Kamera:** Was geschieht, wenn die Kamera senkrecht über den Nord- oder Südpol geschwenkt wird ($\phi = \pm 90^\circ$)? Kippt die Kameraansicht sprunghaft um oder ist die Elevation sauber auf z. B. $[-85^\circ, +85^\circ]$ begrenzt?
+- **Flächennormalen & Beleuchtung:** Wirken die 3D-Körper plastisch mit sichtbarem Glanzpunkt (Specular Highlight), oder sind Flächen pechschwarz bzw. fleckig, weil Normalenvektoren (`glNormal3f`) fehlen oder durch falsche Skalierungsmatrizen verzerrt wurden?
+- **Greifmechanik vs. Skript-Animation:** Basiert das Aufnehmen von Objekten auf einer echten geometrischen Abstands- bzw. BoundingBox-Prüfung zwischen Greiferbacken und Werkstück, oder wird das Objekt rein zeitgesteuert („Fake-Animation“) an die Klaue geheftet?
+
+---
+
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 05)
 - **Empfohlene Suchbegriffe:** `SharpGL WPF OpenGLControl camera gluLookAt`, `OpenGL spherical coordinates orbit camera`, `OpenGL hierarchical matrix stack glPushMatrix`.
 - **Offizielle Dokumentation:** [SharpGL GitHub Repository](https://github.com/dwmkerr/sharpgl), [OpenGL 2.1 Reference Pages](https://registry.khronos.org/OpenGL-Refpages/gl2.1/).
@@ -581,6 +670,15 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
   - [3 P.] Saubere Messreihen mit Warmup, Standardabweichung und Amdahl-Fit.
   - [2 P.] Fundierter experimenteller Nachweis des Cache-Lokalitäts-Effekts.
   - [2 P.] Dokumentation: Aussagekräftige Diagramme und Hardware-Reflexion.
+
+---
+
+#### 🔍 Peer-Review & Leitfragen für das Plenum
+Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
+- **Race Conditions & Nicht-Determinismus:** Werden gemeinsame Variablen (z. B. Partikelzähler, Kollisionssummen) ohne `Interlocked`-Operationen oder thread-lokale Akkumulatoren inkrementiert? *(Auditorium-Test: Mehrfaches Ausführen desselben Testlaufs – liefert die Simulation exakt dieselben Zahlen oder streuen die Ergebnisse zufällig?)*
+- **False Sharing auf Cache-Lines:** Schreiben benachbarte Threads auf dicht beieinanderliegende Array-Felder innerhalb derselben 64-Byte-Cache-Zeile? Verursacht dies einen massiven Performance-Einbruch bei hoher Thread-Anzahl ($p \ge 8$)?
+- **Amdahl-Fit & JIT-Warmup:** Wurde vor der Zeitmessung ein Warmup-Durchlauf ausgeführt, um JIT-Kompilierungszeit zu eliminieren? Ist der berechnete serielle Anteil $s = 1 - f_{\text{par}}$ physikalisch plausibel?
+- **Hardware-Cache-Lokalität:** Zeigt das 2D-Laplace-Experiment den drastischen Geschwindigkeitsunterschied (Faktor 4–10) zwischen zeilenweisem (Row-Major, Cache-Hit) und spaltenweisem (Column-Major, Cache-Miss) Durchlaufen des Arrays?
 
 ---
 
@@ -665,6 +763,15 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
 
 ---
 
+#### 🔍 Peer-Review & Leitfragen für das Plenum
+Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
+- **Globales Kraftgleichgewicht & Invarianten:** Ergibt die vektorielle Summe aller Auflagerreaktionskräfte $\mathbf{f}_p$ und eingeleiteten äußeren Lasten $\mathbf{f}_{\text{ext}}$ exakt $\vec{0}$ bis auf Maschinengenauigkeit ($< 10^{-10}\,\text{N}$)? *(Schwachstellentest: Live-Abfrage der Kräftesumme am Beamer).*
+- **Blockpartitionierung vs. Penalty-Pfusch:** Wurden die Lagerbedingungen mathematisch exakt über Submatrizen ($\mathbf{K}_{ff}, \mathbf{K}_{fp}$) partitioniert und gelöst, oder wurde eine numerisch instabile „Penalty-Methode“ verwendet (künstlich riesige Zahlen auf der Hauptdiagonale von $\mathbf{K}$)?
+- **Kinematische Instabilität bei Stabbruch:** Was passiert bei Überlastung, wenn ein Stab bricht und das Resttragwerk statisch unterbestimmt (mechanischer Mechanismus) wird? Fängt die Software die nicht mehr positiv definite Matrix sauber ab, oder stürzt die Applikation mit unbehandelter Cholesky-`NonPositiveDefiniteException` ab?
+- **Konsistente Farbcodierung der Zug-/Druckstäbe:** Entsprechen die Farben auf dem Canvas tatsächlich den Vorzeichen der Normalkräfte ($N > 0$ Zug = Blau, $N < 0$ Druck = Rot)? Werden Knickstäbe (Euler-Knickfall) korrekt identifiziert?
+
+---
+
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 07)
 - **Empfohlene Suchbegriffe:** `Math.NET Numerics Matrix Cholesky solve C#`, `Direct stiffness method 3D truss assembly`, `truss reaction forces block partitioning`.
 - **Offizielle Dokumentation:** [Math.NET Numerics Documentation](https://numerics.mathdotnet.com/), [Matrix Decomposition in Math.NET](https://numerics.mathdotnet.com/LinearEquations).
@@ -724,6 +831,15 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
   - [3 P.] Saubere Realisierung des RK4-Solvers und des PID-Clamping-Mechanismus.
   - [2 P.] Vergleichende Trajektorienanalyse (mit vs. ohne Anti-Windup bei Laststörung).
   - [2 P.] Dokumentation: Phasenplots und physikalische Fehlerbetrachtung.
+
+---
+
+#### 🔍 Peer-Review & Leitfragen für das Plenum
+Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
+- **Windup-Effekt & Überschwingen bei Aktorsättigung:** Was geschieht bei einem massiven Laststoß, wenn die Stellgröße (Motorspannung oder Triebwerksschub) das physikalische Maximum erreicht? Greift das Anti-Windup Clamping (Conditional Integration) sofort und friert den Integratorzustand ein, oder wächst der I-Anteil weiter an und führt nach der Störung zu katastrophalem Überschwingen?
+- **Echte 4-Stufen-RK4 vs. maskierter Euler:** Werden im Solver wirklich alle 4 Zwischensteigungen $\mathbf{k}_1, \mathbf{k}_2, \mathbf{k}_3, \mathbf{k}_4$ sauber berechnet, oder verbirgt sich hinter dem Aufruf ein vereinfachtes Euler-Verfahren? *(Schwachstellentest: Schrittweite auf $\Delta t = 0{,}02\,\text{s}$ vergrößern – bleibt das System numerisch stabil?)*
+- **S-Function-Zustandskapselung:** Sind die Systemableitungen (`Derivatives`) reine seiteneffektfreie Funktionen des Zustandsvektors $\mathbf{x}$ und der Eingänge $\mathbf{u}$, oder verändern Zwischenschritte versehentlich den globalen Objektzustand?
+- **Physikalischer Realismus der Aktorik:** Werden Motorkraftgrenzen, Ratenbegrenzungen (Slew Rates) und Massenabnahme (Treibstoffverbrauch) kontinuierlich berücksichtigt oder werden unrealistische Momentansprünge gefahren?
 
 ---
 
@@ -791,6 +907,15 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
 
 ---
 
+#### 🔍 Peer-Review & Leitfragen für das Plenum
+Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
+- **Erhaltungssatz nach Little ($\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$):** Stimmen die gemessenen Mittelwerte exakt mit Little's Gesetz überein? Wurde berücksichtigt, dass bei begrenzter Puffergröße $K$ abgewiesene Einheiten aus der effektiven Ankunftsrate $\lambda_{\text{eff}} = \lambda (1 - P_{\text{Block}})$ herausgerechnet werden müssen?
+- **Stochastische Korrektheit der Inversionsmethode:** Werden Zwischenankunfts- und Bedienzeiten mathematisch korrekt über die analytische Inversionsfunktion $\tau = -\frac{1}{\lambda} \ln(1 - U)$ erzeugt, oder wurde unzulässigerweise eine Gleichverteilung bzw. diskrete Schrittweite verwendet? Ist der Zufallsgenerator thread-sicher für die parallelen Replikationen (`Parallel.For`)?
+- **Ereignisdiskreter Zeitsprung vs. Zeitschritt-Timer:** Springt die Simulation echt ereignisgesteuert von Event zu Event ($t \leftarrow t_{\text{event}}$ aus der `PriorityQueue`), oder läuft im Hintergrund ein starrer Zeitschrittleiter-Timer mit unnötigen Leerlaufschritten?
+- **Statistische Signifikanz:** Werden für Durchlauf- und Wartezeiten saubere 95%-Konfidenzintervalle über die Monte-Carlo-Replikationen ausgewiesen oder nur Einzelstichproben gezeigt?
+
+---
+
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 09)
 - **Empfohlene Suchbegriffe:** `C# PriorityQueue discrete event simulation FEL`, `inversion method exponential distribution Random`, `Little's law queueing simulation verification`.
 - **Offizielle Dokumentation:** [Microsoft Learn: PriorityQueue<TElement,TPriority> Klasse](https://learn.microsoft.com/de-de/dotnet/api/system.collections.generic.priorityqueue-2).
@@ -849,6 +974,15 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
   - [3 P.] Korrekte Impuls- und Reflexionsmechanik an schrägen Wänden und aktiven Bumpern bzw. Anschlägen.
   - [2 P.] Zeno-Vermeidung mit sicherem Übergang in den Ruhe- bzw. Rollzustand.
   - [2 P.] Flüssige interaktive Visualisierung (WPF Canvas oder SharpGL).
+
+---
+
+#### 🔍 Peer-Review & Leitfragen für das Plenum
+Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
+- **Tunneling-Effekt bei Höchstgeschwindigkeit:** Was passiert, wenn die Kugel mit extrem hoher Geschwindigkeit auf einen dünnen Bumper oder der Pneumatikzylinder mit maximalem Druck auf den Endanschlag trifft? Tritt Tunneling (Durchdringung) auf, oder isoliert die Schaltfunktion $z(\mathbf{x}) = 0$ das Kontakt-Event absolut zuverlässig?
+- **Präzision der Zero-Crossing Wurzelsuche:** Wird der Schaltzeitpunkt $t^*$ über eine echte Bisektionssuche auf $|z| < 10^{-6}$ genau lokalisiert und die DGL-Integration ab dort neu aufgesetzt, oder wird der Stoß unsauber im Festschritt-Raster ausgeführt?
+- **Zeno-Effekt & Chattering-Vermeidung:** Schaltet das Modell bei minimalen Resthüpfern (Geschwindigkeit unterhalb des Schwellwerts $\epsilon_v = 0{,}01\,\text{m/s}$) stabil in den kontinuierlichen Roll- bzw. Haftzustand über, oder blockiert das System in einer unendlichen Kaskade winziger Zeitschritte?
+- **Energiebilanz beim Stoß:** Entspricht der kinetische Energieverlust bei inelastischen Stößen exakt dem Restitutionskoeffizienten $e^2$, oder gewinnt das System durch fehlerhafte Reflexionsvektoren künstlich Energie?
 
 ---
 
