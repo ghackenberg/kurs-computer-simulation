@@ -109,13 +109,19 @@ Um Fairness, Transparenz und Manipulationssicherheit bei vollständiger KI-Erlau
 
 ### 2.2 Säule 2: Übungsmeilensteine & Micro-Defenses (30 %)
 * **Ziel:** Laufende Überprüfung der praktischen Implementierungsfähigkeit, Recherchekompetenz und spontanen Erklärungsfähigkeit im C#/.NET-Umfeld.
-* **Umfang:** 4 praktische Labor-Meilensteine (begleitend zu den Einheiten 01–10; zwei vor und zwei nach der Semestermitte).
+* **Umfang & chronologische Staffelung:** **4 praktische Labor-Meilensteine** (begleitend zu den Einheiten 01–10; je 7,5 % der Gesamtnote):
+  - **Meilenstein 1 (Abnahme T04, Stoff aus T02/T03):** 2D-Visualisierung & Simulation. Kombination aus 2D-Pixel-FDM (Kühlkörper-Heatmap in `WriteableBitmap`) und 2D-Vektorgrafik auf dem WPF `Canvas` (affine Koordinatentransformation Welt $\leftrightarrow$ Screen, Viewport-Zentrierung, Y-Achsen-Inversion, Vektorpfeile und technische Bemaßung).  
+    *(Kausalitätsgarantie: In Meilenstein 1 und Termin 3 werden **keinerlei** FE-Gleichungssysteme oder Cholesky-Zerlegungen verlangt!)*
+  - **Meilenstein 2 (Abnahme T07, Stoff aus T04/T05):** Echtzeit-Telemetrie & 3D-Kinematik. High-Performance-Datenstreaming mit `ScottPlot 5` und ringförmigen Puffern (`CircularBuffer<double>`) gekoppelt mit SharpGL 3D-Szenengraph-Transformationen.
+  - **Meilenstein 3 (Abnahme T09, Stoff aus T06/T07):** High-Performance & Statische FEM-Fachwerke. Multithreading mit TPL (`Parallel.For`) sowie Aufstellung des statischen Gleichungssystems $\mathbf{K}\mathbf{u}=\mathbf{f}$ mit Cholesky-Zerlegung ($\mathbf{L}\mathbf{L}^\top$) in `Math.NET Numerics`. *(Erst hier werden LGS und Cholesky implementiert und abgeprüft!)*
+  - **Meilenstein 4 (Abnahme T10, Stoff aus T08/T09):** Dynamische Systeme & Stochastische Ereignissimulation. Kontinuierliche DGL-Integration via S-Functions (RK4 mit Anti-Windup Clamping) sowie diskrete Ereignissimulation (DES-Warteschlangen, Monte-Carlo-Simulation mit Welford-Statistik).
 * **Durchführung („Micro-Defense“):** Die Abnahme erfolgt direkt am Arbeitsplatz im Rechnerraum der FH OÖ (Campus Wels):
   1. **Live-Vorführung:** Das erstellte C#/WPF-Programm läuft flüssig und stabil ($\ge 30\,\text{FPS}$).
-  2. **Code-Inspection (Ad-hoc-Frage):** Die Lehrperson deutet auf eine beliebige Codezeile (z. B. Zeigerzugriff in `WriteableBitmap`, Matrix-Faktorisierung in `Math.NET`, Zero-Crossing-Schleife, thread-sicherer Ringpuffer): *„Erklären Sie exakt, was hier passiert und warum hier keine Race Condition bzw. kein Speicherleck auftritt.“*
+  2. **Code-Inspection (Ad-hoc-Frage):** Die Lehrperson deutet auf eine beliebige Codezeile (z. B. Zeigerzugriff in `WriteableBitmap`, Viewport-Transformationsmatrix, Matrix-Faktorisierung in `Math.NET`, Zero-Crossing-Schleife, thread-sicherer Ringpuffer): *„Erklären Sie exakt, was hier passiert und warum hier keine Race Condition bzw. kein Speicherleck auftritt.“*
   3. **Live-Stresstest (Parameteränderung):** Die Lehrperson fordert eine Live-Parameteränderung im laufenden Code:
      * *„Erhöhen Sie die Schrittweite $h$ um den Faktor 10. Was beobachten Sie im Plot? Warum kippt das System weg?“*
      * *„Verdoppeln Sie die Masse des Projektils und halbieren Sie die Federkonstante. Stimmt die Schwingungszeit noch mit der DGL überein?“*
+     * *„Skalieren Sie das Anzeigefenster auf ein extremes 21:9-Format. Bleiben die 2D-Vektorformen unverzerrt und die Bemaßungspfeile am Stabende?“*
 * **Bewertung:** Dreistufig pro Meilenstein (0 / 1 / 2 Punkte bzw. prozentuale Staffelung) mit klarem Bewertungsraster.
 
 ### 2.3 Säule 3: Abschlussprojekt & mündliche Verteidigung (40 %)
@@ -149,9 +155,13 @@ flowchart LR
   - **Ausdrücklich AUSGESCHLOSSEN:** Vektorgrafik-Matrizen, ScottPlot, OpenGL/3D, Multithreading, LGS-Solver, Runge-Kutta, S-Functions, DES, Hybride Events.
 
 * **Quiz 2 (zu Beginn von Termin 5):**
-  - **Behandelter Stoff:** Kapitel 03 (2D-Vektorgrafik), Kapitel 04 (Echtzeit-Telemetrie & Diagramme), Kapitel 05 (3D-Visualisierung & OpenGL).
-  - **Themen:** Koordinatentransformation (Welt $\leftrightarrow$ Screen), Viewport-Skalierung, WPF Canvas & `DrawingVisual`, ScottPlot 5 Datenstreaming, Ringpuffer (`CircularBuffer`), 3D-Computergrafik (SharpGL, homogene $4 \times 4$-Matrizen, Euler-Winkel vs. Transformationen, hierarchische Szenengraphen für Roboter/Fahrzeuge, Orbit-Kamera, Beleuchtungsmodelle), API-Recherchekompetenz.
-  - **Ausdrücklich AUSGESCHLOSSEN:** Multithreading-Parallelisierung, FE-Fachwerke, Cholesky, ODE-Integratoren, S-Functions, Ereignissimulation.
+  - **Behandelter Stoff:** Kapitel 03 (2D-Vektorgrafik & Bemaßung), Kapitel 04 (Echtzeit-Telemetrie & Diagramme), Kapitel 05 (3D-Visualisierung & OpenGL).
+  - **Themen:** Koordinatentransformation (Welt $\leftrightarrow$ Screen), Viewport-Skalierung unter Aspektverhältnis-Erhaltung, Inversion der Y-Achse, WPF Canvas & `DrawingVisual`, geometrische Bemaßung (Dimensioning, Maßketten, Pfeilspitzen), ScottPlot 5 Datenstreaming, Ringpuffer (`CircularBuffer`), 3D-Computergrafik (SharpGL, homogene $4 \times 4$-Matrizen, Euler-Winkel vs. Transformationen, hierarchische Szenengraphen für Roboter/Fahrzeuge, Orbit-Kamera, Beleuchtungsmodelle), API-Recherchekompetenz.
+  - **Ausdrücklich AUSGESCHLOSSEN:** Multithreading-Parallelisierung, FE-Fachwerke & lineare Gleichungssysteme (LGS), Steifigkeitsmatrizen, Cholesky-Zerlegung, ODE-Integratoren, S-Functions, Ereignissimulation.
+  > [!IMPORTANT]
+  > **Kausalitätsprüfung & Konsistenz für Termin 3 & Quiz 2:**  
+  > In Termin 3 (Kapitel 03) und im zugehörigen Quiz 2 werden **keinerlei Fachwerk-Gleichungssysteme ($\mathbf{K} \cdot \mathbf{u} = \mathbf{f}$), Steifigkeitsmatrizen oder Cholesky-Zerlegungen** abgeprüft! Diese mathematischen FE-Methoden werden erst in Kapitel 07 / Termin 7 vermittelt und in Quiz 3 / Meilenstein 3 geprüft.  
+  > In Termin 3 und Quiz 2 stehen bezüglich Kapitel 03 **ausschließlich** die 2D-Vektorgrafik auf dem WPF Canvas, affine Koordinatentransformationen (Welt $\leftrightarrow$ Screen), isotrope Viewport-Skalierung, Inversion der Y-Achse sowie Bemaßungen (Dimensioning, Maßketten, Pfeilgeometrien) im Fokus.
 
 * **Quiz 3 (zu Beginn von Termin 8):**
   - **Behandelter Stoff:** Kapitel 06 (Multithreading & Parallele Simulation), Kapitel 07 (Statische Modelle & LGS), Kapitel 08 (Kontinuierliche dynamische Modelle & S-Functions).
@@ -233,7 +243,49 @@ Beim Start der Applikation erscheint das Bild diagonal zerrissen und verzerrt; n
 
 #### Quiz 2 (Termin 5): 2D-Vektorgrafik, Telemetrie & 3D-Szenengraph
 
-##### Frage 2.1: Homogene Transformationsmatrizen im 3D-Szenengraph
+> [!NOTE]
+> **Kausalitätshinweis zum Prüfungsumfang:**  
+> Gemäß Lehrveranstaltungsstruktur umfasst Quiz 2 für Kapitel 03 (Termin 3) **ausschließlich** 2D-Vektorgrafik, Koordinatentransformationen und Bemaßungen auf dem WPF Canvas. Es werden **keinerlei Fachwerk-Gleichungssysteme ($K \cdot u = f$) oder Cholesky-Zerlegungen** abgeprüft; diese sind Gegenstand von Quiz 3 (Kapitel 07).
+
+##### Frage 2.1: 2D-Vektorgrafik: Koordinatentransformation (Welt ↔ Screen), Y-Inversion & Geometrische Bemaßung auf dem WPF Canvas
+* **Fragentyp:** Berechnungs- und Code-Verständnisfrage (Moodle Calculated / Single-Select)
+* **Chronologischer Kontext:** Kapitel 03 (2D-Vektorgrafik, Canvas, Welt-zu-Screen-Transformation, Bemaßung)
+* **Aufgabenstellung:**
+  In einer mechatronischen 2D-Visualisierung (z. B. schematischer Träger/Balken) soll eine Konstruktion aus dem kartesischen Weltkoordinatensystem (Meter, $Y$ zeigt nach oben) auf ein WPF-Canvas-Fenster der Größe $W_{\text{canvas}} = 800\,\text{px} \times H_{\text{canvas}} = 600\,\text{px}$ (Bildschirmkoordinaten, $Y$ zeigt nach unten) projiziert werden. Die Bounding-Box der Welt beträgt:
+  $$x_{\text{min}} = 0{,}0\,\text{m}, \quad x_{\text{max}} = 10{,}0\,\text{m}, \quad y_{\text{min}} = 0{,}0\,\text{m}, \quad y_{\text{max}} = 5{,}0\,\text{m}$$
+
+  Um Verzerrungen zu vermeiden, wird ein isotroper Skalierungsfaktor (Uniform Aspect Ratio) mit Zentrierung gewählt:
+  ```csharp
+  double scaleX = canvasWidth / (xMax - xMin);
+  double scaleY = canvasHeight / (yMax - yMin);
+  double s = Math.Min(scaleX, scaleY); // Isotropie-Faktor
+  
+  double offsetX = (canvasWidth - (xMax - xMin) * s) / 2.0;
+  double offsetY = (canvasHeight - (yMax - yMin) * s) / 2.0;
+  
+  // Transformation eines Weltpunkts (xw, yw) in Screen-Pixel (xs, ys)
+  double xs = offsetX + (xw - xMin) * s;
+  double ys = canvasHeight - (offsetY + (yw - yMin) * s);
+  ```
+
+  Zusätzlich wird zwischen zwei Lagerpunkten $P_1(1{,}0\,\text{m}, 1{,}0\,\text{m})$ und $P_2(7{,}0\,\text{m}, 1{,}0\,\text{m})$ eine Bemaßungslinie mit Pfeilspitzen im WPF Canvas gezeichnet.
+
+  1. Wie groß ist der Skalierungsfaktor $s$ in $[\text{px/m}]$ und wie lauten die Canvas-Pixelkoordinaten $(x_s, y_s)$ für den Punkt $P_2(7{,}0\,\text{m}, 1{,}0\,\text{m})$?
+  2. Warum müssen die Pfeilspitzen der Bemaßung (Länge $12\,\text{px}$, Öffnungswinkel $30^\circ$) im **Screen Space** und nicht im **World Space** generiert werden?
+
+* **Lösung & Auswertung:**
+  - Skalierungsfaktoren:
+    $$s_x = \frac{800}{10} = 80\,\frac{\text{px}}{\text{m}}, \quad s_y = \frac{600}{5} = 120\,\frac{\text{px}}{\text{m}} \implies s = \min(80, 120) = 80\,\frac{\text{px}}{\text{m}}$$
+  - Offsets zur Zentrierung:
+    $$\text{offsetX} = \frac{800 - 10 \cdot 80}{2} = 0\,\text{px}, \quad \text{offsetY} = \frac{600 - 5 \cdot 80}{2} = \frac{600 - 400}{2} = 100\,\text{px}$$
+  - Pixelkoordinaten von $P_2(7{,}0\,\text{m}, 1{,}0\,\text{m})$:
+    $$x_s = 0 + (7{,}0 - 0) \cdot 80 = 560\,\text{px}$$
+    $$y_s = 600 - (100 + (1{,}0 - 0) \cdot 80) = 600 - 180 = 420\,\text{px}$$
+  - Zu Teil 2 (Bemaßung im Screen Space):
+    Werden Pfeilspitzen im Weltkoordinatensystem als Geometrie modelliert, skalieren sie beim Zoomen oder bei Fenstergrößenänderungen mit. Dadurch würden Pfeile bei starkem Zoom riesig oder bei kleinem Zoom unsichtbar klein. Durch Berechnung der Pfeilflügel im Screen Space (feste Pixellänge $L = 12\,\text{px}$, Drehung um $\pm 30^\circ$ relativ zum normierten Richtungsvektor der Maßlinie $\mathbf{u}_{\text{screen}}$) bleiben Pfeile, Maßhilfslinien und Schriftgrößen typografisch konstant und normgerecht.
+* **Didaktischer Mehrwert:** Prüft exakt das mechatronische 2D-Rendering von Termin 3 (Y-Inversion, isotropes Viewport-Mapping, Bemaßungsgeometrie) ohne vorzeitigen Vorgriff auf Gleichungssysteme oder Cholesky.
+
+##### Frage 2.2: Homogene Transformationsmatrizen im 3D-Szenengraph
 * **Fragentyp:** Multiple-Choice Multiple-Select
 * **Chronologischer Kontext:** Kapitel 05 (3D-Computergrafik mit SharpGL, Szenengraph)
 * **Aufgabenstellung:**
@@ -253,7 +305,7 @@ Beim Start der Applikation erscheint das Bild diagonal zerrissen und verzerrt; n
 * [x] D) Im Szenengraph profitiert die Kinematik davon, dass beim Rendern von Armsegment 2 der Matrix-Stack (`glPushMatrix` / `glPopMatrix` bzw. moderne Matrix-Hierarchien) genutzt wird, wodurch Transformationen von Armsegment 1 automatisch auf alle Kindknoten vererbt werden.
 * [ ] E) Um Rechenzeit zu sparen, können Rotationsmatrizen im 3D-Raum ohne Informationsverlust durch einfache Skalare (Drehwinkel $\theta$) addiert werden.
 
-##### Frage 2.2: ScottPlot 5 Datenstreaming, CircularBuffer & API-Integration
+##### Frage 2.3: ScottPlot 5 Datenstreaming, CircularBuffer & API-Integration
 * **Fragentyp:** Code-Analyse & Multiple-Choice Single-Select
 * **Chronologischer Kontext:** Kapitel 04 (ScottPlot 5, Echtzeit-Telemetrie)
 * **Aufgabenstellung:**
@@ -394,20 +446,47 @@ Welche gravierenden physikalischen und numerischen Phänomene treten bei diesem 
 
 Für das Abschlussprojekt (Säule 3) und die Übungsmeilensteine (Säule 2) kommt eine transparente, kompetenzorientierte Bewertungsrubrik zum Einsatz. Sie unterscheidet explizit zwischen **reiner KI-Generierung (Schein-Animation)** und **echter ingenieurwissenschaftlicher Beherrschung (Physik-Engine auf Basis diskretisierter DGLs/LGS)**.
 
-### 4.1 Die 6 Bewertungsdimensionen
+### 4.1 Das Wahlmodell („Pick your Track“): Industrieller Zwilling (Track A) vs. Simulationsspiel (Track B)
+
+Im Abschlussprojekt (Säule 3) wählen die Studierendenteams verbindlich eines von zwei thematischen Profilen:
+* **Track A: Industrieller Digitaler Zwilling (Industrial Digital Twin):**  
+  Fokus auf mechatronische Industrieanlagen, Fertigungsprozesse, Antriebsstränge oder verfahrenstechnische Aggregate (z. B. Hochregallager-Kran mit Seilschwingung, Thermo-elektrischer Mehrzonen-Extruder, 3-Achs-Portalroboter, Flexible Fertigungszelle FMS, pneumatische Taktanlage).
+* **Track B: Interaktives Mechatronik-Simulationsspiel (Mechatronic Simulation Game):**  
+  Fokus auf echtzeitfähige, physikbasierte Gaming-Engines mit mechatronischem und dynamischem Kern (z. B. Apollo Lunar Lander 3D mit Kardan-Schubvektor, Pinball Arcade / Pachinko Physics Engine mit Zero-Crossing-Kontaktdynamik, Autonomous Drone Obstacle Challenge mit 6-DOF-Flugphysik).
+
+#### Identische Qualitätsmaßstäbe & Chancengleichheit
+Es gilt das didaktische Prinzip der **vollständigen Äquivalenz**: Ein interaktives Simulationsspiel in Track B ist **keine** oberflächliche Spielerei, sondern erfordert exakt dieselbe mathematische, numerische und softwaretechnische Tiefe wie eine Industrieanlage in Track A. Umgekehrt muss ein industrieller Zwilling in Track A denselben hohen Anspruch an interaktive Responsivität, flüssige Frameraten ($\ge 30\,\text{FPS}$) und intuitive UX erfüllen wie ein Simulationsspiel.
+
+Beide Tracks werden daher nach **denselben 6 Qualitätsmaßstäben** bewertet:
+
+| Bewertungskriterium | Qualitätsmaßstab in Track A (Industrie-Zwilling) | Qualitätsmaßstab in Track B (Simulationsspiel) |
+| :--- | :--- | :--- |
+| **K1: Softwarearchitektur & C#-Design (20 %)** | Strikte Entkopplung der Anlagenphysik vom WPF-UI; Worker-Task (`Task.Run`), Ringpuffer/DTOs, MVVM. | Strikte Entkopplung der Game-Physik-Engine vom Render-Loop; Worker-Task, lock-freie Zustands-Snapshots, MVVM. |
+| **K2: Modelltreue & Validierung (20 %)** | Gekoppelte DGLn/PDEs mechatronischer Komponenten; analytischer Abgleich (z. B. stationärer Zustand, Eigenfrequenz). | Reale Starrkörper-/Kontaktmechanik (Newton-Euler, Erhaltungssätze); analytischer Abgleich (z. B. Ziolkowski, Stoßsatz). |
+| **K3: Numerik & Stabilität (15 %)** | Mathematisch begründeter Solver (RK4, Stabilitätsgebiete); Konvergenznachweis $h \to h/2$; Schutz vor Singularitäten. | Mathematisch begründete Zeitschrittwahl; Zero-Crossing-Bisektion gegen Tunneling; Energieerhaltungsnachweis ($E_{\text{tot}} \approx \text{const}$). |
+| **K4: UX, Interaktivität & Dynamics (15 %)** | Industrielles Dashboard; unterbrechungsfreies Live-Tuning von Reglerparametern (Slider) bei laufender Simulation; flüssig ($\ge 30\,\text{FPS}$). | Intuitive Steuerung (Tastatur/Maus); Live-Einflussnahme auf physikalische Parameter (Schwerkraft, Reibung); flüssig ($\ge 30\,\text{FPS}$). |
+| **K5: Recherche & API-Integration (10 %)** | Saubere Einbindung moderner NuGet-Pakete (ScottPlot 5, Math.NET, SharpGL); keine veralteten APIs. | Saubere Einbindung moderner NuGet-Pakete (SharpGL, ScottPlot 5, Sound/Input-APIs); keine veralteten APIs. |
+| **K6: Oral Defense & KI-Transparenz (20 %)** | Vollständige Erklärung jeder Codezeile; Bestehen des Live-Parameterstresstests im Kolloquium; AI-Disclosure. | Vollständige Erklärung jeder Codezeile; Bestehen des Live-Parameterstresstests im Kolloquium; AI-Disclosure. |
+
+> [!IMPORTANT]
+> **Kausalitätsvermerk für Labor-Meilensteine vs. Abschlussprojekt:**  
+> Während das Abschlussprojekt die vollständige Synthese aller Disziplinen fordert, gilt für die vorgelagerten Meilensteine (Säule 2) eine strikte thematische Kausalität:  
+> In **Termin 3 / Meilenstein 1 (Teil B)** werden bezüglich K2 und K3 **ausschließlich 2D-Vektorgrafik, Koordinatentransformationen (Welt $\leftrightarrow$ Screen), Viewport-Skalierung und Bemaßungen** bewertet. Es werden **keinerlei Fachwerk-Gleichungssysteme oder Cholesky-Zerlegungen** abgeprüft – diese sind erst Gegenstand von Meilenstein 3 (Termin 7)!
+
+### 4.2 Die 6 Bewertungsdimensionen
 
 | Kriterium | Gewicht | Fokus & Leitfragen |
 | :--- | :---: | :--- |
 | **K1: Softwarearchitektur & C#-Design** | 20 % | Ist der Code sauber nach der „Goldenen Regel“ entkoppelt (Physik $\leftrightarrow$ MVVM $\leftrightarrow$ GUI)? Werden .NET 8/10 Best Practices (TPL, ring buffer, pure interfaces) angewendet? |
 | **K2: Physikalischer Realismus, Modelltreue & Validierung** | 20 % | Basiert das System auf echten Differentialgleichungen / LGS? Fühlen sich Kollisionen und Dynamik physikalisch plausibel an? Gibt es einen exakten Abgleich gegen analytische Grenzfälle oder Energieerhaltung? |
 | **K3: Numerik, Sensitivität & Stabilität** | 15 % | Wurde die Wahl von Integrator und Schrittweite begründet? Werden CFL-Bedingungen, Butcher-Tableaus oder Stabilitätsgebiete eingehalten? Bleibt das System bei Parametervariation stabil? |
-| **K4: User Experience (UX), Interaktivität & Game Dynamics** | 15 % | Reagiert die Simulation flüssig ($\ge 30\,\text{FPS}$) und intuitiv auf Benutzereingaben? Stimmt die Spielmechanik mit den DGLs überein? Sind Parameter über UI-Regler im Betrieb stufenlos verstellbar? |
+| **K4: User Experience (UX), Interaktivität & Game Dynamics** | 15 % | Reagiert die Simulation flüssig ($\ge 30\,\text{FPS}$) und intuitiv auf Benutzereingaben? Stimmt die Spiel-/Anlagenmechanik mit den DGLs überein? Sind Parameter über UI-Regler im Betrieb stufenlos verstellbar? |
 | **K5: Recherchekompetenz & API-Integration** | 10 % | Wie selbstständig und sauber wurden externe Bibliotheken (ScottPlot 5, SharpGL, Math.NET, MSAGL) via NuGet recherchiert und integriert? Wurden veraltete APIs vermieden und Dokumentationen verstanden? |
 | **K6: Mündliche Verteidigung (Oral Defense) & KI-Transparenz** | 20 % | Kann das Team jede Zeile Code erklären? Gelingt die Live-Modifikation mechatronischer Parameter im Kolloquium? Wurde der KI-Einsatz im AI-Disclosure-Bericht transparent und kritisch reflektiert? |
 
 ---
 
-### 4.2 Leitfaden zur Unterscheidung: „KI-Animation“ vs. „Echte Numerische Simulation“
+### 4.3 Leitfaden zur Unterscheidung: „KI-Animation“ vs. „Echte Numerische Simulation“
 
 Im Rahmen der Laborabnahmen und des Abschlusskolloquiums führt die Lehrperson gezielte **Prüfmethoden** durch, um rein optische KI-Tricks von echten numerischen Physikmodellen zu unterscheiden:
 
@@ -433,7 +512,7 @@ Im Rahmen der Laborabnahmen und des Abschlusskolloquiums führt die Lehrperson g
 
 ---
 
-### 4.3 Detailliertes Bewertungsraster (Rubric)
+### 4.4 Detailliertes Bewertungsraster (Rubric)
 
 ```
 Bewertungsstufen:
@@ -442,37 +521,43 @@ Bewertungsstufen:
 ```
 
 #### K1: Softwarearchitektur & C#-Design (Gewicht: 20 %)
-* **[4] Exzellent:** Konsequente Einhaltung der „Goldenen Regel der Simulationsarchitektur“. Vollständige Kapselung der Physik- und Simulationsmodelle als reine .NET-Klassen ohne jede Referenz auf `System.Windows` oder UI-Bibliotheken. Sauberes MVVM-Muster. Simulations-Loop läuft asynchron in eigenem Worker-Task (`Task.Run`) mit `CancellationToken`. Thread-sichere Übergabe an die View über unveränderliche Snapshots oder vorallokierte Ringpuffer. Absolut ruckelfreie UI-Ausführung.
+* **[4] Exzellent:** Konsequente Einhaltung der „Goldenen Regel der Simulationsarchitektur“ (gilt für Track A & Track B gleichermaßen). Vollständige Kapselung der Physik- und Simulationsmodelle als reine .NET-Klassen ohne jede Referenz auf `System.Windows` oder UI-Bibliotheken. Sauberes MVVM-Muster. Simulations-Loop läuft asynchron in eigenem Worker-Task (`Task.Run`) mit `CancellationToken`. Thread-sichere Übergabe an die View über unveränderliche Snapshots oder vorallokierte Ringpuffer. Absolut ruckelfreie UI-Ausführung.
 * **[3] Gut:** Klare Trennung zwischen Modell und GUI. Solver läuft in Hintergrund-Task. Gelegentlich kleine architektonische Kopplungen oder minimale Allokationen in der Schleife, die die Performance jedoch nicht spürbar beeinträchtigen.
 * **[2] Befriedigend:** Grundlegende Trennung vorhanden, aber typische „LLM-Vibe-Code-Spuren“: Direkte UI-Dispatcher-Aufrufe tief im Physik-Code, globale statische Variablen für Systemzustände, gelegentliche Ruckler bei Daten-Updates.
 * **[1] Ausreichend:** Monolithischer Code („God-Class“). Physik, Vektorrechnung und WPF-Rendering vermischt. Programm läuft, ist aber unübersichtlich und kaum testbar.
 * **[0] Nicht genügend:** Chaotischer Spaghetti-Code; Berechnungen direkt in XAML-Event-Handlern (`Button_Click`); UI friert bei Simulation komplett ein; Deadlocks oder ungefangene Exceptions.
 
 #### K2: Physikalischer Realismus, Modelltreue & Validierung (Gewicht: 20 %)
-* **[4] Exzellent:** Fundierte physikalische Modellierung:
-  1. *Mathematisches Fundament:* Reale Differentialgleichungen (mind. 3. Ordnung oder gekoppelt) bzw. wohlkonditioniertes LGS.
-  2. *Spielphysik:* Kollisionen, Massenträgheit und Reibungskräfte basieren auf exakter Kontaktmechanik und Impulssätzen, nicht auf Keyframe-Animationen.
-  3. *Quantitative Validierung:* Systematischer Abgleich gegen mindestens eine geschlossene analytische Lösung mit Angabe des relativen Fehlers ($e_{\text{rel}} < 1\,\%$) sowie Online-Plot der Energieerhaltung ($E_{\text{tot}} \approx \text{const}$ bei konservativen Systemen).
-* **[3] Gut:** Solide Modellierung. Plausibilitätsnachweis und analytischer Grenzfall erfolgreich nachgerechnet. Bei extremen Stoß- oder Grenzzuständen minimale Abweichungen, die physikalisch begründet werden können.
+* **[4] Exzellent:** Fundierte physikalische Modellierung nach identischen Qualitätsmaßstäben in beiden Tracks:
+  1. *Mathematisches Fundament:* Reale Differentialgleichungen (mind. 3. Ordnung oder gekoppelt) bzw. wohlkonditioniertes lineares Gleichungssystem (LGS ab T07/M3).
+     - *Track A (Industrie-Zwilling):* Exakte DGLn mechatronischer Komponenten (z. B. Kranseil-Pendelgleichung, Zylinder-Thermodynamik, Mehrzonen-Wärmetransport PDE).
+     - *Track B (Simulationsspiel):* Exakte Starrkörper- und Mehrkörperdynamik (Newton-Euler, 6-DOF Drohnenmodell, Gravitations- und Strömungskräfte, Schubvektordynamik).
+  2. *Kontaktmechanik & Spielphysik:* Kollisionen, Massenträgheit und Reibungskräfte basieren auf exakter Kontaktmechanik und Impulssätzen (Zero-Crossing-Bisektion), nicht auf heuristischen Keyframe-Animationen oder unphysikalischen Pixelverschiebungen.
+  3. *Quantitative Validierung:* Systematischer Abgleich gegen mindestens eine geschlossene analytische Lösung mit Angabe des relativen Fehlers ($e_{\text{rel}} < 1\,\%$) sowie Online-Plot der Energieerhaltung ($E_{\text{tot}} \approx \text{const}$ bei Hamilton-/konservativen Systemen).
+     *(Kausalitätsprüfung Labor: In Termin 3 / Meilenstein 1 Teil B bezieht sich K2 ausschließlich auf die mathematisch korrekte 2D-Vektorgrafik, Welt-zu-Screen-Transformation und technische Bemaßung auf dem Canvas; FE-Fachwerke und Cholesky sind hier noch nicht gefordert).*
+* **[3] Gut:** Solide Modellierung in Track A oder Track B. Plausibilitätsnachweis und analytischer Grenzfall erfolgreich nachgerechnet. Bei extremen Stoß- oder Grenzzuständen minimale Abweichungen, die physikalisch begründet werden können.
 * **[2] Befriedigend:** Modellierung vorhanden, aber stark vereinfacht. Validierung beschränkt sich auf rein optischen Vergleich („Kurve sieht plausibel aus wie in MATLAB oder einem YouTube-Video“). Keine exakte Fehlerrechnung.
 * **[1] Ausreichend:** Nur minimale Plausibilitätsprüfung. Gravierende Abweichungen bei Randparametern werden ignoriert oder als „Modellunsicherheit“ deklariert.
 * **[0] Nicht genügend (K.O.-Kriterium):** Reine Schein-Simulation (KI-Animation mit festen Pixelinkrementen pro Frame ohne DGLs/LGS); unphysikalische Ergebnisse (Massen heben ohne Kraft ab, Energie explodiert ohne Dämpfung).
 
 #### K3: Numerik, Sensitivität & Stabilität (Gewicht: 15 %)
-* **[4] Exzellent:** Fundierte numerische Auslegung:
+* **[4] Exzellent:** Fundierte numerische Auslegung (in beiden Tracks gleichermaßen gefordert):
   1. *Solver-Auswahl:* Wahl des Integrators (RK4, Heun, Euler, Zero-Crossing-Controller) mathematisch fundiert und begründet.
   2. *Konvergenztest:* Zeitschrittweiten-Studie ($h, h/2, h/4$) belegt die theoretische Konvergenzordnung des Solvers.
   3. *Stabilitätsgrenzen:* Stabilitätsgebiete und CFL-Bedingungen werden strikt eingehalten; numerische Singularitäten (Division durch Null, schlechte Matrizenkonditionierung) werden defensiv abgefangen.
+     *(Kausalitätsprüfung Labor: In Termin 3 / Meilenstein 1 Teil B prüft K3 die numerische Robustheit der 2D-Projektion bei extremen Zoomstufen und Seitenverhältnissen; FE-Gleichungssysteme/Cholesky folgen erst in T07).*
 * **[3] Gut:** Schrittweite $h$ wurde systematisch experimentell validiert. Solver läuft stabil. Stabilitätsgrenzen sind dem Team bewusst.
 * **[2] Befriedigend:** Schrittweite wurde heuristisch gewählt („damit es flüssig aussieht und nicht zappelt“). Keine formale Konvergenzanalyse.
 * **[1] Ausreichend:** Instabile Parameterbereiche existieren; bei ungünstigen Eingabewerten driftet der Integrator ab (`NaN` / `Overflow`).
 * **[0] Nicht genügend:** Kein Verständnis für numerische Zusammenhänge; Solver schwingt auf; Studierende können den Zusammenhang zwischen Eigenwerten/Zeitschritt und Stabilität nicht erklären.
 
 #### K4: User Experience (UX), Interaktivität & Game Dynamics (Gewicht: 15 %)
-* **[4] Exzellent:** Herausragendes interaktives Erlebnis:
-  1. *Responsivität:* Die Benutzeroberfläche reagiert latenzfrei auf Tastatur-, Maus- oder Gamepad-Eingaben; konstante Framerate $\ge 30\,\text{FPS}$ auch unter hoher Simulationslast.
-  2. *Interaktivität & Live-Tuning:* Wichtige mechatronische Modellparameter (Masse, Dämpfung, Reglerverstärkung, Schwerkraft) können während der laufenden Simulation stufenlos über UI-Slider variiert werden, und die Reaktion ist physikalisch unmittelbar sichtbar.
-  3. *Visuelle Immersion & UX:* Klare Darstellung mechatronischer Zustandsvektoren (z. B. eingeblendete Kraft- und Geschwindigkeitsvektoren, Phasenraum-Trajektorien oder farbcodierte Spannungs-/Temperaturzustände); intuitive Kamera- und Zoomsteuerung.
+* **[4] Exzellent:** Herausragendes interaktives Erlebnis (gleichermaßen hoch für Industrie-Zwilling und Simulationsspiel):
+  1. *Responsivität:* Die Benutzeroberfläche reagiert latenzfrei auf Tastatur-, Maus- oder Gamepad-Eingaben; konstante Framerate $\ge 30\,\text{FPS}$ auch unter hoher Simulationslast ohne Einfrieren des UI-Threads.
+  2. *Interaktivität & Live-Tuning:* Wichtige mechatronische Modellparameter (Masse, Dämpfung, Reglerverstärkung $K_p$, Schwerkraft, Aktorlimits) können während der laufenden Simulation stufenlos über UI-Slider variiert werden, und die Reaktion ist physikalisch unmittelbar sichtbar.
+     - *Track A:* Interaktives Leitstand-Dashboard mit Sollwertstellern, Störgrößenaufschaltung und Zustandsanzeigen.
+     - *Track B:* Reaktionsschnelle Steuerung der Spielfigur/Akteure kombiniert mit Live-Reglern für physikalische Spielweltparameter.
+  3. *Visuelle Immersion & UX:* Klare Darstellung mechatronischer Zustandsvektoren (z. B. eingeblendete Kraft- und Geschwindigkeitsvektoren, Phasenraum-Trajektorien oder farbcodierte Spannungs-/Temperaturzustände); intuitive Kamera- und Zoomsteuerung (Pan/Zoom im Canvas oder Orbit-Kamera in SharpGL).
 * **[3] Gut:** Flüssige grafische Darstellung; funktionale Benutzeroberfläche; Parameter im Betrieb anpassbar; gute visuelle Rückmeldung mechatronischer Größen.
 * **[2] Befriedigend:** Grundlegende Interaktivität vorhanden; UI wirkt stellenweise überladen oder ruckelt bei intensiven Berechnungen; Parameteränderungen erfordern gelegentlich einen Neustart der Simulation.
 * **[1] Ausreichend:** Schwerfällige Bedienung; unübersichtliche Eingabefelder ohne Validierung; unzureichende Rückmeldung an den Benutzer.

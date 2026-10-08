@@ -14,21 +14,21 @@
 
 1. [Didaktisches Gesamtkonzept & Labororganisation](#1-didaktisches-gesamtkonzept--labororganisation)
    - 1.1 Verzahnung von Vorlesung, Hands-on-Labor und Vibe-Coding / KI-gestütztem Arbeiten
-   - 1.2 Das 2-Stufen-Übungsmodell (Sprint & Extension)
+   - 1.2 Das 2-Stufen-Übungsmodell mit Wahlkonzept („Pick your Track: Industrie vs. Gaming“)
    - 1.3 Matrix der chronologischen Technologie-Freigabe (Strikte Konsistenz!)
    - 1.4 Architektur- und Software-Qualitätsstandards („Goldene Regel“)
    - 1.5 Test-Driven Simulation & CI-Workflows
 2. [Kapitelweiser Aufgabenkatalog (Einheit 01 bis 10)](#2-kapitelweiser-aufgabenkatalog-einheit-01-bis-10)
-   - [Einheit 01: „Artillery Strike / Retro Tank Battle“ (Ballistik & Luftwiderstand)](#einheit-01-artillery-strike--retro-tank-battle-ballistik--luftwiderstand)
-   - [Einheit 02: „Gamer-PC Kühlkörper-Optimizer & Waldbrand-Ausbreitung“ (WriteableBitmap FDM)](#einheit-02-gamer-pc-kühlkörper-optimizer--waldbrand-ausbreitung-writeablebitmap-fdm)
-   - [Einheit 03: „Bridge Constructor 2D & Fachwerk-Katapult“ (WPF Canvas Vektoren)](#einheit-03-bridge-constructor-2d--fachwerk-katapult-wpf-canvas-vektoren)
-   - [Einheit 04: „Retro Arcade Racing Telemetry & Flipper-Dashboard“ (ScottPlot 5 Streaming)](#einheit-04-retro-arcade-racing-telemetry--flipper-dashboard-scottplot-5-streaming)
-   - [Einheit 05: „3D Arcade Claw Machine & Lunar Lander“ (SharpGL 3D-Szenengraph)](#einheit-05-3d-arcade-claw-machine--lunar-lander-sharpgl-3d-szenengraph)
-   - [Einheit 06: „Zombie-Horde & Partikelsturm-Benchmark“ (TPL Parallel.For & Cache-Lokalität)](#einheit-06-zombie-horde--partikelsturm-benchmark-tpl-parallelfor--cache-lokalität)
-   - [Einheit 07: „Kran- & Achterbahn-Tragwerk-Rechner“ (Math.NET Cholesky-LGS & FEM)](#einheit-07-kran--achterbahn-tragwerk-rechner-mathnet-cholesky-lgs--fem)
-   - [Einheit 08: „SpaceX Falcon Hop & Segway-Balancer“ (S-Function, RK4 & PID Anti-Windup)](#einheit-08-spacex-falcon-hop--segway-balancer-s-function-rk4--pid-anti-windup)
-   - [Einheit 09: „Achterbahn-Warteschlangen-Chaos & Kassen-Stau“ (Diskrete Ereignissimulation DES)](#einheit-09-achterbahn-warteschlangen-chaos--kassen-stau-diskrete-ereignissimulation-des)
-   - [Einheit 10: „Flipperautomat: Pinball Bumper & Pachinko-Physik“ (Hybride Systeme & Zero-Crossing)](#einheit-10-flipperautomat-pinball-bumper--pachinko-physik-hybride-systeme--zero-crossing)
+   - [Einheit 01: „Industrie-Löschmonitor vs. Retro Tank Duel“ (Ballistik & Luftwiderstand)](#einheit-01-industrie-löschmonitor-vs-retro-tank-duel-ballistik--luftwiderstand)
+   - [Einheit 02: „Gamer-PC Kühlkörper-Optimizer vs. Waldbrand-Ausbreitung“ (WriteableBitmap FDM)](#einheit-02-gamer-pc-kühlkörper-optimizer-vs-waldbrand-ausbreitung-writeablebitmap-fdm)
+   - [Einheit 03: „2D-CAD Fachwerkträger-Viewer vs. Space Radar / Blueprint Sketcher“ (WPF Canvas Vektoren)](#einheit-03-2d-cad-fachwerkträger-viewer-vs-space-radar--blueprint-sketcher-wpf-canvas-vektoren)
+   - [Einheit 04: „Industrie-Prüfstand vs. Retro Arcade Telemetry“ (ScottPlot 5 Streaming)](#einheit-04-industrie-prüfstand-vs-retro-arcade-telemetry-scottplot-5-streaming)
+   - [Einheit 05: „3D-Portalroboter vs. Arcade Claw Machine“ (SharpGL 3D-Szenengraph)](#einheit-05-3d-portalroboter-vs-arcade-claw-machine-sharpgl-3d-szenengraph)
+   - [Einheit 06: „Partikelsturm-Benchmark vs. Zombie-Horde“ (TPL Parallel.For & Cache-Lokalität)](#einheit-06-partikelsturm-benchmark-vs-zombie-horde-tpl-parallelfor--cache-lokalität)
+   - [Einheit 07: „Gittermastkran vs. Achterbahn-Tragwerk & Bridge Solver“ (Math.NET Cholesky-LGS & FEM)](#einheit-07-gittermastkran-vs-achterbahn-tragwerk--bridge-solver-mathnet-cholesky-lgs--fem)
+   - [Einheit 08: „Segway-Balancer vs. SpaceX Falcon Hop“ (S-Function, RK4 & PID Anti-Windup)](#einheit-08-segway-balancer-vs-spacex-falcon-hop-s-function-rk4--pid-anti-windup)
+   - [Einheit 09: „Fertigungslogistik vs. Freizeitpark-Express-Pass“ (Diskrete Ereignissimulation DES)](#einheit-09-fertigungslogistik-vs-freizeitpark-express-pass-diskrete-ereignissimulation-des)
+   - [Einheit 10: „Pneumatischer Taktvorschub vs. Flipperautomat Pinball“ (Hybride Systeme & Zero-Crossing)](#einheit-10-pneumatischer-taktvorschub-vs-flipperautomat-pinball-hybride-systeme--zero-crossing)
 3. [Das große Abschlussprojekt: „Digital Twin & Simulation Game Challenge“](#3-das-große-abschlussprojekt-digital-twin--simulation-game-challenge)
    - 3.1 Zielsetzung & didaktischer Anspruch
    - 3.2 Verbindliche Kernkriterien (Die 5 Säulen des digitalen Zwillings)
@@ -74,7 +74,7 @@ flowchart LR
 
 ---
 
-### 1.2 Das 2-Stufen-Übungsmodell (Sprint & Extension)
+### 1.2 Das 2-Stufen-Übungsmodell mit Wahlkonzept („Pick your Track: Industrie vs. Gaming“)
 
 Jede der Einheiten 01 bis 10 folgt einer strikten Zweistufigkeit:
 
@@ -83,8 +83,15 @@ Jede der Einheiten 01 bis 10 folgt einer strikten Zweistufigkeit:
   - **Umfang:** Minimales C#-Konsolenprogramm oder vorgefertigte Starter-Vorlage.
   - **Erfolgsmetrik:** Ein lauffähiger Algorithmus nach spätestens 50 Minuten; 10 Minuten gemeinsame Auswertung & Fehlerdiskussion im Plenum.
 - **Stufe B (Homework Extension – 1 Woche, festes 2er-Team):**
-  - **Fokus:** Motivierender Mix aus seriöser Industrie-Ingenieuraufgabe und packendem Simulationsspiel („Gamification“).
-  - **Erweiterungen:** Nichtlinearitäten, Randbedingungen, ansprechende Visualisierung, mathematische Validierung gegen Grenzfälle.
+  - **Fokus:** Vertiefung, Parametervariation, Nichtlinearitäten und professionelle Visualisierung.
+  - **Das Wahlmodell („Pick your Track: Industrie vs. Simulation Game“):**  
+    > [!IMPORTANT]
+    > **Keine Doppelbelastung – Genau EINE Aufgabe pro Woche!**  
+    > Bei jeder wöchentlichen Hausübung (Termine T01 bis T10) wählen die 2er-Teams **GENAU EINE** der beiden angebotenen Aufgaben:
+    > - **Track A (Industrie & Mechatronik):** Industrienahe Ingenieuraufgaben, digitale Zwillinge realer Produktionssysteme, mechatronische Prüfstände, Tragwerksstatik und Regelungstechnik.
+    > - **Track B (Simulation Game & Gaming-Physik):** Gamification-Konzepte, Arcade- und Retro-Game-Physik, Sci-Fi-Navigation, interaktive Blueprint-Editoren und Spielemechaniken.
+    > 
+    > Beide Tracks basieren auf **exakt denselben mathematisch-physikalischen Vorlesungsinhalten** und erfordern denselben Programmier- und Modellierungsaufwand (ca. 4–5 Stunden pro Teamwoche). Es muss **nur ein Track pro Woche** bearbeitet und abgegeben werden – eine Doppelbelastung ist weder vorgesehen noch erforderlich! Beide Tracks führen zur maximalen Punktzahl (10 Punkte). Die Teams dürfen wöchentlich frei zwischen Track A und Track B wechseln oder sich semesterbegleitend auf einen Schwerpunkt festlegen.
   - **Dokumentation:** Markdown-Bericht (`README.md` im Übungsordner) inklusive Konvergenzdiagrammen, Messreihen und Parameteranalysen.
   - **Codequalität:** Strikte Einhaltung der OOP- und MVVM-Paradigmen, Entkopplung von Physik und UI, Clean Code nach C#-Styleguide.
 
@@ -100,7 +107,7 @@ Jede der Einheiten 01 bis 10 folgt einer strikten Zweistufigkeit:
 | :--- | :--- | :--- |
 | **T01 (Kap 00+01)** | C# 12 / .NET 8/10 Console, `System.Numerics` (Vector2/4), Expliziter Euler / Heun (RK2), ASCII-Plots, CSV-Export, PPM-Bitmap-Array | **KEIN** WPF, **KEIN** ScottPlot, **KEIN** Multithreading, **KEIN** SharpGL, **KEINE** FEM |
 | **T02 (Kap 02)** | WPF `WriteableBitmap`, 2D-Pixelpuffer (`byte[]`, `int[]`), FDM-Wärmeleitung / zelluläre Gitter, Color-Mapping, `DispatcherTimer` | **KEIN** WPF Canvas (Vektoren), **KEIN** ScottPlot, **KEIN** Multithreading (`Parallel.For`), **KEIN** SharpGL |
-| **T03 (Kap 03)** | WPF `Canvas`, 2D-Vektorgrafiken (`Line`, `Path`, `Polygon`), Affine Welt-Bildschirm-Transformation, Drag-&-Drop, Bemaßung | **KEIN** ScottPlot, **KEIN** SharpGL 3D, **KEIN** Multithreading, **KEIN** Math.NET Cholesky |
+| **T03 (Kap 03)** | WPF `Canvas`, 2D-Vektorgrafiken (`Line`, `Path`, `Polygon`), Affine Welt-Bildschirm-Transformation, Drag-&-Drop, DIN-Bemaßung | **KEIN** ScottPlot, **KEIN** SharpGL 3D, **KEIN** Multithreading, **KEIN** Math.NET Cholesky, **KEINE** Steifigkeitsmatrizen / Stabkräfteberechnung (erst ab T07!) |
 | **T04 (Kap 04)** | `ScottPlot 5` (`WpfPlot`, `DataStreamer`), MSAGL-Graphen, Ringpuffer (`CircularBuffer<T>`), Welford-Streaming-Statistik | **KEIN** SharpGL 3D, **KEIN** Multithreading / TPL, **KEIN** Math.NET Cholesky, **KEINE** S-Functions |
 | **T05 (Kap 05)** | `SharpGL`, 3D-Szenengraph, Orbit-Kamera (Kugelkoordinaten), Matrix-Stack (`glPushMatrix`), Phong-Beleuchtung, Normalenvektoren | **KEIN** TPL Multithreading, **KEIN** Math.NET LGS, **KEINE** S-Functions, **KEINE** Event-Queues |
 | **T06 (Kap 06)** | Task Parallel Library (TPL), `Parallel.For`, `ParallelOptions`, `Interlocked`, `CancellationToken`, Amdahl & Gustafson Fit, Cache-Optimierung | **KEIN** Math.NET Cholesky, **KEINE** S-Functions, **KEINE** Event-Queues |
@@ -136,7 +143,7 @@ Für alle numerischen Modelle sind begleitende Unit-Tests mit `xUnit` oder `MSTe
 
 ---
 
-### Einheit 01: „Artillery Strike / Retro Tank Battle“ (Ballistik & Luftwiderstand)
+### Einheit 01: „Industrie-Löschmonitor vs. Retro Tank Duel“ (Ballistik & Luftwiderstand)
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 01: Einführung](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/01_Einführung/Folien.md) – Modellbegriff, Zustandsraum, Zeitdiskretisierung, explizites Euler-Verfahren, Prädiktor-Korrektor (Heun).
@@ -170,19 +177,31 @@ Konstanten: $g = 9{,}81\,\text{m/s}^2$, Luftdichte $\rho = 1{,}225\,\text{kg/m}^
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – „Retro Tank Duel: Ballistik-Simulator mit Wind & Höhenprofil“
-- **Aufgabenstellung:**
-  1. **Heun-Verfahren (RK2):** Erweitern Sie den Simulator um das Heun-Verfahren und vergleichen Sie die Genauigkeit gegen Euler bei groben Zeitschritten ($\Delta t = 0{,}5\,\text{s}$).
-  2. **Geländeprofil & Zielandockung:**
-     - Das Gelände ist eine Sinuslandschaft: $y_{\text{Boden}}(x) = 50 \cdot \sin(0{,}002 \cdot x) + 20 \cdot \cos(0{,}005 \cdot x)$.
-     - Ein feindlicher Panzer steht bei $x_{\text{Ziel}} = 1400\,\text{m}, y_{\text{Ziel}} = y_{\text{Boden}}(1400)$.
-     - Detektieren Sie den Bodenkontakt, sobald $y_{\text{Projektil}}(t) \le y_{\text{Boden}}(x_{\text{Projektil}}(t))$.
-  3. **Stochastischer Wind:** Bei jedem Schuss weht Gegen- oder Rückenwind $w_x \sim \mathcal{U}(-15, +15)\,\text{m/s}$.
-  4. **Konsolen-Visualisierung oder CSV-Export:**
-     - Zeichnen Sie eine ASCII-Art-Trajektorie in das Konsolenfenster ($80 \times 25$ Zeichen) ODER exportieren Sie die Flugbahn als tabellarische `.csv`-Datei zur externen Auswertung.
-  5. **Automatischer Zielrechner (Bisektion / Sweep):**
-     - Ermitteln Sie bei gegebener Mündungsgeschwindigkeit $v_0 = 160\,\text{m/s}$ und bekanntem Wind $w_x$ automatisiert den erforderlichen Abschusswinkel $\alpha \in [10^\circ, 80^\circ]$, der das Ziel innerhalb eines Trefferradius von $\pm 2{,}0\,\text{m}$ trifft.
-- **Bewertungskriterien (10 Punkte):**
+#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+
+> [!IMPORTANT]
+> **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf derselben Physik und DGL-Integration und führen zur maximalen Punktzahl (10 Punkte).
+
+- **Track A (Industrie): Automatisierter Industrie-Löschmonitor / Schüttgut-Injektor**
+  - **Industrie-Szenario:** Modellierung einer industriellen Hochdruck-Löschanlage (Löschmonitor) zur automatisierten Brandbekämpfung auf einem Werksgelände oder eines pneumatischen Granulat-Injektors zur Silobefüllung.
+  - **DGL-System & Relativwind:** Auswurf unter Gravitation, nichtlinearem quadratischem Strömungswiderstand und variierendem Relativwind $\mathbf{w} = [w_x, 0]^\top$.
+  - **Geländehindernis:** Das Werksgelände weist ein unebenes Sinus-Bodenprofil auf: $y_{\text{Boden}}(x) = 50 \cdot \sin(0{,}002 \cdot x) + 20 \cdot \cos(0{,}005 \cdot x)$. Der Brandherd bzw. das Silo liegt bei $x_{\text{Ziel}} = 1400\,\text{m}, y_{\text{Ziel}} = y_{\text{Boden}}(1400)$.
+  - **Heun-Verfahren (RK2):** Implementieren Sie das Heun-Verfahren und vergleichen Sie Genauigkeit und numerische Stabilität gegen Euler bei grober Schrittweite ($\Delta t = 0{,}5\,\text{s}$).
+  - **Stochastischer Winddrift:** Bei jedem Einsatz weht Gegen- oder Rückenwind $w_x \sim \mathcal{U}(-15, +15)\,\text{m/s}$.
+  - **Automatischer Zielrechner:** Bestimmen Sie bei gegebener Austrittsgeschwindigkeit $v_0 = 160\,\text{m/s}$ automatisiert den erforderlichen Elevationswinkel $\alpha \in [10^\circ, 80^\circ]$ via Bisektion oder Newton-Verfahren, der den Zielbereich innerhalb $\pm 2{,}0\,\text{m}$ trifft.
+  - **Visualisierung:** ASCII-Art-Darstellung der Flugbahn im Konsolenfenster ($80 \times 25$) oder tabellarischer `.csv`-Export.
+
+- **Track B (Simulation Game): Retro Tank Duel (2D-Artillerie-Game mit Wind & Höhenprofil)**
+  - **Game-Szenario:** Klassisches rundenbasiertes Artillerie-Duell im Retro-Stil (*Scorched Earth*, *Worms*, *Artillery Strike*).
+  - **Spielwelt:** Panzer duellieren sich über hügeligem Terrain mit Höhenprofil $y_{\text{Boden}}(x) = 50 \cdot \sin(0{,}002 \cdot x) + 20 \cdot \cos(0{,}005 \cdot x)$. Ein feindlicher Panzer steht bei $x_{\text{Ziel}} = 1400\,\text{m}, y_{\text{Ziel}} = y_{\text{Boden}}(1400)$.
+  - **Flugphysik:** Numerische Flugbahnintegration mit quadratischem Luftwiderstand und Heun-Integrator (RK2).
+  - **Bodenkollision:** Detektion des Aufschlags bei $y_{\text{Projektil}}(t) \le y_{\text{Boden}}(x_{\text{Projektil}}(t))$ mit linearer Schnittpunkt-Interpolation.
+  - **Stochastischer Rundenwind:** Jede Runde wechselt der Windvektor zufällig $w_x \sim \mathcal{U}(-15, +15)\,\text{m/s}$.
+  - **Automatischer KI-Zielrechner:** Implementieren Sie einen Bot-Zielrechner (Bisektion / Winkelsweep $\alpha \in [10^\circ, 80^\circ]$), der bei $v_0 = 160\,\text{m/s}$ den Trefferwinkel für den feindlichen Panzer ermittelt.
+  - **Visualisierung:** ASCII-Art Flugbahn-Plotter auf der Textkonsole oder Export der Trajektoriendaten als `.csv`.
+
+- **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
   - [3 P.] Korrekte Implementierung von Euler und Heun mit Relativwind-Physik.
   - [3 P.] Exakte numerische Kollisionserkennung mit dem analytischen Geländeprofil.
   - [2 P.] Robuster Schusswinkel-Finder (Bisektion oder Newton-Verfahren).
@@ -198,7 +217,7 @@ Konstanten: $g = 9{,}81\,\text{m/s}^2$, Luftdichte $\rho = 1{,}225\,\text{kg/m}^
 
 ---
 
-### Einheit 02: „Gamer-PC Kühlkörper-Optimizer & Waldbrand-Ausbreitung“ (WriteableBitmap FDM)
+### Einheit 02: „Gamer-PC Kühlkörper-Optimizer vs. Waldbrand-Ausbreitung“ (WriteableBitmap FDM)
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 02: Visualisierung 2D Pixel](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/02_Visualisierung_2D_Pixel/Folien.md) – Pixelraster, Farbräume, `WriteableBitmap`, 2D-Finite-Differenzen-Methode (FDM) für Wärmeleitung.
@@ -228,21 +247,29 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – „Gamer-PC CPU-Kühler-Optimizer vs. Waldbrand-Simulator“
-*Wählen Sie eines der beiden Szenarien:*
-- **Szenario 1: Gamer-PC Kühlkörper-Optimizer:**
-  - Modellieren Sie ein CPU-Package ($200 \times 200$ Pixel, $\Delta x = 0{,}2\,\text{mm}$):
+#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+
+> [!IMPORTANT]
+> **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf der 2D-FDM-Wärmeleitungsgleichung und führen zur maximalen Punktzahl (10 Punkte).
+
+- **Track A (Industrie): Gamer-PC & Server-Blade Kühlkörper-Optimizer**
+  - **Industrie-Szenario:** Modellierung des Wärmetransports in einem hochintegrierten Halbleitergehäuse (CPU-Package, $200 \times 200$ Pixel, $\Delta x = 0{,}2\,\text{mm}$):
     - CPU-Die (Silizium, $40 \times 40$ Pixel, $120\,\text{W}$ Verlustleistung).
-    - Wärmeleitpaste (dünne Schicht, geringes $a$).
+    - Wärmeleitpaste (dünne Schicht mit geringem $a$).
     - Kupfer-Heatspreader vs. Aluminium-Kühlrippen mit Luftkanälen.
-  - Implementieren Sie konvektive Kühlung an den Finnen (Robin-Randbedingung: $-k \frac{\partial T}{\partial n} = h (T - T_{\text{Luft}})$).
-  - Demonstrieren Sie den Unterschied zwischen einem verstopften Lüfter ($h = 20\,\text{W/m}^2\text{K}$) und Maximallüftung ($h = 250\,\text{W/m}^2\text{K}$).
-- **Szenario 2: Waldbrand- & Lava-Ausbreitungssimulation:**
-  - 2D-Zellulärer Wärmediffusions-Automat: Baumdichte, Bodenfeuchte und Zündtemperatur $T_{\text{Zünd}} = 300\,^\circ\text{C}$.
-  - Windvektor treibt die Flammenfront bevorzugt in eine Richtung (gerichtete Differenzen 1. Ordnung).
-  - Bei Überschreiten von $T_{\text{Zünd}}$ entflammt die Zelle, setzt Verbrennungswärme frei und wird nach 5 Sekunden zu Asche (schwarz).
-- **Stabilitäts-Experiment:** Zeigen Sie im Bericht die Gitterexplosion bei Überschreitung des Stabilitätskriteriums ($\Delta t > \Delta t_{\text{krit}}$).
-- **Bewertungskriterien (10 Punkte):**
+  - **Konvektive Kühlung:** Implementieren Sie an den Kühlfinnen Robin-Randbedingungen: $-k \frac{\partial T}{\partial n} = h (T - T_{\text{Luft}})$.
+  - **Lüfterausfall-Szenario:** Simulieren Sie den Unterschied zwischen ausgefallenem Lüfter ($h = 20\,\text{W/m}^2\text{K}$) und Hochleistungslüftung ($h = 250\,\text{W/m}^2\text{K}$).
+  - **Stabilitätsanalyse:** Zeigen Sie experimentell die Gitterexplosion bei Überschreitung des Stabilitätskriteriums ($\Delta t > \Delta t_{\text{krit}}$).
+
+- **Track B (Simulation Game): Waldbrand- & Lava-Ausbreitungssimulation**
+  - **Game-Szenario:** 2D-Zellulärer Wärmediffusions- und Ausbreitungs-Automat auf einer Geländekarte ($200 \times 200$ Pixel).
+  - **Physikalisches Gitter:** Jede Zelle besitzt Baumdichte, Bodenfeuchte und Zündtemperatur $T_{\text{Zünd}} = 300\,^\circ\text{C}$.
+  - **Winddrift:** Ein globaler Windvektor treibt die Wärmewelle und Flammenfront bevorzugt in Windrichtung (gerichtete Finite-Differenzen 1. Ordnung).
+  - **Zustandsautomat & Verbrennung:** Bei Überschreitung von $T_{\text{Zünd}}$ geht die Zelle in den Zustand „Brennend“ über, generiert 5 Sekunden lang exotherme Verbrennungswärme und erstirbt anschließend als unbrennbare Asche (schwarz).
+  - **Stabilitätsanalyse:** Dokumentieren Sie das Umkippen in numerische Instabilität bei unzulässig großem Zeitschritt $\Delta t$.
+
+- **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
   - [3 P.] Korrekte FDM-Implementierung mit Materialgrenzen oder Brandzuständen.
   - [3 P.] Effiziente `WriteableBitmap`-Pixelmanipulation ohne Speicherlecks.
   - [2 P.] Experimenteller Nachweis der numerischen Instabilität bei $\Delta t > \Delta t_{\text{krit}}$.
@@ -258,64 +285,105 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-### Einheit 03: „Bridge Constructor 2D & Fachwerk-Katapult“ (WPF Canvas Vektoren)
+### Einheit 03: „2D-CAD Fachwerkträger-Viewer vs. Space Radar / Blueprint Sketcher“ (WPF Canvas Vektoren)
 
 #### Fachlicher Bezug & Lernziele
-- **Vorlesung:** [Kapitel 03: Visualisierung 2D Vektor](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/03_Visualisierung_2D_Vektor/Folien.md) – WPF `Canvas`, Vektor-Primitive (`Line`, `Path`, `Polygon`), Affine Welt-Bildschirm-Transformation, Pan & Zoom.
+- **Vorlesung:** [Kapitel 03: Visualisierung 2D Vektor](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/03_Visualisierung_2D_Vektor/Folien.md) – WPF `Canvas`, Vektor-Primitive (`Line`, `Path`, `Polygon`), Affine Welt-Bildschirm-Transformation, BoundingBox, DIN-Bemaßung, Pan & Zoom, Drag-and-Drop Interaktion.
 - **Quellen-Referenz:** [`Quellen/WS25/FachwerkIdeal2D`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS25/FachwerkIdeal2D).
-- **Technologie-Status:** WPF `Canvas` mit geometrischen Vektoren. Noch *KEIN* ScottPlot, noch *KEIN* SharpGL 3D, noch *KEIN* Math.NET Cholesky-Solver (statische Kräfte werden hier analytisch oder über das Knotenpunktverfahren ermittelt).
+- **Technologie-Status:** WPF `Canvas` mit geometrischen 2D-Vektoren. Noch *KEIN* ScottPlot, noch *KEIN* SharpGL 3D, noch *KEIN* Multithreading!
+- **Didaktische Kausalitäts-Sperre (Sehr wichtig!):** Der Vorlesungsstoff bis zu dieser Einheit behandelt rein die 2D-Vektorgrafik und geometrische Transformationen. Es dürfen in dieser Einheit **KEINE Steifigkeitsmatrizen**, **KEINE Cholesky-Zerlegung** und **KEINE Stabkräfteberechnungen** verlangt oder implementiert werden! (Die numerische Berechnung der Stabkräfte und Verformungen via Finite-Elemente-LGS erfolgt erst in Einheit 07).
 - **Lernziele:**
-  1. Beherrschung der 2D-Welt-zu-Bildschirm-Koordinatentransformation inklusive Inversion der Y-Achse:
-     $$x_{\text{screen}} = (x_{\text{world}} - x_{\text{min}}) \cdot s_x, \quad y_{\text{screen}} = h_{\text{screen}} - (y_{\text{world}} - y_{\text{min}}) \cdot s_y$$
-  2. Dynamisches Zeichnen von Stäben, Knoten, Lastpfeilen und Bemaßungen im WPF `Canvas`.
-  3. Visualisierung von Zugkräften (Blau) und Druckkräften (Rot) mit Versagensanzeige bei Überlast.
+  1. Beherrschung der 2D-Welt-zu-Bildschirm-Koordinatentransformation (Skalierung, Y-Achseninversion, automatisches Zentrieren mit BoundingBox und konfigurierbarem Randabstand/Margin).
+  2. Beherrschung des WPF `Canvas` zur dynamischen Erzeugung und Modifikation von Vektorprimitiven (`Line`, `Ellipse`, `Path`, `Polygon`).
+  3. Mathematisch exakte Vektorpfeile: Berechnung der Pfeilspitzengeometrie (Flügeldreiecke) aus Richtungsvektor und Einheitsnormalen via Drehmatrix.
+  4. Technische Bemaßungsketten nach DIN 406 (Maßhilfslinien, Maßlinien mit echten Maßpfeilspitzen, zentrierter Maßtext).
+  5. Flüssige interaktive Benutzerführung (Mouse Drag-and-Drop zur Echtzeit-Verschiebung von Geometrieknoten).
+
+#### Mathematisches Transformationsmodell
+Weltkoordinaten $(x_{\text{world}}, y_{\text{world}})$ in Metern $\to$ Canvas-Bildschirmkoordinaten $(x_{\text{screen}}, y_{\text{screen}})$ in Pixeln:
+$$s = \min\left( \frac{w_{\text{canvas}} - 2 \cdot \text{margin}_x}{x_{\max} - x_{\min}}, \, \frac{h_{\text{canvas}} - 2 \cdot \text{margin}_y}{y_{\max} - y_{\min}} \right)$$
+$$x_{\text{screen}} = \text{margin}_x + (x_{\text{world}} - x_{\text{min}}) \cdot s + x_{\text{offset}}$$
+$$y_{\text{screen}} = h_{\text{canvas}} - \left[ \text{margin}_y + (y_{\text{world}} - y_{\text{min}}) \cdot s + y_{\text{offset}} \right]$$
+Pfeilspitzen-Geometrie für einen Kraft- oder Geschwindigkeitsvektor $\vec{F} = [F_x, F_y]^\top$ mit Winkel $\phi = \operatorname{atan2}(F_y, F_x)$ und Spitzenlänge $L_{\text{tip}}$, Öffnungswinkel $\beta$:
+$$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} \cos(\phi - \beta) \\ \sin(\phi - \beta) \end{bmatrix}, \quad \vec{p}_{\text{right}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} \cos(\phi + \beta) \\ \sin(\phi + \beta) \end{bmatrix}$$
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Truss-Renderer auf WPF Canvas“
+#### Stufe A: In-Class Sprint (60 min) – „2D-Trägergeometrie & Vektorpfeile auf WPF Canvas“
 - **Aufgabenstellung:**
   1. Öffnen Sie ein leeres WPF-Projekt mit `<Canvas x:Name="TrussCanvas"/>`.
-  2. Implementieren Sie eine Klasse `CoordinateTransformer`, die Meter-Koordinaten automatisch zentriert in Canvas-Pixel umrechnet.
-  3. Definieren Sie ein 3-Knoten-Fachwerk (Knoten 1: $(0,0)$, Knoten 2: $(4,0)$, Knoten 3: $(2,2)$ Meter; vertikale Last $F = 10\,\text{kN}$ an Knoten 3).
-  4. Berechnen Sie die Stabkräfte analytisch:
-     $$S_{13} = S_{23} = -\frac{F}{2 \sin(45^\circ)} \approx -7{,}07\,\text{kN} \quad \text{(Druck)}, \quad S_{12} = +5{,}0\,\text{kN} \quad \text{(Zug)}$$
-  5. Zeichnen Sie Stäbe als WPF `Line`: Druckstäbe rot, Zugstäbe blau. Linienstärke $w = 2 + 5 \cdot \frac{|S_i|}{S_{\max}}$.
-  6. Zeichnen Sie Knoten als Kreise (`Ellipse`) mit Beschriftung.
-- **Erwartetes Ergebnis:** Ein maßstäblich sauber skaliertes Fachwerk, das sich bei Fenstergrößenänderung anpasst.
+  2. Implementieren Sie eine Klasse `CoordinateTransformer`, die Weltkoordinaten (Meter) seitenverhältnistreu ($s_x = s_y = s$) mit BoundingBox und Margin auf Canvas-Pixel abbildet (inklusive Umkehrung der vertikalen Bildschirmachse).
+  3. Definieren Sie ein Trägerdreieck mit 3 Knoten (Knoten 1: $(0,0)$, Knoten 2: $(4,0)$, Knoten 3: $(2,2)$ Meter) und verbinden Sie die Knoten über 3 Stäbe (`Line`).
+  4. Zeichnen Sie Knoten als gefüllte Kreise (`Ellipse`) mit Text-Beschriftungen (`TextBlock` oder `FormattedText`).
+  5. Zeichnen Sie an Knoten 3 einen vertikalen Lastpfeil $\vec{F} = (0, -10)\,\text{kN}$:
+     - Schaftlinie vom Knoten zum Kraftendpunkt.
+     - Pfeilspitze als geschlossenes gefülltes `Polygon`-Dreieck mit korrekter Ausrichtung.
+  6. Reagieren Sie auf das `SizeChanged`-Event des Canvas: Bei Änderung der Fenstergröße muss sich das Trägerdreieck zentriert und ohne Verzerrung automatisch anpassen.
+- **Erwartetes Ergebnis:** Ein mathematisch sauber zentriertes, seitenverhältnistreues Vektorträger-Dreieck mit korrekt ausgerichteter Lastpfeilspitze im WPF-Fenster.
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – „Bridge Constructor 2D & Belastungstest-Simulator“
-- **Aufgabenstellung:**
-  1. **Interaktiver Brückenbau:**
-     - Der Benutzer kann per Mausklick neue Knoten setzen und Stäbe zwischen Knoten aufspannen.
-     - Festlager (Knoten fixiert) und Loselager (horizontale Verschiebung frei) an den Schlucht-Rändern.
-  2. **Interaktive Lastfahrt („Der schwere LKW“):**
-     - Ein LKW (Punktlast $F_{\text{LKW}} = 20\,\text{kN}$) fährt in Zeitschritten über die Fahrbahnknoten der Brücke von links nach rechts.
-     - Bei jedem Schritt werden die Stabkräfte aktualisiert.
-  3. **Versagensindikator & Einsturz:**
-     - Jeder Stab besitzt eine Knick-/Bruchlast $S_{\text{krit}} = 25\,\text{kN}$.
-     - Übersteigt $|S_i| > 0{,}8 \cdot S_{\text{krit}}$, blinkt der Stab gelb/orange; bei $S_i \ge S_{\text{krit}}$ reißt der Stab (wird ausgeblendet oder rot gestrichelt dargestellt).
-  4. **Technische Bemaßung & Kräftedreiecke:**
-     - Zeichnen Sie Maßketten mit Pfeilspitzen unter das Tragwerk.
-     - Bei Klick auf einen Knoten öffnet sich ein Overlay-Canvas, das das geschlossene Kräfteeck ($\sum \vec{F} = \vec{0}$) maßstäblich visualisiert.
-- **Bewertungskriterien (10 Punkte):**
-  - [3 P.] Interaktives Erstellen und Modifizieren des Fachwerks auf dem Canvas.
-  - [3 P.] Korrekte Kraftberechnung und visuelle Darstellung der Spannungszustände während der Lastfahrt.
-  - [2 P.] Animierter Einsturz-/Versagensmechanismus bei Überschreitung der Maximalkraft.
-  - [2 P.] Maßketten und geschlossene Kräftedreiecke an den Knoten.
+#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+
+> [!IMPORTANT]
+> **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks konzentrieren sich rein auf interaktive 2D-Vektorgrafik und führen zur maximalen Punktzahl (10 Punkte).
+
+- **Track A (Industrie): Interaktiver „2D-CAD-Fachwerkträger-Viewer“**
+  - **Tragwerks-Import & Topologie:**
+    - Einlesen eines industriellen Tragwerks aus einer C#-Datenstruktur oder JSON-Datei: Liste von Knoten $(X_i, Y_i)$ in Metern und Stäben (Indexpaare $(i, j)$).
+    - Mindestens 8 Knoten und 13 Stäbe (z. B. Pratt-, Warren- oder K-Fachwerkträger einer Werkhalle oder Brücke).
+  - **Welt-Screen-Transformation mit BoundingBox & Auto-Fit:**
+    - Automatische Berechnung der minimalen BoundingBox $[x_{\min}, x_{\max}] \times [y_{\min}, y_{\max}]$.
+    - Dynamische Skalierung mit 10 % umlaufendem Margin unter strikter Wahrung des Seitenverhältnisses (Aspect Ratio Preservation).
+  - **Normgerechte DIN-Bemaßungsketten (DIN 406):**
+    - Horizontale Maßkette unterhalb des Untergurts mit Maßhilfslinien, Maßlinie, Maßpfeilen und Maßzahlen (z. B. `4.00 m`).
+    - Vertikale Maßkette für die Gesamthöhe des Trägers.
+  - **Vektorpfeile mit korrekter Pfeilspitzengeometrie:**
+    - Zeichnen vorgegebener äußerer Lasten $\vec{F}_{\text{ext}}$ und Auflagerkräfte $\vec{F}_{\text{Lager}}$ an den Knoten.
+    - Die Pfeilspitzen werden über Rotationsmatrizen dynamisch an der Pfeilrichtung ausgerichtet (geschlossene `Polygon`-Spitze mit konfigurierbarem Winkel $\beta = 15^\circ$ und Länge $12\,\text{px}$).
+    - Anzeige von Auflagersymbolen (Dreieck für Festlager, Dreieck mit Rollenlinie für Loselager).
+  - **Interaktives Knotenverschieben per Drag-and-Drop:**
+    - Greifen eines beliebigen Trägerknotens mit der linken Maustaste und Verschieben über das Canvas.
+    - Alle angebundenen Stäbe, Lastpfeile und Maßketten folgen dem Knoten in Echtzeit (`MouseMove`).
+    - Tooltip oder Statusleiste zeigt während des Ziehens die aktuellen Weltkoordinaten $(X, Y)$ auf $1\,\text{mm}$ genau an.
+  - *(Hinweis: Diese interaktive Visualisierung dient als direktes GUI-Frontend für Einheit 07, wo sie mit der Cholesky-Statik-Engine verheiratet wird!)*
+
+- **Track B (Simulation Game): 2D Space Radar & Vector Navigation ODER Bridge Blueprint Sketcher**
+  *(Wählen Sie innerhalb von Track B eine der beiden Game-/CAD-Varianten):*
+  - **Option B.1: „2D Space Radar & Vector Navigation“ (Sci-Fi Vektor-Radar):**
+    - Aufbau eines interaktiven Vektor-Radarschirms im Retro-Vektor-Stil (*Asteroids*, *Elite*).
+    - Spieler-Raumschiff als skaliertes Vektor-Polygon im Zentrum.
+    - Dynamische Geschwindigkeits- ($\vec{v}$) und Beschleunigungspfeile ($\vec{a}$) mit mathematisch sauberer Pfeilspitzengeometrie, die sich an Fluglage und Schub anpassen.
+    - Hindernisse und Raumstationen als geschlossene Polygone mit lokalen Koordinaten.
+    - Kurs-Prädiktor: Vorausschau-Trajektorie (gestrichelte Linie / Punkte), die die interpolierte Flugbahn für die nächsten 5 Sekunden anzeigt.
+    - Interaktive Navigation: Mausrad-Zoom um den Cursor, Pan mit gedrückter mittlerer Maustaste.
+  - **Option B.2: „Bridge Blueprint Sketcher“ (Interaktives Brückenbau-Zeichenbrett):**
+    - Reines interaktives CAD-Zeichenbrett für ein Brückenbauspiel (ohne Statikberechnung):
+    - Klick auf das Canvas platziert neue Trägerknoten (mit zuschaltbarem Grid-Snapping auf ein $0{,}5\,\text{m}$-Raster).
+    - Ziehen einer Verbindungslinie zwischen zwei Knoten erzeugt einen neuen Stab (`Line`).
+    - Kontextmenü zur Definition von Festlagern, Loselagern und Lastangriffspunkten.
+    - Drag-and-Drop zum nachträglichen Justieren gesetzter Knoten mit Live-Aktualisierung der Stablängen.
+    - Taste `Entf` löscht selektierte Stäbe oder Knoten.
+    - Export der erstellten Brückentopologie (Knoten, Stäbe, Lager) als JSON-Datei – diese Topologiedatei bildet in Einheit 07 die Eingangsbasis für den Cholesky-Statiklöser!
+
+- **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
+  - [3 P.] Exakte Welt-Bildschirm-Transformation mit Seitenverhältnistreue (Aspect Ratio) und Auto-Fit-BoundingBox.
+  - [3 P.] Geometrisch exakte Vektorpfeile (korrekte Pfeilspitzengeometrie über Rotationsformeln) und Bemaßungsketten bzw. Vektor-Primitive.
+  - [2 P.] Flüssiges interaktives Drag-and-Drop / Zeichnen auf dem Canvas mit Echtzeit-Aktualisierung.
+  - [2 P.] Dokumentation: Saubere mathematische Beschreibung der affinen Transformation und Screenshots der interaktiven Anwendung.
 
 ---
 
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 03)
-- **Empfohlene Suchbegriffe:** `WPF Canvas world to screen matrix transformation`, `WPF Line dynamic styling StrokeThickness`, `Bridge constructor simulation 2D truss forces`.
+- **Empfohlene Suchbegriffe:** `WPF Canvas world to screen matrix transformation`, `WPF Polygon arrowhead calculation vector`, `WPF Canvas Drag and Drop shape manipulation`.
 - **Offizielle Dokumentation:** [Microsoft Learn: Shapes and Basic Drawing in WPF](https://learn.microsoft.com/de-de/dotnet/desktop/wpf/graphics-multimedia/shapes-and-basic-drawing-in-wpf-overview).
 - **Vibe-Coding Prompting-Tipp:**
-  > *„Erstelle ein WPF-UserControl in C#, das Weltkoordinaten $(x, y)$ in Meter auf einen Canvas mappt. Y muss nach oben positiv sein. Implementiere Zoom mit dem Mausrad um den Mauszeiger und Pan mit gedrückter mittlerer Maustaste. Nutze KEIN ScottPlot, sondern native WPF Shapes (Line, Ellipse, Path).“*
+  > *„Erstelle ein WPF-UserControl in C#, das Weltkoordinaten $(x, y)$ in Meter auf einen Canvas mappt. Y muss nach oben positiv sein. Implementiere BoundingBox-Autofit mit Margin und Seitenverhältnistreue. Berechne für Pfeilspitzen ein geschlossenes Dreiecks-Polygon aus Richtungsvektor und Einheitsnormalen. Verwende KEINE Statiklöser und KEIN ScottPlot, sondern native WPF Shapes (Line, Ellipse, Polygon).“*
 
 ---
 
-### Einheit 04: „Retro Arcade Racing Telemetry & Flipper-Dashboard“ (ScottPlot 5 Streaming)
+### Einheit 04: „Industrie-Prüfstand vs. Retro Arcade Telemetry“ (ScottPlot 5 Streaming)
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 04: Visualisierung 2D Diagramme](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/04_Visualisierung_2D_Diagramme/Folien.md) – High-Performance Streaming mit ScottPlot 5, Ringpuffer, Welford-Algorithmus für rollierende Online-Statistik, MSAGL-Graphen.
@@ -341,23 +409,36 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – „Retro Arcade Racing & Flipper-Telemetrie-Dashboard“
-- **Aufgabenstellung:**
-  1. **Multi-Plot-Cockpit:** Bauen Sie ein Dashboard mit 3 synchronisierten ScottPlot-Panels auf:
-     - **Panel 1 (Geschwindigkeit & RPM):** Live-Signal $v(t)$ und Motordrehzahl mit $\pm 3\sigma$-Toleranzband.
-     - **Panel 2 (G-Kräfte & Bremsverzögerung):** Quer- und Längsbeschleunigung ($a_x, a_y$) als Phasenplot / Streudiagramm.
-     - **Panel 3 (Echtzeit-Histogramm):** Kontinuierlich aktualisierte Verteilung der Rundenzeiten und Bremskräfte mit überlagerter Normalverteilungskurve.
-  2. **Welford-Streaming-Klasse:**
-     - Implementieren Sie die numerisch stabile Rekursion nach B. P. Welford:
-       $$\bar{x}_k = \bar{x}_{k-1} + \frac{x_k - \bar{x}_{k-1}}{k}, \quad S_k = S_{k-1} + (x_k - \bar{x}_{k-1})(x_k - \bar{x}_k), \quad s_k = \sqrt{\frac{S_k}{k-1}}$$
-  3. **Streckenprofil mit MSAGL:**
-     - Stellen Sie den Streckenverlauf (Checkpoints, Boxengasse, Sektoren) als interaktiven topologischen Graphen mit Microsoft MSAGL dar.
-  4. **Anomalie-Erkennung:** Erkennen Sie Motor-Überdreher ($\text{RPM} > 7000$) oder Traktionsverlust ($|a_y| > 1{,}5\,g$) und blenden Sie Marker direkt im ScottPlot-Diagramm ein.
-- **Bewertungskriterien (10 Punkte):**
+#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+
+> [!IMPORTANT]
+> **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf ScottPlot 5 und Welford-Statistik und führen zur maximalen Punktzahl (10 Punkte).
+
+- **Track A (Industrie): Industrieller Antriebsprüfstand & Motoren-Telemetrie-Dashboard**
+  - **Prüfstand-Cockpit:** Aufbau eines Monitorings für einen elektrischen Antriebsprüfstand mit 3 synchronisierten ScottPlot-Panels:
+    - *Panel 1 (Drehzahl & Drehmoment):* Live-Signale $n(t)$ und $M(t)$ mit dynamisch berechnetem $\pm 3\sigma$-Toleranzband zur Erkennung von Lastsprüngen und Schwingungsanregungen.
+    - *Panel 2 (Betriebskennfeld / Phasenplot):* Drehmoment über Drehzahl ($M$ vs. $n$) als Live-Streudiagramm zur Echtzeit-Bestimmung des Motorwirkungsgrads.
+    - *Panel 3 (Echtzeit-Histogramm):* Kontinuierliche Verteilung der Lagervibrationen / Restwelligkeit mit überlagerter Gauss-Verteilung.
+  - **Welford-Streaming-Klasse:** Numerisch stabile Rekursion nach B. P. Welford für gleitenden Mittelwert und Varianz ohne Puffer-Neuallokation:
+    $$\bar{x}_k = \bar{x}_{k-1} + \frac{x_k - \bar{x}_{k-1}}{k}, \quad S_k = S_{k-1} + (x_k - \bar{x}_{k-1})(x_k - \bar{x}_k), \quad s_k = \sqrt{\frac{S_k}{k-1}}$$
+  - **Prüfstandstopologie mit MSAGL:** Graphische Anzeige des mechanischen Antriebsstrangs (Motor $\to$ Kupplung $\to$ Getriebe $\to$ Lastbremse) mit sensorischen Messknoten via Microsoft MSAGL.
+  - **Anomalie-Erkennung:** Automatische Alarme bei Lagervibrationen über Schwellwert oder unzulässigem Temperaturanstieg.
+
+- **Track B (Simulation Game): Retro Arcade Racing & Flipper-Telemetrie-Dashboard**
+  - **Arcade-Cockpit:** Aufbau eines Telemetrie-Dashboards für ein Rennspiel mit 3 synchronisierten ScottPlot-Panels:
+    - *Panel 1 (Geschwindigkeit & RPM):* Live-Signal $v(t)$ und Motordrehzahl mit $\pm 3\sigma$-Toleranzband.
+    - *Panel 2 (G-Kräfte & Bremsverzögerung):* Quer- und Längsbeschleunigung ($a_x, a_y$) als G-Force-Phasenplot (Drift- und Traktionsanalyse).
+    - *Panel 3 (Echtzeit-Histogramm):* Kontinuierlich aktualisierte Verteilung der Rundenzeiten und Bremskräfte mit überlagerter Normalverteilungskurve.
+  - **Welford-Streaming-Klasse:** Exakte Realisierung der numerisch stabilen Welford-Statistik im Render-Loop.
+  - **Streckenprofil mit MSAGL:** Topologischer Graph der Rennstrecke mit Sektoren, Checkpoints und Boxengasse via Microsoft MSAGL.
+  - **Anomalie-Erkennung:** Erkennen von Traktionsverlust ($|a_y| > 1{,}5\,g$) oder Motor-Überdrehern ($\text{RPM} > 7000$) mit Markern direkt im Diagramm.
+
+- **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
   - [3 P.] Saubere ScottPlot-5-Architektur ohne Speicherallokation im Render-Loop.
   - [3 P.] Exakte Realisierung der Welford-Statistik mit mathematischer Verifikation.
   - [2 P.] Ansprechendes Dashboard-Design mit synchronisierten Diagrammachsen.
-  - [2 P.] Einbindung des Streckengraphen via MSAGL.
+  - [2 P.] Einbindung des System-/Streckengraphen via MSAGL.
 
 ---
 
@@ -369,7 +450,7 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-### Einheit 05: „3D Arcade Claw Machine & Lunar Lander“ (SharpGL 3D-Szenengraph)
+### Einheit 05: „3D-Portalroboter vs. Arcade Claw Machine“ (SharpGL 3D-Szenengraph)
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 05: Visualisierung 3D OpenGL](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/05_Visualisierung_3D_OpenGL/Folien.md) – OpenGL Pipeline, SharpGL, Szenengraph-Hierarchie, Transformationsmatrizen (`glPushMatrix`/`glPopMatrix`), Orbit-Kamera.
@@ -395,27 +476,43 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – „3D Arcade Claw Machine (Greifarm-Simulator)“
-- **Aufgabenstellung:**
-  1. **Hierarchischer 3D-Szenengraph:**
-     - Bauen Sie eine vollständige Arcade-Greifarm-Maschine auf:
-       - Gehäuse (Glasquader mit Kantenrahmen).
-       - $X$-Schlitten (Portalbrücke entlang der Hallenachse).
-       - $Y$-Laufkatze (fährt quer auf der Brücke).
-       - $Z$-Seilzug / Teleskoparm (fährt vertikal nach unten).
-       - 3-Finger-Greifer (Finger öffnen und schließen synchron über Gelenkwinkel).
-  2. **OpenGL-Matrix-Stack:**
-     - Nutzen Sie rekursiv `glPushMatrix()` und `glPopMatrix()`, sodass jede Komponente im lokalen Koordinatensystem ihres Eltern-Knotens modelliert wird.
-  3. **Interaktive Steuerung (Gamification):**
-     - Steuern Sie den Greifer per Tastatur (Pfeiltasten für $X/Y$, Leertaste für Absenken und Schließen des Greifers).
-     - Platzieren Sie bunte geometrische Preise (Würfel, Kugeln) auf dem Boden.
-  4. **Beleuchtung & Material:**
-     - Aktivieren Sie `GL_LIGHTING`, definieren Sie Punktstrahler und berechnen Sie glatte Flächennormalen (`glNormal3f`).
-- **Bewertungskriterien (10 Punkte):**
+#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+
+> [!IMPORTANT]
+> **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf dem SharpGL-3D-Szenengraph und führen zur maximalen Punktzahl (10 Punkte).
+
+- **Track A (Industrie): 3D-Portalroboter & Automatisches Kleinteilelager (ASRS)**
+  - **Industrie-Szenario:** Modellierung einer industriellen 3-Achs-Portalanlage zur automatisierten Palettierung und Werkstückhandhabung in einem Fertigungslager.
+  - **Hierarchischer Szenengraph & Kinematik:**
+    - Fester Hallen-Grundrahmen mit Längsführungsschienen.
+    - $X$-Portalbrücke (fährt entlang der Hallenachse).
+    - $Y$-Laufkatze (fährt quer auf der Portalbrücke).
+    - $Z$-Teleskophubwerk (fährt vertikal auf und ab).
+    - Pneumatischer 2-Backen-Parallelgreifer (synchron öffnend und schließend).
+  - **OpenGL-Matrix-Stack:** Nutzen Sie rekursiv `glPushMatrix()` und `glPopMatrix()`, sodass jede Kinematikachse im lokalen Koordinatensystem ihres übergeordneten Bauteils transformiert wird.
+  - **Beleuchtung & Material:** Aktivieren Sie `GL_LIGHTING`, setzen Sie diffuse und spekulare Materialfarben und berechnen Sie glatte Flächennormalen (`glNormal3f`).
+  - **Interaktive Steuerung & Teach-in:** Manuelle Achsverfahrung per Tastatur/Slider und automatisches Anfahren vordefinierter Palettenkoordinaten zur Teileaufnahme.
+
+- **Track B (Simulation Game): 3D Arcade Claw Machine (Jahrmarkt-Greifarm-Simulator)**
+  - **Game-Szenario:** Vollständige mechatronische Nachbildung eines Jahrmarkt-Greifarm-Automaten in einem transparenten Glaskasten.
+  - **Hierarchischer Szenengraph:**
+    - Gehäuse (Glasquader mit Eckprofilen und Auswurfschacht).
+    - $X$-Schlitten (Portalbrücke entlang der Gehäusetiefe).
+    - $Y$-Laufkatze (fährt quer auf der Brücke).
+    - $Z$-Seilzug / Teleskoparm (fährt vertikal nach unten).
+    - 3-Finger-Greifer (Finger öffnen und schließen synchron über Gelenkwinkel).
+  - **OpenGL-Matrix-Stack:** Kaskadierte Transformationen mit `glPushMatrix()` und `glPopMatrix()`.
+  - **Interaktive Steuerung (Gamification):**
+    - Tastatursteuerung (Pfeiltasten für $X/Y$, Leertaste startet den Absenk-, Greif- und Rückholzyklus).
+    - Bunte geometrische Preise (Würfel, Kugeln, Sterne) auf dem Automatenboden.
+  - **Greifmechanik & Beleuchtung:** Distanz-Kollisionsprüfung beim Zupacken; dynamische Spot-Beleuchtung auf das Spielfeld.
+
+- **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
   - [3 P.] Korrekter hierarchischer Szenengraph mit 4 Freiheitsgraden ($X, Y, Z, \text{Greifer}$).
   - [3 P.] Stabile Orbit-Kamera mit flüssiger Tastatur-/Maus-Interaktion.
   - [2 P.] Ansprechende Beleuchtung, Normalenvektoren und Materialfarben.
-  - [2 P.] Greifmechanik mit einfacher Distanz-Kollisionsprüfung beim Aufnehmen eines Preises.
+  - [2 P.] Greifmechanik mit einfacher Distanz-Kollisionsprüfung beim Aufnehmen eines Objekts.
 
 ---
 
@@ -427,7 +524,7 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-### Einheit 06: „Zombie-Horde & Partikelsturm-Benchmark“ (TPL Parallel.For & Cache-Lokalität)
+### Einheit 06: „Partikelsturm-Benchmark vs. Zombie-Horde“ (TPL Parallel.For & Cache-Lokalität)
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 06: Multithreading](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/06_Multithreading/Folien.md) – Task Parallel Library (TPL), `Parallel.For`, Thread-Sicherheit, Amdahlsches Gesetz, CPU-Cache-Hierarchie, False Sharing.
@@ -453,22 +550,33 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – „Zombie-Horden-Benchmark & Amdahl-Analyse“
-- **Aufgabenstellung:**
-  1. **Zombie-Horden-Simulation:**
-     - $N = 50\,000$ Zombies bewegen sich auf einem 2D-Gitter auf die nächstgelegenen Überlebenden zu.
-     - Jeder Zombie scannt seine Nachbarschaft und vermeidet Kollisionen mit anderen Zombies.
-  2. **Systematische Skalierungsreihe:**
-     - Messen Sie die Rechenzeit für $p \in \{1, 2, 4, 6, 8, 12, 16, 24, 32\}$ Threads (`ParallelOptions.MaxDegreeOfParallelism`).
-     - Führen Sie pro Messpunkt 5 Wiederholungen durch (ersten Lauf als JIT-Warmup verwerfen!).
-  3. **Identifikation des seriellen Anteils:**
-     - Fitten Sie die Messkurve an Amdahls Gesetz und bestimmen Sie den seriellen Code-Anteil $s = 1 - f_{\text{par}}$.
-  4. **Hardware-Cache-Experiment (Row-Major vs. Column-Major):**
-     - Führen Sie auf einer $4096 \times 4096$ Matrix eine 2D-Laplace-Glättung aus:
-       - *Test A (Cache-freundlich):* Zeilenweiser Zugriff (äußere Schleife Zeilen, innere Schleife Spalten).
-       - *Test B (Cache-feindlich):* Spaltenweiser Zugriff (äußere Schleife Spalten, innere Schleife Zeilen).
-     - Dokumentieren Sie den extremen Leistungseinbruch (Faktor 4–10) und begründen Sie ihn anhand von Cache-Lines ($64\,\text{Byte}$) und CPU-Prefetching.
-- **Bewertungskriterien (10 Punkte):**
+#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+
+> [!IMPORTANT]
+> **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf TPL-Parallelisierung und Cache-Benchmarking und führen zur maximalen Punktzahl (10 Punkte).
+
+- **Track A (Industrie): Industrieller Schüttgut- & Partikelsturm-Benchmark mit TPL**
+  - **Industrie-Szenario:** Parallele Simulation eines industriellen Granulat-Schüttgutstroms ($N = 100\,000$ Partikel im Silo-Fallrohr) unter Schwerkraft und elastischer Nachbarschafts-Kollisionsabstoßung.
+  - **Systematische Skalierungsreihe:**
+    - Messen Sie die Rechenzeit für $p \in \{1, 2, 4, 6, 8, 12, 16, 24, 32\}$ Threads (`ParallelOptions.MaxDegreeOfParallelism`).
+    - Führen Sie pro Messpunkt 5 Wiederholungen durch (ersten Lauf als JIT-Warmup verwerfen!).
+  - **Identifikation des seriellen Anteils:**
+    - Fitten Sie die Messkurve an Amdahls Gesetz und bestimmen Sie den seriellen Code-Anteil $s = 1 - f_{\text{par}}$.
+  - **Hardware-Cache-Experiment (Row-Major vs. Column-Major):**
+    - Führen Sie auf einer $4096 \times 4096$ Matrix eine 2D-Laplace-Glättung aus:
+      - *Test A (Cache-freundlich):* Zeilenweiser Zugriff (äußere Schleife Zeilen, innere Schleife Spalten).
+      - *Test B (Cache-feindlich):* Spaltenweiser Zugriff (äußere Schleife Spalten, innere Schleife Zeilen).
+    - Dokumentieren Sie den extremen Leistungseinbruch (Faktor 4–10) und begründen Sie ihn anhand von Cache-Lines ($64\,\text{Byte}$) und CPU-Prefetching.
+
+- **Track B (Simulation Game): Zombie-Horden-KI & Crowd-Simulation-Benchmark**
+  - **Game-Szenario:** $N = 50\,000$ Zombies bewegen sich auf einem 2D-Gitter auf die nächstgelegenen Überlebenden zu.
+  - **Schwarmverhalten:** Jeder Zombie scannt seine Nachbarschaft, verfolgt das Ziel und vermeidet Kollisionen mit anderen Zombies (Flocking / Separation).
+  - **Thread-Sicherheit & Parallelisierung:** Parallele Aktualisierung mit `Parallel.For` unter Vermeidung von Race Conditions (Double-Buffering) und False Sharing.
+  - **Skalierungsreihe & Amdahl-Fit:** Messreihe für $p \in \{1, \dots, 32\}$ Threads mit Bestimmung des maximal erreichbaren Speedups.
+  - **Hardware-Cache-Experiment:** Identischer 2D-Laplace-Cache-Lokalitäts-Vergleich auf der $4096 \times 4096$ Matrix (Zeilen- vs. Spaltenzugriff).
+
+- **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
   - [3 P.] Korrekte und thread-sichere Parallelisierung ohne Race Conditions.
   - [3 P.] Saubere Messreihen mit Warmup, Standardabweichung und Amdahl-Fit.
   - [2 P.] Fundierter experimenteller Nachweis des Cache-Lokalitäts-Effekts.
@@ -484,12 +592,13 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-### Einheit 07: „Kran- & Achterbahn-Tragwerk-Rechner“ (Math.NET Cholesky-LGS & FEM)
+### Einheit 07: „Gittermastkran vs. Achterbahn-Tragwerk & Bridge Solver“ (Math.NET Cholesky-LGS & FEM)
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 07: Statische Modelle](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/07_Statische_Modelle/Folien.md) – Finite-Elemente-Methode (FEM) für Stabwerke, globale Steifigkeitsmatrix $\mathbf{K}$, Blockpartitionierung, Cholesky-Faktorisierung ($\mathbf{L}\mathbf{L}^\top$).
 - **Quellen-Referenz:** [`Quellen/WS25/FachwerkElastisch3D`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS25/FachwerkElastisch3D), [`Quellen/WS24/StatischFachwerkElastisch2D`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS24/StatischFachwerkElastisch2D).
 - **Technologie-Status:** `MathNet.Numerics` (Matrizen, Cholesky-Solver). Noch *KEINE* dynamischen S-Functions!
+- **Rückgriff auf Einheit 03 (Verheiratung von Grafik & Statik-Engine):** In Einheit 03 wurde das grafische Vektor-Frontend (CAD-Viewer bzw. Bridge Blueprint Sketcher) auf dem WPF Canvas implementiert. In dieser Einheit schließen Sie den Kreis: Die dortige Visualisierung wird nun direkt mit der Math.NET Cholesky-Statik-Engine verheiratet! Aus den reinen Geometrie-Linien werden physikalisch belastete, farbkodierte Zug- und Druckstäbe mit realen Lagerkräften.
 - **Lernziele:**
   1. Assemblierung der globalen Steifigkeitsmatrix aus Elementmatrizen:
      $$\mathbf{K}_e = \frac{E \cdot A}{L} \begin{bmatrix} \vec{n}\vec{n}^\top & -\vec{n}\vec{n}^\top \\ -\vec{n}\vec{n}^\top & \vec{n}\vec{n}^\top \end{bmatrix}$$
@@ -512,22 +621,47 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – „Achterbahn-Looping & Gittermastkran-Stabilitätsanalyse“
-- **Aufgabenstellung:**
-  1. **3D-Stabwerk-Generalisierung:** Erweitern Sie das Modell auf 3 Raumdimensionen (3 Freiheitsgrade pro Knoten, Elementmatrix $6 \times 6$).
-  2. **Tragwerks-Modellierung (Wahlmöglichkeit):**
-     - *Variante 1 (Achterbahn-Tragwerk):* 3D-Röhrenfachwerk eines Achterbahn-Loopings mit Eigengewicht und dynamischer Fliehkraftlast der Achterbahnwagen.
-     - *Variante 2 (Gittermast-Baukran):* 3D-Kranturm mit Ausleger und Gegengewicht unter Wind- und Nutzlast (mindestens 16 Knoten, 40 Stäbe).
-  3. **Spannungsanalyse & Knick-Sicherheit:**
-     - Berechnen Sie für jeden Stab Dehnung $\epsilon$, Normalspannung $\sigma = E \cdot \epsilon$ und Stabkraft $N$.
-     - Ermitteln Sie die kritische Euler-Knickkraft für Druckstäbe: $N_{\text{knick}} = \frac{\pi^2 E I}{L^2}$.
-     - Markieren Sie Stäbe farblich nach ihrer Auslastungsquote $\eta = \frac{|N|}{N_{\text{zul}}}$.
-  4. **Validierung:** Weisen Sie analytisch nach, dass die Summe aller berechneten Lagerreaktionskräfte exakt gleich den eingeleiteten Außenlasten ist.
-- **Bewertungskriterien (10 Punkte):**
-  - [3 P.] Korrekte mathematische 3D-FEM-Formulierung und Blockpartitionierung.
-  - [3 P.] Robuste Nutzung von Math.NET Cholesky-Zerlegung.
-  - [2 P.] Spannungs- und Knicklastanalyse nach Euler.
-  - [2 P.] Vollständiger Gleichgewichtsnachweis im Markdown-Bericht.
+#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+
+> [!IMPORTANT]
+> **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf der FEM-Steifigkeitsmethode und Math.NET Cholesky und führen zur maximalen Punktzahl (10 Punkte).
+
+- **Track A (Industrie): Gittermastkran & Industriehallen-Tragwerk (FEM-Cholesky verheiratet mit T03-CAD-Viewer)**
+  - **Tragwerks-Modellierung & T03-Verheiratung:**
+    - Übernehmen Sie das in Einheit 03 erstellte Datenmodell und den interaktiven Canvas-Viewer als Frontend.
+    - Speisen Sie die Knotenkoordinaten und Stabverbindungen in die Math.NET Steifigkeits-Engine ein.
+    - Erweitern Sie das Modell wahlweise auf ein 3D-Gittertragwerk (z. B. Kranturm mit Ausleger und Gegengewicht unter Wind- und Nutzlast, $\ge 16$ Knoten, 40 Stäbe) oder ein hochgradig unbestimmtes 2D-Hallen-Fachwerk.
+  - **Cholesky-Löser & Blockpartitionierung:**
+    - Assemblieren Sie $\mathbf{K} \in \mathbb{R}^{n \times n}$ und teilen Sie die Freiheitsgrade in freie ($f$) und gelagerte ($p$) DOFs auf:
+      $$\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f - \mathbf{K}_{fp} \mathbf{u}_p, \quad \mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f + \mathbf{K}_{pp} \mathbf{u}_p$$
+    - Lösen Sie $\mathbf{u}_f$ via Cholesky-Zerlegung `K_ff.Cholesky().Solve(f_f)`.
+  - **Visualisierung im T03-Canvas:**
+    - Die berechneten Stabkräfte steuern nun die Linienfarben (Blau = Zugkraft, Rot = Druckkraft) und Linienstärken ($w \propto |N_i|$) direkt im interaktiven Canvas aus T03!
+    - Die berechneten Lagerreaktionskräfte $\mathbf{f}_p$ werden als Kraftpfeile mit korrekter Pfeilspitze an den Lagern eingeblendet.
+  - **Knicknachweis nach Euler & Validierung:**
+    - Berechnung der Normalspannung $\sigma_i = E \cdot \epsilon_i$ und Euler-Knicklast $N_{\text{knick}} = \frac{\pi^2 E I}{L^2}$ für alle Druckstäbe.
+    - Analytischer Nachweis des globalen Kraftgleichgewichts: $\sum \vec{F} = \vec{0}$ bis auf Maschinengenauigkeit.
+
+- **Track B (Simulation Game): Achterbahn-Tragwerk & Bridge Constructor Physics Engine**
+  - **Verheiratung mit dem Blueprint Sketcher aus T03:**
+    - Importieren Sie die in T03 entworfene Brückentopologie oder ein 3D-Achterbahn-Looping-Tragwerk direkt in den Math.NET Cholesky-Solver.
+  - **Dynamische Lastfahrt („Der schwere Zug / LKW“):**
+    - Ein Zug oder LKW (Wanderlast $F_{\text{Last}} = 20\,\text{kN}$) rollt schrittweise über die Fahrbahnknoten der Brücke von links nach rechts.
+    - In jedem Simulationsschritt wird das LGS gelöst und die aktuellen Stabkräfte berechnet.
+  - **Echtzeit-Farbcodierung & Spannungsanzeige:**
+    - Stäbe färben sich live auf dem Canvas: Blau (Zug), Rot (Druck), Gelb/Orange bei Annäherung an die Grenzlast ($|N_i| > 0{,}8 \cdot N_{\text{zul}}$).
+  - **Stabbruch & Einsturzmechanik:**
+    - Übersteigt eine Stabkraft die zulässige Grenzlast ($|N_i| \ge N_{\text{zul}} = 25\,\text{kN}$), reißt der Stab: Er wird aus der Steifigkeitsmatrix entfernt.
+    - Die Matrix wird neu assembliert; ist das Resttragwerk kinematisch instabil (Matrix singulär), wird der Einsturz des Bauwerks animiert.
+  - **Validierung:**
+    - Automatisierter Check des globalen Kraftgleichgewichts $\sum \vec{F}_{\text{Lager}} + \sum \vec{F}_{\text{Last}} = \vec{0}$ in jedem Schritt der Überfahrt.
+
+- **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
+  - [3 P.] Korrekte mathematische FEM-Formulierung und Cholesky-Blockpartitionierung via Math.NET.
+  - [3 P.] Nahtlose Verheiratung mit der T03-Vektorvisualisierung (Echtzeit-Farbcodierung Zug/Druck und dynamische Lasterfassung).
+  - [2 P.] Spannungs- und Knicklastanalyse (Euler) bzw. Stabbruch- und Einsturzsimulation.
+  - [2 P.] Vollständiger Nachweis des globalen Kraftgleichgewichts im Markdown-Bericht.
 
 ---
 
@@ -539,7 +673,7 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-### Einheit 08: „SpaceX Falcon Hop & Segway-Balancer“ (S-Function, RK4 & PID Anti-Windup)
+### Einheit 08: „Segway-Balancer vs. SpaceX Falcon Hop“ (S-Function, RK4 & PID Anti-Windup)
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 08: Dynamische Modelle Kontinuierlich](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/08_Dynamische_Modelle_Kontinuierlich/Folien.md) – Simulink-artige S-Function-Architektur, Runge-Kutta-Verfahren 4. Ordnung (RK4), PID-Regelung, Aktorsättigung und Anti-Windup Clamping.
@@ -565,22 +699,30 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – „SpaceX Falcon Hop: Raketenlandung mit Schubvektorsteuerung“
-- **Aufgabenstellung:**
-  1. **Physikalisches Modell des Raketen-Hops:**
-     - Vertikalbewegung $y(t)$, Horizontalbewegung $x(t)$, Neigungswinkel $\theta(t)$ (3 Freiheitsgrade im Raum, DGL-System 6. Ordnung).
-     - Triebwerksschub $F_{\text{Triebwerk}}$ mit variabler Neigung (Schubvektor $\delta \in [-15^\circ, +15^\circ]$).
-     - Nichtlineare Masseverringerung durch Treibstoffverbrauch: $\dot{m} = -\frac{F_{\text{Triebwerk}}}{I_{\text{sp}} \cdot g_0}$.
-  2. **Kaskadierter PID-Regler:**
-     - Lageregler für Höhe $y_{\text{soll}}$ und Nickwinkel $\theta_{\text{soll}} = 0^\circ$.
-  3. **Aktorsättigung & Anti-Windup Clamping:**
-     - Schubkraft ist begrenzt: $F_{\text{min}} \le F_{\text{Triebwerk}} \le F_{\text{max}}$.
-     - Wenn der Regler in die Sättigung läuft und Fehler sowie Stellgröße gleiches Vorzeichen haben, stoppen Sie die Integration des I-Anteils (`dxi = 0`).
-  4. **Störungs-Challenge:** Injizieren Sie bei $t = 3\,\text{s}$ eine seitliche Windböe. Zeigen Sie im ScottPlot-Diagramm, dass das System mit Anti-Windup sanft landet, während das System ohne Anti-Windup dramatisch überschwingt und abstürzt.
-- **Bewertungskriterien (10 Punkte):**
-  - [3 P.] Vollständiges S-Function-Modell des mechatronischen Flugkörpers.
+#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+
+> [!IMPORTANT]
+> **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf kontinuierlicher S-Function-Dynamik, RK4 und PID Anti-Windup und führen zur maximalen Punktzahl (10 Punkte).
+
+- **Track A (Industrie): Industrieller Segway-Balancer / Inverses Pendel auf Wagen**
+  - **Industrie-Szenario:** Mechatronische Lageregelung eines selbstbalancierenden Transportfahrzeugs (Segway / Inverses Pendel auf verfahrbarem Wagen) für die fahrerlose Intralogistik.
+  - **DGL-System (4. Ordnung):** Wagenposition $x(t)$, Geschwindigkeit $\dot{x}(t)$, Pendelneigungswinkel $\theta(t)$, Winkelgeschwindigkeit $\dot{\theta}(t)$, gekoppelt mit Motorkraft und Schwerkraftmoment.
+  - **Kaskadierter PID-Regler:** Stabilisierung der aufrechten Gleichgewichtslage ($\theta_{\text{soll}} = 0^\circ$) und Einregelung der Wagenposition.
+  - **Aktorsättigung & Anti-Windup Clamping:** Die Stellkraft bzw. Motorspannung ist physikalisch limitiert ($|F_{\text{Motor}}| \le F_{\max}$). Läuft der Regler in die Begrenzung und weisen Fehler sowie Stellgröße gleiches Vorzeichen auf, wird die Integration des I-Anteils gestoppt (`dxi = 0`).
+  - **Störfall-Experiment:** Injizieren Sie bei $t = 3\,\text{s}$ eine Stoßkraft auf das Pendel. Demonstrieren Sie im ScottPlot-Diagramm, dass das System mit Anti-Windup rasch und aperiodisch einschwingt, während das System ohne Anti-Windup massiv überschwingt und instabil umkippt.
+
+- **Track B (Simulation Game): SpaceX Falcon Hop (Raketenlandung mit Schubvektorsteuerung)**
+  - **Game-Szenario:** Flugkörper (Falcon 9 Booster / Hopper) mit 3 Freiheitsgraden ($x, y, \theta$) im Raum (DGL-System 6. Ordnung).
+  - **Triebwerksmodell:** Haupttriebwerk mit kardanischer Schubvektorsteuerung ($\delta \in [-15^\circ, +15^\circ]$) und nichtlinearer Massenverringerung durch Treibstoffverbrauch ($\dot{m} = -\frac{F}{I_{\text{sp}} g_0}$).
+  - **Kaskadierter PID-Regler:** Lageregler für Soll-Höhe $y_{\text{soll}}$ und vertikale Ausrichtung $\theta_{\text{soll}} = 0^\circ$.
+  - **Aktorsättigung & Anti-Windup Clamping:** Begrenzung der Schubkraft auf $F_{\min} \le F \le F_{\max}$ und Winkelbegrenzung des Schubvektors. Conditional Integration bei Sättigung.
+  - **Störungs-Challenge:** Injizieren Sie bei $t = 3\,\text{s}$ eine heftige Seitenwindböe. Zeigen Sie im Diagramm, dass die Rakete mit Anti-Windup sanft aufsetzt, während sie ohne Anti-Windup die Orientierung verliert und zerschellt.
+
+- **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
+  - [3 P.] Vollständiges S-Function-Modell des mechatronischen Mehrkörpersystems.
   - [3 P.] Saubere Realisierung des RK4-Solvers und des PID-Clamping-Mechanismus.
-  - [2 P.] Vergleichende Trajektorienanalyse (mit vs. ohne Anti-Windup).
+  - [2 P.] Vergleichende Trajektorienanalyse (mit vs. ohne Anti-Windup bei Laststörung).
   - [2 P.] Dokumentation: Phasenplots und physikalische Fehlerbetrachtung.
 
 ---
@@ -593,7 +735,7 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-### Einheit 09: „Achterbahn-Warteschlangen-Chaos & Kassen-Stau“ (Diskrete Ereignissimulation DES)
+### Einheit 09: „Fertigungslogistik vs. Freizeitpark-Express-Pass“ (Diskrete Ereignissimulation DES)
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 09: Dynamische Modelle Diskret](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/09_Dynamische_Modelle_Diskret/Folien.md) – Diskrete Ereignissimulation (DES), Future Event List (FEL), Inversionsmethode, Little's Gesetz $L = \lambda W$, Erlang-C.
@@ -620,21 +762,28 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – „Achterbahn-Express-Pass vs. Supermarkt-Kassen-Stau“
-- **Aufgabenstellung:**
-  1. **Multi-Server System mit Prioritäten ($M/M/c/K$):**
-     - $c = 3$ parallel bediente Drehkreuze/Kassen.
-     - Pufferbegrenzung auf $K = 25$ Personen (bei voller Warteschlange kehren ankommende Kunden ab: Loss-System).
-  2. **Express-Pass-Warteschlange (Prioritätsklassen):**
-     - Normale Besucher (80 %) vs. VIP/Express-Pass-Inhaber (20 %).
-     - VIPs überholen Normalbesucher in der Warteschlange (Non-preemptive Priority Queuing).
-  3. **Empirischer Nachweis von Little's Gesetz:**
-     - Erfassen Sie für jeden Besucher individuelle Eintritts-, Service- und Austrittszeitpunkte.
-     - Weisen Sie nach: $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ für Gesamtsystem und Sub-Queues.
-  4. **Monte-Carlo-Replikation mit Parallel.For:**
-     - Führen Sie 100 Simulationsläufe mit unterschiedlichen Seeds parallel aus (`Parallel.For`).
-     - Ermitteln Sie das 95%-Konfidenzintervall der maximalen Wartezeit und stellen Sie die Verteilungsfunktion in ScottPlot dar.
-- **Bewertungskriterien (10 Punkte):**
+#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+
+> [!IMPORTANT]
+> **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf der diskreten Ereignissimulation (DES) mit $M/M/c/K$-Warteschlangen und führen zur maximalen Punktzahl (10 Punkte).
+
+- **Track A (Industrie): Flexible Fertigungszelle & Logistik-Pufferstau ($M/M/c/K$)**
+  - **Industrie-Szenario:** Ereignisdiskrete Simulation einer flexiblen Fertigungszelle (FMS) mit $c = 3$ parallelen CNC-Bearbeitungsstationen und begrenztem Teilepuffer ($K = 25$ Werkstücke).
+  - **Pufferüberlauf:** Bei voll belegtem Puffer werden eintreffende Rohlinge abgewiesen (Ausschuss/Blockierung im Logistiksystem).
+  - **Prioritätsklassen:** Eilaufträge / Express-Werkstücke (20 % des Gesamtaufkommens) überholen Standard-Chargen (80 %) in der Warteschlange (Non-preemptive Priority Queuing).
+  - **Stochastik & Inversion:** Ziehung exponentialverteilter Zwischenankunfts- und Bedienzeiten über die Inversionsmethode: $\tau = -\frac{1}{\lambda} \ln(1 - U)$.
+  - **Empirischer Nachweis von Little's Gesetz:** Erfassung individueller Warte- und Servicezeiten und Verifikation von $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ sowie Erlang-C.
+  - **Monte-Carlo-Replikation mit Parallel.For:** 100 Simulationsläufe mit unterschiedlichen Seeds zur Bestimmung des 95%-Konfidenzintervalls der Durchlaufzeiten; Histogramm-Darstellung in ScottPlot 5.
+
+- **Track B (Simulation Game): Freizeitpark Achterbahn-Express-Pass & Kassen-Chaos**
+  - **Game-Szenario:** Simulation der Besucherströme an einer großen Achterbahn mit $c = 3$ parallelen Drehkreuzen und Einlass-Wartebereich ($K = 25$ Personen).
+  - **Express-Pass-System:** Standard-Besucher (80 %) vs. VIP/Express-Pass-Inhaber (20 %). VIP-Gäste haben Vorrang und reihen sich vor Standardgästen ein.
+  - **Stochastische Ankünfte:** Inversionsmethode für Ankunftsabstände und Abfertigungsdauern.
+  - **Empirischer Nachweis von Little's Gesetz:** Statistische Überprüfung von $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ für das Gesamtsystem und Sub-Queues.
+  - **Monte-Carlo-Replikation mit Parallel.For:** 100 parallele Replikationen zur Ermittlung des 95%-Konfidenzintervalls der maximalen Wartezeit; Verteilungsdiagramm in ScottPlot.
+
+- **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
   - [3 P.] Korrekte Implementierung des Multi-Server-DES mit Prioritätswarteschlange.
   - [3 P.] Exakte numerische Verifikation von Little's Gesetz und Erlang-C.
   - [2 P.] Multithreadete Monte-Carlo-Auswertung mit Konfidenzintervallen.
@@ -650,7 +799,7 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-### Einheit 10: „Flipperautomat: Pinball Bumper & Pachinko-Physik“ (Hybride Systeme & Zero-Crossing)
+### Einheit 10: „Pneumatischer Taktvorschub vs. Flipperautomat Pinball“ (Hybride Systeme & Zero-Crossing)
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 10: Dynamische Modelle Hybrid](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/10_Dynamische_Modelle_Hybrid/Folien.md) – Hybride Automaten, Zero-Crossing-Funktionen $z(\mathbf{x}) = 0$, Bisektions-Nullstellensuche, Zeno-Vermeidung, Stick-Slip Kontaktmechanik.
@@ -675,22 +824,30 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – „Flipperautomat: Pinball Bumper & Pachinko-Physik“
-- **Aufgabenstellung:**
-  1. **Pinball-Spielfeld mit Hindernissen:**
-     - Geneigte Ebene mit Kugelgravitation ($g_{\text{eff}} = g \cdot \sin \alpha$).
-     - Begrenzungswände, elastische Bumper (Kreise mit Stoßzahl $e > 1{,}0$ für energetischen Extra-Kick!) und geneigte Führungsrampen.
-  2. **Zero-Crossing Nullstellensuche für Kurven & Geraden:**
-     - Formulieren Sie Schaltfunktionen für Kreisbumper: $z_{\text{Bumper}}(\mathbf{x}) = \|\mathbf{p}_{\text{Kugel}} - \mathbf{p}_{\text{Bumper}}\| - (R_{\text{Kugel}} + R_{\text{Bumper}})$.
-     - Berechnen Sie bei Aufprall den Tangenten- und Normalenvektor und reflektieren Sie den Geschwindigkeitsvektor physikalisch korrekt.
-  3. **Zeno-Vermeidung & Chattering-Schutz:**
-     - Rollt die Kugel auf einer Rampe mit extrem kleinen Abprallern, detektieren Sie das Unterschreiten von Grenzgeschwindigkeiten ($|\dot{w}| < \epsilon_v$) und schalten Sie in den kontinuierlichen Rollmodus mit Coulomb-Reibung um.
-  4. **Interaktiver Flipperfinger:**
-     - Betätigung per Tastatur (z. B. Pfeiltasten): Rotierender Stab mit Winkelgeschwindigkeit $\omega$, der der Kugel zusätzlichen Impuls verleiht.
-- **Bewertungskriterien (10 Punkte):**
+#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+
+> [!IMPORTANT]
+> **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf hybriden Systemen mit Zero-Crossing Wurzelsuche und führen zur maximalen Punktzahl (10 Punkte).
+
+- **Track A (Industrie): Pneumatischer Taktvorschub & Bauteilvereinzelung mit Anschlagstoß**
+  - **Industrie-Szenario:** Hybride Modellierung einer pneumatisch getakteten Sortier- und Vorschubeinheit: Ein Pneumatikzylinder schiebt Werkstücke getaktet gegen einen festen Endanschlag.
+  - **Kontinuierliche Druck- & Bewegungsgleichungen:** Kammerdrücke der beiden Zylinderseiten (Drossel- und Ventilgleichungen) gekoppelt mit der Translationsbewegung des Kolbens samt Lastmasse ($m \ddot{x} = p_1 A_1 - p_2 A_2 - F_{\text{Reib}}$).
+  - **Zero-Crossing Bisektion:** Schaltfunktion für den Kontakt mit dem mechanischen Anschlag: $z(\mathbf{x}) = x_{\text{Kolben}} - x_{\text{Anschlag}}$. Präzise Nullstellen-Eingrenzung auf $|z| < 10^{-6}\,\text{m}$ zur Vermeidung unphysikalischer Durchdringung.
+  - **Zeno-Vermeidung & Haftreibung:** Elastisch-plastischer Stoß (Stoßzahl $e = 0{,}3$). Fällt die Stoß-Relativgeschwindigkeit unter $\epsilon_v = 0{,}01\,\text{m/s}$, schaltet der Automat in den Zustand „Endlagenkontakt“ mit Coulomb-Haftreibung um (Chattering-Vermeidung).
+  - **Visualisierung:** WPF Canvas mit animiertem Pneumatikzylinder und ScottPlot-Diagramm der Druckverläufe und Anschlagskräfte.
+
+- **Track B (Simulation Game): Flipperautomat: Pinball Bumper & Pachinko-Physik**
+  - **Game-Szenario:** Hybride Mehrkörpermechanik auf einem geneigten Pinball-Spielfeld ($g_{\text{eff}} = g \cdot \sin \alpha$).
+  - **Hindernisse & Bumper:** Feste Begrenzungswände, elastische Bumper (Kreise mit energetischem Extra-Kick $e = 1{,}2$) und geneigte Führungsrampen.
+  - **Zero-Crossing Wurzelsuche:** Bisektionssuche für Kreis- und Linienkontakte ($z_{\text{Bumper}}(\mathbf{x}) = \|\mathbf{p}_{\text{Kugel}} - \mathbf{p}_{\text{Bumper}}\| - (R_{\text{Kugel}} + R_{\text{Bumper}})$) zur absoluten Vermeidung von Tunneling bei hohen Geschwindigkeiten.
+  - **Zeno-Vermeidung auf Rampen:** Detektion minimaler Stoßamplituden und sichere Umschaltung in den kontinuierlichen Rollmodus mit Roll- und Haftreibung.
+  - **Interaktiver Flipperfinger:** Betätigung per Tastatur: Rotierender Hebel mit Winkelgeschwindigkeit $\omega$, der der Kugel beim Schlag zusätzlichen Impuls verleiht.
+
+- **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
   - [3 P.] Robuste Zero-Crossing Bisektions-Routine ohne Tunneling bei hohen Geschwindigkeiten.
-  - [3 P.] Korrekte Impuls- und Reflexionsmechanik an schrägen Wänden und aktiven Bumpern.
-  - [2 P.] Zeno-Vermeidung mit sicherem Übergang in den Rollzustand.
+  - [3 P.] Korrekte Impuls- und Reflexionsmechanik an schrägen Wänden und aktiven Bumpern bzw. Anschlägen.
+  - [2 P.] Zeno-Vermeidung mit sicherem Übergang in den Ruhe- bzw. Rollzustand.
   - [2 P.] Flüssige interaktive Visualisierung (WPF Canvas oder SharpGL).
 
 ---

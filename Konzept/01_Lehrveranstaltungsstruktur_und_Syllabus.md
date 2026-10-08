@@ -25,10 +25,10 @@
    - 2.3 Scaffolding: Vom In-Class-Sprint zur autonomen Homework Extension
    - 2.4 Modernes Software-Engineering: Pair Programming & Vibe Coding mit KI-Unterstützung
    - 2.5 Gezielte Online-Recherche & Information Retrieval im Ingenieurstudium
-   - 2.6 Themen-Mix: Ernsthafter Ingenieursalltag & unterhaltsame Simulationsspiele („Die Mischung macht's!“)
+   - 2.6 Themen-Duo & Wahlmodell: „Pick your Track – Industrie vs. Gaming“
    - 2.7 Das Prinzip der strikten chronologischen Kausalität
 3. [Mapping der 12 Kapitel auf 10 Präsenztermine](#3-mapping-der-12-kapitel-auf-10-präsenztermine)
-   - 3.1 Semester-Übersichtsmatrix (Kausalität, Werkzeuge, Themen-Duo & Assessments)
+   - 3.1 Semester-Übersichtsmatrix (Kausalität, Werkzeuge, Wahlmodell & Assessments)
    - 3.2 Detaillierte Steckbriefe der Termine T01 bis T10
 4. [Ablaufstruktur eines 150-Minuten-Präsenztermins](#4-ablaufstruktur-eines-150-minuten-präsenztermins)
    - 4.1 Die 4-Phasen-Taktung
@@ -79,7 +79,7 @@ Die Lehrveranstaltung ist mit **3 ECTS-Punkten** (entsprechend einem Gesamt-Work
 | :--- | :--- | :---: | :---: |
 | **Präsenzlehre (ILV)** | 10 Termine à 150 Minuten (inkl. Kurzpausen & Laborbetreuung) | **25,0 h** | 33,3 % |
 | **Vor- & Nachbereitung** | Vorbereitung der Termine, Studium von Skriptum, Notizen & Online-Dokus | **10,0 h** | 13,3 % |
-| **Übungsmeilensteine & Labor** | 4 vertiefende Übungsmeilensteine / Homework Extensions (je 3,75 h) | **15,0 h** | 20,0 % |
+| **Übungsmeilensteine & Labor** | 4 vertiefende Übungsmeilensteine / Extensions (je 3,75 h im gewählten Track A oder B) | **15,0 h** | 20,0 % |
 | **Moodle-Assessments** | 3 formativ/summative Moodle-Tests (Vorbereitung & Durchführung) | **5,0 h** | 6,7 % |
 | **Semesterprojekt & Kolloquium** | Entwicklung des Digitalen Zwillings im 2er-Team & Oral Defense (20 h pro Person) | **20,0 h** | 26,7 % |
 | **Gesamtsumme** | **1 ECTS = 25 Echtstunden** | **75,0 h** | **100,0 %** |
@@ -139,13 +139,19 @@ Das selbstständige Lösen mechatronischer Programmieraufgaben erfordert profess
    - **Thread-Sicherheit:** Wird unerlaubt aus Worker-Threads auf UI-Elemente zugegriffen?
    - **Einheiten-Konsistenz:** Rechnet der gefundene Code in Radiant oder Grad, in SI-Einheiten oder empirischen US-Units?
 
-### 2.6 Themen-Mix: Ernsthafter Ingenieursalltag & unterhaltsame Simulationsspiele („Die Mischung macht's!“)
+### 2.6 Themen-Duo & Wahlmodell: „Pick your Track – Industrie vs. Gaming“
 
 Ein wesentliches didaktisches Prinzip dieser Lehrveranstaltung ist das **duale Aufgaben- und Motivationskonzept**:
-- **Die ingenieurtechnische Säule (Ernsthafter Industriealltag):** Simulation realer industrieller Anlagen (Halbleiter-Kühlkörper, Brückenkräne, DC-Antriebsprüfstände, Taktstraßen-Logistik, VIBN). Sie vermittelt Normgerechtheit, SI-Einheiten, Toleranzen und industrielle Relevanz.
-- **Die spielerische Säule (Simulationsspiele & Arcade-Physik):** Gameloops, Arcade-Physik, Partikelsysteme und interaktive Spielmechaniken (Artillery-Wurfspiele, Sand-/Lava-Pixelwelten, Brückenbau-Games à la Poly Bridge, Raketen-Balancer, Flipper-Kollisionen). Sie bietet sofortiges visuelles Feedback, macht Spaß, belohnt spielerisches Experimentieren und fördert die Intuition für dynamische Zusammenhänge.
+- **Track A: Ernsthafter Industriealltag (Ingenieurtechnische Säule):** Simulation realer industrieller Anlagen (Halbleiter-Kühlkörper, Hallenkräne, DC-Antriebsprüfstände, Taktstraßen-Logistik, Virtuelle Inbetriebnahme). Sie vermittelt Normgerechtheit, SI-Einheiten, Fertigungstoleranzen und industrielle Relevanz für angehende Automatisierungsingenieure.
+- **Track B: Simulationsspiele & Arcade-Physik (Spielerische Säule):** Gameloops, Arcade-Physik, Partikelsysteme und interaktive Spielmechaniken (Artillery-Wurfspiele, Sand-/Lava-Pixelwelten, 2D-Brückenbau à la Poly Bridge, Raketen-Balancer, Flipper-Kollisionen). Sie bietet sofortiges visuelles Feedback, macht Spaß, belohnt spielerisches Experimentieren und fördert die Intuition für dynamische Zusammenhänge.
 
-*„Die Mischung macht's!“* – Beide Welten nutzen exakt dieselben mathematischen und softwaretechnischen Werkzeuge: Ein Feder-Dämpfer-System beschreibt sowohl das Fahrwerk eines Fahrerlosen Transportsystems (AGV) als auch das Sprungverhalten eines Arcade-Charakters.
+> [!IMPORTANT]
+> **Das verbindliche Wahlmodell („Pick your Track: Industrie vs. Gaming“):**  
+> Die Studierenden müssen **NICHT** beide Aufgaben bearbeiten!  
+> - Jedes 2er-Team wählt pro Termin bzw. Meilenstein **GENAU EINE** der beiden Aufgaben: **Track A (Industrie)** ODER **Track B (Game)**.  
+> - **Identischer Workload & identische Lernergebnisse:** Beide Tracks basieren auf exakt denselben mathematischen Grundlagen, numerischen Algorithmen und C#-Softwarearchitekturen (z. B. FDM-Diffusionsmatrix bei Kühlkörper vs. Lavafeld; Math.NET-Cholesky-LGS bei Portalkran vs. einstürzender Brücke; RK4 bei DC-Motor vs. Raketenlandung).  
+> - Beide Tracks führen zu denselben Intended Learning Outcomes (ILOs) und werden nach exakt derselben Bewertungsrubrik beurteilt.  
+> - Teams dürfen ihren Track je nach persönlicher Motivation pro Termin neu wählen oder das Semester über in einer Schiene bleiben.
 
 ### 2.7 Das Prinzip der strikten chronologischen Kausalität
 
@@ -155,7 +161,9 @@ Um Frustration und Wissenslücken zu verhindern, unterliegt das gesamte Curricul
   - *Vor Termin 04:* **Kein ScottPlot!** Diagramme werden davor entweder auf der Konsole tabellarisch ausgegeben oder elementar in Canvas/Pixel gezeichnet.
   - *Vor Termin 05:* **Kein SharpGL / 3D!** Bis dahin bewegen wir uns ausschließlich im 2D-Raum.
   - *Vor Termin 06:* **Kein `Parallel.For` oder Multithreading!** Alle Berechnungen laufen bis dahin strikt deterministisch auf einem Thread.
-  - *Vor Termin 07:* **Keine Steifigkeitsmatrizen, kein Math.NET Cholesky!** Statische Gleichgewichtssysteme werden bis T06 nur über analytische Gleichungen (3 Knoten) oder Vektorgeometrie behandelt.
+  - *Vor Termin 07:* **Keine Steifigkeitsmatrizen, kein Math.NET Cholesky, KEINE FEM-Statik-Berechnung!**  
+    In **Termin 03 (Kapitel 03)** ist die Modellierung **rein geometrisch und visuell** (WPF Canvas, affine Welt-zu-Screen-Transformation, Bounding Box, DIN-Bemaßung, Vektorpfeile für fest vorgegebene Kräfte, interaktives Dragging von Geometriepunkten per Maus). In Termin 03 wird **keine Fachwerk-Statik berechnet**, **kein Gleichungssystem gelöst** und **kein Cholesky verwendet** – alle Kraftwerte sind fest vorgegeben!  
+    Erst in **Termin 07 (Kapitel 07)** wird die echte **FEM-Statik-Engine** (Math.NET Numerics, Steifigkeitsmatrix $\mathbf{K}$, Cholesky-Zerlegung) gebaut und erweckt das geometrische Modell aus Termin 03 zum Leben (Knotenverschiebung $\mathbf{u} = \mathbf{K}^{-1} \mathbf{f}$, elastische Stabverformung, Überlastungsanzeige und Stabbruch).
   - *Vor Termin 08:* **Keine S-Functions und keine ODE-Solver höherer Ordnung (Heun, RK4)!** Bis dahin wird ausschließlich der explizite Euler-Schritt 1. Ordnung verwendet.
   - *Vor Termin 09:* **Keine diskreten Ereigniswarteschlangen (DES) und kein Box-Muller-Zufall!**
   - *Vor Termin 10:* **Keine Bisektion-Zero-Crossing-Detektion und keine FMI/FMU Co-Simulation!**
@@ -168,17 +176,21 @@ Die 12 Kapitel des Repositories (`00_Prolog` bis `11_Epilog`) gliedern sich in z
 
 Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführung (T01) sowie Hybride Dynamik und VIBN-Epilog (T10) zusammengeführt.
 
-### 3.1 Semester-Übersichtsmatrix
+### 3.1 Semester-Übersichtsmatrix (Kausalität, Werkzeuge, Wahlmodell & Assessments)
 
-| Termin | Thema & Fokus | Kapitel im Repo | Vorkenntnisse (Kausaler Stand) | Eingeführte Werkzeuge & Pakete | Industrie-Szenario | Arcade- / Gaming-Pendant | Assessments & Meilensteine |
+> [!NOTE]
+> **Wahlmodell („Pick your Track: Industrie vs. Gaming“):**  
+> Die Studierenden müssen **NICHT** beide Aufgaben bearbeiten! Jedes 2er-Team wählt pro Termin **GENAU EINE** der beiden Aufgaben (**Track A: Industrie ODER Track B: Game**). Beide Tracks führen zu denselben intendierten Lernergebnissen (ILOs), nutzen identische mathematisch-numerische Werkzeuge und erfordern denselben Arbeitsaufwand.
+
+| Termin | Thema & Fokus | Kapitel im Repo | Vorkenntnisse (Kausaler Stand) | Eingeführte Werkzeuge & Pakete | Track A: Industrie-Szenario *(Wahl: A ODER B)* | Track B: Arcade- / Gaming-Pendant *(Wahl: A ODER B)* | Assessments & Meilensteine |
 | :---: | :--- | :---: | :--- | :--- | :--- | :--- | :--- |
 | **T01** | **Einführung & Modellbegriff** | `00_Prolog`<br>`01_Einführung` | C#-Grundlagen, Schulmathematik | .NET 8 SDK, Console, MSTest, Git | Thermisches Sensormodell / Zylinderdämpfung | **Artillery 1D/2D:** Konsolen-Kanonenspiel mit Euler-Luftreibung | Setup-Check, Teambildung |
 | **T02** | **2D-Pixelgrafik & FDM-Feld** | `02_Visualisierung_2D_Pixel` | C#-Arrays, Konsole, Euler 1. Ord. | WPF `Image`, `WriteableBitmap`, `unsafe` Pointer, Stride | PCB-Leiterplatten-Hotspot (Wärmeableitung) | **Falling Sand & Doom Fire:** Interaktive Lava-/Sand-Pixelwelt | **Labor-MS 1 Ausgabe** (2D-Simulation) |
-| **T03** | **2D-Vektorgrafik & Transformation** | `03_Visualisierung_2D_Vektor` | WPF-Basics, `WriteableBitmap`, 2D-FDM | WPF `Canvas`, `DrawingVisual`, Uniform Scaling, BoundingBox | Hallenkran-Träger mit Kräften & DIN-Bemaßung | **Poly Bridge Mini:** Interaktiver 2D-Brückenbauer mit Lasttest | Vorbereitung Labor-MS 1 |
+| **T03** | **2D-Vektorgrafik & Transformation**<br>*(Rein geometrisch & visuell)* | `03_Visualisierung_2D_Vektor` | WPF-Basics, `WriteableBitmap`, Vektorgeometrie | WPF `Canvas`, `DrawingVisual`, Uniform Scaling, BoundingBox | Hallenkran-Träger: Rein geometrischer Canvas-Viewer mit DIN-Bemaßung, festen Kraftpfeilen & Knoten-Dragging *(keine Statik!)* | **Poly Bridge CAD:** Interaktiver 2D-Brücken-Geometrie-Editor (Knoten setzen/verschieben, feste Lastvektoren; *Statik/Bruch erst in T07!*) | Vorbereitung Labor-MS 1 |
 | **T04** | **Echtzeit-Telemetrie & Graphen** | `04_Visualisierung_2D_Diagramme` | WPF Canvas, Pixel, Vektoren | **ScottPlot 5**, `CircularBuffer`, MVVM Toolkit, **MSAGL** | Industrie-4.0-Leitstand: 1-kHz-Vibrationsmonitoring | **Retro Space-Lander HUD:** Flugbahn-Plot & Welford-Statistik | **Moodle-Test 1** (Kap 01–04)<br>**Labor-MS 1 Abgabe** |
 | **T05** | **3D-OpenGL & Szenengraphen** | `05_Visualisierung_3D_OpenGL` | WPF MVVM, ScottPlot 5, Canvas | **SharpGL.WPF**, OrbitCamera, Transformations-Hierarchie | SCARA-Roboterarm (Vorwärtskinematik) | **3D Arcade Crane:** Jahrmarkt-Greifautomat mit Box-Kollision | **Projekt-Themenpool offen**<br>**Labor-MS 2 Ausgabe** |
 | **T06** | **Multithreading & TPL** | `06_Multithreading` | 3D-OpenGL, ScottPlot 5, WPF | **Task Parallel Library (TPL)**, `Parallel.For`, `IProgress<T>` | Parallele Toleranzanalyse eines Getriebes | **100.000 Boids:** Massive Schwarm-Schlacht (Multi-Core 60 FPS) | **Projekt-Kickoff & Exposé** |
-| **T07** | **Statische Systeme & Cholesky** | `07_Statische_Modelle` | TPL Multithreading, 2D/3D-Grafik | **Math.NET Numerics**, FEM-Steifigkeitsmatrix $\mathbf{K}$, Cholesky | FEM-Verformung schwerer Portalkran-Fachwerke | **Destructible Truss:** Einsturzsimulation bei Stabüberlastung | **Moodle-Test 2** (Kap 05–07)<br>**Labor-MS 2 Abgabe**<br>**Labor-MS 3 Ausgabe** |
+| **T07** | **Statische Systeme & Cholesky**<br>*(Erweckt T03 zum Leben)* | `07_Statische_Modelle` | TPL Multithreading, 2D/3D-Grafik | **Math.NET Numerics**, FEM-Steifigkeitsmatrix $\mathbf{K}$, Cholesky | FEM-Verformung schwerer Portalkran-Fachwerke *(erweckt T03-Geometrie mit echter Cholesky-Statik)* | **Destructible Truss / Poly Bridge Physik:** Einsturz & Stabbruch durch echte Math.NET-Cholesky-LGS-Lösung auf T03-Modell | **Moodle-Test 2** (Kap 05–07)<br>**Labor-MS 2 Abgabe**<br>**Labor-MS 3 Ausgabe** |
 | **T08** | **Kontinuierliche Dynamik & ODEs** | `08_Dynamische_Modelle_Kontinuierlich` | Math.NET, TPL, ScottPlot 5 | **S-Functions**, **Heun & RK4**, Anti-Windup Clamping | Geregelter DC-Servomotor mit Strombegrenzung | **Inverted Pendulum Balancer:** SpaceX-Booster-Landegame | **Projekt-Meilenstein M1** (Solver & MSTests) |
 | **T09** | **Diskrete Systeme & Monte-Carlo** | `09_Dynamische_Modelle_Diskret` | RK4 Solver, S-Functions, TPL | `PriorityQueue`, Box-Muller, **Welford-Akkumulator** | M/M/c-Warteschlange: Automobil-Taktstraße | **Factory Tycoon:** Fast-Food-Rush mit Kundenansturm | **Labor-MS 3 Abgabe**<br>**Labor-MS 4 Ausgabe**<br>**Projekt-Meilenstein M2** (GUI) |
 | **T10** | **Hybride Dynamik, VIBN & Kolloquium** | `10_Dynamische_Modelle_Hybrid`<br>`11_Epilog` | Vollständiger Kurs-Stack | **Zero-Crossing Bisektion**, Sticking-Schwelle, FMI/FMU, VIBN | VIBN einer Sortieranlage mit SPS-Kopplung | **Pinball Wizard:** Flipper-Physik ohne Tunneling | **Moodle-Test 3** (Kap 08–10)<br>**Labor-MS 4 Abgabe**<br>**Projekt-Endabgabe & Pitch** |
@@ -200,16 +212,19 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Verstehen:* Taxonomie technischer Modelle (statisch vs. dynamisch, kontinuierlich vs. diskret) und Grieves-Zwillingskonzept.
   - *Anwenden:* Einen einfachen Euler-1.-Ordnung-Zeitschritt ($x_{k+1} = x_k + \Delta t \cdot v_k$) in C# implementieren.
   - *Evaluieren:* Den numerischen Diskretisierungsfehler gegenüber der geschlossenen analytischen Lösung im Unit Test quantifizieren.
-- **Themen-Duo („Die Mischung macht's!“):**
-  - *Industrie-Alltag:* Thermisches Abkühlmodell eines Pt100-Temperatursensors / Dämpfung eines Pneumatikzylinders.
-  - *Gaming / Arcade:* **„Artillery 1D/2D – Kanonenspiel im Terminal“:** Schiefer Wurf unter Gravitation und Newton-Luftwiderstand. Der Spieler gibt Startwinkel und Geschwindigkeit ein, um ein Ziel in Entfernung $d$ zu treffen.
+- **Themen-Duo – Wahlmodell „Pick your Track“ (Track A ODER Track B):**
+  > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide Aufgaben bearbeiten! Beide Tracks führen zu denselben Lernergebnissen und erfordern denselben Arbeitsaufwand.
+  - *Track A (Industrie):* Thermisches Abkühlmodell eines Pt100-Temperatursensors / Dämpfung eines Pneumatikzylinders.
+  - *Track B (Gaming / Arcade):* **„Artillery 1D/2D – Kanonenspiel im Terminal“:** Schiefer Wurf unter Gravitation und Newton-Luftwiderstand. Der Spieler gibt Startwinkel und Geschwindigkeit ein, um ein Ziel in Entfernung $d$ zu treffen.
 - **Theorie-Impuls & Live-Coding (45 min):**
   - Das Modell nach George Box; Digital Model vs. Digital Shadow vs. Digital Twin.
   - Mathematische Herleitung: Vom Differenzenquotienten $\frac{dx}{dt} \approx \frac{x_{k+1}-x_k}{\Delta t}$ zum expliziten Euler-Schritt.
   - Live-Coding: Aufsetzen einer Clean Solution `SystemSimulationWorkshop.sln`, Trennung in `Simulation.Core` (Klassenbibliothek), `Simulation.ConsoleApp` und `Simulation.Tests` (MSTest).
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
-  - **Sprint-Aufgabe:** Implementierung des Euler-Schritts für das 2D-Wurfmodell mit Luftwiderstand $F_w = \frac{1}{2} \rho c_w A v^2$. Konsolenausgabe von Flugbahn, Reichweite und Trefferabfrage auf Zielplattform.
-  - Unit-Test: Automatisierter Vergleich mit dem luftwiderstandsfreien analytischen Parabelwurf für $c_w = 0$.
+  - **Sprint-Aufgabe (im gewählten Track A oder B):**
+    - *Track A:* Implementierung des Euler-Schritts für das thermische Sensor-Abkühlverhalten bzw. Zylinderdämpfung mit automatisierter MSTest-Validierung.
+    - *Track B:* Implementierung des Euler-Schritts für das 2D-Wurfmodell mit Luftwiderstand $F_w = \frac{1}{2} \rho c_w A v^2$. Konsolenausgabe von Flugbahn, Reichweite und Trefferabfrage auf Zielplattform.
+  - Unit-Test (für beide Tracks): Automatisierter Vergleich mit der analytischen Lösung für den fehlerfreien Grenzfall.
 - **Micro-Review & Reflexion (30 min):**
   - Plenumsdiskussion: Warum weicht der Euler-Schritt bei zu großem $\Delta t$ dramatisch von der Physik ab?
 - **Online-Recherche-Tipp:**
@@ -232,54 +247,64 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Verstehen:* Speicherlinearisierung (Row-Major, Stride-Padding) und `Bgr32`-Farbkanäle erklären.
   - *Anwenden:* Allokationsfreies Direct-Pixel-Writing via `WriteableBitmap.Lock()`, `BackBuffer` und Zeigerarithmetik (`unsafe uint*`) umsetzen.
   - *Erschaffen:* Eine 2D-Wärmeleitungssimulation (parabolische PDE) via FDM-5-Punkt-Stern unter Beachtung der Von-Neumann-Stabilitätsgrenze ($s \le 0{,}25$) programmieren.
-- **Themen-Duo („Die Mischung macht's!“):**
-  - *Industrie-Alltag:* Thermischer Hotspot auf einer Leistungselektronik-Leiterplatte (PCB) mit Kühlkörperzone.
-  - *Gaming / Arcade:* **„Falling Sand & Retro Doom Fire“:** Interaktive Simulation von herabfallenden Sandkörnern oder einer 90er-Jahre-Lava-Pixelwelt im Rohspeicher.
+- **Themen-Duo – Wahlmodell „Pick your Track“ (Track A ODER Track B):**
+  > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Es müssen **NICHT** beide bearbeitet werden!
+  - *Track A (Industrie):* Thermischer Hotspot auf einer Leistungselektronik-Leiterplatte (PCB) mit Kühlkörperzone.
+  - *Track B (Gaming / Arcade):* **„Falling Sand & Retro Doom Fire“:** Interaktive Simulation von herabfallenden Sandkörnern oder einer 90er-Jahre-Lava-Pixelwelt im Rohspeicher.
 - **Theorie-Impuls & Live-Coding (45 min):**
   - Warum der WPF-Visual-Tree bei $100.000$ Elementen kollabiert.
   - Zeigerarithmetik in C#: `IntPtr`, `uint*`, Bit-Shifting `(r << 16) | (g << 8) | b`.
   - Mathematische Herleitung: Laplace-Operator $\Delta T = \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2}$, 5-Punkt-Stern-Diskretisierung und Stabilitätsbedingung $s = \frac{a \cdot \Delta t}{\Delta x^2} \le 0{,}25$.
   - Live-Coding: Look-Up-Table (LUT) Farbtabellen-Generator (Kaltes Blau $\to$ Grün $\to$ Heißes Rot).
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
-  - **Sprint-Aufgabe:** Erstellung eines WPF-Fensters mit `Image`-Control ($128 \times 128$ Pixel). Berechnung der FDM-Diffusionsschleife und Rendern im `WriteableBitmap`-BackBuffer.
+  - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
+    - Erstellung eines WPF-Fensters mit `Image`-Control ($128 \times 128$ Pixel). Berechnung der FDM-Diffusionsschleife (PCB-Kühlkörper in Track A oder Sand/Lava in Track B) und Rendern im `WriteableBitmap`-BackBuffer.
 - **Micro-Review & Reflexion (30 min):**
   - Live-Stresstest: Gezielte Erhöhung von $\Delta t$ über die Stabilitätsgrenze ($s = 0{,}28$) ➔ Demonstration der numerischen Gitterexplosion im Plenum.
 - **Online-Recherche-Tipp:**
   - *Suchbegriffe:* `"WriteableBitmap Lock BackBuffer unsafe C#" site:learn.microsoft.com`, `"Von Neumann stability heat equation 2D"`.
   - *Doku-Link:* [Microsoft Learn: WriteableBitmap-Klasse](https://learn.microsoft.com/de-de/dotnet/api/system.windows.media.imaging.writeablebitmap)
 - **Synthese & Ausblick (15 min):**
-  - **Ausgabe Labor-Meilenstein 1 (Teil A):** FDM-Kühlkörper-Simulation mit Neumann-Randbedingungen.
+  - **Ausgabe Labor-Meilenstein 1 (Teil A, Wahl Track A oder Track B):** FDM-Kühlkörper-Simulation mit Neumann-Randbedingungen ODER zelluläre Waldbrand-/Lavasimulation.
 
 ---
 
-#### Termin T03: 2D-Vektorgrafik & Koordinatentransformation
+#### Termin T03: 2D-Vektorgrafik & Koordinatentransformation (Rein geometrisch & visuell)
 - **Kapitel:** [03_Visualisierung_2D_Vektor](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/03_Visualisierung_2D_Vektor/Folien.md)
 - **Kausale Vorkenntnisse (Tabu-Grenze):**
-  - *Erlaubt:* Pixelgrafik aus T02, Vektorrechnung, analytische Statik (3-Knoten-Gleichgewicht).
-  - *Neu eingeführt:* WPF `Canvas`, affine Transformation (Welt $\to$ Screen), `DrawingVisual`, Uniform Scaling, BoundingBox.
-  - *Strikte Tabus:* **Keine Steifigkeitsmatrizen / Math.NET Cholesky (erst in T07!), kein ScottPlot, kein 3D!**
+  - *Erlaubt:* Pixelgrafik aus T02, Elementargeometrie (Vektoren, Punkte, Strecken).
+  - *Neu eingeführt:* WPF `Canvas`, affine Transformation (Welt $\to$ Screen), `DrawingVisual`, Uniform Scaling, BoundingBox, interaktives Dragging von Geometriepunkten per Maus.
+  - *Strikte Tabus:* **REIN GEOMETRISCH & VISUELL! Keine Fachwerk-Statik, kein Gleichungssystem (LGS), kein Math.NET Cholesky (erst in T07!), kein ScottPlot, kein 3D!** Alle Kräfte und Lasten sind rein statische, fest vorgegebene Vektorwerte zur Visualisierung.
 - **Verwendete Werkzeuge & Pakete:**
-  - WPF Vektorgrafik (`Canvas`, `Line`, `Path`, `DrawingVisual`, `MatrixTransform`).
+  - WPF Vektorgrafik (`Canvas`, `Line`, `Path`, `DrawingVisual`, `MatrixTransform`, Maus-Events).
 - **Lernziele (Bloom):**
-  - *Anwenden:* Affine 2D-Koordinatentransformation (Weltkoordinaten mit $+Y$ oben $\to$ Bildschirmkoordinaten mit $+Y$ unten) unter striktem Erhalt des Seitenverhältnisses programmieren.
-  - *Analysieren:* Performanzunterschiede zwischen WPF `Shape`-Objekten und der `DrawingVisual`/`DrawingContext`-Pipeline analysieren.
-  - *Erschaffen:* Gerichtete Kraftpfeile mit orthonormalen Spitzen und dynamischer Bemaßung zeichnen.
-- **Themen-Duo („Die Mischung macht's!“):**
-  - *Industrie-Alltag:* Hallenkran-Ausleger: Analytische Berechnung eines 3-Knoten-Fachwerks mit Zug-/Druck-Farbkodierung und DIN-Bemaßung.
-  - *Gaming / Arcade:* **„Poly Bridge Mini – Der Brückenbau-Bruchtest“:** Interaktives Setzen von Brückenstäben per Mausklick; bei Überlastung färben sich die Stäbe rot und brechen durch.
+  - *Verstehen:* Den mathematischen Zusammenhang zwischen Weltkoordinaten (kartesisches System, $+Y$ oben) und Bildschirmkoordinaten (Pixelraster, $+Y$ unten) bei verzerrungsfreier Skalierung (Bounding Box, Uniform Scaling) erklären.
+  - *Anwenden:* Affine 2D-Koordinatentransformation in C#/WPF implementieren und Mausinteraktionen (Dragging von Knotenpunkten, Zoom & Pan) geometrisch umrechnen.
+  - *Erschaffen:* Rein geometrische Vektordarstellungen (Stäbe als Linien, Knoten als Kreise, Kraftpfeile mit orthonormalen Spitzen aus fest vorgegebenen Werten sowie DIN-gerechte Bemaßungslinien) im WPF `Canvas` rendern.
+- **Themen-Duo – Wahlmodell „Pick your Track“ (Track A ODER Track B):**
+  > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide Aufgaben bearbeiten! Beide Tracks vermitteln dieselben geometrisch-visuellen Grundlagen bei identischem Arbeitsaufwand.
+  - *Track A (Industrie):* **„Hallenkran-Träger CAD-Viewer“:** Rein geometrische und maßstäbliche Visualisierung eines Trägerfachwerks auf dem WPF Canvas. Interaktives Verschieben von Trag- und Lastknoten per Maus-Dragging, dynamische DIN-Bemaßung der Trägerabstände und Darstellung fest vorgegebener Lastvektoren (Pfeilgeometrie) – *völlig ohne Statikberechnung*.
+  - *Track B (Gaming / Arcade):* **„Poly Bridge CAD / Brücken-Geometrie-Editor“:** Interaktiver 2D-Geometrie-Editor für Brückenprofile. Stäbe per Mausklick zwischen Rasterpunkten aufspannen, Knoten per Maus verschieben (Dragging), Bounding Box dynamisch nachführen und fest vorgegebene Gewichtskraft-Pfeile visualisieren. *(Wichtig: Die echte physikalische Statikberechnung und der Bruchtest folgen kausal erst in Termin 07!)*
 - **Theorie-Impuls & Live-Coding (45 min):**
   - Mathematische Formulierung: Bounding-Box, Uniform-Scaling $s = \min(s_x, s_y)$, Translation und Zentrierungs-Offset.
   - Orthonormale Pfeilspitzen-Geometrie aus Richtungsvektor $\vec{u}$ und Normalenvektor $\vec{u}^\perp = (-u_y, u_x)^T$.
-  - Live-Coding: Implementierung der Klasse `WorldToScreenTransformer`.
+  - Interaktives Maus-Dragging: Hit-Testing, Erfassen von Knotenpunkten und inverse Screen-zu-Welt-Transformation.
+  - Live-Coding: Implementierung der Klasse `WorldToScreenTransformer` und Zeichnen maßstäblicher Pfeile und DIN-Bemaßungen auf einem WPF `Canvas`.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
-  - **Sprint-Aufgabe:** Konstruktion eines interaktiven Canvas-Viewers für das Dreiecksfachwerk. Bei Fenstergrößenänderung skaliert die Struktur verzerrungsfrei. Mausrad-Zoom und Drag-Pan.
+  - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
+    - Konstruktion eines interaktiven Canvas-Viewers für das Träger-/Brückengebilde (Knoten, Stäbe, fest vorgegebene Lastpfeile).
+    - Verzerrungsfreie Skalierung bei Fensteränderung (Uniform Scaling, Bounding Box).
+    - Implementierung von interaktivem Maus-Dragging: Beim Verschieben eines Knotens passen sich die angrenzenden Stäbe, Bounding Box und Maßketten in Echtzeit an – *rein geometrisch und visuell, ohne Statik- oder LGS-Löser!*
 - **Micro-Review & Reflexion (30 min):**
-  - Peer-Review: Überprüfung der Pfeilspitzen-Orthonormalität und Fehlerdiagnose bei nicht-quadratischen Fenstern.
+  - Peer-Review: Überprüfung der Pfeilspitzen-Orthonormalität, der verzerrungsfreien Skalierung und des flüssigen Maus-Draggings bei asymmetrischen Fenstern.
 - **Online-Recherche-Tipp:**
-  - *Suchbegriffe:* `"WPF Canvas Zoom Pan MatrixTransform"`, `"DrawingVisual DrawGeometry vs Shape performance"`.
+  - *Suchbegriffe:* `"WPF Canvas Zoom Pan MatrixTransform"`, `"DrawingVisual DrawGeometry vs Shape performance"`, `"WPF Canvas drag and drop shapes mouse coordinates"`.
   - *Doku-Link:* [Microsoft Learn: Übersicht über Zeichnungen mit DrawingVisual](https://learn.microsoft.com/de-de/dotnet/desktop/wpf/graphics-multimedia/using-drawingvisual-objects)
 - **Synthese & Ausblick (15 min):**
-  - **Vervollständigung Labor-Meilenstein 1 (Teil B):** Kopplung von Vektorpfeilen des Wärmestroms $\vec{q} = -\lambda \nabla T$ mit der Heatmap aus T02.
+  - **Vervollständigung Labor-Meilenstein 1 (Teil B, im gewählten Track):**
+    - *Track A:* Ergänzung der FDM-Kühlkörper-Simulation aus T02 um Wärmestrom-Vektorpfeile $\vec{q} = -\lambda \nabla T$ und Bemaßung.
+    - *Track B:* Ergänzung der Waldbrand-/Lava-Pixelwelt aus T02 um Vektorpfeile für Windrichtung und Flammenfront.
+  - *Kausaler Ausblick auf T07:* Erst in Termin 07 wird dieses rein geometrische Vektormodell durch die Math.NET-Cholesky-FEM-Engine mit echter Statik (elastische Dehnung, reale Knotenkräfte, Bruchtest) zum Leben erweckt.
 
 ---
 
@@ -295,16 +320,18 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Verstehen:* Datenstrukturen für kontinuierliches Daten-Streaming (Ringpuffer) zur Vermeidung von GC-Lags erklären.
   - *Anwenden:* `ScottPlot 5` zur latenzfreien Darstellung von Signalverläufen im MVVM-Muster einbinden.
   - *Evaluieren:* Signalfluss-Netzwerke mittels Microsoft Automatic Graph Layout (`MSAGL`) topologisch anordnen.
-- **Themen-Duo („Die Mischung macht's!“):**
-  - *Industrie-Alltag:* Industrie-4.0-Leitstand: 1-kHz-Vibrationsmonitoring mit Grenzwertüberwachung und Systemzustandsgraph.
-  - *Gaming / Arcade:* **„Retro Space-Lander HUD & Telemetrie-Arcade“:** Live-Diagramme für Flughöhe, Triebwerksschub, Treibstoffverbrauch und Welford-Jitter-Statistik in Echtzeit (60 FPS).
+- **Themen-Duo – Wahlmodell „Pick your Track“ (Track A ODER Track B):**
+  > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide Aufgaben bearbeiten! Beide Tracks führen zu denselben Lernergebnissen bei identischem Workload.
+  - *Track A (Industrie):* **„Industrie-4.0-Leitstand“:** 1-kHz-Vibrationsmonitoring mit Grenzwertüberwachung, allokationsfreiem ScottPlot 5 Signal-Plot und MSAGL-Systemzustandsgraph.
+  - *Track B (Gaming / Arcade):* **„Retro Space-Lander HUD & Telemetrie-Arcade“:** Live-Diagramme für Flughöhe, Triebwerksschub, Treibstoffverbrauch und Welford-Jitter-Statistik in Echtzeit (60 FPS).
 - **Theorie-Impuls & Live-Coding (45 min):**
   - Garbage Collection als Feind industrieller Echtzeit-Dashboards: Vermeidungsstrategien.
   - Ringpuffer-Mathematik: Modulo-Arithmetik vs. Bit-Maskierung bei Zweierpotenzen (`index & (capacity - 1)`).
   - ScottPlot 5 Signal-Plot-Architektur: Allokationsfreies Rendern vorallokierter Arrays.
   - Live-Coding: Aufbau eines WPF-MVVM-Dashboards mit `ObservableProperty` und `DispatcherTimer`.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
-  - **Sprint-Aufgabe:** Ein simulierter Sinus-/Messdatengenerator schreibt kontinuierlich in einen `CircularBuffer<double>`. ScottPlot 5 rendert den Signalverlauf; ein MSAGL-Graph visualisiert die Sensorkette.
+  - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
+    - Ein simulierter Sinus-/Messdatengenerator (Vibration bei Track A bzw. Telemetriedaten bei Track B) schreibt kontinuierlich in einen `CircularBuffer<double>`. ScottPlot 5 rendert den Signalverlauf butterweich; ein MSAGL-Graph visualisiert die Systemtopologie.
 - **Micro-Review & Assessment (30 min):**
   - **Moodle-Test 1 (15 min):** Grundlagen Systemsimulation, Taxonomie, Pixel-Stride, FDM-Stabilität, affine Koordinatentransformation (Kapitel 01–04).
   - 15 min gemeinsame Auswertung und Feedback.
@@ -312,7 +339,7 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Suchbegriffe:* `"ScottPlot 5 WPF quickstart" site:scottplot.net`, `"CommunityToolkit.Mvvm ObservableProperty source generators"`.
   - *Doku-Link:* [ScottPlot 5 Cookbook & Documentation](https://scottplot.net/cookbook/5.0/)
 - **Synthese & Ausblick (15 min):**
-  - **Abgabe Labor-Meilenstein 1 (Micro-Defense im Rechnerraum).** Vorschau auf T05: Einstieg in die 3D-Computergrafik mit SharpGL.
+  - **Abgabe Labor-Meilenstein 1 (Micro-Defense im Rechnerraum, im gewählten Track A oder B).** Vorschau auf T05: Einstieg in die 3D-Computergrafik mit SharpGL.
 
 ---
 
@@ -328,16 +355,18 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Verstehen:* Die 3D-Grafikpipeline (Model-View-Projection), Tiefenpufferung (`glEnable(GL_DEPTH_TEST)`) und Kugelkoordinaten.
   - *Anwenden:* Einen hierarchischen Szenengraphen mit relativen Transformationsmatrizen (`glPushMatrix`, `glPopMatrix`) implementieren.
   - *Erschaffen:* Die Vorwärtskinematik eines mechatronischen Roboterarms (SCARA / Portal) im 3D-Raum visualisieren.
-- **Themen-Duo („Die Mischung macht's!“):**
-  - *Industrie-Alltag:* Digitaler Zwilling eines 3-Achs-Industrieroboters mit Gelenkwinkeln und TCP-Trajektorie (Tool Center Point).
-  - *Gaming / Arcade:* **„3D Arcade Claw Machine (Jahrmarkt-Greifautomat)“:** Interaktives Steuern eines 3D-Seilgreifers mit Tastatur, Orbit-Kamera-Perspektiven und Greifraum-Begrenzung.
+- **Themen-Duo – Wahlmodell „Pick your Track“ (Track A ODER Track B):**
+  > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Es müssen **NICHT** beide bearbeitet werden!
+  - *Track A (Industrie):* **„3D-Industrieroboter Digital Twin“:** Digitaler Zwilling eines 3-Achs-Industrieroboters mit Gelenkwinkeln, hierarchischem Szenengraph und TCP-Trajektorie (Tool Center Point).
+  - *Track B (Gaming / Arcade):* **„3D Arcade Claw Machine (Jahrmarkt-Greifautomat)“:** Interaktives Steuern eines 3D-Seilgreifers mit Tastatur, hierarchischem Ausleger, Orbit-Kamera und Greifraum-Begrenzung.
 - **Theorie-Impuls & Live-Coding (45 min):**
   - Warum 3D für den Digitalen Zwilling? Räumliche Kollisionsprüfung und Ergonomie.
   - Kardanfehlerfreie Kameraführung über Azimut $\theta$, Elevation $\phi$ und Distanz $r$.
   - Der Szenengraph als Composite-Muster: Eltern-Kind-Relationen mechatronischer Baugruppen.
   - Live-Coding: Aufbau einer 3-teiligen Roboterachse mit SharpGL.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
-  - **Sprint-Aufgabe:** Einbinden des SharpGL `OpenGLControl` in ein WPF-Fenster. Erstellen einer Zylinder- und Quadergeometrie via `GeometryFactory`; Bewegen zweier Rotationsachsen über UI-Schieberegler.
+  - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
+    - Einbinden des SharpGL `OpenGLControl` in ein WPF-Fenster. Erstellen einer 3D-Baugruppe via `GeometryFactory`; Bewegen zweier Rotationsachsen über UI-Schieberegler im gewählten Track-Szenario.
 - **Micro-Review & Reflexion (30 min):**
   - Code-Inspection: Warum führt das Weglassen von `glPopMatrix()` zu unkontrollierten Drehungen abhängiger Teile?
 - **Online-Recherche-Tipp:**
@@ -345,7 +374,7 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Doku-Link:* [Khronos OpenGL 3.3 Reference Manual](https://registry.khronos.org/OpenGL-Refpages/gl4/)
 - **Synthese & Ausblick (15 min):**
   - **Veröffentlichung des Semesterprojekt-Themenkatalogs („Digital Twin Challenge“).**
-  - **Ausgabe Labor-Meilenstein 2:** 3D-Kinematik mit integriertem ScottPlot-Telemetrie-Dashboard.
+  - **Ausgabe Labor-Meilenstein 2 (Wahl Track A oder Track B):** 3D-Kinematik mit integriertem ScottPlot-Telemetrie-Dashboard.
 
 ---
 
@@ -361,16 +390,18 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Analysieren:* Race Conditions, Deadlocks und False Sharing in Multi-Core-Simulatoren diagnostizieren.
   - *Anwenden:* Datenparallele Schleifen mit `Parallel.For` und Thread-lokalen Zwischenspeichern realisieren.
   - *Erschaffen:* Strikte Entkopplung von 1-kHz-Physikschleife und 60-Hz-WPF-UI via Background-Task und `Progress<T>`.
-- **Themen-Duo („Die Mischung macht's!“):**
-  - *Industrie-Alltag:* Parallele Monte-Carlo-Toleranzanalyse eines Industriegetriebes (100.000 Bauteil-Varianten zeitgleich gerechnet).
-  - *Gaming / Arcade:* **„100.000 Boids – Die Partikel-Schwarm-Schlacht“:** Flocking-Simulation à la Craig Reynolds. Single-Thread kollabiert bei 12 FPS; mit `Parallel.For` flüssige 60 FPS auf allen CPU-Kernen!
+- **Themen-Duo – Wahlmodell „Pick your Track“ (Track A ODER Track B):**
+  > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide Aufgaben bearbeiten!
+  - *Track A (Industrie):* **„Parallele Getriebe-Toleranzanalyse“:** Parallele Monte-Carlo-Toleranzanalyse eines Industriegetriebes ($100.000$ Bauteil-Varianten zeitgleich auf allen CPU-Kernen gerechnet).
+  - *Track B (Gaming / Arcade):* **„100.000 Boids – Die Partikel-Schwarm-Schlacht“:** Flocking-Simulation à la Craig Reynolds. Single-Thread kollabiert bei 12 FPS; mit `Parallel.For` flüssige 60 FPS auf allen Kernen!
 - **Theorie-Impuls & Live-Coding (45 min):**
   - Das Amdahlsche Gesetz und die Grenzen der Skalierung.
   - Atomare Operationen vs. Sperrmechanismen: `Interlocked.Increment` vs. `lock(obj)`.
   - Das WPF-Dispatcher-Problem: Warum `Dispatcher.Invoke` im Simulationsloop das Programm einfriert.
   - Live-Coding: Benchmark-Vergleich: Serielle vs. parallele Laplace-Feldglättung mit CPU-Kern-Auslastungsanzeige.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
-  - **Sprint-Aufgabe:** Entkopplung einer rechenintensiven Partikelsimulation: Der Solver rechnet asynchron in `Task.Run`; das UI bleibt butterweich bedienbar; ein Not-Aus-Button bricht den Lauf sauber via `CancellationToken` ab.
+  - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
+    - Entkopplung einer rechenintensiven Simulation (Toleranzanalyse bei Track A bzw. Schwarm bei Track B): Der Solver rechnet asynchron in `Task.Run` mit `Parallel.For`; das UI bleibt butterweich bedienbar; ein Not-Aus-Button bricht den Lauf sauber via `CancellationToken` ab.
 - **Micro-Review & Reflexion (30 min):**
   - Live-Code-Review: Aufdecken von Race Conditions in studentischen Zwischenspeicher-Akkumulatoren.
 - **Online-Recherche-Tipp:**
@@ -382,7 +413,7 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 
 ---
 
-#### Termin T07: Statische Systeme: Fachwerke & Cholesky-LGS
+#### Termin T07: Statische Systeme: Fachwerke & Cholesky-LGS (Erweckt T03 zum Leben)
 - **Kapitel:** [07_Statische_Modelle](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/07_Statische_Modelle/Folien.md)
 - **Kausale Vorkenntnisse (Tabu-Grenze):**
   - *Erlaubt:* Vektorgrafik (T03), 3D-OpenGL (T05), Multithreading (T06).
@@ -393,17 +424,19 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 - **Lernziele (Bloom):**
   - *Verstehen:* Das Schnittprinzip an Gelenkknoten, statische Bestimmtheit und das FEM-Modell des elastischen Stabelements ($k_e = \frac{E A}{L}$).
   - *Anwenden:* Elementmatrizen transformieren ($\mathbf{k}_e^{glob} = \mathbf{T}^T \mathbf{k}_e^{loc} \mathbf{T}$) und zur globalen Steifigkeitsmatrix $\mathbf{K}$ assemblieren.
-  - *Erschaffen:* Lösung des Gleichungssystems $\mathbf{K} \cdot \mathbf{u} = \mathbf{f}$ via Cholesky-Faktorisierung und Berechnung der Lagerreaktionen.
-- **Themen-Duo („Die Mischung macht's!“):**
-  - *Industrie-Alltag:* FEM-Verformungsanalyse und Belastungsgrenzen eines schweren Portalkran-Maschinengestells.
-  - *Gaming / Arcade:* **„Destructible Truss / Jenga-Physics Challenge“:** Interaktives Entfernen von tragenden Stäben per Mausklick; Live-Neuberechnung des LGS bis zum statischen Kollaps (Singularität $\det(\mathbf{K}) = 0$).
+  - *Erschaffen:* Die echte FEM-Statik-Engine programmieren: Lösung des Gleichungssystems $\mathbf{K} \cdot \mathbf{u} = \mathbf{f}$ via Cholesky-Faktorisierung und Erweckung des rein geometrischen T03-Modells zum physikalisch verformbaren System.
+- **Themen-Duo – Wahlmodell „Pick your Track“ (Track A ODER Track B):**
+  > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide bearbeiten! Beide Tracks erwecken das in T03 rein geometrisch gezeichnete Modell mit der echten Math.NET-Cholesky-Engine zum Leben.
+  - *Track A (Industrie):* **„Portalkran FEM-Statik-Engine“:** Das in T03 rein geometrisch dargestellte Hallenkran-Trägerwerk erwacht zum Leben: Assemblierung der Steifigkeitsmatrix $\mathbf{K}$, Cholesky-Lösung für Knotenverschiebungen $\mathbf{u}$, Ermittlung realer Stab- und Lagerkräfte sowie farbige Visualisierung elastischer Verformungen (Zug blau, Druck rot).
+  - *Track B (Gaming / Arcade):* **„Destructible Truss / Poly Bridge Physik-Engine“:** Das in T03 als reiner Vektorentwurf gezeichnete Brückenmodell wird mit echter FEM-Statik lebendig: Reale Stabbelastungsberechnung via Cholesky; bei Überschreiten der Bruchspannung ($S \ge S_{\text{krit}}$) bricht der überlastete Stab, das System wird re-assembliert und kollabiert spektakulär!
 - **Theorie-Impuls & Live-Coding (45 min):**
   - Vom Kräftegleichgewicht $\sum \vec{F} = \vec{0}$ zum linearen Gleichungssystem $\mathbf{K} \mathbf{u} = \mathbf{f}$.
   - Einarbeitung der Lagerbedingungen durch Zeilen- und Spaltenkondensation oder Penalty-Ansatz.
   - Numerik: Wann ist $\mathbf{K}$ symmetrisch positiv definit (SPD)? Warum Cholesky doppelt so schnell ist wie LU-Zerlegung.
   - Live-Coding: Aufbau einer Fachwerk-Klasse mit Knoten, Stäben und Math.NET `Matrix<double>`.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
-  - **Sprint-Aufgabe:** Berechnung eines 2D-Trägerfachwerks (5 Knoten, 7 Stäbe). Überhöhte Darstellung der Verformung im Vektor-Canvas aus T03.
+  - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
+    - Kopplung des geometrischen Canvas-Viewers aus T03 mit der neuen Math.NET-Cholesky-Statik-Engine. Berechnung der realen Knotenverschiebungen $\mathbf{u}$ und maßstäblich überhöhte Darstellung der Verformung auf dem Canvas.
 - **Micro-Review & Assessment (30 min):**
   - **Moodle-Test 2 (15 min):** 3D-Computergrafik, Szenengraphen, Multithreading (Race Conditions, TPL), LGS, Cholesky, Konditionszahl (Kapitel 05–07).
   - 15 min gemeinsame Auswertung und Besprechung singulärer Matrizen (Mechanismen).
@@ -411,8 +444,8 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Suchbegriffe:* `"Math.NET Numerics Cholesky solve linear system C#"`, `"Direct stiffness method truss assembly C#"`.
   - *Doku-Link:* [Math.NET Numerics Linear Algebra Documentation](https://numerics.mathdotnet.com/LinearEquations)
 - **Synthese & Ausblick (15 min):**
-  - **Abgabe Labor-Meilenstein 2 (Micro-Defense).**
-  - **Ausgabe Labor-Meilenstein 3:** 3D-Fachwerklöser mit Cholesky-Zerlegung und Spannungs-Farbgradienten.
+  - **Abgabe Labor-Meilenstein 2 (Micro-Defense, im gewählten Track A oder B).**
+  - **Ausgabe Labor-Meilenstein 3 (Wahl Track A oder Track B):** 3D-Fachwerklöser mit Cholesky-Zerlegung und Spannungs-Farbgradienten ODER Poly-Bridge-Bruchsimulator.
 
 ---
 
@@ -428,9 +461,10 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Verstehen:* Zustandsraumdarstellung ($\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}, \mathbf{u}, t)$) und Butcher-Tableaus (Konsistenz- und Konvergenzordnung von Euler, Heun, RK4).
   - *Analysieren:* Schrittweitenstabilität bei steifen Systemen und Integrator-Windup bei Stellgrößenbegrenzung.
   - *Erschaffen:* Ein mechatronisches Closed-Loop-System (DC-Servomotor + PI-Drehzahlregler mit Anti-Windup) in modularer S-Function-Struktur simulieren.
-- **Themen-Duo („Die Mischung macht's!“):**
-  - *Industrie-Alltag:* Drehzahl- und Stromregelung eines permanenterregten DC-Servomotors an einer Werkzeugmaschinen-Vorschubachse.
-  - *Gaming / Arcade:* **„Inverted Pendulum Balancer / Falcon Booster Landing“:** Interaktives Arcade-Spiel: Der Spieler versucht mit den Pfeiltasten eine schwebende Rakete aufrecht zu balancieren – gegen den unbestechlichen RK4-PID-Autopiloten!
+- **Themen-Duo – Wahlmodell „Pick your Track“ (Track A ODER Track B):**
+  > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Es müssen **NICHT** beide bearbeitet werden! Beide Tracks fordern dieselbe ODE-Zustandsraummodellierung und RK4-Integration.
+  - *Track A (Industrie):* Drehzahl- und Stromregelung eines permanenterregten DC-Servomotors an einer Werkzeugmaschinen-Vorschubachse.
+  - *Track B (Gaming / Arcade):* **„Inverted Pendulum Balancer / Falcon Booster Landing“:** Interaktives Arcade-Spiel: Der Spieler versucht mit den Pfeiltasten eine schwebende Rakete aufrecht zu balancieren – gegen den unbestechlichen RK4-PID-Autopiloten!
 - **Theorie-Impuls & Live-Coding (45 min):**
   - Konsistenzordnung im Detail: Lokaler Diskretisierungsfehler $\mathcal{O}(h^{p+1})$ vs. globaler Fehler $\mathcal{O}(h^p)$.
   - Mechatronisches Modell des DC-Motors: Elektrische DGL $\frac{di}{dt} = \frac{1}{L}(u - R i - k_e \omega)$, mechanische DGL $\frac{d\omega}{dt} = \frac{1}{J}(k_m i - d \omega - M_L)$.
@@ -438,7 +472,8 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
     `InitStates()`, `UpdateOutputs()`, `UpdateContinuousStates(dt)`.
   - Anti-Windup durch Clamping: Einfrieren des I-Anteils bei Aktor-Sättigung ($|u| \ge U_{max}$).
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
-  - **Sprint-Aufgabe:** Zusammenschalten von `DCMotorBlock` und `PIDControllerBlock`. Sprungantwort unter Euler vs. RK4 vergleichen und im ScottPlot 5 darstellen.
+  - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
+    - Zusammenschalten von Dynamik-Block und PID-Controller-Block. Sprungantwort unter Euler vs. RK4 vergleichen und im ScottPlot 5 darstellen (DC-Motor bei Track A bzw. Booster-Lageregelung bei Track B).
 - **Micro-Review & Reflexion (30 min):**
   - Live-Experiment: Erhöhung der Last $M_L$ bis zur Motorsättigung ➔ Demonstration des Windup-Effekts mit und ohne Clamping.
 - **Online-Recherche-Tipp:**
@@ -461,9 +496,10 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Verstehen:* Den Unterschied zwischen kontinuierlicher Zeitschrittintegration ($\Delta t$) und sprunghaftem Next-Event-Fortschritt erklären.
   - *Anwenden:* Stochastische Zufallsvariablen für Zwischenankunftszeiten (Exponentialverteilung via Inversion) und Bearbeitungsdauern (Normalverteilung via Box-Muller) generieren.
   - *Erschaffen:* Eine parallele Monte-Carlo-Simulation (TPL aus T06) mit numerisch stabilem Welford-Akkumulator zur Bestimmung von Konfidenzintervallen implementieren.
-- **Themen-Duo („Die Mischung macht's!“):**
-  - *Industrie-Alltag:* M/M/c-Warteschlangensimulation einer automatisierten Automobil-Lackierstraße mit stochastischen Maschinenausfällen (MTBF/MTTR).
-  - *Gaming / Arcade:* **„Factory Tycoon / Fast-Food Rush“:** Ein diskreter Rush-Hour-Simulator: Kunden stürmen die Theke, Warteschlangen wachsen; der Spieler investiert in schnellere Service-Stationen, um den stochastischen Game-Over-Kollaps abzuwenden.
+- **Themen-Duo – Wahlmodell „Pick your Track“ (Track A ODER Track B):**
+  > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Es müssen **NICHT** beide bearbeitet werden! Beide Tracks basieren auf ereignisdiskreten Warteschlangen und stochastischen Monte-Carlo-Analysen.
+  - *Track A (Industrie):* M/M/c-Warteschlangensimulation einer automatisierten Automobil-Lackierstraße mit stochastischen Maschinenausfällen (MTBF/MTTR).
+  - *Track B (Gaming / Arcade):* **„Factory Tycoon / Fast-Food Rush“:** Ein diskreter Rush-Hour-Simulator: Kunden stürmen die Theke, Warteschlangen wachsen; der Spieler investiert in schnellere Service-Stationen, um den stochastischen Game-Over-Kollaps abzuwenden.
 - **Theorie-Impuls & Live-Coding (45 min):**
   - Kontinuierlich vs. Diskret: Zeitschrittsteuerung vs. ereignisbasierter Fortschritt.
   - Erzeugung nicht-uniformer Zufallszahlen: Inversionsmethode $X = -\frac{1}{\lambda} \ln(1 - U)$ und Box-Muller-Transformation.
@@ -471,15 +507,16 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
     $$M_k = M_{k-1} + \frac{x_k - M_{k-1}}{k}, \quad S_k = S_{k-1} + (x_k - M_{k-1})(x_k - M_k)$$
   - Live-Coding: Warteschlangensimulator mit `PriorityQueue` und ScottPlot-Balkendiagramm.
 - **Hands-on Laborphase: In-Class Sprint (60 min):**
-  - **Sprint-Aufgabe:** Simulation einer Fertigungszelle mit Puffergröße $N=5$. Ermittlung der Pufferüberlauf-Wahrscheinlichkeit über $10.000$ Monte-Carlo-Läufe mit paralleler TPL-Berechnung.
+  - **Sprint-Aufgabe (Wahl: Track A ODER Track B):**
+    - Simulation einer Fertigungszelle bzw. Servicestation mit Puffergröße $N=5$. Ermittlung der Pufferüberlauf-Wahrscheinlichkeit über $10.000$ Monte-Carlo-Läufe mit paralleler TPL-Berechnung.
 - **Micro-Review & Reflexion (30 min):**
-  - **Abgabe Labor-Meilenstein 3 (Micro-Defense).**
+  - **Abgabe Labor-Meilenstein 3 (Micro-Defense, im gewählten Track A oder B).**
   - Code-Review der Monte-Carlo-Aggregation: Wurde der Welford-Akkumulator thread-sicher gekapselt?
 - **Online-Recherche-Tipp:**
   - *Suchbegriffe:* `"PriorityQueue C# .NET 8"`, `"Box Muller transform C# normal distribution"`, `"Welford's algorithm online variance calculation"`.
   - *Doku-Link:* [Microsoft Learn: PriorityQueue-Klasse](https://learn.microsoft.com/de-de/dotnet/api/system.collections.generic.priorityqueue-2)
 - **Synthese & Ausblick (15 min):**
-  - **Ausgabe Labor-Meilenstein 4:** Parallele Monte-Carlo-Simulation einer Fertigungszelle.
+  - **Ausgabe Labor-Meilenstein 4 (Wahl Track A oder Track B):** Parallele Monte-Carlo-Simulation einer Fertigungszelle ODER Fast-Food-Tycoon-Logistik.
   - **Projekt-Meilenstein M2 fällig:** Abnahme der GUI-Integration und Echtzeit-Telemetrie der Semesterprojekte.
 
 ---
@@ -494,9 +531,10 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Verstehen:* State Events, Zero-Crossing-Detektion via Vorzeichenwechsel-Bisektion und den Zeno-Effekt mit Sticking-Threshold.
   - *Synthetisieren:* Den ganzheitlichen Bogen vom mathematischen Modell über den Code zum Digitalen Zwilling schlagen (FMI/FMU, Co-Simulation, Virtuelle Inbetriebnahme).
   - *Evaluieren:* Das eigene Semesterprojekt präsentieren, im Fachgespräch („Oral Defense“) verteidigen und Peer-Feedback bewerten.
-- **Themen-Duo („Die Mischung macht's!“):**
-  - *Industrie-Alltag:* Virtuelle Inbetriebnahme (VIBN) einer taktgesteuerten Sortieranlage mit Endanschlägen, Teileverzählung und SPS-Kopplung.
-  - *Gaming / Arcade:* **„Arcade Pinball Wizard / Flipper-Physik“:** Perfekte hybride Ball-Kollisionen an Bumpern und Banden: Bisektion verhindert das Durchtunneln von Hindernissen („Bullet through Paper“); Schwerkraft-Ruhelage dank Sticking-Threshold.
+- **Themen-Duo – Wahlmodell „Pick your Track“ (Track A ODER Track B):**
+  > *Hinweis zum Wahlmodell:* Jedes 2er-Team wählt **GENAU EINE** der beiden Aufgaben (Track A: Industrie **ODER** Track B: Game). Studierende müssen **NICHT** beide Aufgaben bearbeiten!
+  - *Track A (Industrie):* Virtuelle Inbetriebnahme (VIBN) einer taktgesteuerten Sortieranlage mit Endanschlägen, Teileverzählung und SPS-Kopplung.
+  - *Track B (Gaming / Arcade):* **„Arcade Pinball Wizard / Flipper-Physik“:** Perfekte hybride Ball-Kollisionen an Bumpern und Banden: Bisektion verhindert das Durchtunneln von Hindernissen („Bullet through Paper“); Schwerkraft-Ruhelage dank Sticking-Threshold.
 - **Theorie-Impuls: Hybride Systeme & VIBN-Synthese (40 min):**
   - Das Wesen hybrider Dynamik: Stetige Trajektorie trifft auf unstetige Zustandsübergänge (Stöße, Reibschwellen, Ventile).
   - Zero-Crossing-Algorithmus: Detektion des Vorzeichenwechsels einer Indikatorfunktion $g(\mathbf{x}) = 0$ und iterative Intervallhalbierung (Bisektion) bis auf Zeittoleranz $\epsilon_t \le 10^{-6}\,\text{s}$.
@@ -505,7 +543,7 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 - **Moodle-Abschlusstest (20 min):**
   - **Moodle-Test 3:** ODE-Numerik (Heun, RK4, Anti-Windup), Diskrete Simulation (DES, Box-Muller, Welford), Hybride Systeme (Zero-Crossing, Sticking, VIBN) (Kapitel 08–10).
 - **Abschluss-Kolloquium: Projekt-Präsentationen & Live-Demos (80 min):**
-  - **Abgabe Labor-Meilenstein 4.**
+  - **Abgabe Labor-Meilenstein 4 (im gewählten Track A oder B).**
   - **Abschlussprojekt „Digital Twin Challenge“ – Live-Pitches & Oral Defense:** Jedes Team präsentiert in einem straffen **7-Minuten-Pitch** (3 min Folien/Mathematik + 3 min Live-Demo des Zwillings + 1 min Q&A und Ad-hoc-Stresstest durch Dozierende).
 - **Semesterabschluss & Noten-Ausblick (10 min):**
   - Zusammenfassung der Lehrveranstaltung, Feedback-Runde, Verabschiedung.
@@ -537,7 +575,7 @@ gantt
 | :---: | :---: | :---: | :--- | :--- |
 | **Phase 1** | 00:00 – 00:45 | **45 min** | **Theorie-Impuls & Live-Coding** | - Interaktive Folienpräsentation (Problemstellung, mathematische Modellierung, physikalische Gesetze)<br>- Live-Coding durch Dozierenden: Konstruktion des Architekturgerüsts in Visual Studio<br>- Fehler provozieren & live debuggen |
 | *Pause* | *integriert* | *5 min* | *Kurzes Durchatmen / Rechner vorbereiten* | *Puffer für Raumlüftung und Vorbereitung der IDE* |
-| **Phase 2** | 00:45 – 01:45 | **60 min** | **Hands-on Laborphase (In-Class Sprint)** | - Studierende arbeiten in festen 2er-Teams am Laptop<br>- Ausfüllen der vorbereiteten Lücken-Schnittstellen (Scaffolding)<br>- Erreichen des "Minimal Viable Product" (lauffähige Mini-Simulation / Gameloop)<br>- Dozent fungiert als aktiver "Floor Coach" |
+| **Phase 2** | 00:45 – 01:45 | **60 min** | **Hands-on Laborphase (In-Class Sprint)** | - Studierende arbeiten in festen 2er-Teams am Laptop (im gewählten Track: Track A Industrie ODER Track B Game)<br>- Ausfüllen der vorbereiteten Lücken-Schnittstellen (Scaffolding)<br>- Erreichen des "Minimal Viable Product" (lauffähige Mini-Simulation / Gameloop)<br>- Dozent fungiert als aktiver "Floor Coach" |
 | **Phase 3** | 01:45 – 02:15 | **30 min** | **Micro-Review, Assessment & Micro-Defense** | - An Terminen mit Test: 15 min Moodle-MCQ-Test (T04, T07, T10)<br>- An Meilenstein-Terminen: Micro-Defenses (Live-Code-Inspektion & Parameter-Stresstest am Tisch)<br>- Gemeinsame Reflexion im Plenum: Aufdecken von Fehlkonzepten |
 | **Phase 4** | 02:15 – 02:30 | **15 min** | **Synthese & Homework Briefing** | - Zusammenfassung der Kernbotschaft & Online-Recherche-Tipps<br>- Briefing der weiterführenden Homework Extension<br>- Beantwortung offener organisatorischer Fragen |
 
@@ -588,6 +626,10 @@ Da Programmier- und Mathematikfähigkeiten in ILVs variieren, wird das Material 
 Ein zentraler Erfolgsfaktor der Didaktik ist die **Entkopplung von Hürde und Tiefe**:
 - In der **Präsenzzeit** wird die initiale Hürde genommen (Syntaxfehler, Bibliotheksinstallation, Grundgleichungen). Kein Studierender verlässt den Hörsaal mit einem nicht kompilierenden Code.
 - In der **Heimarbeit** vertiefen die Teams das bereits funktionierende Modell eigenständig.
+
+> [!IMPORTANT]
+> **Wahlfreiheit ohne Doppelbelastung:**  
+> Die Studierenden müssen **NICHT** beide Aufgaben bearbeiten! Jedes 2er-Team entscheidet sich pro Thema für **GENAU EINEN** der beiden Tracks (**Track A: Industrie ODER Track B: Game**). Beide Pfade vermitteln dieselben Software- und Numerikkompetenzen bei identischem Workload (3,75 h pro Meilenstein-Extension).
 
 ```mermaid
 flowchart TD
@@ -696,15 +738,26 @@ Das Benotungsschema ist zu 100 % mit dem Dokument `Konzept/03_Benotung_Moodle_Te
 - *Charakteristik:* 10–12 Fragen in 15–20 Minuten; visuelle Fehlerdiagnosen, algorithmische Berechnungsfragen mit Zufallsvariablen, subtile Bug-Identifikation in C#-Snippets.
 
 #### Säule 2: 4 Übungsmeilensteine & Micro-Defenses (30 %)
+
+> [!NOTE]
+> **Wahlmodell („Pick your Track: Industrie vs. Gaming“):**  
+> Die Studierenden müssen **NICHT** beide Aufgaben bearbeiten! Jedes 2er-Team wählt für jeden Meilenstein **GENAU EINE** der beiden Aufgaben (**Track A: Industrie ODER Track B: Game**). Beide Tracks führen zu denselben Lernergebnissen (ILOs), erfordern dieselbe Software-Architektur und besitzen denselben Workload.
+
 - Vier praktische Meilensteine (begleitend zu den Laborblöcken, je 7,5 %):
-  - **Meilenstein 1 (nach T02/T03, fällig T04):** 2D-Visualisierung & Simulation (FDM-Kühlkörper & Vektorpfeile).
-  - **Meilenstein 2 (nach T04/T05, fällig T07):** Echtzeit-Dashboard & 3D-Kinematik (ScottPlot 5 Streaming & SharpGL Roboter).
-  - **Meilenstein 3 (nach T06/T07, fällig T09):** High-Performance & Statik (TPL-Multithreading & 3D-Fachwerk Cholesky).
-  - **Meilenstein 4 (nach T08/T09, fällig T10):** Dynamische Systeme & Stochastik (S-Functions DC-Motor & DES Monte-Carlo).
+  - **Meilenstein 1 (nach T02/T03, fällig T04):** 2D-Visualisierung & Simulation  
+    *Wahl:* Track A (FDM-Kühlkörper mit Neumann-RB & Wärmestrom-Vektorpfeilen) **ODER** Track B (Zelluläre Waldbrand-/Lava-Pixelwelt mit Windvektoren).  
+    *(Hinweis: Vektorpfeile in T03 sind rein geometrisch & visuell; keine Statik!)*
+  - **Meilenstein 2 (nach T04/T05, fällig T07):** Echtzeit-Dashboard & 3D-Kinematik  
+    *Wahl:* Track A (SCARA-Roboterarm & ScottPlot-Leitstand) **ODER** Track B (3D Arcade Claw Machine & Retro Space HUD).
+  - **Meilenstein 3 (nach T06/T07, fällig T09):** High-Performance & Statik  
+    *Wahl:* Track A (Portalkran Cholesky-Statik & parallele Getriebe-Toleranzanalyse) **ODER** Track B (Poly Bridge Einsturz-/Bruch-Engine via Cholesky & 100.000 Boids TPL-Schwarm).  
+    *(Hinweis: Erst hier in T07 erweckt die Math.NET Cholesky-Engine die T03-Geometrie zum statischen Leben!)*
+  - **Meilenstein 4 (nach T08/T09, fällig T10):** Dynamische Systeme & Stochastik  
+    *Wahl:* Track A (S-Functions DC-Motor mit PID Anti-Windup & M/M/c-Fertigungslinie) **ODER** Track B (Falcon Booster Balancer mit RK4 & Fast-Food Tycoon DES).
 - *Durchführung der Micro-Defense:* Direkte Abnahme am Arbeitsplatz im Rechnerraum:
-  1. Live-Vorführung des Programms.
+  1. Live-Vorführung des Programms im gewählten Track.
   2. Spontane Code-Inspection: *„Erklären Sie Zeile 42 und warum hier keine GC-Allokation entsteht.“*
-  3. Live-Stresstest: *„Verdoppeln Sie die Schrittweite $h$ – was passiert im Phasenraum?“*
+  3. Live-Stresstest: *„Verdoppeln Sie die Schrittweite $h$ bzw. Parameter $X$ – was passiert im Phasenraum?“*
 
 #### Säule 3: Abschlussprojekt „Digital Twin Challenge“ & Oral Defense (40 %)
 - **10 % Softwarearchitektur & C#-Codequalität:** Strikt entkoppelte Architektur (keine GUI-Aufrufe im Solver), saubere S-Functions, Git-Historie.
