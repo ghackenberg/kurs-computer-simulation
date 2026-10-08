@@ -46,8 +46,8 @@ Im Verlauf des Semesters haben wir vier grundlegende Paradigmen der mathematisch
 **1. Statische Modelle (Kap. 7)**
 - Zeitinvariantes Verhalten
 - Zustand im statischen Gleichgewicht
-- Algebraische Gleichungssysteme ($A \cdot x = b$)
-- Direkte Lösungsverfahren (Gauß, LU)
+- Lineares Gleichungssystem ($\mathbf{A} \mathbf{x} = \mathbf{b}$)
+- Direkte Lösungsverfahren (Gauß, Cholesky, LU)
 - Bsp.: Statisches Fachwerk, Widerstandsnetzwerk
 
 </div>
@@ -55,8 +55,8 @@ Im Verlauf des Semesters haben wir vier grundlegende Paradigmen der mathematisch
 
 **2. Kontinuierliche Modelle (Kap. 8)**
 - Zeit stetig: $t \in \mathbb{R}$
-- Zustand stetig: $x(t) \in \mathbb{R}^n$
-- Gewöhnliche Differentialgleichungen ($\dot{x} = f(x, u, t)$)
+- Zustand stetig: $\mathbf{x}(t) \in \mathbb{R}^n$
+- Gewöhnliche DGL-Systeme ($\dot{\mathbf{x}} = \mathbf{f}(t, \mathbf{x}, \mathbf{u})$)
 - Numerische Integratoren (Euler, Heun, RK4)
 - Bsp.: Vertikaler Wurf, Federpendel
 
@@ -72,8 +72,8 @@ Im Verlauf des Semesters haben wir vier grundlegende Paradigmen der mathematisch
 
 **3. Diskrete Modelle (Kap. 9)**
 - Zeit getaktet ($t_k$) oder ereignisbasiert ($t_e$)
-- Zustand zählbar/diskret: $s \in S$
-- Zustandsübergangsfunktionen ($s_{k+1} = \delta(s_k, e)$)
+- Zustand zählbar/diskret: $\mathbf{s} \in \mathcal{S}$
+- Zustandsübergangsfunktionen ($\mathbf{s}_{k+1} = \boldsymbol{\delta}(\mathbf{s}_k, e)$)
 - Ereignisorientierte Simulation (DES, Queues)
 - Bsp.: Warteschlangen, Fördertechnik, Logistik
 
@@ -81,8 +81,8 @@ Im Verlauf des Semesters haben wir vier grundlegende Paradigmen der mathematisch
 <div>
 
 **4. Hybride Modelle (Kap. 10)**
-- Kopplung kontinuierlicher Dynamik mit diskreten Sprüngen
-- Phasen stetiger Bewegung + Events (Zero-Crossing)
+- Kontinuierliche Dynamik mit diskreten Sprüngen
+- Phasen stetiger Bewegung + Events ($z(\mathbf{x}_c) = 0$)
 - Schaltbedingungen und Strukturwechsel
 - S-Funktions-Architektur für hybride Solver
 - Bsp.: Bouncing Ball (Stoß), Thermostat mit Hysterese
@@ -107,8 +107,8 @@ Mathematische Grundlagen und Modellierungscharakteristik der vier Paradigmen:
 | Kriterium | Statisch (Kap. 7) | Kontinuierlich (Kap. 8) | Diskret (Kap. 9) | Hybrid (Kap. 10) |
 | :--- | :--- | :--- | :--- | :--- |
 | **Zeitverhalten** | Zeitinvariant / Stationär | Kontinuierlich ($t \in \mathbb{R}$) | Diskrete Schritte / Ereignisse | Stetige Phasen + diskrete Events |
-| **Zustandsraum** | Kontinuierlich ($x \in \mathbb{R}^n$) | Kontinuierlich ($x(t) \in \mathbb{R}^n$) | Abzählbar ($s \in S$) | Gemischt ($x \in \mathbb{R}^n, m \in M$) |
-| **Mathematik** | $f(x, u) = 0$ bzw. $A \cdot x = b$ | $\dot{x}(t) = f(x, u, t)$ | $s_{k+1} = \delta(s_k, e_k)$ | $\dot{x} = f_m(x, u), g(x)=0 \implies x^+$ |
+| **Zustandsraum** | Kontinuierlich ($\mathbf{x} \in \mathbb{R}^n$) | Kontinuierlich ($\mathbf{x}(t) \in \mathbb{R}^n$) | Abzählbar ($\mathbf{s} \in \mathcal{S}$) | Gemischt ($\mathbf{x}_c \in \mathbb{R}^{n_c}, m \in \mathcal{M}$) |
+| **Mathematik** | $\mathbf{f}(\mathbf{x}, \mathbf{u}) = \mathbf{0}$ bzw. $\mathbf{A} \mathbf{x} = \mathbf{b}$ | $\dot{\mathbf{x}}(t) = \mathbf{f}(t, \mathbf{x}, \mathbf{u})$ | $\mathbf{s}_{k+1} = \boldsymbol{\delta}(\mathbf{s}_k, e_k)$ | $\dot{\mathbf{x}}_c = \mathbf{f}_m(\mathbf{x}_c, \mathbf{u}), z(\mathbf{x}_c) = 0 \implies \mathbf{x}_c^+ = \mathbf{h}(\mathbf{x}_c^-)$ |
 
 ---
 
@@ -462,7 +462,7 @@ Numerische Simulationen basieren auf IEEE 754 Gleitkommaarithmetik. Typische Feh
 **Akkumulationsfehler bei Zeitschritten:**
 - *Problem:* Wiederholtes Inkrementieren $t = t + \Delta t$ über Millionen Schritte führt zu Zeitdrift.
 - *Best Practice:* Ganzzahliger Schrittzähler:
-$$ t_k = t_0 + k \cdot \Delta t \quad (k \in \mathbb{N}) $$
+$$ t_k = t_0 + k \cdot \Delta t \quad (k \in \mathbb{N}_0 = \{0, 1, 2, \dots\}) $$
 - Verhindert das Auseinanderdriften von Simulationszeit und Solverzustand.
 
 </div>
@@ -487,8 +487,8 @@ $$ x - y \quad \text{mit} \quad x \approx y $$
 **Division durch Null bei Kontakten:**
 - Z.B. Gravitation oder Coulomb-Kräfte: $F \propto \frac{1}{r^2}$.
 - Wenn Abstand $r \to 0$, divergiert die Kraft ins Unendliche $\implies$ `NaN` / Solver-Absturz.
-- *Best Practice:* Regularisierung einführen:
-$$ r_{\text{reg}} = \sqrt{r^2 + \epsilon^2} \quad (\epsilon \ll 1) $$
+- *Best Practice:* Regularisierung mit Längeneinheit $[\epsilon] = \mathrm{m}$:
+$$ r_{\text{reg}} = \sqrt{r^2 + \epsilon^2} \quad (\epsilon \ll r_{\text{char}}) $$
 
 </div>
 </div>
@@ -502,7 +502,7 @@ Ein DGL-System heißt **steif**, wenn Prozesse auf extrem unterschiedlichen Zeit
 <div class="columns top">
 <div>
 
-- Bei expliziten Verfahren (z.B. Euler, RK4) bestimmt die **schnellste** Eigenkreisfrequenz $\omega_{\max}$ die maximale Schrittweite:
+- Bei expliziten Verfahren (z.B. Euler, RK4) bestimmt die **schnellste** Eigenkreisfrequenz $\omega_{\max} = \max_i |\operatorname{Im}(\lambda_i)|$ die maximale Schrittweite:
 $$ \Delta t < \frac{2}{\omega_{\max}} $$
 - Wird $\Delta t$ minimal zu groß gewählt, explodiert die Simulation numerisch!
 

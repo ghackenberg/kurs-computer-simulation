@@ -273,37 +273,72 @@ WpfPlot1.Refresh();
 
 ---
 
-### Dichtefunktionen und Box-Plots
+### Wahrscheinlichkeitsdichte & Analytische Normalverteilung
 
-<div class="columns">
-<div class="two">
+<div class="columns top">
+<div class="one">
 
-#### Wahrscheinlichkeitsdichte (PDF)
-- Normierung: Teilt man `hist.Counts` durch $(N \cdot \Delta w_{\text{bin}})$, erhält man die normierte Wahrscheinlichkeitsdichte.
-- Erlaubt das Einblenden der analytischen Normalverteilung:
-  $$f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}$$
-
-</div>
-<div class="two">
-
-#### Box-Plots (`Plot.Add.Box`)
-- Kompakte Darstellung mehrerer Simulationsszenarien nebeneinander:
-  - **Median** (50. Perzentil)
-  - **Box:** Interquartilsabstand (IQR: 25. bis 75. Perzentil)
-  - **Whisker:** Extremwerte (z.B. $1.5 \times \text{IQR}$)
-  - **Punkte:** Statistische Ausreißer
+#### Normierte Wahrscheinlichkeitsdichte (PDF)
+- Das reine Histogramm liefert absolute Klassenhäufigkeiten $H_k \in \mathbb{N}_0$.
+- **Flächennormierung:** Teilt man $H_k$ durch $(N \cdot \Delta w_{\text{bin}})$, erhält man die normierte empirische Dichte $f_k$:
+  - $N = \sum H_k$: Stichprobenumfang
+  - $\Delta w_{\text{bin}}$: Klassenbreite $[\mathrm{s}]$
+  - Eigenschaft: $\int_{-\infty}^\infty f(x)\,\mathrm{d}x = \sum f_k \Delta w_{\text{bin}} = 1$
 
 </div>
+<div class="one">
+
+#### Gaußsche Normalverteilung $\mathcal{N}(\mu, \sigma^2)$
+Überlagerung der Messdaten mit der theoretischen Wahrscheinlichkeitsdichtefunktion:
+
+$$f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right) \quad \left[\frac{1}{\mathrm{s}}\right]$$
+
+- $x$: Merkmalswert (z.B. Zykluszeit) $[\mathrm{s}]$
+- $\mu$: Erwartungswert (Mittelwert) $[\mathrm{s}]$
+- $\sigma$: Standardabweichung ($\sigma > 0$) $[\mathrm{s}]$
+- $\sigma^2$: Varianz des Prozesses $[\mathrm{s^2}]$
+
 </div>
+</div>
+
+---
+
+### Verteilungsvergleiche mit Box-Plots (ScottPlot)
+
+<div class="columns top">
+<div class="one">
+
+#### Kennwerte eines Box-Plots
+Kompakter Vergleich mehrerer Simulationsreihen nebeneinander:
+- **Median ($Q_2$):** 50. Perzentil (robuster Lageparameter)
+- **Box (IQR):** Interquartilsabstand $\text{IQR} = Q_3 - Q_1$ (mittlere 50 % der Daten)
+- **Whisker:** Wertebereich bis maximal $1{,}5 \times \text{IQR}$ ab Quartilsgrenze
+- **Punkte:** Statistische Ausreißer außerhalb der Whiskers
+
+</div>
+<div class="one">
 
 ```csharp
-// Beispiel: Box-Plot für zwei Parametrierungsvarianten
-var box1 = new ScottPlot.Box 
-    { Position = 1, BoxMiddle = 2.4, BoxMin = 1.8, BoxMax = 3.1 };
-var box2 = new ScottPlot.Box 
-    { Position = 2, BoxMiddle = 3.8, BoxMin = 2.9, BoxMax = 4.6 };
+// Box-Plot für zwei Simulationsläufe
+var box1 = new ScottPlot.Box {
+    Position = 1,
+    BoxMiddle = 2.4, // Median
+    BoxMin = 1.8,    // Q1 (25 %)
+    BoxMax = 3.1,    // Q3 (75 %)
+    WhiskerMin = 1.2,
+    WhiskerMax = 3.8
+};
+var box2 = new ScottPlot.Box {
+    Position = 2,
+    BoxMiddle = 3.8,
+    BoxMin = 2.9,
+    BoxMax = 4.6
+};
 WpfPlot1.Plot.Add.Box(new[] { box1, box2 });
 ```
+
+</div>
+</div>
 
 ---
 
@@ -440,13 +475,30 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Netzwerktopologien & Blockdiagramme
+### Mathematische Modellierung von Modelltopologien
 
-- In Simulationssystemen (wie MATLAB Simulink oder Simscape) werden Modelle als **Graphen** dargestellt:
-  - **Knoten ($V$):** Funktionsblöcke (z.B. Summierer, Integrator, Verstärker) oder physische Bauteile (Masse, Feder).
-  - **Kanten ($E$):** Signalflüsse, Variablenkopplungen oder mechanische/elektrische Verbindungen.
-- **Problem:** Die manuelle Positionierung von Knoten ist aufwändig und skaliert schlecht bei Modelländerungen.
-- **Lösung:** MSAGL platziert Knoten und routet Verbindungslinien vollautomatisch!
+In modernen Blockdiagramm- und Multi-Domain-Simulatoren (Simulink, Modelica, Simscape) wird das Gesamtsystem als gerichteter Graph abgebildet:
+
+$$G = (V, E)$$
+
+- **Knotenmenge $V = \{v_1, \dots, v_n\}$:** Funktionsblöcke (z.B. Integratoren, Kennfelder) oder physikalische Komponenten (Ventil, Zylinder).
+  - Eingangsgrad $\deg^-(v_i)$: Anzahl eingehender Signale / Kopplungen
+  - Ausgangsgrad $\deg^+(v_i)$: Anzahl erzeugter Ausgangssignale
+- **Kantenmenge $E \subseteq V \times V$:** Signal- und Leistungsflüsse $e = (v_i, v_j)$
+- **Adjazenzmatrix $\mathbf{A} \in \{0, 1\}^{n \times n}$:**
+  $$a_{ij} = \begin{cases} 1, & \text{falls } (v_i, v_j) \in E \text{ (Signal von } v_i \text{ zu } v_j \text{)} \\ 0, & \text{sonst} \end{cases}$$
+- **Algebraische Schleifen (Zyklen):** Ein geschlossener Pfad in $\mathbf{A}$ ohne Zustandsverzögerung erzwingt die simultane Nullstellensuche $F(y) = y(t) - g(y(t), u(t)) = 0$.
+
+---
+
+### Netzwerktopologien & Automatisches Layout mit MSAGL
+
+- **Herausforderung:** Bei komplexen Systemen mit hunderten Blöcken ist manuelle Platzierung unmöglich und blockiert Modellrefactorings.
+- **Lösung:** Microsoft Automatic Graph Layout (`MSAGL`):
+  - Berechnet ästhetische, kreuzungsminimierte Layouts vollautomatisch.
+  - Unterstützt hierarchische Layering-Verfahren (Sugiyama-Algorithmus) für kausale Signalflüsse (von links nach rechts).
+  - Unterstützt Force-Directed-Layouts für physikalische Netzwerkgraphen (ungestrickte Feder-Masse-Modelle).
+  - Erlaubt interaktives Zoomen, Panning und Hervorheben kritischer Signalpfade (algebraische Zyklen rot markieren).
 
 ---
 

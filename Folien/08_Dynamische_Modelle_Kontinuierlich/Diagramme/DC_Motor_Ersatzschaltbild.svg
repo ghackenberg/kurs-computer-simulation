@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="100%" height="100%">
+  <defs>
+    <!-- Pfeilspitzen Definitionen -->
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1D4ED8" />
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#DC2626" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#15803D" />
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#C2410C" />
+    </marker>
+    <marker id="arr-dark" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#334155" />
+    </marker>
+
+    <!-- Schattenfilter -->
+    <filter id="panel-shadow" x="-3%" y="-3%" width="106%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.06" />
+    </filter>
+  </defs>
+
+  <style>
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+  </style>
+
+  <!-- Hauptrahmen & Hintergrund -->
+  <rect x="5" y="5" width="950" height="410" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
+
+  <!-- Titelbanner -->
+  <rect x="5" y="5" width="950" height="42" rx="12" fill="#F8FAFC" />
+  <rect x="5" y="32" width="950" height="15" fill="#F8FAFC" />
+  <line x1="5" y1="47" x2="955" y2="47" stroke="#E2E8F0" stroke-width="1.5" />
+  <text x="20" y="30" font-size="16" font-weight="700" fill="#004B96">Gleichstrom-Servomotor: Elektromechanisches Ersatzschaltbild &amp; Streckendynamik</text>
+  
+  <rect x="735" y="12" width="205" height="24" rx="5" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2" />
+  <text x="837" y="28" font-size="12" font-weight="700" fill="#1D4ED8" text-anchor="middle">LTI-Streckenmodell 2. Ordnung</text>
+
+  <!-- ========================================================================= -->
+  <!-- 1. BEREICH LINKS: ELEKTRISCHER ANKERKREIS                                 -->
+  <!-- ========================================================================= -->
+  <rect x="15" y="55" width="310" height="215" rx="8" fill="#F0F7FF" stroke="#BFDBFE" stroke-width="1.2" />
+  <rect x="25" y="63" width="290" height="24" rx="4" fill="#DBEAFE" />
+  <text x="170" y="80" font-size="13" font-weight="700" fill="#1E40AF" text-anchor="middle">1. Elektrischer Ankerkreis (Kirchhoff)</text>
+
+  <!-- Eingangsspannung Klemmen & Pfeil -->
+  <circle cx="38" cy="118" r="4" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2" />
+  <circle cx="38" cy="208" r="4" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2" />
+  <line x1="38" y1="198" x2="38" y2="128" stroke="#DC2626" stroke-width="2" marker-end="url(#arr-red)" />
+  <rect x="22" y="153" width="32" height="20" rx="3" fill="#FFFFFF" stroke="#FCA5A5" stroke-width="1" />
+  <text x="38" y="167" font-size="12" font-weight="700" fill="#DC2626" text-anchor="middle">u(t)</text>
+
+  <!-- Zuleitung oben mit Strompfeil i(t) -->
+  <line x1="42" y1="118" x2="90" y2="118" stroke="#1D4ED8" stroke-width="2" />
+  <line x1="56" y1="110" x2="80" y2="110" stroke="#1D4ED8" stroke-width="1.8" marker-end="url(#arr-blue)" />
+  <rect x="58" y="93" width="22" height="16" rx="3" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1" />
+  <text x="69" y="105" font-size="12" font-weight="700" fill="#1D4ED8" text-anchor="middle">i(t)</text>
+
+  <!-- Ankerwiderstand R (DIN-Symbol) -->
+  <rect x="90" y="110" width="38" height="16" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.8" />
+  <rect x="94" y="92" width="30" height="16" rx="3" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1" />
+  <text x="109" y="105" font-size="12" font-weight="700" fill="#1E40AF" text-anchor="middle">R</text>
+  <rect x="83" y="130" width="52" height="17" rx="3" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
+  <text x="109" y="142" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">u_R=R·i</text>
+
+  <!-- Verbindung R -> L -->
+  <line x1="128" y1="118" x2="148" y2="118" stroke="#1D4ED8" stroke-width="2" />
+
+  <!-- Ankerinduktivität L (Spule) -->
+  <path d="M 148 118 Q 155 102 162 118 Q 169 102 176 118 Q 183 102 190 118" fill="none" stroke="#1D4ED8" stroke-width="2" />
+  <rect x="156" y="92" width="26" height="16" rx="3" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1" />
+  <text x="169" y="105" font-size="12" font-weight="700" fill="#1E40AF" text-anchor="middle">L</text>
+  <rect x="144" y="130" width="56" height="17" rx="3" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
+  <text x="172" y="142" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">u_L=L·di/dt</text>
+
+  <!-- Verbindung L -> Rotor-EMK -->
+  <line x1="190" y1="118" x2="240" y2="118" stroke="#1D4ED8" stroke-width="2" />
+  <line x1="240" y1="118" x2="240" y2="136" stroke="#1D4ED8" stroke-width="2" />
+
+  <!-- Rotor-Ankerkreis / EMK-Symbol -->
+  <circle cx="240" cy="163" r="22" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2" />
+  <text x="240" y="168" font-size="14" font-weight="700" fill="#1D4ED8" text-anchor="middle">M</text>
+  
+  <!-- Bürsten / Anschlüsse oben/unten am Motor -->
+  <rect x="233" y="136" width="14" height="6" fill="#1E293B" />
+  <rect x="233" y="184" width="14" height="6" fill="#1E293B" />
+
+  <!-- Gegen-EMK Pfeil & Beschriftung -->
+  <line x1="272" y1="184" x2="272" y2="144" stroke="#15803D" stroke-width="2" marker-end="url(#arr-green)" />
+  <rect x="264" y="152" width="46" height="18" rx="3" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1" />
+  <text x="287" y="165" font-size="12" font-weight="700" fill="#15803D" text-anchor="middle">u_ind</text>
+
+  <!-- Rückleitung unten -->
+  <line x1="240" y1="190" x2="240" y2="208" stroke="#1D4ED8" stroke-width="2" />
+  <line x1="240" y1="208" x2="42" y2="208" stroke="#1D4ED8" stroke-width="2" />
+
+  <!-- Maschenregel Gleichung Kasten -->
+  <rect x="25" y="222" width="290" height="38" rx="5" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.2" />
+  <text x="170" y="237" font-size="12" font-weight="700" fill="#1E3A8A" text-anchor="middle">Maschenregel: u(t) - u_R - u_L - u_ind = 0</text>
+  <text x="170" y="252" font-size="12" font-weight="600" fill="#1D4ED8" text-anchor="middle">u(t) = R·i(t) + L·(di/dt) + k_e·ω(t)</text>
+
+  <!-- ========================================================================= -->
+  <!-- 2. BEREICH MITTE: ELEKTROMECHANISCHE KOPPLUNG                             -->
+  <!-- ========================================================================= -->
+  <rect x="335" y="55" width="270" height="215" rx="8" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1.2" />
+  <rect x="345" y="63" width="250" height="24" rx="4" fill="#DCFCE7" />
+  <text x="470" y="80" font-size="13" font-weight="700" fill="#15803D" text-anchor="middle">2. Elektromech. Kopplung</text>
+
+  <!-- Drehmoment-Kopplung Box (Elektro -> Mech) -->
+  <rect x="347" y="96" width="246" height="54" rx="6" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.3" />
+  <text x="357" y="112" font-size="12" font-weight="700" fill="#166534">Motormoment (Lorentz-Kraft):</text>
+  <rect x="375" y="120" width="190" height="22" rx="4" fill="#DCFCE7" />
+  <text x="470" y="136" font-size="14" font-weight="700" fill="#15803D" text-anchor="middle">M_m(t) = k_m · i(t)</text>
+
+  <!-- Pfeil Elektro -> Mech -->
+  <line x1="318" y1="123" x2="343" y2="123" stroke="#15803D" stroke-width="2.5" marker-end="url(#arr-green)" />
+
+  <!-- Induktions-Kopplung Box (Mech -> Elektro) -->
+  <rect x="347" y="157" width="246" height="54" rx="6" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.3" />
+  <text x="357" y="173" font-size="12" font-weight="700" fill="#166534">Gegen-EMK (Induktionsgesetz):</text>
+  <rect x="375" y="181" width="190" height="22" rx="4" fill="#DCFCE7" />
+  <text x="470" y="197" font-size="14" font-weight="700" fill="#15803D" text-anchor="middle">u_ind(t) = k_e · ω(t)</text>
+
+  <!-- Pfeil Mech -> Elektro -->
+  <line x1="343" y1="184" x2="318" y2="184" stroke="#15803D" stroke-width="2.5" marker-end="url(#arr-green)" />
+
+  <!-- SI-Konstanten Identität Badge -->
+  <rect x="347" y="220" width="246" height="40" rx="5" fill="#FEFCE8" stroke="#FDE047" stroke-width="1.2" />
+  <text x="470" y="235" font-size="12" font-weight="700" fill="#854D0E" text-anchor="middle">SI-Symmetrie: k_m ≡ k_e</text>
+  <text x="470" y="250" font-size="12" font-weight="600" fill="#A16207" text-anchor="middle">[N·m/A] ≡ [V·s/rad] ≡ [Wb]</text>
+
+  <!-- ========================================================================= -->
+  <!-- 3. BEREICH RECHTS: MECHANISCHER ANTRIEBSSTRANG                            -->
+  <!-- ========================================================================= -->
+  <rect x="615" y="55" width="330" height="215" rx="8" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1.2" />
+  <rect x="625" y="63" width="310" height="24" rx="4" fill="#FFEDD5" />
+  <text x="780" y="80" font-size="13" font-weight="700" fill="#C2410C" text-anchor="middle">3. Mechanischer Rotor (Drallsatz)</text>
+
+  <!-- Welle von Motor nach rechts -->
+  <line x1="605" y1="135" x2="655" y2="135" stroke="#9A3412" stroke-width="5" stroke-linecap="round" />
+
+  <!-- Rotor-Schwungmasse J (Zylinder) -->
+  <rect x="655" y="105" width="46" height="60" rx="5" fill="#FFEDD5" stroke="#EA580C" stroke-width="2" />
+  <rect x="662" y="112" width="32" height="20" rx="3" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1" />
+  <text x="678" y="127" font-size="13" font-weight="700" fill="#9A3412" text-anchor="middle">J</text>
+  <text x="678" y="155" font-size="12" font-weight="600" fill="#C2410C" text-anchor="middle">kg·m²</text>
+
+  <!-- Welle nach rechts weiter -->
+  <line x1="701" y1="135" x2="905" y2="135" stroke="#9A3412" stroke-width="5" stroke-linecap="round" />
+
+  <!-- Viskose Dämpfung d (Lagerreibung) -->
+  <rect x="740" y="145" width="40" height="18" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.5" />
+  <line x1="760" y1="135" x2="760" y2="145" stroke="#C2410C" stroke-width="2" />
+  <line x1="760" y1="163" x2="760" y2="173" stroke="#475569" stroke-width="2" />
+  <line x1="748" y1="173" x2="772" y2="173" stroke="#475569" stroke-width="2.5" />
+  <!-- Schraffur Masse/Gehäuse -->
+  <line x1="750" y1="173" x2="745" y2="179" stroke="#475569" stroke-width="1.5" />
+  <line x1="760" y1="173" x2="755" y2="179" stroke="#475569" stroke-width="1.5" />
+  <line x1="770" y1="173" x2="765" y2="179" stroke="#475569" stroke-width="1.5" />
+  <rect x="735" y="181" width="70" height="17" rx="3" fill="#FFFFFF" stroke="#FED7AA" stroke-width="1" />
+  <text x="770" y="193" font-size="12" font-weight="600" fill="#C2410C" text-anchor="middle">M_fric = d·ω</text>
+
+  <!-- Motormoment Pfeil M_m(t) -->
+  <path d="M 640 108 A 16 16 0 0 1 640 162" fill="none" stroke="#15803D" stroke-width="2.5" marker-end="url(#arr-green)" />
+  <rect x="618" y="93" width="44" height="17" rx="3" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1" />
+  <text x="640" y="106" font-size="12" font-weight="700" fill="#15803D" text-anchor="middle">+M_m</text>
+
+  <!-- Lastmoment Pfeil M_L(t) gegenläufig -->
+  <path d="M 890 162 A 16 16 0 0 1 890 108" fill="none" stroke="#DC2626" stroke-width="2.5" marker-end="url(#arr-red)" />
+  <rect x="866" y="93" width="48" height="17" rx="3" fill="#FFFFFF" stroke="#FCA5A5" stroke-width="1" />
+  <text x="890" y="106" font-size="12" font-weight="700" fill="#DC2626" text-anchor="middle">-M_L(t)</text>
+
+  <!-- Abtrieb: Drehzahl & Position -->
+  <rect x="815" y="145" width="115" height="42" rx="4" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1.2" />
+  <text x="872" y="160" font-size="12" font-weight="700" fill="#9A3412" text-anchor="middle">Drehzahl: ω(t)</text>
+  <text x="872" y="178" font-size="12" font-weight="600" fill="#EA580C" text-anchor="middle">Winkel: θ(t)=∫ω dt</text>
+
+  <!-- Drallsatz Kasten -->
+  <rect x="625" y="222" width="310" height="38" rx="5" fill="#FFFFFF" stroke="#FED7AA" stroke-width="1.2" />
+  <text x="780" y="237" font-size="12" font-weight="700" fill="#9A3412" text-anchor="middle">Drallsatz: J·(dω/dt) = M_m(t) - M_fric - M_L(t)</text>
+  <text x="780" y="252" font-size="12" font-weight="600" fill="#C2410C" text-anchor="middle">J·(dω/dt) = k_m·i(t) - d·ω(t) - M_L(t)</text>
+
+  <!-- ========================================================================= -->
+  <!-- 4. UNTERER BEREICH: QUASISTATIONÄRE NÄHERUNG & KENNWERTE                  -->
+  <!-- ========================================================================= -->
+  <!-- Box Links: Quasistationäre Näherung -->
+  <rect x="15" y="280" width="445" height="125" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+  <rect x="25" y="287" width="425" height="22" rx="4" fill="#E2E8F0" />
+  <text x="237" y="303" font-size="12" font-weight="700" fill="#334155" text-anchor="middle">Quasistationäre Stromnäherung (T_e = L/R &lt;&lt; T_m)</text>
+
+  <text x="25" y="324" font-size="12" font-weight="500" fill="#475569">• Elektrische Zeitkonstante T_e ≈ 0,5 ms vernachlässigbar klein gegenüber T_m ≈ 50 ms</text>
+  
+  <rect x="60" y="333" width="355" height="24" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" />
+  <text x="237" y="349" font-size="13" font-weight="700" fill="#0F172A" text-anchor="middle">L ≈ 0  ⇒  i(t) ≈ (u(t) - k_e·ω(t)) / R</text>
+
+  <text x="25" y="373" font-size="12" font-weight="500" fill="#475569">• Einsetzen von i(t) in Drallsatz eliminiert den schnellen Stromzustand:</text>
+  <text x="25" y="392" font-size="12" font-weight="600" fill="#0369A1">  J·(dω/dt) = (k_m / R)·(u - k_e·ω) - d·ω - M_L</text>
+
+  <!-- Box Rechts: LTI PT1 Parameter & Übertragungsfunktion -->
+  <rect x="470" y="280" width="475" height="125" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.2" />
+  <rect x="480" y="287" width="455" height="22" rx="4" fill="#DCFCE7" />
+  <text x="707" y="303" font-size="12" font-weight="700" fill="#166534" text-anchor="middle">PT_1-Streckenparameter (Normierte Form: T_m·dω/dt + ω = K_m·u)</text>
+
+  <!-- Formelkasten Tm -->
+  <rect x="485" y="316" width="215" height="42" rx="5" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.2" />
+  <text x="495" y="332" font-size="12" font-weight="700" fill="#15803D">Mechanische Zeitkonstante:</text>
+  <text x="592" y="350" font-size="13" font-weight="700" fill="#166534" text-anchor="middle">T_m = (J · R) / (k_m·k_e + d·R)  [s]</text>
+
+  <!-- Formelkasten Km -->
+  <rect x="710" y="316" width="225" height="42" rx="5" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.2" />
+  <text x="720" y="332" font-size="12" font-weight="700" fill="#15803D">Proportionale Verstärkung:</text>
+  <text x="822" y="350" font-size="13" font-weight="700" fill="#166534" text-anchor="middle">K_m = k_m / (k_m·k_e + d·R)  [rad/(s·V)]</text>
+
+  <!-- Resultierende DGL -->
+  <rect x="485" y="365" width="450" height="30" rx="4" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1" />
+  <text x="710" y="385" font-size="12" font-weight="700" fill="#047857" text-anchor="middle">Zustandsdgl.:  dω/dt = -(1/T_m)·ω + (K_m/T_m)·u - (1/J)·M_L</text>
+</svg>

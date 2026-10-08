@@ -452,14 +452,32 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Die physikalische 2D-Wärmeleitungsgleichung
 
-Die zeitliche und räumliche Ausbreitung von Wärme in einem homogenen Medium wird durch die parabolische PDE beschrieben:
+Die Ausbreitung von Wärme in einem homogenen, isotropen Festkörper genügt der parabolischen Diffusions-PDE:
 
-$$\frac{\partial T}{\partial t} = \alpha \cdot \Delta T + Q(x, y, t)$$
+$$\frac{\partial T}{\partial t} = \alpha \cdot \Delta T + Q(x, y, t), \quad \text{mit } \Delta = \nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} \quad \left[\frac{1}{\mathrm{m^2}}\right]$$
 
-- $T(x, y, t)$: Temperaturfeld [$\mathrm{K}$]
-- $\alpha = \frac{\lambda}{\rho \cdot c}$: Temperaturleitfähigkeit [$\mathrm{m^2/s}$]
-- $\Delta = \nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2}$: Laplace-Operator
-- $Q(x, y, t)$: Externe Wärmequellen bzw. Wärmesenken
+<div class="columns top">
+<div class="one">
+
+| Symbol | Physikalische Größe | SI-Einheit |
+| :--- | :--- | :---: |
+| $T(x,y,t)$ | Temperaturfeld | $\mathrm{K}$ / ${}^\circ\mathrm{C}$ |
+| $\alpha$ | **Temperaturleitfähigkeit** ($\frac{\lambda}{\rho \cdot c}$) | $\mathrm{m^2/s}$ |
+| $\lambda$ | Wärmeleitfähigkeit (Fourier) | $\mathrm{W/(m\cdot K)}$ |
+| $\rho$ | Materialdichte | $\mathrm{kg/m^3}$ |
+
+</div>
+<div class="one">
+
+| Symbol | Physikalische Größe | SI-Einheit |
+| :--- | :--- | :---: |
+| $c$ | Spezifische Wärmekapazität | $\mathrm{J/(kg\cdot K)}$ |
+| $Q(x,y,t)$ | **Wärmequellrate** ($Q = \frac{\dot{q}_V}{\rho \cdot c}$) | $\mathrm{K/s}$ |
+| $\dot{q}_V$ | Volumetrische Heizleistung | $\mathrm{W/m^3}$ |
+| $\alpha = \frac{\lambda}{\rho c}$ | Dimensionskontrolle: $\frac{\mathrm{W/(m\cdot K)}}{\mathrm{kg/m^3 \cdot J/(kg\cdot K)}}$ | $\frac{\mathrm{m^2}}{\mathrm{s}}$ |
+
+</div>
+</div>
 
 ---
 
@@ -468,25 +486,22 @@ $$\frac{\partial T}{\partial t} = \alpha \cdot \Delta T + Q(x, y, t)$$
 <div class="columns">
 <div class="two">
 
-Wir diskretisieren Raum und Zeit auf einem gleichmäßigen 2D-Gitter mit Schrittweite $\Delta x = \Delta y = h$:
+Diskretisierung auf gleichmäßigem 2D-Raumgitter ($x_i = i \cdot h, y_j = j \cdot h$ mit $h = \Delta x = \Delta y$ $[\mathrm{m}]$) und Zeitgitter ($t_n = n \cdot \Delta t$ $[\mathrm{s}]$):
 
-- **Zweite räumliche Ableitungen (5-Punkt-Stern):**
-  $$\nabla^2 T_{i,j} \approx \frac{T_{i+1,j} + T_{i-1,j} + T_{i,j+1} + T_{i,j-1} - 4 T_{i,j}}{h^2}$$
-
-- **Explizites Euler-Verfahren für die Zeit:**
-  $$T_{i,j}^{n+1} = T_{i,j}^n + \Delta t \cdot \left[ \alpha \nabla^2 T_{i,j} + Q_{i,j} \right]$$
-
-- **Implementierungsform mit Vorfaktor $s = \frac{\alpha \Delta t}{h^2}$:**
-  $$L_{i,j} = T_{i+1,j} + T_{i-1,j} + T_{i,j+1} + T_{i,j-1} - 4 T_{i,j}$$
-  $$T_{i,j}^{n+1} = T_{i,j}^n + s \cdot L_{i,j} + \Delta t \cdot Q_{i,j}$$
+- **Zustand an Zelle $(i, j)$ zur Zeitstufe $n$:** $T_{i,j}^n \approx T(x_i, y_j, t_n)$ $[\mathrm{K}]$
+- **Räumlicher 5-Punkt-Differenzenstern:**
+  $$\nabla^2 T_{i,j}^n \approx \frac{T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 T_{i,j}^n}{h^2} \quad \left[\frac{\mathrm{K}}{\mathrm{m^2}}\right]$$
+- **Explizites Zeitschrittschema mit Fourier-Zahl $s$ (dimensionslos):**
+  $$L_{i,j}^n = T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 T_{i,j}^n \quad [\mathrm{K}]$$
+  $$T_{i,j}^{n+1} = T_{i,j}^n + s \cdot L_{i,j}^n + \Delta t \cdot Q_{i,j}^n \quad [\mathrm{K}], \quad \text{mit } s = \frac{\alpha \cdot \Delta t}{h^2} \le 0{,}25$$
 
 </div>
 <div class="one">
 
 ![w:340](./Diagramme/FDM_5_Punkt_Stern.svg)
 
-**5-Punkt-Differenzenstern:**
-Temperatur am Punkt $(i, j)$ diffundiert zu den 4 direkten Nachbarn.
+**5-Punkt-Differenzenstern:**  
+Wärme diffundiert in einem Zeitschritt ausschließlich zu den 4 direkten Nachbarzellen.
 
 </div>
 </div>

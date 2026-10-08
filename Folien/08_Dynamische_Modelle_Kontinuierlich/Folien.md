@@ -65,28 +65,24 @@ $$ \frac{d\mathbf{x}}{dt} = \dot{\mathbf{x}}(t) = \mathbf{f}(t, \mathbf{x}(t), \
 
 ---
 
-### Zustandsraumdarstellung
+### Zustandsraumdarstellung: Allgemeine nichtlineare Form
 
 <div class="columns">
 <div class="three">
 
-Eine übliche Methode zur Darstellung von dynamischen Systemen.
+Fundamentales Konzept zur Modellierung dynamischer Systeme:
 
 **Zustandsgleichung:**
-
 $$ \dot{\mathbf{x}}(t) = \mathbf{f}(t, \mathbf{x}(t), \mathbf{u}(t)) $$
-
-Beschreibt die Dynamik des Systems.
+Beschreibt die innere Systemdynamik.
 
 **Ausgangsgleichung:**
-
 $$ \mathbf{y}(t) = \mathbf{g}(t, \mathbf{x}(t), \mathbf{u}(t)) $$
+Beschreibt die messbaren Ausgangssignale.
 
-Beschreibt, wie die beobachtbaren Ausgänge $\mathbf{y}(t)$ aus den Zuständen $\mathbf{x}(t)$ und Eingängen $\mathbf{u}(t)$ berechnet werden.
-
-**Legende:**
-
-*$\mathbf{x}$: Zustandsvektor, $\mathbf{u}$: Eingangsvektor, $\mathbf{y}$: Ausgangsvektor*
+- $\mathbf{x}(t) \in \mathbb{R}^n$: Zustandsvektor ($n$ innere Energiespeicher)
+- $\mathbf{u}(t) \in \mathbb{R}^m$: Eingangsvektor ($m$ Aktoren / Erreger)
+- $\mathbf{y}(t) \in \mathbb{R}^p$: Ausgangsvektor ($p$ Messgrößen)
 
 </div>
 <div>
@@ -98,23 +94,38 @@ Beschreibt, wie die beobachtbaren Ausgänge $\mathbf{y}(t)$ aus den Zuständen $
 
 ---
 
+### Zustandsraumdarstellung: Lineare zeitinvariante Systeme (LTI)
+
+Für lineare, zeitinvariante Systeme vereinfacht sich die Beschreibung zur Matrizenform:
+
+$$ \dot{\mathbf{x}}(t) = \mathbf{A}\mathbf{x}(t) + \mathbf{B}\mathbf{u}(t), \qquad \mathbf{y}(t) = \mathbf{C}\mathbf{x}(t) + \mathbf{D}\mathbf{u}(t) $$
+
+- **$\mathbf{A} \in \mathbb{R}^{n \times n}$ (Systemmatrix):** Beschreibt die autonome Eigendynamik und Stabilität (Eigenwerte $\lambda_i$).
+- **$\mathbf{B} \in \mathbb{R}^{n \times m}$ (Eingangsmatrix):** Koppelt die Aktorsignale an die Zustandsableitungen.
+- **$\mathbf{C} \in \mathbb{R}^{p \times n}$ (Ausgangsmatrix):** Projiziert die internen Zustände auf die Messgrößen.
+- **$\mathbf{D} \in \mathbb{R}^{p \times m}$ (Durchgriffsmatrix):** Direkte algebraische Durchkopplung von Eingang auf Ausgang.
+
+*Standardformat für Regelungstechnik, Modalanalyse und FMI / Simulink / TwinCAT.*
+
+---
+
 ### Von höheren Ordnungen zur ersten Ordnung
 
 <div class="columns">
 <div class="three">
 
-Differentialgleichungen höherer Ordnung können immer in ein System von Differentialgleichungen erster Ordnung umgewandelt werden.
+DGLn höherer Ordnung lassen sich in ein System 1. Ordnung überführen.
 
-**Beispiel: Bewegungsgleichung (2. Ordnung)**
+**Gedämpftes Feder-Masse-System (2. Ordnung):**
 $$ m \ddot{y}(t) + d \dot{y}(t) + k y(t) = F(t) $$
+- Parameter: $m \ [\mathrm{kg}]$, $d \ [\mathrm{N\cdot s/m}]$, $k \ [\mathrm{N/m}]$, $F \ [\mathrm{N}]$, $y \ [\mathrm{m}]$
+- Kennwerte: $\omega_0 = \sqrt{k/m} \ [\mathrm{rad/s}]$, $D = \frac{d}{2\sqrt{km}} \ [-]$
 
-**Umwandlung:**
-1.  Definiere Zustandsvariablen:
-    -   $x_1(t) = y(t)$ (Position)
-    -   $x_2(t) = \dot{y}(t)$ (Geschwindigkeit)
-2.  Leite die Zustandsvariablen nach der Zeit ab:
-    -   $\dot{x}_1(t) = \dot{y}(t) = x_2(t)$
-    -   $\dot{x}_2(t) = \ddot{y}(t) = \frac{1}{m}(F(t) - d x_2(t) - k x_1(t))$
+**Umwandlung in Zustandsraum:**
+1. Zustände: $x_1(t) = y(t)$, $x_2(t) = \dot{y}(t)$
+2. Ableitungen:
+   - $\dot{x}_1 = x_2$
+   - $\dot{x}_2 = \frac{1}{m}(F(t) - d x_2 - k x_1)$
 
 </div>
 <div>
@@ -526,15 +537,14 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 Ein klassisches Beispiel für ein oszillierendes System.
 
-**Annahmen:**
-- Eine Masse `m` ist an einer Feder mit Federkonstante `k` befestigt.
-- Keine Dämpfung (keine Reibung).
-- Bewegung nur in einer Dimension (`y`).
+**Annahmen & Parameter:**
+- Träge Masse $m \ [\mathrm{kg}]$, Federsteifigkeit $k \ [\mathrm{N/m}]$
+- Reibungsfrei ($d = 0\,\mathrm{N\cdot s/m}$), Auslenkung $y(t) \ [\mathrm{m}]$
+- Eigenkreisfrequenz $\omega_0 = \sqrt{k/m} \ [\mathrm{rad/s}]$, Dämpfung $D = 0$
 
 **Physikalisches Gesetz (Hooke'sches Gesetz & Newton):**
-$$ F_{Feder} = -k y $$
-$$ F = m a \implies -k y(t) = m \ddot{y}(t) $$
-$$ \ddot{y}(t) = -\frac{k}{m} y(t) $$
+$$ F_{\text{Feder}} = -k y \quad [\mathrm{N}] $$
+$$ F = m a \implies m \ddot{y}(t) = -k y(t) \iff \ddot{y}(t) + \omega_0^2 y(t) = 0 $$
 
 ---
 
@@ -605,14 +615,15 @@ $$ \begin{pmatrix} y_{k+1} \\ v_{k+1} \end{pmatrix} = \begin{pmatrix} y_k \\ v_k
 <div class="columns">
 <div>
 
-Was passiert mit der Energie des Systems bei der numerischen Simulation? Die Gesamtenergie ist:
+Expliziter Euler-Schritt: $y_{k+1} = y_k + h v_k$, $v_{k+1} = v_k - h \omega_0^2 y_k$.
+Gesamtenergie: $E_k = \frac{1}{2} m v_k^2 + \frac{1}{2} k y_k^2$.
 
-$E = E_{kin} + E_{pot} = \frac{1}{2}mv^2 + \frac{1}{2}ky^2$
+**Analytische Energiebilanz nach Zeitschritt $h$:**
+$$ E_{k+1} = E_k \cdot \left(1 + \omega_0^2 h^2\right) > E_k \quad \forall h > 0 $$
 
-Bei der analytischen Lösung ist `E` konstant.
-Beim expliziten Euler-Verfahren **wächst** die numerische Energie $E_k = \frac{1}{2}mv_k^2 + \frac{1}{2}ky_k^2$ mit jedem Schritt!
-
-Dieses Verhalten ist typisch für den expliziten Euler bei oszillierenden Systemen. Das Verfahren ist nur bedingt stabil. Eine kleinere Schrittweite `h` verlangsamt das Anwachsen, verhindert es aber nicht.
+- In jedem Zeitschritt generiert der explizite Euler künstliche numerische Energie ins System.
+- Nach $N$ Schritten: $E_N = E_0 (1 + \omega_0^2 h^2)^N \to \infty$.
+- Das Verfahren ist für Oszillatoren **unbedingt instabil**! Kleinere $h$ verlangsamen nur die Divergenz.
 
 </div>
 <div>
@@ -1604,7 +1615,17 @@ Dieser Abschnitt demonstriert die Systemsimulation an einem Kernproblem der Auto
 
 ---
 
-### DC-Servomotor: Kontinuierliches Streckenmodell
+### DC-Servomotor: Elektromechanische Modellbildung
+
+- **Elektrischer Ankerkreis:** $u(t) = R \cdot i(t) + L \frac{\mathrm{d}i}{\mathrm{d}t} + k_e \omega(t) \xrightarrow{L \approx 0} i \approx \frac{u - k_e \omega}{R}$
+- **Mechanischer Rotor:** $J \dot{\omega}(t) = k_m \cdot i(t) - d \cdot \omega(t) \implies J \dot{\omega} = -\frac{k_m k_e + d R}{R} \omega + \frac{k_m}{R} u$
+- **PT1-Parameter:** $T_m = \frac{J \cdot R}{k_m k_e + d \cdot R} = 0{,}05\,\mathrm{s}, \quad K_m = \frac{k_m}{k_m k_e + d \cdot R} = 2{,}5\,\frac{\mathrm{rad}}{\mathrm{s \cdot V}}$
+
+![w:920 center](./Diagramme/DC_Motor_Ersatzschaltbild.svg)
+
+---
+
+### DC-Servomotor: Kontinuierliches Streckenmodell (Zustandsraum)
 
 <div class="columns">
 <div class="two">
@@ -1651,18 +1672,20 @@ $$\mathbf{A} = \begin{pmatrix} 0 & 1 \\ 0 & -\frac{1}{T_m} \end{pmatrix}, \quad 
 
 Wird ein Sollwertsprung $w(t) = \theta_{\text{soll}}$ vorgegeben:
 
-1. **Integrator-Windup:** Der Motor kann wegen $u_{\max} = 10\,\mathrm{V}$ nicht schneller beschleunigen. Der Integrator akkumuliert den Fehler $e(t)$ unbegrenzt weiter!
-2. **Überschwingen:** Am Ziel ($e=0$) ist der Integrator überladen und baut Ladung erst nach starkem Überschwingen ab.
-3. **Lösung: Anti-Windup Clamping:**
+1. **Ungesättigte Stellgröße (PID-Regler):**
+   $$u_{\text{raw}}(t) = K_p \cdot e(t) + x_I(t) - K_d \cdot \omega(t)$$
+   mit $K_p = 15{,}0\,\mathrm{V/rad}$, $K_i = 40{,}0\,\frac{\mathrm{V}}{\mathrm{rad\cdot s}}$, $K_d = 0{,}5\,\frac{\mathrm{V\cdot s}}{\mathrm{rad}}$.
+2. **Begrenzung:** $u = \operatorname{clamp}(u_{\text{raw}}, -u_{\max}, +u_{\max})$ ($u_{\max} = 10\,\mathrm{V}$).
+3. **Clamping-Kriterium ($e \cdot u_{\text{raw}} > 0$):**
    $$\dot{x}_I = \begin{cases} 0, & |u_{\text{raw}}| \ge u_{\max} \land e \cdot u_{\text{raw}} > 0 \\ K_i \cdot e(t), & \text{sonst} \end{cases}$$
-   Der Integrator stoppt sofort, solange der Aktor am Anschlag steht!
+   Der Integrator stoppt sofort, solange der Aktor am Anschlag steht und $e$ dieselbe Richtung treibt.
 
 </div>
 <div class="two">
 
 ![w:480](./Illustrationen/AntiWindup_Vergleich.png)
 
-*Mit Anti-Windup Clamping (grün) reagiert die Achse aperiodisch stabil ohne 60% Überschwingen (rot).*
+*Mit Anti-Windup Clamping (grün) reagiert die Achse aperiodisch stabil ohne 60 % Überschwingen (rot).*
 
 </div>
 </div>

@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="100%" height="100%">
+  <defs>
+    <!-- Pfeilspitzen -->
+    <marker id="arr-dark" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" />
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#16A34A" />
+    </marker>
+  </defs>
+
+  <style>
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .code-font {
+      font-family: Consolas, "Courier New", monospace;
+    }
+  </style>
+
+  <!-- Hauptrahmen & Hintergrund -->
+  <rect x="5" y="5" width="950" height="410" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
+
+  <!-- Titelbanner -->
+  <rect x="5" y="5" width="950" height="42" rx="12" fill="#F8FAFC" />
+  <rect x="5" y="32" width="950" height="15" fill="#F8FAFC" />
+  <line x1="5" y1="47" x2="955" y2="47" stroke="#E2E8F0" stroke-width="1.5" />
+  <text x="20" y="30" font-size="16" font-weight="700" fill="#004B96">Event-Lokalisierung: Nullstelleneinkreisung via Vorzeichenwechsel-Bisektion</text>
+  
+  <rect x="730" y="12" width="210" height="24" rx="5" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2" />
+  <text x="835" y="28" font-size="12" font-weight="700" fill="#1D4ED8" text-anchor="middle">Bolzano-Intervallschachtelung</text>
+
+  <!-- ========================================================================= -->
+  <!-- 1. BEREICH LINKS: KOORDINATENSYSTEM & BISEKTIONSSCHRITTE                  -->
+  <!-- ========================================================================= -->
+  <rect x="15" y="54" width="615" height="240" rx="8" fill="#FAFAFA" stroke="#E2E8F0" stroke-width="1.2" />
+  
+  <!-- Header-Band für Zone 1 -->
+  <rect x="15" y="54" width="615" height="24" rx="8" fill="#F1F5F9" />
+  <rect x="15" y="66" width="615" height="12" fill="#F1F5F9" />
+  <line x1="15" y1="78" x2="630" y2="78" stroke="#E2E8F0" stroke-width="1" />
+  <text x="25" y="70" font-size="12" font-weight="700" fill="#334155">1. Intervallschachtelung im Zeitbereich: Lokalisierung von t*</text>
+  <text x="615" y="70" font-size="12" font-weight="700" fill="#15803D" text-anchor="end">Kriterium: z(t_a) · z(t_b) ≤ 0</text>
+
+  <!-- Toleranzband um t* (grün schattiert) -->
+  <rect x="334" y="82" width="12" height="120" fill="#DCFCE7" fill-opacity="0.6" stroke="#86EFAC" stroke-width="1" />
+
+  <!-- Nulllinie z(t) = 0 (Zeitachse t) -->
+  <line x1="45" y1="140" x2="595" y2="140" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr-dark)" />
+  <rect x="42" y="125" width="56" height="16" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+  <text x="70" y="137" font-size="12" font-weight="700" fill="#0284C7" text-anchor="middle">z(t) = 0</text>
+
+  <rect x="548" y="124" width="46" height="16" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+  <text x="571" y="136" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">Zeit t</text>
+
+  <!-- Vertikale Achse z -->
+  <line x1="45" y1="205" x2="45" y2="84" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr-dark)" />
+  <rect x="30" y="82" width="30" height="16" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+  <text x="45" y="94" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">z(t)</text>
+
+  <!-- Kontinuierliche Kurve z(t) -->
+  <path d="M 75 90 C 160 98, 250 120, 340 140 C 420 158, 490 178, 550 190" fill="none" stroke="#2563EB" stroke-width="2.5" />
+
+  <!-- Punkt A bei (85, 93): z(t_a) > 0 -->
+  <circle cx="85" cy="93" r="5" fill="#2563EB" />
+  <rect x="60" y="80" width="105" height="18" rx="3" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1" />
+  <text x="112" y="93" font-size="12" font-weight="700" fill="#1D4ED8" text-anchor="middle">A: z(t_a) &gt; 0</text>
+
+  <!-- Punkt B bei (535, 187): z(t_b) < 0 -->
+  <circle cx="535" cy="187" r="5" fill="#2563EB" />
+  <rect x="445" y="185" width="105" height="18" rx="3" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1" />
+  <text x="497" y="198" font-size="12" font-weight="700" fill="#1D4ED8" text-anchor="middle">B: z(t_b) &lt; 0</text>
+
+  <!-- Exakter Event-Punkt t* bei (340, 140) -->
+  <line x1="340" y1="84" x2="340" y2="202" stroke="#16A34A" stroke-width="1.5" stroke-dasharray="3,3" />
+  <circle cx="340" cy="140" r="5" fill="#16A34A" />
+  <rect x="275" y="90" width="130" height="18" rx="3" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1" />
+  <text x="340" y="103" font-size="12" font-weight="700" fill="#15803D" text-anchor="middle">Exakte Wurzel t*</text>
+
+  <!-- ================= BISEKTIONS-SCHRITTE (INTERVALLBALKEN) ================= -->
+  <!-- Vertikale Hilfslinien der Bisektionspunkte (im Hintergrund) -->
+  <line x1="310" y1="133" x2="310" y2="242" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="2,2" />
+  <circle cx="310" cy="133" r="4" fill="#F59E0B" />
+
+  <line x1="423" y1="158" x2="423" y2="262" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="2,2" />
+  <circle cx="423" cy="158" r="4" fill="#8B5CF6" />
+
+  <line x1="367" y1="147" x2="367" y2="280" stroke="#10B981" stroke-width="1.5" stroke-dasharray="2,2" />
+  <circle cx="367" cy="147" r="4" fill="#10B981" />
+
+  <!-- Schritt 0: Startintervall [t_a, t_b] -->
+  <line x1="85" y1="214" x2="535" y2="214" stroke="#64748B" stroke-width="2" />
+  <line x1="85" y1="209" x2="85" y2="219" stroke="#64748B" stroke-width="2" />
+  <line x1="535" y1="209" x2="535" y2="219" stroke="#64748B" stroke-width="2" />
+  <rect x="180" y="206" width="220" height="17" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+  <text x="290" y="218" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Schritt 0: [t_a, t_b] mit Breite Δt_0</text>
+
+  <!-- Schritt 1: Mittelpunkt t_mid1 = 310 -->
+  <line x1="310" y1="235" x2="535" y2="235" stroke="#D97706" stroke-width="2" />
+  <line x1="310" y1="230" x2="310" y2="240" stroke="#D97706" stroke-width="2" />
+  <line x1="535" y1="230" x2="535" y2="240" stroke="#D97706" stroke-width="2" />
+  <rect x="335" y="227" width="180" height="17" rx="3" fill="#FFFFFF" stroke="#FED7AA" stroke-width="1" />
+  <text x="425" y="239" font-size="12" font-weight="600" fill="#B45309" text-anchor="middle">Schritt 1: Δt_1 = Δt_0 / 2</text>
+
+  <!-- Schritt 2: Mittelpunkt t_mid2 = 423 -->
+  <line x1="310" y1="256" x2="423" y2="256" stroke="#7C3AED" stroke-width="2" />
+  <line x1="310" y1="251" x2="310" y2="261" stroke="#7C3AED" stroke-width="2" />
+  <line x1="423" y1="251" x2="423" y2="261" stroke="#7C3AED" stroke-width="2" />
+  <rect x="314" y="248" width="50" height="17" rx="3" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1" />
+  <text x="339" y="260" font-size="12" font-weight="600" fill="#6D28D9" text-anchor="middle">Δt_0 / 4</text>
+
+  <!-- Schritt 3: Mittelpunkt t_mid3 = 367 -->
+  <line x1="310" y1="275" x2="367" y2="275" stroke="#059669" stroke-width="2" />
+  <line x1="310" y1="271" x2="310" y2="279" stroke="#059669" stroke-width="2" />
+  <line x1="367" y1="271" x2="367" y2="279" stroke="#059669" stroke-width="2" />
+  <rect x="375" y="268" width="225" height="17" rx="3" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1" />
+  <text x="487" y="280" font-size="12" font-weight="700" fill="#047857" text-anchor="middle">Schritt 3: Δt_0 / 8  ⇒ Konvergenz t*</text>
+
+  <!-- ========================================================================= -->
+  <!-- 2. BEREICH RECHTS: ABBRUCHKRITERIEN & WARNUNG                             -->
+  <!-- ========================================================================= -->
+  <!-- Karte A: Duale Abbruchkriterien -->
+  <rect x="640" y="54" width="305" height="114" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.2" />
+  <rect x="640" y="54" width="305" height="22" rx="8" fill="#DCFCE7" />
+  <rect x="640" y="66" width="305" height="10" fill="#DCFCE7" />
+  <line x1="640" y1="76" x2="945" y2="76" stroke="#86EFAC" stroke-width="1" />
+  <text x="792" y="69" font-size="12" font-weight="700" fill="#166534" text-anchor="middle">Duale Abbruchkriterien &amp; Schranke</text>
+
+  <rect x="650" y="82" width="285" height="20" rx="3" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1" />
+  <text x="792" y="96" font-size="12" font-weight="700" fill="#15803D" text-anchor="middle">1. Residualtoleranz: |z(t_mid)| ≤ ε_z</text>
+
+  <rect x="650" y="106" width="285" height="20" rx="3" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1" />
+  <text x="792" y="120" font-size="12" font-weight="700" fill="#15803D" text-anchor="middle">2. Zeittoleranz: |t_b - t_a| ≤ ε_t</text>
+
+  <text x="650" y="142" font-size="12" font-weight="600" fill="#166534">• Max. Schritte: k_max = ⌈log₂(Δt_0 / ε_t)⌉</text>
+  <text x="650" y="158" font-size="12" font-weight="500" fill="#475569">• Bsp: Δt_0=10 ms, ε_t=10 ns ⇒ k_max = 20</text>
+
+  <!-- Karte B: Warnung Häufiger Implementierungsfehler -->
+  <rect x="640" y="176" width="305" height="118" rx="8" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.2" />
+  <rect x="640" y="176" width="305" height="22" rx="8" fill="#FEE2E2" />
+  <rect x="640" y="188" width="305" height="10" fill="#FEE2E2" />
+  <line x1="640" y1="198" x2="945" y2="198" stroke="#FCA5A5" stroke-width="1" />
+  <text x="792" y="191" font-size="12" font-weight="700" fill="#B91C1C" text-anchor="middle">ACHTUNG: Falsche Zeitschritthalbierung</text>
+
+  <rect x="650" y="204" width="285" height="20" rx="3" fill="#FFFFFF" stroke="#FCA5A5" stroke-width="1" />
+  <text x="792" y="218" font-size="12" font-weight="700" fill="#DC2626" text-anchor="middle">❌ Naiv: timeStep /= 2; (FALSCH!)</text>
+
+  <text x="650" y="238" font-size="12" font-weight="600" fill="#991B1B">• Testet starr t_0+0.5h, t_0+0.25h, t_0+0.125h...</text>
+  <text x="650" y="254" font-size="12" font-weight="600" fill="#991B1B">• Verfehlt Nullstellen, falls t* &gt; t_0 + 0.5·Δt_0!</text>
+  <text x="650" y="274" font-size="12" font-weight="700" fill="#15803D">✔ Echte Bisektion schachtelt dynamisch ein</text>
+
+  <!-- ========================================================================= -->
+  <!-- 3. BEREICH UNTEN: ALGORITHMUS (CODE) & EIGENSCHAFTEN                      -->
+  <!-- ========================================================================= -->
+  <!-- Links: C#-Pseudocode -->
+  <rect x="15" y="302" width="540" height="105" rx="8" fill="#1E293B" stroke="#0F172A" stroke-width="1.2" />
+  <rect x="25" y="308" width="285" height="18" rx="3" fill="#334155" />
+  <text x="35" y="321" font-size="12" font-weight="700" fill="#38BDF8">C#-Referenz: Robuste Bisektionsschleife</text>
+
+  <text x="25" y="342" font-size="12" font-weight="500" fill="#F8FAFC" class="code-font">while ((tb - ta) &gt; eps_t &amp;&amp; Math.Abs(z_mid) &gt; eps_z) {</text>
+  <text x="45" y="358" font-size="12" font-weight="500" fill="#F8FAFC" class="code-font">double t_mid = 0.5 * (ta + tb);  double z_mid = EvalZ(t_mid);</text>
+  <text x="45" y="374" font-size="12" font-weight="500" fill="#F8FAFC" class="code-font">if (za * z_mid &lt;= 0.0) { tb = t_mid; zb = z_mid; }</text>
+  <text x="45" y="390" font-size="12" font-weight="500" fill="#F8FAFC" class="code-font">else                  { ta = t_mid; za = z_mid; }</text>
+  <text x="25" y="402" font-size="12" font-weight="500" fill="#F8FAFC" class="code-font">}</text>
+
+  <!-- Rechts: Eigenschaften & Garantien -->
+  <rect x="565" y="302" width="380" height="105" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.2" />
+  <rect x="575" y="308" width="235" height="18" rx="3" fill="#DCFCE7" />
+  <text x="585" y="321" font-size="12" font-weight="700" fill="#166534">Garantierte Konvergenzeigenschaften</text>
+
+  <text x="575" y="343" font-size="12" font-weight="600" fill="#15803D">• Lineare Konvergenz: Halbiert Intervall in jedem Schritt:</text>
+  <rect x="590" y="350" width="340" height="18" rx="3" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1" />
+  <text x="760" y="363" font-size="12" font-weight="700" fill="#047857" text-anchor="middle">Δt_k = Δt_0 · 2^(-k)   (Exponentielle Schrumpfung)</text>
+
+  <text x="575" y="383" font-size="12" font-weight="600" fill="#15803D">• Deterministisch: Bolzano garantiert Auffinden der Wurzel</text>
+  <text x="575" y="399" font-size="12" font-weight="600" fill="#15803D">• Zeno-Schutz: Verhindert unendliche Zeitschrittschrumpfung</text>
+</svg>

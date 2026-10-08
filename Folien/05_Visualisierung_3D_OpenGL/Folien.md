@@ -218,17 +218,43 @@ gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE, lightDiffuse);
 
 ---
 
-### Vektoren für die Beleuchtungsrechnung
+### Vektoren für die Beleuchtungsrechnung (Normiert)
+
+<div class="columns top">
+<div class="two">
+
+Für jeden Oberflächenpunkt $\vec{p}$ erfordert das Phong-Modell vier **Einheitsvektoren** ($\|\cdot\| = 1$):
+
+- **$\vec{n}$ (Normalenvektor):** Senkrecht zur Tangentialebene ($\|\vec{n}\| = 1$).
+- **$\vec{l}$ (Lichtvektor):** Zeigt zur Lichtquelle:
+  $$\vec{l} = \frac{\vec{p}_{\text{light}} - \vec{p}}{\|\vec{p}_{\text{light}} - \vec{p}\|}$$
+- **$\vec{v}$ (Betrachtungsvektor):** Zeigt zur Kamera:
+  $$\vec{v} = \frac{\vec{p}_{\text{cam}} - \vec{p}}{\|\vec{p}_{\text{cam}} - \vec{p}\|}$$
+- **$\vec{r}$ (Reflexionsvektor):** $\vec{r} = 2(\vec{n} \cdot \vec{l})\vec{n} - \vec{l} \quad (\|\vec{r}\| = 1)$
+
+</div>
+<div class="one">
+
+![w:380](./Diagramme/Phong%20-%20Vektoren.svg)
+
+</div>
+</div>
+
+---
+
+### **Ambient**-Komponente (DIN / ISO)
 
 <div class="columns">
 <div>
 
-Für die Berechnung werden an jedem Punkt der Oberfläche vier Vektoren benötigt:
+Simuliert die indirekte, diffuse Grundhelligkeit im Raum (hervorgerufen durch mehrfache Streuung an Wänden und Objekten):
 
-- **$N$ (Normalenvektor)**: Vektor, der senkrecht von der Oberfläche weg zeigt.
-- **$L$ (Lichtvektor)**: Vektor vom Oberflächenpunkt zur Lichtquelle.
-- **$V$ (Betrachtungsvektor)**: Vektor vom Oberflächenpunkt zur Kamera.
-- **$R$ (Reflexionsvektor)**: Vektor, in den der Lichtstrahl an der Oberfläche reflektiert wird. 
+$$I_a = k_a \cdot I_{La}$$
+
+- $k_a \in [0, 1]$: Ambienter Reflexionskoeffizient des Materials (`glMaterial`, Farbvektor RGB)
+- $I_{La} \in [0, 1]$: Intensität / Farbe des globalen Umgebungslichts (`GL_LIGHT_MODEL_AMBIENT`)
+
+*Eigenschaft:* Völlig unabhängig von Oberflächennormalen, Lichtposition oder Kamerablickwinkel; verhindert tiefe, unphysikalisch schwarze Schatten.
 
 </div>
 <div>
@@ -240,41 +266,19 @@ Für die Berechnung werden an jedem Punkt der Oberfläche vier Vektoren benötig
 
 ---
 
-### **Ambient**-Komponente
+### **Diffuse**-Komponente (Lambertsches Gesetz)
 
 <div class="columns">
 <div>
 
-Die Ambient-Komponente ist am einfachsten. Sie ist das Produkt aus der Lichtfarbe und der Materialfarbe für Umgebungslicht.
+Beschreibt die richtungsunabhängige, matte Streuung nach dem Lambertschen Kosinusgesetz:
 
-$I_{a} = \text{light}_{a} \cdot \text{material}_{a}$
+$$I_d = k_d \cdot I_{Ld} \cdot \max(0, \vec{n} \cdot \vec{l})$$
 
-- $\text{light}_{a}$: Farbe des globalen Umgebungslichts (z.B. `GL_LIGHT_MODEL_AMBIENT`).
-- $\text{material}_{a}$: Ambient-Reflexionsvermögen des Materials (definiert mit `glMaterial`).
-
-Diese Komponente ist für jeden Punkt eines Objekts gleich und sorgt für eine Grundhelligkeit.
-
-</div>
-<div>
-
-![w:500](./Diagramme/Phong%20-%20Vektoren.svg)
-
-</div>
-</div>
-
----
-
-### **Diffuse**-Komponente
-
-<div class="columns">
-<div>
-
-Die Diffuse-Komponente hängt vom Winkel zwischen dem Normalenvektor $N$ und dem Lichtvektor $L$ ab. Je direkter das Licht auf die Oberfläche trifft, desto heller ist sie.
-
-$I_{d} = \text{light}_{d} \cdot \text{material}_{d} \cdot \max(0, N \cdot L)$
-
-- $N \cdot L$: Skalarprodukt der normalisierten Vektoren. Entspricht $\cos(\delta)$.
-- $\max(0, ...)$: Sorgt dafür, dass von hinten beleuchtete Flächen nicht negativ beitragen.
+- $k_d \in [0, 1]$: Diffuser Materialkoeffizient (Eigenfarbe)
+- $I_{Ld} \in [0, 1]$: Diffuse Lichtquellenintensität
+- $\vec{n} \cdot \vec{l} = \cos(\delta)$: Kosinus des Einfallswinkels $\delta$
+- $\max(0, \dots)$: Flächen, die von der Lichtquelle abgewandt sind ($\delta > 90^\circ \implies \vec{n}\cdot\vec{l} < 0$), empfangen kein direktes Licht.
 
 </div>
 <div>
@@ -286,17 +290,19 @@ $I_{d} = \text{light}_{d} \cdot \text{material}_{d} \cdot \max(0, N \cdot L)$
 
 ---
 
-### **Specular**-Komponente
+### **Specular**-Komponente (Glanzpunkt)
 
 <div class="columns">
 <div>
 
-Die Specular-Komponente erzeugt ein Glanzlicht und hängt vom Winkel zwischen dem Reflexionsvektor $R$ und dem Betrachtervektor $V$ ab.
+Erzeugt den charakteristischen, schimmernden Glanzpunkt auf glatten Oberflächen:
 
-$I_{s} = \text{light}_{s} \cdot \text{material}_{s} \cdot (\max(0, R \cdot V))^{\text{shininess}}$
+$$I_s = k_s \cdot I_{Ls} \cdot \left(\max(0, \vec{r} \cdot \vec{v})\right)^{\alpha_{\text{shiny}}}$$
 
-- $R = 2(N \cdot L)N - L$: Berechnung des Reflexionsvektors.
-- $\text{shininess}$: Ein Exponent, der die Größe und Schärfe des Glanzlichts steuert (definiert mit `glMaterial`). Je höher der Wert, desto kleiner und schärfer der Glanzpunkt.
+- $k_s \in [0, 1]$: Spekularer Reflexionskoeffizient
+- $I_{Ls} \in [0, 1]$: Spekulare Lichtquellenintensität (meist rein weiß)
+- $\vec{r} = 2(\vec{n}\cdot\vec{l})\vec{n} - \vec{l}$: Reflexions-Einheitsvektor
+- $\alpha_{\text{shiny}} \in [1, 128]$: Shininess-Exponent. Je größer $\alpha_{\text{shiny}}$, desto enger gebündelt und schärfer der Glanzpunkt.
 
 </div>
 <div>
@@ -1239,22 +1245,24 @@ arm1.Add(arm2); axis1.Add(arm1); robot.Add(axis1);
 
 ### Vorwärtskinematik & Matrix-Stack
 
-<div class="columns">
-<div>
+<div class="columns top">
+<div class="two">
 
-Die globale Pose des Greifers $\mathbf{T}_{\text{TCP}}$ berechnet sich durch Verkettung homogener Transformationsmatrizen:
+Greiferpose $\mathbf{T}_{\text{TCP}} \in \mathbb{R}^{4 \times 4}$ durch Verkettung homogener Transformationsmatrizen:
 
-$$\mathbf{T}_{\text{TCP}} = \mathbf{T}_{\text{Base}} \cdot \mathbf{R}_1(\theta_1) \cdot \mathbf{T}_1 \cdot \mathbf{R}_2(\theta_2) \cdot \mathbf{T}_2$$
+$$\mathbf{T}_{\text{TCP}} = \mathbf{T}_{\text{Base}} \cdot \mathbf{R}_y(\theta_1) \cdot \mathbf{T}_z(L_1) \cdot \mathbf{R}_z(\theta_2) \cdot \mathbf{T}_y(L_2)$$
 
-- Durch `gl.PushMatrix()` und `gl.PopMatrix()` während der Baumtraversierung wird der ModelView-Matrix-Stack automatisch akkumuliert.
-- **Vorteil:** Die Visualisierung berechnet die Vorwärtskinematik implizit ohne manuelle Matrixmultiplikation!
+- $\mathbf{T}_{\text{Base}}$: Montagepose der Basis im Weltraum $[\mathrm{m}]$
+- $\mathbf{R}_y(\theta_1), \mathbf{R}_z(\theta_2)$: Drehungen in Gelenken (Yaw $\theta_1$, Pitch $\theta_2$)
+- $\mathbf{T}_z(L_1), \mathbf{T}_y(L_2)$: Armtranslationen (Längen $L_1, L_2$ $[\mathrm{m}]$)
+- *OpenGL:* `gl.PushMatrix()`/`PopMatrix()` akkumuliert die Kette implizit auf dem Hardware-Matrix-Stack!
 
 </div>
-<div>
+<div class="one">
 
 > [!TIP]
-> **Industrie-Standard (Denavit-Hartenberg):**  
-> Genau wie in TwinCAT Kinematics, ROS (URDF-Beschreibungen) oder MATLAB Simscape Multibody folgt die 3D-Szene dem Prinzip serieller Koordinatenvererbung. Verändert die Steuerung den Winkel von Achse 1, bewegen sich alle abhängigen Armsegmente und der Greifer automatisch physikalisch exakt mit.
+> **Industrieller Standard:**  
+> Wie in TwinCAT Kinematics, ROS (URDF) oder MATLAB Simscape vererben serielle Gelenke Posen automatisch an Folgestrukturen.
 
 </div>
 </div>

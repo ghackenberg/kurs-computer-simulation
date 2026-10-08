@@ -670,33 +670,41 @@ plot.Add.Bars(bars);
 
 ---
 
-### Statistische Kennzahlen des Simulationslaufs
-
-Aus den gesammelten Rohdaten lassen sich die zentralen Leistungsindikatoren berechnen:
+### Warteschlangentheorie: Das M/M/1-Modell & Gesetz von Little
 
 <div class="columns">
 <div class="two">
 
-**1. Mittlere Warteschlangenlänge** $\bar{L}_q$
-Zeitgewichtetes Mittel über die Gesamtsimulationsdauer $T$:
-$$\bar{L}_q = \frac{1}{T} \int_0^T L(t) \, dt \approx \frac{1}{T} \sum_{k=1}^K L(t_{k-1}) \cdot (t_k - t_{k-1})$$
-
-**2. Mittlere Wartezeit** $\bar{W}_q$
-Arithmetisches Mittel über alle $N$ bedienten Kunden:
-$$\bar{W}_q = \frac{1}{N} \sum_{i=1}^N W_i$$
+**Klassifikation nach Kendall ($A/S/c$):**
+- **$M/M/1$:** Markov-Ankünfte ($M$), Markov-Bedienung ($M$), $1$ Server.
+- $\lambda \ [\mathrm{min^{-1}}]$: Mittlere Ankunftsrate ($\text{E}[T_A] = 1/\lambda$)
+- $\mu \ [\mathrm{min^{-1}}]$: Mittlere Bedienrate ($\text{E}[T_S] = 1/\mu$)
+- $\rho = \frac{\lambda}{\mu} < 1$: Auslastungsgrad (Verkehrsintensität)
+- **Stabilität:** Nur für $\rho < 1$ existiert ein stationäres Gleichgewicht!
 
 </div>
 <div class="two">
 
-**3. Gesetz von Little (Plausibilitätsprüfung)**
-Im stationären Zustand gilt bei mittlerer Ankunftsrate $\lambda$:
-$$\bar{L}_q = \lambda \cdot \bar{W}_q$$
-
-- Dient in der Praxis als elementarer Plausibilitätscheck: Stimmen simulierte Schlangenlänge und simulierte Wartezeit überein?
-- Abweichungen weisen auf Einschwingphasen (*Warm-up Period*) oder Modellierungsfehler hin.
+**Gesetz von Little (stationärer Zustand):**
+- **Gesamtsystem (Schlange + Server):**
+  $$\bar{L} = \lambda \cdot \bar{W}$$
+- **Warteschlange (Puffer):**
+  $$\bar{L}_q = \lambda \cdot \bar{W}_q$$
+- Mittlere Verweilzeit: $\bar{W} = \bar{W}_q + \frac{1}{\mu}$.
+- Mittlere Schlangenlänge: $\bar{L}_q = \frac{1}{T} \int_0^T L_q(t) \, dt$.
+- Mittlere Wartezeit: $\bar{W}_q = \frac{1}{N} \sum_{i=1}^N W_i$.
 
 </div>
 </div>
+
+---
+
+### Warteschlangentheorie: Kinetik & Ratenbilanz
+
+- Kinetik als kontinuierlicher Geburts- und Todesprozess mit Raten $\lambda$ (Zulauf) und $\mu$ (Ablauf).
+- Stationäre Zustandswahrscheinlichkeit: $P_k = (1 - \rho)\rho^k \implies \bar{L}_q = \frac{\rho^2}{1-\rho}, \quad \bar{W}_q = \frac{\rho}{\mu - \lambda}$.
+
+![w:920 center](./Diagramme/MM1_Warteschlange_Kinetik.svg)
 
 ---
 
@@ -844,16 +852,17 @@ Die **Inversionsmethode** (Inverse Transform Sampling) ist ein Verfahren zur Erz
 
 ### Herleitung mittels Inversionsmethode (2/2) - **Exponentialverteilung**
 
-**Ziel:** Erzeuge eine Zufallsvariable $X$ mit der kumulativen Verteilungsfunktion (CDF) der Exponentialverteilung: $F_X(x) = 1 - e^{-\lambda x}$ für $x \ge 0$.
+**Ziel:** Erzeuge eine Zufallsvariable $X$ mit der CDF $F_X(x) = 1 - e^{-\lambda x}$ für $x \ge 0$.
 
 **Schritte:**
-1.  Setze die CDF gleich einer gleichverteilten Zufallszahl $U \in [0, 1)$: $U = 1 - e^{-\lambda X}$
-2.  Löse nach $e^{-\lambda X}$ auf: $e^{-\lambda X} = 1 - U$
-3.  Wende den natürlichen Logarithmus auf beide Seiten an:
-    $\ln(e^{-\lambda X}) = \ln(1 - U)$ und $-\lambda X = \ln(1 - U)$
-4.  Löse nach $X$ auf: $X = -\frac{1}{\lambda} \ln(1 - U)$
+1. Setze die CDF gleich einer Pseudozufallszahl $U \in [0, 1)$: $U = 1 - e^{-\lambda X}$
+2. Löse nach $e^{-\lambda X}$ auf: $e^{-\lambda X} = 1 - U$
+3. Wende den Logarithmus an: $-\lambda X = \ln(1 - U) \implies X = -\frac{1}{\lambda} \ln(1 - U)$
 
-**Hinweis:** Da $U$ eine gleichverteilte Zufallszahl in $[0, 1)$ ist, ist auch $1 - U$ eine gleichverteilte Zufallszahl in $(0, 1]$. Daher kann die Formel vereinfacht werden zu: $X = -\frac{1}{\lambda} \ln(U)$
+**Numerische Singularitätsvermeidung:**
+- Für $U \in [0, 1)$ liegt $U_{\text{safe}} = 1 - U$ strikt im Intervall $(0, 1]$.
+- Setzt man fälschlich direkt $U \in [0, 1)$ ein, führt $U = 0{,}0$ zu $\ln(0) \to -\infty$ (`+Infinity` im Ereigniskalender!).
+- In C#: `double u = 1.0 - rng.NextDouble(); double x = -Math.Log(u) / lambda;` (garantiert $u \in (0, 1]$).
 
 ---
 

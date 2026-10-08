@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="960" height="440">
+  <defs>
+    <!-- Arrow Markers -->
+    <marker id="arrowAxis" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowSkyBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284C7"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#DC2626"/>
+    </marker>
+    <marker id="arrowFHBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#004B96"/>
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#7C3AED"/>
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#D97706"/>
+    </marker>
+
+    <style>
+      text {
+        font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+      }
+      .math-italic {
+        font-family: 'Cambria Math', 'Times New Roman', serif;
+        font-style: italic;
+      }
+    </style>
+  </defs>
+
+  <!-- Outer Background Canvas -->
+  <rect x="0" y="0" width="960" height="440" fill="#FFFFFF"/>
+  <rect x="5" y="5" width="950" height="430" rx="10" fill="#FAFAFA" stroke="#CBD5E1" stroke-width="1.5"/>
+
+  <!-- Top Title Banner -->
+  <path d="M 5 15 Q 5 5 15 5 L 945 5 Q 955 5 955 15 L 955 42 L 5 42 Z" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="24" y="27" font-size="15" font-weight="bold" fill="#004B96">Schiefer Wurf mit Luftwiderstand: Vektoren &amp; Kräftebilanz</text>
+  <text x="936" y="27" font-size="12" font-weight="bold" fill="#64748B" text-anchor="end">Kapitel 01: Physikalische Grundlagen &amp; Modellbildung</text>
+
+  <!-- ==================== DIAGRAM REGION (LEFT) ==================== -->
+  <!-- Ground shading & Line -->
+  <rect x="60" y="370" width="550" height="45" fill="#F1F5F9"/>
+  <line x1="60" y1="370" x2="615" y2="370" stroke="#94A3B8" stroke-width="2"/>
+
+  <!-- Coordinate Axes -->
+  <!-- X-Axis -->
+  <line x1="85" y1="370" x2="605" y2="370" stroke="#475569" stroke-width="2" marker-end="url(#arrowAxis)"/>
+  <!-- Y-Axis -->
+  <line x1="90" y1="380" x2="90" y2="60" stroke="#475569" stroke-width="2" marker-end="url(#arrowAxis)"/>
+
+  <!-- Trajectory 1: Ungedämpfte Parabel (Vakuum) -->
+  <path d="M 90 310 Q 330 90 570 370" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,5"/>
+
+  <!-- Trajectory 2: Gedämpfte Bahn mit Luftwiderstand -->
+  <path d="M 90 310 C 160 230, 230 185, 290 190 C 350 195, 410 260, 460 370" fill="none" stroke="#004B96" stroke-width="3.5"/>
+
+  <!-- Launch Angle & Components Construction (P0 at 90, 310) -->
+  <!-- Horizontal reference line for angle alpha -->
+  <line x1="90" y1="310" x2="200" y2="310" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <!-- Arc for alpha (angle ~ 45 deg, radius 38) -->
+  <path d="M 128 310 A 38 38 0 0 0 117 283" fill="none" stroke="#D97706" stroke-width="2"/>
+  <!-- v0x component vector -->
+  <line x1="90" y1="310" x2="162" y2="310" stroke="#0284C7" stroke-width="2" marker-end="url(#arrowSkyBlue)"/>
+  <!-- v0y projection dashed line -->
+  <line x1="164" y1="310" x2="164" y2="236" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3,3"/>
+  <!-- v0y component vector on Y axis -->
+  <line x1="90" y1="310" x2="90" y2="236" stroke="#0284C7" stroke-width="2" marker-end="url(#arrowSkyBlue)"/>
+  <!-- Initial Velocity Vector v0 -->
+  <line x1="90" y1="310" x2="162" y2="238" stroke="#0284C7" stroke-width="3" marker-end="url(#arrowSkyBlue)"/>
+
+  <!-- Current State Point P(x, y) at (340, 215) -->
+  <!-- Tangent Velocity Vector v -->
+  <line x1="340" y1="215" x2="415" y2="260" stroke="#0284C7" stroke-width="3" marker-end="url(#arrowSkyBlue)"/>
+
+  <!-- Gravity Force F_G (blue, straight down) -->
+  <line x1="340" y1="215" x2="340" y2="295" stroke="#004B96" stroke-width="3.5" marker-end="url(#arrowFHBlue)"/>
+
+  <!-- Drag Force F_R (red, antiparallel to v) -->
+  <!-- v direction is dx=75, dy=45 => unit is (0.857, 0.514). Opposite is dx=-55, dy=-33 => (285, 182) -->
+  <line x1="340" y1="215" x2="285" y2="182" stroke="#DC2626" stroke-width="3.5" marker-end="url(#arrowRed)"/>
+
+  <!-- Parallelogram lines for F_ges = F_G + F_R -->
+  <!-- From tip of F_R (285, 182) adding F_G (dy=+80) -> (285, 262) -->
+  <line x1="285" y1="182" x2="285" y2="262" stroke="#7C3AED" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <!-- From tip of F_G (340, 295) adding F_R (dx=-55, dy=-33) -> (285, 262) -->
+  <line x1="340" y1="295" x2="285" y2="262" stroke="#7C3AED" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <!-- Resultant Force F_ges -->
+  <line x1="340" y1="215" x2="286" y2="261" stroke="#7C3AED" stroke-width="2.5" marker-end="url(#arrowPurple)"/>
+
+  <!-- Point Marker Dots -->
+  <!-- Origin P0 -->
+  <circle cx="90" cy="310" r="5" fill="#004B96" stroke="#FFFFFF" stroke-width="1.5"/>
+  <!-- Point P -->
+  <circle cx="340" cy="215" r="5.5" fill="#DC2626" stroke="#FFFFFF" stroke-width="2"/>
+  <!-- Impact Point -->
+  <circle cx="460" cy="370" r="4.5" fill="#004B96"/>
+
+  <!-- ==================== SHIELD BADGES & LABELS ==================== -->
+  <!-- Axis Labels -->
+  <rect x="608" y="358" width="36" height="24" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="626" y="374" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">x [m]</text>
+
+  <rect x="72" y="48" width="36" height="24" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="90" y="64" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">y [m]</text>
+
+  <rect x="64" y="374" width="22" height="18" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8"/>
+  <text x="75" y="387" font-size="12" fill="#64748B" text-anchor="middle">0</text>
+
+  <!-- P0 & y0 Labels -->
+  <rect x="22" y="300" width="62" height="22" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="53" y="315" font-size="12" font-weight="bold" fill="#004B96" text-anchor="middle">P₀ (0, y₀)</text>
+
+  <!-- Angle alpha label -->
+  <rect x="126" y="286" width="20" height="20" rx="3" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+  <text x="136" y="300" font-size="12" font-weight="bold" fill="#B45309" text-anchor="middle">α</text>
+
+  <!-- Velocity Components Labels -->
+  <rect x="170" y="222" width="28" height="20" rx="3" fill="#E0F2FE" stroke="#38BDF8" stroke-width="1"/>
+  <text x="184" y="236" font-size="12" font-weight="bold" fill="#0284C7" text-anchor="middle">v₀</text>
+
+  <rect x="96" y="324" width="94" height="20" rx="3" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1"/>
+  <text x="143" y="338" font-size="12" fill="#0369A1" text-anchor="middle">v₀ₓ = v₀ · cos(α)</text>
+
+  <rect x="14" y="244" width="72" height="20" rx="3" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1"/>
+  <text x="50" y="258" font-size="12" fill="#0369A1" text-anchor="middle">v₀ᵧ = v₀ · sin(α)</text>
+
+  <!-- Ungedämpft Curve Label -->
+  <rect x="250" y="105" width="220" height="22" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="360" y="120" font-size="12" fill="#64748B" text-anchor="middle">Ungedämpft (Vakuum): Parabelbahn</text>
+
+  <!-- Gedämpft Curve Label -->
+  <rect x="360" y="145" width="210" height="22" rx="4" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1"/>
+  <text x="465" y="160" font-size="12" font-weight="bold" fill="#004B96" text-anchor="middle">Gedämpft: Mit Luftwiderstand F_R</text>
+
+  <!-- Point P(x, y) Label -->
+  <rect x="315" y="185" width="56" height="20" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="343" y="199" font-size="12" font-weight="bold" fill="#0F172A" text-anchor="middle">P(x, y)</text>
+
+  <!-- Force Labels on Flight Point P -->
+  <!-- Drag F_R -->
+  <rect x="160" y="160" width="120" height="22" rx="4" fill="#FEF2F2" stroke="#F87171" stroke-width="1"/>
+  <text x="220" y="175" font-size="12" font-weight="bold" fill="#DC2626" text-anchor="middle">F_R (Luftwiderstand)</text>
+
+  <!-- Gravity F_G -->
+  <rect x="348" y="295" width="86" height="22" rx="4" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1"/>
+  <text x="391" y="310" font-size="12" font-weight="bold" fill="#004B96" text-anchor="middle">F_G = m · g</text>
+
+  <!-- Resultant F_ges -->
+  <rect x="175" y="258" width="105" height="22" rx="4" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1"/>
+  <text x="227" y="273" font-size="12" font-weight="bold" fill="#7C3AED" text-anchor="middle">F_ges = F_G + F_R</text>
+
+  <!-- Velocity v -->
+  <rect x="420" y="248" width="116" height="22" rx="4" fill="#E0F2FE" stroke="#38BDF8" stroke-width="1"/>
+  <text x="478" y="263" font-size="12" font-weight="bold" fill="#0284C7" text-anchor="middle">v (Tangential)</text>
+
+  <!-- Landing Point Label -->
+  <rect x="424" y="380" width="82" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="465" y="394" font-size="12" fill="#004B96" text-anchor="middle">x_Landung</text>
+
+  <!-- ==================== RIGHT FORMULA & PHYSICS PANEL ==================== -->
+  <rect x="648" y="52" width="298" height="372" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+  <path d="M 648 60 Q 648 52 656 52 L 938 52 Q 946 52 946 60 L 946 80 L 648 80 Z" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="660" y="72" font-size="13" font-weight="bold" fill="#0F172A">Physikalisches Modell (DGL-System)</text>
+
+  <!-- Box 1: Aerodynamischer Widerstand F_R -->
+  <rect x="656" y="88" width="282" height="88" rx="6" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1"/>
+  <text x="666" y="106" font-size="12" font-weight="bold" fill="#991B1B">Aerodynamische Luftwiderstandskraft:</text>
+  <rect x="666" y="112" width="262" height="24" rx="4" fill="#FFFFFF" stroke="#F87171" stroke-width="0.8"/>
+  <text x="797" y="128" font-size="12" font-weight="bold" fill="#B91C1C" text-anchor="middle">F_R = - ½ · c_w · ρ · A · ||v|| · v</text>
+  <text x="666" y="150" font-size="12" fill="#7F1D1D">• Richtung: Streng antiparallel zu v</text>
+  <text x="666" y="166" font-size="12" fill="#7F1D1D">• Betrag wächst quadratisch mit ||v||²</text>
+
+  <!-- Box 2: Bewegungsgleichungen (Newton II) -->
+  <rect x="656" y="184" width="282" height="106" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+  <text x="666" y="202" font-size="12" font-weight="bold" fill="#1E40AF">Newton II &amp; Komponenten-DGL:</text>
+  <text x="666" y="222" font-size="12" fill="#1E3A8A">m · ẍ = - ½ · c_w · ρ · A · ||v|| · ẋ</text>
+  <text x="666" y="244" font-size="12" fill="#1E3A8A">m · ÿ = - m·g - ½ · c_w · ρ · A · ||v|| · ẏ</text>
+  <rect x="666" y="254" width="262" height="26" rx="4" fill="#FFFFFF" stroke="#93C5FD" stroke-width="0.8"/>
+  <text x="797" y="271" font-size="12" font-weight="bold" fill="#1D4ED8" text-anchor="middle">Zustand: v = (ẋ, ẏ)ᵀ,  ||v|| = √(ẋ² + ẏ²)</text>
+
+  <!-- Box 3: Parameter & SI-Einheiten nach DIN 1304 -->
+  <rect x="656" y="298" width="282" height="118" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="666" y="316" font-size="12" font-weight="bold" fill="#334155">Parameter &amp; Einheiten (DIN / ISO):</text>
+  <text x="666" y="335" font-size="12" fill="#475569">• c_w : Widerstandsbeiwert [-] (Kugel: ≈ 0.45)</text>
+  <text x="666" y="353" font-size="12" fill="#475569">• ρ : Luftdichte [kg/m³] (Standardluft: 1.225)</text>
+  <text x="666" y="371" font-size="12" fill="#475569">• A : Stirnfläche / Querschnitt [m²]</text>
+  <text x="666" y="389" font-size="12" fill="#475569">• m : Masse [kg],  g = 9.81 m/s² [m/s²]</text>
+  <text x="666" y="407" font-size="12" fill="#475569">• x, y : Position [m],  v : Geschwindigkeit [m/s]</text>
+</svg>

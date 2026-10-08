@@ -149,20 +149,20 @@ Bevor transformiert werden kann, muss die Ausdehnung des Modells in Weltkoordina
 <div class="one">
 
 **Extremwerte aller Punkte ermitteln:**
-$$X_{min} = \min_{i} (x_i), \quad X_{max} = \max_{i} (x_i)$$
-$$Y_{min} = \min_{i} (y_i), \quad Y_{max} = \max_{i} (y_i)$$
+$$X_{min} = \min_{i} (x_i), \quad X_{max} = \max_{i} (x_i) \quad [\mathrm{m}]$$
+$$Y_{min} = \min_{i} (y_i), \quad Y_{max} = \max_{i} (y_i) \quad [\mathrm{m}]$$
 
 **Breite und Höhe des Modells:**
-$$W_{world} = X_{max} - X_{min}$$
-$$H_{world} = Y_{max} - Y_{min}$$
+$$W_{world} = X_{max} - X_{min} \quad [\mathrm{m}]$$
+$$H_{world} = Y_{max} - Y_{min} \quad [\mathrm{m}]$$
 
 </div>
 <div class="one">
 
 **Nutzbare Bildschirmfläche (Canvas):**
 - Ein Randabstand `margin` verhindert das Abschneiden von Rändern, Knotenpunkten oder Linienstärken:
-$$W_{draw} = W_{canvas} - 2 \cdot \text{margin}$$
-$$H_{draw} = H_{canvas} - 2 \cdot \text{margin}$$
+$$W_{draw} = W_{canvas} - 2 \cdot \text{margin} \quad [\mathrm{px}]$$
+$$H_{draw} = H_{canvas} - 2 \cdot \text{margin} \quad [\mathrm{px}]$$
 
 </div>
 </div>
@@ -175,7 +175,7 @@ $$H_{draw} = H_{canvas} - 2 \cdot \text{margin}$$
 <div class="one">
 
 **Naive Skalierung (Verzerrung!):**
-$$s_x = \frac{W_{draw}}{W_{world}}, \quad s_y = \frac{H_{draw}}{H_{world}}$$
+$$s_x = \frac{W_{draw}}{W_{world}}, \quad s_y = \frac{H_{draw}}{H_{world}} \quad \left[\frac{\mathrm{px}}{\mathrm{m}}\right]$$
 - Wenn $s_x \ne s_y$, wird das Modell gestreckt oder gestaucht.
 - Kreise werden zu Ellipsen, quadratische Fachwerke verzerrt, Winkel verfälscht!
 
@@ -183,7 +183,8 @@ $$s_x = \frac{W_{draw}}{W_{world}}, \quad s_y = \frac{H_{draw}}{H_{world}}$$
 <div class="one">
 
 **Uniform Scaling (Isotrop):**
-$$s = \min(s_x, s_y)$$
+$$s = \min(s_x, s_y) \quad \left[\frac{\mathrm{px}}{\mathrm{m}}\right]$$
+- Skalierungsfaktor $s$ mit Einheit $[\mathrm{px/m}]$ (Pixel pro Meter).
 - Der kleinere Faktor stellt sicher, dass das Modell vollständig auf den Canvas passt.
 - **Alle geometrischen Proportionen und Winkel bleiben physikalisch exakt erhalten.**
 
@@ -199,16 +200,16 @@ $$s = \min(s_x, s_y)$$
 
 **Zentrierungs-Offset:**
 Durch $s = \min(s_x, s_y)$ bleibt in einer Dimension Freiraum. Dieser wird halbiert:
-$$x_{offset} = \text{margin} + \frac{W_{draw} - W_{world} \cdot s}{2}$$
-$$y_{offset} = \text{margin} + \frac{H_{draw} - H_{world} \cdot s}{2}$$
+$$x_{offset} = \text{margin} + \frac{W_{draw} - W_{world} \cdot s}{2} \quad [\mathrm{px}]$$
+$$y_{offset} = \text{margin} + \frac{H_{draw} - H_{world} \cdot s}{2} \quad [\mathrm{px}]$$
 
 </div>
 <div class="one">
 
 **Y-Achsen-Invertierung:**
 Da die Bildschirmachse nach unten verläuft, wird vom oberen Rand $Y_{max}$ abgezogen:
-$$x_{screen} = x_{offset} + (x_w - X_{min}) \cdot s$$
-$$y_{screen} = y_{offset} + (Y_{max} - y_w) \cdot s$$
+$$x_{screen} = x_{offset} + (x_w - X_{min}) \cdot s \quad [\mathrm{px}]$$
+$$y_{screen} = y_{offset} + (Y_{max} - y_w) \cdot s \quad [\mathrm{px}]$$
 
 - Für $y_w = Y_{max} \implies y_{screen} = y_{offset}$ (oben).
 - Für $y_w = Y_{min} \implies y_{screen} = y_{offset} + H_{world} \cdot s$ (unten).
@@ -300,17 +301,15 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Analytische Berechnung der Pfeilspitze
 
-Gegeben sei der Endpunkt (Spitze) $\vec{P}_{tip}$ und der gerichtete Kraftvektor $\vec{F} = (F_x, F_y)^T$.
+Gegeben: Knoten $\vec{P}_{\text{node}}$ $[\mathrm{px}]$, Kraftvektor $\vec{F} = (F_x, F_y)^T$ $[\mathrm{N}]$, Kraftmaßstab $s_F$ $[\mathrm{px/N}]$, Spitzenmaße $L$ (Länge) und $W$ (Breite) $[\mathrm{px}]$.
 
-1. **Normalisierter Richtungsvektor**:
-   $$\vec{u} = \frac{\vec{F}}{\|\vec{F}\|} = \frac{1}{\sqrt{F_x^2 + F_y^2}} \begin{pmatrix} F_x \\ F_y \end{pmatrix}$$
-
-2. **Orthogonalvektor (Normalenvektor, $90^\circ$ gedreht)**:
-   $$\vec{u}^\perp = \begin{pmatrix} -u_y \\ u_x \end{pmatrix}$$
-
-3. **Eckpunkte des Dreiecks (Länge $L$, Basisbreite $W$)**:
-   $$\vec{P}_1 = \vec{P}_{tip} - L \cdot \vec{u} + \frac{W}{2} \cdot \vec{u}^\perp$$
-   $$\vec{P}_2 = \vec{P}_{tip} - L \cdot \vec{u} - \frac{W}{2} \cdot \vec{u}^\perp$$
+1. **Pfeilspitze:** $\vec{P}_{\text{tip}} = \vec{P}_{\text{node}} + s_F \cdot \vec{F}_{\text{screen}} \quad [\mathrm{px}]$
+2. **Normierter Richtungs-Einheitsvektor $\vec{e}_u$:**
+   $$\vec{e}_u = \frac{\vec{F}}{\|\vec{F}\|} = \frac{1}{\sqrt{F_x^2 + F_y^2}} \begin{pmatrix} F_x \\ F_y \end{pmatrix} \quad (\|\vec{e}_u\| = 1)$$
+3. **Orthogonalvektor $\vec{e}_u^\perp$ ($90^\circ$-Drehung links):** $\vec{e}_u^\perp = (-e_{u,y}, e_{u,x})^T$
+4. **Basispunkt & Flügelpunkte des Dreiecks $[\mathrm{px}]$:**
+   $$\vec{P}_{\text{base}} = \vec{P}_{\text{tip}} - L \cdot \vec{e}_u$$
+   $$\vec{P}_{\text{wing1,2}} = \vec{P}_{\text{base}} \pm \frac{W}{2} \cdot \vec{e}_u^\perp$$
 
 ---
 
@@ -321,16 +320,16 @@ Gegeben sei der Endpunkt (Spitze) $\vec{P}_{tip}$ und der gerichtete Kraftvektor
 public Point[] GetArrowhead(
     Point tip, Vector dir, double length, double width)
 {
-    dir.Normalize(); // Richtungs-Einheitsvektor u
+    dir.Normalize(); // Richtungs-Einheitsvektor e_u
     
-    // Orthogonalvektor u_perp (90° gegen den Uhrzeigersinn)
+    // Orthogonalvektor e_u_perp (90° gegen den Uhrzeigersinn)
     var perp = new Vector(-dir.Y, dir.X);
 
-    Point basePoint = tip - (length * dir);
-    Point p1 = basePoint + (width / 2.0 * perp);
-    Point p2 = basePoint - (width / 2.0 * perp);
+    Point pBase = tip - (length * dir); // P_base
+    Point pWing1 = pBase + (width / 2.0 * perp); // P_wing1
+    Point pWing2 = pBase - (width / 2.0 * perp); // P_wing2
 
-    return new Point[] { tip, p1, p2 };
+    return new Point[] { tip, pWing1, pWing2 };
 }
 ```
 
@@ -475,26 +474,42 @@ private void OnMouseMove(object sender, MouseEventArgs e)
 
 ---
 
-### Rücktransformation: Bildschirm zu Welt (`ScreenToWorld`)
+### Analytische Rücktransformation: Bildschirm zu Welt
 
-Für Benutzerinteraktionen (z.B. Anklicken eines Knotens oder Einzeichnen einer Last) muss die Klickposition wieder in physikalische Weltkoordinaten umgerechnet werden:
+Für interaktive Eingaben (z.B. Knotenanklicken, Lasten aufbringen) muss ein Bildschirmpixel $\vec{p}_{\text{pixel}} = (x_{\text{pixel}}, y_{\text{pixel}})^T$ $[\mathrm{px}]$ in Weltkoordinaten $\vec{p}_w = (x_w, y_w)^T$ $[\mathrm{m}]$ rücktransformiert werden:
+
+1. **Invertierung von Pan und Zoom (Affine Transformationsmatrix $\mathbf{M} \in \mathbb{R}^{3 \times 3}$):**
+   $$\begin{pmatrix} x_{\text{unzoomed}} \\ y_{\text{unzoomed}} \\ 1 \end{pmatrix} = \mathbf{M}^{-1} \begin{pmatrix} x_{\text{pixel}} \\ y_{\text{pixel}} \\ 1 \end{pmatrix} \quad [\mathrm{px}]$$
+
+2. **Invertierung der Viewport-Projektion ($[\mathrm{px}] \to [\mathrm{m}]$):**
+   $$x_w = X_{\min} + \frac{x_{\text{unzoomed}} - x_{\text{offset}}}{s} \quad [\mathrm{m}]$$
+   $$y_w = Y_{\max} - \frac{y_{\text{unzoomed}} - y_{\text{offset}}}{s} \quad [\mathrm{m}] \quad (\text{Rückkehr zur physikalischen Y-Achse!})$$
+
+*(Einheitenkontrolle: $\frac{[\mathrm{px}] - [\mathrm{px}]}{[\mathrm{px/m}]} = [\mathrm{m}]$; mathematisch exakte Umkehrung der Vorwärtstransformation).*
+
+---
+
+### C#-Implementierung: ScreenToWorld
 
 ```csharp
 public Point ScreenToWorld(
     Point screenPixel, Matrix canvasMatrix, CoordinateTransformer trans)
 {
-    // 1. Pan- und Zoom-Matrix invertieren
+    // 1. Pan- und Zoom-Matrix invertieren (WPF-Affine Transformation)
     Matrix invMatrix = canvasMatrix;
     invMatrix.Invert();
     Point unzoomed = invMatrix.Transform(screenPixel);
 
-    // 2. Koordinatentransformation (Welt -> Screen) invertieren:
+    // 2. Viewport-Projektion analytisch invertieren (Pixel -> Meter):
     double worldX = _xMin + (unzoomed.X - _xOffset) / _scale;
-    double worldY = _yMax - (unzoomed.Y - _yOffset) / _scale; // Invertiert
+    double worldY = _yMax - (unzoomed.Y - _yOffset) / _scale; // Y-Achse invertieren
 
     return new Point(worldX, worldY);
 }
 ```
+
+- Liefert präzise physikalische Koordinaten $[\mathrm{m}]$ für Raycasting, Picking und Hit-Testing.
+- Unabhängig von aktuellem Zoom-Faktor oder Pan-Verschiebung exakt.
 
 ---
 

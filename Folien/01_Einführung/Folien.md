@@ -390,59 +390,66 @@ Es gibt zwei grundlegende Ansätze:
 
 ### **Analytische** Lösung
 
-- **Was ist das?** Eine exakte, geschlossene mathematische Formel für die Lösung.
-- **Beispiel (freier Fall):** Die Höhe $y(t)$ eines Objekts zum Zeitpunkt $t$ ist $y(t) = y_0 + v_0 t - \frac{1}{2} g t^2$.
-- **Vorteile:**
-    - Exakt und präzise.
-    - Liefert allgemeines Verständnis über den Einfluss von Parametern.
-- **Nachteile:**
-    - Nur für relativ einfache, oft lineare Systeme möglich.
-    - Sobald Komplexität steigt (z.B. Luftwiderstand, nichtlineare Kräfte), oft nicht mehr findbar.
+- **Was ist das?** Eine exakte, geschlossene mathematische Formel für die Lösung als kontinuierliche Zeitfunktion.
+- **Beispiel (Freier Fall mit Anfangsgeschwindigkeit):**
+  $$y(t) = y_0 + v_0 \cdot t - \frac{1}{2} g \cdot t^2$$
+  - $y(t)$: Momentane Höhe zur Zeit $t$ $[\mathrm{m}]$
+  - $t$: Zeit $[\mathrm{s}]$, $y_0$: Anfangshöhe bei $t=0\,\mathrm{s}$ $[\mathrm{m}]$
+  - $v_0$: Vertikale Anfangsgeschwindigkeit $[\mathrm{m/s}]$
+  - $g \approx 9{,}81\,\mathrm{m/s^2}$: Erdbeschleunigung
+- **Vorteile:** Exakt, unendliche zeitliche Auflösung, geschlossene Parameterstudien möglich.
+- **Nachteile:** Nur für einfache, meist lineare Modelle existieren geschlossene Stammfunktionen.
 
 ---
 
 ### **Numerische** Lösung
 
-- **Was ist das?** Eine schrittweise, approximative Berechnung der Lösung.
-- **Beispiel (Euler-Verfahren für $y' = f(t, y)$):**
-  $y_{k+1} = y_k + \Delta t \cdot f(t_k, y_k)$
-- Man startet bei einem bekannten Zustand und berechnet den nächsten Zustand in einem kleinen Zeitschritt $\Delta t$.
-- **Vorteile:**
-    - Auf sehr komplexe, nichtlineare Systeme anwendbar.
-    - Flexibel und universell einsetzbar.
-- **Nachteile:**
-    - Ist immer eine Annäherung (Approximation).
-    - Führt numerische Fehler ein (Diskretisierungsfehler, Rundungsfehler).
-    - Die Wahl des Algorithmus und der Parameter (z.B. Schrittweite $\Delta t$) ist entscheidend für Genauigkeit und Stabilität.
+- **Was ist das?** Eine schrittweise, approximative Berechnung des Systemzustands auf einem diskreten Zeitgitter.
+- **Beispiel (Explizites Euler-Verfahren für $y'(t) = f(t, y)$):**
+  $$y_{k+1} = y_k + \Delta t \cdot f(t_k, y_k), \quad t_{k+1} = t_k + \Delta t$$
+  - $k \in \{0, 1, 2, \dots\}$: Diskreter Zeitschrittindex
+  - $t_k = t_0 + k \cdot \Delta t$: Diskrete Zeitpunkte $[\mathrm{s}]$ mit Zeitschrittweite $\Delta t$ $[\mathrm{s}]$
+  - $y_k \approx y(t_k)$: Diskreter Näherungswert des Zustands
+- **Vorteile:** Universell auf hochgradig nichtlineare und gekoppelte Systeme anwendbar.
+- **Nachteile:** Approximationsfehler (Diskretisierungs- und Rundungsfehler); Wahl von $\Delta t$ entscheidet über Stabilität und Konvergenz.
 
 ---
 
-### Analytisch vs. Numerisch: Ein Beispiel
+### Analytische Modellierung: Ungedämpfter schiefer Wurf
 
-**Problem:** Schiefer Wurf
+![w:920](./Diagramme/Schiefer_Wurf_Kraefte.svg)
+
+---
+
+### Numerische Modellierung: Schiefer Wurf mit Luftwiderstand
 
 <div class="columns top">
 <div class="one">
 
-**Analytische Lösung (ohne Luftwiderstand)**
-- Einfache Parabelbahn.
-- Formeln für Wurfweite, Wurfhöhe, Flugdauer etc. können direkt hergeleitet werden.
-- $x(t) = v_0 \cos(\alpha) t$
-- $y(t) = v_0 \sin(\alpha) t - \frac{1}{2} g t^2$
+**Einfluss des Strömungswiderstands:**
+In realen Medien bremst die turbulente Reibungskraft $\vec{F}_R$ $[\mathrm{N}]$ antiparallel zum Geschwindigkeitsvektor $\vec{v}$:
+
+$$\vec{F}_R = -\frac{1}{2} c_w \rho A \|\vec{v}\| \vec{v}$$
+
+- $c_w$: Strömungswiderstandsbeiwert $[-]$
+- $\rho$: Fluiddichte (Luft: $\rho \approx 1{,}2\,\mathrm{kg/m^3}$)
+- $A$: Stirn- bzw. Querschnittsfläche $[\mathrm{m^2}]$
+- $\vec{v} = (v_x, v_y)^T$: Momentangeschwindigkeit $[\mathrm{m/s}]$
+- $\|\vec{v}\| = \sqrt{v_x^2 + v_y^2}$: Geschwindigkeitsbetrag $[\mathrm{m/s}]$
 
 </div>
 <div class="one">
 
-**Numerische Lösung (mit Luftwiderstand)**
-- Luftwiderstand $\vec{F}_R = -\frac{1}{2} c_w \rho A \|\vec{v}\| \vec{v}$ wirkt antiparallel zur Bahn:
-  $$F_{Rx} \propto -\sqrt{v_x^2 + v_y^2} \cdot v_x, \quad F_{Ry} \propto -\sqrt{v_x^2 + v_y^2} \cdot v_y$$
-- Die nichtlineare Kopplung verhindert eine einfache geschlossene Stammfunktion.
-- Lösung durch schrittweise numerische Integration von Position und Geschwindigkeit.
+**Gekoppeltes DGL-System 2. Ordnung:**
+$$m \ddot{x} = F_{Rx} = -\frac{1}{2} c_w \rho A \sqrt{v_x^2 + v_y^2} \cdot v_x$$
+$$m \ddot{y} = -m g + F_{Ry} = -m g - \frac{1}{2} c_w \rho A \sqrt{v_x^2 + v_y^2} \cdot v_y$$
+
+- **Nichtlineare Geschwindigkeitskopplung:** $v_x$ und $v_y$ koppeln im Term $\sqrt{v_x^2+v_y^2}$ miteinander.
+- **Folge:** Keine elementare geschlossene Stammfunktion möglich!
+- **Lösung:** Numerische Zeitschrittintegration (z.B. Runge-Kutta oder Euler).
 
 </div>
 </div>
-
-Fast alle praxisrelevanten Simulationen basieren auf numerischen Methoden.
 
 ---
 

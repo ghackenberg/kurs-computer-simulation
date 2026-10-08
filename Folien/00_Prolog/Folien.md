@@ -38,13 +38,13 @@ Für diesen Kurs in Computer-Simulation sollten Sie ausreichende Kenntnisse in d
 
 ### Logik
 
-Formalisierung der grundlegenden Prinzipien der mathematischen Beweisführung:
+Formalisierung der Prinzipien mathematischer Beweisführung:
 
-- Wahrheitswerte $t$ und $f$
-- Unärer Operator $\neg$
-- Binäre Operatoren $\vee$ und $\wedge$
-- Schwache Implikation $\Rightarrow$
-- Starke Implikation $\Leftrightarrow$
+- **Wahrheitswerte:** $\mathrm{true}$ ($t$, wahr, $1$) und $\mathrm{false}$ ($f$, falsch, $0$)
+- **Negation (unär):** $\neg A$ (Nicht-Operator)
+- **Junktoren (binär):** Konjunktion $A \wedge B$ (Und), Disjunktion $A \vee B$ (Oder)
+- **Konditional (Implikation):** $A \Rightarrow B$ (Wenn $A$, dann $B$; hinreichende Bedingung)
+- **Bikonditional (Äquivalenz):** $A \Leftrightarrow B$ (Genau dann, wenn; logische Gleichheit)
 
 ---
 
@@ -52,13 +52,14 @@ Formalisierung der grundlegenden Prinzipien der mathematischen Beweisführung:
 
 ### Mengenlehre
 
-Untersuchung von Mengen, also Sammlungen von Objekten, und den Operationen auf diesen:
+Untersuchung von Mengen als Sammlungen von Objekten:
 
-- Mengen $\emptyset$ und $\mathcal{P}(\cdot)$
-- Elementoperatoren $\in$ und $\forall$ sowie $\exists$ und $\nexists$
-- Mengenoperatoren $\cup$ und $\cap$ sowie $\setminus$ und $\times$
-- Mengenbeziehungen $\subset$ und $\subseteq$
-- Tupel $(a, b) \in A \times B$
+- **Grundmengen:** Leere Menge $\emptyset$, Potenzmenge $\mathcal{P}(M) = \{U \mid U \subseteq M\}$
+- **Elementrelation:** $x \in M$ (Element von), $x \notin M$ (kein Element von)
+- **Prädikatenquantoren:** $\forall$ (Allquantor: „für alle“), $\exists$ (Existenzquantor: „es existiert“), $\nexists$ („existiert nicht“)
+- **Mengenoperationen:** Vereinigung $A \cup B$, Schnitt $A \cap B$, Differenz $A \setminus B$, kartesisches Produkt $A \times B$
+- **Mengenrelationen:** Teilmenge $A \subseteq B$, echte Teilmenge $A \subset B$
+- **Geordnetes Tupel:** $(a, b) \in A \times B$
 
 ---
 

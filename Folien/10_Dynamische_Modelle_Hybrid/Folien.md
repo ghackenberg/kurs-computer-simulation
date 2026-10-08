@@ -203,31 +203,54 @@ Abfolge von Freiflugphasen und Kollisionsereignissen:
 
 ---
 
-### Das Zeno-Phänomen (Zeno-Effekt)
-
-Beim hüpfenden Ball verringern sich Sprunghöhe $h_k$ und Flugdauer $\Delta t_k$ mit jedem Aufprall exponentiell (Stoßzahl $e \in [0, 1)$):
-
-$$\Delta t_k = 2 \frac{v_k}{g} = 2 \frac{v_0}{g} e^k$$
+### Das Zeno-Phänomen: Fallversuch aus Höhe h₀
 
 <div class="columns">
-<div>
+<div class="two">
 
-**Mathematische Zeno-Grenzzeit:**
-
-Die Summe aller unendlich vielen Hüpfzeiten konvergiert als **geometrische Reihe** gegen eine endliche Zeit $t_\infty$:
-
-$$t_\infty = t_0 + \sum_{k=0}^{\infty} \Delta t_k = t_0 + \frac{2 v_0}{g} \sum_{k=0}^{\infty} e^k$$
-
-$$t_\infty = t_0 + \frac{2 v_0}{g (1 - e)} < \infty$$
+**Fallversuch aus Ruhehöhe $h_0$ ($y(0)=h_0, v(0)=0$):**
+- Erster Fall bis zum Primäraufprall:
+  $$\Delta t_{\text{fall}, 0} = \sqrt{\frac{2h_0}{g}}$$
+- Auftreff- und Rückprallgeschwindigkeit:
+  $$v_1^- = -\sqrt{2gh_0}, \quad v_1^+ = e \sqrt{2gh_0}$$
+- Nachfolgende Hüpfzyklen ($k \ge 1$):
+  $$\Delta t_k = \frac{2 v_k^+}{g} = 2 \sqrt{\frac{2h_0}{g}} \cdot e^k$$
 
 </div>
-<div>
+<div class="two">
+
+**Analytische Zeno-Grenzzeit $t_\infty$:**
+$$t_\infty = \Delta t_{\text{fall}, 0} + \sum_{k=1}^\infty \Delta t_k = \sqrt{\frac{2h_0}{g}} \left(1 + 2 \sum_{k=1}^\infty e^k\right)$$
+$$t_\infty = \sqrt{\frac{2h_0}{g}} \left(\frac{1 + e}{1 - e}\right) < \infty$$
+
+**Zahlenbeispiel ($h_0 = 1\,\mathrm{m}, g = 9{,}81\,\mathrm{m/s^2}, e = 0{,}75$):**
+- Erster Fall: $\Delta t_{\text{fall},0} \approx 0{,}452\,\mathrm{s}$
+- Grenzzeit: $t_\infty = 0{,}452\,\mathrm{s} \cdot \frac{1{,}75}{0{,}25} \approx 3{,}16\,\mathrm{s}$
+
+</div>
+</div>
+
+---
+
+### Das Zeno-Phänomen: Konsequenzen & Zeno-Kollaps
+
+<div class="columns">
+<div class="two">
+
+**Unendlich viele Events in endlicher Zeit:**
+- Mit jedem Aufprall schrumpft die Hüpfdauer:
+  $$\Delta t_k \to 0 \quad \text{für } k \to \infty$$
+- Alle unendlich vielen Stöße finden vor $t_\infty$ statt.
+- Bei $t = t_\infty$ kommt das System mathematisch zur Ruhe.
+
+</div>
+<div class="two">
 
 **Konsequenz für numerische Solver:**
-- Unendlich viele Ereignisse in endlicher Zeit!
-- Für $t \to t_\infty$ strebt $\Delta t_k \to 0$.
-- Der Solver löst unendlich viele Nulldurchgänge aus (**Chattering**).
-- **Simulationsuhr friert ein:** Der Solver kommt nicht über $t_\infty$ hinaus (*Zeno-Kollaps*).
+- Der Solver detektiert immer dichter aufeinanderfolgende Nulldurchgänge (**Chattering**).
+- Die Schrittweite schrumpft gegen Null ($\Delta t \to 0$).
+- **Zeno-Kollaps:** Die Simulationsuhr friert ein und kann die Zeitmarke $t_\infty$ nicht überschreiten!
+- *Lösung:* Diskreter Moduswechsel in den **Sticking Mode** (Haftkontakt).
 
 </div>
 </div>
@@ -1011,23 +1034,43 @@ while (zeroCrossingValue > Threshold && iteration++ < Limit) {
 
 ---
 
-### Echte Vorzeichenwechsel-Bisektion: Theorie & Kriterien
+### Echte Vorzeichenwechsel-Bisektion: Theorie & Bolzano
 
-Ein Nulldurchgang liegt exakt dann vor, wenn an den Intervallgrenzen ein **Vorzeichenwechsel** auftritt:
+- Nulldurchgang erfordert Vorzeichenwechsel (Bolzano): $\operatorname{sgn}(z(t_a)) \neq \operatorname{sgn}(z(t_b)) \iff z(t_a) \cdot z(t_b) \le 0$.
+- Echte Bisektion halbiert das Suchintervall; naive Schritt-Halbierung verfehlt Nullstellen bei $t > t_0 + 0{,}5\Delta t$.
 
-$$\text{sgn}(z(t_a)) \neq \text{sgn}(z(t_b)) \iff z(t_a) \cdot z(t_b) \le 0$$
+![w:920 center](./Diagramme/ZeroCrossing_Bisektion_Intervall.svg)
+
+---
+
+### Bisektion: Algorithmus, Konvergenz & Abbruchkriterien
+
+<div class="columns">
+<div class="two">
 
 **Bisektionsalgorithmus auf $[t_{\text{left}}, t_{\text{right}}]$:**
 1. Initialisiere $t_{\text{left}} = t_k$ und $t_{\text{right}} = t_k + \Delta t$.
-2. Berechne Mittelpunkt $t_{\text{mid}} = \frac{1}{2}(t_{\text{left}} + t_{\text{right}})$.
+2. Berechne $t_{\text{mid}} = \frac{1}{2}(t_{\text{left}} + t_{\text{right}})$.
 3. Integriere bis $t_{\text{mid}}$ und evaluiere $z_{\text{mid}} = z(t_{\text{mid}})$.
-4. Falls $|z_{\text{mid}}| \le \varepsilon_z$ oder $(t_{\text{right}} - t_{\text{left}}) \le \varepsilon_t$: **Gefunden!**
-5. Falls $\text{sgn}(z_{\text{mid}}) == \text{sgn}(z_{\text{left}})$: Setze $t_{\text{left}} = t_{\text{mid}}$, andernfalls $t_{\text{right}} = t_{\text{mid}}$.
+4. Vorzeichenvergleich:
+   - Falls $\operatorname{sgn}(z_{\text{mid}}) == \operatorname{sgn}(z_{\text{left}})$: $t_{\text{left}} = t_{\text{mid}}$
+   - Andernfalls: $t_{\text{right}} = t_{\text{mid}}$
+5. Wiederhole bis Toleranz erfüllt ist.
 
-> [!WARNING]
-> **Abtasttheorem für Zero-Crossing-Events:**
-> Das Vorzeichenwechsel-Kriterium detektiert nur eine ungerade Anzahl von Nulldurchgängen. Zwei Ereignisse innerhalb von $\Delta t$ löschen sich gegenseitig aus!
-> **Regel:** Maximale Solver-Schrittweite $\Delta t < \Delta t_{\text{event,min}}$.
+</div>
+<div class="two">
+
+**Duale Abbruchkriterien:**
+- **Residualtoleranz:** $|z(t_{\text{mid}})| \le \varepsilon_z$ (z.B. $10^{-6}\,\mathrm{m}$)
+- **Zeittoleranz:** $\Delta t_k \le \varepsilon_t$ (z.B. $10^{-8}\,\mathrm{s}$)
+
+**Lineare Konvergenz:**
+- Intervallbreite nach $k$ Schritten: $\Delta t_k = \Delta t_0 \cdot 2^{-k}$.
+- Maximale Iterationsschritte garantiert beschränkt:
+  $$k_{\max} = \left\lceil \log_2\left(\frac{\Delta t_0}{\varepsilon_t}\right) \right\rceil$$
+
+</div>
+</div>
 
 ---
 

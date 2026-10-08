@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 450" width="960" height="450">
+  <defs>
+    <!-- Arrow Markers -->
+    <marker id="arrowAxis" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#004B96"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#DC2626"/>
+    </marker>
+
+    <style>
+      text {
+        font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+      }
+    </style>
+  </defs>
+
+  <!-- Outer Canvas Background -->
+  <rect x="0" y="0" width="960" height="450" fill="#FFFFFF"/>
+  <rect x="5" y="5" width="950" height="440" rx="10" fill="#FAFAFA" stroke="#CBD5E1" stroke-width="1.5"/>
+
+  <!-- Top Title Banner -->
+  <path d="M 5 15 Q 5 5 15 5 L 945 5 Q 955 5 955 15 L 955 42 L 5 42 Z" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="24" y="27" font-size="15" font-weight="bold" fill="#004B96">Amdahlsches Gesetz: Speedup-Grenzen &amp; Skalierungsverläufe</text>
+  <text x="936" y="27" font-size="12" font-weight="bold" fill="#64748B" text-anchor="end">Kapitel 06: Multithreading &amp; Parallele Simulation</text>
+
+  <!-- ==================== PLOT REGION (LEFT) ==================== -->
+  <!-- Plot Area Background & Grid -->
+  <rect x="95" y="65" width="510" height="325" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+
+  <!-- Horizontal Grid Lines (Speedup S) -->
+  <!-- S = 2 -->
+  <line x1="95" y1="361" x2="605" y2="361" stroke="#F1F5F9" stroke-width="1"/>
+  <!-- S = 4 -->
+  <line x1="95" y1="332" x2="605" y2="332" stroke="#F1F5F9" stroke-width="1"/>
+  <!-- S = 8 -->
+  <line x1="95" y1="274" x2="605" y2="274" stroke="#F1F5F9" stroke-width="1"/>
+  <!-- S = 10 -->
+  <line x1="95" y1="245" x2="605" y2="245" stroke="#F1F5F9" stroke-width="1"/>
+  <!-- S = 16 -->
+  <line x1="95" y1="157" x2="605" y2="157" stroke="#F1F5F9" stroke-width="1"/>
+  <!-- S = 20 -->
+  <line x1="95" y1="99" x2="605" y2="99" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- Vertical Grid Lines (Cores p: 1, 2, 4, 8, 16, 32, 64) -->
+  <line x1="175" y1="65" x2="175" y2="390" stroke="#F8FAFC" stroke-width="1"/>
+  <line x1="255" y1="65" x2="255" y2="390" stroke="#F8FAFC" stroke-width="1"/>
+  <line x1="335" y1="65" x2="335" y2="390" stroke="#F8FAFC" stroke-width="1"/>
+  <line x1="415" y1="65" x2="415" y2="390" stroke="#F8FAFC" stroke-width="1"/>
+  <line x1="495" y1="65" x2="495" y2="390" stroke="#F8FAFC" stroke-width="1"/>
+  <line x1="575" y1="65" x2="575" y2="390" stroke="#F8FAFC" stroke-width="1"/>
+
+  <!-- Asymptote lines (S_max = 1 / (1-s)) -->
+  <!-- S = 2 (s = 50%) -->
+  <line x1="95" y1="361" x2="605" y2="361" stroke="#DC2626" stroke-width="1.2" stroke-dasharray="4,4"/>
+  <!-- S = 4 (s = 75%) -->
+  <line x1="95" y1="332" x2="605" y2="332" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4,4"/>
+  <!-- S = 10 (s = 90%) -->
+  <line x1="95" y1="245" x2="605" y2="245" stroke="#0284C7" stroke-width="1.2" stroke-dasharray="4,4"/>
+  <!-- S = 20 (s = 95%) -->
+  <line x1="95" y1="99" x2="605" y2="99" stroke="#004B96" stroke-width="1.5" stroke-dasharray="5,4"/>
+
+  <!-- Ideal linear Speedup line S = p -->
+  <line x1="95" y1="375" x2="455" y2="70" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,4"/>
+
+  <!-- Speedup Curves (Exact Bezier splines through computed points) -->
+  <!-- s = 0.50 (Rot, S_max = 2) -->
+  <path d="M 95 375.5 Q 175 368, 255 366.7 T 415 362.6 T 575 361.3" fill="none" stroke="#DC2626" stroke-width="2.5"/>
+
+  <!-- s = 0.75 (Amber, S_max = 4) -->
+  <path d="M 95 375.5 C 145 370, 205 362, 255 356.7 C 305 351, 365 344, 415 341.0 C 465 338, 525 335.5, 575 334.4" fill="none" stroke="#D97706" stroke-width="2.5"/>
+
+  <!-- s = 0.90 (Cyan, S_max = 10) -->
+  <path d="M 95 375.5 C 145 369, 205 355, 255 345.2 C 305 333, 365 308, 415 296.9 C 465 285, 525 269, 575 262.4" fill="none" stroke="#0284C7" stroke-width="2.5"/>
+
+  <!-- s = 0.95 (FH-Blau, S_max = 20) -->
+  <path d="M 95 375.5 C 145 368, 205 352, 255 339.4 C 305 322, 365 278, 415 257.1 C 465 230, 525 185, 575 165.7" fill="none" stroke="#004B96" stroke-width="3.5"/>
+
+  <!-- Data point markers on curves at p=64 -->
+  <circle cx="575" cy="361.3" r="4" fill="#DC2626"/>
+  <circle cx="575" cy="334.4" r="4" fill="#D97706"/>
+  <circle cx="575" cy="262.4" r="4" fill="#0284C7"/>
+  <circle cx="575" cy="165.7" r="5" fill="#004B96" stroke="#FFFFFF" stroke-width="1.5"/>
+
+  <!-- Callout pointer from Callout-Badge to p=64 / S=20 asymptote -->
+  <line x1="430" y1="125" x2="570" y2="162" stroke="#004B96" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+  <!-- Coordinate Axes -->
+  <!-- X-Axis -->
+  <line x1="95" y1="390" x2="610" y2="390" stroke="#475569" stroke-width="2" marker-end="url(#arrowAxis)"/>
+  <!-- Y-Axis -->
+  <line x1="95" y1="390" x2="95" y2="55" stroke="#475569" stroke-width="2" marker-end="url(#arrowAxis)"/>
+
+  <!-- ==================== SHIELD BADGES & LABELS ==================== -->
+  <!-- Axis Labels -->
+  <rect x="540" y="415" width="80" height="22" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="580" y="430" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">Kerne p →</text>
+
+  <rect x="18" y="50" width="72" height="22" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="54" y="65" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">Speedup S</text>
+
+  <!-- Y-Axis Tick Labels with Shielding -->
+  <rect x="70" y="382" width="20" height="16" rx="2" fill="#FFFFFF"/>
+  <text x="86" y="394" font-size="12" fill="#64748B" text-anchor="end">0</text>
+
+  <rect x="70" y="353" width="20" height="16" rx="2" fill="#FFFFFF"/>
+  <text x="86" y="365" font-size="12" fill="#64748B" text-anchor="end">2</text>
+
+  <rect x="70" y="324" width="20" height="16" rx="2" fill="#FFFFFF"/>
+  <text x="86" y="336" font-size="12" fill="#64748B" text-anchor="end">4</text>
+
+  <rect x="70" y="237" width="20" height="16" rx="2" fill="#FFFFFF"/>
+  <text x="86" y="249" font-size="12" fill="#64748B" text-anchor="end">10</text>
+
+  <rect x="70" y="91" width="20" height="16" rx="2" fill="#FFFFFF"/>
+  <text x="86" y="103" font-size="12" font-weight="bold" fill="#004B96" text-anchor="end">20</text>
+
+  <!-- X-Axis Tick Labels with Shielding -->
+  <rect x="88" y="396" width="16" height="18" rx="2" fill="#FFFFFF"/>
+  <text x="95" y="409" font-size="12" fill="#64748B" text-anchor="middle">1</text>
+
+  <rect x="167" y="396" width="16" height="18" rx="2" fill="#FFFFFF"/>
+  <text x="175" y="409" font-size="12" fill="#64748B" text-anchor="middle">2</text>
+
+  <rect x="247" y="396" width="16" height="18" rx="2" fill="#FFFFFF"/>
+  <text x="255" y="409" font-size="12" fill="#64748B" text-anchor="middle">4</text>
+
+  <rect x="327" y="396" width="16" height="18" rx="2" fill="#FFFFFF"/>
+  <text x="335" y="409" font-size="12" fill="#64748B" text-anchor="middle">8</text>
+
+  <rect x="407" y="396" width="20" height="18" rx="2" fill="#FFFFFF"/>
+  <text x="415" y="409" font-size="12" fill="#64748B" text-anchor="middle">16</text>
+
+  <rect x="485" y="396" width="20" height="18" rx="2" fill="#FFFFFF"/>
+  <text x="495" y="409" font-size="12" fill="#64748B" text-anchor="middle">32</text>
+
+  <rect x="565" y="396" width="22" height="18" rx="2" fill="#FFFFFF"/>
+  <text x="575" y="409" font-size="12" font-weight="bold" fill="#004B96" text-anchor="middle">64</text>
+
+  <!-- Ideal Speedup Label -->
+  <rect x="300" y="70" width="138" height="20" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="0.8"/>
+  <text x="369" y="84" font-size="12" fill="#475569" text-anchor="middle">Linear: S(p) = p (Ideal)</text>
+
+  <!-- Curve Labels & Asymptote Badges -->
+  <!-- s = 95% -->
+  <rect x="250" y="215" width="135" height="22" rx="4" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1"/>
+  <text x="317" y="230" font-size="12" font-weight="bold" fill="#004B96" text-anchor="middle">s = 95 % (5 % seriell)</text>
+
+  <rect x="455" y="88" width="144" height="22" rx="4" fill="#EFF6FF" stroke="#004B96" stroke-width="1"/>
+  <text x="527" y="103" font-size="12" font-weight="bold" fill="#004B96" text-anchor="middle">S_max = 20 (Asymptote)</text>
+
+  <!-- s = 90% -->
+  <rect x="220" y="280" width="135" height="20" rx="3" fill="#E0F2FE" stroke="#38BDF8" stroke-width="0.8"/>
+  <text x="287" y="294" font-size="12" font-weight="bold" fill="#0284C7" text-anchor="middle">s = 90 % (S_max = 10)</text>
+
+  <!-- s = 75% -->
+  <rect x="180" y="318" width="130" height="20" rx="3" fill="#FEF3C7" stroke="#F59E0B" stroke-width="0.8"/>
+  <text x="245" y="332" font-size="12" font-weight="bold" fill="#D97706" text-anchor="middle">s = 75 % (S_max = 4)</text>
+
+  <!-- s = 50% -->
+  <rect x="150" y="352" width="130" height="20" rx="3" fill="#FEF2F2" stroke="#F87171" stroke-width="0.8"/>
+  <text x="215" y="366" font-size="12" font-weight="bold" fill="#DC2626" text-anchor="middle">s = 50 % (S_max = 2)</text>
+
+  <!-- Callout Alert Badge at p=64 for s=95% -->
+  <rect x="360" y="125" width="215" height="34" rx="5" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.2"/>
+  <text x="467" y="141" font-size="12" font-weight="bold" fill="#B91C1C" text-anchor="middle">Amdahl-Grenze: Max. 20× Speedup</text>
+  <text x="467" y="154" font-size="12" fill="#7F1D1D" text-anchor="middle">selbst bei p = 1 000 Kernen!</text>
+
+  <!-- ==================== RIGHT PANEL: THEORIE & FORMELN ==================== -->
+  <rect x="625" y="52" width="322" height="382" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+  <path d="M 625 60 Q 625 52 633 52 L 939 52 Q 947 52 947 60 L 947 80 L 625 80 Z" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="637" y="72" font-size="13" font-weight="bold" fill="#0F172A">Skalierungsgesetze im Detail</text>
+
+  <!-- Box 1: Amdahlsches Gesetz (Strong Scaling) -->
+  <rect x="633" y="88" width="306" height="126" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+  <text x="643" y="106" font-size="12" font-weight="bold" fill="#1E40AF">Amdahlsches Gesetz (Strong Scaling):</text>
+  <text x="643" y="123" font-size="12" fill="#1E3A8A">Problemgröße konstant, Rechenkerne wachsen:</text>
+  <rect x="643" y="130" width="286" height="26" rx="4" fill="#FFFFFF" stroke="#93C5FD" stroke-width="0.8"/>
+  <text x="786" y="147" font-size="12" font-weight="bold" fill="#004B96" text-anchor="middle">S_Amdahl(p) = 1 / ((1 - s) + s / p)</text>
+  <text x="643" y="172" font-size="12" font-weight="bold" fill="#1E3A8A">Asymptote für p → ∞:   S_max = 1 / (1 - s)</text>
+  <text x="643" y="190" font-size="12" fill="#475569">• s : Parallelisierbarer Codeanteil ∈ [0, 1]</text>
+  <text x="643" y="206" font-size="12" fill="#475569">• (1 - s) : Streng sequentieller Flaschenhals</text>
+
+  <!-- Box 2: Gustafson-Barsis Gesetz (Weak Scaling) -->
+  <rect x="633" y="222" width="306" height="98" rx="6" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+  <text x="643" y="240" font-size="12" font-weight="bold" fill="#166534">Gustafsonsches Gesetz (Weak Scaling):</text>
+  <text x="643" y="257" font-size="12" fill="#14532D">Problemgröße wächst proportional zu den Kernen:</text>
+  <rect x="643" y="264" width="286" height="26" rx="4" fill="#FFFFFF" stroke="#86EFAC" stroke-width="0.8"/>
+  <text x="786" y="281" font-size="12" font-weight="bold" fill="#15803D" text-anchor="middle">S_Gustafson(p) = p - (1 - s) · (p - 1)</text>
+  <text x="643" y="306" font-size="12" fill="#166534">• Nahezu lineare Skalierung bei Gitterverfeinerung!</text>
+
+  <!-- Box 3: Parallele Effizienz & Praxisgrenzen -->
+  <rect x="633" y="328" width="306" height="98" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="643" y="346" font-size="12" font-weight="bold" fill="#334155">Parallele Effizienz E(p):</text>
+  <text x="643" y="365" font-size="12" fill="#334155">E(p) = S(p) / p ≤ 1.0 (100 %)  [Hardwareauslastung]</text>
+  <text x="643" y="384" font-size="12" fill="#64748B">• Reale Verluste: Thread-Overhead &amp; Scheduling</text>
+  <text x="643" y="401" font-size="12" fill="#64748B">• Synchronisationsblockaden (lock, Interlocked)</text>
+  <text x="643" y="418" font-size="12" fill="#64748B">• Bandbreiten-Engpässe (Cache-Contention)</text>
+</svg>

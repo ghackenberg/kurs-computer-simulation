@@ -33,6 +33,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Motivation: Auslastung moderner Mehrkern-Prozessoren
 - Unterschied: Prozess vs. Thread
 - Nebenläufigkeit (Concurrency) vs. echte Parallelität
+- Theoretische Grenzen: Speedup, Effizienz & Amdahlsches Gesetz
 
 ---
 
@@ -86,6 +87,44 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 </div>
 </div>
+
+---
+
+### Parallele Leistungsmetriken: Speedup & Effizienz
+
+<div class="columns top">
+<div class="one">
+
+#### Speedup (Beschleunigungsfaktor)
+Verhältnis der Rechenzeit auf $1$ Kern zu $p$ Kernen:
+
+$$S(p) = \frac{T_1}{T_p}$$
+
+- $T_1$: Ausführungszeit auf $1$ CPU-Kern $[\mathrm{s}]$
+- $T_p$: Ausführungszeit auf $p$ CPU-Kernen $[\mathrm{s}]$ ($p \in \mathbb{N}^+$)
+- **Idealer Speedup (linear):** $S(p) = p$
+
+</div>
+<div class="one">
+
+#### Parallele Effizienz
+Auslastungsgrad der eingesetzten Hardware:
+
+$$E(p) = \frac{S(p)}{p} = \frac{T_1}{p \cdot T_p} \le 1 \quad (100\,\%)$$
+
+- **Typische Ursachen für $E(p) < 1$:**
+  - Thread-Erzeugung und Scheduling-Overhead
+  - Synchronisationsbarrieren (`lock`)
+  - Speicherbandbreite & sequentielle Anteile
+
+</div>
+</div>
+
+---
+
+### Amdahlsches Gesetz & Skalierungsgrenzen
+
+![w:920](./Diagramme/Amdahlsches_Gesetz_Speedup.svg)
 
 ---
 

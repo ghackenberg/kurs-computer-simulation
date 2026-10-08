@@ -37,11 +37,11 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Was ist ein statisches Modell?
 
-- Beschreibt ein System im **Ruhezustand** (im Gleichgewicht).
-- Alle wirkenden Kräfte und Momente heben sich gegenseitig auf.
-- $\sum \vec{F} = 0$ und $\sum \vec{M} = 0$
-- Das Modell ist **zeitunabhängig**.
-- **Typische Fragestellung**: Welche Kräfte wirken innerhalb einer Struktur (z.B. einer Brücke) und wie stark verformt sie sich unter einer gegebenen, konstanten Last?
+- Beschreibt ein System im **Ruhezustand** (im mechanischen Gleichgewicht).
+- Alle wirkenden Kräfte und Momente kompensieren sich exakt zu Null:
+  $$\sum_{i=1}^n \vec{F}_i = \vec{0} \quad [\mathrm{N}] \qquad \text{und} \qquad \sum_{j=1}^m \vec{M}_j = \vec{0} \quad [\mathrm{N\cdot m}]$$
+- Das System ist **zeitunabhängig** ($\dot{\mathbf{x}} = \mathbf{0}$).
+- **Typische Fragestellung**: Welche Schnittkräfte ($S$) wirken in den Stäben eines Tragwerks und wie groß sind die elastischen Verformungen ($\mathbf{u}$) unter konstanter Nennlast?
 
 ---
 
@@ -551,44 +551,28 @@ $$\mathbf{K} \mathbf{u} = \mathbf{f}$$
 
 ---
 
-### Einbau der Randbedingungen
+### Einbau der Randbedingungen: Blockpartitionierung
 
-<div class="columns">
-<div>
+- Unbeschränktes $\mathbf{K}\mathbf{u} = \mathbf{f}$ ist singulär; Lagerung erzwingt $\mathbf{u}_p = \mathbf{0}$ ($p \equiv A$: Auflager; $f \equiv B$: frei).
+- Zeile 1 bestimmt Verschiebungen: $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$; Zeile 2 liefert Lagerreaktionen: $\mathbf{f}_p = \mathbf{K}_{pf}\mathbf{u}_f$.
 
-- Das unbeschränkte System $\mathbf{K} \mathbf{u} = \mathbf{f}$ ist singulär, da das Fachwerk als Starrkörper verschiebbar ist.
-- Wir müssen die **Lagerungen** (Randbedingungen) einbauen.
-- An gelagerten Freiheitsgraden ist die Verschiebung bekannt ($u_p = 0$).
-- Das Gleichungssystem wird nach **freien** ($f$) und **festgehaltenen** ($p$, prescribed) Freiheitsgraden partitioniert.
+![w:920 center](./Diagramme/LGS_Partitionierung_Matrix.svg)
 
-</div>
-<div>
+---
 
-**Blockpartitionierung des Gesamtsystems**:
+### Lösung des partitionierten Systems & Auflagerreaktionen
 
-$$
-\begin{pmatrix}
-\mathbf{K}_{ff} & \mathbf{K}_{fp} \\
-\mathbf{K}_{pf} & \mathbf{K}_{pp}
-\end{pmatrix}
-\begin{pmatrix}
-\mathbf{u}_f \\
-\mathbf{u}_p
-\end{pmatrix}
-=
-\begin{pmatrix}
-\mathbf{f}_f \\
-\mathbf{f}_p
-\end{pmatrix}
-$$
-
-1. Mit $\mathbf{u}_p = \mathbf{0}$ vereinfacht sich Zeile 1 zu:
-   $$\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f \implies \mathbf{u}_f = \mathbf{K}_{ff}^{-1} \mathbf{f}_f$$
-2. Unbekannte Lagerreaktionen folgen aus Zeile 2:
-   $$\mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f$$
-
-</div>
-</div>
+- **Verschiebungen freier Knoten ($\mathbf{u}_f \equiv \mathbf{u}_B$):**
+  - Bei starren Lagern ($\mathbf{u}_p = \mathbf{0}$) entfällt der Koppelterm:
+    $$\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f \iff \mathbf{K}_{BB} \mathbf{u}_B = \mathbf{f}_B$$
+  - $\mathbf{K}_{ff}$ ist **symmetrisch positiv-definit (SPD)** $\implies$ Direkte Cholesky-Zerlegung $\mathbf{K}_{ff} = \mathbf{L}\mathbf{L}^T$.
+  - Aufwand: $\mathcal{O}(\frac{1}{3} n_f^3)$ statt $\mathcal{O}(\frac{2}{3} n_f^3)$ (LU) bzw. $\mathcal{O}(2 n_f^3)$ (Inversion).
+- **Lagerreaktionskräfte ($\mathbf{f}_p \equiv \mathbf{f}_A$):**
+  - Unbekannte Lagerkräfte folgen aus der 2. Zeile des partitionierten Systems:
+    $$\mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f + \mathbf{K}_{pp} \mathbf{u}_p \xrightarrow{\mathbf{u}_p = \mathbf{0}} \mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f$$
+- **Nomenklatur-Mapping:**
+  - International: $f$ (*free*), $p$ (*prescribed*)
+  - Deutschsprachig: $B$ (*beweglich*), $A$ (*Auflager*)
 
 ---
 
@@ -661,13 +645,13 @@ Die grundlegenden physikalischen Prinzipien (Kräftegleichgewicht, Hooke\'sches 
 
 Für jeden freien Knoten im Fachwerk muss die Summe aller Kräfte in jeder Raumrichtung null ergeben. Ein Stab $j$, der am Knoten $i$ angreift, übt eine Kraft $S_j$ aus, die entlang der Stabachse wirkt.
 
-- **Stabvektor**: $L_j = P_k - P_i$ (Vektor von Knoten $i$ zu Knoten $k$)
-- **Einheitsvektor**: $e_j = \frac{L_j}{|L_j|}$
-- **Kraftvektor**: $F_j = S_j \cdot e_j = S_j \cdot \begin{pmatrix} e_{j,x} \\ e_{j,y} \\ e_{j,z} \end{pmatrix}$
+- **Stabvektor**: $\vec{L}_j = \vec{P}_k - \vec{P}_i$ (Vektor von Knoten $i$ zu Knoten $k$)
+- **Einheitsvektor**: $\vec{e}_j = \frac{\vec{L}_j}{|\vec{L}_j|}$
+- **Kraftvektor**: $\vec{F}_j = S_j \cdot \vec{e}_j = S_j \cdot \begin{pmatrix} e_{j,x} \\ e_{j,y} \\ e_{j,z} \end{pmatrix}$
 
 Das Gleichgewicht am Knoten $i$ lautet dann:
 
-$\sum_{j} F_j + F_{ext,i} = 0 \implies \begin{cases} \sum_j S_j \cdot e_{j,x} + F_{ext,i,x} = 0 \\ \sum_j S_j \cdot e_{j,y} + F_{ext,i,y} = 0 \\ \sum_j S_j \cdot e_{j,z} + F_{ext,i,z} = 0 \end{cases}$
+$$\sum_{j} \vec{F}_j + \vec{F}_{\text{ext},i} = \vec{0} \ [\mathrm{N}] \implies \begin{cases} \sum_j S_j \cdot e_{j,x} + F_{\text{ext},i,x} = 0 \\ \sum_j S_j \cdot e_{j,y} + F_{\text{ext},i,y} = 0 \\ \sum_j S_j \cdot e_{j,z} + F_{\text{ext},i,z} = 0 \end{cases}$$
 
 ---
 
@@ -900,22 +884,34 @@ $$
 
 ### Numerische Lösung des Gleichungssystems
 
-Für die Auflösung nach den freien Verschiebungen $\mathbf{u}_B$ gilt:
+Partitioniertes System: $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f - \mathbf{K}_{fp}\mathbf{u}_p \iff \mathbf{K}_{BB}\mathbf{u}_B = \mathbf{f}_B - \mathbf{K}_{BA}\mathbf{u}_A$
 
-$$
-\mathbf{K}_{BB} \mathbf{u}_B = \mathbf{f}_B - \mathbf{K}_{BA} \mathbf{u}_A
-$$
+<div class="columns top">
+<div>
 
-- **Ideales Fachwerk ($\mathbf{A} \mathbf{x} = \mathbf{b}$):** Regulär, nicht symmetrisch $\to$ LU-Faktorisierung mit partieller Pivotisierung:
-  ```csharp
-  Vector<double> x = A.Solve(b); // O(2/3 n^3) statt O(2 n^3) Inversion
-  ```
-- **Elastisches Fachwerk ($\mathbf{K}_{BB} \mathbf{u}_B = \mathbf{f}_B'$):** Die Matrix $\mathbf{K}_{BB}$ ist **symmetrisch positiv-definit (SPD)** $\to$ **Cholesky-Zerlegung** ($\mathbf{K}_{BB} = \mathbf{L} \mathbf{L}^T$):
-  ```csharp
-  // Cholesky ist 2x schneller als LU; robuster Fallback bei Singularität
-  var uB = kBB.Cholesky().Solve(fB);
-  ```
-- **Numerische Best Practice:** Keine explizite Invertierung (`A.Inverse().Multiply(b)` ist numerisch instabil und ineffizient)!
+**Ideales Fachwerk ($\mathbf{A} \mathbf{x} = \mathbf{b}$)**
+- Regulär, nicht symmetrisch
+- LU-Faktorisierung mit Pivotisierung:
+```csharp
+// O(2/3 n^3) Aufwand
+Vector<double> x = A.Solve(b);
+```
+- Nie explizit invertieren (`A.Inverse()`)!
+
+</div>
+<div>
+
+**Elastisches Fachwerk ($\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f'$)**
+- $\mathbf{K}_{ff} \equiv \mathbf{K}_{BB}$ ist **symmetrisch positiv-definit**
+- **Cholesky-Zerlegung** ($\mathbf{K}_{ff} = \mathbf{L}\mathbf{L}^T$):
+```csharp
+// O(1/3 n^3): 2x schneller als LU
+var uB = kBB.Cholesky().Solve(fB);
+```
+- Robuster Fallback bei Singularität
+
+</div>
+</div>
 
 ---
 ## 7.5: Programmtechnische Umsetzung
