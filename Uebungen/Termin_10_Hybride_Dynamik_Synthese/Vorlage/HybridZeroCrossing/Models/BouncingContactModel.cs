@@ -20,11 +20,27 @@ namespace HybridZeroCrossing.Models
         public ContactState State { get; set; } = ContactState.FreeFlight;
 
         public int BounceCount { get; private set; } = 0;
+        public double MaxPenetration { get; private set; } = 0.0;      // [m] für Aufgabe A1
+        public double LastEnergyRatio { get; private set; } = 0.0;     // E_nach / E_vor beim letzten Stoß
 
         public void Reset(double initialHeight = 5.0, double initialVelocity = 0.0)
         {
             State = ContactState.FreeFlight;
             BounceCount = 0;
+            MaxPenetration = 0.0;
+            LastEnergyRatio = 0.0;
+        }
+
+        /// <summary>
+        /// Übt einen vertikalen Stoßimpuls (z. B. Flipperfinger / Pneumatik-Losbrechen) auf den Ball aus.
+        /// </summary>
+        public void ApplyVerticalImpulse(ref double[] x, double deltaV)
+        {
+            // TODO [Aufgabe A2]:
+            // 1. Addieren Sie `deltaV` auf die Vertikalgeschwindigkeit `x[1]`.
+            // 2. Falls sich das System bereits im Zeno-Ruhezustand (`State == ContactState.RestingOnGround`)
+            //    befindet und `x[1] > VStick` gilt, schalten Sie den Automaten wieder in `ContactState.FreeFlight`!
+            x[1] += deltaV;
         }
 
         public double[] ComputeDerivatives(double t, double[] x)
@@ -61,6 +77,10 @@ namespace HybridZeroCrossing.Models
         public bool ApplyDiscreteReset(ref double[] x)
         {
             BounceCount++;
+            double penetration = Math.Max(0.0, Radius - x[0]);
+            if (penetration > MaxPenetration) MaxPenetration = penetration;
+
+            double eBefore = ComputeTotalEnergy(x);
             x[0] = Radius; // Exakt auf Kontaktfläche positionieren
 
             double vBefore = x[1];
@@ -69,11 +89,14 @@ namespace HybridZeroCrossing.Models
                 // Zeno-Schutz: Umschalten auf Ruhezustand am Boden
                 x[1] = 0.0;
                 State = ContactState.RestingOnGround;
+                LastEnergyRatio = 0.0;
                 return true;
             }
 
             // Elastischer Rückstoß: v^+ = -e * v^-
             x[1] = -Restitution * vBefore;
+            double eAfter = ComputeTotalEnergy(x);
+            LastEnergyRatio = eBefore > 1e-9 ? eAfter / eBefore : 0.0;
             return false;
         }
 
@@ -156,6 +179,11 @@ namespace HybridZeroCrossing.Models
             {
                 penetration = Radius - xNext[0];
                 bounced = true;
+
+                // TODO [Aufgabe A1]:
+                // 1. Zählen Sie `BounceCount++` auch im naiven Modus hoch!
+                // 2. Speichern Sie die maximale Bodenpenetration: `if (penetration > MaxPenetration) MaxPenetration = penetration;`
+                // 3. Berechnen Sie vor und nach der Geschwindigkeitsumkehr `ComputeTotalEnergy(xNext)` und aktualisieren Sie `LastEnergyRatio`!
 
                 if (Math.Abs(xNext[1]) < VStick)
                 {

@@ -603,7 +603,7 @@ while (simulating) {
 
 ---
 
-## 11.4: Digitaler Zwilling in der Praxis
+## 11.4: Digitaler Zwilling in der Praxis *(Ausblick Master & Industrie)*
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -644,7 +644,7 @@ Ein Simulationsmodell allein ist noch kein Digitaler Zwilling. Erst die Verknüp
 
 ---
 
-### Co-Simulation mit FMI / FMU (1/2)
+### Co-Simulation mit FMI / FMU (1/2) *(Deep Dive / Ausblick)*
 
 In realen Industrieanlagen stammen Teilsysteme aus unterschiedlichen Domänen und Werkzeugen:
 
@@ -678,7 +678,7 @@ In realen Industrieanlagen stammen Teilsysteme aus unterschiedlichen Domänen un
 
 ---
 
-### Co-Simulation mit FMI / FMU (2/2)
+### Co-Simulation mit FMI / FMU (2/2) *(Deep Dive / Ausblick)*
 
 Master-Slave-Architektur bei der Co-Simulation mechatronischer Gesamtsysteme:
 
@@ -689,7 +689,7 @@ Master-Slave-Architektur bei der Co-Simulation mechatronischer Gesamtsysteme:
 
 ---
 
-### Virtuelle Inbetriebnahme (VIBN) & HiL (1/2)
+### Virtuelle Inbetriebnahme (VIBN) & HiL (1/2) *(Deep Dive / Ausblick)*
 
 Bevor eine Sondermaschine physisch gebaut wird, spart die virtuelle Inbetriebnahme enorme Kosten und Projektrisiken:
 
@@ -718,7 +718,7 @@ Bevor eine Sondermaschine physisch gebaut wird, spart die virtuelle Inbetriebnah
 
 ---
 
-### Virtuelle Inbetriebnahme (VIBN) & HiL (2/2)
+### Virtuelle Inbetriebnahme (VIBN) & HiL (2/2) *(Deep Dive / Ausblick)*
 
 Hardware-in-the-Loop Systemarchitektur für die industrielle Maschinenabnahme:
 
@@ -730,7 +730,7 @@ Hardware-in-the-Loop Systemarchitektur für die industrielle Maschinenabnahme:
 
 ---
 
-### KI-Surrogatmodelle & Physics-Informed Neural Networks
+### KI-Surrogatmodelle & Physics-Informed Neural Networks *(Deep Dive / Ausblick)*
 
 Komplexe FEM- oder CFD-Simulationen benötigen oft Stunden – unmöglich für die Echtzeitüberwachung an der Maschine:
 

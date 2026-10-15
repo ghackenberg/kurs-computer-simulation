@@ -825,7 +825,7 @@ Das Konzept der Abtastzeit (`SampleTime`) wurde eingeführt, um dem Solver mitzu
 
 ---
 
-### Umsetzung der `SampleTime`-Klassen
+### Umsetzung der `SampleTime`-Klassen *(Deep Dive / Framework-Referenz)*
 
 <div class="columns">
 <div class="three">
@@ -859,7 +859,7 @@ public class VariableSampleTime : SampleTime
 
 ---
 
-### ZeroOrderHoldBlock
+### ZeroOrderHoldBlock *(Deep Dive / Framework-Referenz)*
 
 Der `ZeroOrderHoldBlock` realisiert die klassische Abtastung und Haltefunktion (Sample & Hold):
 
@@ -880,7 +880,7 @@ public override void UpdateStates(double time,
 
 ---
 
-### DiscreteTimeIntegratorBlock
+### DiscreteTimeIntegratorBlock *(Deep Dive / Framework-Referenz)*
 
 Der `DiscreteTimeIntegratorBlock` führt eine Integration über die Zeit in diskreten Schritten durch (Summation):
 
@@ -902,7 +902,7 @@ public override void UpdateStates(double time,
 
 ---
 
-### HitLowerLimitBlock (Ereignisdetektion)
+### HitLowerLimitBlock (Ereignisdetektion) *(Deep Dive / Framework-Referenz)*
 
 Dieser Block dient der Detektion von Schwellwert-Unterschreitungen (Events), ohne den Zustand selbst zu ändern:
 
@@ -922,7 +922,7 @@ public override void CalculateZeroCrossings(
 
 ---
 
-### IntegrateWithReset (Zustandsmanipulation)
+### IntegrateWithReset (Zustandsmanipulation) *(Deep Dive / Framework-Referenz)*
 
 Ein kontinuierlicher Integrator, dessen Zustand durch ein diskretes Ereignis zurückgesetzt werden kann:
 
@@ -945,7 +945,7 @@ public override void UpdateStates(
 
 ---
 
-### IntegrateWithLowerLimit
+### IntegrateWithLowerLimit *(Deep Dive / Framework-Referenz)*
 
 Ein Integrator mit einer harten unteren Schranke (wichtig z.B. beim Bouncing Ball, damit dieser nicht "durch den Boden" fällt):
 
@@ -968,7 +968,7 @@ public override void UpdateStates(
 
 ---
 
-### VariableSampleTimeBlock
+### VariableSampleTimeBlock *(Deep Dive / Framework-Referenz)*
 
 Ein Block, der seine Abtastzeit dynamisch anpassen kann (Ereignissteuerung):
 
@@ -1309,7 +1309,7 @@ Auch das Ergebnis des impliziten Solvers sieht gut besser aus, da die Randbeding
 
 ![bg right](./Illustrationen/Abschnitt_6.jpg)
 
-## 10.6: Diskrete Abtastzeiten
+## 10.6: Diskrete Abtastzeiten *(Deep Dive / Framework-Referenz)*
 
 In diesem Abschnitt haben wir gesehen:
 
@@ -1320,7 +1320,7 @@ In diesem Abschnitt haben wir gesehen:
 
 ---
 
-### Initialisierung der Abtastzeitpunkte
+### Initialisierung der Abtastzeitpunkte *(Deep Dive)*
 
 Der Solver muss wissen, wann der *erste* diskrete Zeitschritt stattfindet. Dies geschieht in der `InitializeStates`-Methode.
 
@@ -1338,7 +1338,7 @@ if (f.SampleTime is DiscreteSampleTime)
 
 ---
 
-### Berücksichtigung im Solver: **Max Time Step**
+### Berücksichtigung im Solver: **Max Time Step** *(Deep Dive)*
 
 Der Solver muss sicherstellen, dass er **exakt** auf einem diskreten Abtastzeitpunkt landet und nicht "darüber hinweg" integriert.
 
@@ -1361,7 +1361,7 @@ foreach (Block b in Blocks)
 
 ---
 
-### Berücksichtigung im Solver: **Update States**
+### Berücksichtigung im Solver: **Update States** *(Deep Dive)*
 
 Nachdem der Integrationsschritt durchgeführt wurde (und die Zeit `t` erreicht ist), prüft der Solver, welche diskreten Blöcke "fällig" sind.
 
@@ -1384,7 +1384,7 @@ else if (f.SampleTime is DiscreteSampleTime)
 
 ---
 
-### Berechnung des nächsten Abtastzeitpunkts
+### Berechnung des nächsten Abtastzeitpunkts *(Deep Dive)*
 
 Bei **diskreten** Abtastzeiten ist der nächste Zeitpunkt streng deterministisch und periodisch.
 
@@ -1402,7 +1402,7 @@ $t_{k+1} = t_k + T_{Period}$
 
 ---
 
-### Beispiel: **Basic Discrete Example**
+### Beispiel: **Basic Discrete Example** *(Deep Dive)*
 
 <div class="columns">
 <div class="three">
@@ -1426,7 +1426,7 @@ Das Modell kombiniert kontinuierliche Integration mit diskreter Abtastung:
 
 ![bg contain right](./Screenshots/ZeroOrderHold_Explizit.png)
 
-### Lösung mit dem **expliziten** Solver
+### Lösung mit dem **expliziten** Solver *(Deep Dive)*
 
 Das Diagramm zeigt die kontinuierliche Parabel (blau/orange) und das **treppenförmige** Ausgangssignal des Zero-Order Holds (grün).
 
@@ -1438,7 +1438,7 @@ Das Diagramm zeigt die kontinuierliche Parabel (blau/orange) und das **treppenf�
 
 ![bg right](./Illustrationen/Abschnitt_7.jpg)
 
-## 10.7: Variable Abtastzeiten
+## 10.7: Variable Abtastzeiten *(Deep Dive / Framework-Referenz)*
 
 In diesem Abschnitt haben wir gesehen:
 
@@ -1448,7 +1448,7 @@ In diesem Abschnitt haben wir gesehen:
 
 ---
 
-### Initialisierung des ersten Zeitpunkts
+### Initialisierung des ersten Zeitpunkts *(Deep Dive)*
 
 Auch bei **variabler Abtastzeit** muss der erste Aufrufzeitpunkt bekannt sein, um die Ereigniskette zu starten.
 
@@ -1466,7 +1466,7 @@ else if (f.SampleTime is VariableSampleTime)
 
 ---
 
-### Berücksichtigung im Solver: **Max Time Step**
+### Berücksichtigung im Solver: **Max Time Step** *(Deep Dive)*
 
 Der Solver behandelt variable Abtastzeiten bei der Schrittweitensteuerung identisch zu diskreten Abtastzeiten.
 
@@ -1488,7 +1488,7 @@ foreach (Block b in Blocks)
 
 ---
 
-### Berücksichtigung im Solver: **Update States**
+### Berücksichtigung im Solver: **Update States** *(Deep Dive)*
 
 Auch hier ist die Logik analog, aber sie delegiert die Berechnung des nächsten Zeitpunkts an den Block selbst (*statt der Berechnung mittels Abtastperiode*).
 
@@ -1511,7 +1511,7 @@ else if (f.SampleTime is VariableSampleTime)
 
 ---
 
-### Berechnung des nächsten variablen Zeitpunkts
+### Berechnung des nächsten variablen Zeitpunkts *(Deep Dive)*
 
 Die Klasse `Block` stellt die virtuelle Methode `GetNextVariableHitTime` bereit, die von spezifischen Blöcken überschrieben werden kann.
 
@@ -1535,7 +1535,7 @@ public override double GetNextVariableHitTime(double time, ..., double[] inputs)
 
 ---
 
-### Beispiel: **Variable Sample Time**
+### Beispiel: **Variable Sample Time** *(Deep Dive)*
 
 <div class="columns">
 <div class="two">
@@ -1559,7 +1559,7 @@ Ein System, bei dem die Abtastrate kontinuierlich abnimmt (d.h. das Zeitinterval
 
 ![bg contain right](./Screenshots/VariableSampleTime_Explizit.png)
 
-### Lösung mit dem **expliziten** Solver
+### Lösung mit dem **expliziten** Solver *(Deep Dive)*
 
 - **Orange Kurve:** Das kontinuierlich ansteigende $\Delta t$ (Ausgang des Integrators).
 - **Blaue Punkte:** Die Zeitpunkte, zu denen der `VariableSampler` das letzte Mal aktiv wurde.

@@ -81,53 +81,46 @@ In endlicher physikalischer Zeit treten unendlich viele Stöße auf (**Zeno-Verh
 
 ## 3. Stufe A: In-Class Sprint (60 min)
 
-### Thema: „Bouncing Ball: Naiver Festschritt vs. Bisektion“
+### Thema: „Bouncing Ball: Naiver Festschritt vs. Bisektion, Zeno-Wakeup & Energie-Telemetrie in `HybridZeroCrossing.sln`“
 
-Erstellen Sie eine C#-Konsolenapplikation (`BouncingBallSprint`), die den freien Fall eines Balls unter Schwerkraft simuliert und den gravierenden Energie- und Penetrationsfehler eines naiven Festschrittverfahrens gegenüber einer sauberen Bisektions-Nullstellensuche demonstriert.
+In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/HybridZeroCrossing.sln`) sind das hybride Kontaktmodell (`BouncingContactModel`), der Bisektions-Wurzelsucher (`BisectionRootFinder`) sowie die gekoppelte `WPF Canvas`- und `ScottPlot.WPF`-Ansicht (`MainWindow.xaml`) bereits als ausführbare Baseline vorimplementiert. Starten Sie die Anwendung und bearbeiten Sie im Live-Sprint die folgenden **3 Erweiterungsaufgaben**:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ STUFE A: BOUNCING BALL EXPERIMENT                                      │
+│ STUFE A: BOUNCING BALL EXPERIMENT (WPF CANVAS + SCOTTPLOT 5)           │
 │                                                                        │
-│   Start: y_0 = 5.0 m, v_0 = 0 m/s                                      │
-│   Ballradius: R = 0.1 m, Stoßzahl e = 0.8, g = 9.81 m/s^2              │
-│   Boden bei y = 0  ==>  Kontaktfläche bei y = R                        │
+│   Start: y_0 = 5.0 m, v_0 = 0 m/s, Ballradius R = 0.1 m, e = 0.80      │
 │   Zero-Crossing Funktion: z(y) = y - R = 0                             │
 │                                                                        │
-│   Verfahren 1 (Naiver Festschritt h = 0.05 s):                         │
-│     Wenn y_k+1 <= R: v_k+1 = -e * v_k+1  (Ball dringt tief in Boden ein!)
+│   Verfahren 1 (Bisektion):                                             │
+│     Halbiere Zeitschritt bis |z| < 1e-6 m -> Reset exakt bei y = R!    │
 │                                                                        │
-│   Verfahren 2 (Bisektion):                                             │
-│     Halbiere Zeitschritt, bis |z| < 1e-6 m. Reset exakt bei y = R!    │
+│   Verfahren 2 (Naiver Festschritt h = 0.048 s):                        │
+│     Wenn y_k+1 <= R: v_k+1 = -e * v_k+1 -> Tiefe Bodenpenetration!     │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 #### Aufgabenstellung (Schritt für Schritt):
 
-1. **Systemgleichungen:**
-   $$\dot{y} = v, \quad \dot{v} = -g \quad (g = 9{,}81\,\text{m/s}^2)$$
-   Gesamtenergie: $E_{\text{tot}} = m g y + \frac{1}{2} m v^2$ (mit Masse $m = 1{,}0\,\text{kg}$).
-2. **Verfahren 1 (Naiver Festschritt):**
-   - Schrittweite $h = 0{,}05\,\text{s}$.
-   - Führe den Euler-Schritt aus: $y_{k+1} = y_k + h \cdot v_k$, $v_{k+1} = v_k - h \cdot g$.
-   - Prüfe Bedingung: `if (y_k1 <= R) { v_k1 = -e * v_k1; }`
-   - Protokolliere die Bodenpenetration $\Delta y_{\text{pen}} = R - y_{k+1}$ und die Energie $E_{\text{tot}}$ direkt nach dem Stoß.
-3. **Verfahren 2 (Bisektions-Nullstellensuche):**
-   - Zero-Crossing-Funktion: $z(y) = y - R$.
-   - Erkennt der Schritt einen Vorzeichenwechsel ($z_k > 0$ und $z_{k+1} \le 0$):
-     - Halbiere das Intervall $[t_k, t_{k+1}]$, bis $|z| < 10^{-6}\,\text{m}$.
-     - Führe den Stoß exakt am gefundenen Zeitpunkt $t^*$ aus: $v^+ = -e \cdot v^-$.
-     - Setze die kontinuierliche Integration ab $t^*$ mit Restschrittweite $h_{\text{rest}} = t_{k+1} - t^*$ fort.
-4. **Auswertung auf der Konsole:**
-   Geben Sie nach dem ersten Aufprall für beide Verfahren aus:
-   - Tatsächliche Stoßhöhe $y_{\text{impact}}$
-   - Penetrationsfehler in Millimetern
-   - Kinetische Energie direkt vor und nach dem Stoß
-   - Berechneter theoretischer Energieverlustfaktor $\frac{E_{\text{nach}}}{E_{\text{vor}}} \stackrel{?}{=} e^2 = 0{,}64$.
+1. **Aufgabe A1 – Bodenpenetration & Energieverhältnis beim naiven Festschritt messen (`BouncingContactModel.cs`):**
+   - Starten Sie die Vorlage im Modus **„Bisektion (Zero-Crossing exakt)“** und beobachten Sie in der Statusleiste die maximale Bodenpenetration (`Max. Penetr.: 0.00 mm`) sowie das exakte Energieverhältnis $\frac{E_{\text{nach}}}{E_{\text{vor}}} = e^2 = 0{,}6400$.
+   - Wechseln Sie in der ComboBox auf **„Naiver Festschritt (h = 0.048 s)“**: Sie stellen fest, dass `Stöße: 0` und `Max. Penetr.: 0.00 mm` stehenbleiben, weil die Messwerte in `StepNaive(...)` noch fehlen.
+   - Öffnen Sie `Models/BouncingContactModel.cs` bei `// TODO [Aufgabe A1]` in `StepNaive(...)` und ergänzen Sie:
+     - Hochzählen von `BounceCount++`,
+     - Aktualisieren von `if (penetration > MaxPenetration) MaxPenetration = penetration;`,
+     - Berechnen von `LastEnergyRatio = eAfter / eBefore` vor und nach der Geschwindigkeitsumkehr.
+   - Vergleichen Sie die gemessene Bodenpenetration ($> 30\,\text{mm}$!) und den Energiefehler im naiven Modus mit der Bisektion.
+2. **Aufgabe A2 – Aufwärts-Impuls („⚡ Kick“) & Rückkehr aus dem Zeno-Ruhezustand (`BouncingContactModel.cs`):**
+   - Lassen Sie den Ball hüpfen, bis der Zeno-Schutz (`|v| < VStick`) greift und der Automat in den diskreten Zustand `RestingOnGround` wechselt.
+   - Klicken Sie nun auf den Button **„⚡ Kick (+6 m/s)“**: Obwohl in `ApplyVerticalImpulse(...)` die Geschwindigkeit `x[1] += deltaV` erhöht wird, bleibt der Ball am Boden kleben, weil `ComputeDerivatives` im Zustand `RestingOnGround` weiterhin $\dot{y} = 0, \dot{v} = 0$ erzwingt!
+   - Öffnen Sie `Models/BouncingContactModel.cs` bei `// TODO [Aufgabe A2]` in `ApplyVerticalImpulse(ref double[] x, double deltaV)` und schalten Sie den Automaten wieder in den Zustand `ContactState.FreeFlight` zurück, sobald `State == ContactState.RestingOnGround && x[1] > VStick` gilt (analog zum Losbrechen aus der Haftreibung in Track A bzw. dem Flipperfinger-Stoß in Track B).
+3. **Aufgabe A3 – Simultane Höhen- & Energie-Trajektorie in `ScottPlot.WPF` (`MainWindow.xaml.cs`):**
+   - Öffnen Sie `MainWindow.xaml.cs` in der Methode `UpdatePlot()` bei `// TODO [Aufgabe A3]`.
+   - Fügen Sie neben der roten Energiekurve $E_{\text{tot}}(t)$ (die im freien Flug horizontal verläuft und bei jedem Stoß stufenförmig um den Faktor $e^2$ abfällt) die skalierte Ballhöhe $10 \cdot y(t)$ aus `_heightLog` als zweite `Scatter`-Kurve (`Colors.DodgerBlue`) hinzu, sodass Parabelbögen und Energiestufen zeitgleich sichtbar werden.
 
-**Erwartetes Ergebnis nach 50 Minuten:**  
-- Verfahren 1 zeigt Penetration von $> 30\,\text{mm}$ und grob verfälschte Energieverhältnisse.
-- Verfahren 2 lokalisiert den Bodenkontakt auf $< 1\,\mu\text{m}$ genau und erfüllt $\frac{E_{\text{nach}}}{E_{\text{vor}}} = 0{,}64000$ exakt.
+**Erwartetes Ergebnis nach dem Sprint:**  
+- Im naiven Modus wird eine Bodenpenetration von $> 30\,\text{mm}$ und ein verfälschtes Energieverhältnis sichtbar, während die Bisektion $< 1\,\mu\text{m}$ Fehler und $\frac{E^+}{E^-} = 0{,}6400$ garantiert.  
+- Der Kick-Button holt den Ball jederzeit zuverlässig aus dem Zeno-Ruhezustand `RestingOnGround` zurück in den Freiflug.
 
 ---
 
