@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #004B96; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #475569; }
+      .card-hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; fill: #0f172a; }
+      .label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #334155; }
+      .label-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; font-weight: bold; fill: #0f172a; }
+      .math { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 15px; font-weight: bold; }
+    </style>
+
+    <filter id="shadow" x="-3%" y="-3%" width="106%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <rect width="1000" height="500" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <text x="35" y="36" class="title">Praxisbeispiel im Gitter: Thermisches Modell eines CPU-Kühlkörpers</text>
+  <text x="35" y="56" class="subtitle">Zusammenspiel von Wärmequelle Q, Materialübergängen α(x,y), Isolierung (Neumann) und Luftkühlung (Robin)</text>
+
+  <!-- ========================================================= -->
+  <!-- LEFT: 2D QUERSCHNITT IM PIXELGITTER                       -->
+  <!-- ========================================================= -->
+  <g transform="translate(35, 74)" filter="url(#shadow)">
+    <rect width="510" height="400" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="20" y="28" class="card-hdr">1. 2D-Gitterquerschnitt (Materialzonen &amp; Wärmefluss)</text>
+
+    <!-- Air Background -->
+    <rect x="25" y="45" width="460" height="310" rx="6" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5" />
+    <text x="255" y="68" class="label-bold" style="fill: #0369a1; text-anchor: middle; font-size: 12px;">
+      Kühlluftstrom: T_∞ = 25 °C (Lüfter aktiv: h = 250 W/m²K | Ausfall: h = 20 W/m²K)
+    </text>
+
+    <!-- 6 Representative Aluminum Cooling Fins -->
+    <g fill="#94a3b8" stroke="#475569" stroke-width="1.5">
+      <rect x="95"  y="85" width="32" height="122" rx="2" />
+      <rect x="153" y="85" width="32" height="122" rx="2" />
+      <rect x="211" y="85" width="32" height="122" rx="2" />
+      <rect x="269" y="85" width="32" height="122" rx="2" />
+      <rect x="327" y="85" width="32" height="122" rx="2" />
+      <rect x="385" y="85" width="32" height="122" rx="2" />
+    </g>
+    <rect x="65" y="132" width="380" height="24" rx="4" fill="#e0f2fe" fill-opacity="0.88" />
+    <text x="255" y="149" class="label-bold" style="fill: #0f172a; text-anchor: middle;">
+      Aluminium-Finnen (α_Al ≈ 97 mm²/s) + Robin-Rand an Luft
+    </text>
+
+    <!-- Copper Heatspreader -->
+    <rect x="65" y="207" width="380" height="46" rx="3" fill="#f59e0b" stroke="#b45309" stroke-width="2" />
+    <text x="255" y="235" class="label-bold" style="fill: #ffffff; font-size: 12px; text-anchor: middle;">
+      Kupfer-Heatspreader (Spreizt Wärme breit: α_Cu ≈ 115 mm²/s)
+    </text>
+
+    <!-- Thermal Interface Material (TIM / Paste) - widened to 310px so text fits cleanly inside! -->
+    <rect x="100" y="253" width="310" height="22" fill="#fde047" stroke="#ca8a04" stroke-width="1.5" />
+    <text x="255" y="268" class="label-bold" style="fill: #713f12; font-size: 11px; text-anchor: middle;">
+      TIM / Wärmeleitpaste (Engpass: α ≈ 2,5 mm²/s)
+    </text>
+
+    <!-- CPU Die (Silicon Heat Source) - widened to 310px -->
+    <rect x="100" y="275" width="310" height="43" rx="2" fill="#dc2626" stroke="#7f1d1d" stroke-width="2" />
+    <text x="255" y="294" class="label-bold" style="fill: #ffffff; font-size: 12px; text-anchor: middle;">
+      Silizium CPU-Die (Heizquelle P = 150 W)
+    </text>
+    <text x="255" y="311" class="label" style="fill: #fecaca; font-size: 11px; text-anchor: middle;">
+      Quellterm Q = +q̇_V / (ρ · c_p) [K/s]
+    </text>
+
+    <!-- PCB Bottom Insulation (Neumann) -->
+    <rect x="25" y="318" width="460" height="37" rx="4" fill="#334155" />
+    <text x="255" y="341" class="label-bold" style="fill: #f8fafc; text-anchor: middle;">
+      Leiterplatte (PCB) unten: Adiabate Isolierung (Neumann ∂T/∂y = 0)
+    </text>
+  </g>
+
+  <!-- ========================================================= -->
+  <!-- RIGHT: DER THERMISCHE PFAD VON DER QUELLE ZUR SENKE       -->
+  <!-- ========================================================= -->
+  <g transform="translate(565, 74)" filter="url(#shadow)">
+    <rect width="400" height="400" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="20" y="28" class="card-hdr">2. Die 4 Stationen des Wärmepfads im Code</text>
+
+    <!-- Station 1 -->
+    <g transform="translate(20, 44)">
+      <rect width="360" height="75" rx="6" fill="#fef2f2" stroke="#fca5a5" />
+      <text x="14" y="22" class="label-bold" style="fill: #991b1b;">① Wärmeerzeugung im Chip (Quellterm Q)</text>
+      <text x="14" y="42" class="label">Elektrische Leistung P [W] heizt die Die-Pixel in jedem</text>
+      <text x="14" y="60" class="label">Zeitschritt aktiv auf:  <tspan font-weight="bold" fill="#dc2626">T_neu += Δt · Q[x, y]</tspan></text>
+    </g>
+
+    <!-- Station 2 -->
+    <g transform="translate(20, 130)">
+      <rect width="360" height="75" rx="6" fill="#fefce8" stroke="#fde047" />
+      <text x="14" y="22" class="label-bold" style="fill: #854d0e;">② Engpass Wärmeleitpaste (TIM)</text>
+      <text x="14" y="42" class="label">Kleines α_TIM bremst den Wärmefluss ➔ Großer</text>
+      <text x="14" y="60" class="label">Temperatursprung ΔT über nur 2 Pixel Schichtdicke!</text>
+    </g>
+
+    <!-- Station 3 -->
+    <g transform="translate(20, 216)">
+      <rect width="360" height="75" rx="6" fill="#fff7ed" stroke="#fdba74" />
+      <text x="14" y="22" class="label-bold" style="fill: #9a3412;">③ Wärmespreizung in Kupfer &amp; Alu (5-Punkt-Stern)</text>
+      <text x="14" y="42" class="label">Hohes α_Cu verteilt die Hitze seitlich auf alle 10 Finnen:</text>
+      <text x="14" y="60" class="label"><tspan font-weight="bold" fill="#c2410c">s[x,y] = α[x,y] · Δt / Δx²</tspan>  (mit Δt nach α_max = α_Cu!)</text>
+    </g>
+
+    <!-- Station 4 -->
+    <g transform="translate(20, 302)">
+      <rect width="360" height="80" rx="6" fill="#f0f9ff" stroke="#7dd3fc" />
+      <text x="14" y="22" class="label-bold" style="fill: #0369a1;">④ Wärmeabgabe an die Luft (Robin-Randbedingung)</text>
+      <text x="14" y="42" class="label">Große Oberfläche der 10 Finnen übergibt die Wärme an</text>
+      <text x="14" y="60" class="label">die Luft (T_∞ = 25 °C). Bei Lüfterausfall droht Überhitzung!</text>
+    </g>
+  </g>
+</svg>

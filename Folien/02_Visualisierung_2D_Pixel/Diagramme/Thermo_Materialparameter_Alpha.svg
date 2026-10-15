@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #004B96; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #475569; }
+      .card-hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; fill: #0f172a; }
+      .label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #334155; }
+      .label-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; font-weight: bold; fill: #0f172a; }
+      .math { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 15px; font-weight: bold; }
+      .badge { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: middle; }
+    </style>
+    <filter id="shadow" x="-3%" y="-3%" width="106%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="520" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <!-- Header -->
+  <text x="35" y="36" class="title">Materialparameter: Warum erwärmt sich Kupfer schneller als Paste?</text>
+  <text x="35" y="56" class="subtitle">Zusammenspiel aus Wärmeleitfähigkeit λ (Transport) und Wärmekapazität ρ · c_p (Speicherträgheit)</text>
+
+  <!-- ========================================================= -->
+  <!-- LEFT CARD: DIE ZWEI GEGENSPIELER & FORMEL FÜR ALPHA       -->
+  <!-- ========================================================= -->
+  <g transform="translate(35, 72)" filter="url(#shadow)">
+    <rect width="470" height="420" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="20" y="28" class="card-hdr">1. Die zwei Gegenspieler in jedem Gitterpixel</text>
+
+    <!-- Box A: Zähler (Leitung lambda) -->
+    <g transform="translate(20, 44)">
+      <rect width="430" height="105" rx="6" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5" />
+      <rect x="12" y="12" width="124" height="24" rx="4" fill="#ea580c" />
+      <text x="74" y="24" class="badge">Zähler: Transport</text>
+      <text x="146" y="29" class="label-bold" style="fill: #9a3412; font-size: 13.5px;">Wärmeleitfähigkeit λ [W / (m · K)]</text>
+      <text x="14" y="54" class="label">• Bestimmt, wie <tspan font-weight="bold">breit die „Wärme-Autobahn“</tspan> zwischen zwei Pixeln ist.</text>
+      <text x="14" y="74" class="label">• Großes λ (z. B. Kupfer: 398) ➔ Viel Wärmestrom pro Grad Gefälle.</text>
+      <text x="14" y="94" class="label">• Kleines λ (z. B. Luft: 0,026) ➔ Kaum Durchfluss (Isolator).</text>
+    </g>
+
+    <!-- Box B: Nenner (Speicher rho * c_p) -->
+    <g transform="translate(20, 162)">
+      <rect width="430" height="115" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+      <rect x="12" y="12" width="124" height="24" rx="4" fill="#2563eb" />
+      <text x="74" y="24" class="badge">Nenner: Trägheit</text>
+      <text x="146" y="29" class="label-bold" style="fill: #1e40af; font-size: 13px;">Volumetrische Kapazität ρ · c_p [J / (m³ · K)]</text>
+      <text x="14" y="54" class="label">• <tspan font-weight="bold">Dichte ρ [kg/m³]</tspan> × <tspan font-weight="bold">spez. Wärmekapazität c_p [J/(kg·K)]</tspan>.</text>
+      <text x="14" y="74" class="label">• Bestimmt, wie <tspan font-weight="bold">groß der „Wärmetank“</tspan> eines Volumenelements ist.</text>
+      <text x="14" y="94" class="label">• Großes ρ · c_p ➔ Zelle speichert viel Energie, ehe T merklich steigt!</text>
+    </g>
+
+    <!-- Box C: Quotient Alpha -->
+    <g transform="translate(20, 290)">
+      <rect width="430" height="112" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="2" />
+      <text x="215" y="24" class="label-bold" style="fill: #166534; font-size: 14px; text-anchor: middle;">
+        Ergebnis: Temperaturleitfähigkeit α (auch a genannt) [m²/s]
+      </text>
+      <rect x="18" y="34" width="394" height="42" rx="6" fill="#ffffff" stroke="#22c55e" stroke-width="1.5" />
+      <text x="215" y="60" class="math" style="fill: #15803d; text-anchor: middle; font-size: 15px;">
+        α = λ / (ρ · c_p) = Leitvermögen / Speicherträgheit
+      </text>
+      <text x="215" y="96" class="label-bold" style="fill: #14532d; text-anchor: middle;">
+        „Wie schnell breitet sich eine Temperaturfront im Raum aus?“
+      </text>
+    </g>
+  </g>
+
+  <!-- ========================================================= -->
+  <!-- RIGHT CARD: MATERIALVERGLEICH FÜR DIE SIMULATION          -->
+  <!-- ========================================================= -->
+  <g transform="translate(525, 72)" filter="url(#shadow)">
+    <rect width="440" height="420" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="20" y="28" class="card-hdr">2. Typische Werkstoffe in unserer Simulation (Track A)</text>
+    <text x="20" y="48" class="label" style="fill: #64748b;">Balkenlänge zeigt die Ausbreitungsgeschwindigkeit α [mm²/s]</text>
+
+    <!-- Material 1: Kupfer -->
+    <g transform="translate(20, 68)">
+      <rect width="400" height="72" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+      <text x="14" y="22" class="label-bold" style="fill: #b45309; font-size: 13.5px;">1. Kupfer (Heatspreader)</text>
+      <text x="386" y="22" class="math" style="fill: #b45309; text-anchor: end; font-size: 13.5px;">α ≈ 115 mm²/s</text>
+      <text x="14" y="41" class="label" style="font-size: 11.5px;">λ = 398 W/(m·K) | ρ = 8960 kg/m³ | c_p = 385 J/(kg·K)</text>
+      <rect x="14" y="49" width="372" height="14" rx="4" fill="#d97706" />
+    </g>
+
+    <!-- Material 2: Aluminium -->
+    <g transform="translate(20, 152)">
+      <rect width="400" height="72" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+      <text x="14" y="22" class="label-bold" style="fill: #0369a1; font-size: 13.5px;">2. Aluminium (Kühlrippen / Finnen)</text>
+      <text x="386" y="22" class="math" style="fill: #0369a1; text-anchor: end; font-size: 13.5px;">α ≈ 97 mm²/s</text>
+      <text x="14" y="41" class="label" style="font-size: 11.5px;">λ = 237 W/(m·K) | ρ = 2700 kg/m³ | c_p = 900 J/(kg·K)</text>
+      <rect x="14" y="49" width="314" height="14" rx="4" fill="#0284c7" />
+    </g>
+
+    <!-- Material 3: Silizium -->
+    <g transform="translate(20, 236)">
+      <rect width="400" height="72" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+      <text x="14" y="22" class="label-bold" style="fill: #4f46e5; font-size: 13.5px;">3. Silizium (Aktiver CPU-Chip / Die)</text>
+      <text x="386" y="22" class="math" style="fill: #4f46e5; text-anchor: end; font-size: 13.5px;">α ≈ 89 mm²/s</text>
+      <text x="14" y="41" class="label" style="font-size: 11.5px;">λ = 148 W/(m·K) | ρ = 2330 kg/m³ | c_p = 712 J/(kg·K)</text>
+      <rect x="14" y="49" width="288" height="14" rx="4" fill="#6366f1" />
+    </g>
+
+    <!-- Material 4: Wärmeleitpaste (TIM) -->
+    <g transform="translate(20, 320)">
+      <rect width="400" height="82" rx="6" fill="#fef2f2" stroke="#fca5a5" />
+      <text x="14" y="22" class="label-bold" style="fill: #dc2626; font-size: 13.5px;">4. Wärmeleitpaste (TIM – Engpass!)</text>
+      <text x="386" y="22" class="math" style="fill: #dc2626; text-anchor: end; font-size: 13.5px;">α ≈ 2,5 mm²/s</text>
+      <text x="14" y="41" class="label" style="font-size: 11.5px;">λ = 4,5 W/(m·K) | α ist 46× kleiner als bei Kupfer (dünn auftragen!)</text>
+      <rect x="14" y="49" width="12" height="14" rx="3" fill="#dc2626" />
+      <text x="34" y="60" class="label-bold" style="fill: #dc2626; font-size: 11.5px;">← Starker Temperaturstau an der TIM-Schicht</text>
+    </g>
+  </g>
+</svg>

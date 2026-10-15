@@ -19,6 +19,18 @@ section img {
     object-fit: contain;
 }
 
+/* Größere Darstellung auf reinen Diagramm-Folien ohne Überschrift (mit Sicherheitsabstand zu Header/Footer) */
+section:not(:has(h1, h2, h3, h4)) img {
+    max-height: 555px;
+}
+
+/* Zentrierung für Bilder mit 'center' im Alt-Text */
+section img[alt~="center"] {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* FH-Logo: Nur auf Inhaltsfolien anzeigen, Deckblätter (Title & Lead & Folie 1) schützen */
 section:not(.title):not(.lead):not(:first-of-type)::before {
     content: "";

@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #004B96; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #475569; }
+      .card-hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #0f172a; }
+      .label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #334155; }
+      .label-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; font-weight: bold; fill: #0f172a; }
+      .math { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 15px; font-weight: bold; }
+      .badge { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: middle; }
+    </style>
+
+    <linearGradient id="hotCoolGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+
+    <marker id="arrowOrange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#ea580c" />
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#0284c7" />
+    </marker>
+
+    <filter id="shadow" x="-3%" y="-3%" width="106%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="520" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <!-- Header -->
+  <text x="35" y="36" class="title">Thermodynamische Grundbegriffe &amp; Ingenieur-Analogie</text>
+  <text x="35" y="56" class="subtitle">Vom bekannten elektrischen / hydraulischen System zum Wärmefluss im Festkörper</text>
+
+  <!-- ========================================================= -->
+  <!-- TOP LEFT: THERMISCHES SYSTEM                              -->
+  <!-- ========================================================= -->
+  <g transform="translate(35, 72)" filter="url(#shadow)">
+    <rect width="450" height="230" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="20" y="28" class="card-hdr" style="fill: #b91c1c;">1. Thermisches System (Wärmeleitung)</text>
+
+    <!-- Hot Block -->
+    <rect x="25" y="55" width="120" height="115" rx="6" fill="#fef2f2" stroke="#ef4444" stroke-width="2.5" />
+    <text x="85" y="80" class="label-bold" style="fill: #b91c1c; text-anchor: middle;">Körper A (Heiß)</text>
+    <text x="85" y="106" class="math" style="fill: #dc2626; font-size: 16px; text-anchor: middle;">T₁ = 100 °C</text>
+    <text x="85" y="130" class="label" style="fill: #7f1d1d; text-anchor: middle;">Hohe Teilchen-</text>
+    <text x="85" y="146" class="label" style="fill: #7f1d1d; text-anchor: middle;">bewegung (E_th)</text>
+
+    <!-- Connecting Rod -->
+    <rect x="145" y="92" width="160" height="40" fill="url(#hotCoolGrad)" stroke="#64748b" stroke-width="1.5" />
+    <line x1="162" y1="112" x2="282" y2="112" stroke="#ffffff" stroke-width="3" marker-end="url(#arrowOrange)" />
+    <rect x="155" y="52" width="140" height="28" rx="4" fill="#fff7ed" stroke="#fdba74" stroke-width="1" />
+    <text x="225" y="70" class="label-bold" style="fill: #c2410c; text-anchor: middle;">Wärmestrom Q̇ [W]</text>
+    <text x="225" y="152" class="label" style="fill: #475569; text-anchor: middle;">Leitwert ~ λ · A / Δx</text>
+
+    <!-- Cold Block -->
+    <rect x="305" y="55" width="120" height="115" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2.5" />
+    <text x="365" y="80" class="label-bold" style="fill: #1d4ed8; text-anchor: middle;">Körper B (Kalt)</text>
+    <text x="365" y="106" class="math" style="fill: #2563eb; font-size: 16px; text-anchor: middle;">T₂ = 20 °C</text>
+    <text x="365" y="130" class="label" style="fill: #1e3a8a; text-anchor: middle;">Geringe Teilchen-</text>
+    <text x="365" y="146" class="label" style="fill: #1e3a8a; text-anchor: middle;">bewegung (E_th)</text>
+
+    <!-- Bottom rule -->
+    <rect x="20" y="185" width="410" height="32" rx="5" fill="#fef2f2" stroke="#fecaca" />
+    <text x="225" y="205" class="label-bold" style="fill: #991b1b; text-anchor: middle;">
+      Triebkraft: Temperaturdifferenz ΔT = T₁ − T₂ &gt; 0 (Warm ➔ Kalt)
+    </text>
+  </g>
+
+  <!-- ========================================================= -->
+  <!-- TOP RIGHT: ELEKTRO- / HYDRAULIK-ANALOGIE                  -->
+  <!-- ========================================================= -->
+  <g transform="translate(515, 72)" filter="url(#shadow)">
+    <rect width="450" height="230" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="20" y="28" class="card-hdr" style="fill: #0369a1;">2. Bekannte Analogie (Elektrotechnik / Hydraulik)</text>
+
+    <!-- Left Tank / Capacitor -->
+    <rect x="25" y="55" width="120" height="115" rx="6" fill="#f0f9ff" stroke="#0284c7" stroke-width="2" />
+    <rect x="27" y="85" width="116" height="83" rx="4" fill="#bae6fd" />
+    <text x="85" y="75" class="label-bold" style="fill: #0369a1; text-anchor: middle;">Knoten 1</text>
+    <text x="85" y="110" class="math" style="fill: #0c4a6e; font-size: 15px; text-anchor: middle;">Spannung U₁</text>
+    <text x="85" y="133" class="label" style="fill: #0c4a6e; text-anchor: middle;">(Füllstand h₁)</text>
+    <text x="85" y="155" class="label-bold" style="fill: #0369a1; text-anchor: middle;">Kondensator C</text>
+
+    <!-- Resistor / Pipe -->
+    <rect x="145" y="96" width="160" height="32" fill="#e2e8f0" stroke="#475569" stroke-width="1.5" />
+    <line x1="162" y1="112" x2="282" y2="112" stroke="#0284c7" stroke-width="3" marker-end="url(#arrowBlue)" />
+    <rect x="155" y="52" width="140" height="28" rx="4" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1" />
+    <text x="225" y="70" class="label-bold" style="fill: #0369a1; text-anchor: middle;">Strom I [A = C/s]</text>
+    <text x="225" y="152" class="label" style="fill: #475569; text-anchor: middle;">Leitwert G = 1 / R</text>
+
+    <!-- Right Tank / Capacitor -->
+    <rect x="305" y="55" width="120" height="115" rx="6" fill="#f8fafc" stroke="#64748b" stroke-width="2" />
+    <rect x="307" y="135" width="116" height="33" rx="4" fill="#bae6fd" />
+    <text x="365" y="75" class="label-bold" style="fill: #334155; text-anchor: middle;">Knoten 2</text>
+    <text x="365" y="110" class="math" style="fill: #334155; font-size: 15px; text-anchor: middle;">Spannung U₂</text>
+    <text x="365" y="132" class="label" style="fill: #475569; text-anchor: middle;">(Füllstand h₂)</text>
+    <text x="365" y="155" class="label-bold" style="fill: #334155; text-anchor: middle;">Kondensator C</text>
+
+    <!-- Bottom rule -->
+    <rect x="20" y="185" width="410" height="32" rx="5" fill="#f0f9ff" stroke="#bae6fd" />
+    <text x="225" y="205" class="label-bold" style="fill: #0369a1; text-anchor: middle;">
+      Triebkraft: Spannungsdifferenz ΔU = U₁ − U₂ &gt; 0 (Ohmsches Gesetz)
+    </text>
+  </g>
+
+  <!-- ========================================================= -->
+  <!-- BOTTOM: DIE 3 GRUNDGRÖSSEN AUF EINEN BLICK                -->
+  <!-- ========================================================= -->
+  <g transform="translate(35, 320)" filter="url(#shadow)">
+    <rect width="930" height="175" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="20" y="28" class="card-hdr">3. Die drei Größen sauber auseinanderhalten (Häufigste Verwechslungsgefahr!)</text>
+
+    <!-- Box 1: Temperatur T -->
+    <g transform="translate(15, 42)">
+      <rect width="290" height="115" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+      <rect x="12" y="10" width="28" height="24" rx="4" fill="#dc2626" />
+      <text x="26" y="22" class="badge">T</text>
+      <text x="48" y="27" class="label-bold" style="fill: #991b1b; font-size: 13.5px;">Temperatur [K oder °C]</text>
+      <text x="12" y="52" class="label" style="font-size: 11.5px;">• <tspan font-weight="bold">Was ist das?</tspan> Lokaler Zustand („Wärmedruck“)</text>
+      <text x="12" y="72" class="label" style="font-size: 11.5px;">• <tspan font-weight="bold">Elektro-Analogie:</tspan> Spannung U [V] / Füllstand h</text>
+      <text x="12" y="92" class="label" style="font-size: 11.5px;">• <tspan font-weight="bold">In C#:</tspan> Float-Wert im Pixel <tspan font-family="Consolas">_t[x,y]</tspan></text>
+    </g>
+
+    <!-- Box 2: Wärmeenergie E_th -->
+    <g transform="translate(320, 42)">
+      <rect width="290" height="115" rx="6" fill="#fefce8" stroke="#fde047" stroke-width="1.5" />
+      <rect x="12" y="10" width="38" height="24" rx="4" fill="#ca8a04" />
+      <text x="31" y="22" class="badge">E_th</text>
+      <text x="58" y="27" class="label-bold" style="fill: #854d0e; font-size: 13.5px;">Wärmeenergie [J = W·s]</text>
+      <text x="12" y="52" class="label" style="font-size: 11.5px;">• <tspan font-weight="bold">Was ist das?</tspan> Gespeicherte Energie im Pixel</text>
+      <text x="12" y="72" class="label" style="font-size: 11.5px;">• <tspan font-weight="bold">Elektro-Analogie:</tspan> Elektrische Ladung Q [C]</text>
+      <text x="12" y="92" class="label" style="font-size: 11.5px;">• <tspan font-weight="bold">Formel:</tspan> ΔE_th = m · c_p · ΔT [Joule]</text>
+    </g>
+
+    <!-- Box 3: Wärmestrom q_dot -->
+    <g transform="translate(625, 42)">
+      <rect width="290" height="115" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+      <rect x="12" y="10" width="42" height="24" rx="4" fill="#16a34a" />
+      <text x="33" y="22" class="badge">Q̇ / q̇</text>
+      <text x="62" y="27" class="label-bold" style="fill: #166534; font-size: 13.5px;">Wärmestrom [W] / [W/m²]</text>
+      <text x="12" y="52" class="label" style="font-size: 11.5px;">• <tspan font-weight="bold">Was ist das?</tspan> Energiefluss pro Sekunde</text>
+      <text x="12" y="72" class="label" style="font-size: 11.5px;">• <tspan font-weight="bold">Elektro-Analogie:</tspan> Strom I [A] / Dichte J [A/m²]</text>
+      <text x="12" y="92" class="label" style="font-size: 11.5px;">• <tspan font-weight="bold">Wichtig:</tspan> Fließt nur bei Temperaturgefälle ΔT!</text>
+    </g>
+  </g>
+</svg>

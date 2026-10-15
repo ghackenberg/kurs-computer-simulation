@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #004B96; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #475569; }
+      .card-hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #0f172a; }
+      .label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #334155; }
+      .label-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; font-weight: bold; fill: #0f172a; }
+      .math { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 14.5px; font-weight: bold; }
+      .code { font-family: 'Consolas', monospace; font-size: 11px; font-weight: bold; }
+    </style>
+
+    <marker id="arrOrange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#ea580c" />
+    </marker>
+    <marker id="arrBlue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#0284c7" />
+    </marker>
+
+    <filter id="shadow" x="-3%" y="-3%" width="106%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <rect width="1000" height="520" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <text x="35" y="36" class="title">Die 3 physikalischen Randbedingungen am Pixelgitter im Vergleich</text>
+  <text x="35" y="56" class="subtitle">Was passiert, wenn die Wärmewelle an den Rand des Simulationsgebietes oder an eine Wand stößt?</text>
+
+  <!-- ========================================================= -->
+  <!-- COLUMN 1: DIRICHLET (FESTE TEMPERATUR)                    -->
+  <!-- ========================================================= -->
+  <g transform="translate(30, 74)" filter="url(#shadow)">
+    <rect width="300" height="420" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="2" />
+    <rect x="0" y="0" width="300" height="38" rx="8" fill="#dbeafe" />
+    <text x="150" y="25" class="card-hdr" style="fill: #1e40af; text-anchor: middle;">1. Dirichlet-Rand (Feste Temp.)</text>
+
+    <text x="18" y="60" class="label-bold" style="fill: #1d4ed8;">Technisches Beispiel:</text>
+    <text x="18" y="78" class="label">Großes Eiswasserbad (0 °C) oder geregelte</text>
+    <text x="18" y="95" class="label">Heizplatte hält den Rand exakt auf T_Wand.</text>
+
+    <!-- Grid Sketch (x=18, total width 264) -->
+    <g transform="translate(18, 115)">
+      <!-- Cold Bath left: 0..58 -->
+      <rect x="0" y="0" width="58" height="90" rx="4" fill="#3b82f6" />
+      <text x="29" y="40" class="label-bold" style="fill: #ffffff; text-anchor: middle;">Kühl-</text>
+      <text x="29" y="58" class="label-bold" style="fill: #ffffff; text-anchor: middle;">bad</text>
+
+      <!-- Boundary Node 0: 76..160 -->
+      <rect x="76" y="10" width="84" height="70" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5" />
+      <text x="118" y="34" class="code" style="fill: #1e40af; text-anchor: middle;">Rand T[0,y]</text>
+      <text x="118" y="58" class="label-bold" style="fill: #1d4ed8; text-anchor: middle;">FIX: 20 °C</text>
+
+      <!-- Inner Node 1: 180..264 -->
+      <rect x="180" y="10" width="84" height="70" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+      <text x="222" y="34" class="code" style="fill: #92400e; text-anchor: middle;">Innen T[1,y]</text>
+      <text x="222" y="58" class="label-bold" style="fill: #b45309; text-anchor: middle;">z.B. 65 °C</text>
+
+      <!-- Heat Arrow Out in gap 180 -> 163 -->
+      <line x1="180" y1="45" x2="163" y2="45" stroke="#ea580c" stroke-width="2.5" marker-end="url(#arrOrange)" />
+    </g>
+
+    <!-- Formula & Code Box -->
+    <rect x="15" y="222" width="270" height="75" rx="6" fill="#eff6ff" stroke="#93c5fd" />
+    <text x="150" y="245" class="label-bold" style="fill: #1e40af; text-anchor: middle;">Diskrete Gittervorschrift:</text>
+    <text x="150" y="274" class="math" style="fill: #1d4ed8; text-anchor: middle; font-size: 15.5px;">
+      T_{0, y}  =  T_{Wand}  =  const.
+    </text>
+
+    <rect x="15" y="310" width="270" height="92" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+    <text x="25" y="332" class="label-bold">Physikalische Wirkung:</text>
+    <text x="25" y="352" class="label">• Wärme fließt ungehindert über den</text>
+    <text x="35" y="370" class="label">Rand ab (Rand wirkt als Wärmesenke).</text>
+    <text x="25" y="390" class="code" style="fill: #0f172a;">for (x = 1; x &lt; W-1; x++) // Rand fix</text>
+  </g>
+
+  <!-- ========================================================= -->
+  <!-- COLUMN 2: NEUMANN (ADIABATE ISOLIERUNG)                   -->
+  <!-- ========================================================= -->
+  <g transform="translate(350, 74)" filter="url(#shadow)">
+    <rect width="300" height="420" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+    <rect x="0" y="0" width="300" height="38" rx="8" fill="#e2e8f0" />
+    <text x="150" y="25" class="card-hdr" style="fill: #1e293b; text-anchor: middle;">2. Neumann-Rand (Isolator)</text>
+
+    <text x="18" y="60" class="label-bold" style="fill: #334155;">Technisches Beispiel:</text>
+    <text x="18" y="78" class="label">Perfekte Wärmedämmung (Styropor, PCB-</text>
+    <text x="18" y="95" class="label">Unterseite oder gezeichnete Isolatorwand).</text>
+
+    <!-- Grid Sketch -->
+    <g transform="translate(18, 115)">
+      <!-- Insulation Wall left: 0..58 -->
+      <rect x="0" y="0" width="58" height="90" rx="4" fill="#475569" />
+      <text x="29" y="36" class="label-bold" style="fill: #ffffff; text-anchor: middle; font-size: 12px;">Dämm-</text>
+      <text x="29" y="53" class="label-bold" style="fill: #ffffff; text-anchor: middle; font-size: 12px;">wand</text>
+      <text x="29" y="73" class="label" style="fill: #cbd5e1; text-anchor: middle; font-size: 11px;">q̇ = 0</text>
+
+      <!-- Boundary Node 0: 76..160 -->
+      <rect x="76" y="10" width="84" height="70" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2.5" stroke-dasharray="4,3" />
+      <text x="118" y="34" class="code" style="fill: #92400e; text-anchor: middle;">Rand T[0,y]</text>
+      <text x="118" y="58" class="label-bold" style="fill: #b45309; text-anchor: middle; font-size: 12px;">Kopie: 65 °C</text>
+
+      <!-- Inner Node 1: 180..264 -->
+      <rect x="180" y="10" width="84" height="70" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+      <text x="222" y="34" class="code" style="fill: #92400e; text-anchor: middle;">Innen T[1,y]</text>
+      <text x="222" y="58" class="label-bold" style="fill: #b45309; text-anchor: middle;">z.B. 65 °C</text>
+    </g>
+
+    <!-- Formula & Code Box -->
+    <rect x="15" y="222" width="270" height="75" rx="6" fill="#f1f5f9" stroke="#94a3b8" />
+    <text x="150" y="244" class="label-bold" style="fill: #334155; text-anchor: middle; font-size: 12px;">Kein Gefälle ➔ Kein Wärmefluss (q̇ = 0):</text>
+    <text x="150" y="274" class="math" style="fill: #0f172a; text-anchor: middle; font-size: 15.5px;">
+      T_{0, y}  =  T_{1, y}   (Spiegelung!)
+    </text>
+
+    <rect x="15" y="310" width="270" height="92" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+    <text x="25" y="332" class="label-bold">Physikalische Wirkung:</text>
+    <text x="25" y="352" class="label">• Da T_0 − T_1 = 0 ist, fließt nach Fourier</text>
+    <text x="35" y="370" class="label"><tspan font-weight="bold">exakt 0 Watt</tspan> in die Wand (Wärmestau!).</text>
+    <text x="25" y="390" class="code" style="fill: #0f172a;">tN = (alpha == 0) ? tCenter : tNachbar;</text>
+  </g>
+
+  <!-- ========================================================= -->
+  <!-- COLUMN 3: ROBIN (KONVEKTION / KÜHLRIPPE)                  -->
+  <!-- ========================================================= -->
+  <g transform="translate(670, 74)" filter="url(#shadow)">
+    <rect width="300" height="420" rx="8" fill="#ffffff" stroke="#fdba74" stroke-width="2" />
+    <rect x="0" y="0" width="300" height="38" rx="8" fill="#ffedd5" />
+    <text x="150" y="25" class="card-hdr" style="fill: #9a3412; text-anchor: middle;">3. Robin-Rand (Luftkühlung)</text>
+
+    <text x="18" y="60" class="label-bold" style="fill: #c2410c;">Technisches Beispiel (Track A):</text>
+    <text x="18" y="78" class="label">Alu-Kühlrippe im Luftstrom (T_∞ = 25 °C)</text>
+    <text x="18" y="95" class="label">mit Wärmeübergangskoeffizient h [W/m²K].</text>
+
+    <!-- Grid Sketch (x=18, total width 264) -->
+    <g transform="translate(18, 115)">
+      <!-- Air Flow left: 0..58 -->
+      <rect x="0" y="0" width="58" height="90" rx="4" fill="#e0f2fe" stroke="#38bdf8" />
+      <text x="29" y="26" class="label-bold" style="fill: #0369a1; text-anchor: middle; font-size: 12px;">Luft</text>
+      <text x="29" y="48" class="label-bold" style="fill: #0284c7; text-anchor: middle; font-size: 10.5px;">T_∞=25°</text>
+      <text x="29" y="70" class="label" style="fill: #0369a1; text-anchor: middle; font-size: 10.5px;">Lüfter: h</text>
+
+      <!-- Surface Node 0: 76..160 -->
+      <rect x="76" y="10" width="84" height="70" rx="5" fill="#ffedd5" stroke="#ea580c" stroke-width="2.5" />
+      <text x="118" y="34" class="code" style="fill: #9a3412; text-anchor: middle;">Rand T[0,y]</text>
+      <text x="118" y="58" class="label-bold" style="fill: #c2410c; text-anchor: middle; font-size: 12px;">Mittelwert</text>
+
+      <!-- Inner Fin Node 1: 180..264 -->
+      <rect x="180" y="10" width="84" height="70" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+      <text x="222" y="34" class="code" style="fill: #92400e; text-anchor: middle;">Alu T[1,y]</text>
+      <text x="222" y="58" class="label-bold" style="fill: #b45309; text-anchor: middle;">z.B. 65 °C</text>
+
+      <!-- Arrows cleanly inside gaps: 180->163 and 76->61 -->
+      <line x1="180" y1="45" x2="163" y2="45" stroke="#ea580c" stroke-width="2" marker-end="url(#arrOrange)" />
+      <line x1="76" y1="45" x2="61" y2="45" stroke="#0284c7" stroke-width="2" marker-end="url(#arrBlue)" />
+    </g>
+
+    <!-- Formula & Code Box (Proper 2-line fraction so it never overflows!) -->
+    <rect x="15" y="222" width="270" height="75" rx="6" fill="#fff7ed" stroke="#fdba74" />
+    <text x="150" y="240" class="label-bold" style="fill: #9a3412; text-anchor: middle; font-size: 12px;">Leitung im Metall = Konvektion an Luft:</text>
+    <text x="58" y="274" class="math" style="fill: #c2410c; text-anchor: middle; font-size: 13.5px;">T_{0,y} =</text>
+    <text x="172" y="262" class="math" style="fill: #c2410c; text-anchor: middle; font-size: 12.5px;">λ · T_{1,y} + h · Δx · T_∞</text>
+    <line x1="95" y1="269" x2="250" y2="269" stroke="#c2410c" stroke-width="1.5" />
+    <text x="172" y="286" class="math" style="fill: #c2410c; text-anchor: middle; font-size: 12.5px;">λ + h · Δx</text>
+
+    <rect x="15" y="310" width="270" height="92" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+    <text x="25" y="332" class="label-bold">Grenzfall-Check (Plausibilität):</text>
+    <text x="25" y="352" class="label">• <tspan font-weight="bold">h = 0</tspan> (Vakuum): T_0 = T_1 (Neumann)</text>
+    <text x="25" y="370" class="label">• <tspan font-weight="bold">h ➔ ∞</tspan> (Eisbad): T_0 = T_∞ (Dirichlet)</text>
+    <text x="25" y="390" class="label">• <tspan font-weight="bold">Lüfter an/aus:</tspan> h = 250 vs. 20 W/m²K</text>
+  </g>
+</svg>

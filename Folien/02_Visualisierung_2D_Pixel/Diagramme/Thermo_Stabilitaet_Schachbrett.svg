@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #004B96; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #475569; }
+      .card-hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; fill: #0f172a; }
+      .label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #334155; }
+      .label-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; font-weight: bold; fill: #0f172a; }
+      .math { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 15px; font-weight: bold; }
+    </style>
+    <filter id="shadow" x="-3%" y="-3%" width="106%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="520" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <!-- Header -->
+  <text x="35" y="36" class="title">Von-Neumann-Stabilität: Warum explodiert das Gitter ab s &gt; 0,25?</text>
+  <text x="35" y="56" class="subtitle">Umformung als gewichteter Mittelwert:  T_neu = (1 − 4s) · T_alt  +  4s · T̄_Nachbarn</text>
+
+  <!-- ========================================================= -->
+  <!-- LEFT CARD: STABILER FALL (s = 0.20 <= 0.25)               -->
+  <!-- ========================================================= -->
+  <g transform="translate(35, 75)" filter="url(#shadow)">
+    <rect width="450" height="415" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="2" />
+    <rect x="0" y="0" width="450" height="38" rx="8" fill="#dcfce7" />
+    <text x="225" y="25" class="card-hdr" style="fill: #166534; text-anchor: middle;">
+      1. Stabiler Zeitschritt: s = 0,20 ≤ 0,25 (Gültige Mischung)
+    </text>
+
+    <!-- Weights Box -->
+    <rect x="20" y="50" width="410" height="56" rx="6" fill="#f0fdf4" stroke="#86efac" />
+    <text x="225" y="72" class="math" style="fill: #15803d; text-anchor: middle;">
+      T_neu = 0,20 · T_Mitte + 0,80 · T̄_Nachbarn
+    </text>
+    <text x="225" y="94" class="label" style="fill: #166534; text-anchor: middle;">
+      Beide Gewichte positiv (20 % Eigenwert + 80 % Nachbarn = 100 %)
+    </text>
+
+    <!-- Step 0 -->
+    <text x="20" y="130" class="label-bold">Start (n = 0): Hotspot 100 °C umgeben von 0 °C</text>
+    <g transform="translate(45, 140)">
+      <rect x="0" y="20" width="60" height="20" fill="#cbd5e1" />
+      <rect x="75" y="20" width="60" height="20" fill="#cbd5e1" />
+      <rect x="150" y="0" width="60" height="40" fill="#ef4444" />
+      <rect x="225" y="20" width="60" height="20" fill="#cbd5e1" />
+      <rect x="300" y="20" width="60" height="20" fill="#cbd5e1" />
+      <text x="30" y="34" class="label" style="text-anchor: middle;">0°</text>
+      <text x="105" y="34" class="label" style="text-anchor: middle;">0°</text>
+      <text x="180" y="25" class="label-bold" style="fill: #ffffff; text-anchor: middle;">100°</text>
+      <text x="255" y="34" class="label" style="text-anchor: middle;">0°</text>
+      <text x="330" y="34" class="label" style="text-anchor: middle;">0°</text>
+    </g>
+
+    <!-- Step 1 -->
+    <text x="20" y="208" class="label-bold">Nach 1 Schritt (n = 1): Sanfte Abkühlung der Mitte</text>
+    <g transform="translate(45, 218)">
+      <rect x="0" y="20" width="60" height="20" fill="#cbd5e1" />
+      <rect x="75" y="14" width="60" height="26" fill="#60a5fa" />
+      <rect x="150" y="14" width="60" height="26" fill="#f59e0b" />
+      <rect x="225" y="14" width="60" height="26" fill="#60a5fa" />
+      <rect x="300" y="20" width="60" height="20" fill="#cbd5e1" />
+      <text x="30" y="34" class="label" style="text-anchor: middle;">0°</text>
+      <text x="105" y="31" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+20°</text>
+      <text x="180" y="31" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+20°</text>
+      <text x="255" y="31" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+20°</text>
+      <text x="330" y="34" class="label" style="text-anchor: middle;">0°</text>
+    </g>
+
+    <!-- Step 2 -->
+    <text x="20" y="286" class="label-bold">Nach 2 Schritten (n = 2): Glatte Glockenkurve</text>
+    <g transform="translate(45, 296)">
+      <rect x="0" y="18" width="60" height="22" fill="#93c5fd" />
+      <rect x="75" y="16" width="60" height="24" fill="#60a5fa" />
+      <rect x="150" y="12" width="60" height="28" fill="#38bdf8" />
+      <rect x="225" y="16" width="60" height="24" fill="#60a5fa" />
+      <rect x="300" y="18" width="60" height="22" fill="#93c5fd" />
+      <text x="30" y="33" class="label-bold" style="text-anchor: middle;">+4°</text>
+      <text x="105" y="32" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+8°</text>
+      <text x="180" y="30" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+20°</text>
+      <text x="255" y="32" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+8°</text>
+      <text x="330" y="33" class="label-bold" style="text-anchor: middle;">+4°</text>
+    </g>
+
+    <!-- Conclusion Left -->
+    <rect x="20" y="352" width="410" height="48" rx="6" fill="#dcfce7" stroke="#22c55e" />
+    <text x="225" y="373" class="label-bold" style="fill: #14532d; text-anchor: middle;">
+      Diskretes Maximumprinzip erfüllt:
+    </text>
+    <text x="225" y="391" class="label" style="fill: #166534; text-anchor: middle;">
+      Temperatur bleibt garantiert zwischen Min (0 °C) und Max (100 °C)!
+    </text>
+  </g>
+
+  <!-- ========================================================= -->
+  <!-- RIGHT CARD: INSTABILER FALL (s = 0.35 > 0.25)             -->
+  <!-- ========================================================= -->
+  <g transform="translate(515, 75)" filter="url(#shadow)">
+    <rect width="450" height="415" rx="8" fill="#ffffff" stroke="#fca5a5" stroke-width="2" />
+    <rect x="0" y="0" width="450" height="38" rx="8" fill="#fee2e2" />
+    <text x="225" y="25" class="card-hdr" style="fill: #991b1b; text-anchor: middle;">
+      2. Zu großer Zeitschritt: s = 0,35 &gt; 0,25 (Explosion!)
+    </text>
+
+    <!-- Weights Box -->
+    <rect x="20" y="50" width="410" height="56" rx="6" fill="#fef2f2" stroke="#fca5a5" />
+    <text x="225" y="72" class="math" style="fill: #dc2626; text-anchor: middle;">
+      T_neu = −0,40 · T_Mitte + 1,40 · T̄_Nachbarn
+    </text>
+    <text x="225" y="94" class="label-bold" style="fill: #991b1b; text-anchor: middle; font-size: 12px;">
+      Eigengewicht (1 − 4s = −0,40) ist NEGATIV ➔ Vorzeichenwechsel!
+    </text>
+
+    <!-- Step 0 -->
+    <text x="20" y="130" class="label-bold">Start (n = 0): Hotspot 100 °C umgeben von 0 °C</text>
+    <g transform="translate(45, 140)">
+      <rect x="0" y="20" width="60" height="20" fill="#cbd5e1" />
+      <rect x="75" y="20" width="60" height="20" fill="#cbd5e1" />
+      <rect x="150" y="0" width="60" height="40" fill="#ef4444" />
+      <rect x="225" y="20" width="60" height="20" fill="#cbd5e1" />
+      <rect x="300" y="20" width="60" height="20" fill="#cbd5e1" />
+      <text x="30" y="34" class="label" style="text-anchor: middle;">0°</text>
+      <text x="105" y="34" class="label" style="text-anchor: middle;">0°</text>
+      <text x="180" y="25" class="label-bold" style="fill: #ffffff; text-anchor: middle;">100°</text>
+      <text x="255" y="34" class="label" style="text-anchor: middle;">0°</text>
+      <text x="330" y="34" class="label" style="text-anchor: middle;">0°</text>
+    </g>
+
+    <!-- Step 1 -->
+    <text x="20" y="208" class="label-bold" style="fill: #b91c1c;">Nach 1 Schritt (n = 1): Mitte schießt auf −40 °C (Eis!)</text>
+    <g transform="translate(45, 218)">
+      <rect x="0" y="20" width="60" height="20" fill="#cbd5e1" />
+      <rect x="75" y="6" width="60" height="34" fill="#f97316" />
+      <rect x="150" y="20" width="60" height="32" fill="#1d4ed8" />
+      <rect x="225" y="6" width="60" height="34" fill="#f97316" />
+      <rect x="300" y="20" width="60" height="20" fill="#cbd5e1" />
+      <text x="30" y="34" class="label" style="text-anchor: middle;">0°</text>
+      <text x="105" y="28" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+35°</text>
+      <text x="180" y="41" class="label-bold" style="fill: #ffffff; text-anchor: middle;">−40° !</text>
+      <text x="255" y="28" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+35°</text>
+      <text x="330" y="34" class="label" style="text-anchor: middle;">0°</text>
+    </g>
+
+    <!-- Step 2 -->
+    <text x="20" y="286" class="label-bold" style="fill: #b91c1c;">Nach 2 &amp; 3 Schritten: Schachbrett-Aufschaukeln ➔ NaN</text>
+    <g transform="translate(45, 296)">
+      <rect x="0" y="14" width="60" height="26" fill="#f97316" />
+      <rect x="75" y="20" width="60" height="30" fill="#1d4ed8" />
+      <rect x="150" y="0" width="60" height="44" fill="#dc2626" />
+      <rect x="225" y="20" width="60" height="30" fill="#1d4ed8" />
+      <rect x="300" y="14" width="60" height="26" fill="#f97316" />
+      <text x="30" y="31" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+12°</text>
+      <text x="105" y="40" class="label-bold" style="fill: #ffffff; text-anchor: middle;">−28°</text>
+      <text x="180" y="26" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+65°</text>
+      <text x="255" y="40" class="label-bold" style="fill: #ffffff; text-anchor: middle;">−28°</text>
+      <text x="330" y="31" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+12°</text>
+    </g>
+
+    <!-- Conclusion Right -->
+    <rect x="20" y="352" width="410" height="48" rx="6" fill="#fee2e2" stroke="#ef4444" />
+    <text x="225" y="372" class="label-bold" style="fill: #7f1d1d; text-anchor: middle;">
+      Zwingende Stabilitätsbedingung in 2D:
+    </text>
+    <text x="225" y="391" class="label-bold" style="fill: #b91c1c; text-anchor: middle; font-size: 11.5px;">
+      1 − 4s ≥ 0   ⇔   s = α·Δt / Δx² ≤ 0,25   ⇔   Δt ≤ Δx² / (4 · α_max)
+    </text>
+  </g>
+</svg>
