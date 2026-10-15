@@ -52,13 +52,15 @@ Präsentation der Ergebnisse aus Termin 01 ([Aufgabenblatt 01](../../Uebungen/Te
 
 ---
 
+![bg right](./Illustrationen/Abschnitt_1.jpg)
+
 ## 2.1: Speicherlayout digitaler Rasterbilder
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Diskrete Rasterbilder und 2D-Feldsimulationen
-- Farbmodelle, Bytereihenfolge und Farbtiefe (Bgra32)
-- Zeilenweiser linearer Speicher (Row-Major) und Stride
+- Farbmodelle, Bytereihenfolge und Farbtiefe (`Bgra32`)
+- Zeilenweiser linearer Speicher (Row-Major) und `Stride`
 - Mathematische Adressberechnung und Cache-Lokalität
 
 ---
@@ -170,6 +172,8 @@ Für ein Pixel an Koordinate $(x, y)$ errechnet sich die absolute Position im Pu
 
 ---
 
+![bg right](./Illustrationen/Abschnitt_2.jpg)
+
 ## 2.2: Pixel-Rendering in WPF mit WriteableBitmap
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -177,7 +181,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Das Problem der WPF Visual-Tree-Skalierung
 - Die Architektur der Klasse `WriteableBitmap`
 - Deklaration und Einbindung im XAML-Layout
-- Schärfe vs. Unschärfe: Skalierungsmodi (`NearestNeighbor` vs. `Linear`)
+- Skalierungsmodi (`NearestNeighbor` vs. `Linear`)
 
 ---
 
@@ -300,14 +304,16 @@ private void InitBitmap()
 
 ---
 
+![bg right](./Illustrationen/Abschnitt_3.jpg)
+
 ## 2.3: High-Performance Puffer-Zugriff
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Der threadsichere Aktualisierungszyklus: `Lock()`, `AddDirtyRect()`, `Unlock()`
+- Aktualisierungszyklus: `Lock()`, `AddDirtyRect()`, `Unlock()`
 - Zeigerarithmetik mit C#-Pointern (`unsafe`)
 - 8-Bit Byte-Zugriff vs. 32-Bit Integer-Zugriff (`uint*`)
-- Ausblick (Kapitel 6): Multithreaded-Rendering mit `Parallel.For`
+- Ausblick: Multithreaded-Rendering mit `Parallel.For`
 
 ---
 
@@ -409,13 +415,15 @@ private unsafe void RenderParallel(IntPtr pBackBuffer, int stride, int w, int h)
 
 ---
 
+![bg right](./Illustrationen/Abschnitt_4.jpg)
+
 ## 2.4: Farbskalen & Look-Up-Tables (LUT)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Transformation von kontinuierlichen Skalaren zu Farbwerten
 - Gängige Farbskalen: Cool-Warm, Jet, Viridis
-- Performance-Optimierung durch vorberechnete Look-Up-Tables (LUT)
+- Performance-Optimierung durch Look-Up-Tables (LUT)
 - LUT-Implementierung in C#
 
 ---
@@ -510,16 +518,17 @@ private static uint SampleViridis(double t)
 
 ---
 
+![bg right](./Illustrationen/Abschnitt_5.jpg)
+
 ## 2.5: Anwendungsbeispiel: 2D-Wärmeleitung
 
-Dieser Abschnitt führt **ohne thermodynamisches Vorwissen** Schritt für Schritt in die Wärmeleitung ein:
+Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- **Grundbegriffe & Analogie:** Temperatur $T$, Wärmeenergie $E_{\text{th}}$ und Wärmestrom $\dot{Q}$
-- **Materialkennwerte:** Wärmeleitfähigkeit $\lambda$, Wärmekapazität $\rho \cdot c_p$ und Temperaturleitfähigkeit $\alpha$
-- **Schritt 1 (Fouriersches Gesetz):** Warum ein Temperaturgefälle ($\partial T / \partial x$) einen Wärmestrom antreibt
-- **Schritt 2 (Energiebilanz):** Warum die **Krümmung** ($\partial^2 T / \partial x^2$) über Erwärmung oder Abkühlung entscheidet
-- **Vom Kontinuum zum Pixelgitter:** 2D-Wärmeleitungsgleichung, 5-Punkt-Stern & Nachbarschafts-Mittelwert
-- **Stabilität & Randbedingungen:** Von-Neumann-Grenze ($s \le 0{,}25$), Ping-Pong-Puffer, Dirichlet, Neumann & Robin
+- Thermische Grundbegriffe ($T, E_{\text{th}}, \dot{Q}$) & Analogie
+- Materialkennwerte ($\lambda$, $\rho \cdot c_p$) & Diffusivität $\alpha$
+- Fouriersches Gesetz ($\partial T/\partial x$) & Krümmung ($\partial^2 T/\partial x^2$)
+- 5-Punkt-Stern, Nachbar-Mittelwert & Kennzahl $s$
+- Stabilitätsgrenze ($s \le 0{,}25$) & Randbedingungen
 
 ---
 
@@ -890,7 +899,7 @@ Anhand der Mischungsformel $T_{\text{neu}} = (1 - 4s) \cdot T_{\text{alt}} + 4s 
    - Beide Gewichte sind positiv; $T_{\text{neu}}$ liegt garantiert zwischen $T_{\text{alt}}$ und $\bar{T}_{\text{Nachbarn}}$ (*Maximumprinzip*).
 2. **Stabilitätsgrenze $s = 0{,}25$ ($\implies 0\,T_{\text{alt}} + 1{,}00\,\bar{T}_{\text{Nachbarn}}$):**
    - Eigengewicht wird exakt Null; das Pixel übernimmt zu $100\,\%$ den Nachbar-Durchschnitt.
-3. **Instabiler Bereich $s > 0{,}25$ ($s = 0{,}35 \implies -0{,}40\,T_{\text{alt}} + 1{,}40\,\bar{T}_{\text{Nachbarn}}$):**
+3. **Instabiler Bereich $s > 0{,}25$ ($s = 0{,}35 \implies -0{,}4\,T_{\text{alt}} + 1{,}4\,\bar{T}_{\text{Nachbarn}}$):**
    - Eigengewicht $(1 - 4s)$ wird **negativ**! $+100\,^\circ\mathrm{C}$ schießt auf $-40\,^\circ\mathrm{C}$, dann $+96\,^\circ\mathrm{C}$ $\implies$ **`NaN`-Explosion!**
 
 </div>
