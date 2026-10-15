@@ -82,4 +82,9 @@ public class OrbitCamera
     {
         Distance += deltaDistance;
     }
+
+    // TODO [Stufe A - Aufgabe A2]:
+    // Implementieren Sie public void Pan(double deltaRight, double deltaUp),
+    // um den Zielpunkt (LookAtX, LookAtY, LookAtZ) bei gedrückter rechter Maustaste
+    // quer zur aktuellen horizontalen Blickrichtung (AzimuthDeg) und vertikal (Y) zu verschieben.
 }

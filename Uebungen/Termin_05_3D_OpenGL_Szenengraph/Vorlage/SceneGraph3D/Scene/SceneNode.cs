@@ -116,23 +116,25 @@ public class SceneNode
     }
 
     // =========================================================================
-    // TODO: [Stufe A Sprint]
-    // - Erstellen Sie eine Basisszene mit schattiertem 3D-Zylinder und Koordinatenkreuz.
-    // - Überprüfen Sie die Flächennormalen für korrektes Phong-Shading (glNormal3f).
+    // TODO [Stufe A - Aufgabe A1 & A3]:
+    // - Nutzen Sie in MainWindow.BuildSceneGraph() die Eigenschaft RenderCustomGeometry,
+    //   um jedem Knoten (_baseNode, _arm1Node, _arm2Node, _pinoleNode) seine lokale
+    //   Zeichenlogik zuzuweisen, und rufen Sie in RenderRobot(gl) nur noch _rootNode.Render(gl) auf!
+    // - Ergänzen Sie einen Knoten _workpieceNode für das 3D-Werkstück auf dem Hallenboden.
     // =========================================================================
 
     // =========================================================================
-    // TODO: [Stufe B Track A: Industrie - SCARA-Roboterarm]
-    // - Bauen Sie die Kinematikkette auf: Basis -> Oberarm (L1=1.0m) -> Unterarm (L2=0.8m) -> Pinole (d3) -> Greifer.
-    // - Validieren Sie den Tool Center Point (TCP):
-    //     x_tcp = L1*cos(theta1) + L2*cos(theta1 + theta2)
-    //     z_tcp = -(L1*sin(theta1) + L2*sin(theta1 + theta2))
-    //     y_tcp = H_base - d3
-    // - Zeichnen Sie eine gelbe Kontrollkugel am berechneten TCP.
+    // TODO [Stufe B Track A: Industrie - 4-Achs-SCARA mit Parallelgreifer & Teach-In]:
+    // - Erweitern Sie den Szenengraphen unter _pinoleNode um:
+    //     1. _wristNode (Achse 4: Rotation Ry = theta4 in [-180°, +180°])
+    //     2. _leftFingerNode & _rightFingerNode (symmetrischer 2-Backen-Parallelgreifer, g_width in [0.02, 0.16] m)
+    // - Implementieren Sie eine animierte Teach-In-Bahnsteuerung (DispatcherTimer) zwischen Pose A, Pose B & Home.
+    // - Implementieren Sie das Greifen & Ablegen (Pick-and-Place) des Werkstücks bei d < r_grab.
     // =========================================================================
 
     // =========================================================================
-    // TODO: [Stufe B Track B: Simulation Game - Arcade Claw Crane]
-    // - 3D-Greifarm mit X/Z-Laufkatze, Seilzug (Y-Achse) und pneumatischem 3-Finger-Greifer.
+    // TODO [Stufe B Track B: Simulation Game - 3D Arcade Claw Crane]:
+    // - 3D-Greifarm mit X/Z-Laufkatze, Seilzug (Y-Achse), 3-Finger-Greifer (120°)
+    //   sowie automatischem Greifzyklus (Leertaste) und Spotlight (GL_LIGHT1).
     // =========================================================================
 }

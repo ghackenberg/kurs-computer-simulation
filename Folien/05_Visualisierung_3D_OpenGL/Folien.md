@@ -497,7 +497,7 @@ Geometrie wird innerhalb von `gl.Begin()` und `gl.End()` definiert. Der Paramete
 
 ---
 
-### `GL_POINTS`
+### `GL_POINTS` *(Deep Dive / Referenz)*
 
 <div class="columns">
 <div>
@@ -524,7 +524,7 @@ gl.End();
 
 ---
 
-### Linienprimitive: `GL_LINES`, `STRIP` & `LOOP`
+### Linienprimitive: `GL_LINES`, `STRIP` & `LOOP` *(Deep Dive / Referenz)*
 
 <div class="columns">
 <div>
@@ -552,7 +552,7 @@ gl.End();
 
 ---
 
-### `GL_TRIANGLES`
+### `GL_TRIANGLES` *(Deep Dive / Referenz)*
 
 <div class="columns">
 <div>
@@ -583,7 +583,7 @@ gl.End();
 
 ---
 
-### Verbundene Dreiecke: `STRIP` & `FAN`
+### Verbundene Dreiecke: `STRIP` & `FAN` *(Deep Dive / Referenz)*
 
 <div class="columns">
 <div>
@@ -609,7 +609,7 @@ gl.End();
 
 ---
 
-### Viereck-Primitive: `GL_QUADS` & `QUAD_STRIP`
+### Viereck-Primitive: `GL_QUADS` & `QUAD_STRIP` *(Deep Dive / Referenz)*
 
 <div class="columns">
 <div>
@@ -919,7 +919,7 @@ Die abstrakte Klasse `Transform` ist die Basis für alle Transformationen im Sze
 <div class="columns top">
 <div>
 
-### Klasse `Translate`
+### Klasse `Translate` *(Deep Dive / Referenz)*
 
 Die Klasse `Translate` repräsentiert eine Verschiebung im 3D-Raum.
 
@@ -931,7 +931,7 @@ Die Klasse `Translate` repräsentiert eine Verschiebung im 3D-Raum.
 </div>
 <div>
 
-### Klasse `Rotate`
+### Klasse `Rotate` *(Deep Dive / Referenz)*
 
 Die Klasse `Rotate` repräsentiert eine Rotation um eine beliebige Achse.
 
@@ -946,7 +946,7 @@ Die Klasse `Rotate` repräsentiert eine Rotation um eine beliebige Achse.
 
 ---
 
-### Klasse `Scale`
+### Klasse `Scale` *(Deep Dive / Referenz)*
 
 Die Klasse `Scale` repräsentiert eine Skalierung.
 
@@ -978,7 +978,7 @@ Durch diesen rekursiven Aufruf (`Group.Draw` -> `Child.Draw` -> ...) werden die 
 
 ---
 
-### Klasse `Primitive`
+### Klasse `Primitive` *(Deep Dive / Referenz)*
 
 <div class="columns">
 <div class="one">
@@ -1003,7 +1003,7 @@ Die abstrakte Klasse `Primitive` ist die Basis für alle 2D-Grundformen:
 <div class="columns top">
 <div>
 
-### Klasse `Points`
+### Klasse `Points` *(Deep Dive / Referenz)*
 
 Die Klasse `Points` erbt von `Primitive` und zeichnet eine Menge von Punkten.
 
@@ -1014,7 +1014,7 @@ Die Klasse `Points` erbt von `Primitive` und zeichnet eine Menge von Punkten.
 </div>
 <div>
 
-### Klasse `Lines`
+### Klasse `Lines` *(Deep Dive / Referenz)*
 
 Die Klasse `Lines` erbt von `Primitive` und zeichnet eine Menge von Linien.
 
@@ -1030,7 +1030,7 @@ Die Klasse `Lines` erbt von `Primitive` und zeichnet eine Menge von Linien.
 <div class="columns top">
 <div>
 
-### Klasse `Triangles`
+### Klasse `Triangles` *(Deep Dive / Referenz)*
 
 Die Klasse `Triangles` erbt von `Primitive` und zeichnet eine Menge von gefüllten Dreiecken.
 
@@ -1040,7 +1040,7 @@ Die Klasse `Triangles` erbt von `Primitive` und zeichnet eine Menge von gefüllt
 </div>
 <div>
 
-### Klasse `Quads`
+### Klasse `Quads` *(Deep Dive / Referenz)*
 
 Die Klasse `Quads` erbt von `Primitive` und zeichnet eine Menge von gefüllten Vierecken.
 
@@ -1074,7 +1074,7 @@ Die abstrakte Klasse `Volume` ist die Basisklasse für alle 3D-Volumenkörper:
 
 ---
 
-### Klasse `Cube`
+### Klasse `Cube` *(Deep Dive / Referenz)*
 
 <div class="columns">
 <div class="two">
@@ -1096,7 +1096,7 @@ Zeichnet einen Würfel oder Quader.
 
 ---
 
-### Darstellung eines **Würfels** mit unterschiedlichen Eigenschaften
+### Darstellung eines **Würfels** mit unterschiedlichen Eigenschaften *(Deep Dive / Referenz)*
 
 Der folgende *Screenshot* zeigt Würfeldarstellungen mit unterschiedlichen Eigenschaften:
 
@@ -1104,7 +1104,7 @@ Der folgende *Screenshot* zeigt Würfeldarstellungen mit unterschiedlichen Eigen
 
 ---
 
-### Klasse `Sphere`
+### Klasse `Sphere` *(Deep Dive / Referenz)*
 
 <div class="columns">
 <div class="two">
@@ -1129,7 +1129,7 @@ Approximiert eine Kugeloberfläche über ein Gitternetz aus Längen- und Breiten
 
 ---
 
-### Darstellung einer **Kugel** mit unterschiedlichen Einstellungen
+### Darstellung einer **Kugel** mit unterschiedlichen Einstellungen *(Deep Dive / Referenz)*
 
 Der folgende *Screenshot* zeigt Kugeldarstellungen mit unterschiedlichen Einstellungen:
 
@@ -1140,7 +1140,7 @@ Der folgende *Screenshot* zeigt Kugeldarstellungen mit unterschiedlichen Einstel
 
 ---
 
-### Klasse `Cylinder`
+### Klasse `Cylinder` *(Deep Dive / Referenz)*
 
 <div class="columns">
 <div class="two">
@@ -1164,7 +1164,7 @@ Modelliert einen Kreiszylinder, Kegel oder Kegelstumpf entlang der Y-Achse:
 
 ---
 
-### Darstellung eines **Zylinders** mit unterschiedlichen Einstellungen
+### Darstellung eines **Zylinders** mit unterschiedlichen Einstellungen *(Deep Dive / Referenz)*
 
 Der folgende *Screenshot* zeigt Zylinderdarstellungen mit unterschiedlichen Einstellungen:
 
@@ -1543,18 +1543,17 @@ private void OnMouseMove(object sender, MouseEventArgs e)
 
 ### Laborübung Termin 05: 3D-OpenGL & Szenengraph
 
-Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details: [Aufgabenblatt 05](../../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md):
+In-Class Sprint (Stufe A) & Hausübung (Stufe B, 10 Pkt.) – Details: [Aufgabenblatt 05](../../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md):
 
 <div class="columns">
 <div class="two">
 
 #### Track A: Industrie & Mechatronik
-**SCARA-Roboterarm mit TCP-Check**
-- 4 Achsen: $\theta_1, \theta_2$ (Rotation), $d_3$ (Hub), $\theta_4$ (Greifer)
-- Szenengraph (`glPushMatrix` / `glPopMatrix`)
-- Analytische Vorwärtskinematik für TCP
-- Gelbe Kontrollkugel deckt sich mit Greifer
-- Interaktives Teach-In (Slider & Preset-Posen)
+**4-Achs-SCARA mit Parallelgreifer & Teach-In**
+- Ausbau auf 4 Achsen: $\theta_1, \theta_2, d_3$ + Handgelenk $\theta_4$ & 2-Backen-Parallelgreifer ($g_{\text{width}}$)
+- Einheitliches Szenengraph-Rendering (`_rootNode.Render`)
+- Animiertes Teach-In (`DispatcherTimer`) zwischen Pose A, Pose B & Home
+- Interaktives Pick-and-Place von 3D-Werkstücken
 
 </div>
 <div class="two">
@@ -1563,8 +1562,8 @@ Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details: [Aufgabenblatt 05](../../
 **3D Arcade Claw Crane (Greifarm)**
 - 3D-Gehäuse mit Preisen & Auswurfschacht
 - 3-Achs-Portalbrücke & Seilwinde
-- Schließender 3D-Greifmechanismus
-- Tastatursteuerung & Kollisionsprüfung
+- Schließender 3-Finger-Greifmechanismus
+- Tastatursteuerung & 3D-Kollisionsprüfung
 - Physikalisches Greifen und Ablegen
 
 </div>
