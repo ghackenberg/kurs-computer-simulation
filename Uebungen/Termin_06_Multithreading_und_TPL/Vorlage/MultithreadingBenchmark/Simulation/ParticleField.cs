@@ -1,11 +1,12 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MultithreadingBenchmark.Simulation
 {
     /// <summary>
     /// Repräsentiert ein 2D-Partikel mit Position und Geschwindigkeit.
-    /// Als kompakter Werttyp (Struct) optimiert für Cache-Lokalität (64-Byte Cache Lines).
+    /// Als kompakter Werttyp (Struct) optimiert für Cache-Lokalität.
     /// </summary>
     public struct Particle
     {
@@ -25,14 +26,16 @@ namespace MultithreadingBenchmark.Simulation
 
     /// <summary>
     /// Verwaltet ein Feld von N Partikeln und führt sequentielle sowie parallele Kinetik-Updates durch.
-    /// Physikalisches Modell: Zentralfeld-Attraktor im Ursprung (0,0) mit Euler-Cromer-Integration.
+    /// Physikalisches Modell: Zentralfeld-Attraktor bei (AttractorX, AttractorY) mit Euler-Cromer-Integration.
     /// </summary>
     public class ParticleField
     {
         public Particle[] Particles { get; private set; }
         public int Count => Particles.Length;
 
-        // Attraktor-Parameter
+        // Attraktor-Parameter (Standard im Ursprung (0,0) für deterministische Benchmarks; im UI verschiebbar)
+        public double AttractorX { get; set; } = 0.0;
+        public double AttractorY { get; set; } = 0.0;
         public double Mu { get; set; } = 50000.0;       // Gravitationsparameter
         public double Epsilon { get; set; } = 1.0;       // Glättungsparameter gegen Division durch Null
 
@@ -67,6 +70,8 @@ namespace MultithreadingBenchmark.Simulation
         {
             var copy = new ParticleField(Count)
             {
+                AttractorX = this.AttractorX,
+                AttractorY = this.AttractorY,
                 Mu = this.Mu,
                 Epsilon = this.Epsilon
             };
@@ -75,35 +80,40 @@ namespace MultithreadingBenchmark.Simulation
         }
 
         /// <summary>
-        /// STUFE A (In-Class Sprint): Sequentieller Integrationsschritt (Single-Threaded).
+        /// Sequentieller Integrationsschritt (Single-Threaded).
         /// Euler-Cromer:
-        /// r_i = sqrt(x^2 + y^2 + eps^2)
-        /// a_x = -mu * x / r^3
-        /// a_y = -mu * y / r^3
-        /// v_new = v + dt * a
-        /// x_new = x + dt * v_new
+        /// r_i = sqrt(dx^2 + dy^2 + eps^2)
+        /// a_x = -mu * dx / r^3, a_y = -mu * dy / r^3
+        /// v_new = v + dt * a,   x_new = x + dt * v_new
         /// </summary>
-        public void StepSequential(double dt)
+        public void StepSequential(double dt, CancellationToken cancellationToken = default)
         {
             double epsSquared = Epsilon * Epsilon;
+            double attX = AttractorX;
+            double attY = AttractorY;
 
             for (int i = 0; i < Particles.Length; i++)
             {
-                double px = Particles[i].X;
-                double py = Particles[i].Y;
+                if ((i & 4095) == 0)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                }
 
-                double rSquared = px * px + py * py + epsSquared;
+                double dx = Particles[i].X - attX;
+                double dy = Particles[i].Y - attY;
+
+                double rSquared = dx * dx + dy * dy + epsSquared;
                 double r = Math.Sqrt(rSquared);
                 double rCubed = rSquared * r;
 
-                double ax = -Mu * px / rCubed;
-                double ay = -Mu * py / rCubed;
+                double ax = -Mu * dx / rCubed;
+                double ay = -Mu * dy / rCubed;
 
                 // Euler-Cromer
                 double nvx = Particles[i].Vx + dt * ax;
                 double nvy = Particles[i].Vy + dt * ay;
-                double npx = px + dt * nvx;
-                double npy = py + dt * nvy;
+                double npx = Particles[i].X + dt * nvx;
+                double npy = Particles[i].Y + dt * nvy;
 
                 Particles[i].Vx = nvx;
                 Particles[i].Vy = nvy;
@@ -113,38 +123,40 @@ namespace MultithreadingBenchmark.Simulation
         }
 
         /// <summary>
-        /// STUFE A (In-Class Sprint): Paralleler Integrationsschritt mittels Task Parallel Library (Parallel.For).
+        /// Paralleler Integrationsschritt mittels Task Parallel Library (Parallel.For).
         /// Jeder Thread bearbeitet disjunkte Indizes - keine Race Conditions auf Particles[i].
         /// </summary>
-        public void StepParallel(double dt, int maxDegreeOfParallelism = -1)
+        public void StepParallel(double dt, int maxDegreeOfParallelism = -1, CancellationToken cancellationToken = default)
         {
-            var options = new ParallelOptions();
+            var options = new ParallelOptions
+            {
+                CancellationToken = cancellationToken
+            };
             if (maxDegreeOfParallelism > 0)
             {
                 options.MaxDegreeOfParallelism = maxDegreeOfParallelism;
             }
 
             double epsSquared = Epsilon * Epsilon;
+            double attX = AttractorX;
+            double attY = AttractorY;
 
-            // TODO [Stufe A]: Analysieren Sie das Speicherzugriffsmuster:
-            // Da Particles[i] nacheinander im Array liegen, profitieren benachbarte Threads 
-            // von zusammenhängenden Chunks (Chunk Partitioning der TPL).
             Parallel.For(0, Particles.Length, options, i =>
             {
-                double px = Particles[i].X;
-                double py = Particles[i].Y;
+                double dx = Particles[i].X - attX;
+                double dy = Particles[i].Y - attY;
 
-                double rSquared = px * px + py * py + epsSquared;
+                double rSquared = dx * dx + dy * dy + epsSquared;
                 double r = Math.Sqrt(rSquared);
                 double rCubed = rSquared * r;
 
-                double ax = -Mu * px / rCubed;
-                double ay = -Mu * py / rCubed;
+                double ax = -Mu * dx / rCubed;
+                double ay = -Mu * dy / rCubed;
 
                 double nvx = Particles[i].Vx + dt * ax;
                 double nvy = Particles[i].Vy + dt * ay;
-                double npx = px + dt * nvx;
-                double npy = py + dt * nvy;
+                double npx = Particles[i].X + dt * nvx;
+                double npy = Particles[i].Y + dt * nvy;
 
                 Particles[i].Vx = nvx;
                 Particles[i].Vy = nvy;
@@ -153,19 +165,53 @@ namespace MultithreadingBenchmark.Simulation
             });
         }
 
+        /// <summary>
+        /// Zeichnet das aktuelle Partikelfeld als 2D-Dichte-/Geschwindigkeits-Rasterbild in einen BGRA32-Pixelpuffer.
+        /// </summary>
+        public void RenderToPixelBuffer(uint[] pixelBuffer, int width, int height)
+        {
+            Array.Fill(pixelBuffer, 0xFF0E1117u); // Dunkler Hintergrund
+
+            double scaleX = (width - 1) / 1000.0;
+            double scaleY = (height - 1) / 1000.0;
+
+            // Partikel einzeichnen (Farbe abhängig von Geschwindigkeit)
+            for (int i = 0; i < Particles.Length; i++)
+            {
+                int px = (int)(Particles[i].X * scaleX);
+                int py = (int)(Particles[i].Y * scaleY);
+
+                if ((uint)px < (uint)width && (uint)py < (uint)height)
+                {
+                    double speed = Math.Sqrt(Particles[i].Vx * Particles[i].Vx + Particles[i].Vy * Particles[i].Vy);
+                    uint color = speed > 15.0 ? 0xFFFFB74Du : (speed > 8.0 ? 0xFF4FC3F7u : 0xFF29B6F6u);
+                    pixelBuffer[py * width + px] = color;
+                }
+            }
+
+            // Attraktor-Zentrum als rotes Fadenkreuz markieren
+            int ax = (int)Math.Clamp(AttractorX * scaleX, 3, width - 4);
+            int ay = (int)Math.Clamp(AttractorY * scaleY, 3, height - 4);
+            for (int d = -3; d <= 3; d++)
+            {
+                pixelBuffer[ay * width + (ax + d)] = 0xFFFF5252u;
+                pixelBuffer[(ay + d) * width + ax] = 0xFFFF5252u;
+            }
+        }
+
         // ====================================================================
         // STUFE B: Erweiterungspfade (Wahlmodell Track A oder Track B)
         // ====================================================================
 
-        // TODO [Track A - Industrie]:
-        // Parallele Monte-Carlo-Toleranzanalyse:
-        // Simulieren Sie 10.000.000 Bauteilpaarungen mit Normal- und Gleichverteilung.
-        // Verwenden Sie ThreadLocal<Random> oder Random.Shared, um Locking bei NextDouble() zu verhindern!
-        // Nutzen Sie Interlocked.Increment zur Zählung der Schlechtteile (Ausschuss).
+        // TODO [Track A - Industrie: Parallele Monte-Carlo-Toleranzanalyse in WPF]:
+        // - Simulieren Sie N = 10.000.000 Bauteil-Kombinationen S = L1 - (L2 + L3 + L4).
+        // - Nutzen Sie Random.Shared oder ThreadLocal<Random> (NIEMALS gemeinsames Random ohne Lock!).
+        // - Nutzen Sie thread-lokale Zähler und Interlocked.Add für die Ausschussquote und Histogramm-Bins.
+        // - Melden Sie den Fortschritt via IProgress<T> an die WPF-ProgressBar und unterstützen Sie CancellationToken!
 
-        // TODO [Track B - Simulation Game]:
-        // Boids Flocking / Zombie-Horde:
-        // Fügen Sie Interaktionskräfte zwischen benachbarten Partikeln hinzu (Flocking: Separation, Alignment, Cohesion).
-        // Nutzen Sie räumliche Gitterzerlegung (Spatial Hash Grid), um O(N^2) auf O(N) zu reduzieren.
+        // TODO [Track B - Simulation Game: Boids & Zombie-Horde in WPF]:
+        // - Simulieren Sie 50.000 - 100.000 autonome Agenten mit Nachbarschafts-Abstoßung und Zielverfolgung.
+        // - Verwenden Sie striktes Double-Buffering (StateCurrent[] -> StateNext[]), um Race Conditions zu verhindern.
+        // - Vergleichen Sie im reaktiven WPF-Dashboard live die Framerate (FPS) zwischen Single-Thread und Parallel.For!
     }
 }

@@ -1,4 +1,4 @@
-# Aufgabenblatt Termin 06: Multithreading & Parallele Simulation (TPL)
+# Aufgabenblatt Termin 06: Multithreading, TPL & Reaktive WPF-Entkopplung
 ## Lehrveranstaltung: Systemsimulation / Digitaler Zwilling
 ### FH Oberösterreich – Campus Wels | Studiengang Automatisierungstechnik
 
@@ -7,10 +7,10 @@
 | Metadaten | Details |
 | :--- | :--- |
 | **Lehrveranstaltungseinheit:** | Termin 06 (begleitend zu Kapitel 06: Multithreading & Parallele Simulation) |
-| **Themenschwerpunkt:** | Task Parallel Library (TPL), `Parallel.For`, Cache-Lokalität & Speedup nach Amdahl |
-| **Technologie-Stack:** | C# 12 / .NET 8/10, TPL, `System.Diagnostics.Stopwatch`, `System.Threading` |
-| **Vorgreif-Sperre:** | **Erlaubt:** TPL, `Parallel.For`, `ParallelOptions`, `Interlocked`, `ConcurrentBag<T>`, `Stopwatch`.<br>**Strengstens verboten:** *KEIN* Math.NET Cholesky, *KEINE* kontinuierlichen S-Functions, *KEINE* Event-Queues! |
-| **Zeitbudget:** | **In-Class Sprint:** 60 Minuten (Laborpräsenz)<br>**Homework Extension:** 2–3 Stunden (2er-Team, 1 Woche) |
+| **Themenschwerpunkt:** | Task Parallel Library (`Parallel.For`), Thread-Sicherheit (`Interlocked`, `Random`), Amdahlsches Gesetz & Reaktive WPF-Entkopplung (`async/await`, `Task.Run`, `IProgress<T>`, `CancellationToken`) |
+| **Technologie-Stack:** | C# 12 / .NET 8 (`net8.0-windows`), WPF (`WriteableBitmap`), TPL, `System.Diagnostics.Stopwatch`, `System.Threading` |
+| **Vorgreif-Sperre:** | **Erlaubt:** TPL, `Parallel.For`, `ParallelOptions`, `Interlocked`, `ConcurrentBag<T>`, `Task.Run`, `IProgress<T>`, `CancellationTokenSource`, `Stopwatch`.<br>**Strengstens verboten:** *KEIN* Math.NET Cholesky, *KEINE* kontinuierlichen S-Functions, *KEINE* Event-Queues! |
+| **Zeitbudget:** | **In-Class Sprint:** ca. 45–60 Minuten (Laborpräsenz)<br>**Homework Extension:** 2–3 Stunden (2er-Team, 1 Woche) |
 | **Abgabeform:** | Git-Repository: Sourcecode, Unit-Tests und Markdown-Bericht (`README.md`) |
 
 ---
@@ -18,10 +18,10 @@
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
 
 Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
-1. **Parallelisierungsmuster anwenden:** Rechenintensive Schleifen mittels Task Parallel Library (`Parallel.For`, `ParallelOptions.MaxDegreeOfParallelism`) thread-sicher zu parallelisieren.
-2. **Synchronisationsfehler vermeiden:** Race Conditions und Datenkorruption ohne blockierende globale Locks über thread-lokale Akkumulatoren, Double-Buffering und atomare Operationen (`Interlocked`) zu verhindern.
-3. **Skalierung quantitativ analysieren:** Den parallelen Speedup $S(p)$ und die Effizienz $E(p)$ über variierende Thread-Zahlen $p$ experimentell mit `Stopwatch` zu messen und den seriellen Codeanteil $s = 1 - f_{\text{par}}$ über das Amdahlsche Gesetz mathematisch zu fitten.
-4. **Hardwarenahe Cache-Effekte nachweisen:** Den drastischen Performanceeinfluss räumlicher Cache-Lokalität (Spatial Locality, Cache Lines à 64 Byte, Row-Major vs. Column-Major) experimentell zu quantifizieren und False Sharing zu unterbinden.
+1. **Parallelisierungsmuster anwenden:** Rechenintensive Simulationsschleifen mittels Task Parallel Library (`Parallel.For`, `ParallelOptions.MaxDegreeOfParallelism`) thread-sicher auf alle CPU-Kerne zu verteilen.
+2. **Synchronisationsfehler vermeiden:** Race Conditions und Datenkorruption bei geteilten Zuständen sowie Zufallszahlengeneratoren über thread-lokales `Random` (`Random.Shared` / `ThreadLocal<Random>`), Double-Buffering und atomare Operationen (`Interlocked`) zu verhindern.
+3. **Reaktive WPF-Entkopplung implementieren:** Das Einfrieren des UI-Threads (*UI-Freeze*) durch Auslagerung der Simulationsschleife in `await Task.Run(...)`, gedrosselte Rückmeldung über `IProgress<T>` und kooperativen Not-Aus über `CancellationTokenSource` zu lösen.
+4. **Skalierung quantitativ analysieren:** Den parallelen Speedup $S(p)$ und die Effizienz $E(p)$ über variierende Thread-Zahlen $p$ experimentell mit `Stopwatch` im WPF-Dashboard zu messen und den seriellen Codeanteil $s = 1 - f_{\text{par}}$ nach dem Amdahlschen Gesetz zu bestimmen.
 
 ---
 
@@ -41,74 +41,50 @@ Die **parallele Effizienz** $E(p)$ beschreibt den Auslastungsgrad der eingesetzt
 
 $$E(p) = \frac{S(p)}{p} = \frac{1}{p \cdot s + (1 - s)} \le 1{,}0 \quad (100\,\%)$$
 
-### 2.2 Cache-Architektur & False Sharing
+Aus einem gemessenen Speedup $S(p)$ bei $p > 1$ Kernen lässt sich der experimentelle serielle Anteil $s$ direkt rekonstruieren:
 
-Moderne CPUs transferieren Speicher nicht byteweise, sondern in **Cache-Lines** (typisch 64 Byte). 
-- **Spatial Locality (Row-Major):** Durchläuft eine Schleife ein lineares 1D-Array `data[row * cols + col]`, lädt ein Cache-Miss direkt die nächsten 8 `double`-Werte (64 Byte) in den L1-Cache.
-- **Cache-Miss-Kaskade (Column-Major):** Wird stattdessen spaltenweise zugegriffen (`data[row * cols + col]` mit äußerer Schleife über `col`), erzeugt fast jede Speicherlesung einen Cache-Miss.
-- **False Sharing:** Schreiben zwei Threads auf unterschiedliche Variablen, die zufällig in derselben 64-Byte-Cache-Zeile liegen, invalidieren die CPU-Kerne gegenseitig ihre L1-Caches (Cache Coherence Ping-Pong).
+$$s = \frac{\frac{1}{S(p)} - \frac{1}{p}}{1 - \frac{1}{p}}$$
+
+### 2.2 Reaktive UI-Architektur in WPF (`Task.Run`, `IProgress<T>`, `CancellationToken`)
+
+Führt der WPF-UI-Thread eine lange Simulationsschleife direkt im Button-Click-Handler aus, kann die Message-Pump keine Maus-, Tastatur- oder Zeichenereignisse (`OnRender`) mehr abarbeiten – das Fenster friert ein („Keine Rückmeldung“).
+
+```
+┌──────────────────────────────┐        Task.Run(...)         ┌──────────────────────────────┐
+│        WPF UI-Thread         │ ───────────────────────────► │   Hintergrund-Worker (TPL)   │
+│  • MainWindow / Controls     │                              │  • Simulationsschleife       │
+│  • WriteableBitmap.WritePixels│ ◄─────────────────────────── │  • Parallel.For (Kerne 1..p) │
+│  • ProgressBar & Telemetrie  │   IProgress<T>.Report(...)   │  • Prüft CancellationToken   │
+└──────────────────────────────┘   (gedrosselt, z.B. alle 5)  └──────────────────────────────┘
+```
 
 ---
 
-## 3. Stufe A: In-Class Sprint (60 min)
+## 3. Stufe A: In-Class Sprint (ca. 45–60 min)
 
-### Thema: „Partikel-Kinetik-Benchmark mit TPL Parallel.For“
+### Thema: „UI-Freeze beheben: Reaktives WPF-Partikel-Dashboard mit `Task.Run`, `IProgress<T>` & `CancellationToken`“
 
-Implementieren Sie in einer C#-Konsolenapplikation (`ParallelBenchmarkSprint`) ein minimales, rechenintensives 2D-Partikelsystem mit $N = 100\,000$ Partikeln.
+Öffnen Sie das vorbereitete WPF-Starter-Projekt `Vorlage/MultithreadingBenchmark.sln`. Es enthält bereits das physikalische 2D-Partikelfeld (`ParticleField.cs` mit $N = 100\,000$ Partikeln im Zentralfeld-Attraktor), den Benchmark-Runner (`ParallelRunner.cs`) sowie die WPF-Oberfläche (`MainWindow.xaml` mit `WriteableBitmap`-Partikelansicht, Telemetrie-Panel und Amdahl-Datentabelle).
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│ STUFE A: IN-CLASS SPRINT ARCHITEKTUR                                   │
-│                                                                        │
-│   Partikel-Array [N = 100.000]                                         │
-│   ┌──────────────────────────────────────────────────────────────┐     │
-│   │ [0] (x, y, vx, vy) | [1] (x, y, vx, vy) | ... | [N-1]        │     │
-│   └──────────────────────────────────────────────────────────────┘     │
-│             │                                                          │
-│             ├──> Sequentieller Durchlauf:  for (int i = 0; i < N; i++) │
-│             │    => T_seq mit Stopwatch messen                         │
-│             │                                                          │
-│             └──> Paralleler Durchlauf:    Parallel.For(0, N, i => ...) │
-│                  => T_par mit Stopwatch messen                         │
-│                  => Speedup S = T_seq / T_par                          │
-└────────────────────────────────────────────────────────────────────────┘
-```
+#### Aufgabenstellung (Schritt für Schritt auf Basis der Vorlage):
 
-#### Aufgabenstellung (Schritt für Schritt):
-
-1. **Datenstrukturen definieren:**
-   Erstellen Sie zwei flache Arrays für Positionen und Geschwindigkeiten (Structure of Arrays oder kompaktes Struct):
-   ```csharp
-   public struct Particle
-   {
-       public double X, Y;
-       public double Vx, Vy;
-   }
-   ```
-2. **Initialisierung:**
-   Initialisieren Sie $N = 100\,000$ Partikel mit Zufallskoordinaten im Bereich $[0, 1000] \times [0, 1000]$ und Geschwindigkeiten im Bereich $[-10, +10]\,\text{m/s}$.
-3. **Rechenintensive Kinetik-Aktualisierung (Zentralfeld-Attraktor):**
-   Jeder Partikel wird von einem Gravitationszentrum im Koordinatenursprung $(0, 0)$ angezogen:
-   $$r_i = \sqrt{x_i^2 + y_i^2 + \epsilon^2}, \quad a_{x, i} = -\frac{\mu \cdot x_i}{r_i^3}, \quad a_{y, i} = -\frac{\mu \cdot y_i}{r_i^3}$$
-   mit $\mu = 50\,000$ und Glättungsparameter $\epsilon = 1{,}0$ (gegen Division durch Null).  
-   Euler-Cromer-Schritt:
-   $$\mathbf{v}_i^{k+1} = \mathbf{v}_i^k + \Delta t \cdot \mathbf{a}_i, \quad \mathbf{x}_i^{k+1} = \mathbf{x}_i^k + \Delta t \cdot \mathbf{v}_i^{k+1}$$
-4. **Sequentieller Benchmark:**
-   Führen Sie 20 Zeitschritte sequentiell aus. Nutzen Sie `System.Diagnostics.Stopwatch`.
-   > [!IMPORTANT]
-   > Führen Sie vor der eigentlichen Zeitmessung einen Warmup-Durchlauf über 2 Zeitschritte durch, um den JIT-Compiler zu erwärmen!
-5. **Paralleler Benchmark:**
-   Parallelisieren Sie die äußere Schleife über alle Partikel mit `Parallel.For(0, N, i => { ... })`.
-   Messen Sie erneut die Ausführungszeit für 20 Zeitschritte.
-6. **Auswertung auf der Konsole:**
-   Berechnen und drucken Sie:
-   - $T_{\text{seq}}$ in Millisekunden,
-   - $T_{\text{par}}$ in Millisekunden,
-   - Speedup $S = \frac{T_{\text{seq}}}{T_{\text{par}}}$,
-   - Parallele Effizienz $E = \frac{S}{p_{\text{logical}}}$ mit $p = \text{Environment.ProcessorCount}$.
-
-**Erwartetes Ergebnis nach 50 Minuten:**  
-Ein reproduzierbarer Speedup von $4\times$ bis $10\times$ (je nach Host-CPU) auf der Konsole.
+1. **Starter-Kit starten & UI-Freeze beobachten:**
+   - Starten Sie die Anwendung und klicken Sie im Bild auf verschiedene Positionen, um den Gravitations-Attraktor (rotes Fadenkreuz) zu verschieben.
+   - Klicken Sie nun auf **„▶ Simulation starten (200 Schritte)“**: Beobachten Sie, dass das gesamte WPF-Fenster während der Berechnung **komplett einfriert**, die `ProgressBar` erst ganz am Ende auf $100\,\%$ springt und der Button **„⏹ Not-Aus (Cancel)“** während des Laufs gar nicht angeklickt werden kann!
+2. **Aufgabe A1 – Asynchrone Auslagerung mit `async/await`, `Task.Run` und `IProgress<SimulationProgress>`:**
+   - Machen Sie den Event-Handler `BtnStart_Click` in `MainWindow.xaml.cs` asynchron (`private async void BtnStart_Click(...)`).
+   - Erstellen Sie vor dem Start des Hintergrund-Tasks ein `IProgress<SimulationProgress>`-Objekt:
+     ```csharp
+     IProgress<SimulationProgress> progress = new Progress<SimulationProgress>(p => UpdateUiProgress(p));
+     ```
+   - Lagern Sie die `for`-Schleife über die 200 Zeitschritte in `await Task.Run(() => { ... })` aus und rufen Sie alle 5 Zeitschritte `progress.Report(...)` auf.
+   - *Wichtig:* Warum darf `UpdateUiProgress` (bzw. `_bitmap.WritePixels`) **niemals direkt** aus dem `Task.Run`-Hintergrundthread aufgerufen werden? Überprüfen Sie, dass die Partikelanimation und die `ProgressBar` nun butterweich in Echtzeit laufen!
+3. **Aufgabe A2 – Kooperativer Not-Aus mit `CancellationTokenSource`:**
+   - Instanziieren Sie zu Beginn von `BtnStart_Click` eine neue `_cts = new CancellationTokenSource()`, setzen Sie `BtnCancel.IsEnabled = true` und übergeben Sie `_cts.Token` sowohl an `Task.Run` als auch an `_field.StepParallel(Dt, threads, _cts.Token)` bzw. `_field.StepSequential(Dt, _cts.Token)`.
+   - Fangen Sie die `OperationCanceledException` in einem `try / catch (OperationCanceledException) / finally`-Block sauber ab und geben Sie in `TxtStatus` die Meldung `"Simulation durch Benutzer (Not-Aus) abgebrochen."` aus.
+4. **Aufgabe A3 – Asynchrone Amdahl-Skalierungsreihe ($1 \dots P_{\max}$ Kerne) im UI:**
+   - Machen Sie auch `BtnRunScaling_Click` in `MainWindow.xaml.cs` asynchron (`async void`) und führen Sie `ParallelRunner.RunScalingSeries(...)` im Hintergrund über `await Task.Run(...)` aus, damit das Fenster während der mehrstufigen Benchmark-Messung nicht einfriert.
+   - Vergleichen Sie in der `DataGrid`-Tabelle den Speedup $S(p)$ und die Effizienz $E(p)$ Ihres Prozessors!
 
 ---
 
@@ -117,125 +93,110 @@ Ein reproduzierbarer Speedup von $4\times$ bis $10\times$ (je nach Host-CPU) auf
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – KEINE Doppelbelastung!):**  
 > Wählen Sie als 2er-Team für die Hausübung **GENAU EINEN** der beiden Tracks:
-> - **Track A (Industrie):** Parallele Monte-Carlo-Toleranzanalyse & Passungsprüfung
-> - **Track B (Simulation Game):** 100.000 Boids & Zombie-Horden-KI-Benchmark
+> - **Track A (Industrie):** Parallele Monte-Carlo-Toleranzanalyse & Passungsprüfung im WPF-Dashboard
+> - **Track B (Simulation Game):** Interaktive 2D-Schwarm- & Zombie-Horden-Simulation (50.000+ Agenten) in WPF
 > 
-> Beide Aufgaben basieren auf derselben TPL-Multithreading-Methodik, erfordern denselben Arbeitsaufwand und führen zur maximalen Punktzahl (10 Punkte). Bearbeiten Sie **NUR EINEN** Track!
+> Beide Aufgaben basieren auf derselben TPL-Multithreading- und WPF-Entkopplungs-Methodik (`Parallel.For`, `Task.Run`, `IProgress<T>`, `CancellationToken`), erfordern denselben Arbeitsaufwand und führen zur maximalen Punktzahl (10 Punkte). Bearbeiten Sie **NUR EINEN** Track!
 
 ---
 
 ### Track A (Industrie): Parallele Monte-Carlo-Toleranzanalyse für Baugruppen-Passungen
 
 #### Industrieller Kontext:
-In der automatisierten Serienfertigung (z. B. Getriebe- oder Spindellagerung) addieren sich die Fertigungstoleranzen einzelner Bauteile zu einer nichtlinearen Maßkette. Um Ausschussraten vor der Fertigung exakt zu prognostizieren, werden $N = 10\,000\,000$ statistische Bauteil-Kombinationen parallel simuliert (Monte-Carlo-Toleranzanalyse).
+In der automatisierten Serienfertigung (z. B. Getriebe- oder Spindellagerung) addieren sich die Fertigungstoleranzen einzelner Bauteile zu einer Maßkette. Um Ausschussraten (Millionstel-Bereich / ppm) vor Produktionsbeginn zuverlässig zu bestimmen, werden $N = 10\,000\,000$ virtuelle Baugruppen parallel montiert und statistisch ausgewertet.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ TRACK A: STATISTISCHE MASSEKETTE                                       │
+│ TRACK A: STATISTISCHE MASSKETTE (N = 10.000.000 MONTAGEN)              │
 │                                                                        │
-│   Gehäusebohrung D_G       Lager außen D_A       Welle d_W             │
-│   [Normal / Gauss]         [Rechteck / ISO]      [Log-Normal]          │
-│   ───────────────>         ───────────────>      ───────────>          │
+│   Gehäuse L_1          Innenring L_2      Scheibe L_3     Welle L_4    │
+│   [Normal / Gauss]     [Gleichverteilt]   [Log-Normal]    [Normal]     │
+│   ───────────────►     ───────────────►   ───────────►    ────────►    │
 │                                                                        │
-│   Schließmaß / Passungsspiel: S = D_G - (D_A + d_W)                    │
-│   Ausschusskriterium: S < S_min (Klemmer) ODER S > S_max (Spiel)       │
+│   Axiales Passungsspiel: S = L_1 - (L_2 + L_3 + L_4)                   │
+│   Ausschuss: S < 0,050 mm (Klemmer) ODER S > 0,150 mm (zu großes Spiel)│
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 #### Aufgabenstellung Track A:
 
 1. **Mathematisches Maßketten-Modell:**
-   Ein Präzisions-Spindellager besteht aus 4 aufeinander gestapelten Bauteilen mit statistisch schwankenden Abmessungen:
-   - Bauteil 1 (Gehäuse): $L_1 \sim \mathcal{N}(\mu=50{,}00\,\text{mm}, \sigma=0{,}02\,\text{mm})$ (Normalverteilung).
-   - Bauteil 2 (Innenring): $L_2 \sim \mathcal{U}(19{,}95\,\text{mm}, 20{,}05\,\text{mm})$ (Gleichverteilung).
-   - Bauteil 3 (Distanzscheibe): $L_3 \sim \text{LogNormal}(\mu=1{,}5\,\text{mm}, \sigma=0{,}01\,\text{mm})$.
+   Ein Präzisions-Spindellager besteht aus 4 gefügten Bauteilen mit statistisch schwankenden Abmessungen:
+   - Bauteil 1 (Gehäusebohrung): $L_1 \sim \mathcal{N}(\mu=50{,}00\,\text{mm}, \sigma=0{,}020\,\text{mm})$ (Normalverteilung via Box-Muller).
+   - Bauteil 2 (Lager-Innenring): $L_2 \sim \mathcal{U}(19{,}95\,\text{mm}, 20{,}05\,\text{mm})$ (Gleichverteilung).
+   - Bauteil 3 (Distanzscheibe): $L_3 \sim \mathcal{N}(\mu=1{,}50\,\text{mm}, \sigma=0{,}010\,\text{mm})$.
    - Bauteil 4 (Wellenabsatz): $L_4 \sim \mathcal{N}(\mu=28{,}40\,\text{mm}, \sigma=0{,}015\,\text{mm})$.
    
    Das resultierende axiale Funktionsspiel beträgt:
    $$S = L_1 - (L_2 + L_3 + L_4)$$
-   Zulässiges Toleranzband: $S \in [0{,}050\,\text{mm}, 0{,}150\,\text{mm}]$. Liegt $S$ außerhalb, gilt das Aggregat als Ausschuss.
+   Zulässiges Toleranzband: $S \in [0{,}050\,\text{mm}, 0{,}150\,\text{mm}]$. Liegt $S < 0{,}050\,\text{mm}$ (Klemmer) oder $S > 0{,}150\,\text{mm}$ (übermäßiges Spiel), gilt das Aggregat als **Ausschuss (Scrap)**.
 
-2. **Thread-sichere Monte-Carlo-Parallelisierung:**
-   - Simulieren Sie $N = 10\,000\,000$ Stichproben.
-   - **Thread-lokaler Zufall:** Nutzen Sie `ThreadLocal<Random>` oder `Random.Shared` (in .NET 8), niemals eine gemeinsame `Random`-Instanz ohne Lock (Race Condition führt zu Nullen!).
-   - **Vermeidung von False Sharing:** Jeder Thread zählt seine Ausschussfälle lokal in einer Variablen; die Aggregation in die globale Ausschusszahl erfolgt atomar via `Interlocked.Add` oder über die Überladung `Parallel.For<TLocal>`.
+2. **Thread-sichere Monte-Carlo-Parallelisierung (`Parallel.For` & `Interlocked`):**
+   - Simulieren Sie $N = 10\,000\,000$ Stichproben in Blöcken (damit `IProgress<T>` und `CancellationToken` regelmäßig greifen).
+   - **Thread-lokaler Zufall:** Nutzen Sie zwingend `Random.Shared` oder `ThreadLocal<Random>` mit unterschiedlichem Seed pro Thread – niemals eine ungeschützte gemeinsame `Random`-Instanz!
+   - **Vermeidung von Race Conditions & Lock-Contention:** Akkumulieren Sie die Treffer für Klemmer ($S < S_{\min}$), Gutteile, Übermaß ($S > S_{\max}$) sowie ein Histogramm über z. B. $60$ Klassen (Bins im Bereich $[0{,}00, 0{,}20]\,\text{mm}$) zunächst in thread-lokalen Variablen/Arrays und führen Sie diese atomar mittels `Interlocked.Add` zusammen.
 
-3. **Systematische Skalierungsreihe & Amdahl-Fit:**
-   - Führen Sie die Simulation mit $p \in \{1, 2, 4, 6, 8, 12, 16, 24, 32\}$ Threads aus (Steuerung über `ParallelOptions.MaxDegreeOfParallelism = p`).
-   - Führen Sie pro $p$ genau 5 Messläufe durch (erster Lauf = Warmup; Mittelwert & Standardabweichung der restlichen 4 Läufe protokollieren).
-   - Fitten Sie die Messwerte $(p, S(p))$ an Amdahls Gesetz mittels Nichtlinearer Ausgleichsrechnung (Least-Squares):
-     $$S(p) = \frac{1}{s + \frac{1-s}{p}}$$
-   - Bestimmen Sie den seriellen Anteil $s$ und das theoretische Limit $S_{\max} = 1/s$.
+3. **Reaktives WPF-Qualitäts-Dashboard:**
+   - Erweitern Sie das WPF-Fenster um eine visuelle Darstellung der Monte-Carlo-Analyse:
+     - Live-`ProgressBar` und Not-Aus-Button (`CancellationToken`).
+     - Grafische Darstellung des berechneten Häufigkeits-Histogramms von $S$ (entweder im `WriteableBitmap` oder auf einem `Canvas`) mit farblicher Kennzeichnung der Gutzone (grün) und der beiden Ausschusszonen links/rechts (rot).
+     - Anzeige von Mittelwert $\bar{S}$, Standardabweichung $\sigma_S$, Ausschussquote in $\%$ bzw. $\text{ppm}$ (Parts per Million) sowie Prozessfähigkeitsindex $C_p = \frac{S_{\max} - S_{\min}}{6\,\sigma_S}$.
 
-4. **Hardware-Cache-Experiment (Row-Major vs. Column-Major):**
-   - Allokieren Sie eine 2D-Matrix der Größe $4096 \times 4096$ als flaches 1D-Array `double[4096 * 4096]`.
-   - Implementieren Sie zwei Benchmark-Funktionen für eine Glättungsoperation:
-     - **Test 1 (Row-Major, Cache-freundlich):** Äußere Schleife Zeilen $r$, innere Schleife Spalten $c$.
-     - **Test 2 (Column-Major, Cache-feindlich):** Äußere Schleife Spalten $c$, innere Schleife Zeilen $r$.
-   - Messen Sie die Laufzeit beider Varianten und erklären Sie den Unterschied anhand von Cache Lines (64 Byte) und CPU-Prefetching im Markdown-Bericht.
+4. **Systematische Skalierungsreihe & Amdahl-Auswertung:**
+   - Messen Sie die Laufzeit der $10\,000\,000$ Montagen für $p \in \{1, 2, 4, \dots, P_{\max}\}$ Threads (inkl. JIT-Warmup) und stellen Sie Speedup $S(p)$, Effizienz $E(p)$ und den geschätzten seriellen Anteil $s$ in der `DataGrid`-Tabelle sowie im `README.md`-Bericht dar.
 
 ---
 
-### Track B (Simulation Game): 100.000 Boids & Zombie-Horden-KI-Benchmark
+### Track B (Simulation Game): Interaktive 2D-Schwarm- & Zombie-Horden-Simulation in WPF
 
 #### Game-Kontext:
-In modernen Crowd-Simulationen und Zombie-Survival-Games müssen zehntausende autonome Agenten zeitgleich Pfadfindung, Flucht- und Rudelverhalten (Reynolds Boids) in Echtzeit berechnen. Ohne massive Multicore-Parallelisierung bricht die Framerate sofort ein.
+In modernen Crowd-Simulationen und Survival-Games müssen zehntausende autonome Agenten zeitgleich Zielverfolgung, Hindernisumgehung und gegenseitige Abstoßung berechnen. Auf einem einzelnen CPU-Kern bricht die Bildrate ein – mit `Parallel.For` und Double-Buffering erreichen Sie flüssige Echtzeit!
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ TRACK B: SWARM-VEKTORFELD & SEPARATION                                 │
+│ TRACK B: SCHWARM-VEKTORFELD & DOUBLE-BUFFERING IN WPF                  │
 │                                                                        │
-│   Agent i scannt Nachbarn j im Radius R:                               │
-│                                                                        │
-│            (Agent j)                                                   │
-│               ^                                                        │
-│               │  \vec{d}_ij                                            │
-│               │                                                        │
-│           (Agent i) ───> Fluchtvektor \vec{F}_sep = -\sum \vec{d}_ij / |d|^2
-│                                                                        │
-│   Aktualisierung: Double-Buffering (Array Read[] -> Array Write[])     │
+│   Agent i liest aus StateCurrent[]:                                    │
+│     • Attraktion zum beweglichen Spieler-Zielpunkt P_target (Mausklick)│
+│     • Lokale Abstoßung / Wirbelkraft + Geschwindigkeitsbegrenzung v_max│
+│   Agent i schreibt neuen Zustand exklusiv in StateNext[i]              │
+│   Am Ende des Zeitschritts: Referenztausch Swap(ref Current, ref Next) │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 #### Aufgabenstellung Track B:
 
-1. **Agentenmodell & Schwarmdynamik:**
-   Simulieren Sie $N = 50\,000$ Boids/Zombies auf einer 2D-Fläche ($2000 \times 2000\,\text{m}$) über 50 Simulationsschritte.
-   Jeder Agent besitzt Zustand $\mathbf{x}_i = (x, y)$ und $\mathbf{v}_i = (v_x, v_y)$.
-   Pro Schritt berechnet Agent $i$:
-   - **Zielverfolgung (Attraktion):** Bewegung zum Zentrum der menschlichen Überlebenden $\mathbf{P}_{\text{Target}} = (1000, 1000)$.
-   - **Lokale Separation:** Abstoßung von den nächsten Nachbarn innerhalb des Wahrnehmungsradius $R_{\text{sens}} = 10\,\text{m}$:
-     $$\mathbf{F}_{\text{sep}, i} = \sum_{j \in \text{Nachbarn}, j \neq i} \frac{\mathbf{x}_i - \mathbf{x}_j}{\|\mathbf{x}_i - \mathbf{x}_j\|^2 + \epsilon}$$
-   - **Geschwindigkeitsdämpfung & Maximalbegrenzung:** $\|\mathbf{v}_i\| \le v_{\max} = 5\,\text{m/s}$.
+1. **Agentenmodell & Schwarmdynamik ($N = 50\,000 \dots 100\,000$ Agenten):**
+   - Jeder Agent $i$ besitzt Position $\mathbf{x}_i = (x_i, y_i)$, Geschwindigkeit $\mathbf{v}_i = (v_{x,i}, v_{y,i})$ und einen Typ/Zustand (z. B. langsame vs. schnelle Agenten oder infizierte vs. fliehende Agenten).
+   - Pro Zeitschritt wirkt auf jeden Agenten:
+     - **Zielverfolgung:** Beschleunigung in Richtung des per Maus im `WriteableBitmap` steuerbaren Zielpunkts $\mathbf{P}_{\text{Target}}$.
+     - **Lokale Interaktion / Repulsionsfeld:** Abstoßung von lokalen Nachbarn (z. B. über ein schnelles räumliches 2D-Gitter / Spatial Grid oder lokale Nachbarschaftsstichprobe) sowie Abprallen an Kreishindernissen auf der Karte.
+     - **Geschwindigkeitsdämpfung & Maximalbegrenzung:** $\|\mathbf{v}_i\| \le v_{\max}$.
 
-2. **Thread-Sicherheit durch Double-Buffering:**
-   - Verhindern Sie Lese-Schreib-Konflikte (Race Conditions) durch striktes **Double-Buffering**:
-     - Thread liest Positionen ausschließlich aus `StateCurrent[i]`.
-     - Thread schreibt neue Positionen ausschließlich in `StateNext[i]`.
-     - Am Ende des Zeitschritts werden die Referenzen zeigerbasiert getauscht (`Swap(ref StateCurrent, ref StateNext)`).
+2. **Thread-Sicherheit durch striktes Double-Buffering:**
+   - Da Agent $i$ beim Update die Positionen anderer Agenten $j$ liest, würde direktes Überschreiben eines einzigen Arrays zu **Race Conditions (Tearing)** führen!
+   - Implementieren Sie zwei Arrays `StateCurrent[]` und `StateNext[]`: Innerhalb von `Parallel.For` wird ausschließlich aus `StateCurrent` gelesen und in `StateNext[i]` geschrieben; nach der Schleife werden die Array-Referenzen getauscht.
 
-3. **Systematische Skalierungsreihe & Amdahl-Fit:**
-   - Messen Sie die Rechenzeit für 50 Schritte bei $p \in \{1, 2, 4, 6, 8, 12, 16, 24, 32\}$ Threads.
-   - 5 Durchläufe pro Messpunkt (Warmup verwerfen, Mittelwert und Fehlerbalken erfassen).
-   - Berechnen Sie Speedup $S(p)$ und fitten Sie das Amdahlsche Gesetz zur Ermittlung des seriellen Anteils $s$.
+3. **Reaktives WPF-Echtzeit-Dashboard:**
+   - Starten und stoppen Sie die Endlos-Echtzeitsimulation im Hintergrund über `await Task.Run(...)`, `IProgress<T>` und `CancellationToken` (Not-Aus).
+   - Ermöglichen Sie im laufenden Betrieb das Live-Umschalten zwischen **Sequentiell (1 Thread)** und **TPL `Parallel.For` ($p$ Threads)** sowie das Einstellen der Thread-Anzahl per Slider, sodass der drastische FPS- und Speedup-Unterschied sofort visuell im `WriteableBitmap` und in der Telemetrie sichtbar wird!
 
-4. **Hardware-Cache-Experiment (Row-Major vs. Column-Major):**
-   - Identischer 2D-Laplace/Glättungs-Benchmark auf der $4096 \times 4096$ Matrix wie in Track A:
-     - Vergleich von zeilenweisem Durchlauf (Schrittweite 1 Element) vs. spaltenweisem Durchlauf (Schrittweite 4096 Elemente).
-     - Dokumentation des Verhältnisses $T_{\text{col}} / T_{\text{row}}$ im Bericht.
+4. **Systematische Skalierungsreihe & Amdahl-Auswertung:**
+   - Führen Sie über die `DataGrid`-Tabelle im UI eine reproduzierbare Benchmark-Skalierungsreihe über $p \in \{1, 2, 4, \dots, P_{\max}\}$ Threads durch und dokumentieren Sie Speedup $S(p)$, Effizienz $E(p)$ und den seriellen Anteil $s$ nach Amdahl in Ihrer `README.md`.
 
 ---
 
-## 5. Akzeptanzkriterien & Definition of Done
+## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
 Für die volle Punktzahl (10 Punkte) müssen folgende Kriterien erfüllt sein:
 
 | Kriterium | Punkte | Beschreibung |
 | :--- | :---: | :--- |
-| **Korrekte TPL-Implementierung** | **3 P.** | Thread-sichere Schleifenparallelisierung via `Parallel.For`; keine Race Conditions, kein naiver globaler Lock im Schleifeninneren. |
-| **Skalierungs-Messreihe & Amdahl** | **3 P.** | Vollständige Messreihe über $p \in \{1, \dots, 32\}$; korrekter JIT-Warmup; mathematischer Fit des Parameters $s$ nach Amdahls Gesetz mit Diagramm. |
-| **Cache-Lokalitäts-Experiment** | **2 P.** | Nachweis des Leistungsunterschieds zwischen Row-Major und Column-Major auf $4096 \times 4096$ Matrix mit fundierter hardwarenaher Begründung (Cache-Lines, L1/L2). |
-| **Codequalität & Dokumentation** | **2 P.** | Sauberes Projekt, kompilierbar mit `dotnet build -c Release`, strukturierte `README.md` mit Tabellen, Speedup-Plots und Diskussion. |
+| **Thread-sichere TPL-Parallelisierung** | **3 P.** | Korrekte Nutzung von `Parallel.For` und `ParallelOptions`. Keine Race Conditions (Track A: thread-lokales `Random` + `Interlocked`; Track B: striktes Double-Buffering `Current`/`Next`). |
+| **Reaktive WPF-Entkopplung & Not-Aus** | **3 P.** | Kein Einfrieren des UI-Threads! Saubere Entkopplung mit `async/await` und `Task.Run`, gedrosselte UI-Updates via `IProgress<T>` und jederzeit funktionierender Abbruch via `CancellationTokenSource`. |
+| **Amdahl-Skalierungsreihe & Telemetrie** | **2 P.** | Vollständige Messreihe über $p \in \{1, \dots, P_{\max}\}$ mit JIT-Warmup, korrekter Berechnung von Speedup $S(p)$, Effizienz $E(p)$ und seriellem Anteil $s$ im WPF-Dashboard. |
+| **Codequalität & Dokumentation** | **2 P.** | Sauberes WPF-Projekt, bestandene Unit-Tests (`dotnet test`), strukturierte `README.md` mit Screenshots, Skalierungstabelle und Diskussion des beobachteten Speedups. |
+| **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
 ---
 
@@ -245,35 +206,37 @@ Nutzen Sie zur Vorbereitung und Vertiefung folgende Quellen:
 
 - **Offizielle Dokumentation:**
   - [Microsoft Learn: Datenparallelität (Task Parallel Library)](https://learn.microsoft.com/de-de/dotnet/standard/parallel-programming/data-parallelism-task-parallel-library)
-  - [Microsoft Learn: ParallelOptions Class](https://learn.microsoft.com/de-de/dotnet/api/system.threading.tasks.paralleloptions)
+  - [Microsoft Learn: Asynchrone Programmierung mit async und await in WPF](https://learn.microsoft.com/de-de/dotnet/csharp/asynchronous-programming/)
+  - [Microsoft Learn: IProgress<T> & Progress<T> für UI-Updates](https://learn.microsoft.com/de-de/dotnet/api/system.progress-1)
+  - [Microsoft Learn: Abbruch in verwalteten Threads (CancellationTokenSource)](https://learn.microsoft.com/de-de/dotnet/standard/threading/cancellation-in-managed-threads)
   - [Microsoft Learn: Interlocked Class (Atomare Operationen)](https://learn.microsoft.com/de-de/dotnet/api/system.threading.interlocked)
 - **Gezielte englische Suchbegriffe:**
-  - `C# Parallel.For thread local state aggregation`
-  - `avoid false sharing cache line padding C#`
-  - `Amdahl's law curve fitting non-linear least squares C#`
-  - `spatial locality row major vs column major CPU cache miss`
+  - `"C# WPF Task.Run IProgress CancellationToken WriteableBitmap"`
+  - `"TPL Parallel.For thread local state Interlocked.Add Monte Carlo"`
+  - `"Amdahl's law serial fraction estimation parallel efficiency"`
 
 ---
 
 ## 7. Vibe-Coding Prompting-Tipps
 
-Falls Sie KI-Assistenten (GitHub Copilot, Claude, ChatGPT) verwenden, nutzen Sie präzise Prompts mit Vorgaben zur Vermeidung typischer KI-Fehler:
-
-> [!TIP]
-> **Prompt-Vorlage 1: Thread-lokale Akkumulation (Vermeidung von globalen Locks)**  
-> *„Schreibe mir eine parallele Monte-Carlo-Schleife in C# mit `Parallel.For`. Ich habe $10\,000\,000$ Iterationen. Verwende NICHT ein einfaches `lock` um eine globale Zählvariable, da das die Threads serialisiert. Nutze stattdessen die `Parallel.For`-Überladung mit `localInit`, `body` und `localFinally` sowie `Interlocked.Add`, um Teilergebnisse thread-sicher zusammenzuführen.“*
-
 > [!WARNING]
-> **Prompt-Vorlage 2: Vermeidung von veralteter oder un-threadsicherer Random-Nutzung**  
-> *„Ich benötige Zufallszahlen in parallelen Schleifen unter .NET 8. Generiere mir KEINE statische `new Random()` Instanz, da `Random.NextDouble()` nicht threadsicher ist und Nullen liefert. Nutze `Random.Shared` oder `ThreadLocal<Random>` mit kryptografischem Seed pro Thread.“*
+> **Typische KI-Halluzinationen & Fallstricke bei Termin 06:**
+> 1. **`Dispatcher.Invoke` in jedem Schleifendurchlauf:** Viele KIs rufen innerhalb von `Parallel.For` direkt `Application.Current.Dispatcher.Invoke(...)` auf. Das serialisiert alle Worker-Threads über die UI-Message-Queue und macht die parallele Berechnung 100-mal langsamer als Single-Threading! Nutzen Sie stattdessen `IProgress<T>` und melden Sie nur alle $k$ Schritte (oder einmal pro Frame) einen Zwischenstand.
+> 2. **`System.Random` ist bei geteilter Instanz nicht thread-sicher:** Wird `new Random()` außerhalb von `Parallel.For` erzeugt und innen ohne Schutz `rnd.NextDouble()` aufgerufen, korrumpiert der interne Zustand und liefert nach kurzer Zeit nur noch `0.0`! Nutzen Sie `Random.Shared` oder `ThreadLocal<Random>`.
+> 3. **UI-Objekte im Hintergrundthread anfassen:** Ein direkter Zugriff auf `SimProgressBar.Value` oder `WriteableBitmap.WritePixels` innerhalb von `Task.Run` wirft sofort eine `InvalidOperationException` (Thread-Affinität von WPF).
+
+**Empfohlener Prompt-Rahmen für Ihren KI-Assistenten:**
+> *„Erstelle in C# (.NET 8 WPF) eine asynchrone Hintergrundschleife mit `await Task.Run(...)`, `CancellationTokenSource` und `IProgress<SimulationProgress>`. Innerhalb des Hintergrund-Tasks soll `Parallel.For` mit `ParallelOptions { MaxDegreeOfParallelism = p, CancellationToken = token }` ausgeführt werden. Melde nur alle 5 Zeitschritte über `progress.Report(...)` den Fortschritt an den UI-Thread zurück, wo `WriteableBitmap.WritePixels` und die `ProgressBar` aktualisiert werden.“*
 
 ---
 
-## 8. 🔍 Peer-Review-Leitfragen für das Auditorium
+## 8. 🔍 Peer-Review-Leitfragen für das Plenum (Showcase & Peer-Challenge)
 
-Zu Beginn des nächsten Termins werden zwei Teams zufällig für den **Live-Showcase am Beamer** ausgewählt. Das Auditorium prüft die vorgestellten Lösungen anhand folgender Fragen:
-
-1. **Race-Condition-Prüfung:** Wurden geteilte Zähler ohne `lock` oder `Interlocked` inkrementiert? *(Challenge: Mehrmaliges Ausführen des Programms mit $p = 16$ – weicht die Summe der Ereignisse ab oder bleibt sie exakt deterministisch?)*
-2. **False Sharing auf Cache-Lines:** Liegen thread-spezifische Zähler in einem einfachen Array `int counts[p]` direkt nebeneinander? Verursacht dies bei $p \ge 8$ einen spürbaren Performanceknick durch Cache-Invalidierung?
-3. **JIT-Warmup & Messmethodik:** Wurde die Zeitmessung erst gestartet, nachdem der Code mindestens einmal durchlaufen wurde (Kompilierung des Zwischencodes), oder enthält der $p=1$-Lauf fälschlicherweise den JIT-Kompilierungs-Overhead?
-4. **Physikalische Interpretation des Amdahl-Fits:** Liegt der gefittete serielle Anteil $s$ in einem realistischen Bereich ($0{,}5\,\% \dots 5\,\%$)? Welcher maximale Speedup $S_{\max} = 1/s$ wäre auf einem Supercomputer mit $p = 1024$ Kernen für diesen Algorithmus erreichbar?
+1. **Der UI-Freeze- & Fenster-Verschiebe-Test:**
+   *„Starten Sie eine lange Simulation und verschieben Sie währenddessen das WPF-Fenster mit der Maus oder betätigen Sie den Thread-Slider: Reagiert die Oberfläche verzögerungsfrei, oder hängt der UI-Thread?“*
+2. **Der Sofort-Not-Aus-Stresstest:**
+   *„Klicken Sie mitten in der laufenden Berechnung auf den roten ‚Not-Aus (Cancel)‘-Button: Bricht die TPL-Schleife innerhalb weniger Millisekunden sauber über das `CancellationToken` ab, ohne eine unbehandelte Exception zum Absturz zu bringen?“*
+3. **Der Race-Condition-Check:**
+   *„Liefert die parallele Berechnung bei fester Stichprobengröße bzw. festem Seed konsistente Ergebnisse zu einem 1-Thread-Durchlauf, oder gehen durch fehlendes `Interlocked` / fehlendes Double-Buffering Zählwerte verloren?“*
+4. **Der Amdahl-Realitätscheck:**
+   *„Warum steigt der Speedup $S(p)$ ab der Anzahl physischer Kerne (Hyperthreading / Memory-Bandwidth-Limit) deutlich flacher an als die ideale Diagonale $S(p) = p$, und welchen seriellen Anteil $s$ weist Ihr Dashboard aus?“*
