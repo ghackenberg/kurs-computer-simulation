@@ -635,17 +635,18 @@ $$\underbrace{\frac{\partial T}{\partial t}}_{\substack{\text{Zeitliche Änderun
 
 ---
 
-### Diskretisierung auf dem Pixelgitter: Der 5-Punkt-Stern
+### Räumliche Diskretisierung in 2D: Der 5-Punkt-Stern
 
 <div class="columns">
 <div class="three">
 
-Auf einem quadratischen Pixelgitter ($h = \Delta x = \Delta y$ $[\mathrm{m}]$) summieren wir für Pixel $(i, j)$ die Differenzen zu allen **4 direkten Nachbarn**:
+Auf einem quadratischen Pixelgitter ($\Delta x = \Delta y$) addieren wir die 1D-Krümmungen in $x$- und $y$-Richtung auf einem gemeinsamen Nenner $\Delta x^2$:
 
-1. **Räumlicher 5-Punkt-Differenzenstern ($L_{i,j}^n$ in $[\mathrm{K}]$, $\Delta T_{i,j}^n \approx L_{i,j}^n / h^2$):**
+1. **Summe aus horizontaler und vertikaler Krümmung:**
+   $$\frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} \approx \frac{T_{i+1,j}^n - 2T_{i,j}^n + T_{i-1,j}^n}{\Delta x^2} + \frac{T_{i,j+1}^n - 2T_{i,j}^n + T_{i,j-1}^n}{\Delta x^2}$$
+2. **Zusammenfassung im Zähler als 5-Punkt-Stern $L_{i,j}^n$ $[\mathrm{K}]$:**
    $$L_{i,j}^n = T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 \cdot T_{i,j}^n$$
-2. **Explizites Euler-Zeitschrittschema ($t_{n+1} = t_n + \Delta t$):**
-   $$T_{i,j}^{n+1} = T_{i,j}^n + s \cdot L_{i,j}^n + \Delta t \cdot Q_{i,j}^n, \qquad \text{mit } s = \frac{\alpha \cdot \Delta t}{h^2}$$
+   $$\implies \quad \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} \approx \frac{L_{i,j}^n}{\Delta x^2} \quad \left[\frac{\mathrm{K}}{\mathrm{m^2}}\right]$$
 
 </div>
 <div class="two">
@@ -659,13 +660,39 @@ Auf einem quadratischen Pixelgitter ($h = \Delta x = \Delta y$ $[\mathrm{m}]$) s
 
 ### Anschauliche Interpretation: Der Nachbarschafts-Mittelwert
 
-Was berechnet der Ausdruck $L_{i,j}^n = T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 \cdot T_{i,j}^n$ eigentlich geometrisch? Klammern wir den Faktor $4$ aus, erscheint der **Durchschnittswert $\bar{T}_{\text{Nachbarn}}^n$ der 4 Nachbarpixel**:
+Was berechnet der Zähler $L_{i,j}^n = T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 \cdot T_{i,j}^n$ eigentlich geometrisch? Klammern wir den Faktor $4$ aus, erscheint der **Durchschnittswert $\bar{T}_{\text{Nachbarn}}^n$ der 4 Nachbarpixel**:
 
 $$L_{i,j}^n = 4 \cdot \left( \underbrace{\frac{T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n}{4}}_{\bar{T}_{\text{Nachbarn}}^n \text{ (Mittelwert der 4 Nachbarn)}} - T_{i,j}^n \right)$$
 
 - **Intuitive Bedeutung:**
   - Ist der Durchschnitt der 4 Nachbarn **wärmer** als das Pixel selbst ($\bar{T}_{\text{Nachbarn}}^n > T_{i,j}^n$), ist $L_{i,j}^n > 0 \implies$ **Pixel erwärmt sich!**
   - Ist der Durchschnitt der 4 Nachbarn **kälter** als das Pixel selbst ($\bar{T}_{\text{Nachbarn}}^n < T_{i,j}^n$), ist $L_{i,j}^n < 0 \implies$ **Pixel kühlt ab!**
+
+---
+
+### Zeitliche Diskretisierung: Expliziter Euler & Herkunft von $s$
+
+Wie gelangen wir nun von der 2D-Differentialgleichung $\frac{\partial T}{\partial t} = \alpha \cdot \left(\frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2}\right) + Q$ zur Berechnungsformel für den nächsten Zeitschritt $t_{n+1} = t_n + \Delta t$?
+
+1. **Zeit-Ableitung links durch Vorwärts-Differenz ersetzen (Expliziter Euler aus Termin 01):**
+   $$\frac{\partial T}{\partial t} \approx \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t} \qquad \Longrightarrow \qquad \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t} = \alpha \cdot \frac{L_{i,j}^n}{\Delta x^2} + Q_{i,j}^n$$
+2. **Beide Seiten mit $\Delta t$ multiplizieren und nach $T_{i,j}^{n+1}$ auflösen:**
+   $$T_{i,j}^{n+1} = T_{i,j}^n + \underbrace{\left(\frac{\alpha \cdot \Delta t}{\Delta x^2}\right)}_{=\, s} \cdot L_{i,j}^n + \Delta t \cdot Q_{i,j}^n$$
+- Alle drei Konstanten vor $L_{i,j}^n$ ($\alpha$ aus dem Material, $\Delta t$ aus dem Zeitschritt, $\Delta x^2$ aus dem Ortsgitter) fassen wir zum Parameter **$s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$** zusammen!
+
+---
+
+### Physikalische Bedeutung des Parameters $s$ (Diffusionszahl)
+
+Der Parameter $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$ heißt in der Numerik **dimensionslose Diffusionszahl** (bzw. **Gitter-Fourier-Zahl**):
+
+1. **Einheiten-Check (Dimensionskontrolle):**
+   $$[s] = \frac{[\alpha] \cdot [\Delta t]}{[\Delta x^2]} = \frac{(\mathrm{m^2/s}) \cdot \mathrm{s}}{\mathrm{m^2}} = \frac{\mathrm{m^2}}{\mathrm{m^2}} = 1 \quad \text{(dimensionslose Kennzahl!)}$$
+2. **Anschauliche Bedeutung (Verhältnis zweier Flächen):**
+   - **Zähler ($\alpha \cdot \Delta t$ in $[\mathrm{m^2}]$):** Fläche, über die sich Wärme in **einem Zeitschritt $\Delta t$** ausbreitet.
+   - **Nenner ($\Delta x^2$ in $[\mathrm{m^2}]$):** Geometrische **Fläche eines einzelnen Gitterpixels**.
+   - **Verhältnis $s$:** Welcher Bruchteil einer Pixelfläche pro Zeitschritt thermisch überbrückt wird (Kopplungsstärke zu jedem einzelnen Nachbarpixel)!
+3. **Vorteil im Code:** Einmal vorab als `float s = alpha * dt / (dx * dx);` berechnet (keine Division im Loop).
 
 ---
 
