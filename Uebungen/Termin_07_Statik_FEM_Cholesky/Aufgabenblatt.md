@@ -64,15 +64,15 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
 
 ---
 
-## 3. Stufe A: In-Class Sprint (60 min)
+## 3. Stufe A: In-Class Sprint (ca. 35–45 min)
 
-### Thema: „Dreiecksträger-Assemblierung & Cholesky-Löser mit MathNet“
+### Thema: „FEM-Dreiecksträger validieren, Auflager-/Kraftpfeile im Canvas & 5-Knoten-Auslegerkran“
 
-Erstellen Sie eine C#-Konsolenapplikation (`TrussCholeskySprint`), die ein elementares Dreieckstragwerk (3 Knoten, 3 Stäbe, 6 Freiheitsgrade) aufstellt, partitioniert, mittels Cholesky löst und die Gleichgewichtsbedingungen nachweist.
+Öffnen Sie das vorbereitete WPF-Starter-Projekt `Vorlage/TrussFemSolver.sln`. Es enthält bereits die vollständige 2D-FEM-Engine (`Fem/TrussElement.cs`, `Fem/GlobalStiffnessMatrix.cs`, `Fem/CholeskySolver.cs`) sowie die verformte Darstellung eines 3-Knoten-Dreiecksträgers (`CreateSprintModel`) auf dem WPF-`Canvas`.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ STUFE A: 3-KNOTEN-FACHWERK (DREIECKSTRÄGER)                            │
+│ STUFE A: 3-KNOTEN-FACHWERK (DREIECKSTRÄGER IM STARTER-KIT)             │
 │                                                                        │
 │                      Knoten 3 (x=2m, y=2m)                             │
 │                           ▲                                            │
@@ -83,48 +83,37 @@ Erstellen Sie eine C#-Konsolenapplikation (`TrussCholeskySprint`), die ein eleme
 │                      /    |    \                                       │
 │                     ▼     |     ▼                                      │
 │  Festlager (x=0,y=0) ─────┴───── Loselager (x=4m, y=0)                │
-│  Knoten 1             Stab 3     Knoten 2 (nur x beweglich)            │
+│  Knoten 1 (Id=0)      Stab 3     Knoten 2 (Id=1, nur x beweglich)      │
 │  DOFs: [0, 1] fest               DOFs: [2 frei, 3 fest]                │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### Geometrie & Parameter:
-- Knoten 1: $(0{,}0, 0{,}0)\,\text{m}$ – Festlager ($u_{x1} = 0, u_{y1} = 0$, Indizes $0, 1 \in p$)
-- Knoten 2: $(4{,}0, 0{,}0)\,\text{m}$ – Loselager ($u_{y2} = 0$, Index $3 \in p$; $u_{x2}$ ist frei, Index $2 \in f$)
-- Knoten 3: $(2{,}0, 2{,}0)\,\text{m}$ – Spitzenknoten ($u_{x3}, u_{y3}$ frei, Indizes $4, 5 \in f$)
-- Stäbe: Stab 1 (1–3), Stab 2 (2–3), Stab 3 (1–2).
-- Material: Stahl, $E = 210 \times 10^9\,\text{Pa}$, Querschnitt $A = 1 \times 10^{-4}\,\text{m}^2$ ($1\,\text{cm}^2$).
-- Belastung: Am Knoten 3 wirkt eine vertikale Punktlast $F_y = -10\,000\,\text{N}$ (Index 5).
+#### Referenzwerte des 3-Knoten-Dreiecksträgers ($E = 210\,\text{GPa}, A = 10^{-4}\,\text{m}^2, F_y = -10\,\text{kN}$):
+- **Analytische Verschiebungen:**
+  - Knoten 3 vertikal: $u_{y3} = -\frac{F(2\sqrt{2} + 1)}{EA} \approx -0{,}001823\,\text{m} \quad (-1{,}823\,\text{mm})$
+  - Knoten 3 horizontal: $u_{x3} = +\frac{F}{EA} \approx +0{,}000476\,\text{m} \quad (+0{,}476\,\text{mm})$
+  - Knoten 2 horizontal (Loselager): $u_{x2} = +\frac{2F}{EA} \approx +0{,}000952\,\text{m} \quad (+0{,}952\,\text{mm})$
+- **Stabnormalkräfte & Auflagerreaktionen:**
+  - Dachstäbe 1 & 2 (Druck): $N_1 = N_2 = -\frac{F}{\sqrt{2}} \approx -7{,}071\,\text{kN}$ (rot)
+  - Zugband Stab 3 (Zug): $N_3 = +\frac{F}{2} = +5{,}000\,\text{kN}$ (blau)
+  - Auflagerkräfte vertikal: $F_{y1} = +5{,}000\,\text{kN}$, $F_{y2} = +5{,}000\,\text{kN}$, Gleichgewichtsfehler $|\sum F_x|, |\sum F_y| < 10^{-11}\,\text{N}$.
 
-#### Aufgabenstellung (Schritt für Schritt):
+#### Aufgabenstellung (Schritt für Schritt auf Basis von `Vorlage/TrussFemSolver.sln`):
 
-1. **NuGet-Paket einbinden:**
-   Installieren Sie `MathNet.Numerics` via NuGet.
-2. **Elementmatrix-Methode implementieren:**
-   Erstellen Sie eine Methode `DenseMatrix BuildElementMatrix(double E, double A, double x1, double y1, double x2, double y2)`.
-3. **Globale Steifigkeitsmatrix assemblieren:**
-   Erzeugen Sie $\mathbf{K} \in \mathbb{R}^{6 \times 6}$ und addieren Sie die 3 Elementmatrizen an den entsprechenden Freiheitsgrad-Indizes:
-   - Stab 1: Indizes $[0, 1, 4, 5]$
-   - Stab 2: Indizes $[2, 3, 4, 5]$
-   - Stab 3: Indizes $[0, 1, 2, 3]$
-4. **Blockpartitionierung:**
-   - Freie Indizes: $f = \{2, 4, 5\}$ (Dimension 3)
-   - Gelagerte Indizes: $p = \{0, 1, 3\}$ (Dimension 3)
-   - Extrahieren Sie $\mathbf{K}_{ff} \in \mathbb{R}^{3 \times 3}$ und $\mathbf{K}_{pf} \in \mathbb{R}^{3 \times 3}$.
-5. **Cholesky-Lösung:**
-   Lösen Sie $\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f$ mit:
-   ```csharp
-   Vector<double> uf = K_ff.Cholesky().Solve(f_f);
-   ```
-6. **Lagerreaktionen & Kraftgleichgewicht:**
-   Berechnen Sie $\mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f$.
-   Prüfen Sie das globale Vektorgleichgewicht auf der Konsole:
-   $$\sum F_x = f_{p, 0} + f_{p, 2} + f_{f, 4} \stackrel{?}{=} 0, \quad \sum F_y = f_{p, 1} + f_{p, 3} + f_{f, 5} \stackrel{?}{=} 0$$
-
-**Erwartetes Ergebnis nach 50 Minuten:**  
-- Verschiebung Knoten 3 vertikal: $u_{y3} \approx -0{,}00045\,\text{m}$ (ca. $-0{,}45\,\text{mm}$).
-- Auflagerkräfte vertikal: $F_{y1} = +5000\,\text{N}$, $F_{y2} = +5000\,\text{N}$.
-- Gleichgewichtsfehler: $|\sum F_x| < 10^{-12}\,\text{N}$, $|\sum F_y| < 10^{-12}\,\text{N}$.
+1. **Aufgabe A1 – Auflager-Symbole sowie Last- und Reaktionskraft-Pfeile in `RenderCanvas()` ergänzen:**
+   - Starten Sie `TrussFemSolver` und verifizieren Sie, dass die Telemetrie exakt `Max. Verschiebung: 1,823 mm` und `F_y1: 5,00 kN | F_y2: 5,00 kN` anzeigt.
+   - Aktuell zeichnet `RenderCanvas()` in `MainWindow.xaml.cs` nur Stäbe und Knotenpunkte, aber **keine Lager und keine Kräfte**. Ergänzen Sie in `RenderCanvas()`:
+     - **Auflager-Dreiecke** für Knoten mit gesperrten Freiheitsgraden (`_currentModel.FixedDofs`): Festlager ($X$ und $Y$ gesperrt) als volles Dreieck, Loselager (nur $Y$ gesperrt) mit zusätzlicher horizontaler Rollenspur.
+     - **Kraftpfeile:** Rote Kraftpfeile für alle angreifenden äußeren Lasten (`_currentModel.ExternalForces[dof] != 0`) und grüne Kraftpfeile für die berechneten Auflagerreaktionen (`_currentSolution.ReactionForces`).
+2. **Aufgabe A2 – 5-Knoten-Auslegerkran (`CreateCantileverSprintModel`) modellieren:**
+   - Implementieren Sie in `Fem/CholeskySolver.cs` eine statische Methode `CreateCantileverSprintModel(double loadFy = -10_000.0)` für einen 2-feldrigen Auslegerkran mit **5 Knoten und 7 Stäben**:
+     - Wandlager links: Knoten 0 bei $(0, 0)\,\text{m}$ (Festlager: $u_x, u_y$ fest) und Knoten 1 bei $(0, 2)\,\text{m}$ (Horizontal-Führung: $u_x$ fest).
+     - Mittelfeld: Knoten 2 bei $(2, 0)\,\text{m}$, Knoten 3 bei $(2, 2)\,\text{m}$.
+     - Kragspitze rechts: Knoten 4 bei $(4, 0)\,\text{m}$ mit vertikaler Punktlast `loadFy`.
+     - Verbinden Sie die 5 Knoten mit 7 Stäben (Untergurt, Obergurt, Pfosten, Diagonalen) zu einem statisch bestimmten Fachwerk und testen Sie die Verformung im Canvas!
+3. **Aufgabe A3 – Singularitäts-Test (Was passiert bei unterbestimmter Lagerung?):**
+   - Kommentieren Sie testweise in `CreateSprintModel` die Zeile `model.FixDof(n1.DofX);` aus (sodass beide Lager in X-Richtung verschieblich sind $\to$ horizontale Starrkörper-Bewegung möglich).
+   - Beobachten Sie, warum `kff.Cholesky()` in `CholeskySolver.Solve()` eine Exception wirft (Symmetrisch Positiv Definite Matrix $\mathbf{K}_{ff}$ erfordert $\det(\mathbf{K}_{ff}) > 0$ ohne Eigenwert $0$!) und machen Sie die Änderung anschließend wieder rückgängig.
 
 ---
 

@@ -756,7 +756,7 @@ Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A
 
 ---
 
-### Stablängenänderung durch Knotenverschiebung
+### Stablängenänderung durch Knotenverschiebung *(Deep Dive / Analogie zu 2D)*
 
 <div class="columns">
 <div class="two">
@@ -781,7 +781,7 @@ Die exakte Längenänderung ist die Differenz zwischen der neuen Länge $L'$ (na
 
 ---
 
-### **Exakte** Berechnung der Stablängenänderung
+### **Exakte** Berechnung der Stablängenänderung *(Deep Dive / Analogie zu 2D)*
 
 <div class="columns">
 <div class="three">
@@ -811,7 +811,7 @@ $L' = \sqrt{L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2} = L \sqr
 
 ---
 
-### **Näherungsweise** Berechnung der Stablängenänderung
+### **Näherungsweise** Berechnung der Stablängenänderung *(Deep Dive / Analogie zu 2D)*
 
 <div class="columns">
 <div class="three">
@@ -840,7 +840,7 @@ Dies führt direkt zur linearisierten, näherungsweisen Berechnung.
 
 ---
 
-### Stabkräfte und Steifigkeitsbeziehung
+### Stabkräfte und Steifigkeitsbeziehung *(Deep Dive / Analogie zu 2D)*
 
 Nach dem **Hooke'schen Gesetz** ist die Kraft $S$ im Stab proportional zur Längenänderung $\Delta L$.
 

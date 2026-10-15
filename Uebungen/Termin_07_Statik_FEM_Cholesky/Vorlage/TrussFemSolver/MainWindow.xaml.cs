@@ -212,6 +212,11 @@ namespace TrussFemSolver
                 Canvas.SetTop(nodeLabel, p.Y - 15);
                 TrussCanvas.Children.Add(nodeLabel);
             }
+
+            // TODO [Stufe A - Aufgabe A1]:
+            // Zeichnen Sie hier die Auflager-Symbole (anhand von _currentModel.FixedDofs)
+            // sowie rote Kraftpfeile für äußere Lasten (_currentModel.ExternalForces) und
+            // grüne Kraftpfeile für die berechneten Auflagerreaktionen (_currentSolution.ReactionForces)!
         }
 
         private void LoadSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
