@@ -130,5 +130,15 @@ namespace SFunctionSimulation.Models
         {
             return (Km * uA) / (RA * D + Km * Ke);
         }
+
+        // TODO [Stufe A - Aufgabe A2]:
+        // Extrahieren Sie die PID- und Clamping-Logik (Zeilen 60-85) in eine eigenständige,
+        // wiederverwendbare Klasse Models/PidController.cs!
+
+        // TODO [Stufe B - Track A (Elektro-Thermisches Servomotormodell)]:
+        // Erweitern Sie den Zustandsvektor auf 5 Zustände: x[4] = T_Cu (Wicklungstemperatur in °C, Startwert 20 °C).
+        // - Temperaturabhängiger Ankerwiderstand: R_A(T_Cu) = R_A20 * (1 + 0.00393 * (T_Cu - 20.0))
+        // - Thermische DGL: d(T_Cu)/dt = (R_A(T_Cu) * i_A^2 - (T_Cu - T_Amb) / R_th) / C_th
+        // - Thermisches Derating: Reduzieren Sie UMax ab T_Cu > 80 °C linear!
     }
 }

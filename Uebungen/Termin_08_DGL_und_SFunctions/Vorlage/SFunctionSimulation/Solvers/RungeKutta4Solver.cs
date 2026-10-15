@@ -64,5 +64,14 @@ namespace SFunctionSimulation.Solvers
 
             return xNext;
         }
+
+        // TODO [Stufe A - Aufgabe A1]:
+        // Implementieren Sie einen expliziten Euler-Schritt:
+        //   public static double[] StepEuler(ISFunction system, double t, double[] x, double[] u, double h)
+        // und testen Sie die numerische Stabilitätsgrenze bei h >= 0.025 s (T_el = L_A / R_A = 25 ms)!
+
+        // TODO [Stufe B - Track A]:
+        // Implementieren Sie das 2-stufige Verfahren von Heun (RK2):
+        //   public static double[] StepHeun(ISFunction system, double t, double[] x, double[] u, double h)
     }
 }
