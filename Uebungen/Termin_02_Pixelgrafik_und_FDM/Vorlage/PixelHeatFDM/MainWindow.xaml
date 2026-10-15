@@ -97,9 +97,9 @@
 
                         <!-- Info / Guide -->
                         <TextBlock Text="Aufgaben-Leitfaden:" FontWeight="Bold" Foreground="#CE9178" Margin="0,0,0,4"/>
-                        <TextBlock Text="• Stufe A: Erhöhen Sie Dt > 0.0025s und beobachten Sie die Instabilität." 
+                        <TextBlock Text="• Stufe A: (1) Stabilitätstest s &gt; 0.25, (2) 256er-Farb-LUT in BitmapHeatRenderer, (3) Maus-Zeichnen (Hotspots &amp; Isolator-Wände)." 
                                    Foreground="#CCCCCC" TextWrapping="Wrap" FontSize="11" Margin="0,0,0,4"/>
-                        <TextBlock Text="• Stufe B: Track A (CPU-Kühler mit Robin-Rand) oder Track B (Falling Sand)." 
+                        <TextBlock Text="• Stufe B: Track A (CPU-Kühler mit Robin-Rand) oder Track B (Falling Sand / Lava)." 
                                    Foreground="#CCCCCC" TextWrapping="Wrap" FontSize="11"/>
                     </StackPanel>
                 </ScrollViewer>

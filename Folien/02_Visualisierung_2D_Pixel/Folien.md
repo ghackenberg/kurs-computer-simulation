@@ -269,7 +269,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Der threadsichere Aktualisierungszyklus: `Lock()`, `AddDirtyRect()`, `Unlock()`
 - Zeigerarithmetik mit C#-Pointern (`unsafe`)
 - 8-Bit Byte-Zugriff vs. 32-Bit Integer-Zugriff (`uint*`)
-- Multithreaded-Rendering mit `Parallel.For`
+- Ausblick (Kapitel 6): Multithreaded-Rendering mit `Parallel.For`
 
 ---
 
@@ -346,9 +346,9 @@ private unsafe void UpdatePixelFast(
 
 ---
 
-### Paralleles Rendern mit der Task Parallel Library
+### Ausblick (Kapitel 6): Paralleles Rendern mit `Parallel.For`
 
-Da die Bildzeilen speichertechnisch unabhängig sind, kann das Rendern trivial parallelisiert werden:
+> **Deep Dive / Ausblick auf Kapitel 6 (Multithreading):** Da die Bildzeilen speichertechnisch unabhängig sind, lässt sich die äußere `y`-Schleife ab Kapitel 6 trivial auf alle CPU-Kerne verteilen (in Termin 02 arbeiten wir noch rein sequentiell mit `for`):
 
 ```csharp
 private unsafe void RenderParallel(IntPtr pBackBuffer, int stride, int w, int h)
@@ -563,7 +563,7 @@ Jede partielle Differentialgleichung benötigt zwingend definierte Bedingungen a
   $$T(\mathbf{x}, t) = T_{\text{Wand}} = \text{const.}$$
 - **Physik:** Gekühlter Kühlkörper, Eisbad ($0^\circ\mathrm{C}$).
 - **Umsetzung im Gitter:** Die Randzeilen ($y=0, H-1$) und Randspalten ($x=0, W-1$) werden in der Berechnungsschleife ausgelassen:
-  `Parallel.For(1, Height - 1, ...)`
+  `for (int y = 1; y < Height - 1; y++)`
 
 </div>
 <div class="two">
@@ -589,23 +589,23 @@ Jede partielle Differentialgleichung benötigt zwingend definierte Bedingungen a
 **Dirichlet-Randbedingung:**
 ```csharp
 // Randzeilen/-spalten in Schleife auslassen
-Parallel.For(1, Height - 1, y => {
+for (int y = 1; y < Height - 1; y++) {
     for (int x = 1; x < Width - 1; x++) {
         // Normaler 5-Punkt-Stern
     }
-});
+}
 ```
 
 **Homogene Neumann-Randbedingung (Isoliert):**
 ```csharp
-// Vor Zeitschritt: Randpixel auf Nachbarn spiegeln (dT/dn = 0)
+// Randpixel übernehmen den Wert des inneren Nachbarn (dT/dn = 0)
 for (int y = 0; y < Height; y++) {
-    _tempPrev[0, y] = _tempPrev[1, y];
-    _tempPrev[Width - 1, y] = _tempPrev[Width - 2, y];
+    _tempCurr[0, y] = _tempCurr[1, y];
+    _tempCurr[Width - 1, y] = _tempCurr[Width - 2, y];
 }
 for (int x = 0; x < Width; x++) {
-    _tempPrev[x, 0] = _tempPrev[x, 1];
-    _tempPrev[x, Height - 1] = _tempPrev[x, Height - 2];
+    _tempCurr[x, 0] = _tempCurr[x, 1];
+    _tempCurr[x, Height - 1] = _tempCurr[x, Height - 2];
 }
 ```
 
@@ -627,8 +627,8 @@ for (int x = 0; x < Width; x++) {
 <div class="two">
 
 ```csharp
-// Simulationsschritt (Ping-Pong-Puffer)
-Parallel.For(1, Height - 1, y =>
+// Simulationsschritt (Ping-Pong-Puffer, Double-Buffering)
+for (int y = 1; y < Height - 1; y++)
 {
     for (int x = 1; x < Width - 1; x++)
     {
@@ -638,11 +638,11 @@ Parallel.For(1, Height - 1, y =>
 
         _tempCurr[x, y] = _tempPrev[x, y] + DiffCoeff * laplace;
     }
-});
+}
 
-// Wärmequellen fixieren
+// Wärmequellen fixieren & Puffer tauschen
 _tempCurr[100, 100] = 100.0f;
-_tempCurr[350, 250] = 80.0f;
+(_tempPrev, _tempCurr) = (_tempCurr, _tempPrev);
 ```
 
 </div>
@@ -684,12 +684,12 @@ public unsafe void RenderToBitmap(
 </div>
 <div class="one">
 
-**Paralleler Kernel:**
+**Sequentieller 32-Bit-Kernel:**
 ```csharp
 private unsafe void RenderKernel(
     uint* pBuf, int stride, float[,] f, uint[] lut)
 {
-    Parallel.For(0, Height, y =>
+    for (int y = 0; y < Height; y++)
     {
         uint* row = pBuf + (y * stride);
         for (int x = 0; x < Width; x++)
@@ -698,7 +698,7 @@ private unsafe void RenderKernel(
                 f[x, y] * 2.55f, 0f, 255f);
             row[x] = lut[idx];
         }
-    });
+    }
 }
 ```
 
@@ -711,7 +711,7 @@ private unsafe void RenderKernel(
 
 - **Speicherlayout:** Rasterbilder liegen als 1D-Arrays im RAM; die lineare Byte-Adresse berechnet sich aus $\text{Offset} = y \cdot \text{Stride} + x \cdot 4$. Zeilenweises Iterieren garantiert maximale Cache-Trefferquote.
 - **WriteableBitmap:** Umgeht den Overhead des WPF Visual Trees und ermöglicht das Rendern von Millionen Pixeln bei 60+ FPS über ein einziges `Image`-Control.
-- **High-Performance:** Mit C#-Pointern (`unsafe`), 32-Bit Wortschreiben (`uint*`) und `Parallel.For` wird nahezu die theoretische Speicherbandbreite der CPU ausgeschöpft.
+- **High-Performance:** Mit C#-Pointern (`unsafe`), 32-Bit Wortschreiben (`uint*`) und zeilenweisem Durchlauf wird die Speicherbandbreite der CPU optimal genutzt (und ab Kapitel 6 mit `Parallel.For` parallelisiert).
 - **Look-Up-Tables (LUT):** Kontinuierliche Feldgrößen werden über vorberechnete Farbpaletten (Viridis, Cool-Warm) in $O(1)$-Zeit ohne teure Funktionsaufrufe farbkodiert.
 - **Simulation auf Pixeln:** Finite-Differenzen-Modelle (wie die 2D-Wärmeleitungsgleichung) lassen sich direkt auf 2D-Arrays berechnen und ohne Zwischenschritte visualisieren.
 

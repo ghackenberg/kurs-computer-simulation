@@ -174,4 +174,13 @@ public static class VectorArrow
         Canvas.SetTop(textBlock, yScreen - 16.0);
         canvas.Children.Add(textBlock);
     }
+
+    // =========================================================================
+    // TODO: [Stufe A In-Class Sprint]
+    // Implementieren Sie analog zu AddHorizontalDimensionLine die Methode:
+    //   public static void AddVerticalDimensionLine(
+    //       Canvas canvas, Point pBottom, Point pTop, double xScreen,
+    //       string dimensionText, Brush? strokeColor = null)
+    // zur normgerechten vertikalen Höhenbemaßung links vom Tragwerk.
+    // =========================================================================
 }

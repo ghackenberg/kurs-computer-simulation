@@ -34,6 +34,11 @@ public class BitmapHeatRenderer
         float[,] tData = grid.GetCurrentGrid();
         float range = Math.Max(maxTemp - minTemp, 1e-4f);
 
+        // TODO: [Stufe A In-Class Sprint]
+        // Ersetzen Sie den direkten Aufruf von MapTemperatureToColor(...) pro Pixel
+        // durch eine im Konstruktor vorberechnete 256-Farben Look-Up-Table (uint[256] _colorLut)
+        // für O(1)-Speicherzugriff (analog zu Abschnitt 2.4 der Vorlesungsfolien)
+        // und färben Sie Isolator-Wände (Alpha == 0) dunkelgrau (0xFF404040).
         // Farbkonvertierung in Zwischenpuffer (0 GC Allocations)
         int index = 0;
         for (int y = 0; y < _height; y++)

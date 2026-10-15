@@ -59,30 +59,28 @@ $$\vec{p}_{\text{left}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} 
 
 ---
 
-## 3. Stufe A: In-Class Sprint (60 Minuten)
+### 3. Stufe A: In-Class Sprint (60 Minuten)
 
-**Thema:** 2D-Trägerdreieck & Vektorpfeile auf WPF Canvas  
-**Ziel:** Entwickeln Sie in 60 Minuten eine responsive WPF-Vektoranwendung, die ein einfaches Dreieckstragwerk mit Bemaßung und Lastpfeil zentriert auf einem Canvas darstellt.
+**Basis-Projekt:** Öffnen Sie die bereitgestellte Projektvorlage `Vorlage/VectorTrussCanvas.sln` (`Transform2D.cs`, `VectorArrow.cs`, `TrussGeometry.cs`, `MainWindow.xaml.cs`).  
+Die Vorlage enthält bereits die Basisklasse `Transform2D`, das Dreieckstragwerk `CreateSprintTriangle()` sowie die Pfeilspitzen-Methode `VectorArrow.AddForceArrow` und die horizontale Gesamtmaßkette `AddHorizontalDimensionLine`.  
+**Ziel des Live-Sprints:** Analysieren Sie die Welt-zu-Bildschirm-Transformation, beheben Sie das Koordinaten-Jittering beim Drag-and-Drop und erweitern Sie den Viewer um Live-Stablängen und eine vertikale DIN-406-Höhenbemaßung!
 
-### Aufgabenstellung:
-1. Erstellen Sie ein neues WPF-Projekt `Sprint_CanvasVector`.
-2. Platzieren Sie im XAML ein `<Canvas x:Name="TrussCanvas" Background="#1E1E1E"/>`.
-3. Schreiben Sie eine Hilfsklasse `CoordinateTransformer`:
-   - Wandelt Weltkoordinaten $(X, Y)$ in Canvas-Punkte $(x_{\text{s}}, y_{\text{s}})$ um.
-   - Berechnet $s = \min(s_x, s_y)$ und zentriert die Geometrie mit $50\,\text{px}$ Margin.
-4. **Geometrie-Definition:**
-   - 3 Knoten: $K_1 = (0, 0)\,\text{m}$, $K_2 = (4, 0)\,\text{m}$, $K_3 = (2, 2)\,\text{m}$.
-   - 3 Stäbe: $(K_1, K_2)$, $(K_2, K_3)$, $(K_3, K_1)$.
-5. **Canvas-Zeichnen:**
-   - Zeichnen Sie die Stäbe als `Line` (Strichstärke $3\,\text{px}$, Farbe Weiß oder Hellgrau).
-   - Zeichnen Sie die Knoten als gefüllte Kreise (`Ellipse`, Durchmesser $14\,\text{px}$, Cyan).
-   - Fügen Sie Textlabels („K1“, „K2“, „K3“) neben den Knoten ein.
-6. **Vektorpfeil:**
-   - Zeichnen Sie an Knoten $K_3$ einen nach unten gerichteten Lastpfeil $\vec{F} = [0, -20]\,\text{kN}$ (Länge z. B. $60\,\text{px}$, Farbe Rot).
-   - Generieren Sie die Spitze als geschlossenes `Polygon` mit 3 Punkten ($\vec{p}_{\text{tip}}, \vec{p}_{\text{left}}, \vec{p}_{\text{right}}$).
-7. **Resize-Handling:**
-   - Abonnieren Sie das `TrussCanvas.SizeChanged`-Event: Bei jeder Fenstergrößenänderung muss sich das Tragwerk ohne Verzerrung neu im Canvas zentrieren.
-- **Erwartetes Ergebnis:** Ein absolut sauber zentriertes, unverzerrtes Vektor-Dreieck mit rotem Lastpfeil bei beliebigem Fensterformat.
+### Aufgabenstellung (Live im Hörsaal):
+1. **Code-Walkthrough & Seitenverhältnis-Test (`Transform2D.cs`):**
+   - Starten Sie `VectorTrussCanvas` und führen Sie die bestehenden Unit-Tests (`dotnet test`) aus.
+   - Ziehen Sie das Anwendungsfenster extrem schmal und extrem breit: Prüfen Sie, wie `s = Math.Min(sx, sy)` und die Zentrierungs-Offsets `OffsetX`, `OffsetY` das Dreieck ($K_1=(0,0)$, $K_2=(4,0)$, $K_3=(2,2)$) verzerrungsfrei zentrieren.
+2. **Euklidische Stablängen & Mittelpunkts-Beschriftung (`TrussGeometry.cs` / `MainWindow.xaml.cs`):**
+   - Berechnen Sie für jeden Stab `bar` die exakte euklidische Länge in Weltkoordinaten (Metern):
+     $$L = \sqrt{(X_B - X_A)^2 + (Y_B - Y_A)^2}$$
+   - Platzieren Sie in `Redraw()` am Bildschirm-Mittelpunkt $\vec{p}_{\text{mid}} = \frac{1}{2}(\vec{p}_A + \vec{p}_B)$ jedes Stabes ein gut lesbares `TextBlock`-Label mit der aktuellen Stablänge (z. B. `"2.83 m"` in Gelb/Cyan).
+3. **Vertikale DIN-406-Bemaßungskette (`VectorArrow.cs`):**
+   - In `VectorArrow.cs` ist bereits `AddHorizontalDimensionLine(...)` für die horizontale Gesamtlänge implementiert.
+   - Implementieren Sie analog dazu die Methode `public static void AddVerticalDimensionLine(Canvas canvas, Point pBottom, Point pTop, double xScreen, string dimensionText, Brush? strokeColor = null)` mit waagerechten gestrichelten Maßhilfslinien, senkrechter Maßlinie, oberen/unteren Maßpfeilen (`Polygon`) und mittig platziertem Maßtext.
+   - Rufen Sie diese Methode in `Redraw()` auf, um die Gesamthöhe $(y_{\max} - y_{\min})$ links neben dem Tragwerk (`xScreen = pLeft.X - 35.0`) normgerecht zu bemaßen.
+4. **Fix des Bounding-Box-Jitterings beim Maus-Dragging & Millimeter-Auflösung (`MainWindow.xaml.cs`):**
+   - **Beobachten Sie den Bug:** Wenn Sie aktuell den oberen Knoten $K_3$ oder einen Randknoten mit der Maus nach außen ziehen (`TrussCanvas_MouseMove`), ruft `Redraw()` in jedem Frame `_truss.GetBounds()` und `_transform.Update(...)` neu auf. Dadurch skaliert und verschiebt sich das Koordinatensystem *während des Ziehens* unter dem Mauszeiger weg!
+   - **Ihre Lösung:** Aktualisieren Sie `_transform.Update(...)` in `Redraw()` **nur dann**, wenn gerade **kein** Knoten gezogen wird (`if (_draggedNode == null)`). Erst beim Loslassen der Maustaste (`TrussCanvas_MouseUp`) darf das Auto-Fit auf die neue Bounding Box nachgeführt werden!
+   - Erhöhen Sie zudem die Koordinaten-Rundung in `TrussCanvas_MouseMove` von Zentimetern auf **Millimeter-Auflösung (`Math.Round(worldX, 3)` und `:F3`)**.
 
 ---
 
@@ -102,38 +100,31 @@ $$\vec{p}_{\text{left}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} 
                  ▼                                                   ▼
 ┌─────────────────────────────────┐                 ┌─────────────────────────────────┐
 │  Track A: Industrie & CAD       │                 │   Track B: Simulation Game / CAD│
-│  2D-CAD Fachwerkträger-Viewer   │                 │   Space Radar & Navigation ODER │
-│  mit DIN 406 Bemaßungsketten    │                 │   Bridge Blueprint Sketcher     │
+│  2D-CAD Fachwerkträger-Editor   │                 │   Space Radar & Navigation ODER │
+│  mit DIN 406, Zoom/Pan & JSON   │                 │   Bridge Blueprint Sketcher     │
 └─────────────────────────────────┘                 └─────────────────────────────────┘
 ```
 
 ---
 
-### Track A (Industrie): Interaktiver 2D-CAD Fachwerkträger-Viewer
+### Track A (Industrie): Interaktiver 2D-CAD Fachwerkträger-Editor
 
 #### Industrielles Szenario:
-In der Tragwerksplanung werden Brücken- und Hallenträger als Vektor-Topologien modelliert. Sie entwickeln das interaktive grafische Frontend für einen Fachwerkträger-Viewer, das in Einheit 07 direkt mit dem FEM-Cholesky-Löser gekoppelt werden wird.
+In der Tragwerksplanung werden Brücken- und Hallenträger als Vektor-Topologien modelliert. Aufbauend auf dem in `VectorTrussCanvas` vorhandenen Pratt-Träger (`CreateIndustrialPrattTruss()`) entwickeln Sie einen vollwertigen interaktiven 2D-CAD-Editor mit zweistufiger DIN-406-Bemaßung, Kamera-Zoom/Pan und JSON-Persistenz, der in Einheit 07 direkt mit dem FEM-Cholesky-Löser gekoppelt wird.
 
 #### Funktionsumfang & Anforderungen:
-1. **Tragwerks-Import & Topologie:**
-   - Einlesen eines industriellen Fachwerkträgers (z. B. Pratt-Träger oder Warren-Träger) mit mindestens **8 Knoten und 13 Stäben**.
-   - Knoten-Koordinaten in Metern: z. B. Untergurt bei $Y = 0$, Obergurt bei $Y = 2{,}5\,\text{m}$, Gesamtlänge $12\,\text{m}$.
-2. **Auto-Fit BoundingBox mit Seitenverhältnistreue:**
-   - Exakte Ermittlung von $X_{\min}, X_{\max}, Y_{\min}, Y_{\max}$ aus allen aktuellen Knoten.
-   - Responsives Anpassen bei Resize mit $10\,\%$ Randabstand.
-3. **Normgerechte DIN-Bemaßungsketten (DIN 406):**
-   - Horizontale Gesamtlängen- und Teilbemaßung unterhalb des Untergurts:
-     - Maßhilfslinien (senkrecht von den Knoten nach unten abgesetzt).
-     - Maßlinie mit beidseitigen spitzen Maßpfeilen (gefüllte schlanke Dreiecke).
-     - Zentrierte Maßbeschriftung (z. B. `4.00 m`).
-   - Vertikale Maßkette für die Trägerhöhe links vom Träger.
-4. **Kraftpfeile und Auflager-Visualisierung:**
-   - Darstellung vorgegebener statischer Lasten (z. B. Einzellasten am Obergurt, rot mit Pfeilspitze).
-   - Auflagersymbole: Dreieck für Festlager (Knoten 1), Dreieck auf Rollen für Loselager (Knoten 4).
-5. **Interaktives Drag-and-Drop der Knoten:**
-   - Der Benutzer kann mit der linken Maustaste einen beliebigen Knoten greifen und frei über den Canvas ziehen.
-   - Alle verbundenen Stäbe, Lastpfeile und Maßketten folgen dem Knoten in Echtzeit (`MouseMove`).
-   - Eine Infobox oder Tooltip zeigt live die aktuellen Weltkoordinaten $(X, Y)$ in Millimeter-Auflösung an.
+1. **Erweiterte Tragwerks-Topologie (3. Modell in `TrussGeometry.cs`):**
+   - Ergänzen Sie neben dem Dreieck und dem Pratt-Träger ein drittes, eigenes industrielles Tragwerksmodell `CreateCantileverCraneTruss()` (z. B. asymmetrischer Hallen-Auslegerkran oder Satteldachbinder mit **mindestens 10 Knoten und 17 Stäben**) und machen Sie es in der ComboBox `CmbModelSelection` auswählbar.
+2. **Zweistufige normgerechte DIN-406-Bemaßungsketten:**
+   - **Stufe 1 (Innere horizontale Maßkette bei `dimY = +30 px`):** Automatische Einzel-Teilbemaßung aller benachbarten Untergurt-Abschnitte (z. B. `4.00 m | 4.00 m | 4.00 m`).
+   - **Stufe 2 (Äußere horizontale Maßkette bei `dimY = +60 px`):** Gesamtlängenbemaßung über die gesamte Spannweite (z. B. `12.00 m`).
+   - **Vertikale Maßkette (links bei `dimX = -40 px`):** Gesamthöhe des Trägers sowie (falls vorhanden) Zwischenhöhen.
+3. **Interaktiver Lastvektor-Editor & Kamera-Steuerung (Zoom & Pan):**
+   - Erlauben Sie per Klick auf einen Knoten (oder über Seitenleisten-Steuerelemente / Rechtsklick) das dynamische Ändern von Kraftkomponenten $(F_x, F_y)$ in $\text{kN}$: Die Pfeilrichtung ($\operatorname{atan2}$) und Pfeillänge passen sich sofort live an, während die Pfeilspitze exakt ihre feste Pixelgröße ($14\,\text{px}$) behält!
+   - Implementieren Sie stufenlosen **Mausrad-Zoom (`MouseWheel`)** und **Kamera-Panning (Rechte/Mittlere Maustaste ziehen)** über einen Zoomfaktor und Kamera-Offset in `Transform2D` (oder `MatrixTransform` gemäß Abschnitt 3.4 der Vorlesung).
+4. **Performance-Optimierung & JSON-Import/Export:**
+   - Stellen Sie sicher, dass Brushes statisch eingefroren (`Freeze()`) oder wiederverwendet werden, um unnötige GC-Allokationen beim Dragging zu vermeiden.
+   - Fügen Sie zwei Buttons **„JSON Speichern“** und **„JSON Laden“** (`System.Text.Json`) hinzu, mit denen das aktuell bearbeitete Tragwerk (Knoten, Stäbe, Lager, Lasten) als `.json`-Datei exportiert und wieder eingeladen werden kann.
 
 ---
 

@@ -125,16 +125,24 @@ public partial class MainWindow : Window
             $"{totalLength:F2} m");
 
         // =====================================================================
-        // TODO: [Stufe A Sprint]
-        // - Untersuchen Sie die Erhaltung des Seitenverhältnisses bei Fenster-Resizing.
-        // - Verifizieren Sie die Dreieckskoordinaten K1=(0,0), K2=(4,0), K3=(2,2).
+        // TODO: [Stufe A In-Class Sprint]
+        // 1. Euklidische Stablänge berechnen (L = sqrt(dx^2 + dy^2)) und als
+        //    TextBlock-Label mittig an jedem Stab anzeigen.
+        // 2. Vertikale DIN-406-Bemaßungskette (VectorArrow.AddVerticalDimensionLine)
+        //    für die Gesamthöhe (yMax - yMin) links vom Tragwerk einzeichnen.
+        // 3. Bounding-Box-Jittering beim Ziehen beheben: _transform.Update(...)
+        //    oben in Redraw() nur aufrufen, wenn _draggedNode == null ist, und
+        //    Koordinaten in TrussCanvas_MouseMove auf Millimeter (:F3) runden.
         // =====================================================================
 
         // =====================================================================
-        // TODO: [Stufe B Track A: 2D-CAD Fachwerkträger-Viewer]
-        // - Ergänzen Sie Teilbemaßungen zwischen allen benachbarten Untergurtknoten.
-        // - Fügen Sie eine vertikale DIN-Bemaßungskette für die Trägerhöhe links ein.
-        // - Kopplung vorbereiten für FEM-Statik in Termin 07.
+        // TODO: [Stufe B Track A: 2D-CAD Fachwerkträger-Editor]
+        // 1. Drittes Industriemodell CreateCantileverCraneTruss() (>= 10 Knoten)
+        //    in TrussGeometry.cs ergänzen und in CmbModelSelection einbinden.
+        // 2. Zweistufige horizontale DIN-406-Bemaßung: Innere Maßkette für alle
+        //    Einzel-Feldweiten am Untergurt (+30 px) + äußere Gesamtmaßkette (+60 px).
+        // 3. Interaktives Ändern von Knotenlasten (Fx, Fy) + Mausrad-Zoom & Pan.
+        // 4. JSON-Export und JSON-Import (System.Text.Json) für das Tragwerk.
         // =====================================================================
     }
 
