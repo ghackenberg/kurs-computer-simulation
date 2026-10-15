@@ -75,71 +75,46 @@ $$\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}, \quad \bar{L}_{\text{q}} = \lamb
 
 ## 3. Stufe A: In-Class Sprint (60 min)
 
-### Thema: „FEL-Engine & M/M/1-Warteschlange“
+### Thema: „FEL-Engine, Puffergrenzen, Log-Normal-Kausalität & Monte-Carlo in `DiscreteEventSimulation.sln`“
 
-Erstellen Sie eine C#-Konsolenapplikation (`QueueEngineSprint`), die ein $M/M/1$-Wartesystem über eine ereignisdiskrete Future Event List simuliert und die mittlere Warteschlangenlänge $\bar{L}_{\text{q}}$ mit dem analytischen Erlang-Wert abgleicht.
+In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/DiscreteEventSimulation.sln`) sind die ereignisdiskrete Future Event List (`EventQueue`), die Exponentialverteilung (`ExponentialDistribution`), das Basis-Warteschlangenmodell (`QueueSystem`) sowie das `ScottPlot.WPF`-Dashboard (`MainWindow.xaml.cs`) bereits als lauffähige Baseline vorimplementiert. Starten Sie die Anwendung und bearbeiten Sie im Live-Sprint die folgenden **3 Erweiterungsaufgaben**:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ STUFE A: M/M/1-WARTESYSTEM                                             │
+│ STUFE A: M/M/1/K- UND M/G/1-WARTESYSTEM (WPF + SCOTTPLOT 5)            │
 │                                                                        │
-│   Ankünfte           Warteschlange                 Bedienstation       │
-│   lambda = 4/min     Queue<Entity>                 c = 1 (mu = 5/min)  │
+│   Ankünfte           Wartepuffer (max K)           Bedienstation       │
+│   lambda = 4/min     Queue<Customer>               c = 1 (mu = 5/min)  │
 │   ───────────────>   [ ■ ■ ■ ■ ] ───────────────>  [ SERVER ] ───────> │
-│                                                                        │
-│   Systemauslastung: rho = lambda / mu = 4 / 5 = 0.80                   │
-│   Analytische Queue-Länge: L_q = rho^2 / (1 - rho) = 0.64 / 0.2 = 3.20 │
+│                         │                                              │
+│                         └── voll (Count >= K)? ──> BLOCKED (P_Block)   │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### Systemparameter:
-- Ankunftsrate: $\lambda = 4{,}0\,\text{Kunden/min}$ (mittlerer Abstand $0{,}25\,\text{min} = 15\,\text{s}$).
-- Bedienrate: $\mu = 5{,}0\,\text{Kunden/min}$ (mittlere Bedienzeit $0{,}20\,\text{min} = 12\,\text{s}$).
-- Serveranzahl: $c = 1$.
-- Pufferkapazität: $K = \infty$ (unbegrenzt).
-- Simulationsdauer: $T_{\max} = 20\,000\,\text{Minuten}$ (stochastischer Langzeitlauf).
-
 #### Aufgabenstellung (Schritt für Schritt):
 
-1. **Ereignis-Typen & FEL initialisieren:**
-   Definieren Sie ein Interface oder Enum für Ereignisse:
-   ```csharp
-   public enum EventType { Arrival, Departure }
-   public record SimEvent(EventType Type, double Time);
-   ```
-   Erstellen Sie die min-orientierte Prioritätswarteschlange:
-   ```csharp
-   var fel = new PriorityQueue<SimEvent, double>();
-   ```
-2. **Inversionsmethode kapseln:**
-   ```csharp
-   double SampleExp(Random rnd, double rate) => -Math.Log(1.0 - rnd.NextDouble()) / rate;
-   ```
-3. **Simulationszustand verwalten:**
-   - Aktuelle Simulationszeit $t = 0{,}0$.
-   - Server-Status: `isBusy = false`.
-   - Warteschlange: `int queueLength = 0`.
-   - Zeitgewichtung: `double queueArea = 0.0`, `double lastEventTime = 0.0`.
-4. **Event-Schleife implementieren:**
-   - Erstes Ereignis: Plane erste Ankunft bei $t_{\text{first}} = \text{SampleExp}(\lambda)$ ein.
-   - Solange `fel.Count > 0` und $t < T_{\max}$:
-     - Ziehe nächstes Event: `var (ev, evTime) = fel.Dequeue()`.
-     - Zeitgewichtetes Integral aktualisieren: `queueArea += queueLength * (evTime - lastEventTime);`
-     - $t = \text{evTime}; \quad \text{lastEventTime} = t;$
-     - Bei `Arrival`:
-       - Wenn `isBusy == false`: `isBusy = true`, plane `Departure` bei $t + \text{SampleExp}(\mu)$ ein.
-       - Sonst: `queueLength++;`
-       - Plane nächste `Arrival` bei $t + \text{SampleExp}(\lambda)$ ein.
-     - Bei `Departure`:
-       - Wenn `queueLength > 0`: `queueLength--;`, plane `Departure` bei $t + \text{SampleExp}(\mu)$ ein.
-       - Sonst: `isBusy = false;`
-5. **Ergebnis auswerten:**
-   Berechnen Sie die mittlere Warteschlangenlänge:
-   $$\bar{L}_{\text{q,sim}} = \frac{\text{queueArea}}{T_{\max}}$$
-   Geben Sie $\bar{L}_{\text{q,sim}}$ und den analytischen Vergleichswert $L_{\text{q,analytisch}} = \frac{\rho^2}{1 - \rho} = 3{,}20$ auf der Konsole aus.
+1. **Aufgabe A1 – Wartepuffer-Kapazität $K$ vs. Systemkapazität & Little's Gesetz unter Blocking (`QueueSystem.cs`):**
+   - Starten Sie die Vorlage zunächst mit den Standardwerten ($\lambda = 4{,}0/\text{min}$, $\mu = 5{,}0/\text{min}$, $c = 1$, $K = 0 \implies \infty$) und vergleichen Sie die gemessene mittlere Warteschlangenlänge $\bar{L}_q$ mit dem analytischen Erlang-Wert $L_q = \frac{\rho^2}{1 - \rho} = 3{,}20$.
+   - Öffnen Sie `Models/QueueSystem.cs` beim Kommentar `// TODO [Aufgabe A1]`: Aktuell prüft der Code `totalInSystem >= Capacity` (Gesamtsystem-Kapazität inkl. Server). Ändern Sie die Abfrage so, dass `Capacity` die reine **Wartepuffer-Kapazität** `waitingQueue.Count >= Capacity` begrenzt.
+   - Setzen Sie in der GUI die Kapazität auf $K = 10$ (und anschließend im Überlastfall $\lambda = 6{,}0/\text{min} > \mu$). Vergleichen Sie im Dashboard den relativen Fehler von Little's Gesetz mit der **effektiven Ankunftsrate** $\lambda_{\text{eff}} = \lambda (1 - P_{\text{Block}})$ gegenüber dem naiven Einsetzen der Brutto-Ankunftsrate $\lambda$!
+2. **Aufgabe A2 – Log-Normalverteilte Bedienzeiten via Box-Muller & $M/G/1$-Effekt (`LogNormalDistribution.cs`):**
+   - Öffnen Sie `Random/LogNormalDistribution.cs` bei `// TODO [Aufgabe A2]`. Aktuell gibt `Sample()` lediglich den konstanten Mittelwert `Mean` zurück (deterministische Bedienzeit $M/D/1$ – testen Sie dies kurz in der GUI per Checkbox: $\bar{L}_q$ halbiert sich auf $\approx 1{,}60$!).
+   - Implementieren Sie in `Sample()` die **Box-Muller-Transformation** für $Z \sim \mathcal{N}(0, 1)$ und geben Sie $X = \exp(\mu_{\ln} + \sigma_{\ln} Z) > 0$ zurück (vgl. Folienabschnitt 9.6):
+     ```csharp
+     double u1 = 1.0 - _random.NextDouble();
+     double u2 = 1.0 - _random.NextDouble();
+     double z = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Cos(2.0 * Math.PI * u2);
+     return Math.Exp(MuLog + SigmaLog * z);
+     ```
+   - Aktivieren Sie in der GUI die Checkbox *„Log-Normal-Bedienzeit aktivieren“* mit $\sigma_{\text{service}} = 0{,}40\,\text{min}$ (bei gleichem Mittelwert $1/\mu = 0{,}20\,\text{min}$) und beobachten Sie im Histogramm sowie an $\bar{L}_q$, wie stark Rechtsschiefe (Heavy Tail) die Warteschlange trotz unveränderter Auslastung $\rho = 80\,\%$ aufbläht (Pollaczek-Khinchine-Effekt)!
+3. **Aufgabe A3 – Parallele Monte-Carlo-Replikationen (`Parallel.For`) & 95%-Konfidenzintervall (`MainWindow.xaml.cs`):**
+   - Öffnen Sie `MainWindow.xaml.cs` in der Methode `RunMonteCarloSimulation()` bei `// TODO [Aufgabe A3]`.
+   - Erhöhen Sie die Anzahl der Replikationen von `replications = 5` auf `replications = 100` und parallelisieren Sie die Schleife mittels `Parallel.For(0, replications, r => { ... })` unter Verwendung des deterministischen Prime-Stride-Seeds `int seed = 42 + r * 104729;` (vgl. Folienabschnitt 9.7).
+   - Prüfen Sie im unteren ScottPlot-Diagramm, wie sich der Standardfehler $\text{SE} = s_W / \sqrt{R}$ und die Breite des 95%-Konfidenzintervalls $\bar{W} \pm 1{,}96 \cdot \text{SE}$ durch Verzwanzigfachung der Stichprobe verkleinern.
 
-**Erwartetes Ergebnis nach 50 Minuten:**  
-$\bar{L}_{\text{q,sim}} \in [3{,}10, 3{,}30]$ mit einer Abweichung $< 3\,\%$ vom theoretischen Erwartungswert $3{,}20$.
+**Erwartetes Ergebnis nach dem Sprint:**  
+- Bei $K = 10$ gilt $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ exakt ($< 0{,}5\,\%$ Fehler), während $\lambda \cdot \bar{W}$ um die Blockierwahrscheinlichkeit $P_{\text{Block}}$ abweicht.  
+- Bei $R = 100$ parallelen Läufen schrumpft das 95%-Konfidenzintervall für $\mathbb{E}[W]$ auf ca. $\pm 0{,}015\,\text{min}$ um den theoretischen Wert $W = 1{,}00\,\text{min}$.
 
 ---
 

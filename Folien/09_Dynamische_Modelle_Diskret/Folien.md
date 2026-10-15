@@ -307,7 +307,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Konkretes Beispiel: Simulationsablauf
+### Konkretes Beispiel: Simulationsablauf *(Deep Dive / Nachrechnen)*
 
 <div class="columns">
 <div>
@@ -332,7 +332,7 @@ Annahmen für das Beispiel:
 
 ---
 
-### Tabellarischer Ablauf
+### Tabellarischer Ablauf *(Deep Dive / Nachrechnen)*
 
 Die folgende Tabelle zeigt die Werte der `Clock`, des `State` und der `EventQueue` während der Simulationsrechnung:
 
@@ -859,7 +859,7 @@ private double NextExponential(Random random, double lambda)
 
 ---
 
-### Herleitung mittels Inversionsmethode (1/2) - **Prinzip**
+### Herleitung mittels Inversionsmethode (1/2) - **Prinzip** *(Deep Dive)*
 
 <div class="columns">
 <div class="three">
@@ -880,7 +880,7 @@ Die **Inversionsmethode** (Inverse Transform Sampling) ist ein Verfahren zur Erz
 
 ---
 
-### Herleitung mittels Inversionsmethode (2/2) - **Exponentialverteilung**
+### Herleitung mittels Inversionsmethode (2/2) - **Exponentialverteilung** *(Deep Dive)*
 
 **Ziel:** Erzeuge eine Zufallsvariable $X$ mit der CDF $F_X(x) = 1 - e^{-\lambda x}$ für $x \ge 0$.
 
@@ -955,7 +955,7 @@ private double NextNormal(Random random, double mean, double stdDev)
 
 ---
 
-### Herleitung der Box-Muller-Transformation (1/3) - **Die Idee**
+### Herleitung der Box-Muller-Transformation (1/3) - **Die Idee** *(Deep Dive)*
 
 Die **Box-Muller-Transformation** ist eine Methode zur Erzeugung von Paaren unabhängiger, standardnormalverteilter Zufallszahlen aus Paaren unabhängiger, gleichverteilter Zufallszahlen.
 
@@ -970,7 +970,7 @@ Die **Box-Muller-Transformation** ist eine Methode zur Erzeugung von Paaren unab
 
 ---
 
-### Herleitung der Box-Muller-Transformation (2/3) - **Die Transformation**
+### Herleitung der Box-Muller-Transformation (2/3) - **Die Transformation** *(Deep Dive)*
 
 Die Transformation von kartesischen zu Polarkoordinaten führt zu neuen Zufallsvariablen $R$ (Radius) und $\Theta$ (Winkel).
 
@@ -987,7 +987,7 @@ Die Transformation von kartesischen zu Polarkoordinaten führt zu neuen Zufallsv
 
 ---
 
-### Herleitung der Box-Muller-Transformation (3/3) - **Die Formeln**
+### Herleitung der Box-Muller-Transformation (3/3) - **Die Formeln** *(Deep Dive)*
 
 Durch Einsetzen von $R$ und $\Theta$ in die Polarkoordinaten-Gleichungen erhalten wir die beiden standardnormalverteilten Zufallszahlen $Z_1$ und $Z_2$:
 
@@ -1004,7 +1004,7 @@ Durch Einsetzen von $R$ und $\Theta$ in die Polarkoordinaten-Gleichungen erhalte
 
 ### Stochastische Kausalität bei Bedienzeiten
 
-In diskreten Ereignissimulatoren steuern Zufallsvariablen die Zeitdauer bis zum nächsten Ereignis ($t_{\text{Event}} = \text{Clock} + T$):
+In diskreten Ereignissimulatoren steuern Zufallszahlen die Zeitdauer bis zum nächsten Ereignis ($t_{\text{Event}} = \text{Clock} + T$):
 
 - **Kausalitätsprinzip:** Ein zukünftiges Ereignis darf niemals in der Vergangenheit stattfinden: $T > 0$.
 - **Problem der Normalverteilung:**
@@ -1016,7 +1016,7 @@ In diskreten Ereignissimulatoren steuern Zufallsvariablen die Zeitdauer bis zum 
 
 ---
 
-### Die Log-Normal-Verteilung: Parameterumrechnung
+### Die Log-Normal-Verteilung: Parameterumrechnung *(Deep Dive)*
 
 Eine Zufallsvariable $X$ ist log-normalverteilt ($X \sim \text{LogNormal}(\mu, \sigma)$), wenn $\ln(X) \sim \mathcal{N}(\mu, \sigma^2)$ normalverteilt ist.
 
@@ -1278,7 +1278,7 @@ $$S_k = S_{k-1} + (x_k - M_{k-1}) \cdot (x_k - M_k)$$
 
 ---
 
-### Parallele Aggregation: Chan-Merge-Formel (1979)
+### Parallele Aggregation: Chan-Merge-Formel (1979) *(Deep Dive / Referenz)*
 
 Für parallele Monte-Carlo-Simulationen auf Multi-Core-CPUs leiteten Chan, Golub & LeVeque (1979) eine exakte Fusionsformel für zwei Teilstichproben $A$ und $B$ her:
 
@@ -1293,7 +1293,7 @@ $$S = S_A + S_B + \delta^2 \cdot \frac{n_A \cdot n_B}{n}$$
 
 ---
 
-### `ParallelWelfordAccumulator`: Lokale Akkumulation
+### `ParallelWelfordAccumulator`: Lokale Akkumulation *(Deep Dive / Referenz)*
 
 Ermöglicht die numerisch stabile Ein-Pass-Berechnung von Mittelwert und Varianz für jeden Thread:
 
@@ -1318,7 +1318,7 @@ public class ParallelWelfordAccumulator
 
 ---
 
-### `ParallelWelfordAccumulator`: Chan-Merge
+### `ParallelWelfordAccumulator`: Chan-Merge *(Deep Dive / Referenz)*
 
 Führt die Teilakkumulatoren zweier Threads exakt und verlustfrei zusammen:
 
