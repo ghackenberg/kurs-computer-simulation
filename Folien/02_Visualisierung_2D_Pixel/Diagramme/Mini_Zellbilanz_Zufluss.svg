@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="ag" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#16a34a" />
+    </marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#dc2626" />
+    </marker>
+  </defs>
+
+  <rect width="260" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="130" y="24" class="hdr">Energiebilanz an Zelle i</text>
+  <text x="130" y="41" class="sub">Wann ändert sich T_i zeitlich?</text>
+
+  <!-- Case 1: In = Out -->
+  <g transform="translate(15, 56)">
+    <rect width="230" height="165" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="115" y="20" class="lbl" style="fill: #334155;">1. Durchfluss: Rein = Raus</text>
+
+    <line x1="16" y1="75" x2="66" y2="75" stroke="#16a34a" stroke-width="2.5" marker-end="url(#ag)" />
+    <text x="41" y="64" class="lbl" style="fill: #15803d; font-size: 10.5px;">+40 W</text>
+
+    <rect x="72" y="44" width="86" height="62" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+    <text x="115" y="70" class="lbl" style="fill: #92400e;">Zelle i</text>
+    <text x="115" y="90" class="lbl" style="fill: #b45309;">T_i = konst.</text>
+
+    <line x1="164" y1="75" x2="212" y2="75" stroke="#dc2626" stroke-width="2.5" marker-end="url(#ar)" />
+    <text x="188" y="64" class="lbl" style="fill: #dc2626; font-size: 10.5px;">−40 W</text>
+
+    <text x="115" y="128" class="sub" style="fill: #334155;">Netto-Bilanz: +40 − 40 = 0 W</text>
+    <text x="115" y="148" class="lbl" style="fill: #475569;">➔ ∂T_i / ∂t = 0 (Keine Änderung)</text>
+  </g>
+
+  <!-- Case 2: Net Inflow > 0 -->
+  <g transform="translate(15, 236)">
+    <rect width="230" height="168" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="115" y="20" class="lbl" style="fill: #166534;">2. Überschuss: Rein &gt; Raus</text>
+
+    <line x1="16" y1="75" x2="66" y2="75" stroke="#16a34a" stroke-width="2.5" marker-end="url(#ag)" />
+    <text x="41" y="64" class="lbl" style="fill: #15803d; font-size: 10.5px;">+60 W</text>
+
+    <rect x="72" y="44" width="86" height="62" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+    <text x="115" y="70" class="lbl" style="fill: #166534;">Zelle i</text>
+    <text x="115" y="90" class="lbl" style="fill: #15803d;">T_i steigt ↑</text>
+
+    <line x1="214" y1="75" x2="164" y2="75" stroke="#16a34a" stroke-width="2.5" marker-end="url(#ag)" />
+    <text x="188" y="64" class="lbl" style="fill: #15803d; font-size: 10.5px;">+40 W</text>
+
+    <text x="115" y="128" class="sub" style="fill: #166534;">Netto-Bilanz: +60 + 40 = +100 W</text>
+    <text x="115" y="148" class="lbl" style="fill: #15803d;">➔ ∂T_i / ∂t &gt; 0 (Erwärmung!)</text>
+  </g>
+</svg>

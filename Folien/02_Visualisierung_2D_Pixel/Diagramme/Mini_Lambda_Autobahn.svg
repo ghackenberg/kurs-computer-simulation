@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="ao" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#ffffff" />
+    </marker>
+  </defs>
+
+  <rect width="260" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="130" y="24" class="hdr">Wärmeleitfähigkeit λ</text>
+  <text x="130" y="41" class="sub">„Wie breit ist die Wärme-Autobahn?“</text>
+
+  <!-- Top: High Lambda (Copper) -->
+  <g transform="translate(15, 56)">
+    <rect width="230" height="165" rx="6" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5" />
+    <text x="115" y="20" class="lbl" style="fill: #9a3412;">1. Großes λ (Kupfer: 398)</text>
+    <text x="115" y="37" class="sub" style="fill: #c2410c;">Breite Autobahn (Geringer Widerstand)</text>
+
+    <!-- Wide Highway Pipe -->
+    <rect x="18" y="48" width="44" height="72" rx="4" fill="#dc2626" />
+    <text x="40" y="88" class="lbl" style="fill: #ffffff;">Heiß</text>
+
+    <rect x="62" y="54" width="106" height="60" fill="#ea580c" />
+    <line x1="72" y1="69" x2="154" y2="69" stroke="#ffffff" stroke-width="2.5" marker-end="url(#ao)" />
+    <line x1="72" y1="84" x2="154" y2="84" stroke="#ffffff" stroke-width="2.5" marker-end="url(#ao)" />
+    <line x1="72" y1="99" x2="154" y2="99" stroke="#ffffff" stroke-width="2.5" marker-end="url(#ao)" />
+
+    <rect x="168" y="48" width="44" height="72" rx="4" fill="#2563eb" />
+    <text x="190" y="88" class="lbl" style="fill: #ffffff;">Kalt</text>
+
+    <text x="115" y="146" class="lbl" style="fill: #c2410c;">➔ Hoher Wärmestrom Q̇ ↑↑</text>
+  </g>
+
+  <!-- Bottom: Low Lambda (Paste/Air) -->
+  <g transform="translate(15, 236)">
+    <rect width="230" height="168" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="115" y="20" class="lbl" style="fill: #334155;">2. Kleines λ (Paste: 4,5 / Luft)</text>
+    <text x="115" y="37" class="sub" style="fill: #475569;">Engpass / Nadelöhr (Hoher Widerstand)</text>
+
+    <!-- Narrow Bottleneck Pipe -->
+    <rect x="18" y="48" width="44" height="72" rx="4" fill="#dc2626" />
+    <text x="40" y="88" class="lbl" style="fill: #ffffff;">Heiß</text>
+
+    <rect x="62" y="77" width="106" height="14" fill="#ea580c" />
+    <line x1="72" y1="84" x2="154" y2="84" stroke="#ffffff" stroke-width="2" marker-end="url(#ao)" />
+
+    <rect x="168" y="48" width="44" height="72" rx="4" fill="#2563eb" />
+    <text x="190" y="88" class="lbl" style="fill: #ffffff;">Kalt</text>
+
+    <text x="115" y="148" class="lbl" style="fill: #475569;">➔ Kaum Durchfluss (Wärmestau!)</text>
+  </g>
+</svg>

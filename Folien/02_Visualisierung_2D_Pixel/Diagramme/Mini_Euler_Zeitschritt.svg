@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; text-anchor: middle; }
+      .math { font-family: 'Cambria Math', serif; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="ad" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#0284c7" />
+    </marker>
+  </defs>
+
+  <rect width="260" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="130" y="24" class="hdr">Entstehung des Faktors s</text>
+  <text x="130" y="41" class="sub">3 Konstanten verschmelzen zu s</text>
+
+  <!-- 3 Input Constants -->
+  <g transform="translate(15, 56)">
+    <rect x="0" y="0" width="230" height="46" rx="5" fill="#fff7ed" stroke="#fdba74" />
+    <text x="115" y="19" class="lbl" style="fill: #9a3412;">1. Aus der DGL (Material):</text>
+    <text x="115" y="37" class="math" style="fill: #c2410c;">Faktor  α  [m²/s]</text>
+
+    <rect x="0" y="56" width="230" height="46" rx="5" fill="#eff6ff" stroke="#93c5fd" />
+    <text x="115" y="75" class="lbl" style="fill: #1e40af;">2. Aus 2. Ortsableitung (Gitter):</text>
+    <text x="115" y="93" class="math" style="fill: #1d4ed8;">Teiler  1 / Δx²  [1/m²]</text>
+
+    <rect x="0" y="112" width="230" height="46" rx="5" fill="#fef3c7" stroke="#f59e0b" />
+    <text x="115" y="131" class="lbl" style="fill: #92400e;">3. Aus Euler-Schritt (Zeit):</text>
+    <text x="115" y="149" class="math" style="fill: #b45309;">Multiplikation  · Δt  [s]</text>
+  </g>
+
+  <line x1="130" y1="216" x2="130" y2="242" stroke="#0284c7" stroke-width="2.5" marker-end="url(#ad)" />
+
+  <!-- Bundled Parameter s -->
+  <g transform="translate(15, 246)">
+    <rect width="230" height="76" rx="6" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
+    <text x="115" y="22" class="lbl" style="fill: #166534;">Gebündelter Gitterfaktor s:</text>
+    <text x="115" y="48" class="math" style="fill: #15803d; font-size: 16px;">s = (α · Δt) / Δx²</text>
+    <text x="115" y="66" class="sub" style="fill: #14532d;">Steht direkt vor dem 5-Punkt-Stern L_{i,j}</text>
+  </g>
+
+  <!-- Final Update Step -->
+  <g transform="translate(15, 336)">
+    <rect width="230" height="68" rx="6" fill="#1e293b" />
+    <text x="115" y="22" class="lbl" style="fill: #38bdf8;">Fertiges Euler-Update:</text>
+    <text x="115" y="48" class="math" style="fill: #f8fafc; font-size: 14px;">T_neu = T_alt + s · L + Δt · Q</text>
+  </g>
+</svg>

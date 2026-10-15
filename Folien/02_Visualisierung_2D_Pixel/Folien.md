@@ -95,27 +95,49 @@ Ein **Rasterbild** ist eine zweidimensionale Matrix aus diskreten Bildpunkten (*
 
 ### Farbmodelle und 32-Bit Farbtiefe (`Bgra32`)
 
-In modernen Betriebssystemen und Grafiktreibern ist das **32-Bit BGRA-Format** der Standard für maximale Verarbeitungsgeschwindigkeit:
+<div class="columns">
+<div class="three">
+
+In modernen Grafiktreibern ist das **32-Bit BGRA-Format** der Standard für maximale Geschwindigkeit:
 
 - **B (Blau), G (Grün), R (Rot):** Je 1 Byte ($0 \dots 255$) für die Farbintensität.
-- **A (Alpha):** 1 Byte ($0 = \text{voll transparent}, 255 = \text{voll deckend}$).
+- **A (Alpha):** 1 Byte ($0 = \text{transparent}, 255 = \text{deckend}$).
 - **Speicherorganisation im RAM (Little-Endian):**
   - Byte 0: Blau | Byte 1: Grün | Byte 2: Rot | Byte 3: Alpha
-  - Bei Interpretation als vorzeichenloser 32-Bit-Integer (`uint`):
-    $$\text{Pixel}_{\text{uint}} = (\text{Alpha} \ll 24) \mid (\text{Rot} \ll 16) \mid (\text{Grün} \ll 8) \mid \text{Blau}$$
-  - Wert `0xFFFF0000` entspricht z.B. voll deckendem Reinrot.
+  - Als vorzeichenloser 32-Bit-Integer (`uint`):
+    $$\text{Pixel}_{\text{uint}} = (\text{A} \ll 24) \mid (\text{R} \ll 16) \mid (\text{G} \ll 8) \mid \text{B}$$
+  - Wert `0xFFFF0000` entspricht voll deckendem Reinrot.
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Bgra32_Bitshift.svg)
+
+</div>
+</div>
 
 ---
 
 ### Das Konzept des Strides
+
+<div class="columns">
+<div class="three">
 
 Ein 2D-Rasterbild existiert im Arbeitsspeicher als **kontinuierlicher 1D-Byte-Block**:
 
 - Die Pixelzeilen werden sequentiell hintereinander abgelegt (**Row-Major Order**).
 - **`Stride` (Zeilenschrittweite):** Die tatsächliche Anzahl an Bytes von einer Zeile zur nächsten:
   $$\text{Stride} = \text{Breite} \times \text{BytesJePixel} + \text{Padding}$$
-- Da moderne Speichercontroller am schnellsten auf Adressen zugreifen, die Vielfache von 4 oder 8 Bytes sind, wird die Zeilenlänge ggf. mit ungenutzten Füll-Bytes (*Padding*) aufgerundet.
-- Bei 32-Bit-Pixeln (`Bgra32`) ist die Zeilenbreite $\text{Breite} \times 4$ stets ein Vielfaches von 4.
+- Da Speichercontroller am schnellsten auf Adressen zugreifen, die Vielfache von 4 oder 8 Bytes sind, wird die Zeilenlänge ggf. mit Füll-Bytes (*Padding*) aufgerundet.
+- Bei 32-Bit-Pixeln (`Bgra32`) ist $\text{Breite} \times 4$ stets ein Vielfaches von 4.
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Stride_Padding.svg)
+
+</div>
+</div>
 
 ---
 
@@ -125,19 +147,26 @@ Ein 2D-Rasterbild existiert im Arbeitsspeicher als **kontinuierlicher 1D-Byte-Bl
 
 ### Mathematische Adressberechnung
 
+<div class="columns">
+<div class="three">
+
 Für ein Pixel an Koordinate $(x, y)$ errechnet sich die absolute Position im Puffer:
 
 - **Relativer Byte-Offset:**
   $$\text{Offset}(x, y) = y \cdot \text{Stride} + x \cdot 4$$
-
 - **Absolute Speicheradresse (Pointer):**
   $$p(x, y) = p_{\text{BackBuffer}} + y \cdot \text{Stride} + x \cdot 4$$
-
 - **Bedeutung für die Cache-Lokalität:**
-  - Zeilenweiser Durchlauf ($y$ in der äußeren Schleife, $x$ in der inneren):
-    Sequentieller Speicherzugriff ➔ Optimale Ausnutzung von CPU-L1/L2-Caches und Prefetching.
-  - Spaltenweiser Durchlauf ($x$ außen, $y$ innen):
-    Stride-Sprünge bei jedem Zugriff ➔ Massenhafte Cache-Misses und drastischer Performanceverlust!
+  - **Zeilenweise ($y$ außen, $x$ innen):** Sequentieller Zugriff ➔ Optimale Nutzung von CPU-L1/L2-Caches.
+  - **Spaltenweise ($x$ außen, $y$ innen):** Stride-Sprünge ➔ Massenhafte Cache-Misses!
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Cache_Lokalitaet.svg)
+
+</div>
+</div>
 
 ---
 
@@ -185,6 +214,9 @@ Kombiniert mit einer einzigen
 
 ### Architektur von `WriteableBitmap`
 
+<div class="columns">
+<div class="three">
+
 `WriteableBitmap` (aus `System.Windows.Media.Imaging`) kapselt zwei Pufferbereiche:
 
 1. **BackBuffer (im RAM):**
@@ -193,6 +225,14 @@ Kombiniert mit einer einzigen
    - Der Puffer, der von der MilCore-Render-Engine von WPF zur Darstellung über die Grafikkarte genutzt wird.
 3. **Synchronisation:**
    - Der Transfer vom BackBuffer zum FrontBuffer erfolgt nur, wenn Änderungen explizit über `AddDirtyRect()` gemeldet werden.
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_WriteableBitmap_Puffer.svg)
+
+</div>
+</div>
 
 ---
 
@@ -382,15 +422,25 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Abbildung von Skalaren auf Farben
 
+<div class="columns">
+<div class="three">
+
 In der physikalischen Simulation repräsentiert ein Pixel eine Messgröße $v$ (z.B. Temperatur $T \in [T_{\min}, T_{\max}]$):
 
 1. **Normierung auf das Einheitsintervall $[0, 1]$:**
    $$u = \text{clamp}\left(\frac{v - v_{\min}}{v_{\max} - v_{\min}}, \, 0.0, \, 1.0\right)$$
-
 2. **Farbpalette:**
    - **Cool-to-Warm (Divergierend):** Blau ($u=0$) $\to$ Weiß ($u=0.5$) $\to$ Rot ($u=1$).
    - **Jet / Rainbow:** Weit verbreitet, jedoch problematisch bezüglich Farbwahrnehmung.
    - **Viridis:** Perzeptiv gleichförmig (*perceptually uniform*), monoton in Helligkeit und für Farbfehlsichtigkeiten geeignet.
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Farbskalen_Vergleich.svg)
+
+</div>
+</div>
 
 ---
 
@@ -491,38 +541,71 @@ Wärmeleitung funktioniert nach **demselben Prinzip** wie ein elektrisches RC-Ne
 
 ### Materialparameter 1: Wärmeleitfähigkeit $\lambda$ (Der Transport)
 
-Warum fühlt sich ein Kupferblock sofort heiß an, während sich Wärmeleitpaste oder Kunststoff nur langsam erwärmen? Der erste Faktor ist das **Transportvermögen**:
+<div class="columns">
+<div class="three">
+
+Warum fühlt sich Kupfer sofort heiß an, während sich Paste langsam erwärmt? Der erste Faktor ist das **Transportvermögen**:
 
 - **Wärmeleitfähigkeit $\lambda$ $\left[\frac{\mathrm{W}}{\mathrm{m \cdot K}}\right]$:**
-  - Beschreibt, wie gut ein Material Wärmeströme weiterleitet (*„Breite der Wärme-Autobahn“* zwischen zwei Pixeln, analog zum elektrischen Leitwert $G = 1/R$).
-  - Gibt an, wie viel Watt Wärmeleistung durch einen $1\,\mathrm{m}$ langen Würfel fließt, wenn zwischen Vorder- und Rückseite $1\,\mathrm{K}$ Temperaturdifferenz herrscht.
-- **Typische Größenordnungen in der Technik:**
-  - **Sehr gute Leiter (Metalle):** Kupfer $\lambda \approx 398$, Aluminium $\lambda \approx 237$, Silizium $\lambda \approx 148\,\mathrm{W/(m\cdot K)}$
-  - **Schwache Leiter / Isolatoren:** Wärmeleitpaste $\lambda \approx 4{,}5$, Glas $\lambda \approx 1{,}0$, ruhende Luft $\lambda \approx 0{,}026\,\mathrm{W/(m\cdot K)}$
+  - Beschreibt, wie gut ein Material Wärmeströme weiterleitet (*„Breite der Wärme-Autobahn“* zwischen zwei Pixeln, analog zum Leitwert $G = 1/R$).
+  - Gibt an, wie viel Watt durch einen $1\,\mathrm{m}$-Würfel bei $1\,\mathrm{K}$ Gefälle fließt.
+- **Typische Größenordnungen $\left[\mathrm{W/(m\cdot K)}\right]$:**
+  - **Gute Leiter:** Kupfer $\lambda \approx 398$, Alu $\lambda \approx 237$, Silizium $\lambda \approx 148$
+  - **Isolatoren:** Wärmeleitpaste $\lambda \approx 4{,}5$, Glas $\lambda \approx 1{,}0$, Luft $\lambda \approx 0{,}026$
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Lambda_Autobahn.svg)
+
+</div>
+</div>
 
 ---
 
 ### Materialparameter 2: Wärmekapazität $\rho \cdot c_p$ (Der Speicher)
 
+<div class="columns">
+<div class="three">
+
 Der zweite Faktor ist die **thermische Trägheit** des Materials (*„Wie groß ist der Wärmetank eines Pixels?“*):
 
 - **Spezifische Wärmekapazität $c_p$ $\left[\frac{\mathrm{J}}{\mathrm{kg \cdot K}}\right]$ (bezogen auf die Masse):**
   - Gibt an, wie viele Joule Energie man benötigt, um **$1\,\mathrm{kg}$** des Stoffes um $+1\,\mathrm{K}$ ($+1\,^\circ\mathrm{C}$) zu erwärmen.
-- **Volumetrische Wärmekapazität $\rho \cdot c_p$ $\left[\frac{\mathrm{J}}{\mathrm{m^3 \cdot K}}\right]$ (bezogen auf das Gittervolumen):**
+- **Volumetrische Wärmekapazität $\rho \cdot c_p$ $\left[\frac{\mathrm{J}}{\mathrm{m^3 \cdot K}}\right]$ (pro Gittervolumen):**
   - Da unsere Gitterpixel feste **Volumina** abbilden, multiplizieren wir $c_p$ mit der **Materialdichte $\rho$** $[\mathrm{kg/m^3}]$.
-  - Großes $\rho \cdot c_p$ bedeutet: Das Pixel muss sehr viel Wärmeenergie aufnehmen, bevor seine Temperatur $T$ merklich ansteigt (analog zu einem großen Kondensator $C$)!
+  - Großes $\rho \cdot c_p$ bedeutet: Das Pixel schluckt viel Wärmeenergie, bevor seine Temperatur $T$ merklich ansteigt (analog zum Kondensator $C$)!
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Kapazitaet_Waermetank.svg)
+
+</div>
+</div>
 
 ---
 
 ### Materialparameter 3: Temperaturleitfähigkeit $\alpha$
 
+<div class="columns">
+<div class="three">
+
 Für die Ausbreitungsgeschwindigkeit einer Temperaturfront entscheidet das **Verhältnis** aus Transport ($\lambda$) und Speicherträgheit ($\rho \cdot c_p$) – die **Temperaturleitfähigkeit $\alpha$** (oft auch $a$ genannt):
 
-$$\alpha = \frac{\lambda}{\rho \cdot c_p} = \frac{\text{Leitvermögen (Transport)}}{\text{Speichervermögen (Trägheit)}} \qquad \left[\frac{\mathrm{W/(m\cdot K)}}{\mathrm{kg/m^3 \cdot J/(kg\cdot K)}} = \frac{\mathrm{m^2}}{\mathrm{s}}\right]$$
+$$\alpha = \frac{\lambda}{\rho \cdot c_p} = \frac{\text{Leitvermögen (Transport)}}{\text{Speichervermögen (Trägheit)}} \quad \left[\frac{\mathrm{W/(m\cdot K)}}{\mathrm{J/(m^3\cdot K)}} = \frac{\mathrm{m^2}}{\mathrm{s}}\right]$$
 
 - **Merksatz für die Simulation:**
-  - **Großes $\alpha$ (z. B. Kupfer $\approx 115\,\mathrm{mm^2/s}$, Alu $\approx 97\,\mathrm{mm^2/s}$):** Hoher Wärmedurchfluss bei moderatem Speicher $\implies$ Temperaturunterschiede gleichen sich im Gitter **rasend schnell** aus!
-  - **Kleines $\alpha$ (z. B. Wärmeleitpaste $\approx 2{,}5\,\mathrm{mm^2/s}$):** Geringer Durchfluss $\implies$ Wärme staut sich vor der Schicht!
+  - **Großes $\alpha$ (Kupfer $\approx 115$, Alu $\approx 97\,\mathrm{mm^2/s}$):** Hoher Durchfluss bei moderatem Speicher $\implies$ Temperatur gleicht sich **rasend schnell** aus!
+  - **Kleines $\alpha$ (Wärmeleitpaste $\approx 2{,}5\,\mathrm{mm^2/s}$):** Geringer Durchfluss $\implies$ Wärme staut sich vor der Schicht!
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Alpha_Welle.svg)
+
+</div>
+</div>
 
 ---
 
@@ -532,26 +615,48 @@ $$\alpha = \frac{\lambda}{\rho \cdot c_p} = \frac{\text{Leitvermögen (Transport
 
 ### Schritt 1 zur DGL: Das Fouriersche Gesetz (1. Ableitung)
 
+<div class="columns">
+<div class="three">
+
 Betrachten wir zwei benachbarte Gitterpunkte $i$ (links, Position $x$) und $i+1$ (rechts, Position $x + \Delta x$):
 
 - **Alltagsbeobachtung:** Wann fließt besonders viel Wärmeleistung pro Fläche ($\dot{q}_x$ in $\mathrm{W/m^2}$) von Zelle $i$ nach Zelle $i+1$?
   1. Je besser das Material Wärme leitet (großes **$\lambda$**),
-  2. je größer der Temperaturunterschied **$\Delta T = T_{i+1} - T_i$** zwischen den beiden Zellen ist,
-  3. je kürzer der räumliche Abstand **$\Delta x$** ist, über den dieser Temperaturunterschied abfällt!
-- Genau diesen Zusammenhang formuliert das **Fouriersche Wärmeleitungsgesetz**:
+  2. je größer der Temperaturunterschied **$\Delta T = T_{i+1} - T_i$** ist,
+  3. je kürzer der räumliche Abstand **$\Delta x$** zwischen den Punkten ist!
+- **Fouriersches Wärmeleitungsgesetz:**
   $$\dot{q}_x = -\lambda \cdot \frac{\partial T}{\partial x} \approx -\lambda \cdot \frac{T_{i+1} - T_i}{\Delta x} \quad \left[\frac{\mathrm{W}}{\mathrm{m^2}}\right]$$
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Fourier_3Faktoren.svg)
+
+</div>
+</div>
 
 ---
 
 ### Schritt 1 zur DGL: Warum steht im Fourierschen Gesetz ein Minuszeichen?
 
+<div class="columns">
+<div class="three">
+
 $$\dot{q}_x = -\lambda \cdot \frac{\partial T}{\partial x} \approx -\lambda \cdot \frac{T_{i+1} - T_i}{\Delta x}$$
 
 - **Gedankenexperiment mit konkreten Zahlen:**
-  - Links in Zelle $i$ sei es heiß ($T_i = 80\,^\circ\mathrm{C}$), rechts in Zelle $i+1$ sei es kalt ($T_{i+1} = 30\,^\circ\mathrm{C}$).
+  - Links in Zelle $i$ sei es heiß ($T_i = 80\,^\circ\mathrm{C}$), rechts in Zelle $i+1$ kalt ($T_{i+1} = 30\,^\circ\mathrm{C}$).
   - Gehen wir auf der $x$-Achse nach rechts, **fällt** die Temperatur ab ($\Delta T = 30 - 80 = -50\,\mathrm{K} < 0$), die Steigung $\frac{\partial T}{\partial x}$ ist also **negativ**.
-  - Physikalisch fließt die Wärme aber von **Warm (links) nach Kalt (rechts)**, also in **positive $x$-Richtung** ($\dot{q}_x > 0$)!
-  - **Lösung:** Das Minuszeichen vor $-\lambda$ kehrt das negative Vorzeichen der Steigung um, sodass ein Temperaturabfall nach rechts ($\frac{\partial T}{\partial x} < 0$) einen positiven Wärmestrom nach rechts ($\dot{q}_x > 0$) liefert.
+  - Physikalisch fließt die Wärme aber von **Warm nach Kalt**, also in **positive $x$-Richtung** ($\dot{q}_x > 0$)!
+  - **Lösung:** Das Minuszeichen vor $-\lambda$ kehrt das negative Vorzeichen der Steigung um, sodass $\frac{\partial T}{\partial x} < 0$ einen positiven Fluss $\dot{q}_x > 0$ liefert.
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Fourier_Vorzeichen.svg)
+
+</div>
+</div>
 
 ---
 
@@ -561,12 +666,23 @@ $$\dot{q}_x = -\lambda \cdot \frac{\partial T}{\partial x} \approx -\lambda \cdo
 
 ### Schritt 2 zur DGL: Wärmestrom-Bilanz an einer Gitterzelle
 
+<div class="columns">
+<div class="three">
+
 **Schlüsselfrage:** Wann ändert sich eigentlich die Temperatur $T_i$ einer einzelnen Gitterzelle mit der Zeit ($\frac{\partial T_i}{\partial t} \ne 0$)?
 
 - Fließt von links genauso viel Wärme in die Zelle hinein wie nach rechts wieder herausfließt, bleibt die gespeicherte Energie konstant $\implies$ **Temperatur $T_i$ bleibt unverändert!**
 - Die Temperatur $T_i$ ändert sich nur, wenn die **Summe der Zuflüsse** aus der linken Nachbarzelle ($i-1$) und der rechten Nachbarzelle ($i+1$) ungleich Null ist:
 
-$$\dot{q}_{\text{links}\to i} = \lambda \cdot \frac{T_{i-1} - T_i}{\Delta x}, \qquad \qquad \dot{q}_{\text{rechts}\to i} = \lambda \cdot \frac{T_{i+1} - T_i}{\Delta x}$$
+$$\dot{q}_{\text{links}\to i} = \lambda \cdot \frac{T_{i-1} - T_i}{\Delta x}, \qquad \dot{q}_{\text{rechts}\to i} = \lambda \cdot \frac{T_{i+1} - T_i}{\Delta x}$$
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Zellbilanz_Zufluss.svg)
+
+</div>
+</div>
 
 ---
 
@@ -583,14 +699,25 @@ $$\frac{\partial T_i}{\partial t} = \frac{\dot{q}_{\text{links}\to i} + \dot{q}_
 
 ### Schritt 2 zur DGL: Geometrische Bedeutung der Krümmung
 
-Was bedeutet das Vorzeichen der Krümmung $\frac{\partial^2 T}{\partial x^2} \approx \frac{(T_{i-1} - T_i) + (T_{i+1} - T_i)}{\Delta x^2}$ anschaulich für unsere Zelle $i$?
+<div class="columns">
+<div class="three">
 
-1. **Lineares Gefälle / Gerade ($\frac{\partial^2 T}{\partial x^2} = 0$, z. B. $100^\circ\mathrm{C} \to 60^\circ\mathrm{C} \to 20^\circ\mathrm{C}$):**
-   - Zufluss von links ($+40$) und Abfluss nach rechts ($-40$) heben sich exakt auf $\implies$ **Temperatur bleibt konstant** ($\frac{\partial T_i}{\partial t} = 0$).
-2. **Thermisches Tal / Delle ($\frac{\partial^2 T}{\partial x^2} > 0$, z. B. $100^\circ\mathrm{C} \to 40^\circ\mathrm{C} \to 80^\circ\mathrm{C}$):**
-   - Zelle $i$ ist kälter als ihre Nachbarn; Wärme strömt von beiden Seiten herein $\implies$ **Zelle erwärmt sich** ($\frac{\partial T_i}{\partial t} > 0$).
-3. **Thermischer Berg / Hotspot ($\frac{\partial^2 T}{\partial x^2} < 0$, z. B. $40^\circ\mathrm{C} \to 100^\circ\mathrm{C} \to 40^\circ\mathrm{C}$):**
-   - Zelle $i$ ist heißer als ihre Nachbarn; Wärme strömt nach beiden Seiten weg $\implies$ **Zelle kühlt ab** ($\frac{\partial T_i}{\partial t} < 0$).
+Was bedeutet das Vorzeichen der Krümmung $\frac{\partial^2 T}{\partial x^2} \approx \frac{T_{i+1} - 2T_i + T_{i-1}}{\Delta x^2}$ für Zelle $i$?
+
+1. **Lineares Gefälle / Gerade ($\frac{\partial^2 T}{\partial x^2} = 0$, z. B. $100^\circ \to 60^\circ \to 20^\circ\mathrm{C}$):**
+   - Zufluss links ($+40$) und Abfluss rechts ($-40$) heben sich auf $\implies$ **$T_i$ bleibt konstant** ($\frac{\partial T_i}{\partial t} = 0$).
+2. **Thermisches Tal / Delle ($\frac{\partial^2 T}{\partial x^2} > 0$, z. B. $100^\circ \to 40^\circ \to 80^\circ\mathrm{C}$):**
+   - Zelle $i$ ist kälter als Nachbarn; Wärme strömt beidseitig herein $\implies$ **$T_i$ erwärmt sich** ($\frac{\partial T_i}{\partial t} > 0$).
+3. **Thermischer Berg / Hotspot ($\frac{\partial^2 T}{\partial x^2} < 0$, z. B. $40^\circ \to 100^\circ \to 40^\circ\mathrm{C}$):**
+   - Zelle $i$ ist heißer als Nachbarn; Wärme strömt beidseitig weg $\implies$ **$T_i$ kühlt ab** ($\frac{\partial T_i}{\partial t} < 0$).
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Kruemmung_3Faelle.svg)
+
+</div>
+</div>
 
 ---
 
@@ -660,7 +787,10 @@ Auf einem quadratischen Pixelgitter ($\Delta x = \Delta y$) addieren wir die 1D-
 
 ### Anschauliche Interpretation: Der Nachbarschafts-Mittelwert
 
-Was berechnet der Zähler $L_{i,j}^n = T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 \cdot T_{i,j}^n$ eigentlich geometrisch? Klammern wir den Faktor $4$ aus, erscheint der **Durchschnittswert $\bar{T}_{\text{Nachbarn}}^n$ der 4 Nachbarpixel**:
+<div class="columns">
+<div class="three">
+
+Was berechnet der Zähler $L_{i,j}^n = T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 \cdot T_{i,j}^n$ geometrisch? Klammern wir den Faktor $4$ aus, erscheint der **Durchschnittswert $\bar{T}_{\text{Nachbarn}}^n$ der 4 Nachbarpixel**:
 
 $$L_{i,j}^n = 4 \cdot \left( \underbrace{\frac{T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n}{4}}_{\bar{T}_{\text{Nachbarn}}^n \text{ (Mittelwert der 4 Nachbarn)}} - T_{i,j}^n \right)$$
 
@@ -668,70 +798,133 @@ $$L_{i,j}^n = 4 \cdot \left( \underbrace{\frac{T_{i+1,j}^n + T_{i-1,j}^n + T_{i,
   - Ist der Durchschnitt der 4 Nachbarn **wärmer** als das Pixel selbst ($\bar{T}_{\text{Nachbarn}}^n > T_{i,j}^n$), ist $L_{i,j}^n > 0 \implies$ **Pixel erwärmt sich!**
   - Ist der Durchschnitt der 4 Nachbarn **kälter** als das Pixel selbst ($\bar{T}_{\text{Nachbarn}}^n < T_{i,j}^n$), ist $L_{i,j}^n < 0 \implies$ **Pixel kühlt ab!**
 
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Nachbar_Waage.svg)
+
+</div>
+</div>
+
 ---
 
 ### Zeitliche Diskretisierung: Expliziter Euler & Herkunft von $s$
 
-Wie gelangen wir nun von der 2D-Differentialgleichung $\frac{\partial T}{\partial t} = \alpha \cdot \left(\frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2}\right) + Q$ zur Berechnungsformel für den nächsten Zeitschritt $t_{n+1} = t_n + \Delta t$?
+<div class="columns">
+<div class="three">
 
-1. **Zeit-Ableitung links durch Vorwärts-Differenz ersetzen (Expliziter Euler aus Termin 01):**
-   $$\frac{\partial T}{\partial t} \approx \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t} \qquad \Longrightarrow \qquad \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t} = \alpha \cdot \frac{L_{i,j}^n}{\Delta x^2} + Q_{i,j}^n$$
+Wie wird aus der 2D-DGL die Update-Formel für den nächsten Zeitschritt $t_{n+1} = t_n + \Delta t$?
+
+1. **Zeit-Ableitung durch Vorwärts-Differenz ersetzen (Expliziter Euler):**
+   $$\frac{\partial T}{\partial t} \approx \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t} \implies \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t} = \alpha \cdot \frac{L_{i,j}^n}{\Delta x^2} + Q_{i,j}^n$$
 2. **Beide Seiten mit $\Delta t$ multiplizieren und nach $T_{i,j}^{n+1}$ auflösen:**
    $$T_{i,j}^{n+1} = T_{i,j}^n + \underbrace{\left(\frac{\alpha \cdot \Delta t}{\Delta x^2}\right)}_{=\, s} \cdot L_{i,j}^n + \Delta t \cdot Q_{i,j}^n$$
-- Alle drei Konstanten vor $L_{i,j}^n$ ($\alpha$ aus dem Material, $\Delta t$ aus dem Zeitschritt, $\Delta x^2$ aus dem Ortsgitter) fassen wir zum Parameter **$s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$** zusammen!
+- Die drei Konstanten vor $L_{i,j}^n$ bündeln wir zum Parameter **$s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$**!
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Euler_Zeitschritt.svg)
+
+</div>
+</div>
 
 ---
 
 ### Physikalische Bedeutung des Parameters $s$ (Diffusionszahl)
 
-Der Parameter $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$ heißt in der Numerik **dimensionslose Diffusionszahl** (bzw. **Gitter-Fourier-Zahl**):
+<div class="columns">
+<div class="three">
+
+Der Parameter $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$ heißt **dimensionslose Diffusionszahl** (**Gitter-Fourier-Zahl**):
 
 1. **Einheiten-Check (Dimensionskontrolle):**
-   $$[s] = \frac{[\alpha] \cdot [\Delta t]}{[\Delta x^2]} = \frac{(\mathrm{m^2/s}) \cdot \mathrm{s}}{\mathrm{m^2}} = \frac{\mathrm{m^2}}{\mathrm{m^2}} = 1 \quad \text{(dimensionslose Kennzahl!)}$$
+   $$[s] = \frac{[\alpha] \cdot [\Delta t]}{[\Delta x^2]} = \frac{(\mathrm{m^2/s}) \cdot \mathrm{s}}{\mathrm{m^2}} = \frac{\mathrm{m^2}}{\mathrm{m^2}} = 1 \quad \text{(dimensionslos!)}$$
 2. **Anschauliche Bedeutung (Verhältnis zweier Flächen):**
-   - **Zähler ($\alpha \cdot \Delta t$ in $[\mathrm{m^2}]$):** Fläche, über die sich Wärme in **einem Zeitschritt $\Delta t$** ausbreitet.
+   - **Zähler ($\alpha \cdot \Delta t$ in $[\mathrm{m^2}]$):** Fläche, über die sich Wärme im Schritt $\Delta t$ ausbreitet.
    - **Nenner ($\Delta x^2$ in $[\mathrm{m^2}]$):** Geometrische **Fläche eines einzelnen Gitterpixels**.
-   - **Verhältnis $s$:** Welcher Bruchteil einer Pixelfläche pro Zeitschritt thermisch überbrückt wird (Kopplungsstärke zu jedem einzelnen Nachbarpixel)!
-3. **Vorteil im Code:** Einmal vorab als `float s = alpha * dt / (dx * dx);` berechnet (keine Division im Loop).
+   - **Verhältnis $s$:** Welcher Bruchteil einer Pixelfläche pro Schritt thermisch überbrückt wird!
+3. **Im Code:** Vorab als `float s = alpha * dt / (dx * dx);` berechnet.
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Diffusionszahl_Flaeche.svg)
+
+</div>
+</div>
 
 ---
 
 ### Der Zeitschritt als gewichtete Mischung
 
-Setzen wir $L_{i,j}^n = 4 \cdot (\bar{T}_{\text{Nachbarn}}^n - T_{i,j}^n)$ in unsere Zeitschritt-Formel $T_{i,j}^{n+1} = T_{i,j}^n + s \cdot L_{i,j}^n$ (ohne Heizquelle) ein und klammern $T_{i,j}^n$ aus:
+<div class="columns">
+<div class="three">
 
-$$T_{i,j}^{n+1} = T_{i,j}^n + 4s \cdot \left(\bar{T}_{\text{Nachbarn}}^n - T_{i,j}^n\right) \quad \Longleftrightarrow \quad \boxed{T_{i,j}^{n+1} = \underbrace{(1 - 4s)}_{\text{Eigengewicht}} \cdot T_{i,j}^n + \underbrace{4s}_{\text{Nachbargewicht}} \cdot \bar{T}_{\text{Nachbarn}}^n}$$
+Setzen wir $L_{i,j}^n = 4 \cdot (\bar{T}_{\text{Nachbarn}}^n - T_{i,j}^n)$ in $T_{i,j}^{n+1} = T_{i,j}^n + s \cdot L_{i,j}^n$ (ohne Heizquelle) ein und klammern $T_{i,j}^n$ aus:
+
+$$\boxed{T_{i,j}^{n+1} = \underbrace{(1 - 4s)}_{\text{Eigengewicht}} \cdot T_{i,j}^n + \underbrace{4s}_{\text{Nachbargewicht}} \cdot \bar{T}_{\text{Nachbarn}}^n}$$
 
 - **Erkenntnis:**
-  - In jedem Zeitschritt bildet die neue Pixeltemperatur einfach eine **gewichtete Mischung** aus dem eigenen alten Wert $T_{i,j}^n$ (Gewicht $1 - 4s$) und dem Durchschnitt $\bar{T}_{\text{Nachbarn}}^n$ seiner 4 Nachbarn (Gewicht $4s$)!
+  - In jedem Zeitschritt bildet die neue Pixeltemperatur eine **gewichtete Mischung** aus dem eigenen alten Wert $T_{i,j}^n$ (Gewicht $1 - 4s$) und dem Durchschnitt $\bar{T}_{\text{Nachbarn}}^n$ seiner 4 Nachbarn (Gewicht $4s$)!
   - Die Summe beider Gewichte ist immer $(1 - 4s) + 4s = 1 = 100\,\%$.
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Gewichtete_Mischung.svg)
+
+</div>
+</div>
 
 ---
 
 ### Numerische Stabilität (Von-Neumann): Die 3 Fälle für $s$
 
-Anhand der Mischungsformel $T_{\text{neu}} = (1 - 4s) \cdot T_{\text{alt}} + 4s \cdot \bar{T}_{\text{Nachbarn}}$ verstehen wir sofort, was bei verschiedenen Werten der Diffusionszahl $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$ passiert:
+<div class="columns">
+<div class="three">
 
-1. **Stabiler Bereich $s < 0{,}25$ (z. B. $s = 0{,}20 \implies T_{\text{neu}} = 0{,}20 \cdot T_{\text{alt}} + 0{,}80 \cdot \bar{T}_{\text{Nachbarn}}$):**
-   - Beide Gewichte sind positiv. $T_{\text{neu}}$ liegt **garantiert** zwischen $T_{\text{alt}}$ und $\bar{T}_{\text{Nachbarn}}$ (*Diskretes Maximumprinzip*).
-2. **Stabilitätsgrenze $s = 0{,}25$ ($\implies T_{\text{neu}} = 0 \cdot T_{\text{alt}} + 1{,}00 \cdot \bar{T}_{\text{Nachbarn}}$):**
-   - Das Eigengewicht wird exakt Null; das Pixel übernimmt zu $100\,\%$ den Durchschnitt seiner 4 Nachbarn.
-3. **Instabiler Bereich $s > 0{,}25$ (z. B. $s = 0{,}35 \implies T_{\text{neu}} = -0{,}40 \cdot T_{\text{alt}} + 1{,}40 \cdot \bar{T}_{\text{Nachbarn}}$):**
-   - Das Eigengewicht $(1 - 4s)$ wird **negativ**! Ein $+100\,^\circ\mathrm{C}$ Punkt in $0\,^\circ\mathrm{C}$ Umgebung schießt auf **$-40\,^\circ\mathrm{C}$**, im nächsten Schritt auf **$+96\,^\circ\mathrm{C}$** usw. $\implies$ **Alternierende Gitterexplosion (`NaN`)**!
+Anhand der Mischungsformel $T_{\text{neu}} = (1 - 4s) \cdot T_{\text{alt}} + 4s \cdot \bar{T}_{\text{Nachbarn}}$ verstehen wir sofort die drei Bereiche für $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$:
+
+1. **Stabiler Bereich $s < 0{,}25$ ($s = 0{,}20 \implies 0{,}20\,T_{\text{alt}} + 0{,}80\,\bar{T}_{\text{Nachbarn}}$):**
+   - Beide Gewichte sind positiv; $T_{\text{neu}}$ liegt garantiert zwischen $T_{\text{alt}}$ und $\bar{T}_{\text{Nachbarn}}$ (*Maximumprinzip*).
+2. **Stabilitätsgrenze $s = 0{,}25$ ($\implies 0\,T_{\text{alt}} + 1{,}00\,\bar{T}_{\text{Nachbarn}}$):**
+   - Eigengewicht wird exakt Null; das Pixel übernimmt zu $100\,\%$ den Nachbar-Durchschnitt.
+3. **Instabiler Bereich $s > 0{,}25$ ($s = 0{,}35 \implies -0{,}40\,T_{\text{alt}} + 1{,}40\,\bar{T}_{\text{Nachbarn}}$):**
+   - Eigengewicht $(1 - 4s)$ wird **negativ**! $+100\,^\circ\mathrm{C}$ schießt auf $-40\,^\circ\mathrm{C}$, dann $+96\,^\circ\mathrm{C}$ $\implies$ **`NaN`-Explosion!**
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Stabilitaet_Ampel.svg)
+
+</div>
+</div>
 
 ---
 
 ### Berechnung der maximalen Zeitschrittweite $\Delta t_{\max}$
 
-Damit das Eigengewicht $(1 - 4s)$ niemals negativ wird, muss für jedes 2D-Diffusionsgitter zwingend die **Von-Neumann-Stabilitätsbedingung** eingehalten werden:
+<div class="columns">
+<div class="three">
+
+Damit das Eigengewicht $(1 - 4s)$ niemals negativ wird, muss für jedes 2D-Diffusionsgitter die **Von-Neumann-Stabilitätsbedingung** gelten:
 
 $$\boxed{1 - 4s \ge 0 \quad \Longleftrightarrow \quad s = \frac{\alpha \cdot \Delta t}{\Delta x^2} \le 0{,}25 \quad \Longleftrightarrow \quad \Delta t_{\max} = \frac{\Delta x^2}{4 \cdot \alpha_{\max}}}$$
 
-- **Konkretes Rechenbeispiel für unser Starter-Projekt (`HeatGrid.cs` im Live-Sprint):**
-  - Gegeben: $\alpha = 1{,}0 \times 10^{-4}\,\mathrm{m^2/s}$ und Gitterweite $\Delta x = 1\,\mathrm{mm} = 10^{-3}\,\mathrm{m}$.
+- **Rechenbeispiel für unser Starter-Projekt (`HeatGrid.cs`):**
+  - Gegeben: $\alpha = 1{,}0 \times 10^{-4}\,\mathrm{m^2/s}$ und $\Delta x = 1\,\mathrm{mm} = 10^{-3}\,\mathrm{m}$.
   - Kritische Zeitschrittgrenze:
-    $$\Delta t_{\max} = \frac{(10^{-3}\,\mathrm{m})^2}{4 \cdot 1{,}0 \times 10^{-4}\,\mathrm{m^2/s}} = \frac{10^{-6}}{4 \times 10^{-4}}\,\mathrm{s} = 0{,}0025\,\mathrm{s} = 2{,}5\,\mathrm{ms}$$
-  - **Vorsicht bei feineren Gittern:** Halbiert man den Pixelabstand $\Delta x$, viertelt sich $\Delta t_{\max}$!
+    $$\Delta t_{\max} = \frac{(10^{-3}\,\mathrm{m})^2}{4 \cdot 10^{-4}\,\mathrm{m^2/s}} = 0{,}0025\,\mathrm{s} = 2{,}5\,\mathrm{ms}$$
+  - **Vorsicht:** Halbiert man $\Delta x$, viertelt sich $\Delta t_{\max}$!
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Gitterfeinheit_DtMax.svg)
+
+</div>
+</div>
 
 ---
 
@@ -774,12 +967,23 @@ $$\boxed{1 - 4s \ge 0 \quad \Longleftrightarrow \quad s = \frac{\alpha \cdot \De
 
 ### Innere Isolator-Wände: Die „Kühlakku“-Stolperfalle (Sprint A3)
 
-Im heutigen Live-Sprint zeichnen wir per rechter Maustaste **thermische Isolator-Wände** ($\alpha_{x,y} = 0$) mitten in das Gitter:
+<div class="columns">
+<div class="three">
+
+Im Live-Sprint zeichnen wir per rechter Maustaste **Isolator-Wände** ($\alpha_{x,y} = 0$) mitten in das Gitter:
 
 - **Was passiert, wenn wir nur `_alphaMap[x, y] = 0` setzen?**
-  - Die Wandzelle selbst ändert ihre Temperatur zwar nicht mehr und bleibt dauerhaft auf ihrer Starttemperatur ($20\,^\circ\mathrm{C}$).
+  - Die Wandzelle ändert ihre Temperatur zwar nicht mehr und bleibt dauerhaft auf ihrer Starttemperatur ($20\,^\circ\mathrm{C}$).
   - **Aber:** Das heiße Nachbarpixel *neben* der Wand ($80\,^\circ\mathrm{C}$) liest im 5-Punkt-Stern die $20\,^\circ\mathrm{C}$ kalte Wandzelle als normalen Nachbarn!
-  - Dadurch fließt in jedem Zeitschritt Wärme aus dem heißen Pixel in die $20\,^\circ\mathrm{C}$-Wandzelle ab – die Wand wirkt wie ein **Eiswürfel / Kühlakku (Dirichlet-Senke)** statt wie eine Wärmedämmung!
+  - Dadurch fließt in jedem Schritt Wärme in die $20\,^\circ\mathrm{C}$-Wandzelle ab – die Wand wirkt wie ein **Kühlakku (Dirichlet-Senke)** statt wie eine Dämmung!
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Kuehlakku_Falle.svg)
+
+</div>
+</div>
 
 ---
 
@@ -800,26 +1004,48 @@ Damit exakt **null Wärmestrom** in ein benachbartes Isolatorpixel ($\alpha = 0$
 
 ### 3. Konvektive Randbedingung (Robin): Physikalische Bilanz
 
-Wie kühlt ein Aluminium-Kühlkörper in der Praxis (Aufgabe Track A)? An seiner Oberfläche (Randknoten $0$) strömt kühle Luft mit Temperatur $T_\infty = 25\,^\circ\mathrm{C}$ vorbei:
+<div class="columns">
+<div class="three">
 
-- **1. Wärmeleitung aus dem Metallinneren (Knoten $1$) bis zur Oberfläche (Knoten $0$):**
+Wie kühlt ein Aluminium-Kühlkörper in der Praxis (Aufgabe Track A)? An seiner Oberfläche (Randknoten $0$) strömt kühle Luft mit $T_\infty = 25\,^\circ\mathrm{C}$ vorbei:
+
+- **1. Wärmeleitung aus dem Metallinneren (Knoten $1$) zur Oberfläche ($0$):**
   $$\dot{q}_{\text{Leitung}} = \lambda \cdot \frac{T_{1,y} - T_{0,y}}{\Delta x} \quad \left[\frac{\mathrm{W}}{\mathrm{m^2}}\right]$$
-- **2. Konvektiver Wärmeübergang von der Oberfläche (Knoten $0$) an den Luftstrom ($T_\infty$):**
-  Mit dem **Wärmeübergangskoeffizienten $h$** $[\mathrm{W/(m^2 \cdot K)}]$ (z. B. $h = 250$ bei aktivem Lüfter, $h = 20$ bei Lüfterausfall):
+- **2. Konvektiver Wärmeübergang von der Oberfläche ($0$) an die Luft ($T_\infty$):**
+  Mit dem **Wärmeübergangskoeffizienten $h$** $[\mathrm{W/(m^2 \cdot K)}]$ ($h = 250$ bei aktivem Lüfter, $h = 20$ bei Lüfterausfall):
   $$\dot{q}_{\text{Konvektion}} = h \cdot \left(T_{0,y} - T_\infty\right) \quad \left[\frac{\mathrm{W}}{\mathrm{m^2}}\right]$$
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Robin_Bilanz.svg)
+
+</div>
+</div>
 
 ---
 
 ### 3. Konvektive Randbedingung (Robin): Aufgelöste Gitterformel
 
+<div class="columns">
+<div class="three">
+
 An der Oberfläche muss der aus dem Metall ankommende Wärmestrom gleich dem an die Luft abgegebenen Wärmestrom sein ($\dot{q}_{\text{Leitung}} = \dot{q}_{\text{Konvektion}}$):
 
-$$\lambda \cdot \frac{T_{1,y} - T_{0,y}}{\Delta x} = h \cdot \left(T_{0,y} - T_\infty\right) \quad \Longrightarrow \quad \boxed{T_{0,y} = \frac{\lambda \cdot T_{1,y} + (h \cdot \Delta x) \cdot T_\infty}{\lambda + h \cdot \Delta x}}$$
+$$\lambda \cdot \frac{T_{1,y} - T_{0,y}}{\Delta x} = h \cdot \left(T_{0,y} - T_\infty\right) \implies \boxed{T_{0,y} = \frac{\lambda \cdot T_{1,y} + (h \cdot \Delta x) \cdot T_\infty}{\lambda + h \cdot \Delta x}}$$
 
 - **Anschauliche Bedeutung & Grenzfall-Kontrolle:**
   - $T_{0,y}$ ist das **gewichtete Mittel** aus Innentemperatur $T_{1,y}$ (Gewicht $\lambda$) und Lufttemperatur $T_\infty$ (Gewicht $h \cdot \Delta x$).
   - **Perfekte Isolierung ($h \to 0$):** $T_{0,y} = T_{1,y}$ (**Neumann-Fall**).
   - **Unendlich starke Kühlung ($h \to \infty$):** $T_{0,y} = T_\infty$ (**Dirichlet-Fall**).
+
+</div>
+<div class="one">
+
+![h:400](./Diagramme/Mini_Robin_Grenzfaelle.svg)
+
+</div>
+</div>
 
 ---
 

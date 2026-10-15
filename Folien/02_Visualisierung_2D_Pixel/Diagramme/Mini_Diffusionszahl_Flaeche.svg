@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; text-anchor: middle; }
+      .math { font-family: 'Cambria Math', serif; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="260" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="130" y="24" class="hdr">Geometrie der Kennzahl s</text>
+  <text x="130" y="41" class="sub">Verhältnis zweier Flächen [m²/m²]</text>
+
+  <!-- Visual Area Comparison -->
+  <g transform="translate(30, 58)">
+    <!-- Outer Square: Pixel Area dx * dx -->
+    <rect x="10" y="10" width="180" height="180" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5" />
+    <text x="100" y="32" class="lbl" style="fill: #1e40af;">1 Pixel-Fläche (Nenner)</text>
+    <text x="100" y="50" class="math" style="fill: #1d4ed8;">A_Pixel = Δx · Δx = Δx²</text>
+
+    <!-- Inner Square/Circle: Thermal Diffusion Area alpha * dt -->
+    <rect x="55" y="72" width="90" height="90" rx="45" fill="#fed7aa" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="4,2" />
+    <circle cx="100" cy="117" r="5" fill="#dc2626" />
+    <text x="100" y="108" class="lbl" style="fill: #9a3412; font-size: 11px;">Wärme-Fleck</text>
+    <text x="100" y="134" class="math" style="fill: #c2410c; font-size: 12.5px;">A_Diff = α · Δt</text>
+
+    <!-- Dimension label dx -->
+    <text x="100" y="208" class="lbl" style="fill: #1e40af;">◄──── Kantenlänge Δx ────►</text>
+  </g>
+
+  <!-- Explanation Box -->
+  <g transform="translate(15, 282)">
+    <rect width="230" height="122" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="115" y="22" class="lbl" style="fill: #166534;">Flächenverhältnis s:</text>
+    <text x="115" y="46" class="math" style="fill: #15803d; font-size: 11.5px;">s = A_Diff / A_Pixel = (α·Δt) / Δx²</text>
+    <text x="115" y="70" class="sub" style="fill: #14532d;">• <tspan font-weight="bold">s ≤ 0,25:</tspan> Wärmewelle bleibt im</text>
+    <text x="115" y="86" class="sub" style="fill: #14532d;">Zeitschritt Δt innerhalb des Pixels.</text>
+    <text x="115" y="106" class="sub" style="fill: #dc2626; font-weight: bold;">• s &gt; 0,25: Überspringt Zellmitte!</text>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; text-anchor: middle; }
+      .math { font-family: 'Cambria Math', serif; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="260" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="130" y="24" class="hdr">Mischungs-Balken (100 %)</text>
+  <text x="130" y="41" class="sub">Beispiel für s = 0,15 (4s = 0,60)</text>
+
+  <!-- Stacked Mixing Cylinder -->
+  <g transform="translate(45, 58)">
+    <!-- Neighbor Weight 4s = 60% -->
+    <rect x="0" y="0" width="170" height="132" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
+    <text x="85" y="38" class="lbl" style="fill: #1e40af;">Nachbargewicht: 4s</text>
+    <text x="85" y="64" class="math" style="fill: #1d4ed8; font-size: 16px;">4s = 0,60 (60 %)</text>
+    <text x="85" y="90" class="sub" style="fill: #1e3a8a;">Anteil von T̄_Nachbarn</text>
+    <text x="85" y="108" class="sub" style="fill: #1e3a8a;">(je 1 · s pro Nachbar)</text>
+
+    <!-- Self Weight 1-4s = 40% -->
+    <rect x="0" y="136" width="170" height="96" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+    <text x="85" y="166" class="lbl" style="fill: #92400e;">Eigengewicht: 1 − 4s</text>
+    <text x="85" y="192" class="math" style="fill: #b45309; font-size: 16px;">1 − 4s = 0,40 (40 %)</text>
+    <text x="85" y="216" class="sub" style="fill: #78350f;">Anteil des alten Werts T_{i,j}^n</text>
+  </g>
+
+  <!-- Sum = 100% -->
+  <g transform="translate(15, 308)">
+    <rect width="230" height="96" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="115" y="22" class="lbl" style="fill: #166534;">Summe der Gewichte = 1 (100 %)</text>
+    <text x="115" y="46" class="math" style="fill: #15803d;">(1 − 4s) + 4s = 1,00</text>
+    <text x="115" y="68" class="sub" style="fill: #14532d;">Solange <tspan font-weight="bold">1 − 4s ≥ 0</tspan> (d. h. <tspan font-weight="bold">s ≤ 0,25</tspan>),</text>
+    <text x="115" y="84" class="sub" style="fill: #14532d; font-weight: bold;">ist die Mischung garantiert stabil!</text>
+  </g>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #1e293b; text-anchor: middle; }
+      .scale { font-family: 'Consolas', monospace; font-size: 11px; font-weight: bold; fill: #334155; }
+    </style>
+    <linearGradient id="cw" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="50%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#dc2626" />
+    </linearGradient>
+    <linearGradient id="jet" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#000080" />
+      <stop offset="25%" stop-color="#00ffff" />
+      <stop offset="50%" stop-color="#00ff00" />
+      <stop offset="75%" stop-color="#ffff00" />
+      <stop offset="100%" stop-color="#ff0000" />
+    </linearGradient>
+    <linearGradient id="vir" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#440154" />
+      <stop offset="33%" stop-color="#31688e" />
+      <stop offset="66%" stop-color="#35b779" />
+      <stop offset="100%" stop-color="#fde725" />
+    </linearGradient>
+  </defs>
+
+  <rect width="260" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="130" y="24" class="hdr">Farbpaletten im Vergleich</text>
+  <text x="130" y="41" class="sub">Normierter Wert u ∈ [0, 1]</text>
+
+  <!-- Scale labels on left -->
+  <text x="16" y="84" class="scale">u=1,0</text>
+  <text x="16" y="100" class="sub" style="text-anchor: start; fill: #dc2626;">(T_max)</text>
+
+  <text x="16" y="212" class="scale">u=0,5</text>
+  <text x="16" y="228" class="sub" style="text-anchor: start;">(Mitte)</text>
+
+  <text x="16" y="336" class="scale">u=0,0</text>
+  <text x="16" y="352" class="sub" style="text-anchor: start; fill: #2563eb;">(T_min)</text>
+
+  <!-- Bar 1: Cool-Warm -->
+  <g transform="translate(74, 72)">
+    <rect x="10" y="0" width="32" height="270" rx="4" fill="url(#cw)" stroke="#64748b" />
+    <text x="26" y="290" class="lbl">Cool-</text>
+    <text x="26" y="304" class="lbl">Warm</text>
+  </g>
+
+  <!-- Bar 2: Jet -->
+  <g transform="translate(134, 72)">
+    <rect x="10" y="0" width="32" height="270" rx="4" fill="url(#jet)" stroke="#64748b" />
+    <text x="26" y="290" class="lbl">Jet /</text>
+    <text x="26" y="304" class="lbl">Rainbow</text>
+  </g>
+
+  <!-- Bar 3: Viridis -->
+  <g transform="translate(194, 72)">
+    <rect x="10" y="0" width="32" height="270" rx="4" fill="url(#vir)" stroke="#64748b" />
+    <text x="26" y="290" class="lbl" style="fill: #15803d;">Viridis</text>
+    <text x="26" y="304" class="sub" style="fill: #166534; font-weight: bold;">(Ideal)</text>
+  </g>
+
+  <rect x="16" y="384" width="228" height="24" rx="4" fill="#f0fdf4" stroke="#86efac" />
+  <text x="130" y="400" class="sub" style="fill: #166534; font-weight: bold;">256 Stufen ➔ Array uint[256]</text>
+</svg>

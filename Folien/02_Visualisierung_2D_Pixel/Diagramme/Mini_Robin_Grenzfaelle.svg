@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; text-anchor: middle; }
+      .math { font-family: 'Cambria Math', serif; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="260" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="130" y="24" class="hdr">Robin vereint alle Ränder</text>
+  <text x="130" y="41" class="sub">Je nach Wärmeübergang h</text>
+
+  <!-- Limit 1: h -> 0 -->
+  <g transform="translate(15, 56)">
+    <rect width="230" height="106" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="115" y="22" class="lbl" style="fill: #334155;">1. Grenzfall: h ➔ 0 (Vakuum)</text>
+    <text x="115" y="46" class="sub" style="fill: #475569;">Gewicht der Luft (h·Δx) wird Null:</text>
+    <text x="115" y="70" class="math" style="fill: #0f172a;">T_{0,y} = T_{1,y}</text>
+    <text x="115" y="92" class="lbl" style="fill: #334155;">➔ Identisch zum Neumann-Rand!</text>
+  </g>
+
+  <!-- Middle: Normal Robin -->
+  <g transform="translate(15, 174)">
+    <rect width="230" height="106" rx="6" fill="#fff7ed" stroke="#fdba74" stroke-width="2" />
+    <text x="115" y="22" class="lbl" style="fill: #9a3412;">2. Praxis: 0 &lt; h &lt; ∞ (Lüfter)</text>
+    <text x="115" y="46" class="sub" style="fill: #7c2d12;">Gewichtetes Mittel (λ vs. h·Δx):</text>
+    <text x="115" y="70" class="math" style="fill: #c2410c;">T_∞  &lt;  T_{0,y}  &lt;  T_{1,y}</text>
+    <text x="115" y="92" class="lbl" style="fill: #9a3412;">➔ Realistische Rippenkühlung!</text>
+  </g>
+
+  <!-- Limit 2: h -> infinity -->
+  <g transform="translate(15, 292)">
+    <rect width="230" height="112" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="115" y="22" class="lbl" style="fill: #1e40af;">3. Grenzfall: h ➔ ∞ (Eisbad)</text>
+    <text x="115" y="46" class="sub" style="fill: #1e3a8a;">Luft-Gewicht dominiert komplett:</text>
+    <text x="115" y="70" class="math" style="fill: #1d4ed8;">T_{0,y} = T_∞ = konst.</text>
+    <text x="115" y="94" class="lbl" style="fill: #1e40af;">➔ Identisch zum Dirichlet-Rand!</text>
+  </g>
+</svg>
