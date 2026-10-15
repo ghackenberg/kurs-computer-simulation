@@ -48,55 +48,23 @@ B. P. Welford formulierte eine numerisch exzellent konditionierte Rekursionsform
 
 ## 3. Stufe A: In-Class Sprint (60 Minuten)
 
-**Thema:** Allokationsfreier Signal-Streamer mit ScottPlot 5  
-**Ziel:** Konfigurieren Sie in 60 Minuten einen `WpfPlot` mit kontinuierlichem Datenstrom und rollierender Welford-Statistik ohne GC-Spikes.
+**Basis-Projekt:** Öffnen Sie die bereitgestellte Projektvorlage `Vorlage/ScottPlotTelemetry.sln` (`CircularBuffer.cs`, `WelfordStatistics.cs`, `MainWindow.xaml.cs`).  
+Die Vorlage enthält bereits die Klassen `CircularBuffer<T>` und `WelfordStatistics` sowie ein 50-Hz-Basis-Streaming auf `Plot1` (`DataStreamer`, Kapazität 500) mit $\pm 3\sigma$-Linien.  
+**Ziel des Live-Sprints:** Decken Sie einen versteckten Garbage-Collection-Bug im 50-Hz-Timer-Loop auf, werten Sie das gleitende Zeitfenster des Ringpuffers aus und erweitern Sie den Plot um einen entprellten Anomalie-Detektor sowie einen zweiten Signalkanal!
 
-### Aufgabenstellung:
-1. Erstellen Sie ein neues WPF-Projekt `Sprint_ScottPlot5Telemetry`.
-2. Installieren Sie das NuGet-Paket `ScottPlot.WPF` (Version 5.x).
-3. Fügen Sie im XAML den Namespace und den Plot ein:
-   ```xml
-   <Window ... xmlns:sp="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF">
-       <Grid>
-           <sp:WpfPlot x:Name="Plot1"/>
-       </Grid>
-   </Window>
-   ```
-4. **ScottPlot 5 Konfiguration (Code-Behind):**
-   - Nutzen Sie den modernen `DataLogger` oder `DataStreamer`:
-     ```csharp
-     var streamer = Plot1.Plot.Add.DataStreamer(points: 1000);
-     streamer.ViewScrollLeft(); // Rollierender Oszilloskop-Modus
-     ```
-5. **Welford-Klasse implementieren:**
-   - Erstellen Sie eine kompakte Klasse `WelfordTracker`:
-     ```csharp
-     public class WelfordTracker
-     {
-         public long Count { get; private set; }
-         public double Mean { get; private set; }
-         private double _m2;
-         public double Variance => Count > 1 ? _m2 / (Count - 1) : 0;
-         public double StdDev => Math.Sqrt(Variance);
-
-         public void Add(double x)
-         {
-             Count++;
-             double delta = x - Mean;
-             Mean += delta / Count;
-             double delta2 = x - Mean;
-             _m2 += delta * delta2;
-         }
-     }
-     ```
-6. **Streaming-Timer:**
-   - Starten Sie einen `DispatcherTimer` mit $20\,\text{ms}$ Intervall ($50\,\text{Hz}$).
-   - Generieren Sie ein verrauschtes Signal: $y(t) = 100 + 15 \cdot \sin(2\pi \cdot 0{,}5 \cdot t) + \text{Rauschen}$.
-   - Füttern Sie den Streamer und den `WelfordTracker`.
-   - Aktualisieren Sie das Fenster via `Plot1.Refresh()`.
-7. **GC-Audit:**
-   - Überprüfen Sie im Visual Studio Diagnostic Tools Fenster: Die Process Memory Kurve muss flach bleiben (keine sägezahnartigen Garbage-Collection-Spikes!).
-- **Erwartetes Ergebnis:** Ein flüssig durchlaufendes, stabiles Signaldiagramm bei 50 FPS ohne UI-Lags.
+### Aufgabenstellung (Live im Hörsaal):
+1. **GC-Leak-Jagd & Fix im 50-Hz-Streaming-Loop (`MainWindow.xaml.cs`):**
+   - Starten Sie `ScottPlotTelemetry` und führen Sie die bestehenden Unit-Tests (`dotnet test`) aus (beachten Sie insbesondere `Test_Welford_CatastrophicCancellation_Resistance` mit Offset $10^9$).
+   - **Code-Audit in `OnTelemetryTick`:** Obwohl die Statusleiste *„0 Byte GC-Streaming“* verspricht, werden in `OnTelemetryTick` (bei der Farbzuweisung von `StatusBadge.Background` und `TxtStatusBadge.Foreground`) 50 Mal pro Sekunde neue `new SolidColorBrush(Color.FromRgb(...))`-Objekte auf dem Managed Heap allokiert!
+   - **Ihr Fix:** Legen Sie die benötigten `SolidColorBrush`-Instanzen einmalig als `private static readonly SolidColorBrush` Felder an, rufen Sie im statischen Konstruktor `.Freeze()` darauf auf und verwenden Sie im Timer-Tick ausschließlich diese vorallokierten Referenzen.
+2. **Gleitende Fenster-Auswertung mit `CircularBuffer<double>` (`MainWindow.xaml.cs`):**
+   - Aktuell wird in `OnTelemetryTick` zwar `_buffer.Add(signal)` aufgerufen, die im Ringpuffer gespeicherten letzten 500 Messwerte ($10\,\text{s}$ Historie) werden aber noch nirgends ausgewertet.
+   - Legen Sie ein vorallokiertes Puffer-Array `private readonly double[] _windowCopy = new double[BufferCapacity];` an (kein `new` im Timer-Tick!).
+   - Kopieren Sie in `OnTelemetryTick` den Ringpuffer via `_buffer.CopyTo(_windowCopy)` und berechnen Sie in einer einfachen `for`-Schleife (bis `_buffer.Count`) den **gleitenden Fenster-Mittelwert** sowie **Fenster-Min/Max** der letzten 10 Sekunden. Geben Sie diese Werte in der Statusleiste (`TxtFooter`) im Vergleich zum globalen Langzeit-Welford-Mittelwert aus.
+3. **Entprellte Anomalie-Erkennung & 2. Signalkanal (Sollwert-Spur):**
+   - **Anomalie-Zähler & Entprellung:** Erweitern Sie die Anomalie-Überwachung um einen Gesamtzähler `_anomalyCount` sowie eine Haltezeit von 25 Ticks ($0{,}5\,\text{s}$), damit ein kurzer Ausreißer-Peak im UI-Badge sichtbar bleibt und gezählt wird.
+   - **Zweiter Kanal im `WpfPlot`:** Fügen Sie einen zweiten `DataStreamer` (`_referenceStreamer = Plot1.Plot.Add.DataStreamer(BufferCapacity)`) in grüner oder oranger Farbe hinzu, der das ungestörte ideale Referenzsignal $y_{\text{ref}}(t) = 100 + 15 \cdot \sin(2\pi \cdot 0{,}5 \cdot t)$ synchron zum verrauschten Messsignal plottet.
+- **Erwartetes Ergebnis:** Ein zweikanaliger 50-Hz-Echtzeit-Leitstand mit 0 Byte Heap-Allokation im Render-Loop, gleitender 10-Sekunden-Fensterstatistik und entprellter $3\sigma$-Anomalie-Anzeige.
 
 ---
 

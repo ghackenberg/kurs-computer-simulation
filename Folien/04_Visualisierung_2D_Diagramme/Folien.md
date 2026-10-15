@@ -376,8 +376,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Herausforderungen bei kontinuierlichen Simulationsdatenströmen
 - Das Ringpuffer-Muster (Circular Buffer / Rolling Window)
 - Vermeidung von Speicherallokationen und Garbage-Collection-Latenzen
-- Thread-Entkopplung: Schnelle Simulation vs. menschliches Anzeigefenster
-- UI-Refresh-Strategie mit `DispatcherTimer`
+- ScottPlot 5 `DataStreamer` & Oszilloskop-Darstellung
+- Numerisch stabile Online-Statistik nach Welford ($\pm 3\sigma$-Toleranzband)
 
 ---
 
@@ -444,44 +444,85 @@ public void CopyTo(double[] dest)
 
 ---
 
-### UI-Refresh-Strategie mit `DispatcherTimer`
+### UI-Refresh-Strategie mit `DispatcherTimer` & `DataStreamer`
 
 <div class="columns">
 <div class="one">
 
-**Setup im Window / ViewModel:**
+**ScottPlot 5 `DataStreamer` (Oszilloskop):**
 ```csharp
-private readonly SimulationRingBuffer 
-    _buffer = new(capacity: 2000);
-private readonly double[] 
-    _renderCopy = new double[2000];
-private ScottPlot.Plottables.Signal _livePlot;
+private DataStreamer _streamer;
+private HorizontalLine _meanLine, _upperLine;
 
 private void InitPlot()
 {
-    _livePlot = 
-        WpfPlot1.Plot.Add.Signal(_renderCopy);
-    _livePlot.Data.Period = 0.001; // 1 ms dt
+    // Vorallokierter Ringpuffer in ScottPlot 5
+    _streamer = WpfPlot1.Plot.Add.DataStreamer(500);
+    _streamer.ViewScrollLeft(); // Rollierend
+
+    // Dynamische Referenzlinien (z.B. +-3 Sigma)
+    _meanLine = WpfPlot1.Plot.Add.HorizontalLine(100);
+    _upperLine = WpfPlot1.Plot.Add.HorizontalLine(115);
 }
 ```
 
 </div>
 <div class="one">
 
-**Timer-Taktung (~30 FPS):**
+**Timer-Taktung (50 Hz = 20 ms):**
 ```csharp
-private void StartTimer()
+private void OnTelemetryTick(object? s, EventArgs e)
 {
-    var timer = new DispatcherTimer { 
-        Interval = TimeSpan.FromMilliseconds(33) 
-    };
-    timer.Tick += (s, e) =>
+    double y = ReadNextSensorSample();
+    _streamer.Add(y);      // 0 B GC-Allokation
+    _welford.Add(y);       // O(1) Online-Statistik
+
+    _meanLine.Y = _welford.Mean;
+    _upperLine.Y = _welford.Mean + 3 * _welford.StdDev;
+
+    // Wichtig: Keine 'new SolidColorBrush()' im Tick!
+    WpfPlot1.Refresh();
+}
+```
+
+</div>
+</div>
+
+---
+
+### Online-Statistik im Datenstrom: Welford-Algorithmus (1962)
+
+<div class="columns">
+<div class="two">
+
+- **Problem der naiven Varianzformel:**
+  $$s^2 = \frac{1}{k-1}\left(\sum x_i^2 - \frac{1}{k}\left(\sum x_i\right)^2\right)$$
+  Subtraktion zweier fast gleich großer Riesenzahlen führt bei $k \gg 10^4$ zu **katastrophaler Auslöschung** (sogar $s^2 < 0$!).
+- **Lösung: Rekursion nach B. P. Welford ($O(1)$ Zeit & Speicher):**
+  $$\bar{x}_k = \bar{x}_{k-1} + \frac{x_k - \bar{x}_{k-1}}{k}, \quad S_k = S_{k-1} + (x_k - \bar{x}_{k-1})(x_k - \bar{x}_k)$$
+  $$s_k^2 = \frac{S_k}{k-1}, \quad \sigma_k = \sqrt{s_k^2}, \quad \text{Toleranzband: } \bar{x}_k \pm 3\sigma_k \; (99{,}73\,\%)$$
+
+</div>
+<div class="one">
+
+```csharp
+public class WelfordStatistics
+{
+    public long Count { get; private set; }
+    public double Mean { get; private set; }
+    public double M2 { get; private set; }
+    public double Variance =>
+        Count > 1 ? M2 / (Count - 1) : 0.0;
+    public double StdDev => Math.Sqrt(Variance);
+
+    public void Add(double x)
     {
-        _buffer.CopyTo(_renderCopy);
-        WpfPlot1.Plot.Axes.AutoScale();
-        WpfPlot1.Refresh();
-    };
-    timer.Start();
+        Count++;
+        double delta = x - Mean;
+        Mean += delta / Count;
+        double delta2 = x - Mean;
+        M2 += delta * delta2;
+    }
 }
 ```
 

@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutomaticGraphLayout.WpfGraphControl" Version="1.1.12" />
     <PackageReference Include="ScottPlot.WPF" Version="5.1.59" />
   </ItemGroup>
 

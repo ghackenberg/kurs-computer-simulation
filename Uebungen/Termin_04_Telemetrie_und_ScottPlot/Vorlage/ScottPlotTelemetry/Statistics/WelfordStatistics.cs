@@ -77,20 +77,24 @@ public class WelfordStatistics
     }
 
     // =========================================================================
-    // TODO: [Stufe A Sprint]
-    // - Binden Sie WelfordStatistics an den 50 Hz Streaming-Loop an.
-    // - Zeichnen Sie die horizontale Mittelwertlinie und das +/- 3-Sigma-Band in ScottPlot 5.
+    // TODO: [Stufe A In-Class Sprint (in MainWindow.xaml.cs)]
+    // 1. GC-Leak-Fix: Ersetzen Sie die 'new SolidColorBrush(...)' Allokationen
+    //    in OnTelemetryTick durch statische, eingefrorene (Freeze()) Brushes.
+    // 2. Gleitende Fenster-Statistik: Lesen Sie _buffer via CopyTo in ein
+    //    vorallokiertes Array double[] _windowCopy aus (Min/Max/Mean der letzten 500 Samples).
+    // 3. Entprellter Anomalie-Zähler + 2. DataStreamer für das ungestörte Referenzsignal.
     // =========================================================================
 
     // =========================================================================
     // TODO: [Stufe B Track A: Industrie - Antriebsprüfstand]
     // - Mehrkanal-Tracking: Instanziieren Sie Tracker für Drehzahl n(t), Moment M(t), Schwingung a(t).
     // - Alarmierung: Detektieren Sie Kavitation/Schlupf bei > 3 konsekutiven Grenzwertverletzungen.
-    // - ScottPlot 5 Phasenraum-Betriebskennfeld (M vs n) und Histogramm für Schwingungen.
+    // - ScottPlot 5 Phasenraum-Betriebskennfeld (M vs n), Schwingungs-Histogramm & MSAGL-Graph.
     // =========================================================================
 
     // =========================================================================
     // TODO: [Stufe B Track B: Simulation Game - Retro Racing HUD]
     // - Telemetrie für Geschwindigkeit v(t), Querbeschleunigung a_y(t) und Motordrehzahl RPM.
+    // - Kamm'scher Kreis (a_y vs a_x Scatter), Brems-Histogramm & MSAGL-Streckentopologie.
     // =========================================================================
 }
