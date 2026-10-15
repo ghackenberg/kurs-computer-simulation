@@ -77,6 +77,7 @@ $$I = I_{\text{a}} k_{\text{a}} + I_{\text{d}} k_{\text{d}} (\vec{n} \cdot \vec{
    - Öffnen Sie `MainWindow.xaml.cs` und vergleichen Sie `BuildSceneGraph()` mit `RenderRobot(OpenGL gl)`: Aktuell wird `_rootNode` zwar für `GetWorldPosition()` genutzt, aber `RenderRobot(gl)` zeichnet die Geometrie über manuell duplizierte `gl.PushMatrix()`-Aufrufe, statt `_rootNode.Render(gl)` aufzurufen!
 2. **Aufgabe A1 – Szenengraph-Rendering vereinen (`RenderCustomGeometry` & `_rootNode.Render`):**
    - Weisen Sie in `BuildSceneGraph()` jedem Knoten (`_baseNode`, `_arm1Node`, `_arm2Node`, `_pinoleNode`) über die Eigenschaft `RenderCustomGeometry = gl => { ... }` seine lokale Zeichenlogik zu.
+   - *Wichtiger Hinweis zur Skalierung:* Behalten Sie `gl.PushMatrix(); gl.Translate(L1 / 2.0f, 0, 0); gl.Scale(L1, 0.14f, 0.18f); DrawCube(gl); gl.PopMatrix();` **innerhalb** von `RenderCustomGeometry` bei (setzen Sie **nicht** `_arm1Node.Sx = L1`, da eine Knotenskalierung über den Matrix-Stack auch alle Kindknoten wie `_arm2Node` und `_pinoleNode` verzerren würde!).
    - Ersetzen Sie den gesamten Rumpf von `RenderRobot(OpenGL gl)` durch den einzigen rekursiven Aufruf `_rootNode.Render(gl);`.
    - Überprüfen Sie, dass der Roboter optisch exakt gleich aussieht und der Deckungsfehler $\Delta = 0{,}000\,\text{mm}$ erhalten bleibt.
 3. **Aufgabe A2 – Kamera-Panning mit rechter Maustaste (`OrbitCamera.Pan`):**

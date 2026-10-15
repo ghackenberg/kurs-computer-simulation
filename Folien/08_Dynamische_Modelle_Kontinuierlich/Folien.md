@@ -800,7 +800,7 @@ public class ConstantBlock : Block
     }
 
     public override void CalculateOutputs(double time, 
-        double[] cStates, double[] dStates, double[] inputs, double[] outputs)
+        double[] cStates, double[] inputs, double[] outputs)
     {
         outputs[0] = Value;
     }
@@ -1731,26 +1731,29 @@ public class ClosedLoopMotorBlock : Block
     public double Tm = 0.05, Km = 2.5, UMax = 10.0;
     public double TargetPosition = 1.0; // Sollwert: 1 Radian Sprung
 
-    public ClosedLoopMotorBlock()
+    public ClosedLoopMotorBlock(string name = "DCServo") : base(name)
     {
         // 3 kontinuierliche Zustände: theta, omega, x_I
-        ContinuousStates.AddRange(new[] { 0.0, 0.0, 0.0 });
+        ContinuousStates.Add(new StateDeclaration("Theta"));
+        ContinuousStates.Add(new StateDeclaration("Omega"));
+        ContinuousStates.Add(new StateDeclaration("IntegralError"));
     }
 }
 ```
 
 - Kapselt die Streckenparameter, Reglerverstärkungen und Begrenzungsschranken.
-- Drei Zustandsvariablen werden im gemeinsamen Vektor des Modells registriert.
+- *(Hinweis: In der Laborvorlage `Termin_08` ist diese Block-Schnittstelle noch kompakter als `ISFunction` mit `ComputeDerivatives(double t, double[] x, double[] u)` zusammengefasst).*
 
 ---
 
 ### C#-Implementierung: `ClosedLoopMotorBlock` (Dynamik)
 
 ```csharp
-public override void CalculateDerivatives(double time)
+public override void CalculateDerivatives(
+    double time, double[] cStates, double[] inputs, double[] derivatives)
 {
-    double theta = ContinuousStates[0], omega = ContinuousStates[1];
-    double xI = ContinuousStates[2], error = TargetPosition - theta;
+    double theta = cStates[0], omega = cStates[1];
+    double xI = cStates[2], error = TargetPosition - theta;
     double uRaw = Kp * error + xI - Kd * omega; // D-Anteil auf Istwert
     double uSat = Math.Clamp(uRaw, -UMax, UMax);
 
@@ -1758,9 +1761,9 @@ public override void CalculateDerivatives(double time)
     bool isSat = Math.Abs(uRaw) >= UMax, sameSign = (error * uRaw) > 0.0;
     double dxI = (isSat && sameSign) ? 0.0 : Ki * error;
 
-    Derivatives[0] = omega;
-    Derivatives[1] = (-1.0 / Tm) * omega + (Km / Tm) * uSat;
-    Derivatives[2] = dxI;
+    derivatives[0] = omega;
+    derivatives[1] = (-1.0 / Tm) * omega + (Km / Tm) * uSat;
+    derivatives[2] = dxI;
 }
 ```
 

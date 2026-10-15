@@ -767,9 +767,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Kriterien für eine erfolgreiche Projektarbeit (1/2)
+### Kriterien für Ihr Code-Portfolio & zukünftige F&E-Projekte (1/2)
 
-Für die Umsetzung Ihrer simulationsbezogenen Semesteraufgabe gelten folgende Qualitätsmaßstäbe:
+Für Ihr 10-teiliges C#-Simulations-Portfolio, zukünftige F&E-Projekte und Ihre Bachelorarbeit gelten folgende Qualitätsmaßstäbe:
 
 <div class="columns top">
 <div>

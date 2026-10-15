@@ -183,7 +183,9 @@ namespace HybridZeroCrossing.Models
                 // TODO [Aufgabe A1]:
                 // 1. Zählen Sie `BounceCount++` auch im naiven Modus hoch!
                 // 2. Speichern Sie die maximale Bodenpenetration: `if (penetration > MaxPenetration) MaxPenetration = penetration;`
-                // 3. Berechnen Sie vor und nach der Geschwindigkeitsumkehr `ComputeTotalEnergy(xNext)` und aktualisieren Sie `LastEnergyRatio`!
+                // 3. Berechnen Sie vor dem Schritt `double eBefore = ComputeTotalEnergy(x);` und nach der Geschwindigkeitsumkehr
+                //    `double eAfter = ComputeTotalEnergy(xNext);` und aktualisieren Sie `LastEnergyRatio = eAfter / eBefore;`
+                //    (damit der unphysikalische Energiefehler durch die zusätzliche Falltiefe unter dem Boden sichtbar wird)!
 
                 if (Math.Abs(xNext[1]) < VStick)
                 {

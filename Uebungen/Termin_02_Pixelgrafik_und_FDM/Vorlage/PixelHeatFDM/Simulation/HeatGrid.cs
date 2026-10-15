@@ -204,6 +204,8 @@ public class HeatGrid
     //    beobachten Sie das Schachbrett-Oszillationsmuster bis zum Magenta-Überlauf.
     // 2. Ortsabhängiges Materialgitter: Ergänzen Sie ein Array float[,] _alphaMap,
     //    sodass Step() lokal mit s_xy = (_alphaMap[x, y] * Dt) / (Dx * Dx) rechnet.
+    //    WICHTIG: Spiegeln Sie an Isolator-Nachbarn (_alphaMap[nx, ny] == 0) die
+    //    Temperatur tCenter (Neumann-Rand dT/dn = 0), damit keine Wärme in die Wand abfließt!
     // 3. Maus-Interaktion (mit MainWindow.xaml.cs): Erlauben Sie per Linksklick
     //    das Einzeichnen von 100 °C Hotspots und per Rechtsklick das Setzen von
     //    Isolator-Wänden (_alphaMap[x, y] = 0).

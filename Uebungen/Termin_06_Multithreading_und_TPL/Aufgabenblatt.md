@@ -110,7 +110,7 @@ In der automatisierten Serienfertigung (z. B. Getriebe- oder Spindellagerung) ad
 │ TRACK A: STATISTISCHE MASSKETTE (N = 10.000.000 MONTAGEN)              │
 │                                                                        │
 │   Gehäuse L_1          Innenring L_2      Scheibe L_3     Welle L_4    │
-│   [Normal / Gauss]     [Gleichverteilt]   [Log-Normal]    [Normal]     │
+│   [Normal / Gauss]     [Gleichverteilt]   [Normal / Gauss] [Normal]    │
 │   ───────────────►     ───────────────►   ───────────►    ────────►    │
 │                                                                        │
 │   Axiales Passungsspiel: S = L_1 - (L_2 + L_3 + L_4)                   │

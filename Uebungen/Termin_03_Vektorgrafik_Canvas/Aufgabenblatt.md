@@ -211,4 +211,4 @@ Verwende saubere Vektorrechnung (System.Numerics.Vector2) und binde KEINE FEM- o
 3. **Kausalitäts- und Vorgreif-Check:**  
    *„Wurde die Vorgreif-Sperre strikt eingehalten (kein vorzeitiges Lösen von Gleichungssystemen oder FEM-Rechnungen vor T07)? Konzentriert sich die Architektur rein auf saubere Vektordarstellung und Interaktion?“*
 4. **Performance beim Drag-and-Drop:**  
-   *„Werden bei jedem Maus-Move neue WPF-Shapes erzeugt und auf den Canvas geklatscht (Memory Leak), oder werden die bestehenden Koordinaten der Shapes (`X1, Y1, X2, Y2`, `Points`) dynamisch aktualisiert?“*
+   *„Werden Brushes/Pens vorab eingefroren (`Freeze()`) und bei größeren Tragwerken bestehende WPF-Shapes (`X1, Y1, X2, Y2`, `Points`) bzw. `DrawingVisual` aktualisiert, statt ungebremst tausende ungefreezte Objekte im Heap zu erzeugen?“*

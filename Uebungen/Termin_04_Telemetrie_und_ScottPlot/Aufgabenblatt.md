@@ -110,6 +110,7 @@ Auf einem mechatronischen Motorprüfstand für Elektroantriebe werden Drehzahl $
 4. **Anlagentopologie mit MSAGL (`Microsoft.Msagl.WpfGraphControl`):**
    - Gerichteter Antriebsstrang-Graph: `[Umrichter] -> [E-Motor] -> [Kupplung] -> [Getriebe] -> [Lastbremse]`.
    - Sensor-Knoten färben sich bei Toleranzüberschreitung von Grün auf Rot.
+   - *(Hinweis: Das NuGet-Paket `AutomaticGraphLayout.WpfGraphControl` ist in `ScottPlotTelemetry.csproj` bereits vorinstalliert; der Namespace lautet `Microsoft.Msagl.WpfGraphControl`).*
 
 ---
 

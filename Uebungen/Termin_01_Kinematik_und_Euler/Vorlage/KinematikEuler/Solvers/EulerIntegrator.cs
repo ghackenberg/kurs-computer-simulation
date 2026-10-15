@@ -64,17 +64,37 @@ public static class EulerIntegrator
         return new KinematicState(tImpact, xImpact, 0.0, vxImpact, vyImpact);
     }
 
-    // =========================================================================
-    // TODO: [Stufe A Sprint]
-    // - Experimentieren Sie mit verschiedenen Schrittweiten Delta t (z.B. 0.1s vs 0.01s).
-    // - Vergleichen Sie die berechnete Wurfweite x_impact mit der analytischen Lösung.
-    // =========================================================================
+    /// <summary>
+    /// Führt einen Prädiktor-Korrektor-Integrationsschritt nach Heun (Runge-Kutta 2. Ordnung) aus:
+    /// 1. Prädiktor (Euler-Hilfsschritt): x_tilde = x_k + dt * f(t_k, x_k)
+    /// 2. Korrektor (Trapez-Mittelung):   x_{k+1} = x_k + (dt / 2) * [ f(t_k, x_k) + f(t_k + dt, x_tilde) ]
+    /// </summary>
+    public static KinematicState StepHeun(
+        KinematicState current,
+        double dt,
+        Func<KinematicState, (double ax, double ay)> accelerationFunc)
+    {
+        // TODO [Stufe A Aufgabe A2 & Stufe B]:
+        // 1. Steigung k1 am Intervallanfang t_k berechnen: var (ax1, ay1) = accelerationFunc(current);
+        // 2. Prädiktor-Zustand (Euler-Schritt) tildeState = StepEuler(current, dt, accelerationFunc) bilden.
+        // 3. Steigung k2 am Intervallende t_{k+1} berechnen: var (ax2, ay2) = accelerationFunc(tildeState);
+        // 4. Mittelwert aus Anfangs- und Endsteigung für X, Y, Vx, Vy anwenden:
+        var (ax1, ay1) = accelerationFunc(current);
+        KinematicState predictor = StepEuler(current, dt, accelerationFunc);
+        var (ax2, ay2) = accelerationFunc(predictor);
+
+        double nextTime = current.Time + dt;
+        double nextX = current.X + 0.5 * dt * (current.Vx + predictor.Vx);
+        double nextY = current.Y + 0.5 * dt * (current.Vy + predictor.Vy);
+        double nextVx = current.Vx + 0.5 * dt * (ax1 + ax2);
+        double nextVy = current.Vy + 0.5 * dt * (ay1 + ay2);
+
+        return new KinematicState(nextTime, nextX, nextY, nextVx, nextVy);
+    }
 
     // =========================================================================
     // TODO: [Stufe B Track A: Industrie - Hydraulikzylinder-Endlagendämpfung]
-    // - Implementieren Sie den Heun-Integrator (Prädiktor-Korrektor / RK2):
-    //     x_tilde = x_k + dt * f(t_k, x_k)
-    //     x_{k+1} = x_k + (dt / 2) * [ f(t_k, x_k) + f(t_k + dt, x_tilde) ]
+    // - Nutzen Sie StepEuler und StepHeun für den Konvergenzvergleich am Zylinder.
     // - Implementieren Sie die nichtlineare Zylinderkraft mit Blendenreibung:
     //     F_daempf = d_lin * v + c_blend * v * |v|
     // - Untersuchen Sie die Stabilitätsgrenze am Kontaktanschlag (c_kontakt, d_kontakt).

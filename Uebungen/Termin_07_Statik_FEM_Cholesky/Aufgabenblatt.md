@@ -102,7 +102,7 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
 
 1. **Aufgabe A1 – Auflager-Symbole sowie Last- und Reaktionskraft-Pfeile in `RenderCanvas()` ergänzen:**
    - Starten Sie `TrussFemSolver` und verifizieren Sie, dass die Telemetrie exakt `Max. Verschiebung: 1,823 mm` und `F_y1: 5,00 kN | F_y2: 5,00 kN` anzeigt.
-   - Aktuell zeichnet `RenderCanvas()` in `MainWindow.xaml.cs` nur Stäbe und Knotenpunkte, aber **keine Lager und keine Kräfte**. Ergänzen Sie in `RenderCanvas()`:
+   - Aktuell zeichnet `RenderCanvas()` in `MainWindow.xaml.cs` nur Stäbe und Knotenpunkte, aber **keine Lager und keine Kräfte**. Ergänzen Sie in `RenderCanvas()` *(Tipp: Sie können `VectorArrow.cs` und Ihre Lager-Zeichenmethode direkt aus Ihrem `Termin_03`-Projekt `VectorTrussCanvas` übernehmen!)*:
      - **Auflager-Dreiecke** für Knoten mit gesperrten Freiheitsgraden (`_currentModel.FixedDofs`): Festlager ($X$ und $Y$ gesperrt) als volles Dreieck, Loselager (nur $Y$ gesperrt) mit zusätzlicher horizontaler Rollenspur.
      - **Kraftpfeile:** Rote Kraftpfeile für alle angreifenden äußeren Lasten (`_currentModel.ExternalForces[dof] != 0`) und grüne Kraftpfeile für die berechneten Auflagerreaktionen (`_currentSolution.ReactionForces`).
 2. **Aufgabe A2 – 5-Knoten-Auslegerkran (`CreateCantileverSprintModel`) modellieren:**
@@ -212,11 +212,11 @@ Im Simulationsspiel-Klassiker *Bridge Constructor* entwerfen Spieler Brücken ü
    - Übersteigt $|N_i| > N_{\text{zul}}$, **bricht der Stab**:
      - Der Stab wird aus der Topologie und der Steifigkeitsmatrix gelöscht.
      - Es wird versucht, das verbleibende System neu zu lösen.
-     - **Abfangen von Instabilitäten:** Wird das Resttragwerk kinematisch instabil (Mechanismus), ist $\mathbf{K}_{ff}$ nicht mehr positiv definit! Fangen Sie `NonPositiveDefiniteException` ab:
+     - **Abfangen von Instabilitäten:** Wird das Resttragwerk kinematisch instabil (Mechanismus), ist $\mathbf{K}_{ff}$ nicht mehr positiv definit! Fangen Sie die `ArgumentException` (von `MathNet.Numerics` bei `Cholesky()`) bzw. `InvalidOperationException` (aus `CholeskySolver.Solve()`) sauber ab:
        ```csharp
        try {
            uf = K_ff.Cholesky().Solve(f_f);
-       } catch (NonPositiveDefiniteException) {
+       } catch (Exception ex) when (ex is ArgumentException or InvalidOperationException) {
            TriggerBridgeCollapse();
        }
        ```
@@ -275,5 +275,5 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 1. **Globales Gleichgewicht & Invarianten-Check:** Ergibt die Vektorsumme aller Auflagerkräfte $\mathbf{f}_p$ plus der aktuellen Wanderlast exakt $\vec{0}$? *(Auditorium-Test: Live-Abfrage von $\sum F_y$ am Beamer – weicht der Wert um mehr als $10^{-9}\,\text{N}$ ab?)*
 2. **Mathematische Partitionierung vs. Diagonale-Tricks:** Wurde das LGS sauber über Submatrizen partitioniert, oder wurden Lagerbedingungen durch Überschreiben von Zeilen mit $1{,}0$ und $0$ erzwungen (was die Cholesky-Symmetrie zerstören kann)?
-3. **Verhalten bei Mechanismen / Stabbruch:** Was geschieht in Track B, wenn ein zentraler Stab entfernt wird? Fängt der Code die singuläre Matrix sauber über einen Try-Catch-Block für `NonPositiveDefiniteException` ab, oder stürzt die WPF-Anwendung mit einem unbehandelten Fehler ab?
+3. **Verhalten bei Mechanismen / Stabbruch:** Was geschieht in Track B, wenn ein zentraler Stab entfernt wird? Fängt der Code die singuläre Matrix sauber über einen Try-Catch-Block (`ArgumentException` / `InvalidOperationException`) ab, oder stürzt die WPF-Anwendung mit einem unbehandelten Fehler ab?
 4. **Physikalische Plausibilität der Verformung:** Verformen sich die Stäbe stetig unter der wandernden Last, oder springen Knoten sprunghaft hin und her (was auf falsche Indizierung in der Assemblierungsschleife hinweist)?

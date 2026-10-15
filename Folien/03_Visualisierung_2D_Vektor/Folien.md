@@ -256,7 +256,7 @@ public class CoordinateTransformer
     public void Update(Rect w, double cW, double cH, double margin)
     {
         _xMin = w.Left;
-        _yMax = w.Top; // Höchster Y-Wert kartesisch
+        _yMax = w.Bottom; // Höchster Y-Wert (w.Y + w.Height)
         double drawW = Math.Max(0, cW - 2 * margin);
         double drawH = Math.Max(0, cH - 2 * margin);
         _scale = Math.Min(drawW / w.Width, drawH / w.Height);
@@ -455,14 +455,14 @@ private void OnMouseWheel(object sender, MouseWheelEventArgs e)
 Damit die Maus bei schnellen Bewegungen nicht "abreißt", wird **`CaptureMouse()`** genutzt:
 
 ```csharp
-private Point _lastPos;
+private Point _lastMousePos;
 private bool _isPanning;
 
 private void OnMouseDown(object s, MouseButtonEventArgs e)
 {
     if (e.MiddleButton != MouseButtonState.Pressed && 
         e.LeftButton != MouseButtonState.Pressed) return;
-    _lastPos = e.GetPosition(this);
+    _lastMousePos = e.GetPosition(this);
     _isPanning = true;
     ((IInputElement)s).CaptureMouse();
 }
@@ -528,10 +528,7 @@ public Point ScreenToWorld(
     Point unzoomed = invMatrix.Transform(screenPixel);
 
     // 2. Viewport-Projektion analytisch invertieren (Pixel -> Meter):
-    double worldX = _xMin + (unzoomed.X - _xOffset) / _scale;
-    double worldY = _yMax - (unzoomed.Y - _yOffset) / _scale; // Y-Achse invertieren
-
-    return new Point(worldX, worldY);
+    return trans.ScreenToWorld(unzoomed);
 }
 ```
 

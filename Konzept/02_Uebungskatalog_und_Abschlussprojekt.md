@@ -20,16 +20,16 @@
    - 1.5 Architektur- und Software-Qualitätsstandards („Goldene Regel“)
    - 1.6 Test-Driven Simulation & CI-Workflows
 2. [Kapitelweiser Aufgabenkatalog (Einheit 01 bis 10)](#2-kapitelweiser-aufgabenkatalog-einheit-01-bis-10)
-   - [Einheit 01: „Industrie-Löschmonitor vs. Retro Tank Duel“ (Ballistik & Luftwiderstand)](#einheit-01-industrie-löschmonitor-vs-retro-tank-duel-ballistik--luftwiderstand)
-   - [Einheit 02: „Gamer-PC Kühlkörper-Optimizer vs. Waldbrand-Ausbreitung“ (WriteableBitmap FDM)](#einheit-02-gamer-pc-kühlkörper-optimizer-vs-waldbrand-ausbreitung-writeablebitmap-fdm)
+   - [Einheit 01: „Hydraulikzylinder-Dämpfung vs. Artillery Strike / Retro Tanks“ (Kinematik, Euler & Heun)](#einheit-01-hydraulikzylinder-dämpfung-vs-artillery-strike--retro-tanks-kinematik-euler--heun)
+   - [Einheit 02: „CPU-Kühlkörper-Optimierung vs. Falling Sand & Doom Fire“ (WriteableBitmap FDM)](#einheit-02-cpu-kühlkörper-optimierung-vs-falling-sand--doom-fire-writeablebitmap-fdm)
    - [Einheit 03: „2D-CAD Fachwerkträger-Viewer vs. Space Radar / Blueprint Sketcher“ (WPF Canvas Vektoren)](#einheit-03-2d-cad-fachwerkträger-viewer-vs-space-radar--blueprint-sketcher-wpf-canvas-vektoren)
-   - [Einheit 04: „Industrie-Prüfstand vs. Retro Arcade Telemetry“ (ScottPlot 5 Streaming)](#einheit-04-industrie-prüfstand-vs-retro-arcade-telemetry-scottplot-5-streaming)
-   - [Einheit 05: „3D-Portalroboter vs. Arcade Claw Machine“ (SharpGL 3D-Szenengraph)](#einheit-05-3d-portalroboter-vs-arcade-claw-machine-sharpgl-3d-szenengraph)
-   - [Einheit 06: „Partikelsturm-Benchmark vs. Zombie-Horde“ (TPL Parallel.For & Cache-Lokalität)](#einheit-06-partikelsturm-benchmark-vs-zombie-horde-tpl-parallelfor--cache-lokalität)
-   - [Einheit 07: „Gittermastkran vs. Achterbahn-Tragwerk & Bridge Solver“ (Math.NET Cholesky-LGS & FEM)](#einheit-07-gittermastkran-vs-achterbahn-tragwerk--bridge-solver-mathnet-cholesky-lgs--fem)
-   - [Einheit 08: „Segway-Balancer vs. SpaceX Falcon Hop“ (S-Function, RK4 & PID Anti-Windup)](#einheit-08-segway-balancer-vs-spacex-falcon-hop-s-function-rk4--pid-anti-windup)
-   - [Einheit 09: „Fertigungslogistik vs. Freizeitpark-Express-Pass“ (Diskrete Ereignissimulation DES)](#einheit-09-fertigungslogistik-vs-freizeitpark-express-pass-diskrete-ereignissimulation-des)
-   - [Einheit 10: „Pneumatischer Taktvorschub vs. Flipperautomat Pinball“ (Hybride Systeme & Zero-Crossing)](#einheit-10-pneumatischer-taktvorschub-vs-flipperautomat-pinball-hybride-systeme--zero-crossing)
+   - [Einheit 04: „1-kHz-Vibrationsmonitoring vs. Retro Arcade Racing Telemetry“ (ScottPlot 5 Streaming)](#einheit-04-1-khz-vibrationsmonitoring-vs-retro-arcade-racing-telemetry-scottplot-5-streaming)
+   - [Einheit 05: „4-Achs-SCARA-Roboterarm vs. 3D Arcade Claw Crane“ (SharpGL 3D-Szenengraph)](#einheit-05-4-achs-scara-roboterarm-vs-3d-arcade-claw-crane-sharpgl-3d-szenengraph)
+   - [Einheit 06: „Parallele Monte-Carlo-Toleranzanalyse vs. 100.000 Boids / Zombie-Horde“ (TPL Parallel.For)](#einheit-06-parallele-monte-carlo-toleranzanalyse-vs-100000-boids--zombie-horde-tpl-parallelfor)
+   - [Einheit 07: „Portalkran-Verformung vs. Bridge Constructor Physics Engine“ (Math.NET Cholesky-LGS & FEM)](#einheit-07-portalkran-verformung-vs-bridge-constructor-physics-engine-mathnet-cholesky-lgs--fem)
+   - [Einheit 08: „DC-Servomotor-Regelung vs. SpaceX Falcon Hop“ (S-Function, RK4 & PID Anti-Windup)](#einheit-08-dc-servomotor-regelung-vs-spacex-falcon-hop-s-function-rk4--pid-anti-windup)
+   - [Einheit 09: „Automobil-Lackierstraße vs. Theme Park Rush / Express-Pass“ (Diskrete Ereignissimulation DES)](#einheit-09-automobil-lackierstraße-vs-theme-park-rush--express-pass-diskrete-ereignissimulation-des)
+   - [Einheit 10: „VIBN Pneumatikzylinder vs. Arcade Pinball Wizard“ (Hybride Systeme & Zero-Crossing)](#einheit-10-vibn-pneumatikzylinder-vs-arcade-pinball-wizard-hybride-systeme--zero-crossing)
 3. [Das 10-teilige C#-Simulations-Portfolio (Säule 2a, 30 %)](#3-das-10-teilige-c-simulations-portfolio-säule-2a-30-)
    - 3.1 Zielsetzung & didaktischer Anspruch
    - 3.2 Software-Architekturrahmen („Goldene Regel der Simulationsarchitektur“)
@@ -127,7 +127,7 @@ Alle anderen Studierenden im Raum sind ausdrücklich **keine passiven Zuschauer*
   - *Physikalischer Realismus vs. Fake-Animation:* „Löst die Anwendung tatsächlich das DGL-System oder wird eine vorberechnete Kurve/Spline abgefahren?“
   - *Code-Architektur & Performance:* „Werden im Render-Loop Objekte auf dem Managed Heap allokiert? Wie ist die Thread-Sicherheit bei Datenübergaben gelöst?“
   - *Grenzfall-Konsistenz:* „Entspricht das numerische Ergebnis im stationären Grenzfall exakt der theoretischen Formel?“
-- **Didaktischer Mehrwert:** Konstruktive, fachlich anspruchsvolle Fragen aus dem Plenum fließen positiv in die mündliche Mitarbeit ein. Für die vortragenden Teams ist dieses Format die ideale Vorbereitung auf die spätere Video-Präsentation und die souveräne Diskussion mechatronischer Systeme.
+- **Didaktischer Mehrwert:** Konstruktive, fachlich anspruchsvolle Fragen aus dem Plenum fließen positiv in die mündliche Mitarbeit ein. Für die vortragenden Teams ist dieses Format die ideale Vorbereitung auf die Meilenstein-Abnahmen und die souveräne Verteidigung des C#-Simulations-Portfolios.
 
 ---
 
@@ -154,7 +154,7 @@ Alle anderen Studierenden im Raum sind ausdrücklich **keine passiven Zuschauer*
 
 ### 1.5 Architektur- und Software-Qualitätsstandards
 
-Alle studentischen Lösungen müssen der im Skriptum definierten **Goldenen Regel der Simulationsarchitektur** ([Kapitel 11, Folie 356](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/11_Epilog/Folien.md#L356)) genügen:
+Alle studentischen Lösungen müssen der im Skriptum definierten **Goldenen Regel der Simulationsarchitektur** ([Kapitel 11](../Folien/11_Epilog/Folien.md)) genügen:
 
 > [!IMPORTANT]
 > **Die Goldene Regel der Simulationsarchitektur:**
@@ -166,7 +166,7 @@ Alle studentischen Lösungen müssen der im Skriptum definierten **Goldenen Rege
 
 ### 1.6 Test-Driven Simulation & CI-Workflows
 
-Für alle numerischen Modelle sind begleitende Unit-Tests mit `xUnit` oder `MSTest` Pflicht (Referenzprojekt: [`Quellen/WS25/SimulationTests`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS25/SimulationTests)):
+Für alle numerischen Modelle sind begleitende Unit-Tests mit `xUnit` oder `MSTest` Pflicht (Referenzprojekt: [`Quellen/WS25/SimulationTests`](../Quellen/WS25/SimulationTests)):
 - **Energieerhaltungstests:** Für ungedämpfte Systeme (freies Pendel, elastischer Ball) muss die Gesamtenergie $E_{\text{tot}} = E_{\text{kin}} + E_{\text{pot}}$ im Zeitverlauf bis auf Integrationsfehlerordnung $\mathcal{O}(\Delta t^p)$ konstant bleiben.
 - **Analytische Grenzfallprüfung:** Vergleich numerischer Ergebnisse mit geschlossenen analytischen Lösungen bei trivialen Randbedingungen (z. B. Schiefer Wurf im Vakuum, stationäre Endtemperatur des Stabes).
 - **Invarianzprüfungen:** Statische Fachwerke müssen Translations- und Rotationsinvarianten erfüllen (Summe aller Kräfte und Momente exakt $\vec{0}$).
@@ -177,37 +177,34 @@ Für alle numerischen Modelle sind begleitende Unit-Tests mit `xUnit` oder `MSTe
 
 ---
 
-### Einheit 01: „Industrie-Löschmonitor vs. Retro Tank Duel“ (Ballistik & Luftwiderstand)
+### Einheit 01: „Hydraulikzylinder-Dämpfung vs. Artillery Strike / Retro Tanks“ (Kinematik, Euler & Heun)
 
 #### Fachlicher Bezug & Lernziele
-- **Vorlesung:** [Kapitel 01: Einführung](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/01_Einführung/Folien.md) – Modellbegriff, Zustandsraum, Zeitdiskretisierung, explizites Euler-Verfahren, Prädiktor-Korrektor (Heun).
-- **Quellen-Referenz:** [`Quellen/WS24/DynamischBallwurf1D`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS24/DynamischBallwurf1D).
+- **Vorlesung:** [Kapitel 01: Einführung](../Folien/01_Einführung/Folien.md) – Modellbegriff, Zustandsraum, Zeitdiskretisierung, explizites Euler-Verfahren, Prädiktor-Korrektor (Heun / RK2), lineare Auftreff-Interpolation.
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md`](../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md), [`Vorlage/KinematikEuler.sln`](../Uebungen/Termin_01_Kinematik_und_Euler/Vorlage/KinematikEuler.sln).
+- **Quellen-Referenz:** [`Quellen/WS24/DynamischBallwurf1D`](../Quellen/WS24/DynamischBallwurf1D).
 - **Technologie-Status:** **Reine C#-Konsolenapplikation!** Noch *KEIN* WPF Canvas, noch *KEIN* ScottPlot! Visualisierung via Konsole (ASCII-Art / Tabellen) oder CSV-Export.
 - **Lernziele:**
-  1. Ableitung der 2D-Bewegungsgleichung eines Projektils unter Gravitation, Gegenwind und nichtlinearer quadratischer Luftreibung ($F_{\text{w}} \propto v_{\text{rel}}^2$).
-  2. Implementierung des expliziten Euler- und Heun-Verfahrens mit sauberer Vektorkapselung (`System.Numerics.Vector2`).
-  3. Konzeption einer automatisierten Parameterstudie und Trefferalgorithmus für ein Ziel in hügeligem Gelände.
+  1. Ableitung von Zustandsraummodellen 1. Ordnung (Ballistik unter Luftwiderstand bzw. hydraulische Endlagendämpfung).
+  2. Implementierung des expliziten Euler- und Heun-Verfahrens (RK2) mit sauberer Zustandskapselung (`KinematicState`).
+  3. Lineare Ereignis-Interpolation des Bodenaufschlags und automatisierte Verifikation gegen geschlossene analytische Lösungen (`dotnet test`).
 
 #### Mathematisches Modell
 Zustandsvektor: $\mathbf{x} = \begin{bmatrix} x & y & v_x & v_y \end{bmatrix}^\top \in \mathbb{R}^4$.  
-Windvektor: $\mathbf{w} = \begin{bmatrix} w_x & 0 \end{bmatrix}^\top$. Relativgeschwindigkeit: $\mathbf{v}_{\text{rel}} = \begin{bmatrix} v_x - w_x & v_y \end{bmatrix}^\top$, Betrag $v_{\text{rel}} = \|\mathbf{v}_{\text{rel}}\|$.  
+Windvektor: $\mathbf{w} = \begin{bmatrix} w_x & w_y \end{bmatrix}^\top$. Relativgeschwindigkeit: $\mathbf{v}_{\text{rel}} = \mathbf{v} - \mathbf{w}$, Betrag $v_{\text{rel}} = \|\mathbf{v}_{\text{rel}}\|$.  
 DGL-System 1. Ordnung:
 $$\dot{x} = v_x, \quad \dot{y} = v_y$$
-$$\dot{v}_x = -\frac{\rho \, c_{\text{w}} A}{2m} v_{\text{rel}} (v_x - w_x), \quad \dot{v}_y = -g - \frac{\rho \, c_{\text{w}} A}{2m} v_{\text{rel}} v_y$$
-Konstanten: $g = 9{,}81\,\text{m/s}^2$, Luftdichte $\rho = 1{,}225\,\text{kg/m}^3$, Masse $m = 10{,}0\,\text{kg}$, Kaliber-Radius $r = 0{,}06\,\text{m}$ ($A = \pi r^2$), $c_{\text{w}} = 0{,}25$.
+$$\dot{v}_x = -\frac{k_d}{m} v_{\text{rel}} (v_x - w_x), \quad \dot{v}_y = -g - \frac{k_d}{m} v_{\text{rel}} (v_y - w_y) \quad \text{mit } k_d = \frac{1}{2}\rho c_{\text{w}} A$$
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Artillery Strike: Berechne den Einschlag“
-- **Aufgabenstellung:**
-  1. Erstellen Sie eine C#-Konsolenapplikation `ArtilleryStrikeSprint`.
-  2. Kapseln Sie den Zustand in ein `struct ProjectileState(double X, double Y, double Vx, double Vy)`.
-  3. Implementieren Sie den expliziten Euler-Schritt: $\mathbf{x}_{k+1} = \mathbf{x}_k + \Delta t \cdot \mathbf{f}(t_k, \mathbf{x}_k)$.
-  4. Feuern Sie eine Granate ab mit $v_0 = 150\,\text{m/s}$, $\alpha = 45^\circ$, Abschusshöhe $y_0 = 0\,\text{m}$, Windstille ($w_x = 0$) bei Schrittweiten $\Delta t = 0{,}01\,\text{s}$ und $\Delta t = 0{,}1\,\text{s}$.
-  5. Simulieren Sie bis zum Bodenkontakt ($y \le 0$) und interpolieren Sie den exakten Auftreffpunkt $x_{\text{impact}}$ linear zwischen dem letzten Schritt über dem Boden und dem ersten Schritt unter dem Boden.
-  6. Geben Sie die Wurfweite und Flugdauer auf der Konsole aus und vergleichen Sie mit dem analytischen Vakuumwert:
-     $$x_{\text{vakuum}} = \frac{v_0^2 \sin(2\alpha)}{g} = \frac{150^2 \cdot 1}{9{,}81} \approx 2293{,}6\,\text{m}$$
-- **Erwartetes Ergebnis:** Unter Luftwiderstand sinkt die Reichweite drastisch auf $\approx 1150\text{--}1200\,\text{m}$. Der Unterschied zwischen Euler $\Delta t=0{,}1$ und $\Delta t=0{,}01$ wird transparent sichtbar.
+#### Stufe A: In-Class Sprint (60 min) – „Freier Fall & Schiefer Wurf im Vakuum (Analytischer Abgleich)“
+- **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md)):**
+  1. Öffnen Sie die vorbereitete Solution [`KinematikEuler.sln`](../Uebungen/Termin_01_Kinematik_und_Euler/Vorlage/KinematikEuler.sln).
+  2. Vervollständigen Sie `EulerIntegrator.Step` und `EulerIntegrator.StepHeun` für das `KinematicState`-Struct.
+  3. Implementieren Sie die Simulationsschleife bis zum Bodenkontakt ($y < 0$) mit linearer Interpolation des exakten Auftreffpunkts $\alpha = \frac{y_k}{y_k - y_{k+1}}$.
+  4. Prüfen Sie Ihre Implementierung mit `dotnet test` (3 automatisierte MSTests für Vakuum-Konvergenz, Energiebilanz und Luftwiderstand).
+- **Erwartetes Ergebnis:** Alle 3 Unit-Tests grün; bei $\Delta t = 0{,}01\,\text{s}$ zeigt sich der systematische Euler-Überschuss von $+5{,}310\,\text{m}$ im Vakuum, während Heun (RK2) den analytischen Wert ($1019{,}368\,\text{m}$) exakt trifft.
 
 ---
 
@@ -217,76 +214,68 @@ Konstanten: $g = 9{,}81\,\text{m/s}^2$, Luftdichte $\rho = 1{,}225\,\text{kg/m}^
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
 > Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf derselben Physik und DGL-Integration und führen zur maximalen Punktzahl (10 Punkte).
 
-- **Track A (Industrie): Automatisierter Industrie-Löschmonitor / Schüttgut-Injektor**
-  - **Industrie-Szenario:** Modellierung einer industriellen Hochdruck-Löschanlage (Löschmonitor) zur automatisierten Brandbekämpfung auf einem Werksgelände oder eines pneumatischen Granulat-Injektors zur Silobefüllung.
-  - **DGL-System & Relativwind:** Auswurf unter Gravitation, nichtlinearem quadratischem Strömungswiderstand und variierendem Relativwind $\mathbf{w} = [w_x, 0]^\top$.
-  - **Geländehindernis:** Das Werksgelände weist ein unebenes Sinus-Bodenprofil auf: $y_{\text{Boden}}(x) = 50 \cdot \sin(0{,}002 \cdot x) + 20 \cdot \cos(0{,}005 \cdot x)$. Der Brandherd bzw. das Silo liegt bei $x_{\text{Ziel}} = 1400\,\text{m}, y_{\text{Ziel}} = y_{\text{Boden}}(1400)$.
-  - **Heun-Verfahren (RK2):** Implementieren Sie das Heun-Verfahren und vergleichen Sie Genauigkeit und numerische Stabilität gegen Euler bei grober Schrittweite ($\Delta t = 0{,}5\,\text{s}$).
-  - **Stochastischer Winddrift:** Bei jedem Einsatz weht Gegen- oder Rückenwind $w_x \sim \mathcal{U}(-15, +15)\,\text{m/s}$.
-  - **Automatischer Zielrechner:** Bestimmen Sie bei gegebener Austrittsgeschwindigkeit $v_0 = 160\,\text{m/s}$ automatisiert den erforderlichen Elevationswinkel $\alpha \in [10^\circ, 80^\circ]$ via Bisektion oder Newton-Verfahren, der den Zielbereich innerhalb $\pm 2{,}0\,\text{m}$ trifft.
-  - **Visualisierung:** ASCII-Art-Darstellung der Flugbahn im Konsolenfenster ($80 \times 25$) oder tabellarischer `.csv`-Export.
+- **Track A (Industrie): Hydraulikzylinder-Dämpfung (Not-Stopp einer Schwerlastachse)**
+  - **Industrie-Szenario:** Abbremsen einer schweren Maschinenspindel ($m = 250\,\text{kg}, v_0 = 4{,}0\,\text{m/s}$) durch einen hydraulischen Endlagendämpfer mit linearer Rückstellfeder ($c = 15\,000\,\text{N/m}$), viskoser Dämpfung ($d_{\text{lin}} = 800\,\text{Ns/m}$) und nichtlinearer quadratischer Drosselblendenreibung ($d_{\text{quad}} = 2\,200\,\text{Ns}^2/\text{m}^2$).
+  - **DGL-System:** $\dot{x} = v, \quad \dot{v} = \frac{1}{m}\left(-c x - d_{\text{lin}} v - d_{\text{quad}} v |v|\right)$.
+  - **Solver-Vergleich (Euler vs. Heun / RK2):** Vergleichen Sie expliziten Euler und Heun für $\Delta t \in \{0{,}05\,\text{s}; 0{,}01\,\text{s}; 0{,}001\,\text{s}; 0{,}0001\,\text{s}\}$.
+  - **Umkehrpunkt-Interpolation & Auslegung:** Bestimmen Sie den exakten maximalen Bremsweg $x_{\text{max}}$ beim Nulldurchgang $v(t_{\text{stop}}) = 0$ und optimieren Sie $d_{\text{quad}}$ für $x_{\text{max}} \le 0{,}18\,\text{m}$ bei $|a_{\text{max}}| \le 60\,\text{m/s}^2$.
 
-- **Track B (Simulation Game): Retro Tank Duel (2D-Artillerie-Game mit Wind & Höhenprofil)**
-  - **Game-Szenario:** Klassisches rundenbasiertes Artillerie-Duell im Retro-Stil (*Scorched Earth*, *Worms*, *Artillery Strike*).
-  - **Spielwelt:** Panzer duellieren sich über hügeligem Terrain mit Höhenprofil $y_{\text{Boden}}(x) = 50 \cdot \sin(0{,}002 \cdot x) + 20 \cdot \cos(0{,}005 \cdot x)$. Ein feindlicher Panzer steht bei $x_{\text{Ziel}} = 1400\,\text{m}, y_{\text{Ziel}} = y_{\text{Boden}}(1400)$.
-  - **Flugphysik:** Numerische Flugbahnintegration mit quadratischem Luftwiderstand und Heun-Integrator (RK2).
-  - **Bodenkollision:** Detektion des Aufschlags bei $y_{\text{Projektil}}(t) \le y_{\text{Boden}}(x_{\text{Projektil}}(t))$ mit linearer Schnittpunkt-Interpolation.
-  - **Stochastischer Rundenwind:** Jede Runde wechselt der Windvektor zufällig $w_x \sim \mathcal{U}(-15, +15)\,\text{m/s}$.
-  - **Automatischer KI-Zielrechner:** Implementieren Sie einen Bot-Zielrechner (Bisektion / Winkelsweep $\alpha \in [10^\circ, 80^\circ]$), der bei $v_0 = 160\,\text{m/s}$ den Trefferwinkel für den feindlichen Panzer ermittelt.
-  - **Visualisierung:** ASCII-Art Flugbahn-Plotter auf der Textkonsole oder Export der Trajektoriendaten als `.csv`.
+- **Track B (Simulation Game): „Artillery Strike / Retro Tanks“ (2D-Ballistik mit Luftwiderstand & Wind)**
+  - **Game-Szenario:** Rundenbasiertes Artillerie-Duell (*Scorched Earth* / *Worms*) über eine Distanz von $D = 800\,\text{m}$.
+  - **Flugphysik:** Numerische Flugbahnintegration mit quadratischem Luftwiderstand ($k_d = \frac{1}{2}\rho c_w A$), Windböen $\mathbf{w}$ und Heun-Integrator (RK2).
+  - **Bodenkollision:** Exakte lineare Interpolation des Einschlagorts $x_{\text{impact}}$ bei $y = 0$.
+  - **Visualisierung & Konvergenz:** ASCII-Art-Trajektorie ($80 \times 25$ Zeichen) im Terminal, CSV-Export und Vergleich Euler vs. Heun.
 
 - **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
-  - [3 P.] Korrekte Implementierung von Euler und Heun mit Relativwind-Physik.
-  - [3 P.] Exakte numerische Kollisionserkennung mit dem analytischen Geländeprofil.
-  - [2 P.] Robuster Schusswinkel-Finder (Bisektion oder Newton-Verfahren).
+  - [3 P.] Korrekte Implementierung von Euler und Heun mit nichtlinearer Reibungs-/Windphysik.
+  - [3 P.] Exakte lineare Ereignis-Interpolation (Umkehrpunkt bzw. Bodenaufschlag).
+  - [2 P.] Systematische Parameterstudie / Trefferanalyse.
   - [2 P.] Dokumentation: Tabelle mit Konvergenzvergleich (Euler vs. Heun) und ASCII/CSV-Trajektorien.
 
 ---
 
 #### 🔍 Peer-Review & Leitfragen für das Plenum
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
-- **Fake-Physik vs. echte DGL:** Wird der Luftwiderstand in jedem Zeitschritt vektoriell aus der *Relativgeschwindigkeit* $\|\mathbf{v} - \mathbf{w}\|$ berechnet, oder handelt es sich um eine vereinfachte analytische Parabel mit aufgesetztem Offset?
-- **Schrittweiten-Explosion bei Euler:** Was passiert, wenn die Schrittweite $\Delta t$ live am Beamer verdoppelt oder auf $0{,}5\,\text{s}$ gesetzt wird? Zeigt der explizite Euler die theoretisch erwartete Energieexplosion, während das Heun-Verfahren noch robust konvergiert?
-- **Kollisions-Tunneling & Schnittpunkt:** Taucht das Projektil bei größeren Zeitschritten sichtbar in das Höhenprofil ein (Bodenpenetration), oder wird der Aufschlagspunkt über eine lineare Schnittpunkt-Interpolation exakt bestimmt?
-- **Vorzeichenkonsistenz der Winddrift:** Wirkt Gegenwind ($w_x < 0$) physikalisch bremsend und steilt die Flugbahn ab, oder führt ein Vorzeichenfehler im Relativwindvektor $\mathbf{v}_{\text{rel}} = \mathbf{v} - \mathbf{w}$ zu unphysikalischem Vorwärtsschub?
+- **Fake-Physik vs. echte DGL:** Wird der Luftwiderstand bzw. die Blendenreibung in jedem Zeitschritt aus dem aktuellen Zustand berechnet, oder handelt es sich um eine vereinfachte analytische Parabel?
+- **Schrittweiten-Fehler bei Euler:** Warum überschätzt der explizite Euler beim schiefen Wurf die Höhe und landet um $\Delta t / 2$ zu spät? Wie verbessert das Heun-Verfahren (RK2) die Ordnung von $\mathcal{O}(\Delta t)$ auf $\mathcal{O}(\Delta t^2)$?
+- **Kollisions-Interpolation:** Taucht das Projektil bei größeren Zeitschritten sichtbar in den Boden ein, oder wird der Aufschlagspunkt über $\alpha = \frac{y_k}{y_k - y_{k+1}}$ exakt interpoliert?
+- **Vorzeichenkonsistenz:** Wirkt die quadratische Reibung $-d_{\text{quad}} v |v|$ bzw. der Relativwind $\mathbf{v}_{\text{rel}} = \mathbf{v} - \mathbf{w}$ in beide Bewegungsrichtungen physikalisch bremsend?
 
 ---
 
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 01)
-- **Empfohlene Suchbegriffe:** `Euler vs Heun method C# implementation`, `projectile motion quadratic drag relative wind`, `System.Numerics Vector2 trajectory simulation`.
-- **Offizielle Dokumentation:** [Microsoft Learn: System.Numerics.Vector2](https://learn.microsoft.com/de-de/dotnet/api/system.numerics.vector2), [Wikipedia: Heun's method](https://en.wikipedia.org/wiki/Heun%27s_method).
+- **Empfohlene Suchbegriffe:** `Euler vs Heun method C# implementation`, `projectile motion quadratic drag relative wind`, `hydraulic cushion orifice damping ODE`.
+- **Offizielle Dokumentation:** [Microsoft Learn: Value types & structs](https://learn.microsoft.com/de-de/dotnet/csharp/language-reference/builtin-types/struct), [Wikipedia: Heun's method](https://en.wikipedia.org/wiki/Heun%27s_method).
 - **Vibe-Coding Prompting-Tipp:**
-  > *„Schreibe mir eine reine C#-Klasse `BallisticEngine` ohne jede externe UI-Bibliothek (kein WPF, kein ScottPlot). Sie soll nur mit `double` oder `System.Numerics.Vector2` arbeiten. Implementiere das Heun-Verfahren (RK2) für quadratischen Luftwiderstand mit Relativwind $\mathbf{w}$. Trenne den mathematischen Zustand strikt von der Ein-/Ausgabe.“*
+  > *„Schreibe mir eine reine C#-Klasse ohne jede externe UI-Bibliothek (kein WPF, kein ScottPlot). Implementiere das explizite Euler- und das Heun-Verfahren (RK2) auf Basis des Structs `KinematicState(double X, double Y, double Vx, double Vy)`. Trenne den mathematischen Zustand strikt von der Ein-/Ausgabe.“*
 
 ---
 
-### Einheit 02: „Gamer-PC Kühlkörper-Optimizer vs. Waldbrand-Ausbreitung“ (WriteableBitmap FDM)
+### Einheit 02: „CPU-Kühlkörper-Optimierung vs. Falling Sand & Doom Fire“ (WriteableBitmap FDM)
 
 #### Fachlicher Bezug & Lernziele
-- **Vorlesung:** [Kapitel 02: Visualisierung 2D Pixel](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/02_Visualisierung_2D_Pixel/Folien.md) – Pixelraster, Farbräume, `WriteableBitmap`, 2D-Finite-Differenzen-Methode (FDM) für Wärmeleitung.
+- **Vorlesung:** [Kapitel 02: Visualisierung 2D Pixel](../Folien/02_Visualisierung_2D_Pixel/Folien.md) – Pixelraster, Farbräume, `WriteableBitmap`, 2D-Finite-Differenzen-Methode (FDM) für Wärmeleitung, Dirichlet-, Neumann- und Robin-Randbedingungen.
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.md`](../Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.md), [`Vorlage/PixelHeatFDM.sln`](../Uebungen/Termin_02_Pixelgrafik_und_FDM/Vorlage/PixelHeatFDM.sln).
 - **Technologie-Status:** WPF mit `Image`-Control und `WriteableBitmap`. Noch *KEIN* Canvas (keine Vektorobjekte), noch *KEIN* ScottPlot, noch *KEIN* Multithreading (`Parallel.For` ist erst in Kap 06 erlaubt!).
 - **Lernziele:**
   1. Diskretisierung der 2D-Wärmeleitungsgleichung mit dem 5-Punkt-Differenzenstern auf einem $N \times M$ Gitter.
-  2. Beachtung des Von-Neumann-Stabilitätskriteriums: $\Delta t \le \frac{\Delta x^2}{4 a_{\max}}$.
-  3. Höchst performantes Pixel-Rendering via `WriteableBitmap.Lock()`, direkten Pointer-Zugriff (`unsafe byte*`) oder `Marshal.Copy`.
+  2. Beachtung des Von-Neumann-Stabilitätskriteriums: $s = \frac{\alpha \Delta t}{\Delta x^2} \le 0{,}25$.
+  3. Höchst performantes Pixel-Rendering via `WriteableBitmap.Lock()`, direkten Pointer-Zugriff (`unsafe byte*` / `uint*`) und Double-Buffering.
 
 #### Mathematisches Modell
-2D-Wärmeleitungsgleichung mit ortsabhängiger Temperaturleitfähigkeit $a(x,y) = \frac{\lambda(x,y)}{\rho(x,y) c_{\text{p}}(x,y)}$ und Wärmequelle $\dot{q}_{\text{v}}$:
-$$\frac{\partial T}{\partial t} = a(x,y) \left( \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} \right) + \frac{\dot{q}_{\text{v}}(x,y)}{\rho c_{\text{p}}}$$
+2D-Wärmeleitungsgleichung mit ortsabhängiger Temperaturleitfähigkeit $\alpha(x,y) = \frac{\lambda(x,y)}{\rho(x,y) c_{\text{p}}(x,y)}$:
+$$\frac{\partial T}{\partial t} = \alpha(x,y) \left( \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} \right)$$
 Expliziter FDM-Zeitschritt:
-$$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1,j}^k + T_{i,j+1}^k + T_{i,j-1}^k - 4 T_{i,j}^k}{\Delta x^2} + \frac{\dot{q}_{i,j}}{\rho c_{\text{p}}} \right]$$
+$$T_{x,y}^{k+1} = T_{x,y}^k + \frac{\alpha_{x,y} \Delta t}{\Delta x^2} \left( T_{x+1,y}^k + T_{x-1,y}^k + T_{x,y+1}^k + T_{x,y-1}^k - 4 T_{x,y}^k \right)$$
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Heatmap-Renderer in WriteableBitmap“
-- **Aufgabenstellung:**
-  1. Erstellen Sie ein WPF-Fenster mit einem `<Image x:Name="PixelDisplay"/>` ($128 \times 128$ Pixel).
-  2. Initialisieren Sie eine `WriteableBitmap(128, 128, 96, 96, PixelFormats.Bgr32, null)` und zwei Puffer `double[128, 128]` (`T_old`, `T_new`).
-  3. Randbedingungen: Alle vier Ränder fix auf $T = 20\,^\circ\text{C}$ (Dirichlet). Im Zentrum ($x \in [58, 70], y \in [58, 70]$) konstante Wärmequelle mit $T = 100\,^\circ\text{C}$.
-  4. Führen Sie pro Timer-Tick ($30\,\text{ms}$) einen FDM-Schritt aus ($a = 1{,}0 \times 10^{-4}\,\text{m}^2/\text{s}, \Delta x = 1\,\text{mm}, \Delta t = 0{,}002\,\text{s}$).
-  5. Schreiben Sie eine Farbpalette `uint ColorMap(double temp)`: $20\,^\circ\text{C} \to \text{Blau}$, $50\,^\circ\text{C} \to \text{Grün}$, $80\,^\circ\text{C} \to \text{Gelb}$, $100\,^\circ\text{C} \to \text{Rot}$.
-  6. Kopieren Sie das Pixelarray über `WriteableBitmap.Lock()`, `BackBuffer` und `AddDirtyRect` in die Anzeige.
-- **Erwartetes Ergebnis:** Eine butterweich aufkeimende, farbige Wärmewolke im WPF-Fenster.
+#### Stufe A: In-Class Sprint (60 min) – „Heatmap-Renderer & 5-Punkt-Stern in WriteableBitmap“
+- **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.md)):**
+  1. Öffnen Sie die Vorlage [`PixelHeatFDM.sln`](../Uebungen/Termin_02_Pixelgrafik_und_FDM/Vorlage/PixelHeatFDM.sln) ($200 \times 200$ Gitter).
+  2. Implementieren Sie in `HeatGrid.Step` den 5-Punkt-Laplace-Stern mit Double-Buffering (`_tCurrent` $\leftrightarrow$ `_tNext`) und lokalen Neumann-Spiegelungen an Isolator-Hindernissen ($\alpha = 0$).
+  3. Implementieren Sie in `ThermalColorMap.TemperatureToBgra32` die Falschfarbentransformation ($20\,^\circ\text{C} \to \text{Blau}$, $100\,^\circ\text{C} \to \text{Rot}$) und das direkte Speicherschreiben in `MainWindow.RenderGridToBitmap`.
+- **Erwartetes Ergebnis:** Eine butterweich aufkeimende, farbige Wärmewolke im WPF-Fenster, die interaktiv gezeichnete Isolatorwände umströmt.
 
 ---
 
@@ -294,38 +283,31 @@ $$T_{i,j}^{k+1} = T_{i,j}^k + \Delta t \left[ a_{i,j} \frac{T_{i+1,j}^k + T_{i-1
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
-> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf der 2D-FDM-Wärmeleitungsgleichung und führen zur maximalen Punktzahl (10 Punkte).
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf 2D-Gitter-Simulationen mit `WriteableBitmap` und führen zur maximalen Punktzahl (10 Punkte).
 
-- **Track A (Industrie): Gamer-PC & Server-Blade Kühlkörper-Optimizer**
-  - **Industrie-Szenario:** Modellierung des Wärmetransports in einem hochintegrierten Halbleitergehäuse (CPU-Package, $200 \times 200$ Pixel, $\Delta x = 0{,}2\,\text{mm}$):
-    - CPU-Die (Silizium, $40 \times 40$ Pixel, $120\,\text{W}$ Verlustleistung).
-    - Wärmeleitpaste (dünne Schicht mit geringem $a$).
-    - Kupfer-Heatspreader vs. Aluminium-Kühlrippen mit Luftkanälen.
-  - **Konvektive Kühlung:** Implementieren Sie an den Kühlfinnen Robin-Randbedingungen: $-k \frac{\partial T}{\partial n} = h (T - T_{\text{Luft}})$.
-  - **Lüfterausfall-Szenario:** Simulieren Sie den Unterschied zwischen ausgefallenem Lüfter ($h = 20\,\text{W/m}^2\text{K}$) und Hochleistungslüftung ($h = 250\,\text{W/m}^2\text{K}$).
-  - **Stabilitätsanalyse:** Zeigen Sie experimentell die Gitterexplosion bei Überschreitung des Stabilitätskriteriums ($\Delta t > \Delta t_{\text{krit}}$).
+- **Track A (Industrie): CPU-Kühlkörper-Optimierung (Mehrzonen-FDM & Robin-Rand)**
+  - **Industrie-Szenario:** Modellierung eines Mehrzonen-Halbleiterkühlkörpers ($200 \times 200$ Zellen): Silizium-Die (unten), Kupfer-Heatspreader (Mitte) und Aluminium-Kühlrippen mit Luftkanälen (oben).
+  - **Konvektive Kühlung (Robin-Randbedingung):** Implementieren Sie am oberen Kühlkörperrand den konvektiven Wärmeübergang an die Kühlluft ($T_{\text{top}} = \frac{\lambda T_{\text{innen}} + h \Delta x T_\infty}{\lambda + h \Delta x}$) mit umschaltbarem Lüfterbetrieb ($h_{\text{passiv}}$ vs. $h_{\text{aktiv}}$).
+  - **Stabilitätsanalyse:** Demonstrieren Sie experimentell die Schachbrett-Gitterexplosion bei Überschreitung von $s > 0{,}25$.
 
-- **Track B (Simulation Game): Waldbrand- & Lava-Ausbreitungssimulation**
-  - **Game-Szenario:** 2D-Zellulärer Wärmediffusions- und Ausbreitungs-Automat auf einer Geländekarte ($200 \times 200$ Pixel).
-  - **Physikalisches Gitter:** Jede Zelle besitzt Baumdichte, Bodenfeuchte und Zündtemperatur $T_{\text{Zünd}} = 300\,^\circ\text{C}$.
-  - **Winddrift:** Ein globaler Windvektor treibt die Wärmewelle und Flammenfront bevorzugt in Windrichtung (gerichtete Finite-Differenzen 1. Ordnung).
-  - **Zustandsautomat & Verbrennung:** Bei Überschreitung von $T_{\text{Zünd}}$ geht die Zelle in den Zustand „Brennend“ über, generiert 5 Sekunden lang exotherme Verbrennungswärme und erstirbt anschließend als unbrennbare Asche (schwarz).
-  - **Stabilitätsanalyse:** Dokumentieren Sie das Umkippen in numerische Instabilität bei unzulässig großem Zeitschritt $\Delta t$.
+- **Track B (Simulation Game): „Falling Sand & Doom Fire / Lava“ (Zelluläre Pixel-Physik)**
+  - **Game-Szenario:** Interaktive zelluläre 2D-Physik-Sandbox ($200 \times 200$ Pixel) im Stil von *Noita* / *Doom Fire* gekoppelt mit dem FDM-Temperaturfeld.
+  - **Partikel- & Thermodynamik:** Herabrieselnder Sand (Gravitations- und Böschungsregeln), Wasser (Verdampfung bei $T \ge 100\,^\circ\text{C}$ mit Abkühlung) und Lava/Feuer ($T = 100\,^\circ\text{C}$) mit aufsteigender Konvektionsglut (Upwind-Drift + stochastisches Flackern).
 
 - **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
-  - [3 P.] Korrekte FDM-Implementierung mit Materialgrenzen oder Brandzuständen.
-  - [3 P.] Effiziente `WriteableBitmap`-Pixelmanipulation ohne Speicherlecks.
-  - [2 P.] Experimenteller Nachweis der numerischen Instabilität bei $\Delta t > \Delta t_{\text{krit}}$.
+  - [3 P.] Korrekte FDM-/Zellular-Implementierung mit Materialgrenzen und Randbedingungen.
+  - [3 P.] Effiziente `WriteableBitmap`-Pixelmanipulation ohne Speicherlecks ($\ge 50\,\text{FPS}$).
+  - [2 P.] Experimenteller Nachweis der numerischen Instabilität bei $s > 0{,}25$.
   - [2 P.] Dokumentation: Analyse der Maximaltemperaturen und anschauliche Screenshots.
 
 ---
 
 #### 🔍 Peer-Review & Leitfragen für das Plenum
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
-- **Gitterexplosion & Von-Neumann-Stabilität:** Was passiert, wenn die Schrittweite $\Delta t$ live am Beamer über das theoretische Limit $\Delta t_{\text{krit}} = \frac{\Delta x^2}{4 a_{\max}}$ angehoben wird? Zeigt das Gitter das charakteristische oszillierende Schachbrettmuster und divergiert zu $\pm \infty$ bzw. `NaN`, oder wurde die Instabilität künstlich durch ein unzulässiges `Math.Clamp` maskiert?
-- **Render-Performance & UI-Thread:** Bleibt die Benutzeroberfläche flüssig oder friert das Fenster ein? Werden die Pixel tatsächlich im unmanaged Speicher über `WriteableBitmap.Lock()` und direkten Zeigerzugriff/`Marshal.Copy` aktualisiert oder über langsame `SetPixel`-Aufrufe?
-- **Double-Buffering des FDM-Gitters:** Werden für $T^{k}$ und $T^{k+1}$ zwei getrennte Puffer verwendet, oder wird das Gitter in-place überschrieben? *(In-place-Überschreibung erzeugt eine unphysikalische asymmetrische Ausbreitungsrichtung!)*
-- **Physikalische Randbedingungen:** Werden an den Kühlfinnen echte konvektive Robin-Randbedingungen (Wärmeübergangskoeffizient $h$) bzw. Winddriften realistisch diskretisiert, oder nur statische Dirichlet-Randtemperaturen gehalten?
+- **Gitterexplosion & Von-Neumann-Stabilität:** Was passiert, wenn die Schrittweite $\Delta t$ live am Beamer über das theoretische Limit $s = 0{,}25$ angehoben wird? Zeigt das Gitter das charakteristische oszillierende Schachbrettmuster, oder wurde die Instabilität künstlich durch ein `Math.Clamp` im Solver maskiert?
+- **Render-Performance & UI-Thread:** Werden die Pixel tatsächlich im unmanaged Speicher über `WriteableBitmap.Lock()` und direkten Zeigerzugriff aktualisiert?
+- **Double-Buffering des FDM-Gitters:** Werden für $T^{k}$ und $T^{k+1}$ zwei getrennte Puffer verwendet, die per Referenz-Swap getauscht werden, oder wird das Gitter in-place überschrieben?
+- **Physikalische Randbedingungen:** Werden an Isolatorwänden echte Neumann-Spiegelungen ($\frac{\partial T}{\partial n}=0$) und am Kühlrand konvektive Robin-Randbedingungen verwendet?
 
 ---
 
@@ -333,15 +315,16 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 - **Empfohlene Suchbegriffe:** `WriteableBitmap Lock BackBuffer performance C#`, `2D heat equation finite difference explicit stability`, `Von Neumann stability heat equation grid`.
 - **Offizielle Dokumentation:** [Microsoft Learn: WriteableBitmap-Klasse](https://learn.microsoft.com/de-de/dotnet/api/system.windows.media.imaging.writeablebitmap).
 - **Vibe-Coding Prompting-Tipp:**
-  > *„Erstelle mir eine C#-Methode zur schnellen Pixelaktualisierung einer WPF `WriteableBitmap`. Nutze `unsafe` Zeigerarithmetik auf `bitmap.BackBuffer` oder `Marshal.Copy`. Verwende KEIN SetPixel und KEINE Canvas-Shapes, da dies zu langsam ist. Beachte: Single-Threaded, kein Parallel.For.“*
+  > *„Erstelle mir eine C#-Methode zur schnellen Pixelaktualisierung einer WPF `WriteableBitmap`. Nutze `unsafe` Zeigerarithmetik auf `bitmap.BackBuffer`. Verwende KEIN SetPixel und KEINE Canvas-Shapes, da dies zu langsam ist. Beachte: Single-Threaded, kein Parallel.For.“*
 
 ---
 
 ### Einheit 03: „2D-CAD Fachwerkträger-Viewer vs. Space Radar / Blueprint Sketcher“ (WPF Canvas Vektoren)
 
 #### Fachlicher Bezug & Lernziele
-- **Vorlesung:** [Kapitel 03: Visualisierung 2D Vektor](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/03_Visualisierung_2D_Vektor/Folien.md) – WPF `Canvas`, Vektor-Primitive (`Line`, `Path`, `Polygon`), Affine Welt-Bildschirm-Transformation, BoundingBox, DIN-Bemaßung, Pan & Zoom, Drag-and-Drop Interaktion.
-- **Quellen-Referenz:** [`Quellen/WS25/FachwerkIdeal2D`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS25/FachwerkIdeal2D).
+- **Vorlesung:** [Kapitel 03: Visualisierung 2D Vektor](../Folien/03_Visualisierung_2D_Vektor/Folien.md) – WPF `Canvas`, Vektor-Primitive (`Line`, `Path`, `Polygon`), Affine Welt-Bildschirm-Transformation, BoundingBox, DIN-Bemaßung, Pan & Zoom, Drag-and-Drop Interaktion.
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md`](../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md), [`Vorlage/CanvasTrussViewer.sln`](../Uebungen/Termin_03_Vektorgrafik_Canvas/Vorlage/CanvasTrussViewer.sln).
+- **Quellen-Referenz:** [`Quellen/WS25/FachwerkIdeal2D`](../Quellen/WS25/FachwerkIdeal2D).
 - **Technologie-Status:** WPF `Canvas` mit geometrischen 2D-Vektoren. Noch *KEIN* ScottPlot, noch *KEIN* SharpGL 3D, noch *KEIN* Multithreading!
 - **Didaktische Kausalitäts-Sperre (Sehr wichtig!):** Der Vorlesungsstoff bis zu dieser Einheit behandelt rein die 2D-Vektorgrafik und geometrische Transformationen. Es dürfen in dieser Einheit **KEINE Steifigkeitsmatrizen**, **KEINE Cholesky-Zerlegung** und **KEINE Stabkräfteberechnungen** verlangt oder implementiert werden! (Die numerische Berechnung der Stabkräfte und Verformungen via Finite-Elemente-LGS erfolgt erst in Einheit 07).
 - **Lernziele:**
@@ -444,29 +427,27 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-### Einheit 04: „Industrie-Prüfstand vs. Retro Arcade Telemetry“ (ScottPlot 5 Streaming)
+### Einheit 04: „1-kHz-Vibrationsmonitoring vs. Retro Arcade Racing Telemetry“ (ScottPlot 5 Streaming)
 
 #### Fachlicher Bezug & Lernziele
-- **Vorlesung:** [Kapitel 04: Visualisierung 2D Diagramme](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/04_Visualisierung_2D_Diagramme/Folien.md) – High-Performance Streaming mit ScottPlot 5, Ringpuffer, Welford-Algorithmus für rollierende Online-Statistik, MSAGL-Graphen.
-- **Quellen-Referenz:** [`Quellen/WS25/SimulationMvvmPattern`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS25/SimulationMvvmPattern).
-- **Technologie-Status:** WPF mit `ScottPlot.WPF` (Version 5.x) und `Microsoft.Msagl`. Noch *KEIN* SharpGL 3D, noch *KEIN* Multithreading-Solver!
+- **Vorlesung:** [Kapitel 04: Visualisierung 2D Diagramme](../Folien/04_Visualisierung_2D_Diagramme/Folien.md) – High-Performance Streaming mit ScottPlot 5, Ringpuffer, Welford-Algorithmus für rollierende Online-Statistik, MSAGL-Graphen.
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md), [`Vorlage/ScottPlotTelemetry.sln`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Vorlage/ScottPlotTelemetry.sln).
+- **Quellen-Referenz:** [`Quellen/WS25/SimulationMvvmPattern`](../Quellen/WS25/SimulationMvvmPattern).
+- **Technologie-Status:** WPF mit `ScottPlot.WPF` (Version 5.x) und `AutomaticGraphLayout.WpfGraphControl`. Noch *KEIN* SharpGL 3D, noch *KEIN* Multithreading-Solver!
 - **Lernziele:**
-  1. Beherrschung der modernen ScottPlot-5-API (`WpfPlot`, `Plot.Add.DataLogger`, `Plot.Add.DataStreamer`).
-  2. Vermeidung von Garbage-Collection-Spikes durch vorallokierte Ringpuffer (`CircularBuffer<double>`).
-  3. Numerisch stabile Online-Berechnung von gleitendem Mittelwert $\bar{x}_k$ und Varianz $s_k^2$ nach Welford ohne Historien-Speicherung.
+  1. Beherrschung der modernen ScottPlot-5-API (`WpfPlot`, `Plot.Add.Signal`, `Plot.Add.Bars`).
+  2. Vermeidung von Garbage-Collection-Spikes durch vorallokierte Ringpuffer (`RingBuffer<double>`).
+  3. Numerisch stabile Online-Berechnung von gleitendem Mittelwert $\mu_k$ und Varianz $\sigma_k^2$ nach Welford ohne Historien-Speicherung.
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „High-Speed Signal-Streamer mit ScottPlot 5“
-- **Aufgabenstellung:**
-  1. Binden Sie das NuGet-Paket `ScottPlot.WPF` (v5.x) in ein neues WPF-Projekt ein.
-  2. Platzieren Sie ein `<ScottPlot.WPF.WpfPlot x:Name="TelemetryPlot"/>` im XAML.
-  3. Konfigurieren Sie einen `DataLogger` oder `DataStreamer` für 2000 Datenpunkte.
-  4. Starten Sie einen `DispatcherTimer` mit $20\,\text{ms}$ Intervall ($50\,\text{Hz}$).
-  5. Generieren Sie ein synthetisches Telemetriesignal (z. B. Fahrzeug-Drehzahl mit Rauschen):
-     $$\text{RPM}(t) = 3000 + 1500 \cdot \sin(0{,}5 \cdot t) + 200 \cdot \mathcal{N}(0, 1)$$
-  6. Rufen Sie im Timer `TelemetryPlot.Refresh()` auf und messen Sie die tatsächliche Render-FPS.
-- **Erwartetes Ergebnis:** Ein absolut ruckelfreies, flüssig durchlaufendes Diagramm bei $50\text{--}60\,\text{FPS}$ und minimaler CPU-Auslastung.
+#### Stufe A: In-Class Sprint (60 min) – „High-Speed Signal-Streamer & Welford-Statistik mit ScottPlot 5“
+- **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md)):**
+  1. Öffnen Sie die Vorlage [`ScottPlotTelemetry.sln`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Vorlage/ScottPlotTelemetry.sln).
+  2. Implementieren Sie `RingBuffer.CopyChronologicalTo` ohne Heap-Allokationen.
+  3. Implementieren Sie die Welford-Rekursion in `WelfordStats.Push(double x)`.
+  4. Zeichnen Sie in `MainWindow.OnRenderTimerTick` die $\pm 3\sigma$-Toleranzbänder und aktualisieren Sie den Plot flüssig mit 50 Hz.
+- **Erwartetes Ergebnis:** Ein absolut ruckelfreies, flüssig durchlaufendes Diagramm mit dynamischer $\pm 3\sigma$-Hüllkurve bei $50\text{--}60\,\text{FPS}$.
 
 ---
 
@@ -476,73 +457,66 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
 > Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf ScottPlot 5 und Welford-Statistik und führen zur maximalen Punktzahl (10 Punkte).
 
-- **Track A (Industrie): Industrieller Antriebsprüfstand & Motoren-Telemetrie-Dashboard**
-  - **Prüfstand-Cockpit:** Aufbau eines Monitorings für einen elektrischen Antriebsprüfstand mit 3 synchronisierten ScottPlot-Panels:
-    - *Panel 1 (Drehzahl & Drehmoment):* Live-Signale $n(t)$ und $M(t)$ mit dynamisch berechnetem $\pm 3\sigma$-Toleranzband zur Erkennung von Lastsprüngen und Schwingungsanregungen.
-    - *Panel 2 (Betriebskennfeld / Phasenplot):* Drehmoment über Drehzahl ($M$ vs. $n$) als Live-Streudiagramm zur Echtzeit-Bestimmung des Motorwirkungsgrads.
-    - *Panel 3 (Echtzeit-Histogramm):* Kontinuierliche Verteilung der Lagervibrationen / Restwelligkeit mit überlagerter Gauss-Verteilung.
-  - **Welford-Streaming-Klasse:** Numerisch stabile Rekursion nach B. P. Welford für gleitenden Mittelwert und Varianz ohne Puffer-Neuallokation:
-    $$\bar{x}_k = \bar{x}_{k-1} + \frac{x_k - \bar{x}_{k-1}}{k}, \quad S_k = S_{k-1} + (x_k - \bar{x}_{k-1})(x_k - \bar{x}_k), \quad s_k = \sqrt{\frac{S_k}{k-1}}$$
-  - **Prüfstandstopologie mit MSAGL:** Graphische Anzeige des mechanischen Antriebsstrangs (Motor $\to$ Kupplung $\to$ Getriebe $\to$ Lastbremse) mit sensorischen Messknoten via Microsoft MSAGL.
-  - **Anomalie-Erkennung:** Automatische Alarme bei Lagervibrationen über Schwellwert oder unzulässigem Temperaturanstieg.
+- **Track A (Industrie): 1-kHz-Vibrationsmonitoring & Industrie-4.0-Leitstand**
+  - **Leitstand-Cockpit:** Aufbau eines Condition-Monitoring-Dashboards für eine Spindel-Lagereinheit mit mehreren synchronisierten Kanälen (Lagerbeschleunigung $a_{\text{RMS}}$, Spindeltemperatur $T_{\text{Lager}}$, Motorstrom $I_{\text{Motor}}$) in ScottPlot 5.
+  - **Welford-Streaming & Anomalie-Erkennung:** Numerisch stabile Rekursion nach B. P. Welford für gleitenden Mittelwert und Varianz:
+    $$\mu_k = \mu_{k-1} + \frac{x_k - \mu_{k-1}}{k}, \quad M_{2,k} = M_{2,k-1} + (x_k - \mu_{k-1})(x_k - \mu_k), \quad \sigma_k = \sqrt{\frac{M_{2,k}}{k-1}}$$
+    Automatischer Alarm-Logeintrag und Farbumschlag bei Überschreiten der $+3\sigma$-Grenze nach Störinjektion.
+  - **Anlagentopologie mit MSAGL:** Graphische Anzeige der Messstellentopologie (`Netzteil` $\to$ `Umrichter` $\to$ `Spindelmotor` $\to$ `Festlager`) via Microsoft MSAGL (`AutomaticGraphLayout.WpfGraphControl`) mit roter Knoten-Hervorhebung im Alarmfall.
 
-- **Track B (Simulation Game): Retro Arcade Racing & Flipper-Telemetrie-Dashboard**
-  - **Arcade-Cockpit:** Aufbau eines Telemetrie-Dashboards für ein Rennspiel mit 3 synchronisierten ScottPlot-Panels:
+- **Track B (Simulation Game): „Retro Arcade Racing Telemetry“ (Live-G-Kräfte & MSAGL-Streckengraph)**
+  - **Arcade-Cockpit:** Aufbau eines Echtzeit-Telemetrie-Dashboards für ein Arcade-Rennspiel mit ScottPlot 5:
     - *Panel 1 (Geschwindigkeit & RPM):* Live-Signal $v(t)$ und Motordrehzahl mit $\pm 3\sigma$-Toleranzband.
-    - *Panel 2 (G-Kräfte & Bremsverzögerung):* Quer- und Längsbeschleunigung ($a_x, a_y$) als G-Force-Phasenplot (Drift- und Traktionsanalyse).
-    - *Panel 3 (Echtzeit-Histogramm):* Kontinuierlich aktualisierte Verteilung der Rundenzeiten und Bremskräfte mit überlagerter Normalverteilungskurve.
-  - **Welford-Streaming-Klasse:** Exakte Realisierung der numerisch stabilen Welford-Statistik im Render-Loop.
-  - **Streckenprofil mit MSAGL:** Topologischer Graph der Rennstrecke mit Sektoren, Checkpoints und Boxengasse via Microsoft MSAGL.
-  - **Anomalie-Erkennung:** Erkennen von Traktionsverlust ($|a_y| > 1{,}5\,g$) oder Motor-Überdrehern ($\text{RPM} > 7000$) mit Markern direkt im Diagramm.
+    - *Panel 2 (G-Kräfte-Kreis / „G-G-Diagramm“):* Quer- und Längsbeschleunigung ($a_x, a_y$) als G-Force-Phasenplot mit Traktionskreis ($1{,}2\,g$).
+  - **Welford-Streaming-Klasse:** Online-Statistik für Rundenzeiten und Beschleunigungsspitzen im Render-Loop.
+  - **Streckenprofil mit MSAGL:** Topologischer Graph der Rennstrecke (`Start/Ziel` $\to$ `Haarnadelkurve` $\to$ `Schikane` $\to$ `Steilwand` / `Boxengasse`) via Microsoft MSAGL mit Live-Hervorhebung des aktuellen Fahrzeugsektors.
 
 - **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
   - [3 P.] Saubere ScottPlot-5-Architektur ohne Speicherallokation im Render-Loop.
   - [3 P.] Exakte Realisierung der Welford-Statistik mit mathematischer Verifikation.
-  - [2 P.] Ansprechendes Dashboard-Design mit synchronisierten Diagrammachsen.
+  - [2 P.] Ansprechendes Dashboard-Design mit Anomalie-/Traktionsüberwachung.
   - [2 P.] Einbindung des System-/Streckengraphen via MSAGL.
 
 ---
 
 #### 🔍 Peer-Review & Leitfragen für das Plenum
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
-- **GC-Druck & Speicherallokationen im Render-Loop:** Allokiert der Timer-Tick bei jedem Frame neue `double[]`-Arrays oder LINQ-Abfragen auf dem Heap (überprüfbar mit dem Diagnostic Tools Profiler / `GC.GetTotalMemory(false)`), was zu spürbaren Mikrorucklern führt, oder wird strikt in vorallokierte Ringpuffer geschrieben?
-- **Welford-Rekursion vs. naive Summation:** Werden Mittelwert und Varianz tatsächlich online nach der Welford-Formel ohne Vergangenheits-Array aktualisiert, oder wird naiv mit `Sum()` und $\sum x^2$ gerechnet (Gefahr von Auslöschung und Gleitkomma-Überlauf bei langen Messreihen)?
-- **ScottPlot-API-Konsistenz (Version 5 vs. Version 4):** Werden moderne ScottPlot-5-Methoden (`Plot.Add.DataStreamer`, `Plot.Axes`) eingesetzt, oder schleichen sich veraltete, von LLMs halluzinierte ScottPlot-4-Aufrufe (`AddSignal`, alter Achsen-Zugriff) ein?
-- **Achsensynchronisation bei Benutzerinteraktion:** Bleiben die $X$-Zeitachsen aller drei Diagrammpanels synchron gekoppelt, wenn der Benutzer in einem Plot horizontal scrollt oder zoomt?
+- **GC-Druck & Speicherallokationen im Render-Loop:** Allokiert der Timer-Tick bei jedem Frame neue `double[]`-Arrays oder LINQ-Abfragen auf dem Heap, oder wird strikt in vorallokierte Ringpuffer geschrieben?
+- **Welford-Rekursion vs. naive Summation:** Werden Mittelwert und Varianz tatsächlich online nach der Welford-Formel ohne Vergangenheits-Array aktualisiert, oder wird naiv mit `Sum()` und $\sum x^2$ gerechnet (Gefahr von Auslöschung)?
+- **ScottPlot-API-Konsistenz (Version 5 vs. Version 4):** Werden moderne ScottPlot-5-Methoden (`Plot.Add.Signal`, `Plot.Add.Bars`, `Plot.Axes`) eingesetzt, oder schleichen sich veraltete ScottPlot-4-Aufrufe ein?
+- **MSAGL-Zustandsankopplung:** Reagiert der MSAGL-Graph dynamisch auf Alarme bzw. Sektorwechsel?
 
 ---
 
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 04)
-- **Empfohlene Suchbegriffe:** `ScottPlot 5 DataLogger WPF live streaming`, `Welford algorithm running mean variance C#`, `ScottPlot 5 histogram dynamic update`.
+- **Empfohlene Suchbegriffe:** `ScottPlot 5 Signal WPF live streaming`, `Welford algorithm running mean variance C#`, `MSAGL WpfGraphControl node color C#`.
 - **Offizielle Dokumentation:** [ScottPlot 5 Documentation & Cookbooks](https://scottplot.net/cookbook/5.0/), [Automatic Graph Layout (MSAGL) GitHub](https://github.com/microsoft/automatic-graph-layout).
 - **Vibe-Coding Prompting-Tipp:**
-  > *„Ich verwende ScottPlot Version 5 in WPF. Verwende NICHT die veraltete ScottPlot-4-Syntax (wie AddSignal, Plot.Axes). Zeige mir, wie man mit `Plot.Add.DataLogger()` oder `Plot.Add.DataStreamer()` ein rollierendes Live-Diagramm aufbaut. Halte das Rendering speicherallokationsfrei (0 Byte GC Allocations pro Frame).“*
+  > *„Ich verwende ScottPlot Version 5 in WPF. Verwende NICHT die veraltete ScottPlot-4-Syntax (wie AddSignal, Plot.AxisAuto). Zeige mir, wie man ein vorallokiertes `double[]`-Array mit `Plot.Add.Signal()` aktualisiert und das Rendering speicherallokationsfrei (0 Byte GC Allocations pro Frame) hält.“*
 
 ---
 
-### Einheit 05: „3D-Portalroboter vs. Arcade Claw Machine“ (SharpGL 3D-Szenengraph)
+### Einheit 05: „4-Achs-SCARA-Roboterarm vs. 3D Arcade Claw Crane“ (SharpGL 3D-Szenengraph)
 
 #### Fachlicher Bezug & Lernziele
-- **Vorlesung:** [Kapitel 05: Visualisierung 3D OpenGL](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/05_Visualisierung_3D_OpenGL/Folien.md) – OpenGL Pipeline, SharpGL, Szenengraph-Hierarchie, Transformationsmatrizen (`glPushMatrix`/`glPopMatrix`), Orbit-Kamera.
-- **Quellen-Referenz:** [`Quellen/WS25/VorlageSzenengraph3D`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS25/VorlageSzenengraph3D), [`Quellen/WS25/VorlageVisualisierung3D`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS25/VorlageVisualisierung3D).
-- **Technologie-Status:** SharpGL (`OpenGLControl`) mit 3D-Szenengraph. Noch *KEIN* Multithreading! Noch *KEINE* Math.NET LGS!
+- **Vorlesung:** [Kapitel 05: Visualisierung 3D OpenGL](../Folien/05_Visualisierung_3D_OpenGL/Folien.md) – OpenGL Pipeline, SharpGL, Szenengraph-Hierarchie, Transformationsmatrizen (`glPushMatrix`/`glPopMatrix`), Orbit-Kamera.
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md), [`Vorlage/OpenGLSceneGraph.sln`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Vorlage/OpenGLSceneGraph.sln).
+- **Quellen-Referenz:** [`Quellen/WS25/VorlageSzenengraph3D`](../Quellen/WS25/VorlageSzenengraph3D), [`Quellen/WS25/VorlageVisualisierung3D`](../Quellen/WS25/VorlageVisualisierung3D).
+- **Technologie-Status:** SharpGL (`OpenGLControl`) mit 3D-Szenengraph (`SceneNode`). Noch *KEIN* Multithreading! Noch *KEINE* Math.NET LGS!
 - **Lernziele:**
-  1. Mathematische Beherrschung der 3D-Sicht- und Modelltransformationen (`gluLookAt`, Translation, Rotation).
+  1. Mathematische Beherrschung der 3D-Sicht- und Modelltransformationen (`LookAt`, Translation, Rotation).
   2. Implementierung einer kardanfehlerfreien Orbit-Kamera in Kugelkoordinaten ($r, \theta, \phi$).
-  3. Aufbau eines komponentenorientierten Szenengraphen zur Verwaltung mechatronischer Gelenkketten.
+  3. Aufbau eines hierarchischen Szenengraphen (`SceneNode`) zur Verwaltung mechatronischer Gelenkketten und Vorwärtskinematik.
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „SharpGL-Würfel mit Orbit-Kamera“
-- **Aufgabenstellung:**
-  1. Öffnen Sie die Vorlage `VorlageVisualisierung3D` mit `SharpGL.WPF.OpenGLControl`.
-  2. Implementieren Sie die Kugelkoordinaten-Kamera in der Klasse `OrbitCamera`:
-     $$x_{\text{eye}} = r \cos \phi \sin \theta + x_{\text{look}}, \quad y_{\text{eye}} = r \sin \phi + y_{\text{look}}, \quad z_{\text{eye}} = r \cos \phi \cos \theta + z_{\text{look}}$$
-  3. Binden Sie Maus-Events an:
-     - Linke Maustaste + Ziehen: Azimut $\theta$ und Elevation $\phi$ (Elevation auf $[-85^\circ, +85^\circ]$ klemmen).
-     - Mausrad: Radius $r$ vergrößern/verkleinern.
-  4. Zeichnen Sie im `OpenGLDraw`-Event ein 3D-Koordinatenkreuz ($X$: Rot, $Y$: Grün, $Z$: Blau) und einen schattierten 3D-Körper mit Normalenvektoren.
-- **Erwartetes Ergebnis:** Flüssige interaktive 3D-Kamerafahrt um das zentrale 3D-Objekt.
+#### Stufe A: In-Class Sprint (60 min) – „Orbit-Kamera & 2-Segment-Roboterarm in SharpGL“
+- **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md)):**
+  1. Öffnen Sie die Vorlage [`OpenGLSceneGraph.sln`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Vorlage/OpenGLSceneGraph.sln).
+  2. Implementieren Sie die Kugelkoordinaten-Kamera in `OrbitCamera.ApplyViewTransform` (Elevation $\phi$ auf $[-89^\circ, +89^\circ]$ geklemmt).
+  3. Vervollständigen Sie die rekursive Matrix-Stack-Traversierung in `SceneNode.Render(OpenGL gl)` (`PushMatrix` $\to$ `Translate` $\to$ `Rotate` $\to$ `Scale` $\to$ `Children` $\to$ `PopMatrix`).
+  4. Bauen Sie in `MainWindow.BuildRobotSceneGraph` den hierarchischen 2-Segment-Arm auf (`_baseNode` $\to$ `_arm1Node` $\to$ `_arm2Node`).
+- **Erwartetes Ergebnis:** Flüssige interaktive 3D-Kamerafahrt und hierarchisch gekoppelte Gelenkrotation über die UI-Slider.
 
 ---
 
@@ -552,80 +526,64 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
 > Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf dem SharpGL-3D-Szenengraph und führen zur maximalen Punktzahl (10 Punkte).
 
-- **Track A (Industrie): 3D-Portalroboter & Automatisches Kleinteilelager (ASRS)**
-  - **Industrie-Szenario:** Modellierung einer industriellen 3-Achs-Portalanlage zur automatisierten Palettierung und Werkstückhandhabung in einem Fertigungslager.
+- **Track A (Industrie): 4-Achs-SCARA-Roboterarm (Analytische Vorwärtskinematik & TCP-Kontrolle)**
+  - **Industrie-Szenario:** Digitaler 3D-Zwilling eines 4-Achs-SCARA-Bestückungsroboters ($L_1 = 2{,}0\,\text{m}, L_2 = 1{,}5\,\text{m}$).
   - **Hierarchischer Szenengraph & Kinematik:**
-    - Fester Hallen-Grundrahmen mit Längsführungsschienen.
-    - $X$-Portalbrücke (fährt entlang der Hallenachse).
-    - $Y$-Laufkatze (fährt quer auf der Portalbrücke).
-    - $Z$-Teleskophubwerk (fährt vertikal auf und ab).
-    - Pneumatischer 2-Backen-Parallelgreifer (synchron öffnend und schließend).
-  - **OpenGL-Matrix-Stack:** Nutzen Sie rekursiv `glPushMatrix()` und `glPopMatrix()`, sodass jede Kinematikachse im lokalen Koordinatensystem ihres übergeordneten Bauteils transformiert wird.
-  - **Beleuchtung & Material:** Aktivieren Sie `GL_LIGHTING`, setzen Sie diffuse und spekulare Materialfarben und berechnen Sie glatte Flächennormalen (`glNormal3f`).
-  - **Interaktive Steuerung & Teach-in:** Manuelle Achsverfahrung per Tastatur/Slider und automatisches Anfahren vordefinierter Palettenkoordinaten zur Teileaufnahme.
+    - Basis-Schultergelenk ($\theta_1$ um $Y$), Ellbogengelenk ($\theta_2$ um $Y$ am Ende von Arm 1), vertikale Hubpinole ($d_3 \in [0{,}2\,\text{m}; 1{,}2\,\text{m}]$) und Handgelenk-Rotation ($\theta_4$) mit 2-Backen-Parallelgreifer.
+  - **Analytische Vorwärtskinematik & TCP-Marker:** Berechnen Sie die Weltkoordinaten des Tool Center Points:
+    $$x_{\text{TCP}} = L_1 \cos(\theta_1) + L_2 \cos(\theta_1 + \theta_2), \quad z_{\text{TCP}} = -L_1 \sin(\theta_1) - L_2 \sin(\theta_1 + \theta_2), \quad y_{\text{TCP}} = h_{\text{Basis}} - d_3$$
+    Zeichnen Sie einen Kontrollmarker exakt an $(x_{\text{TCP}}, y_{\text{TCP}}, z_{\text{TCP}})$ zum visuellen Deckungsbeweis mit der OpenGL-Hierarchie.
 
-- **Track B (Simulation Game): 3D Arcade Claw Machine (Jahrmarkt-Greifarm-Simulator)**
-  - **Game-Szenario:** Vollständige mechatronische Nachbildung eines Jahrmarkt-Greifarm-Automaten in einem transparenten Glaskasten.
-  - **Hierarchischer Szenengraph:**
-    - Gehäuse (Glasquader mit Eckprofilen und Auswurfschacht).
-    - $X$-Schlitten (Portalbrücke entlang der Gehäusetiefe).
-    - $Y$-Laufkatze (fährt quer auf der Brücke).
-    - $Z$-Seilzug / Teleskoparm (fährt vertikal nach unten).
-    - 3-Finger-Greifer (Finger öffnen und schließen synchron über Gelenkwinkel).
-  - **OpenGL-Matrix-Stack:** Kaskadierte Transformationen mit `glPushMatrix()` und `glPopMatrix()`.
-  - **Interaktive Steuerung (Gamification):**
-    - Tastatursteuerung (Pfeiltasten für $X/Y$, Leertaste startet den Absenk-, Greif- und Rückholzyklus).
-    - Bunte geometrische Preise (Würfel, Kugeln, Sterne) auf dem Automatenboden.
-  - **Greifmechanik & Beleuchtung:** Distanz-Kollisionsprüfung beim Zupacken; dynamische Spot-Beleuchtung auf das Spielfeld.
+- **Track B (Simulation Game): „3D Arcade Claw Crane“ (Jahrmarkt-Greifarm mit Kisten-Aufnahme)**
+  - **Game-Szenario:** Interaktiver Jahrmarkt-Greifautomat im 3D-Raum.
+  - **Hierarchischer Szenengraph:** Portalbrücke ($X$-Fahrt) $\to$ Laufkatze ($Z$-Fahrt) $\to$ Seilwinde ($Y$-Hub) $\to$ 3-Finger-Greifklaue.
+  - **Interaktive Steuerung & Greifmechanik:** Tastatursteuerung (`W`/`A`/`S`/`D`, `Space` für Absenk-/Greifzyklus), bunte Gewinn-Boxen auf dem Boden und euklidische Distanz-Kollisionsprüfung: Ein ergriffener Preis wird im Szenengraphen dynamisch vom Wurzelknoten an den Klauenknoten umgehängt (Re-Parenting) und über dem Auswurfschacht abgeworfen.
 
 - **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
-  - [3 P.] Korrekter hierarchischer Szenengraph mit 4 Freiheitsgraden ($X, Y, Z, \text{Greifer}$).
-  - [3 P.] Stabile Orbit-Kamera mit flüssiger Tastatur-/Maus-Interaktion.
-  - [2 P.] Ansprechende Beleuchtung, Normalenvektoren und Materialfarben.
-  - [2 P.] Greifmechanik mit einfacher Distanz-Kollisionsprüfung beim Aufnehmen eines Objekts.
+  - [3 P.] Korrekter hierarchischer Szenengraph mit mindestens 4 Freiheitsgraden (`PushMatrix`/`PopMatrix`).
+  - [3 P.] Stabile Orbit-Kamera mit Gimbal-Lock-Schutz und flüssiger Interaktion.
+  - [2 P.] Korrekte Flächennormalen (`gl.Normal`) und plastische Beleuchtung.
+  - [2 P.] Analytischer TCP-Kontrollabgleich (Track A) bzw. Re-Parenting-Greifmechanik (Track B).
 
 ---
 
 #### 🔍 Peer-Review & Leitfragen für das Plenum
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
-- **Hierarchischer Szenengraph & Matrix-Stack:** Bewegen sich die Subkomponenten (Laufkatze, Teleskophubwerk, Greiffinger) rein über lokale Transformationen via `glPushMatrix()` und `glPopMatrix()` mit, oder wurden Weltkoordinaten manuell errechnet? *(Schwachstellentest: Portal verfahren – bleibt der Greifer am Portal oder löst er sich ab?)*
-- **Kardanfehler & Gimbal Lock der Kamera:** Was geschieht, wenn die Kamera senkrecht über den Nord- oder Südpol geschwenkt wird ($\phi = \pm 90^\circ$)? Kippt die Kameraansicht sprunghaft um oder ist die Elevation sauber auf z. B. $[-85^\circ, +85^\circ]$ begrenzt?
-- **Flächennormalen & Beleuchtung:** Wirken die 3D-Körper plastisch mit sichtbarem Glanzpunkt (Specular Highlight), oder sind Flächen pechschwarz bzw. fleckig, weil Normalenvektoren (`glNormal3f`) fehlen oder durch falsche Skalierungsmatrizen verzerrt wurden?
-- **Greifmechanik vs. Skript-Animation:** Basiert das Aufnehmen von Objekten auf einer echten geometrischen Abstands- bzw. BoundingBox-Prüfung zwischen Greiferbacken und Werkstück, oder wird das Objekt rein zeitgesteuert („Fake-Animation“) an die Klaue geheftet?
+- **Hierarchischer Szenengraph & Matrix-Stack:** Bewegen sich die Subkomponenten rein über lokale Transformationen via `gl.PushMatrix()` und `gl.PopMatrix()` mit, und warum darf `Sx = L1` nicht auf den Transformationsknoten selbst gesetzt werden (Verzerrung der Kind-Achsen)?
+- **Kardanfehler & Gimbal Lock der Kamera:** Ist die Elevation $\phi$ sauber auf $[-89^\circ, +89^\circ]$ begrenzt?
+- **Flächennormalen & Beleuchtung:** Wirken die 3D-Körper plastisch schattiert (`gl.Normal`), oder sind Seitenflächen gleichförmig flach?
+- **TCP-Deckungsgleichheit bzw. Re-Parenting:** Liegt der analytisch berechnete TCP-Marker bei beliebigen Winkeln $\theta_1, \theta_2$ exakt im Greiferzentrum?
 
 ---
 
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 05)
-- **Empfohlene Suchbegriffe:** `SharpGL WPF OpenGLControl camera gluLookAt`, `OpenGL spherical coordinates orbit camera`, `OpenGL hierarchical matrix stack glPushMatrix`.
+- **Empfohlene Suchbegriffe:** `SharpGL WPF OpenGLControl camera LookAt`, `OpenGL spherical coordinates orbit camera`, `OpenGL hierarchical matrix stack glPushMatrix`.
 - **Offizielle Dokumentation:** [SharpGL GitHub Repository](https://github.com/dwmkerr/sharpgl), [OpenGL 2.1 Reference Pages](https://registry.khronos.org/OpenGL-Refpages/gl2.1/).
 - **Vibe-Coding Prompting-Tipp:**
-  > *„Erstelle eine C#-Klasse für eine OpenGL Orbit-Kamera mit SharpGL. Berechne die Kameraposition aus Kugelkoordinaten $(r, \theta, \phi)$ und rufe `gl.LookAt()` auf. Beachte: Elevation $\phi$ muss gegen Gimbal Lock geschützt sein (z. B. auf $\pm 89^\circ$ clamped). Implementiere die Methoden `OnMouseMove` und `OnMouseWheel`.“*
+  > *„Erstelle eine C#-Klasse für eine OpenGL Orbit-Kamera mit SharpGL. Berechne die Kameraposition aus Kugelkoordinaten $(r, \theta, \phi)$ und rufe `gl.LookAt()` auf. Beachte: Elevation $\phi$ muss gegen Gimbal Lock geschützt sein (auf $\pm 89^\circ$ clamped).“*
 
 ---
 
-### Einheit 06: „Partikelsturm-Benchmark vs. Zombie-Horde“ (TPL Parallel.For & Cache-Lokalität)
+### Einheit 06: „Parallele Monte-Carlo-Toleranzanalyse vs. 100.000 Boids / Zombie-Horde“ (TPL Parallel.For)
 
 #### Fachlicher Bezug & Lernziele
-- **Vorlesung:** [Kapitel 06: Multithreading](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/06_Multithreading/Folien.md) – Task Parallel Library (TPL), `Parallel.For`, Thread-Sicherheit, Amdahlsches Gesetz, CPU-Cache-Hierarchie, False Sharing.
+- **Vorlesung:** [Kapitel 06: Multithreading](../Folien/06_Multithreading/Folien.md) – Task Parallel Library (TPL), `Parallel.For`, Thread-Sicherheit (`Interlocked`, Double-Buffering), Amdahlsches Gesetz, False Sharing.
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md`](../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md), [`Vorlage/TplParticleSprint.sln`](../Uebungen/Termin_06_Multithreading_und_TPL/Vorlage/TplParticleSprint.sln).
 - **Technologie-Status:** TPL, Multithreading, Benchmarking mit `Stopwatch`. Noch *KEIN* Math.NET Cholesky! Noch *KEINE* kontinuierlichen S-Functions!
 - **Lernziele:**
-  1. Praktische Beherrschung von `Parallel.For` und Vermeidung von Race Conditions (Double-Buffering, Partitionierung).
+  1. Praktische Beherrschung von `Parallel.For` und Vermeidung von Race Conditions (Read/Write-Double-Buffering, `Interlocked`).
   2. Messung und mathematischer Fit des Speedups nach Amdahl:
      $$S(p) = \frac{1}{(1 - f_{\text{par}}) + \frac{f_{\text{par}}}{p}}$$
-  3. Hardwarenahe Optimierung: Nachweis des dramatischen Performanceverlusts durch Cache-Misses (Row-Major vs. Column-Major).
+  3. Thread-sichere Zufallszahlengenerierung und Vermeidung von False Sharing auf Cache-Line-Ebene.
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Partikel-Benchmark mit Parallel.For“
-- **Aufgabenstellung:**
-  1. Erstellen Sie eine C#-Konsolenapplikation `MultithreadingBenchmark`.
-  2. Erzeugen Sie ein System aus $N = 100\,000$ Partikeln mit Positionen und Geschwindigkeiten.
-  3. Berechnen Sie pro Zeitschritt die gravitative Wechselwirkung oder ein 2D-Flock-Verhalten seriell:
-     $$\mathbf{v}_i^{k+1} = \mathbf{v}_i^k + \Delta t \cdot \mathbf{a}_i, \quad \mathbf{x}_i^{k+1} = \mathbf{x}_i^k + \Delta t \cdot \mathbf{v}_i^{k+1}$$
-  4. Messen Sie die Ausführungszeit $T_{\text{seq}}$ über 50 Zeitschritte mittels `Stopwatch`.
-  5. Parallelisieren Sie die Iteration mit `Parallel.For(0, N, i => { ... })`.
-  6. Berechnen und drucken Sie Speedup $S = \frac{T_{\text{seq}}}{T_{\text{par}}}$ und parallele Effizienz $E = \frac{S}{p}$.
-- **Erwartetes Ergebnis:** Signifikanter Speedup von $4\text{--}7\times$ auf einem modernen Multicore-PC.
+#### Stufe A: In-Class Sprint (60 min) – „Paralleler Partikelfeld-Schritt & Determinismus-Check“
+- **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md)):**
+  1. Öffnen Sie die Vorlage [`TplParticleSprint.sln`](../Uebungen/Termin_06_Multithreading_und_TPL/Vorlage/TplParticleSprint.sln) ($N = 200\,000$ Partikel).
+  2. Implementieren Sie `ParticleFieldSimulator.StepParallel` mittels `Parallel.For` und `ParallelOptions { MaxDegreeOfParallelism = maxDegreeOfParallelism }`.
+  3. Prüfen Sie mit `dotnet test`, dass der parallele Lauf über alle Kerne bitweise (bzw. auf $10^{-12}$) exakt dasselbe Ergebnis liefert wie der serielle Referenzlauf (`StepSerial`).
+- **Erwartetes Ergebnis:** Alle 3 Unit-Tests grün; deutlicher Multi-Core-Speedup in der Konsolen-Benchmark-Tabelle.
 
 ---
 
@@ -633,79 +591,66 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
-> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf TPL-Parallelisierung und Cache-Benchmarking und führen zur maximalen Punktzahl (10 Punkte).
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf TPL-Parallelisierung und Amdahl-Skalierungsanalyse und führen zur maximalen Punktzahl (10 Punkte).
 
-- **Track A (Industrie): Industrieller Schüttgut- & Partikelsturm-Benchmark mit TPL**
-  - **Industrie-Szenario:** Parallele Simulation eines industriellen Granulat-Schüttgutstroms ($N = 100\,000$ Partikel im Silo-Fallrohr) unter Schwerkraft und elastischer Nachbarschafts-Kollisionsabstoßung.
-  - **Systematische Skalierungsreihe:**
-    - Messen Sie die Rechenzeit für $p \in \{1, 2, 4, 6, 8, 12, 16, 24, 32\}$ Threads (`ParallelOptions.MaxDegreeOfParallelism`).
-    - Führen Sie pro Messpunkt 5 Wiederholungen durch (ersten Lauf als JIT-Warmup verwerfen!).
-  - **Identifikation des seriellen Anteils:**
-    - Fitten Sie die Messkurve an Amdahls Gesetz und bestimmen Sie den seriellen Code-Anteil $s = 1 - f_{\text{par}}$.
-  - **Hardware-Cache-Experiment (Row-Major vs. Column-Major):**
-    - Führen Sie auf einer $4096 \times 4096$ Matrix eine 2D-Laplace-Glättung aus:
-      - *Test A (Cache-freundlich):* Zeilenweiser Zugriff (äußere Schleife Zeilen, innere Schleife Spalten).
-      - *Test B (Cache-feindlich):* Spaltenweiser Zugriff (äußere Schleife Spalten, innere Schleife Zeilen).
-    - Dokumentieren Sie den extremen Leistungseinbruch (Faktor 4–10) und begründen Sie ihn anhand von Cache-Lines ($64\,\text{Byte}$) und CPU-Prefetching.
+- **Track A (Industrie): Parallele Monte-Carlo-Toleranzanalyse (Maßkettenrechnung mit Amdahl-Fit)**
+  - **Industrie-Szenario:** Statistische Maßkettenanalyse einer 4-teiligen Getriebewellen-Baugruppe über $N = 10\,000\,000$ virtuelle Baugruppen für das axiale Spaltmaß $S = L_{\text{Gehäuse}} - (L_1 + L_2 + L_3)$.
+  - **Thread-sichere Stochastik & Zählung:** Box-Muller-Transformation mit eigenen `Random`-Instanzen pro Partition (oder `Random.Shared`) und atomarer Ausschusszählung ($S < 0{,}05\,\text{mm}$ oder $S > 0{,}45\,\text{mm}$) via `Interlocked.Increment` bzw. lokalem Thread-Akkumulator.
+  - **Skalierungsreihe & Amdahl-Fit:** Messung von $T(p)$ für $p \in \{1, 2, 4, 8, \dots\}$ Kerne und Bestimmung des effektiven seriellen Programmanteils $1 - f_{\text{par}} = \frac{1/S(p) - 1/p}{1 - 1/p}$.
 
-- **Track B (Simulation Game): Zombie-Horden-KI & Crowd-Simulation-Benchmark**
-  - **Game-Szenario:** $N = 50\,000$ Zombies bewegen sich auf einem 2D-Gitter auf die nächstgelegenen Überlebenden zu.
-  - **Schwarmverhalten:** Jeder Zombie scannt seine Nachbarschaft, verfolgt das Ziel und vermeidet Kollisionen mit anderen Zombies (Flocking / Separation).
-  - **Thread-Sicherheit & Parallelisierung:** Parallele Aktualisierung mit `Parallel.For` unter Vermeidung von Race Conditions (Double-Buffering) und False Sharing.
-  - **Skalierungsreihe & Amdahl-Fit:** Messreihe für $p \in \{1, \dots, 32\}$ Threads mit Bestimmung des maximal erreichbaren Speedups.
-  - **Hardware-Cache-Experiment:** Identischer 2D-Laplace-Cache-Lokalitäts-Vergleich auf der $4096 \times 4096$ Matrix (Zeilen- vs. Spaltenzugriff).
+- **Track B (Simulation Game): „100.000 Boids / Zombie-Horde“ (Hochparalleler Schwarm-Benchmark)**
+  - **Game-Szenario:** Hochparallele 2D-Schwarmsimulation ($N = 20\,000\text{--}100\,000$ Agenten) mit Nachbarschafts-Interaktion (Separation & Zielverfolgung).
+  - **Strikte Read/Write-Trennung:** Alle Threads lesen ausschließlich aus `stateRead[j]` und schreiben ihr Ergebnis konfliktfrei in `stateWrite[i]`.
+  - **Skalierungsreihe & False-Sharing-Experiment:** Messung von Speedup $S(p)$, Effizienz $E(p)$ und Vergleich gegen ein schlecht ausgerichtetes Zähler-Array (`long[p]` vs. `long[p * 16]`).
 
 - **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
-  - [3 P.] Korrekte und thread-sichere Parallelisierung ohne Race Conditions.
-  - [3 P.] Saubere Messreihen mit Warmup, Standardabweichung und Amdahl-Fit.
-  - [2 P.] Fundierter experimenteller Nachweis des Cache-Lokalitäts-Effekts.
-  - [2 P.] Dokumentation: Aussagekräftige Diagramme und Hardware-Reflexion.
+  - [3 P.] Korrekte und thread-sichere Parallelisierung ohne Race Conditions (`dotnet test`).
+  - [3 P.] Saubere Messreihen mit JIT-Warmup, Speedup $S(p)$ und Amdahl-Parameterfit.
+  - [2 P.] Experimenteller Nachweis zu `lock` vs. `Interlocked` bzw. False Sharing.
+  - [2 P.] Dokumentation: Aussagekräftige Benchmark-Tabellen und Hardware-Reflexion.
 
 ---
 
 #### 🔍 Peer-Review & Leitfragen für das Plenum
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
-- **Race Conditions & Nicht-Determinismus:** Werden gemeinsame Variablen (z. B. Partikelzähler, Kollisionssummen) ohne `Interlocked`-Operationen oder thread-lokale Akkumulatoren inkrementiert? *(Auditorium-Test: Mehrfaches Ausführen desselben Testlaufs – liefert die Simulation exakt dieselben Zahlen oder streuen die Ergebnisse zufällig?)*
-- **False Sharing auf Cache-Lines:** Schreiben benachbarte Threads auf dicht beieinanderliegende Array-Felder innerhalb derselben 64-Byte-Cache-Zeile? Verursacht dies einen massiven Performance-Einbruch bei hoher Thread-Anzahl ($p \ge 8$)?
-- **Amdahl-Fit & JIT-Warmup:** Wurde vor der Zeitmessung ein Warmup-Durchlauf ausgeführt, um JIT-Kompilierungszeit zu eliminieren? Ist der berechnete serielle Anteil $s = 1 - f_{\text{par}}$ physikalisch plausibel?
-- **Hardware-Cache-Lokalität:** Zeigt das 2D-Laplace-Experiment den drastischen Geschwindigkeitsunterschied (Faktor 4–10) zwischen zeilenweisem (Row-Major, Cache-Hit) und spaltenweisem (Column-Major, Cache-Miss) Durchlaufen des Arrays?
+- **Race Conditions & Nicht-Determinismus:** Liefert die parallele Simulation bei festem Seed reproduzierbare Ergebnisse, oder entstehen durch ungeschützte Zugriffe Datenrennen?
+- **Thread-Sicherheit von `System.Random`:** Warum liefert `new Random()` ohne Seed in parallelen Tasks identische Zahlenfolgen oder korrupte Zustände (0-Werte)?
+- **False Sharing auf Cache-Lines:** Warum bricht die Performance ein, wenn 16 Threads gleichzeitig in benachbarte Elemente eines `int[16]`-Arrays schreiben (64-Byte Cache-Line Ping-Pong)?
+- **Amdahl-Fit & JIT-Warmup:** Wurde vor der Zeitmessung ein Warmup-Durchlauf ausgeführt, um die JIT-Kompilierungszeit auszuschließen?
 
 ---
 
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 06)
-- **Empfohlene Suchbegriffe:** `C# Parallel.For MaxDegreeOfParallelism performance`, `Amdahl's law curve fitting non-linear least squares`, `cache line false sharing CPU benchmark C#`.
+- **Empfohlene Suchbegriffe:** `C# Parallel.For MaxDegreeOfParallelism performance`, `Amdahl's law speedup serial fraction`, `cache line false sharing CPU benchmark C#`.
 - **Offizielle Dokumentation:** [Microsoft Learn: Datenparallelität (Task Parallel Library)](https://learn.microsoft.com/de-de/dotnet/standard/parallel-programming/data-parallelism-task-parallel-library).
 - **Vibe-Coding Prompting-Tipp:**
-  > *„Schreibe mir einen C#-Benchmark mit `System.Diagnostics.Stopwatch`. Verwende `Parallel.For` mit expliziter Vorgabe von `ParallelOptions.MaxDegreeOfParallelism`. Achte darauf, dass keine gemeinsamen Variablen ohne `Interlocked` oder Thread-lokale Akkumulatoren modifiziert werden, um False Sharing zu vermeiden.“*
+  > *„Schreibe mir einen C#-Benchmark mit `System.Diagnostics.Stopwatch`. Verwende `Parallel.For` mit expliziter Vorgabe von `ParallelOptions.MaxDegreeOfParallelism`. Achte darauf, dass keine gemeinsamen Variablen ohne `Interlocked` oder Thread-lokale Akkumulatoren modifiziert werden, um Race Conditions und False Sharing zu vermeiden.“*
 
 ---
 
-### Einheit 07: „Gittermastkran vs. Achterbahn-Tragwerk & Bridge Solver“ (Math.NET Cholesky-LGS & FEM)
+### Einheit 07: „Portalkran-Verformung vs. Bridge Constructor Physics Engine“ (Math.NET Cholesky-LGS & FEM)
 
 #### Fachlicher Bezug & Lernziele
-- **Vorlesung:** [Kapitel 07: Statische Modelle](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/07_Statische_Modelle/Folien.md) – Finite-Elemente-Methode (FEM) für Stabwerke, globale Steifigkeitsmatrix $\mathbf{K}$, Blockpartitionierung, Cholesky-Faktorisierung ($\mathbf{L}\mathbf{L}^\top$).
-- **Quellen-Referenz:** [`Quellen/WS25/FachwerkElastisch3D`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS25/FachwerkElastisch3D), [`Quellen/WS24/StatischFachwerkElastisch2D`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS24/StatischFachwerkElastisch2D).
+- **Vorlesung:** [Kapitel 07: Statische Modelle](../Folien/07_Statische_Modelle/Folien.md) – Finite-Elemente-Methode (FEM) für Stabwerke, globale Steifigkeitsmatrix $\mathbf{K}$, Blockpartitionierung, Cholesky-Faktorisierung ($\mathbf{L}\mathbf{L}^\top$), Euler-Knicklast.
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md`](../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md), [`Vorlage/FemTrussCholesky.sln`](../Uebungen/Termin_07_Statik_FEM_Cholesky/Vorlage/FemTrussCholesky.sln).
+- **Quellen-Referenz:** [`Quellen/WS25/FachwerkElastisch3D`](../Quellen/WS25/FachwerkElastisch3D), [`Quellen/WS24/StatischFachwerkElastisch2D`](../Quellen/WS24/StatischFachwerkElastisch2D).
 - **Technologie-Status:** `MathNet.Numerics` (Matrizen, Cholesky-Solver). Noch *KEINE* dynamischen S-Functions!
-- **Rückgriff auf Einheit 03 (Verheiratung von Grafik & Statik-Engine):** In Einheit 03 wurde das grafische Vektor-Frontend (CAD-Viewer bzw. Bridge Blueprint Sketcher) auf dem WPF Canvas implementiert. In dieser Einheit schließen Sie den Kreis: Die dortige Visualisierung wird nun direkt mit der Math.NET Cholesky-Statik-Engine verheiratet! Aus den reinen Geometrie-Linien werden physikalisch belastete, farbkodierte Zug- und Druckstäbe mit realen Lagerkräften.
+- **Rückgriff auf Einheit 03 (Verheiratung von Grafik & Statik-Engine):** In Einheit 03 wurde das grafische Vektor-Frontend auf dem WPF Canvas implementiert. In dieser Einheit wird die Geometrie direkt mit der Math.NET Cholesky-Statik-Engine verheiratet!
 - **Lernziele:**
-  1. Assemblierung der globalen Steifigkeitsmatrix aus Elementmatrizen:
-     $$\mathbf{K}_e = \frac{E \cdot A}{L} \begin{bmatrix} \vec{n}\vec{n}^\top & -\vec{n}\vec{n}^\top \\ -\vec{n}\vec{n}^\top & \vec{n}\vec{n}^\top \end{bmatrix}$$
+  1. Assemblierung der globalen Steifigkeitsmatrix aus $4\times 4$-Elementmatrizen:
+     $$\mathbf{K}_e = \frac{E \cdot A}{L} \begin{bmatrix} c^2 & cs & -c^2 & -cs \\ cs & s^2 & -cs & -s^2 \\ -c^2 & -cs & c^2 & cs \\ -cs & -s^2 & cs & s^2 \end{bmatrix}$$
   2. Exakte Blockpartitionierung nach freien ($f$) und vorgeschriebenen ($p$) Freiheitsgraden:
-     $$\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f - \mathbf{K}_{fp} \mathbf{u}_p, \quad \mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f + \mathbf{K}_{pp} \mathbf{u}_p$$
-  3. Berechnung von Lagerreaktionen und Stab-Normalspannungen $\sigma_i = E \cdot \epsilon_i$.
+     $$\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f, \quad \mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f - \mathbf{f}_{p,\text{ext}}$$
+  3. Berechnung von Lagerreaktionen, Stab-Normalkräften $N_e$ und Euler-Knickgrenzen $N_{\text{knick}} = \frac{\pi^2 E I}{L^2}$.
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Assemblierung & Cholesky-Löser“
-- **Aufgabenstellung:**
-  1. Binden Sie das NuGet-Paket `MathNet.Numerics` ein.
-  2. Implementieren Sie eine Klasse `TrussAssembler2D` für ein Dreiecksträger-System (3 Knoten, 6 Freiheitsgrade).
-  3. Assemblieren Sie die globale Matrix $\mathbf{K} \in \mathbb{R}^{6 \times 6}$ durch Aufsummieren der Elementsteifigkeiten.
-  4. Blockpartitionieren Sie die Matrix für Fest- und Loselager (3 Lager-Freiheitsgrade, 3 freie Freiheitsgrade).
-  5. Lösen Sie $\mathbf{u}_f$ via Cholesky: `K_ff.Cholesky().Solve(f_f)`.
-  6. Berechnen Sie die Lagerkräfte $\mathbf{f}_p$ und prüfen Sie das globale Kraftgleichgewicht:
-     $$\sum F_x = 0, \quad \sum F_y = 0$$
-- **Erwartetes Ergebnis:** Numerisch exakte Knotenverschiebungen und Gleichgewicht bis auf Maschinengenauigkeit ($< 10^{-12}\,\text{N}$).
+#### Stufe A: In-Class Sprint (60 min) – „Assemblierung & Cholesky-Löser für den 3-Knoten-Kragträger“
+- **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md)):**
+  1. Öffnen Sie die Vorlage [`FemTrussCholesky.sln`](../Uebungen/Termin_07_Statik_FEM_Cholesky/Vorlage/FemTrussCholesky.sln).
+  2. Implementieren Sie in `TrussSolver.Solve` die Assemblierung der $4\times 4$-Elementmatrizen in `kGlobal`, die Extraktion von `kff` und `ff`, die Cholesky-Lösung `kff.Cholesky().Solve(ff)` und die Stabkraftberechnung $N_e = \frac{EA}{L}\Delta L$.
+  3. Prüfen Sie Ihre Implementierung mit `dotnet test` (3 automatisierte MSTests gegen geschlossene analytische Handrechnung und globales Kräftegleichgewicht $\sum F_x = 0, \sum F_y = 0$).
+- **Erwartetes Ergebnis:** Alle 3 Unit-Tests grün; exakte Übereinstimmung mit der analytischen Kragträger-Lösung ($N_0 = +20\,\text{kN}, N_1 = -20\sqrt{2}\,\text{kN}$) und Gleichgewicht bis auf $< 10^{-9}\,\text{N}$.
 
 ---
 
@@ -715,84 +660,61 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
 > Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf der FEM-Steifigkeitsmethode und Math.NET Cholesky und führen zur maximalen Punktzahl (10 Punkte).
 
-- **Track A (Industrie): Gittermastkran & Industriehallen-Tragwerk (FEM-Cholesky verheiratet mit T03-CAD-Viewer)**
-  - **Tragwerks-Modellierung & T03-Verheiratung:**
-    - Übernehmen Sie das in Einheit 03 erstellte Datenmodell und den interaktiven Canvas-Viewer als Frontend.
-    - Speisen Sie die Knotenkoordinaten und Stabverbindungen in die Math.NET Steifigkeits-Engine ein.
-    - Erweitern Sie das Modell wahlweise auf ein 3D-Gittertragwerk (z. B. Kranturm mit Ausleger und Gegengewicht unter Wind- und Nutzlast, $\ge 16$ Knoten, 40 Stäbe) oder ein hochgradig unbestimmtes 2D-Hallen-Fachwerk.
-  - **Cholesky-Löser & Blockpartitionierung:**
-    - Assemblieren Sie $\mathbf{K} \in \mathbb{R}^{n \times n}$ und teilen Sie die Freiheitsgrade in freie ($f$) und gelagerte ($p$) DOFs auf:
-      $$\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f - \mathbf{K}_{fp} \mathbf{u}_p, \quad \mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f + \mathbf{K}_{pp} \mathbf{u}_p$$
-    - Lösen Sie $\mathbf{u}_f$ via Cholesky-Zerlegung `K_ff.Cholesky().Solve(f_f)`.
-  - **Visualisierung im T03-Canvas:**
-    - Die berechneten Stabkräfte steuern nun die Linienfarben (Blau = Zugkraft, Rot = Druckkraft) und Linienstärken ($w \propto |N_i|$) direkt im interaktiven Canvas aus T03!
-    - Die berechneten Lagerreaktionskräfte $\mathbf{f}_p$ werden als Kraftpfeile mit korrekter Pfeilspitze an den Lagern eingeblendet.
-  - **Knicknachweis nach Euler & Validierung:**
-    - Berechnung der Normalspannung $\sigma_i = E \cdot \epsilon_i$ und Euler-Knicklast $N_{\text{knick}} = \frac{\pi^2 E I}{L^2}$ für alle Druckstäbe.
-    - Analytischer Nachweis des globalen Kraftgleichgewichts: $\sum \vec{F} = \vec{0}$ bis auf Maschinengenauigkeit.
+- **Track A (Industrie): Portalkran-Verformung unter Wanderlast (Spannungs-Farbcode & Knicknachweis)**
+  - **Tragwerks-Modellierung:** 2D-Portalkran-Fachwerk ($\ge 7$ Knoten, $\ge 11$ Stäbe) mit verfahrbarer Laufkatzen-Wanderlast $F_{\text{Last}}$ entlang des Untergurts.
+  - **Visualisierung & Überhöhung:** Darstellung des unverformten Referenzgitters und der um Faktor $\alpha_{\text{scale}}$ überhöhten elastischen Verformung $\mathbf{p}_i' = \mathbf{p}_i + \alpha_{\text{scale}} \mathbf{u}_i$ mit Farbcodierung (Blau = Zug, Rot = Druck) und Kraftpfeilen (`VectorArrow` aus T03).
+  - **Euler-Knicknachweis & Gleichgewicht:** Prüfung aller Druckstäbe gegen $N_{\text{knick}} = \frac{\pi^2 E I}{L_e^2}$ und automatisierter Nachweis von $\sum \vec{F} = \vec{0}$.
 
-- **Track B (Simulation Game): Achterbahn-Tragwerk & Bridge Constructor Physics Engine**
-  - **Verheiratung mit dem Blueprint Sketcher aus T03:**
-    - Importieren Sie die in T03 entworfene Brückentopologie oder ein 3D-Achterbahn-Looping-Tragwerk direkt in den Math.NET Cholesky-Solver.
-  - **Dynamische Lastfahrt („Der schwere Zug / LKW“):**
-    - Ein Zug oder LKW (Wanderlast $F_{\text{Last}} = 20\,\text{kN}$) rollt schrittweise über die Fahrbahnknoten der Brücke von links nach rechts.
-    - In jedem Simulationsschritt wird das LGS gelöst und die aktuellen Stabkräfte berechnet.
-  - **Echtzeit-Farbcodierung & Spannungsanzeige:**
-    - Stäbe färben sich live auf dem Canvas: Blau (Zug), Rot (Druck), Gelb/Orange bei Annäherung an die Grenzlast ($|N_i| > 0{,}8 \cdot N_{\text{zul}}$).
-  - **Stabbruch & Einsturzmechanik:**
-    - Übersteigt eine Stabkraft die zulässige Grenzlast ($|N_i| \ge N_{\text{zul}} = 25\,\text{kN}$), reißt der Stab: Er wird aus der Steifigkeitsmatrix entfernt.
-    - Die Matrix wird neu assembliert; ist das Resttragwerk kinematisch instabil (Matrix singulär), wird der Einsturz des Bauwerks animiert.
-  - **Validierung:**
-    - Automatisierter Check des globalen Kraftgleichgewichts $\sum \vec{F}_{\text{Lager}} + \sum \vec{F}_{\text{Last}} = \vec{0}$ in jedem Schritt der Überfahrt.
+- **Track B (Simulation Game): „Bridge Constructor Physics Engine“ (LKW-Überfahrt, Stabbruch & Einsturz)**
+  - **Game-Szenario:** Kontinuierliche Cholesky-Neuberechnung während ein schwerer LKW ($m_{\text{LKW}} = 15\,\text{t}$) über die Fahrbahnknoten der Brücke rollt (anteilige Lastaufteilung auf benachbarte Knoten).
+  - **Stabbruch & Kaskadenversagen:** Übersteigt $|N_e| > N_{\text{max}}$, reißt der Stab (`IsBroken = true`) und wird aus der Assemblierung entfernt. Wird $\mathbf{K}_{ff}$ singulär/instabil (`ArgumentException` / `InvalidOperationException` bei `Cholesky()`), wird der Brückeneinsturz ausgelöst!
 
 - **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
-  - [3 P.] Korrekte mathematische FEM-Formulierung und Cholesky-Blockpartitionierung via Math.NET.
-  - [3 P.] Nahtlose Verheiratung mit der T03-Vektorvisualisierung (Echtzeit-Farbcodierung Zug/Druck und dynamische Lasterfassung).
-  - [2 P.] Spannungs- und Knicklastanalyse (Euler) bzw. Stabbruch- und Einsturzsimulation.
-  - [2 P.] Vollständiger Nachweis des globalen Kraftgleichgewichts im Markdown-Bericht.
+  - [3 P.] Korrekte mathematische FEM-Formulierung und Cholesky-Blockpartitionierung via Math.NET (`dotnet test`).
+  - [3 P.] Anschauliche Visualisierung (Farbcodierung Zug/Druck, Verformungsüberhöhung, Wanderlast).
+  - [2 P.] Spannungs- und Knicklastanalyse (Euler) bzw. Stabbruch- und Einsturzmechanik.
+  - [2 P.] Vollständiger Nachweis des globalen Kraftgleichgewichts.
 
 ---
 
 #### 🔍 Peer-Review & Leitfragen für das Plenum
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
-- **Globales Kraftgleichgewicht & Invarianten:** Ergibt die vektorielle Summe aller Auflagerreaktionskräfte $\mathbf{f}_p$ und eingeleiteten äußeren Lasten $\mathbf{f}_{\text{ext}}$ exakt $\vec{0}$ bis auf Maschinengenauigkeit ($< 10^{-10}\,\text{N}$)? *(Schwachstellentest: Live-Abfrage der Kräftesumme am Beamer).*
-- **Blockpartitionierung vs. Penalty-Pfusch:** Wurden die Lagerbedingungen mathematisch exakt über Submatrizen ($\mathbf{K}_{ff}, \mathbf{K}_{fp}$) partitioniert und gelöst, oder wurde eine numerisch instabile „Penalty-Methode“ verwendet (künstlich riesige Zahlen auf der Hauptdiagonale von $\mathbf{K}$)?
-- **Kinematische Instabilität bei Stabbruch:** Was passiert bei Überlastung, wenn ein Stab bricht und das Resttragwerk statisch unterbestimmt (mechanischer Mechanismus) wird? Fängt die Software die nicht mehr positiv definite Matrix sauber ab, oder stürzt die Applikation mit unbehandelter Cholesky-`NonPositiveDefiniteException` ab?
-- **Konsistente Farbcodierung der Zug-/Druckstäbe:** Entsprechen die Farben auf dem Canvas tatsächlich den Vorzeichen der Normalkräfte ($N > 0$ Zug = Blau, $N < 0$ Druck = Rot)? Werden Knickstäbe (Euler-Knickfall) korrekt identifiziert?
+- **Globales Kraftgleichgewicht & Invarianten:** Ergibt die vektorielle Summe aller Auflagerreaktionskräfte $\mathbf{f}_p$ und eingeleiteten äußeren Lasten $\mathbf{f}_{\text{ext}}$ exakt $\vec{0}$ bis auf Maschinengenauigkeit ($< 10^{-9}\,\text{N}$)?
+- **Blockpartitionierung vs. Penalty-Pfusch:** Wurden die Lagerbedingungen mathematisch exakt über Submatrizen ($\mathbf{K}_{ff}, \mathbf{K}_{pf}$) partitioniert und gelöst?
+- **Kinematische Instabilität bei Stabbruch:** Fängt die Software eine nicht mehr positiv definite Matrix sauber per `try/catch (ArgumentException)` / `InvalidOperationException` ab, wenn ein Stab reißt und ein Mechanismus entsteht?
+- **Konsistente Farbcodierung der Zug-/Druckstäbe:** Entsprechen die Farben tatsächlich den Vorzeichen der Normalkräfte ($N > 0$ Zug = Blau, $N < 0$ Druck = Rot)?
 
 ---
 
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 07)
-- **Empfohlene Suchbegriffe:** `Math.NET Numerics Matrix Cholesky solve C#`, `Direct stiffness method 3D truss assembly`, `truss reaction forces block partitioning`.
+- **Empfohlene Suchbegriffe:** `Math.NET Numerics Matrix Cholesky solve C#`, `Direct stiffness method 2D truss assembly`, `truss reaction forces block partitioning`.
 - **Offizielle Dokumentation:** [Math.NET Numerics Documentation](https://numerics.mathdotnet.com/), [Matrix Decomposition in Math.NET](https://numerics.mathdotnet.com/LinearEquations).
 - **Vibe-Coding Prompting-Tipp:**
-  > *„Nutze `MathNet.Numerics.LinearAlgebra.Double.DenseMatrix`. Erstelle mir eine C#-Methode, die eine globale Steifigkeitsmatrix anhand zweier Integer-Listen (`freeDofs`, `prescribedDofs`) in vier Submatrizen $K_{ff}, K_{fp}, K_{pf}, K_{pp}$ zerlegt und mit `Cholesky().Solve()` die freien Verschiebungen berechnet. Vermeide ineffiziente Schleifen.“*
+  > *„Nutze `MathNet.Numerics.LinearAlgebra.Double.DenseMatrix`. Erstelle mir eine C#-Methode, die eine globale Steifigkeitsmatrix anhand zweier Integer-Listen (`freeDofs`, `fixedDofs`) in die Submatrizen $K_{ff}$ und $K_{pf}$ zerlegt und mit `Cholesky().Solve()` die freien Verschiebungen berechnet.“*
 
 ---
 
-### Einheit 08: „Segway-Balancer vs. SpaceX Falcon Hop“ (S-Function, RK4 & PID Anti-Windup)
+### Einheit 08: „DC-Servomotor-Regelung vs. SpaceX Falcon Hop“ (S-Function, RK4 & PID Anti-Windup)
 
 #### Fachlicher Bezug & Lernziele
-- **Vorlesung:** [Kapitel 08: Dynamische Modelle Kontinuierlich](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/08_Dynamische_Modelle_Kontinuierlich/Folien.md) – Simulink-artige S-Function-Architektur, Runge-Kutta-Verfahren 4. Ordnung (RK4), PID-Regelung, Aktorsättigung und Anti-Windup Clamping.
-- **Quellen-Referenz:** [`Quellen/WS25/SFunctionContinuous`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS25/SFunctionContinuous).
-- **Technologie-Status:** S-Function Block-Architektur, RK4-Solver. Noch *KEINE* Diskrete Ereignissimulation (DES)!
+- **Vorlesung:** [Kapitel 08: Dynamische Modelle Kontinuierlich](../Folien/08_Dynamische_Modelle_Kontinuierlich/Folien.md) – Simulink-artige S-Function-Architektur (`ISFunction`), Runge-Kutta-Verfahren 4. Ordnung (RK4), PID-Regelung, Aktorsättigung und Anti-Windup Clamping.
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_08_Kontinuierliche_Dynamik_RK4/Aufgabenblatt.md`](../Uebungen/Termin_08_Kontinuierliche_Dynamik_RK4/Aufgabenblatt.md), [`Vorlage/ContinuousOdeRk4.sln`](../Uebungen/Termin_08_Kontinuierliche_Dynamik_RK4/Vorlage/ContinuousOdeRk4.sln).
+- **Quellen-Referenz:** [`Quellen/WS25/SFunctionContinuous`](../Quellen/WS25/SFunctionContinuous).
+- **Technologie-Status:** S-Function-Architektur (`ISFunction`), `Rk4Solver`. Noch *KEINE* Diskrete Ereignissimulation (DES)!
 - **Lernziele:**
-  1. Saubere Kapselung kontinuierlicher Systeme nach dem Vorbild von MATLAB/Simulink (`Derivatives`, `Outputs`, `Update`).
-  2. Implementierung des klassischen Runge-Kutta-4-Solvers.
+  1. Saubere Kapselung kontinuierlicher Systeme nach dem Vorbild von MATLAB/Simulink (`ComputeDerivatives`, `ComputeOutputs`).
+  2. Implementierung des allokationsfreien, 4-stufigen Runge-Kutta-4-Solvers (`Rk4Solver`).
   3. Entwurf und Parametrierung eines PID-Reglers mit Begrenzung und bedingter Integration (Anti-Windup Clamping).
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „DC-Motor als S-Function mit RK4“
-- **Aufgabenstellung:**
-  1. Öffnen Sie `SFunctionContinuous` und leiten Sie eine Klasse `DcMotorBlock : Block` ab.
-  2. Zustandsvektor $\mathbf{x} = \begin{bmatrix} i_{\text{A}} & \omega & \theta \end{bmatrix}^\top$ (Strom, Drehzahl, Drehwinkel).
-  3. Implementieren Sie die Ableitungen:
-     $$\frac{\mathrm{d}i_{\text{A}}}{\mathrm{d}t} = \frac{u_{\text{A}} - R_{\text{A}} i_{\text{A}} - k_{\text{e}} \omega}{L_{\text{A}}}, \quad \frac{\mathrm{d}\omega}{\mathrm{d}t} = \frac{k_{\text{m}} i_{\text{A}} - d \cdot \omega - M_{\text{Last}}}{J}, \quad \frac{\mathrm{d}\theta}{\mathrm{d}t} = \omega$$
-  4. Führen Sie einen Spannungssprung ($24\,\text{V}$) mit dem RK4-Verfahren aus:
-     $$\mathbf{k}_1 = \mathbf{f}(t_k, \mathbf{x}_k), \quad \dots \quad \mathbf{x}_{k+1} = \mathbf{x}_k + \frac{h}{6}(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4)$$
-  5. Plotten oder protokollieren Sie Strom und Drehzahl über der Zeit.
-- **Erwartetes Ergebnis:** Exakte Nachbildung des Motor-Einschwingverhaltens ohne numerische Dämpfung.
+#### Stufe A: In-Class Sprint (60 min) – „S-Function-Kern & RK4-Energieerhaltung am Federpendel“
+- **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_08_Kontinuierliche_Dynamik_RK4/Aufgabenblatt.md)):**
+  1. Öffnen Sie die Vorlage [`ContinuousOdeRk4.sln`](../Uebungen/Termin_08_Kontinuierliche_Dynamik_RK4/Vorlage/ContinuousOdeRk4.sln).
+  2. Implementieren Sie in `Rk4Solver.Step` die 4 Zwischenstufen ($\mathbf{k}_1, \mathbf{k}_2, \mathbf{k}_3, \mathbf{k}_4$) ohne `new double[]`-Allokationen in der Schleife.
+  3. Vervollständigen Sie `ComputeDerivatives` in `HarmonicOscillatorBlock` und die Anti-Windup-Clamping-Logik in `DcServoControlBlock`.
+  4. Prüfen Sie Ihre Implementierung mit `dotnet test` (3 automatisierte MSTests: Energieerhaltung über 100 Perioden $< 0{,}01\,\%$ vs. Euler-Explosion, sowie Anti-Windup-Überschwingreduktion).
+- **Erwartetes Ergebnis:** Alle 3 Unit-Tests grün; RK4 hält die Gesamtenergie über 100 Schwingungsperioden hochpräzise konstant.
 
 ---
 
@@ -802,69 +724,60 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
 > Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf kontinuierlicher S-Function-Dynamik, RK4 und PID Anti-Windup und führen zur maximalen Punktzahl (10 Punkte).
 
-- **Track A (Industrie): Industrieller Segway-Balancer / Inverses Pendel auf Wagen**
-  - **Industrie-Szenario:** Mechatronische Lageregelung eines selbstbalancierenden Transportfahrzeugs (Segway / Inverses Pendel auf verfahrbarem Wagen) für die fahrerlose Intralogistik.
-  - **DGL-System (4. Ordnung):** Wagenposition $x(t)$, Geschwindigkeit $\dot{x}(t)$, Pendelneigungswinkel $\theta(t)$, Winkelgeschwindigkeit $\dot{\theta}(t)$, gekoppelt mit Motorkraft und Schwerkraftmoment.
-  - **Kaskadierter PID-Regler:** Stabilisierung der aufrechten Gleichgewichtslage ($\theta_{\text{soll}} = 0^\circ$) und Einregelung der Wagenposition.
-  - **Aktorsättigung & Anti-Windup Clamping:** Die Stellkraft bzw. Motorspannung ist physikalisch limitiert ($|F_{\text{Motor}}| \le F_{\max}$). Läuft der Regler in die Begrenzung und weisen Fehler sowie Stellgröße gleiches Vorzeichen auf, wird die Integration des I-Anteils gestoppt (`dxi = 0`).
-  - **Störfall-Experiment:** Injizieren Sie bei $t = 3\,\text{s}$ eine Stoßkraft auf das Pendel. Demonstrieren Sie im ScottPlot-Diagramm, dass das System mit Anti-Windup rasch und aperiodisch einschwingt, während das System ohne Anti-Windup massiv überschwingt und instabil umkippt.
+- **Track A (Industrie): DC-Servomotor-Regelung mit Lastsprung & Anti-Windup Clamping**
+  - **Industrie-Szenario:** Elektromechanischer Gleichstrom-Servomotor ($\mathbf{x} = [i_A, \omega, \theta, x_I]^\top \in \mathbb{R}^4$) mit PI/PID-Drehzahlregler und $\pm 24\,\text{V}$ Ankerspannungsbegrenzung.
+  - **Lastsprung-Experiment:** Führungssprung auf $\omega_{\text{ref}} = 150\,\text{rad/s}$ und Zuschaltung eines Lastmoments $M_L = 0{,}8\,\text{Nm}$ ab $t = 0{,}25\,\text{s}$.
+  - **Vergleichstudie:** Quantitativer Vergleich der Sprungantwort *mit* vs. *ohne* Anti-Windup Clamping (Überschwingweite in $\%$, Ausregelzeit $T_{2\%}$, maximaler Ankerstrom).
 
-- **Track B (Simulation Game): SpaceX Falcon Hop (Raketenlandung mit Schubvektorsteuerung)**
-  - **Game-Szenario:** Flugkörper (Falcon 9 Booster / Hopper) mit 3 Freiheitsgraden ($x, y, \theta$) im Raum (DGL-System 6. Ordnung).
-  - **Triebwerksmodell:** Haupttriebwerk mit kardanischer Schubvektorsteuerung ($\delta \in [-15^\circ, +15^\circ]$) und nichtlinearer Massenverringerung durch Treibstoffverbrauch ($\dot{m} = -\frac{F}{I_{\text{sp}} g_0}$).
-  - **Kaskadierter PID-Regler:** Lageregler für Soll-Höhe $y_{\text{soll}}$ und vertikale Ausrichtung $\theta_{\text{soll}} = 0^\circ$.
-  - **Aktorsättigung & Anti-Windup Clamping:** Begrenzung der Schubkraft auf $F_{\min} \le F \le F_{\max}$ und Winkelbegrenzung des Schubvektors. Conditional Integration bei Sättigung.
-  - **Störungs-Challenge:** Injizieren Sie bei $t = 3\,\text{s}$ eine heftige Seitenwindböe. Zeigen Sie im Diagramm, dass die Rakete mit Anti-Windup sanft aufsetzt, während sie ohne Anti-Windup die Orientierung verliert und zerschellt.
+- **Track B (Simulation Game): „SpaceX Falcon Hop / Booster Landing“ (Raketen-Vertikallandung)**
+  - **Game-Szenario:** Vertikallandung einer wiederverwendbaren Raketenstufe mit variabler Masse $\dot{m}(t) = -\alpha_{\text{fuel}} F_{\text{thrust}}$ ($\mathbf{x} = [y, v_y, m, x_I]^\top$).
+  - **Schubbegrenzung & Anti-Windup:** Reale Triebwerksgrenzen $0 \le F_{\text{thrust}} \le F_{\text{max}}$ mit Conditional Integration (Clamping) während der Sättigungsphase beim Abfangen aus $y_0 = 500\,\text{m}, v_0 = -60\,\text{m/s}$.
+  - **Soft-Touchdown:** Nachweis einer sanften Landung ($|v_{\text{touchdown}}| < 1{,}0\,\text{m/s}$) im Vergleich zum Absturz/Wiederaufsteigen ohne Anti-Windup.
 
 - **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
-  - [3 P.] Vollständiges S-Function-Modell des mechatronischen Mehrkörpersystems.
-  - [3 P.] Saubere Realisierung des RK4-Solvers und des PID-Clamping-Mechanismus.
-  - [2 P.] Vergleichende Trajektorienanalyse (mit vs. ohne Anti-Windup bei Laststörung).
-  - [2 P.] Dokumentation: Phasenplots und physikalische Fehlerbetrachtung.
+  - [3 P.] Vollständiges S-Function-Modell (`ISFunction`) des mechatronischen Systems.
+  - [3 P.] Allokationsfreier `Rk4Solver` und wirksames PID-Anti-Windup-Clamping (`dotnet test`).
+  - [2 P.] Vergleichende Trajektorienanalyse (mit vs. ohne Anti-Windup sowie RK4 vs. Euler).
+  - [2 P.] Dokumentation: Verlaufstabellen/Plots und physikalische Fehlerbetrachtung.
 
 ---
 
 #### 🔍 Peer-Review & Leitfragen für das Plenum
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
-- **Windup-Effekt & Überschwingen bei Aktorsättigung:** Was geschieht bei einem massiven Laststoß, wenn die Stellgröße (Motorspannung oder Triebwerksschub) das physikalische Maximum erreicht? Greift das Anti-Windup Clamping (Conditional Integration) sofort und friert den Integratorzustand ein, oder wächst der I-Anteil weiter an und führt nach der Störung zu katastrophalem Überschwingen?
-- **Echte 4-Stufen-RK4 vs. maskierter Euler:** Werden im Solver wirklich alle 4 Zwischensteigungen $\mathbf{k}_1, \mathbf{k}_2, \mathbf{k}_3, \mathbf{k}_4$ sauber berechnet, oder verbirgt sich hinter dem Aufruf ein vereinfachtes Euler-Verfahren? *(Schwachstellentest: Schrittweite auf $\Delta t = 0{,}02\,\text{s}$ vergrößern – bleibt das System numerisch stabil?)*
-- **S-Function-Zustandskapselung:** Sind die Systemableitungen (`Derivatives`) reine seiteneffektfreie Funktionen des Zustandsvektors $\mathbf{x}$ und der Eingänge $\mathbf{u}$, oder verändern Zwischenschritte versehentlich den globalen Objektzustand?
-- **Physikalischer Realismus der Aktorik:** Werden Motorkraftgrenzen, Ratenbegrenzungen (Slew Rates) und Massenabnahme (Treibstoffverbrauch) kontinuierlich berücksichtigt oder werden unrealistische Momentansprünge gefahren?
+- **Windup-Effekt & Überschwingen bei Aktorsättigung:** Warum darf der Integrator nur dann angehalten werden, wenn der Ausgang in der Sättigung ist *und* der Regelfehler $e$ dasselbe Vorzeichen wie die Überschreitung hat?
+- **Echte 4-Stufen-RK4 vs. Euler:** Warum muss der Zeitparameter bei $\mathbf{k}_2$ und $\mathbf{k}_3$ auf $t + 0{,}5\Delta t$ und bei $\mathbf{k}_4$ auf $t + \Delta t$ gesetzt werden?
+- **Allokationsfreiheit im Solver:** Wurden die Hilfsarrays `_k1` bis `_k4` und `_xTemp` im Konstruktor von `Rk4Solver` vorallokiert?
 
 ---
 
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 08)
-- **Empfohlene Suchbegriffe:** `Runge Kutta 4 implementation C# state vector`, `PID controller anti windup clamping conditional integration`, `rocket landing thrust vector control state space`.
+- **Empfohlene Suchbegriffe:** `Runge Kutta 4 implementation C# state vector`, `PID controller anti windup clamping conditional integration`, `Simulink S-Function derivatives outputs pattern`.
 - **Offizielle Dokumentation:** [Wikipedia: Runge–Kutta methods](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods), [PID Controller Anti-Windup Strategies](https://en.wikipedia.org/wiki/Integral_windup).
 - **Vibe-Coding Prompting-Tipp:**
-  > *„Schreibe eine thread-sichere C#-Klasse `PidController` mit Anti-Windup nach dem Conditional Integration (Clamping) Prinzip. Eingänge: `setpoint`, `measuredValue`, `dt`. Parameter: `Kp`, `Ki`, `Kd`, `minOutput`, `maxOutput`. Halte den I-Zustand an, wenn der Ausgang gesättigt ist und der Fehler das gleiche Vorzeichen hat.“*
+  > *„Implementiere das Interface `ISFunction` (`ComputeDerivatives`, `ComputeOutputs`) und einen allokationsfreien `Rk4Solver` in C#. Integriere den Regler-Integralzustand $x_I$ direkt als Teil des Zustandsvektors `x` durch den RK4-Solver und setze `dxdt[3] = 0.0`, sobald Anti-Windup Clamping aktiv ist.“*
 
 ---
 
-### Einheit 09: „Fertigungslogistik vs. Freizeitpark-Express-Pass“ (Diskrete Ereignissimulation DES)
+### Einheit 09: „Automobil-Lackierstraße vs. Theme Park Rush / Express-Pass“ (Diskrete Ereignissimulation DES)
 
 #### Fachlicher Bezug & Lernziele
-- **Vorlesung:** [Kapitel 09: Dynamische Modelle Diskret](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/09_Dynamische_Modelle_Diskret/Folien.md) – Diskrete Ereignissimulation (DES), Future Event List (FEL), Inversionsmethode, Little's Gesetz $L = \lambda W$, Erlang-C.
-- **Quellen-Referenz:** [`Quellen/WS24/DynamischWarteschlange`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS24/DynamischWarteschlange).
+- **Vorlesung:** [Kapitel 09: Dynamische Modelle Diskret](../Folien/09_Dynamische_Modelle_Diskret/Folien.md) – Diskrete Ereignissimulation (DES), Future Event List (FEL), Inversionsmethode, Little's Gesetz $\bar{L} = \lambda_{\text{eff}} \bar{W}$, $M/M/c/K$ & Prioritätswarteschlangen.
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_09_Diskrete_Ereignisse_DES/Aufgabenblatt.md`](../Uebungen/Termin_09_Diskrete_Ereignisse_DES/Aufgabenblatt.md), [`Vorlage/DesQueueSim.sln`](../Uebungen/Termin_09_Diskrete_Ereignisse_DES/Vorlage/DesQueueSim.sln).
+- **Quellen-Referenz:** [`Quellen/WS24/DynamischWarteschlange`](../Quellen/WS24/DynamischWarteschlange).
 - **Technologie-Status:** .NET `PriorityQueue<TElement, TPriority>`, stochastische Zufallsgeneratoren. Noch *KEINE* hybriden Zero-Crossings!
 - **Lernziele:**
-  1. Aufbau einer zeitdiskreten Simulations-Engine mit ereignisgesteuertem Zeitsprung ($t \leftarrow t_{\text{event}}$).
-  2. Exakte stochastische Modellierung exponentialverteilter Zwischenankunfts- und Bedienzeiten.
-  3. Statistische Verifikation der Simulationsergebnisse gegen Erlang-C und Little's Gesetz.
+  1. Aufbau einer zeitdiskreten Simulations-Engine mit ereignisgesteuertem Zeitsprung ($t \leftarrow t_{\text{next}}$).
+  2. Exakte stochastische Modellierung exponentialverteilter Zwischenankunfts- und Bedienzeiten ($\Delta t = -\frac{1}{\lambda}\ln(1-U)$).
+  3. Zeitgewichtete Flächenintegration $\int N(t)\,\mathrm{d}t$ und empirische Verifikation von Little's Gesetz ($\bar{L} = \lambda_{\text{eff}} \bar{W}$).
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Event-Queue & M/M/1-Warteschlange“
-- **Aufgabenstellung:**
-  1. Öffnen Sie `DynamischWarteschlange` oder erstellen Sie eine Konsolenapplikation.
-  2. Nutzen Sie `System.Collections.Generic.PriorityQueue<SimEvent, double>` als Future Event List (FEL).
-  3. Modellieren Sie ein M/M/1-System:
-     - Ankunftsrate $\lambda = 4\,\text{Kunden/min}$, Bedienrate $\mu = 5\,\text{Kunden/min}$ (Auslastung $\rho = 0{,}8$).
-     - Ereignistypen: `ArrivalEvent` und `DepartureEvent`.
-  4. Ziehen Sie im Event-Loop stets das zeitlich nächste Ereignis und aktualisieren Sie den Systemzustand.
-  5. Berechnen Sie über $T_{\max} = 20\,000\,\text{min}$ die zeitgewichtete mittlere Warteschlangenlänge $\bar{L}_{\text{q}}$ und vergleichen Sie mit Erlang:
-     $$L_{\text{q,analytisch}} = \frac{\rho^2}{1 - \rho} = \frac{0{,}8^2}{0{,}2} = 3{,}2$$
-- **Erwartetes Ergebnis:** Numerische Konvergenz der Simulation gegen den analytischen Erwartungswert ($< 3\,\%$ Abweichung).
+#### Stufe A: In-Class Sprint (60 min) – „Future Event List & M/M/1-Warteschlange“
+- **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_09_Diskrete_Ereignisse_DES/Aufgabenblatt.md)):**
+  1. Öffnen Sie die Vorlage [`DesQueueSim.sln`](../Uebungen/Termin_09_Diskrete_Ereignisse_DES/Vorlage/DesQueueSim.sln).
+  2. Implementieren Sie die Inversionsmethode in `SampleExponential`, das zeitgewichtete Flächenintegral `areaUnderL += numberInSystem * dt` und die Ereignisbehandlung (`Arrival` / `Departure`) in `Mm1QueueSimulation.Run`.
+  3. Prüfen Sie Ihre Implementierung mit `dotnet test` (3 automatisierte MSTests: Mittelwert der Exponentialverteilung, Little's Gesetz auf $< 10^{-9}$ exakt, und Konvergenz gegen $L_{\text{theo}} = \frac{\rho}{1-\rho} = 4{,}0$ bei $\rho = 0{,}8$).
+- **Erwartetes Ergebnis:** Alle 3 Unit-Tests grün; exakte Bestätigung von Little's Gesetz.
 
 ---
 
@@ -872,70 +785,63 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
-> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf der diskreten Ereignissimulation (DES) mit $M/M/c/K$-Warteschlangen und führen zur maximalen Punktzahl (10 Punkte).
+> Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf der diskreten Ereignissimulation (DES) und führen zur maximalen Punktzahl (10 Punkte).
 
-- **Track A (Industrie): Flexible Fertigungszelle & Logistik-Pufferstau ($M/M/c/K$)**
-  - **Industrie-Szenario:** Ereignisdiskrete Simulation einer flexiblen Fertigungszelle (FMS) mit $c = 3$ parallelen CNC-Bearbeitungsstationen und begrenztem Teilepuffer ($K = 25$ Werkstücke).
-  - **Pufferüberlauf:** Bei voll belegtem Puffer werden eintreffende Rohlinge abgewiesen (Ausschuss/Blockierung im Logistiksystem).
-  - **Prioritätsklassen:** Eilaufträge / Express-Werkstücke (20 % des Gesamtaufkommens) überholen Standard-Chargen (80 %) in der Warteschlange (Non-preemptive Priority Queuing).
-  - **Stochastik & Inversion:** Ziehung exponentialverteilter Zwischenankunfts- und Bedienzeiten über die Inversionsmethode: $\tau = -\frac{1}{\lambda} \ln(1 - U)$.
-  - **Empirischer Nachweis von Little's Gesetz:** Erfassung individueller Warte- und Servicezeiten und Verifikation von $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ sowie Erlang-C.
-  - **Monte-Carlo-Replikation mit Parallel.For:** 100 Simulationsläufe mit unterschiedlichen Seeds zur Bestimmung des 95%-Konfidenzintervalls der Durchlaufzeiten; Histogramm-Darstellung in ScottPlot 5.
+- **Track A (Industrie): Automobil-Lackierstraße ($M/M/c/K$-Mehrkanalsystem & Pufferoptimierung)**
+  - **Industrie-Szenario:** Ereignisdiskrete Simulation einer Lackierstraße mit $c \in \{2, 3, 4\}$ parallelen Lackierkabinen ($\lambda = 12\,\text{Karosserien/h}, \mu = 5\,\text{Karosserien/h}$) und begrenztem Staupuffer $K$.
+  - **Blockierwahrscheinlichkeit & Little's Gesetz:** Erfassung abgewiesener Karosserien ($P_{\text{Block}}$), Berechnung des effektiven Durchsatzes $\lambda_{\text{eff}} = \lambda (1 - P_{\text{Block}})$ und Nachweis von $\bar{L} = \lambda_{\text{eff}} \bar{W}$.
+  - **Auslegungsstudie:** Ermittlung der minimalen Kabinenanzahl $c$ und Pufferkapazität $K$ für $P_{\text{Block}} < 1\,\%$ und $\bar{W}_q < 6\,\text{min}$.
 
-- **Track B (Simulation Game): Freizeitpark Achterbahn-Express-Pass & Kassen-Chaos**
-  - **Game-Szenario:** Simulation der Besucherströme an einer großen Achterbahn mit $c = 3$ parallelen Drehkreuzen und Einlass-Wartebereich ($K = 25$ Personen).
-  - **Express-Pass-System:** Standard-Besucher (80 %) vs. VIP/Express-Pass-Inhaber (20 %). VIP-Gäste haben Vorrang und reihen sich vor Standardgästen ein.
-  - **Stochastische Ankünfte:** Inversionsmethode für Ankunftsabstände und Abfertigungsdauern.
-  - **Empirischer Nachweis von Little's Gesetz:** Statistische Überprüfung von $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ für das Gesamtsystem und Sub-Queues.
-  - **Monte-Carlo-Replikation mit Parallel.For:** 100 parallele Replikationen zur Ermittlung des 95%-Konfidenzintervalls der maximalen Wartezeit; Verteilungsdiagramm in ScottPlot.
+- **Track B (Simulation Game): „Theme Park Rush / Rollercoaster Queue“ (Fastpass-Prioritäten & Monte-Carlo)**
+  - **Game-Szenario:** Simulation einer Achterbahn-Station mit $c = 2$ Abfertigungsschleusen und zwei Warteschlangen: **VIP-Fastpass** ($p_{\text{VIP}} = 20\,\%$) und **Normal-Ticket** ($80\,\%$) im Non-Preemptive Priority Queuing.
+  - **Getrennte Statistik & Little's Gesetz:** Separate Messung von $\bar{W}_{q,\text{VIP}}$ und $\bar{W}_{q,\text{Normal}}$ sowie Verifikation von Little's Gesetz für beide Teilströme und das Gesamtsystem.
+  - **Monte-Carlo-Studie:** Variation des VIP-Anteils von $5\,\%$ bis $50\,\%$ über unabhängige Replikationen.
 
 - **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
-  - [3 P.] Korrekte Implementierung des Multi-Server-DES mit Prioritätswarteschlange.
-  - [3 P.] Exakte numerische Verifikation von Little's Gesetz und Erlang-C.
-  - [2 P.] Multithreadete Monte-Carlo-Auswertung mit Konfidenzintervallen.
-  - [2 P.] Dokumentation: Wartezeit-Verteilungsdiagramme und Diskussion.
+  - [3 P.] Korrekte Implementierung des Multi-Server-DES mit `PriorityQueue` (`dotnet test`).
+  - [3 P.] Exakte zeitgewichtete Flächenintegration und Verifikation von Little's Gesetz ($\bar{L} = \lambda_{\text{eff}} \bar{W}$).
+  - [2 P.] Systematische Parameter-/Monte-Carlo-Auswertung ($c, K$ bzw. $p_{\text{VIP}}$).
+  - [2 P.] Dokumentation: Ergebnistabellen/Plots und ingenieurmäßige Auslegungsempfehlung.
 
 ---
 
 #### 🔍 Peer-Review & Leitfragen für das Plenum
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
-- **Erhaltungssatz nach Little ($\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$):** Stimmen die gemessenen Mittelwerte exakt mit Little's Gesetz überein? Wurde berücksichtigt, dass bei begrenzter Puffergröße $K$ abgewiesene Einheiten aus der effektiven Ankunftsrate $\lambda_{\text{eff}} = \lambda (1 - P_{\text{Block}})$ herausgerechnet werden müssen?
-- **Stochastische Korrektheit der Inversionsmethode:** Werden Zwischenankunfts- und Bedienzeiten mathematisch korrekt über die analytische Inversionsfunktion $\tau = -\frac{1}{\lambda} \ln(1 - U)$ erzeugt, oder wurde unzulässigerweise eine Gleichverteilung bzw. diskrete Schrittweite verwendet? Ist der Zufallsgenerator thread-sicher für die parallelen Replikationen (`Parallel.For`)?
-- **Ereignisdiskreter Zeitsprung vs. Zeitschritt-Timer:** Springt die Simulation echt ereignisgesteuert von Event zu Event ($t \leftarrow t_{\text{event}}$ aus der `PriorityQueue`), oder läuft im Hintergrund ein starrer Zeitschrittleiter-Timer mit unnötigen Leerlaufschritten?
-- **Statistische Signifikanz:** Werden für Durchlauf- und Wartezeiten saubere 95%-Konfidenzintervalle über die Monte-Carlo-Replikationen ausgewiesen oder nur Einzelstichproben gezeigt?
+- **Zeitgewichtetes Integral vs. Event-Durchschnitt:** Warum liefert der ungewichtete Durchschnitt von $N(t)$ an den Event-Zeitpunkten ein falsches $\bar{L}$, und warum ist $\frac{1}{T_{\text{sim}}}\int_0^{T_{\text{sim}}} N(t)\,\mathrm{d}t$ zwingend erforderlich?
+- **Effektive Ankunftsrate bei endlichem Puffer $K$:** Warum muss in einem $M/M/c/K$-System mit $\lambda_{\text{eff}} = \lambda(1 - P_{\text{Block}})$ statt mit $\lambda$ gerechnet werden?
+- **Ereignisdiskreter Zeitsprung vs. Polling:** Springt die Simulationsuhr direkt auf `simTime = ev.Timestamp`, ohne Rechenzeit in leeren Intervallen zu verschwenden?
 
 ---
 
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 09)
-- **Empfohlene Suchbegriffe:** `C# PriorityQueue discrete event simulation FEL`, `inversion method exponential distribution Random`, `Little's law queueing simulation verification`.
+- **Empfohlene Suchbegriffe:** `C# PriorityQueue discrete event simulation FEL`, `inversion method exponential distribution Random`, `Little's law time average area under curve simulation`.
 - **Offizielle Dokumentation:** [Microsoft Learn: PriorityQueue<TElement,TPriority> Klasse](https://learn.microsoft.com/de-de/dotnet/api/system.collections.generic.priorityqueue-2).
 - **Vibe-Coding Prompting-Tipp:**
-  > *„Erstelle ein sauberes C#-Gerüst für eine Discrete Event Simulation (DES). Verwende `System.Collections.Generic.PriorityQueue<IEvent, double>`, wobei double die absolute Simulationszeit ist. Kapsle Events als Record-Typen. Implementiere die Inversionsmethode für exponentialverteilte Zufallszahlen: `tau = -Math.Log(1.0 - rnd.NextDouble()) / lambda`.“*
+  > *„Erstelle ein sauberes C#-Gerüst für eine Discrete Event Simulation (DES) mit `PriorityQueue<SimEvent, double>`. Aktualisiere vor jeder Zustandsänderung das zeitgewichtete Flächenintegral `areaUnderL += numberInSystem * (ev.Timestamp - lastEventTime)`.“*
 
 ---
 
-### Einheit 10: „Pneumatischer Taktvorschub vs. Flipperautomat Pinball“ (Hybride Systeme & Zero-Crossing)
+### Einheit 10: „VIBN Pneumatikzylinder vs. Arcade Pinball Wizard“ (Hybride Systeme & Zero-Crossing)
 
 #### Fachlicher Bezug & Lernziele
-- **Vorlesung:** [Kapitel 10: Dynamische Modelle Hybrid](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Folien/10_Dynamische_Modelle_Hybrid/Folien.md) – Hybride Automaten, Zero-Crossing-Funktionen $z(\mathbf{x}) = 0$, Bisektions-Nullstellensuche, Zeno-Vermeidung, Stick-Slip Kontaktmechanik.
-- **Quellen-Referenz:** [`Quellen/WS25/SFunctionHybrid`](file:///c:/Users/P28500/Desktop/Repositories/kurs-computer-simulation/Quellen/WS25/SFunctionHybrid).
-- **Technologie-Status:** Hybride Simulations-Engine, Zero-Crossing Wurzelsuche, FMI/FMU Grundlagen. Voller Semester-Stack freigegeben!
+- **Vorlesung:** [Kapitel 10: Dynamische Modelle Hybrid](../Folien/10_Dynamische_Modelle_Hybrid/Folien.md) & [Kapitel 11: Epilog](../Folien/11_Epilog/Folien.md) – Hybride Automaten, Zero-Crossing-Funktionen $g(\mathbf{x}) = 0$, Bisektions-Nullstellensuche, Zeno-Vermeidung, Virtuelle Inbetriebnahme (VIBN).
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.md`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.md), [`Vorlage/HybridZeroCrossing.sln`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Vorlage/HybridZeroCrossing.sln).
+- **Quellen-Referenz:** [`Quellen/WS25/SFunctionHybrid`](../Quellen/WS25/SFunctionHybrid).
+- **Technologie-Status:** Hybride Simulations-Engine (`IHybridSystem`, `BisectionRootFinder`), FMI/FMU & VIBN-Synthese. Voller Semester-Stack freigegeben!
 - **Lernziele:**
-  1. Synchronisation von kontinuierlicher DGL-Integration und diskreten Schaltzuständen.
-  2. Implementierung einer präzisen Zero-Crossing Bisektion zur Vermeidung von Körper-Durchdringungen (Tunneling).
-  3. Beherrschung des Zeno-Effekts und Umschaltung von stoßender in ruhende Haftreibung.
+  1. Synchronisation von kontinuierlicher DGL-Integration (Heun / RK) und diskreten Schaltzuständen (`HandleZeroCrossing`).
+  2. Implementierung einer präzisen Zero-Crossing-Bisektion (`BisectionRootFinder.FindRoot`) zur Vermeidung von Körper-Durchdringungen (Tunneling) und künstlichen Energiefehlern.
+  3. Beherrschung des Zeno-Effekts mittels Sticking-Threshold ($|v^+| < v_{\text{stick}}$) und Kopplung mit einem SPS-Zustandsautomaten (VIBN).
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Bouncing Ball: Festschritt vs. Bisektion“
-- **Aufgabenstellung:**
-  1. Öffnen Sie `SFunctionHybrid`.
-  2. Simulieren Sie den freien Fall eines Balls ($y_0 = 5\,\text{m}$, Stoßzahl $e = 0{,}8$).
-  3. Vergleichen Sie zwei Verfahren:
-     - *Verfahren 1 (Naiver Festschritt):* Wenn $y_{k+1} \le R$, invertiere $v_{k+1} = -e \cdot v_{k+1}$.
-     - *Verfahren 2 (Bisektion):* Bei Vorzeichenwechsel von $z(t) = y(t) - R$ Intervall $[t_k, t_{k+1}]$ halbieren, bis $|z| < 10^{-6}\,\text{m}$. Stoß exakt an der Nullstelle ausführen!
-  4. Berechnen und visualisieren Sie den künstlichen Energiefehler des naiven Verfahrens.
-- **Erwartetes Ergebnis:** Bisektion eliminiert Penetrationsfehler und unphysikalischen Energiegewinn vollständig.
+#### Stufe A: In-Class Sprint (60 min) – „Bouncing Ball: Festschritt vs. Bisektions-Zero-Crossing“
+- **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.md)):**
+  1. Öffnen Sie die Vorlage [`HybridZeroCrossing.sln`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Vorlage/HybridZeroCrossing.sln).
+  2. Implementieren Sie die Bisektionsschleife in `BisectionRootFinder.FindRoot` (Vorzeichenwechsel $g(\alpha_{\text{low}}) \cdot g(\alpha_{\text{mid}}) \le 0$).
+  3. Vervollständigen Sie den hybriden Zeitschritt in `BouncingContactModel.StepHybrid`: Teil-Schritt $\Delta t_1 = \alpha^* \Delta t$ bis zum Kontakt, `HandleZeroCrossing` exakt auf $y = 0$, und Rest-Schritt $\Delta t_2 = (1 - \alpha^*)\Delta t$.
+  4. Prüfen Sie Ihre Implementierung mit `dotnet test` (3 automatisierte MSTests: Bisektions-Präzision $< 10^{-10}$, exakte Energieerhaltung bei $e = 1{,}0$ über 10 Stöße vs. $> 15\,\%$ Energieverlust beim naiven Festschritt, sowie Zeno-Sticking-Erkennung).
+- **Erwartetes Ergebnis:** Alle 3 Unit-Tests grün; Bisektion eliminiert Penetrationsfehler und künstlichen Energieverlust vollständig.
 
 ---
 
@@ -945,42 +851,35 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
 > Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf hybriden Systemen mit Zero-Crossing Wurzelsuche und führen zur maximalen Punktzahl (10 Punkte).
 
-- **Track A (Industrie): Pneumatischer Taktvorschub & Bauteilvereinzelung mit Anschlagstoß**
-  - **Industrie-Szenario:** Hybride Modellierung einer pneumatisch getakteten Sortier- und Vorschubeinheit: Ein Pneumatikzylinder schiebt Werkstücke getaktet gegen einen festen Endanschlag.
-  - **Kontinuierliche Druck- & Bewegungsgleichungen:** Kammerdrücke der beiden Zylinderseiten (Drossel- und Ventilgleichungen) gekoppelt mit der Translationsbewegung des Kolbens samt Lastmasse ($m \ddot{x} = p_1 A_1 - p_2 A_2 - F_{\text{Reib}}$).
-  - **Zero-Crossing Bisektion:** Schaltfunktion für den Kontakt mit dem mechanischen Anschlag: $z(\mathbf{x}) = x_{\text{Kolben}} - x_{\text{Anschlag}}$. Präzise Nullstellen-Eingrenzung auf $|z| < 10^{-6}\,\text{m}$ zur Vermeidung unphysikalischer Durchdringung.
-  - **Zeno-Vermeidung & Haftreibung:** Elastisch-plastischer Stoß (Stoßzahl $e = 0{,}3$). Fällt die Stoß-Relativgeschwindigkeit unter $\epsilon_v = 0{,}01\,\text{m/s}$, schaltet der Automat in den Zustand „Endlagenkontakt“ mit Coulomb-Haftreibung um (Chattering-Vermeidung).
-  - **Visualisierung:** WPF Canvas mit animiertem Pneumatikzylinder und ScottPlot-Diagramm der Druckverläufe und Anschlagskräfte.
+- **Track A (Industrie): Virtuelle Inbetriebnahme (VIBN) – Pneumatikzylinder mit Endanschlägen & SPS-Zyklus**
+  - **Industrie-Szenario:** Hybride Modellierung eines doppeltwirkenden Pneumatikzylinders (Hub $L_{\text{stroke}} = 0{,}500\,\text{m}$) mit zwei Zero-Crossing-Indikatorfunktionen ($g_{\text{front}}(x) = L_{\text{stroke}} - x$, $g_{\text{back}}(x) = x$), digitalen Endlagensensoren (`BG_Back`, `BG_Front`) und gekoppeltem SPS-Schrittketten-Automaten (`IDLE` $\to$ `EXTENDING` $\to$ `HOLD_FRONT` $\to$ `RETRACTING`).
+  - **Zero-Crossing & Zeno-Sticking:** Exakte Bisektion des Anschlagzeitpunkts $t^*$, Stoßreflexion ($e = 0{,}25$) und Übergang in die Endlagen-Ruhe bei $|v^+| < v_{\text{stick}}$.
 
-- **Track B (Simulation Game): Flipperautomat: Pinball Bumper & Pachinko-Physik**
-  - **Game-Szenario:** Hybride Mehrkörpermechanik auf einem geneigten Pinball-Spielfeld ($g_{\text{eff}} = g \cdot \sin \alpha$).
-  - **Hindernisse & Bumper:** Feste Begrenzungswände, elastische Bumper (Kreise mit energetischem Extra-Kick $e = 1{,}2$) und geneigte Führungsrampen.
-  - **Zero-Crossing Wurzelsuche:** Bisektionssuche für Kreis- und Linienkontakte ($z_{\text{Bumper}}(\mathbf{x}) = \|\mathbf{p}_{\text{Kugel}} - \mathbf{p}_{\text{Bumper}}\| - (R_{\text{Kugel}} + R_{\text{Bumper}})$) zur absoluten Vermeidung von Tunneling bei hohen Geschwindigkeiten.
-  - **Zeno-Vermeidung auf Rampen:** Detektion minimaler Stoßamplituden und sichere Umschaltung in den kontinuierlichen Rollmodus mit Roll- und Haftreibung.
-  - **Interaktiver Flipperfinger:** Betätigung per Tastatur: Rotierender Hebel mit Winkelgeschwindigkeit $\omega$, der der Kugel beim Schlag zusätzlichen Impuls verleiht.
+- **Track B (Simulation Game): „Arcade Pinball Wizard“ (2D-Flipper-Physik mit Bumper-Bisektion)**
+  - **Game-Szenario:** Hybride 2D-Kugeldynamik auf einem um $\alpha_{\text{tilt}} = 6{,}5^\circ$ geneigten Flippertisch mit Seitenwänden und mindestens 3 kreisförmigen aktiven Bumpern ($g_i(x,y) = \sqrt{(x - x_{B,i})^2 + (y - y_{B,i})^2} - (R_{\text{Ball}} + R_{B,i}) = 0$).
+  - **Vektorielle Normalenreflexion & High-Speed-Bisektion:** Exakte Lokalisierung des Kontaktzeitpunkts via `BisectionRootFinder.FindRoot`, Zerlegung von $\mathbf{v}^-$ in Normalen- und Tangentialkomponente ($\mathbf{v}^+ = \mathbf{v}_t^- - e_{\text{Bumper}} \mathbf{v}_n^-$ mit $e_{\text{Bumper}} = 1{,}15$), Punktezähler und Sticking-Ruhelage.
 
 - **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
-  - [3 P.] Robuste Zero-Crossing Bisektions-Routine ohne Tunneling bei hohen Geschwindigkeiten.
-  - [3 P.] Korrekte Impuls- und Reflexionsmechanik an schrägen Wänden und aktiven Bumpern bzw. Anschlägen.
-  - [2 P.] Zeno-Vermeidung mit sicherem Übergang in den Ruhe- bzw. Rollzustand.
-  - [2 P.] Flüssige interaktive Visualisierung (WPF Canvas oder SharpGL).
+  - [3 P.] Robuste Zero-Crossing-Bisektionsroutine und exakte Event-Zerlegung ($\Delta t_1 + \Delta t_2 = \Delta t$) (`dotnet test`).
+  - [3 P.] Korrekte Stoß-/Reflexionsmechanik und SPS-Kopplung (Track A) bzw. 2D-Normalenreflexion an Bumpern (Track B).
+  - [2 P.] Zuverlässige Zeno-Vermeidung (`IsSticking`) mit Übergang in die Ruhelage.
+  - [2 P.] Quantitative Gegenüberstellung (Naiver Festschritt vs. Bisektions-Zero-Crossing).
 
 ---
 
 #### 🔍 Peer-Review & Leitfragen für das Plenum
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
-- **Tunneling-Effekt bei Höchstgeschwindigkeit:** Was passiert, wenn die Kugel mit extrem hoher Geschwindigkeit auf einen dünnen Bumper oder der Pneumatikzylinder mit maximalem Druck auf den Endanschlag trifft? Tritt Tunneling (Durchdringung) auf, oder isoliert die Schaltfunktion $z(\mathbf{x}) = 0$ das Kontakt-Event absolut zuverlässig?
-- **Präzision der Zero-Crossing Wurzelsuche:** Wird der Schaltzeitpunkt $t^*$ über eine echte Bisektionssuche auf $|z| < 10^{-6}$ genau lokalisiert und die DGL-Integration ab dort neu aufgesetzt, oder wird der Stoß unsauber im Festschritt-Raster ausgeführt?
-- **Zeno-Effekt & Chattering-Vermeidung:** Schaltet das Modell bei minimalen Resthüpfern (Geschwindigkeit unterhalb des Schwellwerts $\epsilon_v = 0{,}01\,\text{m/s}$) stabil in den kontinuierlichen Roll- bzw. Haftzustand über, oder blockiert das System in einer unendlichen Kaskade winziger Zeitschritte?
-- **Energiebilanz beim Stoß:** Entspricht der kinetische Energieverlust bei inelastischen Stößen exakt dem Restitutionskoeffizienten $e^2$, oder gewinnt das System durch fehlerhafte Reflexionsvektoren künstlich Energie?
+- **Warum verliert der naive Festschritt beim freien Fall Energie?** Weil der Ball am Schrittende bei $y_{k+1} < 0$ bereits unter dem Boden ist, dort umkehrt und die potenzielle Energie $m g |y_{k+1}|$ beim Hochsetzen auf $y=0$ vernichtet wird!
+- **Teil-Schritt-Aufteilung ($\Delta t_1$ und $\Delta t_2$):** Warum muss nach der Stoßumkehr bei $t^* = t_k + \alpha^* \Delta t$ noch die Restzeit $\Delta t_2 = (1 - \alpha^*)\Delta t$ integriert werden?
+- **Zeno-Effekt & Chattering-Vermeidung:** Was passiert bei $e < 1$ ohne Sticking-Schwelle $v_{\text{stick}}$, wenn die Flugzeiten zwischen zwei Stößen geometrisch gegen Null konvergieren?
 
 ---
 
 #### 💡 Online-Recherche & Vibe-Coding-Guide (Einheit 10)
-- **Empfohlene Suchbegriffe:** `hybrid simulation zero crossing bisection root finding`, `Zeno behavior chattering avoidance pinball physics`, `circle line segment collision response vector reflection`.
+- **Empfohlene Suchbegriffe:** `hybrid simulation zero crossing bisection root finding`, `Zeno behavior chattering avoidance bouncing ball`, `circle collision normal vector reflection 2D`.
 - **Offizielle Dokumentation:** [Modelica Specification (Hybrid Event Handling)](https://modelica.org/specifications/), [FMI Standard Documentation](https://fmi-standard.org/).
 - **Vibe-Coding Prompting-Tipp:**
-  > *„Schreibe mir eine C#-Routine für die Nullstellensuche eines Zero-Crossing-Events $z(t) = 0$ zwischen zwei Integrationsschritten $t_0$ und $t_1$. Verwende Bisektion mit maximal 20 Iterationen oder Toleranz $|z| < 10^{-6}$. Zeige, wie der Zustand exakt an der Nullstelle eingefroren, der Geschwindigkeits-Reset ausgeführt und der nächste Zeitschritt ab dort neu gestartet wird.“*
+  > *„Nutze `BisectionRootFinder.FindRoot`, um bei einem Vorzeichenwechsel der Indikatorfunktion $g(\mathbf{x})$ den normierten Kontaktzeitpunkt $\alpha^* \in [0, 1]$ zu bestimmen. Integriere exakt $\Delta t_1 = \alpha^* \Delta t$ bis zum Kontakt, rufe `HandleZeroCrossing` auf und integriere anschließend die Restzeit $\Delta t_2 = (1 - \alpha^*)\Delta t$.“*
 
 ---
 

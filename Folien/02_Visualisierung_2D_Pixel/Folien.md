@@ -621,6 +621,20 @@ for (int x = 0; x < Width; x++) {
 
 ---
 
+### 3. Konvektive Randbedingung (Robin-Randbedingung)
+
+An gekühlten Bauteiloberflächen (z. B. Kühlrippen im Luftstrom mit Wärmeübergangskoeffizient $h\ [\mathrm{W/(m^2\cdot K)}]$ und Fluidtemperatur $T_\infty$) ist die Wärmeleitung im Festkörper gleich dem konvektiven Wärmeübergang:
+
+$$-\lambda \frac{\partial T}{\partial n} = h \cdot \left(T_{\text{Rand}} - T_\infty\right)$$
+
+- **Einseitige Differenzenapproximation am Randknoten $0$ (Nachbar $1$, Gitterweite $\Delta x$):**
+  $$-\lambda \frac{T_{0,y} - T_{1,y}}{\Delta x} = h \cdot \left(T_{0,y} - T_\infty\right)$$
+- **Aufgelöst nach der Randtemperatur $T_{0,y}$:**
+  $$T_{0,y} = \frac{\lambda \cdot T_{1,y} + h \cdot \Delta x \cdot T_\infty}{\lambda + h \cdot \Delta x}$$
+  *(Grenzfallkontrolle: $h \to 0$ liefert Neumann $T_{0,y} = T_{1,y}$; $h \to \infty$ liefert Dirichlet $T_{0,y} = T_\infty$).*
+
+---
+
 ### Simulation und Visualisierung im Code
 
 <div class="columns">
@@ -628,6 +642,8 @@ for (int x = 0; x < Width; x++) {
 
 ```csharp
 // Simulationsschritt (Ping-Pong-Puffer, Double-Buffering)
+// Tipp: Für echte Row-Major-Lokalität in C# [y, x] (float[Height, Width])
+// oder 1D-Array [y * Width + x] nutzen, da der letzte Index benachbart liegt!
 for (int y = 1; y < Height - 1; y++)
 {
     for (int x = 1; x < Width - 1; x++)

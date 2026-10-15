@@ -529,7 +529,7 @@ if (next is ArrivalEvent)
     else
     {
         State.Busy = true;
-        var serviceTime = Random.NextDouble() * 5 * 60;
+        var serviceTime = Random.Shared.NextDouble() * 5 * 60;
         Add(new DepartureEvent(Clock + serviceTime));
     }
 }
@@ -571,7 +571,7 @@ else if (next is DepartureEvent)
         var arrivalTime = State.Queue.Dequeue();
         var waitTime = Clock - arrivalTime;
         // ...
-        var serviceTime = Random.NextDouble() * 5 * 60;
+        var serviceTime = Random.Shared.NextDouble() * 5 * 60;
         Add(new DepartureEvent(Clock + serviceTime));
     }
 }
@@ -735,6 +735,35 @@ plot.Add.Bars(bars);
 - Stationäre Zustandswahrscheinlichkeit: $P_k = (1 - \rho)\rho^k \implies \bar{L}_q = \frac{\rho^2}{1-\rho}, \quad \bar{W}_q = \frac{\rho}{\mu - \lambda}$.
 
 ![w:920 center](./Diagramme/MM1_Warteschlange_Kinetik.svg)
+
+---
+
+### Erweiterung auf reale Anlagen: $M/M/c/K$ & Prioritäten
+
+<div class="columns top">
+<div class="one">
+
+**Mehrkanal-Systeme mit Pufferlimit ($M/M/c/K$):**
+- **$c$ parallele Stationen:** Auslastung $\rho = \frac{\lambda}{c \cdot \mu}$. Statt `bool Busy` zählt `int busyServers < c`.
+- **Endlicher Puffer $K$ (Blocking):** Ist der Puffer voll (`waitingQueue.Count >= K`), werden ankommende Aufträge mit Blockierwahrscheinlichkeit $P_{\text{Block}} = \frac{N_{\text{rejected}}}{N_{\text{total}}}$ abgewiesen.
+- **Little's Gesetz mit effektivem Durchsatz:**
+  $$\lambda_{\text{eff}} = \lambda \cdot (1 - P_{\text{Block}}) \implies \bar{L}_q = \lambda_{\text{eff}} \cdot \bar{W}_q$$
+
+</div>
+<div class="one">
+
+**Prioritäts-Warteschlangen (Express / VIP):**
+- Eilige Aufträge überholen Standard-Aufträge im Puffer (ohne laufende Bearbeitungen abzubrechen – *Non-Preemptive*):
+```csharp
+// Zwei getrennte FIFO-Schlangen:
+var next = vipQueue.Count > 0 
+    ? vipQueue.Dequeue() 
+    : standardQueue.Dequeue();
+```
+- Oder via `PriorityQueue<Job, (int Prio, double Arrival)>`.
+
+</div>
+</div>
 
 ---
 

@@ -13,7 +13,7 @@ math: mathjax
 
 ![bg right](./Titelbild.jpg)
 
-# Kapitel 1: Systemsimulation und den Digitalen Zwilling
+# Kapitel 1: Systemsimulation und der Digitale Zwilling
 
 Dieses Kapitel umfasst das Folgende:
 
@@ -129,7 +129,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 ![h:100](./Illustrationen/Branche_Elektrotechnik.jpg)
 
 **Elektrotechnik**
-- Wie verhält sich eine Schaltung bei Spannungs-schwankungen?
+- Wie verhält sich eine Schaltung bei Spannungsschwankungen?
 - Wie ist das Abstrahlverhalten einer Antenne?
 
 </div>
@@ -186,7 +186,7 @@ Modelle können nach verschiedenen Kriterien klassifiziert werden:
     - Ereignis
   - Hybrid
 
-Die Wahl des Modelltyps hängt von der Problemstellung und dem zu untersuch-enden System ab.
+Die Wahl des Modelltyps hängt von der Problemstellung und dem zu untersuchenden System ab.
 
 </div>
 <div class="three">
@@ -453,6 +453,30 @@ $$m \ddot{y} = -m g + F_{Ry} = -m g - \frac{1}{2} c_w \rho A \sqrt{v_x^2 + v_y^2
 
 ---
 
+### Präzisionssteigerung: Heun-Verfahren (RK2) & Ereignis-Interpolation
+
+<div class="columns top">
+<div class="one">
+
+**Prädiktor-Korrektor nach Heun (Ordnung $\mathcal{O}(\Delta t^2)$):**
+- Der explizite Euler nutzt nur die Anfangssteigung $\mathbf{f}(t_k, \mathbf{x}_k)$ und überschätzt Wurfparabeln systematisch.
+- **Heun (RK2)** mittelt Anfangs- und Endsteigung:
+  1. *Prädiktor:* $\tilde{\mathbf{x}}_{k+1} = \mathbf{x}_k + \Delta t \cdot \mathbf{f}(t_k, \mathbf{x}_k)$
+  2. *Korrektor:* $\mathbf{x}_{k+1} = \mathbf{x}_k + \frac{\Delta t}{2}\left[\mathbf{f}(t_k, \mathbf{x}_k) + \mathbf{f}(t_{k+1}, \tilde{\mathbf{x}}_{k+1})\right]$
+
+</div>
+<div class="one">
+
+**Lineare Schnittpunkt-Interpolation ($y = 0$):**
+- Fällt $y_{k+1} < 0$ unter den Boden, liefert der Bruchteil $\tau \in [0, 1]$ den exakten Auftreffpunkt ohne „Tunneling“:
+  $$\tau = \frac{0 - y_k}{y_{k+1} - y_k}$$
+  $$t_{\text{impact}} = t_k + \tau \Delta t, \quad x_{\text{impact}} = x_k + \tau (x_{k+1} - x_k)$$
+
+</div>
+</div>
+
+---
+
 ![bg right](./Illustrationen/Abschnitt_4.jpg)
 
 ## 1.4: Visualisierung von Simulationsdaten
@@ -584,7 +608,7 @@ Es besteht aus drei Kernkomponenten:
 Ein Digitaler Zwilling ist **nicht nur** ein CAD-Modell oder eine 3D-Visualisierung:
 
 - **Geometrie**: 3D-Struktur.
-- **Physik**: Verhalten unter Last, thermische Eigenschaften, etc. (-> **Simulations-modelle!**)
+- **Physik**: Verhalten unter Last, thermische Eigenschaften, etc. (-> **Simulationsmodelle!**)
 - **Daten**: Live-Daten von Sensoren, historische Daten, Wartungsprotokolle.
 - **Logik**: Steuerungssoftware, Produktionsregeln.
 

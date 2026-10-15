@@ -114,20 +114,20 @@ Klassifizierung der unterschiedlichen Rechnerarchitekturen nach Michael J. Flynn
 
 ### Programmierparadigmen
 
-- **Strukturierte Programmierung** (Verzweigungen und Schleifen)
-- **Funktionale Programmierung** (Funktionen, Übergabewerte, Rückgabewerte)
-- **Objektorientierte Program-mierung** (Schnittstellen, Klassen, Vererbung, Instanziierung, Polymorphismus)
+- **Strukturierte Programmierung** (Verzweigungen, Schleifen, cache-freundliche Array-Iteration)
+- **Funktionale Programmierung** (Zustandsfreie Ableitungsfunktionen $\dot{\mathbf{x}} = \mathbf{f}(t, \mathbf{x})$ ohne Seiteneffekte)
+- **Objektorientierte Programmierung** (Schnittstellen `ISFunction`, Klassen, Vererbung, Polymorphismus)
 
 ---
 
 ## Lernziele
 
-Die Teilnehmer*innen sollten nach erfolgreichem absolvieren dieses Kurses die folgenden Fähigkeiten entwickelt haben:
+Die Teilnehmer*innen sollten nach erfolgreichem Absolvieren dieses Kurses die folgenden Fähigkeiten entwickelt haben:
 
 - Auswahl einer geeigneten Modellart und Bildung eines geeigneten Modells für einen gegebenen Anwendungsfall
 - Auswahl einer geeigneten Lösungsmethode und Anwendung der Methode auf ein definiertes Modell
 - Umsetzung des Modells und der Lösungsmethode in einem Computer-Programm mit grafischer Benutzerschnittstelle
-- Visualisierung der Daten den Computer-Programms mittles Charts und 2D- bzw. 3D-Ansichten
+- Visualisierung der Daten des Computer-Programms mittels Charts und 2D- bzw. 3D-Ansichten
 
 ---
 

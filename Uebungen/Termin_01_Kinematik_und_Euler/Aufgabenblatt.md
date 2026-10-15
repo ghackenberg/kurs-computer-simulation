@@ -50,35 +50,32 @@ $$\tau = \frac{0 - y_k}{y_{k+1} - y_k} \in [0, 1] \implies t^* = t_k + \tau \cdo
 
 ## 3. Stufe A: In-Class Sprint (60 Minuten)
 
-**Thema:** Schiefer Wurf im Vakuum mit explizitem Euler  
-**Ziel:** Schreiben Sie ein minimales, sauberes Konsolenprogramm in C#, das die Flugbahn eines schiefen Wurfs im Vakuum berechnet und den Diskretisierungsfehler quantifiziert.
+**Basis-Projekt:** Öffnen Sie die bereitgestellte Projektvorlage `Vorlage/KinematikEuler.sln` (`Program.cs`, `Models/KinematicState.cs`, `Solvers/EulerIntegrator.cs`, `Tests/KinematikEulerTests.cs`).  
+**Ziel:** Vervollständigen Sie den expliziten Euler-Integrator (`StepEuler`), die lineare Schnittpunkt-Interpolation (`InterpolateGroundImpact`) sowie das Prädiktor-Korrektor-Verfahren nach Heun (`StepHeun`), bringen Sie alle Unit-Tests (`dotnet test`) auf Grün und analysieren Sie den systematischen Höhen- und Reichweitenfehler beim schiefen Wurf im Vakuum.
 
-### Aufgabenstellung:
-1. Erstellen Sie eine C#-Konsolenanwendung `Sprint_EulerVakuum`.
-2. Definieren Sie einen unveränderlichen Zustand:
+### Aufgabenstellung (Live im Hörsaal auf Basis von `Vorlage/KinematikEuler.sln`):
+1. Öffnen Sie `Vorlage/KinematikEuler.sln` und betrachten Sie das unveränderliche Zustands-Struct in `Models/KinematicState.cs`:
    ```csharp
-   public readonly record struct ProjectileState(double X, double Y, double Vx, double Vy);
+   public readonly record struct KinematicState(double Time, double X, double Y, double Vx, double Vy);
    ```
-3. Modellieren Sie die DGL 2. Ordnung für den schiefen Wurf im Schwerefeld der Erde ($g = 9{,}81\,\text{m/s}^2$):
-   $$\dot{x} = v_x, \quad \dot{y} = v_y, \quad \dot{v}_x = 0, \quad \dot{v}_y = -g$$
-4. Integrieren Sie mit dem expliziten Euler-Verfahren ausgehend von:
-   - Startposition: $x_0 = 0\,\text{m}, \; y_0 = 0\,\text{m}$
-   - Abgangsgeschwindigkeit: $v_0 = 150\,\text{m/s}$
-   - Abschusswinkel: $\alpha = 45^\circ$ ($\implies v_{x,0} = v_0 \cos \alpha, \; v_{y,0} = v_0 \sin \alpha$)
-5. Führen Sie die Simulation für zwei Schrittweiten durch:
-   - Lauf 1: $\Delta t = 0{,}1\,\text{s}$
-   - Lauf 2: $\Delta t = 0{,}01\,\text{s}$
-6. Brechen Sie die Schleife ab, sobald $y_{k+1} \le 0$ ist, und berechnen Sie $x_{\text{impact}}$ mittels linearer Nullstellen-Interpolation.
-7. Vergleichen Sie Wurfweite $x_{\text{num}}$ und Flugzeit $t_{\text{num}}$ mit den geschlossenen analytischen Vakuumlösungen:
-   $$t_{\text{ana}} = \frac{2 v_0 \sin \alpha}{g} \approx 21{,}623\,\text{s}, \quad x_{\text{ana}} = \frac{v_0^2 \sin(2\alpha)}{g} \approx 2293{,}58\,\text{m}$$
-8. Geben Sie die Ergebnisse tabellarisch auf der Konsole aus:
+2. **Aufgabe A1 – Expliziter Euler (`StepEuler`) & Boden-Interpolation (`InterpolateGroundImpact`):**
+   - Vervollständigen Sie in `Solvers/EulerIntegrator.cs` die Methode `StepEuler(...)` für die DGL 2. Ordnung ($\dot{x} = v_x, \; \dot{y} = v_y, \; \dot{v}_x = a_x, \; \dot{v}_y = a_y$) sowie `InterpolateGroundImpact(previous, current)` mittels linearer Nullstellen-Interpolation $\tau = \frac{0 - y_k}{y_{k+1} - y_k}$.
+   - Führen Sie `dotnet test` aus und verifizieren Sie, dass die Unit-Tests für `StepEuler` und `InterpolateGroundImpact` grün durchlaufen!
+3. **Aufgabe A2 – Prädiktor-Korrektor nach Heun (`StepHeun`) & Konvergenzvergleich im Vakuum:**
+   - Implementieren Sie in `Solvers/EulerIntegrator.cs` zusätzlich die Methode `StepHeun(...)` (Abschnitt 2.3) und vergleichen Sie in `Program.RunSprint_BallisticTrajectory()` beide Verfahren für:
+     - Startposition: $x_0 = 0\,\text{m}, \; y_0 = 0\,\text{m}$, Abgangsgeschwindigkeit: $v_0 = 150\,\text{m/s}$, Winkel: $\alpha = 45^\circ$ ($g = 9{,}81\,\text{m/s}^2$)
+     - Schrittweiten: $\Delta t = 0{,}1\,\text{s}$ und $\Delta t = 0{,}01\,\text{s}$
+   - Vergleichen Sie Wurfweite $x_{\text{impact}}$, Flugzeit $t_{\text{impact}}$ und Scheitelhöhe $y_{\max}$ mit den analytischen Vakuumlösungen:
+     $$t_{\text{ana}} = \frac{2 v_0 \sin \alpha}{g} \approx 21{,}623\,\text{s}, \quad x_{\text{ana}} = \frac{v_0^2 \sin(2\alpha)}{g} \approx 2293{,}58\,\text{m}, \quad y_{\max,\text{ana}} = \frac{(v_0 \sin\alpha)^2}{2g} \approx 573{,}39\,\text{m}$$
+4. **Erwartete Konsolenausgabe & Physikalische Erkenntnis:**
    ```text
    === SPRINT-ERGEBNISSE: SCHIEFER WURF IM VAKUUM ===
-   Analytisch:  t = 21.623 s | x_impact = 2293.58 m
-   Euler dt=0.10s: t = 21.623 s | x_impact = 2293.58 m | Diff = 0.000 m
-   Euler dt=0.01s: t = 21.623 s | x_impact = 2293.58 m | Diff = 0.000 m
+   Analytisch:  t = 21.623 s | x_impact = 2293.58 m | y_max = 573.39 m
+   Euler dt=0.10s: t = 21.673 s (+0.0500 s) | x_impact = 2298.89 m (+5.310 m) | y_max = 578.69 m (+5.297 m)
+   Euler dt=0.01s: t = 21.628 s (+0.0050 s) | x_impact = 2294.11 m (+0.530 m) | y_max = 573.92 m (+0.530 m)
+   Heun  dt=0.10s: t = 21.623 s (+0.0000 s) | x_impact = 2293.58 m (+0.000 m) | y_max = 573.39 m (+0.000 m)
    ```
-   *(Erkenntnisfrage für das Plenum: Warum trifft der explizite Euler beim schiefen Wurf im Vakuum in $x$ die exakte Reichweite, während die Kurvenhöhe einen systematischen Fehler aufweist?)*
+   *(Erkenntnisfrage für das Plenum: Obwohl $\dot{x} = v_{x0} = \text{const}$ in $x$-Richtung fehlerfrei integriert wird, überschätzt der explizite Euler in jedem Schritt die Höhe $y$, weil er die Anfangsgeschwindigkeit $v_{y,k}$ statt des Intervallmittels nutzt! Dadurch landet das Projektil exakt um $\Delta t / 2$ zu spät und fliegt um $\Delta x = v_{x0} \cdot \frac{\Delta t}{2} \approx +5{,}31\,\text{m}$ zu weit. Warum liefert Heun (RK2) im Vakuum selbst bei $\Delta t = 0{,}1\,\text{s}$ exakt $0{,}000\,\text{m}$ Fehler?)*
 
 ---
 

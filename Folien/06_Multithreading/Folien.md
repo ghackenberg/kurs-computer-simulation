@@ -296,20 +296,18 @@ Console.WriteLine(counter);
 </div>
 <div>
 
-**Korrekt (mit `lock`):**
+**Korrekt (`lock` oder atomares `Interlocked`):**
 ```csharp
 int counter = 0;
-object sync = new object();
 
 Parallel.For(0, 10000, _ =>
 {
-    lock (sync) // Kritischer Abschnitt
-    {
-        counter++;
-    }
+    // Lock-freie Hardware-Instruktion für Zähler/Summen:
+    Interlocked.Increment(ref counter);
+    // Alternativ für komplexe Blöcke: lock (sync) { ... }
 });
 
-// Ergebnis: 10000 (exakt!)
+// Ergebnis: 10000 (exakt & maximal schnell!)
 Console.WriteLine(counter);
 ```
 
@@ -332,13 +330,14 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 Die Klasse `System.Random` ist **nicht threadsicher**:
 - Greifen mehrere Threads gleichzeitig auf dieselbe Instanz zu, korrumpiert der interne Zustand $\to$ es werden nur noch Nullen oder identische Folgen geliefert.
-- **Lösung:** Jeder Thread (bzw. jede Iteration) benötigt eine eigene Instanz mit einem **eindeutigen Seed**!
+- **Lösung:** Entweder `Random.Shared` (ab .NET 6 intern thread-lokal gekapselt) oder für exakte Reproduzierbarkeit eine eigene Instanz mit **eindeutigem Seed** pro Lauf:
 
 ```csharp
 Parallel.For(0, numberOfRuns, i =>
 {
-    // Eindeutiger Seed garantiert unabhängige, reproduzierbare Zufallsfolgen
-    var localRandom = new Random(seed: i);
+    // Option A (Reproduzierbar): Eindeutiger Seed pro Lauf/Partition
+    var localRandom = new Random(seed: 42 + i * 104729);
+    // Option B (Schnell ohne Seed-Vorgabe): Random.Shared.NextDouble()
 
     double result = RunSingleSimulation(localRandom);
     results.Add(result);

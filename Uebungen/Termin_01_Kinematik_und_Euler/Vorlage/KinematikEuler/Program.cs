@@ -89,7 +89,26 @@ internal class Program
             Console.WriteLine($"  y_Max    = {yMaxNum:F2} m (Fehler: {yMaxNum - yMaxAna:+0.000;-0.000} m)\n");
         }
 
-        Console.WriteLine("Hinweis: In X ist der Fehler numerisch exakt 0, da ax = 0 konstant ist!");
+        // Vergleich mit Heun (RK2) bei grober Schrittweite dt = 0.10 s:
+        {
+            double dt = 0.1;
+            var state = new KinematicState(Time: 0.0, X: 0.0, Y: 0.0, Vx: vx0, Vy: vy0);
+            var previous = state;
+            double yMaxHeun = 0.0;
+            while (state.Y >= 0.0)
+            {
+                if (state.Y > yMaxHeun) yMaxHeun = state.Y;
+                previous = state;
+                state = EulerIntegrator.StepHeun(state, dt, _ => (0.0, -G));
+            }
+            var impactHeun = EulerIntegrator.InterpolateGroundImpact(previous, state);
+            Console.WriteLine($"Heun RK2 (dt = {dt:F2}s):");
+            Console.WriteLine($"  t_Impact = {impactHeun.Time:F3} s (Fehler: {impactHeun.Time - tAna:+0.0000;-0.0000} s)");
+            Console.WriteLine($"  x_Impact = {impactHeun.X:F2} m (Fehler: {impactHeun.X - xAna:+0.000;-0.000} m)\n");
+        }
+
+        Console.WriteLine("Erkenntnis: Expliziter Euler überschätzt y(t), landet dadurch um dt/2 zu spät");
+        Console.WriteLine("und schießt in x_Impact um vx0 * (dt/2) über das Ziel hinaus! Heun (RK2) integriert Parabeln exakt.");
     }
 
     /// <summary>

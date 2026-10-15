@@ -606,14 +606,16 @@ $$\mathbf{K} \mathbf{u} = \mathbf{f}$$
 
 ---
 
-### Lösung und Ergebnisse
+### Lösung und Ergebnisse: Stabkräfte & Knicknachweis
 
-1.  **Löse $K \cdot u = f$ nach $u$ auf**: Das Ergebnis sind die Verschiebungen aller Knoten.
-2.  **Post-Processing**:
-    - Aus den Knotenverschiebungen $u$ kann für jeden Stab die Längenänderung $\Delta L$ berechnet werden.
-    - Aus $\Delta L$ kann mit dem Hooke'schen Gesetz die **Stabkraft** $S$ berechnet werden.
-
-Das elastische Modell liefert uns also sowohl die **Verformungen** als auch die **Kräfte**!
+1. **Löse $\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f$ nach $\mathbf{u}_f$ auf**: Liefert die Verschiebungen aller freien Knoten.
+2. **Post-Processing (Normalkraft $S_e$ pro Stab):**
+   $$S_e = \frac{EA}{L} \cdot \Delta L = \frac{EA}{L} \left[ \vec{e}_{ij} \cdot (\vec{u}_j - \vec{u}_i) \right] \quad (S_e > 0\text{: Zug}, \ S_e < 0\text{: Druck})$$
+3. **Festigkeits- und Stabilitätsnachweis (Euler-Knickung):**
+   - **Fließgrenze (Zug & Druck):** $|\sigma_e| = \frac{|S_e|}{A} \le R_{p0,2}$
+   - **Euler-Knicklast für schlanke Druckstäbe ($S_e < 0$, beidseitig gelenkig – Euler-Fall 2):**
+     $$N_{\text{knick}} = \frac{\pi^2 \cdot E \cdot I}{L^2} \quad \implies \quad \text{Stabilitätsversagen falls } |S_e| \ge N_{\text{knick}}$$
+     *(mit Flächenträgheitsmoment $I\ [\mathrm{m^4}]$, z. B. Kreisrohr: $I = \frac{\pi}{64}(D^4 - d^4)$).*
 
 ---
 ## 7.4: Erweiterung der Berechnungsmodelle auf 3D
@@ -742,9 +744,9 @@ Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A
 <div>
 
 - **Knotenverschiebungen**: Der Vektor $\mathbf{u}$ enthält nun für jeden Knoten drei Komponenten ($u_x, u_y, u_z$).
-- **Stab-Steifigkeitsmatrix**: Die $\mathbf{k}_{\text{Stab}}$ ist nun eine $6 \times 6$-Matrix, da sie die 3 Verschiebungen an beiden Enden des Stabes in Beziehung setzt.
-- **Globale Steifigkeitsmatrix $\mathbf{K}$**: Wird analog zum 2D-Fall assembliert, wird aber deutlich größer. Für ein Fachwerk mit $k$ Knoten ist $\mathbf{K}$ eine $3k \times 3k$-Matrix.
-- Die Lösung $\mathbf{K} \mathbf{u} = \mathbf{f}$ folgt dem gleichen Schema.
+- **Dimensionsunabhängige Vektorformel:** Die in Abschnitt 7.2 über Taylor-Linearisierung ($|\Delta \vec{u}| \ll L$) hergeleitete Längenänderung gilt in $\mathbb{R}^3$ identisch:
+  $$\Delta L \approx \vec{e}_{ij} \cdot (\vec{u}_j - \vec{u}_i), \quad S = \frac{EA}{L} \Delta L, \quad \vec{f}_j = -\vec{f}_i = S \cdot \vec{e}_{ij}$$
+- **Stab-Steifigkeitsmatrix**: $\mathbf{k}_{\text{Stab}}$ wird zur $6 \times 6$-Matrix, die globale Steifigkeitsmatrix $\mathbf{K}$ hat die Dimension $3k \times 3k$.
 
 </div>
 <div>
@@ -753,109 +755,6 @@ Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A
 
 </div>
 </div>
-
----
-
-### Stablängenänderung durch Knotenverschiebung *(Deep Dive / Analogie zu 2D)*
-
-<div class="columns">
-<div class="two">
-
-Die Längenänderung $\Delta L$ eines Stabes zwischen den Knoten $i$ und $j$ hängt von deren Verschiebungen $\vec{u}_i$ und $\vec{u}_j$ ab.
-
-- **Verschiebungsvektoren**: $\vec{u}_i = (u_{ix}, u_{iy}, u_{iz})$ und $\vec{u}_j = (u_{jx}, u_{jy}, u_{jz})$.
-- **Ursprünglicher Stabvektor**: $\vec{L}_{ij} = \vec{p}_j - \vec{p}_i$
-
-Die exakte Längenänderung ist die Differenz zwischen der neuen Länge $L'$ (nach der Verformung) und der ursprünglichen Länge $L$.
-
-- **Neuer Stabvektor**: $\vec{L}'_{ij} = (\vec{p}_j + \vec{u}_j) - (\vec{p}_i + \vec{u}_i) = \vec{L}_{ij} + (\vec{u}_j - \vec{u}_i)$
-- **Neue Länge**: $L' = |\vec{L}'_{ij}|$
-
-</div>
-<div>
-
-![w:500](./Diagramme/Stablaengenaenderung.tikz.svg)
-
-</div>
-</div>
-
----
-
-### **Exakte** Berechnung der Stablängenänderung *(Deep Dive / Analogie zu 2D)*
-
-<div class="columns">
-<div class="three">
-
-Die exakte Längenänderung ist: $\Delta L = L' - L = |\vec{L}_{ij} + \vec{u}_j - \vec{u}_i| - |\vec{L}_{ij}|$.
-
-Um die Wurzel zu eliminieren, betrachten wir das Quadrat der neuen Länge $L'^2$. Sei $\Delta \vec{u} = \vec{u}_j - \vec{u}_i$.
-
-$L'^2 = |\vec{L} + \Delta \vec{u}|^2 = (\vec{L} + \Delta \vec{u}) \cdot (\vec{L} + \Delta \vec{u})$
-
-Ausmultiplizieren des Skalarprodukts ergibt:
-
-$L'^2 = \vec{L} \cdot \vec{L} + 2(\vec{L} \cdot \Delta \vec{u}) + \Delta \vec{u} \cdot \Delta \vec{u}$
-$L'^2 = L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2$
-
-Die neue Länge ist somit:
-
-$L' = \sqrt{L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2} = L \sqrt{1 + \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2} + \frac{|\Delta \vec{u}|^2}{L^2}}$
-
-</div>
-<div>
-
-![w:500](./Diagramme/Stablaengenaenderung.tikz.svg)
-
-</div>
-</div>
-
----
-
-### **Näherungsweise** Berechnung der Stablängenänderung *(Deep Dive / Analogie zu 2D)*
-
-<div class="columns">
-<div class="three">
-
-Für die in der Praxis übliche Annahme **kleiner Verschiebungen** gilt $|\Delta \vec{u}| \ll L$. Daher kann der quadratische Term $\frac{|\Delta \vec{u}|^2}{L^2}$ vernachlässigt werden.
-
-$L' \approx L \sqrt{1 + \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2}}$
-
-Mit der Taylor-Näherung $\sqrt{1+x} \approx 1 + \frac{x}{2}$ für kleine $x$ erhalten wir:
-
-$L' \approx L \left(1 + \frac{1}{2} \cdot \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2}\right) = L \left(1 + \frac{\vec{L} \cdot \Delta \vec{u}}{L^2}\right) = L + \frac{\vec{L} \cdot \Delta \vec{u}}{L}$
-
-Die Längenänderung $\Delta L = L' - L$ ist damit:
-
-$\Delta L \approx \frac{\vec{L} \cdot \Delta \vec{u}}{L} = \left(\frac{\vec{L}}{L}\right) \cdot \Delta \vec{u} = \vec{e} \cdot (\vec{u}_j - \vec{u}_i)$
-
-Dies führt direkt zur linearisierten, näherungsweisen Berechnung.
-
-</div>
-<div>
-
-![w:500](./Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
-
-</div>
-</div>
-
----
-
-### Stabkräfte und Steifigkeitsbeziehung *(Deep Dive / Analogie zu 2D)*
-
-Nach dem **Hooke'schen Gesetz** ist die Kraft $S$ im Stab proportional zur Längenänderung $\Delta L$.
-
-$S = \frac{E \cdot A}{L} \cdot \Delta L$
-
-- $E$: Elastizitätsmodul (Materialeigenschaft)
-- $A$: Querschnittsfläche des Stabes
-- $L$: Ursprüngliche Länge des Stabes
-
-Die Stabkraft $S$ erzeugt an den Knoten $i$ und $j$ die Gegenkräfte $\vec{f}_i$ und $\vec{f}_j$:
-
-$\vec{f}_j = S \cdot \vec{e}$
-$\vec{f}_i = -S \cdot \vec{e}$
-
-Diese Kräfte halten das Gleichgewicht mit den externen Kräften.
 
 ---
 
@@ -1115,11 +1014,34 @@ public class ElasticRod : Rod {
 
 ---
 
+### C#-Implementierung: Index-Partitionierung (`Kff`, `Kpf`, `Ff`)
+
+Extraktion der freien (`free`) und gesperrten (`prescribed`) Freiheitsgrade aus $\mathbf{K}_{\text{global}}$ (`GlobalStiffnessMatrix.cs`):
+
+```csharp
+var prescribed = FixedDofs.OrderBy(d => d).ToArray();
+var free = Enumerable.Range(0, TotalDofs).Except(FixedDofs).OrderBy(d => d).ToArray();
+
+var kff = new DenseMatrix(free.Length, free.Length);
+var ff  = new DenseVector(free.Length);
+for (int i = 0; i < free.Length; i++) {
+    ff[i] = ExternalForces[free[i]];
+    for (int j = 0; j < free.Length; j++)
+        kff[i, j] = kGlobal[free[i], free[j]];
+}
+var kpf = new DenseMatrix(prescribed.Length, free.Length);
+for (int i = 0; i < prescribed.Length; i++)
+    for (int j = 0; j < free.Length; j++)
+        kpf[i, j] = kGlobal[prescribed[i], free[j]];
+```
+
+---
+
 ### Verwendung von Bibliotheken (`Math.NET Numerics`)
 
 - Numerische Bibliotheken bieten hochoptimierte und stabile LGS-Löser.
 - **Ideales Fachwerk:** Direkte Lösung via `A.Solve(b)` (LU-Zerlegung)
-- **Elastisches Fachwerk:** Cholesky-Zerlegung `kBB.Cholesky().Solve(...)` ($\mathbf{K}_{BB}$)
+- **Elastisches Fachwerk:** Cholesky-Zerlegung `kff.Cholesky().Solve(ff)` ($\mathbf{K}_{ff} \equiv \mathbf{K}_{BB}$)
 
 ```csharp
 using MathNet.Numerics.LinearAlgebra;
@@ -1127,14 +1049,14 @@ using MathNet.Numerics.LinearAlgebra;
 // Ideales Fachwerk: Direkte LU-Lösung mit partieller Pivotisierung
 Vector<double> x = A.Solve(b);
 
-// Elastisches Fachwerk: Cholesky-Zerlegung (LL^T) mit LU-Fallback
-var rhs = fKnown - kBA * uKnown;
-Vector<double> uUnknown;
+// Elastisches Fachwerk: Cholesky-Zerlegung (LL^T) & Auflagerreaktionen f_p = K_pf * u_f
+Vector<double> uf;
 try {
-    uUnknown = kBB.Cholesky().Solve(rhs);
-} catch (Exception) {
-    uUnknown = kBB.LU().Solve(rhs);
+    uf = kff.Cholesky().Solve(ff);
+} catch (ArgumentException ex) { // Falls K_ff nicht positiv definit (Mechanismus!)
+    throw new InvalidOperationException("Tragwerk kinematisch instabil!", ex);
 }
+Vector<double> fp = kpf.Multiply(uf); // Auflagerreaktionskräfte
 ```
 
 ---

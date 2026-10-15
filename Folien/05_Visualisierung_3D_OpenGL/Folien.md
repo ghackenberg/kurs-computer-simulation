@@ -967,14 +967,14 @@ Die `DrawLocal`-Methode eines `Group`-Knotens ist besonders einfach: Sie ruft le
 protected override void DrawLocal(OpenGL gl)
 {
     // Rufe die Draw-Methode für alle Kinder auf
-    foreach (Node child in _children.Values)
+    foreach (Node child in _children)
     {
         child.Draw(gl);
     }
 }
 ```
 
-Durch diesen rekursiven Aufruf (`Group.Draw` -> `Child.Draw` -> ...) werden die Transformationen korrekt entlang der Baumhierarchie akkumuliert.
+Durch diesen rekursiven Aufruf (`Group.Draw` -> `Child.Draw` -> ...) werden die Transformationen korrekt entlang der Baumhierarchie akkumuliert. *(In der Laborvorlage `Termin_05` vereint die kompakte Klasse `SceneNode` Gruppenknoten und lokale Transformationen $T, R, S$ direkt in einer Klasse).*
 
 ---
 
@@ -1288,8 +1288,8 @@ $$\mathbf{T}_{\text{TCP}} = \mathbf{T}_{\text{Base}} \cdot \mathbf{R}_y(\theta_1
 <div class="one">
 
 > [!TIP]
-> **Industrieller Standard:**  
-> Wie in TwinCAT Kinematics, ROS (URDF) oder MATLAB Simscape vererben serielle Gelenke Posen automatisch an Folgestrukturen.
+> **Knickarm vs. SCARA (Labor T05):**  
+> Hier schwenkt ein **Knickarmroboter** vertikal ($\mathbf{R}_y(\theta_1)$ Yaw + $\mathbf{R}_z(\theta_2)$ Pitch). Beim **SCARA-Roboter** im Labor (`SceneGraph3D`) rotieren *beide* Arme horizontal um die parallele Y-Achse ($\mathbf{R}_y(\theta_1) \cdot \mathbf{T}_x(L_1) \cdot \mathbf{R}_y(\theta_2) \cdot \mathbf{T}_x(L_2)$), gefolgt vom vertikalen Hub der Pinole ($d_3$).
 
 </div>
 </div>

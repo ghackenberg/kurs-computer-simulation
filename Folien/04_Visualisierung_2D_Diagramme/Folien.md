@@ -277,23 +277,25 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### ScottPlot API: **Histogramme und Bins**
+### ScottPlot 5 API: **Histogramme und Bins**
 
 ```csharp
 // 1. Rohdaten & Histogramm berechnen (20 Bins in [0..10 s])
 double[] durations = Simulation.RunMonteCarloRuns(10000);
-var hist = new ScottPlot.Statistics.Histogram(
-    durations, min: 0, max: 10, binCount: 20);
+var hist = ScottPlot.Statistics.Histogram.WithBinCount(20, 0, 10);
+hist.AddRange(durations);
 
-// 2. Balkendiagramm aus berechneten Klassen erzeugen
-var bar = WpfPlot1.Plot.Add.Bar(hist.Counts, hist.BinCenters);
-bar.Label = "Simulierte Häufigkeit";
-bar.FillColor = ScottPlot.Colors.SteelBlue.WithAlpha(0.7);
+// 2. Balkendiagramm (ScottPlot 5 Bars) aus berechneten Klassen erzeugen
+var bars = hist.Bins.Zip(hist.Counts, (pos, cnt) => new ScottPlot.Bar {
+    Position = pos, Value = cnt, Size = hist.FirstBinSize * 0.85,
+    FillColor = ScottPlot.Colors.SteelBlue.WithAlpha(0.7f),
+    LineColor = ScottPlot.Colors.SteelBlue, LineWidth = 1.2f
+}).ToList();
+WpfPlot1.Plot.Add.Bars(bars);
 
 // 3. Achsen und Layout konfigurieren
 WpfPlot1.Plot.XLabel("Verweildauer [s]");
 WpfPlot1.Plot.YLabel("Absolute Häufigkeit");
-WpfPlot1.Plot.Legend.IsVisible = true;
 WpfPlot1.Plot.Axes.AutoScale();
 WpfPlot1.Refresh();
 ```

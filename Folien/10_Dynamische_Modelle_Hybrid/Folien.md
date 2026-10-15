@@ -1575,7 +1575,7 @@ Der Block steuert seine eigene Ausführungs-frequenz dynamisch basierend auf dem
 - **Nulldurchgangsdetektion (Zero-Crossings):** Schaltfunktionen $z(\mathbf{x}_c) = 0$ erkennen Ereignisse unabhängig vom festen Zeitschrittgitter.
 - **Intervall-Bisektion:** Garantiert robuste Nullstelleneinkreisung über Vorzeichenwechsel ($\text{sgn}(z(t_a)) \neq \text{sgn}(z(t_b))$) und synchronisiert die verbleibende Restzeit $\Delta t_{\text{remaining}}$ exakt.
 - **Zeno-Phänomen & Haftkontakt:** Unendliche Stoßhäufungen in endlicher Zeit ($dt \to 0$) werden numerisch durch energetische Haftschwellen (`nearZero` $\implies$ Umschaltung in Sticking-Modus) beherrscht.
-- **Abtastraten-Koordination:** Diskrete und kontinuierliche Blöcke mit unterschiedlichen Tasks (Periodisch, Multirate, Variable Sample Time) koexistieren in einer gemeinsamen Simulations-Engine.
+- **Abtastraten-Koordination:** Diskrete und kontinuierliche Blöcke mit unterschiedlichen Tasks (Periodisch, Multirate, Variable Sample Time) koexistieren in einer gemeinsamen Simulations-Engine *(im Labor `Termin_10` kompakt abgebildet über `IHybridSystem` und `BisectionRootFinder.FindRoot`)*.
 
 ---
 
