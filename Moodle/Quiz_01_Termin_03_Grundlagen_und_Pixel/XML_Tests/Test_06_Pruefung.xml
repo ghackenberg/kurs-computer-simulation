@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_01_Termin_03/Test_06_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Test 06 (Prüfung) – Gold, GC-Allokationsfreiheit & Robin-Rand</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: T06.Q1: FDM-Stabilitätsgrenze für eine Gold-Kontaktbeschichtung -->
+  <question type="multichoice">
+    <name>
+      <text>T06_Q1_CFL_Gold</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Eine Bonddraht-Kontaktfläche aus Gold wird thermisch untersucht:</p>
+<ul>
+  <li>Temperaturleitfähigkeit von Gold: \(\alpha = 1{,}27 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
+  <li>Gitterweite: \(\Delta x = \Delta y = 2{,}5\,\text{mm} = 2{,}5 \cdot 10^{-3}\,\text{m}\)</li>
+</ul>
+<p>Berechnen Sie die maximale Zeitschrittweite \(\Delta t_{\max}\) für den stabilen 2D-Euler-FDM-Schritt.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(2{,}5 \cdot 10^{-3})^2}{4 \cdot 1{,}27 \cdot 10^{-4}} = \frac{6{,}25 \cdot 10^{-6}}{5{,}08 \cdot 10^{-4}}\,\text{s} \approx 0{,}012303\,\text{s} \approx 12{,}30\,\text{ms}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T06_Q1_CFL_Gold</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 12{,}30\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! \(6{,}25 \cdot 10^{-6} / (5{,}08 \cdot 10^{-4})\,\text{s} \approx 12{,}30\,\text{ms}\).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 24{,}61\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 6{,}15\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Faktor 8 statt 4.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 1{,}23\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 2: T06.Q2: Garbage Collection Spikes durch Allokationen in der Renderschleife -->
+  <question type="multichoice">
+    <name>
+      <text>T06_Q2_Code_GC_Spikes_Allokation</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Eine 60-FPS-Simulationsschleife aktualisiert die Bildschirmanzeige:</p>
+<pre><code class="language-csharp">private void Timer_Tick(object sender, EventArgs e)
+{
+    // Simulationsschritt durchführen:
+    StepSimulation();
+
+    // Anzeige aktualisieren:
+    int stride = width * 4;
+    byte[] pixelBuffer = new byte[stride * height]; // Im 60-Hz-Tick neu angelegt!
+    FillPixels(pixelBuffer);
+    bitmap.WritePixels(new Int32Rect(0, 0, width, height), pixelBuffer, stride, 0);
+}</code></pre>
+<p>Welches schwerwiegende Performanceproblem tritt nach einigen Sekunden Betrieb auf?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Wird bei jedem Frame (60-mal pro Sekunde) ein großes Byte-Array allokiert (z. B. \(1920 \times 1080 \times 4 \approx 8{,}3\,\text{MB}\)), erzeugt dies hunderte Megabyte Müll pro Sekunde auf dem Large Object Heap (LOH). Der .NET Garbage Collector muss regelmäßig anhalten (Stop-the-World GC-Pausen), was zu massiven Framerate-Einbrüchen und Rucklern führt. Lösung: Array einmalig vorallokieren.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T06_Q2_Code_GC_Spikes_Allokation</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Der Garbage Collector muss ständig riesige Speichermengen auf dem Heap freiräumen; dies führt zu regelmäßigen 'Stop-the-World'-GC-Pausen und spürbaren Rucklern in der Visualisierung.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Null-Allokations-Politik in zeitkritischen Schleifen ist Pflicht.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Das Betriebssystem schließt das Programm sofort mit einem OutOfMemory-Crash nach genau 10 Frames.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Der GC räumt den Speicher zwar frei, bremst die Anwendung dabei jedoch massiv aus.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der DispatcherTimer verliert seine Zeitbasis und zählt rückwärts.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die Zeitbasis wird nicht invertiert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<code>WritePixels</code> akzeptiert keine Arrays, die im selben Frame instanziiert wurden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. WritePixels akzeptiert das Array, leidet aber unter dem Allokationsoverhead.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 3: T06.Q3: Die Robin-Randbedingung (Konvektiver Wärmeübergang) -->
+  <question type="multichoice">
+    <name>
+      <text>T06_Q3_Physik_Robin_Randbedingung</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>An den Kühlrippen eines Kühlkörpers wird der Wärmeübergang an die umgebende Luft über eine <strong>Robin-Randbedingung (Randbedingung 3. Art)</strong> modelliert:</p>
+<p>$$-\lambda \frac{\partial T}{\partial n} = h \left( T_{\text{Rand}} - T_{\infty} \right)$$</p>
+<p>Welche Grenzwertbetrachtung bezüglich des Wärmeübergangskoeffizienten \(h\) ist <strong>physikalisch korrekt</strong>?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Geht \(h \to 0\), verschwindet der Wärmestrom \(q = 0 \implies \frac{\partial T}{\partial n} = 0\); dies entspricht einer perfekten thermischen Isolation (homogene Neumann-Bedingung). Geht \(h \to \infty\), wird der Widerstand an der Oberfläche null und die Randtemperatur gleicht sich instantan der Umgebungstemperatur an (\(T_{\text{Rand}} = T_{\infty}\), Dirichlet-Bedingung).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T06_Q3_Physik_Robin_Randbedingung</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Für \(h \to 0\) geht die Robin-Bedingung in eine adiabate Isolation (Neumann) über; für \(h \to \infty\) geht sie in eine feste Umgebungstemperatur (Dirichlet) über.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Die Robin-Bedingung verbindet Neumann und Dirichlet über den konvektiven Übergang.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Für \(h \to \infty\) wird die Platte vollkommen isoliert, da unendlich viel Wärme abgestoßen wird.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Bei h -> unendlich gleicht sich die Randtemperatur sofort der Umgebung an.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der Wärmeübergangskoeffizient \(h\) hat dieselbe Dimension wie die Temperaturleitfähigkeit \(\alpha\).]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. h hat die Einheit W/(m² K), alpha die Einheit m²/s.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Robin-Bedingung kann nur bei statischen Problemen verwendet werden, bei dynamischen FDM-Gittern ist sie mathematisch verboten.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Robin-Bedingungen sind der Standard bei dynamischen Kühlkörper-Simulationen.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 4: T06.Q4: Modell-Taxonomie: Kontinuierliche vs. Diskrete Systeme -->
+  <question type="multichoice">
+    <name>
+      <text>T06_Q4_Taxonomie_Kontinuierlich_Diskret</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In Kapitel 01 wird die Taxonomie technischer Modelle besprochen. Was ist das wesentliche Unterscheidungsmerkmal zwischen <strong>kontinuierlichen</strong> und <strong>diskreten</strong> dynamischen Modellen hinsichtlich ihrer Zustandsvariablen?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Kontinuierliche dynamische Modelle besitzen Zustände, die sich stetig über der Zeit verändern (beschrieben durch Differentialgleichungen wie Temperatur, Druck, Geschwindigkeit). Diskrete Modelle ändern ihren Zustand sprunghaft zu isolierten Ereigniszeitpunkten (beschrieben durch Zähler, Warteschlangen, Zustandsautomaten).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T06_Q4_Taxonomie_Kontinuierlich_Diskret</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[In kontinuierlichen Modellen ändern sich Zustände stetig im Zeitverlauf (DGLn); in diskreten Modellen ändert sich der Zustand sprunghaft zu diskreten Ereigniszeitpunkten (DES / Automaten).]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Dies bildet die fundamentale Trennlinie in der Modelltheorie.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Kontinuierliche Modelle können nur auf Analogrechnern ausgeführt werden, diskrete Modelle nur auf PCs.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Beide Modellklassen werden auf Digitalrechnern simuliert (kontinuierliche via Zeitschrittintegration).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Diskrete Modelle berücksichtigen keine Zeit, sondern nur Kosten und Gewichte.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Ereignisdiskrete Simulationen (DES) besitzen eine explizite Simulationszeitachse.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Kontinuierliche Modelle haben keine physikalischen Einheiten.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Sie basieren direkt auf physikalischen SI-Größen.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 5: T06.Q5: Performance-Optimierung durch Farbtabellen (Lookup Tables, LUT) -->
+  <question type="multichoice">
+    <name>
+      <text>T06_Q5_LUT_Falschfarben_Performance</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Zur Visualisierung einer 2D-Temperaturverteilung (Werte von 0 bis 255) erzeugt ein Algorithmus eine Falschfarben-Heatmap (Blau \(\to\) Grün \(\to\) Rot). Warum verwendet man hierfür in performantem C# eine vorab berechnete <strong>Lookup Table (LUT)</strong> mit 256 <code>uint</code>-Einträgen, anstatt die Farbwerte pro Pixel und Frame über mathematische Formeln zu berechnen?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Bei einem Bild mit \(800 \times 600 = 480.000\) Pixeln und 60 FPS müssten pro Sekunde fast 30 Millionen Farbinterpolationstransformationen gerechnet werden. Mit einer vorab berechneten LUT (256 Einträge im schnellen CPU-L1-Cache) reduziert sich die Farbzuordnung auf einen einzigen O(1) Array-Zugriff <code>lut[heatByte]</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T06_Q5_LUT_Falschfarben_Performance</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Die LUT reduziert die Farbzuordnung pro Pixel auf einen O(1)-Speicherzugriff im CPU-Cache und eliminiert Millionen rechenintensiver Verzweigungen und mathematischer Interpolationen pro Sekunde.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Lookup Tables sind ein Eckpfeiler hardwarenaher Echtzeitgrafik.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil C# keine mathematischen Funktionen wie Sinus oder lineare Interpolation in Schleifen unterstützt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. C# unterstützt diese mathematischen Funktionen problemlos, sie kosten jedoch Rechenzeit.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil WPF keine Bilder anzeigen kann, wenn die Pixel nicht vorab in einer Tabelle registriert wurden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. WPF interessiert sich nur für den fertigen Pufferinhalt.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Eine LUT wird zwingend benötigt, um den Garbage Collector daran zu hindern, Pixeldaten zu löschen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das hat keinen Bezug zum GC.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

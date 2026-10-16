@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_01_Termin_03/Test_09_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Test 09 (Prüfung) – Nickel, Pointerarithmetik & Diffusionslänge</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: T09.Q1: FDM-Stabilitätsgrenze für Nickellegierung -->
+  <question type="multichoice">
+    <name>
+      <text>T09_Q1_CFL_Nickel</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Eine Hochtemperatur-Nickellegierung wird simuliert:</p>
+<ul>
+  <li>Temperaturleitfähigkeit von Nickel: \(\alpha = 0{,}23 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
+  <li>Gitterweite: \(\Delta x = \Delta y = 2{,}0\,\text{mm} = 2{,}0 \cdot 10^{-3}\,\text{m}\)</li>
+</ul>
+<p>Wie groß ist die maximale Zeitschrittweite \(\Delta t_{\max}\) für das explizite 2D-FDM-Verfahren?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(2{,}0 \cdot 10^{-3})^2}{4 \cdot 0{,}23 \cdot 10^{-4}} = \frac{4{,}0 \cdot 10^{-6}}{0{,}92 \cdot 10^{-4}}\,\text{s} = \frac{4{,}0}{92}\,\text{s} \approx 0{,}043478\,\text{s} \approx 43{,}48\,\text{ms}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T09_Q1_CFL_Nickel</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 43{,}48\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! \(4{,}0 \cdot 10^{-6} / (0{,}92 \cdot 10^{-4})\,\text{s} \approx 43{,}48\,\text{ms}\).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 86{,}96\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 21{,}74\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Faktor 8 statt 4.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 4{,}35\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 2: T09.Q2: Zeigerarithmetik-Falle bei uint* vs. byte* -->
+  <question type="multichoice">
+    <name>
+      <text>T09_Q2_Code_Pointer_Arithmetik_Uint</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Entwickler castet den Back-Buffer auf <code>uint*</code>, um 32-Bit-Pixelwerte auf einmal zu schreiben. Zum Zeilenvorschub verwendet er den ermittelten <code>bitmap.BackBufferStride</code> (gemessen in Bytes!):</p>
+<pre><code class="language-csharp">uint* pBuffer = (uint*)bitmap.BackBuffer;
+int strideInBytes = bitmap.BackBufferStride;
+
+for (int y = 0; y < height; y++)
+{
+    // Fataler Zeilenvorschub:
+    uint* pRow = pBuffer + (y * strideInBytes);
+    for (int x = 0; x < width; x++)
+    {
+        pRow[x] = 0xFF0000FF; // Rot
+    }
+}</code></pre>
+<p>Welcher fatale Denkfehler liegt bei der Zeigerarithmetik in C# vor?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>In C/C# und C# zählt Zeigerarithmetik immer in Einheiten des zugrundeliegenden Datentyps! Die Erhöhung eines <code>uint*</code> um 1 verschiebt die Speicheradresse um <code>sizeof(uint) = 4</code> Bytes. Addiert man zu einem <code>uint*</code> den Wert <code>y * strideInBytes</code>, verschiebt sich die Adresse um \(y \times \text{strideInBytes} \times 4\) Bytes – also viermal zu weit! Nach einem Viertel der Bildhöhe stürzt das Programm mit Speicherverletzung ab.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T09_Q2_Code_Pointer_Arithmetik_Uint</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Zeigerarithmetik auf <code>uint*</code> multipliziert den Offset intern mit <code>sizeof(uint) = 4</code>. Die Addition von <code>strideInBytes</code> springt daher viermal zu weit im Speicher und führt zum Crash.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Bei uint* muss der Byte-Stride durch 4 geteilt werden (pBuffer + y * (stride / 4)) oder als byte* adressiert werden.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<code>0xFF0000FF</code> ist keine gültige Hexadezimalzahl in C#.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. 0xFF0000FF ist ein absolut reguläres uint-Literal.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[In C# dürfen Zeiger niemals mit Schleifenvariablen multipliziert werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das ist Standardzeigerarithmetik.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der Code funktioniert tadellos, da die CLR Typunterschiede bei Pointern ignoriert.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die CLR bzw. der C#-Compiler skaliert Pointerarithmetik streng nach Typgröße.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 3: T09.Q3: Physikalisches Skalierungsgesetz: Die thermische Diffusionslänge -->
+  <question type="multichoice">
+    <name>
+      <text>T09_Q3_Physik_Diffusionslaenge_Wurzel</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Für die Ausbreitung einer Temperaturfront in einem homogenen Medium gilt näherungsweise das Diffusionsgesetz für die thermische Eindringtiefe:</p>
+<p>$$L \approx \sqrt{2 \alpha t}$$</p>
+<p>Was bedeutet dieser mathematische Zusammenhang, wenn Sie die Eindringtiefe der Wärmewelle <strong>verdoppeln</strong> wollen (\(L_2 = 2 L_1\))?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Wegen \(L \propto \sqrt{t}\) bzw. \(t \propto L^2\) erfordert eine Verdopplung der Eindringtiefe \(L\) die vierfache Zeit: \(t_2 = 4 t_1\). Die Wärmeausbreitung verlangsamt sich mit zunehmender Tiefe drastisch.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T09_Q3_Physik_Diffusionslaenge_Wurzel</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Die dafür erforderliche Zeit vervierfacht sich (\(t_2 = 4 t_1\)), da die Diffusionslänge nur mit der Quadratwurzel der Zeit wächst.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Dies ist das universelle Gesetz aller Diffusionsvorgänge.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die dafür erforderliche Zeit verdoppelt sich (\(t_2 = 2 t_1\)), da Ausbreitungsprozesse linear ablaufen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Wellenausbreitung ist linear, Diffusion ist parabolisch-quadratisch.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Zeit bleibt gleich, lediglich die Temperatur verdoppelt sich.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die Wärmefront benötigt Zeit zum Vordringen.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Zeit verkürzt sich auf die Hälfte, da heiße Körper schneller diffundieren.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Völlig unphysikalisch.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 4: T09.Q4: Modellvalidität & Gültigkeitsbereich (Operational Design Domain) -->
+  <question type="multichoice">
+    <name>
+      <text>T09_Q4_Gueltigkeitsbereich_Modell</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein lineares thermisches FDM-Modell nutzt eine konstante Temperaturleitfähigkeit \(\alpha = \text{const}\). Unter welcher Betriebsbedingung verliert dieses Modell in der mechatronischen Praxis schlagartig seine Gültigkeit?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Reale Werkstoffe ändern ihre thermischen Parameter mit der Temperatur. Insbesondere bei Phasenübergängen (z. B. Schmelzen von Lötzinn bei 217°C oder Phasenwechsel in Heatpipes) wird enorme latente Schmelzwärme umgesetzt, ohne dass die Temperatur steigt. Ein lineares Modell ohne Phasenübergang versagt hier vollständig.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T09_Q4_Gueltigkeitsbereich_Modell</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Sobald ein Phasenwechsel eintritt (z. B. Aufschmelzen von Lötstellen), da latente Schmelzwärme umgesetzt wird und \(\alpha\) stark temperaturabhängig wird.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Die Gültigkeitsgrenzen des linearen Modells müssen im Vorfeld definiert sein.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Sobald die Außentemperatur genau 20°C (Raumtemperatur) erreicht.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Bei Raumtemperatur sind lineare Modelle meist hervorragend gültig.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Wenn die Simulation länger als 10 Sekunden Echtzeit dauert.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Reine Simulationsdauer limitiert nicht die physikalische Gültigkeit.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Wenn das Modell in C# statt in Python ausgeführt wird.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die Programmiersprache ändert nichts an der Physik.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 5: T09.Q5: Thread-Entkopplung: Simulation vs. UI-Dispatcher -->
+  <question type="multichoice">
+    <name>
+      <text>T09_Q5_UI_Dispatcher_Entkopplung</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Warum darf eine rechenintensive FDM-Feldsimulation (z. B. \(1000 \times 1000\) Gitterpunkte mit 100 Iterationen pro Frame) <strong>niemals direkt synchron auf dem WPF-UI-Thread</strong> ausgeführt werden?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>In WPF verarbeitet der UI-Thread über den Dispatcher sämtliche Windows-Nachrichten, Eingaben (Maus, Tastatur) und Render-Aufrufe. Wird dieser Thread durch eine Sekunden dauernde FDM-Schleife blockiert, friert das gesamte Anwendungsfenster ein („Keine Rückmeldung“). Simulation und UI müssen über Hintergrund-Threads bzw. Background-Worker entkoppelt werden.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T09_Q5_UI_Dispatcher_Entkopplung</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Weil der UI-Thread sämtliche Benutzerinteraktionen und Fensterbotschaften verarbeitet; eine synchrone Blockierung führt zum sofortigen Einfrieren der Benutzeroberfläche ('Keine Rückmeldung').]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Dies verletzt die fundamentale Architekturregel der Lehrveranstaltung.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil die Grafikkarte nur Daten von Worker-Threads akzeptieren kann.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die WPF-Engine rendert über ihren eigenen Render-Thread.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil Berechnungen auf dem UI-Thread mathematisch falsche Rundungsfehler erzeugen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die FPU rechnet auf allen Threads mit identischer Präzision.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil Windows C#-Programme nach 100 Schleifendurchläufen automatisch beendet.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Es gibt kein solches Schleifenlimit.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

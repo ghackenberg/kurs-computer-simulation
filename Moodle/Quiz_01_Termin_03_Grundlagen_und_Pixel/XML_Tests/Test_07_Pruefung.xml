@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_01_Termin_03/Test_07_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Test 07 (Prüfung) – Silber, Off-by-One & Energieerhaltung</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: T07.Q1: FDM-Stabilitätsgrenze für Reinsilber -->
+  <question type="multichoice">
+    <name>
+      <text>T07_Q1_CFL_Silber</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Silber besitzt die höchste thermische Leitfähigkeit aller Metalle:</p>
+<ul>
+  <li>Temperaturleitfähigkeit von Silber: \(\alpha = 1{,}74 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
+  <li>Gitterweite: \(\Delta x = \Delta y = 1{,}0\,\text{mm} = 1{,}0 \cdot 10^{-3}\,\text{m}\)</li>
+</ul>
+<p>Wie lautet die maximale Zeitschrittweite \(\Delta t_{\max}\) für ein stabiles 2D-FDM-Verfahren?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(1{,}0 \cdot 10^{-3})^2}{4 \cdot 1{,}74 \cdot 10^{-4}} = \frac{1{,}0 \cdot 10^{-6}}{6{,}96 \cdot 10^{-4}}\,\text{s} \approx 0{,}0014368\,\text{s} \approx 1{,}44\,\text{ms}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T07_Q1_CFL_Silber</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 1{,}44\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! \(1{,}0 \cdot 10^{-6} / (6{,}96 \cdot 10^{-4})\,\text{s} \approx 1{,}44\,\text{ms}\).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 2{,}87\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 5{,}75\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Faktor 4 im Nenner fehlt.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 0{,}72\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Unnötig halbiert.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 2: T07.Q2: Code-Analyse: Off-by-One Fehler bei der Differenzenstern-Iteration -->
+  <question type="multichoice">
+    <name>
+      <text>T07_Q2_Code_OffByOne_Rand</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Student schreibt folgende FDM-Berechnungsschleife für ein Gitter der Dimension \(W \times H\):</p>
+<pre><code class="language-csharp">for (int y = 0; y < height; y++)
+{
+    for (int x = 0; x < width; x++)
+    {
+        // 5-Punkt-Stern:
+        nextGrid[x, y] = grid[x, y] + s * (
+            grid[x + 1, y] + grid[x - 1, y] +
+            grid[x, y + 1] + grid[x, y - 1] - 4 * grid[x, y]
+        );
+    }
+}</code></pre>
+<p>Was geschieht bei der Ausführung dieser Schleife?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Bei \(x = 0\) greift <code>grid[x-1, y]</code> auf den Index -1 zu; bei \(x = width - 1\) greift <code>grid[x+1, y]</code> auf den Index <code>width</code> zu. Dasselbe gilt für \(y\). Die Schleife wirft sofort beim ersten Pixel eine <code>IndexOutOfRangeException</code>. Die inneren Punkte müssen von 1 bis Dimension - 2 laufen, während die Ränder separat behandelt werden müssen.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T07_Q2_Code_OffByOne_Rand</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Es tritt sofort beim ersten Durchlauf (\(x=0, y=0\)) eine <code>IndexOutOfRangeException</code> auf, da auf negative Indizes (\(x-1\)) und Indizes außerhalb des Arrays zugegriffen wird.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Randpunkte müssen gesondert über Randbedingungen behandelt werden.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[C# setzt ungültige Indizes automatisch auf 0 zurück, sodass die Randberechnung fehlerfrei weiterläuft.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. C# prüft Array-Grenzen strikt und wirft Ausnahmen.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Schleife wird ausgeführt, aber das Bild wird um ein Pixel nach links verschoben.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das Programm bricht sofort ab.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Es entsteht ein Compilerfehler, da zweidimensionale Arrays in C# nicht mit 's' skaliert werden dürfen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das ist syntaktisch gültig.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 3: T07.Q3: Physikalische Konsistenzprüfung: Energieerhaltung bei adiabaten Rändern -->
+  <question type="multichoice">
+    <name>
+      <text>T07_Q3_Physik_Energieerhaltung_Neumann</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einer thermischen Simulation ist eine Platte an allen vier Außenrändern <strong>vollständig thermisch isoliert</strong> (adiabate Neumann-Ränder, \(\partial T / \partial n = 0\)). Es gibt keine inneren Wärmequellen. Welche fundamentale physikalische Invariante muss das numerische FDM-Verfahren über die gesamte Simulationszeit hinweg exakt einhalten?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Nach dem 1. Hauptsatz der Thermodynamik (Energieerhaltung) kann aus einem allseitig isolierten System ohne Quellen weder Energie entweichen noch hinzukommen. Das Integral der Temperatur über die Fläche bzw. die Summe aller Zelltemperaturen \(\sum_{i,j} T_{i,j}\) muss zeitlich exakt konstant bleiben (bis auf Maschinengenauigkeit).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T07_Q3_Physik_Energieerhaltung_Neumann</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Die Summe bzw. das Integral der thermischen Energie über alle Gitterpunkte (\(\sum T_{i,j}\)) muss über alle Zeitschritte hinweg konstant bleiben (Energieerhaltungssatz).]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Dies ist der wichtigste Validierungstest für die Korrektheit der Neumann-Randimplementierung.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die maximale Temperatur im Gitter muss mit jedem Zeitschritt ansteigen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Ohne Wärmequellen kann das Maximum nur fallen (Dissipation).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Temperatur aller Zellen muss innerhalb eines einzigen Zeitschritts auf 0°C absinken.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Wärme verteilt sich stetig, sie verschwindet nicht.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Entropie des Systems muss kontinuierlich abnehmen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Der 2. Hauptsatz besagt, dass die Entropie bei irreversibler Wärmeleitung zunimmt.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 4: T07.Q4: Das Pragmatische Merkmal nach Herbert Stachowiak -->
+  <question type="multichoice">
+    <name>
+      <text>T07_Q4_Stachowiak_Pragmatismus</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Was versteht Herbert Stachowiak unter dem <strong>Pragmatischen Merkmal</strong> eines Modells?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Das pragmatische Merkmal besagt: Modelle sind ihren Originalen nicht per se zugeordnet, sondern erfüllen eine Ersetzungsfunktion für bestimmte Subjekte (Nutzer), innerhalb bestimmter Zeitintervalle und unter Einschränkung auf bestimmte gedankliche oder tatsächliche Operationen (Zweck).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T07_Q4_Stachowiak_Pragmatismus</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Ein Modell ist nicht universell gültig, sondern erfüllt seine Ersetzungsfunktion stets nur für bestimmte Nutzer (Subjekte), innerhalb definierter Zeitspannen und für einen ganz konkreten Anwendungszweck.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Kein Modell ohne Zweck.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Ein Modell muss pragmatisch programmiert werden, d. h. ohne objektorientierte Klassen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Hat nichts mit Programmierparadigmen zu tun.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Ein Modell darf maximal 100 Zeilen Quellcode umfassen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das ist keine wissenschaftliche Definition.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Pragmatismus bedeutet, dass physikalische Gesetze in Simulationen ignoriert werden dürfen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Physik ist das Fundament mechatronischer Modelle.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 5: T07.Q5: Performancevorteil von Unsafe-Pointern gegenüber regulären 2D-Arrays -->
+  <question type="multichoice">
+    <name>
+      <text>T07_Q5_Unsafe_Pointer_vs_Array_Speed</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Warum ist der direkte Speicherzugriff über <code>unsafe byte*</code> in C# bei intensiven Pixel- und FDM-Berechnungen messbar schneller als der Zugriff über ein Standard-C#-Array <code>byte[,]</code>?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Bei jedem Zugriff auf ein sicheres C#-Array (<code>array[i, j]</code>) prüft die CLR zur Laufzeit, ob der Index innerhalb der deklarierten Grenzen liegt (Array Bounds Checking). Bei <code>unsafe byte*</code> entfallen diese Prüfungen vollständig; die CPU führt reine Zeigeradditionen ohne Verzweigungen aus.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T07_Q5_Unsafe_Pointer_vs_Array_Speed</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Bei Zeigeroperationen entfällt das von der .NET-CLR bei jedem regulären Array-Zugriff durchgeführte automatische 'Array Bounds Checking' (Bereichsprüfung), was Verzweigungen im Maschinencode eliminiert.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Bounds Checking kostet in tiefen Schleifen erhebliche Prozessorzyklen.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil Pointer in C# automatisch im L1-Cache festgefroren werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die Hardware steuert das Caching, nicht das unsafe-Schlüsselwort.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil reguläre Arrays in C# auf der Festplatte zwischengespeichert werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Arrays liegen wie alle Objekte im Arbeitsspeicher (RAM).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil unsafe Pointer immer auf 128 Bit parallel vektorisiert werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Vektorisierung erfordert explizite SIMD-Instruktionen.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

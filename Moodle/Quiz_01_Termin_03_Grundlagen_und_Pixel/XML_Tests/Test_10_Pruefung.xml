@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_01_Termin_03/Test_10_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Test 10 (Prüfung) – Zink, Mehrzonen-Stabilität & Alpha-Kanal</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: T10.Q1: FDM-Stabilitätsgrenze für Zink-Druckguss -->
+  <question type="multichoice">
+    <name>
+      <text>T10_Q1_CFL_Zink</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Zink-Druckgussgehäuse wird thermisch simuliert:</p>
+<ul>
+  <li>Temperaturleitfähigkeit von Zink: \(\alpha = 0{,}41 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
+  <li>Gitterauflösung: \(\Delta x = \Delta y = 1{,}5\,\text{mm} = 1{,}5 \cdot 10^{-3}\,\text{m}\)</li>
+</ul>
+<p>Berechnen Sie die maximale Zeitschrittweite \(\Delta t_{\max}\) für den stabilen 2D-Euler-FDM-Schritt.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(1{,}5 \cdot 10^{-3})^2}{4 \cdot 0{,}41 \cdot 10^{-4}} = \frac{2{,}25 \cdot 10^{-6}}{1{,}64 \cdot 10^{-4}}\,\text{s} \approx 0{,}01372\,\text{s} \approx 13{,}72\,\text{ms}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T10_Q1_CFL_Zink</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 13{,}72\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! \(2{,}25 \cdot 10^{-6} / (1{,}64 \cdot 10^{-4})\,\text{s} \approx 13{,}72\,\text{ms}\).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 27{,}44\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 6{,}86\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Faktor 8 statt 4.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 1{,}37\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 2: T10.Q2: Zeiger-Aliasing & Puffer-Swap-Fehler beim Double-Buffering -->
+  <question type="multichoice">
+    <name>
+      <text>T10_Q2_Code_Buffer_Swap_Referenzfehler</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Zur Vermeidung von Allokationen implementiert ein Entwickler das Double-Buffering über Referenz-Tausch:</p>
+<pre><code class="language-csharp">double[,] bufferA = new double[width, height];
+double[,] bufferB = new double[width, height];
+
+public void Step()
+{
+    ComputeNextStep(bufferA, bufferB); // Liest A, schreibt B
+    
+    // Entwickler schreibt:
+    bufferA = bufferB; 
+}</code></pre>
+<p>Welcher fatale Fehler tritt ab dem <strong>zweiten Zeitschritt</strong> auf?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Durch <code>bufferA = bufferB</code> zeigen nun beide Variablen auf dieselbe Speicherinstanz von <code>bufferB</code>! Die ursprüngliche Instanz von <code>bufferA</code> geht verloren. Ab Schritt 2 liest und schreibt die Methode in dasselbe Array; das Double-Buffering ist zerstört und es entstehen In-Place-Schreibfehler.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T10_Q2_Code_Buffer_Swap_Referenzfehler</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Referenz-Aliasing: <code>bufferA</code> und <code>bufferB</code> verweisen ab Schritt 2 auf dieselbe Array-Instanz im Speicher. Das Double-Buffering kollabiert zu einem fehlerhaften In-Place-Update.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Ein echter Tausch erfordert eine Hilfsvariable: temp = bufferA; bufferA = bufferB; bufferB = temp;</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der C#-Compiler wirft einen Fehler, da Arrays in C# schreibgeschützt (immutable) sind.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Arrays in C# sind vollkommen veränderlich (mutable).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Es tritt eine <code>StackOverflowException</code> auf, weil Arrays auf dem Stack rekursiv wachsen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Arrays liegen auf dem Managed Heap.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Werte im Array werden automatisch alle auf den Wert 0 zurückgesetzt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die Werte bleiben erhalten, aber beide Zeiger referenzieren dieselbe Instanz.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 3: T10.Q3: Stabilitätsgrenze bei Mehrzonengittern (Materialmix) -->
+  <question type="multichoice">
+    <name>
+      <text>T10_Q3_Mehrzonengitter_Stabilitaet</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einer heterogenen Baugruppe (z. B. Leiterplatte) grenzt ein Kupferbereich (\(\alpha_{\text{Cu}} = 1{,}11 \cdot 10^{-4}\,\text{m}^2/\text{s}\)) unmittelbar an ein Epoxidharz-Substrat (\(\alpha_{\text{FR4}} = 0{,}001 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)). Das räumliche Gitter ist einheitlich äquidistant (\(\Delta x = \text{const}\)). Welcher Materialbereich bestimmt die <strong>global zulässige Zeitschrittweite \(\Delta t_{\max}\)</strong> der Gesamtsimulation?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Das Gesamtsystem wird instabil, sobald auch nur an einem einzigen Gitterpunkt das lokale Kriterium \(s_i \le 0{,}25\) verletzt wird. Da \(\Delta t_{\max} = \frac{\Delta x^2}{4 \alpha}\) umgekehrt proportional zu \(\alpha\) ist, diktiert die Zone mit der <strong>höchsten</strong> Temperaturleitfähigkeit (hier Kupfer) den kleinsten und damit global maßgeblichen Zeitschritt!</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T10_Q3_Mehrzonengitter_Stabilitaet</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Der Kupferbereich (höchstes \(\alpha\)): Da \(\Delta t_{\max} \propto 1/\alpha\) gilt, erfordert die Zone mit der schnellsten Diffusion den kleinsten Zeitschritt, um lokale Oszillationen zu verhindern.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Die steifste bzw. schnellste Komponente limitiert das gesamte explizite Zeitintegrationsverfahren.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der Epoxidharzbereich (niedrigstes \(\alpha\)), da Isolatoren numerisch am schwierigsten zu berechnen sind.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Bei kleinem alpha ist der Zeitschritt unkritisch groß.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der arithmetische Mittelwert aus beiden \(\alpha\)-Werten bestimmt den Zeitschritt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Dann würde Kupfer sofort numerisch explodieren.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[In C# wird automatisch für jede Zelle ein separater individueller Zeitschritt gewählt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Standard-Gitter integrieren mit einem global synchronen Zeitschritt.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 4: T10.Q4: Der Digitale Zwilling im Produktlebenszyklus (As-Designed, As-Manufactured, As-Operated) -->
+  <question type="multichoice">
+    <name>
+      <text>T10_Q4_Lebenszyklus_Digital_Twin</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In der industriellen Automatisierungstechnik begleitet der Digitale Zwilling den Lebenszyklus einer Maschine. Welche Aussage zur Entwicklung des Digitalen Zwillings von der Konstruktion bis zum Betrieb ist <strong>fachlich korrekt</strong>?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Im Lebenszyklus wandelt sich der Zwilling: Der 'Digital Twin Prototype / As-Designed' basiert auf CAD und idealen Nennwerten; der 'As-Manufactured' integriert reale Fertigungstoleranzen; der 'Digital Twin Instance / As-Operated' wird im laufenden Leitstand kontinuierlich mit realen Sensordaten gefüttert, um Verschleiß und Restlebensdauer zu berechnen.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T10_Q4_Lebenszyklus_Digital_Twin</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Der Digitale Zwilling entwickelt sich vom 'As-Designed' (ideale CAD/Simulationsmodelle) über 'As-Manufactured' (mit realen Fertigungstoleranzen) bis zum 'As-Operated' (kontinuierlich mit Echtzeit-Betriebsdaten synchronisierte Instanz).]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Dies spiegelt den ganzheitlichen industriellen Lifecycle-Ansatz wider.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Sobald eine Maschine die Werkshalle verlässt, wird ihr Digitaler Zwilling gelöscht, da er im Betrieb wertlos ist.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Im laufenden Betrieb entfaltet der Zwilling für Predictive Maintenance seinen größten Wert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Ein Digitaler Zwilling darf während des gesamten Lebenszyklus niemals mit neuen Sensordaten aktualisiert werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Kontinuierliche Datenanbindung ist das Kernkriterium nach Grieves.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der Begriff 'Digital Twin' bezieht sich ausschließlich auf die kaufmännische Buchhaltungssoftware eines Unternehmens.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Es ist ein mechatronisches Ingenieurskonzept.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 5: T10.Q5: Der Alpha-Kanal in Bgra32 und unsichtbare Pixel -->
+  <question type="multichoice">
+    <name>
+      <text>T10_Q5_Alpha_Kanal_Bgra32_Transparenz</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Student schreibt Farbwerte in eine <code>WriteableBitmap</code> im Format <code>PixelFormats.Bgra32</code>:</p>
+<pre><code class="language-csharp">byte* pPixel = pBackBuffer + index;
+pPixel[0] = 0;   // Blau
+pPixel[1] = 0;   // Grün
+pPixel[2] = 255; // Rot = Maximal
+pPixel[3] = 0;   // Alpha</code></pre>
+<p>Auf dem Bildschirm bleibt das entsprechende Pixel vollkommen transparent bzw. nimmt die Hintergrundfarbe des Fensters an, anstatt intensiv rot zu leuchten. Warum?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Im Format <code>Bgra32</code> repräsentiert das vierte Byte (Offset 3) den linearen Alpha-Kanal (Deckkraft / Opazität). Ein Wert von 0 bedeutet vollkommen transparent (0 % Deckung). Damit ein Pixel sichtbar wird, muss der Alpha-Kanal typischerweise auf 255 (voll deckend / 100 % Opazität) gesetzt werden.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T10_Q5_Alpha_Kanal_Bgra32_Transparenz</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Offset 3 steuert den Alpha-Kanal (Deckkraft); ein Wert von 0 bedeutet 0 % Opazität (vollkommene Transparenz), wodurch die roten Farbwerte unsichtbar bleiben. Sichtbare Pixel erfordern Alpha = 255.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! In Bgra32 muss der Alphakanal zwingend auf 255 gesetzt werden, wenn der Pixel voll deckend sein soll.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[In WPF bedeutet Alpha = 0 maximale Helligkeit und Alpha = 255 tiefschwarz.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Alpha steuert die Deckkraft/Opazität, nicht die Helligkeit.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der Grafikkartentreiber unterstützt bei Rot keine Alphakanäle.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Jeder Farbkanal wird gleichmäßig mit Alpha geblendet.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Das Pixel wird nicht angezeigt, weil Rot an Offset 2 statt an Offset 0 steht.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. In Bgra32 steht Rot exakt an Offset 2.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

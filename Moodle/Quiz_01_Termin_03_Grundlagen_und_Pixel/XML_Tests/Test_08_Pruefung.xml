@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_01_Termin_03/Test_08_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Test 08 (Prüfung) – Titan, Dimensionsabhängigkeit & Neumann-Falle</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: T08.Q1: FDM-Stabilitätsgrenze für ein Titanbauteil -->
+  <question type="multichoice">
+    <name>
+      <text>T08_Q1_CFL_Titan</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Titan besitzt eine sehr geringe Temperaturleitfähigkeit:</p>
+<ul>
+  <li>Temperaturleitfähigkeit von Titan: \(\alpha = 0{,}09 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
+  <li>Gitterweite: \(\Delta x = \Delta y = 1{,}0\,\text{mm} = 1{,}0 \cdot 10^{-3}\,\text{m}\)</li>
+</ul>
+<p>Welche maximale Zeitschrittweite \(\Delta t_{\max}\) ergibt sich für das explizite 2D-FDM-Verfahren?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(1{,}0 \cdot 10^{-3})^2}{4 \cdot 0{,}09 \cdot 10^{-4}} = \frac{1{,}0 \cdot 10^{-6}}{0{,}36 \cdot 10^{-4}}\,\text{s} = \frac{1}{36}\,\text{s} \approx 0{,}02778\,\text{s} \approx 27{,}78\,\text{ms}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T08_Q1_CFL_Titan</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 27{,}78\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! \(1{,}0 \cdot 10^{-6} / (0{,}36 \cdot 10^{-4})\,\text{s} \approx 27{,}78\,\text{ms}\).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 55{,}56\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 13{,}89\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Faktor 8 statt 4 verwendet.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 2{,}78\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 2: T08.Q2: Die Kühlakku-Falle: Verwechslung von Neumann- und Dirichlet-Rand -->
+  <question type="multichoice">
+    <name>
+      <text>T08_Q2_Code_Neumann_Kuehlakku_Falle</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Student soll einen isolierten Rand (adiabater Rand, kein Wärmeaustausch) programmieren. Er implementiert dies im Code wie folgt:</p>
+<pre><code class="language-csharp">// Randbehandlung für die linke Kante (x = 0):
+for (int y = 0; y < height; y++)
+{
+    grid[0, y] = 0.0; // Student denkt: 0 bedeutet kein Wärmefluss
+}</code></pre>
+<p>Welchen physikalischen Effekt erzeugt dieser Code tatsächlich?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><code>grid[0, y] = 0.0</code> setzt die Temperatur am Rand fest auf 0°C. Das ist eine homogene <strong>Dirichlet-Randbedingung</strong> (ein unendliches Kühlbad / Eisbad), die dem System permanent Wärme entzieht. Eine echte Neumann-Isolationsbedingung erfordert \(\frac{\partial T}{\partial x} = 0\), also <code>grid[0, y] = grid[1, y]</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T08_Q2_Code_Neumann_Kuehlakku_Falle</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Der Rand wirkt wie ein ideales Kühlbad mit konstanter Temperatur 0°C (Dirichlet-Rand); er saugt permanent Wärme aus dem System ab, anstatt es thermisch zu isolieren.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Dies ist der klassische Fehler: Verwechslung von Gradient 0 (Neumann) mit Absolutwert 0 (Dirichlet).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der Rand ist perfekt isoliert, da bei 0.0 keine Energie vorhanden ist.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Temperatur ist eine intensive Zustandsgröße; 0°C ist ein Kühlbad.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Das Gitter stürzt sofort mit einer <code>DivideByZeroException</code> ab.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Es wird durch keinen Wert geteilt.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Wärme reflektiert am Rand mit doppelter Energie.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Sie wird vernichtet.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 3: T08.Q3: Dimensionale Abhängigkeit der CFL-Stabilitätsgrenze (1D, 2D, 3D) -->
+  <question type="multichoice">
+    <name>
+      <text>T08_Q3_Physik_Dimensionsabhaengigkeit_CFL</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Für die explizite Finite-Differenzen-Methode der Diffusionsgleichung lautet das Stabilitätskriterium in Abhängigkeit von der Raumdimension \(d\):</p>
+<p>$$s = \frac{\alpha \Delta t}{\Delta x^2} \le s_{\max}$$</p>
+<p>Wie verhält sich \(s_{\max}\) für 1D-, 2D- und 3D-Gitter und was ist die mathematische Ursache?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Beim expliziten Euler-Schritt lautet das zentrale Gewicht \((1 - 2d \cdot s)\), da in jeder Raumdimension zwei Nachbarn existieren (1D: 2, 2D: 4, 3D: 6 Nachbarn). Damit das zentrale Gewicht nicht negativ wird, muss \(1 - 2d \cdot s \ge 0 \implies s \le \frac{1}{2d}\) gelten: 1D: \(s \le 1/2\), 2D: \(s \le 1/4\), 3D: \(s \le 1/6\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T08_Q3_Physik_Dimensionsabhaengigkeit_CFL</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[1D: \(s \le 1/2\), 2D: \(s \le 1/4\), 3D: \(s \le 1/6\). Ursache: In \(d\) Dimensionen gibt es \(2d\) Nachbarn; das zentrale Gewicht \((1 - 2d \cdot s)\) darf nicht negativ werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Die Stabilitätsgrenze sinkt reziprok mit der Anzahl der Nachbarn.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[In allen Dimensionen gilt konstant \(s \le 0{,}5\), da die Zeitschrittweite unabhängig vom Raum ist.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Zusätzliche Raumdimensionen addieren Wärmeströme.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[1D: \(s \le 1\), 2D: \(s \le 2\), 3D: \(s \le 3\), da mehr Raum mehr Wärme aufnehmen kann.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das Gegenteil ist der Fall.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Stabilitätsgrenze hängt ausschließlich vom Material \(\alpha\) ab, nicht von den Raumdimensionen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die Gittergeometrie bestimmt den Stabilitätsfaktor s_max maßgeblich.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 4: T08.Q4: Taxonomie: Statische vs. Dynamische Modelle -->
+  <question type="multichoice">
+    <name>
+      <text>T08_Q4_Statisch_vs_Dynamisch</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Was ist der definitorische Unterschied zwischen einem <strong>statischen</strong> und einem <strong>dynamischen</strong> mechatronischen Modell?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Ein statisches Modell beschreibt einen zeitunabhängigen Gleichgewichtszustand (z. B. Biegung eines Balkens unter konstanter Last, \(\dot{x} = 0\)), typischerweise modelliert durch algebraische Gleichungssysteme. Ein dynamisches Modell besitzt Energiespeicher (Trägheiten, Kapazitäten) und beschreibt den zeitlichen Übergang (Trajektorie) über Differentialgleichungen.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T08_Q4_Statisch_vs_Dynamisch</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Statische Modelle beschreiben zeitunabhängige Gleichgewichtszustände ohne Gedächtnis/Speicher (algebraische Gleichungen); dynamische Modelle besitzen Energiespeicher und bilden die zeitliche Veränderung von Zuständen ab (DGLn).]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Dies trennt Statik (Termin 07) von Dynamik (Termin 08).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Statische Modelle sind in C# programmiert, dynamische Modelle in C++.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Hat keinen Bezug zur Programmiersprache.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Statische Modelle berücksichtigen Reibung, dynamische Modelle sind stets reibungsfrei.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Beide können Reibung enthalten.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Statische Modelle dürfen nur als PDF gezeichnet werden, niemals am Computer berechnet werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Statische FE-Systeme werden hochgradig am Computer gerechnet.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 5: T08.Q5: Allokationsfreie Speicherabstraktion mit Span<T> in modernem C# -->
+  <question type="multichoice">
+    <name>
+      <text>T08_Q5_Span_Memory_Modern_Net</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In modernem C# (.NET 8) wird zunehmend <code>Span&lt;T&gt;</code> und <code>ReadOnlySpan&lt;T&gt;</code> für simulationsnahe Puffer eingesetzt. Welchen entscheidenden Vorteil bietet <code>Span&lt;T&gt;</code> gegenüber herkömmlichen Array-Slices (wie <code>array.Skip(...).Take(...)</code>)?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><code>Span&lt;T&gt;</code> ist ein <code>ref struct</code>, das auf dem Stack allokiert wird und eine typisierte Sicht auf einen beliebigen zusammenhängenden Speicherbereich (Heap, Stack via <code>stackalloc</code> oder unmanaged Speicher) darstellt. Es entstehen absolut null Heap-Allokationen und kein GC-Overhead.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T08_Q5_Span_Memory_Modern_Net</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[<code>Span&lt;T&gt;</code> ermöglicht performante, speichersichere Slices direkt im bestehenden Speicher ohne jegliche Heap-Allokationen (0 Byte Garbage Collection Overhead).]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Span<T> ist der Schlüssel zu moderner High-Performance in .NET.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<code>Span&lt;T&gt;</code> führt Berechnungen automatisch parallel auf allen CPU-Kernen aus.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Span<T> ist eine Datenstruktur, kein Multithreading-Scheduler.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<code>Span&lt;T&gt;</code> kann nur Daten auf der Festplatte lesen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Span arbeitet im flüchtigen Hauptspeicher.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<code>Span&lt;T&gt;</code> schaltet das Typsystem von C# komplett ab.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Span ist strikt typsicher.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

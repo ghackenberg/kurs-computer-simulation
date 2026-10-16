@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_01_Termin_03/Test_03_Vorbereitung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Test 03 (Vorbereitung) – Silizium, Ping-Pong-Puffer & Gitterverfeinerung</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: T03.Q1: FDM-Wärmeleitung & CFL-Stabilitätsgrenze (Silizium-Chip) -->
+  <question type="multichoice">
+    <name>
+      <text>T03_Q1_CFL_Berechnung_Silizium</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Mikroprozessor-Hotspot wird auf einem Siliziumsubstrat simuliert:</p>
+<ul>
+  <li>Temperaturleitfähigkeit von Silizium: \(\alpha = 0{,}88 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
+  <li>Feine räumliche Diskretisierung: \(\Delta x = \Delta y = 0{,}5\,\text{mm} = 0{,}5 \cdot 10^{-3}\,\text{m}\)</li>
+</ul>
+<p>Berechnen Sie die maximale Zeitschrittweite \(\Delta t_{\max}\) für das explizite 2D-Euler-FDM-Verfahren.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(0{,}5 \cdot 10^{-3})^2}{4 \cdot 0{,}88 \cdot 10^{-4}} = \frac{0{,}25 \cdot 10^{-6}}{3{,}52 \cdot 10^{-4}}\,\text{s} \approx 0{,}0007102\,\text{s} \approx 0{,}71\,\text{ms}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T03_Q1_CFL_Berechnung_Silizium</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 0{,}71\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! \(0{,}25 \cdot 10^{-6} / (3{,}52 \cdot 10^{-4})\,\text{s} \approx 0{,}71\,\text{ms}\).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 1{,}42\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das entspricht der unzulässigen 1D-Bedingung \(\Delta x^2 / (2\alpha)\).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 2{,}84\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Hier fehlt der Faktor 4 komplett.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 7{,}10\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 2: T03.Q2: Code-Analyse: In-Place-Überschreiben vs. Ping-Pong-Buffering -->
+  <question type="multichoice">
+    <name>
+      <text>T03_Q2_Code_InPlace_Update_Fehler</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einer Simulationsschleife aktualisiert ein Student ein 2D-Temperaturfeld direkt im selben Array:</p>
+<pre><code class="language-csharp">for (int y = 1; y < height - 1; y++)
+{
+    for (int x = 1; x < width - 1; x++)
+    {
+        // Fehlerhafte In-Place Zuweisung:
+        grid[x, y] = grid[x, y] + s * (
+            grid[x + 1, y] + grid[x - 1, y] +
+            grid[x, y + 1] + grid[x, y - 1] - 4.0 * grid[x, y]
+        );
+    }
+}</code></pre>
+<p>Welcher <strong>fundamentale Simulationsfehler</strong> tritt durch dieses Vorgehen auf?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Weil die Schleife zeilenweise von links nach rechts und oben nach unten läuft, wurden die Nachbarn <code>grid[x-1, y]</code> und <code>grid[x, y-1]</code> bereits mit Werten des neuen Zeitschritts \(k+1\) überschrieben, während <code>grid[x+1, y]</code> und <code>grid[x, y+1]</code> noch auf Zeitschritt \(k\) stehen. Dadurch entsteht ein asymmetrischer numerischer Transportfehler (künstliche thermische Drift). Abhilfe schafft Double-Buffering (Ping-Pong).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T03_Q2_Code_InPlace_Update_Fehler</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Asymmetrische Richtungsverzerrung: Bereits berechnete Werte des neuen Zeitschritts gehen sofort in die Nachbarberechnung ein; es entsteht eine künstliche Richtungsdrift nach rechts unten. Es wird zwingend ein zweiter Puffer (Ping-Pong) benötigt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Beim expliziten Zeitschritt müssen alle Nachbarn strikt aus dem alten Zeitschritt k stammen.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der C#-Compiler verweigert die Ausführung mit Compilerfehler CS0123 wegen verbotener Rekursion.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Syntaktisch ist das völlig legaler C#-Code.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Das Verfahren transformiert sich automatisch in ein implizites Verfahren und wird dadurch absolut stabil.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Es handelt sich um ein fehlerhaftes Gauss-Seidel-Mischverfahren mit unkontrollierten Fehlern.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Das Array wirft nach genau einem Durchlauf eine <code>NullReferenceException</code>.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das Array bleibt allokiert.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 3: T03.Q3: Auswirkung einer räumlichen Gitterverfeinerung auf den Zeitschritt -->
+  <question type="multichoice">
+    <name>
+      <text>T03_Q3_Physik_Gitterverfeinerung_Konsequenz</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Um feinere thermische Details an einem Kühlkörper aufzulösen, halbiert ein Entwickler die räumliche Schrittweite von \(\Delta x = 1{,}0\,\text{mm}\) auf \(\Delta x = 0{,}5\,\text{mm}\). Wie muss die maximale Zeitschrittweite \(\Delta t\) angepasst werden, damit das explizite FDM-Verfahren stabil bleibt?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Wegen \(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha}\) geht die räumliche Schrittweite quadratisch in die Zeitschrittbegrenzung ein: \((0{,}5)^2 = 0{,}25\). Eine Halbierung von \(\Delta x\) erfordert eine Viertelung von \(\Delta t\)!</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T03_Q3_Physik_Gitterverfeinerung_Konsequenz</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[\(\Delta t\) muss auf mindestens ein Viertel (\(1/4\)) des vorherigen Werts reduziert werden, da bei parabolischen DGLn eine quadratische Kopplung \(\Delta t \propto \Delta x^2\) gilt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Die quadratische Abhängigkeit ist der Hauptgrund für den enormen Rechenaufwand feiner FDM-Gitter.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t\) muss lediglich halbiert werden (\(1/2\)), da die Schrittweiten linear gekoppelt sind.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das gilt für hyperbolische Wellengleichungen (CFL-Bedingung), nicht für parabolische Diffusion.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t\) bleibt unverändert, da die zeitliche und räumliche Diskretisierung unabhängig voneinander gewählt werden können.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das Verfahren würde sofort explodieren.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t\) kann verdoppelt werden, da feinere Gitter numerisch stabiler sind.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Feinere Gitter verlangen zwingend kleinere Zeitschritte.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 4: T03.Q4: Das Diktum von George Box und Modellgrenzen in der Ingenieurpraxis -->
+  <question type="multichoice">
+    <name>
+      <text>T03_Q4_George_Box_Modellgrenzen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Der Statistiker George Box prägte das berühmte Zitat: <em>„All models are wrong, but some are useful.“</em> Welche fundamentale Erkenntnis leitet sich daraus für die Modellbildung mechatronischer Systeme ab?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Jedes Modell ist eine Abstraktion und Reduktion der Wirklichkeit. Ein Modell soll die Realität nicht perfekt kopieren, sondern eine konkrete Fragestellung (z. B. thermische Grenztemperatur) mit hinreichender Genauigkeit und vertretbarem Rechenaufwand beantworten.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T03_Q4_George_Box_Modellgrenzen</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Jedes Modell vernachlässigt zwangsläufig reale Effekte; seine Qualität bemisst sich nicht an absoluter Vollständigkeit, sondern daran, ob es das zielgerichtete Verhalten für seinen Zweck hinreichend genau vorhersagt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Ingenieure modellieren zielgerichtet („so einfach wie möglich, so detailliert wie nötig“).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Computersimulationen sind prinzipiell fehlerhaft und dürfen deshalb in industriellen Freigabeprozessen niemals eingesetzt werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Simulationen sind das Standardwerkzeug moderner Entwicklung.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Ein Modell ist erst dann wissenschaftlich valide, wenn es bis auf atomare Ebene alle Naturgesetze gleichzeitig abbildet.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Ein solches Modell wäre unberechenbar und verstößt gegen das Verkürzungsmerkmal.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Nur rein analytisch gelöste Formeln sind brauchbar, numerische Algorithmen sind grundsätzlich unbrauchbar.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Reale industrielle Systeme lassen sich fast nie geschlossen analytisch lösen.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 5: T03.Q5: WPF-Rendering-Pipeline: Lock, Unlock und AddDirtyRect -->
+  <question type="multichoice">
+    <name>
+      <text>T03_Q5_WPF_AddDirtyRect_Lock</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Entwickler aktualisiert den <code>BackBuffer</code> einer <code>WriteableBitmap</code> direkt über Zeiger im RAM. Er vergisst jedoch nach der Schleife den Aufruf von <code>bitmap.AddDirtyRect(...)</code>. Was ist die Folge?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><code>AddDirtyRect</code> signalisiert der WPF-Render-Pipeline (dem Composition-Engine), welcher Bereich des Back-Buffers verändert wurde und zur GPU kopiert werden muss. Ohne diesen Aufruf weiß WPF nichts von den geänderten Daten und das Fenster zeigt weiterhin das alte Bild.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T03_Q5_WPF_AddDirtyRect_Lock</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Das Anzeigefenster aktualisiert sich nicht (optischer Stillstand), da WPF nicht informiert wird, welcher Bildbereich neu gerendert und an die Grafikkarte übertragen werden muss.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! AddDirtyRect stößt das Dirty-Region-Tracking der WPF-Engine an.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Das Betriebssystem stürzt mit einem Blue-Screen ab, weil DirectX unerlaubt manipuliert wurde.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Es passiert lediglich keine Bildschirmaktualisierung.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[WPF wechselt automatisch in den Software-Rendering-Modus und aktualisiert das Bild nach 5 Sekunden Verzögerung.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Es erfolgt gar kein Update der betroffenen Region.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Es wird automatisch eine <code>InvalidOperationException</code> geworfen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Fehlt AddDirtyRect, wird keine Exception ausgelöst, das Bild bleibt stumm unverändert.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

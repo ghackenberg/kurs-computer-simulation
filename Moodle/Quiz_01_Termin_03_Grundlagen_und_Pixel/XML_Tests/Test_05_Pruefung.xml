@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_01_Termin_03/Test_05_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Test 05 (Prüfung) – Baustahl, Lock-Synchronisation & Cache-Lokalität</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: T05.Q1: FDM-Stabilitätsgrenze für Baustahl -->
+  <question type="multichoice">
+    <name>
+      <text>T05_Q1_CFL_Baustahl</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Die Erwärmung eines massiven Baustahl-Trägers wird mittels FDM modelliert:</p>
+<ul>
+  <li>Temperaturleitfähigkeit von Baustahl: \(\alpha = 0{,}13 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
+  <li>Gitterauflösung: \(\Delta x = \Delta y = 2{,}0\,\text{mm} = 2{,}0 \cdot 10^{-3}\,\text{m}\)</li>
+</ul>
+<p>Welche maximale Zeitschrittweite \(\Delta t_{\max}\) garantiert numerische Stabilität?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(2{,}0 \cdot 10^{-3})^2}{4 \cdot 0{,}13 \cdot 10^{-4}} = \frac{4{,}0 \cdot 10^{-6}}{0{,}52 \cdot 10^{-4}}\,\text{s} = \frac{4{,}0}{52}\,\text{s} \approx 0{,}07692\,\text{s} \approx 76{,}9\,\text{ms}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T05_Q1_CFL_Baustahl</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 76{,}9\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! \(4{,}0 \cdot 10^{-6} / (0{,}52 \cdot 10^{-4})\,\text{s} \approx 76{,}9\,\text{ms}\).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 153{,}8\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das ist die unzulässige 1D-Bedingung.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 38{,}5\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Unnötig halbierter Wert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 7{,}69\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Rechenfehler um den Faktor 10.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 2: T05.Q2: Fehlendes Lock() beim Zugriff auf WriteableBitmap -->
+  <question type="multichoice">
+    <name>
+      <text>T05_Q2_Code_Lock_Vergessen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Student schreibt folgende Render-Methode in WPF:</p>
+<pre><code class="language-csharp">public void UpdateFrame()
+{
+    // bitmap.Lock() wurde vergessen!
+    unsafe
+    {
+        byte* ptr = (byte*)bitmap.BackBuffer;
+        ptr[0] = 255;
+    }
+    bitmap.AddDirtyRect(new Int32Rect(0, 0, 1, 1));
+    bitmap.Unlock(); // Wirft Ausnahme!
+}</code></pre>
+<p>Welches Problem tritt auf, wenn <code>bitmap.Lock()</code> vor dem Zugriff auf <code>BackBuffer</code> nicht aufgerufen wird?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>In WPF schützt <code>Lock()</code> den Back-Buffer vor gleichzeitigem Zugriff durch den Render-Thread der WPF-Engine. Fehlt <code>Lock()</code>, kann der Zeiger ungültig sein, es drohen Data Races mit der Grafikkarte und der Aufruf von <code>Unlock()</code> wirft eine <code>InvalidOperationException</code>, weil kein aktiver Lock besteht.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T05_Q2_Code_Lock_Vergessen</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Es drohen Data Races mit dem WPF-Render-Thread und der Aufruf von <code>Unlock()</code> wirft eine <code>InvalidOperationException</code>, weil die Bitmap nicht zuvor gesperrt wurde.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Lock() und Unlock() müssen stets paarweise aufgerufen werden.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der C#-Compiler verhindert die Kompilierung bereits im Build-Schritt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Der Compiler prüft keine Aufrufreihenfolgen von WPF-Methoden.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[WPF ignoriert dies und sperrt die Bitmap automatisch dauerhaft im Hintergrund.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die interne Sperre muss explizit angefordert werden.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Es führt lediglich dazu, dass die Bitmap in Graustufen umgewandelt wird.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Es handelt sich um ein gravierendes Synchronisations- und API-Problem.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 3: T05.Q3: Physikalischer Vorzeichenfehler im Laplace-Differenzenstern -->
+  <question type="multichoice">
+    <name>
+      <text>T05_Q3_Physik_Vorzeichenfehler_Laplace</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einer FDM-Implementierung unterläuft einem Entwickler ein Vorzeichenfehler in der Zeitschritt-Aktualisierung:</p>
+<p>$$T_{i,j}^{n+1} = T_{i,j}^n - s \cdot \left( T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 T_{i,j}^n \right)$$</p>
+<p>Welche physikalische Konsequenz hat dieses <strong>Minuszeichen vor dem Diffusionsausdruck</strong>?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Die Wärmeleitungsgleichung beschreibt einen irreversiblen Dissipationsprozess (2. Hauptsatz der Thermodynamik). Ein negatives Vorzeichen kehrt die Diffusionsrichtung um: Wärme fließt von Kalt nach Heiß, Temperaturunterschiede steilen sich auf und die Simulation explodiert antikausal.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T05_Q3_Physik_Vorzeichenfehler_Laplace</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Verletzung des 2. Hauptsatzes der Thermodynamik: Wärme fließt von kalten zu heißen Zonen; Temperaturgradienten verstärken sich antikausal selbst und das System divergiert sofort.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Dies entspräche einer 'Rückwärts-Wärmeleitungsgleichung', die mathematisch extrem instabil ist.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Das System erreicht den thermischen Gleichgewichtszustand doppelt so schnell.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Es divergiert und erreicht nie ein Gleichgewicht.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die physikalische Ausbreitung bleibt identisch, lediglich die Achsen sind gespiegelt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die Vorzeichenumkehr invertiert das physikalische Fließverhalten fundamental.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Temperatur fällt überall schlagartig auf den absoluten Nullpunkt (0 Kelvin).]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die Werte explodieren zu plus/minus unendlich.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 4: T05.Q4: Die drei Säulen des Digitalen Zwillings nach Michael Grieves -->
+  <question type="multichoice">
+    <name>
+      <text>T05_Q4_Grieves_Drei_Elemente</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Michael Grieves formulierte 2002/2014 das Ursprungskonzept des <strong>Digitalen Zwillings (Digital Twin)</strong>. Aus welchen <strong>drei fundamentalen Entitäten</strong> besteht dieses Konzept zwingend?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Nach Grieves besteht der Digitale Zwilling aus: 1. Dem physischen Produkt im realen Raum, 2. dem virtuellen Produkt im virtuellen Raum, 3. den Datenverbindungen, die Daten aus dem realen Raum in den virtuellen Raum und Informationen/Steuerbefehle aus dem virtuellen Raum in den realen Raum übertragen.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T05_Q4_Grieves_Drei_Elemente</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[1. Reales Produkt im physischen Raum, 2. virtuelles Produkt im virtuellen Raum, 3. automatisierte Daten- und Informationsverbindungen zwischen beiden Räumen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Dies ist das 3-Säulen-Modell nach Grieves.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[1. CAD-Modell, 2. PDF-Dokumentation, 3. Kaufmännisches ERP-System.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Reine Dokumente ohne Verhaltensmodell und Datenkopplung bilden keinen Digitalen Zwilling.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[1. Sensor, 2. Mikrocontroller, 3. LCD-Display.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das sind Standard-Hardwarekomponenten eines eingebetteten Systems.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[1. Finite-Elemente-Mesh, 2. Cloud-Speicher, 3. Mobilfunkvertrag.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Grieves definiert ein allgemeines systemisches Modell.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 5: T05.Q5: Cache-Lokalität: Row-Major vs. Column-Major in C# -->
+  <question type="multichoice">
+    <name>
+      <text>T05_Q5_Cache_Lokalitaet_Row_Major</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Warum ist Schleife A in C# bei einem großen 2D-Gitter (\(4000 \times 4000\) <code>double</code>) typischerweise um ein Vielfaches schneller als Schleife B?</p>
+<pre><code class="language-csharp">// Schleife A:
+for (int y = 0; y < height; y++)
+    for (int x = 0; x < width; x++)
+        sum += grid[y, x];
+
+// Schleife B:
+for (int x = 0; x < width; x++)
+    for (int y = 0; y < height; y++)
+        sum += grid[y, x];</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>In C# werden mehrdimensionale Arrays im <strong>Row-Major-Format</strong> abgelegt: Elemente einer Zeile liegen im Speicher direkt hintereinander. Schleife A liest linearen Speicher und nutzt geladene Cache-Lines (typisch 64 Bytes) optimal aus (räumliche Lokalität). Schleife B springt bei jedem Schritt um eine ganze Zeile im Speicher weiter, was zu ständigen Cache-Misses führt.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T05_Q5_Cache_Lokalitaet_Row_Major</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Schleife A greift sequenziell auf den linearen Speicher zu (Row-Major); dies maximiert die Ausnutzung von CPU-Cache-Lines (Spatial Locality), während Schleife B bei jedem Schritt Cache-Misses erzeugt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Hardwarenahe Softwarearchitektur erfordert strikte Beachtung der Speicherlinearisierung.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Schleife B wird vom JIT-Compiler aus Sicherheitsgründen nicht optimiert.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Der JIT optimiert beide Schleifen, kann aber die Speicherzugriffsmuster nicht völlig umstrukturieren.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[In C# dürfen Arrays per Sprachstandard nur mit der Variablen 'y' in der äußeren Schleife iteriert werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Variablennamen spielen für die Ausführung keine Rolle.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Schleife A nutzt automatisch die GPU, während Schleife B auf der CPU läuft.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Beide Schleifen laufen auf der CPU.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

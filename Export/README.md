@@ -3,7 +3,7 @@
 **Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
-**Zuletzt generiert:** 2026-10-15 13:52:22 UTC  
+**Zuletzt generiert:** 2026-10-16 07:04:00 UTC  
 
 Dieses Verzeichnis enthält alle druckreifen, vollständigen PDF-Unterlagen für den Upload auf Moodle.
 
@@ -28,16 +28,16 @@ Dieses Verzeichnis enthält alle druckreifen, vollständigen PDF-Unterlagen für
 
 | Termin | Thema | Moodle-Export-Datei | Dateigröße | Lokale Datei |
 | :--- | :--- | :--- | :---: | :--- |
-| **Termin 01** | Kinematik und Euler | [`Termin_01_Aufgabenblatt.pdf`](Uebungen/Termin_01_Aufgabenblatt.pdf) | 323.6 KB | `Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.pdf` |
-| **Termin 02** | Pixelgrafik und FDM | [`Termin_02_Aufgabenblatt.pdf`](Uebungen/Termin_02_Aufgabenblatt.pdf) | 351.51 KB | `Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.pdf` |
-| **Termin 03** | Vektorgrafik Canvas | [`Termin_03_Aufgabenblatt.pdf`](Uebungen/Termin_03_Aufgabenblatt.pdf) | 335.85 KB | `Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.pdf` |
-| **Termin 04** | Telemetrie und ScottPlot | [`Termin_04_Aufgabenblatt.pdf`](Uebungen/Termin_04_Aufgabenblatt.pdf) | 313.84 KB | `Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.pdf` |
-| **Termin 05** | 3D OpenGL Szenengraph | [`Termin_05_Aufgabenblatt.pdf`](Uebungen/Termin_05_Aufgabenblatt.pdf) | 348.2 KB | `Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.pdf` |
-| **Termin 06** | Multithreading und TPL | [`Termin_06_Aufgabenblatt.pdf`](Uebungen/Termin_06_Aufgabenblatt.pdf) | 422.82 KB | `Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.pdf` |
-| **Termin 07** | Statik FEM Cholesky | [`Termin_07_Aufgabenblatt.pdf`](Uebungen/Termin_07_Aufgabenblatt.pdf) | 381.54 KB | `Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.pdf` |
-| **Termin 08** | DGL und SFunctions | [`Termin_08_Aufgabenblatt.pdf`](Uebungen/Termin_08_Aufgabenblatt.pdf) | 370.17 KB | `Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.pdf` |
-| **Termin 09** | Diskrete Systeme DES | [`Termin_09_Aufgabenblatt.pdf`](Uebungen/Termin_09_Aufgabenblatt.pdf) | 379.53 KB | `Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.pdf` |
-| **Termin 10** | Hybride Dynamik Synthese | [`Termin_10_Aufgabenblatt.pdf`](Uebungen/Termin_10_Aufgabenblatt.pdf) | 416.54 KB | `Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.pdf` |
+| **Termin 01** | Kinematik und Euler | [`Termin_01_Aufgabenblatt.pdf`](Uebungen/Termin_01_Aufgabenblatt.pdf) | 333.95 KB | `Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.pdf` |
+| **Termin 02** | Pixelgrafik und FDM | [`Termin_02_Aufgabenblatt.pdf`](Uebungen/Termin_02_Aufgabenblatt.pdf) | 361.08 KB | `Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.pdf` |
+| **Termin 03** | Vektorgrafik Canvas | [`Termin_03_Aufgabenblatt.pdf`](Uebungen/Termin_03_Aufgabenblatt.pdf) | 337.76 KB | `Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.pdf` |
+| **Termin 04** | Telemetrie und ScottPlot | [`Termin_04_Aufgabenblatt.pdf`](Uebungen/Termin_04_Aufgabenblatt.pdf) | 314.66 KB | `Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.pdf` |
+| **Termin 05** | 3D OpenGL Szenengraph | [`Termin_05_Aufgabenblatt.pdf`](Uebungen/Termin_05_Aufgabenblatt.pdf) | 358.77 KB | `Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.pdf` |
+| **Termin 06** | Multithreading und TPL | [`Termin_06_Aufgabenblatt.pdf`](Uebungen/Termin_06_Aufgabenblatt.pdf) | 421.96 KB | `Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.pdf` |
+| **Termin 07** | Statik FEM Cholesky | [`Termin_07_Aufgabenblatt.pdf`](Uebungen/Termin_07_Aufgabenblatt.pdf) | 383.08 KB | `Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.pdf` |
+| **Termin 08** | DGL und SFunctions | [`Termin_08_Aufgabenblatt.pdf`](Uebungen/Termin_08_Aufgabenblatt.pdf) | 368.92 KB | `Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.pdf` |
+| **Termin 09** | Diskrete Systeme DES | [`Termin_09_Aufgabenblatt.pdf`](Uebungen/Termin_09_Aufgabenblatt.pdf) | 376.91 KB | `Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.pdf` |
+| **Termin 10** | Hybride Dynamik Synthese | [`Termin_10_Aufgabenblatt.pdf`](Uebungen/Termin_10_Aufgabenblatt.pdf) | 417.05 KB | `Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.pdf` |
 
 ---
 *Automatisch generiert mit `node Skripte/export_to_pdf.js`*

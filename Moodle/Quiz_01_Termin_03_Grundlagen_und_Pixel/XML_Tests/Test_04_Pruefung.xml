@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_01_Termin_03/Test_04_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Test 04 (Prüfung) – Messing, Stride-Padding & Ghost-Cells</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: T04.Q1: FDM-Stabilitätsgrenze für Messing-Kühlkörper -->
+  <question type="multichoice">
+    <name>
+      <text>T04_Q1_CFL_Messing</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Messingbauteil wird thermisch simuliert:</p>
+<ul>
+  <li>Temperaturleitfähigkeit von Messing: \(\alpha = 0{,}34 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
+  <li>Gitterweite: \(\Delta x = \Delta y = 1{,}5\,\text{mm} = 1{,}5 \cdot 10^{-3}\,\text{m}\)</li>
+</ul>
+<p>Wie groß ist die maximale Zeitschrittweite \(\Delta t_{\max}\) nach der 2D-Von-Neumann-Bedingung?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(1{,}5 \cdot 10^{-3})^2}{4 \cdot 0{,}34 \cdot 10^{-4}} = \frac{2{,}25 \cdot 10^{-6}}{1{,}36 \cdot 10^{-4}}\,\text{s} \approx 0{,}016544\,\text{s} \approx 16{,}54\,\text{ms}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T04_Q1_CFL_Messing</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 16{,}54\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt richtig! \(2{,}25 \cdot 10^{-6} / (1{,}36 \cdot 10^{-4})\,\text{s} \approx 16{,}54\,\text{ms}\).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 33{,}09\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert mit Faktor 2 statt 4.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 8{,}27\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Faktor 8 statt 4 verwendet.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\Delta t_{\max} \approx 1{,}65\,\text{ms}\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 2: T04.Q2: Code-Analyse: Vernachlässigung des Grafiktreiber-Stride-Paddings -->
+  <question type="multichoice">
+    <name>
+      <text>T04_Q2_Code_Stride_Padding_Bug</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Entwickler verwendet folgenden Code zum Zeilenumbruch im unmanaged Back-Buffer:</p>
+<pre><code class="language-csharp">int stride = width * 4; // Feste Annahme ohne Abfrage der Bitmap-Eigenschaft
+byte* pRow = (byte*)bitmap.BackBuffer + (y * stride);</code></pre>
+<p>Auf manchen Systemen oder bei ungeraden Bildbreiten (z. B. \(W = 643\)) erscheint das Bild diagonal zerschnitten und schräg verzerrt. Warum ist die Annahme <code>stride = width * 4</code> gefährlich?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Grafiktreiber und das Windows-Subsystem richten Zeilenanfänge aus Performancegründen oft auf 16-, 64- oder 128-Byte-Grenzen aus (Padding-Bytes am Zeilenende). Daher kann <code>BackBufferStride</code> größer sein als <code>width * 4</code>. Man muss zwingend immer <code>bitmap.BackBufferStride</code> abfragen!</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T04_Q2_Code_Stride_Padding_Bug</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Grafiksysteme fügen zur Speicherausrichtung am Zeilenende oft Padding-Bytes ein, sodass <code>BackBufferStride &gt; width * 4</code> sein kann. Wird dieser Treiber-Stride ignoriert, entsteht bei jeder Zeile ein Versatz.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Niemals den Stride hart berechnen, sondern stets bitmap.BackBufferStride abfragen.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[<code>width * 4</code> ist in .NET verboten, weil der Garbage Collector nur Zweierpotenzen verarbeiten kann.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. .NET verbietet diese Rechnung nicht, es ist ein Logikfehler bzgl. des Treibers.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Bei ungeraden Bildbreiten müssen Farbwerte als 16-Bit-Shorts statt als Bytes abgelegt werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das Pixelformat bleibt Bgra32 (8 Bit je Kanal).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Zeilenlänge muss stets mit 3 multipliziert werden, da der Alphakanal nicht im Stride liegt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Der Alphakanal ist integraler Bestandteil von Bgra32.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 3: T04.Q3: Randbedingungen: Adiabater Neumann-Rand & Geisterknoten -->
+  <question type="multichoice">
+    <name>
+      <text>T04_Q3_Neumann_Ghost_Cells</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>An der linken Begrenzung (\(x=0\)) eines 2D-Kühlkörpers soll eine <strong>ideale thermische Isolation</strong> (adiabater Rand, Neumann-Randbedingung \(\frac{\partial T}{\partial x} = 0\)) simuliert werden. Wie wird dieser Rand im expliziten 5-Punkt-Stern mittels eines Geisterknotens (Ghost Cell \(T_{-1, j}\)) korrekt diskretisiert?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Die zentrale Differenz für den Gradienten am Rand lautet \(\frac{\partial T}{\partial x} \approx \frac{T_{1, j} - T_{-1, j}}{2 \Delta x} = 0 \implies T_{-1, j} = T_{1, j}\). Einsetzen in die 5-Punkt-Formel am Rand \(i=0\) ergibt \(T_{1, j} + T_{1, j} + T_{0, j+1} + T_{0, j-1} - 4 T_{0, j} = 2 T_{1, j} + T_{0, j+1} + T_{0, j-1} - 4 T_{0, j}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T04_Q3_Neumann_Ghost_Cells</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Der Geisterknoten wird gleich dem inneren Nachbarn gesetzt (\(T_{-1, j} = T_{1, j}\)); dadurch wird der innere Nachbar in der Bilanz zweifach gewichtet und der Wärmestrom über den Rand ist exakt null.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Dies spiegelt den Gradienten null symmetrisch wider.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Randknoten werden auf konstant 0°C gesetzt (\(T_{0, j} = 0\)).]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das wäre eine homogene Dirichlet-Randbedingung (Kühlbad), keine Isolation.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der Geisterknoten wird negiert (\(T_{-1, j} = -T_{1, j}\)), um den Wärmestrom abzusaugen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das würde zu einem maximalen Wärmestrom führen.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Am Rand wird der Laplace-Term komplett zu null gesetzt, sodass der Randpunkt seine Anfangstemperatur ewig behält.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Auch ein isolierter Rand ändert seine Temperatur durch Wärmeleitung von innen.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 4: T04.Q4: Das Verkürzungsmerkmal nach Herbert Stachowiak -->
+  <question type="multichoice">
+    <name>
+      <text>T04_Q4_Stachowiak_Verkuerzung</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In der allgemeinen Modelltheorie nach Herbert Stachowiak spielt das <strong>Verkürzungsmerkmal</strong> eine tragende Rolle. Was besagt dieses Merkmal im Kontext der Computersimulation?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>Nach Stachowiak erfasst ein Modell nicht alle Attribute des Originals, sondern nur diejenigen, die dem Modellierer für das jeweilige Untersuchungsziel relevant erscheinen. Unwesentliche Details werden abstrahiert.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T04_Q4_Stachowiak_Verkuerzung</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Modelle erfassen im Allgemeinen nicht alle Eigenschaften des Originals, sondern blenden irrelevante Attribute gezielt aus, um die Komplexität beherrschbar zu machen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Dies ist das definitorische Verkürzungsmerkmal nach Stachowiak.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Simulationszeit muss immer kürzer sein als die reale physikalische Prozesszeit.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das betrifft die Echtzeitfähigkeit, nicht das modelltheoretische Verkürzungsmerkmal.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Numerische Schrittweiten müssen immer kleiner gewählt werden als 1 Millisekunde.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das ist eine numerische Parametrisierungsfrage.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[C#-Quelltexte müssen durch Code-Minifier im Speicher komprimiert werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Hat nichts mit Stachowiak zu tun.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 5: T04.Q5: 32-Bit-Integer Bit-Packing für PixelFormats.Bgra32 -->
+  <question type="multichoice">
+    <name>
+      <text>T04_Q5_Bitshift_Bgra32_Packing</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Entwickler möchte 32-Bit-Farbwerte direkt als <code>uint</code> in den Back-Buffer schreiben:</p>
+<pre><code class="language-csharp">uint* pPixel = (uint*)bitmap.BackBuffer + index;
+// Entwickler schreibt:
+*pPixel = (uint)((alpha << 24) | (red << 16) | (green << 8) | blue);</code></pre>
+<p>Auf einem x86/x64-Windows-PC (Little-Endian) entspricht dies im Speicher der Bytefolge <code>[B, G, R, A]</code>. Was geschieht, wenn der Entwickler stattdessen folgende Zeile schreibt?</p>
+<pre><code class="language-csharp">*pPixel = (uint)((alpha << 24) | (blue << 16) | (green << 8) | red);</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>In einem Little-Endian 32-Bit-Integer liegt das niederwertigste Byte (Bits 0..7) an der niedrigsten Speicheradresse. Im ersten Fall liegt <code>blue</code> bei Bits 0..7 (Byte 0) und <code>red</code> bei Bits 16..23 (Byte 2) – das entspricht exakt Bgra32! Im zweiten Fall liegt <code>red</code> an Byte 0 und <code>blue</code> an Byte 2. Rot und Blau sind somit im Bild vertauscht.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T04_Q5_Bitshift_Bgra32_Packing</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Rot- und Blau-Kanäle sind auf dem Bildschirm vertauscht: Was rot sein sollte, erscheint blau, und umgekehrt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Auf Little-Endian-Systemen belegt der niederwertigste Teil (Bits 0..7) Byte-Offset 0.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Das Bild wird vollkommen transparent, weil der Alpha-Wert durch das Verschieben gelöscht wird.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Alpha liegt in beiden Fällen korrekt bei Bits 24..31.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der C#-Compiler meldet einen Syntaxfehler, weil Bitshift-Operatoren auf uint nicht definiert sind.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Bitshifts auf uint sind Standard-C#.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Es ändert sich nichts, da der x86-Prozessor Bit-Reihenfolgen automatisch korrigiert.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Der Prozessor führt die Bitshifts exakt so aus wie programmiert.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>
