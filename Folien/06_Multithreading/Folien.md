@@ -152,9 +152,7 @@ $$E(p) = \frac{S(p)}{p} = \frac{T_1}{p \cdot T_p} \le 1 \quad (100\,\%)$$
 
 ---
 
-### Amdahlsches Gesetz & Skalierungsgrenzen
-
-![w:920](./Diagramme/Amdahlsches_Gesetz_Speedup.svg)
+![center w:1080](./Diagramme/Amdahlsches_Gesetz_Speedup.svg)
 
 ---
 

@@ -415,9 +415,7 @@ Es gibt zwei grundlegende Ansätze:
 
 ---
 
-### Analytische Modellierung: Ungedämpfter schiefer Wurf
-
-![w:920](./Diagramme/Schiefer_Wurf_Kraefte.svg)
+![center w:1080](./Diagramme/Schiefer_Wurf_Kraefte.svg)
 
 ---
 

@@ -162,9 +162,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Visualisierung der Koordinatentransformation
-
-![width:1050px](./Diagramme/Koordinatentransformation.svg)
+![center w:1080](./Diagramme/Koordinatentransformation.svg)
 
 ---
 
