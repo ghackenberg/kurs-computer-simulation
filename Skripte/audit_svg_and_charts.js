@@ -196,6 +196,92 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       }
     });
 
+    // 5b. Unshielded Text-Rect Border Collisions (Stroked rect edges intersecting text without opaque background)
+    const strokedRects = Array.from(document.querySelectorAll('rect')).map(el => {
+      const style = window.getComputedStyle(el);
+      const stroke = style.stroke;
+      const strokeWidth = parseFloat(style.strokeWidth || '0');
+      const r = el.getBoundingClientRect();
+      return {
+        el,
+        hasStroke: stroke && stroke !== 'none' && stroke !== 'transparent' && strokeWidth > 0,
+        strokeWidth,
+        rect: { left: r.left, right: r.right, top: r.top, bottom: r.bottom, width: r.width, height: r.height }
+      };
+    }).filter(r => r.hasStroke && r.rect.width > 10 && r.rect.height > 10);
+
+    const rectCollisionSeen = new Set();
+    texts.forEach(t => {
+      strokedRects.forEach(sr => {
+        if (sr.el.contains(t.el)) return;
+
+        const R = sr.rect;
+        const T = t.rect;
+
+        const edges = [
+          { name: 'top', y: R.top, x1: R.left, x2: R.right, isHoriz: true },
+          { name: 'bottom', y: R.bottom, x1: R.left, x2: R.right, isHoriz: true },
+          { name: 'left', x: R.left, y1: R.top, y2: R.bottom, isHoriz: false },
+          { name: 'right', x: R.right, y1: R.top, y2: R.bottom, isHoriz: false }
+        ];
+
+        edges.forEach(edge => {
+          let intersects = false;
+          let pt = null;
+
+          if (edge.isHoriz) {
+            const xOverlapMin = Math.max(T.left, edge.x1);
+            const xOverlapMax = Math.min(T.right, edge.x2);
+            if (xOverlapMax - xOverlapMin >= 8) {
+              if (T.top + 3 <= edge.y && T.bottom - 3 >= edge.y) {
+                intersects = true;
+                pt = { x: (xOverlapMin + xOverlapMax) / 2, y: edge.y };
+              }
+            }
+          } else {
+            const yOverlapMin = Math.max(T.top, edge.y1);
+            const yOverlapMax = Math.min(T.bottom, edge.y2);
+            if (yOverlapMax - yOverlapMin >= 8) {
+              if (T.left + 3 <= edge.x && T.right - 3 >= edge.x) {
+                intersects = true;
+                pt = { x: edge.x, y: (yOverlapMin + yOverlapMax) / 2 };
+              }
+            }
+          }
+
+          if (intersects && pt) {
+            const elsAtPt = document.elementsFromPoint(pt.x, pt.y);
+            const textIdx = elsAtPt.indexOf(t.el);
+            const rectIdx = elsAtPt.indexOf(sr.el);
+            let shielded = false;
+
+            if (textIdx !== -1 && rectIdx !== -1) {
+              for (let i = Math.min(textIdx, rectIdx) + 1; i < Math.max(textIdx, rectIdx); i++) {
+                const el = elsAtPt[i];
+                const style = window.getComputedStyle(el);
+                const fill = style.fill;
+                if (fill && fill !== 'none' && fill !== 'transparent' && style.opacity !== '0' && style.fillOpacity !== '0') {
+                  shielded = true;
+                  break;
+                }
+              }
+            }
+
+            if (!shielded) {
+              const key = t.text + '_' + edge.name;
+              if (!rectCollisionSeen.has(key)) {
+                rectCollisionSeen.add(key);
+                issues.push({
+                  type: 'TEXT_RECT_BORDER_COLLISION',
+                  message: `Unshielded rectangle ${edge.name} border intersects text "${t.text.slice(0, 25)}"`
+                });
+              }
+            }
+          }
+        });
+      });
+    });
+
     // 6. Minimum Font Size Check (< 11px)
     texts.forEach(t => {
       const style = window.getComputedStyle(t.el);

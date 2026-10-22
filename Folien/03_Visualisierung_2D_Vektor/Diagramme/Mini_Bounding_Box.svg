@@ -23,17 +23,23 @@
     <text x="120" y="40" class="dim" style="text-anchor: middle; fill: #64748b;">Nutzfläche (DrawArea)</text>
 
     <!-- Centered Truss Bounding Box -->
-    <g transform="translate(50, 65)">
-      <rect width="140" height="105" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="2,2" />
-      <polygon points="10,90 130,90 70,18" fill="none" stroke="#1d4ed8" stroke-width="2.5" />
-      <circle cx="10" cy="90" r="4" fill="#1e40af" />
-      <circle cx="130" cy="90" r="4" fill="#1e40af" />
-      <circle cx="70" cy="18" r="4" fill="#1e40af" />
+    <g transform="translate(58, 65)">
+      <rect width="124" height="105" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="2,2" />
+      <polygon points="12,90 112,90 62,18" fill="none" stroke="#1d4ed8" stroke-width="2.5" />
+      <circle cx="12" cy="90" r="4" fill="#1e40af" />
+      <circle cx="112" cy="90" r="4" fill="#1e40af" />
+      <circle cx="62" cy="18" r="4" fill="#1e40af" />
     </g>
 
-    <!-- Offsets -->
-    <text x="35" y="115" class="dim" style="fill: #b45309;">x_off</text>
-    <text x="205" y="115" class="dim" style="fill: #b45309;">x_off</text>
+    <!-- Offsets (mit Schutz-Pill) -->
+    <g transform="translate(23, 107)">
+      <rect width="30" height="18" rx="3" fill="#ffffff" stroke="#fde68a" stroke-width="1" />
+      <text x="15" y="13" class="dim" style="font-size: 11.5px; fill: #b45309; text-anchor: middle;">x_off</text>
+    </g>
+    <g transform="translate(187, 107)">
+      <rect width="30" height="18" rx="3" fill="#ffffff" stroke="#fde68a" stroke-width="1" />
+      <text x="15" y="13" class="dim" style="font-size: 11.5px; fill: #b45309; text-anchor: middle;">x_off</text>
+    </g>
   </g>
 
   <!-- Formula Summary Card -->

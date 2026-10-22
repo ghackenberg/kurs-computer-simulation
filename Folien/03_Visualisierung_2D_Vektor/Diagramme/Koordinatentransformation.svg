@@ -194,6 +194,13 @@
       <text x="50" y="13" font-size="12" font-weight="700" fill="#1E293B" text-anchor="middle">(0, 0) Ursprung</text>
     </g>
 
+    <!-- Margin Zone -->
+    <rect class="margin-zone" x="75" y="110" width="315" height="245" rx="2" />
+    
+    <!-- Margin Bemaßung -->
+    <line x1="90" y1="75" x2="90" y2="110" stroke="#64748B" stroke-width="1.2" marker-start="url(#arrow-margin)" marker-end="url(#arrow-margin)" />
+    <text x="96" y="96" font-size="12" fill="#475569" font-weight="600">margin</text>
+
     <!-- Canvas Achsen -->
     <!-- X-Achse nach rechts -->
     <line class="axis" x1="40" y1="75" x2="200" y2="75" marker-end="url(#arrow-axis)" />
@@ -205,16 +212,9 @@
     <!-- Y-Achse nach UNTEN (Beschriftung rechts der Achse!) -->
     <line class="axis" x1="40" y1="75" x2="40" y2="200" marker-end="url(#arrow-axis)" />
     <g transform="translate(48, 190)">
-      <rect x="0" y="0" width="80" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-      <text class="axis-label" x="40" y="14" text-anchor="middle">+Y_scr [px]</text>
+      <rect x="0" y="0" width="100" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+      <text class="axis-label" x="50" y="14" text-anchor="middle">+Y_scr [px]</text>
     </g>
-
-    <!-- Margin Zone -->
-    <rect class="margin-zone" x="75" y="110" width="315" height="245" rx="2" />
-    
-    <!-- Margin Bemaßung -->
-    <line x1="90" y1="75" x2="90" y2="110" stroke="#64748B" stroke-width="1.2" marker-start="url(#arrow-margin)" marker-end="url(#arrow-margin)" />
-    <text x="96" y="96" font-size="12" fill="#475569" font-weight="600">margin</text>
 
     <!-- Zeichenbereich Bemaßung unten (mit Shield) -->
     <line x1="75" y1="380" x2="390" y2="380" stroke="#0284C7" stroke-width="1.2" marker-start="url(#arrow-dim-blue-rev)" marker-end="url(#arrow-dim-blue)" />

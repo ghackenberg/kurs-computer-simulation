@@ -55,16 +55,16 @@
 
     <text x="120" y="60" class="fml" style="font-size: 13px; font-weight: bold;">y_s = y_off + (Y_max - y_w) · s</text>
 
-    <g transform="translate(15, 78)">
-      <rect width="210" height="46" rx="4" fill="#eff6ff" stroke="#bfdbfe" />
-      <text x="105" y="18" class="desc" style="font-weight: bold; fill: #1e40af;">Fall 1: Höchster Punkt (Y_max)</text>
-      <text x="105" y="36" class="fml" style="fill: #1d4ed8;">y_s = y_off + 0 = OBEN</text>
+    <g transform="translate(10, 78)">
+      <rect width="220" height="46" rx="4" fill="#eff6ff" stroke="#bfdbfe" />
+      <text x="110" y="18" class="desc" style="font-weight: bold; fill: #1e40af;">Fall 1: Höchster Punkt (Y_max)</text>
+      <text x="110" y="36" class="fml" style="font-size: 11.5px; fill: #1d4ed8;">y_s = y_off + 0 (oben)</text>
     </g>
 
-    <g transform="translate(15, 134)">
-      <rect width="210" height="46" rx="4" fill="#eff6ff" stroke="#bfdbfe" />
-      <text x="105" y="18" class="desc" style="font-weight: bold; fill: #1e40af;">Fall 2: Tiefster Punkt (Y_min)</text>
-      <text x="105" y="36" class="fml" style="fill: #1d4ed8;">y_s = y_off + H_world · s = UNTEN</text>
+    <g transform="translate(10, 134)">
+      <rect width="220" height="46" rx="4" fill="#eff6ff" stroke="#bfdbfe" />
+      <text x="110" y="18" class="desc" style="font-weight: bold; fill: #1e40af;">Fall 2: Tiefster Punkt (Y_min)</text>
+      <text x="110" y="36" class="fml" style="font-size: 11.5px; fill: #1d4ed8;">y_s = y_off + H_w · s (unten)</text>
     </g>
   </g>
 </svg>

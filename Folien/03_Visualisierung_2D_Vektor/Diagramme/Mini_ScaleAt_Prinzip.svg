@@ -32,10 +32,10 @@
     <text x="120" y="20" class="lbl" style="fill: #1e40af;">2. Skalierung: Scale(s)</text>
     <text x="120" y="38" class="desc">Vergrößert um Ursprung (0,0)</text>
     <!-- Kleines Quadrat wächst zu großem -->
-    <rect x="50" y="50" width="30" height="25" fill="none" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="3,2" />
-    <rect x="50" y="50" width="60" height="40" fill="none" stroke="#2563eb" stroke-width="2" />
-    <circle cx="50" cy="50" r="4" fill="#047857" />
-    <text x="150" y="70" class="fml" style="fill: #1d4ed8;">P' = s · (P - C)</text>
+    <rect x="28" y="48" width="25" height="20" fill="none" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="3,2" />
+    <rect x="28" y="48" width="50" height="36" fill="none" stroke="#2563eb" stroke-width="2" />
+    <circle cx="28" cy="48" r="4" fill="#047857" />
+    <text x="160" y="70" class="fml" style="fill: #1d4ed8;">P' = s · (P - C)</text>
   </g>
 
   <!-- Schritt 3 -->

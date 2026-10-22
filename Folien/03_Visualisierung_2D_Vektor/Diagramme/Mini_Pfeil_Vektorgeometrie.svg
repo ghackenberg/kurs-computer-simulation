@@ -38,9 +38,9 @@
   <g transform="translate(15, 286)">
     <rect width="240" height="120" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
     <text x="120" y="22" class="lbl" style="fill: #1d4ed8;">Der 4-Schritte-Algorithmus</text>
-    <text x="15" y="44" class="math" style="fill: #1e40af;">1. e_u = F / ||F||</text>
-    <text x="15" y="64" class="math" style="fill: #1e40af;">2. e_u_perp = (-e_y, e_x)^T</text>
-    <text x="15" y="84" class="math" style="fill: #1e40af;">3. P_base = P_tip - L · e_u</text>
-    <text x="15" y="104" class="math" style="fill: #1e40af;">4. P_wing = P_base ± (W/2)·e_perp</text>
+    <text x="12" y="45" class="math" style="font-size: 11.5px; fill: #1e40af;">1. e_u = F / ||F||</text>
+    <text x="12" y="65" class="math" style="font-size: 11.5px; fill: #1e40af;">2. e_perp = (-e_y, e_x)ᵀ</text>
+    <text x="12" y="85" class="math" style="font-size: 11.5px; fill: #1e40af;">3. P_base = P_tip - L · e_u</text>
+    <text x="12" y="105" class="math" style="font-size: 11.5px; fill: #1e40af;">4. P_wing = P_base ± (W/2)·e_perp</text>
   </g>
 </svg>
