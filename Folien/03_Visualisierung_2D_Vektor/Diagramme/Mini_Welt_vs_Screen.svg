@@ -29,7 +29,7 @@
 
       <circle cx="80" cy="-45" r="4" fill="#2563eb" />
       <!-- Shield rect to avoid line collision -->
-      <rect x="15" y="-30" width="130" height="20" rx="3" fill="#ffffff" stroke="#93c5fd" stroke-width="1" />
+      <rect x="5" y="-31" width="150" height="22" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="1" />
       <text x="80" y="-16" class="desc" style="fill: #1e40af; font-weight: bold;">+Y zeigt nach OBEN</text>
     </g>
   </g>
@@ -50,7 +50,7 @@
 
       <circle cx="0" cy="0" r="4" fill="#991b1b" />
       <circle cx="80" cy="45" r="4" fill="#ef4444" />
-      <rect x="15" y="10" width="130" height="20" rx="3" fill="#ffffff" stroke="#fca5a5" stroke-width="1" />
+      <rect x="5" y="9" width="150" height="22" rx="4" fill="#ffffff" stroke="#fca5a5" stroke-width="1" />
       <text x="80" y="24" class="desc" style="fill: #b91c1c; font-weight: bold;">+Y zeigt nach UNTEN!</text>
     </g>
   </g>

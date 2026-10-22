@@ -82,6 +82,52 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       }
     });
 
+    // 1b. Badge / Pill / Shield Rectangle Text Overflow Check (Custom SVGs)
+    const allTexts = Array.from(document.querySelectorAll('text'));
+    const allRects = Array.from(document.querySelectorAll('rect')).filter(r => !r.closest('defs') && !r.closest('clipPath'));
+
+    allTexts.forEach(t => {
+      const tBox = t.getBoundingClientRect();
+      if (tBox.width <= 0 || tBox.height <= 0) return;
+      const tText = (t.textContent || '').trim().replace(/\s+/g, ' ');
+      if (!tText) return;
+
+      const tCenterX = (tBox.left + tBox.right) / 2;
+      const tCenterY = (tBox.top + tBox.bottom) / 2;
+
+      allRects.forEach(r => {
+        const rBox = r.getBoundingClientRect();
+        if (rBox.width < 20 || rBox.height < 10) return;
+        if (rBox.width > svgWidth * 0.95 && rBox.height > svgHeight * 0.95) return;
+
+        const centerInside = (tCenterX >= rBox.left && tCenterX <= rBox.right &&
+                              tCenterY >= rBox.top && tCenterY <= rBox.bottom);
+        const isBadgeOrPill = rBox.height < 60 && rBox.width < 320;
+
+        if (centerInside && isBadgeOrPill) {
+          const overflowLeft = rBox.left - tBox.left;
+          const overflowRight = tBox.right - rBox.right;
+          const overflowTop = rBox.top - tBox.top;
+          const overflowBottom = tBox.bottom - rBox.bottom;
+
+          if (overflowLeft > 2 || overflowRight > 2) {
+            const maxOverflow = Math.max(overflowLeft, overflowRight);
+            issues.push({
+              type: 'SHIELD_TEXT_OVERFLOW',
+              message: `Text "${tText.slice(0, 30)}" exceeds background rect horizontally by ${Math.round(maxOverflow)}px (Text: ${Math.round(tBox.width)}px, Rect: ${Math.round(rBox.width)}px)`
+            });
+          }
+          if (overflowTop > 2 || overflowBottom > 2) {
+            const maxOverflow = Math.max(overflowTop, overflowBottom);
+            issues.push({
+              type: 'SHIELD_TEXT_OVERFLOW',
+              message: `Text "${tText.slice(0, 30)}" exceeds background rect vertically by ${Math.round(maxOverflow)}px (Text: ${Math.round(tBox.height)}px, Rect: ${Math.round(rBox.height)}px)`
+            });
+          }
+        }
+      });
+    });
+
     // 2. ViewBox Clipping Check
     const elements = Array.from(document.querySelectorAll('text, rect, path, foreignObject'));
     let outOfBoundsCount = 0;
