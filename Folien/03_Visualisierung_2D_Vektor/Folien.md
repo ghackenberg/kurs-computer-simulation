@@ -491,51 +491,51 @@ $$s = \min(s_x, s_y) \quad \left[\frac{\mathrm{px}}{\mathrm{m}}\right]$$
 
 ---
 
-### Zentrierung im Viewport: Das Restplatz-Prinzip
+### Zentrierung im Viewport: Die 2 Grenzfälle
 
 <div class="columns top">
 <div class="two">
 
-Im Zeichenbereich $(W_{\text{draw}}, H_{\text{draw}})$ füllt das Modell nach isotroper Skalierung $s = \min(s_x, s_y)$ genau eine Achse vollständig aus. Auf der anderen Achse entsteht Freiraum:
+Beim isotropen Skalieren $s = \min(s_x, s_y)$ stößt das Modell $(W_{\text{world}}, H_{\text{world}})$ an genau einer Achse an – auf der anderen entsteht Freiraum:
 
-- **Das Problem ohne Zentrierung:**
-  - Beim naiven Platzieren bei $(\text{margin}, \text{margin})$ würde das Modell starr am linken bzw. oberen Rand kleben.
-- **Symmetrische Restplatz-Aufteilung:**
-  - Der ungenutzte Freiraum $\Delta W = W_{\text{draw}} - W_{\text{world}} \cdot s$ wird gleichmäßig halbiert:
-    $$x_{\text{off}} = \text{margin} + \frac{\Delta W}{2} \quad [\mathrm{px}]$$
-- **Wirkung:** Das Modell schwebt harmonisch im visuellen Zentrum des Viewports.
+- **Problem ohne Zentrierung:**
+  - Bei naivem Platzieren an $(\text{margin}, \text{margin})$ klebt das Modell am linken bzw. oberen Rand.
+- **Fall 1: Höhen-limitiert ($s_y \le s_x$):**  
+  Modellhöhe füllt $H_{\text{draw}}$ ($H_{\text{world}} \cdot s$) voll aus ($\Delta H = 0$).  
+  Restplatz auf X: $x_{\text{off}} = \text{margin} + \frac{\Delta W}{2}, \quad y_{\text{off}} = \text{margin}$.
+- **Fall 2: Breiten-limitiert ($s_x < s_y$):**  
+  Modellbreite füllt $W_{\text{draw}}$ ($W_{\text{world}} \cdot s$) voll aus ($\Delta W = 0$).  
+  Restplatz auf Y: $y_{\text{off}} = \text{margin} + \frac{\Delta H}{2}, \quad x_{\text{off}} = \text{margin}$.
 
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Zentrierung_Viewport.svg)
+![w:1000](./Diagramme/Mini_Zentrierung_Zwei_Faelle.svg)
 
 </div>
 </div>
 
 ---
 
-### Zentrierung: Die 2 Grenzfälle & Universelle Formel
+### Zentrierung im Detail: Geometrie & Universelle Formel
 
 <div class="columns top">
 <div class="two">
 
-Je nach Seitenverhältnis des Modells tritt genau ein Grenzfall ein:
+Geometrische Konstruktion im Canvas und universelle Implementierung:
 
-- **Fall 1: Höhen-limitiert ($s_y \le s_x$):**  
-  Modellhöhe füllt $H_{\text{draw}}$ voll aus ($\Delta H = 0$).  
-  Restplatz horizontal: $x_{\text{off}} = \text{margin} + \frac{\Delta W}{2}, \quad y_{\text{off}} = \text{margin}$.
-- **Fall 2: Breiten-limitiert ($s_x < s_y$):**  
-  Modellbreite füllt $W_{\text{draw}}$ voll aus ($\Delta W = 0$).  
-  Restplatz vertikal: $y_{\text{off}} = \text{margin} + \frac{\Delta H}{2}, \quad x_{\text{off}} = \text{margin}$.
-
-> **Universelle C#-Formel (ohne `if`/`else`):**  
-> Für die limitierende Achse fällt $(W_{\text{draw}} - W_{\text{world}} \cdot s)$ exakt auf $0$ – derselbe Code berechnet beide Fälle!
+- **Symmetrische Freiräume:**  
+  $\Delta W = W_{\text{draw}} - W_{\text{world}} \cdot s$ und $\Delta H = H_{\text{draw}} - H_{\text{world}} \cdot s$.
+- **Universelle C#-Offset-Formel:**
+  $$x_{\text{off}} = \text{margin} + \frac{\Delta W}{2}, \quad y_{\text{off}} = \text{margin} + \frac{\Delta H}{2} \quad [\mathrm{px}]$$
+- **C#-Eleganz ohne `if`/`else`:**
+  - Auf der limitierenden Achse (im Bild: $s = s_y$) fällt der Freiraum auf exakt $0 \implies y_{\text{off}} = \text{margin}$.
+  - Derselbe Code berechnet beide Fälle ohne Fallunterscheidung!
 
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Zentrierung_Zwei_Faelle.svg)
+![w:1000](./Diagramme/Mini_Zentrierung_Viewport.svg)
 
 </div>
 </div>

@@ -81,9 +81,9 @@
   <g transform="translate(15, 300)">
     <rect width="240" height="106" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
     <text x="120" y="20" class="lbl" style="fill: #15803d;">Universelle Offset-Formel</text>
-    <text x="120" y="42" class="fml" style="fill: #166534;">x_off = margin + ΔW / 2</text>
-    <text x="120" y="62" class="fml" style="fill: #166534;">y_off = margin + ΔH / 2</text>
-    <text x="120" y="81" class="desc" style="font-size: 11.5px; fill: #166534;">ΔW = W_draw - W_world · s</text>
-    <text x="120" y="97" class="desc" style="font-weight: bold; fill: #14532d;">Restwert der aktiven Achse wird 0!</text>
+    <text x="120" y="40" class="fml" style="fill: #166534;">x_off = margin + ΔW / 2</text>
+    <text x="120" y="58" class="fml" style="fill: #166534;">y_off = margin + ΔH / 2</text>
+    <text x="120" y="77" class="desc" style="font-size: 11.5px; fill: #166534;">ΔW = W_draw - W_world · s</text>
+    <text x="120" y="93" class="desc" style="font-size: 11.5px; fill: #166534;">ΔH = H_draw - H_world · s</text>
   </g>
 </svg>

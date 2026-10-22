@@ -4,17 +4,17 @@
       .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
       .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
       .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
-      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
-      .fml { font-family: 'Consolas', monospace; font-size: 12.5px; fill: #0369a1; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+      .fml { font-family: 'Consolas', monospace; font-size: 12px; fill: #0369a1; text-anchor: middle; }
     </style>
   </defs>
 
   <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
   <text x="135" y="24" class="hdr">Viewport-Zentrierung</text>
-  <text x="135" y="42" class="sub">Symmetrischer Freiraum</text>
+  <text x="135" y="42" class="sub">Geometrie &amp; Universelle Offsets</text>
 
   <!-- Canvas Box -->
-  <g transform="translate(15, 54)">
+  <g transform="translate(15, 52)">
     <rect width="240" height="230" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
     <text x="120" y="20" class="desc" style="font-weight: bold; fill: #64748b;">Canvas (W_draw × H_draw)</text>
 
@@ -46,11 +46,13 @@
   </g>
 
   <!-- Erklärung Box -->
-  <g transform="translate(15, 296)">
-    <rect width="240" height="110" rx="6" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.5" />
-    <text x="120" y="24" class="lbl" style="fill: #0369a1;">Zentrierungs-Formel</text>
-    <text x="120" y="48" class="fml">ΔW = W_draw - W_world · s</text>
-    <text x="120" y="72" class="fml">x_off = margin + ΔW / 2</text>
-    <text x="120" y="94" class="desc" style="font-weight: bold; fill: #0c4a6e;">Modell steht perfekt mittig!</text>
+  <g transform="translate(15, 292)">
+    <rect width="240" height="116" rx="6" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #0369a1;">Universelle Offsets (x_off, y_off)</text>
+    <text x="120" y="40" class="fml">x_off = margin + ΔW / 2</text>
+    <text x="120" y="58" class="fml">y_off = margin + ΔH / 2</text>
+    <text x="120" y="78" class="desc" style="fill: #0369a1;">Hier (s = s_y): ΔH = 0 ⇒ y_off = margin</text>
+    <text x="120" y="96" class="desc" style="fill: #0284c7;">ΔW = W_draw - W_world · s</text>
+    <text x="120" y="110" class="desc" style="font-weight: bold; fill: #0c4a6e;">Modell steht perfekt mittig!</text>
   </g>
 </svg>
