@@ -20,7 +20,7 @@
 
     <!-- Margin Inset -->
     <rect x="20" y="26" width="200" height="176" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3" />
-    <text x="120" y="40" class="dim" style="text-anchor: middle; fill: #64748b;">Nutzfläche (DrawArea)</text>
+    <text x="120" y="40" class="dim" style="font-size: 11.5px; text-anchor: middle; fill: #64748b;">Nutzfläche (W_draw × H_draw)</text>
 
     <!-- Centered Truss Bounding Box -->
     <g transform="translate(58, 65)">
@@ -47,8 +47,8 @@
     <rect width="240" height="120" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
     <text x="120" y="22" class="lbl" style="fill: #15803d;">Berechnungs-Pipeline</text>
     <text x="120" y="44" class="desc" style="font-weight: bold; fill: #166534;">W_world = X_max - X_min</text>
-    <text x="120" y="66" class="desc" style="font-weight: bold; fill: #166534;">s = Math.Min(dW/W_w, dH/H_w)</text>
-    <text x="120" y="88" class="desc" style="font-weight: bold; fill: #047857;">x_off = margin + (dW - W_w·s)/2</text>
+    <text x="120" y="66" class="desc" style="font-size: 11.5px; font-weight: bold; fill: #166534;">s = Math.Min(W_draw/W_world, ...)</text>
+    <text x="120" y="88" class="desc" style="font-size: 11px; font-weight: bold; fill: #047857;">x_off = margin + (W_draw - W_world·s)/2</text>
     <text x="120" y="108" class="desc" style="font-weight: bold; fill: #14532d;">Automatisch zentriert!</text>
   </g>
 </svg>

@@ -502,8 +502,8 @@ Nach der isotropen Skalierung $s = \min(s_x, s_y)$ füllt das Modell genau eine 
   - Das Modell würde am linken bzw. oberen Rand kleben.
 - **Symmetrische Verteilung des Restplatzes:**
   - Die Breiten- bzw. Höhendifferenz $\Delta W$ bzw. $\Delta H$ wird halbiert:
-    $x_{\text{offset}} = \text{margin}_x + \frac{W_{\text{draw}} - W_{\text{world}} \cdot s}{2} \quad [\mathrm{px}]$
-    $y_{\text{offset}} = \text{margin}_y + \frac{H_{\text{draw}} - H_{\text{world}} \cdot s}{2} \quad [\mathrm{px}]$
+    $x_{\text{off}} = \text{margin} + \frac{W_{\text{draw}} - W_{\text{world}} \cdot s}{2} \quad [\mathrm{px}]$
+    $y_{\text{off}} = \text{margin} + \frac{H_{\text{draw}} - H_{\text{world}} \cdot s}{2} \quad [\mathrm{px}]$
 - **Ergebnis:** Das Modell schwebt perfekt zentriert im Viewport.
 
 </div>
@@ -526,12 +526,12 @@ Das Koordinaten-Paradoxon erfordert eine **Spiegelung der vertikalen Achse**:
 - **Weltraum:** $Y$ wächst nach **oben** (Boden bei $Y=0\,\mathrm{m}$).
 - **Screenraum:** $Y$ wächst nach **unten** (Kopfzeile bei $Y=0\,\mathrm{px}$).
 - **Die Transformationsgleichung:**
-  $y_{\text{screen}} = y_{\text{offset}} + (Y_{\max} - y_w) \cdot s \quad [\mathrm{px}]$
+  $y_s = y_{\text{off}} + (Y_{\max} - y_w) \cdot s \quad [\mathrm{px}]$
 - **Grenzwerte-Kontrolle:**
   - Höchster Modellpunkt ($y_w = Y_{\max}$):  
-    $y_{\text{screen}} = y_{\text{offset}} + 0 \implies$ **oberer Rand**.
+    $y_s = y_{\text{off}} + 0 \implies$ **oberer Rand**.
   - Tiefster Modellpunkt ($y_w = Y_{\min}$):  
-    $y_{\text{screen}} = y_{\text{offset}} + H_{\text{world}} \cdot s \implies$ **unterer Rand**.
+    $y_s = y_{\text{off}} + H_{\text{world}} \cdot s \implies$ **unterer Rand**.
 - **Einheiten:** $[\mathrm{px}] + [\mathrm{m}] \cdot [\mathrm{px/m}] = [\mathrm{px}]$ (dimensionsrein).
 
 </div>

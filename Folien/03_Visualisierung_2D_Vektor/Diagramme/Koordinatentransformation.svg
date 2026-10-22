@@ -106,9 +106,9 @@
 
     <!-- Width Bemaßung unten (mit Shield) -->
     <line class="dim-line" x1="120" y1="380" x2="340" y2="380" marker-start="url(#arrow-dim-rev)" marker-end="url(#arrow-dim)" />
-    <g transform="translate(145, 370)">
-      <rect x="0" y="0" width="170" height="20" rx="3" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1" />
-      <text class="dim-text" x="85" y="14">worldRect.Width (X_span)</text>
+    <g transform="translate(140, 370)">
+      <rect x="0" y="0" width="180" height="20" rx="3" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1" />
+      <text class="dim-text" x="90" y="14">W_world = X_max - X_min</text>
     </g>
 
     <!-- Modell (2D Fachwerk) -->
@@ -147,10 +147,10 @@
 
     <!-- Info-Box Unten Welt -->
     <rect class="code-box" x="15" y="420" width="435" height="92" />
-    <text class="code-text" x="25" y="440" font-weight="700" fill="#004B96">// 1. Skalierungsfaktoren berechnen</text>
-    <text class="code-text" x="25" y="460">double sX = (wCanvas - 2*margin) / wRect.Width;</text>
-    <text class="code-text" x="25" y="478">double sY = (hCanvas - 2*margin) / wRect.Height;</text>
-    <text class="code-text" x="25" y="498" font-weight="700" fill="#D97706">double scale = Math.Min(sX, sY); // Isotrop</text>
+    <text class="code-text" x="25" y="440" font-weight="700" fill="#004B96">// 1. Skalierung &amp; Zentrierung (C#)</text>
+    <text class="code-text" x="25" y="460">double drawW = canvasWidth - 2 * margin;</text>
+    <text class="code-text" x="25" y="478">double drawH = canvasHeight - 2 * margin;</text>
+    <text class="code-text" x="25" y="498" font-weight="700" fill="#D97706">double scale = Math.Min(drawW / worldW, drawH / worldH);</text>
   </g>
 
   <!-- ========================================== -->
@@ -163,10 +163,10 @@
     
     <!-- 3 Schritte Badge -->
     <g transform="translate(-15, 130)">
-      <rect class="formula-tag" x="0" y="0" width="110" height="85" />
-      <text x="55" y="18" font-size="12.5" font-weight="700" fill="#004B96" text-anchor="middle">3 Schritte:</text>
-      <text x="10" y="38" font-size="12" fill="#1E293B">1. Shift (-Xmin)</text>
-      <text x="10" y="56" font-size="12" fill="#1E293B">2. Scale (*s)</text>
+      <rect class="formula-tag" x="0" y="0" width="115" height="85" />
+      <text x="57.5" y="18" font-size="12.5" font-weight="700" fill="#004B96" text-anchor="middle">3 Schritte:</text>
+      <text x="10" y="38" font-size="12" fill="#1E293B">1. Shift (-X_min)</text>
+      <text x="10" y="56" font-size="12" fill="#1E293B">2. Scale (· s)</text>
       <text x="10" y="74" font-size="12" font-weight="700" fill="#DC2626">3. Y-Invert!</text>
     </g>
   </g>
@@ -218,9 +218,9 @@
 
     <!-- Zeichenbereich Bemaßung unten (mit Shield) -->
     <line x1="75" y1="380" x2="390" y2="380" stroke="#0284C7" stroke-width="1.2" marker-start="url(#arrow-dim-blue-rev)" marker-end="url(#arrow-dim-blue)" />
-    <g transform="translate(130, 370)">
-      <rect x="0" y="0" width="200" height="20" rx="3" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1" />
-      <text class="dim-text" style="fill: #0284C7;" x="100" y="14">Zeichenbereich (wCanvas - 2*m)</text>
+    <g transform="translate(115, 370)">
+      <rect x="0" y="0" width="235" height="20" rx="3" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1" />
+      <text class="dim-text" style="fill: #0284C7;" x="117.5" y="14">W_draw = canvasWidth - 2·margin</text>
     </g>
 
     <!-- Transformiertes Modell im Canvas -->
@@ -252,21 +252,21 @@
     <g transform="translate(240, 155)">
       <rect x="0" y="0" width="180" height="42" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
       <text x="90" y="16" font-size="12.5" font-weight="700" fill="#DC2626" text-anchor="middle">Transformiert P' (x_s, y_s)</text>
-      <text x="90" y="32" font-size="12" fill="#7F1D1D" text-anchor="middle">x_s = m + (x_w - X_min) * s</text>
+      <text x="90" y="32" font-size="12" fill="#7F1D1D" text-anchor="middle">x_s = x_off + (x_w - X_min) · s</text>
     </g>
     
     <!-- Y-Invertierung Hinweis Box (Shielded) -->
     <g transform="translate(240, 205)">
       <rect x="0" y="0" width="180" height="42" rx="4" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1" />
       <text x="90" y="16" font-size="12.5" font-weight="700" fill="#B45309" text-anchor="middle">Y-Invertierung:</text>
-      <text x="90" y="32" font-size="12" font-weight="700" fill="#B45309" text-anchor="middle">y_s = m + (Y_max - y_w) * s</text>
+      <text x="90" y="32" font-size="12" font-weight="700" fill="#B45309" text-anchor="middle">y_s = y_off + (Y_max - y_w) · s</text>
     </g>
 
     <!-- Info-Box Unten Bildschirm -->
     <rect class="code-box" x="15" y="420" width="435" height="92" />
-    <text class="code-text" x="25" y="440" font-weight="700" fill="#004B96">// 2. Punkt-Transformation (C#)</text>
-    <text class="code-text" x="25" y="460">double scrX = margin + (wX - wRect.Left) * scale;</text>
-    <text class="code-text" x="25" y="478" font-weight="700" fill="#DC2626">double scrY = margin + (wRect.Top - wY) * scale;</text>
-    <text class="code-text" x="25" y="498" fill="#64748B">// wRect.Top ist Y_max! Invertiert die Y-Achse</text>
+    <text class="code-text" x="25" y="440" font-weight="700" fill="#004B96">// 2. Punkt-Transformation (C# Transform2D)</text>
+    <text class="code-text" x="25" y="460">double scrX = OffsetX + (x - XMin) * Scale;</text>
+    <text class="code-text" x="25" y="478" font-weight="700" fill="#DC2626">double scrY = OffsetY + (YMax - y) * Scale;</text>
+    <text class="code-text" x="25" y="498" fill="#64748B">// (YMax - y) invertiert die Y-Achse ins Screen-System</text>
   </g>
 </svg>
