@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; fill: #0369a1; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">WPF Shape Grundformen</text>
+  <text x="135" y="42" class="sub">Vektor-Primitive für Modelle</text>
+
+  <!-- Shape 1: Line -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="66" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+    <line x1="20" y1="46" x2="90" y2="20" stroke="#2563eb" stroke-width="3" stroke-linecap="round" />
+    <circle cx="20" cy="46" r="3" fill="#1e40af" />
+    <circle cx="90" cy="20" r="3" fill="#1e40af" />
+    <text x="165" y="28" class="code">Line</text>
+    <text x="165" y="48" class="desc" style="font-weight: bold; fill: #1d4ed8;">Stäbe &amp; Achsen</text>
+  </g>
+
+  <!-- Shape 2: Polygon & Ellipse -->
+  <g transform="translate(15, 126)">
+    <rect width="240" height="74" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+    <circle cx="35" cy="37" r="16" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2" />
+    <polygon points="90,52 72,22 108,22" fill="#fde68a" stroke="#d97706" stroke-width="2" />
+    <text x="160" y="30" class="code" style="text-anchor: middle;">Ellipse, Polygon</text>
+    <text x="160" y="52" class="desc" style="font-weight: bold; fill: #4338ca; text-anchor: middle;">Knoten &amp; Pfeile</text>
+  </g>
+
+  <!-- Shape 3: Path -->
+  <g transform="translate(15, 206)">
+    <rect width="240" height="84" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+    <path d="M 15 60 C 35 10, 75 80, 105 25" fill="none" stroke="#dc2626" stroke-width="2.5" />
+    <circle cx="35" cy="10" r="2.5" fill="#64748b" />
+    <circle cx="75" cy="80" r="2.5" fill="#64748b" />
+    <text x="160" y="34" class="code" style="text-anchor: middle;">Path (Bézier)</text>
+    <text x="160" y="56" class="desc" style="font-weight: bold; fill: #b91c1c; text-anchor: middle;">Biegelinien &amp; CAD</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="298" width="240" height="108" rx="6" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2" />
+  <text x="135" y="322" class="lbl" style="fill: #0f172a;">Attached Properties</text>
+  <text x="135" y="345" class="code" style="text-anchor: middle;">Canvas.SetLeft(el, x);</text>
+  <text x="135" y="365" class="code" style="text-anchor: middle;">Canvas.SetTop(el, y);</text>
+  <text x="135" y="390" class="desc" style="font-weight: bold; fill: #0f172a;">Container steuert Position!</text>
+</svg>

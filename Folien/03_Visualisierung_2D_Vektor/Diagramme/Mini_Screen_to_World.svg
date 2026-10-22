@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
+      .math { font-family: 'Cambria Math', serif; font-size: 13px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">ScreenToWorld Pipeline</text>
+  <text x="135" y="42" class="sub">Vom Klick zur Physik</text>
+
+  <!-- Step 1 -->
+  <g transform="translate(30, 56)">
+    <rect width="210" height="44" rx="5" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2" />
+    <text x="105" y="18" class="lbl" style="fill: #991b1b;">Mausklick auf Canvas</text>
+    <text x="105" y="34" class="math" style="fill: #b91c1c; text-anchor: middle;">P_screen (x, y) in [px]</text>
+  </g>
+
+  <!-- Step 2 -->
+  <g transform="translate(30, 116)">
+    <rect width="210" height="64" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="105" y="22" class="lbl" style="fill: #1d4ed8;">1. Matrix-Invertierung</text>
+    <text x="105" y="48" class="math" style="fill: #1e3a8a; text-anchor: middle;">P_unzoom = M^-1 · P_screen</text>
+  </g>
+
+  <!-- Step 3 -->
+  <g transform="translate(30, 196)">
+    <rect width="210" height="84" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5" />
+    <text x="105" y="22" class="lbl" style="fill: #15803d;">2. Viewport-Invertierung</text>
+    <text x="105" y="46" class="math" style="fill: #166534; text-anchor: middle;">x_w = X_min + (x - x_off)/s</text>
+    <text x="105" y="68" class="math" style="fill: #166534; text-anchor: middle;">y_w = Y_max - (y - y_off)/s</text>
+  </g>
+
+  <!-- Output -->
+  <g transform="translate(30, 296)">
+    <rect width="210" height="50" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5" />
+    <text x="105" y="20" class="lbl" style="fill: #b45309;">Physikalischer Weltpunkt</text>
+    <text x="105" y="38" class="math" style="fill: #92400e; text-anchor: middle;">P_world (x_w, y_w) in [m]</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="15" y="360" width="240" height="46" rx="5" fill="#f8fafc" stroke="#94a3b8" stroke-width="1" />
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #0f172a;">Exakte Treffer bei Hit-Testing!</text>
+</svg>

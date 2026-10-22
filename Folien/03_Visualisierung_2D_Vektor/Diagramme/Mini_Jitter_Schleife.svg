@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
+      .loop { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Die Dragging-Jitter-Falle</text>
+  <text x="135" y="42" class="sub">Teufelskreis beim Ziehen</text>
+
+  <!-- Cycle -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="220" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+
+    <!-- Step 1 -->
+    <g transform="translate(35, 20)">
+      <rect width="170" height="34" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2" />
+      <text x="85" y="22" class="loop" style="fill: #991b1b; text-anchor: middle;">1. Maus zieht Knoten</text>
+    </g>
+
+    <!-- Step 2 -->
+    <g transform="translate(35, 75)">
+      <rect width="170" height="34" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2" />
+      <text x="85" y="22" class="loop" style="fill: #991b1b; text-anchor: middle;">2. BoundingBox wächst</text>
+    </g>
+
+    <!-- Step 3 -->
+    <g transform="translate(35, 130)">
+      <rect width="170" height="34" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2" />
+      <text x="85" y="22" class="loop" style="fill: #991b1b; text-anchor: middle;">3. Maßstab schrumpft!</text>
+    </g>
+
+    <text x="120" y="195" class="desc" style="font-weight: bold; fill: #b91c1c;">➔ Heftiges Flackern &amp; Zittern</text>
+  </g>
+
+  <!-- Fix -->
+  <g transform="translate(15, 286)">
+    <rect width="240" height="120" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="24" class="lbl" style="fill: #15803d;">Die saubere Sprint-Lösung</text>
+    <text x="120" y="50" class="desc" style="fill: #166534;">Auto-Fit BoundingBox einfrieren,</text>
+    <text x="120" y="72" class="desc" style="font-weight: bold; fill: #15803d;">solange Dragging aktiv ist!</text>
+    <text x="120" y="98" class="desc" style="font-family: Consolas; font-weight: bold; fill: #047857;">if (_draggedNode == null)</text>
+  </g>
+</svg>

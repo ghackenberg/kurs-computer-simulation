@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Shapes vs. DrawingVisual</text>
+  <text x="135" y="42" class="sub">Der interne Overhead</text>
+
+  <!-- Box 1 -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="135" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #b91c1c;">WPF Shapes (Line, Ellipse)</text>
+    
+    <g transform="translate(15, 30)">
+      <rect width="210" height="24" rx="3" fill="#fee2e2" stroke="#ef4444" stroke-width="1" />
+      <text x="105" y="17" class="code" style="fill: #991b1b; text-anchor: middle;">Visual ➔ UIElement ➔ Shape</text>
+    </g>
+
+    <text x="120" y="75" class="desc" style="fill: #7f1d1d;">• Hunderte Dependency Properties</text>
+    <text x="120" y="95" class="desc" style="font-weight: bold; fill: #991b1b;">• 2-stufiger Layout-Pass!</text>
+    <text x="120" y="120" class="desc" style="fill: #b91c1c; font-weight: bold;">Limit: Kollaps ab ~2.000 Shapes</text>
+  </g>
+
+  <!-- Box 2 -->
+  <g transform="translate(15, 202)">
+    <rect width="240" height="135" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #15803d;">DrawingVisual (Low-Level)</text>
+
+    <g transform="translate(15, 30)">
+      <rect width="210" height="24" rx="3" fill="#dcfce7" stroke="#22c55e" stroke-width="1" />
+      <text x="105" y="17" class="code" style="fill: #15803d; text-anchor: middle;">Erbt direkt von Visual!</text>
+    </g>
+
+    <text x="120" y="75" class="desc" style="fill: #14532d;">• KEIN UIElement, KEIN Layout</text>
+    <text x="120" y="95" class="desc" style="font-weight: bold; fill: #166534;">• Direkter GPU-Befehls-Stream</text>
+    <text x="120" y="120" class="desc" style="fill: #15803d; font-weight: bold;">Performance: &gt; 100.000 Stäbe</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="15" y="348" width="240" height="58" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="135" y="370" class="lbl" style="fill: #1d4ed8;">Empfehlung</text>
+  <text x="135" y="392" class="desc" style="font-weight: bold; fill: #1e3a8a;">Große Netze mit DrawingVisual!</text>
+</svg>

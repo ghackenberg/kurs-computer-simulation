@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Rastergrafik vs. Vektor</text>
+  <text x="135" y="42" class="sub">Zoom-Vergleich (800 %)</text>
+
+  <!-- Box 1: Raster -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="135" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #b91c1c;">1. Rastergrafik (Pixel)</text>
+    
+    <g transform="translate(30, 32)">
+      <rect x="0" y="48" width="16" height="16" fill="#dc2626" stroke="#991b1b" stroke-width="0.5" />
+      <rect x="16" y="48" width="16" height="16" fill="#ef4444" stroke="#991b1b" stroke-width="0.5" />
+      <rect x="32" y="32" width="16" height="16" fill="#dc2626" stroke="#991b1b" stroke-width="0.5" />
+      <rect x="48" y="32" width="16" height="16" fill="#ef4444" stroke="#991b1b" stroke-width="0.5" />
+      <rect x="64" y="16" width="16" height="16" fill="#dc2626" stroke="#991b1b" stroke-width="0.5" />
+      <rect x="80" y="16" width="16" height="16" fill="#ef4444" stroke="#991b1b" stroke-width="0.5" />
+      <rect x="96" y="0" width="16" height="16" fill="#dc2626" stroke="#991b1b" stroke-width="0.5" />
+      <rect x="112" y="0" width="16" height="16" fill="#ef4444" stroke="#991b1b" stroke-width="0.5" />
+      <circle cx="150" cy="38" r="18" fill="none" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="3,2" />
+      <path d="M 140 28 L 160 48 M 140 48 L 160 28" stroke="#b91c1c" stroke-width="2" />
+    </g>
+
+    <text x="120" y="112" class="desc" style="font-weight: bold; fill: #991b1b;">Treppen &amp; Unschärfe</text>
+    <text x="120" y="127" class="desc" style="fill: #7f1d1d;">Feste Pixelmatrix</text>
+  </g>
+
+  <!-- Box 2: Vektor -->
+  <g transform="translate(15, 202)">
+    <rect width="240" height="135" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #15803d;">2. Vektorgrafik (Analytisch)</text>
+
+    <g transform="translate(30, 30)">
+      <path d="M 10 65 Q 65 65 115 10" fill="none" stroke="#16a34a" stroke-width="5" stroke-linecap="round" />
+      <circle cx="10" cy="65" r="4" fill="#15803d" />
+      <circle cx="115" cy="10" r="4" fill="#15803d" />
+      <circle cx="150" cy="38" r="18" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" />
+      <path d="M 142 38 L 148 44 L 158 32" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <text x="120" y="112" class="desc" style="font-weight: bold; fill: #166534;">Gestochen scharf!</text>
+    <text x="120" y="127" class="desc" style="fill: #14532d;">Auflösungsunabhängig</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="348" width="240" height="58" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="135" y="370" class="lbl" style="fill: #1d4ed8;">Ingenieur-Fazit</text>
+  <text x="135" y="392" class="desc" style="font-weight: bold; fill: #1e3a8a;">CAD &amp; Fachwerke brauchen Vektoren</text>
+</svg>

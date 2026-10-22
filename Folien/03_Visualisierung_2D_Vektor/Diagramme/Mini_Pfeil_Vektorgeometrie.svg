@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
+      .math { font-family: 'Cambria Math', serif; font-size: 13px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Analytische Pfeilspitze</text>
+  <text x="135" y="42" class="sub">Reine Vektoralgebra</text>
+
+  <!-- Construction -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="220" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+
+    <line x1="30" y1="170" x2="160" y2="60" stroke="#dc2626" stroke-width="3" />
+    <circle cx="30" cy="170" r="4" fill="#991b1b" />
+    <text x="30" y="195" class="math" style="fill: #991b1b; text-anchor: middle;">P_node</text>
+
+    <circle cx="160" cy="60" r="4" fill="#dc2626" />
+    <text x="175" y="55" class="math" style="fill: #dc2626; text-anchor: start;">P_tip</text>
+
+    <!-- Base & Wings -->
+    <circle cx="128" cy="88" r="3" fill="#2563eb" />
+    <text x="100" y="105" class="math" style="fill: #2563eb; text-anchor: end;">P_base</text>
+
+    <!-- Triangle Polygon Fill -->
+    <polygon points="160,60 110,72 142,108" fill="#fca5a5" stroke="#dc2626" stroke-width="2" />
+    <text x="95" y="65" class="math" style="fill: #059669; text-anchor: end;">P_wing1</text>
+    <text x="155" y="125" class="math" style="fill: #059669; text-anchor: start;">P_wing2</text>
+  </g>
+
+  <!-- Steps -->
+  <g transform="translate(15, 286)">
+    <rect width="240" height="120" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #1d4ed8;">Der 4-Schritte-Algorithmus</text>
+    <text x="15" y="44" class="math" style="fill: #1e40af;">1. e_u = F / ||F||</text>
+    <text x="15" y="64" class="math" style="fill: #1e40af;">2. e_u_perp = (-e_y, e_x)^T</text>
+    <text x="15" y="84" class="math" style="fill: #1e40af;">3. P_base = P_tip - L · e_u</text>
+    <text x="15" y="104" class="math" style="fill: #1e40af;">4. P_wing = P_base ± (W/2)·e_perp</text>
+  </g>
+</svg>

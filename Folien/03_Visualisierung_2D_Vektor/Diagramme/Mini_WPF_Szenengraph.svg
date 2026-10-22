@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">WPF Retained-Mode Baum</text>
+  <text x="135" y="42" class="sub">Der Visual Tree im RAM</text>
+
+  <!-- Node 1: Window -->
+  <g transform="translate(60, 56)">
+    <rect width="150" height="34" rx="5" fill="#1e293b" stroke="#0f172a" stroke-width="1.5" />
+    <text x="75" y="22" class="lbl" style="fill: #ffffff;">MainWindow</text>
+  </g>
+
+  <line x1="135" y1="90" x2="135" y2="108" stroke="#64748b" stroke-width="2" />
+  <polygon points="135,112 131,104 139,104" fill="#64748b" />
+
+  <!-- Node 2: Border -->
+  <g transform="translate(60, 114)">
+    <rect width="150" height="34" rx="5" fill="#334155" stroke="#1e293b" stroke-width="1.5" />
+    <text x="75" y="22" class="lbl" style="fill: #f8fafc;">Border (Clip)</text>
+  </g>
+
+  <line x1="135" y1="148" x2="135" y2="166" stroke="#64748b" stroke-width="2" />
+  <polygon points="135,170 131,162 139,162" fill="#64748b" />
+
+  <!-- Node 3: Canvas -->
+  <g transform="translate(50, 172)">
+    <rect width="170" height="38" rx="5" fill="#0284c7" stroke="#0369a1" stroke-width="1.5" />
+    <text x="85" y="24" class="lbl" style="fill: #ffffff;">Canvas Viewport</text>
+  </g>
+
+  <!-- Branches -->
+  <path d="M 95 210 L 95 230 L 45 230 L 45 248" fill="none" stroke="#0284c7" stroke-width="1.5" />
+  <path d="M 135 210 L 135 248" fill="none" stroke="#0284c7" stroke-width="1.5" />
+  <path d="M 175 210 L 175 230 L 225 230 L 225 248" fill="none" stroke="#0284c7" stroke-width="1.5" />
+
+  <!-- Children -->
+  <g transform="translate(10, 250)">
+    <rect width="70" height="42" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.2" />
+    <text x="35" y="26" class="lbl" style="fill: #1d4ed8;">Line</text>
+  </g>
+  <g transform="translate(100, 250)">
+    <rect width="70" height="42" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.2" />
+    <text x="35" y="26" class="lbl" style="fill: #1d4ed8;">Ellipse</text>
+  </g>
+  <g transform="translate(190, 250)">
+    <rect width="70" height="42" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.2" />
+    <text x="35" y="26" class="lbl" style="fill: #1d4ed8;">Polygon</text>
+  </g>
+
+  <!-- Summary Card -->
+  <rect x="15" y="312" width="240" height="94" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+  <text x="135" y="335" class="lbl" style="fill: #15803d;">Persistenter Objekt-Baum</text>
+  <text x="135" y="358" class="desc" style="fill: #166534;">Jedes Shape lebt als C#-Objekt</text>
+  <text x="135" y="380" class="desc" style="font-weight: bold; fill: #14532d;">WPF zeichnet automatisch neu!</text>
+</svg>

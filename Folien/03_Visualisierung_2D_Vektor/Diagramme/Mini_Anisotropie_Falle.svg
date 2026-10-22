@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
+      .math { font-family: 'Cambria Math', serif; font-size: 13px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Die Anisotropie-Falle</text>
+  <text x="135" y="42" class="sub">Naive Skalierung verzerrt</text>
+
+  <!-- Box 1: Anisotrop -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="135" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #b91c1c;">1. Naiv: s_x ≠ s_y (FALSCH)</text>
+
+    <g transform="translate(25, 32)">
+      <ellipse cx="50" cy="45" rx="42" ry="20" fill="#fee2e2" stroke="#dc2626" stroke-width="2" />
+      <polygon points="120,65 190,65 155,20" fill="none" stroke="#dc2626" stroke-width="2" />
+      <circle cx="155" cy="20" r="3" fill="#991b1b" />
+      <circle cx="120" cy="65" r="3" fill="#991b1b" />
+      <circle cx="190" cy="65" r="3" fill="#991b1b" />
+    </g>
+
+    <text x="120" y="112" class="desc" style="font-weight: bold; fill: #991b1b;">Winkel &amp; Maße verfälscht!</text>
+    <text x="120" y="127" class="desc" style="fill: #7f1d1d;">Kreis wird zur Ellipse</text>
+  </g>
+
+  <!-- Box 2: Isotrop -->
+  <g transform="translate(15, 202)">
+    <rect width="240" height="135" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #15803d;">2. Isotrop: s = min(s_x, s_y)</text>
+
+    <g transform="translate(25, 32)">
+      <circle cx="50" cy="45" r="28" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+      <polygon points="120,70 190,70 155,20" fill="none" stroke="#16a34a" stroke-width="2" />
+      <circle cx="155" cy="20" r="3" fill="#15803d" />
+      <circle cx="120" cy="70" r="3" fill="#15803d" />
+      <circle cx="190" cy="70" r="3" fill="#15803d" />
+    </g>
+
+    <text x="120" y="112" class="desc" style="font-weight: bold; fill: #166534;">100 % form- &amp; winkeltreu</text>
+    <text x="120" y="127" class="desc" style="fill: #14532d;">Physikalisch korrekt</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="15" y="348" width="240" height="58" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="135" y="370" class="lbl" style="fill: #1d4ed8;">Die Goldene Regel</text>
+  <text x="135" y="392" class="math" style="fill: #1e3a8a; text-anchor: middle;">s = Math.Min(sx, sy);</text>
+</svg>

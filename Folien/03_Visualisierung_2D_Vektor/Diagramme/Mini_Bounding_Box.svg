@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
+      .dim { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #0369a1; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Bounding Box &amp; Offsets</text>
+  <text x="135" y="42" class="sub">Vom Extremwert zur Zeichenfläche</text>
+
+  <!-- Outer Canvas Box -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="220" rx="6" fill="#ffffff" stroke="#0284c7" stroke-width="2" />
+    <text x="120" y="18" class="dim" style="text-anchor: middle;">Canvas Viewport</text>
+
+    <!-- Margin Inset -->
+    <rect x="20" y="26" width="200" height="176" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3" />
+    <text x="120" y="40" class="dim" style="text-anchor: middle; fill: #64748b;">Nutzfläche (DrawArea)</text>
+
+    <!-- Centered Truss Bounding Box -->
+    <g transform="translate(50, 65)">
+      <rect width="140" height="105" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="2,2" />
+      <polygon points="10,90 130,90 70,18" fill="none" stroke="#1d4ed8" stroke-width="2.5" />
+      <circle cx="10" cy="90" r="4" fill="#1e40af" />
+      <circle cx="130" cy="90" r="4" fill="#1e40af" />
+      <circle cx="70" cy="18" r="4" fill="#1e40af" />
+    </g>
+
+    <!-- Offsets -->
+    <text x="35" y="115" class="dim" style="fill: #b45309;">x_off</text>
+    <text x="205" y="115" class="dim" style="fill: #b45309;">x_off</text>
+  </g>
+
+  <!-- Formula Summary Card -->
+  <g transform="translate(15, 286)">
+    <rect width="240" height="120" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #15803d;">Berechnungs-Pipeline</text>
+    <text x="120" y="44" class="desc" style="font-weight: bold; fill: #166534;">W_world = X_max - X_min</text>
+    <text x="120" y="66" class="desc" style="font-weight: bold; fill: #166534;">s = Math.Min(dW/W_w, dH/H_w)</text>
+    <text x="120" y="88" class="desc" style="font-weight: bold; fill: #047857;">x_off = margin + (dW - W_w·s)/2</text>
+    <text x="120" y="108" class="desc" style="font-weight: bold; fill: #14532d;">Automatisch zentriert!</text>
+  </g>
+</svg>

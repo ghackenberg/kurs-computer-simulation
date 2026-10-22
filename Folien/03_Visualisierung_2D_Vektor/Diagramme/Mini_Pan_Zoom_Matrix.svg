@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
+      .math { font-family: 'Cambria Math', serif; font-size: 13px; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">GPU-MatrixTransform</text>
+  <text x="135" y="42" class="sub">Hardwarebeschleunigte Navigation</text>
+
+  <!-- CPU Box -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="120" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #b91c1c;">Ansatz A: CPU-Neuzeichnen</text>
+    <text x="120" y="45" class="desc" style="fill: #7f1d1d;">10.000 Shapes neu verschieben:</text>
+    <text x="120" y="65" class="desc" style="font-weight: bold; fill: #991b1b;">Canvas.SetLeft(), SetTop()</text>
+    <text x="120" y="88" class="desc" style="font-weight: bold; fill: #b91c1c;">UI ruckelt stark (&lt; 15 FPS)</text>
+    <text x="120" y="106" class="desc" style="fill: #7f1d1d;">O(N) CPU-Aufwand pro Event</text>
+  </g>
+
+  <!-- GPU Box -->
+  <g transform="translate(15, 186)">
+    <rect width="240" height="125" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #15803d;">Ansatz B: GPU MatrixTransform</text>
+    <text x="120" y="45" class="desc" style="fill: #166534;">Modell bleibt starr gezeichnet</text>
+    
+    <g transform="translate(45, 52)">
+      <rect width="150" height="38" rx="4" fill="#ffffff" stroke="#16a34a" stroke-width="1.2" />
+      <text x="75" y="24" class="math" style="fill: #15803d; text-anchor: middle;">M = [ S,  0,  dx;  0,  S,  dy ]</text>
+    </g>
+
+    <text x="120" y="110" class="desc" style="font-weight: bold; fill: #15803d;">O(1) Aufwand: Konstant 60+ FPS!</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="15" y="322" width="240" height="84" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="135" y="344" class="lbl" style="fill: #1d4ed8;">Architektur-Vorteil</text>
+  <text x="135" y="366" class="desc" style="fill: #1e40af;">Entkopplung von Geometrie &amp; Kamera</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #1e3a8a;">0 B Allokationen im Navigationstakt!</text>
+</svg>

@@ -99,7 +99,10 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
   const tempHtml = path.join(deckDir, '.tmp_lint.html');
 
   const themePath = path.resolve('Themen/fhooe.css');
-  const cmd = `npx @marp-team/marp-cli "${markdownPath}" --theme-set "${themePath}" --html --no-stdin -o "${tempHtml}"`;
+  const marpBin = process.platform === 'win32' && fs.existsSync(path.join(process.env.APPDATA || '', 'npm', 'marp.cmd'))
+    ? `"${path.join(process.env.APPDATA || '', 'npm', 'marp.cmd')}"`
+    : 'marp';
+  const cmd = `${marpBin} "${markdownPath}" --theme-set "${themePath}" --html --no-stdin -o "${tempHtml}"`;
   execSync(cmd, { stdio: 'pipe' });
 
   const page = await browser.newPage();
