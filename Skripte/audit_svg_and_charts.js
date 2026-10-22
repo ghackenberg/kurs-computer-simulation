@@ -238,7 +238,11 @@ async function auditSvgFile(browser, svgPath, options = {}) {
 
 async function main() {
   const args = process.argv.slice(2);
-  const targetDir = args[0] || 'Folien';
+  let targetDir = args[0] || 'Folien';
+  if (!fs.existsSync(targetDir) && fs.existsSync('Folien')) {
+    const match = fs.readdirSync('Folien').find(d => d.startsWith(targetDir));
+    if (match) targetDir = path.join('Folien', match);
+  }
 
   const puppeteer = getPuppeteer();
   const browser = await puppeteer.launch({
