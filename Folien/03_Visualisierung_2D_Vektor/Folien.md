@@ -491,25 +491,51 @@ $$s = \min(s_x, s_y) \quad \left[\frac{\mathrm{px}}{\mathrm{m}}\right]$$
 
 ---
 
-### Zentrierung im Viewport (Symmetrischer Freiraum)
+### Zentrierung im Viewport: Das Restplatz-Prinzip
 
 <div class="columns top">
 <div class="two">
 
-Nach der isotropen Skalierung $s = \min(s_x, s_y)$ füllt das Modell genau eine Achse komplett aus. Auf der anderen Achse verbleibt Freiraum:
+Im Zeichenbereich $(W_{\text{draw}}, H_{\text{draw}})$ füllt das Modell nach isotroper Skalierung $s = \min(s_x, s_y)$ genau eine Achse vollständig aus. Auf der anderen Achse entsteht Freiraum:
 
-- **Problem ohne Zentrierung:**
-  - Das Modell würde am linken bzw. oberen Rand kleben.
-- **Symmetrische Verteilung des Restplatzes:**
-  - Die Breiten- bzw. Höhendifferenz $\Delta W$ bzw. $\Delta H$ wird halbiert:
-    $x_{\text{off}} = \text{margin} + \frac{W_{\text{draw}} - W_{\text{world}} \cdot s}{2} \quad [\mathrm{px}]$
-    $y_{\text{off}} = \text{margin} + \frac{H_{\text{draw}} - H_{\text{world}} \cdot s}{2} \quad [\mathrm{px}]$
-- **Ergebnis:** Das Modell schwebt perfekt zentriert im Viewport.
+- **Das Problem ohne Zentrierung:**
+  - Beim naiven Platzieren bei $(\text{margin}, \text{margin})$ würde das Modell starr am linken bzw. oberen Rand kleben.
+- **Symmetrische Restplatz-Aufteilung:**
+  - Der ungenutzte Freiraum $\Delta W = W_{\text{draw}} - W_{\text{world}} \cdot s$ wird gleichmäßig halbiert:
+    $$x_{\text{off}} = \text{margin} + \frac{\Delta W}{2} \quad [\mathrm{px}]$$
+- **Wirkung:** Das Modell schwebt harmonisch im visuellen Zentrum des Viewports.
 
 </div>
 <div class="one">
 
 ![w:1000](./Diagramme/Mini_Zentrierung_Viewport.svg)
+
+</div>
+</div>
+
+---
+
+### Zentrierung: Die 2 Grenzfälle & Universelle Formel
+
+<div class="columns top">
+<div class="two">
+
+Je nach Seitenverhältnis des Modells tritt genau ein Grenzfall ein:
+
+- **Fall 1: Höhen-limitiert ($s_y \le s_x$):**  
+  Modellhöhe füllt $H_{\text{draw}}$ voll aus ($\Delta H = 0$).  
+  Restplatz horizontal: $x_{\text{off}} = \text{margin} + \frac{\Delta W}{2}, \quad y_{\text{off}} = \text{margin}$.
+- **Fall 2: Breiten-limitiert ($s_x < s_y$):**  
+  Modellbreite füllt $W_{\text{draw}}$ voll aus ($\Delta W = 0$).  
+  Restplatz vertikal: $y_{\text{off}} = \text{margin} + \frac{\Delta H}{2}, \quad x_{\text{off}} = \text{margin}$.
+
+> **Universelle C#-Formel (ohne `if`/`else`):**  
+> Für die limitierende Achse fällt $(W_{\text{draw}} - W_{\text{world}} \cdot s)$ exakt auf $0$ – derselbe Code berechnet beide Fälle!
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Zentrierung_Zwei_Faelle.svg)
 
 </div>
 </div>
