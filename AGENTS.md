@@ -160,3 +160,35 @@ Dieses Repository ist nach folgendem Schema aufgebaut:
 - Der Ordner `./Quellen/[WS|SSXX]/[Projektname]` enthält die C#-Implementierung aus einem speziellen Semester und zu einem spezifischen Thema
 - Der Ordner `./Vorlagen` enthält Vorlagen für Tikz- und Mermaid.js-Grafiken
 
+
+
+## Qualitätsprüfung & Linter (Automatisierte Prüfskripte)
+
+Zur Sicherstellung der didaktischen und visuellen Qualität existieren automatisierte Prüfskripte, die vor jedem Commit und nach jeder Folienänderung ausgeführt werden sollen:
+
+### 1. Schnellausführung via npm
+
+Alle Linter und Build-Skripte sind in der zentralen `package.json` hinterlegt:
+
+- `npm run lint` – Führt die vollständige Validierung aus (DOM-Layout, Abschnittsschema, SVG-Audits).
+- `npm run lint:slides` – Prüft alle Foliensätze auf DOM-Ebene im nativen 1280x720 Viewport (Überlauf, Kopf-/Fußzeilenabstände, SVG-Schriftgrößen via CTM).
+- `npm run lint:slides:03` – Führt die DOM-Prüfung gezielt für Kapitel 3 aus.
+- `npm run lint:sections` – Validiert alle Kapitel- und Abschnittsübersichten auf Schema-Konformität und Vorhandensein der 3:4-Hintergrundillustrationen.
+- `npm run lint:sections:03` – Prüft das Abschnittsschema gezielt für Kapitel 3.
+- `npm run lint:svg` – Standalone SVG-Audit für alle Diagramme in `Folien/` (Kontrast, Schriftgrößen, ViewBox-Konsistenz).
+- `npm run fix:svg-fonts` – Automatische Reparatur zu kleiner Schriftgrößen in SVGs.
+- `npm run export:pdf` – Exportiert alle druckreifen PDFs für Moodle (`Folien/` und `Uebungen/`).
+- `npm run export:pdf:03` – Kompiliert das druckreife Moodle-PDF gezielt für Kapitel 3.
+
+### 2. Regeln der automatisierten Qualitätsgates
+
+1. **Vertikale und horizontale Begrenzung:**
+   - Kein Element darf über die Folie ragen (`scrollHeight <= clientHeight`, `scrollWidth <= clientWidth`).
+   - Mindestabstand zu Kopf- und Fußzeile: Mindestens **12 px** Sicherheitsabstand (`minHeaderMargin`, `minFooterMargin`).
+2. **SVG- und Diagramm-Lesbarkeit:**
+   - Effektive Schriftgröße aller Textelemente im final gerenderten DOM: Mindestens **11.5 px** (`minFontSize`).
+   - Die Messung erfolgt über die echte Browser-Transformationsmatrix (`getScreenCTM()`).
+3. **Abschnitts- und Kapitelschema:**
+   - Jedes Kapitel besitzt eine Übersicht mit `![bg right](./Titelbild.jpg)` (im 3:4-Hochformat, $896 \times 1200\,\text{px}$) und der Standard-Einleitung `Dieses Kapitel umfasst die folgenden Abschnitte:`.
+   - Jeder Abschnitt `## N.M:` besitzt eine Übersicht mit `![bg right](./Illustrationen/Abschnitt_M.jpg)` (im 3:4-Hochformat) und der Standard-Einleitung `Dieser Abschnitt umfasst die folgenden Inhalte:`.
+   - Die Bildinhalte müssen **minimalistisch**, **textfrei** und **auf eine einzige, klare Metapher fokussiert** sein.

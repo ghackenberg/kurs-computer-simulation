@@ -1,0 +1,23 @@
+{
+  "name": "kurs-computer-simulation",
+  "version": "1.0.0",
+  "description": "Lehrmaterialien für Systemsimulation / Digitaler Zwilling an der FH Oberösterreich Campus Wels",
+  "private": true,
+  "scripts": {
+    "lint": "npm run lint:slides && npm run lint:sections && npm run lint:svg",
+    "lint:slides": "node Skripte/lint_slides_dom.js",
+    "lint:slides:03": "node Skripte/lint_slides_dom.js 03",
+    "lint:sections": "node Skripte/lint_section_slides.js",
+    "lint:sections:03": "node Skripte/lint_section_slides.js 03",
+    "lint:svg": "node Skripte/audit_svg_and_charts.js Folien",
+    "lint:svg:03": "node Skripte/audit_svg_and_charts.js Folien/03_Visualisierung_2D_Vektor",
+    "fix:svg-fonts": "node Skripte/apply_svg_font_fixes.js",
+    "export:pdf": "node Skripte/export_to_pdf.js --all",
+    "export:pdf:slides": "node Skripte/export_to_pdf.js --slides",
+    "export:pdf:exercises": "node Skripte/export_to_pdf.js --exercises",
+    "export:pdf:03": "node Skripte/export_to_pdf.js -c 03"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^4.1.2"
+  }
+}
