@@ -21,7 +21,7 @@
     <!-- Y-Achse nach oben -->
     <line x1="25" y1="125" x2="25" y2="35" stroke="#059669" stroke-width="2.5" />
     <polygon points="25,30 20,40 30,40" fill="#059669" />
-    <text x="15" y="42" class="lbl" style="fill: #047857;">+Y</text>
+    <text x="42" y="38" class="lbl" style="fill: #047857;">+Y</text>
 
     <line x1="25" y1="125" x2="95" y2="125" stroke="#059669" stroke-width="2" />
     <text x="90" y="140" class="desc" style="fill: #065f46;">+X</text>
@@ -43,7 +43,7 @@
 
     <line x1="25" y1="35" x2="25" y2="125" stroke="#dc2626" stroke-width="2.5" />
     <polygon points="25,130 20,120 30,120" fill="#dc2626" />
-    <text x="15" y="120" class="lbl" style="fill: #b91c1c;">+Y</text>
+    <text x="42" y="128" class="lbl" style="fill: #b91c1c;">+Y</text>
     <text x="60" y="90" class="lbl" style="fill: #dc2626;">Unten</text>
   </g>
 

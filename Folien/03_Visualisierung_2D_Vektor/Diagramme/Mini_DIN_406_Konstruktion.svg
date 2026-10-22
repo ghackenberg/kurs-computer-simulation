@@ -43,7 +43,7 @@
 
     <!-- Beschriftungen der Zonen (rechts der Maßhilfslinie) -->
     <text x="46" y="58" class="desc" style="font-size: 11.5px; fill: #64748b;">Gap 4px</text>
-    <text x="46" y="134" class="desc" style="font-size: 11.5px; fill: #64748b;">Überstand 8px</text>
+    <text x="46" y="142" class="desc" style="font-size: 11.5px; fill: #64748b;">Überstand 8px</text>
   </g>
 
   <!-- Konstruktionsschritte Legende -->

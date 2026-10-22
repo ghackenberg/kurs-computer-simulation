@@ -26,10 +26,10 @@
   <!-- Shape 2: Polygon & Ellipse -->
   <g transform="translate(15, 126)">
     <rect width="240" height="74" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-    <circle cx="35" cy="37" r="16" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2" />
-    <polygon points="90,52 72,22 108,22" fill="#fde68a" stroke="#d97706" stroke-width="2" />
-    <text x="160" y="30" class="code" style="text-anchor: middle;">Ellipse, Polygon</text>
-    <text x="160" y="52" class="desc" style="font-weight: bold; fill: #4338ca; text-anchor: middle;">Knoten &amp; Pfeile</text>
+    <circle cx="28" cy="37" r="14" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2" />
+    <polygon points="72,50 56,24 88,24" fill="#fde68a" stroke="#d97706" stroke-width="2" />
+    <text x="164" y="30" class="code" style="text-anchor: middle;">Ellipse, Polygon</text>
+    <text x="164" y="52" class="desc" style="font-weight: bold; fill: #4338ca; text-anchor: middle;">Knoten &amp; Pfeile</text>
   </g>
 
   <!-- Shape 3: Path -->

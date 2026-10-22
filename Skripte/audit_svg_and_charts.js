@@ -436,6 +436,85 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       });
     });
 
+    // 5d. Unshielded Text-Polygon Collisions (Arrow tips and geometric polygons intersecting text)
+    const svgPolygons = Array.from(document.querySelectorAll('polygon')).map(poly => {
+      const ctm = poly.getScreenCTM();
+      if (!ctm) return null;
+      const pointsAttr = poly.getAttribute('points') || '';
+      const rawPoints = pointsAttr.trim().split(/[\s,]+/).map(parseFloat);
+      const vertices = [];
+      for (let i = 0; i < rawPoints.length - 1; i += 2) {
+        const x = rawPoints[i], y = rawPoints[i + 1];
+        if (!isNaN(x) && !isNaN(y)) {
+          vertices.push({
+            x: ctm.a * x + ctm.c * y + ctm.e,
+            y: ctm.b * x + ctm.d * y + ctm.f
+          });
+        }
+      }
+      return { el: poly, vertices };
+    }).filter(p => p && p.vertices.length >= 3);
+
+    const polyCollisionSeen = new Set();
+    texts.forEach(t => {
+      svgPolygons.forEach(poly => {
+        const V = poly.vertices;
+        let hit = false;
+        let hitPt = null;
+
+        for (let i = 0; i < V.length; i++) {
+          const p1 = V[i];
+          const p2 = V[(i + 1) % V.length];
+          const clip = clipSegmentAABB(p1.x, p1.y, p2.x, p2.y, t.rect.left, t.rect.top, t.rect.right, t.rect.bottom);
+          if (clip && clip.length >= 3) {
+            hit = true;
+            hitPt = { x: (clip.pEnter.x + clip.pExit.x) / 2, y: (clip.pEnter.y + clip.pExit.y) / 2 };
+            break;
+          }
+        }
+
+        if (!hit) {
+          for (const v of V) {
+            if (v.x >= t.rect.left && v.x <= t.rect.right && v.y >= t.rect.top && v.y <= t.rect.bottom) {
+              hit = true;
+              hitPt = { x: v.x, y: v.y };
+              break;
+            }
+          }
+        }
+
+        if (hit && hitPt) {
+          const els = document.elementsFromPoint(hitPt.x, hitPt.y);
+          const textIdx = els.indexOf(t.el);
+          const polyIdx = els.indexOf(poly.el);
+
+          let shielded = false;
+          if (textIdx !== -1 && polyIdx !== -1) {
+            for (let i = Math.min(textIdx, polyIdx) + 1; i < Math.max(textIdx, polyIdx); i++) {
+              const el = els[i];
+              const style = window.getComputedStyle(el);
+              const fill = style.fill;
+              if (fill && fill !== 'none' && fill !== 'transparent' && style.opacity !== '0' && style.fillOpacity !== '0') {
+                shielded = true;
+                break;
+              }
+            }
+          }
+
+          if (!shielded) {
+            const key = t.text + '_poly';
+            if (!polyCollisionSeen.has(key)) {
+              polyCollisionSeen.add(key);
+              issues.push({
+                type: 'TEXT_POLYGON_COLLISION',
+                message: `Unshielded polygon/arrow tip intersects text "${t.text.slice(0, 25)}"`
+              });
+            }
+          }
+        }
+      });
+    });
+
     // 6. Minimum Font Size Check (< 11px)
     texts.forEach(t => {
       const style = window.getComputedStyle(t.el);
