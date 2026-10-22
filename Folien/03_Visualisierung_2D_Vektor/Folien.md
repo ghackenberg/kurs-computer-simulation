@@ -165,37 +165,64 @@ myCanvas.Children.Add(member);
 
 ---
 
-### Attached Properties: Warum `Canvas.Left`?
+### Attached Properties: Warum kein `myNode.Left`?
 
 <div class="columns top">
 <div class="two">
 
-Ein fundamentales Architekturprinzip von WPF:
+Warum deklariert die Klasse `Ellipse` nicht einfach `myNode.Left = 100`?
 
-- Ein Shape (`Line`, `Ellipse`) besitzt von sich aus **keine** Eigenschaften namens `Left` oder `Top`.
-- In einem `Grid` oder `StackPanel` wären absolute Koordinaten sinnlos.
-- Der `Canvas` stellt diese Eigenschaften als **angehängte Abhängigkeitseigenschaften** bereit:
-
-```csharp
-// XAML:
-<Ellipse Canvas.Left="100" Canvas.Top="50" Width="10" Height="10"/>
-
-// C#-Code-Behind:
-Canvas.SetLeft(myNode, 100.0);
-Canvas.SetTop(myNode, 50.0);
-double x = Canvas.GetLeft(myNode);
-```
+- **Kopplung an Layout-Container:** Ein Element kann in verschiedensten Panels liegen (`Canvas`, `Grid`, `StackPanel`, `DockPanel`).
+- **Keine universellen Koordinaten:** Im `Grid` braucht man Zeilen/Spalten, im `StackPanel` gibt es gar keine Koordinaten.
+- **Speicher- & Architekturfalle:** Müsste `UIElement` jede denkbare Container-Eigenschaft als Feld besitzen, wäre jedes Objekt speicherintensiv überfrachtet.
+- **Die WPF-Lösung:** Der übergeordnete **Container** definiert die Eigenschaft (`Canvas.Left`), das **Kindelement** trägt nur den Wert.
 
 </div>
 <div class="one">
 
-> **Architektur-Vorteil:**  
-> Strikte Entkopplung zwischen der visuellen Form und der Layout-Strategie des übergeordneten Containers!
+![w:1000](./Diagramme/Mini_Attached_Properties.svg)
 
-<br>
+</div>
+</div>
 
-> **Praxis-Tipp:**  
-> Positionsänderungen über `Canvas.SetLeft()` lösen einen lokalen Layout-Cycle aus.
+---
+
+### Attached Properties: Hinter den Kulissen (C# & XAML)
+
+<div class="columns top">
+<div class="one">
+
+**1. Der interne Property-Store:**
+Jedes `DependencyObject` besitzt einen internen Schlüssel-Wert-Speicher:
+- `Canvas.SetLeft(node, 100.0)` ruft intern auf:
+  ```csharp
+  node.SetValue(Canvas.LeftProperty, 100.0);
+  ```
+- Es existiert kein Feld `Left` in `Ellipse` – der Wert ist an `node` assoziiert.
+
+**2. Syntax-Gegenüberstellung:**
+- **XAML:** `<Ellipse Canvas.Left="100" Canvas.Top="50"/>`
+- **C#:** `Canvas.SetLeft(node, 100.0);`
+
+</div>
+<div class="one">
+
+**3. Wie nutzt der Canvas den Wert?**
+In Phase 2 des Layout-Cycles (`Arrange`) fragt der `Canvas` die Werte jedes Kindes ab:
+
+```csharp
+foreach (UIElement child in Children)
+{
+    double x = Canvas.GetLeft(child);
+    double y = Canvas.GetTop(child);
+    child.Arrange(new Rect(x, y, 
+        child.DesiredSize.Width, 
+        child.DesiredSize.Height));
+}
+```
+
+> **Performance-Tipp:**  
+> `Canvas.SetLeft()` markiert gezielt nur das Layout des Canvas als verändert (`AffectsArrange`).
 
 </div>
 </div>
