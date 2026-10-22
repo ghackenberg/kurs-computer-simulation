@@ -373,6 +373,69 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       });
     });
 
+    // 5c. Unshielded Text-Circle Collisions (Marker/node circles overlapping text without opaque background)
+    const svgCircles = Array.from(document.querySelectorAll('circle')).map(c => {
+      const ctm = c.getScreenCTM();
+      if (!ctm) return null;
+      const cx = parseFloat(c.getAttribute('cx') || '0');
+      const cy = parseFloat(c.getAttribute('cy') || '0');
+      const r = parseFloat(c.getAttribute('r') || '0');
+      const center = { x: ctm.a * cx + ctm.c * cy + ctm.e, y: ctm.b * cx + ctm.d * cy + ctm.f };
+      const scale = Math.hypot(ctm.a, ctm.b);
+      const rScreen = r * scale;
+      const style = window.getComputedStyle(c);
+      const strokeWidth = parseFloat(style.strokeWidth || '0') * scale;
+      return { el: c, center, r: rScreen, strokeWidth, effectiveR: rScreen + strokeWidth / 2 };
+    }).filter(c => c && c.r > 0);
+
+    const circleCollisionSeen = new Set();
+    texts.forEach(t => {
+      svgCircles.forEach(c => {
+        const px = Math.max(t.rect.left, Math.min(c.center.x, t.rect.right));
+        const py = Math.max(t.rect.top, Math.min(c.center.y, t.rect.bottom));
+        const dist = Math.hypot(c.center.x - px, c.center.y - py);
+
+        if (dist <= c.effectiveR) {
+          // Check if text is intentionally contained inside a large badge/node circle
+          const textInside = (
+            t.rect.left >= c.center.x - c.effectiveR &&
+            t.rect.right <= c.center.x + c.effectiveR &&
+            t.rect.top >= c.center.y - c.effectiveR &&
+            t.rect.bottom <= c.center.y + c.effectiveR
+          );
+          if (textInside) return;
+
+          const els = document.elementsFromPoint(px, py);
+          const textIdx = els.indexOf(t.el);
+          const circleIdx = els.indexOf(c.el);
+
+          let shielded = false;
+          if (textIdx !== -1 && circleIdx !== -1) {
+            for (let i = Math.min(textIdx, circleIdx) + 1; i < Math.max(textIdx, circleIdx); i++) {
+              const el = els[i];
+              const style = window.getComputedStyle(el);
+              const fill = style.fill;
+              if (fill && fill !== 'none' && fill !== 'transparent' && style.opacity !== '0' && style.fillOpacity !== '0') {
+                shielded = true;
+                break;
+              }
+            }
+          }
+
+          if (!shielded) {
+            const key = t.text + '_circle';
+            if (!circleCollisionSeen.has(key)) {
+              circleCollisionSeen.add(key);
+              issues.push({
+                type: 'TEXT_CIRCLE_COLLISION',
+                message: `Unshielded circle marker overlaps text "${t.text.slice(0, 25)}"`
+              });
+            }
+          }
+        }
+      });
+    });
+
     // 6. Minimum Font Size Check (< 11px)
     texts.forEach(t => {
       const style = window.getComputedStyle(t.el);

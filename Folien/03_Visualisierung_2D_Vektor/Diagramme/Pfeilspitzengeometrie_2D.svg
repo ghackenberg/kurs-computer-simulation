@@ -85,7 +85,10 @@
   <!-- Eckpunkte & Beschriftung -->
   <!-- Knotenpunkt P_node -->
   <circle cx="120" cy="340" r="6" fill="#FFFFFF" stroke="#004B96" stroke-width="3" />
-  <text x="20" y="335" font-size="15" font-weight="700" fill="#1E293B">P_node (Start)</text>
+  <g transform="translate(10, 305)">
+    <rect x="0" y="0" width="102" height="22" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="51" y="16" font-size="13" font-weight="700" fill="#1E293B" text-anchor="middle">P_node (Start)</text>
+  </g>
 
   <!-- Pfeilspitze P_tip -->
   <circle cx="450" cy="160" r="5" fill="#DC2626" stroke="#FFFFFF" stroke-width="2" />

@@ -21,7 +21,7 @@
     <g transform="translate(150, 110)">
       <circle cx="0" cy="0" r="16" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="2,2" />
       <circle cx="0" cy="0" r="3" fill="#dc2626" />
-      <text x="8" y="-8" class="math" style="fill: #991b1b;">P_cursor</text>
+      <text x="20" y="-8" class="math" style="fill: #991b1b;">P_cursor</text>
       <polygon points="12,12 12,28 17,23 23,32 26,30 20,21 27,20" fill="#1e293b" stroke="#ffffff" stroke-width="1" />
     </g>
 

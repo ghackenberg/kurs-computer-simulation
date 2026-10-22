@@ -18,7 +18,7 @@
     <rect width="240" height="135" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
     <text x="120" y="22" class="lbl" style="fill: #b91c1c;">1. Naiv: s_x ≠ s_y (FALSCH)</text>
 
-    <g transform="translate(25, 32)">
+    <g transform="translate(25, 20)">
       <ellipse cx="50" cy="45" rx="42" ry="20" fill="#fee2e2" stroke="#dc2626" stroke-width="2" />
       <polygon points="120,65 190,65 155,20" fill="none" stroke="#dc2626" stroke-width="2" />
       <circle cx="155" cy="20" r="3" fill="#991b1b" />
@@ -35,7 +35,7 @@
     <rect width="240" height="135" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
     <text x="120" y="22" class="lbl" style="fill: #15803d;">2. Isotrop: s = min(s_x, s_y)</text>
 
-    <g transform="translate(25, 32)">
+    <g transform="translate(25, 20)">
       <circle cx="50" cy="45" r="28" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
       <polygon points="120,70 190,70 155,20" fill="none" stroke="#16a34a" stroke-width="2" />
       <circle cx="155" cy="20" r="3" fill="#15803d" />
