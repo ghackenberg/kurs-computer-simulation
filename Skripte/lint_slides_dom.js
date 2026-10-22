@@ -92,6 +92,8 @@ function parseSvgMetrics(svgPath) {
 async function lintSlideDeck(markdownPath, browser, options = {}) {
   const minFontSize = options.minFontSize || 11.5;
   const maxOverflow = options.maxOverflow || 2; // Tolerance 2px for subpixel layout
+  const minHeaderMargin = options.minHeaderMargin !== undefined ? options.minHeaderMargin : 12;
+  const minFooterMargin = options.minFooterMargin !== undefined ? options.minFooterMargin : 12;
 
   const deckDir = path.dirname(markdownPath);
   const deckName = path.basename(deckDir);
@@ -138,20 +140,31 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       const clientWidth = sec.clientWidth;
       const scrollWidth = sec.scrollWidth;
 
+      // Find bottom of header relative to section
+      const header = sec.querySelector('header');
+      const headerBottom = header ? (header.getBoundingClientRect().bottom - sec.getBoundingClientRect().top) : 0;
+
       // Find top of footer relative to section
       const footer = sec.querySelector('footer');
       const footerTop = footer ? (footer.getBoundingClientRect().top - sec.getBoundingClientRect().top) : clientHeight;
 
-      // Find lowest content edge
+      // Find highest and lowest content edge
+      const contentChildren = Array.from(sec.children).filter(child => child.tagName !== 'HEADER' && child.tagName !== 'FOOTER');
+      let contentTop = clientHeight;
       let contentBottom = 0;
-      Array.from(sec.children).forEach(child => {
-        if (child.tagName === 'HEADER' || child.tagName === 'FOOTER') return;
+
+      contentChildren.forEach(child => {
         const rect = child.getBoundingClientRect();
+        const topRel = rect.top - sec.getBoundingClientRect().top;
         const bottomRel = rect.bottom - sec.getBoundingClientRect().top;
-        if (bottomRel > contentBottom) {
-          contentBottom = bottomRel;
-        }
+        if (topRel < contentTop) contentTop = topRel;
+        if (bottomRel > contentBottom) contentBottom = bottomRel;
       });
+
+      if (contentChildren.length === 0) {
+        contentTop = 0;
+        contentBottom = 0;
+      }
 
       // Images in section
       const images = Array.from(sec.querySelectorAll('img')).map(img => {
@@ -179,8 +192,10 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         scrollHeight,
         clientWidth,
         scrollWidth,
-        contentBottom,
+        headerBottom,
         footerTop,
+        contentTop,
+        contentBottom,
         images
       });
     });
@@ -273,10 +288,14 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
   const slides = [];
   for (const s of rawSlides) {
     const vOverflow = Math.max(0, s.scrollHeight - s.clientHeight);
-    const footerCollision = Math.max(0, s.contentBottom - s.footerTop);
-    const effectiveVOverflow = Math.max(vOverflow, footerCollision);
-
     const hOverflow = Math.max(0, s.scrollWidth - s.clientWidth);
+
+    const headerMargin = s.contentTop > 0 ? (s.contentTop - s.headerBottom) : minHeaderMargin;
+    const footerMargin = s.contentBottom > 0 ? (s.footerTop - s.contentBottom) : minFooterMargin;
+
+    const hasHeaderCollision = headerMargin < minHeaderMargin;
+    const hasFooterCollision = footerMargin < minFooterMargin;
+    const effectiveVOverflow = Math.max(vOverflow, Math.max(0, -footerMargin));
 
     const svgIssues = [];
     for (const img of s.images) {
@@ -304,10 +323,14 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       ...s,
       effectiveVOverflow: Math.round(effectiveVOverflow),
       hOverflow: Math.round(hOverflow),
+      headerMargin: Math.round(headerMargin),
+      footerMargin: Math.round(footerMargin),
       svgIssues,
-      hasError: hasVOverflow || hasHOverflow || hasSvgIssues,
+      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssues,
       hasVOverflow,
       hasHOverflow,
+      hasHeaderCollision,
+      hasFooterCollision,
       hasSvgIssues
     });
   }
@@ -326,9 +349,16 @@ async function main() {
   let target = 'all';
   let minFontSize = 11.5;
 
+  let minHeaderMargin = 12;
+  let minFooterMargin = 12;
+
   args.forEach(arg => {
     if (arg.startsWith('--min-font-size=')) {
       minFontSize = parseFloat(arg.split('=')[1]);
+    } else if (arg.startsWith('--min-header-margin=')) {
+      minHeaderMargin = parseFloat(arg.split('=')[1]);
+    } else if (arg.startsWith('--min-footer-margin=')) {
+      minFooterMargin = parseFloat(arg.split('=')[1]);
     } else if (!arg.startsWith('--')) {
       target = arg;
     }
@@ -378,7 +408,7 @@ async function main() {
   for (const deck of decks) {
     const deckName = path.basename(path.dirname(deck));
     process.stdout.write(`Inspecting ${deckName} ... `);
-    const res = await lintSlideDeck(deck, browser, { minFontSize });
+    const res = await lintSlideDeck(deck, browser, { minFontSize, minHeaderMargin, minFooterMargin });
     allResults.push(res);
     grandTotalSlides += res.totalSlides;
     grandTotalErrors += res.errorSlides.length;
@@ -391,6 +421,20 @@ async function main() {
         const issues = [];
         if (err.hasVOverflow) issues.push(`Vertikaler Überlauf: +${err.effectiveVOverflow}px`);
         if (err.hasHOverflow) issues.push(`Horizontaler Überlauf: +${err.hOverflow}px`);
+        if (err.hasHeaderCollision) {
+          if (err.headerMargin < 0) {
+            issues.push(`Kopfzeilen-Überdeckung: Überlappung um ${Math.abs(err.headerMargin)}px`);
+          } else {
+            issues.push(`Kopfzeilen-Abstand zu gering: ${err.headerMargin}px (Mindestabstand: ${minHeaderMargin}px)`);
+          }
+        }
+        if (err.hasFooterCollision) {
+          if (err.footerMargin < 0) {
+            issues.push(`Fußzeilen-Überdeckung: Überlappung um ${Math.abs(err.footerMargin)}px`);
+          } else {
+            issues.push(`Fußzeilen-Abstand zu gering: ${err.footerMargin}px (Mindestabstand: ${minFooterMargin}px)`);
+          }
+        }
         if (err.hasSvgIssues) {
           err.svgIssues.forEach(s => {
             const detail = s.sampleSmallText ? ` [z.B. "${s.sampleSmallText.text}": ${s.sampleSmallText.effectivePx}px, deklariert: ${s.sampleSmallText.declFont}px]` : '';

@@ -505,19 +505,15 @@ public class Transform2D
 ```csharp
 public class Transform2D
 {
-    // ... Zustand aus Update() ...
+    // ... Bounding-Box & Skalierungszustand aus Update() ...
 
-    /// <summary>
-    /// Wandelt Weltpunkt (X_w, Y_w) [m] in Canvas-Pixel (x_s, y_s) [px] um.
-    /// </summary>
+    // Wandelt Weltpunkt (X_w, Y_w) [m] in Canvas-Pixel (x_s, y_s) [px] um
     public Point WorldToScreen(double xW, double yW) => new(
         OffsetX + (xW - XMin) * Scale,
         OffsetY + (YMax - yW) * Scale // Y-Achsen-Invertierung!
     );
 
-    /// <summary>
-    /// Wandelt Canvas-Pixel (x_s, y_s) [px] zurück in Weltkoordinaten [m].
-    /// </summary>
+    // Wandelt Canvas-Pixel (x_s, y_s) [px] zurück in Weltkoordinaten [m]
     public (double Xw, double Yw) ScreenToWorld(double xS, double yS) => (
         XMin + (xS - OffsetX) / Scale,
         YMax - (yS - OffsetY) / Scale
@@ -809,20 +805,18 @@ private void OnMouseWheel(object sender, MouseWheelEventArgs e)
 Damit die Maus bei schnellen Wisch-Bewegungen nicht abreißt, wird **`CaptureMouse()`** genutzt:
 
 ```csharp
-private Point _lastMousePos;
+private Point _lastPos;
 private bool _isPanning;
 
 private void OnMouseDown(object sender, MouseButtonEventArgs e)
 {
-    if (e.MiddleButton == MouseButtonState.Pressed || 
-       (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.Space)))
-    {
-        _lastMousePos = e.GetPosition(this);
-        _isPanning = true;
-        ((IInputElement)sender).CaptureMouse();
-        Cursor = Cursors.SizeAll;
-    }
+    if (e.MiddleButton != MouseButtonState.Pressed && !Keyboard.IsKeyDown(Key.Space)) return;
+    _lastPos = e.GetPosition(this);
+    _isPanning = true;
+    ((IInputElement)sender).CaptureMouse();
+    Cursor = Cursors.SizeAll;
 }
+
 private void OnMouseUp(object sender, MouseButtonEventArgs e)
 {
     _isPanning = false;
@@ -847,10 +841,7 @@ private void OnMouseMove(object sender, MouseEventArgs e)
     _lastMousePos = currentPos;
 
     Matrix m = CanvasMatrixTransform.Matrix;
-    
-    // Verschiebt den Viewport hardwarebeschleunigt um delta
-    m.Translate(delta.X, delta.Y);
-    
+    m.Translate(delta.X, delta.Y); // Hardwarebeschleunigter Pan
     CanvasMatrixTransform.Matrix = m;
 }
 ```
@@ -928,30 +919,31 @@ private void Redraw()
 <div class="columns top">
 <div class="one">
 
-### 1. `MouseDown` auf Knoten
+#### 1. `MouseDown` auf Knoten
 - Knoten per Hit-Testing erfassen:  
   `_draggedNode = hitNode;`
 - Auto-Fit Transformation wird **eingefroren**.
 - Maus fangen mit `CaptureMouse()`.
 
-### 2. `MouseMove` (Dragging)
-- Bildschirm-Mausposition in Weltkoordinaten $[\mathrm{m}]$ umrechnen (`ScreenToWorld`).
+#### 2. `MouseMove` (Dragging)
+- Bildschirmkoordinaten in Welt $[\mathrm{m}]$ umrechnen (`ScreenToWorld`).
 - Knotenkoordinaten in Welt nachführen:  
   `_draggedNode.X = worldX;`
-- Canvas zeichnet mit eingefrorenem Maßstab $\implies$ **perfekt stabiles Ziehen ohne Zittern!**
+- Canvas zeichnet mit eingefrorenem Maßstab $\implies$ **kein Zittern!**
 
 </div>
 <div class="one">
 
-### 3. `MouseUp` (Abschluss)
+#### 3. `MouseUp` (Abschluss)
 - `_draggedNode = null;`
 - `ReleaseMouseCapture();`
 - Erst jetzt darf `Redraw()` die Bounding Box aktualisieren und das Modell neu einpassen.
 
-<br>
-
 > **Sprint-Bezug:**  
 > Genau diesen Bugfix setzt ihr in Sprint-Aufgabe 4 live in [`VectorTrussCanvas`](../../Uebungen/Termin_03_Vektorgrafik_Canvas/Vorlage/VectorTrussCanvas/MainWindow.xaml.cs) um!
+
+</div>
+</div>
 
 </div>
 </div>
@@ -1213,7 +1205,6 @@ public class SimpleRenderCanvas : FrameworkElement
 
         var pen = new Pen(Brushes.Black, 1.0);
         pen.Freeze();
-
         foreach (var bar in Data.Bars)
             dc.DrawLine(pen, bar.P1, bar.P2);
     }
@@ -1260,31 +1251,26 @@ public class SimpleRenderCanvas : FrameworkElement
 
 ### Laborübung Termin 03: Vektorgrafik auf Canvas
 
-Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details siehe [Aufgabenblatt 03](../../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md):
+Vertiefende Hausübung (10 Pkt., Wahlmodell Track A oder B) – Details siehe [Aufgabenblatt 03](../../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md):
 
 <div class="columns">
 <div class="two">
 
-#### Track A: Industrie & Mechatronik
-**2D-CAD Fachwerkträger-Viewer (Rein geometrisch!)**
+#### Track A: CAD-Fachwerkträger
 - Pratt-/Warren-Träger (min. 8 Knoten, 13 Stäbe)
 - Auto-Fit BoundingBox mit isotroper Skalierung
 - Normgerechte DIN-406 Bemaßungsketten
-- Lager- und Lastpfeile (analytische Geometrie)
-- Drag-and-Drop der Knoten mit Maustracking
-- *(Hinweis: Statische FEM-Berechnung folgt in Termin 07!)*
+- Analytische Pfeilspitzen für Lager- und Lastvektoren
+- Drag & Drop der Knoten mit interaktivem Maustracking
 
 </div>
 <div class="two">
 
-#### Track B: Simulation Game
-**Space Radar ODER Blueprint Sketcher**
-- **Option B.1 Space Radar:** Vektorschiff mit Pfeilspitzen für $\vec{v}$ und $\vec{a}$, Distanzringe, Kursprädiktor
-- **Option B.2 Blueprint Sketcher:** Interaktiver CAD-Editor mit Grid-Snapping, Stab-Aufspannen & Lagern
+#### Track B: Radar / Blueprint-Sketcher
+- **Option B.1 Space Radar:** Vektorschiff mit Pfeilspitzen für $\vec{v}, \vec{a}$, Distanzringe & Kursprädiktor
+- **Option B.2 Blueprint Sketcher:** Interaktiver CAD-Editor mit Grid-Snapping & Stab-Aufspannen
 - Stufenloses Pan & Zoom via `MatrixTransform`
-- *(Hinweis: Reine CAD-/Vektorgeometrie ohne FEM-Solver!)*
+- Saubere WPF Canvas / `DrawingVisual`-Architektur
 
 </div>
 </div>
-
-> Saubere WPF Canvas / `DrawingVisual` Architektur – Wahlmodell: Track A oder Track B.
