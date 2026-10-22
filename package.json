@@ -45,6 +45,7 @@
     "lint:svg:10": "node Skripte/audit_svg_and_charts.js 10",
     "lint:svg:11": "node Skripte/audit_svg_and_charts.js 11",
     "fix:svg-fonts": "node Skripte/apply_svg_font_fixes.js",
+    "generate:plots": "dotnet run --project Werkzeuge/GrafikGenerator/GrafikGenerator.csproj",
     "export:pdf": "node Skripte/export_to_pdf.js --all",
     "export:pdf:slides": "node Skripte/export_to_pdf.js --slides",
     "export:pdf:exercises": "node Skripte/export_to_pdf.js --exercises",

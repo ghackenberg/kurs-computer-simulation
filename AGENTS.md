@@ -158,7 +158,11 @@ Dieses Repository ist nach folgendem Schema aufgebaut:
 - Der Ordner `./Quellen/[WSXX]` enthält die C#-Implementierung aus dem Wintersemester `XX`
 - Der Ordner `./Quellen/[SSXX]` enthält die C#-Implementierung aus dem Sommersemester `XX`
 - Der Ordner `./Quellen/[WS|SSXX]/[Projektname]` enthält die C#-Implementierung aus einem speziellen Semester und zu einem spezifischen Thema
+- Der Ordner `./Uebungen` enthält die Aufgaben- und Übungsblätter nach Terminen geordnet (`[XX_Uebung_Bezeichnung]`)
+- Der Ordner `./Export` enthält alle druckreifen, exportierten Moodle-PDFs (Foliensätze und Übungsblätter)
+- Der Ordner `./Skripte` enthält plattformunabhängige Node.js-basierte Prüf- und Buildskripte (Linter für DOM, Abschnitte, SVGs sowie PDF-Export)
 - Der Ordner `./Vorlagen` enthält Vorlagen für Tikz- und Mermaid.js-Grafiken
+- Der Ordner `./Werkzeuge` enthält interne Entwickler- und Generierungswerkzeuge (z.B. den C#-Grafikgenerator in `./Werkzeuge/GrafikGenerator`)
 
 
 
@@ -168,17 +172,26 @@ Zur Sicherstellung der didaktischen und visuellen Qualität existieren automatis
 
 ### 1. Schnellausführung via npm
 
-Alle Linter und Build-Skripte sind in der zentralen `package.json` hinterlegt:
+Alle Linter und Build-Skripte sind in der zentralen `package.json` hinterlegt (frühere PowerShell-Skripte wurden zugunsten plattformunabhängiger npm-Befehle vollständig abgelöst):
 
-- `npm run lint` – Führt die vollständige Validierung aus (DOM-Layout, Abschnittsschema, SVG-Audits).
-- `npm run lint:slides` – Prüft alle Foliensätze auf DOM-Ebene im nativen 1280x720 Viewport (Überlauf, Kopf-/Fußzeilenabstände, SVG-Schriftgrößen via CTM).
-- `npm run lint:slides:03` – Führt die DOM-Prüfung gezielt für Kapitel 3 aus.
-- `npm run lint:sections` – Validiert alle Kapitel- und Abschnittsübersichten auf Schema-Konformität und Vorhandensein der 3:4-Hintergrundillustrationen.
-- `npm run lint:sections:03` – Prüft das Abschnittsschema gezielt für Kapitel 3.
-- `npm run lint:svg` – Standalone SVG-Audit für alle Diagramme in `Folien/` (Kontrast, Schriftgrößen, ViewBox-Konsistenz).
-- `npm run fix:svg-fonts` – Automatische Reparatur zu kleiner Schriftgrößen in SVGs.
-- `npm run export:pdf` – Exportiert alle druckreifen PDFs für Moodle (`Folien/` und `Uebungen/`).
-- `npm run export:pdf:03` – Kompiliert das druckreife Moodle-PDF gezielt für Kapitel 3.
+- **Gesamter Prüflauf:**
+  - `npm run lint` – Führt die vollständige Validierung aus (DOM-Layout, Abschnittsschema, SVG-Audits).
+- **DOM- & Layoutprüfung (Überlauf, Sicherheitsabstände, effektive Schriftgrößen via CTM):**
+  - `npm run lint:slides` – Prüft alle Foliensätze.
+  - `npm run lint:slides:[XX]` – Prüft gezielt Kapitel `XX` (`00` bis `11`, z.B. `npm run lint:slides:03`).
+- **Abschnitts- & Bildschema (3:4-Hintergrundbilder, Intro-Formulierungen, Agenda-Abgleich):**
+  - `npm run lint:sections` – Prüft alle Kapitel.
+  - `npm run lint:sections:[XX]` – Prüft gezielt Kapitel `XX` (`00` bis `11`, z.B. `npm run lint:sections:03`).
+- **SVG-Audit & Typografie-Reparatur:**
+  - `npm run lint:svg` – Standalone SVG-Audit für alle Diagramme in `Folien/`.
+  - `npm run lint:svg:[XX]` – SVG-Audit gezielt für Kapitel `XX` (`00` bis `11`, z.B. `npm run lint:svg:03`).
+  - `npm run fix:svg-fonts` – Automatische Reparatur zu kleiner Schriftgrößen in SVGs.
+- **Druckreifer PDF-Export (Moodle):**
+  - `npm run export:pdf` – Exportiert alle druckreifen PDFs für Moodle (`Folien/` und `Uebungen/`).
+  - `npm run export:pdf:slides` – Exportiert nur alle Foliensätze.
+  - `npm run export:pdf:exercises` – Exportiert nur alle Übungsblätter.
+  - `npm run export:pdf:[XX]` – Kompiliert das Moodle-PDF gezielt für Kapitel `XX` (`00` bis `11`, z.B. `npm run export:pdf:03`).
+  - `npm run export:pdf:uebung:[XX]` – Kompiliert das Moodle-PDF gezielt für Übungsblatt `XX` (`01` bis `10`, z.B. `npm run export:pdf:uebung:03`).
 
 ### 2. Regeln der automatisierten Qualitätsgates
 

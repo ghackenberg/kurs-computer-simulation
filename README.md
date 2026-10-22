@@ -51,9 +51,9 @@ dotnet test Quellen/Quellen.sln -c Release
 
 ## Qualitätssicherung & Folienvalidierung
 
-Zur Sicherstellung höchster Beamer- und Lesbarkeitsergonomie verfügt das Repository über einen automatisierten Headless-Chromium-Linter:
+Zur Sicherstellung höchster Beamer- und Lesbarkeitsergonomie verfügt das Repository über automatisierte Prüfskripte via npm:
 
-```powershell
-# Automatische Prüfung aller 12 Foliensätze auf vertikalen Überlauf und minimale Schriftgrößen
-pwsh Skripte/Test-SlideLayout.ps1
+```bash
+# Vollständige Validierung aller Foliensätze (DOM-Layout, Abschnittsschema, SVGs)
+npm run lint
 ```
