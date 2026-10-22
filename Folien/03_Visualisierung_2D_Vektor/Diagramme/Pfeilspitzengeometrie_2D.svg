@@ -56,7 +56,10 @@
   <!-- Einheitsvektoren bei P_node -->
   <!-- Richtungsvektor u -->
   <line x1="120" y1="340" x2="198" y2="297" stroke="#004B96" stroke-width="2.5" marker-end="url(#arrow-u)" />
-  <text x="175" y="285" font-size="15" font-weight="700" fill="#004B96">u = e_u</text>
+  <g transform="translate(135, 258)">
+    <rect x="0" y="0" width="76" height="22" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="38" y="16" font-size="13" font-weight="700" fill="#004B96" text-anchor="middle">u = e_u</text>
+  </g>
 
   <!-- Orthogonalvektor u_perp -->
   <line x1="346" y1="220" x2="310" y2="158" stroke="#DC2626" stroke-width="2.5" marker-end="url(#arrow-perp)" />

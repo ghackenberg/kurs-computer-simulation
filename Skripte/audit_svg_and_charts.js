@@ -156,21 +156,72 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       });
     });
 
-    // 5. Unshielded Text-Line Collisions (Geometry lines intersecting text without opaque background)
-    texts.forEach(t => {
-      const rect = t.rect;
-      const fractions = [0.15, 0.3, 0.5, 0.7, 0.85];
-      let lineHit = false;
+    // 5. Unshielded Text-Line Collisions (Exact geometric segment intersection + shielding check)
+    function clipSegmentAABB(x1, y1, x2, y2, left, top, right, bottom) {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      let t0 = 0.0;
+      let t1 = 1.0;
+      const p = [-dx, dx, -dy, dy];
+      const q = [x1 - left, right - x1, y1 - top, bottom - y1];
 
-      for (const fx of fractions) {
-        for (const fy of [0.3, 0.5, 0.7]) {
-          const pt = { x: rect.left + rect.width * fx, y: rect.top + rect.height * fy };
-          const els = document.elementsFromPoint(pt.x, pt.y);
-          const lineIndex = els.findIndex(el => el.tagName === 'line' || (el.tagName === 'path' && el.getAttribute('stroke') && (!el.getAttribute('fill') || el.getAttribute('fill') === 'none')));
-          if (lineIndex !== -1) {
-            const textIndex = els.indexOf(t.el);
-            let shielded = false;
-            for (let i = Math.min(textIndex, lineIndex) + 1; i < Math.max(textIndex, lineIndex); i++) {
+      for (let i = 0; i < 4; i++) {
+        if (p[i] === 0) {
+          if (q[i] < 0) return null;
+        } else {
+          const r = q[i] / p[i];
+          if (p[i] < 0) {
+            if (r > t1) return null;
+            if (r > t0) t0 = r;
+          } else {
+            if (r < t0) return null;
+            if (r < t1) t1 = r;
+          }
+        }
+      }
+      if (t0 > t1) return null;
+      return {
+        t0, t1,
+        pEnter: { x: x1 + t0 * dx, y: y1 + t0 * dy },
+        pExit: { x: x1 + t1 * dx, y: y1 + t1 * dy },
+        length: Math.hypot((t1 - t0) * dx, (t1 - t0) * dy)
+      };
+    }
+
+    const svgLines = Array.from(document.querySelectorAll('line')).map(l => {
+      const ctm = l.getScreenCTM();
+      if (!ctm) return null;
+      const x1 = parseFloat(l.getAttribute('x1') || '0');
+      const y1 = parseFloat(l.getAttribute('y1') || '0');
+      const x2 = parseFloat(l.getAttribute('x2') || '0');
+      const y2 = parseFloat(l.getAttribute('y2') || '0');
+      const style = window.getComputedStyle(l);
+      const stroke = style.stroke;
+      const strokeWidth = parseFloat(style.strokeWidth || '0');
+      const hasStroke = stroke && stroke !== 'none' && stroke !== 'transparent' && strokeWidth > 0;
+      return {
+        el: l,
+        p1: { x: ctm.a * x1 + ctm.c * y1 + ctm.e, y: ctm.b * x1 + ctm.d * y1 + ctm.f },
+        p2: { x: ctm.a * x2 + ctm.c * y2 + ctm.e, y: ctm.b * x2 + ctm.d * y2 + ctm.f },
+        hasStroke
+      };
+    }).filter(l => l && l.hasStroke);
+
+    const lineCollisionSeen = new Set();
+    texts.forEach(t => {
+      // Analytischer Schnitt mit allen <line> Elementen
+      svgLines.forEach(l => {
+        const clip = clipSegmentAABB(l.p1.x, l.p1.y, l.p2.x, l.p2.y, t.rect.left, t.rect.top, t.rect.right, t.rect.bottom);
+        if (clip && clip.length >= 6) {
+          const midX = (clip.pEnter.x + clip.pExit.x) / 2;
+          const midY = (clip.pEnter.y + clip.pExit.y) / 2;
+          const els = document.elementsFromPoint(midX, midY);
+          const textIdx = els.indexOf(t.el);
+          const lineIdx = els.indexOf(l.el);
+
+          let shielded = false;
+          if (textIdx !== -1 && lineIdx !== -1) {
+            for (let i = Math.min(textIdx, lineIdx) + 1; i < Math.max(textIdx, lineIdx); i++) {
               const el = els[i];
               const style = window.getComputedStyle(el);
               const fill = style.fill;
@@ -179,20 +230,60 @@ async function auditSvgFile(browser, svgPath, options = {}) {
                 break;
               }
             }
-            if (!shielded) {
-              lineHit = true;
-              break;
+          }
+
+          if (!shielded) {
+            const key = t.text + '_line';
+            if (!lineCollisionSeen.has(key)) {
+              lineCollisionSeen.add(key);
+              issues.push({
+                type: 'TEXT_LINE_COLLISION',
+                message: `Unshielded line intersects text "${t.text.slice(0, 25)}"`
+              });
             }
           }
         }
-        if (lineHit) break;
-      }
+      });
 
-      if (lineHit) {
-        issues.push({
-          type: 'TEXT_LINE_COLLISION',
-          message: `Unshielded line intersects text "${t.text.slice(0, 25)}"`
-        });
+      // Pfad-Abtastung für Freiformkurven (<path>) mit feinem Raster (11x5 Punkte)
+      if (!lineCollisionSeen.has(t.text + '_line')) {
+        const fractionsX = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
+        const fractionsY = [0.2, 0.35, 0.5, 0.65, 0.8];
+        let pathHit = false;
+
+        for (const fx of fractionsX) {
+          for (const fy of fractionsY) {
+            const pt = { x: t.rect.left + t.rect.width * fx, y: t.rect.top + t.rect.height * fy };
+            const els = document.elementsFromPoint(pt.x, pt.y);
+            const pathIndex = els.findIndex(el => el.tagName === 'path' && el.getAttribute('stroke') && (!el.getAttribute('fill') || el.getAttribute('fill') === 'none'));
+            if (pathIndex !== -1) {
+              const textIndex = els.indexOf(t.el);
+              let shielded = false;
+              for (let i = Math.min(textIndex, pathIndex) + 1; i < Math.max(textIndex, pathIndex); i++) {
+                const el = els[i];
+                const style = window.getComputedStyle(el);
+                const fill = style.fill;
+                if (fill && fill !== 'none' && fill !== 'transparent' && style.opacity !== '0' && style.fillOpacity !== '0') {
+                  shielded = true;
+                  break;
+                }
+              }
+              if (!shielded) {
+                pathHit = true;
+                break;
+              }
+            }
+          }
+          if (pathHit) break;
+        }
+
+        if (pathHit) {
+          lineCollisionSeen.add(t.text + '_line');
+          issues.push({
+            type: 'TEXT_LINE_COLLISION',
+            message: `Unshielded path intersects text "${t.text.slice(0, 25)}"`
+          });
+        }
       }
     });
 

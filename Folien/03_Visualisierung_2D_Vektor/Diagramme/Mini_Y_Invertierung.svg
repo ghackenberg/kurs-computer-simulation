@@ -37,7 +37,7 @@
 
     <!-- Y-Achse nach unten -->
     <circle cx="25" cy="35" r="4" fill="#b91c1c" />
-    <text x="45" y="45" class="desc" style="font-size: 12.5px;">(0,0)</text>
+    <text x="45" y="52" class="desc" style="font-size: 12.5px;">(0,0)</text>
     <line x1="25" y1="35" x2="95" y2="35" stroke="#dc2626" stroke-width="2" />
     <text x="90" y="50" class="desc" style="fill: #991b1b;">+X</text>
 

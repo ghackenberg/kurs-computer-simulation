@@ -204,9 +204,9 @@
     <!-- Canvas Achsen -->
     <!-- X-Achse nach rechts -->
     <line class="axis" x1="40" y1="75" x2="200" y2="75" marker-end="url(#arrow-axis)" />
-    <g transform="translate(205, 65)">
-      <rect x="0" y="0" width="80" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-      <text class="axis-label" x="40" y="14" text-anchor="middle">+X_scr [px]</text>
+    <g transform="translate(210, 50)">
+      <rect x="0" y="0" width="90" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+      <text class="axis-label" x="45" y="14" text-anchor="middle">+X_scr [px]</text>
     </g>
     
     <!-- Y-Achse nach UNTEN (Beschriftung rechts der Achse!) -->
