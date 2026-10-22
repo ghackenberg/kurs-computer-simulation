@@ -52,6 +52,10 @@ Präsentation der Ergebnisse aus Termin 02 ([Aufgabenblatt 02](../../Uebungen/Te
 
 ---
 
+<!-- Platzhalter für Abschnittsbildbeschreibung -->
+
+![bg right](./Illustrationen/Abschnitt_1.jpg)
+
 ## 3.1: Grundlagen der Vektorgrafik und WPF Canvas
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -274,16 +278,19 @@ public void AddNode(Canvas canvas,
 
 ---
 
+<!-- Platzhalter für Abschnittsbildbeschreibung -->
+
+![bg right](./Illustrationen/Abschnitt_2.jpg)
+
 ## 3.2: Transformation: Welt- zu Bildschirmkoordinaten
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Das fundamentale Paradoxon: Welt- vs. Bildschirmkoordinaten
-- Geometrische Bemaßung, Bounding Box und Sicherheitsabstand (`margin`)
-- Die Anisotropie-Falle: Warum naive Skalierung physikalische Geometrie zerstört
-- Erhalt des Seitenverhältnisses (Aspect Ratio / Isotropes Uniform Scaling)
-- Zentrierungsoffsets und Invertierung der Y-Achse
-- Mathematische Formulierung und saubere C#-Implementierung (`Transform2D`)
+- Das Koordinaten-Paradoxon (Physik vs. Monitor)
+- Bounding Box, Modellgrenzen und Randabstand
+- Die Anisotropie-Falle (Verzerrung vs. Isotropie)
+- Isotropes Skalieren und Invertierung der Y-Achse
+- C#-Implementierung der Klasse `Transform2D`
 
 ---
 
@@ -525,6 +532,10 @@ public class Transform2D
 
 ---
 
+<!-- Platzhalter für Abschnittsbildbeschreibung -->
+
+![bg right](./Illustrationen/Abschnitt_3.jpg)
+
 ## 3.3: Vektordarstellung geometrischer Elemente und Kräfte
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
@@ -662,16 +673,19 @@ public static void AddHorizontalDimensionLine(Canvas canvas, Point p1, Point p2,
 
 ---
 
+<!-- Platzhalter für Abschnittsbildbeschreibung -->
+
+![bg right](./Illustrationen/Abschnitt_4.jpg)
+
 ## 3.4: Interaktive Steuerung im Canvas (Pan & Zoom)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Anforderung: Flüssige Navigation in großen Simulationsmodellen
-- Architekturansätze: Naives Neuzeichnen vs. GPU-`MatrixTransform`
-- Stufenloses Zoomen mit Mauszeiger-Fixpunkt (`ScaleAt`)
-- Verschieben der Arbeitsfläche per Drag & Drop (`Pan`) und `CaptureMouse`
-- Das Bounding-Box Jitter-Phänomen beim Knoten-Dragging
-- Analytische zweistufige Rücktransformation (`ScreenToWorld`)
+- Navigation in Simulationsmodellen
+- Naives Neuzeichnen vs. GPU-`MatrixTransform`
+- Zoom mit Mauszeiger-Fixpunkt (`ScaleAt`)
+- Verschieben per Drag & Drop (`Pan`) und `CaptureMouse`
+- Der Dragging-Jitter Bugfix & `ScreenToWorld`
 
 ---
 
@@ -996,16 +1010,19 @@ public Point ScreenToWorld(Point screenPixel, Matrix canvasMatrix, Transform2D t
 
 ---
 
+<!-- Platzhalter für Abschnittsbildbeschreibung -->
+
+![bg right](./Illustrationen/Abschnitt_5.jpg)
+
 ## 3.5: Performance & Architektur: Shapes vs. DrawingVisual
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Das Performance-Bottleneck von WPF `Shape`-Elementen
-- Der interne Aufbau: `UIElement`-Overhead und Layout-Pass (`Measure`/`Arrange`)
-- High-Performance Vektorgrafik mit `DrawingVisual` & `DrawingContext`
-- Die lebenswichtige `Freeze()`-Doktrin für Pens und Brushes
-- Erstellung eines benutzerdefinierten `VisualHost`-Controls
-- Technologie- und Performancevergleich (Shapes vs. DrawingVisual vs. Pixel)
+- Der `UIElement`-Overhead von WPF `Shape`-Objekten
+- Der 2-stufige Layout-Pass (`Measure` / `Arrange`)
+- High-Performance Vektorgrafik mit `DrawingVisual`
+- Die lebenswichtige `Freeze()`-Doktrin
+- Aufbau des `VisualHost`-Controls & Technologievergleich
 
 ---
 

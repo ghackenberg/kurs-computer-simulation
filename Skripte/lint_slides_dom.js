@@ -12,6 +12,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { lintSectionDeck } = require('./lint_section_slides');
 
 const CHROME_PATHS = [
   'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -335,6 +336,28 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     });
   }
 
+  // 3. Schema- und Bildprüfung für Kapitel- und Abschnittsübersichten
+  if (!options.skipSchema) {
+    const sectionLint = lintSectionDeck(markdownPath);
+    if (sectionLint && sectionLint.issues && sectionLint.issues.length > 0) {
+      for (const iss of sectionLint.issues) {
+        let targetSlide = null;
+        if (iss.slideNum > 0 && iss.slideNum <= slides.length) {
+          targetSlide = slides[iss.slideNum - 1];
+        } else if (slides.length > 0) {
+          targetSlide = slides[0];
+        }
+
+        if (targetSlide) {
+          targetSlide.schemaIssues = targetSlide.schemaIssues || [];
+          targetSlide.schemaIssues.push(iss.message);
+          targetSlide.hasError = true;
+          targetSlide.hasSchemaIssues = true;
+        }
+      }
+    }
+  }
+
   return {
     markdownPath,
     deckName,
@@ -351,6 +374,7 @@ async function main() {
 
   let minHeaderMargin = 12;
   let minFooterMargin = 12;
+  let skipSchema = false;
 
   args.forEach(arg => {
     if (arg.startsWith('--min-font-size=')) {
@@ -359,6 +383,8 @@ async function main() {
       minHeaderMargin = parseFloat(arg.split('=')[1]);
     } else if (arg.startsWith('--min-footer-margin=')) {
       minFooterMargin = parseFloat(arg.split('=')[1]);
+    } else if (arg === '--skip-schema') {
+      skipSchema = true;
     } else if (!arg.startsWith('--')) {
       target = arg;
     }
@@ -408,7 +434,7 @@ async function main() {
   for (const deck of decks) {
     const deckName = path.basename(path.dirname(deck));
     process.stdout.write(`Inspecting ${deckName} ... `);
-    const res = await lintSlideDeck(deck, browser, { minFontSize, minHeaderMargin, minFooterMargin });
+    const res = await lintSlideDeck(deck, browser, { minFontSize, minHeaderMargin, minFooterMargin, skipSchema });
     allResults.push(res);
     grandTotalSlides += res.totalSlides;
     grandTotalErrors += res.errorSlides.length;
@@ -440,6 +466,9 @@ async function main() {
             const detail = s.sampleSmallText ? ` [z.B. "${s.sampleSmallText.text}": ${s.sampleSmallText.effectivePx}px, deklariert: ${s.sampleSmallText.declFont}px]` : '';
             issues.push(`SVG Schrift zu klein: ${path.basename(s.src)} (${s.minFont}px < ${minFontSize}px, Box: ${s.renderedBox})${detail}`);
           });
+        }
+        if (err.schemaIssues && err.schemaIssues.length > 0) {
+          err.schemaIssues.forEach(msg => issues.push(`Schema-Fehler: ${msg}`));
         }
         console.log(`    - Folie ${err.pagination} [${err.title || 'Ohne Titel'}]: ${issues.join(' | ')}`);
       }
