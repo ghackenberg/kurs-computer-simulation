@@ -188,6 +188,80 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     return results;
   });
 
+  // Inspect all SVG images directly in the browser DOM to measure true effective font sizes
+  const svgInspectionMap = new Map();
+  for (const s of rawSlides) {
+    for (const img of s.images) {
+      if (img.src && (img.src.endsWith('.svg') || img.src.includes('.svg?'))) {
+        const cleanSrc = decodeURIComponent(img.src.split('?')[0]);
+        const absSvgPath = path.resolve(deckDir, cleanSrc);
+        const cacheKey = `${cleanSrc}__${Math.round(img.renderedWidth)}x${Math.round(img.renderedHeight)}`;
+        if (!svgInspectionMap.has(cacheKey) && fs.existsSync(absSvgPath) && img.renderedWidth > 0 && img.renderedHeight > 0) {
+          const svgText = fs.readFileSync(absSvgPath, 'utf8');
+          const evalResult = await page.evaluate(({ svgText, w, h, minSize }) => {
+            let container = document.getElementById('__svg_eval_container');
+            if (!container) {
+              container = document.createElement('div');
+              container.id = '__svg_eval_container';
+              container.style.position = 'fixed';
+              container.style.left = '0';
+              container.style.top = '0';
+              container.style.zIndex = '-9999';
+              container.style.pointerEvents = 'none';
+              container.style.visibility = 'hidden';
+              document.body.appendChild(container);
+            }
+            container.style.width = w + 'px';
+            container.style.height = h + 'px';
+            container.innerHTML = svgText;
+
+            const svg = container.querySelector('svg');
+            if (!svg) return null;
+            svg.style.width = '100%';
+            svg.style.height = '100%';
+
+            const textNodes = Array.from(svg.querySelectorAll('text, tspan'));
+            const textDetails = [];
+
+            textNodes.forEach(t => {
+              const str = (t.textContent || '').trim();
+              if (!str) return;
+              if (t.tagName.toLowerCase() === 'text' && t.querySelector('tspan')) return;
+
+              const ctm = t.getScreenCTM();
+              const cs = window.getComputedStyle(t);
+              const declFont = parseFloat(cs.fontSize) || 0;
+              const scaleY = ctm ? Math.abs(ctm.d) : 1;
+              const effectivePx = declFont * scaleY;
+
+              if (declFont > 0 && effectivePx > 0) {
+                textDetails.push({
+                  text: str.length > 28 ? str.substring(0, 25) + '...' : str,
+                  declFont: Math.round(declFont * 10) / 10,
+                  effectivePx: Math.round(effectivePx * 10) / 10
+                });
+              }
+            });
+
+            if (textDetails.length === 0) return { hasText: false, allSmallTexts: [] };
+
+            const minEff = textDetails.reduce((min, cur) => cur.effectivePx < min.effectivePx ? cur : min, textDetails[0]);
+            const smallTexts = textDetails.filter(t => t.effectivePx < minSize);
+
+            return {
+              hasText: true,
+              minFont: minEff.effectivePx,
+              sampleSmallText: minEff,
+              allSmallTexts: smallTexts
+            };
+          }, { svgText, w: img.renderedWidth, h: img.renderedHeight, minSize: minFontSize });
+
+          svgInspectionMap.set(cacheKey, evalResult);
+        }
+      }
+    }
+  }
+
   await page.close();
 
   // Remove temporary HTML file
@@ -208,24 +282,16 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     for (const img of s.images) {
       if (img.src && (img.src.endsWith('.svg') || img.src.includes('.svg?'))) {
         const cleanSrc = decodeURIComponent(img.src.split('?')[0]);
-        const absSvgPath = path.resolve(deckDir, cleanSrc);
-        const metrics = parseSvgMetrics(absSvgPath);
-        if (metrics && metrics.viewBoxWidth) {
-          const scale = img.renderedWidth / metrics.viewBoxWidth;
-          const effectiveFont = metrics.baseFont * scale;
-          if (effectiveFont < minFontSize && img.renderedWidth > 0) {
-            svgIssues.push({
-              src: cleanSrc,
-              viewBoxWidth: metrics.viewBoxWidth,
-              viewBoxHeight: metrics.viewBoxHeight,
-              aspectRatio: metrics.aspectRatio ? metrics.aspectRatio.toFixed(2) : 'N/A',
-              renderedWidth: Math.round(img.renderedWidth),
-              renderedHeight: Math.round(img.renderedHeight),
-              scale: scale.toFixed(3),
-              baseFont: metrics.baseFont,
-              effectiveFont: effectiveFont.toFixed(1)
-            });
-          }
+        const cacheKey = `${cleanSrc}__${Math.round(img.renderedWidth)}x${Math.round(img.renderedHeight)}`;
+        const inspection = svgInspectionMap.get(cacheKey);
+        if (inspection && inspection.hasText && inspection.allSmallTexts && inspection.allSmallTexts.length > 0) {
+          svgIssues.push({
+            src: cleanSrc,
+            renderedBox: `${Math.round(img.renderedWidth)}x${Math.round(img.renderedHeight)}`,
+            minFont: inspection.minFont,
+            sampleSmallText: inspection.allSmallTexts[0],
+            smallCount: inspection.allSmallTexts.length
+          });
         }
       }
     }
@@ -257,7 +323,16 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
 
 async function main() {
   const args = process.argv.slice(2);
-  const target = args[0] || 'all';
+  let target = 'all';
+  let minFontSize = 11.5;
+
+  args.forEach(arg => {
+    if (arg.startsWith('--min-font-size=')) {
+      minFontSize = parseFloat(arg.split('=')[1]);
+    } else if (!arg.startsWith('--')) {
+      target = arg;
+    }
+  });
 
   const puppeteer = getPuppeteer();
   const execPath = getBrowserExecutable();
@@ -303,7 +378,7 @@ async function main() {
   for (const deck of decks) {
     const deckName = path.basename(path.dirname(deck));
     process.stdout.write(`Inspecting ${deckName} ... `);
-    const res = await lintSlideDeck(deck, browser);
+    const res = await lintSlideDeck(deck, browser, { minFontSize });
     allResults.push(res);
     grandTotalSlides += res.totalSlides;
     grandTotalErrors += res.errorSlides.length;
@@ -318,7 +393,8 @@ async function main() {
         if (err.hasHOverflow) issues.push(`Horizontaler Überlauf: +${err.hOverflow}px`);
         if (err.hasSvgIssues) {
           err.svgIssues.forEach(s => {
-            issues.push(`SVG Schrift zu klein: ${path.basename(s.src)} (${s.effectiveFont}px < 11.5px, Scale: ${s.scale}, Aspect: ${s.aspectRatio}:1)`);
+            const detail = s.sampleSmallText ? ` [z.B. "${s.sampleSmallText.text}": ${s.sampleSmallText.effectivePx}px, deklariert: ${s.sampleSmallText.declFont}px]` : '';
+            issues.push(`SVG Schrift zu klein: ${path.basename(s.src)} (${s.minFont}px < ${minFontSize}px, Box: ${s.renderedBox})${detail}`);
           });
         }
         console.log(`    - Folie ${err.pagination} [${err.title || 'Ohne Titel'}]: ${issues.join(' | ')}`);

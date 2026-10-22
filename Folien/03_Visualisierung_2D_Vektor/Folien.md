@@ -66,7 +66,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Was ist Vektorgrafik?
 
-<div class="columns top">
+<div class="columns">
 <div class="two">
 
 - **Mathematische Repräsentation**: Bilder bestehen nicht aus Pixeln, sondern aus analytisch definierten Primitiven (Punkte, Linien, Polygone).
@@ -80,7 +80,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_Vektor_vs_Pixel.svg)
+![w:1000](./Diagramme/Mini_Vektor_vs_Pixel.svg)
 
 </div>
 </div>
@@ -106,7 +106,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_WPF_Szenengraph.svg)
+![w:1000](./Diagramme/Mini_WPF_Szenengraph.svg)
 
 </div>
 </div>
@@ -130,7 +130,7 @@ In WPF bietet das `Canvas`-Control eine 2D-Zeichenfläche mit **absoluter Positi
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_WPF_Grundformen.svg)
+![w:1000](./Diagramme/Mini_WPF_Grundformen.svg)
 
 </div>
 </div>
@@ -307,7 +307,7 @@ Beim Zeichnen physikalischer Systeme treffen zwei inkompatible Welten aufeinande
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_Welt_vs_Screen.svg)
+![w:1000](./Diagramme/Mini_Welt_vs_Screen.svg)
 
 </div>
 </div>
@@ -368,7 +368,7 @@ $$H_{\text{draw}} = H_{\text{canvas}} - 2 \cdot \text{margin} \quad [\mathrm{px}
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_Bounding_Box.svg)
+![w:1000](./Diagramme/Mini_Bounding_Box.svg)
 
 </div>
 </div>
@@ -395,7 +395,7 @@ $$s_x = \frac{W_{\text{draw}}}{W_{\text{world}}}, \quad s_y = \frac{H_{\text{dra
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_Anisotropie_Falle.svg)
+![w:1000](./Diagramme/Mini_Anisotropie_Falle.svg)
 
 </div>
 </div>
@@ -581,7 +581,7 @@ Gegeben: Knoten $\vec{P}_{\text{node}}$ $[\mathrm{px}]$, Kraftvektor $\vec{F} = 
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_Pfeil_Vektorgeometrie.svg)
+![w:1000](./Diagramme/Mini_Pfeil_Vektorgeometrie.svg)
 
 </div>
 </div>
@@ -632,7 +632,7 @@ In industriellen CAD-Viewern werden Abmessungen normgerecht nach **DIN 406** dar
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_DIN_406_Bemaszung.svg)
+![w:1000](./Diagramme/Mini_DIN_406_Bemaszung.svg)
 
 </div>
 </div>
@@ -696,7 +696,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_Pan_Zoom_Matrix.svg)
+![w:1000](./Diagramme/Mini_Pan_Zoom_Matrix.svg)
 
 </div>
 </div>
@@ -771,7 +771,7 @@ In WPF gekapselt: `m.ScaleAt(zoom, zoom, mousePos.X, mousePos.Y);`
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_ScaleAt_Cursor.svg)
+![w:1000](./Diagramme/Mini_ScaleAt_Cursor.svg)
 
 </div>
 </div>
@@ -877,7 +877,7 @@ Beim interaktiven Verschieben von Knotenpunkten tritt in naiven Implementierunge
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_Jitter_Schleife.svg)
+![w:1000](./Diagramme/Mini_Jitter_Schleife.svg)
 
 </div>
 </div>
@@ -975,7 +975,7 @@ $$y_w = Y_{\max} - \frac{y_u - y_{\text{offset}}}{s} \quad [\mathrm{m}]$$
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_Screen_to_World.svg)
+![w:1000](./Diagramme/Mini_Screen_to_World.svg)
 
 </div>
 </div>
@@ -1037,7 +1037,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_Shape_vs_DrawingVisual.svg)
+![w:1000](./Diagramme/Mini_Shape_vs_DrawingVisual.svg)
 
 </div>
 </div>
@@ -1115,7 +1115,7 @@ In Render-Schleifen von Simulationsanwendungen gilt die **strikte Regel**:
 </div>
 <div class="one">
 
-![h:420](./Diagramme/Mini_Freeze_Optimierung.svg)
+![w:1000](./Diagramme/Mini_Freeze_Optimierung.svg)
 
 </div>
 </div>
