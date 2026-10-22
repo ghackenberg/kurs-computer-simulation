@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+      .good { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; fill: #15803d; text-anchor: middle; }
+      .fml { font-family: 'Consolas', monospace; font-size: 11.5px; fill: #047857; text-anchor: middle; }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Outer Frame -->
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Die Freeze-Doktrin</text>
+  <text x="135" y="42" class="sub">Kamera-Entkopplung beim Dragging</text>
+
+  <!-- Schritt 1: Während Ziehen (Eingefroren) -->
+  <g transform="translate(15, 52)">
+    <rect width="240" height="116" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.2" />
+    <rect x="0" y="0" width="240" height="22" rx="6" fill="#eff6ff" />
+    <text x="120" y="16" class="lbl" style="fill: #1d4ed8;">1. Während Dragging: Freeze!</text>
+
+    <!-- Canvas Simulation Area -->
+    <rect x="15" y="28" width="210" height="80" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="3,2" />
+
+    <!-- Basis Fachwerk mit gezogenem K3 -->
+    <polygon points="50,98 190,98 120,40" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5" />
+    <circle cx="50" cy="98" r="3.5" fill="#1e40af" />
+    <circle cx="190" cy="98" r="3.5" fill="#1e40af" />
+    
+    <!-- Gezogener Knoten K3 (folgt Cursor perfekt!) -->
+    <circle cx="120" cy="40" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1" />
+
+    <!-- Maus Cursor exakt auf K3 -->
+    <path d="M 120,40 L 128,54 L 123,55 L 127,63 L 124,64 L 120,56 L 116,59 Z" fill="#0f172a" stroke="#ffffff" stroke-width="1" />
+
+    <!-- Freeze Badge links -->
+    <rect x="20" y="32" width="70" height="18" rx="3" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1" />
+    <text x="55" y="45" class="tag" style="fill: #0369a1;">s = const</text>
+
+    <!-- 1:1 Tracking Badge rechts -->
+    <rect x="135" y="32" width="85" height="18" rx="3" fill="#dcfce7" stroke="#86efac" stroke-width="1" />
+    <text x="177" y="45" class="good">K3 folgt 1:1 ✓</text>
+  </g>
+
+  <!-- Schritt 2: Nach Loslassen (Auto-Fit) -->
+  <g transform="translate(15, 176)">
+    <rect width="240" height="116" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.2" />
+    <rect x="0" y="0" width="240" height="22" rx="6" fill="#f0fdf4" />
+    <text x="120" y="16" class="lbl" style="fill: #15803d;">2. Nach MouseUp: Einmaliger Fit</text>
+
+    <!-- Canvas Simulation Area -->
+    <rect x="15" y="28" width="210" height="80" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="3,2" />
+
+    <!-- Neues Fachwerk sauber eingepasst -->
+    <polygon points="55,98 185,98 120,46" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" />
+    <circle cx="55" cy="98" r="3.5" fill="#15803d" />
+    <circle cx="185" cy="98" r="3.5" fill="#15803d" />
+    <circle cx="120" cy="46" r="4.5" fill="#15803d" />
+
+    <!-- Badge: Ruhiger Fit -->
+    <rect x="55" y="60" width="130" height="20" rx="4" fill="#ffffff" stroke="#86efac" stroke-width="1" />
+    <text x="120" y="74" class="good">Ruhige Neuberechnung</text>
+  </g>
+
+  <!-- Solution Code Box -->
+  <g transform="translate(15, 300)">
+    <rect width="240" height="106" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #15803d;">Die Entkopplungs-Regel</text>
+    <text x="120" y="42" class="fml" style="font-weight: bold;">if (_draggedNode == null)</text>
+    <text x="120" y="62" class="fml">_transform.Update(...);</text>
+    <text x="120" y="81" class="desc" style="font-size: 11.5px; fill: #166534;">Bounds-Update beim Ziehen blockiert</text>
+    <text x="120" y="97" class="good">100% flüssig &amp; jitter-frei!</text>
+  </g>
+</svg>

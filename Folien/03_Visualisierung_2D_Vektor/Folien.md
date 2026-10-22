@@ -1033,20 +1033,49 @@ private void OnMouseMove(object sender, MouseEventArgs e)
 
 ---
 
-### Die Dragging-Jitter-Falle (In-Class Bugfix!)
+### Die Dragging-Jitter-Falle: Das Phänomen
 
 <div class="columns top">
 <div class="two">
 
-Beim interaktiven Verschieben von Knotenpunkten tritt in naiven Implementierungen ein **schwerer Feedback-Bug** auf:
+Beim interaktiven Verschieben von Knotenpunkten tritt in naiven Auto-Fit-Implementierungen ein fataler Abreiß-Effekt auf:
 
-**Der Teufelskreis beim Knoten-Dragging:**
-1. Die Maus greift Knoten $K_3$ und zieht ihn nach oben.
-2. In `MouseMove` ruft `Redraw()` die Bounding Box und `_transform.Update()` auf.
-3. Durch den weiter außen liegenden Knoten **wächst die Bounding Box**.
-4. Der Auto-Fit-Maßstab $s = \min(s_x, s_y)$ **schrumpft**.
-5. Das Tragwerk verkleinert sich $\implies$ der Knoten hüpft unter dem Mauszeiger weg!
-6. **Ergebnis:** Heftiges Zittern und Flackern (**Jittering**).
+- **1. Maus zieht Knoten nach außen:**
+  - Der Anwender greift Knoten $K_3$ und zieht die Maus nach oben.
+  - In Weltkoordinaten wächst das Tragwerk: $H_{\text{world}}$ steigt.
+- **2. Der Auto-Fit-Fehler:**
+  - Naives `Redraw()` ruft unbedacht `_transform.Update()` auf.
+  - Der Maßstab $s = \min(s_x, s_y)$ schrumpft sofort, um das vergrößerte Modell einzupassen!
+- **3. Das Abreißen vom Cursor:**
+  - Durch das kleinere $s$ wird das Tragwerk kleiner dargestellt.
+  - Knoten $K_3$ hüpft unter dem Mauszeiger nach unten weg!
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Jitter_Mechanik.svg)
+
+</div>
+</div>
+
+---
+
+### Die Dragging-Jitter-Falle: Der Teufelskreis
+
+<div class="columns top">
+<div class="two">
+
+Das Wegspringen führt zu einer **destruktiven Rückkopplung** (Feedback-Loop):
+
+- **Der Teufelskreis beim Ziehen:**
+  1. Maus zieht Knoten $K_3 \implies$ Modellhöhe $H_{\text{world}}$ steigt.
+  2. Bounding-Box wächst $\implies$ Maßstab $s$ schrumpft.
+  3. Knoten hüpft nach unten weg $\implies$ Lücke zum Cursor.
+  4. Nächster `MouseMove`-Event: Maus korrigiert nach oben.
+- **Die 60-Hz-Oszillation:**
+  - Da dieser Zyklus bei jeder Mausbewegung abläuft (60–120 FPS), vibriert das Modell chaotisch.
+  - Der Knoten zappelt hysterisch um den Cursor (**Jittering**).
+- **Architekturfehler:** Unzulässige Kopplung von Objekt-Manipulation und Kamera-Transformation!
 
 </div>
 <div class="one">
@@ -1058,39 +1087,32 @@ Beim interaktiven Verschieben von Knotenpunkten tritt in naiven Implementierunge
 
 ---
 
-### Die Lösung des Jittering-Problems
+### Die Lösung des Jittering-Problems: Freeze-Doktrin
 
 <div class="columns top">
 <div class="two">
 
-**Die Entkopplungs-Regel:**
-Beim Dragging (`_draggedNode != null`) darf die Box (`xMin`, `xMax`, `yMin`, `yMax`) **nie** angepasst werden!
+**Kamera-Entkopplung während der Interaktion:**
+
+- **Freeze-Doktrin:** Bounding-Box (`xMin`, `xMax`, `yMin`, `yMax`) und $s$ bleiben bei aktivem Ziehen (`_draggedNode != null`) fixiert $\implies K_3$ folgt dem Cursor $1:1$.
+- **C#-Code in `Redraw()`:**
 
 ```csharp
-private void Redraw()
+if (_draggedNode == null)
 {
-    // Auto-Fit BoundingBox NUR aktualisieren,
-    // wenn gerade KEIN Knoten gezogen wird!
-    if (_draggedNode == null)
-    {
-        var (xMin, xMax, yMin, yMax) = 
-            _truss.GetBounds();
-        _transform.Update(xMin, xMax, 
-            yMin, yMax, 
-            TrussCanvas.ActualWidth, 
-            TrussCanvas.ActualHeight);
-    }
-
-    DrawTruss();
+    var (xMin, xMax, yMin, yMax) = _truss.GetBounds();
+    _transform.Update(xMin, xMax, yMin, yMax, 
+        TrussCanvas.ActualWidth, TrussCanvas.ActualHeight);
 }
+DrawTruss();
 ```
+
+- **Nach Loslassen (`MouseUp`):** Einmaliges ruhiges Einpassen!
 
 </div>
 <div class="one">
 
-> **Die Kern-Erkenntnis:**  
-> Die Kamera-Transformation muss während der Maus-Interaktion **eingefroren** bleiben!  
-> Erst beim Loslassen der Maustaste (`MouseUp`) wird das Koordinatensystem neu eingepasst.
+![w:1000](./Diagramme/Mini_Jitter_Loesung.svg)
 
 </div>
 </div>

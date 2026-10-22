@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+      .warn { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; fill: #b91c1c; text-anchor: middle; }
+      .fml { font-family: 'Consolas', monospace; font-size: 11.5px; fill: #0369a1; text-anchor: middle; }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Outer Frame -->
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Dragging-Jitter Mechanik</text>
+  <text x="135" y="42" class="sub">Warum der Knoten weghüpft</text>
+
+  <!-- Schritt 1: Maus zieht Knoten -->
+  <g transform="translate(15, 52)">
+    <rect width="240" height="116" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.2" />
+    <rect x="0" y="0" width="240" height="22" rx="6" fill="#f1f5f9" />
+    <text x="120" y="16" class="lbl" style="fill: #1e40af;">1. Maus zieht K3 nach oben</text>
+
+    <!-- Canvas Simulation Area -->
+    <rect x="15" y="28" width="210" height="80" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="3,2" />
+
+    <!-- Basis Fachwerk (unten) -->
+    <polygon points="50,98 190,98 120,48" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5" />
+    <circle cx="50" cy="98" r="3.5" fill="#1e40af" />
+    <circle cx="190" cy="98" r="3.5" fill="#1e40af" />
+    <circle cx="120" cy="48" r="4.5" fill="#2563eb" />
+
+    <!-- Maus Cursor Symbol bei K3 -->
+    <path d="M 120,48 L 128,62 L 123,63 L 127,71 L 124,72 L 120,64 L 116,67 Z" fill="#0f172a" stroke="#ffffff" stroke-width="1" />
+
+    <!-- Zug-Pfeil nach oben -->
+    <line x1="135" y1="52" x2="135" y2="34" stroke="#dc2626" stroke-width="2" />
+    <polygon points="131,36 135,30 139,36" fill="#dc2626" />
+
+    <!-- Shield Box für BoundingBox wächst -->
+    <rect x="120" y="32" width="100" height="18" rx="3" fill="#fee2e2" stroke="#fca5a5" stroke-width="1" />
+    <text x="170" y="45" class="tag" style="fill: #991b1b; font-size: 11.5px;">H_world wächst</text>
+  </g>
+
+  <!-- Schritt 2: Auto-Fit schrumpft & Knoten hüpft weg -->
+  <g transform="translate(15, 176)">
+    <rect width="240" height="116" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.2" />
+    <rect x="0" y="0" width="240" height="22" rx="6" fill="#fee2e2" />
+    <text x="120" y="16" class="lbl" style="fill: #b91c1c;">2. Auto-Fit verkleinert s</text>
+
+    <!-- Canvas Simulation Area -->
+    <rect x="15" y="28" width="210" height="80" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="3,2" />
+
+    <!-- Schrumpf-Effekt: Gesamtes Fachwerk wird kleiner dargestellt! -->
+    <polygon points="65,98 175,98 120,62" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="3,2" />
+    <circle cx="65" cy="98" r="3" fill="#94a3b8" />
+    <circle cx="175" cy="98" r="3" fill="#94a3b8" />
+    
+    <!-- Neuer geschrumpfter Knoten K3 (gesprungen nach unten!) -->
+    <circle cx="120" cy="62" r="4.5" fill="#dc2626" />
+    
+    <!-- Shielded Tag for K3 springt ab -->
+    <rect x="135" y="54" width="85" height="18" rx="3" fill="#fee2e2" stroke="#fca5a5" stroke-width="1" />
+    <text x="177" y="67" class="warn" style="font-size: 11.5px;">K3 springt ab!</text>
+
+    <!-- Maus Cursor steht noch oben (Lücke entstanden!) -->
+    <path d="M 120,38 L 128,52 L 123,53 L 127,61 L 124,62 L 120,54 L 116,57 Z" fill="#0f172a" stroke="#ffffff" stroke-width="1" opacity="0.6" />
+    
+    <!-- Sprung-Distanz Pfeil -->
+    <line x1="120" y1="40" x2="120" y2="54" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="2,2" />
+
+    <!-- Shield Box für Maßstab sinkt -->
+    <rect x="15" y="32" width="98" height="18" rx="3" fill="#fee2e2" stroke="#fca5a5" stroke-width="1" />
+    <text x="64" y="45" class="tag" style="fill: #991b1b; font-size: 11.5px;">s sinkt drastisch</text>
+  </g>
+
+  <!-- Problem Summary Box -->
+  <g transform="translate(15, 300)">
+    <rect width="240" height="106" rx="6" fill="#fff1f2" stroke="#fca5a5" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #991b1b;">Ergebnis: Heftiges Jittering</text>
+    <text x="120" y="41" class="desc" style="fill: #7f1d1d;">Knoten reißt vom Mauszeiger ab</text>
+    <text x="120" y="59" class="desc" style="fill: #7f1d1d;">Nächster MouseMove korrigiert zurück</text>
+    <text x="120" y="79" class="warn" style="font-size: 12px;">60 Hz Oszillation &amp; Flackern!</text>
+    <text x="120" y="96" class="desc" style="fill: #475569;">Modell vibriert unkontrollierbar</text>
+  </g>
+</svg>
