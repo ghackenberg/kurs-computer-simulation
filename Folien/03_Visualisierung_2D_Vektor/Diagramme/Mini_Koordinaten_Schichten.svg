@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; fill: #334155; text-anchor: middle; }
+      .fml { font-family: 'Consolas', monospace; font-size: 12px; fill: #0369a1; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">2-Schichten-Rückrechnung</text>
+  <text x="135" y="42" class="sub">Vom Mausklick in die Welt</text>
+
+  <!-- Schicht 1: Screen Pixel -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="85" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #991b1b;">1. Bildschirmpixel (Maus)</text>
+    <text x="120" y="42" class="fml" style="fill: #b91c1c;">P_screen = (x_p, y_p) [px]</text>
+    <text x="120" y="66" class="desc">Physischer Monitor-Klick</text>
+  </g>
+
+  <!-- Pfeil nach unten Schicht 1 -> 2 -->
+  <line x1="135" y1="142" x2="135" y2="168" stroke="#475569" stroke-width="2.5" />
+  <polygon points="135,172 130,162 140,162" fill="#475569" />
+  <text x="195" y="158" class="lbl" style="font-size: 12px; fill: #b45309;">M⁻¹ (Kamera)</text>
+
+  <!-- Schicht 2: Virtueller Canvas -->
+  <g transform="translate(15, 175)">
+    <rect width="240" height="85" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #1e40af;">2. Canvas-Pixel (Unzoomed)</text>
+    <text x="120" y="42" class="fml" style="fill: #1d4ed8;">P_canvas = M⁻¹ · P_screen [px]</text>
+    <text x="120" y="66" class="desc">Hebt Pan &amp; Zoom auf</text>
+  </g>
+
+  <!-- Pfeil nach unten Schicht 2 -> 3 -->
+  <line x1="135" y1="263" x2="135" y2="289" stroke="#475569" stroke-width="2.5" />
+  <polygon points="135,293 130,283 140,283" fill="#475569" />
+  <text x="195" y="279" class="lbl" style="font-size: 12px; fill: #047857;">Viewport⁻¹</text>
+
+  <!-- Schicht 3: Weltkoordinaten -->
+  <g transform="translate(15, 296)">
+    <rect width="240" height="110" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #15803d;">3. Physikalische Welt [m]</text>
+    <text x="120" y="46" class="fml" style="fill: #16a34a; font-weight: bold;">x_w = X_min + (x_u - x_off)/s</text>
+    <text x="120" y="70" class="fml" style="fill: #16a34a; font-weight: bold;">y_w = Y_max - (y_u - y_off)/s</text>
+    <text x="120" y="94" class="desc" style="fill: #14532d; font-weight: bold;">Exakte Meter für Physik &amp; FEM!</text>
+  </g>
+</svg>

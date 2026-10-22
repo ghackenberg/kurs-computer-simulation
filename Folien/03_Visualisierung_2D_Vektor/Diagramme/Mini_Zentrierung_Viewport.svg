@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
+      .fml { font-family: 'Consolas', monospace; font-size: 12.5px; fill: #0369a1; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Viewport-Zentrierung</text>
+  <text x="135" y="42" class="sub">Symmetrischer Freiraum</text>
+
+  <!-- Canvas Box -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="230" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="120" y="20" class="desc" style="font-weight: bold; fill: #64748b;">Canvas (W_draw × H_draw)</text>
+
+    <!-- Margin Zone -->
+    <rect x="15" y="30" width="210" height="185" fill="#f1f5f9" stroke="#cbd5e1" stroke-dasharray="4,3" stroke-width="1" />
+    
+    <!-- Restplatz links -->
+    <rect x="15" y="30" width="35" height="185" fill="#e0f2fe" opacity="0.7" />
+    <line x1="32" y1="30" x2="32" y2="215" stroke="#0284c7" stroke-width="1" stroke-dasharray="2,2" />
+    <text x="32" y="125" class="fml" transform="rotate(-90 32 125)">ΔW / 2</text>
+
+    <!-- Modell (vertikal voll, horizontal Rest) -->
+    <g transform="translate(50, 45)">
+      <rect width="140" height="155" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
+      <!-- Fachwerk Streben -->
+      <polygon points="10,140 130,140 70,25" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2.5" />
+      <line x1="70" y1="25" x2="70" y2="70" stroke="#1d4ed8" stroke-width="2" />
+      <line x1="70" y1="102" x2="70" y2="140" stroke="#1d4ed8" stroke-width="2" />
+      <circle cx="10" cy="140" r="5" fill="#1e40af" />
+      <circle cx="130" cy="140" r="5" fill="#1e40af" />
+      <circle cx="70" cy="25" r="5" fill="#1e40af" />
+      <circle cx="70" cy="140" r="4" fill="#1e40af" />
+      <rect x="32" y="74" width="76" height="24" rx="4" fill="#eff6ff" stroke="#93c5fd" stroke-width="1" />
+      <text x="70" y="91" class="lbl" style="fill: #1e3a8a;">Modell (s)</text>
+    </g>
+
+    <!-- Restplatz rechts -->
+    <rect x="190" y="30" width="35" height="185" fill="#e0f2fe" opacity="0.7" />
+    <text x="207" y="125" class="fml" transform="rotate(90 207 125)">ΔW / 2</text>
+  </g>
+
+  <!-- Erklärung Box -->
+  <g transform="translate(15, 296)">
+    <rect width="240" height="110" rx="6" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.5" />
+    <text x="120" y="24" class="lbl" style="fill: #0369a1;">Zentrierungs-Formel</text>
+    <text x="120" y="48" class="fml">ΔW = W_draw - W_world · s</text>
+    <text x="120" y="72" class="fml">x_off = margin + ΔW / 2</text>
+    <text x="120" y="94" class="desc" style="font-weight: bold; fill: #0c4a6e;">Modell steht perfekt mittig!</text>
+  </g>
+</svg>

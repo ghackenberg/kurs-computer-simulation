@@ -442,34 +442,53 @@ $$s = \min(s_x, s_y) \quad \left[\frac{\mathrm{px}}{\mathrm{m}}\right]$$
 
 ---
 
-### Zentrierung und Invertierung der Y-Achse
+### Zentrierung im Viewport (Symmetrischer Freiraum)
 
 <div class="columns top">
 <div class="two">
 
-**1. Zentrierungs-Offsets (Symmetrischer Freiraum):**
-$$x_{\text{offset}} = \text{margin} + \frac{W_{\text{draw}} - W_{\text{world}} \cdot s}{2} \quad [\mathrm{px}]$$
-$$y_{\text{offset}} = \text{margin} + \frac{H_{\text{draw}} - H_{\text{world}} \cdot s}{2} \quad [\mathrm{px}]$$
+Nach der isotropen Skalierung $s = \min(s_x, s_y)$ füllt das Modell genau eine Achse komplett aus. Auf der anderen Achse verbleibt Freiraum:
 
-**2. Transformationsgleichungen (Welt $\to$ Screen):**
-$$x_{\text{screen}} = x_{\text{offset}} + (x_w - X_{\min}) \cdot s \quad [\mathrm{px}]$$
-$$y_{\text{screen}} = y_{\text{offset}} + (Y_{\max} - y_w) \cdot s \quad [\mathrm{px}]$$
-
-- Für $y_w = Y_{\max} \implies y_{\text{screen}} = y_{\text{offset}}$ (oberer Bildschirmrand).
-- Für $y_w = Y_{\min} \implies y_{\text{screen}} = y_{\text{offset}} + H_{\text{world}} \cdot s$ (unten).
+- **Problem ohne Zentrierung:**
+  - Das Modell würde am linken bzw. oberen Rand kleben.
+- **Symmetrische Verteilung des Restplatzes:**
+  - Die Breiten- bzw. Höhendifferenz $\Delta W$ bzw. $\Delta H$ wird halbiert:
+    $x_{\text{offset}} = \text{margin}_x + \frac{W_{\text{draw}} - W_{\text{world}} \cdot s}{2} \quad [\mathrm{px}]$
+    $y_{\text{offset}} = \text{margin}_y + \frac{H_{\text{draw}} - H_{\text{world}} \cdot s}{2} \quad [\mathrm{px}]$
+- **Ergebnis:** Das Modell schwebt perfekt zentriert im Viewport.
 
 </div>
 <div class="one">
 
-> **Einheitenkontrolle:**  
-> $$[\mathrm{px}] + ([\mathrm{m}] - [\mathrm{m}]) \cdot \left[\frac{\mathrm{px}}{\mathrm{m}}\right] = [\mathrm{px}]$$  
-> Die Formel ist dimensionsrein!
+![w:1000](./Diagramme/Mini_Zentrierung_Viewport.svg)
 
-<br>
+</div>
+</div>
 
-> **Analytische Umkehrfunktion:**  
-> $$x_w = X_{\min} + \frac{x_{\text{screen}} - x_{\text{offset}}}{s} \quad [\mathrm{m}]$$  
-> $$y_w = Y_{\max} - \frac{y_{\text{screen}} - y_{\text{offset}}}{s} \quad [\mathrm{m}]$$
+---
+
+### Invertierung der Y-Achse (Welt $\to$ Screen)
+
+<div class="columns top">
+<div class="two">
+
+Das Koordinaten-Paradoxon erfordert eine **Spiegelung der vertikalen Achse**:
+
+- **Weltraum:** $Y$ wächst nach **oben** (Boden bei $Y=0\,\mathrm{m}$).
+- **Screenraum:** $Y$ wächst nach **unten** (Kopfzeile bei $Y=0\,\mathrm{px}$).
+- **Die Transformationsgleichung:**
+  $y_{\text{screen}} = y_{\text{offset}} + (Y_{\max} - y_w) \cdot s \quad [\mathrm{px}]$
+- **Grenzwerte-Kontrolle:**
+  - Höchster Modellpunkt ($y_w = Y_{\max}$):  
+    $y_{\text{screen}} = y_{\text{offset}} + 0 \implies$ **oberer Rand**.
+  - Tiefster Modellpunkt ($y_w = Y_{\min}$):  
+    $y_{\text{screen}} = y_{\text{offset}} + H_{\text{world}} \cdot s \implies$ **unterer Rand**.
+- **Einheiten:** $[\mathrm{px}] + [\mathrm{m}] \cdot [\mathrm{px/m}] = [\mathrm{px}]$ (dimensionsrein).
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Y_Invertierung.svg)
 
 </div>
 </div>
@@ -646,6 +665,30 @@ In industriellen CAD-Viewern werden Abmessungen normgerecht nach **DIN 406** dar
 
 ---
 
+### DIN 406: Geometrische Konstruktion der Maßkette
+
+<div class="columns top">
+<div class="two">
+
+Zerlegung der Maßkette in **5 Konstruktionsschritte**:
+
+1. **Referenzpunkte:** Bauteilknoten $P_1(x_1, y_1)$ und $P_2(x_2, y_2)$.
+2. **Maßhilfslinien:** Orthogonal von $P_1, P_2$ zu $y_{\text{dim}}$ führen.
+   - Gap ($\Delta y_{\text{gap}} = 4\,\mathrm{px}$) und Überstand ($\Delta y_{\text{over}} = 8\,\mathrm{px}$).
+3. **Maßlinie:** Verbindungsstrecke auf $y_{\text{dim}}$ zwischen Hilfslinien.
+4. **Maßpfeile:** Schlanke Spitzen ($12\,\mathrm{px}$, $15^\circ$) an Hilfslinien.
+5. **Maßzahl:** Zentrierter Text bei $x_{\text{mid}} = \frac{x_1 + x_2}{2}$ über Maßlinie.
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_DIN_406_Konstruktion.svg)
+
+</div>
+</div>
+
+---
+
 ### C#-Implementierung: DIN-406 Maßkette
 
 ```csharp
@@ -761,27 +804,53 @@ Ein übergeordneter Container (`Border` oder `Grid`) fängt alle Mausereignisse 
 
 ---
 
-### Zoom zentriert auf den Mauszeiger (`ScaleAt`)
+### Das Fixpunkt-Dilemma beim Zoomen
 
 <div class="columns top">
 <div class="two">
 
-**Das Problem bei naivem Zoom:**
-- Wird um den Ursprung $(0,0)$ skaliert, springt das anvisierte Bauteil bei jedem Mausrad-Tick nach rechts unten weg.
+Warum versagt naives Skalieren in interaktiven Viewern?
 
-**Die Lösung: Fixpunkt unter dem Cursor (`ScaleAt`):**
-- Der Punkt unter dem Cursor $\vec{P}_{\text{cursor}}$ muss während des Skalierens an derselben Bildschirmposition verbleiben.
-- **Mathematischer 3-Schritt-Ablauf:**
-  1. Translation um $-\vec{P}_{\text{cursor}}$ (Punkt in Ursprung).
-  2. Skalierung um Zoom-Faktor $s_{\text{zoom}}$.
-  3. Translation um $+\vec{P}_{\text{cursor}}$ (Punkt zurück an Ort).
-
-In WPF gekapselt: `m.ScaleAt(zoom, zoom, mousePos.X, mousePos.Y);`
+- **Naiver Zoom um den Ursprung $(0,0)$:**
+  - Jeder Bildschirmpunkt transformiert sich gemäß:
+    $\vec{P}' = s_{\text{zoom}} \cdot \vec{P}$
+  - **Beispiel:** Ein Bauteildreieck bei $(800\,\mathrm{px}, 500\,\mathrm{px})$ wandert bei Zoomfaktor $1{,}5$ auf $(1200\,\mathrm{px}, 750\,\mathrm{px})$.
+  - **Effekt:** Das anvisierte Detail springt nach rechts unten aus dem Sichtfeld!
+- **Das CAD-Ziel: Fixpunkt-Invarianz:**
+  - Der Punkt direkt unter dem Cursor $\vec{P}_{\text{cursor}}$ muss vor und nach dem Zoom an **exakt derselben Bildschirmposition** bleiben:
+    $\vec{P}_{\text{cursor}}' = \vec{P}_{\text{cursor}}$
+  - Die visuelle Welt expandiert radial **um den Mauszeiger**.
 
 </div>
 <div class="one">
 
 ![w:1000](./Diagramme/Mini_ScaleAt_Cursor.svg)
+
+</div>
+</div>
+
+---
+
+### Die 3-Schritt-Matrix-Zerlegung (`ScaleAt`)
+
+<div class="columns top">
+<div class="two">
+
+Skalierung um ein beliebiges Zentrum $\vec{C} = \vec{P}_{\text{cursor}}$ via Matrix-Kaskade:
+
+$\mathbf{M}_{\text{zoom}} = \mathbf{T}(+\vec{C}) \cdot \mathbf{S}(s, s) \cdot \mathbf{T}(-\vec{C})$
+
+1. **Translation $-\vec{C}$:** Verschiebt Cursor in den Ursprung $(0,0)$.
+2. **Skalierung $\mathbf{S}(s)$:** Streckt Raum isotrop um Ursprung $(0,0)$.
+3. **Rücktranslation $+\vec{C}$:** Schiebt Zentrum an alte Position zurück.
+
+- **Beweis für $\vec{P} = \vec{C}$:** $s \cdot (\vec{C} - \vec{C}) + \vec{C} = \vec{C} \quad \checkmark$
+- **WPF-Befehl:** `matrix.ScaleAt(zoom, zoom, cursor.X, cursor.Y);`
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_ScaleAt_Prinzip.svg)
 
 </div>
 </div>
@@ -964,19 +1033,50 @@ private void Redraw()
 
 ---
 
-### Analytische Rücktransformation: Bildschirm zu Welt
+### Das 2-Schichten-Modell der Koordinaten
 
 <div class="columns top">
 <div class="two">
 
-Für Selektion und Picking (z.B. Knoten anklicken, Lasten aufbringen) muss ein Bildschirmpixel $\vec{p}_{\text{pixel}} = (x_p, y_p)^T$ $[\mathrm{px}]$ in Weltkoordinaten $\vec{p}_w = (x_w, y_w)^T$ $[\mathrm{m}]$ rücktransformiert werden:
+Für interaktive Selektion (Knoten per Mausklick fangen, Lasten ansetzen) müssen Klickpixel $\vec{P}_{\text{screen}}$ in physikalische Meter $[\mathrm{m}]$ rückgerechnet werden.
 
-**1. Invertierung von Pan & Zoom (Affine WPF-Matrix $\mathbf{M} \in \mathbb{R}^{3 \times 3}$):**
-$$\begin{pmatrix} x_u \\ y_u \\ 1 \end{pmatrix} = \mathbf{M}^{-1} \begin{pmatrix} x_p \\ y_p \\ 1 \end{pmatrix} \quad [\mathrm{px}]$$
+Die Rücktransformation durchläuft **zwei getrennte Schichten**:
 
-**2. Invertierung der Viewport-Projektion ($[\mathrm{px}] \to [\mathrm{m}]$):**
-$$x_w = X_{\min} + \frac{x_u - x_{\text{offset}}}{s} \quad [\mathrm{m}]$$
-$$y_w = Y_{\max} - \frac{y_u - y_{\text{offset}}}{s} \quad [\mathrm{m}]$$
+1. **Schicht 1: Die GPU-Kameramatrix (Pan & Zoom):**
+   - Hebt die interaktive Kamerabewegung auf:
+     $\vec{P}_{\text{canvas}} = \mathbf{M}^{-1} \cdot \vec{P}_{\text{screen}} \quad [\mathrm{px}]$
+   - $\mathbf{M}$ enthält alle bisherigen `ScaleAt`- und Pan-Translationen.
+2. **Schicht 2: Das Viewport-Modell (`Transform2D`):**
+   - Rechnet virtuelle Canvas-Pixel in physikalische Weltkoordinaten $[\mathrm{m}]$ um.
+   - Hebt Bounding-Box-Zentrierung, isotropen Maßstab $s$ und $Y$-Inversion auf.
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Koordinaten_Schichten.svg)
+
+</div>
+</div>
+
+---
+
+### Schrittweise analytische Rückrechnung
+
+<div class="columns top">
+<div class="two">
+
+Aus den Viewport-Vorwärtsgleichungen leiten wir die **analytische Umkehrfunktion** ab:
+
+- **X-Rückrechnung (Translation & Skalierung):**
+  $x_{\text{canvas}} = x_{\text{offset}} + (x_w - X_{\min}) \cdot s$
+  $\iff x_w = X_{\min} + \frac{x_{\text{canvas}} - x_{\text{offset}}}{s} \quad [\mathrm{m}]$
+- **Y-Rückrechnung (Invertierung & Skalierung):**
+  $y_{\text{canvas}} = y_{\text{offset}} + (Y_{\max} - y_w) \cdot s$
+  $\iff y_w = Y_{\max} - \frac{y_{\text{canvas}} - y_{\text{offset}}}{s} \quad [\mathrm{m}]$
+
+> **Einheitenkontrolle:**  
+> $[\mathrm{m}] + \frac{[\mathrm{px}] - [\mathrm{px}]}{[\mathrm{px/m}]} = [\mathrm{m}]$  
+> Die Berechnung ist dimensionsrein und exakt!
 
 </div>
 <div class="one">
@@ -1053,31 +1153,50 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### WPF Shapes: Der Layout-Pass (`Measure`/`Arrange`)
+### Der 2-stufige Layout-Cycle: Warum zwei Phasen?
 
 <div class="columns top">
 <div class="two">
 
-Warum bricht die Performance bei vielen Shapes ein?
+Ein Container kann Kindern erst Raum zuweisen, wenn er den Gesamtbedarf aller Kinder kennt:
 
-- **Der 2-stufige Layout-Cycle:**
-  1. `MeasureOverride`: Ermittelt den Platzbedarf jedes Kindelements.
-  2. `ArrangeOverride`: Weist jedem Element seine finale Position zu.
-- **Konsequenz bei Animationen & Simulationen:**
-  - Jede Positionsänderung triggert den rekursiven Layout-Cycle im gesamten Visual Tree.
-  - Bei 5.000 Elementen bedeutet dies 10.000 Methodenaufrufe pro Render-Frame!
-  - Die CPU wird vollständig blockiert, bevor die GPU überhaupt ein einziges Bild rendern darf.
+- **Phase 1: `Measure` (Bedarfsermittlung / Wunschgröße):**
+  - Parent ruft `child.Measure(availableSize)` auf.
+  - Kind misst seinen Inhalt und meldet `DesiredSize` zurück.
+  - Noch keine feste Platzierung im Fenster!
+- **Phase 2: `Arrange` (Raumzuweisung / Finaler Platz):**
+  - Parent entscheidet und ruft `child.Arrange(finalRect)` auf.
+  - Kind erhält finale Position und Größe (`ActualWidth`, `ActualHeight`).
 
 </div>
 <div class="one">
 
-> **Die Diagnose:**  
-> WPF `Shapes` sind für UI-Elemente (Buttons, Icons) entworfen – nicht für Simulations-Netze mit zehntausenden Stäben!
+![w:1000](./Diagramme/Mini_Layout_Cycle_Phasen.svg)
 
-<br>
+</div>
+</div>
 
-> **Die Lösung:**  
-> Umgehung des UIElement- und Layout-Layers mittels `DrawingVisual`.
+---
+
+### Der Layout-Kollaps in Simulationsanwendungen
+
+<div class="columns top">
+<div class="two">
+
+In der Simulationsvisualisierung führt der 2-Phasen-Cycle zum **Performance-Kollaps**:
+
+- **Normale Desktop-App (30 Controls):**
+  - Layout-Pass benötigt $< 0{,}2\,\mathrm{ms}$ (unmerklich).
+- **Simulations-Canvas (5.000 Stäbe & 2.500 Knoten):**
+  - Jede Knotenbewegung markiert verbundene Stäbe als „layout-dirty“ (`InvalidateMeasure`).
+  - WPF durchläuft den Layout-Cycle **rekursiv über alle Shapes**.
+  - **5.000 Shapes $\implies$ 10.000 Methodenaufrufe pro Frame!**
+- **Konsequenz:** Die CPU blockiert im UI-Thread, noch bevor die GPU überhaupt rendern darf.
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Shape_vs_DrawingVisual.svg)
 
 </div>
 </div>
@@ -1100,6 +1219,31 @@ Warum bricht die Performance bei vielen Shapes ein?
 <div class="one">
 
 ![center w:450](./Diagramme/WPF_Visual_Hierarchie.svg)
+
+</div>
+</div>
+
+---
+
+### Zeichenwerkzeuge in WPF: Brush vs. Pen
+
+<div class="columns top">
+<div class="two">
+
+Im `DrawingContext` steuern zwei Klassen aus `System.Windows.Media` das Rendering:
+
+- **`Brush` (Flächenfüllung – die „Tinte“):**
+  - Füllt geschlossene 2D-Flächen (Kreise, Polygone, Texte).
+  - `SolidColorBrush`, `LinearGradientBrush` oder gecacht via `Brushes.SteelBlue`, `Brushes.Crimson`.
+- **`Pen` (Linien & Kontur – der „Zeichenstift“):**
+  - Zeichnet Umrisse, Achsen und Vektorstäbe.
+  - Basis ist stets ein `Brush` (Farbe) + Strichattribute: `Thickness`, `DashStyle`, `LineCap`.
+- **Merksatz:** *„Der Pen ist der Stift – der Brush liefert die Tinte!“*
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Brush_vs_Pen.svg)
 
 </div>
 </div>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">WPF Layout-Cycle</text>
+  <text x="135" y="42" class="sub">Die 2-Stufen-Verhandlung</text>
+
+  <!-- Phase 1: Measure -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="150" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #1e40af;">Phase 1: Measure (Wunsch)</text>
+    
+    <rect x="20" y="36" width="90" height="32" rx="4" fill="#dbeafe" stroke="#3b82f6" />
+    <text x="65" y="56" class="lbl" style="font-size: 12px; fill: #1d4ed8;">Parent</text>
+
+    <rect x="130" y="36" width="90" height="32" rx="4" fill="#dbeafe" stroke="#3b82f6" />
+    <text x="175" y="56" class="lbl" style="font-size: 12px; fill: #1d4ed8;">Child Shape</text>
+
+    <!-- Pfeil Anfrage -->
+    <line x1="75" y1="80" x2="165" y2="80" stroke="#2563eb" stroke-width="2" />
+    <polygon points="165,80 157,76 157,84" fill="#2563eb" />
+    <text x="120" y="74" class="desc" style="font-size: 11.5px; fill: #1e3a8a;">Measure(availSize)</text>
+
+    <!-- Pfeil Antwort -->
+    <line x1="165" y1="105" x2="75" y2="105" stroke="#059669" stroke-width="2" />
+    <polygon points="75,105 83,101 83,109" fill="#059669" />
+    <text x="120" y="100" class="desc" style="font-size: 11.5px; fill: #047857;">DesiredSize</text>
+
+    <text x="120" y="132" class="desc" style="font-weight: bold; fill: #1e3a8a;">„Wie viel Platz willst du?“</text>
+  </g>
+
+  <!-- Phase 2: Arrange -->
+  <g transform="translate(15, 218)">
+    <rect width="240" height="150" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #15803d;">Phase 2: Arrange (Zuweisung)</text>
+
+    <rect x="20" y="36" width="90" height="32" rx="4" fill="#dcfce7" stroke="#22c55e" />
+    <text x="65" y="56" class="lbl" style="font-size: 12px; fill: #15803d;">Parent</text>
+
+    <rect x="130" y="36" width="90" height="32" rx="4" fill="#dcfce7" stroke="#22c55e" />
+    <text x="175" y="56" class="lbl" style="font-size: 12px; fill: #15803d;">Child Shape</text>
+
+    <!-- Pfeil Zuweisung -->
+    <line x1="75" y1="80" x2="165" y2="80" stroke="#16a34a" stroke-width="2" />
+    <polygon points="165,80 157,76 157,84" fill="#16a34a" />
+    <text x="120" y="74" class="desc" style="font-size: 11.5px; fill: #14532d;">Arrange(finalRect)</text>
+
+    <!-- Bestätigung -->
+    <circle cx="120" cy="105" r="12" fill="#bbf7d0" stroke="#16a34a" />
+    <path d="M 114 105 L 118 109 L 126 101" fill="none" stroke="#15803d" stroke-width="2" />
+
+    <text x="120" y="132" class="desc" style="font-weight: bold; fill: #14532d;">„Hier ist dein Platz!“</text>
+  </g>
+
+  <g transform="translate(15, 376)">
+    <rect width="240" height="32" rx="4" fill="#fee2e2" stroke="#fca5a5" />
+    <text x="120" y="20" class="lbl" style="font-size: 12px; fill: #991b1b;">5.000 Shapes = 10.000 Aufrufe!</text>
+  </g>
+</svg>
