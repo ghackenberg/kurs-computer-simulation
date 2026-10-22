@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #475569; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 11px; font-weight: bold; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">WPF Layout-Panels</text>
+  <text x="135" y="42" class="sub">4 grundlegende Layout-Strategien</text>
+
+  <!-- 1. Canvas (Oben Links) -->
+  <g transform="translate(12, 54)">
+    <rect width="118" height="144" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.2" />
+    <rect width="118" height="24" rx="6" fill="#dbeafe" />
+    <text x="59" y="16" class="lbl" style="fill: #1e40af;">1. Canvas</text>
+    
+    <!-- Mini Skizze -->
+    <rect x="14" y="34" width="90" height="52" rx="3" fill="#ffffff" stroke="#bfdbfe" />
+    <circle cx="34" cy="52" r="7" fill="#3b82f6" />
+    <rect x="62" y="60" width="28" height="16" rx="2" fill="#60a5fa" />
+    
+    <text x="59" y="102" class="desc" style="font-weight: bold; fill: #1e3a8a;">Absolut (X, Y)</text>
+    <rect x="10" y="112" width="98" height="22" rx="3" fill="#ffffff" stroke="#3b82f6" stroke-width="1" />
+    <text x="59" y="127" class="code" style="fill: #1d4ed8;">Canvas.Left/Top</text>
+  </g>
+
+  <!-- 2. StackPanel (Oben Rechts) -->
+  <g transform="translate(140, 54)">
+    <rect width="118" height="144" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2" />
+    <rect width="118" height="24" rx="6" fill="#dcfce7" />
+    <text x="59" y="16" class="lbl" style="fill: #15803d;">2. StackPanel</text>
+    
+    <!-- Mini Skizze -->
+    <rect x="14" y="34" width="90" height="52" rx="3" fill="#ffffff" stroke="#bbf7d0" />
+    <rect x="22" y="39" width="74" height="11" rx="2" fill="#22c55e" />
+    <rect x="22" y="54" width="74" height="11" rx="2" fill="#4ade80" />
+    <rect x="22" y="69" width="74" height="11" rx="2" fill="#86efac" />
+    
+    <text x="59" y="102" class="desc" style="font-weight: bold; fill: #14532d;">Linear (Stapel)</text>
+    <rect x="10" y="112" width="98" height="22" rx="3" fill="#ffffff" stroke="#22c55e" stroke-width="1" />
+    <text x="59" y="127" class="desc" style="font-size: 11px; fill: #15803d; font-weight: bold;">Keine Koordinaten</text>
+  </g>
+
+  <!-- 3. Grid (Unten Links) -->
+  <g transform="translate(12, 208)">
+    <rect width="118" height="144" rx="6" fill="#fef3c7" stroke="#fcd34d" stroke-width="1.2" />
+    <rect width="118" height="24" rx="6" fill="#fde68a" />
+    <text x="59" y="16" class="lbl" style="fill: #92400e;">3. Grid</text>
+    
+    <!-- Mini Skizze -->
+    <rect x="14" y="34" width="90" height="52" rx="3" fill="#ffffff" stroke="#fde68a" />
+    <line x1="59" y1="34" x2="59" y2="86" stroke="#f59e0b" stroke-dasharray="2,2" />
+    <line x1="14" y1="60" x2="104" y2="60" stroke="#f59e0b" stroke-dasharray="2,2" />
+    <rect x="19" y="39" width="35" height="16" rx="2" fill="#f59e0b" fill-opacity="0.5" />
+    <rect x="64" y="65" width="35" height="16" rx="2" fill="#d97706" fill-opacity="0.5" />
+
+    <text x="59" y="102" class="desc" style="font-weight: bold; fill: #78350f;">Tabelle (Raster)</text>
+    <rect x="10" y="112" width="98" height="22" rx="3" fill="#ffffff" stroke="#d97706" stroke-width="1" />
+    <text x="59" y="127" class="code" style="fill: #b45309;">Grid.Row/Column</text>
+  </g>
+
+  <!-- 4. DockPanel (Unten Rechts) -->
+  <g transform="translate(140, 208)">
+    <rect width="118" height="144" rx="6" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1.2" />
+    <rect width="118" height="24" rx="6" fill="#ede9fe" />
+    <text x="59" y="16" class="lbl" style="fill: #5b21b6;">4. DockPanel</text>
+    
+    <!-- Mini Skizze -->
+    <rect x="14" y="34" width="90" height="52" rx="3" fill="#ffffff" stroke="#ddd6fe" />
+    <rect x="18" y="38" width="82" height="11" rx="1" fill="#8b5cf6" />
+    <rect x="18" y="52" width="20" height="28" rx="1" fill="#a78bfa" />
+    <rect x="42" y="52" width="58" height="28" rx="1" fill="#c4b5fd" />
+
+    <text x="59" y="102" class="desc" style="font-weight: bold; fill: #4c1d95;">Kanten (Andocken)</text>
+    <rect x="10" y="112" width="98" height="22" rx="3" fill="#ffffff" stroke="#7c3aed" stroke-width="1" />
+    <text x="59" y="127" class="code" style="fill: #6d28d9;">DockPanel.Dock</text>
+  </g>
+
+  <!-- Footer Banner -->
+  <g transform="translate(12, 362)">
+    <rect width="246" height="44" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="123" y="18" class="desc" style="font-size: 11px; font-weight: bold; fill: #0f172a;">Jeder Container fordert andere Daten!</text>
+    <text x="123" y="34" class="desc" style="font-size: 11px; fill: #0369a1;">Deshalb: Attached Properties statt fixer Felder</text>
+  </g>
+</svg>

@@ -165,6 +165,28 @@ myCanvas.Children.Add(member);
 
 ---
 
+### WPF Layout-Panels: 4 Strategien
+
+<div class="columns top">
+<div class="two">
+
+In WPF positioniert man UI-Elemente nicht pixelgenau per Hand, sondern überlässt dies spezialisierten **Layout-Containern (Panels)**:
+
+- **`Canvas` (Absolut):** Platziert Kindelemente an expliziten Koordinaten $(x, y)$. Ideal für 2D-Simulationen, CAD und Vektorgrafiken.
+- **`StackPanel` (Linear):** Stapelt Elemente sequentiell horizontal oder vertikal. Braucht *keine* Koordinaten (Menüs, Toolbars).
+- **`Grid` (Tabellarisch):** Teilt Fläche in Zeilen und Spalten (`Row`, `Column`). Passt sich responsiv an Fenstergrößen an (Standard für Masken).
+- **`DockPanel` (Andocken):** Heftet Elemente an die Außenkanten (`Top`, `Bottom`, `Left`, `Right`) und füllt das Zentrum.
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_WPF_Layout_Panels.svg)
+
+</div>
+</div>
+
+---
+
 ### Attached Properties: Warum kein `myNode.Left`?
 
 <div class="columns top">
@@ -172,10 +194,10 @@ myCanvas.Children.Add(member);
 
 Warum deklariert die Klasse `Ellipse` nicht einfach `myNode.Left = 100`?
 
-- **Kopplung an Layout-Container:** Ein Element kann in verschiedensten Panels liegen (`Canvas`, `Grid`, `StackPanel`, `DockPanel`).
-- **Keine universellen Koordinaten:** Im `Grid` braucht man Zeilen/Spalten, im `StackPanel` gibt es gar keine Koordinaten.
-- **Speicher- & Architekturfalle:** Müsste `UIElement` jede denkbare Container-Eigenschaft als Feld besitzen, wäre jedes Objekt speicherintensiv überfrachtet.
-- **Die WPF-Lösung:** Der übergeordnete **Container** definiert die Eigenschaft (`Canvas.Left`), das **Kindelement** trägt nur den Wert.
+- **Verschiedene Anforderungen:** Jedes Panel benötigt völlig andere Layout-Informationen (`Canvas.Left/Top`, `Grid.Row/Column`, `DockPanel.Dock` oder gar keine beim `StackPanel`).
+- **Die Speicherfalle:** Müsste `UIElement` jede Eigenschaft aller Container als C#-Feld besitzen, wäre jedes Objekt speicherintensiv überfrachtet.
+- **Open-Closed-Prinzip:** Eigene Custom-Panels könnten keine neuen Eigenschaften definieren, ohne `UIElement` umzuschreiben.
+- **Die WPF-Lösung:** Der übergeordnete **Container** definiert die Eigenschaft (`Canvas.Left`), das **Kindelement** speichert nur den Wert.
 
 </div>
 <div class="one">
