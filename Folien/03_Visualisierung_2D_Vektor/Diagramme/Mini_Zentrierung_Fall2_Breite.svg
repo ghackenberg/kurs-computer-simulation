@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+      .fml { font-family: 'Consolas', monospace; font-size: 12px; fill: #b45309; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Frame -->
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Fall 2: Breiten-limitiert</text>
+  <text x="135" y="42" class="sub">s = s_x (vertikaler Freiraum)</text>
+
+  <!-- Canvas Box -->
+  <g transform="translate(15, 52)">
+    <rect width="240" height="230" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="120" y="20" class="desc" style="font-weight: bold; fill: #64748b;">Canvas (W_draw × H_draw)</text>
+
+    <!-- Margin Zone (gestrichelt) -->
+    <rect x="15" y="30" width="210" height="185" fill="#f1f5f9" stroke="#cbd5e1" stroke-dasharray="4,3" stroke-width="1" />
+
+    <!-- Restplatz oben (ΔH / 2) -->
+    <rect x="15" y="30" width="210" height="45" fill="#fef3c7" opacity="0.8" />
+    <text x="120" y="58" class="fml">ΔH / 2</text>
+
+    <!-- Modell (horizontal voll belegt, vertikal zentriert) -->
+    <g transform="translate(15, 75)">
+      <rect width="210" height="95" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
+      <!-- Fachwerk flach -->
+      <polygon points="15,85 195,85 105,15" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2.5" />
+      <line x1="105" y1="15" x2="105" y2="48" stroke="#1d4ed8" stroke-width="2" />
+      <line x1="105" y1="62" x2="105" y2="85" stroke="#1d4ed8" stroke-width="2" />
+      <circle cx="15" cy="85" r="4.5" fill="#1e40af" />
+      <circle cx="195" cy="85" r="4.5" fill="#1e40af" />
+      <circle cx="105" cy="15" r="4.5" fill="#1e40af" />
+      
+      <!-- Label Modell -->
+      <rect x="65" y="44" width="80" height="22" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="1" />
+      <text x="105" y="59" class="lbl" style="fill: #1e3a8a;">Modell (s)</text>
+    </g>
+
+    <!-- Restplatz unten (ΔH / 2) -->
+    <rect x="15" y="170" width="210" height="45" fill="#fef3c7" opacity="0.8" />
+    <text x="120" y="198" class="fml">ΔH / 2</text>
+  </g>
+
+  <!-- Erklärung Box -->
+  <g transform="translate(15, 292)">
+    <rect width="240" height="116" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #b45309;">Offset-Berechnung (Fall 2)</text>
+    <text x="120" y="40" class="desc" style="fill: #b45309;">Breite füllt voll: ΔW = 0 ⇒ x_off = margin</text>
+    <text x="120" y="60" class="fml">ΔH = H_draw - H_world · s</text>
+    <text x="120" y="80" class="fml">y_off = margin + ΔH / 2</text>
+    <text x="120" y="100" class="desc" style="font-weight: bold; fill: #78350f;">Symmetrischer Ausgleich auf Y!</text>
+  </g>
+</svg>

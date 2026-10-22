@@ -491,21 +491,22 @@ $$s = \min(s_x, s_y) \quad \left[\frac{\mathrm{px}}{\mathrm{m}}\right]$$
 
 ---
 
-### Zentrierung im Viewport: Die 2 Grenzfälle
+### Zentrierung im Viewport: Problem & 2 Grenzfälle
 
 <div class="columns top">
 <div class="two">
 
-Beim isotropen Skalieren $s = \min(s_x, s_y)$ stößt das Modell $(W_{\text{world}}, H_{\text{world}})$ an genau einer Achse an – auf der anderen entsteht Freiraum:
+Beim isotropen Skalieren $s = \min(s_x, s_y)$ stößt das Modell $(W_{\text{world}}, H_{\text{world}})$ an genau einer Achse von $(W_{\text{draw}}, H_{\text{draw}})$ an:
 
-- **Problem ohne Zentrierung:**
-  - Bei naivem Platzieren an $(\text{margin}, \text{margin})$ klebt das Modell am linken bzw. oberen Rand.
-- **Fall 1: Höhen-limitiert ($s_y \le s_x$):**  
-  Modellhöhe füllt $H_{\text{draw}}$ ($H_{\text{world}} \cdot s$) voll aus ($\Delta H = 0$).  
-  Restplatz auf X: $x_{\text{off}} = \text{margin} + \frac{\Delta W}{2}, \quad y_{\text{off}} = \text{margin}$.
-- **Fall 2: Breiten-limitiert ($s_x < s_y$):**  
-  Modellbreite füllt $W_{\text{draw}}$ ($W_{\text{world}} \cdot s$) voll aus ($\Delta W = 0$).  
-  Restplatz auf Y: $y_{\text{off}} = \text{margin} + \frac{\Delta H}{2}, \quad x_{\text{off}} = \text{margin}$.
+- **Das Problem ohne Zentrierung:**
+  - Bei naivem Platzieren an $(\text{margin}, \text{margin})$ klebt das Modell starr am linken bzw. oberen Rand.
+  - Der gesamte ungenutzte Freiraum verbleibt rechts bzw. unten.
+- **Die 2 resultierenden Grenzfälle:**
+  - **Fall 1: Höhen-limitiert ($s_y \le s_x$):**  
+    Modell füllt $H_{\text{draw}}$ aus $\implies$ horizontaler Freiraum $\Delta W$.
+  - **Fall 2: Breiten-limitiert ($s_x < s_y$):**  
+    Modell füllt $W_{\text{draw}}$ aus $\implies$ vertikaler Freiraum $\Delta H$.
+- **Ziel:** Symmetrische Aufteilung mit $x_{\text{off}}$ und $y_{\text{off}}$.
 
 </div>
 <div class="one">
@@ -517,25 +518,49 @@ Beim isotropen Skalieren $s = \min(s_x, s_y)$ stößt das Modell $(W_{\text{worl
 
 ---
 
-### Zentrierung im Detail: Geometrie & Universelle Formel
+### Zentrierung Fall 1: Höhen-limitiert (s_y ≤ s_x)
 
 <div class="columns top">
 <div class="two">
 
-Geometrische Konstruktion im Canvas und universelle Implementierung:
+Ist das Fenster relativ breiter als das Modell, limitiert die Höhe ($s = s_y$):
 
-- **Symmetrische Freiräume:**  
-  $\Delta W = W_{\text{draw}} - W_{\text{world}} \cdot s$ und $\Delta H = H_{\text{draw}} - H_{\text{world}} \cdot s$.
-- **Universelle C#-Offset-Formel:**
-  $$x_{\text{off}} = \text{margin} + \frac{\Delta W}{2}, \quad y_{\text{off}} = \text{margin} + \frac{\Delta H}{2} \quad [\mathrm{px}]$$
-- **C#-Eleganz ohne `if`/`else`:**
-  - Auf der limitierenden Achse (im Bild: $s = s_y$) fällt der Freiraum auf exakt $0 \implies y_{\text{off}} = \text{margin}$.
-  - Derselbe Code berechnet beide Fälle ohne Fallunterscheidung!
+- **Vertikale Achse (voll belegt):**
+  - Modellhöhe füllt $H_{\text{draw}}$ ($H_{\text{world}} \cdot s$). $\Delta H = 0 \implies y_{\text{off}} = \text{margin}$.
+- **Horizontale Achse (Freiraum):**
+  - Freiraum $\Delta W = W_{\text{draw}} - W_{\text{world}} \cdot s > 0$ wird links/rechts halbiert:
+    $$x_{\text{off}} = \text{margin} + \frac{\Delta W}{2} \quad [\mathrm{px}]$$
+- **Ergebnis:** Das Modell steht horizontal perfekt zentriert im Viewport.
 
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Zentrierung_Viewport.svg)
+![w:1000](./Diagramme/Mini_Zentrierung_Fall1_Hoehe.svg)
+
+</div>
+</div>
+
+---
+
+### Zentrierung Fall 2: Breiten-limitiert (s_x < s_y)
+
+<div class="columns top">
+<div class="two">
+
+Ist das Fenster relativ höher als das Modell, limitiert die Breite ($s = s_x$):
+
+- **Horizontale Achse (voll belegt):**
+  - Modellbreite füllt $W_{\text{draw}}$ ($W_{\text{world}} \cdot s$). $\Delta W = 0 \implies x_{\text{off}} = \text{margin}$.
+- **Vertikale Achse (Freiraum):**
+  - Freiraum $\Delta H = H_{\text{draw}} - H_{\text{world}} \cdot s > 0$ wird oben/unten halbiert:
+    $$y_{\text{off}} = \text{margin} + \frac{\Delta H}{2} \quad [\mathrm{px}]$$
+- **Universelle C#-Formel (ohne `if`/`else`):**
+  - Auf der limitierenden Achse gilt $\Delta = 0$. Die Formeln berechnen beide Fälle einheitlich!
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Zentrierung_Fall2_Breite.svg)
 
 </div>
 </div>
