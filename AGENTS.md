@@ -175,7 +175,10 @@ Zur Sicherstellung der didaktischen und visuellen Qualität existieren automatis
 Alle Linter und Build-Skripte sind in der zentralen `package.json` hinterlegt (frühere PowerShell-Skripte wurden zugunsten plattformunabhängiger npm-Befehle vollständig abgelöst):
 
 - **Gesamter Prüflauf:**
-  - `npm run lint` – Führt die vollständige Validierung aus (DOM-Layout, Abschnittsschema, SVG-Audits).
+  - `npm run lint` – Führt die vollständige Validierung aus (DOM-Layout, Abschnittsschema, SVG-Audits, Variablen-Konsistenz).
+- **Variablen-Konsistenz & Didaktische Abdeckung (Diagramme & Code):**
+  - `npm run lint:variables` – Prüft die didaktische Variablen-Konsistenz für alle Kapitel.
+  - `npm run lint:variables:[XX]` – Prüft gezielt Kapitel `XX` (`00` bis `11`, z.B. `npm run lint:variables:03`).
 - **DOM- & Layoutprüfung (Überlauf, Sicherheitsabstände, effektive Schriftgrößen via CTM):**
   - `npm run lint:slides` – Prüft alle Foliensätze.
   - `npm run lint:slides:[XX]` – Prüft gezielt Kapitel `XX` (`00` bis `11`, z.B. `npm run lint:slides:03`).
@@ -205,3 +208,7 @@ Alle Linter und Build-Skripte sind in der zentralen `package.json` hinterlegt (f
    - Jedes Kapitel besitzt eine Übersicht mit `![bg right](./Titelbild.jpg)` (im 3:4-Hochformat, $896 \times 1200\,\text{px}$) und der Standard-Einleitung `Dieses Kapitel umfasst die folgenden Abschnitte:`.
    - Jeder Abschnitt `## N.M:` besitzt eine Übersicht mit `![bg right](./Illustrationen/Abschnitt_M.jpg)` (im 3:4-Hochformat) und der Standard-Einleitung `Dieser Abschnitt umfasst die folgenden Inhalte:`.
    - Die Bildinhalte müssen **minimalistisch**, **textfrei** und **auf eine einzige, klare Metapher fokussiert** sein.
+4. **Variablen-Konsistenz & Didaktische Abdeckung:**
+   - **Regel 1 (SVG-Diagramme):** Variablen und mathematische Symbole, die in SVG-Diagrammen dargestellt werden, müssen im zugehörigen Folientext (bzw. bei Vollformat-Diagrammen im Abschnitt) genannt und eingeführt werden.
+   - **Regel 2 (Halbseitiger Code):** Variablen, Parameter und Knotennamen in zweispaltigen Code-Fragmenten müssen in der Texterklärung derselben Folie erläutert werden.
+   - **Regel 3 (Ganzseitiger Code):** Variablen in ganzseitigen Code-Listings müssen auf den vorherigen Folien des aktuellen Abschnitts didaktisch eingeführt worden sein.

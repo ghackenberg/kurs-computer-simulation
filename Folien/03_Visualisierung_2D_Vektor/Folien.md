@@ -124,9 +124,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 In WPF bietet das `Canvas`-Control eine 2D-Zeichenfläche mit **absoluter Positionierung**:
 
-- Kindelemente werden über angehängte Eigenschaften (**Attached Properties**) exakt im Koordinatenraum platziert:
-  - `Canvas.Left="120"`
-  - `Canvas.Top="85"`
+- Kindelemente (`el`) werden über angehängte Eigenschaften (**Attached Properties**) an Position $(x, y)$ platziert:
+  - In C#: `Canvas.SetLeft(el, x);` und `Canvas.SetTop(el, y);`
+  - In XAML: `Canvas.Left="120"` und `Canvas.Top="85"`
 - Im Gegensatz zu `Grid` führt der Canvas **keine automatische Layout-Verschachtelung** durch.
 - Kindelemente können sich frei überlappen (Z-Index).
 - Ideal geeignet für technische 2D-Simulationsmodelle, CAD-Viewer und interaktive Vektorgrafiken.
@@ -143,7 +143,7 @@ In WPF bietet das `Canvas`-Control eine 2D-Zeichenfläche mit **absoluter Positi
 
 ### WPF Canvas: Instanziierung im Code
 
-Kindelemente lassen sich direkt im Code-Behind erzeugen und zur `Children`-Sammlung hinzufügen:
+Kindelemente (z.B. ein Tragwerksstab `member` als `Line`) lassen sich direkt im Code-Behind erzeugen und zur `Children`-Sammlung des Canvas hinzufügen:
 
 ```csharp
 // Linie auf einem WPF Canvas im C#-Code erzeugen
@@ -160,7 +160,7 @@ var member = new Line
 myCanvas.Children.Add(member);
 ```
 
-- Das Element wird sofort Bestandteil des WPF Visual Tree.
+- Das Element `member` wird sofort Bestandteil des WPF Visual Tree.
 - Bei Fensteränderungen zeichnet WPF das Element automatisch neu.
 
 ---
@@ -197,7 +197,7 @@ Warum deklariert die Klasse `Ellipse` nicht einfach `myNode.Left = 100`?
 - **Verschiedene Anforderungen:** Jedes Panel benötigt völlig andere Layout-Informationen (`Canvas.Left/Top`, `Grid.Row/Column`, `DockPanel.Dock` oder gar keine beim `StackPanel`).
 - **Die Speicherfalle:** Müsste `UIElement` jede Eigenschaft aller Container als C#-Feld besitzen, wäre jedes Objekt speicherintensiv überfrachtet.
 - **Open-Closed-Prinzip:** Eigene Custom-Panels könnten keine neuen Eigenschaften definieren, ohne `UIElement` umzuschreiben.
-- **Die WPF-Lösung:** Der übergeordnete **Container** definiert die Eigenschaft (`Canvas.Left`), das **Kindelement** speichert nur den Wert.
+- **Die WPF-Lösung:** Der übergeordnete **Container** definiert die Eigenschaft (`Canvas.Left`), das **Kindelement** (`child`) speichert nur die Position $(x, y)$.
 
 </div>
 <div class="one">
@@ -230,7 +230,7 @@ Jedes `DependencyObject` besitzt einen internen Schlüssel-Wert-Speicher:
 <div class="one">
 
 **3. Wie nutzt der Canvas den Wert?**
-In Phase 2 des Layout-Cycles (`Arrange`) fragt der `Canvas` die Werte jedes Kindes ab:
+In Phase 2 des Layout-Cycles (`Arrange`) fragt der `Canvas` die Werte $(x, y)$ jedes Kindes (`child`) ab:
 
 ```csharp
 foreach (UIElement child in Children)
@@ -266,7 +266,7 @@ foreach (UIElement child in Children)
 <br>
 
 **Zentrierung von Knotenpunkten (Ellipsen):**
-Um eine `Ellipse` mit Radius $r$ exakt auf dem Punkt $(x_s, y_s)$ zu zentrieren:
+Um ein Element `node` (`Ellipse`) mit Radius $r$ exakt auf Punkt $p = (x_s, y_s)$ zu zentrieren:
 $$\text{Canvas.Left} = x_s - r, \quad \text{Canvas.Top} = y_s - r$$
 
 </div>
@@ -628,7 +628,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
   1. **Konfigurierbarer Kraftmaßstab $s_F$ $[\mathrm{px/N}]$:**
      $\vec{L}_F = s_F \cdot \vec{F}_{\text{screen}} \quad [\mathrm{px}]$
   2. **Feste Pfeillänge mit Beschriftung (Industriestandard):**
-     Pfeilschaft besitzt feste Länge ($65\,\mathrm{px}$); Betrag wird als Text gerendert (`"25.0 kN"`).
+     Pfeilschaft ($P_{\text{node}} \to P_{\text{tip}}$) mit Basis $P_{\text{base}}$, Flügeln $P_{\text{wing1,2}}$ und Richtungsvektor $u = e_u$; Betrag als Text (`"25.0 kN"`).
 
 </div>
 <div class="two">
@@ -648,8 +648,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 Gegeben: Knoten $\vec{P}_{\text{node}}$ $[\mathrm{px}]$, Kraftvektor $\vec{F} = (F_x, F_y)^T$, Spitzenmaße $L$ und $W$ $[\mathrm{px}]$.
 
 1. **Pfeilspitze:** $\vec{P}_{\text{tip}} = \vec{P}_{\text{node}} + \text{length} \cdot \vec{e}_u$
-2. **Normierter Richtungsvektor:** $\vec{e}_u = \vec{F}_{\text{screen}} / \|\vec{F}_{\text{screen}}\|$
-3. **Orthogonalvektor ($90^\circ$ links):** $\vec{e}_u^\perp = (-e_{u,y}, e_{u,x})^T$
+2. **Normierter Richtungsvektor:** $\vec{e}_u = \vec{F}_{\text{screen}} / \|\vec{F}_{\text{screen}}\|$ mit Komponenten $(e_x, e_y)$
+3. **Orthogonalvektor ($90^\circ$ links):** $\vec{e}_u^\perp = \vec{e}_{\text{perp}} = (-e_y, e_x)^T$
 4. **Basispunkt & Flügelpunkte:**
    $\vec{P}_{\text{base}} = \vec{P}_{\text{tip}} - L \cdot \vec{e}_u, \quad \vec{P}_{\text{wing1,2}} = \vec{P}_{\text{base}} \pm \frac{W}{2} \cdot \vec{e}_u^\perp$
 
@@ -721,8 +721,8 @@ In industriellen CAD-Viewern werden Abmessungen normgerecht nach **DIN 406** dar
 
 Zerlegung der Maßkette in **5 Konstruktionsschritte**:
 
-1. **Referenzpunkte:** Bauteilknoten $P_1(x_1, y_1)$ und $P_2(x_2, y_2)$.
-2. **Maßhilfslinien:** Orthogonal von $P_1, P_2$ zu $y_{\text{dim}}$ führen.
+1. **Referenzpunkte:** Bauteilknoten $P_1(x_1, y_1)$ und $P_2(x_2, y_2)$ erfassen.
+2. **Maßhilfslinien:** Orthogonal von jedem Bezugspunkt $P_i$ ($P_1, P_2$) zu $y_{\text{dim}}$ führen.
    - Gap ($\Delta y_{\text{gap}} = 4\,\mathrm{px}$) und Überstand ($\Delta y_{\text{over}} = 8\,\mathrm{px}$).
 3. **Maßlinie:** Verbindungsstrecke auf $y_{\text{dim}}$ zwischen Hilfslinien.
 4. **Maßpfeile:** Schlanke Spitzen ($12\,\mathrm{px}$, $15^\circ$) an Hilfslinien.
@@ -961,7 +961,7 @@ private void OnMouseUp(object sender, MouseButtonEventArgs e)
 
 ### Verschieben: Die `MouseMove`-Logik
 
-In `MouseMove` wird die Differenz $\vec{\Delta} = \vec{P}_{\text{current}} - \vec{P}_{\text{last}}$ direkt auf die Matrix translatiert:
+In `MouseMove` wird die Differenz $\vec{\Delta} = \vec{P}_{\text{current}} - \vec{P}_{\text{last}}$ (`delta = currentPos - _lastPos`) direkt auf die Matrix translatiert:
 
 ```csharp
 private void OnMouseMove(object sender, MouseEventArgs e)
@@ -969,8 +969,8 @@ private void OnMouseMove(object sender, MouseEventArgs e)
     if (!_isPanning) return;
 
     Point currentPos = e.GetPosition(this);
-    Vector delta = currentPos - _lastMousePos;
-    _lastMousePos = currentPos;
+    Vector delta = currentPos - _lastPos;
+    _lastPos = currentPos;
 
     Matrix m = CanvasMatrixTransform.Matrix;
     m.Translate(delta.X, delta.Y); // Hardwarebeschleunigter Pan
@@ -1013,7 +1013,7 @@ Beim interaktiven Verschieben von Knotenpunkten tritt in naiven Implementierunge
 <div class="two">
 
 **Die Entkopplungs-Regel:**
-Während eines aktiven Drag-Vorgangs darf die Bounding Box **niemals** dynamisch neu angepasst werden!
+Beim Dragging (`_draggedNode != null`) darf die Box (`xMin`, `xMax`, `yMin`, `yMax`) **nie** angepasst werden!
 
 ```csharp
 private void Redraw()
@@ -1087,17 +1087,17 @@ private void Redraw()
 <div class="columns top">
 <div class="two">
 
-Für interaktive Selektion (Knoten per Mausklick fangen, Lasten ansetzen) müssen Klickpixel $\vec{P}_{\text{screen}}$ in physikalische Meter $[\mathrm{m}]$ rückgerechnet werden.
+Für interaktive Selektion müssen Klickpixel $\vec{P}_{\text{screen}} = (x_p, y_p)$ in physikalische Meter $\vec{P}_{\text{world}} = (x_w, y_w)$ rückgerechnet werden.
 
 Die Rücktransformation durchläuft **zwei getrennte Schichten**:
 
 1. **Schicht 1: Die GPU-Kameramatrix (Pan & Zoom):**
    - Hebt die interaktive Kamerabewegung auf:
-     $\vec{P}_{\text{canvas}} = \mathbf{M}^{-1} \cdot \vec{P}_{\text{screen}} \quad [\mathrm{px}]$
+     $\vec{P}_{\text{canvas}} = (x_u, y_u) = \mathbf{M}^{-1} \cdot \vec{P}_{\text{screen}} \quad [\mathrm{px}]$
    - $\mathbf{M}$ enthält alle bisherigen `ScaleAt`- und Pan-Translationen.
 2. **Schicht 2: Das Viewport-Modell (`Transform2D`):**
-   - Rechnet virtuelle Canvas-Pixel in physikalische Weltkoordinaten $[\mathrm{m}]$ um.
-   - Hebt Bounding-Box-Zentrierung, isotropen Maßstab $s$ und $Y$-Inversion auf.
+   - Rechnet unzoomed Pixel $(x_u, y_u)$ in physikalische Weltkoordinaten um:
+     $x_w = X_{\min} + (x_u - x_{\text{off}}) / s, \quad y_w = Y_{\max} - (y_u - y_{\text{off}}) / s$
 
 </div>
 <div class="one">
@@ -1114,14 +1114,14 @@ Die Rücktransformation durchläuft **zwei getrennte Schichten**:
 <div class="columns top">
 <div class="two">
 
-Aus den Viewport-Vorwärtsgleichungen leiten wir die **analytische Umkehrfunktion** ab:
+Aus den Viewport-Vorwärtsgleichungen leiten wir die **analytische Umkehrfunktion** von $\vec{P}_{\text{unzoom}}$ zum physikalischen Weltpunkt $\vec{P}_{\text{world}} = (x_w, y_w)$ ab:
 
 - **X-Rückrechnung (Translation & Skalierung):**
-  $x_{\text{canvas}} = x_{\text{offset}} + (x_w - X_{\min}) \cdot s$
-  $\iff x_w = X_{\min} + \frac{x_{\text{canvas}} - x_{\text{offset}}}{s} \quad [\mathrm{m}]$
+  $x_{\text{canvas}} = x_{\text{off}} + (x_w - X_{\min}) \cdot s$
+  $\iff x_w = X_{\min} + \frac{x_{\text{canvas}} - x_{\text{off}}}{s} \quad [\mathrm{m}]$
 - **Y-Rückrechnung (Invertierung & Skalierung):**
-  $y_{\text{canvas}} = y_{\text{offset}} + (Y_{\max} - y_w) \cdot s$
-  $\iff y_w = Y_{\max} - \frac{y_{\text{canvas}} - y_{\text{offset}}}{s} \quad [\mathrm{m}]$
+  $y_{\text{canvas}} = y_{\text{off}} + (Y_{\max} - y_w) \cdot s$
+  $\iff y_w = Y_{\max} - \frac{y_{\text{canvas}} - y_{\text{off}}}{s} \quad [\mathrm{m}]$
 
 > **Einheitenkontrolle:**  
 > $[\mathrm{m}] + \frac{[\mathrm{px}] - [\mathrm{px}]}{[\mathrm{px/m}]} = [\mathrm{m}]$  
@@ -1329,7 +1329,9 @@ In Render-Schleifen von Simulationsanwendungen gilt die **strikte Regel**:
 <div class="columns top">
 <div class="one">
 
-**Setup & Freezing:**
+**1. Setup & Freezing (`visual`, `dc`):**
+- Werkzeuge `Pen pen` und `Brush brush` einfrieren (`Freeze()`):
+
 ```csharp
 var visual = new DrawingVisual();
 
@@ -1349,7 +1351,9 @@ using (DrawingContext dc = visual.RenderOpen())
 </div>
 <div class="one">
 
-**Zeichenschleifen:**
+**2. Zeichenschleifen (`rods`, `nodes`):**
+- Iteration über Sammlungen `rods` und `nodes`:
+
 ```csharp
 private void DrawScene(
     DrawingContext dc, List<Rod> rods, 

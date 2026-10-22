@@ -31,24 +31,23 @@
       <circle cx="62" cy="18" r="4" fill="#1e40af" />
     </g>
 
-    <!-- Offsets (mit Schutz-Pill) -->
-    <g transform="translate(23, 107)">
-      <rect width="30" height="18" rx="3" fill="#ffffff" stroke="#fde68a" stroke-width="1" />
-      <text x="15" y="13" class="dim" style="font-size: 11.5px; fill: #b45309; text-anchor: middle;">x_off</text>
+    <!-- Randabstand (mit Schutz-Pill) -->
+    <g transform="translate(18, 107)">
+      <rect width="40" height="18" rx="3" fill="#ffffff" stroke="#fde68a" stroke-width="1" />
+      <text x="20" y="13" class="dim" style="font-size: 11.5px; fill: #b45309; text-anchor: middle;">margin</text>
     </g>
-    <g transform="translate(187, 107)">
-      <rect width="30" height="18" rx="3" fill="#ffffff" stroke="#fde68a" stroke-width="1" />
-      <text x="15" y="13" class="dim" style="font-size: 11.5px; fill: #b45309; text-anchor: middle;">x_off</text>
+    <g transform="translate(182, 107)">
+      <rect width="40" height="18" rx="3" fill="#ffffff" stroke="#fde68a" stroke-width="1" />
+      <text x="20" y="13" class="dim" style="font-size: 11.5px; fill: #b45309; text-anchor: middle;">margin</text>
     </g>
   </g>
 
   <!-- Formula Summary Card -->
   <g transform="translate(15, 286)">
     <rect width="240" height="120" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
-    <text x="120" y="22" class="lbl" style="fill: #15803d;">Berechnungs-Pipeline</text>
-    <text x="120" y="44" class="desc" style="font-weight: bold; fill: #166534;">W_world = X_max - X_min</text>
-    <text x="120" y="66" class="desc" style="font-size: 11.5px; font-weight: bold; fill: #166534;">s = Math.Min(W_draw/W_world, ...)</text>
-    <text x="120" y="88" class="desc" style="font-size: 11px; font-weight: bold; fill: #047857;">x_off = margin + (W_draw - W_world·s)/2</text>
-    <text x="120" y="108" class="desc" style="font-weight: bold; fill: #14532d;">Automatisch zentriert!</text>
+    <text x="120" y="24" class="lbl" style="fill: #15803d;">Modell- &amp; Zeichenmaße</text>
+    <text x="120" y="48" class="desc" style="font-weight: bold; fill: #166534;">W_world = X_max - X_min</text>
+    <text x="120" y="70" class="desc" style="font-weight: bold; fill: #166534;">H_world = Y_max - Y_min</text>
+    <text x="120" y="94" class="desc" style="font-weight: bold; fill: #047857;">W_draw = W_canvas - 2·margin</text>
   </g>
 </svg>
