@@ -21,11 +21,11 @@
     <g transform="translate(30, 115)">
       <line x1="0" y1="0" x2="150" y2="0" stroke="#1d4ed8" stroke-width="2" />
       <polygon points="156,0 146,-4 146,4" fill="#1d4ed8" />
-      <text x="160" y="4" class="axis" style="fill: #1d4ed8;">+X</text>
+      <text x="160" y="4" class="axis" style="fill: #1d4ed8;">+X_w</text>
 
       <line x1="0" y1="0" x2="0" y2="-70" stroke="#1d4ed8" stroke-width="2" />
       <polygon points="0,-76 -4,-66 4,-66" fill="#1d4ed8" />
-      <text x="8" y="-65" class="axis" style="fill: #1d4ed8;">+Y</text>
+      <text x="8" y="-65" class="axis" style="fill: #1d4ed8;">+Y_w</text>
 
       <circle cx="80" cy="-45" r="4" fill="#2563eb" />
       <!-- Shield rect to avoid line collision -->
@@ -42,11 +42,11 @@
     <g transform="translate(30, 45)">
       <line x1="0" y1="0" x2="150" y2="0" stroke="#dc2626" stroke-width="2" />
       <polygon points="156,0 146,-4 146,4" fill="#dc2626" />
-      <text x="160" y="4" class="axis" style="fill: #dc2626;">+X</text>
+      <text x="160" y="4" class="axis" style="fill: #dc2626;">+X_s</text>
 
       <line x1="0" y1="0" x2="0" y2="70" stroke="#dc2626" stroke-width="2" />
       <polygon points="0,76 -4,66 4,66" fill="#dc2626" />
-      <text x="8" y="70" class="axis" style="fill: #dc2626;">+Y</text>
+      <text x="8" y="70" class="axis" style="fill: #dc2626;">+Y_s</text>
 
       <circle cx="0" cy="0" r="4" fill="#991b1b" />
       <circle cx="80" cy="45" r="4" fill="#ef4444" />

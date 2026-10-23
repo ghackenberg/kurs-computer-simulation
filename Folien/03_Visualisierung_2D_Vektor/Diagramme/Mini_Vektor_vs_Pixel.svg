@@ -40,9 +40,11 @@
     <text x="120" y="22" class="lbl" style="fill: #15803d;">2. Vektorgrafik (Analytisch)</text>
 
     <g transform="translate(30, 30)">
-      <path d="M 10 65 Q 65 65 115 10" fill="none" stroke="#16a34a" stroke-width="5" stroke-linecap="round" />
-      <circle cx="10" cy="65" r="4" fill="#15803d" />
-      <circle cx="115" cy="10" r="4" fill="#15803d" />
+      <path d="M 16 55 Q 65 55 110 18" fill="none" stroke="#16a34a" stroke-width="4" stroke-linecap="round" />
+      <circle cx="16" cy="55" r="4" fill="#15803d" />
+      <circle cx="110" cy="18" r="4" fill="#15803d" />
+      <text x="14" y="44" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#15803d">(x_1, y_1)</text>
+      <text x="102" y="8" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#15803d" text-anchor="end">(x_2, y_2)</text>
       <circle cx="150" cy="38" r="18" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" />
       <path d="M 142 38 L 148 44 L 158 32" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
     </g>

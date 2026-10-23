@@ -356,7 +356,7 @@ Beim Zeichnen physikalischer Systeme treffen zwei inkompatible Welten aufeinande
    - Ursprung beliebig (z.B. Auflagerpunkt).
 
 2. **Bildschirm-Koordinatensystem (WPF Canvas):**
-   - Diskret: Bildschirmpixel in $[\mathrm{px}]$.
+   - Diskret: $x_s, y_s \in \mathbb{N}_0$ in Bildschirmpixeln $[\mathrm{px}]$.
    - **$+Y$-Achse zeigt nach UNTEN** (Scanline-Raster).
    - Ursprung $(0,0)$ starr in der linken oberen Fensterecke.
 
@@ -670,19 +670,19 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 <div class="columns top">
 <div class="two">
 
-- **Geometrie:** Maßstab $s = \min(s_x, s_y)$ $[\mathrm{px/m}]$ (z.B. $10\,\mathrm{m}$ Träger $\to 500\,\mathrm{px}$).
+- **Geometrie:** Geometriemaßstab $s$ $[\mathrm{px/m}]$ (z.B. $10\,\mathrm{m}$ Träger $\to 500\,\mathrm{px}$).
 - **Physikalische Kräfte:** Dürfen **nicht** mit dem Geometriemaßstab gezeichnet werden!
   - Eine Last von $50\,\mathrm{kN}$ wäre sonst $2.500.000\,\mathrm{px}$ lang.
 - **Zwei professionelle Lösungsansätze:**
   1. **Konfigurierbarer Kraftmaßstab $s_F$ $[\mathrm{px/N}]$:**
-     $\vec{L}_F = s_F \cdot \vec{F}_{\text{screen}} \quad [\mathrm{px}]$
+     $L = s_F \cdot |\vec{F}| \quad [\mathrm{px}]$ (proportional zur Last).
   2. **Feste Pfeillänge mit Beschriftung (Industriestandard):**
      Pfeilschaft ($P_{\text{node}} \to P_{\text{tip}}$) mit Basis $P_{\text{base}}$, Flügeln $P_{\text{wing1,2}}$ und Richtungsvektor $u = e_u$; Betrag als Text (`"25.0 kN"`).
 
 </div>
 <div class="two">
 
-![w:520](./Diagramme/Pfeilspitzengeometrie_2D.svg)
+![w:500](./Diagramme/Pfeilspitzengeometrie_2D.svg)
 
 </div>
 </div>
@@ -1050,7 +1050,7 @@ Beim interaktiven Verschieben von Knotenpunkten tritt in naiven Auto-Fit-Impleme
   - In Weltkoordinaten wächst das Tragwerk: $H_{\text{world}}$ steigt.
 - **2. Der Auto-Fit-Fehler:**
   - Naives `Redraw()` ruft unbedacht `_transform.Update()` auf.
-  - Der Maßstab $s = \min(s_x, s_y)$ schrumpft sofort, um das vergrößerte Modell einzupassen!
+  - Der Auto-Fit-Maßstab $s$ schrumpft sofort, um das vergrößerte Modell einzupassen!
 - **3. Das Abreißen vom Cursor:**
   - Durch das kleinere $s$ wird das Tragwerk kleiner dargestellt.
   - Knoten $K_3$ hüpft unter dem Mauszeiger nach unten weg!

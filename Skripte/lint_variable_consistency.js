@@ -1,10 +1,11 @@
 /**
  * Automated Variable Consistency & Coverage Linter
  * 
- * Enforces 3 pedagogical didactic rules:
+ * Enforces 4 pedagogical didactic rules:
  * Rule 1: Variables shown in SVG diagrams must be mentioned in the slide text.
  * Rule 2: Variables in half-slide code fragments must be explained in the text of the same slide.
  * Rule 3: Variables in full-slide code fragments must be introduced on preceding slides of that section.
+ * Rule 4: Mathematical variables in slide text must be anchored in accompanying diagram or code.
  */
 
 const fs = require('fs');
@@ -89,8 +90,8 @@ const CANONICAL_ALIASES = {
   'x_max': ['x_max', 'xmax', 'maxx'],
   'y_min': ['y_min', 'ymin', 'miny'],
   'y_max': ['y_max', 'ymax', 'maxy'],
-  'x_s': ['x_s', 'xs', 'scrx', 'screenx', 'xscreen', 'x_scr'],
-  'y_s': ['y_s', 'ys', 'scry', 'screeny', 'yscreen', 'y_scr'],
+  'x_s': ['x_s', 'xs', 'scrx', 'screenx', 'xscreen', 'x_scr', 'px', 'p.x', 'p_x'],
+  'y_s': ['y_s', 'ys', 'scry', 'screeny', 'yscreen', 'y_scr', 'py', 'p.y', 'p_y'],
   'x_w': ['x_w', 'xw', 'worldx', 'wx', 'xworld'],
   'y_w': ['y_w', 'yw', 'worldy', 'wy', 'yworld'],
   'p_cursor': ['p_cursor', 'pcursor', 'cursor', 'zoomcenter', 'mousepos'],
@@ -200,6 +201,15 @@ function extractSlideTokens(text) {
       tokens.add(parts.join(''));
       tokens.add(parts[0] + parts[1].charAt(0).toUpperCase() + parts[1].slice(1));
     }
+  });
+
+  // 4. Property access in code or text: e.g. p.X, child.Arrange, bounds.Width
+  const dotMatches = normText.match(/\b([A-Za-z][A-Za-z0-9_]*)\.([A-Za-z][A-Za-z0-9_]*)\b/g) || [];
+  dotMatches.forEach(dot => {
+    const [obj, prop] = dot.split('.');
+    tokens.add(dot.toLowerCase());
+    tokens.add(`${obj.toLowerCase()}_${prop.toLowerCase()}`);
+    tokens.add(`${obj.toLowerCase()}${prop.toLowerCase()}`);
   });
 
   return tokens;
@@ -503,7 +513,7 @@ function auditChapterVariables(chapterDir) {
             slideNum,
             title,
             type: 'TEXT_VAR_NOT_ANCHORED',
-            severity: 'WARNUNG',
+            severity: 'FEHLER',
             message: `Variable "${v}" im Folientext wird weder im begleitenden Diagramm noch im Code visualisiert/genutzt.`
           });
         }
@@ -517,7 +527,7 @@ function auditChapterVariables(chapterDir) {
 // CLI Execution
 if (require.main === module) {
   const args = process.argv.slice(2);
-  const targetChapter = args[0] || '03';
+  const targetChapter = args.find(a => !a.startsWith('--'));
 
   console.log('================================================================');
   console.log('  AUTOMATED VARIABLE CONSISTENCY & COVERAGE LINTER');
@@ -526,7 +536,9 @@ if (require.main === module) {
   const folienRoot = path.resolve('Folien');
   const dirs = fs.readdirSync(folienRoot).filter(d => {
     const full = path.join(folienRoot, d);
-    return fs.statSync(full).isDirectory() && d.startsWith(targetChapter);
+    if (!fs.statSync(full).isDirectory()) return false;
+    if (targetChapter) return d.startsWith(targetChapter);
+    return true;
   });
 
   if (dirs.length === 0) {
@@ -534,55 +546,35 @@ if (require.main === module) {
     process.exit(1);
   }
 
-  const strictMode = args.includes('--strict');
   let totalErrors = 0;
-  let totalWarnings = 0;
 
   dirs.forEach(d => {
     const chapterPath = path.join(folienRoot, d);
     const result = auditChapterVariables(chapterPath);
     console.log(`Prüfe Kapitel ${d} (${result.totalSlides} Folien) ...`);
 
-    const errors = result.issues.filter(iss => iss.rule !== 4);
-    const warnings = result.issues.filter(iss => iss.rule === 4);
+    totalErrors += result.issues.length;
 
-    totalErrors += errors.length;
-    totalWarnings += warnings.length;
-
-    if (errors.length === 0 && warnings.length === 0) {
+    if (result.issues.length === 0) {
       console.log('  ✓ OK: Alle Variablen sind didaktisch vollständig abgedeckt!\n');
     } else {
-      if (errors.length > 0) {
-        console.log(`  ✗ ${errors.length} Fehler (Regel 1–3: Nicht eingeführte Symbole):`);
-        errors.forEach(iss => {
-          console.log(`    - Folie ${iss.slideNum} [${iss.title}] (Regel ${iss.rule}): ${iss.message}`);
-        });
-      }
-      if (warnings.length > 0) {
-        console.log(`  ⚠ ${warnings.length} Didaktische Hinweise (Regel 4: Text-Variable nicht im Begleitdiagramm/Code visualisiert):`);
-        warnings.forEach(iss => {
-          console.log(`    - Folie ${iss.slideNum} [${iss.title}]: ${iss.message}`);
-        });
-      }
+      console.log(`  ✗ ${result.issues.length} Fehler (Didaktische Variablen-Inkonsistenz):`);
+      result.issues.forEach(iss => {
+        console.log(`    - Folie ${iss.slideNum} [${iss.title}] (Regel ${iss.rule}): ${iss.message}`);
+      });
       console.log('');
     }
   });
 
   console.log('================================================================');
-  if (totalErrors === 0 && totalWarnings === 0) {
+  if (totalErrors === 0) {
     console.log('  ZUSAMMENFASSUNG: ALLES DIDAKTISCH KONSISTENT ✓');
-  } else if (totalErrors === 0) {
-    console.log(`  ZUSAMMENFASSUNG: 0 Fehler, ${totalWarnings} didaktische Hinweise (Regel 4) ✓`);
   } else {
-    console.log(`  ZUSAMMENFASSUNG: ${totalErrors} Fehler, ${totalWarnings} didaktische Hinweise gefunden.`);
+    console.log(`  ZUSAMMENFASSUNG: ${totalErrors} Fehler gefunden ✗`);
   }
   console.log('================================================================\n');
 
-  if (strictMode) {
-    process.exit(totalErrors + totalWarnings > 0 ? 1 : 0);
-  } else {
-    process.exit(totalErrors > 0 ? 1 : 0);
-  }
+  process.exit(totalErrors > 0 ? 1 : 0);
 }
 
 module.exports = {
