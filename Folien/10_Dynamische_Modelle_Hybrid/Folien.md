@@ -83,7 +83,7 @@ Das System wird durch folgende Annahmen vereinfacht:
 </div>
 <div class="four">
 
-![w:500](./Diagramme/BouncingBall_Zeit-Positions-Diagramm.tikz.svg)
+![](./Diagramme/BouncingBall_Zeit-Positions-Diagramm.tikz.svg)
 
 </div>
 </div>
@@ -109,7 +109,7 @@ $$ \dot{y} = v \text{ und } \dot{v} = -g $$
 </div>
 <div>
 
-![w:500](./Diagramme/BouncingBall_Flugparabel.tikz.svg)
+![](./Diagramme/BouncingBall_Flugparabel.tikz.svg)
 
 </div>
 </div>
@@ -131,7 +131,7 @@ Diese Bedingungen definieren ein sogenanntes *Nulldurchgangsereignis*, bei dem d
 </div>
 <div>
 
-![w:500](./Diagramme/BouncingBall_Aufprall_Bedingung.tikz.svg)
+![](./Diagramme/BouncingBall_Aufprall_Bedingung.tikz.svg)
 
 </div>
 </div>
@@ -154,7 +154,7 @@ $$ v(t_e^+) = -e \cdot v(t_e^-) $$
 </div>
 <div>
 
-![w:500](./Diagramme/BouncingBall_Aufprall_Zustandsaenderung.tikz.svg)
+![](./Diagramme/BouncingBall_Aufprall_Zustandsaenderung.tikz.svg)
 
 </div>
 </div>
@@ -181,7 +181,7 @@ Diese Gleichungen gelten, solange der Ball sich in der Luft befindet ($y(t) > 0$
 </div>
 <div>
 
-![w:500](./Diagramme/BouncingBall_Freiflug_Position_Geschwindigkeit.tikz.svg)
+![](./Diagramme/BouncingBall_Freiflug_Position_Geschwindigkeit.tikz.svg)
 
 </div>
 </div>
@@ -203,7 +203,7 @@ Dies ist eine quadratische Gleichung für $\Delta t = (t_e - t_0)$. Die positive
 </div>
 <div>
 
-![w:500](./Diagramme/BouncingBall_Aufprall_Zeitpunkt.tikz.svg)
+![](./Diagramme/BouncingBall_Aufprall_Zeitpunkt.tikz.svg)
 
 </div>
 </div>
@@ -369,7 +369,7 @@ Dieses Signal existiert und ändert sich kontinuierlich über die Zeit.
 </div>
 <div>
 
-![w:500](./Diagramme/DigitalerSensor_Eingangssignal.tikz.svg)
+![](./Diagramme/DigitalerSensor_Eingangssignal.tikz.svg)
 
 </div>
 </div>
@@ -395,7 +395,7 @@ $$ U_{sens}(t) = U(t_k) \quad \text{für} \quad t_k \le t < t_{k+1} $$
 </div>
 <div>
 
-![w:500](./Diagramme/DigitalerSensor_Abtastung.tikz.svg)
+![](./Diagramme/DigitalerSensor_Abtastung.tikz.svg)
 
 </div>
 </div>
@@ -418,7 +418,7 @@ Im Gegensatz zum Bouncing Ball sind die Ereignisse hier **zeitgesteuert** (perio
 </div>
 <div>
 
-![w:500](./Diagramme/DigitalerSensor_Gesamtsystem.tikz.svg)
+![](./Diagramme/DigitalerSensor_Gesamtsystem.tikz.svg)
 
 </div>
 </div>
@@ -443,7 +443,7 @@ Dies führt zu einem **ereignisgesteuerten hybriden System**, bei dem die Abtast
 </div>
 <div>
 
-![w:500](./Diagramme/DigitalerSensor_VariableAbtastrate_Signal.tikz.svg)
+![](./Diagramme/DigitalerSensor_VariableAbtastrate_Signal.tikz.svg)
 
 </div>
 </div>
@@ -483,7 +483,7 @@ Die variable Abtastlogik nutzt $c(t)$, um die Abtastrate anzupassen:
 </div>
 <div>
 
-![w:500](./Diagramme/DigitalerSensor_Eingangs_und_Steuersignal.tikz.svg)
+![](./Diagramme/DigitalerSensor_Eingangs_und_Steuersignal.tikz.svg)
 
 </div>
 </div>
@@ -506,7 +506,7 @@ Die variable Abtastlogik nutzt $c(t)$, um die Abtastrate anzupassen:
 </div>
 <div>
 
-![w:500](./Diagramme/DigitalerSensor_VariableAbtastung.tikz.svg)
+![](./Diagramme/DigitalerSensor_VariableAbtastung.tikz.svg)
 
 </div>
 </div>
@@ -1039,7 +1039,7 @@ Der Solver nutzt einen iterativen Prozess, um den genauen Zeitpunkt eines Ereign
 </div>
 <div>
 
-![h:440px](./Diagramme/Nulldurchgang.svg)
+![](./Diagramme/Nulldurchgang.svg)
 
 </div>
 </div>
@@ -1069,7 +1069,7 @@ while (zeroCrossingValue > Threshold && iteration++ < Limit) {
 - Nulldurchgang erfordert Vorzeichenwechsel (Bolzano): $\operatorname{sgn}(z(t_a)) \neq \operatorname{sgn}(z(t_b)) \iff z(t_a) \cdot z(t_b) \le 0$.
 - Echte Bisektion halbiert das Suchintervall; naive Schritt-Halbierung verfehlt Nullstellen bei $t > t_0 + 0{,}5\Delta t$.
 
-![w:920 center](./Diagramme/ZeroCrossing_Bisektion_Intervall.svg)
+![](./Diagramme/ZeroCrossing_Bisektion_Intervall.svg)
 
 ---
 
@@ -1120,7 +1120,7 @@ Das Flussdiagramm verdeutlicht die Entscheidungslogik des Solvers bei der Ereign
 </div>
 <div>
 
-![h:460px](./Diagramme/Solver_Logik.svg)
+![](./Diagramme/Solver_Logik.svg)
 
 </div>
 </div>

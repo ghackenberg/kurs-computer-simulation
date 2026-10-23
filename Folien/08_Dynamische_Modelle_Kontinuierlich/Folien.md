@@ -160,7 +160,7 @@ $$ m \ddot{y}(t) + d \dot{y}(t) + k y(t) = F(t) $$
 </div>
 <div>
 
-![width: 1000px](./Illustrationen/Bewegungsgleichung.jpg)
+![](./Illustrationen/Bewegungsgleichung.jpg)
 
 </div>
 </div>
@@ -258,7 +258,7 @@ $$ x_{k+1} = x_k + h \cdot f(t_k, x_k) $$
 </div>
 <div>
 
-![w:500](./Diagramme/Euler%20-%20Explizit.svg)
+![](./Diagramme/Euler%20-%20Explizit.svg)
 
 </div>
 </div>
@@ -282,7 +282,7 @@ $$ x_{k+1} = x_k + h \cdot f(t_{k+1}, x_{k+1}) $$
 </div>
 <div>
 
-![w:500](./Diagramme/Euler%20-%20Implizit.svg)
+![](./Diagramme/Euler%20-%20Implizit.svg)
 
 </div>
 </div>
@@ -1124,7 +1124,7 @@ Die Klasse `EulerExplicitSolver` implementiert einen einfachen Algorithmus für 
 </div>
 <div class="two">
 
-![h:470px center](./Diagramme/Simulationsschleife_Explizit.svg)
+![](./Diagramme/Simulationsschleife_Explizit.svg)
 
 </div>
 </div>
@@ -1278,7 +1278,7 @@ Die Auflösung der algebraischen Schleife erfordert eine Fixpunktiteration in je
 4. Vergleiche $V_{out}'$ mit dem geschätzten $V_{out}$.
 5. Wenn $|V_{out}' - V_{out}| > \text{Toleranz}$, passe Schätzung an und wiederhole ab Schritt 2.
 
-![w:950 center](./Diagramme/Algebraische_Schleife_Praxis.svg)
+![](./Diagramme/Algebraische_Schleife_Praxis.svg)
 
 ---
 
@@ -1349,7 +1349,7 @@ Die algebraische Schleife entsteht durch die wechselseitige Abhängigkeit von Kr
 
 ### Beschleunigung im Fluid: Blockdiagramm mit Added Mass *(Deep Dive)*
 
-![w:1150 center](./Diagramme/Algebraische_Schleife_Mechanik.svg)
+![](./Diagramme/Algebraische_Schleife_Mechanik.svg)
 
 ---
 
@@ -1399,7 +1399,7 @@ Der implizite Euler löst in jedem Zeitschritt eine Fixpunktiteration:
 
 ### Simulationsschleife in `EulerImplicitSolver` (Ablauf) *(Deep Dive / Referenz)*
 
-![w:1180 center](./Diagramme/Simulationsschleife_Implizit.svg)
+![](./Diagramme/Simulationsschleife_Implizit.svg)
 
 ---
 
@@ -1574,7 +1574,7 @@ Setzt man $z = i\beta$ mit $\beta = \omega_0 h > 0$ in die Stabilitätsfunktione
 
 ### Konvergenzordnung im Vergleich (Log-Log-Plot)
 
-![bg right:55% width:650px](./Illustrationen/Solver_Konvergenzordnung.png)
+![bg right:55%](./Illustrationen/Solver_Konvergenzordnung.png)
 
 - **Doppelt-logarithmische Skala:**
   $$\log_{10}(\text{Fehler}) = p \cdot \log_{10}(h) + C$$
@@ -1651,7 +1651,7 @@ Dieser Abschnitt demonstriert die Systemsimulation an einem Kernproblem der Auto
 - **Mechanischer Rotor:** $J \dot{\omega}(t) = k_m \cdot i(t) - d \cdot \omega(t) \implies J \dot{\omega} = -\frac{k_m k_e + d R}{R} \omega + \frac{k_m}{R} u$
 - **PT1-Parameter:** $T_m = \frac{J \cdot R}{k_m k_e + d \cdot R} = 0{,}05\,\mathrm{s}, \quad K_m = \frac{k_m}{k_m k_e + d \cdot R} = 2{,}5\,\frac{\mathrm{rad}}{\mathrm{s \cdot V}}$
 
-![w:920 center](./Diagramme/DC_Motor_Ersatzschaltbild.svg)
+![](./Diagramme/DC_Motor_Ersatzschaltbild.svg)
 
 ---
 
@@ -1691,7 +1691,7 @@ $$\mathbf{A} = \begin{pmatrix} 0 & 1 \\ 0 & -\frac{1}{T_m} \end{pmatrix}, \quad 
 
 ### DC-Servomotor: Blockschaltbild des Regelkreises
 
-![w:1150 center](./Diagramme/Blockschaltbild_DCServo.svg)
+![](./Diagramme/Blockschaltbild_DCServo.svg)
 
 ---
 
@@ -1713,7 +1713,7 @@ Wird ein Sollwertsprung $w(t) = \theta_{\text{soll}}$ vorgegeben:
 </div>
 <div class="two">
 
-![w:480](./Illustrationen/AntiWindup_Vergleich.png)
+![](./Illustrationen/AntiWindup_Vergleich.png)
 
 *Mit Anti-Windup Clamping (grün) reagiert die Achse aperiodisch stabil ohne 60 % Überschwingen (rot).*
 
@@ -1796,7 +1796,7 @@ while (solver.Time <= 0.6) // 600 ms Regelung
 </div>
 <div class="two">
 
-![w:460](./Screenshots/ClosedLoop_RK4_StepResponse.png)
+![](./Screenshots/ClosedLoop_RK4_StepResponse.png)
 
 </div>
 </div>

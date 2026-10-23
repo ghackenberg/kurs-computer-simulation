@@ -46,7 +46,7 @@ $$\phi_i = \frac{i}{\text{stacks}} \cdot \pi, \quad \theta_j = \frac{j}{\text{sl
 </div>
 <div>
 
-![width:1000px](./Illustrationen/Sphere_Slices_Stacks.png)
+![](./Illustrationen/Sphere_Slices_Stacks.png)
 
 </div>
 </div>
@@ -180,7 +180,7 @@ Ein rotationssymmetrischer Körper entlang der Y-Achse mit Höhe $h$, unterem Ra
 </div>
 <div>
 
-![width:1000px](./Illustrationen/Cylinder_Slices.png)
+![](./Illustrationen/Cylinder_Slices.png)
 
 </div>
 </div>
@@ -247,7 +247,7 @@ Die Herleitung erfolgt über einen Schnitt in der XY-Ebene ($\theta = 0$):
 </div>
 <div>
 
-![width:1000px](./Diagramme/Zylindernormale%20-%20Normalenvektor%20XY.svg)
+![](./Diagramme/Zylindernormale%20-%20Normalenvektor%20XY.svg)
 
 </div>
 </div>
@@ -272,7 +272,7 @@ $$\vec{P}_\theta = \begin{pmatrix} h \cdot \cos(\theta) \\ r_1 - r_2 \\ h \cdot 
 </div>
 <div>
 
-![width:1000px](./Diagramme/Zylindernormale%20-%20Normalenvektor%20XZ.svg)
+![](./Diagramme/Zylindernormale%20-%20Normalenvektor%20XZ.svg)
 
 </div>
 </div>

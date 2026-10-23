@@ -142,9 +142,23 @@ function lintSectionDeck(markdownPath) {
         });
       }
     }
+    // 3. Prüfe auf verbotene Bilddimensionen (w:, h:, width:, height:)
+    const imgMatches = slide.matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g);
+    for (const match of imgMatches) {
+      const alt = match[1];
+      const src = match[2];
+      const dimMatch = alt.match(/\b(?:w|h|width|height)\s*:\s*\d+/i);
+      if (dimMatch) {
+        issues.push({
+          slideNum,
+          type: 'EXPLICIT_IMAGE_DIMENSION',
+          message: `Verbotene Bilddimension '${dimMatch[0]}' in Referenz zu '${path.basename(src)}'. Bildgrößen müssen rein über CSS/Theme geregelt werden.`
+        });
+      }
+    }
   });
 
-  // 3. Consistency checks
+  // 4. Consistency checks
   const actualNums = new Set(actualSectionSlides.map(s => s.secNum));
   const declaredNums = new Set(declaredSectionsInAgenda.map(s => s.num));
 

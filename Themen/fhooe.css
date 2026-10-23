@@ -15,20 +15,54 @@ section {
 
 /* 1. Globaler Schutz gegen Bild- und Diagrammüberlauf */
 section img {
-    max-height: 480px;
+    max-height: 440px;
     object-fit: contain;
 }
 
-/* Größere Darstellung auf reinen Diagramm-Folien ohne Überschrift (mit Sicherheitsabstand zu Header/Footer) */
-section:not(:has(h1, h2, h3, h4)) img {
-    max-height: 555px;
+/* Freistehende Inhaltsbilder außerhalb von Spalten: Automatisch horizontal zentrieren und volle Breite */
+section:not(:has(div.columns)) img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
-/* Zentrierung für Bilder mit 'center' im Alt-Text */
+/* 2. Reine Diagramm-Folien ganz ohne Überschrift: Maximaler Bildbereich (bis zu 580px hoch) */
+section:not(:has(h1, h2, h3, h4)) img {
+    max-height: 580px;
+}
+section:not(:has(h1, h2, h3, h4)) > p:only-child {
+    margin: 0;
+}
+
+/* 3. Reine Bildfolien mit Überschrift (nur Überschrift + Bild): Bis zu 535px hoch */
+section:has(h1, h2, h3, h4):not(:has(div.columns, ul, ol, pre, table, blockquote, p + p)) img {
+    max-height: 535px;
+}
+section:has(h1, h2, h3, h4):not(:has(div.columns, ul, ol, pre, table, blockquote, p + p)) > p:only-of-type {
+    margin-bottom: 0;
+}
+
+/* 4. Freistehende Diagramme auf Folien mit 1 Intro-Zeile Text (Überschrift + 1 kurzer Absatz + Bild): Bis zu 440px */
+section:not(:has(div.columns, ul, ol, pre, table, blockquote)):has(p + p:not(:has(+ p))) img {
+    max-height: 440px;
+}
+
+/* 5. Freistehende Diagramme auf Folien mit umfangreichem Text oder Listen: Kompaktere Maximalhöhe */
+section:not(:has(div.columns)):has(p + p + p, ul, ol, p + p ~ blockquote, blockquote ~ p + p) img {
+    max-height: 360px;
+}
+
+/* Rückwärtskompatibilität: Zentrierung für Bilder mit 'center' im Alt-Text */
 section img[alt~="center"] {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    width: 100%;
+    max-width: 100%;
 }
 
 /* FH-Logo: Nur auf Inhaltsfolien anzeigen, Deckblätter (Title & Lead & Folie 1) schützen */
@@ -89,11 +123,22 @@ section div.columns > div {
 }
 
 /* Bildbegrenzung innerhalb von Flex-Spalten */
-section div.columns img,
-section div.columns svg {
+/* Standardmäßig Inhaltsbilder auf volle Spaltenbreite (100%) aufspannen */
+section div.columns img {
+    width: 100%;
     max-width: 100%;
     height: auto;
     object-fit: contain;
+    max-height: 460px;
+}
+
+/* Spalten mit Text oder Listen unter dem Bild (z.B. Kategorienspalten, Mini-Karten): Bildhöhe kompakt halten */
+section div.columns > div:has(ul, ol) img {
+    max-height: 90px;
+}
+section div.columns svg {
+    max-width: 100%;
+    height: auto;
 }
 section div.columns > div.two {
     flex-grow: 2;

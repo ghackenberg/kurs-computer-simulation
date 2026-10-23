@@ -693,7 +693,7 @@ plot.Add.Bars(bars);
 </div>
 <div class="two">
 
-![h:380px](./Illustrationen/Queue_Wartezeit_Histogramm.png)
+![](./Illustrationen/Queue_Wartezeit_Histogramm.png)
 
 </div>
 </div>
@@ -734,7 +734,7 @@ plot.Add.Bars(bars);
 - Kinetik als kontinuierlicher Geburts- und Todesprozess mit Raten $\lambda$ (Zulauf) und $\mu$ (Ablauf).
 - Stationäre Zustandswahrscheinlichkeit: $P_k = (1 - \rho)\rho^k \implies \bar{L}_q = \frac{\rho^2}{1-\rho}, \quad \bar{W}_q = \frac{\rho}{\mu - \lambda}$.
 
-![w:920 center](./Diagramme/MM1_Warteschlange_Kinetik.svg)
+![](./Diagramme/MM1_Warteschlange_Kinetik.svg)
 
 ---
 
@@ -852,14 +852,14 @@ Die folgenden beiden Diagramme zeigen den Verlauf der Wahrscheinlichkeitsdichtef
 
 **Wahrscheinlichkeitsdichtefunktion**
 
-![width:395](./Illustrationen/ExpDichteF.svg)
+![](./Illustrationen/ExpDichteF.svg)
 
 </div>
 <div>
 
 **Kumulative Verteilungsfunktion**
 
-![width:395](./Illustrationen/ExpVerteilungF.svg)
+![](./Illustrationen/ExpVerteilungF.svg)
 
 </div>
 </div>
@@ -902,7 +902,7 @@ Die **Inversionsmethode** (Inverse Transform Sampling) ist ein Verfahren zur Erz
 </div>
 <div class="two">
 
-![w:500](./Diagramme/Inversionsmethode_Prinzip.tikz.svg)
+![](./Diagramme/Inversionsmethode_Prinzip.tikz.svg)
 
 </div>
 </div>
@@ -1270,7 +1270,7 @@ Monte-Carlo-Replikationen sind vollständig unabhängig voneinander (*embarrassi
 </div>
 <div>
 
-![h:400px](./Illustrationen/MonteCarloParallel.jpg)
+![](./Illustrationen/MonteCarloParallel.jpg)
 
 </div>
 </div>

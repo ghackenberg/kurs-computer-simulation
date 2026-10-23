@@ -96,7 +96,7 @@ In der Automatisierungstechnik fallen bei hochfrequenter Messwerterfassung (z.B.
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Display_Bottleneck.svg)
+![](./Diagramme/Mini_Display_Bottleneck.svg)
 
 </div>
 </div>
@@ -121,7 +121,7 @@ Wie reduziert man $10^7$ Messwerte auf wenige tausend Bildschirmkoordinaten?
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Decimation_Aliasing.svg)
+![](./Diagramme/Mini_Decimation_Aliasing.svg)
 
 </div>
 </div>
@@ -144,7 +144,7 @@ ScottPlot 5 umgeht das WPF-Retained-Mode-Problem durch eine direkte Hardware-Ren
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Rendering_Pipeline.svg)
+![](./Diagramme/Mini_Rendering_Pipeline.svg)
 
 </div>
 </div>
@@ -265,7 +265,7 @@ Messdaten liegen in der Simulation meist mit **konstanter Schrittweite** vor ($t
 </div>
 <div class="three">
 
-![w:1000](./Illustrationen/ScottPlot_Signal_Example.png)
+![](./Illustrationen/ScottPlot_Signal_Example.png)
 
 </div>
 </div>
@@ -291,7 +291,7 @@ Der Verzicht auf ein explizites Zeitstempel-Array halbiert den RAM-Bedarf im Spe
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Signal_RAM_Vorteil.svg)
+![](./Diagramme/Mini_Signal_RAM_Vorteil.svg)
 
 </div>
 </div>
@@ -315,7 +315,7 @@ Viele DGL-Solver (z.B. Runge-Kutta RK45) steuern Zeitschritte `dt` adaptiv:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_SignalXY_Binaersuche.svg)
+![](./Diagramme/Mini_SignalXY_Binaersuche.svg)
 
 </div>
 </div>
@@ -336,7 +336,7 @@ Konkrete Sprungantwort eines adaptiven DGL-Solvers (RK45) in ScottPlot 5:
 </div>
 <div class="three">
 
-![w:1000](./Illustrationen/ScottPlot_SignalXY_Example.png)
+![](./Illustrationen/ScottPlot_SignalXY_Example.png)
 
 </div>
 </div>
@@ -361,7 +361,7 @@ In der Mechatronik (Übung 4, Track A) interessiert der Zusammenhang zweier Zust
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Phasenraum_Motor.svg)
+![](./Diagramme/Mini_Phasenraum_Motor.svg)
 
 </div>
 </div>
@@ -382,7 +382,7 @@ Konkrete Ausgabe der Phasenraum-Trajektorie $(n, M)$ eines DC-Servomotors mit Sc
 </div>
 <div class="three">
 
-![w:1000](./Illustrationen/ScottPlot_Scatter_Example.png)
+![](./Illustrationen/ScottPlot_Scatter_Example.png)
 
 </div>
 </div>
@@ -409,7 +409,7 @@ In der Fahrsimulation (Übung 4, Track B) bestimmt der Reifen-Grip die maximal �
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Kammscher_Kreis.svg)
+![](./Diagramme/Mini_Kammscher_Kreis.svg)
 
 </div>
 </div>
@@ -432,7 +432,7 @@ Zur Analyse dynamischer Systeme $\mathrm{d}\vec{x}/\mathrm{d}t = f(\vec{x})$ mit
 </div>
 <div class="one">
 
-![h:370](./Diagramme/Mini_VectorField_Phasenraum.svg)
+![](./Diagramme/Mini_VectorField_Phasenraum.svg)
 
 </div>
 </div>
@@ -453,7 +453,7 @@ Konkrete Ausgabe des Phasenraum-Richtungsfeldes eines gedämpften Schwingers mit
 </div>
 <div class="three">
 
-![w:1000](./Illustrationen/ScottPlot_VectorField_Example.png)
+![](./Illustrationen/ScottPlot_VectorField_Example.png)
 
 </div>
 </div>
@@ -525,7 +525,7 @@ Beim Erstellen eines Histogramms teilt man den Wertebereich $[x_{\min}, x_{\max}
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Binning_Vergleich.svg)
+![](./Diagramme/Mini_Binning_Vergleich.svg)
 
 </div>
 </div>
@@ -577,7 +577,7 @@ Ein Histogramm liefert absolute Klassenhäufigkeiten $H_k \in \mathbb{N}_0$.
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_PDF_Flaechennormierung.svg)
+![](./Diagramme/Mini_PDF_Flaechennormierung.svg)
 
 </div>
 </div>
@@ -598,7 +598,7 @@ Konkrete Monte-Carlo-Toleranzanalyse über $N = 10.000$ Simulationsdurchläufe:
 </div>
 <div class="three">
 
-![w:1000](./Illustrationen/ScottPlot_Histogram_Example.png)
+![](./Illustrationen/ScottPlot_Histogram_Example.png)
 
 </div>
 </div>
@@ -624,7 +624,7 @@ Wenn Messdaten nicht gaußverteilt sind oder starke Ausreißer enthalten, sind M
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Boxplot_Anatomie.svg)
+![](./Diagramme/Mini_Boxplot_Anatomie.svg)
 
 </div>
 </div>
@@ -672,7 +672,7 @@ Konkreter Vergleich dreier Regelungsstrategien (P-, PI- und PID-Regler):
 </div>
 <div class="three">
 
-![w:1000](./Illustrationen/ScottPlot_BoxPlot_Example.png)
+![](./Illustrationen/ScottPlot_BoxPlot_Example.png)
 
 </div>
 </div>
@@ -696,7 +696,7 @@ Bei Simulationsvergleichen werden Kennzahlen verschiedener Modellvarianten gegen
 </div>
 <div class="one">
 
-![h:370](./Diagramme/Mini_Gruppierte_Bars.svg)
+![](./Diagramme/Mini_Gruppierte_Bars.svg)
 
 </div>
 </div>
@@ -718,7 +718,7 @@ Konkreter Variantenvergleich zweier Modellkonfigurationen über vier Laststufen:
 </div>
 <div class="three">
 
-![w:1000](./Illustrationen/ScottPlot_Bars_Example.png)
+![](./Illustrationen/ScottPlot_Bars_Example.png)
 
 </div>
 </div>
@@ -742,7 +742,7 @@ Ortsdiskrete Modelle (wie das FDM-Temperaturfeld aus Termin 02) erzeugen 2D-Matr
 </div>
 <div class="one">
 
-![h:370](./Diagramme/Mini_Heatmap_Colorbar.svg)
+![](./Diagramme/Mini_Heatmap_Colorbar.svg)
 
 </div>
 </div>
@@ -764,7 +764,7 @@ Konkrete Darstellung des 2D-Temperaturfelds $T[i,j]$ (FDM aus Termin 02):
 </div>
 <div class="three">
 
-![h:390](./Illustrationen/ScottPlot_Heatmap_Example.png)
+![](./Illustrationen/ScottPlot_Heatmap_Example.png)
 
 </div>
 </div>
@@ -819,7 +819,7 @@ Die .NET Common Language Runtime (CLR) teilt den Managed Heap in Generationen ei
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_GC_Generationen.svg)
+![](./Diagramme/Mini_GC_Generationen.svg)
 
 </div>
 </div>
@@ -844,7 +844,7 @@ Ein Ringpuffer speichert die jüngsten $N$ Messwerte in einem vorallokierten Arr
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Ringpuffer_Modulo.svg)
+![](./Diagramme/Mini_Ringpuffer_Modulo.svg)
 
 </div>
 </div>
@@ -894,7 +894,7 @@ Warum darf die Simulation das UI nicht direkt im eigenen Takt aktualisieren?
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_MultiRate_Entkopplung.svg)
+![](./Diagramme/Mini_MultiRate_Entkopplung.svg)
 
 </div>
 </div>
@@ -946,7 +946,7 @@ $$s^2 = \frac{1}{k-1} \left( \sum_{i=1}^k x_i^2 - \frac{1}{k} \left(\sum_{i=1}^k
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Ausloeschung_IEEE754.svg)
+![](./Diagramme/Mini_Ausloeschung_IEEE754.svg)
 
 </div>
 </div>
@@ -971,7 +971,7 @@ B. P. Welford formulierte eine numerisch exzellent konditionierte Rekursionsform
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Welford_Schritt.svg)
+![](./Diagramme/Mini_Welford_Schritt.svg)
 
 </div>
 </div>
@@ -1022,7 +1022,7 @@ Mit Welfords Online-Statistik lassen sich kontinuierliche Konfidenzbänder berec
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Drei_Sigma_Band.svg)
+![](./Diagramme/Mini_Drei_Sigma_Band.svg)
 
 </div>
 </div>
@@ -1046,7 +1046,7 @@ Bei Telemetriedaten reicht der Mittelwert $\mu(t)$ für Qualitätsaussagen oft n
 </div>
 <div class="one">
 
-![h:370](./Diagramme/Mini_FillY_Toleranzkorridor.svg)
+![](./Diagramme/Mini_FillY_Toleranzkorridor.svg)
 
 </div>
 </div>
@@ -1068,7 +1068,7 @@ Konkrete Telemetrie-Visualisierung eines Drucksignals mit ScottPlot 5:
 </div>
 <div class="three">
 
-![w:1000](./Illustrationen/ScottPlot_FillY_Example.png)
+![](./Illustrationen/ScottPlot_FillY_Example.png)
 
 </div>
 </div>
@@ -1181,7 +1181,7 @@ Für gerichtete Kausalsysteme (Signalflusspläne) berechnet MSAGL das Layout nac
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Sugiyama_4Phasen.svg)
+![](./Diagramme/Mini_Sugiyama_4Phasen.svg)
 
 </div>
 </div>
@@ -1203,7 +1203,7 @@ Vollautomatisch von MSAGL berechneter Regelkreis:
 </div>
 <div class="three">
 
-![h:390](./Illustrationen/MSAGL_Sugiyama_Layout.png)
+![](./Illustrationen/MSAGL_Sugiyama_Layout.png)
 
 </div>
 </div>
@@ -1229,7 +1229,7 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_ForceDirected_Kraefte.svg)
+![](./Diagramme/Mini_ForceDirected_Kraefte.svg)
 
 </div>
 </div>
@@ -1251,7 +1251,7 @@ Vollautomatisch berechnete Netzwerktopologie eines Antriebsstrangs:
 </div>
 <div class="three">
 
-![h:390](./Illustrationen/MSAGL_ForceDirected_Layout.png)
+![](./Illustrationen/MSAGL_ForceDirected_Layout.png)
 
 </div>
 </div>
@@ -1275,7 +1275,7 @@ Vollautomatisch berechnete Netzwerktopologie eines Antriebsstrangs:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Algebraic_Loop_Mechanik.svg)
+![](./Diagramme/Mini_Algebraic_Loop_Mechanik.svg)
 
 </div>
 </div>
@@ -1284,7 +1284,7 @@ Vollautomatisch berechnete Netzwerktopologie eines Antriebsstrangs:
 
 ### Hervorhebung algebraischer Schleifen in MSAGL
 
-![center w:1100](./Diagramme/MSAGL_AlgebraicLoop_Highlight.svg)
+![](./Diagramme/MSAGL_AlgebraicLoop_Highlight.svg)
 
 *Erkennung: Die rote Schleife (Sum1 ➔ Gain1 ➔ Gain2 ➔ Sum1) enthält kein speicherndes Element und muss vor Simulationsstart diagnostiziert werden.*
 
@@ -1307,7 +1307,7 @@ Um algebraische Schleifen automatisch im Graphen aufzudecken, nutzt man eine Tie
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_DFS_Zyklussuche.svg)
+![](./Diagramme/Mini_DFS_Zyklussuche.svg)
 
 </div>
 </div>

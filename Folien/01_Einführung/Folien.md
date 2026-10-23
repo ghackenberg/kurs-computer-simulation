@@ -90,7 +90,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 <div class="columns top">
 <div class="one">
 
-![h:100](./Illustrationen/Branche_Maschinenbau.jpg)
+![](./Illustrationen/Branche_Maschinenbau.jpg)
 
 **Maschinenbau**
 - Wie verhält sich eine Brücke unter Last?
@@ -100,7 +100,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 </div>
 <div class="one">
 
-![h:100](./Illustrationen/Branche_Produktion_Logistik.jpg)
+![](./Illustrationen/Branche_Produktion_Logistik.jpg)
 
 **Produktion & Logistik**
 - Was ist der optimale Materialfluss in einer Fabrik?
@@ -117,7 +117,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 <div class="columns top">
 <div class="one">
 
-![h:100](./Illustrationen/Branche_Verfahrenstechnik.jpg)
+![](./Illustrationen/Branche_Verfahrenstechnik.jpg)
 
 **Verfahrenstechnik**
 - Wie verteilt sich die Temperatur in einem Reaktor?
@@ -126,7 +126,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 </div>
 <div class="one">
 
-![h:100](./Illustrationen/Branche_Elektrotechnik.jpg)
+![](./Illustrationen/Branche_Elektrotechnik.jpg)
 
 **Elektrotechnik**
 - Wie verhält sich eine Schaltung bei Spannungsschwankungen?
@@ -135,7 +135,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 </div>
 <div class="one">
 
-![h:100](./Illustrationen/Branche_Informatik.jpg)
+![](./Illustrationen/Branche_Informatik.jpg)
 
 **Informatik**
 - Wie ist die Antwortzeit eines Servers unter Last?
@@ -415,7 +415,7 @@ Es gibt zwei grundlegende Ansätze:
 
 ---
 
-![center w:1080](./Diagramme/Schiefer_Wurf_Kraefte.svg)
+![](./Diagramme/Schiefer_Wurf_Kraefte.svg)
 
 ---
 
@@ -506,7 +506,7 @@ Visualisierung ist essenziell, um:
 <div class="columns top">
 <div class="one">
 
-![h:100](./Illustrationen/Visualisierung_Chart.jpg)
+![](./Illustrationen/Visualisierung_Chart.jpg)
 
 **1. Einfache Diagramme (Plots)**
 - Darstellung von einer Größe über einer anderen (oft über die Zeit).
@@ -516,7 +516,7 @@ Visualisierung ist essenziell, um:
 </div>
 <div class="one">
 
-![h:100](./Illustrationen/Visualisierung_2D.jpg)
+![](./Illustrationen/Visualisierung_2D.jpg)
 
 **2. 2D-Visualisierungen**
 - Darstellung von räumlichen Daten in einer Ebene.
@@ -527,7 +527,7 @@ Visualisierung ist essenziell, um:
 </div>
 <div class="one">
 
-![h:100](./Illustrationen/Visualisierung_3D.jpg)
+![](./Illustrationen/Visualisierung_3D.jpg)
 
 **3. 3D-Visualisierungen**
 - Darstellung von räumlichen Daten in einer dreidimensionalen Szene.
@@ -543,7 +543,7 @@ Visualisierung ist essenziell, um:
 
 In diesem Kurs lernen wir die Visualisierung entlang von vier komplementären Dimensionen kennen:
 
-![w:1150](./Diagramme/Visualisierungsformen.svg)
+![](./Diagramme/Visualisierungsformen.svg)
 
 
 ---
@@ -657,7 +657,7 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 <div class="columns top">
 <div class="one">
 
-![h:75](./Illustrationen/Phase_Design_Entwicklung.jpg)
+![](./Illustrationen/Phase_Design_Entwicklung.jpg)
 
 **1. Design & Entwicklung**
 - Simulation zur Auslegung und Validierung des Produkts.
@@ -666,7 +666,7 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 </div>
 <div class="one">
 
-![h:75](./Illustrationen/Phase_Produktion_Inbetriebnahme.jpg)
+![](./Illustrationen/Phase_Produktion_Inbetriebnahme.jpg)
 
 **2. Produktion & Inbetriebnahme**
 - Simulation zur Planung der Fertigung.
@@ -675,7 +675,7 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 </div>
 <div class="one">
 
-![h:75](./Illustrationen/Phase_Betrieb_Wartung.jpg)
+![](./Illustrationen/Phase_Betrieb_Wartung.jpg)
 
 **3. Betrieb & Wartung**
 - Der "Digital Twin Instance" läuft parallel zum realen Produkt.
@@ -692,7 +692,7 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 <div class="columns top">
 <div class="one">
 
-![h:100](./Illustrationen/Inbetriebnahme_Klassisch.jpg)
+![](./Illustrationen/Inbetriebnahme_Klassisch.jpg)
 
 **Traditioneller Ansatz**
 1. Mechanik und Elektrik aufbauen.
@@ -703,7 +703,7 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 </div>
 <div class="one">
 
-![h:100](./Illustrationen/Inbetriebnahme_Modern.jpg)
+![](./Illustrationen/Inbetriebnahme_Modern.jpg)
 
 **Ansatz mit Digitalem Zwilling**
 1. Parallel zum Aufbau der Mechanik wird ein kinematisches Simulationsmodell (Digitaler Zwilling) erstellt.

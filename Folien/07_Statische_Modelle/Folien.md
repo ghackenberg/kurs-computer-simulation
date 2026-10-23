@@ -85,7 +85,7 @@ Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist
 </div>
 <div>
 
-![w:520](./Diagramme/Fachwerk_Topologie_2D.svg)
+![](./Diagramme/Fachwerk_Topologie_2D.svg)
 
 </div>
 </div>
@@ -406,7 +406,7 @@ Diese Formel ist nichtlinear. Für die **Finite-Elemente-Methode** wird sie übl
 </div>
 <div>
 
-![w:500](./Diagramme/Stablaengenaenderung.tikz.svg)
+![](./Diagramme/Stablaengenaenderung.tikz.svg)
 
 </div>
 </div>
@@ -434,7 +434,7 @@ $L' = \sqrt{L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2}$
 </div>
 <div>
 
-![w:500](./Diagramme/Stablaengenaenderung.tikz.svg)
+![](./Diagramme/Stablaengenaenderung.tikz.svg)
 
 </div>
 </div>
@@ -463,7 +463,7 @@ $\Delta L \approx \frac{\vec{L} \cdot \Delta \vec{u}}{L} = \left(\frac{\vec{L}}{
 </div>
 <div>
 
-![w:500](./Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
+![](./Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
 
 </div>
 </div>
@@ -586,7 +586,7 @@ $$\mathbf{K} \mathbf{u} = \mathbf{f}$$
 - Unbeschränktes $\mathbf{K}\mathbf{u} = \mathbf{f}$ ist singulär; Lagerung erzwingt $\mathbf{u}_p = \mathbf{0}$ ($p \equiv A$: Auflager; $f \equiv B$: frei).
 - Zeile 1 bestimmt Verschiebungen: $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$; Zeile 2 liefert Lagerreaktionen: $\mathbf{f}_p = \mathbf{K}_{pf}\mathbf{u}_f$.
 
-![w:920 center](./Diagramme/LGS_Partitionierung_Matrix.svg)
+![](./Diagramme/LGS_Partitionierung_Matrix.svg)
 
 ---
 
@@ -867,7 +867,7 @@ Das Modell umfasst drei zentrale Klassen:
 </div>
 <div class="two">
 
-![w:620](./Diagramme/Model.svg)
+![](./Diagramme/Model.svg)
 
 </div>
 </div>

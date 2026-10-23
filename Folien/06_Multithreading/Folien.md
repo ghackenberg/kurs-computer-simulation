@@ -152,7 +152,7 @@ $$E(p) = \frac{S(p)}{p} = \frac{T_1}{p \cdot T_p} \le 1 \quad (100\,\%)$$
 
 ---
 
-![center w:1080](./Diagramme/Amdahlsches_Gesetz_Speedup.svg)
+![](./Diagramme/Amdahlsches_Gesetz_Speedup.svg)
 
 ---
 
@@ -439,7 +439,7 @@ Die Entkopplung von Simulation und Benutzeroberfläche erfordert eine klare Thre
 
 ### Signal- & Datenfluss: UI & Hintergrund-Worker
 
-![center w:1100](./Diagramme/Multithreading_WPF_Architektur.svg)
+![](./Diagramme/Multithreading_WPF_Architektur.svg)
 
 *Ablauf: 1. Start aus UI ➔ 2. Simulation auf ThreadPool ➔ 3. Thread-sicheres Progress-Reporting ➔ 4. UI-Aktualisierung im SynchronizationContext.*
 

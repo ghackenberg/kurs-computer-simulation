@@ -113,7 +113,7 @@ In modernen Grafiktreibern ist das **32-Bit BGRA-Format** der Standard für maxi
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Bgra32_Bitshift.svg)
+![](./Diagramme/Mini_Bgra32_Bitshift.svg)
 
 </div>
 </div>
@@ -136,14 +136,14 @@ Ein 2D-Rasterbild existiert im Arbeitsspeicher als **kontinuierlicher 1D-Byte-Bl
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Stride_Padding.svg)
+![](./Diagramme/Mini_Stride_Padding.svg)
 
 </div>
 </div>
 
 ---
 
-![center w:1080](./Diagramme/Speicherlayout_Stride.svg)
+![](./Diagramme/Speicherlayout_Stride.svg)
 
 ---
 
@@ -165,7 +165,7 @@ Für ein Pixel an Koordinate $(x, y)$ errechnet sich die absolute Position im Pu
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Cache_Lokalitaet.svg)
+![](./Diagramme/Mini_Cache_Lokalitaet.svg)
 
 </div>
 </div>
@@ -233,7 +233,7 @@ Kombiniert mit einer einzigen
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_WriteableBitmap_Puffer.svg)
+![](./Diagramme/Mini_WriteableBitmap_Puffer.svg)
 
 </div>
 </div>
@@ -445,7 +445,7 @@ In der physikalischen Simulation repräsentiert ein Pixel eine Messgröße $v$ (
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Farbskalen_Vergleich.svg)
+![](./Diagramme/Mini_Farbskalen_Vergleich.svg)
 
 </div>
 </div>
@@ -465,7 +465,7 @@ In der physikalischen Simulation repräsentiert ein Pixel eine Messgröße $v$ (
 </div>
 <div class="one">
 
-![h:410](./Diagramme/LUT_Farbskala_Prinzip.svg)
+![](./Diagramme/LUT_Farbskala_Prinzip.svg)
 
 </div>
 </div>
@@ -544,7 +544,7 @@ Wärmeleitung funktioniert nach **demselben Prinzip** wie ein elektrisches RC-Ne
 
 ---
 
-![center w:1080](./Diagramme/Thermo_Grundbegriffe_Analogie.svg)
+![](./Diagramme/Thermo_Grundbegriffe_Analogie.svg)
 
 ---
 
@@ -565,7 +565,7 @@ Warum fühlt sich Kupfer sofort heiß an, während sich Paste langsam erwärmt? 
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Lambda_Autobahn.svg)
+![](./Diagramme/Mini_Lambda_Autobahn.svg)
 
 </div>
 </div>
@@ -588,7 +588,7 @@ Der zweite Faktor ist die **thermische Trägheit** des Materials (*„Wie groß 
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Kapazitaet_Waermetank.svg)
+![](./Diagramme/Mini_Kapazitaet_Waermetank.svg)
 
 </div>
 </div>
@@ -611,14 +611,14 @@ $$\alpha = \frac{\lambda}{\rho \cdot c_p} = \frac{\text{Leitvermögen (Transport
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Alpha_Welle.svg)
+![](./Diagramme/Mini_Alpha_Welle.svg)
 
 </div>
 </div>
 
 ---
 
-![center w:1080](./Diagramme/Thermo_Materialparameter_Alpha.svg)
+![](./Diagramme/Thermo_Materialparameter_Alpha.svg)
 
 ---
 
@@ -639,7 +639,7 @@ Betrachten wir zwei benachbarte Gitterpunkte $i$ (links, Position $x$) und $i+1$
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Fourier_3Faktoren.svg)
+![](./Diagramme/Mini_Fourier_3Faktoren.svg)
 
 </div>
 </div>
@@ -662,14 +662,14 @@ $$\dot{q}_x = -\lambda \cdot \frac{\partial T}{\partial x} \approx -\lambda \cdo
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Fourier_Vorzeichen.svg)
+![](./Diagramme/Mini_Fourier_Vorzeichen.svg)
 
 </div>
 </div>
 
 ---
 
-![center w:1080](./Diagramme/Thermo_Fourier_Gesetz.svg)
+![](./Diagramme/Thermo_Fourier_Gesetz.svg)
 
 ---
 
@@ -688,7 +688,7 @@ $$\dot{q}_{\text{links}\to i} = \lambda \cdot \frac{T_{i-1} - T_i}{\Delta x}, \q
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Zellbilanz_Zufluss.svg)
+![](./Diagramme/Mini_Zellbilanz_Zufluss.svg)
 
 </div>
 </div>
@@ -723,14 +723,14 @@ Was bedeutet das Vorzeichen der Krümmung $\frac{\partial^2 T}{\partial x^2} \ap
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Kruemmung_3Faelle.svg)
+![](./Diagramme/Mini_Kruemmung_3Faelle.svg)
 
 </div>
 </div>
 
 ---
 
-![center w:1080](./Diagramme/Thermo_Energiebilanz_Kruemmung.svg)
+![](./Diagramme/Thermo_Energiebilanz_Kruemmung.svg)
 
 ---
 
@@ -787,7 +787,7 @@ Auf einem quadratischen Pixelgitter ($\Delta x = \Delta y$) addieren wir die 1D-
 </div>
 <div class="two">
 
-![w:390](./Diagramme/FDM_5_Punkt_Stern.svg)
+![](./Diagramme/FDM_5_Punkt_Stern.svg)
 
 </div>
 </div>
@@ -810,7 +810,7 @@ $$L_{i,j}^n = 4 \cdot \left( \underbrace{\frac{T_{i+1,j}^n + T_{i-1,j}^n + T_{i,
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Nachbar_Waage.svg)
+![](./Diagramme/Mini_Nachbar_Waage.svg)
 
 </div>
 </div>
@@ -833,7 +833,7 @@ Wie wird aus der 2D-DGL die Update-Formel für den nächsten Zeitschritt $t_{n+1
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Euler_Zeitschritt.svg)
+![](./Diagramme/Mini_Euler_Zeitschritt.svg)
 
 </div>
 </div>
@@ -858,7 +858,7 @@ Der Parameter $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$ heißt **dimensions
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Diffusionszahl_Flaeche.svg)
+![](./Diagramme/Mini_Diffusionszahl_Flaeche.svg)
 
 </div>
 </div>
@@ -881,7 +881,7 @@ $$\boxed{T_{i,j}^{n+1} = \underbrace{(1 - 4s)}_{\text{Eigengewicht}} \cdot T_{i,
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Gewichtete_Mischung.svg)
+![](./Diagramme/Mini_Gewichtete_Mischung.svg)
 
 </div>
 </div>
@@ -905,7 +905,7 @@ Anhand der Mischungsformel $T_{\text{neu}} = (1 - 4s) \cdot T_{\text{alt}} + 4s 
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Stabilitaet_Ampel.svg)
+![](./Diagramme/Mini_Stabilitaet_Ampel.svg)
 
 </div>
 </div>
@@ -930,22 +930,22 @@ $$\boxed{1 - 4s \ge 0 \quad \Longleftrightarrow \quad s = \frac{\alpha \cdot \De
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Gitterfeinheit_DtMax.svg)
+![](./Diagramme/Mini_Gitterfeinheit_DtMax.svg)
 
 </div>
 </div>
 
 ---
 
-![center w:1080](./Diagramme/Thermo_Stabilitaet_Schachbrett.svg)
+![](./Diagramme/Thermo_Stabilitaet_Schachbrett.svg)
 
 ---
 
-![center w:1080](./Diagramme/Thermo_PingPong_Buffering.svg)
+![](./Diagramme/Thermo_PingPong_Buffering.svg)
 
 ---
 
-![center w:1080](./Diagramme/Thermo_Randbedingungen_Gitter.svg)
+![](./Diagramme/Thermo_Randbedingungen_Gitter.svg)
 
 ---
 
@@ -965,7 +965,7 @@ $$\boxed{1 - 4s \ge 0 \quad \Longleftrightarrow \quad s = \frac{\alpha \cdot \De
 </div>
 <div class="one">
 
-![h:320](./Illustrationen/Randbedingungen_Vergleich.png)
+![](./Illustrationen/Randbedingungen_Vergleich.png)
 
 *Oben: Dirichlet. Unten: Neumann.*
 
@@ -989,7 +989,7 @@ Im Live-Sprint zeichnen wir per rechter Maustaste **Isolator-Wände** ($\alpha_{
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Kuehlakku_Falle.svg)
+![](./Diagramme/Mini_Kuehlakku_Falle.svg)
 
 </div>
 </div>
@@ -1027,7 +1027,7 @@ Wie kühlt ein Aluminium-Kühlkörper in der Praxis (Aufgabe Track A)? An seiner
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Robin_Bilanz.svg)
+![](./Diagramme/Mini_Robin_Bilanz.svg)
 
 </div>
 </div>
@@ -1051,14 +1051,14 @@ $$\lambda \cdot \frac{T_{1,y} - T_{0,y}}{\Delta x} = h \cdot \left(T_{0,y} - T_\
 </div>
 <div class="one">
 
-![h:400](./Diagramme/Mini_Robin_Grenzfaelle.svg)
+![](./Diagramme/Mini_Robin_Grenzfaelle.svg)
 
 </div>
 </div>
 
 ---
 
-![center w:1080](./Diagramme/Thermo_CPU_Kuehlkoerper_Aufbau.svg)
+![](./Diagramme/Thermo_CPU_Kuehlkoerper_Aufbau.svg)
 
 ---
 
@@ -1089,7 +1089,7 @@ _tempCurr[100, 100] = 100.0f;
 </div>
 <div class="one">
 
-![w:360](./Illustrationen/Heatmap_Temperaturfeld.png)
+![](./Illustrationen/Heatmap_Temperaturfeld.png)
 
 *Simuliertes Temperaturfeld auf WriteableBitmap.*
 

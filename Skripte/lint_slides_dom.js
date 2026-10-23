@@ -95,6 +95,8 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
   const maxOverflow = options.maxOverflow || 2; // Tolerance 2px for subpixel layout
   const minHeaderMargin = options.minHeaderMargin !== undefined ? options.minHeaderMargin : 12;
   const minFooterMargin = options.minFooterMargin !== undefined ? options.minFooterMargin : 12;
+  const checkImages = options.checkImages || false;
+  const minImageWidthRatio = options.minImageWidthRatio || 0.95;
 
   const deckDir = path.dirname(markdownPath);
   const deckName = path.basename(deckDir);
@@ -375,6 +377,8 @@ async function main() {
   let minHeaderMargin = 12;
   let minFooterMargin = 12;
   let skipSchema = false;
+  let checkImages = false;
+  let minImageWidthRatio = 0.95;
 
   args.forEach(arg => {
     if (arg.startsWith('--min-font-size=')) {
@@ -385,6 +389,11 @@ async function main() {
       minFooterMargin = parseFloat(arg.split('=')[1]);
     } else if (arg === '--skip-schema') {
       skipSchema = true;
+    } else if (arg === '--check-images') {
+      checkImages = true;
+    } else if (arg.startsWith('--min-image-width=')) {
+      minImageWidthRatio = parseFloat(arg.split('=')[1]);
+      checkImages = true;
     } else if (!arg.startsWith('--')) {
       target = arg;
     }
@@ -434,7 +443,7 @@ async function main() {
   for (const deck of decks) {
     const deckName = path.basename(path.dirname(deck));
     process.stdout.write(`Inspecting ${deckName} ... `);
-    const res = await lintSlideDeck(deck, browser, { minFontSize, minHeaderMargin, minFooterMargin, skipSchema });
+    const res = await lintSlideDeck(deck, browser, { minFontSize, minHeaderMargin, minFooterMargin, skipSchema, checkImages, minImageWidthRatio });
     allResults.push(res);
     grandTotalSlides += res.totalSlides;
     grandTotalErrors += res.errorSlides.length;

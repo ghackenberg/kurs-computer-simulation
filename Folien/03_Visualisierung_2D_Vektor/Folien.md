@@ -84,7 +84,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Vektor_vs_Pixel.svg)
+![](./Diagramme/Mini_Vektor_vs_Pixel.svg)
 
 </div>
 </div>
@@ -110,7 +110,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_WPF_Szenengraph.svg)
+![](./Diagramme/Mini_WPF_Szenengraph.svg)
 
 </div>
 </div>
@@ -134,7 +134,7 @@ In WPF bietet das `Canvas`-Control eine 2D-Zeichenfläche mit **absoluter Positi
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_WPF_Grundformen.svg)
+![](./Diagramme/Mini_WPF_Grundformen.svg)
 
 </div>
 </div>
@@ -180,7 +180,7 @@ In WPF positioniert man UI-Elemente nicht pixelgenau per Hand, sondern überläs
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_WPF_Layout_Panels.svg)
+![](./Diagramme/Mini_WPF_Layout_Panels.svg)
 
 </div>
 </div>
@@ -202,7 +202,7 @@ Warum deklariert die Klasse `Ellipse` nicht einfach `myNode.Left = 100`?
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Attached_Properties.svg)
+![](./Diagramme/Mini_Attached_Properties.svg)
 
 </div>
 </div>
@@ -363,7 +363,7 @@ Beim Zeichnen physikalischer Systeme treffen zwei inkompatible Welten aufeinande
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Welt_vs_Screen.svg)
+![](./Diagramme/Mini_Welt_vs_Screen.svg)
 
 </div>
 </div>
@@ -399,7 +399,7 @@ Beim Zeichnen physikalischer Systeme treffen zwei inkompatible Welten aufeinande
 
 ---
 
-![center w:1080](./Diagramme/Koordinatentransformation.svg)
+![](./Diagramme/Koordinatentransformation.svg)
 
 ---
 
@@ -424,7 +424,7 @@ $$H_{\text{draw}} = H_{\text{canvas}} - 2 \cdot \text{margin} \quad [\mathrm{px}
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Bounding_Box.svg)
+![](./Diagramme/Mini_Bounding_Box.svg)
 
 </div>
 </div>
@@ -449,7 +449,7 @@ $$s_x = \frac{W_{\text{draw}}}{W_{\text{world}}}, \quad s_y = \frac{H_{\text{dra
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Anisotropie_Falle.svg)
+![](./Diagramme/Mini_Anisotropie_Falle.svg)
 
 </div>
 </div>
@@ -509,7 +509,7 @@ Beim isotropen Skalieren $s = \min(s_x, s_y)$ stößt das Modell $(W_{\text{worl
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Zentrierung_Zwei_Faelle.svg)
+![](./Diagramme/Mini_Zentrierung_Zwei_Faelle.svg)
 
 </div>
 </div>
@@ -533,7 +533,7 @@ Ist das Fenster relativ breiter als das Modell, limitiert die Höhe ($s = s_y$):
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Zentrierung_Fall1_Hoehe.svg)
+![](./Diagramme/Mini_Zentrierung_Fall1_Hoehe.svg)
 
 </div>
 </div>
@@ -558,7 +558,7 @@ Ist das Fenster relativ höher als das Modell, limitiert die Breite ($s = s_x$):
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Zentrierung_Fall2_Breite.svg)
+![](./Diagramme/Mini_Zentrierung_Fall2_Breite.svg)
 
 </div>
 </div>
@@ -586,7 +586,7 @@ Das Koordinaten-Paradoxon erfordert eine **Spiegelung der vertikalen Achse**:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Y_Invertierung.svg)
+![](./Diagramme/Mini_Y_Invertierung.svg)
 
 </div>
 </div>
@@ -682,7 +682,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div class="two">
 
-![w:500](./Diagramme/Pfeilspitzengeometrie_2D.svg)
+![](./Diagramme/Pfeilspitzengeometrie_2D.svg)
 
 </div>
 </div>
@@ -705,7 +705,7 @@ Gegeben: Knoten $\vec{P}_{\text{node}}$ $[\mathrm{px}]$, Kraftvektor $\vec{F} = 
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Pfeil_Vektorgeometrie.svg)
+![](./Diagramme/Mini_Pfeil_Vektorgeometrie.svg)
 
 </div>
 </div>
@@ -756,7 +756,7 @@ In industriellen CAD-Viewern werden Abmessungen normgerecht nach **DIN 406** dar
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_DIN_406_Bemaszung.svg)
+![](./Diagramme/Mini_DIN_406_Bemaszung.svg)
 
 </div>
 </div>
@@ -780,7 +780,7 @@ Zerlegung der Maßkette in **5 Konstruktionsschritte**:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_DIN_406_Konstruktion.svg)
+![](./Diagramme/Mini_DIN_406_Konstruktion.svg)
 
 </div>
 </div>
@@ -854,7 +854,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Pan_Zoom_Matrix.svg)
+![](./Diagramme/Mini_Pan_Zoom_Matrix.svg)
 
 </div>
 </div>
@@ -929,7 +929,7 @@ Warum versagt naives Skalieren in interaktiven Viewern?
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_ScaleAt_Cursor.svg)
+![](./Diagramme/Mini_ScaleAt_Cursor.svg)
 
 </div>
 </div>
@@ -954,7 +954,7 @@ $$\mathbf{M}_{\text{zoom}} = \mathbf{T}(+\vec{C}) \cdot \mathbf{S}(s, s) \cdot \
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_ScaleAt_Prinzip.svg)
+![](./Diagramme/Mini_ScaleAt_Prinzip.svg)
 
 </div>
 </div>
@@ -1091,7 +1091,7 @@ Beim interaktiven Verschieben von Knotenpunkten tritt in naiven Auto-Fit-Impleme
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Jitter_Mechanik.svg)
+![](./Diagramme/Mini_Jitter_Mechanik.svg)
 
 </div>
 </div>
@@ -1118,7 +1118,7 @@ Das Wegspringen führt zu einer **destruktiven Rückkopplung** (Feedback-Loop):
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Jitter_Schleife.svg)
+![](./Diagramme/Mini_Jitter_Schleife.svg)
 
 </div>
 </div>
@@ -1150,7 +1150,7 @@ DrawTruss();
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Jitter_Loesung.svg)
+![](./Diagramme/Mini_Jitter_Loesung.svg)
 
 </div>
 </div>
@@ -1211,7 +1211,7 @@ Beim interaktiven Arbeiten existieren drei verschiedene Bezugssysteme:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Koordinaten_Schichten.svg)
+![](./Diagramme/Mini_Koordinaten_Schichten.svg)
 
 </div>
 </div>
@@ -1235,7 +1235,7 @@ Klickt der Nutzer ins Fenster, entsteht ein geometrischer Versatz:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Kamera_Unzoom.svg)
+![](./Diagramme/Mini_Kamera_Unzoom.svg)
 
 </div>
 </div>
@@ -1262,7 +1262,7 @@ Vom entzerrten Canvas-Punkt $\vec{P}_{\text{unzoom}} = (x_u, y_u)$ gelangen wir 
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Screen_to_World.svg)
+![](./Diagramme/Mini_Screen_to_World.svg)
 
 </div>
 </div>
@@ -1327,7 +1327,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Shape_vs_DrawingVisual.svg)
+![](./Diagramme/Mini_Shape_vs_DrawingVisual.svg)
 
 </div>
 </div>
@@ -1352,7 +1352,7 @@ Ein Container kann Kindern erst Raum zuweisen, wenn er den Gesamtbedarf aller Ki
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Layout_Cycle_Phasen.svg)
+![](./Diagramme/Mini_Layout_Cycle_Phasen.svg)
 
 </div>
 </div>
@@ -1377,7 +1377,7 @@ In der Simulationsvisualisierung führt der 2-Phasen-Cycle zum **Performance-Kol
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Shape_vs_DrawingVisual.svg)
+![](./Diagramme/Mini_Shape_vs_DrawingVisual.svg)
 
 </div>
 </div>
@@ -1399,7 +1399,7 @@ In der Simulationsvisualisierung führt der 2-Phasen-Cycle zum **Performance-Kol
 </div>
 <div class="one">
 
-![center w:450](./Diagramme/WPF_Visual_Hierarchie.svg)
+![](./Diagramme/WPF_Visual_Hierarchie.svg)
 
 </div>
 </div>
@@ -1424,7 +1424,7 @@ Im `DrawingContext` steuern zwei Klassen aus `System.Windows.Media` das Renderin
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Brush_vs_Pen.svg)
+![](./Diagramme/Mini_Brush_vs_Pen.svg)
 
 </div>
 </div>
@@ -1449,7 +1449,7 @@ In Render-Schleifen von Simulationsanwendungen gilt die **strikte Regel**:
 </div>
 <div class="one">
 
-![w:1000](./Diagramme/Mini_Freeze_Optimierung.svg)
+![](./Diagramme/Mini_Freeze_Optimierung.svg)
 
 </div>
 </div>
