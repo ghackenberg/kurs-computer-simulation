@@ -943,19 +943,52 @@ Warum versagt naives Skalieren in interaktiven Viewern?
 
 Skalierung um ein beliebiges Zentrum $\vec{C} = \vec{P}_{\text{cursor}}$ via Matrix-Kaskade:
 
-$\mathbf{M}_{\text{zoom}} = \mathbf{T}(+\vec{C}) \cdot \mathbf{S}(s, s) \cdot \mathbf{T}(-\vec{C})$
+$$\mathbf{M}_{\text{zoom}} = \mathbf{T}(+\vec{C}) \cdot \mathbf{S}(s, s) \cdot \mathbf{T}(-\vec{C})$$
 
 1. **Translation $-\vec{C}$:** Verschiebt Cursor in den Ursprung $(0,0)$.
-2. **Skalierung $\mathbf{S}(s)$:** Streckt Raum isotrop um Ursprung $(0,0)$.
+2. **Skalierung $\mathbf{S}(s, s)$:** Streckt Raum isotrop um Ursprung $(0,0)$.
 3. **Rücktranslation $+\vec{C}$:** Schiebt Zentrum an alte Position zurück.
 
-- **Beweis für $\vec{P} = \vec{C}$:** $s \cdot (\vec{C} - \vec{C}) + \vec{C} = \vec{C} \quad \checkmark$
-- **WPF-Befehl:** `matrix.ScaleAt(zoom, zoom, cursor.X, cursor.Y);`
+- **WPF-Befehl:** `matrix.ScaleAt(zoom, zoom, cursor.X, cursor.Y);` fasst diese Kaskade in einer GPU-Operation zusammen.
 
 </div>
 <div class="one">
 
 ![w:1000](./Diagramme/Mini_ScaleAt_Prinzip.svg)
+
+</div>
+</div>
+
+---
+
+### Mathematischer Beweis der `ScaleAt`-Transformation
+
+<div class="columns top">
+<div class="one">
+
+**1. Vektorielle Kaskade & Fixpunkt:**
+Ein Punkt $\vec{P}$ durchläuft die drei Einzelschritte:
+- **Schritt 1:** $\vec{P}_1 = \vec{P} - \vec{C}$ (Verschiebung in Ursprung)
+- **Schritt 2:** $\vec{P}_2 = s \cdot \vec{P}_1 = s \cdot (\vec{P} - \vec{C})$ (Skalierung)
+- **Schritt 3:** $\vec{P}' = \vec{P}_2 + \vec{C} = s \cdot (\vec{P} - \vec{C}) + \vec{C}$
+
+Zweipunkt-Form: $\vec{P}' = s \cdot \vec{P} + (1 - s) \cdot \vec{C}$
+
+- **Fixpunkt ($\vec{P} = \vec{C}$):** $\vec{C}' = s \cdot \vec{C} + (1 - s) \cdot \vec{C} = \vec{C} \quad \checkmark$
+- **Ergebnis:** Der Punkt unter dem Cursor bleibt absolut ortsfest!
+
+</div>
+<div class="one">
+
+**2. Homogene $3 \times 3$-Transformationsmatrix:**
+$$\begin{aligned}
+\mathbf{M}_{\text{zoom}} &= \begin{pmatrix} 1 & 0 & C_x \\ 0 & 1 & C_y \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} s & 0 & -s\,C_x \\ 0 & s & -s\,C_y \\ 0 & 0 & 1 \end{pmatrix} \\
+&= \begin{pmatrix} s & 0 & (1 - s)\,C_x \\ 0 & s & (1 - s)\,C_y \\ 0 & 0 & 1 \end{pmatrix}
+\end{aligned}$$
+
+- **Radialer Zoom für $\vec{P} = \vec{C} + \vec{r}$:**
+  $\vec{P}' - \vec{C} = s \cdot (\vec{C} + \vec{r} - \vec{C}) = s \cdot \vec{r}$
+  $\implies$ Abstände zum Cursor skalieren homogen mit $s$.
 
 </div>
 </div>
