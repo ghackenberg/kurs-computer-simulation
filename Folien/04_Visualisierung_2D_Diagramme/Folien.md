@@ -1376,6 +1376,53 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 
 ---
 
+### Das Oszillations-Dilemma bei ungedämpften Kräften
+
+<div class="columns">
+<div class="two">
+
+- **Warum reicht naiver Gradientenabstieg nicht aus?**
+  - Bei konstanter Schrittweite ($\Delta \vec{p} = \Delta t \cdot \vec{F}_{\text{net}}$) schießen Knoten über die Gleichgewichtslage hinaus (**Overshooting**).
+  - Wegen der quadratisch anwachsenden Coulomb-Kräfte ($\propto 1/d^2$) treibt die Gegenkraft den Knoten im Folgeschritt sofort wieder weit zurück.
+- **Folge: Endloser Grenzzyklus (Limit Cycle):**
+  - Ohne thermische Dämpfung pendeln Knoten permanent im Zickzack um das Minimum; das Layout kommt **niemals zur Ruhe**.
+- **Lösungsansatz Simulated Annealing:**
+  - Eine schrumpfende Temperaturschranke $T_k$ begrenzt die Schrittweite und entzieht dem System kinetische Schwingungsenergie.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_ForceDirected_Oszillation.svg)
+
+</div>
+</div>
+
+---
+
+### Simulated Annealing: Abkühlung & Konvergenz
+
+<div class="columns">
+<div class="two">
+
+- **Prinzip der thermischen Dämpfung (Metallurgie):**
+  - Ein abklingender Temperaturfaktor $T_k$ kappt die maximal erlaubte Verschiebung pro Zeitschritt:
+    $$\Delta \vec{p}_i = \frac{\vec{F}_{\text{net}, i}}{\|\vec{F}_{\text{net}, i}\|} \cdot \min\left(T_k, \|\vec{F}_{\text{net}, i}\|\right)$$
+- **Geometrisches Abkühlungsschema:**
+  $$T_{k+1} = \gamma \cdot T_k, \quad \text{mit } \gamma \approx 0{,}90 \dots 0{,}95$$
+- **Didaktischer Ablauf:**
+  - **Start ($T_0$ groß):** Große Schritte überwinden topologische Barrieren und entflechten Kantenkreuzungen.
+  - **Ende ($T_k \to 0$):** Mikroschritte frieren das System im stabilen Kräftegleichgewicht $\|\vec{F}_{\text{net}}\| \approx 0$ ein.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_ForceDirected_Konvergenz.svg)
+
+</div>
+</div>
+
+---
+
 ### Force-Directed: Iteration 15 (Einschwingen & Annealing)
 
 <div class="columns">

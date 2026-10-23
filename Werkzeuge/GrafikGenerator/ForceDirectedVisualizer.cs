@@ -132,7 +132,164 @@ namespace GrafikGenerator
                 temp *= cooling;
             }
 
+            // Generate dedicated theory diagrams for annealing and oscillations
+            GenerateOscillationSvg(Path.Combine(diagramDir, "Mini_ForceDirected_Oszillation.svg"));
+            GenerateConvergenceSvg(Path.Combine(diagramDir, "Mini_ForceDirected_Konvergenz.svg"));
+
             Console.WriteLine("Force-Directed Simulations-SVGs erfolgreich erzeugt!");
+        }
+
+        private static void GenerateOscillationSvg(string filePath)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 280 420\" width=\"280\" height=\"420\">");
+            sb.AppendLine("  <defs>");
+            sb.AppendLine("    <style>");
+            sb.AppendLine("      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }");
+            sb.AppendLine("      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #475569; text-anchor: middle; }");
+            sb.AppendLine("      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }");
+            sb.AppendLine("      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }");
+            sb.AppendLine("    </style>");
+            sb.AppendLine("    <marker id=\"arr-red-osc\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"5\" markerHeight=\"5\" orient=\"auto-start-reverse\">");
+            sb.AppendLine("      <path d=\"M 0 1.5 L 9 5 L 0 8.5 z\" fill=\"#dc2626\" />");
+            sb.AppendLine("    </marker>");
+            sb.AppendLine("    <marker id=\"arr-grn-osc\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"5\" markerHeight=\"5\" orient=\"auto-start-reverse\">");
+            sb.AppendLine("      <path d=\"M 0 1.5 L 9 5 L 0 8.5 z\" fill=\"#16a34a\" />");
+            sb.AppendLine("    </marker>");
+            sb.AppendLine("  </defs>");
+            sb.AppendLine();
+            sb.AppendLine("  <rect width=\"280\" height=\"420\" rx=\"10\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\"1.5\" />");
+            sb.AppendLine("  <text x=\"140\" y=\"24\" class=\"hdr\">Das Oszillations-Dilemma</text>");
+            sb.AppendLine("  <text x=\"140\" y=\"42\" class=\"sub\">Ungedämpft vs. Simulated Annealing</text>");
+            sb.AppendLine();
+            sb.AppendLine("  <!-- Graphic canvas -->");
+            sb.AppendLine("  <g transform=\"translate(15, 54)\">");
+            sb.AppendLine("    <rect width=\"250\" height=\"184\" rx=\"6\" fill=\"#ffffff\" stroke=\"#cbd5e1\" stroke-width=\"1\" />");
+            sb.AppendLine();
+            sb.AppendLine("    <!-- Left Compartment: Ungedämpft -->");
+            sb.AppendLine("    <text x=\"62\" y=\"18\" class=\"lbl\" style=\"fill: #dc2626; text-anchor: middle;\">Ungedämpft</text>");
+            sb.AppendLine("    <text x=\"62\" y=\"32\" class=\"desc\" style=\"fill: #7f1d1d; font-size: 11.5px; text-anchor: middle;\">T = const</text>");
+            sb.AppendLine("    <circle cx=\"62\" cy=\"95\" r=\"9\" fill=\"#fee2e2\" stroke=\"#ef4444\" stroke-width=\"1.5\" stroke-dasharray=\"2,2\" />");
+            sb.AppendLine();
+            sb.AppendLine("    <!-- Limit Cycle Trajectory (Overshooting) -->");
+            sb.AppendLine("    <path d=\"M 26 55 L 98 135 L 32 130 L 92 60 Z\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"2\" stroke-dasharray=\"4,2\" />");
+            sb.AppendLine("    <line x1=\"26\" y1=\"55\" x2=\"64\" y2=\"97\" stroke=\"#dc2626\" stroke-width=\"2\" marker-end=\"url(#arr-red-osc)\" />");
+            sb.AppendLine("    <line x1=\"98\" y1=\"135\" x2=\"60\" y2=\"132\" stroke=\"#dc2626\" stroke-width=\"2\" marker-end=\"url(#arr-red-osc)\" />");
+            sb.AppendLine("    <line x1=\"32\" y1=\"130\" x2=\"66\" y2=\"89\" stroke=\"#dc2626\" stroke-width=\"2\" marker-end=\"url(#arr-red-osc)\" />");
+            sb.AppendLine("    <circle cx=\"26\" cy=\"55\" r=\"5\" fill=\"#ef4444\" stroke=\"#ffffff\" stroke-width=\"1.5\" />");
+            sb.AppendLine("    <circle cx=\"98\" cy=\"135\" r=\"5\" fill=\"#ef4444\" stroke=\"#ffffff\" stroke-width=\"1.5\" />");
+            sb.AppendLine("    <circle cx=\"32\" cy=\"130\" r=\"5\" fill=\"#ef4444\" stroke=\"#ffffff\" stroke-width=\"1.5\" />");
+            sb.AppendLine("    <text x=\"62\" y=\"166\" class=\"desc\" style=\"font-weight: bold; fill: #b91c1c; text-anchor: middle;\">Grenzzyklus</text>");
+            sb.AppendLine();
+            sb.AppendLine("    <!-- Divider -->");
+            sb.AppendLine("    <line x1=\"125\" y1=\"10\" x2=\"125\" y2=\"174\" stroke=\"#e2e8f0\" stroke-width=\"1.5\" stroke-dasharray=\"3,3\" />");
+            sb.AppendLine();
+            sb.AppendLine("    <!-- Right Compartment: Mit Annealing -->");
+            sb.AppendLine("    <text x=\"188\" y=\"18\" class=\"lbl\" style=\"fill: #15803d; text-anchor: middle;\">Mit Annealing</text>");
+            sb.AppendLine("    <text x=\"188\" y=\"32\" class=\"desc\" style=\"fill: #14532d; font-size: 11.5px; text-anchor: middle;\">T_{k+1} = &#947; &#183; T_k</text>");
+            sb.AppendLine("    <circle cx=\"188\" cy=\"95\" r=\"9\" fill=\"#dcfce7\" stroke=\"#22c55e\" stroke-width=\"1.5\" />");
+            sb.AppendLine();
+            sb.AppendLine("    <!-- Converging Damped Spiral Trajectory -->");
+            sb.AppendLine("    <line x1=\"148\" y1=\"55\" x2=\"218\" y2=\"122\" stroke=\"#16a34a\" stroke-width=\"2.2\" marker-end=\"url(#arr-grn-osc)\" />");
+            sb.AppendLine("    <line x1=\"218\" y1=\"122\" x2=\"172\" y2=\"106\" stroke=\"#16a34a\" stroke-width=\"1.8\" marker-end=\"url(#arr-grn-osc)\" />");
+            sb.AppendLine("    <line x1=\"172\" y1=\"106\" x2=\"188\" y2=\"95\" stroke=\"#16a34a\" stroke-width=\"1.5\" marker-end=\"url(#arr-grn-osc)\" />");
+            sb.AppendLine("    <circle cx=\"148\" cy=\"55\" r=\"5\" fill=\"#22c55e\" stroke=\"#ffffff\" stroke-width=\"1.5\" />");
+            sb.AppendLine("    <circle cx=\"218\" cy=\"122\" r=\"4.5\" fill=\"#22c55e\" stroke=\"#ffffff\" stroke-width=\"1.5\" />");
+            sb.AppendLine("    <circle cx=\"188\" cy=\"95\" r=\"6\" fill=\"#2563eb\" stroke=\"#ffffff\" stroke-width=\"1.8\" />");
+            sb.AppendLine("    <text x=\"188\" y=\"166\" class=\"desc\" style=\"font-weight: bold; fill: #15803d; text-anchor: middle;\">Stabile Ruhelage</text>");
+            sb.AppendLine("  </g>");
+            sb.AppendLine();
+            sb.AppendLine("  <!-- Explanation Card -->");
+            sb.AppendLine("  <g transform=\"translate(15, 248)\">");
+            sb.AppendLine("    <rect width=\"250\" height=\"84\" rx=\"6\" fill=\"#fff7ed\" stroke=\"#fdba74\" stroke-width=\"1.5\" />");
+            sb.AppendLine("    <text x=\"125\" y=\"20\" class=\"lbl\" style=\"fill: #c2410c;\">Ursache des Oszillierens</text>");
+            sb.AppendLine("    <text x=\"125\" y=\"38\" class=\"desc\" style=\"fill: #9a3412;\">Coulomb-Kräfte steigen quadratisch (1/d²)</text>");
+            sb.AppendLine("    <text x=\"125\" y=\"54\" class=\"desc\" style=\"fill: #9a3412;\">Knoten schießen über das Minimum hinaus</text>");
+            sb.AppendLine("    <text x=\"125\" y=\"72\" class=\"desc\" style=\"font-weight: bold; fill: #ea580c;\">Ohne Dämpfung entsteht ein Limit Cycle!</text>");
+            sb.AppendLine("  </g>");
+            sb.AppendLine();
+            sb.AppendLine("  <!-- Summary Footer -->");
+            sb.AppendLine("  <rect x=\"15\" y=\"342\" width=\"250\" height=\"66\" rx=\"6\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\"1.5\" />");
+            sb.AppendLine("  <text x=\"140\" y=\"364\" class=\"lbl\" style=\"fill: #004B96;\">Dämpfung durch Annealing</text>");
+            sb.AppendLine("  <text x=\"140\" y=\"382\" class=\"desc\" style=\"font-weight: bold; fill: #334155;\">Schrittweite schrumpft mit T_k</text>");
+            sb.AppendLine("  <text x=\"140\" y=\"398\" class=\"desc\" style=\"fill: #64748b;\">Dämpft kinetische Energie des Systems</text>");
+            sb.AppendLine("</svg>");
+            File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
+        }
+
+        private static void GenerateConvergenceSvg(string filePath)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 280 420\" width=\"280\" height=\"420\">");
+            sb.AppendLine("  <defs>");
+            sb.AppendLine("    <style>");
+            sb.AppendLine("      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }");
+            sb.AppendLine("      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #475569; text-anchor: middle; }");
+            sb.AppendLine("      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }");
+            sb.AppendLine("      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }");
+            sb.AppendLine("      .axis-lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #475569; }");
+            sb.AppendLine("    </style>");
+            sb.AppendLine("  </defs>");
+            sb.AppendLine();
+            sb.AppendLine("  <rect width=\"280\" height=\"420\" rx=\"10\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\"1.5\" />");
+            sb.AppendLine("  <text x=\"140\" y=\"24\" class=\"hdr\">Simulated Annealing: Konvergenz</text>");
+            sb.AppendLine("  <text x=\"140\" y=\"42\" class=\"sub\">Restkraft ||F_net|| über Iterationen k</text>");
+            sb.AppendLine();
+            sb.AppendLine("  <!-- Graphic canvas with Plot -->");
+            sb.AppendLine("  <g transform=\"translate(15, 54)\">");
+            sb.AppendLine("    <rect width=\"250\" height=\"184\" rx=\"6\" fill=\"#ffffff\" stroke=\"#cbd5e1\" stroke-width=\"1\" />");
+            sb.AppendLine();
+            sb.AppendLine("    <!-- Grid lines -->");
+            sb.AppendLine("    <line x1=\"42\" y1=\"145\" x2=\"235\" y2=\"145\" stroke=\"#cbd5e1\" stroke-width=\"1.2\" />");
+            sb.AppendLine("    <line x1=\"42\" y1=\"105\" x2=\"235\" y2=\"105\" stroke=\"#f1f5f9\" stroke-width=\"1\" />");
+            sb.AppendLine("    <line x1=\"42\" y1=\"65\" x2=\"235\" y2=\"65\" stroke=\"#f1f5f9\" stroke-width=\"1\" />");
+            sb.AppendLine("    <line x1=\"42\" y1=\"25\" x2=\"235\" y2=\"25\" stroke=\"#f1f5f9\" stroke-width=\"1\" />");
+            sb.AppendLine("    <line x1=\"42\" y1=\"25\" x2=\"42\" y2=\"145\" stroke=\"#cbd5e1\" stroke-width=\"1.2\" />");
+            sb.AppendLine();
+            sb.AppendLine("    <!-- Axis ticks & labels -->");
+            sb.AppendLine("    <text x=\"34\" y=\"149\" class=\"axis-lbl\" style=\"text-anchor: end;\">0</text>");
+            sb.AppendLine("    <text x=\"34\" y=\"109\" class=\"axis-lbl\" style=\"text-anchor: end;\">1</text>");
+            sb.AppendLine("    <text x=\"34\" y=\"69\" class=\"axis-lbl\" style=\"text-anchor: end;\">2</text>");
+            sb.AppendLine("    <text x=\"34\" y=\"29\" class=\"axis-lbl\" style=\"text-anchor: end;\">3</text>");
+            sb.AppendLine("    <text x=\"42\" y=\"162\" class=\"axis-lbl\" style=\"text-anchor: middle;\">0</text>");
+            sb.AppendLine("    <text x=\"80\" y=\"162\" class=\"axis-lbl\" style=\"text-anchor: middle;\">10</text>");
+            sb.AppendLine("    <text x=\"119\" y=\"162\" class=\"axis-lbl\" style=\"text-anchor: middle;\">20</text>");
+            sb.AppendLine("    <text x=\"158\" y=\"162\" class=\"axis-lbl\" style=\"text-anchor: middle;\">30</text>");
+            sb.AppendLine("    <text x=\"196\" y=\"162\" class=\"axis-lbl\" style=\"text-anchor: middle;\">40</text>");
+            sb.AppendLine("    <text x=\"235\" y=\"162\" class=\"axis-lbl\" style=\"text-anchor: middle;\">50</text>");
+            sb.AppendLine("    <text x=\"138\" y=\"177\" class=\"axis-lbl\" style=\"text-anchor: middle; font-weight: bold;\">Iteration k</text>");
+            sb.AppendLine();
+            sb.AppendLine("    <!-- Curve 1: Ohne Annealing (Limit cycle oscillations in Red) -->");
+            sb.AppendLine("    <path d=\"M 42 45 L 61 75 L 80 50 L 99 85 L 119 55 L 138 80 L 158 52 L 177 82 L 196 58 L 216 78 L 235 62\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,2\" />");
+            sb.AppendLine();
+            sb.AppendLine("    <!-- Curve 2: Mit Simulated Annealing (Smooth geometric decay in Green) -->");
+            sb.AppendLine("    <path d=\"M 42 45 Q 70 85 100 120 T 160 141 T 235 144\" fill=\"none\" stroke=\"#16a34a\" stroke-width=\"2.6\" />");
+            sb.AppendLine("    <circle cx=\"235\" cy=\"144\" r=\"4\" fill=\"#16a34a\" stroke=\"#ffffff\" stroke-width=\"1\" />");
+            sb.AppendLine();
+            sb.AppendLine("    <!-- Legend inside plot -->");
+            sb.AppendLine("    <rect x=\"115\" y=\"12\" width=\"124\" height=\"44\" rx=\"4\" fill=\"#ffffff\" opacity=\"0.9\" stroke=\"#e2e8f0\" stroke-width=\"1\" />");
+            sb.AppendLine("    <line x1=\"122\" y1=\"25\" x2=\"140\" y2=\"25\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,2\" />");
+            sb.AppendLine("    <text x=\"145\" y=\"29\" class=\"axis-lbl\" style=\"fill: #dc2626; font-size: 11.5px;\">Ungedämpft</text>");
+            sb.AppendLine("    <line x1=\"122\" y1=\"43\" x2=\"140\" y2=\"43\" stroke=\"#16a34a\" stroke-width=\"2.4\" />");
+            sb.AppendLine("    <text x=\"145\" y=\"47\" class=\"axis-lbl\" style=\"fill: #16a34a; font-size: 11.5px; font-weight: bold;\">Mit Annealing</text>");
+            sb.AppendLine("  </g>");
+            sb.AppendLine();
+            sb.AppendLine("  <!-- Explanation Card -->");
+            sb.AppendLine("  <g transform=\"translate(15, 248)\">");
+            sb.AppendLine("    <rect width=\"250\" height=\"84\" rx=\"6\" fill=\"#f0fdf4\" stroke=\"#86efac\" stroke-width=\"1.5\" />");
+            sb.AppendLine("    <text x=\"125\" y=\"20\" class=\"lbl\" style=\"fill: #15803d;\">Abkühlungsschema</text>");
+            sb.AppendLine("    <text x=\"125\" y=\"38\" class=\"desc\" style=\"fill: #166534;\">T_{k+1} = &#947; &#183; T_k (Abkühlrate &#947; &#8776; 0,92)</text>");
+            sb.AppendLine("    <text x=\"125\" y=\"54\" class=\"desc\" style=\"fill: #166534;\">Schrittweite: &#916;p = (F / ||F||) &#183; min(T_k, ||F||)</text>");
+            sb.AppendLine("    <text x=\"125\" y=\"72\" class=\"desc\" style=\"font-weight: bold; fill: #15803d;\">Monotone Konvergenz gegen ||F_net|| &#8776; 0</text>");
+            sb.AppendLine("  </g>");
+            sb.AppendLine();
+            sb.AppendLine("  <!-- Summary Footer -->");
+            sb.AppendLine("  <rect x=\"15\" y=\"342\" width=\"250\" height=\"66\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#93c5fd\" stroke-width=\"1.5\" />");
+            sb.AppendLine("  <text x=\"140\" y=\"364\" class=\"lbl\" style=\"fill: #1d4ed8;\">Numerische Stabilität</text>");
+            sb.AppendLine("  <text x=\"140\" y=\"382\" class=\"desc\" style=\"font-weight: bold; fill: #1e40af;\">Verhindert Oszillieren um das Minimum</text>");
+            sb.AppendLine("  <text x=\"140\" y=\"398\" class=\"desc\" style=\"fill: #2563eb;\">Garantiert Stillstand im Gleichgewicht</text>");
+            sb.AppendLine("</svg>");
+            File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
         }
 
         private enum Mode { DetailedForces, NetForcesOnly, Equilibrium }

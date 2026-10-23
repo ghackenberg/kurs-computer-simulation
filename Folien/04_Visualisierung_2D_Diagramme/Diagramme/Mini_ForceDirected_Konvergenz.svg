@@ -1,0 +1,69 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 420" width="280" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+      .axis-lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #475569; }
+    </style>
+  </defs>
+
+  <rect width="280" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="140" y="24" class="hdr">Simulated Annealing: Konvergenz</text>
+  <text x="140" y="42" class="sub">Restkraft ||F_net|| über Iterationen k</text>
+
+  <!-- Graphic canvas with Plot -->
+  <g transform="translate(15, 54)">
+    <rect width="250" height="184" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Grid lines -->
+    <line x1="42" y1="145" x2="235" y2="145" stroke="#cbd5e1" stroke-width="1.2" />
+    <line x1="42" y1="105" x2="235" y2="105" stroke="#f1f5f9" stroke-width="1" />
+    <line x1="42" y1="65" x2="235" y2="65" stroke="#f1f5f9" stroke-width="1" />
+    <line x1="42" y1="25" x2="235" y2="25" stroke="#f1f5f9" stroke-width="1" />
+    <line x1="42" y1="25" x2="42" y2="145" stroke="#cbd5e1" stroke-width="1.2" />
+
+    <!-- Axis ticks & labels -->
+    <text x="34" y="149" class="axis-lbl" style="text-anchor: end;">0</text>
+    <text x="34" y="109" class="axis-lbl" style="text-anchor: end;">1</text>
+    <text x="34" y="69" class="axis-lbl" style="text-anchor: end;">2</text>
+    <text x="34" y="29" class="axis-lbl" style="text-anchor: end;">3</text>
+    <text x="42" y="162" class="axis-lbl" style="text-anchor: middle;">0</text>
+    <text x="80" y="162" class="axis-lbl" style="text-anchor: middle;">10</text>
+    <text x="119" y="162" class="axis-lbl" style="text-anchor: middle;">20</text>
+    <text x="158" y="162" class="axis-lbl" style="text-anchor: middle;">30</text>
+    <text x="196" y="162" class="axis-lbl" style="text-anchor: middle;">40</text>
+    <text x="235" y="162" class="axis-lbl" style="text-anchor: middle;">50</text>
+    <text x="138" y="177" class="axis-lbl" style="text-anchor: middle; font-weight: bold;">Iteration k</text>
+
+    <!-- Curve 1: Ohne Annealing (Limit cycle oscillations in Red) -->
+    <path d="M 42 45 L 61 75 L 80 50 L 99 85 L 119 55 L 138 80 L 158 52 L 177 82 L 196 58 L 216 78 L 235 62" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="3,2" />
+
+    <!-- Curve 2: Mit Simulated Annealing (Smooth geometric decay in Green) -->
+    <path d="M 42 45 Q 70 85 100 120 T 160 141 T 235 144" fill="none" stroke="#16a34a" stroke-width="2.6" />
+    <circle cx="235" cy="144" r="4" fill="#16a34a" stroke="#ffffff" stroke-width="1" />
+
+    <!-- Legend inside plot -->
+    <rect x="115" y="12" width="124" height="44" rx="4" fill="#ffffff" opacity="0.9" stroke="#e2e8f0" stroke-width="1" />
+    <line x1="122" y1="25" x2="140" y2="25" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="3,2" />
+    <text x="145" y="29" class="axis-lbl" style="fill: #dc2626; font-size: 11.5px;">Ungedämpft</text>
+    <line x1="122" y1="43" x2="140" y2="43" stroke="#16a34a" stroke-width="2.4" />
+    <text x="145" y="47" class="axis-lbl" style="fill: #16a34a; font-size: 11.5px; font-weight: bold;">Mit Annealing</text>
+  </g>
+
+  <!-- Explanation Card -->
+  <g transform="translate(15, 248)">
+    <rect width="250" height="84" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="125" y="20" class="lbl" style="fill: #15803d;">Abkühlungsschema</text>
+    <text x="125" y="38" class="desc" style="fill: #166534;">T_{k+1} = &#947; &#183; T_k (Abkühlrate &#947; &#8776; 0,92)</text>
+    <text x="125" y="54" class="desc" style="fill: #166534;">Schrittweite: &#916;p = (F / ||F||) &#183; min(T_k, ||F||)</text>
+    <text x="125" y="72" class="desc" style="font-weight: bold; fill: #15803d;">Monotone Konvergenz gegen ||F_net|| &#8776; 0</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="250" height="66" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+  <text x="140" y="364" class="lbl" style="fill: #1d4ed8;">Numerische Stabilität</text>
+  <text x="140" y="382" class="desc" style="font-weight: bold; fill: #1e40af;">Verhindert Oszillieren um das Minimum</text>
+  <text x="140" y="398" class="desc" style="fill: #2563eb;">Garantiert Stillstand im Gleichgewicht</text>
+</svg>
