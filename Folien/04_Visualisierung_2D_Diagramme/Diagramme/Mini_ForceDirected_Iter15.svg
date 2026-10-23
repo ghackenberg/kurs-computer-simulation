@@ -1,0 +1,63 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 420" width="280" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+      .node-txt { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; fill: #1e293b; text-anchor: middle; dominant-baseline: central; }
+    </style>
+    <marker id="arr-net" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16a34a" />
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626" />
+    </marker>
+  </defs>
+
+  <rect width="280" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="140" y="24" class="hdr">Force-Directed: Iteration 15</text>
+  <text x="140" y="42" class="sub">Einschwingen &amp; Simulated Annealing</text>
+  <g transform="translate(15, 54)">
+    <rect width="250" height="184" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <line x1="54.9" y1="45.6" x2="186.0" y2="145.3" stroke="#94a3b8" stroke-width="2" />
+    <line x1="186.0" y1="145.3" x2="64.1" y2="145.2" stroke="#94a3b8" stroke-width="2" />
+    <line x1="64.1" y1="145.2" x2="195.1" y2="45.6" stroke="#94a3b8" stroke-width="2" />
+    <line x1="195.1" y1="45.6" x2="124.9" y2="93.4" stroke="#94a3b8" stroke-width="2" />
+    <line x1="124.9" y1="93.4" x2="54.9" y2="45.6" stroke="#94a3b8" stroke-width="2" />
+    <line x1="186.0" y1="145.3" x2="124.9" y2="93.4" stroke="#94a3b8" stroke-width="2" />
+    <line x1="54.9" y1="45.6" x2="56.1" y2="45.4" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-net)" />
+    <line x1="186.0" y1="145.3" x2="181.5" y2="146.3" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-net)" />
+    <line x1="64.1" y1="145.2" x2="69.0" y2="146.0" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-net)" />
+    <line x1="195.1" y1="45.6" x2="193.9" y2="45.4" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-net)" />
+    <line x1="124.9" y1="93.4" x2="124.6" y2="91.9" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-net)" />
+    <rect x="36.9" y="32.6" width="36" height="26" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.8" />
+    <text x="54.9" y="45.6" class="node-txt">v_1</text>
+    <rect x="168.0" y="132.3" width="36" height="26" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.8" />
+    <text x="186.0" y="145.3" class="node-txt">v_2</text>
+    <rect x="46.1" y="132.2" width="36" height="26" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.8" />
+    <text x="64.1" y="145.2" class="node-txt">v_3</text>
+    <rect x="177.1" y="32.6" width="36" height="26" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.8" />
+    <text x="195.1" y="45.6" class="node-txt">v_4</text>
+    <rect x="106.9" y="80.4" width="36" height="26" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.8" />
+    <text x="124.9" y="93.4" class="node-txt">v_5</text>
+  </g>
+
+  <!-- Explanation Card -->
+  <g transform="translate(15, 248)">
+    <rect width="250" height="84" rx="6" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5" />
+    <text x="125" y="20" class="lbl" style="fill: #c2410c;">Simulated Annealing</text>
+    <text x="125" y="38" class="desc" style="fill: #9a3412;">Temperatur T_k klingt schrittweise ab</text>
+    <text x="125" y="54" class="desc" style="font-weight: bold; fill: #ea580c;">Schrittweiten schrumpfen (Dämpfung)</text>
+    <text x="125" y="72" class="desc" style="fill: #c2410c;">Verhindert Oszillieren um Minimum</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="250" height="66" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="140" y="364" class="lbl" style="fill: #004B96;">Einschwingphase</text>
+  <text x="140" y="382" class="desc" style="font-weight: bold; fill: #334155;">Topologie bereits kreuzungsfrei</text>
+  <text x="140" y="398" class="desc" style="fill: #64748b;">Feinjustierung der Kantenlängen l_0</text>
+</svg>

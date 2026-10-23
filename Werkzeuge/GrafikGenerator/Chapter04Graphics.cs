@@ -29,6 +29,7 @@ namespace GrafikGenerator
             GenerateScottPlotFillY(targetDir);
             GenerateMsaglSugiyama(targetDir);
             GenerateMsaglForceDirected(targetDir);
+            ForceDirectedVisualizer.GenerateAll(root);
         }
 
         private static void ApplyChapter04Typography(Plot plot, string title, string xLabel, string yLabel)

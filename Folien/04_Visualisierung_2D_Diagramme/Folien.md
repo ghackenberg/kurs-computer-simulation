@@ -1331,6 +1331,95 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 
 ---
 
+### Force-Directed: Iteration 0 (Start & Kräftezerlegung)
+
+<div class="columns">
+<div class="two">
+
+- **Zufällige Startverteilung:**
+  - Knoten $v_1, v_2, v_3, v_4, v_5$ starten ungeordnet; Kanten überschneiden sich chaotisch.
+- **Kräftezerlegung an jedem Knoten:**
+  - **Hookesche Zugfedern $F_s$ (blau):** Ziehen verbundene Knoten zusammen.
+  - **Coulomb-Abstoßung $F_r$ (rot):** Drückt alle Knotenpaare auseinander.
+- **Resultierender Kraftvektor:**
+  - Die Vektorsumme $\vec{F}_{\text{net}} = \sum \vec{F}_s + \sum \vec{F}_r$ (grün) bestimmt die anfängliche Bewegungsrichtung.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_ForceDirected_Iter0.svg)
+
+</div>
+</div>
+
+---
+
+### Force-Directed: Iteration 2 (Dynamische Entwirrung)
+
+<div class="columns">
+<div class="two">
+
+- **Numerischer Zeitschritt (Euler-Verfahren):**
+  - Jeder Knoten $v_1, \dots, v_5$ wandert ein Wegstück entlang der wirkenden Gesamtkraft.
+- **Reduktion auf Summenvektoren:**
+  - Zur Wahrung der Übersicht werden Einzelkräfte ausgeblendet: Nur die **grünen Summenvektoren $\vec{F}_{\text{net}}$** bleiben sichtbar.
+- **Erste Entflechtung:**
+  - Knoten $v_1, v_2, v_3, v_4, v_5$ streben entlang des Energiegradienten auseinander; Kantenüberkreuzungen lösen sich auf.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_ForceDirected_Iter2.svg)
+
+</div>
+</div>
+
+---
+
+### Force-Directed: Iteration 15 (Einschwingen & Annealing)
+
+<div class="columns">
+<div class="two">
+
+- **Simulated Annealing (Temperatur $T_k$):**
+  - Ein abklingender Temperaturfaktor $T_k$ begrenzt die maximale Schrittweite pro Iteration.
+  - Dämpft Oszillationen und verhindert Überschwingen um Energieminima.
+- **Geometrische Feinjustierung:**
+  - Die Topologie der Knoten $v_1, v_2, v_3, v_4, v_5$ ist bereits kreuzungsfrei.
+  - Kürzere Summenvektoren $\vec{F}_{\text{net}}$ gleichen Kantenlängen an die Ruhelänge $l_0$ an.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_ForceDirected_Iter15.svg)
+
+</div>
+</div>
+
+---
+
+### Force-Directed: Iteration 50 (Stationäres Gleichgewicht)
+
+<div class="columns">
+<div class="two">
+
+- **Kräftegleichgewicht erreicht:**
+  - An allen Knoten $v_1, v_2, v_3, v_4, v_5$ heben sich Zug- und Abstoßungskräfte auf:
+    $$\vec{F}_{\text{net}} = \sum \vec{F}_s + \sum \vec{F}_r \approx \vec{0}$$
+- **Optimales Simulationsergebnis:**
+  - Das System ruht im lokalen Minimum der potentiellen Energie.
+  - Symmetrisches, harmonisches Layout mit gleichmäßigen Kantenlängen $l_0$ ganz ohne manuelle Platzierung.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_ForceDirected_Iter50.svg)
+
+</div>
+</div>
+
+---
+
 ### MSAGL in der Praxis: Organisches Force-Directed Layout
 
 <div class="columns">
