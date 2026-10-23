@@ -1337,12 +1337,12 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 <div class="two">
 
 - **Zufällige Startverteilung:**
-  - Knoten $v_1, v_2, v_3, v_4, v_5$ starten ungeordnet; Kanten überschneiden sich chaotisch.
+  - Knoten starten ungeordnet; Kanten und Abstände sind stark verzerrt.
 - **Kräftezerlegung an jedem Knoten:**
-  - **Hookesche Zugfedern $F_s$ (blau):** Ziehen verbundene Knoten zusammen.
-  - **Coulomb-Abstoßung $F_r$ (rot):** Drückt alle Knotenpaare auseinander.
+  - **Hookesche Zugfedern $F_s$ (blau):** Ziehen verbundene Nachbarknoten entlang der Kantenlinie an.
+  - **Paarweise Coulomb-Abstoßung $F_r$ (rot gestrichelt):** Jedes Knotenpaar stößt sich elektrostatisch ab (bei $N=5$ Knoten existieren $\binom{5}{2} = 10$ Paare bzw. 4 Abstoßungsvektoren pro Knoten).
 - **Resultierender Kraftvektor:**
-  - Die Vektorsumme $\vec{F}_{\text{net}} = \sum \vec{F}_s + \sum \vec{F}_r$ (grün) bestimmt die anfängliche Bewegungsrichtung.
+  - Die Vektorsumme $\vec{F}_{\text{net}} = \sum \vec{F}_s + \sum \vec{F}_r$ (grün) bestimmt die anfängliche Bewegungsrichtung jedes Knotens.
 
 </div>
 <div class="one">
@@ -1360,11 +1360,11 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 <div class="two">
 
 - **Numerischer Zeitschritt (Euler-Verfahren):**
-  - Jeder Knoten $v_1, \dots, v_5$ wandert ein Wegstück entlang der wirkenden Gesamtkraft.
+  - Jeder Knoten wandert ein Wegstück entlang seiner wirkenden Gesamtkraft.
 - **Reduktion auf Summenvektoren:**
   - Zur Wahrung der Übersicht werden Einzelkräfte ausgeblendet: Nur die **grünen Summenvektoren $\vec{F}_{\text{net}}$** bleiben sichtbar.
 - **Erste Entflechtung:**
-  - Knoten $v_1, v_2, v_3, v_4, v_5$ streben entlang des Energiegradienten auseinander; Kantenüberkreuzungen lösen sich auf.
+  - Die Knoten streben entlang des Energiegradienten auseinander; Kanten und Abstände beginnen sich harmonisch auszurichten.
 
 </div>
 <div class="one">
@@ -1385,7 +1385,7 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
   - Ein abklingender Temperaturfaktor $T_k$ begrenzt die maximale Schrittweite pro Iteration.
   - Dämpft Oszillationen und verhindert Überschwingen um Energieminima.
 - **Geometrische Feinjustierung:**
-  - Die Topologie der Knoten $v_1, v_2, v_3, v_4, v_5$ ist bereits kreuzungsfrei.
+  - Die Topologie der Knoten ist bereits kreuzungsfrei und weitgehend symmetrisch.
   - Kürzere Summenvektoren $\vec{F}_{\text{net}}$ gleichen Kantenlängen an die Ruhelänge $l_0$ an.
 
 </div>
@@ -1404,7 +1404,7 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 <div class="two">
 
 - **Kräftegleichgewicht erreicht:**
-  - An allen Knoten $v_1, v_2, v_3, v_4, v_5$ heben sich Zug- und Abstoßungskräfte auf:
+  - An allen Knoten heben sich Zug- und Abstoßungskräfte auf:
     $$\vec{F}_{\text{net}} = \sum \vec{F}_s + \sum \vec{F}_r \approx \vec{0}$$
 - **Optimales Simulationsergebnis:**
   - Das System ruht im lokalen Minimum der potentiellen Energie.
