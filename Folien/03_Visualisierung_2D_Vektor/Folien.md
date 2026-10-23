@@ -1193,22 +1193,22 @@ DrawTruss();
 
 ---
 
-### Das 2-Schichten-Modell der Koordinaten
+### Die drei Koordinatenräume: Screen, Canvas und World
 
 <div class="columns top">
 <div class="two">
 
-Für interaktive Selektion müssen Klickpixel $\vec{P}_{\text{screen}} = (x_p, y_p)$ in physikalische Meter $\vec{P}_{\text{world}} = (x_w, y_w)$ rückgerechnet werden.
+Beim interaktiven Arbeiten mit Simulationsmodellen existieren drei grundlegend verschiedene Bezugssysteme:
 
-Die Rücktransformation durchläuft **zwei getrennte Schichten**:
-
-1. **Schicht 1: Die GPU-Kameramatrix (Pan & Zoom):**
-   - Hebt die interaktive Kamerabewegung auf:
-     $\vec{P}_{\text{canvas}} = (x_u, y_u) = \mathbf{M}^{-1} \cdot \vec{P}_{\text{screen}} \quad [\mathrm{px}]$
-   - $\mathbf{M}$ enthält alle bisherigen `ScaleAt`- und Pan-Translationen.
-2. **Schicht 2: Das Viewport-Modell (`Transform2D`):**
-   - Rechnet unzoomed Pixel $(x_u, y_u)$ in physikalische Weltkoordinaten um:
-     $x_w = X_{\min} + (x_u - x_{\text{off}}) / s, \quad y_w = Y_{\max} - (y_u - y_{\text{off}}) / s$
+1. **Screen-Raum (Monitor / Viewport $[\mathrm{px}]$):**
+   - Diskrete Pixel des Fensters; Ursprung $(0,0)$ starr oben links.
+   - Jeder Mausklick liefert Screen-Pixel $\vec{P}_{\text{screen}} = (x_p, y_p)$.
+2. **Canvas-Raum (Virtuelle Arbeitsfläche $[\mathrm{px}]$):**
+   - Ruhende Zeichenebene $\vec{P}_{\text{canvas}} = \vec{P}_{\text{unzoom}} = (x_u, y_u)$.
+   - GPU-Kameramatrix $\mathbf{M}$ verschiebt und skaliert diese Fläche dynamisch.
+3. **World-Raum (Physikalisches Modell $[\mathrm{m}]$):**
+   - Ingenieur-Koordinaten $\vec{P}_{\text{world}} = (x_w, y_w)$; **$+Y$ nach oben!**
+   - Rückrechnung via $x_w = X_{\min} + (x_u - x_{\text{off}})/s$ und $y_w = Y_{\max} - (y_u - y_{\text{off}})/s$.
 
 </div>
 <div class="one">
@@ -1220,23 +1220,23 @@ Die Rücktransformation durchläuft **zwei getrennte Schichten**:
 
 ---
 
-### Schrittweise analytische Rückrechnung
+### Das Unzoom-Prinzip & Welt-Rückrechnung
 
 <div class="columns top">
 <div class="two">
 
-Ausgehend vom Klickpunkt $\vec{P}_{\text{screen}}$ heben wir zunächst die Kameramatrix zu $\vec{P}_{\text{unzoom}}$ auf. Anschließend leiten wir die **analytische Umkehrfunktion** zum physikalischen Weltpunkt $\vec{P}_{\text{world}} = (x_w, y_w)$ ab:
+Um einen Klickpunkt $\vec{P}_{\text{screen}}$ einem Modellknoten zuzuordnen, müssen zwei Transformationen invertiert werden:
 
-- **X-Rückrechnung (Translation & Skalierung):**
-  $x_{\text{canvas}} = x_{\text{off}} + (x_w - X_{\min}) \cdot s$
-  $\iff x_w = X_{\min} + \frac{x_{\text{canvas}} - x_{\text{off}}}{s} \quad [\mathrm{m}]$
-- **Y-Rückrechnung (Invertierung & Skalierung):**
-  $y_{\text{canvas}} = y_{\text{off}} + (Y_{\max} - y_w) \cdot s$
-  $\iff y_w = Y_{\max} - \frac{y_{\text{canvas}} - y_{\text{off}}}{s} \quad [\mathrm{m}]$
+- **1. Kamera-Unzoom (`Matrix.Invert()`):**
+  - Hebt Pan-Offset und Zoomfaktor der GPU-Kamera auf:
+    $$\vec{P}_{\text{unzoom}} = (x_u, y_u) = \mathbf{M}^{-1} \cdot \vec{P}_{\text{screen}} \quad [\mathrm{px}]$$
+  - Liefert den Punkt auf der ruhenden Zeichenebene.
+- **2. Viewport-Invertierung (`Transform2D`):**
+  - Rechnet Canvas-Pixel $(x_u, y_u)$ in physikalische Meter um:
+    $$x_w = X_{\min} + \frac{x_u - x_{\text{off}}}{s}, \quad y_w = Y_{\max} - \frac{y_u - y_{\text{off}}}{s} \quad [\mathrm{m}]$$
+  - Die $Y$-Achse wird dabei wieder nach oben gespiegelt.
 
-> **Einheitenkontrolle:**  
-> $[\mathrm{m}] + \frac{[\mathrm{px}] - [\mathrm{px}]}{[\mathrm{px/m}]} = [\mathrm{m}]$  
-> Die Berechnung ist dimensionsrein und exakt!
+> **Dimensionsreinheit:** $[\mathrm{m}] + ([\mathrm{px}] - [\mathrm{px}]) / [\mathrm{px/m}] = [\mathrm{m}]$.
 
 </div>
 <div class="one">
