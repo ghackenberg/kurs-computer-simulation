@@ -64,7 +64,7 @@
     <g transform="translate(10, 134)">
       <rect width="220" height="46" rx="4" fill="#eff6ff" stroke="#bfdbfe" />
       <text x="110" y="18" class="desc" style="font-weight: bold; fill: #1e40af;">Fall 2: Tiefster Punkt (Y_min)</text>
-      <text x="110" y="36" class="fml" style="font-size: 11.5px; fill: #1d4ed8;">y_s = y_off + H_world · s (unten)</text>
+      <text x="110" y="36" class="fml" style="font-size: 11px; fill: #1d4ed8;">y_s = y_off + H_world · s (unten)</text>
     </g>
   </g>
 </svg>

@@ -193,7 +193,8 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       }
     }
 
-    // 4. Panel / Card Boundary Clipping (Text extending outside visible structural card rect)
+    // 4. Panel / Card Boundary Margin & Clipping
+    // Prüft, ob Text innerhalb struktureller Boxen/Cards liegt und ausreichend Mindestabstand zu den Rändern einhält
     const cards = Array.from(document.querySelectorAll('rect'))
       .filter(r => !r.closest('defs') && !r.closest('clipPath'))
       .filter(r => {
@@ -204,17 +205,25 @@ async function auditSvgFile(browser, svgPath, options = {}) {
         return (hasFill || hasStroke) && !isDashed && style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
       })
       .map(r => r.getBoundingClientRect())
-      .filter(r => r.width > 350 && r.height > 250);
+      .filter(r => r.width >= 80 && r.height >= 40);
 
     texts.forEach(t => {
       cards.forEach(card => {
-        const startsInside = t.rect.left >= card.left + 5 && t.rect.left < card.right - 25 &&
-                             t.rect.top >= card.top + 5 && t.rect.top < card.bottom - 5;
-        if (startsInside && t.rect.right > card.right + 4) {
-          issues.push({
-            type: 'PANEL_CLIPPING',
-            message: `"${t.text.slice(0, 25)}" overflows card right edge by ${Math.round(t.rect.right - card.right)}px`
-          });
+        const startsInside = t.rect.left >= card.left + 4 && t.rect.left < card.right - 25 &&
+                             t.rect.top >= card.top + 2 && t.rect.bottom <= card.bottom + 4;
+        if (startsInside) {
+          const rightMargin = card.right - t.rect.right;
+          if (rightMargin < 0) {
+            issues.push({
+              type: 'PANEL_CLIPPING',
+              message: `"${t.text.slice(0, 25)}" overflows card right edge by ${Math.round(-rightMargin)}px`
+            });
+          } else if (rightMargin < 8.0) {
+            issues.push({
+              type: 'CARD_MARGIN_TOO_SMALL',
+              message: `Text "${t.text.slice(0, 25)}" is too close to card right edge (${rightMargin.toFixed(1)}px < 8px minimum)`
+            });
+          }
         }
       });
     });

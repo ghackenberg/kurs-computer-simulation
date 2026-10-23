@@ -22,8 +22,8 @@
     <text x="10" y="15" class="lbl" style="fill: #991b1b;">1. Screen-Raum (Monitor [px])</text>
 
     <!-- Mini Window Frame -->
-    <rect x="10" y="26" width="90" height="64" rx="3" fill="#ffffff" stroke="#ef4444" stroke-width="1.2" />
-    <line x1="10" y1="36" x2="100" y2="36" stroke="#fca5a5" stroke-width="0.8" />
+    <rect x="10" y="26" width="84" height="64" rx="3" fill="#ffffff" stroke="#ef4444" stroke-width="1.2" />
+    <line x1="10" y1="36" x2="94" y2="36" stroke="#fca5a5" stroke-width="0.8" />
     <circle cx="16" cy="31" r="1.8" fill="#ef4444" />
     <circle cx="21" cy="31" r="1.8" fill="#f59e0b" />
     <circle cx="26" cy="31" r="1.8" fill="#10b981" />
@@ -32,15 +32,15 @@
     <text x="14" y="50" class="desc" style="font-size: 11.5px; fill: #b91c1c; font-weight: bold;">(0,0)</text>
     
     <!-- Screen Click Point -->
-    <circle cx="56" cy="56" r="3.5" fill="#dc2626" />
+    <circle cx="52" cy="56" r="3.5" fill="#dc2626" />
     <!-- Cursor Icon -->
-    <path d="M 56,56 L 62,66 L 59,67 L 62,73 L 60,74 L 57,68 L 53,70 Z" fill="#0f172a" stroke="#ffffff" stroke-width="0.8" />
-    <text x="56" y="84" class="fml" style="font-size: 11.5px; fill: #b91c1c; text-anchor: middle;">P_screen</text>
+    <path d="M 52,56 L 58,66 L 55,67 L 58,73 L 56,74 L 53,68 L 49,70 Z" fill="#0f172a" stroke="#ffffff" stroke-width="0.8" />
+    <text x="52" y="84" class="fml" style="font-size: 11.5px; fill: #b91c1c; text-anchor: middle;">P_screen</text>
 
     <!-- Text description right -->
-    <text x="108" y="44" class="fml" style="fill: #b91c1c;">(x_p, y_p) in [px]</text>
-    <text x="108" y="64" class="desc" style="font-weight: bold; fill: #991b1b;">Mausklick im Viewport</text>
-    <text x="108" y="84" class="desc" style="fill: #7f1d1d;">+Y zeigt nach UNTEN</text>
+    <text x="102" y="44" class="fml" style="fill: #b91c1c;">(x_p, y_p) in [px]</text>
+    <text x="102" y="64" class="desc" style="font-weight: bold; fill: #991b1b;">Mausklick im Viewport</text>
+    <text x="102" y="84" class="desc" style="fill: #7f1d1d;">+Y zeigt nach UNTEN</text>
   </g>
 
   <!-- Transition 1 -> 2 (Kamera M) -->
@@ -57,19 +57,19 @@
     <text x="10" y="15" class="lbl" style="fill: #1e40af;">2. Canvas-Raum (WPF Canvas [px])</text>
 
     <!-- Virtual Canvas Sheet -->
-    <rect x="10" y="26" width="90" height="64" rx="3" fill="#ffffff" stroke="#3b82f6" stroke-width="1.2" stroke-dasharray="3,2" />
+    <rect x="10" y="26" width="84" height="64" rx="3" fill="#ffffff" stroke="#3b82f6" stroke-width="1.2" stroke-dasharray="3,2" />
     <!-- Truss Model on Canvas -->
-    <polygon points="18,70 78,70 48,46" fill="none" stroke="#2563eb" stroke-width="1.5" />
-    <circle cx="18" cy="70" r="2.5" fill="#1d4ed8" />
-    <circle cx="78" cy="70" r="2.5" fill="#1d4ed8" />
-    <circle cx="48" cy="46" r="3.5" fill="#dc2626" />
-    <text x="48" y="38" class="fml" style="font-size: 11.5px; fill: #1d4ed8; text-anchor: middle;">P_canvas</text>
-    <text x="48" y="86" class="desc" style="font-size: 11.5px; fill: #2563eb; text-anchor: middle;">WPF-Shapes</text>
+    <polygon points="14,70 74,70 44,46" fill="none" stroke="#2563eb" stroke-width="1.5" />
+    <circle cx="14" cy="70" r="2.5" fill="#1d4ed8" />
+    <circle cx="74" cy="70" r="2.5" fill="#1d4ed8" />
+    <circle cx="44" cy="46" r="3.5" fill="#dc2626" />
+    <text x="44" y="38" class="fml" style="font-size: 11.5px; fill: #1d4ed8; text-anchor: middle;">P_canvas</text>
+    <text x="44" y="86" class="desc" style="font-size: 11.5px; fill: #2563eb; text-anchor: middle;">WPF-Shapes</text>
 
     <!-- Text description right -->
-    <text x="108" y="44" class="fml" style="fill: #1e40af;">P_canvas in [px]</text>
-    <text x="108" y="64" class="desc" style="font-weight: bold; fill: #1e40af;">Ruhende Zeichenebene</text>
-    <text x="108" y="84" class="desc" style="fill: #1e3a8a;">Modell vor Kamera</text>
+    <text x="102" y="44" class="fml" style="fill: #1e40af;">P_canvas in [px]</text>
+    <text x="102" y="64" class="desc" style="font-weight: bold; fill: #1e40af;">Ruhende Zeichenebene</text>
+    <text x="102" y="84" class="desc" style="fill: #1e3a8a;">Modell vor Kamera</text>
   </g>
 
   <!-- Transition 2 -> 3 (Viewport Projection) -->
@@ -86,29 +86,29 @@
     <text x="10" y="15" class="lbl" style="fill: #15803d;">3. World-Raum (Physik [m])</text>
 
     <!-- Cartesian World Axis System -->
-    <g transform="translate(16, 92)">
+    <g transform="translate(10, 92)">
       <!-- X-Axis -->
-      <line x1="0" y1="0" x2="58" y2="0" stroke="#16a34a" stroke-width="1.8" />
-      <polygon points="62,0 56,-3 56,3" fill="#16a34a" />
-      <text x="46" y="-7" class="axis" style="fill: #15803d;">+X_w</text>
+      <line x1="0" y1="0" x2="68" y2="0" stroke="#16a34a" stroke-width="1.8" />
+      <polygon points="72,0 66,-3 66,3" fill="#16a34a" />
+      <text x="50" y="-8" class="axis" style="fill: #15803d;">+X_w</text>
 
       <!-- Y-Axis (UPWARDS!) -->
       <line x1="0" y1="0" x2="0" y2="-62" stroke="#16a34a" stroke-width="1.8" />
       <polygon points="0,-66 -3,-59 3,-59" fill="#16a34a" />
-      <text x="5" y="-53" class="axis" style="fill: #15803d;">+Y_w</text>
+      <text x="5" y="-60" class="axis" style="fill: #15803d;">+Y_w</text>
 
       <!-- Physical Truss in World -->
       <polygon points="8,0 48,0 28,-34" fill="none" stroke="#15803d" stroke-width="1.5" />
       <circle cx="8" cy="0" r="2.5" fill="#166534" />
       <circle cx="48" cy="0" r="2.5" fill="#166534" />
       <circle cx="28" cy="-34" r="3.5" fill="#dc2626" />
-      <text x="36" y="-31" class="fml" style="font-size: 11.5px; fill: #15803d; text-anchor: start;">P_world</text>
+      <text x="32" y="-42" class="fml" style="font-size: 11.5px; fill: #15803d; text-anchor: middle;">P_world</text>
     </g>
 
     <!-- Text description right -->
-    <text x="108" y="42" class="fml" style="fill: #15803d;">(x_w, y_w) in [m]</text>
-    <text x="108" y="62" class="desc" style="font-weight: bold; fill: #166534;">Ingenieur-System [m]</text>
-    <text x="108" y="82" class="desc" style="fill: #14532d;">+Y zeigt nach OBEN</text>
-    <text x="108" y="100" class="desc" style="font-size: 11.5px; fill: #15803d;">Physikalischer Ursprung</text>
+    <text x="104" y="42" class="fml" style="fill: #15803d;">(x_w, y_w) in [m]</text>
+    <text x="104" y="62" class="desc" style="font-weight: bold; fill: #166534;">Ingenieur-System [m]</text>
+    <text x="104" y="82" class="desc" style="fill: #14532d;">+Y zeigt nach OBEN</text>
+    <text x="104" y="100" class="desc" style="font-size: 11.5px; fill: #15803d;">Physikalischer Ursprung</text>
   </g>
 </svg>

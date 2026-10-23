@@ -41,5 +41,5 @@
   <rect x="15" y="322" width="240" height="84" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
   <text x="135" y="344" class="lbl" style="fill: #1d4ed8;">Architektur-Vorteil</text>
   <text x="135" y="366" class="desc" style="fill: #1e40af;">Entkopplung von Geometrie &amp; Kamera</text>
-  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #1e3a8a;">0 B Allokationen im Navigationstakt!</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #1e3a8a;">0 B Allokation im Zoom-Loop!</text>
 </svg>

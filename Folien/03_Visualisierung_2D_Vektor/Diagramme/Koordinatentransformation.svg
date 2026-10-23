@@ -249,17 +249,17 @@
     <line x1="225" y1="75" x2="225" y2="150" stroke="#EF4444" stroke-width="1.2" stroke-dasharray="3,3" />
 
     <!-- Label für P' (Shielded) -->
-    <g transform="translate(240, 155)">
-      <rect x="0" y="0" width="180" height="42" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
-      <text x="90" y="16" font-size="12.5" font-weight="700" fill="#DC2626" text-anchor="middle">Transformiert P' (x_s, y_s)</text>
-      <text x="90" y="32" font-size="12" fill="#7F1D1D" text-anchor="middle">x_s = x_off + (x_w - X_min) · s</text>
+    <g transform="translate(235, 155)">
+      <rect x="0" y="0" width="190" height="42" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+      <text x="95" y="16" font-size="12.5" font-weight="700" fill="#DC2626" text-anchor="middle">Transformiert P' (x_s, y_s)</text>
+      <text x="95" y="32" font-size="12" fill="#7F1D1D" text-anchor="middle">x_s = x_off + (x_w - X_min) · s</text>
     </g>
     
     <!-- Y-Invertierung Hinweis Box (Shielded) -->
-    <g transform="translate(240, 205)">
-      <rect x="0" y="0" width="180" height="42" rx="4" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1" />
-      <text x="90" y="16" font-size="12.5" font-weight="700" fill="#B45309" text-anchor="middle">Y-Invertierung:</text>
-      <text x="90" y="32" font-size="12" font-weight="700" fill="#B45309" text-anchor="middle">y_s = y_off + (Y_max - y_w) · s</text>
+    <g transform="translate(235, 205)">
+      <rect x="0" y="0" width="190" height="42" rx="4" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1" />
+      <text x="95" y="16" font-size="12.5" font-weight="700" fill="#B45309" text-anchor="middle">Y-Invertierung:</text>
+      <text x="95" y="32" font-size="12" font-weight="700" fill="#B45309" text-anchor="middle">y_s = y_off + (Y_max - y_w) · s</text>
     </g>
 
     <!-- Info-Box Unten Bildschirm -->

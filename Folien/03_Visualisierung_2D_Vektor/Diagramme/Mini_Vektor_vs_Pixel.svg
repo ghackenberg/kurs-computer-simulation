@@ -56,5 +56,5 @@
   <!-- Summary Footer -->
   <rect x="15" y="348" width="240" height="58" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
   <text x="135" y="370" class="lbl" style="fill: #1d4ed8;">Ingenieur-Fazit</text>
-  <text x="135" y="392" class="desc" style="font-weight: bold; fill: #1e3a8a;">CAD &amp; Fachwerke brauchen Vektoren</text>
+  <text x="135" y="392" class="desc" style="font-weight: bold; fill: #1e3a8a;">Fachwerke erfordern Vektoren</text>
 </svg>
