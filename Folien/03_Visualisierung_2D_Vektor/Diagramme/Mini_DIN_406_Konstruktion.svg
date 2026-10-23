@@ -3,59 +3,87 @@
     <style>
       .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
       .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
-      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
-      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; fill: #334155; }
-      .fml { font-family: 'Consolas', monospace; font-size: 12.5px; fill: #0369a1; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; }
+      .fml { font-family: 'Consolas', monospace; font-size: 11.5px; fill: #0369a1; }
+      .dim { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; fill: #0284c7; }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; text-anchor: middle; }
     </style>
   </defs>
 
+  <!-- Frame -->
   <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="135" y="24" class="hdr">DIN 406 Bemaßungskette</text>
-  <text x="135" y="42" class="sub">Geometrische 5-Schritt-Konstruktion</text>
+  <text x="135" y="24" class="hdr">DIN 406 Maßkette</text>
+  <text x="135" y="42" class="sub">Geometrische Parameter &amp; Konstruktion</text>
 
   <!-- Visualisierung Bemaßung -->
-  <g transform="translate(15, 54)">
-    <rect width="240" height="175" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-    
-    <!-- Bauteil / Stab -->
-    <line x1="40" y1="40" x2="200" y2="40" stroke="#475569" stroke-width="5" stroke-linecap="round" />
-    <circle cx="40" cy="40" r="6" fill="#004B96" />
-    <circle cx="200" cy="40" r="6" fill="#004B96" />
-    <text x="40" y="26" class="lbl" style="fill: #004B96;">P₁</text>
-    <text x="200" y="26" class="lbl" style="fill: #004B96;">P₂</text>
+  <g transform="translate(15, 52)">
+    <rect width="240" height="206" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.2" />
 
-    <!-- Maßhilfslinien -->
-    <!-- Links -->
-    <line x1="40" y1="48" x2="40" y2="135" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="3,2" />
+    <!-- Vertikale Y-Achse als Konstruktions-Leitlinie (rechts) -->
+    <!-- y_1 Ebene (Bauteilknoten) -->
+    <line x1="20" y1="38" x2="225" y2="38" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
+    <rect x="202" y="28" width="30" height="16" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1" />
+    <text x="217" y="40" class="tag" style="fill: #475569; font-size: 11.5px;">y₁</text>
+
+    <!-- y_dim Ebene (Maßlinie) -->
+    <line x1="20" y1="126" x2="225" y2="126" stroke="#bae6fd" stroke-width="1.2" stroke-dasharray="3,2" />
+    <rect x="194" y="117" width="42" height="18" rx="3" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1" />
+    <text x="215" y="130" class="tag" style="fill: #0369a1; font-size: 11.5px;">y_dim</text>
+
+    <!-- Bauteil / Stab zwischen P1 und P2 -->
+    <line x1="55" y1="38" x2="185" y2="38" stroke="#334155" stroke-width="5" stroke-linecap="round" />
+    <circle cx="55" cy="38" r="5" fill="#004B96" />
+    <circle cx="185" cy="38" r="5" fill="#004B96" />
+
+    <!-- Knoten-Labels -->
+    <rect x="30" y="14" width="50" height="18" rx="3" fill="#eff6ff" stroke="#93c5fd" stroke-width="1" />
+    <text x="55" y="27" class="tag" style="fill: #1e40af;">P₁(x₁,y₁)</text>
+
+    <rect x="160" y="14" width="50" height="18" rx="3" fill="#eff6ff" stroke="#93c5fd" stroke-width="1" />
+    <text x="185" y="27" class="tag" style="fill: #1e40af;">P₂(x₂,y₂)</text>
+
+    <!-- Maßhilfslinien (mit Gap und Überstand) -->
+    <!-- Links: von y=46 (Gap 8) bis y=142 (Überstand 16) -->
+    <line x1="55" y1="46" x2="55" y2="144" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3,2" />
     <!-- Rechts -->
-    <line x1="200" y1="48" x2="200" y2="135" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="3,2" />
+    <line x1="185" y1="46" x2="185" y2="144" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3,2" />
 
-    <!-- Maßlinie -->
-    <line x1="40" y1="120" x2="200" y2="120" stroke="#0284c7" stroke-width="2" />
-    
-    <!-- Pfeilspitzen (innen nach außen zeigend) -->
-    <polygon points="40,120 54,115 54,125" fill="#0284c7" />
-    <polygon points="200,120 186,115 186,125" fill="#0284c7" />
+    <!-- Kennzeichnung Δy_gap links -->
+    <line x1="45" y1="38" x2="45" y2="46" stroke="#e11d48" stroke-width="1.5" />
+    <rect x="6" y="44" width="46" height="18" rx="3" fill="#ffe4e6" stroke="#fda4af" stroke-width="1" />
+    <text x="29" y="57" class="tag" style="fill: #be123c; font-size: 11.5px;">Δy_gap</text>
 
-    <!-- Maßzahl (nach DIN 406 oberhalb der Maßlinie) -->
-    <rect x="95" y="96" width="50" height="18" fill="#ffffff" stroke="#bae6fd" rx="3" />
-    <text x="120" y="110" class="lbl" style="fill: #0369a1;">4.00 m</text>
+    <!-- Horizontale Maßlinie auf y_dim -->
+    <line x1="55" y1="126" x2="185" y2="126" stroke="#0284c7" stroke-width="2" />
+    <!-- Maßpfeile -->
+    <polygon points="55,126 69,122 69,130" fill="#0284c7" />
+    <polygon points="185,126 171,122 171,130" fill="#0284c7" />
 
-    <!-- Beschriftungen der Zonen (rechts der Maßhilfslinie) -->
-    <text x="46" y="58" class="desc" style="font-size: 11.5px; fill: #64748b;">Gap 4px</text>
-    <text x="46" y="142" class="desc" style="font-size: 11.5px; fill: #64748b;">Überstand 8px</text>
+    <!-- Kennzeichnung Δy_over links -->
+    <line x1="45" y1="126" x2="45" y2="144" stroke="#d97706" stroke-width="1.5" />
+    <rect x="4" y="146" width="50" height="18" rx="3" fill="#fef3c7" stroke="#fcd34d" stroke-width="1" />
+    <text x="29" y="159" class="tag" style="fill: #b45309; font-size: 11.5px;">Δy_over</text>
+
+    <!-- Maßzahl zentriert bei x_mid -->
+    <rect x="94" y="103" width="52" height="18" rx="3" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" />
+    <text x="120" y="116" class="tag" style="fill: #0369a1;">4.00 m</text>
+
+    <!-- Marker für x_mid -->
+    <rect x="94" y="132" width="52" height="18" rx="3" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1" />
+    <text x="120" y="145" class="tag" style="fill: #0369a1; font-size: 11.5px;">x_mid</text>
   </g>
 
-  <!-- Konstruktionsschritte Legende -->
-  <g transform="translate(15, 238)">
-    <rect width="240" height="168" rx="6" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.5" />
-    <text x="120" y="22" class="lbl" style="fill: #0369a1;">Die 5 Konstruktionsschritte</text>
-    <line x1="15" y1="32" x2="225" y2="32" stroke="#bae6fd" stroke-width="1" />
+  <!-- Parameter Legende -->
+  <g transform="translate(15, 268)">
+    <rect width="240" height="140" rx="6" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.5" />
+    <text x="120" y="18" class="lbl" style="fill: #0369a1;">Konstruktions-Variablen</text>
+    <line x1="12" y1="26" x2="228" y2="26" stroke="#bae6fd" stroke-width="1" />
 
-    <text x="25" y="52" class="desc"><b>1. Referenz:</b> Knoten P₁, P₂ erfassen</text>
-    <text x="25" y="76" class="desc"><b>2. Hilfslinien:</b> Von P_i mit Gap 4 px</text>
-    <text x="25" y="100" class="desc"><b>3. Überstand:</b> 8 px über Maßlinie</text>
-    <text x="25" y="124" class="desc"><b>4. Maßlinie:</b> Zwischen Hilfslinien</text>
-    <text x="25" y="148" class="desc"><b>5. Pfeile &amp; Text:</b> Spitzen 1:3 &amp; Zahl</text>
+    <text x="16" y="44" class="desc">• <b>P₁, P₂:</b> Bauteilknoten (x₁, y₁), (x₂, y₂)</text>
+    <text x="16" y="64" class="desc">• <b>y_dim:</b> Y-Höhe der Maßlinie (yScreen)</text>
+    <text x="16" y="84" class="desc">• <b>Δy_gap = 4 px:</b> Abstand zum Bauteil</text>
+    <text x="16" y="104" class="desc">• <b>Δy_over = 8 px:</b> Überstand Hilfslinie</text>
+    <text x="16" y="124" class="desc">• <b>x_mid = (x₁ + x₂) / 2:</b> Textposition</text>
   </g>
 </svg>

@@ -477,4 +477,13 @@ if (require.main === module) {
   process.exit(totalIssues > 0 ? 1 : 0);
 }
 
-module.exports = { auditChapterVariables };
+module.exports = {
+  auditChapterVariables,
+  extractSlideTokens,
+  extractSvgVariables,
+  extractCodeVariables,
+  matchesAnyAlias,
+  STOP_WORDS,
+  CANONICAL_ALIASES,
+  normalizeUnicode
+};

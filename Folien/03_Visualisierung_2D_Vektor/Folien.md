@@ -773,10 +773,10 @@ In industriellen CAD-Viewern werden Abmessungen normgerecht nach **DIN 406** dar
 Zerlegung der Maßkette in **5 Konstruktionsschritte**:
 
 1. **Referenzpunkte:** Bauteilknoten $P_1(x_1, y_1)$ und $P_2(x_2, y_2)$ erfassen.
-2. **Maßhilfslinien:** Orthogonal von jedem Bezugspunkt $P_i$ ($P_1, P_2$) zu $y_{\text{dim}}$ führen.
+2. **Maßhilfslinien:** Orthogonal von $P_1, P_2$ zu $y_{\text{dim}}$ (`yScreen`) führen.
    - Gap ($\Delta y_{\text{gap}} = 4\,\mathrm{px}$) und Überstand ($\Delta y_{\text{over}} = 8\,\mathrm{px}$).
-3. **Maßlinie:** Verbindungsstrecke auf $y_{\text{dim}}$ zwischen Hilfslinien.
-4. **Maßpfeile:** Schlanke Spitzen ($12\,\mathrm{px}$, $15^\circ$) an Hilfslinien.
+3. **Maßlinie:** Horizontale Verbindungsstrecke auf Höhe $y_{\text{dim}}$.
+4. **Maßpfeile:** Schlanke Spitzen an den Enden der Maßlinie.
 5. **Maßzahl:** Zentrierter Text bei $x_{\text{mid}} = \frac{x_1 + x_2}{2}$ über Maßlinie.
 
 </div>
@@ -795,20 +795,26 @@ Zerlegung der Maßkette in **5 Konstruktionsschritte**:
 public static void AddHorizontalDimensionLine(Canvas canvas, Point p1, Point p2, 
                                               double yScreen, string text, Brush stroke)
 {
-    // 1. Maßhilfslinien mit 8 px Überstand
-    canvas.Children.Add(new Line { X1 = p1.X, Y1 = p1.Y + 4, X2 = p1.X, Y2 = yScreen + 8, Stroke = stroke });
-    canvas.Children.Add(new Line { X1 = p2.X, Y1 = p2.Y + 4, X2 = p2.X, Y2 = yScreen + 8, Stroke = stroke });
+    const double yGap = 4;   // Δy_gap: Abstand zum Bauteil
+    const double yOver = 8;  // Δy_over: Überstand über yScreen (y_dim)
 
-    // 2. Maßlinie
+    // 1. Maßhilfslinien von (p.Y + yGap) bis (yScreen + yOver)
+    canvas.Children.Add(new Line { X1 = p1.X, Y1 = p1.Y + yGap, X2 = p1.X, Y2 = yScreen + yOver, Stroke = stroke });
+    canvas.Children.Add(new Line { X1 = p2.X, Y1 = p2.Y + yGap, X2 = p2.X, Y2 = yScreen + yOver, Stroke = stroke });
+
+    // 2. Maßlinie auf yScreen (y_dim)
     canvas.Children.Add(new Line { X1 = p1.X, Y1 = yScreen, X2 = p2.X, Y2 = yScreen, Stroke = stroke });
 
-    // 3. Maßpfeile (links und rechts nach außen zeigend)
-    canvas.Children.Add(CreateArrowHead(p1, new Vector(1, 0), stroke));
-    canvas.Children.Add(CreateArrowHead(p2, new Vector(-1, 0), stroke));
+    // 3. Maßpfeile auf Höhe der Maßlinie
+    Point dim1 = new Point(p1.X, yScreen);
+    Point dim2 = new Point(p2.X, yScreen);
+    canvas.Children.Add(CreateArrowHead(dim1, new Vector(1, 0), stroke));
+    canvas.Children.Add(CreateArrowHead(dim2, new Vector(-1, 0), stroke));
 
-    // 4. Maßzahl zentriert platzieren
+    // 4. Maßzahl zentriert bei x_mid = (p1.X + p2.X) / 2
+    double xMid = (p1.X + p2.X) / 2.0;
     var label = new TextBlock { Text = text, Foreground = stroke, FontSize = 11 };
-    Canvas.SetLeft(label, (p1.X + p2.X) / 2.0 - 20);
+    Canvas.SetLeft(label, xMid - 20);
     Canvas.SetTop(label, yScreen - 16);
     canvas.Children.Add(label);
 }
