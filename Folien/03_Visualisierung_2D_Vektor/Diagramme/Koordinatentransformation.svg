@@ -66,8 +66,8 @@
     <path d="M 0 10 Q 0 0 10 0 L 455 0 Q 465 0 465 10 L 465 48 L 0 48 Z" fill="#E2E8F0" />
     <circle cx="24" cy="24" r="12" fill="#004B96" />
     <text x="24" y="29" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
-    <text class="title" x="48" y="24">Weltkoordinatensystem (Physik)</text>
-    <text class="subtitle" x="48" y="40">Kartesisch [m] • Y zeigt NACH OBEN</text>
+    <text class="title" x="48" y="22">Weltkoordinatensystem (Physik)</text>
+    <text class="subtitle" x="48" y="42">Kartesisch [m] • Y zeigt NACH OBEN</text>
 
     <!-- Grid -->
     <line class="grid-line" x1="65" y1="350" x2="370" y2="350" />
@@ -134,9 +134,9 @@
     
     <!-- Label für P -->
     <g transform="translate(250, 155)">
-      <rect x="0" y="0" width="155" height="36" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+      <rect x="0" y="0" width="155" height="40" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
       <text x="77.5" y="15" font-size="13" font-weight="700" fill="#DC2626" text-anchor="middle">Punkt P (x_w, y_w)</text>
-      <text x="77.5" y="29" font-size="12.5" fill="#7F1D1D" text-anchor="middle">z.B. (3.0 m, 4.0 m)</text>
+      <text x="77.5" y="32" font-size="12.5" fill="#7F1D1D" text-anchor="middle">z.B. (3.0 m, 4.0 m)</text>
     </g>
 
     <!-- BBox Referenzpunkte (mit Shield) -->
@@ -181,8 +181,8 @@
     <path d="M 0 10 Q 0 0 10 0 L 455 0 Q 465 0 465 10 L 465 48 L 0 48 Z" fill="#E2E8F0" />
     <circle cx="24" cy="24" r="12" fill="#004B96" />
     <text x="24" y="29" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
-    <text class="title" x="48" y="24">Bildschirm (WPF Canvas)</text>
-    <text class="subtitle" x="48" y="40">Pixel [px] • Y zeigt NACH UNTEN</text>
+    <text class="title" x="48" y="22">Bildschirm (WPF Canvas)</text>
+    <text class="subtitle" x="48" y="42">Pixel [px] • Y zeigt NACH UNTEN</text>
 
     <!-- Canvas Fläche -->
     <rect class="canvas-bg" x="40" y="75" width="385" height="315" rx="4" />

@@ -167,7 +167,14 @@ async function auditSvgFile(browser, svgPath, options = {}) {
 
         const xOverlap = Math.max(0, Math.min(a.rect.right, b.rect.right) - Math.max(a.rect.left, b.rect.left));
         const yOverlap = Math.max(0, Math.min(a.rect.bottom, b.rect.bottom) - Math.max(a.rect.top, b.rect.top));
-        if (xOverlap >= 8 && yOverlap >= 6) {
+
+        // Strict Text-Text Collision Gate:
+        // 1. Line-height collision: Two horizontally overlapping lines (>= 15px) touching vertically (>= 1.5px)
+        // 2. Corner/box collision: Any text bounding boxes colliding by >= 4px in both dimensions
+        const isLineCollision = xOverlap >= 15 && yOverlap >= 1.5;
+        const isBoxCollision = xOverlap >= 4 && yOverlap >= 3;
+
+        if (isLineCollision || isBoxCollision) {
           issues.push({
             type: 'TEXT_TEXT_COLLISION',
             message: `"${a.text.slice(0, 25)}" collides with "${b.text.slice(0, 25)}" (${Math.round(xOverlap)}x${Math.round(yOverlap)}px)`

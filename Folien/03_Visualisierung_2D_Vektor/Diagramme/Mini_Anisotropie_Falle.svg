@@ -26,8 +26,8 @@
       <circle cx="190" cy="65" r="3" fill="#991b1b" />
     </g>
 
-    <text x="120" y="112" class="desc" style="font-weight: bold; fill: #991b1b;">Winkel &amp; Maße verfälscht!</text>
-    <text x="120" y="127" class="desc" style="fill: #7f1d1d;">Kreis wird zur Ellipse</text>
+    <text x="120" y="110" class="desc" style="font-weight: bold; fill: #991b1b;">Winkel &amp; Maße verfälscht!</text>
+    <text x="120" y="128" class="desc" style="fill: #7f1d1d;">Kreis wird zur Ellipse</text>
   </g>
 
   <!-- Box 2: Isotrop -->
@@ -43,8 +43,8 @@
       <circle cx="190" cy="70" r="3" fill="#15803d" />
     </g>
 
-    <text x="120" y="112" class="desc" style="font-weight: bold; fill: #166534;">100 % form- &amp; winkeltreu</text>
-    <text x="120" y="127" class="desc" style="fill: #14532d;">Physikalisch korrekt</text>
+    <text x="120" y="110" class="desc" style="font-weight: bold; fill: #166534;">100 % form- &amp; winkeltreu</text>
+    <text x="120" y="128" class="desc" style="fill: #14532d;">Physikalisch korrekt</text>
   </g>
 
   <!-- Footer -->
