@@ -1198,17 +1198,15 @@ DrawTruss();
 <div class="columns top">
 <div class="two">
 
-Beim interaktiven Arbeiten mit Simulationsmodellen existieren drei grundlegend verschiedene Bezugssysteme:
+Beim interaktiven Arbeiten existieren drei verschiedene Bezugssysteme:
 
-1. **Screen-Raum (Monitor / Viewport $[\mathrm{px}]$):**
-   - Diskrete Pixel des Fensters; Ursprung $(0,0)$ starr oben links.
-   - Jeder Mausklick liefert Screen-Pixel $\vec{P}_{\text{screen}} = (x_p, y_p)$.
-2. **Canvas-Raum (Virtuelle Arbeitsfläche $[\mathrm{px}]$):**
-   - Ruhende Zeichenebene $\vec{P}_{\text{canvas}} = \vec{P}_{\text{unzoom}} = (x_u, y_u)$.
-   - GPU-Kameramatrix $\mathbf{M}$ verschiebt und skaliert diese Fläche dynamisch.
-3. **World-Raum (Physikalisches Modell $[\mathrm{m}]$):**
-   - Ingenieur-Koordinaten $\vec{P}_{\text{world}} = (x_w, y_w)$; **$+Y$ nach oben!**
-   - Rückrechnung via $x_w = X_{\min} + (x_u - x_{\text{off}})/s$ und $y_w = Y_{\max} - (y_u - y_{\text{off}})/s$.
+- **Screen-Raum (Monitor / Viewport $[\mathrm{px}]$):**
+  Diskrete Pixel des Anwendungsfensters; Ursprung $(0,0)$ starr oben links, $+Y$ nach unten. Mausklick liefert $\vec{P}_{\text{screen}} = (x_p, y_p)$.
+- **Canvas-Raum (Ruhende Zeichenebene $[\mathrm{px}]$):**
+  Zeichenfläche für WPF-Shapes $\vec{P}_{\text{canvas}}$, noch vor jeder Kamerabewegung. GPU-Kameramatrix $\mathbf{M}$ verschiebt und skaliert diese Ebene dynamisch.
+- **World-Raum (Physikalisches Modell $[\mathrm{m}]$):**
+  Reales Ingenieur-Koordinatensystem $(+X_w, +Y_w)$ mit Modellknoten $\vec{P}_{\text{world}} = (x_w, y_w)$ und $+Y$ nach oben.
+  Vorwärts-Pipeline: World $\xrightarrow{\text{Viewport: } s, x_{\text{off}}, y_{\text{off}}} \text{Canvas} \xrightarrow{\mathbf{M}} \text{Screen}$.
 
 </div>
 <div class="one">
@@ -1220,21 +1218,44 @@ Beim interaktiven Arbeiten mit Simulationsmodellen existieren drei grundlegend v
 
 ---
 
-### Das Unzoom-Prinzip & Welt-Rückrechnung
+### Das Interaktions-Problem & Kamera-Unzoom
 
 <div class="columns top">
 <div class="two">
 
-Um einen Klickpunkt $\vec{P}_{\text{screen}}$ einem Modellknoten zuzuordnen, müssen zwei Transformationen invertiert werden:
+Klickt der Nutzer ins Fenster, entsteht ein geometrischer Versatz:
 
-- **1. Kamera-Unzoom (`Matrix.Invert()`):**
-  - Hebt Pan-Offset und Zoomfaktor der GPU-Kamera auf:
-    $$\vec{P}_{\text{unzoom}} = (x_u, y_u) = \mathbf{M}^{-1} \cdot \vec{P}_{\text{screen}} \quad [\mathrm{px}]$$
-  - Liefert den Punkt auf der ruhenden Zeichenebene.
-- **2. Viewport-Invertierung (`Transform2D`):**
-  - Rechnet Canvas-Pixel $(x_u, y_u)$ in physikalische Meter um:
-    $$x_w = X_{\min} + \frac{x_u - x_{\text{off}}}{s}, \quad y_w = Y_{\max} - \frac{y_u - y_{\text{off}}}{s} \quad [\mathrm{m}]$$
-  - Die $Y$-Achse wird dabei wieder nach oben gespiegelt.
+- **Das Problem:** Der Mausklick liefert Pixelkoordinaten $\vec{P}_{\text{screen}} = (x_p, y_p)$ bezogen auf das Fenster.
+- Die WPF-Shapes liegen jedoch starr auf der ruhenden Zeichenebene (Canvas).
+- Wurde die Szene per Pan und Zoom mit Kameramatrix $\mathbf{M}$ verschoben, trifft der Klick nicht die Shape-Geometrie!
+- **Schicht 1 (Kamera-Unzoom):**
+  Multiplikation mit $\mathbf{M}^{-1}$ hebt Verschiebung und Skalierung auf:
+  $$\vec{P}_{\text{unzoom}} = (x_u, y_u) = \mathbf{M}^{-1} \cdot \vec{P}_{\text{screen}} \quad [\mathrm{px}]$$
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Kamera_Unzoom.svg)
+
+</div>
+</div>
+
+---
+
+### Analytische Viewport-Inversion (Canvas → World)
+
+<div class="columns top">
+<div class="two">
+
+Vom entzerrten Canvas-Punkt $\vec{P}_{\text{unzoom}} = (x_u, y_u)$ gelangen wir in physikalische Ingenieur-Koordinaten $\vec{P}_{\text{world}} = (x_w, y_w)$:
+
+- **1. Offset-Verschiebung subtrahieren:**
+  - Zieht die Ränder $x_{\text{off}}$ und $y_{\text{off}}$ ab:
+    $$\Delta x = x_u - x_{\text{off}}, \quad \Delta y = y_u - y_{\text{off}} \quad [\mathrm{px}]$$
+- **2. Maßstabs-Division ($1/s$) & Achsenspiegelung:**
+  - Umrechnung von $[\mathrm{px}]$ in $[\mathrm{m}]$ durch Division mit $s$.
+  - Die physikalische $Y$-Achse $+Y_w$ zeigt nach oben (gespiegelt von $Y_{\max}$):
+    $$x_w = X_{\min} + \frac{x_u - x_{\text{off}}}{s} \quad [\mathrm{m}], \quad y_w = Y_{\max} - \frac{y_u - y_{\text{off}}}{s} \quad [\mathrm{m}]$$
 
 > **Dimensionsreinheit:** $[\mathrm{m}] + ([\mathrm{px}] - [\mathrm{px}]) / [\mathrm{px/m}] = [\mathrm{m}]$.
 

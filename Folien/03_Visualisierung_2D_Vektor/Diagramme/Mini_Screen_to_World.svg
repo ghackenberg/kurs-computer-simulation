@@ -12,95 +12,91 @@
 
   <!-- Background Card -->
   <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="135" y="20" class="hdr">Geometrisches Unzoom</text>
-  <text x="135" y="38" class="sub">Vom Klick zur Welt-Koordinate</text>
+  <text x="135" y="19" class="hdr">Viewport⁻¹ (Schicht 2)</text>
+  <text x="135" y="38" class="sub">Vom Canvas-Pixel zum Welt-Modell</text>
 
-  <!-- Schritt 1: Kamera-Unzoom (M^-1) -->
+  <!-- 1. Canvas Space (Ruhende Zeichenebene) -->
   <g transform="translate(15, 48)">
-    <rect width="240" height="154" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <rect width="240" height="136" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
     <rect x="0" y="0" width="240" height="20" rx="6" fill="#dbeafe" />
-    <text x="10" y="15" class="lbl" style="fill: #1e40af;">Schritt 1: Kamera-Unzoom (M⁻¹)</text>
+    <text x="10" y="15" class="lbl" style="fill: #1e40af;">1. Ruhender Canvas (Pixel [px])</text>
 
-    <!-- Subpanel A: Gezoomter Viewport (Screen) -->
-    <g transform="translate(10, 26)">
-      <rect width="90" height="72" rx="4" fill="#ffffff" stroke="#fca5a5" stroke-width="1" />
-      <text x="45" y="14" class="lbl" style="font-size: 11.5px; fill: #991b1b; text-anchor: middle;">P_screen</text>
-      <!-- Zoomed / shifted truss (larger, cropped) -->
-      <polygon points="5,54 75,54 40,24" fill="none" stroke="#ef4444" stroke-width="1.8" />
-      <circle cx="40" cy="24" r="3" fill="#dc2626" />
-      <!-- Cursor -->
-      <path d="M 40,24 L 46,34 L 43,35 L 46,41 L 44,42 L 41,36 L 37,38 Z" fill="#0f172a" stroke="#ffffff" stroke-width="0.6" />
-      <text x="45" y="68" class="desc" style="font-size: 11.5px; fill: #b91c1c; text-anchor: middle;">(x_p, y_p)</text>
+    <!-- Virtual Canvas Sheet -->
+    <rect x="10" y="26" width="92" height="98" rx="3" fill="#ffffff" stroke="#3b82f6" stroke-width="1.2" stroke-dasharray="3,2" />
+    
+    <!-- Origin (0,0) -->
+    <circle cx="10" cy="26" r="2.5" fill="#1e40af" />
+    <text x="16" y="38" class="desc" style="font-size: 11.5px; fill: #1e40af; font-weight: bold;">(0,0)</text>
+
+    <!-- Offsets indicators -->
+    <line x1="10" y1="52" x2="28" y2="52" stroke="#d97706" stroke-width="1.2" />
+    <text x="14" y="66" class="fml" style="font-size: 11.5px; fill: #d97706;">x_off</text>
+
+    <!-- Truss on Canvas -->
+    <polygon points="30,96 94,96 64,62" fill="none" stroke="#2563eb" stroke-width="1.5" />
+    <circle cx="30" cy="96" r="2.5" fill="#1d4ed8" />
+    <circle cx="94" cy="96" r="2.5" fill="#1d4ed8" />
+    <circle cx="64" cy="62" r="3" fill="#dc2626" />
+    <text x="64" y="52" class="fml" style="font-size: 11.5px; fill: #dc2626; text-anchor: middle;">P_unzoom</text>
+    <text x="58" y="118" class="desc" style="font-size: 11.5px; fill: #2563eb; text-anchor: middle;">WPF-Shapes</text>
+
+    <!-- Text description right -->
+    <g transform="translate(112, 28)">
+      <text x="0" y="16" class="fml" style="fill: #1e40af;">P_unzoom (x_u, y_u)</text>
+      <text x="0" y="38" class="desc" style="fill: #d97706;">Offset abziehen:</text>
+      <text x="0" y="56" class="fml" style="fill: #1e40af;">x_u - x_off</text>
+      <text x="0" y="74" class="fml" style="fill: #1e40af;">y_u - y_off</text>
+      <text x="0" y="94" class="desc" style="font-size: 11.5px; fill: #64748b;">+Y nach unten</text>
     </g>
-
-    <!-- Arrow M^-1 in between -->
-    <g transform="translate(103, 54)">
-      <line x1="0" y1="6" x2="18" y2="6" stroke="#1d4ed8" stroke-width="2" />
-      <polygon points="22,6 16,2 16,10" fill="#1d4ed8" />
-      <text x="11" y="-3" class="lbl" style="font-size: 11.5px; fill: #1e40af; text-anchor: middle;">M⁻¹</text>
-    </g>
-
-    <!-- Subpanel B: Unzoomed Canvas -->
-    <g transform="translate(132, 26)">
-      <rect width="98" height="72" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="1" stroke-dasharray="3,2" />
-      <text x="49" y="14" class="lbl" style="font-size: 11.5px; fill: #1e40af; text-anchor: middle;">P_unzoom</text>
-      <!-- Standard resting truss -->
-      <polygon points="14,54 84,54 49,26" fill="none" stroke="#2563eb" stroke-width="1.5" />
-      <circle cx="14" cy="54" r="2.5" fill="#1d4ed8" />
-      <circle cx="84" cy="54" r="2.5" fill="#1d4ed8" />
-      <circle cx="49" cy="26" r="3" fill="#dc2626" />
-      <text x="49" y="68" class="desc" style="font-size: 11.5px; fill: #1e40af; text-anchor: middle;">(x_u, y_u)</text>
-    </g>
-
-    <!-- Formula pill at bottom of Box 1 (spacious 18px line spacing) -->
-    <rect x="10" y="106" width="220" height="40" rx="4" fill="#ffffff" stroke="#bfdbfe" stroke-width="1" />
-    <text x="120" y="121" class="fml" style="fill: #1e40af; text-anchor: middle;">P_unzoom = M⁻¹ · P_screen [px]</text>
-    <text x="120" y="139" class="desc" style="font-size: 11.5px; fill: #475569; text-anchor: middle;">Hebt Pan-Offset &amp; Zoomfaktor auf</text>
   </g>
 
-  <!-- Schritt 2: Viewport-Invertierung (Transform2D) -->
-  <g transform="translate(15, 208)">
-    <rect width="240" height="158" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
-    <rect x="0" y="0" width="240" height="20" rx="6" fill="#dcfce7" />
-    <text x="10" y="15" class="lbl" style="fill: #15803d;">Schritt 2: Viewport⁻¹ (Meter-Modell)</text>
+  <!-- Transition Arrow Viewport^-1 -->
+  <g transform="translate(15, 187)">
+    <line x1="38" y1="0" x2="38" y2="24" stroke="#16a34a" stroke-width="2" />
+    <polygon points="38,28 34,21 42,21" fill="#16a34a" />
+    <rect x="48" y="2" width="194" height="22" rx="4" fill="#ffffff" stroke="#86efac" stroke-width="1" />
+    <text x="145" y="17" class="fml" style="font-size: 11.5px; fill: #15803d; text-anchor: middle;">Skalierung 1/s &amp; Y-Spiegelung</text>
+  </g>
 
-    <!-- Left: Geometric mapping illustration -->
-    <g transform="translate(18, 92)">
-      <!-- World Coordinate Frame -->
-      <line x1="0" y1="0" x2="68" y2="0" stroke="#16a34a" stroke-width="1.5" />
-      <polygon points="72,0 66,-3 66,3" fill="#16a34a" />
-      <text x="56" y="-7" class="axis" style="fill: #15803d;">+X_w</text>
+  <!-- 2. World Space (Physikalischer Modellraum) -->
+  <g transform="translate(15, 218)">
+    <rect width="240" height="136" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <rect x="0" y="0" width="240" height="20" rx="6" fill="#dcfce7" />
+    <text x="10" y="15" class="lbl" style="fill: #15803d;">2. World-Raum (Meter [m])</text>
+
+    <!-- World Axis Frame (Y UPWARDS) -->
+    <g transform="translate(18, 114)">
+      <!-- X-Axis -->
+      <line x1="0" y1="0" x2="82" y2="0" stroke="#16a34a" stroke-width="1.5" />
+      <polygon points="86,0 80,-3 80,3" fill="#16a34a" />
+      <text x="64" y="-12" class="axis" style="fill: #15803d;">+X_w</text>
 
       <!-- Y-Axis (UPWARDS!) -->
-      <line x1="0" y1="0" x2="0" y2="-62" stroke="#16a34a" stroke-width="1.5" />
-      <polygon points="0,-66 -3,-60 3,-60" fill="#16a34a" />
-      <text x="5" y="-53" class="axis" style="fill: #15803d;">+Y_w</text>
+      <line x1="0" y1="0" x2="0" y2="-76" stroke="#16a34a" stroke-width="1.5" />
+      <polygon points="0,-80 -3,-74 3,-74" fill="#16a34a" />
+      <text x="6" y="-68" class="axis" style="fill: #15803d;">+Y_w</text>
 
-      <!-- Physical Truss -->
-      <polygon points="10,0 56,0 33,-36" fill="none" stroke="#15803d" stroke-width="1.5" />
+      <!-- Truss Model in World -->
+      <polygon points="10,0 52,0 31,-42" fill="none" stroke="#15803d" stroke-width="1.5" />
       <circle cx="10" cy="0" r="2.5" fill="#166534" />
-      <circle cx="56" cy="0" r="2.5" fill="#166534" />
-      <circle cx="33" cy="-36" r="3" fill="#dc2626" />
-      <text x="40" y="-33" class="fml" style="font-size: 11.5px; fill: #15803d; text-anchor: start;">P_world</text>
+      <circle cx="52" cy="0" r="2.5" fill="#166534" />
+      <circle cx="31" cy="-42" r="3" fill="#dc2626" />
+      <text x="31" y="-50" class="fml" style="font-size: 11.5px; fill: #dc2626; text-anchor: middle;">P_world</text>
+      <text x="31" y="14" class="desc" style="font-size: 11.5px; fill: #166534; text-anchor: middle;">Physik</text>
     </g>
 
-    <!-- Right: Transformation explanation (spacious 18-20px spacing) -->
-    <g transform="translate(108, 28)">
-      <text x="0" y="14" class="desc" style="font-weight: bold; fill: #166534;">X: Translation &amp; s</text>
-      <text x="0" y="32" class="desc" style="font-size: 11.5px; fill: #15803d;">Offset x_off abziehen</text>
-
-      <text x="0" y="54" class="desc" style="font-weight: bold; fill: #b91c1c;">Y: Invertierung &amp; s</text>
-      <text x="0" y="72" class="desc" style="font-size: 11.5px; fill: #b91c1c;">Y-Spiegelung von Y_max</text>
+    <!-- Text description right -->
+    <g transform="translate(112, 28)">
+      <text x="0" y="16" class="fml" style="fill: #15803d;">P_world (x_w, y_w)</text>
+      <text x="0" y="38" class="desc" style="font-weight: bold; fill: #166534;">Ingenieur-System:</text>
+      <text x="0" y="56" class="desc" style="fill: #15803d;">X startet bei X_min</text>
+      <text x="0" y="74" class="desc" style="fill: #15803d;">Y startet bei Y_max</text>
+      <text x="0" y="94" class="desc" style="font-size: 11.5px; fill: #166534; font-weight: bold;">+Y_w zeigt nach OBEN</text>
     </g>
-
-    <!-- Formula pill bottom of Box 2 (clean 20px spacing) -->
-    <rect x="8" y="104" width="224" height="46" rx="4" fill="#ffffff" stroke="#86efac" stroke-width="1" />
-    <text x="120" y="121" class="fml" style="font-size: 11.5px; fill: #15803d; text-anchor: middle;">x_w = X_min + (x_u - x_off) / s</text>
-    <text x="120" y="141" class="fml" style="font-size: 11.5px; fill: #b91c1c; text-anchor: middle;">y_w = Y_max - (y_u - y_off) / s</text>
   </g>
 
-  <!-- Summary Footer (spacious 18px line spacing) -->
-  <rect x="15" y="372" width="240" height="38" rx="5" fill="#fef3c7" stroke="#fcd34d" stroke-width="1.2" />
-  <text x="135" y="387" class="desc" style="font-weight: bold; fill: #92400e; text-anchor: middle;">Dimensionsrein: [px] → [m]</text>
-  <text x="135" y="404" class="desc" style="font-size: 11.5px; fill: #b45309; text-anchor: middle;">Exakter physikalischer Punkt für Hit-Testing</text>
+  <!-- Formula Card (Footer) -->
+  <rect x="15" y="362" width="240" height="48" rx="5" fill="#ffffff" stroke="#86efac" stroke-width="1.2" />
+  <text x="135" y="380" class="fml" style="fill: #15803d; text-anchor: middle;">x_w = X_min + (x_u - x_off) / s</text>
+  <text x="135" y="400" class="fml" style="fill: #15803d; text-anchor: middle;">y_w = Y_max - (y_u - y_off) / s</text>
 </svg>

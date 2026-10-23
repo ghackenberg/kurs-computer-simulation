@@ -37,17 +37,17 @@
     <path d="M 56,56 L 62,66 L 59,67 L 62,73 L 60,74 L 57,68 L 53,70 Z" fill="#0f172a" stroke="#ffffff" stroke-width="0.8" />
     <text x="56" y="84" class="fml" style="font-size: 11.5px; fill: #b91c1c; text-anchor: middle;">P_screen</text>
 
-    <!-- Text description right (clean spacing & margin) -->
+    <!-- Text description right -->
     <text x="108" y="44" class="fml" style="fill: #b91c1c;">(x_p, y_p) in [px]</text>
     <text x="108" y="64" class="desc" style="font-weight: bold; fill: #991b1b;">Mausklick im Viewport</text>
     <text x="108" y="84" class="desc" style="fill: #7f1d1d;">+Y zeigt nach UNTEN</text>
   </g>
 
-  <!-- Transition 1 -> 2 (Kamera M^-1) -->
+  <!-- Transition 1 -> 2 (Kamera M) -->
   <g transform="translate(15, 150)">
     <line x1="48" y1="0" x2="48" y2="16" stroke="#475569" stroke-width="1.8" />
     <polygon points="48,20 44,13 52,13" fill="#475569" />
-    <text x="72" y="14" class="fml" style="fill: #1e40af;">P_canvas = M⁻¹ · P_screen</text>
+    <text x="72" y="14" class="fml" style="fill: #1e40af;">GPU-Kamera: M (Pan &amp; Zoom)</text>
   </g>
 
   <!-- 2. Canvas Space (WPF Canvas) -->
@@ -63,21 +63,20 @@
     <circle cx="18" cy="70" r="2.5" fill="#1d4ed8" />
     <circle cx="78" cy="70" r="2.5" fill="#1d4ed8" />
     <circle cx="48" cy="46" r="3.5" fill="#dc2626" />
-    <!-- Labels safely distanced -->
     <text x="48" y="38" class="fml" style="font-size: 11.5px; fill: #1d4ed8; text-anchor: middle;">P_canvas</text>
-    <text x="48" y="85" class="desc" style="font-size: 11.5px; fill: #2563eb; text-anchor: middle;">(x_u, y_u)</text>
+    <text x="48" y="86" class="desc" style="font-size: 11.5px; fill: #2563eb; text-anchor: middle;">WPF-Shapes</text>
 
     <!-- Text description right -->
-    <text x="108" y="44" class="fml" style="fill: #1e40af;">P_unzoom in [px]</text>
+    <text x="108" y="44" class="fml" style="fill: #1e40af;">P_canvas in [px]</text>
     <text x="108" y="64" class="desc" style="font-weight: bold; fill: #1e40af;">Ruhende Zeichenebene</text>
-    <text x="108" y="84" class="desc" style="fill: #1e3a8a;">Hebt Pan &amp; Zoom auf</text>
+    <text x="108" y="84" class="desc" style="fill: #1e3a8a;">Modell vor Kamera</text>
   </g>
 
-  <!-- Transition 2 -> 3 (Viewport Inversion) -->
+  <!-- Transition 2 -> 3 (Viewport Projection) -->
   <g transform="translate(15, 274)">
     <line x1="48" y1="0" x2="48" y2="16" stroke="#475569" stroke-width="1.8" />
     <polygon points="48,20 44,13 52,13" fill="#475569" />
-    <text x="72" y="14" class="fml" style="fill: #15803d;">Viewport⁻¹: x_off, y_off, s</text>
+    <text x="72" y="14" class="fml" style="fill: #15803d;">Viewport: s, x_off, y_off</text>
   </g>
 
   <!-- 3. World Space (Physik in Metern) -->
@@ -110,6 +109,6 @@
     <text x="108" y="42" class="fml" style="fill: #15803d;">(x_w, y_w) in [m]</text>
     <text x="108" y="62" class="desc" style="font-weight: bold; fill: #166534;">Ingenieur-System [m]</text>
     <text x="108" y="82" class="desc" style="fill: #14532d;">+Y zeigt nach OBEN</text>
-    <text x="108" y="100" class="desc" style="font-size: 11.5px; fill: #15803d;">(X_min, Y_max)</text>
+    <text x="108" y="100" class="desc" style="font-size: 11.5px; fill: #15803d;">Physikalischer Ursprung</text>
   </g>
 </svg>
