@@ -1085,9 +1085,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Mathematisches Graphenmodell für Simulationssysteme
 - Das Microsoft Automatic Graph Layout (`MSAGL`)
-- Automatische Layout-Algorithmen (Sugiyama vs. Force-Directed)
-- Algebraische Schleifen (Algebraic Loops) und DAE-Systeme
-- Tiefensuche (DFS 3-Farben) zur Zyklen-Erkennung
+- Hierarchisches Sugiyama-Layout für kausale Signalflüsse
+- Organisches Force-Directed Layout (Partikelsimulation)
+- MSAGL API: Graphaufbau, Styling & WPF-Integration
 
 ---
 
@@ -1442,87 +1442,29 @@ Vollautomatisch berechnete Netzwerktopologie eines Antriebsstrangs:
 
 ---
 
-### Was ist eine algebraische Schleife (Algebraic Loop)?
-
-<div class="columns">
-<div class="two">
-
-- **Kausale Systeme (ODE):**
-  - Rückkopplung enthält mindestens einen **Integrator** $\frac{1}{s}$ oder eine Zustandsverzögerung $z^{-1}$.
-  - Der Zustand $x(t)$ entkoppelt Ursache und Wirkung zeitlich: $dx/dt = f(x, u)$.
-- **Algebraische Schleife (DAE):**
-  - Geschlossener Signalpfad über Gain-Blöcke `k_1` und `k_2` **ohne Verzögerungsglied** (direkter Durchgriff $\mathbf{D} \ne \mathbf{0}$).
-  - Ausgang hängt sofort vom Eingang ab, der Eingang hängt sofort vom Ausgang ab:
-    $$y(t) = g(y(t), u(t))$$
-  - Erzwingt im Solver eine iterative Nullstellensuche oder divergiert!
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Algebraic_Loop_Mechanik.svg)
-
-</div>
-</div>
-
----
-
-### Hervorhebung algebraischer Schleifen in MSAGL
-
-![](./Diagramme/MSAGL_AlgebraicLoop_Highlight.svg)
-
-*Erkennung: Die rote Schleife (Sum1 ➔ Gain1 ➔ Gain2 ➔ Sum1) enthält kein speicherndes Element und muss vor Simulationsstart diagnostiziert werden.*
-
----
-
-### Zyklen-Erkennung: Tiefensuche mit 3 Farben
-
-<div class="columns">
-<div class="two">
-
-Um algebraische Schleifen automatisch im Graphen aufzudecken, nutzt man eine Tiefensuche (DFS) in $O(|V| + |E|)$:
-
-- **Die drei Markierungszustände:**
-  1. **Weiß:** Knoten (`v_4`) wurde noch nicht besucht.
-  2. **Grau:** Knoten (`v_1`, `v_2`, `v_3`) liegt auf aktivem Rekursions-Stack.
-  3. **Schwarz:** Knoten und alle Nachfolger sind vollständig abgearbeitet.
-- **Kriterium für Zyklen:**
-  - Rückwärtskante von `v_3` auf den grauen Knoten `v_1` schließt einen Kreis!
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_DFS_Zyklussuche.svg)
-
-</div>
-</div>
-
----
-
-### MSAGL API: Zyklus-Hervorhebung (Highlighting)
+### MSAGL API: Topologieaufbau & Styling
 
 ```csharp
-var graph = new Microsoft.Msagl.Drawing.Graph("Blockschaltbild");
-var eIn    = graph.AddEdge("In", "Sum1");
-var eLoop1 = graph.AddEdge("Sum1", "Gain1");
-var eLoop2 = graph.AddEdge("Gain1", "Gain2");
-var eLoop3 = graph.AddEdge("Gain2", "Sum1"); // Schleife ohne Integrator!
+var graph = new Microsoft.Msagl.Drawing.Graph("Antriebsstrang");
 
-// Kanten der algebraischen Schleife auffällig rot färben:
-var loopEdges = new[] { eLoop1, eLoop2, eLoop3 };
-foreach (var edge in loopEdges)
-{
-    edge.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
-    edge.Attr.LineWidth = 3;
-}
+// 1. Kanten definieren (Signal- und Kraftfluss)
+graph.AddEdge("CAN-Gateway", "Inverter");
+graph.AddEdge("Inverter", "Traktionsmotor");
+graph.AddEdge("Traktionsmotor", "Getriebe");
 
-// Betroffenen Summationsknoten hervorheben:
-var sumNode = graph.FindNode("Sum1");
-sumNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.MistyRose;
-sumNode.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+// 2. Visuelles Styling von Knoten und Kanten
+var invNode = graph.FindNode("Inverter");
+invNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.LightSkyBlue;
+invNode.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Box;
+
+var canEdge = graph.AddEdge("CAN-Gateway", "Fahrzeugleitrechner");
+canEdge.Attr.Color = Microsoft.Msagl.Drawing.Color.SteelBlue;
+
+// 3. Im WPF-GraphControl visualisieren
 GraphControl.Graph = graph;
 ```
 
-- Das Objekt `graph` markiert Kanten `eLoop1`, `eLoop2`, `eLoop3` und den Knoten `sumNode` rot.
+- Das Objekt `graph` definiert die Netzwerktopologie und weist `invNode` sowie `canEdge` visuelle Attribute zu.
 
 ---
 
@@ -1546,7 +1488,7 @@ GraphControl.Graph = graph;
 |---|---|---|
 | **Fokus** | Layout & Visualisierung | Interaktive Modellierung |
 | **Kantenführung** | Automatisch (Splines) | Bezier-Kurven / Pins |
-| **Zyklenanalyse** | Integriert | Modell-Logik nötig |
+| **Layout-Berechnung** | Vollautomatisch (Sugiyama/Forces) | Manuell / Interaktiv |
 | **Interaktion** | Zoom, Pan, Drag | Wire-Connecting, Edit |
 
 </div>
@@ -1575,7 +1517,7 @@ GraphControl.Graph = graph;
   - Welford-Algorithmus verhindert katastrophale Subtraktionsauslöschung und führt $\pm 3\sigma$-Toleranzbänder online nach.
 - **MSAGL:**
   - Sugiyama- und Force-Directed-Layouts ordnen komplexe Signalnetze vollautomatisch.
-  - DFS-Zyklenprüfung diagnostiziert algebraische Schleifen visuell vor Simulationsstart.
+  - Ermöglicht automatische Visualisierung, Styling und Inspektion von Topologien.
 
 </div>
 </div>
