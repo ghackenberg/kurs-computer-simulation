@@ -41,7 +41,7 @@
     <text x="58" y="118" class="desc" style="font-size: 11.5px; fill: #2563eb; text-anchor: middle;">WPF-Shapes</text>
 
     <!-- Text description right -->
-    <g transform="translate(112, 28)">
+    <g transform="translate(118, 28)">
       <text x="0" y="16" class="fml" style="fill: #1e40af;">P_unzoom (x_u, y_u)</text>
       <text x="0" y="38" class="desc" style="fill: #d97706;">Offset abziehen:</text>
       <text x="0" y="56" class="fml" style="fill: #1e40af;">x_u - x_off</text>
@@ -67,9 +67,9 @@
     <!-- World Axis Frame (Y UPWARDS) -->
     <g transform="translate(18, 114)">
       <!-- X-Axis -->
-      <line x1="0" y1="0" x2="82" y2="0" stroke="#16a34a" stroke-width="1.5" />
-      <polygon points="86,0 80,-3 80,3" fill="#16a34a" />
-      <text x="64" y="-12" class="axis" style="fill: #15803d;">+X_w</text>
+      <line x1="0" y1="0" x2="66" y2="0" stroke="#16a34a" stroke-width="1.5" />
+      <polygon points="70,0 64,-3 64,3" fill="#16a34a" />
+      <text x="50" y="-8" class="axis" style="fill: #15803d;">+X_w</text>
 
       <!-- Y-Axis (UPWARDS!) -->
       <line x1="0" y1="0" x2="0" y2="-76" stroke="#16a34a" stroke-width="1.5" />
@@ -86,7 +86,7 @@
     </g>
 
     <!-- Text description right -->
-    <g transform="translate(112, 28)">
+    <g transform="translate(118, 28)">
       <text x="0" y="16" class="fml" style="fill: #15803d;">P_world (x_w, y_w)</text>
       <text x="0" y="38" class="desc" style="font-weight: bold; fill: #166534;">Ingenieur-System:</text>
       <text x="0" y="56" class="desc" style="fill: #15803d;">X startet bei X_min</text>

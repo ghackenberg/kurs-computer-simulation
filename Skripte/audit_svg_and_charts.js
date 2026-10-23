@@ -179,6 +179,16 @@ async function auditSvgFile(browser, svgPath, options = {}) {
             type: 'TEXT_TEXT_COLLISION',
             message: `"${a.text.slice(0, 25)}" collides with "${b.text.slice(0, 25)}" (${Math.round(xOverlap)}x${Math.round(yOverlap)}px)`
           });
+        } else if (yOverlap >= 6) {
+          // 3. Proximity violation (Horizontaler Mindestabstand auf gleicher Zeile):
+          // Getrennte Textelemente auf gleicher visueller Zeile müssen mindestens 10px Mindestabstand halten
+          const horizDist = Math.max(a.rect.left, b.rect.left) - Math.min(a.rect.right, b.rect.right);
+          if (horizDist < 10.0) {
+            issues.push({
+              type: 'TEXT_PROXIMITY_VIOLATION',
+              message: `Horizontal distance between "${a.text.slice(0, 20)}" and "${b.text.slice(0, 20)}" (${horizDist.toFixed(1)}px) is below 10px minimum`
+            });
+          }
         }
       }
     }
