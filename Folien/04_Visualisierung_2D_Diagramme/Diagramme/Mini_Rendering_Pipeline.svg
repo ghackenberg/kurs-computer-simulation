@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">ScottPlot 5 Pipeline</text>
+  <text x="135" y="42" class="sub">Immediate-Mode Rendering</text>
+
+  <!-- Step 1: Memory Array -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="66" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">1. Datenarray im RAM</text>
+    <text x="120" y="38" class="desc" style="font-weight: bold; fill: #1e40af;">double[] ys (1.000.000 Werte)</text>
+    <text x="120" y="54" class="desc" style="fill: #3b82f6;">Konstante Periode dt = const</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <path d="M 135 122 L 135 136" stroke="#004B96" stroke-width="2" marker-end="url(#arr)" />
+
+  <!-- Step 2: Min/Max Decimation -->
+  <g transform="translate(15, 138)">
+    <rect width="240" height="66" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #15803d;">2. Min/Max Decimation</text>
+    <text x="120" y="38" class="desc" style="font-weight: bold; fill: #166534;">O(1) Zeit-zu-Pixel-Mapping</text>
+    <text x="120" y="54" class="desc" style="fill: #16a34a;">Nur ~3.840 Liniensegmente</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <path d="M 135 206 L 135 220" stroke="#004B96" stroke-width="2" />
+
+  <!-- Step 3: SkiaSharp Surface -->
+  <g transform="translate(15, 222)">
+    <rect width="240" height="66" rx="6" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">3. SkiaSharp / Direct2D</text>
+    <text x="120" y="38" class="desc" style="font-weight: bold; fill: #9a3412;">Hardwarebeschleunigte Bitmap</text>
+    <text x="120" y="54" class="desc" style="fill: #ea580c;">Kein WPF Visual-Tree-Overhead</text>
+  </g>
+
+  <!-- Arrow 3 -->
+  <path d="M 135 290 L 135 304" stroke="#004B96" stroke-width="2" />
+
+  <!-- Step 4: WPF WpfPlot View -->
+  <g transform="translate(15, 306)">
+    <rect width="240" height="52" rx="6" fill="#fdf4ff" stroke="#f0abfc" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #86198f;">4. WPF WpfPlot View</text>
+    <text x="120" y="38" class="desc" style="font-weight: bold; fill: #701a75;">Flüssige 60 FPS Darstellung</text>
+  </g>
+
+  <!-- Footer note -->
+  <rect x="15" y="368" width="240" height="42" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+  <text x="135" y="386" class="desc" style="font-weight: bold; fill: #004B96;">Vorteil: 0 B Visual-Tree-Last</text>
+  <text x="135" y="401" class="desc" style="fill: #475569;">Kein UI-Ruckeln bei Langzeitläufen</text>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Phasenraum: Kamm'scher Kreis</text>
+  <text x="135" y="42" class="sub">G-G-Diagramm (Track B Racing)</text>
+
+  <!-- Circle Diagram -->
+  <g transform="translate(20, 56)">
+    <rect width="230" height="190" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    
+    <!-- Cross Axes -->
+    <line x1="100" y1="22" x2="100" y2="175" stroke="#94a3b8" stroke-width="1.5" />
+    <polygon points="100,18 97,25 103,25" fill="#94a3b8" />
+    <text x="100" y="14" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#334155" text-anchor="middle">a_x (Längs)</text>
+
+    <line x1="15" y1="95" x2="215" y2="95" stroke="#94a3b8" stroke-width="1.5" />
+    <polygon points="217,95 210,92 210,98" fill="#94a3b8" />
+    <text x="220" y="86" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#334155" text-anchor="end">a_y (Quer)</text>
+
+    <!-- Kamm Circle r=48 centered at 100, 95 (spans x=52..148, text is at x=160..220) -->
+    <circle cx="100" cy="95" r="48" fill="#dcfce7" fill-opacity="0.5" stroke="#16a34a" stroke-width="2" />
+    <text x="100" y="60" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#15803d" text-anchor="middle">Limit: mu*g</text>
+
+    <!-- Trajectory points safely positioned away from text -->
+    <circle cx="110" cy="80" r="4" fill="#16a34a" />
+    <circle cx="85" cy="115" r="4" fill="#16a34a" />
+    <circle cx="130" cy="70" r="4" fill="#d97706" />
+    <circle cx="142" cy="52" r="4" fill="#dc2626" />
+    <text x="175" y="44" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b91c1c">Drift!</text>
+  </g>
+
+  <!-- Formula Box -->
+  <g transform="translate(15, 258)">
+    <rect width="240" height="74" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Resultierende Reibkraft</text>
+    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #9a3412;">a_res = sqrt(a_x^2 + a_y^2)</text>
+    <text x="120" y="58" class="desc" style="fill: #ea580c;">Haftungsgrenze a_res &lt;= mu * g</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #004B96;">Labor-Track B (Gaming)</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #334155;">Farbmarker: Grip vs. Drift</text>
+</svg>

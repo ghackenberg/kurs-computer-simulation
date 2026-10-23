@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Decimation: Aliasing-Falle</text>
+  <text x="135" y="42" class="sub">Naives Subsampling vs. Min/Max</text>
+
+  <!-- Box 1: Naives Subsampling -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="132" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #b91c1c;">1. Naives Subsampling (Jeder k-te)</text>
+    
+    <g transform="translate(20, 30)">
+      <!-- Wave with missed peak -->
+      <path d="M 0 35 Q 20 35 40 35 L 50 5 L 60 35 Q 80 35 100 35 L 120 35 L 140 35 L 160 35 L 180 35 L 200 35" fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="2,2" />
+      <!-- Sampled points missing the spike -->
+      <circle cx="20" cy="35" r="3.5" fill="#991b1b" />
+      <circle cx="70" cy="35" r="3.5" fill="#991b1b" />
+      <circle cx="120" cy="35" r="3.5" fill="#991b1b" />
+      <circle cx="170" cy="35" r="3.5" fill="#991b1b" />
+      <path d="M 20 35 L 70 35 L 120 35 L 170 35" fill="none" stroke="#ef4444" stroke-width="2" />
+      <!-- Warning cross on spike -->
+      <circle cx="50" cy="5" r="7" fill="none" stroke="#dc2626" stroke-width="1.5" />
+      <path d="M 46 2 L 54 8 M 46 8 L 54 2" stroke="#dc2626" stroke-width="1.5" />
+    </g>
+
+    <text x="120" y="104" class="desc" style="font-weight: bold; fill: #991b1b;">Spike verpasst! (Aliasing)</text>
+    <text x="120" y="122" class="desc" style="fill: #7f1d1d;">Transiente Fehler unsichtbar</text>
+  </g>
+
+  <!-- Box 2: Min/Max Decimation -->
+  <g transform="translate(15, 198)">
+    <rect width="240" height="132" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #15803d;">2. Min/Max-Säulen-Decimation</text>
+
+    <g transform="translate(20, 30)">
+      <!-- Min/Max vertical columns -->
+      <line x1="20" y1="32" x2="20" y2="38" stroke="#16a34a" stroke-width="3" stroke-linecap="round" />
+      <line x1="50" y1="5" x2="50" y2="38" stroke="#16a34a" stroke-width="3" stroke-linecap="round" />
+      <line x1="80" y1="33" x2="80" y2="37" stroke="#16a34a" stroke-width="3" stroke-linecap="round" />
+      <line x1="110" y1="34" x2="110" y2="36" stroke="#16a34a" stroke-width="3" stroke-linecap="round" />
+      <line x1="140" y1="30" x2="140" y2="38" stroke="#16a34a" stroke-width="3" stroke-linecap="round" />
+      <line x1="170" y1="32" x2="170" y2="38" stroke="#16a34a" stroke-width="3" stroke-linecap="round" />
+      
+      <!-- Envelope connection -->
+      <path d="M 20 32 L 50 5 L 80 33 L 110 34 L 140 30 L 170 32" fill="none" stroke="#22c55e" stroke-width="1" />
+      <path d="M 20 38 L 50 38 L 80 37 L 110 36 L 140 38 L 170 38" fill="none" stroke="#22c55e" stroke-width="1" />
+      <!-- Checkmark -->
+      <circle cx="195" cy="20" r="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1" />
+      <path d="M 191 20 L 194 23 L 199 17" fill="none" stroke="#15803d" stroke-width="1.8" stroke-linecap="round" />
+    </g>
+
+    <text x="120" y="104" class="desc" style="font-weight: bold; fill: #166534;">Extremwert sicher erfasst!</text>
+    <text x="120" y="122" class="desc" style="fill: #14532d;">Hüllkurve physikalisch exakt</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #1d4ed8;">ScottPlot 5 Signal-Kern</text>
+  <text x="135" y="383" class="desc" style="font-weight: bold; fill: #1e3a8a;">Pro Pixel: [ymin, ymax] Spanne</text>
+  <text x="135" y="398" class="desc" style="fill: #1e40af;">Volle Dynamik bei 60 FPS</text>
+</svg>

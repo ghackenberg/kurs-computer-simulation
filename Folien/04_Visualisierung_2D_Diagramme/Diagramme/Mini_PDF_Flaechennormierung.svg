@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">PDF-Flächennormierung</text>
+  <text x="135" y="42" class="sub">Häufigkeit zur Dichtefunktion</text>
+
+  <!-- Step 1: Absolute Counts Hk -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="126" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">1. Absolute Häufigkeiten H_k</text>
+    <g transform="translate(30, 28)">
+      <line x1="0" y1="55" x2="180" y2="55" stroke="#94a3b8" stroke-width="1" />
+      <rect x="20" y="35" width="25" height="20" fill="#93c5fd" stroke="#2563eb" />
+      <rect x="50" y="15" width="25" height="40" fill="#93c5fd" stroke="#2563eb" />
+      <rect x="80" y="5" width="25" height="50" fill="#93c5fd" stroke="#2563eb" />
+      <rect x="110" y="20" width="25" height="35" fill="#93c5fd" stroke="#2563eb" />
+      <rect x="140" y="40" width="25" height="15" fill="#93c5fd" stroke="#2563eb" />
+    </g>
+    <text x="120" y="100" class="desc" style="font-weight: bold; fill: #1e40af;">H_k in [Anzahl]</text>
+    <text x="120" y="116" class="desc" style="fill: #1e3a8a;">Abhängig von N (Stichprobe)</text>
+  </g>
+
+  <!-- Step 2: Normalized Density fk with Gauss Curve -->
+  <g transform="translate(15, 192)">
+    <rect width="240" height="138" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #15803d;">2. Empirische Dichte f_k</text>
+    <g transform="translate(30, 28)">
+      <line x1="0" y1="55" x2="180" y2="55" stroke="#94a3b8" stroke-width="1" />
+      <rect x="20" y="38" width="25" height="17" fill="#86efac" stroke="#16a34a" />
+      <rect x="50" y="20" width="25" height="35" fill="#86efac" stroke="#16a34a" />
+      <rect x="80" y="10" width="25" height="45" fill="#86efac" stroke="#16a34a" />
+      <rect x="110" y="22" width="25" height="33" fill="#86efac" stroke="#16a34a" />
+      <rect x="140" y="42" width="25" height="13" fill="#86efac" stroke="#16a34a" />
+      <!-- Analytical Gaussian Curve overlay -->
+      <path d="M 10 52 Q 60 48 85 8 Q 105 8 125 45 Q 155 52 175 54" fill="none" stroke="#dc2626" stroke-width="2" />
+    </g>
+    <text x="120" y="100" class="desc" style="font-weight: bold; fill: #166534;">f_k = H_k / (N * h)</text>
+    <text x="120" y="116" class="desc" style="fill: #14532d;">Integral: Sum(f_k * h) = 1</text>
+    <text x="120" y="130" class="desc" style="fill: #b91c1c;">Rote Gaußkurve passt exakt!</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #004B96;">Erkenntnis</text>
+  <text x="135" y="383" class="desc" style="font-weight: bold; fill: #334155;">Flächennormierung zwingend</text>
+  <text x="135" y="398" class="desc" style="fill: #64748b;">für Vergleich mit theoretischer PDF</text>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Sugiyama-Algorithmus</text>
+  <text x="135" y="42" class="sub">Hierarchisches Layout in 4 Phasen</text>
+
+  <!-- Phase 1 -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="60" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">Phase 1: Zyklusumkehr</text>
+    <text x="120" y="38" class="desc" style="font-weight: bold; fill: #1e40af;">Feedback-Kanten temporär drehen</text>
+    <text x="120" y="52" class="desc" style="fill: #3b82f6;">Macht den Graphen azyklisch (DAG)</text>
+  </g>
+
+  <!-- Phase 2 -->
+  <g transform="translate(15, 122)">
+    <rect width="240" height="60" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #15803d;">Phase 2: Schichten-Zuweisung</text>
+    <text x="120" y="38" class="desc" style="font-weight: bold; fill: #166534;">Knoten auf Ebenen L_1, L_2...</text>
+    <text x="120" y="52" class="desc" style="fill: #16a34a;">Dummy-Knoten für lange Kanten</text>
+  </g>
+
+  <!-- Phase 3 -->
+  <g transform="translate(15, 190)">
+    <rect width="240" height="60" rx="6" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Phase 3: Kreuzungsminimierung</text>
+    <text x="120" y="38" class="desc" style="font-weight: bold; fill: #9a3412;">Baryzentrische Permutation</text>
+    <text x="120" y="52" class="desc" style="fill: #ea580c;">Minimiert Kantenkreuzungen</text>
+  </g>
+
+  <!-- Phase 4 -->
+  <g transform="translate(15, 258)">
+    <rect width="240" height="60" rx="6" fill="#fdf4ff" stroke="#f0abfc" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #86198f;">Phase 4: Koordinaten &amp; Splines</text>
+    <text x="120" y="38" class="desc" style="font-weight: bold; fill: #701a75;">Begradigung von Signalleitungen</text>
+    <text x="120" y="52" class="desc" style="fill: #a21caf;">Kollisionsfreies Spline-Routing</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="332" width="240" height="74" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="354" class="lbl" style="fill: #004B96;">MSAGL Standard</text>
+  <text x="135" y="374" class="desc" style="font-weight: bold; fill: #334155;">Perfekt für gerichtete Kausalität</text>
+  <text x="135" y="390" class="desc" style="fill: #64748b;">Signalflusspläne von links nach rechts</text>
+</svg>

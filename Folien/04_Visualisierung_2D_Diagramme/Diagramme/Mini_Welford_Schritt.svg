@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Der Welford-Schritt</text>
+  <text x="135" y="42" class="sub">O(1) Online-Rekursion</text>
+
+  <!-- Graphic representation of Mean shift -->
+  <g transform="translate(25, 56)">
+    <rect width="220" height="110" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <line x1="20" y1="60" x2="200" y2="60" stroke="#94a3b8" stroke-width="1.5" />
+    
+    <!-- Old Mean -->
+    <circle cx="70" cy="60" r="5" fill="#3b82f6" />
+    <text x="70" y="45" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#1d4ed8" text-anchor="middle">Mean_{k-1}</text>
+
+    <!-- New Sample x_k -->
+    <circle cx="170" cy="60" r="5" fill="#dc2626" />
+    <text x="170" y="45" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b91c1c" text-anchor="middle">x_k</text>
+
+    <!-- New Mean shift -->
+    <circle cx="95" cy="60" r="5" fill="#16a34a" />
+    <text x="95" y="85" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#15803d" text-anchor="middle">Mean_k</text>
+    <path d="M 70 70 Q 82 78 95 70" fill="none" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arr)" />
+  </g>
+
+  <!-- Step-by-Step Code Card -->
+  <g transform="translate(15, 178)">
+    <rect width="240" height="152" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">Zwei-Phasen-Korrektur</text>
+    
+    <g transform="translate(15, 32)">
+      <text x="0" y="16" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" fill="#1e3a8a">1. delta = x_k - Mean;</text>
+      <text x="0" y="36" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#1d4ed8">2. Mean += delta / Count;</text>
+      <text x="0" y="58" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" fill="#1e3a8a">3. delta2 = x_k - Mean;</text>
+      <text x="0" y="80" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#15803d">4. M2 += delta * delta2;</text>
+      <text x="0" y="104" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" fill="#475569">Variance s_k^2, StdDev sigma_k</text>
+    </g>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #15803d;">Genialer Vorteil</text>
+  <text x="135" y="383" class="desc" style="font-weight: bold; fill: #166534;">Keine Historie speichern!</text>
+  <text x="135" y="398" class="desc" style="fill: #14532d;">Perfekt für unendliche Datenströme</text>
+</svg>

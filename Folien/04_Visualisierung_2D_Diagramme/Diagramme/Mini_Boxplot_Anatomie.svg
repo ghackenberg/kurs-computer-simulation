@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Anatomie des Box-Plots</text>
+  <text x="135" y="42" class="sub">Nicht-parametrische Kennwerte</text>
+
+  <!-- Boxplot Drawing Area -->
+  <g transform="translate(20, 54)">
+    <rect width="230" height="200" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Outlier Dot at top -->
+    <circle cx="85" cy="20" r="4" fill="#dc2626" stroke="#991b1b" stroke-width="1" />
+    <text x="96" y="24" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#dc2626">Ausreißer</text>
+
+    <!-- Upper Whisker bar -->
+    <line x1="65" y1="45" x2="105" y2="45" stroke="#334155" stroke-width="2" />
+    <text x="114" y="49" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" fill="#475569">Max (1.5*IQR)</text>
+
+    <!-- Whisker stem top -->
+    <line x1="85" y1="45" x2="85" y2="75" stroke="#334155" stroke-width="1.5" stroke-dasharray="3,2" />
+
+    <!-- The Box (Q1 to Q3) -->
+    <rect x="55" y="75" width="60" height="70" rx="2" fill="#bfdbfe" stroke="#1d4ed8" stroke-width="2" />
+    
+    <!-- Q3 Label -->
+    <text x="48" y="80" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#1d4ed8" text-anchor="end">Q_3</text>
+
+    <!-- Median Line Q2 -->
+    <line x1="55" y1="105" x2="115" y2="105" stroke="#b91c1c" stroke-width="3" />
+    <text x="122" y="109" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b91c1c">Median Q_2</text>
+
+    <!-- Q1 Label -->
+    <text x="48" y="148" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#1d4ed8" text-anchor="end">Q_1</text>
+
+    <!-- Whisker stem bottom -->
+    <line x1="85" y1="145" x2="85" y2="175" stroke="#334155" stroke-width="1.5" stroke-dasharray="3,2" />
+
+    <!-- Lower Whisker bar -->
+    <line x1="65" y1="175" x2="105" y2="175" stroke="#334155" stroke-width="2" />
+    <text x="114" y="179" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" fill="#475569">Min (1.5*IQR)</text>
+  </g>
+
+  <!-- Formula Details Box -->
+  <g transform="translate(15, 266)">
+    <rect width="240" height="68" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">Interquartilsabstand (IQR)</text>
+    <text x="120" y="38" class="desc" style="font-weight: bold; fill: #1e40af;">IQR = Q3 - Q1</text>
+    <text x="120" y="56" class="desc" style="fill: #1e3a8a;">Robuste Streuung (mittlere 50 %)</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="344" width="240" height="62" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="366" class="lbl" style="fill: #004B96;">ScottPlot 5 Box</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #334155;">Plot.Add.Box(new[] { box1, box2 })</text>
+</svg>

@@ -52,82 +52,136 @@ Präsentation der Ergebnisse aus Termin 03 ([Aufgabenblatt 03](../../Uebungen/Te
 
 ---
 
+<!-- Platzhalter für Abschnittsbildbeschreibung -->
+
+![bg right](./Illustrationen/Abschnitt_1.jpg)
+
 ## 4.1: Einführung in 2D-Diagramme und Datenstrukturen
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Die Rolle von Diagrammen und Graphen in der Simulationstechnik
-- Überblick über WPF-Frameworks: High-Level-Komponenten vs. Low-Level-Zeichnen
-- Architektur: Datenquelle, View-Model und Chart-/Graph-Controls
+- Das Display-Bottleneck und die Grenzen nativer UI-Elemente
+- Retained Mode vs. Immediate Mode beim Plotting
+- Daten-Dezimation: Aliasing-Falle vs. Min/Max-Säulen-Decimation
+- Rendering-Pipeline moderner Chart-Engines (ScottPlot 5)
 
 ---
 
-### Warum spezialisierte Bibliotheken?
+### Warum spezialisierte Diagramm-Bibliotheken?
 
 - Eigene Canvas- oder Pixel-Zeichnungen bieten maximale Freiheit, erfordern aber hohen Entwicklungsaufwand für Achsen, Gitter, Legenden, Zooming und automatisches Layout.
 - In industriellen Simulationsanwendungen und Digitalen Zwillingen dominieren zwei Visualisierungsaufgaben:
   1. **Datenverläufe & Zeitreihen (Plots/Charts):** Verfolgung kontinuierlicher Signale $x(t)$, Systemtrajektorien und statistischer Verteilungen.
   2. **Strukturen & Topologien (Graphen):** Darstellung von Signalflüssen, Blockschaltbildern, Komponentennetzwerken und Kausalitäten.
 - In diesem Kapitel nutzen wir zwei etablierte Open-Source-Bibliotheken:
-  - **`ScottPlot`** für hochperformante wissenschaftliche Zeitreihen- und Statistikdiagramme.
+  - **`ScottPlot 5`** für hochperformante wissenschaftliche Zeitreihen- und Statistikdiagramme.
   - **`MSAGL`** (Microsoft Automatic Graph Layout) für gerichtete Netzwerktopologien und Blockdiagramme.
 
 ---
 
-### Architektur: Simulation und UI-Kopplung
+### Das Display-Bottleneck: $10^7$ Punkte vs. Bildschirm
 
 <div class="columns">
-<div class="one">
+<div class="two">
 
-- **MVVM-Architektur:**
-  - **Engine:** Berechnet Zustände $\dot{x} = f(x, u, t)$.
-  - **Puffer:** Sammelt Daten zeitdiskret ohne GC-Druck.
-  - **View:** Bindet `WpfPlot` und Graph-Controls ein.
-- **Praxisanforderungen:**
-  - **Allokationsarm:** Keine GC-Pauses bei Langzeitläufen.
-  - **Hohe Framerate:** Flüssiges Pan & Zoom bei $>10^6$ Punkten.
+In der Automatisierungstechnik fallen bei hochfrequenter Messwerterfassung (z.B. DAQ mit $1\,\text{kHz}$) rasch enorme Datenmengen an:
+
+- Nach 3 Stunden Messung umfasst der Puffer $N = 10^7$ Samples.
+- Ein Standard-Monitor (Full HD bis 4K) besitzt jedoch nur $1.920$ bis $3.840$ horizontale Bildschirmpixel!
+- **Das Dilemma:** Auf eine einzige Pixelspalte treffen rechnerisch bis zu $5.000$ Messwerte.
+- **Kollaps nativer Controls:** Ein WPF-`Canvas` mit $10^7$ `Line`- oder `Polyline`-Objekten belegt Gigabytes an Speicher im Visual Tree und friert das System ein.
+- **Lösung:** Dezimierung der Daten auf Bildschirmauflösung in $O(\text{Pixel})$ statt $O(N)$!
 
 </div>
 <div class="one">
 
-| Anforderung | Low-Level Canvas | ScottPlot / MSAGL |
-|---|---|---|
-| **Achsen & Gitter** | Hoher Aufwand | Integriert |
-| **Performance ($10^6$ Pkt.)** | Bricht ein (Shapes) | Hardwarebeschleunigt |
-| **Automatisches Layout** | Manuell | Sugiyama / Force |
-| **Interaktivität** | Selbstbau | Out-of-the-Box |
+![w:1000](./Diagramme/Mini_Display_Bottleneck.svg)
 
 </div>
 </div>
 
 ---
+
+### Daten-Dezimation: Die Aliasing-Falle
+
+<div class="columns">
+<div class="two">
+
+Wie reduziert man $10^7$ Messwerte auf wenige tausend Bildschirmkoordinaten?
+
+- **Naives Subsampling (Jeder $k$-te Wert):**
+  - Man überspringt Punkte und zeichnet nur jeden $k$-ten Wert.
+  - **Gefahr:** Transiente Spitzen (EMV-Pulse, Druckstöße) fallen in Lücken und werden **übersehen**!
+- **Min/Max-Säulen-Decimation (ScottPlot):**
+  - Für jede Pixelspalte wird das Indexintervall $[i_{\min}, i_{\max}]$ gebildet.
+  - Es wird nur das **Minimum** und **Maximum** als vertikale Linie gerendert.
+  - **Vorteil:** Die physikalische Hüllkurve bleibt garantiert erhalten!
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Decimation_Aliasing.svg)
+
+</div>
+</div>
+
+---
+
+### ScottPlot 5 Rendering-Pipeline
+
+<div class="columns">
+<div class="two">
+
+ScottPlot 5 umgeht das WPF-Retained-Mode-Problem durch eine direkte Hardware-Rendering-Pipeline:
+
+1. **Datenarray im RAM:** Flaches `double[] ys` mit fester Abtastperiode `dt` ohne UI-Objekt-Overhead.
+2. **Min/Max-Decimation:** Schnelle $O(1)$-Indexsuche berechnet pro Pixelspalte nur das vertikale Liniensegment.
+3. **SkiaSharp-Engine:** Direktes 2D-Zeichnen auf eine gerenderte Offscreen-Bitmap (Direct2D/OpenGL-beschleunigt).
+4. **WPF-Einbindung:** `WpfPlot` präsentiert das fertige Bild als Bitmap-Quelle (`ImageSource`) – **0 FrameworkElements** für Datenpunkte!
+5. **Ergebnis:** Butterweiche 60 FPS selbst bei Millionen von Messwerten im Dauerlauf.
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Rendering_Pipeline.svg)
+
+</div>
+</div>
+
+---
+
+<!-- Platzhalter für Abschnittsbildbeschreibung -->
+
+![bg right](./Illustrationen/Abschnitt_2.jpg)
 
 ## 4.2: Zeitreihen- und Streudiagramme mit ScottPlot
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Eigenschaften und Architektur von ScottPlot
-- Einbindung des `WpfPlot`-Controls in XAML und C#
+- Eigenschaften und API-Architektur von ScottPlot 5
 - Streu- vs. Signalgraphen (`Scatter`, `Signal`, `SignalXY`)
-- High-Performance-Rendering mit SkiaSharp und Min/Max-Decimation
-- Interaktivität (Zoom, Pan, AutoScale, Achsen-Styling)
+- Äquidistante Abtastung und $O(1)$-Indexsuche
+- Phasenraum-Trajektorien in Mechatronik und Fahrphysik
+- Dual-Achsen und Leitstand-Styling
 
 ---
 
-### Visualisierung mit ScottPlot
+### Visualisierung mit ScottPlot 5
 
 <div class="columns">
 <div class="two">
 
 `ScottPlot` ist eine freie und quelloffene Bibliothek für .NET zur Erstellung interaktiver Diagramme.
 
-- **Einfache API:** Schnelle Diagrammerstellung mit wenigen Codezeilen.
+- **Einfache API:** Schnelle Diagrammerstellung mit wenigen, ausdrucksstarken C#-Methoden.
 - **Hohe Performance:** Hardware-beschleunigtes Rendering (SkiaSharp), optimiert für Millionen von Datenpunkten.
 - **Vielseitig:** Unterstützt Linien-, Signal-, Streu-, Balkendiagramme und Histogramme.
-- **Interaktiv:** Diagramme in WPF sind standardmäßig interaktiv (zoomen mit Mausrad, verschieben per Drag & Drop).
+- **Interaktiv:** Diagramme in WPF sind standardmäßig voll interaktiv (Zoomen mit Mausrad, Verschieben per Drag & Drop).
+- **Modern:** Konsequente Trennung von Plot-Logik (`ScottPlot.Plot`) und WPF-Host (`WpfPlot`).
 
 </div>
-<div>
+<div class="one">
 
 ![](./Illustrationen/ScottPlot_Logo.svg)
 
@@ -136,28 +190,32 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### ScottPlot API: **Grundlagen**
+### ScottPlot 5 API: **Grundlagen**
 
 <div class="columns">
-<div class="three">
+<div class="two">
 
-Die zentrale Klasse in ScottPlot ist `ScottPlot.Plot`. Eine Instanz davon repräsentiert ein Diagramm.
+Die zentrale Klasse in ScottPlot ist `ScottPlot.Plot`. Eine Instanz davon repräsentiert ein vollständiges Diagramm.
 
 **Typischer Workflow:**
 1. **Plot-Objekt erhalten:** Über das `WpfPlot`-Control in XAML (`WpfPlot1.Plot`).
-2. **Daten hinzufügen:** Mit Methoden wie `Plot.Add.Scatter()`, `Plot.Add.Signal()`, `Plot.Add.Bar()`.
-3. **Diagramm konfigurieren:** Achsenbeschriftungen (`Plot.XLabel()`, `Plot.YLabel()`), Titel (`Plot.Title()`), Legende (`Plot.Legend.IsVisible = true`).
-4. **Aktualisieren:** Bei dynamischen Daten über `WpfPlot1.Refresh()`.
+2. **Daten hinzufügen:** Mit Methoden wie `Plot.Add.Scatter()`, `Plot.Add.Signal()`, `Plot.Add.Bars()`.
+3. **Achsen konfigurieren:** Beschriftungen mit `Plot.XLabel()`, `Plot.YLabel()` und Titel mit `Plot.Title()`.
+4. **Legende aktivieren:** Über `Plot.Legend.IsVisible = true`.
+5. **Aktualisieren:** Bei dynamischen Daten über `WpfPlot1.Refresh()`.
 
 </div>
-<div>
+<div class="one">
 
 ```xaml
-<!-- XAML-Einbindung -->
+<!-- XAML-Einbindung in WPF -->
 <Window ...
-  xmlns:sp="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF">
+  xmlns:sp="clr-namespace:
+    ScottPlot.WPF;
+    assembly=ScottPlot.WPF">
   <Grid>
-    <sp:WpfPlot x:Name="WpfPlot1" />
+    <sp:WpfPlot 
+      x:Name="WpfPlot1" />
   </Grid>
 </Window>
 ```
@@ -183,10 +241,13 @@ var s2 = WpfPlot1.Plot.Add.Scatter(xs, ys2);
 s2.Label = "Zustand x2(t)";
 s2.Color = ScottPlot.Colors.Red;
 s2.LineStyle = ScottPlot.LineStyle.Dash;
+
 WpfPlot1.Plot.Legend.IsVisible = true;
 WpfPlot1.Plot.Axes.AutoScale();
 WpfPlot1.Refresh();
 ```
+
+- Konfiguration von zwei Kurven `s1` und `s2` mit `xs`, `ys1` und `ys2` für diskrete Zustandsverläufe.
 
 ---
 
@@ -195,73 +256,132 @@ WpfPlot1.Refresh();
 <div class="columns">
 <div class="two">
 
-In physikalischen Simulationen liegen Messdaten fast immer mit **konstanter Schrittweite** vor:
-$$t_i = t_0 + i \cdot \Delta t$$
+Messdaten liegen in der Simulation meist mit **konstanter Schrittweite** vor ($t_i = t_0 + i \cdot \Delta t$):
 
-ScottPlot nutzt dies mit `Plot.Add.Signal(ys)` radikal aus:
-- Das Zeit-Array $xs$ muss **überhaupt nicht gespeichert** werden.
-- Die Abtastperiode wird als skalare Eigenschaft übergeben (`Data.Period = dt`).
-- Ermöglicht flüssige Interaktion bei über **1 Million Datenpunkten** bei stabilen 60 FPS!
+- **Kein Zeitstempel-Array:** Das Array `xs` muss überhaupt nicht gespeichert werden.
+- **Skalare Abtastperiode:** Übergabe via `sig.Data.Period = dt`.
+- **Echtzeit-Performance:** Flüssige Interaktion bei über **10 Millionen Datenpunkten** bei stabilen 60 FPS!
 
 </div>
 <div class="three">
 
-![width:560px](./Illustrationen/ScottPlot_Signal_Example.png)
+![width:480px](./Illustrationen/ScottPlot_Signal_Example.png)
 
 </div>
 </div>
 
 ---
 
-### Warum rendert `Signal` $10^6$ Punkte bei 60 FPS?
+### Speicherbedarf im Vergleich: `Scatter` vs. `Signal`
 
-- **Problem naiver Scatter-Plots:** Bei 1.000.000 Punkten müsste der Renderer 1.000.000 Vektorsegment-Koordinaten transformieren, obwohl der Bildschirm nur ca. 1.920 Pixel breit ist!
-- **Min/Max-Säulen-Decimation in ScottPlot:**
-  1. **$O(1)$-Indexsuche:** Da $\Delta t$ konstant ist, lässt sich für jede vertikale Pixelspalte $p_x$ direkt die Array-Indexspanne berechnen:
-     $$i(t) = \left\lfloor \frac{t - t_0}{\Delta t} \right\rfloor$$
-  2. **Extremwert-Kompression:** Für jeden Pixel wird lediglich das Minimum und Maximum im Indexintervall $[i_{\min}, i_{\max}]$ ermittelt.
-  3. **Rendering:** Pro Bildschirmspalte wird nur ein einzelner vertikaler Strich vom Minimum zum Maximum gezeichnet.
-  4. **Komplexität:** Aus $10^6$ Punkten werden nur ca. $2 \times \text{Pixelbreite} \approx 3.840$ Liniensegmente!
+<div class="columns">
+<div class="two">
+
+Der Verzicht auf ein explizites Zeitstempel-Array halbiert den RAM-Bedarf im Speicherlayout:
+
+- **`Scatter(xs, ys)`:**
+  - Benötigt zwei Arrays: `xs` (8 Byte) und `ys` (8 Byte).
+  - Für $10^6$ Punkte: $2 \times 8\,\text{MB} = 16\,\text{MB}$ Heap-Speicher.
+  - Suchaufwand beim Rendern: $O(N)$.
+- **`Signal(ys)`:**
+  - Benötigt nur `ys` (8 Byte) und skalare Abtastparameter `dt` sowie `t_0`.
+  - Für $10^6$ Punkte: Nur **$8\,\text{MB}$ Heap-Speicher (-50 %)**.
+  - Direkte Indexberechnung: $i(t) = \lfloor (t - t_0)/dt \rfloor$ in **$O(1)$**.
+  - Für monotone, aber adaptive Zeitschritte; binäre Suche in $O(\log N)$.
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Signal_RAM_Vorteil.svg)
+
+</div>
+</div>
 
 ---
 
-### Methodenvergleich: `Scatter` vs. `Signal` vs. `SignalXY`
+### Phasenraum: Motorprüfstand
+
+<div class="columns">
+<div class="two">
+
+In der Mechatronik (Übung 4, Track A) interessiert der Zusammenhang zweier Zustände:
+
+- **Drehmoment $M(t)$ gegen Drehzahl $n(t)$:**
+  - Zeit $t$ wird als Parameter eliminiert.
+  - Der Betriebspunkt $(n, M)$ wandert als Trajektorie im Kennfeld.
+- **Thermische Leistungsgrenze:**
+  $$P_{\max} = 2\pi \cdot n \cdot M \implies M(n) \le \frac{P_{\max}}{2\pi \cdot n}$$
+  - Bildet eine **Hyperbel** im Phasenraum.
+- In ScottPlot wird dies über `Plot.Add.Scatter(nArr, mArr)` visualisiert.
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Phasenraum_Motor.svg)
+
+</div>
+</div>
+
+---
+
+### Phasenraum: Kamm'scher Kreis (Fahrphysik)
+
+<div class="columns">
+<div class="two">
+
+In der Fahrsimulation (Übung 4, Track B) bestimmt der Reifen-Grip die maximal übertragbaren Kräfte:
+
+- **G-G-Diagramm:**
+  - Querbeschleunigung $a_y$ über Längsbeschleunigung $a_x$.
+  - Die resultierende Gesamtbeschleunigung ist:
+    $$a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu \cdot g$$
+- **Haftungslimit (Kamm'scher Kreis):**
+  - $\mu$: Reibbeiwert, $g$: Erdbeschleunigung.
+  - **Grün:** $a_{\text{res}} \le \mu g$ (voller Grip).
+  - **Orange:** Grenzbereich (Drift / Schlupf).
+  - **Rot:** $a_{\text{res}} > \mu g$ (Traktionsabriss).
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Kammscher_Kreis.svg)
+
+</div>
+</div>
+
+---
+
+### Methodenvergleich der Plot-Typen
 
 | Merkmal | `Scatter(xs, ys)` | `Signal(ys)` | `SignalXY(xs, ys)` |
 |---|---|---|---|
-| **Abtastung** | Beliebig (ungeordnet) | **Streng äquidistant** ($\Delta t = \text{const}$) | Monoton steigend (adaptiv) |
+| **Abtastung** | Beliebig (ungeordnet) | **Streng äquidistant** ($\Delta t = \text{const}$) | Monoton steigend |
 | **Speicher** | $2 \times N$ ($xs$ und $ys$) | **$1 \times N$** ($ys$ genügt) | $2 \times N$ ($xs$ und $ys$) |
-| **Suchaufwand** | $O(N)$ (jeder Punkt gezeichnet) | **$O(1)$** (direkter Index) | $O(\log N)$ (binäre Suche) |
+| **Suchaufwand** | $O(N)$ (jeder Punkt) | **$O(1)$** (direkter Index) | $O(\log N)$ (Binärsuche) |
 | **Max. Punkte** | $\approx 10^4$ flüssig | **$> 10^7$ flüssig (60 FPS)** | $\approx 10^6$ flüssig |
-| **Typischer Einsatz** | Phasenraum $x_2(x_1)$ | Feste Schritte (Euler, Heun) | Adaptive Solver (RK45) |
-
----
-
-### Konfiguration von Signal-Plots
-
-Für zeitdiskrete Simulationen mit festem Zeitschritt bietet `Signal` maximale Performance:
+| **Typischer Einsatz** | Phasenraum, Kennfelder | Feste Schritte (Euler, Heun) | Adaptive Solver (RK45) |
 
 ```csharp
-// Äquidistant abgetastete Messreihe konfigurieren
 var sig = WpfPlot1.Plot.Add.Signal(ys);
 sig.Data.Period = 0.001; // dt = 1 ms (1 kHz Abtastrate)
 sig.Data.XOffset = 0.0;   // Startzeit t0 = 0 s
 ```
 
-- **Keine $x$-Allokation:** Das $x$-Array entfällt vollständig; Zeitstempel werden dynamisch berechnet.
-- **Min/Max-Decimation:** Pro Pixelspalte wird nur das Minimum und Maximum gerendert.
-
 ---
+
+<!-- Platzhalter für Abschnittsbildbeschreibung -->
+
+![bg right](./Illustrationen/Abschnitt_3.jpg)
 
 ## 4.3: Statistische Auswertung & Histogramme mit ScottPlot
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Die Rolle stochastischer Auswertungen in der Simulationstechnik
-- Häufigkeitsverteilungen und Binning (`ScottPlot.Statistics.Histogram`)
-- Visualisierung mittels Balkendiagrammen (`BarPlot`)
-- Überlagerung theoretischer Wahrscheinlichkeitsdichten (PDF)
-- Box-Plots zur kompakten Analyse von Verteilungsparametern
+- Stochastische Signale und Rauschprozesse in Simulationssystemen
+- Das Binning-Dilemma: Wahl der optimalen Klassenbreite
+- Häufigkeitsverteilung vs. normierte Wahrscheinlichkeitsdichte (PDF)
+- Überlagerung theoretischer Normalverteilungen
+- Robuste Kennwerte und Box-Plot-Analyse
 
 ---
 
@@ -274,6 +394,32 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Ziele der Visualisierung:**
   - Identifikation von Verteilungsformen (Normalverteilung, Exponentialverteilung, Schiefe, Bimodalität).
   - Statistische Validierung numerischer Modelle gegen empirische Messdaten.
+  - Erkennung von Fertigungsausreißern und Kavitationserscheinungen.
+
+---
+
+### Das Binning-Dilemma: Wahl der Klassenbreite $h$
+
+<div class="columns">
+<div class="two">
+
+Beim Erstellen eines Histogramms teilt man den Wertebereich $[x_{\min}, x_{\max}]$ in $k$ Intervalle (Bins) der Breite $h$ ein:
+
+- **Zu breite Bins ($k$ zu klein):**
+  - Starke Überglättung – Verteilungsasymmetrie und bimodale Spitzen werden unsichtbar.
+- **Zu schmale Bins ($k$ zu groß):**
+  - Starke Unterglättung – Histogramm zerfällt in unruhiges statistisches Rauschen.
+- **Freedman-Diaconis-Regel (Empfehlung für Messdaten):**
+  $$h = \frac{2 \cdot \text{IQR}}{\sqrt[3]{N}}, \quad k = \left\lceil \frac{x_{\max} - x_{\min}}{h} \right\rceil$$
+  - Nutzt den Interquartilsabstand $\text{IQR}$; extrem robust gegen Ausreißer!
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Binning_Vergleich.svg)
+
+</div>
+</div>
 
 ---
 
@@ -285,7 +431,7 @@ double[] durations = Simulation.RunMonteCarloRuns(10000);
 var hist = ScottPlot.Statistics.Histogram.WithBinCount(20, 0, 10);
 hist.AddRange(durations);
 
-// 2. Balkendiagramm (ScottPlot 5 Bars) aus berechneten Klassen erzeugen
+// 2. Balkendiagramm (ScottPlot 5 Bars) aus Klassen erzeugen
 var bars = hist.Bins.Zip(hist.Counts, (pos, cnt) => new ScottPlot.Bar {
     Position = pos, Value = cnt, Size = hist.FirstBinSize * 0.85,
     FillColor = ScottPlot.Colors.SteelBlue.WithAlpha(0.7f),
@@ -300,86 +446,102 @@ WpfPlot1.Plot.Axes.AutoScale();
 WpfPlot1.Refresh();
 ```
 
+- Berechnung des Histogramms `hist` über `durations` und Darstellung als Balkenliste `bars`.
+
 ---
 
-### Wahrscheinlichkeitsdichte & Analytische Normalverteilung
+### Flächennormierung zur Wahrscheinlichkeitsdichte (PDF)
 
-<div class="columns top">
-<div class="one">
+<div class="columns">
+<div class="two">
 
-#### Normierte Wahrscheinlichkeitsdichte (PDF)
-- Das reine Histogramm liefert absolute Klassenhäufigkeiten $H_k \in \mathbb{N}_0$.
-- **Flächennormierung:** Teilt man $H_k$ durch $(N \cdot \Delta w_{\text{bin}})$, erhält man die normierte empirische Dichte $f_k$:
-  - $N = \sum H_k$: Stichprobenumfang
-  - $\Delta w_{\text{bin}}$: Klassenbreite $[\mathrm{s}]$
-  - Eigenschaft: $\int_{-\infty}^\infty f(x)\,\mathrm{d}x = \sum f_k \Delta w_{\text{bin}} = 1$
+Ein Histogramm liefert absolute Klassenhäufigkeiten $H_k \in \mathbb{N}_0$.
+
+- **Warum ist Flächennormierung nötig?**
+  - Absolute Werte $H_k$ hängen vom Stichprobenumfang $N$ ab.
+  - Eine theoretische Dichte $f(x)$ hat stets Fläche $\int_{-\infty}^\infty f(x)\,\mathrm{d}x = 1$.
+- **Empirische Dichte $f_k$:**
+  $$f_k = \frac{H_k}{N \cdot h} \quad \implies \quad \sum_{k=1}^m f_k \cdot h = 1$$
+- **Analytische Gauß-Kurve $\mathcal{N}(\mu, \sigma^2)$:**
+  $$f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right)$$
 
 </div>
 <div class="one">
 
-#### Gaußsche Normalverteilung $\mathcal{N}(\mu, \sigma^2)$
-Überlagerung der Messdaten mit der theoretischen Wahrscheinlichkeitsdichtefunktion:
-
-$$f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right) \quad \left[\frac{1}{\mathrm{s}}\right]$$
-
-- $x$: Merkmalswert (z.B. Zykluszeit) $[\mathrm{s}]$
-- $\mu$: Erwartungswert (Mittelwert) $[\mathrm{s}]$
-- $\sigma$: Standardabweichung ($\sigma > 0$) $[\mathrm{s}]$
-- $\sigma^2$: Varianz des Prozesses $[\mathrm{s^2}]$
+![w:1000](./Diagramme/Mini_PDF_Flaechennormierung.svg)
 
 </div>
 </div>
 
 ---
 
-### Verteilungsvergleiche mit Box-Plots (ScottPlot)
+### Nicht-parametrische Kennwerte & Box-Plot-Anatomie
 
-<div class="columns top">
-<div class="one">
+<div class="columns">
+<div class="two">
 
-#### Kennwerte eines Box-Plots
-Kompakter Vergleich mehrerer Simulationsreihen nebeneinander:
-- **Median ($Q_2$):** 50. Perzentil (robuster Lageparameter)
-- **Box (IQR):** Interquartilsabstand $\text{IQR} = Q_3 - Q_1$ (mittlere 50 % der Daten)
-- **Whisker:** Wertebereich bis maximal $1{,}5 \times \text{IQR}$ ab Quartilsgrenze
-- **Punkte:** Statistische Ausreißer außerhalb der Whiskers
+Wenn Messdaten nicht gaußverteilt sind oder starke Ausreißer enthalten, sind Mittelwert und Varianz irreführend.
+
+- **Fünf-Punkte-Zusammenfassung:**
+  - **Median ($Q_2$):** Robuster Lageparameter (50 % der Daten kleiner/größer).
+  - **Unteres Quartil ($Q_1$):** 25. Perzentil.
+  - **Oberes Quartil ($Q_3$):** 75. Perzentil.
+  - **Interquartilsabstand ($\text{IQR}$):** $\text{IQR} = Q_3 - Q_1$ (mittlere 50 %).
+- **Whisker-Definition nach John Tukey:**
+  - Reichen bis zum extremsten Messwert innerhalb von maximal $1{,}5 \times \text{IQR}$ ab Box-Rand.
+  - Werte außerhalb gelten als statistische Ausreißer!
 
 </div>
 <div class="one">
+
+![w:1000](./Diagramme/Mini_Boxplot_Anatomie.svg)
+
+</div>
+</div>
+
+---
+
+### Verteilungsvergleiche mit Box-Plots in ScottPlot 5
 
 ```csharp
-// Box-Plot für zwei Simulationsläufe
+// Definition zweier Boxen (box1 und box2) mit Q_1, Q_2, Q_3
 var box1 = new ScottPlot.Box {
     Position = 1,
-    BoxMiddle = 2.4, // Median
-    BoxMin = 1.8,    // Q1 (25 %)
-    BoxMax = 3.1,    // Q3 (75 %)
+    BoxMiddle = 2.4, // Median Q_2
+    BoxMin = 1.8,    // Unteres Quartil Q_1
+    BoxMax = 3.1,    // Oberes Quartil Q_3
     WhiskerMin = 1.2,
     WhiskerMax = 3.8
 };
 var box2 = new ScottPlot.Box {
     Position = 2,
-    BoxMiddle = 3.8,
-    BoxMin = 2.9,
-    BoxMax = 4.6
+    BoxMiddle = 3.8, // Median Q_2
+    BoxMin = 2.9,    // Unteres Quartil Q_1
+    BoxMax = 4.6,    // Oberes Quartil Q_3
+    WhiskerMin = 2.1,
+    WhiskerMax = 5.2
 };
 WpfPlot1.Plot.Add.Box(new[] { box1, box2 });
 ```
 
-</div>
-</div>
+- Die Objekte `box1` und `box2` visualisieren Quartile `BoxMin` ($Q_1$), `BoxMax` ($Q_3$) und den Median `BoxMiddle` ($Q_2$).
 
 ---
+
+<!-- Platzhalter für Abschnittsbildbeschreibung -->
+
+![bg right](./Illustrationen/Abschnitt_4.jpg)
 
 ## 4.4: Live-Streaming & Telemetrie
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Herausforderungen bei kontinuierlichen Simulationsdatenströmen
-- Das Ringpuffer-Muster (Circular Buffer / Rolling Window)
-- Vermeidung von Speicherallokationen und Garbage-Collection-Latenzen
-- ScottPlot 5 `DataStreamer` & Oszilloskop-Darstellung
-- Numerisch stabile Online-Statistik nach Welford ($\pm 3\sigma$-Toleranzband)
+- .NET CLR Garbage Collection und die 0-Byte-Allokationsregel
+- Der Ringpuffer (Circular Buffer) mit Modulo-Arithmetik
+- Multi-Rate-Entkopplung: 1 kHz Simulation vs. 50 Hz UI-Refresh
+- Subtraktionsauslöschung und der Welford-Algorithmus (1962)
+- Dynamische $\pm 3\sigma$-Toleranzbänder in ScottPlot 5
 
 ---
 
@@ -389,7 +551,7 @@ Ein Digitaler Zwilling oder eine Hardware-in-the-Loop-Simulation liefert kontinu
 
 - **Typische Fallstricke naiver Implementierungen:**
   - `List<double>.Add()` wächst unbegrenzt $\rightarrow$ Speicherüberlauf (Out-of-Memory) nach längerer Laufzeit.
-  - Dynamisches Resizing von Listen erzeugt kontinuierlich GC-Allokationen und führt zu spürbarem Ruckeln (GC-Pauses).
+  - Dynamisches Resizing von Listen erzeugt kontinuierlich Heap-Allokationen und führt zu spürbarem Ruckeln (GC-Pauses).
   - Ein direkter Aufruf von `WpfPlot.Refresh()` in jedem Simulationsschritt überlastet den UI-Thread und blockiert die Simulation.
 - **Architektonische Lösung:**
   1. **Ringpuffer mit fester Kapazität:** Konstante Speichernutzung, null Allokationen während der Simulation.
@@ -397,115 +559,183 @@ Ein Digitaler Zwilling oder eine Hardware-in-the-Loop-Simulation liefert kontinu
 
 ---
 
-### Das Ringpuffer-Muster (Circular Buffer)
+### CLR Garbage Collection & Zero-Allocation
 
 <div class="columns">
-<div class="one">
+<div class="two">
 
-**Puffer-Definition & Enqueue:**
-```csharp
-public class SimulationRingBuffer
-{
-    private readonly double[] _data;
-    private int _head;
-    private readonly object _lock = new();
-    public SimulationRingBuffer(int cap) =>
-        _data = new double[cap];
-    public void Enqueue(double val)
-    {
-        lock (_lock)
-        {
-            _data[_head] = val;
-            _head = (_head + 1) % _data.Length;
-        }
-    }
-}
-```
+Die .NET Common Language Runtime (CLR) teilt den Managed Heap in Generationen ein:
+
+- **Generation 0:** Kurzlebige Objekte (`new`). Läuft schnell voll $\implies$ löst häufige Kollektionen aus.
+- **Stop-the-World Pausen:** Während der GC angehalten wird, stockt der UI-Thread $\implies$ sichtbare Mikroruckler (GC-Jitter).
+- **Die Zero-Allocation-Regel:**
+  - Im 50-Hz-Render-Loop gilt strikt: **0 Byte Allokation pro Frame**!
+  - Keine `new SolidColorBrush()`, keine temporären Listen!
+  - Einmalige Allokation beim Start und Aufruf von `brush.Freeze()`.
 
 </div>
 <div class="one">
 
-**Kopie für Rendering:**
-```csharp
-public void CopyTo(double[] dest)
-{
-    lock (_lock)
-    {
-        Array.Copy(_data, dest, _data.Length);
-    }
-}
-```
-
-- **Vorteile:**
-  - Feste Array-Größe im Speicher.
-  - $O(1)$-Enqueue ohne Allokationen.
-  - Keine GC-Pausen im Simulationstakt.
+![w:1000](./Diagramme/Mini_GC_Generationen.svg)
 
 </div>
 </div>
 
 ---
 
-### UI-Refresh-Strategie mit `DispatcherTimer` & `DataStreamer`
+### Das Ringpuffer-Muster (Circular Buffer)
 
 <div class="columns">
+<div class="two">
+
+Ein Ringpuffer speichert die jüngsten $N$ Messwerte in einem vorallokierten Array fester Kapazität `cap`:
+
+- **Schreibzeiger `head`:** Zeigt auf den nächsten freien Index.
+- **Modulo-Wrap-Around:**
+  $$\text{head} = (\text{head} + 1) \bmod \text{cap}$$
+  - Älteste Werte werden automatisch überschrieben.
+  - $O(1)$ Zeitaufwand, **0 Byte GC-Allokation** beim Einfügen von `val`!
+- **Snapshot für Rendering:**
+  - Via `Array.Copy(_data, dest, cap)` werden Daten blitzschnell in den Zielpuffer `dest` kopiert.
+
+</div>
 <div class="one">
 
-**ScottPlot 5 `DataStreamer` (Oszilloskop):**
+![w:1000](./Diagramme/Mini_Ringpuffer_Modulo.svg)
+
+</div>
+</div>
+
+---
+
+### Ringpuffer: C#-Implementierung
+
+```csharp
+public class SimulationRingBuffer(int cap)
+{
+    private readonly double[] _data = new double[cap];
+    private int _head;
+    private readonly object _lock = new();
+
+    public void Enqueue(double val)
+    {
+        lock (_lock) { _data[_head] = val; _head = (_head + 1) % _data.Length; }
+    }
+
+    public void CopyTo(double[] dest)
+    {
+        lock (_lock) { Array.Copy(_data, dest, _data.Length); }
+    }
+}
+```
+
+- Der Puffer mit Kapazität `cap` speichert den Messwert `val` und kopiert in `dest`.
+
+---
+
+### Taktentkopplung (Multi-Rate-Architektur)
+
+<div class="columns">
+<div class="two">
+
+Warum darf die Simulation das UI nicht direkt im eigenen Takt aktualisieren?
+
+- **Mess-/Simulationstakt (1.000 Hz):**
+  - Schneller Solver oder DAQ-Kanal (Schrittweite `dt = 1 ms`).
+  - Schreibt Messwerte in den thread-sicheren Ringpuffer.
+- **UI-Display-Takt (50 Hz / 20 ms):**
+  - Das menschliche Auge kann mehr als 60 FPS kaum auflösen.
+  - Ein `DispatcherTimer` holt mit 50 Hz einen Snapshot aus dem Puffer und ruft `WpfPlot.Refresh()` auf.
+  - **Vorteil:** UI-Message-Queue bleibt frei und reaktionsschnell!
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_MultiRate_Entkopplung.svg)
+
+</div>
+</div>
+
+---
+
+### UI-Refresh mit `DispatcherTimer` & `DataStreamer`
+
 ```csharp
 private DataStreamer _streamer;
 private HorizontalLine _meanLine, _upperLine;
 
 private void InitPlot()
 {
-    // Vorallokierter Ringpuffer in ScottPlot 5
     _streamer = WpfPlot1.Plot.Add.DataStreamer(500);
-    _streamer.ViewScrollLeft(); // Rollierend
-
-    // Dynamische Referenzlinien (z.B. +-3 Sigma)
+    _streamer.ViewScrollLeft(); // Oszilloskop-Band
     _meanLine = WpfPlot1.Plot.Add.HorizontalLine(100);
     _upperLine = WpfPlot1.Plot.Add.HorizontalLine(115);
 }
+
+private void OnTelemetryTick(object? s, EventArgs e)
+{
+    double y = ReadNextSensorSample();
+    _streamer.Add(y);           // 0 B Allokation
+    _welford.Add(y);            // O(1) Online-Statistik
+    _meanLine.Y = _welford.Mean; _upperLine.Y = _welford.Mean + 3 * _welford.StdDev;
+    WpfPlot1.Refresh();
+}
 ```
+
+- Handler-Parameter `s` und `e` für den Timer; Linien `_meanLine` und `_upperLine` führen Toleranzen nach.
+
+---
+
+### Das Problem der naiven Varianzberechnung
+
+<div class="columns">
+<div class="two">
+
+Die klassische Lehrbuchformel für die Stichprobenvarianz lautet:
+
+$$s^2 = \frac{1}{k-1} \left( \sum_{i=1}^k x_i^2 - \frac{1}{k} \left(\sum_{i=1}^k x_i\right)^2 \right)$$
+
+- **Katastrophale Subtraktionsauslöschung:**
+  - Bei Telemetriedaten mit großem Offset (z.B. $x_i \approx 10^7$) und kleinem Rauschen subtrahiert man zwei fast identische Riesenzahlen.
+  - IEEE 754 Gleitkommazahlen verlieren dabei alle signifikanten Mantissenbits!
+  - Durch Rundungsfehler wird die Differenz oft negativ $\implies s^2 < 0 \implies \sqrt{s^2} = \text{NaN}$!
 
 </div>
 <div class="one">
 
-**Timer-Taktung (50 Hz = 20 ms):**
-```csharp
-private void OnTelemetryTick(object? s, EventArgs e)
-{
-    double y = ReadNextSensorSample();
-    _streamer.Add(y);      // 0 B GC-Allokation
-    _welford.Add(y);       // O(1) Online-Statistik
-
-    _meanLine.Y = _welford.Mean;
-    _upperLine.Y = _welford.Mean + 3 * _welford.StdDev;
-
-    // Wichtig: Keine 'new SolidColorBrush()' im Tick!
-    WpfPlot1.Refresh();
-}
-```
+![w:1000](./Diagramme/Mini_Ausloeschung_IEEE754.svg)
 
 </div>
 </div>
 
 ---
 
-### Online-Statistik im Datenstrom: Welford-Algorithmus (1962)
+### Der Welford-Algorithmus (1962)
 
 <div class="columns">
 <div class="two">
 
-- **Problem der naiven Varianzformel:**
-  $$s^2 = \frac{1}{k-1}\left(\sum x_i^2 - \frac{1}{k}\left(\sum x_i\right)^2\right)$$
-  Subtraktion zweier fast gleich großer Riesenzahlen führt bei $k \gg 10^4$ zu **katastrophaler Auslöschung** (sogar $s^2 < 0$!).
-- **Lösung: Rekursion nach B. P. Welford ($O(1)$ Zeit & Speicher):**
-  $$\bar{x}_k = \bar{x}_{k-1} + \frac{x_k - \bar{x}_{k-1}}{k}, \quad S_k = S_{k-1} + (x_k - \bar{x}_{k-1})(x_k - \bar{x}_k)$$
-  $$s_k^2 = \frac{S_k}{k-1}, \quad \sigma_k = \sqrt{s_k^2}, \quad \text{Toleranzband: } \bar{x}_k \pm 3\sigma_k \; (99{,}73\,\%)$$
+B. P. Welford formulierte eine numerisch exzellent konditionierte Rekursionsformel in $O(1)$:
+
+1. **Mittelwert `Mean_k` ($\bar{x}_k$) und `delta`:**
+   $$\text{delta} = x_k - \bar{x}_{k-1}, \quad \bar{x}_k = \bar{x}_{k-1} + \frac{\text{delta}}{k}$$
+2. **Quadratsumme ($M_{2,k}$) und `delta2`:**
+   $$\text{delta2} = x_k - \bar{x}_k, \quad M_{2,k} = M_{2,k-1} + \text{delta} \cdot \text{delta2}$$
+3. **Varianz (`Variance` $s_k^2$) & Streuung (`StdDev` $\sigma_k$):**
+   $$s_k^2 = \frac{M_{2,k}}{k-1}, \quad \sigma_k = \sqrt{s_k^2}$$
+- **Vorteil:** Absolut stabil, 0 Pufferhistorie erforderlich!
 
 </div>
 <div class="one">
+
+![w:1000](./Diagramme/Mini_Welford_Schritt.svg)
+
+</div>
+</div>
+
+---
+
+### Welford-Statistik: C#-Implementierung
 
 ```csharp
 public class WelfordStatistics
@@ -513,8 +743,7 @@ public class WelfordStatistics
     public long Count { get; private set; }
     public double Mean { get; private set; }
     public double M2 { get; private set; }
-    public double Variance =>
-        Count > 1 ? M2 / (Count - 1) : 0.0;
+    public double Variance => Count > 1 ? M2 / (Count - 1) : 0.0;
     public double StdDev => Math.Sqrt(Variance);
 
     public void Add(double x)
@@ -528,20 +757,48 @@ public class WelfordStatistics
 }
 ```
 
+- Berechnung von `Mean`, `M2`, `Variance` und `StdDev` über die Differenzen `delta` und `delta2`.
+
+---
+
+### Dynamische 3-Sigma-Toleranzbänder
+
+<div class="columns">
+<div class="two">
+
+Mit Welfords Online-Statistik lassen sich kontinuierliche Konfidenzbänder berechnen:
+
+- **Drei-Sigma-Regel (Gauß-Verteilung):**
+  - $\bar{x} \pm 1\sigma$: Enthält 68,27 % aller Messwerte.
+  - $\bar{x} \pm 2\sigma$: Enthält 95,45 % aller Messwerte.
+  - $\bar{x} \pm 3\sigma$: Enthält **99,73 %** aller Messwerte.
+- **Anomalie-Erkennung:**
+  - Überschreitet ein Messwert $y(t) > \bar{x} + 3\sigma$ oder $y(t) < \bar{x} - 3\sigma$, liegt eine statistisch signifikante Anomalie vor.
+  - Indiziert Fehler wie Kavitation, Bauteilermüdung oder Reibungsverlust.
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Drei_Sigma_Band.svg)
+
 </div>
 </div>
 
 ---
 
+<!-- Platzhalter für Abschnittsbildbeschreibung -->
+
+![bg right](./Illustrationen/Abschnitt_5.jpg)
+
 ## 4.5: Topologie- und Netzwerkgraphen mit MSAGL
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Mathematisches Graphenmodell für Simulationsmodelle
-- Das Microsoft Automatic Graph Layout (`AutomaticGraphLayoutControl`)
+- Mathematisches Graphenmodell für Simulationssysteme
+- Das Microsoft Automatic Graph Layout (`MSAGL`)
 - Automatische Layout-Algorithmen (Sugiyama vs. Force-Directed)
-- Erkennung und Visualisierung algebraischer Schleifen
-- Praktische Umsetzung und farbliches Kanten-Highlighting
+- Algebraische Schleifen (Algebraic Loops) und DAE-Systeme
+- Tiefensuche (DFS 3-Farben) zur Zyklen-Erkennung
 
 ---
 
@@ -557,7 +814,7 @@ $$G = (V, E)$$
 - **Kantenmenge $E \subseteq V \times V$:** Signal- und Leistungsflüsse $e = (v_i, v_j)$
 - **Adjazenzmatrix $\mathbf{A} \in \{0, 1\}^{n \times n}$:**
   $$a_{ij} = \begin{cases} 1, & \text{falls } (v_i, v_j) \in E \text{ (Signal von } v_i \text{ zu } v_j \text{)} \\ 0, & \text{sonst} \end{cases}$$
-- **Algebraische Schleifen (Zyklen):** Ein geschlossener Pfad in $\mathbf{A}$ ohne Zustandsverzögerung erzwingt die simultane Nullstellensuche $F(y) = y(t) - g(y(t), u(t)) = 0$.
+- **Topologische Ordnung:** Eine Reihenfolge der Knoten, bei der alle gerichteten Kanten von links nach rechts zeigen (nur bei DAGs möglich).
 
 ---
 
@@ -597,10 +854,10 @@ $$G = (V, E)$$
 **C#-Code-Behind:**
 ```csharp
 // 1. Graph-Objekt erstellen
-var graph = new Microsoft.Msagl.Drawing.Graph("Simulationsmodell");
+var graph = new Microsoft.Msagl.Drawing.Graph("Sim");
 
 // 2. Knoten hinzufügen
-graph.AddNode("Integrator").LabelText = "Integrator [1/s]";
+graph.AddNode("Integrator").LabelText = "Integrator";
 graph.AddNode("Gain").LabelText = "Gain [k=2.5]";
 graph.AddNode("Sum").LabelText = "Sum [+ -]";
 
@@ -616,32 +873,79 @@ GraphControl.Graph = graph;
 </div>
 </div>
 
----
-
-### Automatische Layout-Algorithmen im Detail
-
-- **Sugiyama-Algorithmus (Hierarchisches / Layered Layout):**
-  - **1. Zyklusauflösung:** Temporäre Umkehrung von Rückkopplungskanten zur Erzeugung eines DAG.
-  - **2. Schichten-Zuweisung:** Knoten werden geordneten Schichten (Ebenen) zugeordnet.
-  - **3. Kreuzungsminimierung:** Optimierung der Knotenreihenfolge innerhalb jeder Schicht.
-  - **4. Koordinatenberechnung:** Begradigung von Kanten und Spline-Routing.
-  - *Ideal für gerichtete Signalflusspläne und Ursache-Wirkungsketten.*
-- **Force-Directed (Kräftebasiertes Layout / Spring Embedder):**
-  - Kanten verhalten sich wie mechanische Zugfedern, Knoten stoßen sich elektrostatisch ab.
-  - Erreicht ein energetisches Kräftegleichgewicht.
-  - *Ideal für ungerichtete Netze, Schaltungen und Komponentenstrukturen.*
+- Die Instanz `graph` modelliert Knoten und Kanten für das WPF-Control `GraphControl`.
 
 ---
 
-### Visualisierung algebraischer Schleifen
+### Der Sugiyama-Algorithmus (Hierarchisches Layout)
 
-- **Was ist eine algebraische Schleife?**
-  Ein geschlossener Signalpfad ohne speicherndes Element (wie einen Integrator $\frac{1}{s}$ oder ein Verzögerungsglied $z^{-1}$).
-- **Numerische Konsequenz:**
-  Führt zu einer impliziten algebraischen Gleichung im Zeitschritt:
-  $$y(t) = g(y(t), u(t))$$
-  Erfordert zeitaufwändige Nullstellensuche (z.B. Newton-Raphson) oder divergiert im expliziten Solver.
-- **Diagnose:** MSAGL markiert identifizierte Zyklen farblich und hebt betroffene Kanten hervor.
+<div class="columns">
+<div class="two">
+
+Für gerichtete Kausalsysteme (Signalflusspläne) berechnet MSAGL das Layout nach dem 4-Phasen-Verfahren von Kozo Sugiyama:
+
+1. **Phase 1 (Cycle Removal):** Temporäre Umkehrung von Feedback-Kanten; erzeugt einen kreisfreien Graphen (DAG).
+2. **Phase 2 (Layer Assignment):** Zuweisung der Knoten zu horizontalen Schichten $L_1, L_2, \dots$; Einfügen von Dummy-Knoten für lange Kanten.
+3. **Phase 3 (Crossing Minimization):** Vertauschen der Knotenreihenfolge in Schichten (Barycentric Heuristic).
+4. **Phase 4 (Coordinate Assignment):** Spline-Routing und Begradigung von Signalleitungen.
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Sugiyama_4Phasen.svg)
+
+</div>
+</div>
+
+---
+
+### Force-Directed Layout (Spring-Embedder)
+
+<div class="columns">
+<div class="two">
+
+Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
+
+- **Physikalisches Analogon:**
+  - **Hookesche Zugfedern zwischen Knoten v_1 und v_2:**
+    $$F_s = k \cdot (\|\Delta\vec{p}\| - d_0)$$
+    Ziehen benachbarte Knoten $v_1$ und $v_2$ an.
+  - **Elektrostatische Ladungen (Coulomb):**
+    $$F_r = \frac{C}{\|\Delta\vec{p}\|^2}$$
+    Stoßen alle Knotenpaare voneinander ab.
+- **Numerische Lösung:** Iteration bis zum Kräftegleichgewicht $\sum \vec{F}_i \approx \vec{0}$.
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_ForceDirected_Kraefte.svg)
+
+</div>
+</div>
+
+---
+
+### Was ist eine algebraische Schleife (Algebraic Loop)?
+
+<div class="columns">
+<div class="two">
+
+- **Kausale Systeme (ODE):**
+  - Rückkopplung enthält mindestens einen **Integrator** $\frac{1}{s}$ oder eine Zustandsverzögerung $z^{-1}$.
+  - Der Zustand $x(t)$ entkoppelt Ursache und Wirkung zeitlich: $dx/dt = f(x, u)$.
+- **Algebraische Schleife (DAE):**
+  - Geschlossener Signalpfad über Gain-Blöcke `k_1` und `k_2` **ohne Verzögerungsglied** (direkter Durchgriff $\mathbf{D} \ne \mathbf{0}$).
+  - Ausgang hängt sofort vom Eingang ab, der Eingang hängt sofort vom Ausgang ab:
+    $$y(t) = g(y(t), u(t))$$
+  - Erzwingt im Solver eine iterative Nullstellensuche oder divergiert!
+
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_Algebraic_Loop_Mechanik.svg)
+
+</div>
+</div>
 
 ---
 
@@ -649,32 +953,43 @@ GraphControl.Graph = graph;
 
 ![center w:1100](./Diagramme/MSAGL_AlgebraicLoop_Highlight.svg)
 
-*Erkennung: Die rote Schleife (Sum1 ➔ Gain1 ➔ Gain2 ➔ Sum1) enthält kein speicherndes Element und muss numerisch gelöst oder algebraisch aufgelöst werden.*
+*Erkennung: Die rote Schleife (Sum1 ➔ Gain1 ➔ Gain2 ➔ Sum1) enthält kein speicherndes Element und muss vor Simulationsstart diagnostiziert werden.*
 
 ---
 
-### MSAGL API: Graph-Aufbau mit Schleife
+### Zyklen-Erkennung: Tiefensuche mit 3 Farben
 
-```csharp
-var graph = new Microsoft.Msagl.Drawing.Graph("Blockschaltbild");
+<div class="columns">
+<div class="two">
 
-// Signalverbindungen definieren
-var eIn    = graph.AddEdge("In", "Sum1");
-var eLoop1 = graph.AddEdge("Sum1", "Gain1");
-var eLoop2 = graph.AddEdge("Gain1", "Gain2");
-var eLoop3 = graph.AddEdge("Gain2", "Sum1"); // Schleife ohne Integrator!
-var eInt   = graph.AddEdge("Gain1", "Integrator");
+Um algebraische Schleifen automatisch im Graphen aufzudecken, nutzt man eine Tiefensuche (DFS) in $O(|V| + |E|)$:
 
-GraphControl.Graph = graph;
-```
+- **Die drei Markierungszustände:**
+  1. **Weiß:** Knoten (`v_4`) wurde noch nicht besucht.
+  2. **Grau:** Knoten (`v_1`, `v_2`, `v_3`) liegt auf aktivem Rekursions-Stack.
+  3. **Schwarz:** Knoten und alle Nachfolger sind vollständig abgearbeitet.
+- **Kriterium für Zyklen:**
+  - Rückwärtskante von `v_3` auf den grauen Knoten `v_1` schließt einen Kreis!
 
-- Kante `eLoop3` schließt den Pfad direkt auf `Sum1` zurück (algebraische Schleife).
+</div>
+<div class="one">
+
+![w:1000](./Diagramme/Mini_DFS_Zyklussuche.svg)
+
+</div>
+</div>
 
 ---
 
 ### MSAGL API: Zyklus-Hervorhebung (Highlighting)
 
 ```csharp
+var graph = new Microsoft.Msagl.Drawing.Graph("Blockschaltbild");
+var eIn    = graph.AddEdge("In", "Sum1");
+var eLoop1 = graph.AddEdge("Sum1", "Gain1");
+var eLoop2 = graph.AddEdge("Gain1", "Gain2");
+var eLoop3 = graph.AddEdge("Gain2", "Sum1"); // Schleife ohne Integrator!
+
 // Kanten der algebraischen Schleife auffällig rot färben:
 var loopEdges = new[] { eLoop1, eLoop2, eLoop3 };
 foreach (var edge in loopEdges)
@@ -683,15 +998,14 @@ foreach (var edge in loopEdges)
     edge.Attr.LineWidth = 3;
 }
 
-// Knoten der algebraischen Schleife hervorheben:
+// Betroffenen Summationsknoten hervorheben:
 var sumNode = graph.FindNode("Sum1");
 sumNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.MistyRose;
 sumNode.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
-
 GraphControl.Graph = graph;
 ```
 
-- Visuelle Diagnose verhindert numerische Divergenzen vor Simulationsstart.
+- Das Objekt `graph` markiert Kanten `eLoop1`, `eLoop2`, `eLoop3` und den Knoten `sumNode` rot.
 
 ---
 
@@ -728,20 +1042,23 @@ GraphControl.Graph = graph;
 <div class="columns">
 <div class="one">
 
-- **ScottPlot (`Plot.Add.Signal`):**
-  - Äquidistante Abtastung und Min/Max-Decimation ermöglichen flüssiges Rendering von $>10^6$ Punkten bei 60 FPS.
-  - `SignalXY` deckt monotone Zeitreihen mit adaptiver Schrittweite ab; `Scatter` eignet sich für Phasenraumdiagramme.
-- **Statistische Auswertung:**
-  - `Histogram` und `Bar` visualisieren Verweilzeiten, Rauschdaten und Monte-Carlo-Streuungen.
+- **Display-Bottleneck & Decimation:**
+  - $10^7$ Punkte überfordern UI-Controls; Min/Max-Säulen-Decimation schützt vor Aliasing und garantiert 60 FPS.
+- **ScottPlot 5 (`Signal` & `Scatter`):**
+  - Äquidistante Abtastung spart 50 % RAM ($O(1)$-Index).
+  - Phasenraum-Trajektorien visualisieren Leistungsgrenzen ($P_{\max}$-Hyperbel, Kamm'scher Kreis).
+- **Statistische Verteilungen:**
+  - Freedman-Diaconis-Binning und Flächennormierung ($f_k = \frac{H_k}{N \cdot h}$) ermöglichen präzisen Gauß-Fit.
 
 </div>
 <div class="one">
 
-- **Live-Streaming:**
-  - Vorallokierte Ringpuffer verhindern Garbage-Collection-Latenzen; Entkopplung via Timer schont den UI-Thread.
+- **Live-Streaming & Zero-Allocation:**
+  - Ringpuffer (`CircularBuffer`) und `Freeze()` verhindern GC-Jitter im 50-Hz-Loop.
+  - Welford-Algorithmus verhindert katastrophale Subtraktionsauslöschung und führt $\pm 3\sigma$-Toleranzbänder online nach.
 - **MSAGL:**
-  - Berechnet automatische Layouts (Sugiyama, Force-Directed).
-  - Macht kritische Modellstrukturen (z.B. algebraische Schleifen) durch gezieltes Kanten-Styling sofort diagnostizierbar.
+  - Sugiyama- und Force-Directed-Layouts ordnen komplexe Signalnetze vollautomatisch.
+  - DFS-Zyklenprüfung diagnostiziert algebraische Schleifen visuell vor Simulationsstart.
 
 </div>
 </div>
@@ -777,4 +1094,3 @@ Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details siehe [Aufgabenblatt 04](.
 </div>
 
 > Performance-Dashboard mit ScottPlot 5 & MSAGL (0 B GC-Druck) – Wahlmodell: Track A oder B.
-

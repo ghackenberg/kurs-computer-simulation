@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Das Display-Bottleneck</text>
+  <text x="135" y="42" class="sub">10^7 Datenpunkte vs. Bildschirm</text>
+
+  <!-- Box 1: Sensor Stream -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="130" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #1d4ed8;">Messdatenstrom (1 kHz DAQ)</text>
+    
+    <!-- Pulse signal points -->
+    <g transform="translate(20, 32)">
+      <line x1="0" y1="35" x2="200" y2="35" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+      <path d="M 5 35 Q 25 5 45 35 T 85 35 T 125 10 T 165 35 T 195 35" fill="none" stroke="#2563eb" stroke-width="2" />
+      <circle cx="25" cy="18" r="3" fill="#1d4ed8" />
+      <circle cx="65" cy="35" r="3" fill="#1d4ed8" />
+      <circle cx="105" cy="35" r="3" fill="#1d4ed8" />
+      <circle cx="125" cy="10" r="3" fill="#dc2626" />
+      <circle cx="145" cy="35" r="3" fill="#1d4ed8" />
+      <circle cx="185" cy="35" r="3" fill="#1d4ed8" />
+    </g>
+
+    <text x="120" y="102" class="desc" style="font-weight: bold; fill: #1e40af;">N = 10.000.000 Punkte</text>
+    <text x="120" y="120" class="desc" style="fill: #1e3a8a;">Kontinuierlicher DAQ-Puffer</text>
+  </g>
+
+  <!-- Box 2: Monitor Resolution -->
+  <g transform="translate(15, 196)">
+    <rect width="240" height="136" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl" style="fill: #b91c1c;">Display-Grenze (Full HD / 4K)</text>
+
+    <!-- Monitor grid -->
+    <g transform="translate(30, 32)">
+      <rect x="0" y="0" width="180" height="50" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+      <line x1="45" y1="0" x2="45" y2="50" stroke="#e2e8f0" stroke-width="1" />
+      <line x1="90" y1="0" x2="90" y2="50" stroke="#e2e8f0" stroke-width="1" />
+      <line x1="135" y1="0" x2="135" y2="50" stroke="#e2e8f0" stroke-width="1" />
+      <rect x="88" y="5" width="4" height="40" fill="#ef4444" opacity="0.8" />
+      <text x="90" y="62" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b91c1c" text-anchor="middle">1 Pixel Spalte</text>
+    </g>
+
+    <text x="120" y="112" class="desc" style="font-weight: bold; fill: #991b1b;">1 Pixel = ca. 5.000 Samples!</text>
+    <text x="120" y="128" class="desc" style="fill: #7f1d1d;">Canvas Polyline kollabiert</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="344" width="240" height="62" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+  <text x="135" y="366" class="lbl" style="fill: #15803d;">Decimation-Prinzip</text>
+  <text x="135" y="385" class="desc" style="font-weight: bold; fill: #166534;">O(Pixel) statt O(N) zeichnen</text>
+  <text x="135" y="399" class="desc" style="fill: #14532d;">Nur Min &amp; Max pro Pixelspalte</text>
+</svg>

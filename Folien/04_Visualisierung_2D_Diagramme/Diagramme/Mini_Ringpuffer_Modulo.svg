@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Ringpuffer-Architektur</text>
+  <text x="135" y="42" class="sub">Circular Buffer &amp; Modulo Wrap</text>
+
+  <!-- Circular Ring Illustration -->
+  <g transform="translate(35, 60)">
+    <circle cx="100" cy="90" r="70" fill="none" stroke="#cbd5e1" stroke-width="18" />
+    
+    <!-- Buffer segments -->
+    <path d="M 100 20 A 70 70 0 0 1 170 90" fill="none" stroke="#3b82f6" stroke-width="18" />
+    <path d="M 170 90 A 70 70 0 0 1 100 160" fill="none" stroke="#60a5fa" stroke-width="18" />
+    <path d="M 100 160 A 70 70 0 0 1 30 90" fill="none" stroke="#93c5fd" stroke-width="18" />
+    
+    <!-- Head Pointer -->
+    <line x1="100" y1="90" x2="145" y2="45" stroke="#dc2626" stroke-width="3" stroke-linecap="round" />
+    <circle cx="100" cy="90" r="4" fill="#dc2626" />
+    <polygon points="148,42 138,45 145,52" fill="#dc2626" />
+    
+    <rect x="75" y="55" width="48" height="18" rx="2" fill="#ffffff" opacity="0.9" />
+    <text x="99" y="68" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#dc2626" text-anchor="middle">head</text>
+
+    <rect x="75" y="105" width="48" height="18" rx="2" fill="#ffffff" opacity="0.9" />
+    <text x="99" y="118" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#475569" text-anchor="middle">val</text>
+  </g>
+
+  <!-- Formula Card -->
+  <g transform="translate(15, 252)">
+    <rect width="240" height="80" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">Modulo-Arithmetik</text>
+    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #1e40af;">head = (head + 1) % cap;</text>
+    <text x="120" y="60" class="desc" style="fill: #1e3a8a;">Feste Kapazität cap, 0 Byte Allokation</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #004B96;">Eigenschaft</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #334155;">O(1) Enqueue ohne GC-Pause</text>
+</svg>

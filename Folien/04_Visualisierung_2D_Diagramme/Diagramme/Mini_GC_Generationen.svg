@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">CLR Garbage Collection</text>
+  <text x="135" y="42" class="sub">GC-Jitter im 50 Hz Render-Loop</text>
+
+  <!-- Box 1: Bad Loop -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="132" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #b91c1c;">1. Naiv: new Brush() im Tick</text>
+    <g transform="translate(25, 28)">
+      <!-- Heap buckets -->
+      <rect x="0" y="0" width="55" height="40" fill="#fecaca" stroke="#dc2626" />
+      <text x="27" y="24" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b91c1c" text-anchor="middle">Gen 0</text>
+
+      <rect x="65" y="0" width="55" height="40" fill="#fee2e2" stroke="#ef4444" />
+      <text x="92" y="24" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" fill="#7f1d1d" text-anchor="middle">Gen 1</text>
+
+      <rect x="130" y="0" width="55" height="40" fill="#f8fafc" stroke="#94a3b8" />
+      <text x="157" y="24" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" fill="#64748b" text-anchor="middle">Gen 2</text>
+    </g>
+    <text x="120" y="96" class="desc" style="font-weight: bold; fill: #991b1b;">Gen 0 läuft ständig voll!</text>
+    <text x="120" y="114" class="desc" style="fill: #7f1d1d;">Stop-the-World Pausen (Ruckeln)</text>
+  </g>
+
+  <!-- Box 2: Zero Allocation with Freeze -->
+  <g transform="translate(15, 198)">
+    <rect width="240" height="132" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #15803d;">2. Zero-Allocation (0 B / Frame)</text>
+    <g transform="translate(30, 30)">
+      <rect x="10" y="0" width="160" height="36" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" />
+      <text x="90" y="22" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#15803d" text-anchor="middle">static readonly + Freeze()</text>
+    </g>
+    <text x="120" y="94" class="desc" style="font-weight: bold; fill: #166534;">0 Byte Heap-Allokation im Tick</text>
+    <text x="120" y="112" class="desc" style="fill: #14532d;">Vorallokierte Ringpuffer &amp; Pens</text>
+    <text x="120" y="126" class="desc" style="fill: #15803d;">Keine GC-Pausen bei Dauerlauf</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #1d4ed8;">Labor-Sprint A Fix</text>
+  <text x="135" y="383" class="desc" style="font-weight: bold; fill: #1e3a8a;">Kein 'new' im 50 Hz Loop!</text>
+  <text x="135" y="398" class="desc" style="fill: #1e40af;">Statische Ressourcen cachen</text>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Subtraktionsauslöschung</text>
+  <text x="135" y="42" class="sub">IEEE 754 Rundungsfalle</text>
+
+  <!-- Box 1: Naive Formula -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="132" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #b91c1c;">1. Naive Lehrbuchformel</text>
+    
+    <g transform="translate(20, 28)">
+      <rect x="0" y="0" width="200" height="30" rx="4" fill="#ffffff" stroke="#f87171" />
+      <text x="100" y="20" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b91c1c" text-anchor="middle">Sum(x_i^2) - 1/k * (Sum x_i)^2</text>
+    </g>
+
+    <text x="120" y="80" class="desc" style="font-weight: bold; fill: #991b1b;">Riesenzahl minus Riesenzahl</text>
+    <text x="120" y="98" class="desc" style="fill: #7f1d1d;">z.B. 10.000.000,001 - 10.000.000,000</text>
+    <text x="120" y="116" class="desc" style="font-weight: bold; fill: #dc2626;">Mantissenbits komplett gelöscht!</text>
+  </g>
+
+  <!-- Box 2: Mathematical Horror -->
+  <g transform="translate(15, 198)">
+    <rect width="240" height="132" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">2. Die fatale Folge</text>
+
+    <g transform="translate(20, 30)">
+      <rect x="10" y="0" width="180" height="36" rx="4" fill="#ffedd5" stroke="#ea580c" />
+      <text x="100" y="22" font-family="'Segoe UI', Arial, sans-serif" font-size="12px" font-weight="bold" fill="#c2410c" text-anchor="middle">s^2 &lt; 0  =&gt;  sqrt(s^2) = NaN!</text>
+    </g>
+
+    <text x="120" y="86" class="desc" style="font-weight: bold; fill: #9a3412;">Crash in Live-Telemetrie</text>
+    <text x="120" y="104" class="desc" style="fill: #c2410c;">Gleitkomma-Varianz wird negativ</text>
+    <text x="120" y="120" class="desc" style="fill: #7c2d12;">Nicht streaming-fähig!</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #15803d;">Die Lösung: Welford (1962)</text>
+  <text x="135" y="383" class="desc" style="font-weight: bold; fill: #166534;">Numerisch perfekt konditioniert</text>
+  <text x="135" y="398" class="desc" style="fill: #14532d;">O(1) Zeit &amp; garantierte Stabilität</text>
+</svg>
