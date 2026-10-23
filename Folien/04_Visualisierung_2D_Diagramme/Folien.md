@@ -1376,23 +1376,23 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 
 ---
 
-### Das Oszillations-Dilemma bei ungedämpften Kräften
+### Force-Directed: Naiv Iteration 50 (Ungedämpfter Grenzzyklus)
 
 <div class="columns">
 <div class="two">
 
-- **Warum reicht naiver Gradientenabstieg nicht aus?**
-  - Bei konstanter Schrittweite ($\Delta \vec{p} = \Delta t \cdot \vec{F}_{\text{net}}$) schießen Knoten über die Gleichgewichtslage hinaus (**Overshooting**).
-  - Wegen der quadratisch anwachsenden Coulomb-Kräfte ($\propto 1/d^2$) treibt die Gegenkraft den Knoten im Folgeschritt sofort wieder weit zurück.
-- **Folge: Endloser Grenzzyklus (Limit Cycle):**
-  - Ohne thermische Dämpfung pendeln Knoten permanent im Zickzack um das Minimum; das Layout kommt **niemals zur Ruhe**.
-- **Lösungsansatz Simulated Annealing:**
-  - Eine schrumpfende Temperaturschranke $T_k$ begrenzt die Schrittweite und entzieht dem System kinetische Schwingungsenergie.
+- **Kein Stillstand ohne Dämpfung:**
+  - Bei naiver Fortführung mit konstanter Schrittweite kommt das System selbst nach 50 Iterationen **nicht zur Ruhe**.
+- **Ursache: Overshooting:**
+  - Die quadratisch anwachsenden Coulomb-Kräfte ($\propto 1/d^2$) schleudern die Knoten permanent über die Gleichgewichtslage hinaus.
+- **Endloser Grenzzyklus (Limit Cycle):**
+  - Ohne thermische Dämpfung pendeln die Knoten im Zickzack; das Layout vibriert mit hohen Restkräften $\vec{F}_{\text{net}}$.
+  - Zeigt die zwingende Notwendigkeit eines Dämpfungsmechanismus!
 
 </div>
 <div class="one">
 
-![](./Diagramme/Mini_ForceDirected_Oszillation.svg)
+![](./Diagramme/Mini_ForceDirected_Iter50_Ungedaempft.svg)
 
 </div>
 </div>
@@ -1405,13 +1405,13 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 <div class="two">
 
 - **Prinzip der thermischen Dämpfung (Metallurgie):**
-  - Ein abklingender Temperaturfaktor $T_k$ kappt die maximal erlaubte Verschiebung pro Zeitschritt:
+  - Ein abklingender Temperaturfaktor $T_k$ begrenzt die maximal erlaubte Verschiebung pro Zeitschritt:
     $$\Delta \vec{p}_i = \frac{\vec{F}_{\text{net}, i}}{\|\vec{F}_{\text{net}, i}\|} \cdot \min\left(T_k, \|\vec{F}_{\text{net}, i}\|\right)$$
 - **Geometrisches Abkühlungsschema:**
   $$T_{k+1} = \gamma \cdot T_k, \quad \text{mit } \gamma \approx 0{,}90 \dots 0{,}95$$
-- **Didaktischer Ablauf:**
-  - **Start ($T_0$ groß):** Große Schritte überwinden topologische Barrieren und entflechten Kantenkreuzungen.
-  - **Ende ($T_k \to 0$):** Mikroschritte frieren das System im stabilen Kräftegleichgewicht $\|\vec{F}_{\text{net}}\| \approx 0$ ein.
+- **Konvergenzverlauf:**
+  - *Ungedämpft (rot gestrichelt):* Permanentes Schwingungsrauschen.
+  - *Mit Annealing (grün):* Monotone Konvergenz gegen $\|\vec{F}_{\text{net}}\| \approx 0$.
 
 </div>
 <div class="one">
@@ -1423,17 +1423,18 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 
 ---
 
-### Force-Directed: Iteration 15 (Einschwingen & Annealing)
+### Force-Directed: Iteration 15 (Einschwingen mit Annealing)
 
 <div class="columns">
 <div class="two">
 
-- **Simulated Annealing (Temperatur $T_k$):**
-  - Ein abklingender Temperaturfaktor $T_k$ begrenzt die maximale Schrittweite pro Iteration.
-  - Dämpft Oszillationen und verhindert Überschwingen um Energieminima.
-- **Geometrische Feinjustierung:**
+- **Thermisches Abbremsen:**
+  - Die gesunkene Temperatur $T_k$ begrenzt weite Sprünge und dämpft Oszillationen wirksam ab.
+- **Gezielte Feinjustierung:**
   - Die Topologie der Knoten ist bereits kreuzungsfrei und weitgehend symmetrisch.
-  - Kürzere Summenvektoren $\vec{F}_{\text{net}}$ gleichen Kantenlängen an die Ruhelänge $l_0$ an.
+  - Kürzere Summenvektoren $\vec{F}_{\text{net}}$ gleichen Kantenlängen sanft an die Ruhelänge $l_0$ an.
+- **Vorbereitung des Gleichgewichts:**
+  - Minimale Restkräfte führen das System direkt in das lokale Minimum.
 
 </div>
 <div class="one">

@@ -10,7 +10,7 @@ const puppeteer = require('C:/Users/P28500/AppData/Roaming/npm/node_modules/@mer
   const svgs = [
     'Mini_ForceDirected_Iter0.svg',
     'Mini_ForceDirected_Iter2.svg',
-    'Mini_ForceDirected_Oszillation.svg',
+    'Mini_ForceDirected_Iter50_Ungedaempft.svg',
     'Mini_ForceDirected_Konvergenz.svg',
     'Mini_ForceDirected_Iter15.svg',
     'Mini_ForceDirected_Iter50.svg'
