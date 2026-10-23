@@ -20,6 +20,7 @@ namespace GrafikGenerator
             var root = dir?.FullName ?? Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../"));
             Console.WriteLine($"Repository Root: {root}");
 
+            Chapter04Graphics.Generate(root);
             GenerateQueuePlots(root);
             GenerateHeatmapPlot(root);
             GenerateBoundaryConditionsPlot(root);

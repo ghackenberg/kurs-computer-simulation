@@ -315,7 +315,28 @@ Viele DGL-Solver (z.B. Runge-Kutta RK45) steuern Zeitschritte `dt` adaptiv:
 </div>
 <div class="one">
 
-![h:370](./Diagramme/Mini_SignalXY_Binaersuche.svg)
+![w:1000](./Diagramme/Mini_SignalXY_Binaersuche.svg)
+
+</div>
+</div>
+
+---
+
+### Anwendungsbeispiel: `SignalXY` mit adaptiver Schrittweite
+
+<div class="columns">
+<div class="two">
+
+Konkrete Sprungantwort eines adaptiven DGL-Solvers (RK45) in ScottPlot 5:
+
+- **Adaptive Schrittweite:** Kleines $\mathrm{d}t = 0{,}006\,\text{s}$ bei steilem Anstieg ($t < 0{,}6\,\text{s}$), großes $\mathrm{d}t = 0{,}04\,\text{s}$ im Gleichgewicht.
+- Stützpunkte im Zeitarray `xs` und Zustandsarray `ys` sind variabel beabstandet.
+- Referenzwert $w = 1{,}0$ zeigt das aperiodische Einschwingen.
+
+</div>
+<div class="three">
+
+![w:1000](./Illustrationen/ScottPlot_SignalXY_Example.png)
 
 </div>
 </div>
@@ -341,6 +362,27 @@ In der Mechatronik (Übung 4, Track A) interessiert der Zusammenhang zweier Zust
 <div class="one">
 
 ![w:1000](./Diagramme/Mini_Phasenraum_Motor.svg)
+
+</div>
+</div>
+
+---
+
+### Anwendungsbeispiel: `Scatter` im Motorkennfeld
+
+<div class="columns">
+<div class="two">
+
+Konkrete Ausgabe der Phasenraum-Trajektorie $(n, M)$ eines DC-Servomotors mit ScottPlot 5:
+
+- **Zustandskurve:** Trajektorie des Betriebspunkts von $(0, 0)$ beim Hochlaufen bis zum stationären Arbeitspunkt bei $2.350\,\text{U/min}$ und $6{,}0\,\text{Nm}$.
+- **Thermische Grenze:** Gestrichelte Hyperbel markiert die Leistungsgrenze $P_{\max} = 1{,}2\,\text{kW}$.
+- Überlastbereich beim Anfahren wird unmittelbar optisch transparent.
+
+</div>
+<div class="three">
+
+![w:1000](./Illustrationen/ScottPlot_Scatter_Example.png)
 
 </div>
 </div>
@@ -391,6 +433,27 @@ Zur Analyse dynamischer Systeme $\mathrm{d}\vec{x}/\mathrm{d}t = f(\vec{x})$ mit
 <div class="one">
 
 ![h:370](./Diagramme/Mini_VectorField_Phasenraum.svg)
+
+</div>
+</div>
+
+---
+
+### Anwendungsbeispiel: `VectorField` & Phasenebene
+
+<div class="columns">
+<div class="two">
+
+Konkrete Ausgabe des Phasenraum-Richtungsfeldes eines gedämpften Schwingers mit ScottPlot 5:
+
+- **Richtungsvektoren:** Reguläres Gitter von Vektoren `vectors` für Zustände $x_1$ (Auslenkung) und $x_2$ (Geschwindigkeit).
+- **Trajektorie:** Überlagerte Spiralkurve $x(t)$ verdeutlicht den Einlauf in den stabilen Gleichgewichtspunkt im Ursprung.
+- Erlaubt die Beurteilung von Dämpfung und Konvergenzgebiet ohne aufwendige Parameterstudien.
+
+</div>
+<div class="three">
+
+![w:1000](./Illustrationen/ScottPlot_VectorField_Example.png)
 
 </div>
 </div>
@@ -521,6 +584,27 @@ Ein Histogramm liefert absolute Klassenhäufigkeiten $H_k \in \mathbb{N}_0$.
 
 ---
 
+### Anwendungsbeispiel: Histogramm & Normalverteilung
+
+<div class="columns">
+<div class="two">
+
+Konkrete Monte-Carlo-Toleranzanalyse über $N = 10.000$ Simulationsdurchläufe:
+
+- **Klasseneinteilung:** Absolute Häufigkeiten $H_k$ der Bauteillänge über 24 Bins der Breite $h$.
+- **Analytische Kurve:** Überlagerte Gauß-Dichtefunktion $\mathcal{N}(\mu, \sigma^2)$ mit Mittelwert $\mu = 100\,\text{mm}$ und Standardabweichung $\sigma = 4{,}5\,\text{mm}$.
+- Bestätigt die korrekte stochastische Modellierung des Fertigungsprozesses.
+
+</div>
+<div class="three">
+
+![w:1000](./Illustrationen/ScottPlot_Histogram_Example.png)
+
+</div>
+</div>
+
+---
+
 ### Nicht-parametrische Kennwerte & Box-Plot-Anatomie
 
 <div class="columns">
@@ -574,6 +658,27 @@ WpfPlot1.Plot.Add.Box(new[] { box1, box2 });
 
 ---
 
+### Anwendungsbeispiel: Gütevergleich mit Box-Plots
+
+<div class="columns">
+<div class="two">
+
+Konkreter Vergleich dreier Regelungsstrategien (P-, PI- und PID-Regler):
+
+- Statistische Verteilung der Einschwingzeit $t_s$ unter zufälligen Laststörungen.
+- **Median ($Q_2$):** PID-Regler schwingt viermal schneller ein als der reine P-Regler.
+- **Quartile & Whisker:** Quartile $Q_1$, $Q_3$ und Whisker belegen die drastisch reduzierte Streubreite des PID-Ansatzes.
+
+</div>
+<div class="three">
+
+![w:1000](./Illustrationen/ScottPlot_BoxPlot_Example.png)
+
+</div>
+</div>
+
+---
+
 ### Parameterstudien mit gruppierten Balken
 
 <div class="columns">
@@ -598,6 +703,28 @@ Bei Simulationsvergleichen werden Kennzahlen verschiedener Modellvarianten gegen
 
 ---
 
+### Anwendungsbeispiel: Gruppierte Balken in ScottPlot 5
+
+<div class="columns">
+<div class="two">
+
+Konkreter Variantenvergleich zweier Modellkonfigurationen über vier Laststufen:
+
+- Gegenüberstellung von `Modell A` (Baseline) und `Modell B` (Optimiert, -23 %).
+- Die Gruppen gliedern sich in *Leerlauf*, *Teillast*, *Nennlast* und *Überlast*.
+- Jeder Balken nutzt `Position` und einen `Offset` mit definierter `Breite`.
+- Direkter visueller Nachweis von Energieeinsparungen für Simulationsberichte.
+
+</div>
+<div class="three">
+
+![w:1000](./Illustrationen/ScottPlot_Bars_Example.png)
+
+</div>
+</div>
+
+---
+
 ### Ortsdiskrete 2D-Zustände mit `Heatmap` & `ColorBar`
 
 <div class="columns">
@@ -616,6 +743,28 @@ Ortsdiskrete Modelle (wie das FDM-Temperaturfeld aus Termin 02) erzeugen 2D-Matr
 <div class="one">
 
 ![h:370](./Diagramme/Mini_Heatmap_Colorbar.svg)
+
+</div>
+</div>
+
+---
+
+### Anwendungsbeispiel: 2D-Temperaturfeld mit `Heatmap`
+
+<div class="columns">
+<div class="two">
+
+Konkrete Darstellung des 2D-Temperaturfelds $T[i,j]$ (FDM aus Termin 02):
+
+- **Matrix:** $50 \times 50$ Gitterpunkte mit Hotspot und Randkühlung.
+- **`Turbo`-Colormap:** Farbübergang von Blau über Gelb nach Rot.
+- **`ColorBar`:** Bindet die Temperaturskala in $[^\circ\text{C}]$ als Legende an.
+- Schnelles GPU-Rendering in SkiaSharp garantiert flüssigen Betrieb.
+
+</div>
+<div class="three">
+
+![h:390](./Illustrationen/ScottPlot_Heatmap_Example.png)
 
 </div>
 </div>
@@ -904,6 +1053,28 @@ Bei Telemetriedaten reicht der Mittelwert $\mu(t)$ für Qualitätsaussagen oft n
 
 ---
 
+### Anwendungsbeispiel: `FillY` im Live-Monitoring
+
+<div class="columns">
+<div class="two">
+
+Konkrete Telemetrie-Visualisierung eines Drucksignals mit ScottPlot 5:
+
+- **Nennverlauf:** Harmonische Führungsgröße $\mu(t)$.
+- **Toleranzkorridor:** Schattiertes Band zwischen $y_{\text{lower}}$ und $y_{\text{upper}}$ ($\mu(t) \pm 3\sigma$).
+- **Anomalie-Erkennung:** Ein Druckstoß bei $t \approx 1{,}38\,\text{s}$ durchbricht die obere Schranke $y_{\text{upper}}$ und triggert einen Alarm.
+- Dank Alpha-Blending bleibt der Verlauf von $\mu(t)$ stets erkennbar.
+
+</div>
+<div class="three">
+
+![w:1000](./Illustrationen/ScottPlot_FillY_Example.png)
+
+</div>
+</div>
+
+---
+
 <!-- Platzhalter für Abschnittsbildbeschreibung -->
 
 ![bg right](./Illustrationen/Abschnitt_5.jpg)
@@ -1017,6 +1188,28 @@ Für gerichtete Kausalsysteme (Signalflusspläne) berechnet MSAGL das Layout nac
 
 ---
 
+### MSAGL in der Praxis: Hierarchisches Sugiyama-Layout
+
+<div class="columns">
+<div class="two">
+
+Vollautomatisch von MSAGL berechneter Regelkreis:
+
+- **Vorwärtspfad:** Von `Sollwert w(t)` über `Summierer`, `PID-Regler`, `Leistungsaktor` zur `Regelstrecke`.
+- **Rückführpfad:** Signal `Istwert y(t)` über den `Sensor` zum `Summierer`.
+- **Störgröße:** Externe Kopplung von `Störgröße z(t)`.
+- Sugiyama minimiert Kantenkreuzungen vollautomatisch.
+
+</div>
+<div class="three">
+
+![h:390](./Illustrationen/MSAGL_Sugiyama_Layout.png)
+
+</div>
+</div>
+
+---
+
 ### Force-Directed Layout (Spring-Embedder)
 
 <div class="columns">
@@ -1037,6 +1230,28 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 <div class="one">
 
 ![w:1000](./Diagramme/Mini_ForceDirected_Kraefte.svg)
+
+</div>
+</div>
+
+---
+
+### MSAGL in der Praxis: Organisches Force-Directed Layout
+
+<div class="columns">
+<div class="two">
+
+Vollautomatisch berechnete Netzwerktopologie eines Antriebsstrangs:
+
+- **Busknoten:** `CAN-Gateway` vernetzt `Inverter`, `Batterie-BMS` und `Fahrzeugleitrechner`.
+- **Antrieb & Kühlung:** `Inverter`, `Traktionsmotor`, `Getriebe`, `Radsensorik` und `Kühlkreislauf`.
+- **Telemetrie:** Anbindung an die `Telemetrie-Cloud`.
+- Kräfte-Gleichgewicht entflechtet Knoten gleichmäßig.
+
+</div>
+<div class="three">
+
+![h:390](./Illustrationen/MSAGL_ForceDirected_Layout.png)
 
 </div>
 </div>
