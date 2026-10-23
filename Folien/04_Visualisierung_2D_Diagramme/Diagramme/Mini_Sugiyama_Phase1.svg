@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 420" width="280" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+      .node-txt { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #1e293b; text-anchor: middle; dominant-baseline: central; }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; fill: #dc2626; text-anchor: middle; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16a34a" />
+    </marker>
+  </defs>
+
+  <rect width="280" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="140" y="24" class="hdr">Sugiyama Phase 1</text>
+  <text x="140" y="42" class="sub">Zyklusbeseitigung (Cycle Removal)</text>
+
+  <!-- Graphic Display -->
+  <g transform="translate(15, 54)">
+    <rect width="250" height="184" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Node v1 (Sollwert / Input) -->
+    <rect x="25" y="30" width="46" height="34" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="48" y="47" class="node-txt">v_1</text>
+
+    <!-- Node v2 (Regler / Controller) -->
+    <rect x="175" y="30" width="46" height="34" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="198" y="47" class="node-txt">v_2</text>
+
+    <!-- Node v3 (Strecke / Plant) -->
+    <rect x="175" y="125" width="46" height="34" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="198" y="142" class="node-txt">v_3</text>
+
+    <!-- Node v4 (Sensor / Feedback) -->
+    <rect x="25" y="125" width="46" height="34" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="48" y="142" class="node-txt">v_4</text>
+
+    <!-- Forward Edge v1 -> v2 -->
+    <line x1="71" y1="47" x2="167" y2="47" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)" />
+
+    <!-- Forward Edge v2 -> v3 -->
+    <line x1="198" y1="64" x2="198" y2="117" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)" />
+
+    <!-- Forward Edge v3 -> v4 -->
+    <line x1="175" y1="142" x2="79" y2="142" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)" />
+
+    <!-- Cycle Back-Edge v4 -> v1 (Original, red dotted) -->
+    <path d="M 38 125 L 38 72" stroke="#dc2626" stroke-width="2" stroke-dasharray="3,2" marker-end="url(#arr-red)" />
+
+    <!-- Reversed Edge v1 -> v4 (Green solid arc showing inversion) -->
+    <path d="M 58 64 Q 75 95 58 117" fill="none" stroke="#16a34a" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arr-green)" />
+
+    <!-- Badge explaining inversion -->
+    <rect x="80" y="83" width="94" height="24" rx="4" fill="#fef2f2" stroke="#fca5a5" stroke-width="1" />
+    <text x="127" y="99" class="tag">e_rev drehen!</text>
+  </g>
+
+  <!-- Explanation Card -->
+  <g transform="translate(15, 248)">
+    <rect width="250" height="84" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="125" y="20" class="lbl" style="fill: #1d4ed8;">Feedback Arc Set (FAS)</text>
+    <text x="125" y="38" class="desc" style="fill: #1e40af;">Kanten, die Zyklen schließen, suchen</text>
+    <text x="125" y="54" class="desc" style="font-weight: bold; fill: #dc2626;">Temporär: v_4 ➔ v_1 wird v_1 ➔ v_4</text>
+    <text x="125" y="72" class="desc" style="fill: #2563eb;">Erzeugt kreisfreien gerichteten DAG</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="250" height="66" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+  <text x="140" y="364" class="lbl" style="fill: #15803d;">Ziel von Phase 1</text>
+  <text x="140" y="382" class="desc" style="font-weight: bold; fill: #166534;">Basis für topologische Schichtung</text>
+  <text x="140" y="398" class="desc" style="fill: #15803d;">Originalrichtung wird in Phase 4 restauriert</text>
+</svg>

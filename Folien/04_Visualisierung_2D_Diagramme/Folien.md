@@ -1188,6 +1188,101 @@ Für gerichtete Kausalsysteme (Signalflusspläne) berechnet MSAGL das Layout nac
 
 ---
 
+### Sugiyama Phase 1: Zyklusbeseitigung (Cycle Removal)
+
+<div class="columns">
+<div class="two">
+
+- **Das Problem (Gerichtete Zyklen):**
+  - Im Vorwärtspfad fließt das Signal von $v_1$ über $v_2$ und $v_3$ zum Ausgang $v_4$.
+  - Die Rückkopplung $v_4 \to v_1$ schließt einen Kreis; Schichtung verlangt zwingend einen kreisfreien DAG.
+- **Feedback Arc Set (FAS):**
+  - Minimale Kantenmenge zur Zyklusauflösung (z.B. via DFS nach Rückwärtskanten).
+- **Die Transformation:**
+  - Temporäre Drehung von $e_{\text{rev}}$ ($v_4 \to v_1$ wird zu $v_1 \to v_4$).
+  - Nach Phase 4 wird die Kante wieder in ihrer Originalrichtung gerendert.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Sugiyama_Phase1.svg)
+
+</div>
+</div>
+
+---
+
+### Sugiyama Phase 2: Schichten-Zuweisung & Dummy-Knoten
+
+<div class="columns">
+<div class="two">
+
+- **Zuweisung zu diskreten Schichten (Ranking):**
+  - Knoten $v$ erhalten Schichten $L_1, L_2, L_3, \dots$ (z.B. $v_1 \in L_1$, $v_2 \in L_2$, $v_3 \in L_3$).
+  - Bedingung für jede Kante $(u, v)$: $\text{layer}(v) \ge \text{layer}(u) + 1$.
+  - Solver: *Longest-Path* oder *Network-Simplex* (minimiert Dummy-Knoten).
+- **Normalisierung mit Dummy-Knoten:**
+  - Langkante von $v_1 \in L_1$ direkt nach $v_3 \in L_3$ wird in Schicht $L_2$ geteilt.
+  - Einfügen von Dummy $d_1$: Teilkanten $v_1 \to d_1$ und $d_1 \to v_3$.
+  - Alle Kanten besitzen nun exakt Schichtweite $\Delta L = 1$ (`ΔL = 1`).
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Sugiyama_Phase2.svg)
+
+</div>
+</div>
+
+---
+
+### Sugiyama Phase 3: Kreuzungsminimierung (Layer Permutation)
+
+<div class="columns">
+<div class="two">
+
+- **Das Problem (NP-schwer):**
+  - Ungünstige Reihenfolgen erzeugen Kantenkreuzungen (z.B. $v_1 \to v_4$ und $v_2 \to v_3$).
+  - Innerhalb jeder Schicht können Knoten jedoch frei vertikal permutiert werden.
+- **Barycenter-Heuristik (Schwerpunkt-Verfahren):**
+  - Fixiere die Vorgängerschicht $L_1$ und sortiere Schicht $L_2$.
+  - Berechne die Soll-Position $y_{\text{bary}}(v)$ eines Knotens $v \in L_2$ als arithmetischen Mittelwert seiner Vorgänger $u \in \text{pred}(v)$:
+    $$y_{\text{bary}}(v) = \frac{1}{|\text{pred}(v)|} \sum_{u \in \text{pred}(v)} y(u)$$
+  - Durch Tauschen von $v_3$ und $v_4$ nach aufsteigendem $y_{\text{bary}}$ verlaufen die Kanten kreuzungsfrei!
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Sugiyama_Phase3.svg)
+
+</div>
+</div>
+
+---
+
+### Sugiyama Phase 4: Koordinaten & Spline-Routing
+
+<div class="columns">
+<div class="two">
+
+- **Exakte Koordinatenzuweisung (Brandes-Köpf):**
+  - Aus den diskreten Rängen werden stetige $(x, y)$-Koordinaten berechnet.
+  - Der Vorwärtspfad $v_1 \to v_2 \to v_3$ wird horizontal **fluchtend begradigt**, um Knicke zu minimieren.
+  - Knotenabstände werden für lesbare Beschriftungen optimiert.
+- **Spline-Routing für Signalleitungen:**
+  - Dummy-Knoten aus Phase 2 dienen als Stützstellen für glatte **B-Splines** und werden danach unsichtbar.
+  - **Rückführpfad:** Die in Phase 1 umgekehrte Kante $e_{\text{rev}}$ wird über $v_4$ in Originalrichtung außen herum geroutet ($v_4 \to v_1$).
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Sugiyama_Phase4.svg)
+
+</div>
+</div>
+
+---
+
 ### MSAGL in der Praxis: Hierarchisches Sugiyama-Layout
 
 <div class="columns">
