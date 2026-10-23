@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; fill: #334155; text-anchor: middle; }
+      .tick { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; fill: #475569; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Gruppierte Balken: Layout</text>
+  <text x="135" y="42" class="sub">Offsets &amp; Positionierung</text>
+
+  <!-- Box 1: Geometrisches Layout -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="200" rx="6" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">Balkenpositionen &amp; Spacing</text>
+
+    <!-- Bar Chart Canvas -->
+    <g transform="translate(20, 30)">
+      <!-- Baseline axis -->
+      <line x1="10" y1="120" x2="190" y2="120" stroke="#64748b" stroke-width="1.5" />
+      
+      <!-- Group 1: Baseline x = 50 -->
+      <rect x="32" y="50" width="24" height="70" fill="#2563eb" rx="2" />
+      <rect x="58" y="30" width="24" height="90" fill="#f97316" rx="2" />
+      <line x1="57" y1="120" x2="57" y2="126" stroke="#475569" stroke-width="1.5" />
+      <text x="57" y="142" class="tick">Gruppe 1</text>
+
+      <!-- Group 2: Baseline x = 140 -->
+      <rect x="117" y="65" width="24" height="55" fill="#2563eb" rx="2" />
+      <rect x="143" y="20" width="24" height="100" fill="#f97316" rx="2" />
+      <line x1="142" y1="120" x2="142" y2="126" stroke="#475569" stroke-width="1.5" />
+      <text x="142" y="142" class="tick">Gruppe 2</text>
+
+      <!-- Dimension annotations -->
+      <line x1="32" y1="42" x2="56" y2="42" stroke="#1d4ed8" stroke-width="1" />
+      <text x="44" y="38" font-family="'Segoe UI', Arial, sans-serif" font-size="13px" fill="#1d4ed8" text-anchor="middle">Breite</text>
+
+      <line x1="57" y1="150" x2="142" y2="150" stroke="#64748b" stroke-width="1" stroke-dasharray="2,2" />
+      <rect x="42" y="156" width="116" height="18" fill="#ffffff" rx="2" />
+      <text x="100" y="170" font-family="'Segoe UI', Arial, sans-serif" font-size="13px" fill="#475569" text-anchor="middle">Gruppenabstand</text>
+    </g>
+  </g>
+
+  <!-- Box 2: Berechnungsformel & Legende -->
+  <g transform="translate(15, 266)">
+    <rect width="240" height="140" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #0f172a;">Positions-Arithmetik</text>
+
+    <!-- Legend -->
+    <g transform="translate(15, 30)">
+      <rect x="5" y="2" width="14" height="12" fill="#2563eb" rx="2" />
+      <text x="25" y="13" font-family="'Segoe UI', Arial, sans-serif" font-size="13px" fill="#1e293b" text-anchor="start">Modell A</text>
+
+      <rect x="100" y="2" width="14" height="12" fill="#f97316" rx="2" />
+      <text x="120" y="13" font-family="'Segoe UI', Arial, sans-serif" font-size="13px" fill="#1e293b" text-anchor="start">Modell B</text>
+    </g>
+
+    <text x="120" y="78" class="desc" style="font-weight: bold; fill: #004B96;">Offset = Position + k · Breite</text>
+    <text x="120" y="100" class="desc">Balken zentriert ausgerichtet</text>
+    <text x="120" y="122" class="desc">Ideal für Varianten-Analysen</text>
+  </g>
+</svg>

@@ -265,7 +265,7 @@ Messdaten liegen in der Simulation meist mit **konstanter Schrittweite** vor ($t
 </div>
 <div class="three">
 
-![width:480px](./Illustrationen/ScottPlot_Signal_Example.png)
+![w:1000](./Illustrationen/ScottPlot_Signal_Example.png)
 
 </div>
 </div>
@@ -287,12 +287,35 @@ Der Verzicht auf ein explizites Zeitstempel-Array halbiert den RAM-Bedarf im Spe
   - Benötigt nur `ys` (8 Byte) und skalare Abtastparameter `dt` sowie `t_0`.
   - Für $10^6$ Punkte: Nur **$8\,\text{MB}$ Heap-Speicher (-50 %)**.
   - Direkte Indexberechnung: $i(t) = \lfloor (t - t_0)/dt \rfloor$ in **$O(1)$**.
-  - Für monotone, aber adaptive Zeitschritte; binäre Suche in $O(\log N)$.
 
 </div>
 <div class="one">
 
 ![w:1000](./Diagramme/Mini_Signal_RAM_Vorteil.svg)
+
+</div>
+</div>
+
+---
+
+### Nicht-äquidistante Signale mit `SignalXY`
+
+<div class="columns">
+<div class="two">
+
+Viele DGL-Solver (z.B. Runge-Kutta RK45) steuern Zeitschritte `dt` adaptiv:
+
+- In transienten Phasen sinkt `dt` ab, im Gleichgewicht wächst `dt`.
+- Array `xs` ist nicht-äquidistant, aber **streng monoton steigend**.
+- **Grenze von `Signal`:** Direkte Indexsuche $i = \lfloor t/dt \rfloor$ für Index $i$ unmöglich.
+- **Lösung `Plot.Add.SignalXY(xs, ys)`:**
+  - **Binärsuche** in $O(\log N)$ ermittelt Indizes für $[xMin, xMax]$.
+  - Min/Max-Dezimation rendert flüssig bei $> 10^6$ Punkten!
+
+</div>
+<div class="one">
+
+![h:370](./Diagramme/Mini_SignalXY_Binaersuche.svg)
 
 </div>
 </div>
@@ -345,6 +368,29 @@ In der Fahrsimulation (Übung 4, Track B) bestimmt der Reifen-Grip die maximal �
 <div class="one">
 
 ![w:1000](./Diagramme/Mini_Kammscher_Kreis.svg)
+
+</div>
+</div>
+
+---
+
+### Phasenraum-Richtungsfelder mit `VectorField`
+
+<div class="columns">
+<div class="two">
+
+Zur Analyse dynamischer Systeme $\mathrm{d}\vec{x}/\mathrm{d}t = f(\vec{x})$ mit Zeitschritten $\mathrm{d}t$ und Zuständen $x_1$ und $x_2$:
+
+- Bevor eine Trajektorie $x(t)$ numerisch integriert wird, offenbart das **Richtungsfeld** bereits das globale Verhalten.
+- An jedem Gitterpunkt $(x_1, x_2)$ wird der Geschwindigkeitsvektor als gerichteter Pfeil berechnet.
+- **ScottPlot 5 API:**
+  - `Plot.Add.VectorField(vectors)` visualisiert ein 2D-Gitter von Vektoren `vectors`.
+  - Macht Grenzzyklen und Attraktoren sichtbar, noch bevor eine Trajektorie $x(t)$ berechnet wird.
+
+</div>
+<div class="one">
+
+![h:370](./Diagramme/Mini_VectorField_Phasenraum.svg)
 
 </div>
 </div>
@@ -525,6 +571,54 @@ WpfPlot1.Plot.Add.Box(new[] { box1, box2 });
 ```
 
 - Die Objekte `box1` und `box2` visualisieren Quartile `BoxMin` ($Q_1$), `BoxMax` ($Q_3$) und den Median `BoxMiddle` ($Q_2$).
+
+---
+
+### Parameterstudien mit gruppierten Balken
+
+<div class="columns">
+<div class="two">
+
+Bei Simulationsvergleichen werden Kennzahlen verschiedener Modellvarianten gegenübergestellt:
+
+- **Szenarienvergleich:** `Modell A` (Baseline) vs. `Modell B` (Optimiert).
+- **Positions-Arithmetik in ScottPlot 5:**
+  - Jeder Balken besitzt `Position`, `Value` und eine `Breite`.
+  - Bei mehreren Balken pro Gruppe wird die Position um einen `Offset` verschoben: $\text{Offset} = \text{Position} + k \cdot \text{Breite}$.
+  - Zwischen den Gruppen sorgt ein `Gruppenabstand` für klare visuelle Trennung.
+  - Ideal für Monte-Carlo-Vergleiche, Taktzeiten und Energiebedarf.
+
+</div>
+<div class="one">
+
+![h:370](./Diagramme/Mini_Gruppierte_Bars.svg)
+
+</div>
+</div>
+
+---
+
+### Ortsdiskrete 2D-Zustände mit `Heatmap` & `ColorBar`
+
+<div class="columns">
+<div class="two">
+
+Ortsdiskrete Modelle (wie das FDM-Temperaturfeld aus Termin 02) erzeugen 2D-Matrizen $T[i,j]$ vom Typ `double[,]`:
+
+- **Keine $N \times M$ UI-Rechtecke:** Ein WPF-`Canvas` bricht bei $250.000$ Elementen zusammen.
+- **ScottPlot-Pipeline mit `Plot.Add.Heatmap(matrix)`:**
+  - Normierung der Matrixwerte zwischen $T_{\min}$, $T_{\text{mid}}$ und $T_{\max}$.
+  - Lookup in einer `Colormap` liefert den `ARGB`-Farbwert.
+  - Upload als SkiaSharp-Bitmap-Textur; GPU-Skalierung in $O(1)$!
+  - `Plot.Add.ColorBar(heatmap)` bindet die Skala als Legende an.
+
+</div>
+<div class="one">
+
+![h:370](./Diagramme/Mini_Heatmap_Colorbar.svg)
+
+</div>
+</div>
 
 ---
 
@@ -780,6 +874,30 @@ Mit Welfords Online-Statistik lassen sich kontinuierliche Konfidenzbänder berec
 <div class="one">
 
 ![w:1000](./Diagramme/Mini_Drei_Sigma_Band.svg)
+
+</div>
+</div>
+
+---
+
+### Schattierte Toleranzkorridore mit `FillY`
+
+<div class="columns">
+<div class="two">
+
+Bei Telemetriedaten reicht der Mittelwert $\mu(t)$ für Qualitätsaussagen oft nicht aus:
+
+- **Toleranzgrenzen:** Konfidenzband über obere Schranke $y_{\text{upper}}$ und untere Schranke $y_{\text{lower}}$ (z.B. $\mu(t) \pm 3\sigma$).
+- **Polygon-Rendering mit `Plot.Add.FillY`:**
+  - `Plot.Add.FillY(xs, y_lower, y_upper)` erzeugt geschlossenen 2D-Pfad (`SKPath`).
+  - Punkte laufen vorwärts entlang $y_{\text{upper}}$ und rückwärts entlang $y_{\text{lower}}$.
+  - Die Fläche wird mittels Alpha-Blending halbtransparent gerendert.
+  - Abweichungen fallen sofort auf, ohne $\mu(t)$ zu verdecken.
+
+</div>
+<div class="one">
+
+![h:370](./Diagramme/Mini_FillY_Toleranzkorridor.svg)
 
 </div>
 </div>

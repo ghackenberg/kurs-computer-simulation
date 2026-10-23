@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; fill: #334155; text-anchor: middle; }
+    </style>
+    <linearGradient id="cmap" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#313695" />
+      <stop offset="25%" stop-color="#4575b4" />
+      <stop offset="50%" stop-color="#ffffbf" />
+      <stop offset="75%" stop-color="#f46d43" />
+      <stop offset="100%" stop-color="#a50026" />
+    </linearGradient>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Heatmap &amp; ColorBar</text>
+  <text x="135" y="42" class="sub">2D-Zustandsfeld &amp; Transfer</text>
+
+  <!-- Box 1: Matrix & Heatmap Grid -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="190" rx="6" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">Ortsdiskrete 2D-Matrix</text>
+
+    <!-- Heatmap Grid -->
+    <g transform="translate(20, 32)">
+      <!-- 4x4 Cells -->
+      <rect x="0" y="0" width="30" height="30" fill="#313695" stroke="#ffffff" stroke-width="1" />
+      <rect x="30" y="0" width="30" height="30" fill="#4575b4" stroke="#ffffff" stroke-width="1" />
+      <rect x="60" y="0" width="30" height="30" fill="#74add1" stroke="#ffffff" stroke-width="1" />
+      <rect x="90" y="0" width="30" height="30" fill="#abd9e9" stroke="#ffffff" stroke-width="1" />
+
+      <rect x="0" y="30" width="30" height="30" fill="#4575b4" stroke="#ffffff" stroke-width="1" />
+      <rect x="30" y="30" width="30" height="30" fill="#ffffbf" stroke="#ffffff" stroke-width="1" />
+      <rect x="60" y="30" width="30" height="30" fill="#fee090" stroke="#ffffff" stroke-width="1" />
+      <rect x="90" y="30" width="30" height="30" fill="#74add1" stroke="#ffffff" stroke-width="1" />
+
+      <rect x="0" y="60" width="30" height="30" fill="#74add1" stroke="#ffffff" stroke-width="1" />
+      <rect x="30" y="60" width="30" height="30" fill="#fee090" stroke="#ffffff" stroke-width="1" />
+      <rect x="60" y="60" width="30" height="30" fill="#f46d43" stroke="#ffffff" stroke-width="1" />
+      <rect x="90" y="60" width="30" height="30" fill="#fee090" stroke="#ffffff" stroke-width="1" />
+
+      <rect x="0" y="90" width="30" height="30" fill="#abd9e9" stroke="#ffffff" stroke-width="1" />
+      <rect x="30" y="90" width="30" height="30" fill="#74add1" stroke="#ffffff" stroke-width="1" />
+      <rect x="60" y="90" width="30" height="30" fill="#fee090" stroke="#ffffff" stroke-width="1" />
+      <rect x="90" y="90" width="30" height="30" fill="#a50026" stroke="#ffffff" stroke-width="1" />
+
+      <!-- ColorBar on the right -->
+      <g transform="translate(142, 0)">
+        <rect x="0" y="0" width="18" height="120" fill="url(#cmap)" stroke="#64748b" stroke-width="1" rx="2" />
+        <text x="24" y="12" font-family="'Segoe UI', Arial, sans-serif" font-size="13px" fill="#1e293b" text-anchor="start">T_max</text>
+        <text x="24" y="66" font-family="'Segoe UI', Arial, sans-serif" font-size="13px" fill="#64748b" text-anchor="start">T_mid</text>
+        <text x="24" y="118" font-family="'Segoe UI', Arial, sans-serif" font-size="13px" fill="#1e293b" text-anchor="start">T_min</text>
+      </g>
+    </g>
+
+    <text x="120" y="174" class="desc" style="font-weight: bold; fill: #0f172a;">Matrix-Zustand T[i,j] (z.B. FDM)</text>
+  </g>
+
+  <!-- Box 2: Render-Logik & Colormap -->
+  <g transform="translate(15, 256)">
+    <rect width="240" height="150" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="120" y="24" class="lbl" style="fill: #004B96;">GPU-Bitmap-Pipeline</text>
+
+    <text x="120" y="48" class="desc" style="font-weight: bold; fill: #1d4ed8;">Kein Zeichnen von Polygonen!</text>
+    <text x="120" y="70" class="desc">1. Normalisierung: [T_min, T_max]</text>
+    <text x="120" y="92" class="desc">2. Farb-Lookup in Colormap (ARGB)</text>
+    <text x="120" y="114" class="desc">3. Bitmap-Upload in SkiaSharp</text>
+    <text x="120" y="136" class="desc" style="fill: #15803d; font-weight: bold;">Skalierung auf GPU in O(1)</text>
+  </g>
+</svg>

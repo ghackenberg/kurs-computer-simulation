@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">FillY: Toleranzkorridore</text>
+  <text x="135" y="42" class="sub">Hüllkurven &amp; Blending</text>
+
+  <!-- Box 1: Shaded Corridor -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="190" rx="6" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">Flächen-Interpolation</text>
+
+    <!-- Curve & Fill Area -->
+    <g transform="translate(20, 30)">
+      <!-- Axes -->
+      <line x1="10" y1="120" x2="190" y2="120" stroke="#94a3b8" stroke-width="1.5" />
+      <line x1="10" y1="10" x2="10" y2="120" stroke="#94a3b8" stroke-width="1.5" />
+
+      <!-- Shaded polygon: upper curve forward, lower curve reverse -->
+      <path d="M 20 60 Q 70 30 120 45 T 180 20 L 180 80 Q 120 95 70 80 T 20 90 Z" fill="#93c5fd" fill-opacity="0.45" stroke="#3b82f6" stroke-width="1.2" stroke-dasharray="3,2" />
+
+      <!-- Center mean curve -->
+      <path d="M 20 75 Q 70 55 120 70 T 180 50" fill="none" stroke="#1d4ed8" stroke-width="2" />
+
+      <!-- Annotations -->
+      <text x="145" y="16" font-family="'Segoe UI', Arial, sans-serif" font-size="13px" fill="#2563eb" text-anchor="middle">y_upper</text>
+      <text x="145" y="66" font-family="'Segoe UI', Arial, sans-serif" font-size="13px" fill="#1d4ed8" font-weight="bold" text-anchor="middle">μ(t)</text>
+      <text x="145" y="104" font-family="'Segoe UI', Arial, sans-serif" font-size="13px" fill="#2563eb" text-anchor="middle">y_lower</text>
+    </g>
+
+    <text x="120" y="174" class="desc" style="font-weight: bold; fill: #0f172a;">Konfidenzband μ ± 3σ</text>
+  </g>
+
+  <!-- Box 2: Closed Polygon Render-Logik -->
+  <g transform="translate(15, 256)">
+    <rect width="240" height="150" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="120" y="24" class="lbl" style="fill: #004B96;">Polygon-Render-Logik</text>
+
+    <text x="120" y="48" class="desc" style="font-weight: bold; fill: #1d4ed8;">Geschlossener 2N-Pfad (SKPath)</text>
+    <text x="120" y="70" class="desc">1. Hinweg: entlang y_upper</text>
+    <text x="120" y="92" class="desc">2. Rückweg: y_lower umgekehrt</text>
+    <text x="120" y="114" class="desc">3. Schließen (Z) &amp; Raster-Füllung</text>
+    <text x="120" y="136" class="desc" style="fill: #15803d; font-weight: bold;">Alpha-Blending überlappender Pfade</text>
+  </g>
+</svg>

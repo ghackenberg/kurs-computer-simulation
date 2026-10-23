@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">SignalXY: Binärsuche</text>
+  <text x="135" y="42" class="sub">Adaptive Schritte in O(log N)</text>
+
+  <!-- Box 1: Adaptive Time Steps -->
+  <g transform="translate(15, 54)">
+    <rect width="240" height="132" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">1. Variable Zeitschritte dt</text>
+    
+    <!-- Timeline with non-uniform ticks -->
+    <g transform="translate(20, 30)">
+      <line x1="0" y1="35" x2="200" y2="35" stroke="#94a3b8" stroke-width="1.5" />
+      <!-- Non-uniform ticks -->
+      <line x1="10" y1="28" x2="10" y2="42" stroke="#2563eb" stroke-width="2" />
+      <line x1="25" y1="28" x2="25" y2="42" stroke="#2563eb" stroke-width="2" />
+      <line x1="45" y1="28" x2="45" y2="42" stroke="#2563eb" stroke-width="2" />
+      <line x1="95" y1="28" x2="95" y2="42" stroke="#2563eb" stroke-width="2" />
+      <line x1="120" y1="28" x2="120" y2="42" stroke="#2563eb" stroke-width="2" />
+      <line x1="180" y1="28" x2="180" y2="42" stroke="#2563eb" stroke-width="2" />
+      
+      <!-- Monotone arrow -->
+      <path d="M 10 18 L 180 18" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="3,2" />
+      <text x="95" y="12" font-family="'Segoe UI', Arial, sans-serif" font-size="13.5px" font-weight="bold" fill="#1d4ed8" text-anchor="middle">xs streng monoton</text>
+    </g>
+
+    <text x="120" y="98" class="desc" style="font-weight: bold; fill: #1e40af;">dt ist variabel (Solver RK45)</text>
+    <text x="120" y="118" class="desc" style="fill: #1e3a8a;">Direktindex i = t/dt unmöglich</text>
+  </g>
+
+  <!-- Box 2: Binary Search in Visible Range -->
+  <g transform="translate(15, 198)">
+    <rect width="240" height="132" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #15803d;">2. O(log N) Bereichssuche</text>
+
+    <!-- Viewport bracket -->
+    <rect x="15" y="32" width="210" height="34" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" />
+    <text x="120" y="54" font-family="'Segoe UI', Arial, sans-serif" font-size="13.5px" font-weight="bold" fill="#15803d" text-anchor="middle">Fenster [xMin, xMax]</text>
+
+    <text x="120" y="92" class="desc" style="font-weight: bold; fill: #166534;">Binärsuche: Start &amp; End-Index</text>
+    <text x="120" y="112" class="desc" style="fill: #14532d;">Nur sichtbare Spanne dezimiert</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #1d4ed8;">C#-API</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #1e3a8a;">Plot.Add.SignalXY(xs, ys)</text>
+</svg>
