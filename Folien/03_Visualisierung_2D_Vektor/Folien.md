@@ -440,13 +440,11 @@ Was passiert bei **naiver Skalierung** mit getrennten Faktoren für X und Y?
 
 $$s_x = \frac{W_{\text{draw}}}{W_{\text{world}}}, \quad s_y = \frac{H_{\text{draw}}}{H_{\text{world}}} \quad \left[\frac{\mathrm{px}}{\mathrm{m}}\right]$$
 
-- Wenn $s_x \ne s_y$, wird der Raum gestreckt oder gestaucht.
-- **Folgen für technische Visualisierungen:**
-  - Kreise werden zu eirigen Ellipsen.
-  - Quadratische Fachwerke werden rechteckig verzerrt.
-  - $45^\circ$-Diagonalstreben kippen optisch ab.
-  - Kraftvektoren zeigen in falsche Raumrichtungen!
-- **Ingenieur-Regel:** In physikalischen Modellen ist anisotrope Skalierung unzulässig!
+- Wenn $s_x \ne s_y$, wird der Raum gestreckt oder gestaucht:
+  - Kreise werden zu Ellipsen, Fachwerke rechteckig verzerrt.
+  - $45^\circ$-Diagonalen kippen ab, Kraftvektoren zeigen fehl!
+- **Ingenieur-Regel:** Anisotrope Skalierung ist in Physikmodellen unzulässig!
+- **Die Lösung:** Ein isotroper Maßstab $s = \min(s_x, s_y)$ (nächste Folie).
 
 </div>
 <div class="one">
@@ -851,6 +849,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
   - Extremes Flackern und UI-Lags ab 1.000 Elementen.
   - Koppelt den Navigationszustand unnötig an Modelldaten.
   - Erzeugt unzählige Layout-Passes in WPF.
+- **Die saubere Lösung:** GPU-Transformation mit Affiner Matrix $\mathbf{M}$ (folgt).
 
 </div>
 <div class="one">
@@ -1193,7 +1192,7 @@ Die Rücktransformation durchläuft **zwei getrennte Schichten**:
 <div class="columns top">
 <div class="two">
 
-Aus den Viewport-Vorwärtsgleichungen leiten wir die **analytische Umkehrfunktion** von $\vec{P}_{\text{unzoom}}$ zum physikalischen Weltpunkt $\vec{P}_{\text{world}} = (x_w, y_w)$ ab:
+Ausgehend vom Klickpunkt $\vec{P}_{\text{screen}}$ heben wir zunächst die Kameramatrix zu $\vec{P}_{\text{unzoom}}$ auf. Anschließend leiten wir die **analytische Umkehrfunktion** zum physikalischen Weltpunkt $\vec{P}_{\text{world}} = (x_w, y_w)$ ab:
 
 - **X-Rückrechnung (Translation & Skalierung):**
   $x_{\text{canvas}} = x_{\text{off}} + (x_w - X_{\min}) \cdot s$

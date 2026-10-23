@@ -69,6 +69,7 @@ function normalizeUnicode(str) {
   return str
     .replace(/₁/g, '_1').replace(/₂/g, '_2').replace(/₃/g, '_3').replace(/₄/g, '_4')
     .replace(/ᵢ/g, '_i').replace(/ₙ/g, '_n').replace(/ₘ/g, '_m')
+    .replace(/Δ/g, 'delta_')
     .replace(/ä/g, 'ae').replace(/Ä/g, 'Ae')
     .replace(/ö/g, 'oe').replace(/Ö/g, 'Oe')
     .replace(/ü/g, 'ue').replace(/Ü/g, 'Ue')
@@ -99,16 +100,22 @@ const CANONICAL_ALIASES = {
   'p_wing': ['p_wing', 'pwing', 'wing', 'p_wing1', 'p_wing2', 'pwing1', 'pwing2', 'p_wing12', 'pwing12'],
   'p_wing1': ['p_wing1', 'pwing1', 'wing1', 'p_wing', 'p_wing12', 'pwing12'],
   'p_wing2': ['p_wing2', 'pwing2', 'wing2', 'p_wing', 'p_wing12', 'pwing12'],
-  'e_u': ['e_u', 'eu', 'u', 'dir'],
+  'e_u': ['e_u', 'eu', 'u', 'dir', 'e_x', 'e_y', 'ex', 'ey'],
   'e_perp': ['e_perp', 'eperp', 'perp'],
   'scale': ['scale', 's', 'zoomfactor'],
+  's_x': ['s_x', 'sx', 'scale_x', 'scalex', 'scale'],
+  's_y': ['s_y', 'sy', 'scale_y', 'scaley', 'scale'],
   'margin': ['margin', 'rand'],
-  'gap': ['gap', 'deltay_gap', 'y_gap'],
-  'overhang': ['overhang', 'ueberstand', 'deltay_over', 'y_over'],
-  'p_1': ['p_1', 'p1'],
-  'p_2': ['p_2', 'p2'],
-  'p_i': ['p_i', 'pi'],
+  'gap': ['gap', 'deltay_gap', 'y_gap', 'delta_y_gap', 'deltaygap', 'ygap'],
+  'overhang': ['overhang', 'ueberstand', 'deltay_over', 'y_over', 'delta_y_over', 'deltayover', 'yover'],
+  'p_1': ['p_1', 'p1', 'x_1', 'y_1', 'x1', 'y1'],
+  'p_2': ['p_2', 'p2', 'x_2', 'y_2', 'x2', 'y2'],
+  'p_i': ['p_i', 'pi', 'x_i', 'y_i', 'xi', 'yi'],
   'y_dim': ['y_dim', 'ydim', 'yscreen', 'y_screen'],
+  'x_mid': ['x_mid', 'xmid', 'midx'],
+  'delta_w': ['delta_w', 'deltaw', 'w_draw', 'wdraw'],
+  'delta_h': ['delta_h', 'deltah', 'h_draw', 'hdraw'],
+  'k_3': ['k_3', 'k3', 'node_3', 'node3', 'draggednode', '_draggednode'],
   'length': ['length', 'l'],
   'width': ['width', 'w'],
   'lastpos': ['lastpos', '_lastpos', 'p_last', 'lastmousepos', '_lastmousepos'],
@@ -118,17 +125,20 @@ const CANONICAL_ALIASES = {
   'screenpixel': ['screenpixel', 'p_screen', 'screen', 'pixel'],
   'canvasmatrix': ['canvasmatrix', 'm', 'matrix'],
   'trans': ['trans', 'transform2d', 'transform', 'viewport'],
-  'unzoomed': ['unzoomed', 'p_unzoom', 'p_canvas', 'canvaspoint'],
+  'unzoomed': ['unzoomed', 'p_unzoom', 'p_canvas', 'canvaspoint', 'x_u', 'y_u', 'xu', 'yu'],
   'worldx': ['worldx', 'x_w', 'xw'],
   'worldy': ['worldy', 'y_w', 'yw'],
-  'p_screen': ['p_screen', 'pscreen', 'screenpixel'],
-  'p_canvas': ['p_canvas', 'pcanvas', 'unzoomed'],
-  'p_unzoom': ['p_unzoom', 'punzoom', 'unzoomed', 'p_canvas'],
-  'p_world': ['p_world', 'pworld', 'worldpoint'],
-  'x_p': ['x_p', 'xp', 'x_screen', 'scrx'],
-  'y_p': ['y_p', 'yp', 'y_screen', 'scry'],
-  'x_u': ['x_u', 'xu', 'x_canvas', 'unzoomx'],
-  'y_u': ['y_u', 'yu', 'y_canvas', 'unzoomy'],
+  'p_screen': ['p_screen', 'pscreen', 'screenpixel', 'x_p', 'y_p', 'xp', 'yp'],
+  'p_canvas': ['p_canvas', 'pcanvas', 'unzoomed', 'x_u', 'y_u', 'xu', 'yu'],
+  'p_unzoom': ['p_unzoom', 'punzoom', 'unzoomed', 'p_canvas', 'x_u', 'y_u', 'xu', 'yu'],
+  'p_world': ['p_world', 'pworld', 'worldpoint', 'x_w', 'y_w', 'xw', 'yw'],
+  'x_p': ['x_p', 'xp', 'x_screen', 'scrx', 'p_screen'],
+  'y_p': ['y_p', 'yp', 'y_screen', 'scry', 'p_screen'],
+  'x_u': ['x_u', 'xu', 'x_canvas', 'unzoomx', 'p_canvas', 'p_unzoom'],
+  'y_u': ['y_u', 'yu', 'y_canvas', 'unzoomy', 'p_canvas', 'p_unzoom'],
+  'f_x': ['f_x', 'fx', 'f_norm', 'f', 'e_u'],
+  'f_y': ['f_y', 'fy', 'f_norm', 'f', 'e_u'],
+  's_f': ['s_f', 'sf', 'scale_f', 'scalef', 'scale'],
   'f': ['f', 'kraft', 'kraftvektor', 'kraftvektoren', 'kraefte', 'last', 'lasten']
 };
 
@@ -179,12 +189,17 @@ function extractSlideTokens(text) {
     });
   }
 
-  // 3. Regular words from text
-  const clean = normText.replace(/<[^>]+>/g, ' ').replace(/[#*_`]/g, ' ');
+  // 3. Regular words from text (preserve underscores for identifiers like P_1, y_dim)
+  const clean = normText.replace(/<[^>]+>/g, ' ').replace(/[#*`]/g, ' ');
   const words = clean.match(/[A-Za-z][A-Za-z0-9_]*/g) || [];
   words.forEach(w => {
     tokens.add(w);
     tokens.add(w.toLowerCase());
+    if (w.includes('_')) {
+      const parts = w.split('_');
+      tokens.add(parts.join(''));
+      tokens.add(parts[0] + parts[1].charAt(0).toUpperCase() + parts[1].slice(1));
+    }
   });
 
   return tokens;
@@ -311,6 +326,39 @@ function extractCodeVariables(codeBlock) {
   return Array.from(vars);
 }
 
+function extractSlideGeometricVariables(slideText) {
+  const vars = new Set();
+  const mathRegex = /\$([^\$]+)\$/g;
+  let m;
+  while ((m = mathRegex.exec(slideText)) !== null) {
+    let rawMath = m[1]
+      .replace(/\\Delta/g, 'delta_')
+      .replace(/_\{([A-Za-z0-9_]+)\}/g, '_$1')
+      .replace(/\\text\{([A-Za-z0-9_]+)\}/g, '$1');
+
+    // Subscripted variables: e.g. y_dim, x_mid, x_off, y_off, P_1, P_2, W_world, s_x, s_y
+    const subMatches = rawMath.match(/\b([A-Za-z]+_[A-Za-z0-9]+)\b/g);
+    if (subMatches) {
+      subMatches.forEach(v => {
+        const norm = normalizeUnicode(v).toLowerCase();
+        if (norm.startsWith('min_') || norm.startsWith('max_')) return;
+        if (!STOP_WORDS.has(v) && !STOP_WORDS.has(norm) && !/^(px|m|kn|s|hz|fps|mm|rad|deg|min|max|sin|cos|tan)$/i.test(norm)) {
+          vars.add(v);
+        }
+      });
+    }
+
+    // Delta variables: delta_W, delta_H, deltay_gap, deltay_over
+    const deltaMatches = rawMath.match(/delta_[A-Za-z0-9_]+/g);
+    if (deltaMatches) {
+      deltaMatches.forEach(d => {
+        if (!STOP_WORDS.has(d)) vars.add(d);
+      });
+    }
+  }
+  return Array.from(vars);
+}
+
 function auditChapterVariables(chapterDir) {
   const folienPath = path.join(chapterDir, 'Folien.md');
   if (!fs.existsSync(folienPath)) {
@@ -423,6 +471,44 @@ function auditChapterVariables(chapterDir) {
         });
       }
     });
+
+    // Rule 4 (Bidirectional Consistency): Mathematical text variables must be anchored in SVG or Code
+    if (svgMatches.length > 0 || codeMatches.length > 0) {
+      const targetTokens = new Set();
+
+      svgMatches.forEach(sm => {
+        const absPath = path.resolve(chapterDir, sm[1]);
+        if (fs.existsSync(absPath)) {
+          const raw = fs.readFileSync(absPath, 'utf8');
+          const toks = extractSlideTokens(raw);
+          toks.forEach(t => targetTokens.add(t));
+        }
+      });
+
+      codeMatches.forEach(cm => {
+        const code = cm[1];
+        const toks = extractSlideTokens(code);
+        toks.forEach(t => targetTokens.add(t));
+        const cvs = extractCodeVariables(code);
+        cvs.forEach(v => targetTokens.add(v.toLowerCase()));
+      });
+
+      const textWithoutCode = slide.replace(/```(?:csharp|c#)[\s\S]*?```/gi, '');
+      const geomVars = extractSlideGeometricVariables(textWithoutCode);
+
+      geomVars.forEach(v => {
+        if (!matchesAnyAlias(v, targetTokens)) {
+          issues.push({
+            rule: 4,
+            slideNum,
+            title,
+            type: 'TEXT_VAR_NOT_ANCHORED',
+            severity: 'WARNUNG',
+            message: `Variable "${v}" im Folientext wird weder im begleitenden Diagramm noch im Code visualisiert/genutzt.`
+          });
+        }
+      });
+    }
   });
 
   return { chapterDir, totalSlides: slides.length, issues };
@@ -448,33 +534,55 @@ if (require.main === module) {
     process.exit(1);
   }
 
-  let totalIssues = 0;
+  const strictMode = args.includes('--strict');
+  let totalErrors = 0;
+  let totalWarnings = 0;
+
   dirs.forEach(d => {
     const chapterPath = path.join(folienRoot, d);
     const result = auditChapterVariables(chapterPath);
     console.log(`Prüfe Kapitel ${d} (${result.totalSlides} Folien) ...`);
 
-    if (result.issues.length === 0) {
-      console.log('  ✓ OK: Alle SVG- und Code-Variablen sind didaktisch vollständig abgedeckt!\n');
+    const errors = result.issues.filter(iss => iss.rule !== 4);
+    const warnings = result.issues.filter(iss => iss.rule === 4);
+
+    totalErrors += errors.length;
+    totalWarnings += warnings.length;
+
+    if (errors.length === 0 && warnings.length === 0) {
+      console.log('  ✓ OK: Alle Variablen sind didaktisch vollständig abgedeckt!\n');
     } else {
-      totalIssues += result.issues.length;
-      console.log(`  ✗ ${result.issues.length} Auffälligkeit(en) gefunden:`);
-      result.issues.forEach(iss => {
-        console.log(`    - Folie ${iss.slideNum} [${iss.title}] (Regel ${iss.rule}): ${iss.message}`);
-      });
+      if (errors.length > 0) {
+        console.log(`  ✗ ${errors.length} Fehler (Regel 1–3: Nicht eingeführte Symbole):`);
+        errors.forEach(iss => {
+          console.log(`    - Folie ${iss.slideNum} [${iss.title}] (Regel ${iss.rule}): ${iss.message}`);
+        });
+      }
+      if (warnings.length > 0) {
+        console.log(`  ⚠ ${warnings.length} Didaktische Hinweise (Regel 4: Text-Variable nicht im Begleitdiagramm/Code visualisiert):`);
+        warnings.forEach(iss => {
+          console.log(`    - Folie ${iss.slideNum} [${iss.title}]: ${iss.message}`);
+        });
+      }
       console.log('');
     }
   });
 
   console.log('================================================================');
-  if (totalIssues === 0) {
+  if (totalErrors === 0 && totalWarnings === 0) {
     console.log('  ZUSAMMENFASSUNG: ALLES DIDAKTISCH KONSISTENT ✓');
+  } else if (totalErrors === 0) {
+    console.log(`  ZUSAMMENFASSUNG: 0 Fehler, ${totalWarnings} didaktische Hinweise (Regel 4) ✓`);
   } else {
-    console.log(`  ZUSAMMENFASSUNG: ${totalIssues} Auffälligkeit(en) gefunden.`);
+    console.log(`  ZUSAMMENFASSUNG: ${totalErrors} Fehler, ${totalWarnings} didaktische Hinweise gefunden.`);
   }
   console.log('================================================================\n');
 
-  process.exit(totalIssues > 0 ? 1 : 0);
+  if (strictMode) {
+    process.exit(totalErrors + totalWarnings > 0 ? 1 : 0);
+  } else {
+    process.exit(totalErrors > 0 ? 1 : 0);
+  }
 }
 
 module.exports = {

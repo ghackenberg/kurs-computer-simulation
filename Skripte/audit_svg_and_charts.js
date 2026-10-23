@@ -20,7 +20,7 @@ function getPuppeteer() {
 }
 
 async function auditSvgFile(browser, svgPath, options = {}) {
-  const rasterize = options.rasterize !== false;
+  const rasterize = options.rasterize === true;
   const rasterDir = options.rasterDir || path.resolve('.tmp_raster_svg');
   if (rasterize && !fs.existsSync(rasterDir)) fs.mkdirSync(rasterDir, { recursive: true });
 
@@ -29,7 +29,7 @@ async function auditSvgFile(browser, svgPath, options = {}) {
 
   const fileUrl = 'file:///' + path.resolve(svgPath).replace(/\\/g, '/');
   try {
-    await page.goto(fileUrl, { waitUntil: 'networkidle0', timeout: 10000 });
+    await page.goto(fileUrl, { waitUntil: 'domcontentloaded', timeout: 8000 });
   } catch (e) {
     await page.close();
     return { path: svgPath, error: 'Failed to load SVG: ' + e.message, issues: [] };
@@ -603,7 +603,10 @@ async function auditSvgFile(browser, svgPath, options = {}) {
 
 async function main() {
   const args = process.argv.slice(2);
-  let targetDir = args[0] || 'Folien';
+  const rasterize = args.includes('--rasterize');
+  const filteredArgs = args.filter(a => !a.startsWith('--'));
+
+  let targetDir = filteredArgs[0] || 'Folien';
   if (!fs.existsSync(targetDir) && fs.existsSync('Folien')) {
     const match = fs.readdirSync('Folien').find(d => d.startsWith(targetDir));
     if (match) targetDir = path.join('Folien', match);
@@ -618,7 +621,7 @@ async function main() {
 
   console.log(`\n================================================================`);
   console.log(`  AUTOMATED SVG QUALITY & READABILITY AUDITOR`);
-  console.log(`  Scanning directory: ${targetDir}`);
+  console.log(`  Scanning directory: ${targetDir}${rasterize ? ' (PNG Rasterize ON)' : ' (Fast Mode: in-memory DOM audit)'}`);
   console.log(`================================================================\n`);
 
   function findSvgs(dir) {
@@ -643,10 +646,23 @@ async function main() {
   const allSvgs = findSvgs(targetDir);
   console.log(`Found ${allSvgs.length} SVG files to audit.\n`);
 
+  const CONCURRENCY = 6;
+  const results = [];
+  const startTime = Date.now();
+
+  for (let i = 0; i < allSvgs.length; i += CONCURRENCY) {
+    const chunk = allSvgs.slice(i, i + CONCURRENCY);
+    const chunkResults = await Promise.all(
+      chunk.map(svg => auditSvgFile(browser, svg, { rasterize }))
+    );
+    results.push(...chunkResults);
+  }
+
+  const durationSec = ((Date.now() - startTime) / 1000).toFixed(1);
+
   let defectCount = 0;
-  for (const svg of allSvgs) {
-    const rel = path.relative(process.cwd(), svg);
-    const result = await auditSvgFile(browser, svg);
+  for (const result of results) {
+    const rel = path.relative(process.cwd(), result.path);
     if (result.issues && result.issues.length > 0) {
       defectCount++;
       console.log(`✗ ${rel} (Aspect: ${result.aspectRatio}:1):`);
@@ -660,7 +676,7 @@ async function main() {
 
   console.log(`\n================================================================`);
   console.log(`  ZUSAMMENFASSUNG SVG-AUDIT`);
-  console.log(`  Geprüfte SVGs: ${allSvgs.length}`);
+  console.log(`  Geprüfte SVGs: ${allSvgs.length} in ${durationSec}s`);
   console.log(`  SVGs mit Auffälligkeiten: ${defectCount}`);
   console.log(`================================================================\n`);
   process.exit(0);

@@ -212,3 +212,4 @@ Alle Linter und Build-Skripte sind in der zentralen `package.json` hinterlegt (f
    - **Regel 1 (SVG-Diagramme):** Variablen und mathematische Symbole, die in SVG-Diagrammen dargestellt werden, müssen im zugehörigen Folientext (bzw. bei Vollformat-Diagrammen im Abschnitt) genannt und eingeführt werden.
    - **Regel 2 (Halbseitiger Code):** Variablen, Parameter und Knotennamen in zweispaltigen Code-Fragmenten müssen in der Texterklärung derselben Folie erläutert werden.
    - **Regel 3 (Ganzseitiger Code):** Variablen in ganzseitigen Code-Listings müssen auf den vorherigen Folien des aktuellen Abschnitts didaktisch eingeführt worden sein.
+   - **Regel 4 (Didaktische Verankerung von Textvariablen):** Mathematische Formelvariablen im Folientext auf Folien mit Diagramm oder Code müssen im begleitenden Diagramm und/oder im Code-Snippet visualisiert oder verwendet werden (Gegenprüfung Text $\to$ SVG/Code).
