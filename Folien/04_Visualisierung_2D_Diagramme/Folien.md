@@ -730,17 +730,42 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 Beim Erstellen eines Histogramms teilt man den Wertebereich $[x_{\min}, x_{\max}]$ in $k$ Intervalle (Bins) der Breite $h$ ein:
 
 - **Zu breite Bins ($k$ zu klein):**
-  - Starke Überglättung – Verteilungsasymmetrie und bimodale Spitzen werden unsichtbar.
+  - Starke Überglättung – Verteilungsasymmetrie und Peaks werden unsichtbar.
 - **Zu schmale Bins ($k$ zu groß):**
   - Starke Unterglättung – Histogramm zerfällt in unruhiges statistisches Rauschen.
-- **Freedman-Diaconis-Regel (Empfehlung für Messdaten):**
-  $$h = \frac{2 \cdot \text{IQR}}{\sqrt[3]{N}}, \quad k = \left\lceil \frac{x_{\max} - x_{\min}}{h} \right\rceil$$
-  - Nutzt den Interquartilsabstand $\text{IQR}$; extrem robust gegen Ausreißer!
+- **Freedman-Diaconis-Kriterium:**
+  - Optimale Klassenbreite balanciert Auflösung und statistisches Rauschen über $h = 2 \cdot \text{IQR} / \sqrt[3]{N}$ bei $N$ Messpunkten.
 
 </div>
 <div class="one">
 
 ![](./Diagramme/Mini_Binning_Vergleich.svg)
+
+</div>
+</div>
+
+---
+
+### Freedman-Diaconis-Regel & Interquartilsabstand (IQR)
+
+<div class="columns">
+<div class="two">
+
+Robuste Berechnung der Klassenbreite $h$ für Simulationsdaten:
+
+- **Freedman-Diaconis-Formel:**
+  - $h = 2 \cdot \text{IQR} / \sqrt[3]{N}$ mit $k = \lceil (x_{\max} - x_{\min}) / h \rceil$.
+- **Interquartilsabstand ($\text{IQR}$):**
+  - Aufteilung der sortierten Daten in Quartile: $Q_1$ (25 %) und $Q_3$ (75 %).
+  - $\text{IQR} = Q_3 - Q_1$: Spannweite der zentralen 50 % aller Messwerte.
+- **Vorteil gegenüber Standardabweichung $\sigma$:**
+  - Scott's Rule ($h \sim \sigma$) wird durch seltene Ausreißer stark verzerrt.
+  - $\text{IQR}$ besitzt hohen Bruchpunkt: Rand-Ausreißer ändern $\text{IQR}$ nicht.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_IQR_Verteilung.svg)
 
 </div>
 </div>
