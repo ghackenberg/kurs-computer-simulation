@@ -488,23 +488,22 @@ Vom Reibwert zur realen Fahrzeugbewegung ($F = m \cdot a$):
 
 ---
 
-### Querdynamik: Schräglaufwinkel & Querkraft $F_y$
+### Querdynamik: Schräglaufwinkel & Pacejka $\mu_y(\alpha)$
 
 <div class="columns">
 <div class="two">
 
-Wie aus Lenkbewegung die Querbeschleunigung $a_y$ entsteht:
+Seitenkraft entsteht analog zur Längsdynamik:
 
 - **Schräglaufwinkel $\alpha$ (Querschlupf):**
-  - Beim Lenken weicht die Radlaufebene vom Geschwindigkeitsvektor $v$ ab.
-  - Winkeldifferenz ist der **Schräglaufwinkel**: $\tan \alpha = v_y / v_x$.
-- **Seitenführungskraft $F_y$:**
-  - Der Reifenlatsch wird quer elastisch geschert.
-  - Querkraft: $F_y = \mu_y(\alpha) \cdot F_z = \mu_y(\alpha) \cdot m \cdot g$.
-- **Querbeschleunigung $a_y$ (Zentripetalkraft):**
-  - Aus $m \cdot a_y = F_y$ folgt: $a_y = F_y / m = \mu_y(\alpha) \cdot g = v^2 / R$.
-  - Auch hier kürzt sich die Masse $m$ heraus!
-  - $R$: Momentaner Kurvenradius der Trajektorie.
+  - Lenken dreht Rad $\to$ weicht von $v$ ab ($\tan \alpha = v_y / v_x$).
+- **Reibwert $\mu_y(\alpha)$ (Pacejka-Querkurve):**
+  - Querscherung folgt demselben Verlauf wie Längsschlupf:
+  - Linear $\alpha < 4^\circ$ ($\mu_y \sim \alpha$) $\to$ Peak $\mu_{y,\max}$ bei $8^\circ \dots 10^\circ$.
+  - Bei $\alpha > 15^\circ$ reißt die Führung ab ($\mu_{\text{gleit}}$).
+- **Querkraft $F_y$ & Beschleunigung $a_y$ (Newton):**
+  - $F_y = \mu_y(\alpha) \cdot F_z = \mu_y(\alpha) \cdot m \cdot g$.
+  - $a_y = F_y / m = \mu_y(\alpha) \cdot g = v^2 / R$ (Masse $m$ kürzt sich heraus).
 
 </div>
 <div class="one">
