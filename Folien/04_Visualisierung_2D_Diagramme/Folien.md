@@ -435,26 +435,53 @@ Gummireifen übertragen Drehmoment $M$ nur durch elastische Verformung:
 
 ---
 
-### Reifenphysik: Kraftübertragung & $\mu$-Schlupf-Kurve
+### Reifenphysik: Kraftübertragung & $\mu(s)$-Schlupf-Kurve
 
 <div class="columns">
 <div class="two">
 
-Wie aus Schlupf $s$ die Reibkraft $\mu(s) \cdot g$ entsteht (Pacejka):
+Wie aus Schlupf $s$ der Reibwert $\mu(s)$ entsteht (Pacejka):
 
 - **Kein Schlupf ($s = 0$):**
-  - Rad rollt synchron ($v_{\text{Rad}} = v$) $\to$ Gummi unverformt $\implies \mu = 0$ (ohne Schlupf keine Kraft!).
+  - Rad rollt synchron ($v_{\text{Rad}} = v$) $\to$ Gummi unverformt $\implies \mu(0) = 0$ (ohne Schlupf keine Reibkraft!).
 - **Linear-elastischer Bereich ($s < 8\,\%$):**
-  - Reines Spannen des Gummis $\to \mu$ steigt proportional mit $s$ an (Alltagsbereich, direktes Lenken).
+  - Reines Spannen des Gummis $\to \mu(s)$ steigt linear mit $s$ an (Alltagsbereich, direktes Lenken).
 - **Peak / Grip-Optimum ($s \approx 10 \dots 15\,\%$):**
   - Maximaler Reibwert $\mu_{\max}$ (schnellste Rundenzeit bzw. kontrollierter Drift).
 - **Gleitreibung ($s > 20\,\%$):**
-  - Reifen rutscht durch $\to$ Einbruch auf Gleitreibung $\mu < \mu_{\max}$ (Traktionsabriss, Durchdrehen).
+  - Reifen rutscht durch $\to$ Einbruch auf Gleitwert $\mu_{\text{gleit}} < \mu_{\max}$ (Traktionsabriss, Durchdrehen).
 
 </div>
 <div class="one">
 
 ![](./Diagramme/Mini_Schlupf_Pacejka.svg)
+
+</div>
+</div>
+
+---
+
+### Reifenkräfte: Von $\mu(s)$ zur Beschleunigung
+
+<div class="columns">
+<div class="two">
+
+Vom Reibwert zur realen Fahrzeugbewegung ($F = m \cdot a$):
+
+- **Längskraft $F_x$ & Beschleunigung $a_x$ (Newton):**
+  - Radlast durch Fahrzeugmasse $m$: $F_z = m \cdot g$.
+  - Reibkraft in Fahrtrichtung: $F_x = \mu(s) \cdot F_z = \mu(s) \cdot m \cdot g$.
+  - Beschleunigung: $a_x = F_x / m = \mu(s) \cdot g$ (Masse $m$ kürzt sich!).
+- **Querbeschleunigung $a_y$ (Kurvenfahrt & Lenken):**
+  - Einlenken schert den Reifen seitlich $\to$ Querkraft $F_y$.
+  - Querbeschleunigung: $a_y = F_y / m$.
+- **Telemetrie-Bedeutung:**
+  - Beschleunigung in $g$-Einheiten ($a_x / g$) entspricht direkt $\mu(s)$!
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Reifen_Kraefte.svg)
 
 </div>
 </div>
@@ -1796,7 +1823,7 @@ Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details siehe [Aufgabenblatt 04](.
 **Retro Arcade Racing HUD & G-Force Telemetrie**
 - Live Speed- & RPM-Streamer mit Shift-Flash
 - Welford-Statistik für optimale Ausdreh-Drehzahl
-- Kamm'scher Kreis (Phasenplot $a_x$ vs. $a_y$ mit Haftungslimit $\mu \cdot g$)
+- Kamm'scher Kreis (Phasenplot $a_x$ vs. $a_y$ mit Haftungslimit $\mu_{\max} \cdot g$)
 - Rundenzeit-Histogramm & Strecken-Topologie (MSAGL)
 
 </div>
