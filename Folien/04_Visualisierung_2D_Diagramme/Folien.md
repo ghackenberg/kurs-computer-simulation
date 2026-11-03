@@ -1507,93 +1507,11 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 
 ---
 
-### Force-Directed: Iteration 0 (Start & Kräftezerlegung)
+### Force-Directed: Konvergenzverlauf (Partikelsimulation)
 
-<div class="columns">
-<div class="two">
+Evolution der Knotenpositionen und Restkräfte $\vec{F}_{\text{net}}$ vom Startzustand bis zum Gleichgewicht bei abklingender Schrittweite:
 
-- **Zufällige Startverteilung:**
-  - Knoten starten ungeordnet; Kanten und Abstände sind stark verzerrt.
-- **Kräftezerlegung an jedem Knoten:**
-  - **Hookesche Zugfedern $F_s$ (blau):** Ziehen verbundene Nachbarknoten entlang der Kantenlinie an.
-  - **Paarweise Coulomb-Abstoßung $F_r$ (rot gestrichelt):** Jedes Knotenpaar stößt sich elektrostatisch ab (bei $N=5$ Knoten existieren $\binom{5}{2} = 10$ Paare bzw. 4 Abstoßungsvektoren pro Knoten).
-- **Resultierender Kraftvektor:**
-  - Die Vektorsumme $\vec{F}_{\text{net}} = \sum \vec{F}_s + \sum \vec{F}_r$ (grün) bestimmt die anfängliche Bewegungsrichtung jedes Knotens.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_ForceDirected_Iter0.svg)
-
-</div>
-</div>
-
----
-
-### Force-Directed: Iteration 2 (Dynamische Entwirrung)
-
-<div class="columns">
-<div class="two">
-
-- **Numerischer Zeitschritt (Euler-Verfahren):**
-  - Jeder Knoten wandert ein Wegstück entlang seiner wirkenden Gesamtkraft.
-- **Reduktion auf Summenvektoren:**
-  - Zur Wahrung der Übersicht werden Einzelkräfte ausgeblendet: Nur die **grünen Summenvektoren $\vec{F}_{\text{net}}$** bleiben sichtbar.
-- **Erste Entflechtung:**
-  - Die Knoten streben entlang des Energiegradienten auseinander; Kanten und Abstände beginnen sich harmonisch auszurichten.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_ForceDirected_Iter2.svg)
-
-</div>
-</div>
-
----
-
-### Force-Directed: Iteration 15 (Einschwingen & Dämpfung)
-
-<div class="columns">
-<div class="two">
-
-- **Schrittweitendämpfung im Einsatz:**
-  - Der Dämpfungsfaktor $T_k$ begrenzt Sprungweiten und dämpft Oszillationen wirksam ab.
-- **Gezielte Feinjustierung:**
-  - Die Topologie der Knoten ist bereits kreuzungsfrei und weitgehend symmetrisch.
-  - Kürzere Summenvektoren $\vec{F}_{\text{net}}$ gleichen Kantenlängen sanft an die Ruhelänge $l_0$ an.
-- **Vorbereitung des Gleichgewichts:**
-  - Minimale Restkräfte führen das System direkt in das Minimum.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_ForceDirected_Iter15.svg)
-
-</div>
-</div>
-
----
-
-### Force-Directed: Iteration 50 (Stationäres Gleichgewicht)
-
-<div class="columns">
-<div class="two">
-
-- **Kräftegleichgewicht erreicht:**
-  - An allen Knoten heben sich Zug- und Abstoßungskräfte auf:
-    $$\vec{F}_{\text{net}} = \sum \vec{F}_s + \sum \vec{F}_r \approx \vec{0}$$
-- **Optimales Simulationsergebnis:**
-  - Das System ruht im lokalen Minimum der potentiellen Energie.
-  - Symmetrisches, harmonisches Layout mit gleichmäßigen Kantenlängen $l_0$ ganz ohne manuelle Platzierung.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_ForceDirected_Iter50.svg)
-
-</div>
-</div>
+![](./Diagramme/Mini_ForceDirected_Matrix.svg)
 
 ---
 

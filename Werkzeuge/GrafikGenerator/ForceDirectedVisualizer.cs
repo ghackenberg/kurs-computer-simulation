@@ -18,6 +18,18 @@ namespace GrafikGenerator
             public List<(double Fx, double Fy)> Coulombs { get; } = new();
         }
 
+        
+        public class Snapshot
+        {
+            public int Iteration { get; set; }
+            public double Temp { get; set; }
+            public double MaxForce { get; set; }
+            public string Title { get; set; } = "";
+            public string Subtitle { get; set; } = "";
+            public string Badge { get; set; } = "";
+            public List<(double X, double Y, double Fx, double Fy)> Nodes { get; set; } = new();
+        }
+
         public static void GenerateAll(string root)
         {
             var diagramDir = Path.Combine(root, "Folien", "04_Visualisierung_2D_Diagramme", "Diagramme");
@@ -44,6 +56,9 @@ namespace GrafikGenerator
             double kr = 4800.0;   // Coulomb repulsion constant
             double temp = 14.0;   // Simulated annealing temperature
             double cooling = 0.92;
+
+            var snapshots = new List<Snapshot>();
+            var matrixMilestones = new HashSet<int> { 0, 2, 5, 10, 20, 50 };
 
             for (int iter = 0; iter <= 50; iter++)
             {
@@ -97,6 +112,67 @@ namespace GrafikGenerator
                     nodes[v].Springs.Add((-fx, -fy));
                 }
 
+
+                // Collect snapshot if milestone
+                if (matrixMilestones.Contains(iter))
+                {
+                    double maxF = 0;
+                    var snapNodes = new List<(double X, double Y, double Fx, double Fy)>();
+                    foreach (var n in nodes)
+                    {
+                        double fLen = Math.Sqrt(n.Fx * n.Fx + n.Fy * n.Fy);
+                        maxF = Math.Max(maxF, fLen);
+                        snapNodes.Add((n.X, n.Y, n.Fx, n.Fy));
+                    }
+
+                    var snap = new Snapshot
+                    {
+                        Iteration = iter,
+                        Temp = temp,
+                        MaxForce = maxF,
+                        Nodes = snapNodes
+                    };
+
+                    if (iter == 0)
+                    {
+                        snap.Title = "Iteration 0: Startzustand";
+                        snap.Subtitle = "Chaotische Lage, kreuzende Kanten";
+                        snap.Badge = $"Max. Kraft ||F_net|| = {maxF.ToString("F1", CultureInfo.InvariantCulture)} N | Schrittweite: {temp.ToString("F1", CultureInfo.InvariantCulture)}";
+                    }
+                    else if (iter == 2)
+                    {
+                        snap.Title = "Iteration 2: Coulomb-Expansion";
+                        snap.Subtitle = "Starke Abstoßung sprengt Knotenklumpen";
+                        snap.Badge = $"Max. Kraft ||F_net|| = {maxF.ToString("F1", CultureInfo.InvariantCulture)} N | Schrittweite: {temp.ToString("F1", CultureInfo.InvariantCulture)}";
+                    }
+                    else if (iter == 5)
+                    {
+                        snap.Title = "Iteration 5: Entflechtung";
+                        snap.Subtitle = "Kanten kreuzungsfrei, Federn wirken";
+                        snap.Badge = $"Max. Kraft ||F_net|| = {maxF.ToString("F1", CultureInfo.InvariantCulture)} N | Schrittweite: {temp.ToString("F1", CultureInfo.InvariantCulture)}";
+                    }
+                    else if (iter == 10)
+                    {
+                        snap.Title = "Iteration 10: Dämpfungseinsatz";
+                        snap.Subtitle = "Dämpfung reduziert die Schrittweite";
+                        snap.Badge = $"Dämpfung greift: Schrittweite = {temp.ToString("F1", CultureInfo.InvariantCulture)} | ||F_net|| = {maxF.ToString("F1", CultureInfo.InvariantCulture)} N";
+                    }
+                    else if (iter == 20)
+                    {
+                        snap.Title = "Iteration 20: Feinjustierung";
+                        snap.Subtitle = "Kanten nähern sich der Soll-Federlänge";
+                        snap.Badge = $"Feinjustierung: Schrittweite = {temp.ToString("F1", CultureInfo.InvariantCulture)} | ||F_net|| = {maxF.ToString("F1", CultureInfo.InvariantCulture)} N";
+                    }
+                    else // 50
+                    {
+                        snap.Title = "Iteration 50: Kräftegleichgewicht";
+                        snap.Subtitle = "Stationärer Stillstand: Summe F_net ≈ 0";
+                        snap.Badge = "Gleichgewicht erreicht: ||F_net|| < 0.01 N (Stillstand)";
+                    }
+
+                    snapshots.Add(snap);
+                }
+
                 // Render key milestones
                 if (iter == 0)
                 {
@@ -131,6 +207,9 @@ namespace GrafikGenerator
 
                 temp *= cooling;
             }
+
+            // Generate 3x2 Matrix SVG
+            GenerateMatrixSvg(Path.Combine(diagramDir, "Mini_ForceDirected_Matrix.svg"), snapshots, edges);
 
             // Generate dedicated theory diagrams for annealing and oscillations
             GenerateUncooledSvg(Path.Combine(diagramDir, "Mini_ForceDirected_Iter50_Ungedaempft.svg"), edges, l0, ks, kr);
@@ -541,6 +620,114 @@ namespace GrafikGenerator
                 sb.AppendLine("  <text x=\"140\" y=\"364\" class=\"lbl\" style=\"fill: #1d4ed8;\">Finales Layout</text>");
                 sb.AppendLine("  <text x=\"140\" y=\"382\" class=\"desc\" style=\"font-weight: bold; fill: #1e40af;\">Kantenlängen gleichmäßig d &#8776; l_0</text>");
                 sb.AppendLine("  <text x=\"140\" y=\"398\" class=\"desc\" style=\"fill: #2563eb;\">Optimales Ergebnis der Partikelsimulation</text>");
+            }
+
+            sb.AppendLine("</svg>");
+            File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
+        }
+
+        private static void GenerateMatrixSvg(string filePath, List<Snapshot> snapshots, List<(int, int)> edges)
+        {
+            var inv = CultureInfo.InvariantCulture;
+            var sb = new StringBuilder();
+            sb.AppendLine("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1110 470\" width=\"1110\" height=\"470\">");
+            sb.AppendLine("  <defs>");
+            sb.AppendLine("    <style>");
+            sb.AppendLine("      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }");
+            sb.AppendLine("      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; text-anchor: middle; }");
+            sb.AppendLine("      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; text-anchor: middle; }");
+            sb.AppendLine("    </style>");
+            sb.AppendLine("    <marker id=\"arr-net\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"5.5\" markerHeight=\"5.5\" orient=\"auto-start-reverse\">");
+            sb.AppendLine("      <path d=\"M 0 1.5 L 9 5 L 0 8.5 z\" fill=\"#16a34a\" />");
+            sb.AppendLine("    </marker>");
+            sb.AppendLine("  </defs>");
+            sb.AppendLine();
+
+            for (int idx = 0; idx < snapshots.Count && idx < 6; idx++)
+            {
+                var s = snapshots[idx];
+                int col = idx % 3;
+                int row = idx / 3;
+                double colX = 10.0 + col * 370.0;
+                double rowY = 10.0 + row * 230.0;
+                bool isEq = (s.Iteration == 50);
+
+                string cardFill = isEq ? "#f0fdf4" : "#f8fafc";
+                string cardStroke = isEq ? "#86efac" : "#cbd5e1";
+                double strokeW = isEq ? 1.8 : 1.5;
+                string titleFill = isEq ? "#15803d" : "#004B96";
+                string subFill = isEq ? "#166534" : "#475569";
+                string subWeight = isEq ? "bold" : "normal";
+
+                // Card background
+                sb.AppendLine($"  <!-- Tile {idx}: Iteration {s.Iteration} -->");
+                sb.AppendLine($"  <rect x=\"{colX.ToString("F1", inv)}\" y=\"{rowY.ToString("F1", inv)}\" width=\"350\" height=\"220\" rx=\"8\" fill=\"{cardFill}\" stroke=\"{cardStroke}\" stroke-width=\"{strokeW.ToString("F1", inv)}\" />");
+
+                // Header
+                sb.AppendLine($"  <text x=\"{(colX + 175.0).ToString("F1", inv)}\" y=\"{(rowY + 24.0).ToString("F1", inv)}\" class=\"hdr\" fill=\"{titleFill}\">{s.Title}</text>");
+                sb.AppendLine($"  <text x=\"{(colX + 175.0).ToString("F1", inv)}\" y=\"{(rowY + 41.0).ToString("F1", inv)}\" class=\"sub\" fill=\"{subFill}\" font-weight=\"{subWeight}\">{s.Subtitle}</text>");
+
+                // Inner Canvas
+                string innerBorder = isEq ? "#bbf7d0" : "#cbd5e1";
+                sb.AppendLine($"  <rect x=\"{(colX + 15.0).ToString("F1", inv)}\" y=\"{(rowY + 50.0).ToString("F1", inv)}\" width=\"320\" height=\"132\" rx=\"6\" fill=\"#ffffff\" stroke=\"{innerBorder}\" stroke-width=\"1\" />");
+
+                // Mapping nodes to inner canvas center (colX + 175, rowY + 116)
+                double cx = colX + 175.0;
+                double cy = rowY + 116.0;
+
+                var mapped = new List<(double X, double Y, double Fx, double Fy)>();
+                foreach (var n in s.Nodes)
+                {
+                    double px = cx + (n.X - 125.0) * 1.5;
+                    double py = cy + (n.Y - 95.0) * 1.1;
+                    mapped.Add((px, py, n.Fx, n.Fy));
+                }
+
+                // Edges
+                string edgeColor = isEq ? "#6ee7b7" : "#94a3b8";
+                foreach (var (u, v) in edges)
+                {
+                    var p1 = mapped[u];
+                    var p2 = mapped[v];
+                    sb.AppendLine($"  <line x1=\"{p1.X.ToString("F1", inv)}\" y1=\"{p1.Y.ToString("F1", inv)}\" x2=\"{p2.X.ToString("F1", inv)}\" y2=\"{p2.Y.ToString("F1", inv)}\" stroke=\"{edgeColor}\" stroke-width=\"2\" />");
+                }
+
+                // Nodes
+                string nodeFill = isEq ? "#16a34a" : "#2563eb";
+                foreach (var p in mapped)
+                {
+                    sb.AppendLine($"  <circle cx=\"{p.X.ToString("F1", inv)}\" cy=\"{p.Y.ToString("F1", inv)}\" r=\"5.5\" fill=\"{nodeFill}\" stroke=\"#ffffff\" stroke-width=\"1.8\" />");
+                }
+
+                // Force arrows (for non-equilibrium)
+                if (!isEq)
+                {
+                    double arrowScale = (s.Iteration == 0) ? 1.4 : ((s.Iteration == 2) ? 1.6 : 2.2);
+                    foreach (var p in mapped)
+                    {
+                        double fx = p.Fx * arrowScale;
+                        double fy = p.Fy * arrowScale;
+                        double len = Math.Sqrt(fx * fx + fy * fy);
+                        if (len > 24.0)
+                        {
+                            fx = (fx / len) * 24.0;
+                            fy = (fy / len) * 24.0;
+                            len = 24.0;
+                        }
+                        if (len > 2.5)
+                        {
+                            sb.AppendLine($"  <line x1=\"{p.X.ToString("F1", inv)}\" y1=\"{p.Y.ToString("F1", inv)}\" x2=\"{(p.X + fx).ToString("F1", inv)}\" y2=\"{(p.Y + fy).ToString("F1", inv)}\" stroke=\"#16a34a\" stroke-width=\"2.2\" marker-end=\"url(#arr-net)\" />");
+                        }
+                    }
+                }
+
+                // Badge / Footer Bar
+                string badgeBg = isEq ? "#dcfce7" : "#eff6ff";
+                string badgeBorder = isEq ? "#86efac" : "#bfdbfe";
+                string badgeText = isEq ? "#15803d" : "#1e40af";
+                sb.AppendLine($"  <rect x=\"{(colX + 15.0).ToString("F1", inv)}\" y=\"{(rowY + 189.0).ToString("F1", inv)}\" width=\"320\" height=\"23\" rx=\"4\" fill=\"{badgeBg}\" stroke=\"{badgeBorder}\" stroke-width=\"1\" />");
+                sb.AppendLine($"  <text x=\"{(colX + 175.0).ToString("F1", inv)}\" y=\"{(rowY + 205.0).ToString("F1", inv)}\" class=\"desc\" fill=\"{badgeText}\" font-weight=\"bold\">{s.Badge}</text>");
+                sb.AppendLine();
             }
 
             sb.AppendLine("</svg>");
