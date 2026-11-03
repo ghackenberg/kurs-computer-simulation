@@ -686,16 +686,27 @@ namespace GrafikGenerator
             var graph = new Microsoft.Msagl.Drawing.Graph("Netzwerk");
             graph.Attr.BackgroundColor = Microsoft.Msagl.Drawing.Color.White;
 
-            graph.AddEdge("CAN-Gateway", "Inverter");
-            graph.AddEdge("CAN-Gateway", "Batterie-BMS");
-            graph.AddEdge("CAN-Gateway", "Fahrzeugleitrechner");
-            graph.AddEdge("Inverter", "Traktionsmotor");
-            graph.AddEdge("Batterie-BMS", "Inverter");
-            graph.AddEdge("Batterie-BMS", "Kühlkreislauf");
-            graph.AddEdge("Traktionsmotor", "Getriebe");
-            graph.AddEdge("Traktionsmotor", "Kühlkreislauf");
-            graph.AddEdge("Getriebe", "Radsensorik");
-            graph.AddEdge("Fahrzeugleitrechner", "Telemetrie-Cloud");
+            // Cluster 1: CNC-Bearbeitungsstation
+            graph.AddEdge("Gateway-A", "SPS-CNC");
+            graph.AddEdge("Gateway-A", "Spindel-Sensor");
+            graph.AddEdge("Gateway-A", "Kühlmitteldruck");
+            graph.AddEdge("Gateway-A", "Werkzeug-Kamera");
+            graph.AddEdge("SPS-CNC", "Spindel-Sensor");
+            graph.AddEdge("SPS-CNC", "Kühlmitteldruck");
+
+            // Cluster 2: Roboter-Handling
+            graph.AddEdge("Gateway-B", "Roboter-SPS");
+            graph.AddEdge("Gateway-B", "Greifer-Sensorik");
+            graph.AddEdge("Gateway-B", "Gelenk-Drehgeber");
+            graph.AddEdge("Gateway-B", "Sicherheitsradar");
+            graph.AddEdge("Roboter-SPS", "Greifer-Sensorik");
+            graph.AddEdge("Roboter-SPS", "Gelenk-Drehgeber");
+
+            // Cluster-Kopplung & Cloud
+            graph.AddEdge("Gateway-A", "Gateway-B");
+            graph.AddEdge("SPS-CNC", "Roboter-SPS");
+            graph.AddEdge("Gateway-A", "Edge-Cloud");
+            graph.AddEdge("Gateway-B", "Edge-Cloud");
 
             foreach (var node in graph.Nodes)
             {
@@ -706,15 +717,39 @@ namespace GrafikGenerator
                 node.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Ellipse;
                 node.Attr.Padding = 8;
             }
-            graph.FindNode("CAN-Gateway").Attr.FillColor = Microsoft.Msagl.Drawing.Color.LemonChiffon;
-            graph.FindNode("Telemetrie-Cloud").Attr.FillColor = Microsoft.Msagl.Drawing.Color.Honeydew;
+
+            // Cluster 1 Farbgebung: Soft Blue
+            string[] cluster1 = { "SPS-CNC", "Spindel-Sensor", "Kühlmitteldruck", "Werkzeug-Kamera" };
+            foreach (var id in cluster1)
+            {
+                var n = graph.FindNode(id);
+                if (n != null) { n.Attr.FillColor = new Microsoft.Msagl.Drawing.Color(224, 242, 254); n.Attr.Color = Microsoft.Msagl.Drawing.Color.SteelBlue; }
+            }
+
+            // Cluster 2 Farbgebung: Soft Amber
+            string[] cluster2 = { "Roboter-SPS", "Greifer-Sensorik", "Gelenk-Drehgeber", "Sicherheitsradar" };
+            foreach (var id in cluster2)
+            {
+                var n = graph.FindNode(id);
+                if (n != null) { n.Attr.FillColor = new Microsoft.Msagl.Drawing.Color(254, 237, 213); n.Attr.Color = Microsoft.Msagl.Drawing.Color.DarkOrange; }
+            }
+
+            // Gateways: Soft Emerald
+            var nGwA = graph.FindNode("Gateway-A");
+            if (nGwA != null) { nGwA.Attr.FillColor = new Microsoft.Msagl.Drawing.Color(220, 252, 231); nGwA.Attr.Color = Microsoft.Msagl.Drawing.Color.SeaGreen; }
+            var nGwB = graph.FindNode("Gateway-B");
+            if (nGwB != null) { nGwB.Attr.FillColor = new Microsoft.Msagl.Drawing.Color(220, 252, 231); nGwB.Attr.Color = Microsoft.Msagl.Drawing.Color.SeaGreen; }
+
+            // Cloud: Soft Purple
+            var nCloud = graph.FindNode("Edge-Cloud");
+            if (nCloud != null) { nCloud.Attr.FillColor = new Microsoft.Msagl.Drawing.Color(243, 232, 255); nCloud.Attr.Color = Microsoft.Msagl.Drawing.Color.Purple; }
 
             var geomGraph = new Microsoft.Msagl.Core.Layout.GeometryGraph();
             foreach (var n in graph.Nodes)
             {
-                double w = Math.Max(130, n.Id.Length * 10.5);
+                double w = Math.Max(120, n.Id.Length * 9.5);
                 var geomNode = new Microsoft.Msagl.Core.Layout.Node(
-                    CurveFactory.CreateRectangle(w, 46, new Microsoft.Msagl.Core.Geometry.Point(0, 0)),
+                    CurveFactory.CreateRectangle(w, 42, new Microsoft.Msagl.Core.Geometry.Point(0, 0)),
                     n
                 );
                 n.GeometryNode = geomNode;
@@ -732,7 +767,7 @@ namespace GrafikGenerator
             LayoutHelpers.CalculateLayout(geomGraph, settings, null);
 
             var pngFile = Path.Combine(targetDir, "MSAGL_ForceDirected_Layout.png");
-            ExportMsaglGraph(graph, geomGraph, pngFile, "Force-Directed Layout: Multidomänen-Netzwerk (MSAGL)");
+            ExportMsaglGraph(graph, geomGraph, pngFile, "Force-Directed Layout: IoT-Sensornetzwerk (MSAGL)");
             Console.WriteLine($"Erzeugt (MSAGL PNG): {pngFile}");
         }
 
@@ -852,7 +887,7 @@ namespace GrafikGenerator
 
             using var image = SKImage.FromBitmap(bitmap);
             using var data = image.Encode(SKEncodedImageFormat.Png, 100);
-            using var fs = File.OpenWrite(pngPath);
+            using var fs = File.Create(pngPath);
             data.SaveTo(fs);
         }
     }

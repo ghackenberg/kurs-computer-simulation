@@ -1651,12 +1651,11 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 <div class="columns">
 <div class="two">
 
-Vollautomatisch berechnete Netzwerktopologie eines Antriebsstrangs:
+Netzwerktopologie einer Industrie-4.0-Fertigungszelle:
 
-- **Busknoten:** `CAN-Gateway` vernetzt `Inverter`, `Batterie-BMS` und `Fahrzeugleitrechner`.
-- **Antrieb & Kühlung:** `Inverter`, `Traktionsmotor`, `Getriebe`, `Radsensorik` und `Kühlkreislauf`.
-- **Telemetrie:** Anbindung an die `Telemetrie-Cloud`.
-- Kräfte-Gleichgewicht entflechtet Knoten gleichmäßig.
+- **Cluster 1 (CNC-Zelle):** `Gateway-A` bündelt `SPS-CNC`, `Spindel-Sensor`, `Kühlmitteldruck` und `Werkzeug-Kamera`.
+- **Cluster 2 (Roboter):** `Gateway-B` bündelt `Roboter-SPS`, `Greifer-Sensorik`, `Gelenk-Drehgeber` und `Sicherheitsradar`.
+- **Backbone & Cloud:** `Gateway-A` $\leftrightarrow$ `Gateway-B` und Anbindung an die `Edge-Cloud`.
 
 </div>
 <div class="three">
@@ -1671,26 +1670,26 @@ Vollautomatisch berechnete Netzwerktopologie eines Antriebsstrangs:
 ### MSAGL API: Topologieaufbau & Styling
 
 ```csharp
-var graph = new Microsoft.Msagl.Drawing.Graph("Antriebsstrang");
+var graph = new Microsoft.Msagl.Drawing.Graph("Fertigungszelle");
 
-// 1. Kanten definieren (Signal- und Kraftfluss)
-graph.AddEdge("CAN-Gateway", "Inverter");
-graph.AddEdge("Inverter", "Traktionsmotor");
-graph.AddEdge("Traktionsmotor", "Getriebe");
+// 1. Kanten definieren (Signal- und Sensornetzwerk)
+graph.AddEdge("Gateway-A", "SPS-CNC");
+graph.AddEdge("Gateway-A", "Spindel-Sensor");
+graph.AddEdge("Gateway-A", "Gateway-B");
 
 // 2. Visuelles Styling von Knoten und Kanten
-var invNode = graph.FindNode("Inverter");
-invNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.LightSkyBlue;
-invNode.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Box;
+var spsNode = graph.FindNode("SPS-CNC");
+spsNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.LightSkyBlue;
+spsNode.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Box;
 
-var canEdge = graph.AddEdge("CAN-Gateway", "Fahrzeugleitrechner");
-canEdge.Attr.Color = Microsoft.Msagl.Drawing.Color.SteelBlue;
+var linkEdge = graph.AddEdge("Gateway-A", "Edge-Cloud");
+linkEdge.Attr.Color = Microsoft.Msagl.Drawing.Color.Purple;
 
 // 3. Im WPF-GraphControl visualisieren
 GraphControl.Graph = graph;
 ```
 
-- Das Objekt `graph` definiert die Netzwerktopologie und weist `invNode` sowie `canEdge` visuelle Attribute zu.
+- Das Objekt `graph` definiert die Netzwerktopologie und weist `spsNode` sowie `linkEdge` visuelle Attribute zu.
 
 ---
 
