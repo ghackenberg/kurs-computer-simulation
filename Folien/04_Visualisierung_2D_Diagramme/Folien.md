@@ -1277,15 +1277,17 @@ public class WelfordStatistics
 <div class="columns">
 <div class="two">
 
-Mit Welfords Online-Statistik lassen sich kontinuierliche Konfidenzbänder berechnen:
+Kontinuierliche Toleranzbänder für stationäre Arbeitsprozesse:
 
+- **Stationärer Arbeitspunkt:**
+  - Für Messungen um ein Sollniveau (z.B. Solldruck $100\,\text{bar}$).
+  - `_meanLine.Y = _welford.Mean`: Horizontaler Mittelwert $\bar{x}$ und Schranke `_upperLine.Y` ($\bar{x} + 3\sigma$) schwingen online ein und folgen Lastsprüngen adaptiv.
 - **Drei-Sigma-Regel (Gauß-Verteilung):**
   - $\bar{x} \pm 1\sigma$: Enthält 68,27 % aller Messwerte.
   - $\bar{x} \pm 2\sigma$: Enthält 95,45 % aller Messwerte.
-  - $\bar{x} \pm 3\sigma$: Enthält **99,73 %** aller Messwerte.
+  - $\bar{x} \pm 3\sigma$: Enthält **99,73 %** aller regulären Messwerte.
 - **Anomalie-Erkennung:**
-  - Überschreitet ein Messwert $y(t) > \bar{x} + 3\sigma$ oder $y(t) < \bar{x} - 3\sigma$, liegt eine statistisch signifikante Anomalie vor.
-  - Indiziert Fehler wie Kavitation, Bauteilermüdung oder Reibungsverlust.
+  - Verlässt ein Messwert das Band ($y(t) > \bar{x} + 3\sigma$), liegt ein Fehler vor (z.B. Kavitation, Druckstoß oder Lagerschaden).
 
 </div>
 <div class="one">
@@ -1302,14 +1304,14 @@ Mit Welfords Online-Statistik lassen sich kontinuierliche Konfidenzbänder berec
 <div class="columns">
 <div class="two">
 
-Bei Telemetriedaten reicht der Mittelwert $\mu(t)$ für Qualitätsaussagen oft nicht aus:
+Erweiterung auf zeitabhängige Soll-Trajektorien $\mu(t)$ (z.B. Zylinderhub):
 
-- **Toleranzgrenzen:** Konfidenzband über obere Schranke $y_{\text{upper}}$ und untere Schranke $y_{\text{lower}}$ (z.B. $\mu(t) \pm 3\sigma$).
+- **Grenze horizontaler Linien:**
+  - Bei zeitvariantem Sollwert versagt eine feste Schranke.
+  - Das Band muss als zeitvarianter Schlauch $y_{\text{upper}}(t) = \mu(t) + 3\sigma$ und $y_{\text{lower}}(t) = \mu(t) - 3\sigma$ mitwandern.
 - **Polygon-Rendering mit `Plot.Add.FillY`:**
-  - `Plot.Add.FillY(xs, y_lower, y_upper)` erzeugt geschlossenen 2D-Pfad (`SKPath`).
-  - Punkte laufen vorwärts entlang $y_{\text{upper}}$ und rückwärts entlang $y_{\text{lower}}$.
-  - Die Fläche wird mittels Alpha-Blending halbtransparent gerendert.
-  - Abweichungen fallen sofort auf, ohne $\mu(t)$ zu verdecken.
+  - Erzeugt geschlossenen `SKPath`: Vorwärts entlang $y_{\text{upper}}$, rückwärts entlang $y_{\text{lower}}$.
+  - Halbtransparentes Alpha-Blending hebt Abweichungen hervor, ohne $\mu(t)$ zu verdecken.
 
 </div>
 <div class="one">
