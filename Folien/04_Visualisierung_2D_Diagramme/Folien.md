@@ -409,182 +409,23 @@ Trajektorie $(n, M)$ in 3 farbkodierten Phasen:
 
 ---
 
-### Reifenphysik: Entstehung von Reifenschlupf
+### Phasenraum: Kamm'scher Kreis (Fahrzeugtelemetrie)
 
 <div class="columns">
 <div class="two">
 
-Gummireifen übertragen Drehmoment $M$ nur durch elastische Verformung:
+Gekoppelte Beschleunigungen im Racing-Leitstand (Übung 4, Track B):
 
-- **Drehmoment $\to$ Umfangsgeschwindigkeit:**
-  - Motor erzeugt Drehmoment $M$ an Rad mit Radius $r$.
-  - Rad dreht mit Winkelgeschwindigkeit $\omega \to v_{\text{Rad}} = \omega \cdot r$.
-- **Geschwindigkeitsdifferenz ($v_{\text{Rad}} \neq v$):**
-  - Vortrieb: Rad eilt dem Fahrzeug voraus ($v_{\text{Rad}} > v$).
-  - Bremsen: Rad verzögert gegenüber Fahrzeug ($v_{\text{Rad}} < v$).
-- **Längsschlupf $s$:** Relative Abweichung $s = (v_{\text{Rad}} - v) / v$.
-- **Reifenlatsch:** Verformt das Gummiprofil in der Aufstandsfläche.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Reifenschlupf_Kinematik.svg)
-
-</div>
-</div>
-
----
-
-### Reifenphysik: Kraftübertragung & $\mu(s)$-Schlupf-Kurve
-
-<div class="columns">
-<div class="two">
-
-Wie aus Schlupf $s$ der Reibwert $\mu(s)$ entsteht (Pacejka):
-
-- **Kein Schlupf ($s = 0$):**
-  - Rad rollt synchron ($v_{\text{Rad}} = v$) $\to$ Gummi unverformt $\implies \mu(0) = 0$ (ohne Schlupf keine Reibkraft!).
-- **Linear-elastischer Bereich ($s < 8\,\%$):**
-  - Reines Spannen des Gummis $\to \mu(s)$ steigt linear mit $s$ an (Alltagsbereich, direktes Lenken).
-- **Peak / Grip-Optimum ($s \approx 10 \dots 15\,\%$):**
-  - Maximaler Reibwert $\mu_{\max}$ (schnellste Rundenzeit bzw. kontrollierter Drift).
-- **Gleitreibung ($s > 20\,\%$):**
-  - Reifen rutscht durch $\to$ Einbruch auf Gleitwert $\mu_{\text{gleit}} < \mu_{\max}$ (Traktionsabriss, Durchdrehen).
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Schlupf_Pacejka.svg)
-
-</div>
-</div>
-
----
-
-### Reifenphysik: Das Bürstenmodell (Reifenlatsch)
-
-<div class="columns">
-<div class="two">
-
-Mechanischer Ursprung der Haft- und Gleitzone im Reifenlatsch:
-
-- **Reifenlatsch (Aufstandsfläche der Länge $L$):**
-  - Gummiborsten treten bei $x = 0$ unbelastet in den Latsch ein.
-  - Nach hinten ($x \to L$) dehnt der Schlupf $s$ das Profil elastisch.
-- **Spannungsverläufe:**
-  - Scherspannung: $\tau(x) = c_p \cdot s \cdot x$ wächst linear nach hinten.
-  - Normaldruck $p(x)$ ist parabelförmig (am Rand gering).
-- **Zweiteilung des Latsches (Coulomb: $\tau \le \mu_0 \cdot p$):**
-  - **Haftzone (vorne):** $\tau(x) \le \mu_0 p(x) \implies$ Profil haftet fest.
-  - **Gleitzone (hinten):** Scherspannung übersteigt Druck $\implies$ Profil beginnt am Auslauf mikroskopisch zu rutschen.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Buerstenmodell_Latsch.svg)
-
-</div>
-</div>
-
----
-
-### Reifenphysik: Herleitung der 80 %-Grenze
-
-<div class="columns">
-<div class="two">
-
-Mathematische Integration der Scherkräfte nach Fiala:
-
-- **Fiala-Gleichung (Latschintegration):**
-  - Durch Integration von $\tau(x)$ über den Latsch $L$ folgt:
-    $$F / F_{\max} = 3\theta - 3\theta^2 + \theta^3 \quad (\text{mit Schlupf } \theta \sim s)$$
-- **Warum genau 80 %? (Linearitätsgrenze):**
-  - Für $\theta \to 0$ verhält sich der Reifen rein linear ($3\theta$).
-  - Bei $F = 0{,}8 \cdot F_{\max}$ erreicht die Gleitzone rund $10\,\%$ des Latsches $\to$ Abweichung von der linearen Tangente übersteigt $5\,\%$.
-- **Konsequenz für die Systemsimulation:**
-  - **Bis 80 % ($a_{\text{res}} \le 0{,}8\,\mu_{\max} g$):** Lineares LTI-Modell ($F = c_s \cdot s$) ist exakt genug ($\le 5\,\%$ Fehler).
-  - **Über 80 %:** Nichtlineare Sättigung $\to$ Pacejka zwingend!
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Fiala_Linearitaet.svg)
-
-</div>
-</div>
-
----
-
-### Reifenkräfte: Längsbeschleunigung $a_x$
-
-<div class="columns">
-<div class="two">
-
-Vom Reibwert zur realen Fahrzeugbewegung ($F = m \cdot a$):
-
-- **Radlast $F_z$ (Schwerkraft):**
-  - Fahrzeugmasse $m$ erzeugt Normalkraft: $F_z = m \cdot g$.
-- **Längskraft $F_x$ (Coulomb / Pacejka):**
-  - Reibkraft in Fahrtrichtung: $F_x = \mu(s) \cdot F_z = \mu(s) \cdot m \cdot g$.
-- **Längsbeschleunigung $a_x$ (Newton):**
-  - Aus $m \cdot a_x = F_x$ folgt: $a_x = F_x / m = \mu(s) \cdot g$.
-  - *Masse $m$ kürzt sich vollständig heraus!*
-- **Telemetrie-Bedeutung:**
-  - Normiert auf $g$ entspricht die Beschleunigung direkt dem Reibwert: $a_x / g = \mu(s)$.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Reifen_Kraefte.svg)
-
-</div>
-</div>
-
----
-
-### Querdynamik: Schräglaufwinkel & Pacejka $\mu_y(\alpha)$
-
-<div class="columns">
-<div class="two">
-
-Seitenkraft entsteht analog zur Längsdynamik:
-
-- **Schräglaufwinkel $\alpha$ (Querschlupf):**
-  - Lenken dreht die Radebene $\to$ weicht vom Vektor $\vec{v}$ ab.
-  - Geschwindigkeitskomponenten: $\tan \alpha = v_y / v_x$.
-- **Reibwert $\mu_y(\alpha)$ (Pacejka-Querkurve):**
-  - Querscherung folgt demselben Verlauf wie Längsschlupf:
-  - Linear $\alpha < 4^\circ$ ($\mu_y \sim \alpha$) $\to$ Peak $\mu_{y,\max}$ bei $8^\circ \dots 10^\circ$.
-  - Bei $\alpha > 15^\circ$ reißt die Seitenführung ab ($\mu_{\text{gleit}}$).
-- **Querkraft $F_y$ & Querbeschleunigung $a_y$ (Newton):**
-  - $F_y = \mu_y(\alpha) \cdot F_z = \mu_y(\alpha) \cdot m \cdot g$.
-  - Aus $m \cdot a_y = F_y$ folgt: $a_y = F_y / m = \mu_y(\alpha) \cdot g$.
-  - *Genau wie bei $a_x$ kürzt sich die Masse $m$ heraus!*
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Querdynamik_Schraeglauf.svg)
-
-</div>
-</div>
-
----
-
-### Phasenraum: Kamm'scher Kreis & G-G-Telemetrie
-
-<div class="columns">
-<div class="two">
-
-Kopplung von Längs- und Querdynamik im Gaming-HUD (Track B):
-
-- **Kamm'sches Haftungsgesetz:**
+- **Zustandsraum $(a_y, a_x)$:**
+  - Längsachse $a_x$: Antreiben ($+a_x$) oder Bremsen ($-a_x$).
+  - Querachse $a_y$: Kurvenkräfte (Zentripetalbeschleunigung).
+- **Haftungsgrenze (Kamm'scher Kreis):**
   $$a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu_{\max} \cdot g$$
   - Vollbremsung ($|a_x| = \mu_{\max} g$) erzwingt $a_y = 0$ (Lenkverlust).
-- **Die 3 Grip-Zonen im Leitstand:**
-  - **Grün ($a_{\text{res}} \le 0{,}8\,\mu_{\max} g$):** Sicherer linearer Bereich ($\mu \sim s, \alpha$).
-  - **Orange ($0{,}8 \dots 1{,}0\,\mu_{\max} g$):** Limit / kontrollierter Drift.
-  - **Rot ($a_{\text{res}} > \mu_{\max} g$):** Traktionsabriss ($\mu_{\text{gleit}}$) $\to$ führt zu **Untersteuern** (Front schiebt) oder **Übersteuern** (Heck bricht aus $\to$ Dreher).
+- **Telemetrie-Zonen im Leitstand:**
+  - **Grün ($a_{\text{res}} \le 0{,}8\,\mu_{\max} g$):** Sicherer linearer Bereich.
+  - **Orange ($0{,}8 \dots 1{,}0\,\mu_{\max} g$):** Grenzbereich / kontrollierter Drift.
+  - **Rot ($a_{\text{res}} > \mu_{\max} g$):** Traktionsabriss (Spin-Gefahr).
 
 </div>
 <div class="one">
