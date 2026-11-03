@@ -53,9 +53,9 @@
   <!-- Explanation Card -->
   <g transform="translate(15, 258)">
     <rect width="240" height="74" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
-    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Grip-Zonen im G-G-Diagramm</text>
-    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #9a3412;">Grün: Linearer Grip (&lt; 0.8 g)</text>
-    <text x="120" y="58" class="desc" style="fill: #ea580c;">Orange: Renntempo | Rot: Rutschen</text>
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">80%-Schwelle &amp; Grip-Zonen</text>
+    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #9a3412;">&lt; 0.8 g: Linearer Grip (Sicher)</text>
+    <text x="120" y="58" class="desc" style="fill: #ea580c;">0.8-1.0 g: Schlupf | &gt; 1.0 g: Abriss</text>
   </g>
 
   <!-- Summary Footer -->

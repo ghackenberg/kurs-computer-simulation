@@ -393,11 +393,11 @@ Warum darf die Leistungsgrenze im Kennfeld kurzzeitig überschritten werden?
 <div class="columns">
 <div class="two">
 
-Ausgabe der Phasenraum-Trajektorie $(n, M)$ mit ScottPlot `ScatterLine`:
+Trajektorie $(n, M)$ in drei Phasen:
 
-- **Dauerleistungsgrenze:** Gestrichelte Hyperbel für $P_{\max} = 1{,}2\,\text{kW}$ (S1).
-- **Dynamischer Hochlauf:** Trajektorie taucht beim Anfahren kurzzeitig in den Peak-Bereich ($1{,}4\,\text{kW}$) ein.
-- **Stationärer Arbeitspunkt:** Schwingt bei $2.350\,\text{U/min}$ und $4{,}0\,\text{Nm}$ stabil unterhalb von $P_{\max}$ ein.
+- **1. Hochlauf:** Maximalmoment ($9{,}2\,\text{Nm}$) beschleunigt die Trägheit; Peak ($1{,}4\,\text{kW}$) übersteigt $P_{\max} = 1{,}2\,\text{kW}$ kurzzeitig (zulässig).
+- **2. Solldrehzahl:** Bei $2.450\,\text{U/min}$ fällt das Beschleunigungsmoment ab ($M \to 2{,}8\,\text{Nm}$).
+- **3. Lastaufschaltung:** Lastmoment ($4{,}0\,\text{Nm}$) greift an; Einlaufen in stationären S1-Arbeitspunkt ($2.350\,\text{U/min}$).
 
 </div>
 <div class="three">
@@ -414,12 +414,12 @@ Ausgabe der Phasenraum-Trajektorie $(n, M)$ mit ScottPlot `ScatterLine`:
 <div class="columns">
 <div class="two">
 
-In der Fahrsimulation (Übung 4, Track B) koppelt der Reifen die Längs- und Querdynamik:
+Reifen koppeln Längs- und Querdynamik (Übung 4, Track B):
 
-- **Haftungsgesetz:** Die resultierende Reifenbeschleunigung $a_{\text{res}}$ koppelt Längs- und Querführung:
+- **Massen-Normierung ($a = F/m$):** Reifenkräfte $F$ normiert auf Fahrzeugmasse $m$:
   $$a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu \cdot g$$
-- **Zielkonflikt:** Längskraft $a_x$ (Bremse/Gas) und Querkraft $a_y$ (Kurvenführung) teilen sich das Kraftpotenzial.
-- Vollbremsung mit $a_x = \mu g$ bedeutet $a_y = 0$ (Fahrzeug kann nicht mehr lenken!).
+- **Haftungsgesetz (Kamm):** Längs- ($a_x$) und Querführung ($a_y$) teilen sich das Haftungsbudget $\mu \cdot g$. Vollbremsung mit $a_x = \mu g$ führt zu $a_y = 0$ (keine Lenkwirkung).
+- **Grenzüberschreitung ($a_{\text{res}} > \mu \cdot g$):** Abreißen der Haftung in Gleitreibung; Räder blockieren / Fahrzeug rutscht unkontrolliert.
 
 </div>
 <div class="one">
@@ -436,12 +436,12 @@ In der Fahrsimulation (Übung 4, Track B) koppelt der Reifen die Längs- und Que
 <div class="columns">
 <div class="two">
 
-Telemetrie-Dashboard im Rennsport-Leitstand (Übung 4, Track B):
+Echtzeitanalyse von $a_x$ und $a_y$ im Gaming-HUD:
 
-- **Zone 1: Linearer Grip (Grün):** $a_{\text{res}} \le 0{,}8 \cdot \mu g$ – stabiler Fahrzustand mit vollen Lenkreserven.
-- **Zone 2: Grenzbereich (Orange):** $0{,}8 \cdot \mu g < a_{\text{res}} \le 1{,}0 \cdot \mu g$ – optimales Renntempo, kontrollierter Drift.
-- **Zone 3: Traktionsabriss (Rot):** $a_{\text{res}} > \mu g$ – Haftungsabriss, Rutschen und Schleudern.
-- **Phasenmanöver:** Anbremsen ($-a_x$) $\to$ Trail-Braking $\to$ Scheitelpunkt ($a_y = \max$) $\to$ Beschleunigen ($+a_x$).
+- **Warum 80 %-Schwelle ($0{,}8 \cdot \mu g$)?** Bis 80 % reagiert der Reifen linear (präzise Lenkung); darüber setzt Reifenschlupf ein (Renn-Limit).
+- **Grün ($a_{\text{res}} \le 0{,}8 \cdot \mu g$):** Linearer Normalbereich (volle Reserven).
+- **Orange ($0{,}8 \cdot \mu g < a_{\text{res}} \le 1{,}0 \cdot \mu g$):** Optimaler Renn-Grip / Drift.
+- **Rot ($a_{\text{res}} > \mu g$):** Traktionsabriss (Gleitreibung, Spin).
 
 </div>
 <div class="one">
