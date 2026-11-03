@@ -71,13 +71,30 @@ namespace GrafikGenerator
             hyp.LinePattern = LinePattern.Dashed;
             hyp.LegendText = "Dauerleistung P_max = 1.2 kW (S1)";
 
-            // Trajektorie Betriebspunkt: Dynamischer Hochlauf mit kurzzeitigem Peak (S2) und Einlauf in S1-Arbeitspunkt
-            double[] nTraj = { 0, 200, 600, 1200, 1600, 1900, 2200, 2450, 2400, 2350 };
-            double[] mTraj = { 0, 9.2, 9.0,  8.5,  8.0,  7.0,  5.2,  2.8,  3.6,  4.0 };
-            var traj = plot.Add.ScatterLine(nTraj, mTraj);
-            traj.Color = ScottPlot.Colors.SteelBlue;
-            traj.LineWidth = 4.0f;
-            traj.LegendText = "Trajektorie (Anfahren & Last)";
+            // Trajektorie in 3 farbkodierten Betriebsphasen:
+            // Phase 1: Hochlauf & kurzzeitiger Peak (S2 Überlast)
+            double[] nPhase1 = { 0, 200, 600, 1200, 1600, 1900 };
+            double[] mPhase1 = { 0, 9.2, 9.0,  8.5,  8.0,  7.0 };
+            var traj1 = plot.Add.ScatterLine(nPhase1, mPhase1);
+            traj1.Color = ScottPlot.Colors.SteelBlue;
+            traj1.LineWidth = 4.5f;
+            traj1.LegendText = "1. Hochlauf & Peak (S2)";
+
+            // Phase 2: Annäherung an Solldrehzahl (Moment fällt ab)
+            double[] nPhase2 = { 1900, 2200, 2450 };
+            double[] mPhase2 = { 7.0,  5.2,  2.8 };
+            var traj2 = plot.Add.ScatterLine(nPhase2, mPhase2);
+            traj2.Color = ScottPlot.Colors.DarkCyan;
+            traj2.LineWidth = 4.5f;
+            traj2.LegendText = "2. Solldrehzahl (n-Limit)";
+
+            // Phase 3: Lastaufschaltung & Einlaufen in stationären S1-Arbeitspunkt
+            double[] nPhase3 = { 2450, 2400, 2350 };
+            double[] mPhase3 = { 2.8,  3.6,  4.0 };
+            var traj3 = plot.Add.ScatterLine(nPhase3, mPhase3);
+            traj3.Color = ScottPlot.Colors.DarkOrange;
+            traj3.LineWidth = 4.5f;
+            traj3.LegendText = "3. Lastaufschaltung";
 
             var startMarker = plot.Add.Marker(0, 0, MarkerShape.FilledCircle, 12, ScottPlot.Colors.ForestGreen);
             startMarker.LegendText = "Startpunkt (0, 0)";

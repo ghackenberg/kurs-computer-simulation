@@ -393,11 +393,11 @@ Warum darf die Leistungsgrenze im Kennfeld kurzzeitig überschritten werden?
 <div class="columns">
 <div class="two">
 
-Trajektorie $(n, M)$ in drei Phasen:
+Trajektorie $(n, M)$ in 3 farbkodierten Phasen:
 
-- **1. Hochlauf:** Maximalmoment ($9{,}2\,\text{Nm}$) beschleunigt die Trägheit; Peak ($1{,}4\,\text{kW}$) übersteigt $P_{\max} = 1{,}2\,\text{kW}$ kurzzeitig (zulässig).
-- **2. Solldrehzahl:** Bei $2.450\,\text{U/min}$ fällt das Beschleunigungsmoment ab ($M \to 2{,}8\,\text{Nm}$).
-- **3. Lastaufschaltung:** Lastmoment ($4{,}0\,\text{Nm}$) greift an; Einlaufen in stationären S1-Arbeitspunkt ($2.350\,\text{U/min}$).
+- **1. Hochlauf (Blau):** Maximalmoment ($9{,}2\,\text{Nm}$) beschleunigt die Trägheit; Peak ($1{,}4\,\text{kW}$) übersteigt $P_{\max} = 1{,}2\,\text{kW}$ kurzzeitig (zulässig).
+- **2. Solldrehzahl (Türkis):** Bei $2.450\,\text{U/min}$ fällt das Beschleunigungsmoment ab ($M \to 2{,}8\,\text{Nm}$).
+- **3. Lastaufschaltung (Orange):** Lastmoment ($4{,}0\,\text{Nm}$) greift an; Einlaufen in stationären S1-Arbeitspunkt ($2.350\,\text{U/min}$).
 
 </div>
 <div class="three">
@@ -416,15 +416,45 @@ Trajektorie $(n, M)$ in drei Phasen:
 
 Reifen koppeln Längs- und Querdynamik (Übung 4, Track B):
 
-- **Massen-Normierung ($a = F/m$):** Reifenkräfte $F$ normiert auf Fahrzeugmasse $m$:
+- **Längsbeschleunigung $a_x$ (Fahrzeugachse):**
+  - $+a_x$: Antreiben (Gas) | $-a_x$: Verzögern (Bremse).
+- **Querbeschleunigung $a_y$ (Kurvenachse):**
+  - Entsteht bei Kurvenfahrt durch Reifenseitenkräfte.
+- **Kamm'scher Kreis:** Der Reifen überträgt in der Fahrbahnebene maximal die Grenzhaftung $\mu \cdot g$:
   $$a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu \cdot g$$
-- **Haftungsgesetz (Kamm):** Längs- ($a_x$) und Querführung ($a_y$) teilen sich das Haftungsbudget $\mu \cdot g$. Vollbremsung mit $a_x = \mu g$ führt zu $a_y = 0$ (keine Lenkwirkung).
-- **Grenzüberschreitung ($a_{\text{res}} > \mu \cdot g$):** Abreißen der Haftung in Gleitreibung; Räder blockieren / Fahrzeug rutscht unkontrolliert.
+- **Zielkonflikt:** Vollbremsung ($a_x = \mu g$) erzwingt $a_y = 0$ (keine Lenkwirkung mehr möglich!).
 
 </div>
 <div class="one">
 
 ![](./Diagramme/Mini_Kammscher_Kreis.svg)
+
+</div>
+</div>
+
+---
+
+### Fahrdynamik: Drift vs. Traktionsabriss
+
+<div class="columns">
+<div class="two">
+
+Fahrdynamische Effekte an und über der Haftgrenze $\mu \cdot g$:
+
+- **1. Linearer Grip ($a_{\text{res}} \le 0{,}8 \cdot \mu g$):**
+  - Reifen haftet ohne Schlupf. Auto folgt präzise der Lenkspur.
+- **2. Kontrollierter Drift ($0{,}8 \cdot \mu g < a_{\text{res}} \le 1{,}0 \cdot \mu g$):**
+  - **Reifenschlupf:** Profil beginnt mikroskopisch zu gleiten.
+  - Heck wird leicht ausgestellt; feinfühliges Gegenlenken balanciert das Fahrzeug im optimalen Renntempo.
+- **3. Traktionsabriss ($a_{\text{res}} > \mu \cdot g$):**
+  - Haftung bricht schlagartig in **Gleitreibung** ein.
+  - **Untersteuern:** Front rutscht $\to$ Auto schiebt geradeaus.
+  - **Übersteuern:** Heck verliert Grip $\to$ Fahrzeug dreht sich (Spin).
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Fahrdynamik_Drift.svg)
 
 </div>
 </div>
@@ -438,10 +468,13 @@ Reifen koppeln Längs- und Querdynamik (Übung 4, Track B):
 
 Echtzeitanalyse von $a_x$ und $a_y$ im Gaming-HUD:
 
-- **Warum 80 %-Schwelle ($0{,}8 \cdot \mu g$)?** Bis 80 % reagiert der Reifen linear (präzise Lenkung); darüber setzt Reifenschlupf ein (Renn-Limit).
-- **Grün ($a_{\text{res}} \le 0{,}8 \cdot \mu g$):** Linearer Normalbereich (volle Reserven).
-- **Orange ($0{,}8 \cdot \mu g < a_{\text{res}} \le 1{,}0 \cdot \mu g$):** Optimaler Renn-Grip / Drift.
-- **Rot ($a_{\text{res}} > \mu g$):** Traktionsabriss (Gleitreibung, Spin).
+- **Warum eine 80 %-Schwelle ($0{,}8 \cdot \mu g$)?**
+  - Bis 80 % der Haftgrenze verhält sich der Reifen linear.
+  - Die 80 %-Linie dient im Leitstand als **Vorwarnschwelle** vor dem nichtlinearen Schlupfbereich.
+- **Die 3 Grip-Zonen im Leitstand:**
+  - **Grün ($a_{\text{res}} \le 0{,}8 \cdot \mu g$):** Linearer Normalbereich (Sicherheit).
+  - **Orange ($0{,}8 \cdot \mu g < a_{\text{res}} \le 1{,}0 \cdot \mu g$):** Limit / Drift-Bereich.
+  - **Rot ($a_{\text{res}} > \mu g$):** Traktionsabriss (Gleitreibung, Spin-Gefahr).
 
 </div>
 <div class="one">

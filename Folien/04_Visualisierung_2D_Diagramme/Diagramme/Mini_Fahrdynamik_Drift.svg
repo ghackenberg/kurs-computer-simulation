@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Drift vs. Traktionsabriss</text>
+  <text x="135" y="42" class="sub">Fahrdynamik (Track B Racing)</text>
+
+  <!-- Illustration Canvas -->
+  <g transform="translate(20, 56)">
+    <rect width="230" height="190" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Corner Road Arc -->
+    <path d="M 20 170 Q 20 50 140 30" fill="none" stroke="#e2e8f0" stroke-width="44" stroke-linecap="round" />
+    <path d="M 20 170 Q 20 50 140 30" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,4" />
+
+    <!-- Trajectory Paths and Markers First -->
+    <path d="M 26 165 Q 28 65 125 45" fill="none" stroke="#16a34a" stroke-width="3" />
+    <circle cx="125" cy="45" r="5" fill="#16a34a" />
+
+    <path d="M 26 165 Q 36 60 148 56" fill="none" stroke="#d97706" stroke-width="2.5" stroke-dasharray="4,2" />
+    <circle cx="148" cy="56" r="5" fill="#d97706" />
+
+    <line x1="42" y1="105" x2="95" y2="25" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="3,2" />
+    <polygon points="98,21 89,26 95,31" fill="#dc2626" />
+    <circle cx="42" cy="105" r="4.5" fill="#dc2626" />
+
+    <!-- Labels with Solid White Shields placed on Top -->
+    <!-- Case 1: Grip -->
+    <rect x="52" y="60" width="70" height="18" rx="2" fill="#ffffff" />
+    <text x="87" y="73" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#15803d" text-anchor="middle">1. Grip (Spur)</text>
+
+    <!-- Case 2: Drift -->
+    <rect x="135" y="72" width="74" height="18" rx="2" fill="#ffffff" />
+    <text x="172" y="85" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b45309" text-anchor="middle">2. Drift</text>
+
+    <!-- Case 3: Abriss -->
+    <rect x="25" y="112" width="80" height="18" rx="2" fill="#ffffff" />
+    <text x="65" y="125" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b91c1c" text-anchor="middle">3. Abriss</text>
+
+    <!-- Physical Friction Note -->
+    <rect x="25" y="152" width="180" height="26" rx="3" fill="#fef2f2" stroke="#fecaca" stroke-width="1" />
+    <text x="115" y="169" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#991b1b" text-anchor="middle">Gleitreibung &lt; Haftreibung</text>
+  </g>
+
+  <!-- Explanation Card -->
+  <g transform="translate(15, 258)">
+    <rect width="240" height="74" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Fahrdynamische Auswirkungen</text>
+    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #9a3412;">Untersteuern: Schieben über Front</text>
+    <text x="120" y="58" class="desc" style="fill: #ea580c;">Übersteuern: Heck bricht aus (Spin)</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #004B96;">Grenzbereich im Rennsport</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #334155;">Schlupfkurve (Pacejka)</text>
+</svg>
