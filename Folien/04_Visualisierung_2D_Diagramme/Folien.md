@@ -388,6 +388,47 @@ Warum darf die Leistungsgrenze im Kennfeld kurzzeitig überschritten werden?
 
 ---
 
+### ScottPlot API: `Scatter` im Motorkennfeld
+
+<div class="columns">
+<div class="two">
+
+C#-Architektur zur Kennfeld-Visualisierung in ScottPlot 5:
+
+- **Hyperbel:** Arrays `nHyp` und `mHyp` gemäß Grenze $P_{\max}$; Kurve `hyp` mit gestricheltem Stil (`LinePattern.Dashed`).
+- **Phasen-Trajektorie:** Arrays `n1` und `m1` für Hochlauf und Lastaufschaltung als Trajektorie `t1`.
+- **Marker:** `Plot.Add.Marker(...)` hebt den stationären S1-Arbeitspunkt hervor.
+
+</div>
+<div class="two">
+
+```csharp
+// 1. Hyperbel: Dauerleistung P_max = 1.2 kW
+double[] nHyp = new double[80], mHyp = new double[80];
+for (int i = 0; i < 80; i++) {
+  nHyp[i] = 955.0 + i * (2045.0 / 79);
+  mHyp[i] = 1200.0 / (2.0 * Math.PI * (nHyp[i] / 60.0));
+}
+var hyp = plot.Add.ScatterLine(nHyp, mHyp);
+hyp.Color = ScottPlot.Colors.Crimson;
+hyp.LinePattern = LinePattern.Dashed;
+
+// 2. Trajektorien (Hochlauf & Last)
+double[] n1 = { 0, 200, 600, 1200, 1600, 1900 };
+double[] m1 = { 0, 9.2, 9.0,  8.5,  8.0,  7.0 };
+var t1 = plot.Add.ScatterLine(n1, m1);
+t1.Color = ScottPlot.Colors.SteelBlue;
+
+// 3. Stationärer Arbeitspunkt & Achsen
+plot.Add.Marker(2350, 4.0, MarkerShape.FilledSquare, 10);
+plot.Axes.SetLimits(0, 3200, 0, 12);
+```
+
+</div>
+</div>
+
+---
+
 ### Anwendungsbeispiel: `Scatter` im Motorkennfeld
 
 <div class="columns">
@@ -421,16 +462,80 @@ Gekoppelte Beschleunigungen im Racing-Leitstand (Übung 4, Track B):
   - Querachse $a_y$: Kurvenkräfte (Zentripetalbeschleunigung).
 - **Haftungsgrenze (Kamm'scher Kreis):**
   $$a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu_{\max} \cdot g$$
+  - Reifenhaftung begrenzt die Vektorsumme aus Längs- und Querkraft.
   - Vollbremsung ($|a_x| = \mu_{\max} g$) erzwingt $a_y = 0$ (Lenkverlust).
-- **Telemetrie-Zonen im Leitstand:**
-  - **Grün ($a_{\text{res}} \le 0{,}8\,\mu_{\max} g$):** Sicherer linearer Bereich.
-  - **Orange ($0{,}8 \dots 1{,}0\,\mu_{\max} g$):** Grenzbereich / kontrollierter Drift.
-  - **Rot ($a_{\text{res}} > \mu_{\max} g$):** Traktionsabriss (Spin-Gefahr).
+- **Peak-Reibwert:** $\mu_{\max}$ definiert das Haftungslimit ($g = 9{,}81\,\text{m/s}^2$).
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Kammscher_Kreis.svg)
+
+</div>
+</div>
+
+---
+
+### Fahrdynamik: Grip-Zonen im G-G-Diagramm
+
+<div class="columns">
+<div class="two">
+
+Klassifikation der Beschleunigungszustände im Leitstand:
+
+- **Grip-Zonen nach Ausnutzung von $\mu_{\max} \cdot g$:**
+  - **Grün ($a_{\text{res}} \le 0{,}8\,\mu_{\max} g$):** Sicherer linearer Bereich (hohe Haftungsreserve).
+  - **Orange ($0{,}8 \dots 1{,}0\,\mu_{\max} g$):** Grenzbereich am Haftungslimit (kontrollierter Drift).
+  - **Rot ($a_{\text{res}} > \mu_{\max} g$):** Traktionsabriss (Übergang in Gleitreibung, Spin-Gefahr).
+- **Simulation & Telemetrie:**
+  - Zeitschritte erzeugen Datenpunkte $(a_y, a_x)$ zur Fahrstilanalyse.
 
 </div>
 <div class="one">
 
 ![](./Diagramme/Mini_Kammscher_Zonen.svg)
+
+</div>
+</div>
+
+---
+
+### ScottPlot API: Kamm'scher Kreis & G-G-Diagramm
+
+<div class="columns">
+<div class="two">
+
+C#-Architektur zur G-G-Visualisierung in ScottPlot 5:
+
+- **Hüllkreise:** Arrays `xCirc` und `yCirc` mit Winkel `phi` via `Math.Cos` und `Math.Sin` für Radius $1{,}0\,g$.
+- **`ScatterLine`:** Zeichnet Grenzlinie `limit` mit roter Signalfarbe (`Colors.Crimson`).
+- **Streupunkte:** `s.LineWidth = 0` und `s.MarkerSize = 10` stellen Telemetriepunkte ohne Verbindungslinie dar.
+- **1:1-Aspekt:** `Plot.Axes.SquareUnits()` erzwingt kreisrunde Geometrie auf dem Bildschirm.
+
+</div>
+<div class="two">
+
+```csharp
+// 1. Parametrischer Hüllkreis (1.0 g)
+double[] xCirc = new double[121], yCirc = new double[121];
+for (int i = 0; i <= 120; i++) {
+  double phi = i * 2.0 * Math.PI / 120;
+  xCirc[i] = 1.0 * Math.Cos(phi);
+  yCirc[i] = 1.0 * Math.Sin(phi);
+}
+var limit = plot.Add.ScatterLine(xCirc, yCirc);
+limit.Color = ScottPlot.Colors.Crimson;
+
+// 2. Telemetriedaten als reine Punkte
+var s = plot.Add.Scatter(ayData, axData);
+s.LineWidth = 0;
+s.MarkerSize = 10;
+s.Color = ScottPlot.Colors.ForestGreen;
+
+// 3. Quadratisches 1:1 Aspektverhältnis
+plot.Axes.SquareUnits();
+plot.Axes.SetLimits(-1.35, 1.35, -1.35, 1.35);
+```
 
 </div>
 </div>
@@ -446,7 +551,8 @@ Reifen-Grip-Telemetrie für das Gaming-HUD (Übung 4, Track B):
 
 - **Grenz-Hüllkurven:** Parametrische Kreise für $1{,}0\,\mu g$ (Haftgrenze) und $0{,}8\,\mu g$ (Grip-Grenze).
 - **Farbkodierte Telemetrie:** Scatter-Punkte für Längsbeschleunigung $a_x$ und Querbeschleunigung $a_y$.
-- **Aspektverhältnis:** `Plot.Axes.SquareUnits()` erzwingt ein kreisrundes 1:1-Diagramm.
+- **Fahrzustände:** Vollbremsung, Trail-Braking in Kurve, Apex und Drift-Peak.
+- **Aspektverhältnis:** `Plot.Axes.SquareUnits()` für 1:1-Geometrie.
 
 </div>
 <div class="three">
