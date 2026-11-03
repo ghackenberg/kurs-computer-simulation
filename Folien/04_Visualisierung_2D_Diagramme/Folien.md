@@ -517,69 +517,20 @@ Seitenkraft entsteht analog zur Längsdynamik:
 
 ---
 
-### Phasenraum: Kamm'scher Kreis (Fahrphysik)
+### Phasenraum: Kamm'scher Kreis & G-G-Telemetrie
 
 <div class="columns">
 <div class="two">
 
-Kopplung von Längs- und Querdynamik (Übung 4, Track B):
+Kopplung von Längs- und Querdynamik im Gaming-HUD (Track B):
 
-- **2D-Beschleunigungsebene ($a_x, a_y$):**
-  - Längsachse $a_x$: Antreiben ($+a_x$) oder Bremsen ($-a_x$).
-  - Querachse $a_y$: Reifenseitenkräfte bei Kurvenfahrt.
-- **Haftungsgesetz (Kamm):** $a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu_{\max} \cdot g$
-  - Reibgrenze $\mu_{\max}$: Peak-Reibwert aus Pacejka-Kurve (trocken $\approx 1{,}0 \dots 1{,}2$, nass $\approx 0{,}6$, Eis $\approx 0{,}1$).
-  - $g$: Erdbeschleunigung ($9{,}81\,\text{m/s}^2$).
-- **Zielkonflikt:** Vollbremsung ($|a_x| = \mu_{\max} g$) erzwingt $a_y = 0$ (keine Lenkwirkung mehr möglich!).
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Kammscher_Kreis.svg)
-
-</div>
-</div>
-
----
-
-### Fahrdynamik: Untersteuern vs. Übersteuern
-
-<div class="columns">
-<div class="two">
-
-Zweikampf um das Haftungslimit $\mu_{\max} \cdot g$ zwischen Vorder- und Hinterachse:
-
-- **Untersteuern (Vorderachse überlastet):**
-  - **Ursache:** Zu schnelles Einlenken oder zu starkes Hineinbremsen in die Kurve (Trail-Braking übertrieben).
-  - **Verhalten:** Vorderräder rutschen; Fahrzeug schiebt trotz vollem Lenkeinschlag geradeaus zum Kurvenaußenrand.
-- **Übersteuern (Hinterachse überlastet):**
-  - **Ursache:** Zu viel Gas bei Heckantrieb oder Lastwechsel (Entlastung des Hecks beim abrupten Gaswegnehmen).
-  - **Verhalten:** Hinterräder verlieren Führung; Heck bricht aus $\to$ Dreher (Spin), falls nicht gegengelenkt wird.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Untersteuern_Uebersteuern.svg)
-
-</div>
-</div>
-
----
-
-### G-G-Diagramm in der Telemetrie: Grip-Zonen
-
-<div class="columns">
-<div class="two">
-
-Echtzeitanalyse von $a_x$ und $a_y$ im Gaming-HUD:
-
-- **Warum eine 80 %-Schwelle ($0{,}8 \cdot \mu g$)?**
-  - Bis 80 % der Haftgrenze verhält sich der Reifen linear.
-  - Die 80 %-Linie dient im Leitstand als **Vorwarnschwelle** vor dem nichtlinearen Schlupfbereich.
+- **Kamm'sches Haftungsgesetz:**
+  $$a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu_{\max} \cdot g$$
+  - Vollbremsung ($|a_x| = \mu_{\max} g$) erzwingt $a_y = 0$ (Lenkverlust).
 - **Die 3 Grip-Zonen im Leitstand:**
-  - **Grün ($a_{\text{res}} \le 0{,}8 \cdot \mu g$):** Linearer Normalbereich (Sicherheit).
-  - **Orange ($0{,}8 \cdot \mu g < a_{\text{res}} \le 1{,}0 \cdot \mu g$):** Limit / Drift-Bereich.
-  - **Rot ($a_{\text{res}} > \mu g$):** Traktionsabriss (Gleitreibung, Spin-Gefahr).
+  - **Grün ($a_{\text{res}} \le 0{,}8\,\mu_{\max} g$):** Sicherer linearer Bereich ($\mu \sim s, \alpha$).
+  - **Orange ($0{,}8 \dots 1{,}0\,\mu_{\max} g$):** Limit / kontrollierter Drift.
+  - **Rot ($a_{\text{res}} > \mu_{\max} g$):** Traktionsabriss ($\mu_{\text{gleit}}$) $\to$ führt zu **Untersteuern** (Front schiebt) oder **Übersteuern** (Heck bricht aus $\to$ Dreher).
 
 </div>
 <div class="one">
