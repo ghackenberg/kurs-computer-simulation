@@ -123,6 +123,8 @@ const CANONICAL_ALIASES = {
   'ispanning': ['ispanning', '_ispanning', 'panning'],
   'currentpos': ['currentpos', 'p_current', 'curpos', 'pos'],
   'delta': ['delta', 'd'],
+  'deltaold': ['deltaold', 'delta_old', 'delta_k', 'deltak', 'delta'],
+  'deltanew': ['deltanew', 'delta_new', 'delta_k_star', 'deltakstar', 'delta2'],
   'screenpixel': ['screenpixel', 'p_screen', 'screen', 'pixel'],
   'canvasmatrix': ['canvasmatrix', 'm', 'matrix'],
   'trans': ['trans', 'transform2d', 'transform', 'viewport'],

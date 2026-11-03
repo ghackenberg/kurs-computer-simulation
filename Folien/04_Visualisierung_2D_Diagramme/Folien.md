@@ -1201,13 +1201,13 @@ $$s^2 = \frac{1}{k-1} \left( \sum_{i=1}^k x_i^2 - \frac{1}{k} \left(\sum_{i=1}^k
 Numerisch stabile Online-Mittelwertbildung nach B. P. Welford (1962):
 
 - **Problem klassischer Summation:**
-  - Erfordert Speicherung aller Daten oder birgt Überlauf bei $k \to \infty$.
-- **Welford-Rekursion für den Mittelwert:**
-  - $\text{delta} = x_k - \bar{x}_{k-1}$ mit $\bar{x}_k = \bar{x}_{k-1} + \frac{\text{delta}}{k}$.
-- **Intuition des Mittelwert-Updates:**
-  - `delta`: Abweichung des neuen Messwerts $x_k$ vom alten Mittelwert $\text{Mean}_{k-1}$.
-  - Neuer Mittelwert $\text{Mean}_k$ korrigiert den alten Wert um $1/k$ dieser Abweichung.
-- **Effizienz:** Exakt eine Division pro Zeitschritt ($O(1)$ Zeit und Speicher).
+  - Speicherung aller Daten nötig oder Überlauf bei $k \to \infty$.
+- **Welford-Mittelwert-Rekursion:**
+  - Abweichung vor Update: $\delta_k = \text{deltaOld} = x_k - \bar{x}_{k-1}$.
+  - Neuer Mittelwert: $\bar{x}_k = \bar{x}_{k-1} + \frac{\delta_k}{k}$ ($\text{Mean}_k = \text{Mean}_{k-1} + \frac{\delta_k}{k}$).
+- **Intuition:**
+  - Neuer Mittelwert korrigiert $\text{Mean}_{k-1}$ um $\frac{1}{k}$ der Abweichung $\delta_k$.
+- **Effizienz:** Exakt eine Division pro Zeitschritt ($O(1)$ Zeit & Speicher).
 
 </div>
 <div class="one">
@@ -1219,22 +1219,60 @@ Numerisch stabile Online-Mittelwertbildung nach B. P. Welford (1962):
 
 ---
 
+### Welford-Algorithmus: Mathematische Herleitung
+
+<div class="columns">
+<div class="one">
+
+**1. Quadratsumme aufspalten:**
+Die Summe der quadrierten Abweichungen $M_{2,k} = \sum_{i=1}^k (x_i - \bar{x}_k)^2$ spaltet das neueste Sample $x_k$ ab:
+$M_{2,k} = (x_k - \bar{x}_k)^2 + \sum_{i=1}^{k-1} (x_i - \bar{x}_k)^2$
+
+**2. Verschiebung zum alten Mittelwert:**
+Substituiere $(x_i - \bar{x}_k) = (x_i - \bar{x}_{k-1}) - (\bar{x}_k - \bar{x}_{k-1})$:
+$\sum_{i=1}^{k-1} (x_i - \bar{x}_k)^2 = \sum_{i=1}^{k-1} (x_i - \bar{x}_{k-1})^2$
+$- 2(\bar{x}_k - \bar{x}_{k-1}) \sum_{i=1}^{k-1} (x_i - \bar{x}_{k-1}) + (k-1)(\bar{x}_k - \bar{x}_{k-1})^2$
+
+**3. Verschwindender Mischterm:**
+Da $\bar{x}_{k-1}$ das arithmetische Mittel ist, gilt:
+$\sum_{i=1}^{k-1} (x_i - \bar{x}_{k-1}) = 0 \implies \text{Mischterm entfällt!}$
+
+</div>
+<div class="one">
+
+**4. Terme zusammenführen:**
+Mit $M_{2,k-1} = \sum_{i=1}^{k-1} (x_i - \bar{x}_{k-1})^2$ folgt:
+$M_{2,k} = M_{2,k-1} + (k-1)(\bar{x}_k - \bar{x}_{k-1})^2 + (x_k - \bar{x}_k)^2$
+
+**5. Substitution mit $\delta_k$ und $\delta_k^*$:**
+Mit $\bar{x}_k - \bar{x}_{k-1} = \frac{\delta_k}{k}$, $\delta_k = x_k - \bar{x}_{k-1}$ und $\delta_k^* = x_k - \bar{x}_k$:
+$(k-1)\left(\frac{\delta_k}{k}\right)^2 + (\delta_k^*)^2 = \frac{k-1}{k^2}\delta_k^2 + \frac{(k-1)^2}{k^2}\delta_k^2$
+$= \frac{k-1}{k}\delta_k^2 = \delta_k \cdot \delta_k^*$ (wegen $\delta_k^* = \frac{k-1}{k}\delta_k$)
+
+**Endergebnis der Rekursion:**
+$M_{2,k} = M_{2,k-1} + \delta_k \cdot \delta_k^*$
+
+</div>
+</div>
+
+---
+
 ### Welford-Algorithmus: Rekursive Varianzberechnung
 
 <div class="columns">
 <div class="two">
 
-Numerisch auslöschungsfreie Berechnung der Streuung im Datenstrom:
+Numerisch auslöschungsfreie Online-Berechnung der Streuung:
 
-- **Quadratsumme $M_{2,k}$:**
-  - Akkumuliert die quadrierten Abweichungen vom Mittelwert.
-- **Welfords Rekursionsschritt:**
-  - Differenz zum neuen Mittelwert $\text{Mean}_k$: $\text{delta2} = x_k - \bar{x}_k$.
-  - Update: $M_{2,k} = M_{2,k-1} + \text{delta} \cdot \text{delta2}$.
+- **Rekursionsschritt für Quadratsumme $M_{2,k}$:**
+  - Vor Update ($\text{Mean}_{k-1}$): $\delta_k = \text{deltaOld} = x_k - \bar{x}_{k-1}$.
+  - Nach Update ($\text{Mean}_k$): $\delta_k^* = \text{deltaNew} = x_k - \bar{x}_k$.
+  - Rekursionsformel: $M_{2,k} = M_{2,k-1} + \text{deltaOld} \cdot \text{deltaNew}$.
 - **Stichprobenvarianz $s_k^2$ & Standardabweichung $\sigma_k$:**
-  - $s_k^2 = M_{2,k} / (k - 1)$ mit $\sigma_k = \sqrt{s_k^2}$.
-- **Numerische Immunität:**
-  - $\text{delta} \cdot \text{delta2} \ge 0 \implies s_k^2 \ge 0$, absolut kein $\text{NaN}$!
+  - $s_k^2 = M_{2,k} / (k - 1)$ und $\sigma_k = \sqrt{s_k^2}$.
+- **Garantierte numerische Stabilität:**
+  - Da $\text{deltaNew} = \frac{k-1}{k} \text{deltaOld}$, ist das Produkt stets $\ge 0$.
+  - Kein Vorzeichenwechsel $\implies s_k^2 \ge 0$, absolut kein $\text{NaN}$!
 
 </div>
 <div class="one">
@@ -1260,15 +1298,15 @@ public class WelfordStatistics
     public void Add(double x)
     {
         Count++;
-        double delta = x - Mean;
-        Mean += delta / Count;
-        double delta2 = x - Mean;
-        M2 += delta * delta2;
+        double deltaOld = x - Mean;
+        Mean += deltaOld / Count;
+        double deltaNew = x - Mean;
+        M2 += deltaOld * deltaNew;
     }
 }
 ```
 
-- Berechnung von `Mean`, `M2`, `Variance` und `StdDev` über die Differenzen `delta` und `delta2`.
+- Berechnung von `Mean`, `M2`, `Variance` und `StdDev` über die Differenzen `deltaOld` und `deltaNew`.
 
 ---
 
