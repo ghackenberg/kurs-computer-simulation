@@ -1304,11 +1304,11 @@ Kontinuierliche Toleranzbänder für stationäre Arbeitsprozesse:
 <div class="columns">
 <div class="two">
 
-Erweiterung auf zeitabhängige Soll-Trajektorien $\mu(t)$ (z.B. Zylinderhub):
+Toleranzbänder für zeitabhängige Führungsgrößen $\mu(t)$ (z.B. Zylinderhub):
 
-- **Grenze horizontaler Linien:**
-  - Bei zeitvariantem Sollwert versagt eine feste Schranke.
-  - Das Band muss als zeitvarianter Schlauch $y_{\text{upper}}(t) = \mu(t) + 3\sigma$ und $y_{\text{lower}}(t) = \mu(t) - 3\sigma$ mitwandern.
+- **Soll-Trajektorie & feste Toleranz:**
+  - $\mu(t)$: Vorgegebener Nennverlauf; Gutbereich $y_{\text{upper}}(t)$ / $y_{\text{lower}}(t)$ über $\mu(t) \pm 3\sigma$.
+  - Feste horizontale Linien versagen hier, da das Band mitwandern muss.
 - **Polygon-Rendering mit `Plot.Add.FillY`:**
   - Erzeugt geschlossenen `SKPath`: Vorwärts entlang $y_{\text{upper}}$, rückwärts entlang $y_{\text{lower}}$.
   - Halbtransparentes Alpha-Blending hebt Abweichungen hervor, ohne $\mu(t)$ zu verdecken.
@@ -1330,9 +1330,9 @@ Erweiterung auf zeitabhängige Soll-Trajektorien $\mu(t)$ (z.B. Zylinderhub):
 
 Konkrete Telemetrie-Visualisierung eines Drucksignals mit ScottPlot 5:
 
-- **Nennverlauf:** Harmonische Führungsgröße $\mu(t)$.
-- **Toleranzkorridor:** Schattiertes Band zwischen $y_{\text{lower}}$ und $y_{\text{upper}}$ ($\mu(t) \pm 3\sigma$).
-- **Anomalie-Erkennung:** Ein Druckstoß bei $t \approx 1{,}38\,\text{s}$ durchbricht die obere Schranke $y_{\text{upper}}$ und triggert einen Alarm.
+- **Führungsgröße:** Vorgegebene Sollkurve $\mu(t)$ aus dem Prozessmodell.
+- **Feste Toleranzgrenzen:** Gutbereich zwischen $y_{\text{lower}}$ und $y_{\text{upper}}$ ($\mu(t) \pm 3\sigma$).
+- **Anomalie-Erkennung:** Druckstoß bei $t \approx 1{,}38\,\text{s}$ durchbricht $y_{\text{upper}}$ (Alarm).
 - Dank Alpha-Blending bleibt der Verlauf von $\mu(t)$ stets erkennbar.
 
 </div>
