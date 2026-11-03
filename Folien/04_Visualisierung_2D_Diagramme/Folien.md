@@ -1491,13 +1491,11 @@ Vollautomatisch von MSAGL berechneter Regelkreis:
 Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 
 - **Physikalisches Analogon:**
-  - **Hookesche Zugfedern zwischen Knoten v_1 und v_2:**
-    $$F_s = k \cdot (\|\Delta\vec{p}\| - d_0)$$
-    Ziehen benachbarte Knoten $v_1$ und $v_2$ an.
-  - **Elektrostatische Ladungen (Coulomb):**
-    $$F_r = \frac{C}{\|\Delta\vec{p}\|^2}$$
-    Stoßen alle Knotenpaare voneinander ab.
-- **Numerische Lösung:** Iteration bis zum Kräftegleichgewicht $\sum \vec{F}_i \approx \vec{0}$.
+  - **Hookesche Zugfedern:** $F_s = k \cdot (\|\Delta\vec{p}\| - d_0)$ zwischen Knoten $v_1$ und $v_2$.
+  - **Coulomb-Ladungen:** $F_r = \frac{C}{\|\Delta\vec{p}\|^2}$ stoßen alle Knotenpaare ab.
+- **Numerische Lösung mit Schrittweitendämpfung:**
+  - Knoten wandern iterativ entlang der wirkenden Gesamtkraft.
+  - Schrittweitendämpfung verhindert Oszillationen bis $\sum \vec{F}_i \approx \vec{0}$.
 
 </div>
 <div class="one">
@@ -1554,65 +1552,18 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 
 ---
 
-### Force-Directed: Naiv Iteration 50 (Ungedämpfter Grenzzyklus)
+### Force-Directed: Iteration 15 (Einschwingen & Dämpfung)
 
 <div class="columns">
 <div class="two">
 
-- **Kein Stillstand ohne Dämpfung:**
-  - Bei naiver Fortführung mit konstanter Schrittweite kommt das System selbst nach 50 Iterationen **nicht zur Ruhe**.
-- **Ursache: Overshooting:**
-  - Die quadratisch anwachsenden Coulomb-Kräfte ($\propto 1/d^2$) schleudern die Knoten permanent über die Gleichgewichtslage hinaus.
-- **Endloser Grenzzyklus (Limit Cycle):**
-  - Ohne thermische Dämpfung pendeln die Knoten im Zickzack; das Layout vibriert mit hohen Restkräften $\vec{F}_{\text{net}}$.
-  - Zeigt die zwingende Notwendigkeit eines Dämpfungsmechanismus!
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_ForceDirected_Iter50_Ungedaempft.svg)
-
-</div>
-</div>
-
----
-
-### Simulated Annealing: Abkühlung & Konvergenz
-
-<div class="columns">
-<div class="two">
-
-- **Prinzip der thermischen Dämpfung (Metallurgie):**
-  - Ein abklingender Temperaturfaktor $T_k$ begrenzt die maximal erlaubte Verschiebung pro Zeitschritt:
-    $$\Delta \vec{p}_i = \frac{\vec{F}_{\text{net}, i}}{\|\vec{F}_{\text{net}, i}\|} \cdot \min\left(T_k, \|\vec{F}_{\text{net}, i}\|\right)$$
-- **Geometrisches Abkühlungsschema:**
-  $$T_{k+1} = \gamma \cdot T_k, \quad \text{mit } \gamma \approx 0{,}90 \dots 0{,}95$$
-- **Konvergenzverlauf:**
-  - *Ungedämpft (rot gestrichelt):* Permanentes Schwingungsrauschen.
-  - *Mit Annealing (grün):* Monotone Konvergenz gegen $\|\vec{F}_{\text{net}}\| \approx 0$.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_ForceDirected_Konvergenz.svg)
-
-</div>
-</div>
-
----
-
-### Force-Directed: Iteration 15 (Einschwingen mit Annealing)
-
-<div class="columns">
-<div class="two">
-
-- **Thermisches Abbremsen:**
-  - Die gesunkene Temperatur $T_k$ begrenzt weite Sprünge und dämpft Oszillationen wirksam ab.
+- **Schrittweitendämpfung im Einsatz:**
+  - Der Dämpfungsfaktor $T_k$ begrenzt Sprungweiten und dämpft Oszillationen wirksam ab.
 - **Gezielte Feinjustierung:**
   - Die Topologie der Knoten ist bereits kreuzungsfrei und weitgehend symmetrisch.
   - Kürzere Summenvektoren $\vec{F}_{\text{net}}$ gleichen Kantenlängen sanft an die Ruhelänge $l_0$ an.
 - **Vorbereitung des Gleichgewichts:**
-  - Minimale Restkräfte führen das System direkt in das lokale Minimum.
+  - Minimale Restkräfte führen das System direkt in das Minimum.
 
 </div>
 <div class="one">
