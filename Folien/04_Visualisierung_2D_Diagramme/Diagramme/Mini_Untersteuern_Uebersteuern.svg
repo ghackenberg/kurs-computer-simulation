@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Unter- vs. Übersteuern</text>
+  <text x="135" y="42" class="sub">Grenzbereich &amp; Stabilität</text>
+
+  <!-- Diagram Canvas -->
+  <g transform="translate(20, 56)">
+    <rect width="230" height="190" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Corner Road Arc -->
+    <path d="M 25 170 Q 25 50 145 30" fill="none" stroke="#f1f5f9" stroke-width="44" stroke-linecap="round" />
+    <path d="M 25 170 Q 25 50 145 30" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,4" />
+
+    <!-- Ideal Line (Dashed Green) -->
+    <path d="M 32 165 Q 35 70 135 48" fill="none" stroke="#16a34a" stroke-width="2" stroke-dasharray="3,2" />
+
+    <!-- Case A: Understeer (Car pushes straight out over front wheels) -->
+    <g transform="translate(45, 100) rotate(-40)">
+      <rect x="-10" y="-18" width="20" height="36" rx="3" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.2" />
+      <line x1="-12" y1="-12" x2="-12" y2="-4" stroke="#1e293b" stroke-width="3" />
+      <line x1="12" y1="-12" x2="12" y2="-4" stroke="#1e293b" stroke-width="3" />
+      <line x1="-12" y1="6" x2="-12" y2="14" stroke="#1e293b" stroke-width="3" />
+      <line x1="12" y1="6" x2="12" y2="14" stroke="#1e293b" stroke-width="3" />
+    </g>
+    <!-- Push arrow straight off curve -->
+    <line x1="45" y1="100" x2="88" y2="28" stroke="#dc2626" stroke-width="2.5" />
+    <polygon points="91,23 82,28 88,33" fill="#dc2626" />
+    <rect x="25" y="132" width="86" height="16" rx="2" fill="#ffffff" />
+    <text x="68" y="144" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#1d4ed8" text-anchor="middle">Untersteuern</text>
+
+    <!-- Case B: Oversteer (Rear swings out, spinning into over-rotation) -->
+    <g transform="translate(132, 60) rotate(-85)">
+      <rect x="-10" y="-18" width="20" height="36" rx="3" fill="#ea580c" stroke="#c2410c" stroke-width="1.2" />
+      <line x1="-12" y1="-12" x2="-12" y2="-4" stroke="#1e293b" stroke-width="3" />
+      <line x1="12" y1="-12" x2="12" y2="-4" stroke="#1e293b" stroke-width="3" />
+      <line x1="-12" y1="6" x2="-12" y2="14" stroke="#1e293b" stroke-width="3" />
+      <line x1="12" y1="6" x2="12" y2="14" stroke="#1e293b" stroke-width="3" />
+    </g>
+    <!-- Spin curve arrow -->
+    <path d="M 148 44 Q 165 48 162 70" fill="none" stroke="#ea580c" stroke-width="2.5" />
+    <polygon points="160,75 166,67 158,68" fill="#ea580c" />
+    <rect x="135" y="85" width="84" height="16" rx="2" fill="#ffffff" />
+    <text x="177" y="97" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#c2410c" text-anchor="middle">Übersteuern</text>
+  </g>
+
+  <!-- Explanation Card -->
+  <g transform="translate(15, 258)">
+    <rect width="240" height="74" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Grenzbereich der Achsen</text>
+    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #9a3412;">Untersteuern: VA rutscht (Schieben)</text>
+    <text x="120" y="58" class="desc" style="fill: #ea580c;">Übersteuern: HA rutscht (Dreher)</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #004B96;">Track B: Fahrphysik</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #334155;">Grenzstabilität (VA vs. HA)</text>
+</svg>

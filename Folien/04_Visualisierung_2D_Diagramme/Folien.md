@@ -416,12 +416,13 @@ Trajektorie $(n, M)$ in 3 farbkodierten Phasen:
 
 Reifen koppeln Längs- und Querdynamik (Übung 4, Track B):
 
-- **Längsbeschleunigung $a_x$ (Fahrzeugachse):**
-  - $+a_x$: Antreiben (Gas) | $-a_x$: Verzögern (Bremse).
-- **Querbeschleunigung $a_y$ (Kurvenachse):**
-  - Entsteht bei Kurvenfahrt durch Reifenseitenkräfte.
-- **Kamm'scher Kreis:** Der Reifen überträgt in der Fahrbahnebene maximal die Grenzhaftung $\mu \cdot g$:
+- **Beschleunigungsebene ($a_x, a_y$):**
+  - Längsachse $a_x$: Antreiben ($+a_x$) oder Bremsen ($-a_x$).
+  - Querachse $a_y$: Reifenseitenkräfte bei Kurvenfahrt.
+- **Haftungsgesetz (Kamm):**
   $$a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu \cdot g$$
+  - $\mu$: Reibbeiwert zwischen Reifen und Asphalt (trocken $\approx 1{,}0 \dots 1{,}2$, nass $\approx 0{,}6$, Eis $\approx 0{,}1$).
+  - $g$: Erdbeschleunigung ($9{,}81\,\text{m/s}^2$).
 - **Zielkonflikt:** Vollbremsung ($a_x = \mu g$) erzwingt $a_y = 0$ (keine Lenkwirkung mehr möglich!).
 
 </div>
@@ -434,27 +435,47 @@ Reifen koppeln Längs- und Querdynamik (Übung 4, Track B):
 
 ---
 
-### Fahrdynamik: Drift vs. Traktionsabriss
+### Reifenphysik: Reifenschlupf & $\mu$-Schlupf-Kurve
 
 <div class="columns">
 <div class="two">
 
-Fahrdynamische Effekte an und über der Haftgrenze $\mu \cdot g$:
+Zur Kraftübertragung muss elastisches Gummi deformiert werden:
 
-- **1. Linearer Grip ($a_{\text{res}} \le 0{,}8 \cdot \mu g$):**
-  - Reifen haftet ohne Schlupf. Auto folgt präzise der Lenkspur.
-- **2. Kontrollierter Drift ($0{,}8 \cdot \mu g < a_{\text{res}} \le 1{,}0 \cdot \mu g$):**
-  - **Reifenschlupf:** Profil beginnt mikroskopisch zu gleiten.
-  - Heck wird leicht ausgestellt; feinfühliges Gegenlenken balanciert das Fahrzeug im optimalen Renntempo.
-- **3. Traktionsabriss ($a_{\text{res}} > \mu \cdot g$):**
-  - Haftung bricht schlagartig in **Gleitreibung** ein.
-  - **Untersteuern:** Front rutscht $\to$ Auto schiebt geradeaus.
-  - **Übersteuern:** Heck verliert Grip $\to$ Fahrzeug dreht sich (Spin).
+- **Reifenschlupf $s$:** Reale Radumfangsgeschwindigkeit weicht von der Fahrzeuggeschwindigkeit ab.
+- **Die 3 Bereiche der $\mu$-Schlupf-Kurve (Pacejka):**
+  - **Linear ($s < 8\,\%$):** Elastische Profilverformung; Reibkraft wächst streng linear mit Schlupf $s$.
+  - **Peak ($s \approx 10 \dots 15\,\%$):** Maximaler Reibwert $\mu_{\max}$ (optimaler Grip im kontrollierten Drift).
+  - **Gleiten ($s > 20\,\%$):** Reibung bricht auf Gleitreibung ein.
 
 </div>
 <div class="one">
 
-![](./Diagramme/Mini_Fahrdynamik_Drift.svg)
+![](./Diagramme/Mini_Schlupf_Pacejka.svg)
+
+</div>
+</div>
+
+---
+
+### Fahrdynamik: Untersteuern vs. Übersteuern
+
+<div class="columns">
+<div class="two">
+
+Zweikampf um die Haftgrenze zwischen Vorder- und Hinterachse:
+
+- **Untersteuern (Vorderachse überlastet):**
+  - **Ursache:** Zu schnelles Einlenken oder zu starkes Hineinbremsen in die Kurve (Trail-Braking übertrieben).
+  - **Verhalten:** Vorderräder rutschen; Fahrzeug schiebt trotz vollem Lenkeinschlag geradeaus zum Kurvenaußenrand.
+- **Übersteuern (Hinterachse überlastet):**
+  - **Ursache:** Zu viel Gas bei Heckantrieb oder Lastwechsel (Entlastung des Hecks beim abrupten Gaswegnehmen).
+  - **Verhalten:** Hinterräder verlieren Führung; Heck bricht aus $\to$ Dreher (Spin), falls nicht gegengelenkt wird.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Untersteuern_Uebersteuern.svg)
 
 </div>
 </div>
