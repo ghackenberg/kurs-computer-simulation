@@ -1203,10 +1203,10 @@ Numerisch stabile Online-Mittelwertbildung nach B. P. Welford (1962):
 - **Problem klassischer Summation:**
   - Speicherung aller Daten nötig oder Überlauf bei $k \to \infty$.
 - **Welford-Mittelwert-Rekursion:**
-  - Abweichung vor Update: $\delta_k = \text{deltaOld} = x_k - \bar{x}_{k-1}$.
-  - Neuer Mittelwert: $\bar{x}_k = \bar{x}_{k-1} + \frac{\delta_k}{k}$ ($\text{Mean}_k = \text{Mean}_{k-1} + \frac{\delta_k}{k}$).
+  - Abweichung vor dem Update: $\delta_k = x_k - \bar{x}_{k-1}$.
+  - Neuer Mittelwert: $\bar{x}_k = \bar{x}_{k-1} + \frac{\delta_k}{k}$.
 - **Intuition:**
-  - Neuer Mittelwert korrigiert $\text{Mean}_{k-1}$ um $\frac{1}{k}$ der Abweichung $\delta_k$.
+  - Neuer Mittelwert $\bar{x}_k$ korrigiert alten Mittelwert $\bar{x}_{k-1}$ um $\frac{1}{k}$ der Abweichung $\delta_k$.
 - **Effizienz:** Exakt eine Division pro Zeitschritt ($O(1)$ Zeit & Speicher).
 
 </div>
@@ -1227,13 +1227,13 @@ Numerisch stabile Online-Mittelwertbildung nach B. P. Welford (1962):
 Numerisch auslöschungsfreie Online-Berechnung der Streuung:
 
 - **Rekursionsschritt für Quadratsumme $M_{2,k}$:**
-  - Vor Update ($\text{Mean}_{k-1}$): $\delta_k = \text{deltaOld} = x_k - \bar{x}_{k-1}$.
-  - Nach Update ($\text{Mean}_k$): $\delta_k^* = \text{deltaNew} = x_k - \bar{x}_k$.
-  - Rekursionsformel: $M_{2,k} = M_{2,k-1} + \text{deltaOld} \cdot \text{deltaNew}$.
+  - Abweichung vor dem Update: $\delta_k = x_k - \bar{x}_{k-1}$.
+  - Abweichung nach dem Update: $\delta_k^* = x_k - \bar{x}_k$.
+  - Rekursionsformel: $M_{2,k} = M_{2,k-1} + \delta_k \cdot \delta_k^*$.
 - **Stichprobenvarianz $s_k^2$ & Standardabweichung $\sigma_k$:**
   - $s_k^2 = M_{2,k} / (k - 1)$ und $\sigma_k = \sqrt{s_k^2}$.
 - **Garantierte numerische Stabilität:**
-  - Da $\text{deltaNew} = \frac{k-1}{k} \text{deltaOld}$, ist das Produkt stets $\ge 0$.
+  - Da $\delta_k^* = \frac{k-1}{k}\delta_k$, ist das Produkt stets $\delta_k \cdot \delta_k^* \ge 0$.
   - Kein Vorzeichenwechsel $\implies s_k^2 \ge 0$, absolut kein $\text{NaN}$!
 
 </div>
@@ -1260,15 +1260,15 @@ public class WelfordStatistics
     public void Add(double x)
     {
         Count++;
-        double deltaOld = x - Mean;
-        Mean += deltaOld / Count;
-        double deltaNew = x - Mean;
-        M2 += deltaOld * deltaNew;
+        double delta = x - Mean;
+        Mean += delta / Count;
+        double deltaStar = x - Mean;
+        M2 += delta * deltaStar;
     }
 }
 ```
 
-- Berechnung von `Mean`, `M2`, `Variance` und `StdDev` über die Differenzen `deltaOld` und `deltaNew`.
+- Die Eigenschaften `Mean`, `M2`, `Variance` und `StdDev` werden über die Differenzen `delta` und `deltaStar` fortlaufend aktualisiert.
 
 ---
 

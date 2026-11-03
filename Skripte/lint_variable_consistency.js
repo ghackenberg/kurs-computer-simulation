@@ -70,7 +70,12 @@ function normalizeUnicode(str) {
   return str
     .replace(/₁/g, '_1').replace(/₂/g, '_2').replace(/₃/g, '_3').replace(/₄/g, '_4')
     .replace(/ᵢ/g, '_i').replace(/ₙ/g, '_n').replace(/ₘ/g, '_m')
+    .replace(/_\{([A-Za-z0-9_-]+)\}/g, (m, p1) => '_' + p1.replace(/-/g, '_'))
     .replace(/Δ/g, 'delta_')
+    .replace(/δ/g, 'delta')
+    .replace(/σ/g, 'sigma')
+    .replace(/x̄/g, 'x_bar')
+    .replace(/x̄/g, 'x')
     .replace(/ä/g, 'ae').replace(/Ä/g, 'Ae')
     .replace(/ö/g, 'oe').replace(/Ö/g, 'Oe')
     .replace(/ü/g, 'ue').replace(/Ü/g, 'Ue')
@@ -123,7 +128,12 @@ const CANONICAL_ALIASES = {
   'ispanning': ['ispanning', '_ispanning', 'panning'],
   'currentpos': ['currentpos', 'p_current', 'curpos', 'pos'],
   'delta': ['delta', 'd'],
-  'deltaold': ['deltaold', 'delta_old', 'delta_k', 'deltak', 'delta'],
+  'x_bar_k': ['x_bar_k', 'xbark', 'x_k', 'xk', 'mean_k', 'meank', 'mean', 'x_bar', 'xbar', 'x'],
+  'x_bar_k_1': ['x_bar_k_1', 'xbark1', 'x_bar_k_minus_1', 'x_k_1', 'mean_k_1', 'meank1', 'mean', 'x'],
+  'delta_k': ['delta_k', 'deltak', 'delta', 'deltaold', 'delta_old', 'd'],
+  'delta_k_star': ['delta_k_star', 'deltakstar', 'delta_star', 'deltastar', 'deltanew', 'delta_new', 'delta2', 'deltastar'],
+  'sigma_k': ['sigma_k', 'sigmak', 'sigma', 'stddev'],
+  's_k': ['s_k', 'sk', 's', 'variance'],
   'deltanew': ['deltanew', 'delta_new', 'delta_k_star', 'deltakstar', 'delta2'],
   'screenpixel': ['screenpixel', 'p_screen', 'screen', 'pixel'],
   'canvasmatrix': ['canvasmatrix', 'm', 'matrix'],
@@ -161,7 +171,11 @@ function extractSlideTokens(text) {
       .replace(/\\min/g, 'min')
       .replace(/\\max/g, 'max')
       .replace(/\\Delta/g, 'delta')
-      .replace(/_\{(\w+)\}/g, '_$1');
+      .replace(/\\delta/g, 'delta')
+      .replace(/\\sigma/g, 'sigma')
+      .replace(/\\bar\{([A-Za-z0-9_]+)\}/g, '$1_bar')
+      .replace(/\\bar\s*([A-Za-z])/g, '$1_bar')
+      .replace(/_\{([A-Za-z0-9_-]+)\}/g, (m, p1) => '_' + p1.replace(/-/g, '_'));
 
     if (/wing1\s*,\s*2/i.test(rawMath)) {
       tokens.add('p_wing1');
