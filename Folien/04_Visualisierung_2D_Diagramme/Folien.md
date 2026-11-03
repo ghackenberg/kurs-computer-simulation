@@ -621,7 +621,7 @@ C#-Architektur zur Erzeugung von 2D-Vektorfeldern in ScottPlot 5:
 
 - **Gitterpunkte:** Schleifen über die Koordinaten `x1` und `x2` spannen die diskrete Phasenebene auf.
 - **Ableitungsvektoren:** Die zeitlichen Ableitungen `dx1` und `dx2` ergeben die Vektorlänge `len`.
-- **Normierung:** Vektor `dir` wird auf einheitliche Länge skaliert, um Überlappungen benachbarter Pfeile zu vermeiden.
+- **Y-Invertierung:** SkiaSharp nutzt ein Bildschirmkoordinatensystem ($+y$ nach unten); Vektor `dir` wird daher mit `-dx2` übergeben.
 - **Überlagerung:** `Plot.Add.VectorField(vectors)` visualisiert das Gitter im Diagrammhintergrund.
 
 </div>
@@ -636,7 +636,7 @@ for (double x1 = -3; x1 <= 3; x1 += 0.4) {
     double len = Math.Sqrt(dx1*dx1 + dx2*dx2);
     var dir = new Vector2(
       (float)(dx1 / len * 0.22),
-      (float)(dx2 / len * 0.22));
+      (float)(-dx2 / len * 0.22));
     vectors.Add(new RootedCoordinateVector(
       new Coordinates(x1, x2), dir));
   }

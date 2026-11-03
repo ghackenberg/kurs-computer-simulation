@@ -303,7 +303,9 @@ namespace GrafikGenerator
                     {
                         double scale = 0.22 / len;
                         var coord = new Coordinates(x1, x2);
-                        var dir = new System.Numerics.Vector2((float)(dx1 * scale), (float)(dx2 * scale));
+                        // Beachte: In ScottPlot 5 verläuft die Y-Komponente von Vector2 im Bildschirmkoordinatensystem (nach unten positiv),
+                        // daher muss dx2 für die mathematische Y-Achse invertiert werden (-dx2).
+                        var dir = new System.Numerics.Vector2((float)(dx1 * scale), (float)(-dx2 * scale));
                         vectors.Add(new RootedCoordinateVector(coord, dir));
                     }
                 }
