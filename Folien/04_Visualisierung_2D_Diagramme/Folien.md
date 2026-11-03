@@ -419,11 +419,11 @@ Reifen koppeln Längs- und Querdynamik (Übung 4, Track B):
 - **Beschleunigungsebene ($a_x, a_y$):**
   - Längsachse $a_x$: Antreiben ($+a_x$) oder Bremsen ($-a_x$).
   - Querachse $a_y$: Reifenseitenkräfte bei Kurvenfahrt.
-- **Haftungsgesetz (Kamm):**
-  $$a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu \cdot g$$
-  - $\mu$: Reibbeiwert zwischen Reifen und Asphalt (trocken $\approx 1{,}0 \dots 1{,}2$, nass $\approx 0{,}6$, Eis $\approx 0{,}1$).
+- **Haftungsgesetz (Kamm):** $a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu \cdot g$
+  - $\mu$: Reibwert (trocken $\approx 1{,}0 \dots 1{,}2$, nass $\approx 0{,}6$, Eis $\approx 0{,}1$).
   - $g$: Erdbeschleunigung ($9{,}81\,\text{m/s}^2$).
-- **Zielkonflikt:** Vollbremsung ($a_x = \mu g$) erzwingt $a_y = 0$ (keine Lenkwirkung mehr möglich!).
+- **Zielkonflikt:** Vollbremsung ($a_x = \mu g$) erzwingt $a_y = 0$ (Lenkverlust).
+- **Offene Frage:** Woher stammt $\mu$? $\to$ Entsteht dynamisch erst durch **Schlupf**!
 
 </div>
 <div class="one">
@@ -435,18 +435,22 @@ Reifen koppeln Längs- und Querdynamik (Übung 4, Track B):
 
 ---
 
-### Reifenphysik: Reifenschlupf & $\mu$-Schlupf-Kurve
+### Reifenphysik: Entstehung von Schlupf & $\mu$-Kurve
 
 <div class="columns">
 <div class="two">
 
-Zur Kraftübertragung muss elastisches Gummi deformiert werden:
+Gummireifen übertragen Kräfte nur durch elastische Verformung:
 
-- **Reifenschlupf $s$:** Reale Radumfangsgeschwindigkeit weicht von der Fahrzeuggeschwindigkeit ab.
-- **Die 3 Bereiche der $\mu$-Schlupf-Kurve (Pacejka):**
-  - **Linear ($s < 8\,\%$):** Elastische Profilverformung; Reibkraft wächst streng linear mit Schlupf $s$.
-  - **Peak ($s \approx 10 \dots 15\,\%$):** Maximaler Reibwert $\mu_{\max}$ (optimaler Grip im kontrollierten Drift).
-  - **Gleiten ($s > 20\,\%$):** Reibung bricht auf Gleitreibung ein.
+- **Ursache von Schlupf $s$ (Drehmoment $\to$ Schlupf):**
+  - Motor erzeugt Drehmoment $M$ am Rad ($r$) $\to$ $v_{\text{Rad}} = \omega \cdot r$.
+  - Für Vortrieb muss das Rad voreilen ($v_{\text{Rad}} > v$).
+  - Differenz definiert den **Schlupf**: $s = (v_{\text{Rad}} - v) / v$.
+- **Kraftübertragung durch Schlupf (Pacejka):**
+  - **$s = 0$:** Gummi unverformt $\to \mu = 0$ (keine Kraftübertragung!).
+  - **Linear ($s < 8\,\%$):** Elastische Profildehnung ($\mu \sim s$).
+  - **Peak ($s \approx 10 \dots 15\,\%$):** Reibwert-Maximum $\mu_{\max}$ (Grip-Optimum).
+  - **Gleitreibung ($s > 20\,\%$):** Traktionsabriss / Durchdrehen.
 
 </div>
 <div class="one">

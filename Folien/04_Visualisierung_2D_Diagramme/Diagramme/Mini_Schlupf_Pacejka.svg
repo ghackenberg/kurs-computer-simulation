@@ -48,15 +48,16 @@
   </g>
 
   <!-- Explanation Card -->
-  <g transform="translate(15, 258)">
+  <g transform="translate(15, 254)">
     <rect width="240" height="74" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
-    <text x="120" y="20" class="lbl" style="fill: #c2410c;">3 Phasen der Reibungskurve</text>
-    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #9a3412;">&lt; 8 %: Linear (Profilverformung)</text>
-    <text x="120" y="58" class="desc" style="fill: #ea580c;">10-15 %: Peak (Drift) | &gt; 20 %: Gleiten</text>
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Entstehung von Schlupf s</text>
+    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #9a3412;">v_Rad = omega * r &gt; v</text>
+    <text x="120" y="58" class="desc" style="fill: #ea580c;">s = (v_Rad - v) / v</text>
   </g>
 
   <!-- Summary Footer -->
-  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="135" y="364" class="lbl" style="fill: #004B96;">Track B: Fahrphysik</text>
-  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #334155;">Pacejka Magic Formula</text>
+  <rect x="15" y="336" width="240" height="72" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="356" class="lbl" style="fill: #004B96;">Pacejka-Kraftschluss</text>
+  <text x="135" y="376" class="desc" style="font-weight: bold; fill: #15803d;">s = 0 %: mu = 0 (keine Kraft!)</text>
+  <text x="135" y="394" class="desc" style="fill: #475569;">Grip-Peak: mu_max bei 10-15 %</text>
 </svg>
