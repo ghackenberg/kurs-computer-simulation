@@ -596,7 +596,7 @@ Dynamik eines gedämpften Fahrwerks-Federbeins ($m, d, c$):
 <div class="columns">
 <div class="two">
 
-Geometrische Schwingungsanalyse der Systemdynamik $\mathrm{d}\vec{x}/\mathrm{d}t = f(\vec{x})$:
+Schwingungsanalyse der Systemdynamik $\mathrm{d}\vec{x}/\mathrm{d}t = f(\vec{x})$:
 
 - **Vektorfeld vor der Simulation:**
   - An jedem Gitterpunkt $(x_1, x_2)$ zeigt der Pfeil, wohin Feder- und Dämpferkräfte das Rad im nächsten Augenblick treiben.
