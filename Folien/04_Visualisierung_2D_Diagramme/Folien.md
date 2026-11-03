@@ -1622,21 +1622,22 @@ Netzwerktopologie einer Industrie-4.0-Fertigungszelle:
 
 ```csharp
 var graph = new Microsoft.Msagl.Drawing.Graph("Fertigungszelle");
+// 1. Organisches Layout aktivieren (MDS / Force-Directed)
+graph.LayoutAlgorithmSettings = new Microsoft.Msagl.Layout.MDS.MdsLayoutSettings();
 
-// 1. Kanten definieren (Signal- und Sensornetzwerk)
+// 2. Kanten definieren (Signal- und Sensornetzwerk)
 graph.AddEdge("Gateway-A", "SPS-CNC");
 graph.AddEdge("Gateway-A", "Spindel-Sensor");
 graph.AddEdge("Gateway-A", "Gateway-B");
 
-// 2. Visuelles Styling von Knoten und Kanten
+// 3. Visuelles Styling von Knoten und Kanten
 var spsNode = graph.FindNode("SPS-CNC");
 spsNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.LightSkyBlue;
 spsNode.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Box;
-
 var linkEdge = graph.AddEdge("Gateway-A", "Edge-Cloud");
 linkEdge.Attr.Color = Microsoft.Msagl.Drawing.Color.Purple;
 
-// 3. Im WPF-GraphControl visualisieren
+// 4. Im WPF-GraphControl visualisieren
 GraphControl.Graph = graph;
 ```
 

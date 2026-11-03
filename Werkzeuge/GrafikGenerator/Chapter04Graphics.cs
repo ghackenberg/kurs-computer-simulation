@@ -763,7 +763,7 @@ namespace GrafikGenerator
             }
             graph.GeometryGraph = geomGraph;
 
-            var settings = new FastIncrementalLayoutSettings();
+            var settings = new Microsoft.Msagl.Layout.MDS.MdsLayoutSettings();
             LayoutHelpers.CalculateLayout(geomGraph, settings, null);
 
             var pngFile = Path.Combine(targetDir, "MSAGL_ForceDirected_Layout.png");
