@@ -564,21 +564,22 @@ Reifen-Grip-Telemetrie für das Gaming-HUD (Übung 4, Track B):
 
 ---
 
-### Phasenebene: Modellierung dynamischer Systeme
+### Stoßdämpfer: Modellierung in der Phasenebene
 
 <div class="columns">
 <div class="two">
 
-Viele mechatronische Systeme genügen einer DGL 2. Ordnung mit Parametern $m, d, c$:
+Dynamik eines gedämpften Fahrwerks-Federbeins ($m, d, c$):
 
-- **Differentialgleichung:**
+- **Kräftebilanz am Rad nach einer Bodenwelle:**
   $$m \ddot{x} + d \dot{x} + c x = 0 \iff \ddot{x} = -\frac{c}{m} x - \frac{d}{m} \dot{x}$$
-- **Zustandstransformation:**
-  - $x_1 = x$ (Position / Auslenkung)
-  - $x_2 = \dot{x}$ (Geschwindigkeit)
+  - Federkraft $F_c = -c \cdot x$ zieht zur Ruhelage zurück.
+  - Dämpferkraft $F_d = -d \cdot \dot{x}$ bremst die Bewegung hydraulisch.
+- **Zustandsraum $(x_1, x_2)$:**
+  - $x_1 = x$: Federweg / Auslenkung der Radmasse.
+  - $x_2 = \dot{x}$: Einfeder- bzw. Ausfedergeschwindigkeit.
 - **Gekoppeltes System 1. Ordnung:**
-  $$\begin{bmatrix} \dot{x}_1 \\ \dot{x}_2 \end{bmatrix} = \begin{bmatrix} x_2 \\ -\frac{c}{m} x_1 - \frac{d}{m} x_2 \end{bmatrix} = f(\vec{x})$$
-- Jeder Zustand $(x_1, x_2)$ besitzt einen Tangentenvektor $\dot{\vec{x}}$.
+  - Tangentenvektor: $\dot{\vec{x}} = [x_2, -\frac{c}{m} x_1 - \frac{d}{m} x_2]^T = f(\vec{x})$.
 
 </div>
 <div class="one">
@@ -590,17 +591,21 @@ Viele mechatronische Systeme genügen einer DGL 2. Ordnung mit Parametern $m, d,
 
 ---
 
-### Phasenraum-Richtungsfelder als „Strömungskarte“
+### Richtungsfeld: Strömungskarte des Feder-Dämpfers
 
 <div class="columns">
 <div class="two">
 
-Zur Analyse dynamischer Systeme $\mathrm{d}\vec{x}/\mathrm{d}t = f(\vec{x})$ mit Zuständen $x_1$ und $x_2$:
+Geometrische Schwingungsanalyse der Systemdynamik $\mathrm{d}\vec{x}/\mathrm{d}t = f(\vec{x})$:
 
-- Bevor eine Trajektorie $x(t)$ numerisch integriert wird, offenbart das **Richtungsfeld** bereits das globale Verhalten.
-- An jedem Gitterpunkt $(x_1, x_2)$ wird der Geschwindigkeitsvektor als gerichteter Pfeil berechnet.
-- **Strömungskarten-Analogie:** Trajektorien verhalten sich wie Partikel im Fluid und folgen den Vektoren tangential.
-- **Qualitative Analyse:** Ruhelagen ($f(\vec{x}) = \vec{0}$) und Stabilität (gedämpfte Strudelsenke vs. ungedämpfter Wirbel) sofort sichtbar.
+- **Vektorfeld vor der Simulation:**
+  - An jedem Gitterpunkt $(x_1, x_2)$ zeigt der Pfeil, wohin Feder- und Dämpferkräfte das Rad im nächsten Augenblick treiben.
+- **Physikalische Kräfteorientierung:**
+  - Bei $x_2 > 0$ (Ausfedern) zeigt der Pfeil nach rechts ($\dot{x}_1 > 0$).
+  - Bei $x_1 > 0$ (gestauchte Feder) zieht die Feder nach unten ($\dot{x}_2 < 0$).
+- **Dissipative Strudelsenke:**
+  - Dämpfer entzieht kontinuierlich Energie $\to$ Pfeile drehen spiralig ein.
+  - Trajektorie $x(t)$ läuft in die stabile Ruhelage $(0, 0)$ ein.
 
 </div>
 <div class="one">
@@ -612,15 +617,15 @@ Zur Analyse dynamischer Systeme $\mathrm{d}\vec{x}/\mathrm{d}t = f(\vec{x})$ mit
 
 ---
 
-### ScottPlot 5 API: Phasenporträts mit `VectorField`
+### ScottPlot 5 API: Richtungsfeld mit `VectorField`
 
 <div class="columns">
 <div class="two">
 
-C#-Architektur zur Erzeugung von 2D-Vektorfeldern in ScottPlot 5:
+C#-Architektur zur Erzeugung des Stoßdämpfer-Richtungsfeldes:
 
-- **Gitterpunkte:** Schleifen über die Koordinaten `x1` und `x2` spannen die diskrete Phasenebene auf.
-- **Ableitungsvektoren:** Die zeitlichen Ableitungen `dx1` und `dx2` ergeben die Vektorlänge `len`.
+- **Gitterpunkte:** Schleifen über `x1` (Weg) und `x2` (Geschwindigkeit) spannen die Phasenebene auf.
+- **Ableitungsvektoren:** `dx1 = x2` und `dx2 = -x1 - 0.3 * x2` mit Vektorlänge `len`.
 - **Y-Invertierung:** SkiaSharp nutzt ein Bildschirmkoordinatensystem ($+y$ nach unten); Vektor `dir` wird daher mit `-dx2` übergeben.
 - **Überlagerung:** `Plot.Add.VectorField(vectors)` visualisiert das Gitter im Diagrammhintergrund.
 
@@ -649,16 +654,16 @@ plot.Add.VectorField(vectors);
 
 ---
 
-### Anwendungsbeispiel: `VectorField` & Phasenebene
+### Anwendungsbeispiel: Stoßdämpfer-Ausschwingen
 
 <div class="columns">
 <div class="two">
 
-Konkrete Ausgabe des Phasenraum-Richtungsfeldes eines gedämpften Schwingers mit ScottPlot 5:
+Ausschwingen der Radmasse nach einer Bodenwelle mit ScottPlot 5:
 
 - **Richtungsvektoren:** Reguläres Gitter von Vektoren für Zustände $x_1$ (Auslenkung) und $x_2$ (Geschwindigkeit).
-- **Trajektorie:** Überlagerte Spiralkurve $x(t)$ verdeutlicht den Einlauf in den stabilen Gleichgewichtspunkt im Ursprung.
-- Erlaubt die Beurteilung von Dämpfung und Konvergenzgebiet ohne aufwendige Parameterstudien.
+- **Trajektorie:** Start bei Auslenkung $x_1 = 2{,}5\,\text{m}$ ($x_2 = 0\,\text{m/s}$); Einlaufen in den Ruhezustand $(0, 0)$.
+- **Energiedissipation:** Dämpfer ($d = 0{,}3$) verringert die Schwingungsamplitude mit jedem Umlauf.
 
 </div>
 <div class="three">
