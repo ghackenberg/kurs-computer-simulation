@@ -435,22 +435,47 @@ Reifen koppeln Längs- und Querdynamik (Übung 4, Track B):
 
 ---
 
-### Reifenphysik: Entstehung von Schlupf & $\mu$-Kurve
+### Reifenphysik: Entstehung von Reifenschlupf
 
 <div class="columns">
 <div class="two">
 
 Gummireifen übertragen Kräfte nur durch elastische Verformung:
 
-- **Ursache von Schlupf $s$ (Drehmoment $\to$ Schlupf):**
-  - Motor erzeugt Drehmoment $M$ am Rad ($r$) $\to$ $v_{\text{Rad}} = \omega \cdot r$.
-  - Für Vortrieb muss das Rad voreilen ($v_{\text{Rad}} > v$).
-  - Differenz definiert den **Schlupf**: $s = (v_{\text{Rad}} - v) / v$.
-- **Kraftübertragung durch Schlupf (Pacejka):**
-  - **$s = 0$:** Gummi unverformt $\to \mu = 0$ (keine Kraftübertragung!).
-  - **Linear ($s < 8\,\%$):** Elastische Profildehnung ($\mu \sim s$).
-  - **Peak ($s \approx 10 \dots 15\,\%$):** Reibwert-Maximum $\mu_{\max}$ (Grip-Optimum).
-  - **Gleitreibung ($s > 20\,\%$):** Traktionsabriss / Durchdrehen.
+- **Drehmoment $\to$ Radumfangsgeschwindigkeit:**
+  - Motor erzeugt Drehmoment $M$ an Achse mit Radius $r$.
+  - Rad rotiert mit Winkelgeschwindigkeit $\omega \to v_{\text{Rad}} = \omega \cdot r$.
+- **Geschwindigkeitsdifferenz (Vortrieb & Bremsen):**
+  - Für Vorwärtsbeschleunigung muss das Rad dem Fahrzeug voreilen ($v_{\text{Rad}} > v$).
+  - Beim Bremsen verzögert das Rad gegenüber dem Fahrzeug ($v_{\text{Rad}} < v$).
+- **Längsschlupf $s$:** Relative Geschwindigkeitsabweichung $s = (v_{\text{Rad}} - v) / v$.
+- **Reifenlatsch:** Die Differenz spannt das Gummiprofil in der Reifenaufstandsfläche elastisch vor.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Reifenschlupf_Kinematik.svg)
+
+</div>
+</div>
+
+---
+
+### Reifenphysik: Kraftübertragung & $\mu$-Schlupf-Kurve
+
+<div class="columns">
+<div class="two">
+
+Wie aus Schlupf $s$ die Reibkraft $\mu(s) \cdot g$ entsteht (Pacejka):
+
+- **Kein Schlupf ($s = 0$):**
+  - Rad rollt synchron ($v_{\text{Rad}} = v$) $\to$ Gummi unverformt $\implies \mu = 0$ (ohne Schlupf keine Kraft!).
+- **Linear-elastischer Bereich ($s < 8\,\%$):**
+  - Reines Spannen des Gummis $\to \mu$ steigt proportional mit $s$ an (Alltagsbereich, direktes Lenken).
+- **Peak / Grip-Optimum ($s \approx 10 \dots 15\,\%$):**
+  - Maximaler Reibwert $\mu_{\max}$ (schnellste Rundenzeit bzw. kontrollierter Drift).
+- **Gleitreibung ($s > 20\,\%$):**
+  - Reifen rutscht durch $\to$ Einbruch auf Gleitreibung $\mu < \mu_{\max}$ (Traktionsabriss, Durchdrehen).
 
 </div>
 <div class="one">

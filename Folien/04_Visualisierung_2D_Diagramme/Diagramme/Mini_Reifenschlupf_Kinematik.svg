@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Kinematik des Rades</text>
+  <text x="135" y="42" class="sub">Entstehung von Längsschlupf s</text>
+
+  <!-- Canvas Graphic: Wheel & Contact Patch -->
+  <g transform="translate(20, 56)">
+    <rect width="230" height="186" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Road Surface -->
+    <line x1="15" y1="150" x2="215" y2="150" stroke="#334155" stroke-width="3" />
+    <line x1="25" y1="156" x2="35" y2="164" stroke="#94a3b8" stroke-width="1.5" />
+    <line x1="55" y1="156" x2="65" y2="164" stroke="#94a3b8" stroke-width="1.5" />
+    <line x1="85" y1="156" x2="95" y2="164" stroke="#94a3b8" stroke-width="1.5" />
+    <line x1="115" y1="156" x2="125" y2="164" stroke="#94a3b8" stroke-width="1.5" />
+    <line x1="145" y1="156" x2="155" y2="164" stroke="#94a3b8" stroke-width="1.5" />
+    <line x1="175" y1="156" x2="185" y2="164" stroke="#94a3b8" stroke-width="1.5" />
+    <line x1="200" y1="156" x2="210" y2="164" stroke="#94a3b8" stroke-width="1.5" />
+
+    <!-- Tire Outer Circle (Radius 58, Center at 115, 88) -->
+    <circle cx="115" cy="88" r="58" fill="#334155" />
+    <!-- Rim Inner Circle -->
+    <circle cx="115" cy="88" r="38" fill="#e2e8f0" stroke="#64748b" stroke-width="2" />
+    <circle cx="115" cy="88" r="8" fill="#0f172a" />
+
+    <!-- Radius line r with shield -->
+    <line x1="115" y1="88" x2="160" y2="52" stroke="#ffffff" stroke-width="1.8" stroke-dasharray="3,2" />
+    <rect x="134" y="56" width="16" height="16" rx="2" fill="#334155" />
+    <text x="142" y="69" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#ffffff" text-anchor="middle">r</text>
+
+    <!-- Angular Velocity Arrow omega (arc) with shield -->
+    <path d="M 88 44 A 40 40 0 0 1 142 44" fill="none" stroke="#2563eb" stroke-width="2.5" />
+    <polygon points="148,46 138,40 143,49" fill="#2563eb" />
+    <rect x="65" y="10" width="100" height="18" rx="2" fill="#ffffff" />
+    <text x="115" y="24" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#2563eb" text-anchor="middle">Drehung omega</text>
+
+    <!-- Contact Patch (Reifenlatsch) at bottom -->
+    <rect x="92" y="146" width="46" height="8" rx="2" fill="#ea580c" />
+    <text x="115" y="174" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#c2410c" text-anchor="middle">Reifenlatsch (Dehnung)</text>
+
+    <!-- Velocity Vectors: v_Rad vs v_Fzg -->
+    <!-- v_Rad tangential at bottom pointing right (driving direction) -->
+    <line x1="115" y1="138" x2="175" y2="138" stroke="#16a34a" stroke-width="2.5" />
+    <polygon points="180,138 172,134 172,142" fill="#16a34a" />
+    <rect x="176" y="126" width="48" height="18" rx="2" fill="#ffffff" />
+    <text x="200" y="140" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#16a34a" text-anchor="middle">v_Rad</text>
+
+    <!-- Vehicle Velocity v at axle level pointing right -->
+    <line x1="115" y1="88" x2="160" y2="88" stroke="#004B96" stroke-width="2.5" />
+    <polygon points="165,88 157,84 157,92" fill="#004B96" />
+    <rect x="166" y="78" width="42" height="18" rx="2" fill="#ffffff" />
+    <text x="187" y="92" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#004B96" text-anchor="middle">v</text>
+  </g>
+
+  <!-- Formula & Definition Card -->
+  <g transform="translate(15, 252)">
+    <rect width="240" height="76" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Längsschlupf-Definition</text>
+    <text x="120" y="42" class="desc" style="font-weight: bold; fill: #9a3412;">s = (v_Rad - v) / v</text>
+    <text x="120" y="62" class="desc" style="fill: #ea580c;">v_Rad = omega * r</text>
+  </g>
+
+  <!-- Explanation Footer Card -->
+  <rect x="15" y="336" width="240" height="72" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="356" class="lbl" style="fill: #004B96;">Geschwindigkeitsdifferenz</text>
+  <text x="135" y="376" class="desc" style="font-weight: bold; fill: #15803d;">v_Rad &gt; v: Antreiben (s &gt; 0)</text>
+  <text x="135" y="394" class="desc" style="font-weight: bold; fill: #b91c1c;">v_Rad &lt; v: Bremsen (s &lt; 0)</text>
+</svg>
