@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">S1 Dauer vs. Peak Überlast</text>
+  <text x="135" y="42" class="sub">Thermische Auslegung (Track A)</text>
+
+  <!-- Diagram Canvas -->
+  <g transform="translate(20, 56)">
+    <rect width="230" height="190" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Overload Background (Upper Area) -->
+    <path d="M 38 160 L 38 55 L 90 55 Q 130 60 185 145 L 185 24 L 38 24 Z" fill="#fee2e2" opacity="0.45" />
+    <rect x="115" y="24" width="108" height="18" rx="2" fill="#ffffff" />
+    <text x="169" y="37" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b91c1c" text-anchor="middle">S2 Peak (Überlast)</text>
+
+    <!-- Axes -->
+    <line x1="38" y1="160" x2="205" y2="160" stroke="#475569" stroke-width="1.5" />
+    <polygon points="208,160 200,157 200,163" fill="#475569" />
+    <text x="195" y="176" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#334155" text-anchor="end">n [rpm]</text>
+
+    <line x1="38" y1="160" x2="38" y2="24" stroke="#475569" stroke-width="1.5" />
+    <polygon points="38,20 35,27 41,27" fill="#475569" />
+    <text x="48" y="22" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#334155">M [Nm]</text>
+
+    <!-- S1 Limit Line (Dashed Hyperbola) -->
+    <path d="M 38 55 L 90 55 Q 130 60 185 145" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="4,3" />
+
+    <!-- Dynamic Trajectory entering Peak and settling into S1 -->
+    <path d="M 38 160 Q 60 48 115 50 T 150 110" fill="none" stroke="#2563eb" stroke-width="2.5" />
+    <circle cx="150" cy="110" r="5" fill="#ea580c" />
+
+    <!-- Label: P_max -->
+    <rect x="38" y="58" width="98" height="18" rx="2" fill="#ffffff" />
+    <text x="87" y="71" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b91c1c" text-anchor="middle">P_max = 1.2 kW</text>
+
+    <!-- Label: S1 Dauerbetrieb -->
+    <rect x="40" y="118" width="96" height="18" rx="2" fill="#ffffff" />
+    <text x="88" y="131" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#15803d" text-anchor="middle">S1 Dauerbetrieb</text>
+    
+    <!-- Label: Arbeitspunkt -->
+    <rect x="144" y="120" width="80" height="18" rx="2" fill="#ffffff" />
+    <text x="184" y="133" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#ea580c" text-anchor="middle">Arbeitspunkt</text>
+  </g>
+
+  <!-- Explanation Card -->
+  <g transform="translate(15, 258)">
+    <rect width="240" height="74" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">Thermische Zeitkonstante tau_th</text>
+    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #1e40af;">Kurzzeitig: Peak &gt; P_max erlaubt</text>
+    <text x="120" y="58" class="desc" style="fill: #1e3a8a;">Stationär: Zwingend in S1 (P &lt;= P_max)</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #004B96;">Auslegungskriterium</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #334155;">Dynamik vs. Dauergrenze</text>
+</svg>

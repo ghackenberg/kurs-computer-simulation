@@ -20,6 +20,7 @@ namespace GrafikGenerator
             Directory.CreateDirectory(targetDir);
 
             GenerateScottPlotScatter(targetDir);
+            GenerateScottPlotKammscherKreis(targetDir);
             GenerateScottPlotSignalXY(targetDir);
             GenerateScottPlotVectorField(targetDir);
             GenerateScottPlotBars(targetDir);
@@ -49,7 +50,7 @@ namespace GrafikGenerator
             plot.Axes.Margins(0.04, 0.06);
         }
 
-        // 1. Scatter: Phasenraum DC-Motor Kennfeld
+        // 1. Scatter: Phasenraum DC-Motor Kennfeld (S1 Dauer vs. Peak Überlast)
         public static void GenerateScottPlotScatter(string targetDir)
         {
             var plot = new Plot();
@@ -68,26 +69,156 @@ namespace GrafikGenerator
             hyp.Color = ScottPlot.Colors.Crimson;
             hyp.LineWidth = 3.5f;
             hyp.LinePattern = LinePattern.Dashed;
-            hyp.LegendText = "Leistungsgrenze P_max = 1.2 kW";
+            hyp.LegendText = "Dauerleistung P_max = 1.2 kW (S1)";
 
-            // Trajektorie Betriebspunkt: Hochlauf und Lastsprung (bleibt unterhalb der Leistungsgrenze)
-            double[] nTraj = { 0, 200, 600, 1200, 1700, 2100, 2400, 2500, 2450, 2400, 2350 };
-            double[] mTraj = { 0, 8.8, 8.5,  7.2,  5.8,  4.6,  3.2,  2.2,  3.0,  4.2,  4.0 };
+            // Trajektorie Betriebspunkt: Dynamischer Hochlauf mit kurzzeitigem Peak (S2) und Einlauf in S1-Arbeitspunkt
+            double[] nTraj = { 0, 200, 600, 1200, 1600, 1900, 2200, 2450, 2400, 2350 };
+            double[] mTraj = { 0, 9.2, 9.0,  8.5,  8.0,  7.0,  5.2,  2.8,  3.6,  4.0 };
             var traj = plot.Add.ScatterLine(nTraj, mTraj);
             traj.Color = ScottPlot.Colors.SteelBlue;
             traj.LineWidth = 4.0f;
-            traj.LegendText = "Betriebspunkt (n, M)";
+            traj.LegendText = "Trajektorie (Anfahren & Last)";
 
             var startMarker = plot.Add.Marker(0, 0, MarkerShape.FilledCircle, 12, ScottPlot.Colors.ForestGreen);
             startMarker.LegendText = "Startpunkt (0, 0)";
             var endMarker = plot.Add.Marker(2350, 4.0, MarkerShape.FilledSquare, 12, ScottPlot.Colors.DarkOrange);
-            endMarker.LegendText = "Arbeitspunkt";
+            endMarker.LegendText = "Stationärer Arbeitspunkt";
 
             plot.ShowLegend(Alignment.UpperRight);
             ApplyChapter04Typography(plot, "Scatter: DC-Motor Phasenraum-Kennfeld", "Drehzahl n [U/min]", "Drehmoment M [Nm]");
             plot.Axes.SetLimits(0, 3200, 0, 12);
 
             var outFile = Path.Combine(targetDir, "ScottPlot_Scatter_Example.png");
+            plot.SavePng(outFile, 900, 675);
+            Console.WriteLine($"Erzeugt (HiDPI): {outFile}");
+        }
+
+        // 2. Scatter: Kamm'scher Kreis (Fahrphysik & G-G-Diagramm)
+        public static void GenerateScottPlotKammscherKreis(string targetDir)
+        {
+            var plot = new Plot();
+
+            // Achsenkreuz bei 0
+            plot.Add.HorizontalLine(0, 1.5f, ScottPlot.Colors.Gray.WithAlpha(0.4f));
+            plot.Add.VerticalLine(0, 1.5f, ScottPlot.Colors.Gray.WithAlpha(0.4f));
+
+            // Haftgrenze mu * g = 1.0 g (Äußerer Kreis) und Grip-Grenze 0.8 g (Innerer Kreis)
+            int circlePts = 120;
+            double[] xOuter = new double[circlePts + 1];
+            double[] yOuter = new double[circlePts + 1];
+            double[] xInner = new double[circlePts + 1];
+            double[] yInner = new double[circlePts + 1];
+            for (int i = 0; i <= circlePts; i++)
+            {
+                double phi = i * 2.0 * Math.PI / circlePts;
+                xOuter[i] = 1.0 * Math.Cos(phi);
+                yOuter[i] = 1.0 * Math.Sin(phi);
+                xInner[i] = 0.8 * Math.Cos(phi);
+                yInner[i] = 0.8 * Math.Sin(phi);
+            }
+
+            var outerCircle = plot.Add.ScatterLine(xOuter, yOuter);
+            outerCircle.Color = ScottPlot.Colors.Crimson;
+            outerCircle.LineWidth = 3.5f;
+            outerCircle.LegendText = "Haftgrenze μ·g = 1.0 g";
+
+            var innerCircle = plot.Add.ScatterLine(xInner, yInner);
+            innerCircle.Color = ScottPlot.Colors.DarkOrange;
+            innerCircle.LineWidth = 2.2f;
+            innerCircle.LinePattern = LinePattern.Dashed;
+            innerCircle.LegendText = "Grip-Grenze 0.8·μ·g";
+
+            // Synthetische Telemetriepunkte: Vollbremsung, Trail-Braking, Apex, Beschleunigen
+            var ptsGreenX = new List<double>();
+            var ptsGreenY = new List<double>();
+            var ptsOrangeX = new List<double>();
+            var ptsOrangeY = new List<double>();
+            var ptsRedX = new List<double>();
+            var ptsRedY = new List<double>();
+
+            var rng = new Random(42);
+
+            void AddPt(double ax, double ay)
+            {
+                double ares = Math.Sqrt(ax * ax + ay * ay);
+                if (ares <= 0.8)
+                {
+                    ptsGreenX.Add(ay); // X: Querbeschleunigung
+                    ptsGreenY.Add(ax); // Y: Längsbeschleunigung
+                }
+                else if (ares <= 1.0)
+                {
+                    ptsOrangeX.Add(ay);
+                    ptsOrangeY.Add(ax);
+                }
+                else
+                {
+                    ptsRedX.Add(ay);
+                    ptsRedY.Add(ax);
+                }
+            }
+
+            // Vollbremsung
+            for (double ax = 0; ax >= -0.92; ax -= 0.06)
+            {
+                AddPt(ax, (rng.NextDouble() - 0.5) * 0.08);
+            }
+            // Trail-Braking Linkskurve
+            for (int step = 0; step < 14; step++)
+            {
+                double t = step / 13.0;
+                double ax = -0.88 * (1.0 - t) - 0.08 * t + (rng.NextDouble() - 0.5) * 0.04;
+                double ay = 0.1 * (1.0 - t) + 0.90 * t + (rng.NextDouble() - 0.5) * 0.04;
+                AddPt(ax, ay);
+            }
+            // Apex / Scheitelpunkt am Haftungslimit
+            for (int step = 0; step < 8; step++)
+            {
+                double ax = (rng.NextDouble() - 0.5) * 0.10;
+                double ay = 0.90 + rng.NextDouble() * 0.16; // einige Peaks > 1.0g
+                AddPt(ax, ay);
+            }
+            // Beschleunigen Kurvenausgang
+            for (int step = 0; step < 12; step++)
+            {
+                double t = step / 11.0;
+                double ax = 0.05 * (1.0 - t) + 0.65 * t + (rng.NextDouble() - 0.5) * 0.04;
+                double ay = 0.85 * (1.0 - t) + 0.05 * t + (rng.NextDouble() - 0.5) * 0.04;
+                AddPt(ax, ay);
+            }
+
+            if (ptsGreenX.Count > 0)
+            {
+                var sGreen = plot.Add.Scatter(ptsGreenX.ToArray(), ptsGreenY.ToArray());
+                sGreen.Color = ScottPlot.Colors.ForestGreen;
+                sGreen.MarkerSize = 10;
+                sGreen.LineWidth = 0;
+                sGreen.LegendText = "Linearer Grip (< 0.8 g)";
+            }
+            if (ptsOrangeX.Count > 0)
+            {
+                var sOrange = plot.Add.Scatter(ptsOrangeX.ToArray(), ptsOrangeY.ToArray());
+                sOrange.Color = ScottPlot.Colors.DarkOrange;
+                sOrange.MarkerSize = 10;
+                sOrange.LineWidth = 0;
+                sOrange.LegendText = "Grenzbereich (0.8 - 1.0 g)";
+            }
+            if (ptsRedX.Count > 0)
+            {
+                var sRed = plot.Add.Scatter(ptsRedX.ToArray(), ptsRedY.ToArray());
+                sRed.Color = ScottPlot.Colors.Crimson;
+                sRed.MarkerSize = 12;
+                sRed.MarkerShape = MarkerShape.Cross;
+                sRed.LineWidth = 0;
+                sRed.LegendText = "Traktionsabriss (> 1.0 g)";
+            }
+
+            plot.ShowLegend(Alignment.UpperRight);
+            ApplyChapter04Typography(plot, "Kamm'scher Kreis: G-G Telemetrie", "Querbeschleunigung a_y [g]", "Längsbeschleunigung a_x [g]");
+            plot.Axes.SquareUnits();
+            plot.Axes.SetLimits(-1.35, 1.35, -1.35, 1.35);
+
+            var outFile = Path.Combine(targetDir, "ScottPlot_KammscherKreis_Example.png");
             plot.SavePng(outFile, 900, 675);
             Console.WriteLine($"Erzeugt (HiDPI): {outFile}");
         }

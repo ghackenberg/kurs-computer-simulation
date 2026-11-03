@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">DGL in Phasenebene</text>
+  <text x="135" y="42" class="sub">Zustandsraum 2. Ordnung</text>
+
+  <!-- Diagram Canvas -->
+  <g transform="translate(20, 56)">
+    <rect width="230" height="190" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- DGL Formula Box -->
+    <rect x="25" y="16" width="180" height="34" rx="4" fill="#eff6ff" stroke="#93c5fd" stroke-width="1" />
+    <text x="115" y="38" font-family="'Segoe UI', Arial, sans-serif" font-size="12px" font-weight="bold" fill="#1e40af" text-anchor="middle">m·x'' + d·x' + c·x = 0</text>
+
+    <!-- Downward Arrow to State Space -->
+    <line x1="115" y1="52" x2="115" y2="72" stroke="#3b82f6" stroke-width="2" />
+    <polygon points="115,76 111,68 119,68" fill="#3b82f6" />
+
+    <!-- State Space Cross -->
+    <line x1="115" y1="84" x2="115" y2="175" stroke="#94a3b8" stroke-width="1.2" />
+    <polygon points="115,80 112,87 118,87" fill="#94a3b8" />
+    <rect x="55" y="86" width="56" height="16" rx="2" fill="#ffffff" />
+    <text x="83" y="98" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#475569" text-anchor="middle">x_2 = x'</text>
+
+    <line x1="30" y1="135" x2="200" y2="135" stroke="#94a3b8" stroke-width="1.2" />
+    <polygon points="204,135 197,132 197,138" fill="#94a3b8" />
+    <text x="195" y="152" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#475569" text-anchor="end">x_1 = x</text>
+
+    <!-- Tangent Vector arrow -->
+    <line x1="135" y1="120" x2="168" y2="108" stroke="#ea580c" stroke-width="2.5" />
+    <polygon points="172,106 163,103 165,112" fill="#ea580c" />
+    <circle cx="135" cy="120" r="4" fill="#c2410c" />
+    <rect x="135" y="86" width="62" height="16" rx="2" fill="#ffffff" />
+    <text x="166" y="98" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#ea580c" text-anchor="middle">x' = f(x)</text>
+  </g>
+
+  <!-- Explanation Card -->
+  <g transform="translate(15, 258)">
+    <rect width="240" height="74" rx="6" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #15803d;">Zustandstransformation</text>
+    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #166534;">x_1 = Position | x_2 = Geschw.</text>
+    <text x="120" y="58" class="desc" style="fill: #14532d;">DGL 2. Ord. -&gt; 2 DGLs 1. Ord.</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #004B96;">Zustandsraum-Modell</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #334155;">Geometrische Systemanalyse</text>
+</svg>

@@ -350,12 +350,9 @@ Konkrete Sprungantwort eines adaptiven DGL-Solvers (RK45) in ScottPlot 5:
 
 In der Mechatronik (Übung 4, Track A) interessiert der Zusammenhang zweier Zustände:
 
-- **Drehmoment $M(t)$ gegen Drehzahl $n(t)$:**
-  - Zeit $t$ wird als Parameter eliminiert.
-  - Der Betriebspunkt $(n, M)$ wandert als Trajektorie im Kennfeld.
-- **Thermische Leistungsgrenze:**
-  $$P_{\max} = 2\pi \cdot n \cdot M \implies M(n) \le \frac{P_{\max}}{2\pi \cdot n}$$
-  - Bildet eine **Hyperbel** im Phasenraum.
+- **Zustandsraum statt Zeitachse:** Zeit $t$ wird als explizite Achse eliminiert.
+- **Zustandskurve:** Die gekoppelten Messwerte von Drehmoment $M(t)$ und Drehzahl $n(t)$ spannen die Trajektorie $(n, M)$ auf.
+- **Kennfeld-Hyperbeln:** Linien konstanter Grenzleistung $P_{\max} = 2\pi \cdot n \cdot M$ bilden Hyperbeln im Zustandsraum.
 - In ScottPlot wird dies über `Plot.Add.Scatter(nArr, mArr)` visualisiert.
 
 </div>
@@ -368,16 +365,39 @@ In der Mechatronik (Übung 4, Track A) interessiert der Zusammenhang zweier Zust
 
 ---
 
+### Thermische Leistungsgrenze: Dauer- vs. Peak-Betrieb
+
+<div class="columns">
+<div class="two">
+
+Warum darf die Leistungsgrenze im Kennfeld kurzzeitig überschritten werden?
+
+- **Dauerbetrieb (S1):** Thermische Grenze $P_{\max} = 1{,}2\,\text{kW}$ darf im Dauerbetrieb nicht überschritten werden:
+  $$M(n) \le \frac{P_{\max}}{2\pi \cdot n}$$
+- **Thermische Zeitkonstante $\tau_{\text{th}}$:** Wicklungen erwärmen sich sehr träge (Minuten) gegenüber schnellen Beschleunigungsvorgängen.
+- **Kurzzeit-Überlast (S2-Peak):** Beim Anfahren darf die Trajektorie kurzzeitig $P > P_{\max}$ abrufen.
+- **Auslegungskriterium:** Der stationäre Arbeitspunkt muss zwingend im S1-Bereich liegen.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Motor_S1_vs_Peak.svg)
+
+</div>
+</div>
+
+---
+
 ### Anwendungsbeispiel: `Scatter` im Motorkennfeld
 
 <div class="columns">
 <div class="two">
 
-Konkrete Phasenraum-Trajektorie $(n, M)$ eines DC-Servomotors mit ScottPlot 5:
+Ausgabe der Phasenraum-Trajektorie $(n, M)$ mit ScottPlot `ScatterLine`:
 
-- **Zustandskurve:** Trajektorie von $(0, 0)$ bis zum stationären Arbeitspunkt bei $2.350\,\text{U/min}$ und $4{,}0\,\text{Nm}$.
-- **Thermische Grenze:** Gestrichelte Hyperbel für $P_{\max} = 1{,}2\,\text{kW}$.
-- **Sicherer Betrieb:** Gesamter Verlauf liegt unterhalb der Leistungsgrenze.
+- **Dauerleistungsgrenze:** Gestrichelte Hyperbel für $P_{\max} = 1{,}2\,\text{kW}$ (S1).
+- **Dynamischer Hochlauf:** Trajektorie taucht beim Anfahren kurzzeitig in den Peak-Bereich ($1{,}4\,\text{kW}$) ein.
+- **Stationärer Arbeitspunkt:** Schwingt bei $2.350\,\text{U/min}$ und $4{,}0\,\text{Nm}$ stabil unterhalb von $P_{\max}$ ein.
 
 </div>
 <div class="three">
@@ -394,17 +414,12 @@ Konkrete Phasenraum-Trajektorie $(n, M)$ eines DC-Servomotors mit ScottPlot 5:
 <div class="columns">
 <div class="two">
 
-In der Fahrsimulation (Übung 4, Track B) bestimmt der Reifen-Grip die maximal übertragbaren Kräfte:
+In der Fahrsimulation (Übung 4, Track B) koppelt der Reifen die Längs- und Querdynamik:
 
-- **G-G-Diagramm:**
-  - Querbeschleunigung $a_y$ über Längsbeschleunigung $a_x$.
-  - Die resultierende Gesamtbeschleunigung ist:
-    $$a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu \cdot g$$
-- **Haftungslimit (Kamm'scher Kreis):**
-  - $\mu$: Reibbeiwert, $g$: Erdbeschleunigung.
-  - **Grün:** $a_{\text{res}} \le \mu g$ (voller Grip).
-  - **Orange:** Grenzbereich (Drift / Schlupf).
-  - **Rot:** $a_{\text{res}} > \mu g$ (Traktionsabriss).
+- **Haftungsgesetz:** Die resultierende Reifenbeschleunigung $a_{\text{res}}$ koppelt Längs- und Querführung:
+  $$a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu \cdot g$$
+- **Zielkonflikt:** Längskraft $a_x$ (Bremse/Gas) und Querkraft $a_y$ (Kurvenführung) teilen sich das Kraftpotenzial.
+- Vollbremsung mit $a_x = \mu g$ bedeutet $a_y = 0$ (Fahrzeug kann nicht mehr lenken!).
 
 </div>
 <div class="one">
@@ -416,23 +431,128 @@ In der Fahrsimulation (Übung 4, Track B) bestimmt der Reifen-Grip die maximal �
 
 ---
 
-### Phasenraum-Richtungsfelder mit `VectorField`
+### G-G-Diagramm in der Telemetrie: Grip-Zonen
 
 <div class="columns">
 <div class="two">
 
-Zur Analyse dynamischer Systeme $\mathrm{d}\vec{x}/\mathrm{d}t = f(\vec{x})$ mit Zeitschritten $\mathrm{d}t$ und Zuständen $x_1$ und $x_2$:
+Telemetrie-Dashboard im Rennsport-Leitstand (Übung 4, Track B):
+
+- **Zone 1: Linearer Grip (Grün):** $a_{\text{res}} \le 0{,}8 \cdot \mu g$ – stabiler Fahrzustand mit vollen Lenkreserven.
+- **Zone 2: Grenzbereich (Orange):** $0{,}8 \cdot \mu g < a_{\text{res}} \le 1{,}0 \cdot \mu g$ – optimales Renntempo, kontrollierter Drift.
+- **Zone 3: Traktionsabriss (Rot):** $a_{\text{res}} > \mu g$ – Haftungsabriss, Rutschen und Schleudern.
+- **Phasenmanöver:** Anbremsen ($-a_x$) $\to$ Trail-Braking $\to$ Scheitelpunkt ($a_y = \max$) $\to$ Beschleunigen ($+a_x$).
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Kammscher_Zonen.svg)
+
+</div>
+</div>
+
+---
+
+### Anwendungsbeispiel: G-G-Telemetrie mit ScottPlot
+
+<div class="columns">
+<div class="two">
+
+Reifen-Grip-Telemetrie für das Gaming-HUD (Übung 4, Track B):
+
+- **Grenz-Hüllkurven:** Parametrische Kreise für $1{,}0\,\mu g$ (Haftgrenze) und $0{,}8\,\mu g$ (Grip-Grenze).
+- **Farbkodierte Telemetrie:** Scatter-Punkte für Längsbeschleunigung $a_x$ und Querbeschleunigung $a_y$.
+- **Aspektverhältnis:** `Plot.Axes.SquareUnits()` erzwingt ein kreisrundes 1:1-Diagramm.
+
+</div>
+<div class="three">
+
+![](./Illustrationen/ScottPlot_KammscherKreis_Example.png)
+
+</div>
+</div>
+
+---
+
+### Phasenebene: Modellierung dynamischer Systeme
+
+<div class="columns">
+<div class="two">
+
+Viele mechatronische Systeme genügen einer DGL 2. Ordnung mit Parametern $m, d, c$:
+
+- **Differentialgleichung:**
+  $$m \ddot{x} + d \dot{x} + c x = 0 \iff \ddot{x} = -\frac{c}{m} x - \frac{d}{m} \dot{x}$$
+- **Zustandstransformation:**
+  - $x_1 = x$ (Position / Auslenkung)
+  - $x_2 = \dot{x}$ (Geschwindigkeit)
+- **Gekoppeltes System 1. Ordnung:**
+  $$\begin{bmatrix} \dot{x}_1 \\ \dot{x}_2 \end{bmatrix} = \begin{bmatrix} x_2 \\ -\frac{c}{m} x_1 - \frac{d}{m} x_2 \end{bmatrix} = f(\vec{x})$$
+- Jeder Zustand $(x_1, x_2)$ besitzt einen Tangentenvektor $\dot{\vec{x}}$.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_DGL_Phasenebene.svg)
+
+</div>
+</div>
+
+---
+
+### Phasenraum-Richtungsfelder als „Strömungskarte“
+
+<div class="columns">
+<div class="two">
+
+Zur Analyse dynamischer Systeme $\mathrm{d}\vec{x}/\mathrm{d}t = f(\vec{x})$ mit Zuständen $x_1$ und $x_2$:
 
 - Bevor eine Trajektorie $x(t)$ numerisch integriert wird, offenbart das **Richtungsfeld** bereits das globale Verhalten.
 - An jedem Gitterpunkt $(x_1, x_2)$ wird der Geschwindigkeitsvektor als gerichteter Pfeil berechnet.
-- **ScottPlot 5 API:**
-  - `Plot.Add.VectorField(vectors)` visualisiert ein 2D-Gitter von Vektoren `vectors`.
-  - Macht Grenzzyklen und Attraktoren sichtbar, noch bevor eine Trajektorie $x(t)$ berechnet wird.
+- **Strömungskarten-Analogie:** Trajektorien verhalten sich wie Partikel im Fluid und folgen den Vektoren tangential.
+- **Qualitative Analyse:** Ruhelagen ($f(\vec{x}) = \vec{0}$) und Stabilität (gedämpfte Strudelsenke vs. ungedämpfter Wirbel) sofort sichtbar.
 
 </div>
 <div class="one">
 
 ![](./Diagramme/Mini_VectorField_Phasenraum.svg)
+
+</div>
+</div>
+
+---
+
+### ScottPlot 5 API: Phasenporträts mit `VectorField`
+
+<div class="columns">
+<div class="two">
+
+C#-Architektur zur Erzeugung von 2D-Vektorfeldern in ScottPlot 5:
+
+- **Gitterpunkte:** Schleifen über die Koordinaten `x1` und `x2` spannen die diskrete Phasenebene auf.
+- **Ableitungsvektoren:** Die zeitlichen Ableitungen `dx1` und `dx2` ergeben die Vektorlänge `len`.
+- **Normierung:** Vektor `dir` wird auf einheitliche Länge skaliert, um Überlappungen benachbarter Pfeile zu vermeiden.
+- **Überlagerung:** `Plot.Add.VectorField(vectors)` visualisiert das Gitter im Diagrammhintergrund.
+
+</div>
+<div class="two">
+
+```csharp
+var vectors = new List<RootedCoordinateVector>();
+for (double x1 = -3; x1 <= 3; x1 += 0.4) {
+  for (double x2 = -3; x2 <= 3; x2 += 0.4) {
+    double dx1 = x2;
+    double dx2 = -x1 - 0.3 * x2;
+    double len = Math.Sqrt(dx1*dx1 + dx2*dx2);
+    var dir = new Vector2(
+      (float)(dx1 / len * 0.22),
+      (float)(dx2 / len * 0.22));
+    vectors.Add(new RootedCoordinateVector(
+      new Coordinates(x1, x2), dir));
+  }
+}
+plot.Add.VectorField(vectors);
+```
 
 </div>
 </div>
@@ -446,7 +566,7 @@ Zur Analyse dynamischer Systeme $\mathrm{d}\vec{x}/\mathrm{d}t = f(\vec{x})$ mit
 
 Konkrete Ausgabe des Phasenraum-Richtungsfeldes eines gedämpften Schwingers mit ScottPlot 5:
 
-- **Richtungsvektoren:** Reguläres Gitter von Vektoren `vectors` für Zustände $x_1$ (Auslenkung) und $x_2$ (Geschwindigkeit).
+- **Richtungsvektoren:** Reguläres Gitter von Vektoren für Zustände $x_1$ (Auslenkung) und $x_2$ (Geschwindigkeit).
 - **Trajektorie:** Überlagerte Spiralkurve $x(t)$ verdeutlicht den Einlauf in den stabilen Gleichgewichtspunkt im Ursprung.
 - Erlaubt die Beurteilung von Dämpfung und Konvergenzgebiet ohne aufwendige Parameterstudien.
 

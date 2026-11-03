@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">G-G Grip-Zonen</text>
+  <text x="135" y="42" class="sub">Fahrphysik (Track B Racing)</text>
+
+  <!-- Circle Diagram Canvas -->
+  <g transform="translate(20, 56)">
+    <rect width="230" height="190" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    
+    <!-- Outer Red Area (Slip) -->
+    <rect x="5" y="5" width="220" height="180" rx="4" fill="#fee2e2" opacity="0.4" />
+
+    <!-- Orange Zone (0.8 to 1.0 g) -->
+    <circle cx="115" cy="95" r="56" fill="#fef3c7" stroke="#dc2626" stroke-width="2" />
+
+    <!-- Green Inner Zone (< 0.8 g) -->
+    <circle cx="115" cy="95" r="44" fill="#dcfce7" stroke="#d97706" stroke-width="1.8" stroke-dasharray="3,2" />
+
+    <!-- Cross Axes -->
+    <line x1="115" y1="28" x2="115" y2="168" stroke="#94a3b8" stroke-width="1.2" />
+    <polygon points="115,24 112,30 118,30" fill="#94a3b8" />
+    <text x="115" y="16" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#334155" text-anchor="middle">+a_x (Gas)</text>
+    <text x="115" y="184" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#334155" text-anchor="middle">-a_x (Bremse)</text>
+
+    <line x1="20" y1="95" x2="210" y2="95" stroke="#94a3b8" stroke-width="1.2" />
+    <polygon points="214,95 207,92 207,98" fill="#94a3b8" />
+    <text x="216" y="86" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#334155" text-anchor="end">a_y</text>
+
+    <!-- Zone Labels (Offset from axes with solid shielding) -->
+    <rect x="124" y="62" width="34" height="16" rx="2" fill="#ffffff" />
+    <text x="141" y="74" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#15803d" text-anchor="middle">Grip</text>
+
+    <rect x="135" y="24" width="70" height="16" rx="2" fill="#ffffff" />
+    <text x="170" y="36" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b45309" text-anchor="middle">1.0 g Limit</text>
+
+    <!-- Telemetry Markers -->
+    <circle cx="115" cy="130" r="4" fill="#16a34a" />
+    <circle cx="95" cy="115" r="4" fill="#16a34a" />
+    <circle cx="75" cy="100" r="4.5" fill="#d97706" />
+    <circle cx="68" cy="88" r="4.5" fill="#d97706" />
+    <circle cx="56" cy="95" r="5" fill="#dc2626" />
+  </g>
+
+  <!-- Explanation Card -->
+  <g transform="translate(15, 258)">
+    <rect width="240" height="74" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Grip-Zonen im G-G-Diagramm</text>
+    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #9a3412;">Grün: Linearer Grip (&lt; 0.8 g)</text>
+    <text x="120" y="58" class="desc" style="fill: #ea580c;">Orange: Renntempo | Rot: Rutschen</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #004B96;">Telemetrie-Analyse</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #334155;">a_res = sqrt(a_x^2 + a_y^2)</text>
+</svg>
