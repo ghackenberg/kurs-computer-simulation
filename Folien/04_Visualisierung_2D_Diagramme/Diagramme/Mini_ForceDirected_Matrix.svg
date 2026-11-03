@@ -1,9 +1,8 @@
 ﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1110 470" width="1110" height="470">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; text-anchor: middle; }
-      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; text-anchor: middle; }
-      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; text-anchor: middle; }
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; }
+      .fsum { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 600; }
     </style>
     <marker id="arr-net" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
       <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#16a34a" />
@@ -12,153 +11,141 @@
 
   <!-- Tile 0: Iteration 0 -->
   <rect x="10.0" y="10.0" width="350" height="220" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="185.0" y="34.0" class="hdr" fill="#004B96">Iteration 0: Startzustand</text>
-  <text x="185.0" y="51.0" class="sub" fill="#475569" font-weight="normal">Chaotische Lage, kreuzende Kanten</text>
-  <rect x="25.0" y="60.0" width="320" height="132" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-  <line x1="80.0" y1="76.5" x2="290.0" y2="82.0" stroke="#94a3b8" stroke-width="2" />
-  <line x1="290.0" y1="82.0" x2="275.0" y2="170.0" stroke="#94a3b8" stroke-width="2" />
-  <line x1="275.0" y1="170.0" x2="95.0" y2="175.5" stroke="#94a3b8" stroke-width="2" />
-  <line x1="95.0" y1="175.5" x2="80.0" y2="76.5" stroke="#94a3b8" stroke-width="2" />
-  <line x1="200.0" y1="142.5" x2="80.0" y2="76.5" stroke="#94a3b8" stroke-width="2" />
-  <line x1="200.0" y1="142.5" x2="290.0" y2="82.0" stroke="#94a3b8" stroke-width="2" />
-  <line x1="200.0" y1="142.5" x2="275.0" y2="170.0" stroke="#94a3b8" stroke-width="2" />
-  <line x1="200.0" y1="142.5" x2="95.0" y2="175.5" stroke="#94a3b8" stroke-width="2" />
-  <line x1="80.0" y1="76.5" x2="111.3" y2="84.2" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="290.0" y1="82.0" x2="267.0" y2="76.5" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="275.0" y1="170.0" x2="276.4" y2="182.8" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="95.0" y1="175.5" x2="105.9" y2="174.7" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="200.0" y1="142.5" x2="179.4" y2="128.4" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <circle cx="80.0" cy="76.5" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="290.0" cy="82.0" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="275.0" cy="170.0" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="95.0" cy="175.5" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="200.0" cy="142.5" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <rect x="25.0" y="199.0" width="320" height="23" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" />
-  <text x="185.0" y="215.0" class="desc" fill="#1e40af" font-weight="bold">Max. Kraft ||F_net|| = 3.6 N | Schrittweite: 14.0</text>
+  <text x="26.0" y="36.0" class="hdr" text-anchor="start" fill="#004B96">Iteration 0</text>
+  <text x="344.0" y="36.0" class="fsum" text-anchor="end" fill="#475569">&#931; ||F_net|| = 11.6 N</text>
+  <rect x="20.0" y="48.0" width="330" height="172" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+  <line x1="52.0" y1="71.0" x2="318.0" y2="78.0" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="318.0" y1="78.0" x2="299.0" y2="190.0" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="299.0" y1="190.0" x2="71.0" y2="197.0" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="71.0" y1="197.0" x2="52.0" y2="71.0" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="204.0" y1="155.0" x2="52.0" y2="71.0" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="204.0" y1="155.0" x2="318.0" y2="78.0" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="204.0" y1="155.0" x2="299.0" y2="190.0" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="204.0" y1="155.0" x2="71.0" y2="197.0" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="52.0" y1="71.0" x2="86.7" y2="79.5" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="318.0" y1="78.0" x2="292.5" y2="71.9" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="299.0" y1="190.0" x2="300.6" y2="204.2" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="71.0" y1="197.0" x2="83.1" y2="196.1" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="204.0" y1="155.0" x2="181.1" y2="139.3" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <circle cx="52.0" cy="71.0" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="318.0" cy="78.0" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="299.0" cy="190.0" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="71.0" cy="197.0" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="204.0" cy="155.0" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
 
   <!-- Tile 1: Iteration 2 -->
   <rect x="380.0" y="10.0" width="350" height="220" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="555.0" y="34.0" class="hdr" fill="#004B96">Iteration 2: Coulomb-Expansion</text>
-  <text x="555.0" y="51.0" class="sub" fill="#475569" font-weight="normal">Starke Abstoßung sprengt Knotenklumpen</text>
-  <rect x="395.0" y="60.0" width="320" height="132" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-  <line x1="454.0" y1="77.2" x2="657.0" y2="81.5" stroke="#94a3b8" stroke-width="2" />
-  <line x1="657.0" y1="81.5" x2="645.1" y2="171.2" stroke="#94a3b8" stroke-width="2" />
-  <line x1="645.1" y1="171.2" x2="466.4" y2="175.5" stroke="#94a3b8" stroke-width="2" />
-  <line x1="466.4" y1="175.5" x2="454.0" y2="77.2" stroke="#94a3b8" stroke-width="2" />
-  <line x1="567.4" y1="141.2" x2="454.0" y2="77.2" stroke="#94a3b8" stroke-width="2" />
-  <line x1="567.4" y1="141.2" x2="657.0" y2="81.5" stroke="#94a3b8" stroke-width="2" />
-  <line x1="567.4" y1="141.2" x2="645.1" y2="171.2" stroke="#94a3b8" stroke-width="2" />
-  <line x1="567.4" y1="141.2" x2="466.4" y2="175.5" stroke="#94a3b8" stroke-width="2" />
-  <line x1="454.0" y1="77.2" x2="481.2" y2="82.8" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="657.0" y1="81.5" x2="636.3" y2="76.6" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="645.1" y1="171.2" x2="644.9" y2="182.4" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="466.4" y1="175.5" x2="475.9" y2="175.9" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="567.4" y1="141.2" x2="551.7" y2="128.7" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <circle cx="454.0" cy="77.2" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="657.0" cy="81.5" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="645.1" cy="171.2" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="466.4" cy="175.5" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="567.4" cy="141.2" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <rect x="395.0" y="199.0" width="320" height="23" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" />
-  <text x="555.0" y="215.0" class="desc" fill="#1e40af" font-weight="bold">Max. Kraft ||F_net|| = 3.1 N | Schrittweite: 11.8</text>
+  <text x="396.0" y="36.0" class="hdr" text-anchor="start" fill="#004B96">Iteration 2</text>
+  <text x="714.0" y="36.0" class="fsum" text-anchor="end" fill="#475569">&#931; ||F_net|| = 10.0 N</text>
+  <rect x="390.0" y="48.0" width="330" height="172" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+  <line x1="427.1" y1="71.9" x2="684.2" y2="77.3" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="684.2" y1="77.3" x2="669.2" y2="191.5" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="669.2" y1="191.5" x2="442.8" y2="196.9" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="442.8" y1="196.9" x2="427.1" y2="71.9" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="570.7" y1="153.3" x2="427.1" y2="71.9" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="570.7" y1="153.3" x2="684.2" y2="77.3" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="570.7" y1="153.3" x2="669.2" y2="191.5" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="570.7" y1="153.3" x2="442.8" y2="196.9" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="427.1" y1="71.9" x2="457.3" y2="78.2" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="684.2" y1="77.3" x2="661.2" y2="71.9" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="669.2" y1="191.5" x2="668.9" y2="204.0" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="442.8" y1="196.9" x2="453.4" y2="197.5" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="570.7" y1="153.3" x2="553.2" y2="139.5" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <circle cx="427.1" cy="71.9" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="684.2" cy="77.3" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="669.2" cy="191.5" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="442.8" cy="196.9" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="570.7" cy="153.3" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
 
   <!-- Tile 2: Iteration 5 -->
   <rect x="750.0" y="10.0" width="350" height="220" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="925.0" y="34.0" class="hdr" fill="#004B96">Iteration 5: Entflechtung</text>
-  <text x="925.0" y="51.0" class="sub" fill="#475569" font-weight="normal">Kanten kreuzungsfrei, Federn wirken</text>
-  <rect x="765.0" y="60.0" width="320" height="132" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-  <line x1="829.1" y1="77.9" x2="1023.1" y2="80.8" stroke="#94a3b8" stroke-width="2" />
-  <line x1="1023.1" y1="80.8" x2="1015.0" y2="172.8" stroke="#94a3b8" stroke-width="2" />
-  <line x1="1015.0" y1="172.8" x2="838.2" y2="175.6" stroke="#94a3b8" stroke-width="2" />
-  <line x1="838.2" y1="175.6" x2="829.1" y2="77.9" stroke="#94a3b8" stroke-width="2" />
-  <line x1="934.6" y1="139.4" x2="829.1" y2="77.9" stroke="#94a3b8" stroke-width="2" />
-  <line x1="934.6" y1="139.4" x2="1023.1" y2="80.8" stroke="#94a3b8" stroke-width="2" />
-  <line x1="934.6" y1="139.4" x2="1015.0" y2="172.8" stroke="#94a3b8" stroke-width="2" />
-  <line x1="934.6" y1="139.4" x2="838.2" y2="175.6" stroke="#94a3b8" stroke-width="2" />
-  <line x1="829.1" y1="77.9" x2="851.3" y2="81.2" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="1023.1" y1="80.8" x2="1005.5" y2="76.7" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="1015.0" y1="172.8" x2="1013.1" y2="182.1" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="838.2" y1="175.6" x2="846.2" y2="177.5" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="934.6" y1="139.4" x2="924.0" y2="129.1" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <circle cx="829.1" cy="77.9" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="1023.1" cy="80.8" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="1015.0" cy="172.8" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="838.2" cy="175.6" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="934.6" cy="139.4" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <rect x="765.0" y="199.0" width="320" height="23" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" />
-  <text x="925.0" y="215.0" class="desc" fill="#1e40af" font-weight="bold">Max. Kraft ||F_net|| = 2.5 N | Schrittweite: 9.2</text>
+  <text x="766.0" y="36.0" class="hdr" text-anchor="start" fill="#004B96">Iteration 5</text>
+  <text x="1084.0" y="36.0" class="fsum" text-anchor="end" fill="#475569">&#931; ||F_net|| = 8.1 N</text>
+  <rect x="760.0" y="48.0" width="330" height="172" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+  <line x1="803.5" y1="72.8" x2="1049.2" y2="76.5" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="1049.2" y1="76.5" x2="1038.9" y2="193.5" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="1038.9" y1="193.5" x2="815.1" y2="197.1" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="815.1" y1="197.1" x2="803.5" y2="72.8" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="937.2" y1="151.1" x2="803.5" y2="72.8" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="937.2" y1="151.1" x2="1049.2" y2="76.5" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="937.2" y1="151.1" x2="1038.9" y2="193.5" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="937.2" y1="151.1" x2="815.1" y2="197.1" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="803.5" y1="72.8" x2="828.2" y2="76.4" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="1049.2" y1="76.5" x2="1029.7" y2="71.9" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="1038.9" y1="193.5" x2="1036.9" y2="203.9" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="815.1" y1="197.1" x2="823.9" y2="199.2" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="937.2" y1="151.1" x2="925.3" y2="139.6" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <circle cx="803.5" cy="72.8" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="1049.2" cy="76.5" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="1038.9" cy="193.5" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="815.1" cy="197.1" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="937.2" cy="151.1" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
 
   <!-- Tile 3: Iteration 10 -->
   <rect x="10.0" y="240.0" width="350" height="220" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="185.0" y="264.0" class="hdr" fill="#004B96">Iteration 10: Dämpfungseinsatz</text>
-  <text x="185.0" y="281.0" class="sub" fill="#475569" font-weight="normal">Dämpfung reduziert die Schrittweite</text>
-  <rect x="25.0" y="290.0" width="320" height="132" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-  <line x1="95.6" y1="308.4" x2="277.8" y2="309.9" stroke="#94a3b8" stroke-width="2" />
-  <line x1="277.8" y1="309.9" x2="274.2" y2="404.8" stroke="#94a3b8" stroke-width="2" />
-  <line x1="274.2" y1="404.8" x2="100.6" y2="406.2" stroke="#94a3b8" stroke-width="2" />
-  <line x1="100.6" y1="406.2" x2="95.6" y2="308.4" stroke="#94a3b8" stroke-width="2" />
-  <line x1="191.8" y1="367.2" x2="95.6" y2="308.4" stroke="#94a3b8" stroke-width="2" />
-  <line x1="191.8" y1="367.2" x2="277.8" y2="309.9" stroke="#94a3b8" stroke-width="2" />
-  <line x1="191.8" y1="367.2" x2="274.2" y2="404.8" stroke="#94a3b8" stroke-width="2" />
-  <line x1="191.8" y1="367.2" x2="100.6" y2="406.2" stroke="#94a3b8" stroke-width="2" />
-  <line x1="95.6" y1="308.4" x2="111.4" y2="309.2" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="277.8" y1="309.9" x2="264.6" y2="306.5" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="274.2" y1="404.8" x2="271.1" y2="411.9" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="100.6" y1="406.2" x2="106.8" y2="409.3" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="191.8" y1="367.2" x2="186.1" y2="359.6" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <circle cx="95.6" cy="308.4" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="277.8" cy="309.9" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="274.2" cy="404.8" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="100.6" cy="406.2" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="191.8" cy="367.2" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <rect x="25.0" y="429.0" width="320" height="23" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" />
-  <text x="185.0" y="445.0" class="desc" fill="#1e40af" font-weight="bold">Dämpfung greift: Schrittweite = 6.1 | ||F_net|| = 1.8 N</text>
+  <text x="26.0" y="266.0" class="hdr" text-anchor="start" fill="#004B96">Iteration 10</text>
+  <text x="344.0" y="266.0" class="fsum" text-anchor="end" fill="#475569">&#931; ||F_net|| = 6.0 N</text>
+  <rect x="20.0" y="278.0" width="330" height="172" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+  <line x1="71.8" y1="303.5" x2="302.6" y2="305.3" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="302.6" y1="305.3" x2="297.9" y2="426.1" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="297.9" y1="426.1" x2="78.1" y2="427.9" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="78.1" y1="427.9" x2="71.8" y2="303.5" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="193.7" y1="378.3" x2="71.8" y2="303.5" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="193.7" y1="378.3" x2="302.6" y2="305.3" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="193.7" y1="378.3" x2="297.9" y2="426.1" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="193.7" y1="378.3" x2="78.1" y2="427.9" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="71.8" y1="303.5" x2="89.4" y2="304.3" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="302.6" y1="305.3" x2="287.8" y2="301.5" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="297.9" y1="426.1" x2="294.5" y2="434.0" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="78.1" y1="427.9" x2="85.0" y2="431.4" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="193.7" y1="378.3" x2="187.3" y2="369.8" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <circle cx="71.8" cy="303.5" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="302.6" cy="305.3" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="297.9" cy="426.1" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="78.1" cy="427.9" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="193.7" cy="378.3" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
 
   <!-- Tile 4: Iteration 20 -->
   <rect x="380.0" y="240.0" width="350" height="220" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="555.0" y="264.0" class="hdr" fill="#004B96">Iteration 20: Feinjustierung</text>
-  <text x="555.0" y="281.0" class="sub" fill="#475569" font-weight="normal">Kanten nähern sich der Soll-Federlänge</text>
-  <rect x="395.0" y="290.0" width="320" height="132" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-  <line x1="473.6" y1="308.2" x2="640.9" y2="308.4" stroke="#94a3b8" stroke-width="2" />
-  <line x1="640.9" y1="308.4" x2="641.9" y2="407.6" stroke="#94a3b8" stroke-width="2" />
-  <line x1="641.9" y1="407.6" x2="474.1" y2="407.9" stroke="#94a3b8" stroke-width="2" />
-  <line x1="474.1" y1="407.9" x2="473.6" y2="308.2" stroke="#94a3b8" stroke-width="2" />
-  <line x1="559.5" y1="364.3" x2="473.6" y2="308.2" stroke="#94a3b8" stroke-width="2" />
-  <line x1="559.5" y1="364.3" x2="640.9" y2="308.4" stroke="#94a3b8" stroke-width="2" />
-  <line x1="559.5" y1="364.3" x2="641.9" y2="407.6" stroke="#94a3b8" stroke-width="2" />
-  <line x1="559.5" y1="364.3" x2="474.1" y2="407.9" stroke="#94a3b8" stroke-width="2" />
-  <line x1="473.6" y1="308.2" x2="481.9" y2="306.9" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="640.9" y1="308.4" x2="633.6" y2="305.8" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="641.9" y1="407.6" x2="638.5" y2="412.2" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="474.1" y1="407.9" x2="478.4" y2="411.4" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <line x1="559.5" y1="364.3" x2="557.7" y2="360.2" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
-  <circle cx="473.6" cy="308.2" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="640.9" cy="308.4" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="641.9" cy="407.6" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="474.1" cy="407.9" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="559.5" cy="364.3" r="5.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
-  <rect x="395.0" y="429.0" width="320" height="23" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" />
-  <text x="555.0" y="445.0" class="desc" fill="#1e40af" font-weight="bold">Feinjustierung: Schrittweite = 2.6 | ||F_net|| = 0.9 N</text>
+  <text x="396.0" y="266.0" class="hdr" text-anchor="start" fill="#004B96">Iteration 20</text>
+  <text x="714.0" y="266.0" class="fsum" text-anchor="end" fill="#475569">&#931; ||F_net|| = 3.5 N</text>
+  <rect x="390.0" y="278.0" width="330" height="172" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+  <line x1="451.9" y1="303.2" x2="663.9" y2="303.4" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="663.9" y1="303.4" x2="665.1" y2="429.7" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="665.1" y1="429.7" x2="452.5" y2="430.0" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="452.5" y1="430.0" x2="451.9" y2="303.2" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="560.6" y1="374.6" x2="451.9" y2="303.2" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="560.6" y1="374.6" x2="663.9" y2="303.4" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="560.6" y1="374.6" x2="665.1" y2="429.7" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="560.6" y1="374.6" x2="452.5" y2="430.0" stroke="#94a3b8" stroke-width="2.4" />
+  <line x1="451.9" y1="303.2" x2="461.1" y2="301.8" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="663.9" y1="303.4" x2="655.7" y2="300.6" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="665.1" y1="429.7" x2="661.2" y2="434.8" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="452.5" y1="430.0" x2="457.3" y2="433.9" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <line x1="560.6" y1="374.6" x2="558.7" y2="370.0" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-net)" />
+  <circle cx="451.9" cy="303.2" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="663.9" cy="303.4" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="665.1" cy="429.7" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="452.5" cy="430.0" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <circle cx="560.6" cy="374.6" r="6.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
 
   <!-- Tile 5: Iteration 50 -->
   <rect x="750.0" y="240.0" width="350" height="220" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.8" />
-  <text x="925.0" y="264.0" class="hdr" fill="#15803d">Iteration 50: Kräftegleichgewicht</text>
-  <text x="925.0" y="281.0" class="sub" fill="#166534" font-weight="bold">Stationärer Stillstand: Summe F_net &#8776; 0</text>
-  <rect x="765.0" y="290.0" width="320" height="132" rx="6" fill="#ffffff" stroke="#bbf7d0" stroke-width="1" />
-  <line x1="851.5" y1="306.1" x2="1003.9" y2="305.8" stroke="#6ee7b7" stroke-width="2" />
-  <line x1="1003.9" y1="305.8" x2="1006.6" y2="411.7" stroke="#6ee7b7" stroke-width="2" />
-  <line x1="1006.6" y1="411.7" x2="849.8" y2="411.7" stroke="#6ee7b7" stroke-width="2" />
-  <line x1="849.8" y1="411.7" x2="851.5" y2="306.1" stroke="#6ee7b7" stroke-width="2" />
-  <line x1="928.3" y1="361.3" x2="851.5" y2="306.1" stroke="#6ee7b7" stroke-width="2" />
-  <line x1="928.3" y1="361.3" x2="1003.9" y2="305.8" stroke="#6ee7b7" stroke-width="2" />
-  <line x1="928.3" y1="361.3" x2="1006.6" y2="411.7" stroke="#6ee7b7" stroke-width="2" />
-  <line x1="928.3" y1="361.3" x2="849.8" y2="411.7" stroke="#6ee7b7" stroke-width="2" />
-  <circle cx="851.5" cy="306.1" r="5.5" fill="#16a34a" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="1003.9" cy="305.8" r="5.5" fill="#16a34a" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="1006.6" cy="411.7" r="5.5" fill="#16a34a" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="849.8" cy="411.7" r="5.5" fill="#16a34a" stroke="#ffffff" stroke-width="1.8" />
-  <circle cx="928.3" cy="361.3" r="5.5" fill="#16a34a" stroke="#ffffff" stroke-width="1.8" />
-  <rect x="765.0" y="429.0" width="320" height="23" rx="4" fill="#dcfce7" stroke="#86efac" stroke-width="1" />
-  <text x="925.0" y="445.0" class="desc" fill="#15803d" font-weight="bold">Gleichgewicht erreicht: ||F_net|| &lt; 0.01 N (Stillstand)</text>
+  <text x="766.0" y="266.0" class="hdr" text-anchor="start" fill="#15803d">Iteration 50</text>
+  <text x="1084.0" y="266.0" class="fsum" text-anchor="end" fill="#15803d">&#931; ||F_net|| = 1.0 N</text>
+  <rect x="760.0" y="278.0" width="330" height="172" rx="6" fill="#ffffff" stroke="#bbf7d0" stroke-width="1" />
+  <line x1="831.8" y1="300.5" x2="1024.9" y2="300.1" stroke="#6ee7b7" stroke-width="2.4" />
+  <line x1="1024.9" y1="300.1" x2="1028.4" y2="434.9" stroke="#6ee7b7" stroke-width="2.4" />
+  <line x1="1028.4" y1="434.9" x2="829.7" y2="434.9" stroke="#6ee7b7" stroke-width="2.4" />
+  <line x1="829.7" y1="434.9" x2="831.8" y2="300.5" stroke="#6ee7b7" stroke-width="2.4" />
+  <line x1="929.1" y1="370.7" x2="831.8" y2="300.5" stroke="#6ee7b7" stroke-width="2.4" />
+  <line x1="929.1" y1="370.7" x2="1024.9" y2="300.1" stroke="#6ee7b7" stroke-width="2.4" />
+  <line x1="929.1" y1="370.7" x2="1028.4" y2="434.9" stroke="#6ee7b7" stroke-width="2.4" />
+  <line x1="929.1" y1="370.7" x2="829.7" y2="434.9" stroke="#6ee7b7" stroke-width="2.4" />
+  <circle cx="831.8" cy="300.5" r="6.5" fill="#16a34a" stroke="#ffffff" stroke-width="2" />
+  <circle cx="1024.9" cy="300.1" r="6.5" fill="#16a34a" stroke="#ffffff" stroke-width="2" />
+  <circle cx="1028.4" cy="434.9" r="6.5" fill="#16a34a" stroke="#ffffff" stroke-width="2" />
+  <circle cx="829.7" cy="434.9" r="6.5" fill="#16a34a" stroke="#ffffff" stroke-width="2" />
+  <circle cx="929.1" cy="370.7" r="6.5" fill="#16a34a" stroke="#ffffff" stroke-width="2" />
 
 </svg>

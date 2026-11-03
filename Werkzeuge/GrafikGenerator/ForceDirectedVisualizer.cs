@@ -24,6 +24,7 @@ namespace GrafikGenerator
             public int Iteration { get; set; }
             public double Temp { get; set; }
             public double MaxForce { get; set; }
+            public double ForceSum { get; set; }
             public string Title { get; set; } = "";
             public string Subtitle { get; set; } = "";
             public string Badge { get; set; } = "";
@@ -117,11 +118,13 @@ namespace GrafikGenerator
                 if (matrixMilestones.Contains(iter))
                 {
                     double maxF = 0;
+                    double forceSum = 0;
                     var snapNodes = new List<(double X, double Y, double Fx, double Fy)>();
                     foreach (var n in nodes)
                     {
                         double fLen = Math.Sqrt(n.Fx * n.Fx + n.Fy * n.Fy);
                         maxF = Math.Max(maxF, fLen);
+                        forceSum += fLen;
                         snapNodes.Add((n.X, n.Y, n.Fx, n.Fy));
                     }
 
@@ -130,6 +133,7 @@ namespace GrafikGenerator
                         Iteration = iter,
                         Temp = temp,
                         MaxForce = maxF,
+                        ForceSum = forceSum,
                         Nodes = snapNodes
                     };
 
@@ -633,9 +637,8 @@ namespace GrafikGenerator
             sb.AppendLine("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1110 470\" width=\"1110\" height=\"470\">");
             sb.AppendLine("  <defs>");
             sb.AppendLine("    <style>");
-            sb.AppendLine("      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; text-anchor: middle; }");
-            sb.AppendLine("      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; text-anchor: middle; }");
-            sb.AppendLine("      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; text-anchor: middle; }");
+            sb.AppendLine("      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; }");
+            sb.AppendLine("      .fsum { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 600; }");
             sb.AppendLine("    </style>");
             sb.AppendLine("    <marker id=\"arr-net\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6.5\" markerHeight=\"6.5\" orient=\"auto-start-reverse\">");
             sb.AppendLine("      <path d=\"M 0 1.5 L 9 5 L 0 8.5 z\" fill=\"#16a34a\" />");
@@ -656,30 +659,30 @@ namespace GrafikGenerator
                 string cardStroke = isEq ? "#86efac" : "#cbd5e1";
                 double strokeW = isEq ? 1.8 : 1.5;
                 string titleFill = isEq ? "#15803d" : "#004B96";
-                string subFill = isEq ? "#166534" : "#475569";
-                string subWeight = isEq ? "bold" : "normal";
+                string fsumFill = isEq ? "#15803d" : "#475569";
+                string fsumVal = s.ForceSum < 0.05 ? "&lt; 0.01 N" : $"{s.ForceSum.ToString("F1", inv)} N";
 
                 // Card background
                 sb.AppendLine($"  <!-- Tile {idx}: Iteration {s.Iteration} -->");
                 sb.AppendLine($"  <rect x=\"{colX.ToString("F1", inv)}\" y=\"{rowY.ToString("F1", inv)}\" width=\"350\" height=\"220\" rx=\"8\" fill=\"{cardFill}\" stroke=\"{cardStroke}\" stroke-width=\"{strokeW.ToString("F1", inv)}\" />");
 
-                // Header
-                sb.AppendLine($"  <text x=\"{(colX + 175.0).ToString("F1", inv)}\" y=\"{(rowY + 24.0).ToString("F1", inv)}\" class=\"hdr\" fill=\"{titleFill}\">{s.Title}</text>");
-                sb.AppendLine($"  <text x=\"{(colX + 175.0).ToString("F1", inv)}\" y=\"{(rowY + 41.0).ToString("F1", inv)}\" class=\"sub\" fill=\"{subFill}\" font-weight=\"{subWeight}\">{s.Subtitle}</text>");
+                // Header - "Iteration N" (left) and Kräftesumme (right)
+                sb.AppendLine($"  <text x=\"{(colX + 16.0).ToString("F1", inv)}\" y=\"{(rowY + 26.0).ToString("F1", inv)}\" class=\"hdr\" text-anchor=\"start\" fill=\"{titleFill}\">Iteration {s.Iteration}</text>");
+                sb.AppendLine($"  <text x=\"{(colX + 334.0).ToString("F1", inv)}\" y=\"{(rowY + 26.0).ToString("F1", inv)}\" class=\"fsum\" text-anchor=\"end\" fill=\"{fsumFill}\">&#931; ||F_net|| = {fsumVal}</text>");
 
-                // Inner Canvas
+                // Inner Canvas - maximized from y = 38 to 210 (height 172px, width 330px)
                 string innerBorder = isEq ? "#bbf7d0" : "#cbd5e1";
-                sb.AppendLine($"  <rect x=\"{(colX + 15.0).ToString("F1", inv)}\" y=\"{(rowY + 50.0).ToString("F1", inv)}\" width=\"320\" height=\"132\" rx=\"6\" fill=\"#ffffff\" stroke=\"{innerBorder}\" stroke-width=\"1\" />");
+                sb.AppendLine($"  <rect x=\"{(colX + 10.0).ToString("F1", inv)}\" y=\"{(rowY + 38.0).ToString("F1", inv)}\" width=\"330\" height=\"172\" rx=\"6\" fill=\"#ffffff\" stroke=\"{innerBorder}\" stroke-width=\"1\" />");
 
-                // Mapping nodes to inner canvas center (colX + 175, rowY + 116)
+                // Mapping nodes to inner canvas center (colX + 175, rowY + 124)
                 double cx = colX + 175.0;
-                double cy = rowY + 116.0;
+                double cy = rowY + 124.0;
 
                 var mapped = new List<(double X, double Y, double Fx, double Fy)>();
                 foreach (var n in s.Nodes)
                 {
-                    double px = cx + (n.X - 125.0) * 1.5;
-                    double py = cy + (n.Y - 95.0) * 1.1;
+                    double px = cx + (n.X - 125.0) * 1.9;
+                    double py = cy + (n.Y - 95.0) * 1.4;
                     mapped.Add((px, py, n.Fx, n.Fy));
                 }
 
@@ -689,23 +692,23 @@ namespace GrafikGenerator
                 {
                     var p1 = mapped[u];
                     var p2 = mapped[v];
-                    sb.AppendLine($"  <line x1=\"{p1.X.ToString("F1", inv)}\" y1=\"{p1.Y.ToString("F1", inv)}\" x2=\"{p2.X.ToString("F1", inv)}\" y2=\"{p2.Y.ToString("F1", inv)}\" stroke=\"{edgeColor}\" stroke-width=\"2\" />");
+                    sb.AppendLine($"  <line x1=\"{p1.X.ToString("F1", inv)}\" y1=\"{p1.Y.ToString("F1", inv)}\" x2=\"{p2.X.ToString("F1", inv)}\" y2=\"{p2.Y.ToString("F1", inv)}\" stroke=\"{edgeColor}\" stroke-width=\"2.4\" />");
                 }
 
                 // Force arrows (for non-equilibrium, drawn before nodes so node circles mask line starts cleanly)
                 if (!isEq)
                 {
-                    double arrowScale = 9.0;
+                    double arrowScale = 10.0;
                     foreach (var p in mapped)
                     {
                         double fx = p.Fx * arrowScale;
                         double fy = p.Fy * arrowScale;
                         double len = Math.Sqrt(fx * fx + fy * fy);
-                        if (len > 34.0)
+                        if (len > 38.0)
                         {
-                            fx = (fx / len) * 34.0;
-                            fy = (fy / len) * 34.0;
-                            len = 34.0;
+                            fx = (fx / len) * 38.0;
+                            fy = (fy / len) * 38.0;
+                            len = 38.0;
                         }
                         if (len > 3.0)
                         {
@@ -718,15 +721,9 @@ namespace GrafikGenerator
                 string nodeFill = isEq ? "#16a34a" : "#2563eb";
                 foreach (var p in mapped)
                 {
-                    sb.AppendLine($"  <circle cx=\"{p.X.ToString("F1", inv)}\" cy=\"{p.Y.ToString("F1", inv)}\" r=\"5.5\" fill=\"{nodeFill}\" stroke=\"#ffffff\" stroke-width=\"1.8\" />");
+                    sb.AppendLine($"  <circle cx=\"{p.X.ToString("F1", inv)}\" cy=\"{p.Y.ToString("F1", inv)}\" r=\"6.5\" fill=\"{nodeFill}\" stroke=\"#ffffff\" stroke-width=\"2\" />");
                 }
 
-                // Badge / Footer Bar
-                string badgeBg = isEq ? "#dcfce7" : "#eff6ff";
-                string badgeBorder = isEq ? "#86efac" : "#bfdbfe";
-                string badgeText = isEq ? "#15803d" : "#1e40af";
-                sb.AppendLine($"  <rect x=\"{(colX + 15.0).ToString("F1", inv)}\" y=\"{(rowY + 189.0).ToString("F1", inv)}\" width=\"320\" height=\"23\" rx=\"4\" fill=\"{badgeBg}\" stroke=\"{badgeBorder}\" stroke-width=\"1\" />");
-                sb.AppendLine($"  <text x=\"{(colX + 175.0).ToString("F1", inv)}\" y=\"{(rowY + 205.0).ToString("F1", inv)}\" class=\"desc\" fill=\"{badgeText}\" font-weight=\"bold\">{s.Badge}</text>");
                 sb.AppendLine();
             }
 

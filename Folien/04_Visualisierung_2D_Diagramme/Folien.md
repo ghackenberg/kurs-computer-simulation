@@ -1509,7 +1509,7 @@ Für ungerichtete Komponenten-Netzwerke eignet sich das Kräfte-Verfahren:
 
 ### Force-Directed: Konvergenzverlauf (Partikelsimulation)
 
-Evolution der Knotenpositionen und Restkräfte $\vec{F}_{\text{net}}$ vom Startzustand bis zum Gleichgewicht bei abklingender Schrittweite:
+Evolution der Knotenpositionen und Kräftesumme $\sum \|\vec{F}_{\text{net}}\|$ vom Startzustand bis zum Gleichgewicht bei abklingender Schrittweite:
 
 ![](./Diagramme/Mini_ForceDirected_Matrix.svg)
 
