@@ -39,7 +39,9 @@ async function auditSvgFile(browser, svgPath, options = {}) {
     const issues = [];
     const svg = document.querySelector('svg');
     if (!svg) {
-      return { hasSvg: false, issues: ['No <svg> root element found'] };
+      const parserError = document.querySelector('parsererror');
+      const errText = parserError ? parserError.innerText.trim().replace(/\s+/g, ' ') : 'No <svg> root element found (XML parsing failed)';
+      return { hasSvg: false, issues: [{ type: 'XML_PARSE_ERROR', message: errText }] };
     }
 
     const svgRect = svg.getBoundingClientRect();
@@ -705,7 +707,7 @@ async function main() {
   console.log(`  Geprüfte SVGs: ${allSvgs.length} in ${durationSec}s`);
   console.log(`  SVGs mit Auffälligkeiten: ${defectCount}`);
   console.log(`================================================================\n`);
-  process.exit(0);
+  process.exit(defectCount > 0 ? 1 : 0);
 }
 
 main().catch(err => {

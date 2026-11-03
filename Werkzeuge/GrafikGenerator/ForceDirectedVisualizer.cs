@@ -166,8 +166,8 @@ namespace GrafikGenerator
                     else // 50
                     {
                         snap.Title = "Iteration 50: Kräftegleichgewicht";
-                        snap.Subtitle = "Stationärer Stillstand: Summe F_net ≈ 0";
-                        snap.Badge = "Gleichgewicht erreicht: ||F_net|| < 0.01 N (Stillstand)";
+                        snap.Subtitle = "Stationärer Stillstand: Summe F_net &#8776; 0";
+                        snap.Badge = "Gleichgewicht erreicht: ||F_net|| &lt; 0.01 N (Stillstand)";
                     }
 
                     snapshots.Add(snap);
@@ -633,9 +633,9 @@ namespace GrafikGenerator
             sb.AppendLine("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1110 470\" width=\"1110\" height=\"470\">");
             sb.AppendLine("  <defs>");
             sb.AppendLine("    <style>");
-            sb.AppendLine("      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }");
-            sb.AppendLine("      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; text-anchor: middle; }");
-            sb.AppendLine("      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; text-anchor: middle; }");
+            sb.AppendLine("      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; text-anchor: middle; }");
+            sb.AppendLine("      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; text-anchor: middle; }");
+            sb.AppendLine("      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; text-anchor: middle; }");
             sb.AppendLine("    </style>");
             sb.AppendLine("    <marker id=\"arr-net\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"5.5\" markerHeight=\"5.5\" orient=\"auto-start-reverse\">");
             sb.AppendLine("      <path d=\"M 0 1.5 L 9 5 L 0 8.5 z\" fill=\"#16a34a\" />");
