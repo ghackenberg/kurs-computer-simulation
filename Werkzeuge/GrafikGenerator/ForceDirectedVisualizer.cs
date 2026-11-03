@@ -450,7 +450,7 @@ namespace GrafikGenerator
             sb.AppendLine("      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }");
             sb.AppendLine("      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }");
             sb.AppendLine("    </style>");
-            sb.AppendLine("    <marker id=\"arr-net\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"5.5\" markerHeight=\"5.5\" orient=\"auto-start-reverse\">");
+            sb.AppendLine("    <marker id=\"arr-net\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6.5\" markerHeight=\"6.5\" orient=\"auto-start-reverse\">");
             sb.AppendLine("      <path d=\"M 0 1.5 L 9 5 L 0 8.5 z\" fill=\"#16a34a\" />");
             sb.AppendLine("    </marker>");
             sb.AppendLine("    <marker id=\"arr-blue\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"4.5\" markerHeight=\"4.5\" orient=\"auto-start-reverse\">");
@@ -637,7 +637,7 @@ namespace GrafikGenerator
             sb.AppendLine("      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; text-anchor: middle; }");
             sb.AppendLine("      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; text-anchor: middle; }");
             sb.AppendLine("    </style>");
-            sb.AppendLine("    <marker id=\"arr-net\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"5.5\" markerHeight=\"5.5\" orient=\"auto-start-reverse\">");
+            sb.AppendLine("    <marker id=\"arr-net\" viewBox=\"0 0 10 10\" refX=\"7\" refY=\"5\" markerWidth=\"6.5\" markerHeight=\"6.5\" orient=\"auto-start-reverse\">");
             sb.AppendLine("      <path d=\"M 0 1.5 L 9 5 L 0 8.5 z\" fill=\"#16a34a\" />");
             sb.AppendLine("    </marker>");
             sb.AppendLine("  </defs>");
@@ -692,33 +692,33 @@ namespace GrafikGenerator
                     sb.AppendLine($"  <line x1=\"{p1.X.ToString("F1", inv)}\" y1=\"{p1.Y.ToString("F1", inv)}\" x2=\"{p2.X.ToString("F1", inv)}\" y2=\"{p2.Y.ToString("F1", inv)}\" stroke=\"{edgeColor}\" stroke-width=\"2\" />");
                 }
 
-                // Nodes
-                string nodeFill = isEq ? "#16a34a" : "#2563eb";
-                foreach (var p in mapped)
-                {
-                    sb.AppendLine($"  <circle cx=\"{p.X.ToString("F1", inv)}\" cy=\"{p.Y.ToString("F1", inv)}\" r=\"5.5\" fill=\"{nodeFill}\" stroke=\"#ffffff\" stroke-width=\"1.8\" />");
-                }
-
-                // Force arrows (for non-equilibrium)
+                // Force arrows (for non-equilibrium, drawn before nodes so node circles mask line starts cleanly)
                 if (!isEq)
                 {
-                    double arrowScale = (s.Iteration == 0) ? 1.4 : ((s.Iteration == 2) ? 1.6 : 2.2);
+                    double arrowScale = 9.0;
                     foreach (var p in mapped)
                     {
                         double fx = p.Fx * arrowScale;
                         double fy = p.Fy * arrowScale;
                         double len = Math.Sqrt(fx * fx + fy * fy);
-                        if (len > 24.0)
+                        if (len > 34.0)
                         {
-                            fx = (fx / len) * 24.0;
-                            fy = (fy / len) * 24.0;
-                            len = 24.0;
+                            fx = (fx / len) * 34.0;
+                            fy = (fy / len) * 34.0;
+                            len = 34.0;
                         }
-                        if (len > 2.5)
+                        if (len > 3.0)
                         {
-                            sb.AppendLine($"  <line x1=\"{p.X.ToString("F1", inv)}\" y1=\"{p.Y.ToString("F1", inv)}\" x2=\"{(p.X + fx).ToString("F1", inv)}\" y2=\"{(p.Y + fy).ToString("F1", inv)}\" stroke=\"#16a34a\" stroke-width=\"2.2\" marker-end=\"url(#arr-net)\" />");
+                            sb.AppendLine($"  <line x1=\"{p.X.ToString("F1", inv)}\" y1=\"{p.Y.ToString("F1", inv)}\" x2=\"{(p.X + fx).ToString("F1", inv)}\" y2=\"{(p.Y + fy).ToString("F1", inv)}\" stroke=\"#16a34a\" stroke-width=\"2.8\" marker-end=\"url(#arr-net)\" />");
                         }
                     }
+                }
+
+                // Nodes (drawn on top)
+                string nodeFill = isEq ? "#16a34a" : "#2563eb";
+                foreach (var p in mapped)
+                {
+                    sb.AppendLine($"  <circle cx=\"{p.X.ToString("F1", inv)}\" cy=\"{p.Y.ToString("F1", inv)}\" r=\"5.5\" fill=\"{nodeFill}\" stroke=\"#ffffff\" stroke-width=\"1.8\" />");
                 }
 
                 // Badge / Footer Bar
