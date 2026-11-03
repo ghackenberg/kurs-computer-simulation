@@ -1219,44 +1219,6 @@ Numerisch stabile Online-Mittelwertbildung nach B. P. Welford (1962):
 
 ---
 
-### Welford-Algorithmus: Mathematische Herleitung
-
-<div class="columns">
-<div class="one">
-
-**1. Quadratsumme aufspalten:**
-Die Summe der quadrierten Abweichungen $M_{2,k} = \sum_{i=1}^k (x_i - \bar{x}_k)^2$ spaltet das neueste Sample $x_k$ ab:
-$M_{2,k} = (x_k - \bar{x}_k)^2 + \sum_{i=1}^{k-1} (x_i - \bar{x}_k)^2$
-
-**2. Verschiebung zum alten Mittelwert:**
-Substituiere $(x_i - \bar{x}_k) = (x_i - \bar{x}_{k-1}) - (\bar{x}_k - \bar{x}_{k-1})$:
-$\sum_{i=1}^{k-1} (x_i - \bar{x}_k)^2 = \sum_{i=1}^{k-1} (x_i - \bar{x}_{k-1})^2$
-$- 2(\bar{x}_k - \bar{x}_{k-1}) \sum_{i=1}^{k-1} (x_i - \bar{x}_{k-1}) + (k-1)(\bar{x}_k - \bar{x}_{k-1})^2$
-
-**3. Verschwindender Mischterm:**
-Da $\bar{x}_{k-1}$ das arithmetische Mittel ist, gilt:
-$\sum_{i=1}^{k-1} (x_i - \bar{x}_{k-1}) = 0 \implies \text{Mischterm entfällt!}$
-
-</div>
-<div class="one">
-
-**4. Terme zusammenführen:**
-Mit $M_{2,k-1} = \sum_{i=1}^{k-1} (x_i - \bar{x}_{k-1})^2$ folgt:
-$M_{2,k} = M_{2,k-1} + (k-1)(\bar{x}_k - \bar{x}_{k-1})^2 + (x_k - \bar{x}_k)^2$
-
-**5. Substitution mit $\delta_k$ und $\delta_k^*$:**
-Mit $\bar{x}_k - \bar{x}_{k-1} = \frac{\delta_k}{k}$, $\delta_k = x_k - \bar{x}_{k-1}$ und $\delta_k^* = x_k - \bar{x}_k$:
-$(k-1)\left(\frac{\delta_k}{k}\right)^2 + (\delta_k^*)^2 = \frac{k-1}{k^2}\delta_k^2 + \frac{(k-1)^2}{k^2}\delta_k^2$
-$= \frac{k-1}{k}\delta_k^2 = \delta_k \cdot \delta_k^*$ (wegen $\delta_k^* = \frac{k-1}{k}\delta_k$)
-
-**Endergebnis der Rekursion:**
-$M_{2,k} = M_{2,k-1} + \delta_k \cdot \delta_k^*$
-
-</div>
-</div>
-
----
-
 ### Welford-Algorithmus: Rekursive Varianzberechnung
 
 <div class="columns">
