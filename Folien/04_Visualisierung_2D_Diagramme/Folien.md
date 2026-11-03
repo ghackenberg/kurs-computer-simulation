@@ -496,14 +496,16 @@ Vom Reibwert zur realen Fahrzeugbewegung ($F = m \cdot a$):
 Seitenkraft entsteht analog zur Längsdynamik:
 
 - **Schräglaufwinkel $\alpha$ (Querschlupf):**
-  - Lenken dreht Rad $\to$ weicht von $v$ ab ($\tan \alpha = v_y / v_x$).
+  - Lenken dreht die Radebene $\to$ weicht vom Vektor $\vec{v}$ ab.
+  - Geschwindigkeitskomponenten: $\tan \alpha = v_y / v_x$.
 - **Reibwert $\mu_y(\alpha)$ (Pacejka-Querkurve):**
   - Querscherung folgt demselben Verlauf wie Längsschlupf:
   - Linear $\alpha < 4^\circ$ ($\mu_y \sim \alpha$) $\to$ Peak $\mu_{y,\max}$ bei $8^\circ \dots 10^\circ$.
-  - Bei $\alpha > 15^\circ$ reißt die Führung ab ($\mu_{\text{gleit}}$).
-- **Querkraft $F_y$ & Beschleunigung $a_y$ (Newton):**
+  - Bei $\alpha > 15^\circ$ reißt die Seitenführung ab ($\mu_{\text{gleit}}$).
+- **Querkraft $F_y$ & Querbeschleunigung $a_y$ (Newton):**
   - $F_y = \mu_y(\alpha) \cdot F_z = \mu_y(\alpha) \cdot m \cdot g$.
-  - $a_y = F_y / m = \mu_y(\alpha) \cdot g = v^2 / R$ (Masse $m$ kürzt sich heraus).
+  - Aus $m \cdot a_y = F_y$ folgt: $a_y = F_y / m = \mu_y(\alpha) \cdot g$.
+  - *Genau wie bei $a_x$ kürzt sich die Masse $m$ heraus!*
 
 </div>
 <div class="one">
