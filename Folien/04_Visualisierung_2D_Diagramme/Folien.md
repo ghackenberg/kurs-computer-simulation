@@ -395,9 +395,9 @@ Warum darf die Leistungsgrenze im Kennfeld kurzzeitig überschritten werden?
 
 Trajektorie $(n, M)$ in 3 farbkodierten Phasen:
 
-- **1. Hochlauf (Blau):** Maximalmoment ($9{,}2\,\text{Nm}$) beschleunigt die Trägheit; Peak ($1{,}4\,\text{kW}$) übersteigt $P_{\max} = 1{,}2\,\text{kW}$ kurzzeitig (zulässig).
-- **2. Solldrehzahl (Türkis):** Bei $2.450\,\text{U/min}$ fällt das Beschleunigungsmoment ab ($M \to 2{,}8\,\text{Nm}$).
-- **3. Lastaufschaltung (Orange):** Lastmoment ($4{,}0\,\text{Nm}$) greift an; Einlaufen in stationären S1-Arbeitspunkt ($2.350\,\text{U/min}$).
+- **1. Hochlauf (Blau):** Maximalmoment ($9{,}2\,\text{Nm}$) beschleunigt Trägheit; Peak ($1{,}4\,\text{kW}$) übersteigt $P_{\max} = 1{,}2\,\text{kW}$ kurzzeitig.
+- **2. Solldrehzahl (Türkis):** Bei $2.450\,\text{U/min}$ fällt Beschleunigungsmoment ab ($M \to 2{,}8\,\text{Nm}$).
+- **3. Lastaufschaltung (Orange):** Lastmoment ($4{,}0\,\text{Nm}$) greift an; stationärer S1-Punkt ($2.350\,\text{U/min}$).
 
 </div>
 <div class="three">
@@ -409,47 +409,21 @@ Trajektorie $(n, M)$ in 3 farbkodierten Phasen:
 
 ---
 
-### Phasenraum: Kamm'scher Kreis (Fahrphysik)
-
-<div class="columns">
-<div class="two">
-
-Reifen koppeln Längs- und Querdynamik (Übung 4, Track B):
-
-- **Beschleunigungsebene ($a_x, a_y$):**
-  - Längsachse $a_x$: Antreiben ($+a_x$) oder Bremsen ($-a_x$).
-  - Querachse $a_y$: Reifenseitenkräfte bei Kurvenfahrt.
-- **Haftungsgesetz (Kamm):** $a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu \cdot g$
-  - $\mu$: Reibwert (trocken $\approx 1{,}0 \dots 1{,}2$, nass $\approx 0{,}6$, Eis $\approx 0{,}1$).
-  - $g$: Erdbeschleunigung ($9{,}81\,\text{m/s}^2$).
-- **Zielkonflikt:** Vollbremsung ($a_x = \mu g$) erzwingt $a_y = 0$ (Lenkverlust).
-- **Offene Frage:** Woher stammt $\mu$? $\to$ Entsteht dynamisch erst durch **Schlupf**!
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Kammscher_Kreis.svg)
-
-</div>
-</div>
-
----
-
 ### Reifenphysik: Entstehung von Reifenschlupf
 
 <div class="columns">
 <div class="two">
 
-Gummireifen übertragen Kräfte nur durch elastische Verformung:
+Gummireifen übertragen Drehmoment $M$ nur durch elastische Verformung:
 
-- **Drehmoment $\to$ Radumfangsgeschwindigkeit:**
-  - Motor erzeugt Drehmoment $M$ an Achse mit Radius $r$.
-  - Rad rotiert mit Winkelgeschwindigkeit $\omega \to v_{\text{Rad}} = \omega \cdot r$.
-- **Geschwindigkeitsdifferenz (Vortrieb & Bremsen):**
-  - Für Vorwärtsbeschleunigung muss das Rad dem Fahrzeug voreilen ($v_{\text{Rad}} > v$).
-  - Beim Bremsen verzögert das Rad gegenüber dem Fahrzeug ($v_{\text{Rad}} < v$).
-- **Längsschlupf $s$:** Relative Geschwindigkeitsabweichung $s = (v_{\text{Rad}} - v) / v$.
-- **Reifenlatsch:** Die Differenz spannt das Gummiprofil in der Reifenaufstandsfläche elastisch vor.
+- **Drehmoment $\to$ Umfangsgeschwindigkeit:**
+  - Motor erzeugt Drehmoment $M$ an Rad mit Radius $r$.
+  - Rad dreht mit Winkelgeschwindigkeit $\omega \to v_{\text{Rad}} = \omega \cdot r$.
+- **Geschwindigkeitsdifferenz ($v_{\text{Rad}} \neq v$):**
+  - Vortrieb: Rad eilt dem Fahrzeug voraus ($v_{\text{Rad}} > v$).
+  - Bremsen: Rad verzögert gegenüber Fahrzeug ($v_{\text{Rad}} < v$).
+- **Längsschlupf $s$:** Relative Abweichung $s = (v_{\text{Rad}} - v) / v$.
+- **Reifenlatsch:** Verformt das Gummiprofil in der Aufstandsfläche.
 
 </div>
 <div class="one">
@@ -487,12 +461,37 @@ Wie aus Schlupf $s$ die Reibkraft $\mu(s) \cdot g$ entsteht (Pacejka):
 
 ---
 
+### Phasenraum: Kamm'scher Kreis (Fahrphysik)
+
+<div class="columns">
+<div class="two">
+
+Kopplung von Längs- und Querdynamik (Übung 4, Track B):
+
+- **2D-Beschleunigungsebene ($a_x, a_y$):**
+  - Längsachse $a_x$: Antreiben ($+a_x$) oder Bremsen ($-a_x$).
+  - Querachse $a_y$: Reifenseitenkräfte bei Kurvenfahrt.
+- **Haftungsgesetz (Kamm):** $a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu_{\max} \cdot g$
+  - Reibgrenze $\mu_{\max}$: Peak-Reibwert aus Pacejka-Kurve (trocken $\approx 1{,}0 \dots 1{,}2$, nass $\approx 0{,}6$, Eis $\approx 0{,}1$).
+  - $g$: Erdbeschleunigung ($9{,}81\,\text{m/s}^2$).
+- **Zielkonflikt:** Vollbremsung ($|a_x| = \mu_{\max} g$) erzwingt $a_y = 0$ (keine Lenkwirkung mehr möglich!).
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Kammscher_Kreis.svg)
+
+</div>
+</div>
+
+---
+
 ### Fahrdynamik: Untersteuern vs. Übersteuern
 
 <div class="columns">
 <div class="two">
 
-Zweikampf um die Haftgrenze zwischen Vorder- und Hinterachse:
+Zweikampf um das Haftungslimit $\mu_{\max} \cdot g$ zwischen Vorder- und Hinterachse:
 
 - **Untersteuern (Vorderachse überlastet):**
   - **Ursache:** Zu schnelles Einlenken oder zu starkes Hineinbremsen in die Kurve (Trail-Braking übertrieben).
