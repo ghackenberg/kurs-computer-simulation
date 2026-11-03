@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Querdynamik des Rades</text>
+  <text x="135" y="42" class="sub">Schraeglaufwinkel alpha &amp; Seitenkraft</text>
+
+  <!-- Canvas Graphic: Top View of Wheel Cornering -->
+  <g transform="translate(20, 56)">
+    <rect width="230" height="186" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Center Line / Vehicle Travel Direction v (upward angled) -->
+    <line x1="115" y1="170" x2="115" y2="25" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3" />
+
+    <!-- Travel Direction Vector v (tilted 14 deg to the left) -->
+    <line x1="115" y1="135" x2="82" y2="35" stroke="#004B96" stroke-width="2.5" />
+    <polygon points="79,28 80,38 88,34" fill="#004B96" />
+    <rect x="52" y="32" width="26" height="16" rx="2" fill="#ffffff" />
+    <text x="65" y="44" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#004B96" text-anchor="middle">v</text>
+
+    <!-- Wheel Body (Top View, vertical orientation in wheel plane) -->
+    <!-- Tread -->
+    <rect x="100" y="40" width="30" height="110" rx="6" fill="#334155" />
+    <!-- Rim in middle -->
+    <rect x="108" y="55" width="14" height="80" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="1.5" />
+
+    <!-- Slip Angle Arc alpha between wheel plane (vertical) and v -->
+    <path d="M 115 70 A 50 50 0 0 0 96 73" fill="none" stroke="#dc2626" stroke-width="2" />
+    <rect x="65" y="74" width="46" height="18" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8" />
+    <text x="88" y="87" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#dc2626" text-anchor="middle">alpha</text>
+
+    <!-- Lateral Force Arrow F_y (pointing perpendicular to wheel to the left) -->
+    <line x1="100" y1="95" x2="25" y2="95" stroke="#16a34a" stroke-width="3" />
+    <polygon points="18,95 28,90 28,100" fill="#16a34a" />
+    <rect x="14" y="104" width="86" height="18" rx="2" fill="#ffffff" />
+    <text x="57" y="117" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#16a34a" text-anchor="middle">F_y = mu_y*F_z</text>
+
+    <!-- Lateral Acceleration Arrow a_y (pointing left) -->
+    <line x1="130" y1="95" x2="195" y2="95" stroke="#ea580c" stroke-width="2.5" />
+    <polygon points="202,95 192,90 192,100" fill="#ea580c" />
+    <rect x="140" y="104" width="82" height="18" rx="2" fill="#ffffff" />
+    <text x="181" y="117" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#ea580c" text-anchor="middle">a_y = mu_y*g</text>
+
+    <!-- Wheel Heading Label -->
+    <rect x="135" y="44" width="85" height="16" rx="2" fill="#ffffff" />
+    <text x="177" y="56" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#334155" text-anchor="middle">Radebene</text>
+  </g>
+
+  <!-- Formula Card -->
+  <g transform="translate(15, 252)">
+    <rect width="240" height="76" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Querkraft &amp; Querbeschleunigung</text>
+    <text x="120" y="42" class="desc" style="font-weight: bold; fill: #9a3412;">tan(alpha) = v_y / v_x</text>
+    <text x="120" y="62" class="desc" style="fill: #ea580c;">a_y = F_y / m = mu_y(alpha) * g</text>
+  </g>
+
+  <!-- Circle Kinematics Card -->
+  <rect x="15" y="336" width="240" height="72" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="356" class="lbl" style="fill: #004B96;">Zentripetalbeschleunigung</text>
+  <text x="135" y="376" class="desc" style="font-weight: bold; fill: #15803d;">a_y = v^2 / R (Kurvenradius R)</text>
+  <text x="135" y="394" class="desc" style="fill: #475569;">Reifenquerscherung liefert Grip</text>
+</svg>

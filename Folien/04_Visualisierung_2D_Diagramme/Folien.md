@@ -461,27 +461,55 @@ Wie aus Schlupf $s$ der Reibwert $\mu(s)$ entsteht (Pacejka):
 
 ---
 
-### Reifenkräfte: Von $\mu(s)$ zur Beschleunigung
+### Reifenkräfte: Längsbeschleunigung $a_x$
 
 <div class="columns">
 <div class="two">
 
 Vom Reibwert zur realen Fahrzeugbewegung ($F = m \cdot a$):
 
-- **Längskraft $F_x$ & Beschleunigung $a_x$ (Newton):**
-  - Radlast durch Fahrzeugmasse $m$: $F_z = m \cdot g$.
+- **Radlast $F_z$ (Schwerkraft):**
+  - Fahrzeugmasse $m$ erzeugt Normalkraft: $F_z = m \cdot g$.
+- **Längskraft $F_x$ (Coulomb / Pacejka):**
   - Reibkraft in Fahrtrichtung: $F_x = \mu(s) \cdot F_z = \mu(s) \cdot m \cdot g$.
-  - Beschleunigung: $a_x = F_x / m = \mu(s) \cdot g$ (Masse $m$ kürzt sich!).
-- **Querbeschleunigung $a_y$ (Kurvenfahrt & Lenken):**
-  - Einlenken schert den Reifen seitlich $\to$ Querkraft $F_y$.
-  - Querbeschleunigung: $a_y = F_y / m$.
+- **Längsbeschleunigung $a_x$ (Newton):**
+  - Aus $m \cdot a_x = F_x$ folgt: $a_x = F_x / m = \mu(s) \cdot g$.
+  - *Masse $m$ kürzt sich vollständig heraus!*
 - **Telemetrie-Bedeutung:**
-  - Beschleunigung in $g$-Einheiten ($a_x / g$) entspricht direkt $\mu(s)$!
+  - Normiert auf $g$ entspricht die Beschleunigung direkt dem Reibwert: $a_x / g = \mu(s)$.
 
 </div>
 <div class="one">
 
 ![](./Diagramme/Mini_Reifen_Kraefte.svg)
+
+</div>
+</div>
+
+---
+
+### Querdynamik: Schräglaufwinkel & Querkraft $F_y$
+
+<div class="columns">
+<div class="two">
+
+Wie aus Lenkbewegung die Querbeschleunigung $a_y$ entsteht:
+
+- **Schräglaufwinkel $\alpha$ (Querschlupf):**
+  - Beim Lenken weicht die Radlaufebene vom Geschwindigkeitsvektor $v$ ab.
+  - Winkeldifferenz ist der **Schräglaufwinkel**: $\tan \alpha = v_y / v_x$.
+- **Seitenführungskraft $F_y$:**
+  - Der Reifenlatsch wird quer elastisch geschert.
+  - Querkraft: $F_y = \mu_y(\alpha) \cdot F_z = \mu_y(\alpha) \cdot m \cdot g$.
+- **Querbeschleunigung $a_y$ (Zentripetalkraft):**
+  - Aus $m \cdot a_y = F_y$ folgt: $a_y = F_y / m = \mu_y(\alpha) \cdot g = v^2 / R$.
+  - Auch hier kürzt sich die Masse $m$ heraus!
+  - $R$: Momentaner Kurvenradius der Trajektorie.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Querdynamik_Schraeglauf.svg)
 
 </div>
 </div>

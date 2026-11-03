@@ -58,7 +58,7 @@
 
   <!-- Lateral Extension Card -->
   <rect x="15" y="336" width="240" height="72" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="135" y="356" class="lbl" style="fill: #004B96;">Kurvenfahrt: Querbeschleunigung</text>
-  <text x="135" y="376" class="desc" style="font-weight: bold; fill: #15803d;">Lenken erzeugt Seitenkraft F_y</text>
-  <text x="135" y="394" class="desc" style="fill: #475569;">a_y = F_y / m (Kurvenbeschleunigung)</text>
+  <text x="135" y="356" class="lbl" style="fill: #004B96;">Telemetrie-Bedeutung</text>
+  <text x="135" y="376" class="desc" style="font-weight: bold; fill: #15803d;">a_x / g = mu(s)</text>
+  <text x="135" y="394" class="desc" style="fill: #475569;">G-Kraft entspricht Reibwert!</text>
 </svg>
