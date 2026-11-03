@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Herleitung der 80%-Grenze</text>
+  <text x="135" y="42" class="sub">Fiala-Modell &amp; Linearitaetstoleranz</text>
+
+  <!-- Canvas Graphic: F/F_max vs theta Curve -->
+  <g transform="translate(20, 56)">
+    <rect width="230" height="186" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Shaded Zones: Green LTI Zone (y=0..0.8) and Orange Saturation (y=0.8..1.0) -->
+    <!-- In SVG coordinates, origin is at (35, 150), y=0.8 is at 150 - 0.8*110 = 62, y=1.0 is at 150 - 1.0*110 = 40 -->
+    <rect x="35" y="62" width="165" height="88" fill="#dcfce7" opacity="0.45" />
+    <rect x="35" y="40" width="165" height="22" fill="#fef3c7" opacity="0.45" />
+
+    <!-- Axes -->
+    <line x1="35" y1="150" x2="205" y2="150" stroke="#475569" stroke-width="1.5" />
+    <polygon points="210,150 202,147 202,153" fill="#475569" />
+    <text x="195" y="166" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#334155" text-anchor="end">Schlupf theta</text>
+
+    <line x1="35" y1="150" x2="35" y2="25" stroke="#475569" stroke-width="1.5" />
+    <polygon points="35,20 32,28 38,28" fill="#475569" />
+    <text x="45" y="26" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#334155">F / F_max</text>
+
+    <!-- 100% and 80% Horizontal Gridlines -->
+    <line x1="35" y1="40" x2="195" y2="40" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,2" />
+    <text x="30" y="44" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#dc2626" text-anchor="end">1.0</text>
+
+    <line x1="35" y1="62" x2="195" y2="62" stroke="#ea580c" stroke-width="1.8" stroke-dasharray="4,2" />
+    <text x="30" y="66" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#ea580c" text-anchor="end">0.8</text>
+
+    <!-- Linear Tangent Line (3 * theta) in gray -->
+    <line x1="35" y1="150" x2="85" y2="40" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,2" />
+    <rect x="44" y="44" width="46" height="18" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8" />
+    <text x="67" y="57" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#64748b" text-anchor="middle">3*theta</text>
+
+    <!-- Fiala Curve: F/F_max = 3*theta - 3*theta^2 + theta^3 -->
+    <path d="M 35 150 Q 80 50 195 40" fill="none" stroke="#2563eb" stroke-width="2.8" />
+
+    <!-- 80% Point Marker -->
+    <circle cx="95" cy="62" r="5" fill="#ea580c" />
+    <rect x="105" y="68" width="88" height="20" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8" />
+    <text x="149" y="82" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#ea580c" text-anchor="middle">80% Grenze</text>
+
+    <!-- Zone Annotations (positioned safely below tangent line) -->
+    <rect x="40" y="125" width="94" height="18" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8" />
+    <text x="87" y="138" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#15803d" text-anchor="middle">LTI: Fehler &lt; 5%</text>
+
+    <rect x="135" y="18" width="65" height="18" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8" />
+    <text x="167" y="31" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b45309" text-anchor="middle">Saettigung</text>
+  </g>
+
+  <!-- Formula Card -->
+  <g transform="translate(15, 252)">
+    <rect width="240" height="76" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Fiala-Reifenformel</text>
+    <text x="120" y="42" class="desc" style="font-weight: bold; fill: #9a3412;">F/F_max = 3*theta - 3*theta^2 + theta^3</text>
+    <text x="120" y="62" class="desc" style="fill: #ea580c;">Bis 0.8: Abweichung &lt; 5% (Linear)</text>
+  </g>
+
+  <!-- Simulation Consequence Card -->
+  <rect x="15" y="336" width="240" height="72" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="356" class="lbl" style="fill: #004B96;">Simulations-Relevanz</text>
+  <text x="135" y="376" class="desc" style="font-weight: bold; fill: #15803d;">&lt; 0.8: Lineares Reifenmodell F = c*s</text>
+  <text x="135" y="394" class="desc" style="font-weight: bold; fill: #ea580c;">&gt;= 0.8: Nichtlineare Pacejka-Gleichung</text>
+</svg>

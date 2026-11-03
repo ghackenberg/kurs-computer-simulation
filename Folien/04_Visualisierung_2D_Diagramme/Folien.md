@@ -461,6 +461,60 @@ Wie aus Schlupf $s$ der Reibwert $\mu(s)$ entsteht (Pacejka):
 
 ---
 
+### Reifenphysik: Das Bürstenmodell (Reifenlatsch)
+
+<div class="columns">
+<div class="two">
+
+Mechanischer Ursprung der Haft- und Gleitzone im Reifenlatsch:
+
+- **Reifenlatsch (Aufstandsfläche der Länge $L$):**
+  - Gummiborsten treten bei $x = 0$ unbelastet in den Latsch ein.
+  - Nach hinten ($x \to L$) dehnt der Schlupf $s$ das Profil elastisch.
+- **Spannungsverläufe:**
+  - Scherspannung: $\tau(x) = c_p \cdot s \cdot x$ wächst linear nach hinten.
+  - Normaldruck $p(x)$ ist parabelförmig (am Rand gering).
+- **Zweiteilung des Latsches (Coulomb: $\tau \le \mu_0 \cdot p$):**
+  - **Haftzone (vorne):** $\tau(x) \le \mu_0 p(x) \implies$ Profil haftet fest.
+  - **Gleitzone (hinten):** Scherspannung übersteigt Druck $\implies$ Profil beginnt am Auslauf mikroskopisch zu rutschen.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Buerstenmodell_Latsch.svg)
+
+</div>
+</div>
+
+---
+
+### Reifenphysik: Herleitung der 80 %-Grenze
+
+<div class="columns">
+<div class="two">
+
+Mathematische Integration der Scherkräfte nach Fiala:
+
+- **Fiala-Gleichung (Latschintegration):**
+  - Durch Integration von $\tau(x)$ über den Latsch $L$ folgt:
+    $$F / F_{\max} = 3\theta - 3\theta^2 + \theta^3 \quad (\text{mit Schlupf } \theta \sim s)$$
+- **Warum genau 80 %? (Linearitätsgrenze):**
+  - Für $\theta \to 0$ verhält sich der Reifen rein linear ($3\theta$).
+  - Bei $F = 0{,}8 \cdot F_{\max}$ erreicht die Gleitzone rund $10\,\%$ des Latsches $\to$ Abweichung von der linearen Tangente übersteigt $5\,\%$.
+- **Konsequenz für die Systemsimulation:**
+  - **Bis 80 % ($a_{\text{res}} \le 0{,}8\,\mu_{\max} g$):** Lineares LTI-Modell ($F = c_s \cdot s$) ist exakt genug ($\le 5\,\%$ Fehler).
+  - **Über 80 %:** Nichtlineare Sättigung $\to$ Pacejka zwingend!
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Fiala_Linearitaet.svg)
+
+</div>
+</div>
+
+---
+
 ### Reifenkräfte: Längsbeschleunigung $a_x$
 
 <div class="columns">

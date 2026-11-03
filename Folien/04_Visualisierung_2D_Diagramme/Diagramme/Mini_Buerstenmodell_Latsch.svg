@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Bürstenmodell des Reifens</text>
+  <text x="135" y="42" class="sub">Mechanik im Reifenlatsch (Laenge L)</text>
+
+  <!-- Canvas Graphic: Contact Patch & Bristles -->
+  <g transform="translate(20, 56)">
+    <rect width="230" height="186" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Zones Shading: Haftzone (green) & Gleitzone (orange) -->
+    <rect x="35" y="65" width="105" height="85" fill="#dcfce7" opacity="0.5" />
+    <rect x="140" y="65" width="55" height="85" fill="#fee2e2" opacity="0.5" />
+
+    <!-- Road Surface -->
+    <line x1="15" y1="150" x2="215" y2="150" stroke="#334155" stroke-width="3" />
+    <line x1="25" y1="156" x2="35" y2="164" stroke="#94a3b8" stroke-width="1.5" />
+    <line x1="75" y1="156" x2="85" y2="164" stroke="#94a3b8" stroke-width="1.5" />
+    <line x1="125" y1="156" x2="135" y2="164" stroke="#94a3b8" stroke-width="1.5" />
+    <line x1="175" y1="156" x2="185" y2="164" stroke="#94a3b8" stroke-width="1.5" />
+
+    <!-- Pressure Parabola p(x) in blue -->
+    <path d="M 35 150 Q 115 50 195 150" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-dasharray="4,2" />
+    <rect x="80" y="52" width="70" height="16" rx="2" fill="#ffffff" />
+    <text x="115" y="64" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#0284c7" text-anchor="middle">Druck p(x)</text>
+
+    <!-- Shear Stress Wedge tau(x) in red -->
+    <line x1="35" y1="150" x2="140" y2="92" stroke="#dc2626" stroke-width="2.5" />
+    <line x1="140" y1="92" x2="195" y2="150" stroke="#dc2626" stroke-width="2" stroke-dasharray="3,2" />
+    <rect x="62" y="104" width="60" height="16" rx="2" fill="#ffffff" />
+    <text x="92" y="116" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#dc2626" text-anchor="middle">tau(x)</text>
+
+    <!-- Contact Patch Border Markers x=0 and x=L -->
+    <line x1="35" y1="146" x2="35" y2="170" stroke="#64748b" stroke-width="1.5" />
+    <text x="35" y="182" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#64748b" text-anchor="middle">x=0</text>
+
+    <line x1="195" y1="146" x2="195" y2="170" stroke="#64748b" stroke-width="1.5" />
+    <text x="195" y="182" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#64748b" text-anchor="middle">x=L</text>
+
+    <!-- Separation Line between Haft- and Gleitzone -->
+    <line x1="140" y1="65" x2="140" y2="150" stroke="#ea580c" stroke-width="1.8" stroke-dasharray="3,2" />
+
+    <!-- Zone Labels -->
+    <rect x="52" y="74" width="70" height="16" rx="2" fill="#ffffff" />
+    <text x="87" y="86" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#15803d" text-anchor="middle">Haftzone</text>
+
+    <rect x="144" y="74" width="50" height="16" rx="2" fill="#ffffff" />
+    <text x="169" y="86" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b91c1c" text-anchor="middle">Gleiten</text>
+
+    <!-- Rolling Direction Arrow at top -->
+    <line x1="50" y1="24" x2="175" y2="24" stroke="#004B96" stroke-width="2" />
+    <polygon points="182,24 172,20 172,28" fill="#004B96" />
+    <rect x="75" y="14" width="82" height="16" rx="2" fill="#ffffff" />
+    <text x="116" y="26" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#004B96" text-anchor="middle">Rollrichtung</text>
+  </g>
+
+  <!-- Formula Card -->
+  <g transform="translate(15, 252)">
+    <rect width="240" height="76" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Spannungen im Latsch L</text>
+    <text x="120" y="42" class="desc" style="font-weight: bold; fill: #9a3412;">tau(x) = c_p * s * x  (Scherspannung)</text>
+    <text x="120" y="62" class="desc" style="fill: #ea580c;">Haftkriterium: tau(x) &lt;= mu_0 * p(x)</text>
+  </g>
+
+  <!-- Zone Transition Card -->
+  <rect x="15" y="336" width="240" height="72" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="356" class="lbl" style="fill: #004B96;">Zweizone-Effekt</text>
+  <text x="135" y="376" class="desc" style="font-weight: bold; fill: #15803d;">Vorne (Haftung): Lineare Dehnung</text>
+  <text x="135" y="394" class="desc" style="font-weight: bold; fill: #b91c1c;">Hinten (Gleiten): Reibung saettigt ab</text>
+</svg>
