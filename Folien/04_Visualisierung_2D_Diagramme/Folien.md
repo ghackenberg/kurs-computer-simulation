@@ -373,11 +373,11 @@ In der Mechatronik (Übung 4, Track A) interessiert der Zusammenhang zweier Zust
 <div class="columns">
 <div class="two">
 
-Konkrete Ausgabe der Phasenraum-Trajektorie $(n, M)$ eines DC-Servomotors mit ScottPlot 5:
+Konkrete Phasenraum-Trajektorie $(n, M)$ eines DC-Servomotors mit ScottPlot 5:
 
-- **Zustandskurve:** Trajektorie des Betriebspunkts von $(0, 0)$ beim Hochlaufen bis zum stationären Arbeitspunkt bei $2.350\,\text{U/min}$ und $6{,}0\,\text{Nm}$.
-- **Thermische Grenze:** Gestrichelte Hyperbel markiert die Leistungsgrenze $P_{\max} = 1{,}2\,\text{kW}$.
-- Überlastbereich beim Anfahren wird unmittelbar optisch transparent.
+- **Zustandskurve:** Trajektorie von $(0, 0)$ bis zum stationären Arbeitspunkt bei $2.350\,\text{U/min}$ und $4{,}0\,\text{Nm}$.
+- **Thermische Grenze:** Gestrichelte Hyperbel für $P_{\max} = 1{,}2\,\text{kW}$.
+- **Sicherer Betrieb:** Gesamter Verlauf liegt unterhalb der Leistungsgrenze.
 
 </div>
 <div class="three">

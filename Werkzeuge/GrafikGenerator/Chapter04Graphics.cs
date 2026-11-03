@@ -55,12 +55,13 @@ namespace GrafikGenerator
             var plot = new Plot();
             
             // Hyperbel thermische Leistungsgrenze Pmax = 1200 W -> M = Pmax / (2*pi*n/60)
-            int nPoints = 100;
+            // Ab n = 955 U/min liegt die Hyperbel im darstellbaren Bereich M <= 12 Nm
+            int nPoints = 80;
             double[] nHyp = new double[nPoints];
             double[] mHyp = new double[nPoints];
             for (int i = 0; i < nPoints; i++)
             {
-                nHyp[i] = 400 + i * 26.0; // 400 bis 3000 U/min
+                nHyp[i] = 955.0 + i * (2045.0 / (nPoints - 1)); // 955 bis 3000 U/min
                 mHyp[i] = 1200.0 / (2.0 * Math.PI * (nHyp[i] / 60.0));
             }
             var hyp = plot.Add.ScatterLine(nHyp, mHyp);
@@ -69,9 +70,9 @@ namespace GrafikGenerator
             hyp.LinePattern = LinePattern.Dashed;
             hyp.LegendText = "Leistungsgrenze P_max = 1.2 kW";
 
-            // Trajektorie Betriebspunkt: Hochlauf und Lastsprung
-            double[] nTraj = { 0, 200, 600, 1200, 1800, 2200, 2400, 2500, 2450, 2400, 2350 };
-            double[] mTraj = { 0, 9.5, 9.2, 8.8,  7.5,  5.8,  4.2,  3.0,  5.2,  6.8,  6.0 };
+            // Trajektorie Betriebspunkt: Hochlauf und Lastsprung (bleibt unterhalb der Leistungsgrenze)
+            double[] nTraj = { 0, 200, 600, 1200, 1700, 2100, 2400, 2500, 2450, 2400, 2350 };
+            double[] mTraj = { 0, 8.8, 8.5,  7.2,  5.8,  4.6,  3.2,  2.2,  3.0,  4.2,  4.0 };
             var traj = plot.Add.ScatterLine(nTraj, mTraj);
             traj.Color = ScottPlot.Colors.SteelBlue;
             traj.LineWidth = 4.0f;
@@ -79,12 +80,12 @@ namespace GrafikGenerator
 
             var startMarker = plot.Add.Marker(0, 0, MarkerShape.FilledCircle, 12, ScottPlot.Colors.ForestGreen);
             startMarker.LegendText = "Startpunkt (0, 0)";
-            var endMarker = plot.Add.Marker(2350, 6.0, MarkerShape.FilledSquare, 12, ScottPlot.Colors.DarkOrange);
+            var endMarker = plot.Add.Marker(2350, 4.0, MarkerShape.FilledSquare, 12, ScottPlot.Colors.DarkOrange);
             endMarker.LegendText = "Arbeitspunkt";
 
-            plot.ShowLegend();
-            plot.Axes.SetLimits(0, 3200, 0, 12);
+            plot.ShowLegend(Alignment.UpperRight);
             ApplyChapter04Typography(plot, "Scatter: DC-Motor Phasenraum-Kennfeld", "Drehzahl n [U/min]", "Drehmoment M [Nm]");
+            plot.Axes.SetLimits(0, 3200, 0, 12);
 
             var outFile = Path.Combine(targetDir, "ScottPlot_Scatter_Example.png");
             plot.SavePng(outFile, 900, 675);
