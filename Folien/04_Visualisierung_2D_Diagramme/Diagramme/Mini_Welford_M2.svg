@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #475569; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr">Welford: Varianz &amp; M2</text>
+  <text x="135" y="42" class="sub">Quadratsummen-Rekursion</text>
+
+  <!-- Diagram Canvas -->
+  <g transform="translate(20, 56)">
+    <rect width="230" height="190" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Number Line -->
+    <line x1="15" y1="95" x2="215" y2="95" stroke="#94a3b8" stroke-width="1.5" />
+
+    <!-- Old Mean x_bar_{k-1} -->
+    <circle cx="50" cy="95" r="5" fill="#3b82f6" />
+    <rect x="15" y="105" width="70" height="16" rx="2" fill="#ffffff" />
+    <text x="50" y="117" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#1d4ed8" text-anchor="middle">Mean_{k-1}</text>
+
+    <!-- New Mean x_bar_k -->
+    <circle cx="88" cy="95" r="5" fill="#16a34a" />
+    <rect x="62" y="70" width="52" height="16" rx="2" fill="#ffffff" />
+    <text x="88" y="82" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#15803d" text-anchor="middle">Mean_k</text>
+
+    <!-- Sample x_k -->
+    <circle cx="185" cy="95" r="5.5" fill="#dc2626" />
+    <rect x="170" y="105" width="30" height="16" rx="2" fill="#ffffff" />
+    <text x="185" y="117" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#b91c1c" text-anchor="middle">x_k</text>
+
+    <!-- delta bracket (from 50 to 185, top arc) -->
+    <path d="M 50 62 L 50 48 L 185 48 L 185 62" fill="none" stroke="#2563eb" stroke-width="1.5" />
+    <rect x="85" y="38" width="65" height="18" rx="2" fill="#ffffff" />
+    <text x="117" y="51" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#1d4ed8" text-anchor="middle">delta</text>
+
+    <!-- delta2 bracket (from 88 to 185, bottom arc) -->
+    <path d="M 88 130 L 88 144 L 185 144 L 185 130" fill="none" stroke="#16a34a" stroke-width="1.5" />
+    <rect x="106" y="136" width="60" height="18" rx="2" fill="#ffffff" />
+    <text x="136" y="149" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#15803d" text-anchor="middle">delta2</text>
+
+    <!-- Inset Formula -->
+    <rect x="25" y="162" width="180" height="22" rx="4" fill="#f0fdf4" stroke="#86efac" stroke-width="1" />
+    <text x="115" y="177" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5px" font-weight="bold" fill="#166534" text-anchor="middle">M2 += delta * delta2</text>
+  </g>
+
+  <!-- Formula Details Box -->
+  <g transform="translate(15, 258)">
+    <rect width="240" height="74" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="120" y="20" class="lbl" style="fill: #1d4ed8;">Varianz &amp; Standardabweichung</text>
+    <text x="120" y="40" class="desc" style="font-weight: bold; fill: #1e40af;">s_k^2 = M_{2,k} / (k - 1)</text>
+    <text x="120" y="58" class="desc" style="fill: #1e3a8a;">sigma_k = sqrt(s_k^2)</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="15" y="342" width="240" height="64" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="135" y="364" class="lbl" style="fill: #004B96;">Numerische Stabilität</text>
+  <text x="135" y="388" class="desc" style="font-weight: bold; fill: #334155;">delta * delta2 &gt;= 0: Kein NaN!</text>
+</svg>

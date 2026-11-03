@@ -1193,25 +1193,53 @@ $$s^2 = \frac{1}{k-1} \left( \sum_{i=1}^k x_i^2 - \frac{1}{k} \left(\sum_{i=1}^k
 
 ---
 
-### Der Welford-Algorithmus (1962)
+### Welford-Algorithmus: Rekursiver Mittelwert
 
 <div class="columns">
 <div class="two">
 
-B. P. Welford formulierte eine numerisch exzellent konditionierte Rekursionsformel in $O(1)$:
+Numerisch stabile Online-Mittelwertbildung nach B. P. Welford (1962):
 
-1. **Mittelwert `Mean_k` ($\bar{x}_k$) und `delta`:**
-   $$\text{delta} = x_k - \bar{x}_{k-1}, \quad \bar{x}_k = \bar{x}_{k-1} + \frac{\text{delta}}{k}$$
-2. **Quadratsumme ($M_{2,k}$) und `delta2`:**
-   $$\text{delta2} = x_k - \bar{x}_k, \quad M_{2,k} = M_{2,k-1} + \text{delta} \cdot \text{delta2}$$
-3. **Varianz (`Variance` $s_k^2$) & Streuung (`StdDev` $\sigma_k$):**
-   $$s_k^2 = \frac{M_{2,k}}{k-1}, \quad \sigma_k = \sqrt{s_k^2}$$
-- **Vorteil:** Absolut stabil, 0 Pufferhistorie erforderlich!
+- **Problem klassischer Summation:**
+  - Erfordert Speicherung aller Daten oder birgt Überlauf bei $k \to \infty$.
+- **Welford-Rekursion für den Mittelwert:**
+  - $\text{delta} = x_k - \bar{x}_{k-1}$ mit $\bar{x}_k = \bar{x}_{k-1} + \frac{\text{delta}}{k}$.
+- **Intuition des Mittelwert-Updates:**
+  - `delta`: Abweichung des neuen Messwerts $x_k$ vom alten Mittelwert $\text{Mean}_{k-1}$.
+  - Neuer Mittelwert $\text{Mean}_k$ korrigiert den alten Wert um $1/k$ dieser Abweichung.
+- **Effizienz:** Exakt eine Division pro Zeitschritt ($O(1)$ Zeit und Speicher).
 
 </div>
 <div class="one">
 
 ![](./Diagramme/Mini_Welford_Schritt.svg)
+
+</div>
+</div>
+
+---
+
+### Welford-Algorithmus: Rekursive Varianzberechnung
+
+<div class="columns">
+<div class="two">
+
+Numerisch auslöschungsfreie Berechnung der Streuung im Datenstrom:
+
+- **Quadratsumme $M_{2,k}$:**
+  - Akkumuliert die quadrierten Abweichungen vom Mittelwert.
+- **Welfords Rekursionsschritt:**
+  - Differenz zum neuen Mittelwert $\text{Mean}_k$: $\text{delta2} = x_k - \bar{x}_k$.
+  - Update: $M_{2,k} = M_{2,k-1} + \text{delta} \cdot \text{delta2}$.
+- **Stichprobenvarianz $s_k^2$ & Standardabweichung $\sigma_k$:**
+  - $s_k^2 = M_{2,k} / (k - 1)$ mit $\sigma_k = \sqrt{s_k^2}$.
+- **Numerische Immunität:**
+  - $\text{delta} \cdot \text{delta2} \ge 0 \implies s_k^2 \ge 0$, absolut kein $\text{NaN}$!
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Welford_M2.svg)
 
 </div>
 </div>
