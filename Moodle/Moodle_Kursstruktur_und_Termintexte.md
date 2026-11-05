@@ -43,9 +43,9 @@ Pro Termin wählt Ihr 2er-Team verbindlich **GENAU EINEN** Track – keine Doppe
 Zum Auftakt klären wir die Taxonomie technischer Modelle, das Konzept des Digitalen Zwillings nach Michael Grieves sowie die Grundlagen der numerischen Zeitdiskretisierung. Wir überführen kontinuierliche Bewegungsgleichungen zweiter Ordnung unter Erdbeschleunigung in Zustandsraumdarstellungen erster Ordnung und implementieren den expliziten Euler-Integrator in C#.
 
 **Übungsaufgaben für diesen Termin:**
-* **Stufe A (In-Class Sprint):** Reversible Koordinatentransformation `Transform2D`, Live-Stablängen, vertikale DIN-406-Bemaßung und Behebung des Bounding-Box-Jitterings beim Ziehen.
-* 🏭 **Stufe B – Track A (Industrie):** *2D-CAD Tragwerks-Inspektor & Last-Editor* – Zweistufige DIN-406-Bemaßungsketten, interaktives Ziehen/Drehen der Kraftpfeilspitzen $(F_x, F_y)$, Mausrad-Zoom/Pan und JSON-Export.
-* 🎮 **Stufe B – Track B (Game):** *„Poly Bridge“ Blueprint-Baumeister* – Interaktives Brückenbau-Zeichenbrett über einer Schlucht mit $0{,}5\,\text{m}$-Grid-Snapping, Maximallängen-Vorschau ($L_{\max} = 4{,}0\,\text{m}$), Live-Baubudget und JSON-Level-Export.
+* **Stufe A (In-Class Sprint):** C#-Konsolenmodell für den freien Fall und schiefen Wurf im Vakuum sowie analytischer Abgleich mit der geschlossenen Freifall-Lösung.
+* 🏭 **Stufe B – Track A (Industrie):** *Hydraulikzylinder-Dämpfung* – Modellierung nichtlinearer Blendenreibung, Parameterstudie und Vergleich mit dem Heun-Verfahren (Runge-Kutta 2. Ordnung).
+* 🎮 **Stufe B – Track B (Game):** *„Artillery Strike / Retro Tanks“* – 2D-Ballistik mit quadratischem Luftwiderstand, dynamischen Windböen und exakter Bodenkollisions-Interpolation.
 * *(Hinweis: Wählen Sie für Stufe B genau einen Track – Track A ODER Track B!)*
 
 ---
@@ -75,9 +75,9 @@ In dieser Einheit widmen wir uns der mechatronischen 2D-Vektorgrafik auf dem WPF
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T02:** Zwei ausgewählte Teams präsentieren ihre FDM-Wärmeleitungs- und Pixelsimulationen am Beamer.
 * 📝 **Moodle-Quiz 1 (15 min):** Erstes summatives Quiz zu den Grundlagen, Pixelgrafik und der CFL-Stabilitätsgrenze (Kapitel 00 bis 02).
-* **Stufe A (In-Class Sprint):** Reversible Koordinatentransformation Transform2D und Zeichnen eines Fachwerkträgers mit skalierten Kraftpfeilen.
-* 🏭 **Stufe B – Track A (Industrie):** *2D-CAD-Fachwerkträger-Viewer* – Bemaßungsketten nach DIN 406, Knotenverschiebung per Drag-and-Drop und automatische Zentrierung.
-* 🎮 **Stufe B – Track B (Game):** *„2D Space Radar & Vector Navigation“* – Vektor-Radar mit Geschwindigkeits- und Schubpfeilen, Polygon-Hindernissen und stufenlosem Zoom.
+* **Stufe A (In-Class Sprint):** Reversible Koordinatentransformation `Transform2D`, Live-Stablängen, vertikale DIN-406-Bemaßung und Behebung des Bounding-Box-Jitterings beim Ziehen.
+* 🏭 **Stufe B – Track A (Industrie):** *2D-CAD Tragwerks-Inspektor & Last-Editor* – Zweistufige DIN-406-Bemaßungsketten, interaktives Ziehen/Drehen der Kraftpfeilspitzen $(F_x, F_y)$, Mausrad-Zoom/Pan und JSON-Export.
+* 🎮 **Stufe B – Track B (Game):** *„Poly Bridge“ Blueprint-Baumeister* – Interaktives Brückenbau-Zeichenbrett über einer Schlucht mit $0{,}5\,\text{m}$-Grid-Snapping, Maximallängen-Vorschau ($L_{\max} = 4{,}0\,\text{m}$), Live-Baubudget und JSON-Level-Export.
 
 ---
 
