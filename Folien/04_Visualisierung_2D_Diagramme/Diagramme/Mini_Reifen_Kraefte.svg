@@ -51,7 +51,7 @@
   <!-- Calculation Card -->
   <g transform="translate(15, 252)">
     <rect width="240" height="76" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" />
-    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Newton: Masse m kuerzt sich!</text>
+    <text x="120" y="20" class="lbl" style="fill: #c2410c;">Newton: Masse m kürzt sich!</text>
     <text x="120" y="42" class="desc" style="font-weight: bold; fill: #9a3412;">m * a_x = F_x = mu(s) * m * g</text>
     <text x="120" y="62" class="desc" style="fill: #ea580c;">a_x = mu(s) * g  [m/s^2]</text>
   </g>

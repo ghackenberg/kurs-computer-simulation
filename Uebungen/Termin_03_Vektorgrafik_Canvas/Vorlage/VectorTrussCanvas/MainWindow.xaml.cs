@@ -136,13 +136,23 @@ public partial class MainWindow : Window
         // =====================================================================
 
         // =====================================================================
-        // TODO: [Stufe B Track A: 2D-CAD Fachwerkträger-Editor]
+        // TODO: [Stufe B Track A: 2D-CAD Tragwerks-Inspektor & Last-Editor]
         // 1. Drittes Industriemodell CreateCantileverCraneTruss() (>= 10 Knoten)
-        //    in TrussGeometry.cs ergänzen und in CmbModelSelection einbinden.
+        //    in TrussGeometry.cs ergänzen + 1.0m-Hintergrundgitter zeichnen.
         // 2. Zweistufige horizontale DIN-406-Bemaßung: Innere Maßkette für alle
         //    Einzel-Feldweiten am Untergurt (+30 px) + äußere Gesamtmaßkette (+60 px).
-        // 3. Interaktives Ändern von Knotenlasten (Fx, Fy) + Mausrad-Zoom & Pan.
-        // 4. JSON-Export und JSON-Import (System.Text.Json) für das Tragwerk.
+        // 3. Interaktives Ziehen der Kraftpfeilspitzen (Fx, Fy) + Mausrad-Zoom & Pan.
+        // 4. JSON-Export und JSON-Import (System.Text.Json) + Brushes Freeze().
+        // =====================================================================
+
+        // =====================================================================
+        // TODO: [Stufe B Track B: Poly Bridge Blueprint-Baumeister]
+        // 1. Start-Szene CreateCanyonBlueprintLevel() mit Felswand-Polygonen +
+        //    0.5m-Konstruktionsraster mit Grid-Snapping (Math.Round(val * 2.0) / 2.0).
+        // 2. Gestrichelte Stab-Vorschau mit Maximallänge L_max = 4.0m (grün/rot) +
+        //    Live-Baubudget-Anzeige (Summe L_i * 1000 EUR/m vs. Maximalbudget).
+        // 3. Interaktives Knoten-Setzen, Stäbe-Spannen und Löschen (Entf/Rechtsklick).
+        // 4. JSON-Export und JSON-Import (System.Text.Json) + Brushes Freeze().
         // =====================================================================
     }
 

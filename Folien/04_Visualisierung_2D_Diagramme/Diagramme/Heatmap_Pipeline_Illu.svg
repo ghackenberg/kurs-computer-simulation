@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <linearGradient id="turbo-grad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="35%" stop-color="#06b6d4" />
+      <stop offset="65%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#dc2626" />
+    </linearGradient>
+    <marker id="arr-hm" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+  </defs>
+
+  <rect x="15" y="15" width="450" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="42" class="hdr" fill="#004B96">Heatmap: 2D-Array &#8594; Raw-Pixel-Bitmap (Termin 02)</text>
+
+  <!-- Schritt 1: double[,] Array -->
+  <rect x="30" y="70" width="135" height="195" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
+  <text x="97" y="95" class="code" fill="#334155">double[,]</text>
+  <g transform="translate(45, 110)" font-family="Consolas, monospace" font-size="13" font-weight="bold" text-anchor="middle">
+    <rect x="0" y="0" width="50" height="36" fill="#eff6ff" stroke="#cbd5e1" />
+    <text x="25" y="23" fill="#1e40af">22.4</text>
+    <rect x="52" y="0" width="50" height="36" fill="#fef3c7" stroke="#cbd5e1" />
+    <text x="77" y="23" fill="#b45309">64.1</text>
+    <rect x="0" y="38" width="50" height="36" fill="#fef3c7" stroke="#cbd5e1" />
+    <text x="25" y="61" fill="#b45309">58.9</text>
+    <rect x="52" y="38" width="50" height="36" fill="#fee2e2" stroke="#cbd5e1" />
+    <text x="77" y="61" fill="#dc2626">98.5</text>
+    <rect x="0" y="76" width="50" height="36" fill="#eff6ff" stroke="#cbd5e1" />
+    <text x="25" y="99" fill="#1e40af">25.0</text>
+    <rect x="52" y="76" width="50" height="36" fill="#fef3c7" stroke="#cbd5e1" />
+    <text x="77" y="99" fill="#b45309">61.2</text>
+  </g>
+  <text x="97" y="248" class="code" fill="#64748b">intensities</text>
+
+  <line x1="168" y1="168" x2="198" y2="168" stroke="#2563eb" stroke-width="3" marker-end="url(#arr-hm)" />
+
+  <!-- Schritt 2: Colormap Lookup -->
+  <rect x="204" y="70" width="76" height="195" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
+  <text x="242" y="95" class="code" fill="#334155">LUT</text>
+  <rect x="228" y="110" width="28" height="115" rx="4" fill="url(#turbo-grad)" stroke="#475569" stroke-width="1.5" />
+  <text x="242" y="248" class="code" fill="#64748b">Turbo</text>
+
+  <line x1="283" y1="168" x2="313" y2="168" stroke="#2563eb" stroke-width="3" marker-end="url(#arr-hm)" />
+
+  <!-- Schritt 3: 1 SKBitmap Textur -->
+  <rect x="318" y="70" width="132" height="195" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
+  <text x="384" y="95" class="code" fill="#15803d">1 Bitmap</text>
+  <g transform="translate(333, 110)">
+    <rect x="0" y="0" width="50" height="36" fill="#2563eb" />
+    <rect x="50" y="0" width="50" height="36" fill="#eab308" />
+    <rect x="0" y="36" width="50" height="36" fill="#f59e0b" />
+    <rect x="50" y="36" width="50" height="36" fill="#dc2626" />
+    <rect x="0" y="72" width="50" height="36" fill="#3b82f6" />
+    <rect x="50" y="72" width="50" height="36" fill="#eab308" />
+  </g>
+  <text x="384" y="248" class="code" fill="#15803d">SKBitmap</text>
+
+  <!-- Komplexitäts-Badge unten (mit N_x und N_y) -->
+  <rect x="30" y="285" width="420" height="60" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.8" />
+  <text x="240" y="310" class="code" fill="#1e40af">Pixel-Update: O(N_x·N_y) im Array (0 UI-Shapes!)</text>
+  <text x="240" y="333" class="code" fill="#15803d">GPU zeichnet 1 Textur + ColorBar in O(1)</text>
+</svg>

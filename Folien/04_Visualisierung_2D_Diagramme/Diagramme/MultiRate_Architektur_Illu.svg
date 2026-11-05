@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="arr-mr1" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+    <marker id="arr-mr2" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+  </defs>
+
+  <!-- Links/Oben: Schneller Simulations-Thread (1000 Hz) -->
+  <rect x="20" y="18" width="440" height="95" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
+  <text x="240" y="46" class="hdr" fill="#1d4ed8">1. Simulations-Task (1.000 Hz · 1 ms)</text>
+  <text x="240" y="74" class="code" fill="#1e40af">Berechnet y &#8594; _streamer.Add(y)</text>
+  <text x="240" y="98" class="code" fill="#dc2626">Kein WpfPlot1.Refresh() hier!</text>
+
+  <!-- Pfeil in den Puffer -->
+  <line x1="240" y1="113" x2="240" y2="148" stroke="#2563eb" stroke-width="3.5" marker-end="url(#arr-mr1)" />
+
+  <!-- Mitte: Ringpuffer / DataStreamer -->
+  <rect x="75" y="152" width="330" height="72" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
+  <text x="240" y="182" class="hdr" fill="#b45309">Puffer im RAM (DataStreamer)</text>
+  <text x="240" y="208" class="code" fill="#92400e">20 neue Punkte pro UI-Frame</text>
+
+  <!-- Pfeil zum UI-Timer -->
+  <line x1="240" y1="224" x2="240" y2="259" stroke="#16a34a" stroke-width="3.5" marker-end="url(#arr-mr2)" />
+
+  <!-- Unten: Langsamer UI-Timer (50 Hz) -->
+  <rect x="20" y="264" width="440" height="98" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
+  <text x="240" y="292" class="hdr" fill="#15803d">2. WPF DispatcherTimer (50 Hz · 20 ms)</text>
+  <text x="240" y="320" class="code" fill="#166534">OnUiTimerTick &#8594; WpfPlot1.Refresh()</text>
+  <text x="240" y="344" class="code" fill="#15803d">Zeichnet nur 50-mal pro Sekunde neu</text>
+</svg>

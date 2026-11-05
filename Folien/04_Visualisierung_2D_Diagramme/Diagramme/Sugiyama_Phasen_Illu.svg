@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; text-anchor: middle; }
+      .node { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="sg-arr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#475569" />
+    </marker>
+    <marker id="sg-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+  </defs>
+
+  <!-- 1. Cycle Removal -->
+  <rect x="15" y="15" width="215" height="165" rx="10" fill="#f8fafc" stroke="#93c5fd" stroke-width="2" />
+  <text x="122" y="38" class="hdr" fill="#1d4ed8">1. Cycle Removal</text>
+  <line x1="78" y1="95" x2="152" y2="95" stroke="#475569" stroke-width="2.5" marker-end="url(#sg-arr)" />
+  <path d="M 65 112 Q 122 155 168 112" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="4,3" marker-end="url(#sg-red)" />
+  <circle cx="62" cy="95" r="16" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
+  <text x="62" y="100" class="node" fill="#1e3a8a">A</text>
+  <circle cx="175" cy="95" r="16" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
+  <text x="175" y="100" class="node" fill="#1e3a8a">B</text>
+
+  <!-- 2. Layering (L_1, L_2, L_3) -->
+  <rect x="250" y="15" width="215" height="165" rx="10" fill="#f8fafc" stroke="#93c5fd" stroke-width="2" />
+  <text x="357" y="38" class="hdr" fill="#1d4ed8">2. Layering (L_1..L_3)</text>
+  <line x1="290" y1="55" x2="290" y2="145" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4,4" />
+  <line x1="357" y1="55" x2="357" y2="145" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4,4" />
+  <line x1="424" y1="55" x2="424" y2="145" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4,4" />
+  <line x1="304" y1="105" x2="340" y2="85" stroke="#475569" stroke-width="2" marker-end="url(#sg-arr)" />
+  <line x1="372" y1="85" x2="408" y2="105" stroke="#475569" stroke-width="2" marker-end="url(#sg-arr)" />
+  <circle cx="290" cy="105" r="14" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
+  <circle cx="357" cy="80" r="14" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
+  <circle cx="424" cy="105" r="14" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
+  <text x="290" y="166" class="node" fill="#1e40af">L_1</text>
+  <text x="357" y="166" class="node" fill="#1e40af">L_2</text>
+  <text x="424" y="166" class="node" fill="#1e40af">L_3</text>
+
+  <!-- 3. Crossing Minimization -->
+  <rect x="15" y="200" width="215" height="165" rx="10" fill="#f8fafc" stroke="#86efac" stroke-width="2" />
+  <text x="122" y="223" class="hdr" fill="#15803d">3. Crossing Minimization</text>
+  <!-- Vorher: Kreuzung (links gedimmt) -->
+  <line x1="45" y1="260" x2="95" y2="325" stroke="#fca5a5" stroke-width="2" />
+  <line x1="45" y1="325" x2="95" y2="260" stroke="#fca5a5" stroke-width="2" />
+  <!-- Nachher: Parallel (rechts grün) -->
+  <line x1="145" y1="260" x2="198" y2="260" stroke="#16a34a" stroke-width="2.5" marker-end="url(#sg-arr)" />
+  <line x1="145" y1="325" x2="198" y2="325" stroke="#16a34a" stroke-width="2.5" marker-end="url(#sg-arr)" />
+  <circle cx="145" cy="260" r="11" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+  <circle cx="145" cy="325" r="11" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+  <circle cx="205" cy="260" r="11" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+  <circle cx="205" cy="325" r="11" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+
+  <!-- 4. Spline Routing -->
+  <rect x="250" y="200" width="215" height="165" rx="10" fill="#f8fafc" stroke="#86efac" stroke-width="2" />
+  <text x="357" y="223" class="hdr" fill="#15803d">4. Spline Routing</text>
+  <rect x="272" y="268" width="44" height="30" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
+  <rect x="336" y="268" width="44" height="30" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+  <rect x="400" y="268" width="44" height="30" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
+  <line x1="316" y1="283" x2="332" y2="283" stroke="#475569" stroke-width="2" marker-end="url(#sg-arr)" />
+  <line x1="380" y1="283" x2="396" y2="283" stroke="#475569" stroke-width="2" marker-end="url(#sg-arr)" />
+  <path d="M 422 298 C 422 342, 294 342, 294 302" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#sg-arr)" />
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="arr-fw" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#1d4ed8" />
+    </marker>
+    <marker id="arr-bw" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#047857" />
+    </marker>
+  </defs>
+
+  <rect x="15" y="15" width="450" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="42" class="hdr" fill="#004B96">FillY(xs, yLower, yUpper): Polygon-Konstruktion</text>
+
+  <rect x="35" y="58" width="410" height="240" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+
+  <!-- Gefülltes Polygon (Vorwärts oben, Rückwärts unten) -->
+  <path d="M 65,135 L 150,95 L 240,125 L 330,85 L 415,115 L 415,225 L 330,195 L 240,235 L 150,205 L 65,245 Z" fill="#93c5fd" fill-opacity="0.45" stroke="none" />
+
+  <!-- Obere Kante: Vorwärts 0 -> N-1 -->
+  <path d="M 65,135 L 150,95 L 240,125 L 330,85 L 410,113" fill="none" stroke="#1d4ed8" stroke-width="3.5" marker-end="url(#arr-fw)" />
+  <text x="240" y="80" class="code" fill="#1d4ed8">1. Vorwärts entlang yUpper[0 ... N-1] &#8594;</text>
+
+  <!-- Rechte Verbindung -->
+  <line x1="415" y1="115" x2="415" y2="225" stroke="#64748b" stroke-width="2.5" stroke-dasharray="4,3" />
+
+  <!-- Untere Kante: Rückwärts N-1 -> 0 -->
+  <path d="M 415,225 L 330,195 L 240,235 L 150,205 L 70,243" fill="none" stroke="#047857" stroke-width="3.5" marker-end="url(#arr-bw)" />
+  <text x="240" y="268" class="code" fill="#047857">&#8592; 2. Rückwärts entlang yLower[N-1 ... 0]</text>
+
+  <!-- Sollkurve mu(t) in der Mitte -->
+  <path d="M 65,190 L 150,150 L 240,180 L 330,140 L 415,170" fill="none" stroke="#1e3a8a" stroke-width="2.5" stroke-dasharray="5,4" />
+
+  <!-- Fußzeile -->
+  <rect x="35" y="312" width="410" height="36" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+  <text x="240" y="335" class="code" fill="#1e3a8a">1 geschlossener SKPath mit 2·N Eckpunkten in O(N)</text>
+</svg>

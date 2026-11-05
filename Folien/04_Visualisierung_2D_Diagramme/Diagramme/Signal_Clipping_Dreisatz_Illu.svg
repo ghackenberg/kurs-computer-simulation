@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+    </style>
+    <marker id="cl-arr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+  </defs>
+
+  <!-- Oben: Zoom-Fenster auf der Zeitachse [t_min = 5.000 s ... t_max = 5.010 s] -->
+  <rect x="15" y="15" width="450" height="145" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="2" />
+  <text x="240" y="40" class="hdr" fill="#1d4ed8">1. Reinzoomen: Sichtbares Zeitfenster [5.000 s ... 5.010 s]</text>
+
+  <!-- Gesamte Zeitachse 0 s bis 10.000 s -->
+  <line x1="40" y1="95" x2="440" y2="95" stroke="#94a3b8" stroke-width="4" />
+  <text x="52" y="122" class="code" fill="#64748b">0 s</text>
+  <text x="420" y="122" class="code" fill="#64748b">10.000 s</text>
+
+  <!-- Hervorgehobener Zoom-Ausschnitt in der Mitte -->
+  <rect x="175" y="62" width="130" height="62" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" />
+  <polyline points="182,105 202,75 225,98 248,72 272,92 298,80" fill="none" stroke="#15803d" stroke-width="3" />
+  <text x="175" y="145" class="code" fill="#15803d">t_min = 5.000 s</text>
+  <text x="325" y="145" class="code" fill="#15803d">t_max = 5.010 s</text>
+
+  <!-- Dreisatz-Pfeile nach unten -->
+  <line x1="195" y1="160" x2="195" y2="205" stroke="#16a34a" stroke-width="3" marker-end="url(#cl-arr)" />
+  <line x1="285" y1="160" x2="285" y2="205" stroke="#16a34a" stroke-width="3" marker-end="url(#cl-arr)" />
+  <rect x="95" y="170" width="290" height="26" rx="5" fill="#ffffff" stroke="#16a34a" stroke-width="1.5" />
+  <text x="240" y="188" class="code" fill="#166534">Dreisatz: i = (t - t_0) / dt</text>
+
+  <!-- Unten: Array ys[0 ... 9.999.999] im RAM -->
+  <rect x="15" y="212" width="450" height="153" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="238" class="hdr" fill="#0f172a">2. Array-Ausschnitt im RAM (O(1) = Nur 2 Divisionen!)</text>
+
+  <!-- Links ausgegraut -->
+  <rect x="30" y="254" width="135" height="52" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" />
+  <text x="97" y="276" class="code" fill="#64748b">ys[0..4999]</text>
+  <text x="97" y="296" class="sub" fill="#64748b">Ignoriert!</text>
+
+  <!-- Mitte aktiv (nur 11 Werte!) -->
+  <rect x="170" y="250" width="140" height="60" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" />
+  <text x="240" y="275" class="code" fill="#166534">ys[5000..5010]</text>
+  <text x="240" y="298" class="sub" fill="#15803d">Nur 11 Werte gelesen!</text>
+
+  <!-- Rechts ausgegraut -->
+  <rect x="315" y="254" width="135" height="52" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" />
+  <text x="382" y="276" class="code" fill="#64748b">ys[5011..N]</text>
+  <text x="382" y="296" class="sub" fill="#64748b">Ignoriert!</text>
+
+  <text x="240" y="345" class="code" fill="#15803d">9.999.989 Punkte werden im RAM gar nicht erst berührt!</text>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect x="15" y="15" width="450" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="42" class="hdr" fill="#004B96">Live-Monitoring: HorizontalLine mit Welford</text>
+
+  <!-- Plotfläche -->
+  <rect x="35" y="58" width="410" height="240" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+
+  <!-- 3-Sigma Band Hintergrund -->
+  <rect x="36" y="105" width="408" height="145" fill="#dcfce7" opacity="0.55" />
+
+  <!-- Obere Grenze: Mean + 3*StdDev -->
+  <line x1="35" y1="105" x2="445" y2="105" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,4" />
+  <text x="45" y="96" class="code" fill="#dc2626">Obere Linie: Mean + 3·StdDev</text>
+
+  <!-- Mittelwert: Mean -->
+  <line x1="35" y1="178" x2="445" y2="178" stroke="#16a34a" stroke-width="2.5" />
+  <text x="45" y="170" class="code" fill="#15803d">Mittelwert-Linie: Mean</text>
+
+  <!-- Untere Grenze: Mean - 3*StdDev -->
+  <line x1="35" y1="250" x2="445" y2="250" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,4" />
+  <text x="45" y="270" class="code" fill="#dc2626">Untere Linie: Mean - 3·StdDev</text>
+
+  <!-- Live-Messsignal mit Ausreißer-Peak -->
+  <polyline points="45,182 80,165 115,192 150,170 185,188 220,160 255,185 290,172 325,72 355,190 390,175 430,180" fill="none" stroke="#2563eb" stroke-width="3" />
+  <circle cx="325" cy="72" r="7" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+  <text x="340" y="77" class="code" fill="#dc2626">Alarm!</text>
+
+  <!-- Fußzeile: Welford O(1) -->
+  <rect x="35" y="312" width="410" height="36" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+  <text x="240" y="335" class="code" fill="#1e3a8a" text-anchor="middle">3 Ebenen: DataStreamer + HorizontalLine + Alarm</text>
+</svg>

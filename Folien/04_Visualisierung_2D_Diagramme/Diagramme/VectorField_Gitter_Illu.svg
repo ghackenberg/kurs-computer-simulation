@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="vf-arr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#64748b" />
+    </marker>
+    <marker id="tr-arr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#ea580c" />
+    </marker>
+  </defs>
+
+  <rect x="15" y="15" width="450" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="42" class="hdr" fill="#004B96">Layer-Prinzip: VectorField O(G_x·G_y) + ScatterLine</text>
+
+  <!-- Plotfeld -->
+  <rect x="45" y="58" width="390" height="255" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+  <line x1="45" y1="185" x2="435" y2="185" stroke="#e2e8f0" stroke-width="1.5" />
+  <line x1="240" y1="58" x2="240" y2="313" stroke="#e2e8f0" stroke-width="1.5" />
+
+  <!-- Ebene 1: Grobes Vektorgitter (Richtungsfeld im Hintergrund) -->
+  <g stroke="#64748b" stroke-width="2" marker-end="url(#vf-arr)">
+    <line x1="90" y1="95" x2="122" y2="95" />
+    <line x1="185" y1="95" x2="218" y2="102" />
+    <line x1="285" y1="95" x2="312" y2="115" />
+    <line x1="375" y1="95" x2="388" y2="128" />
+
+    <line x1="90" y1="155" x2="105" y2="130" />
+    <line x1="185" y1="155" x2="210" y2="150" />
+    <line x1="285" y1="155" x2="295" y2="180" />
+    <line x1="375" y1="155" x2="365" y2="190" />
+
+    <line x1="105" y1="215" x2="95" y2="185" />
+    <line x1="185" y1="215" x2="175" y2="192" />
+    <line x1="295" y1="215" x2="270" y2="222" />
+    <line x1="385" y1="215" x2="355" y2="235" />
+
+    <line x1="110" y1="275" x2="90" y2="245" />
+    <line x1="205" y1="275" x2="175" y2="268" />
+    <line x1="305" y1="275" x2="272" y2="275" />
+    <line x1="395" y1="275" x2="362" y2="275" />
+  </g>
+
+  <!-- Ebene 2: Überlagerte Trajektorie im Vordergrund -->
+  <path d="M 385,185 C 385,275 115,280 120,185 C 125,105 335,105 330,185 C 326,238 175,238 180,185 C 184,152 275,152 248,182" fill="none" stroke="#ea580c" stroke-width="4" marker-end="url(#tr-arr)" />
+  <circle cx="385" cy="185" r="6" fill="#16a34a" stroke="#ffffff" stroke-width="2" />
+  <circle cx="240" cy="185" r="6" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+
+  <!-- Legenden-Badges unten -->
+  <rect x="45" y="324" width="185" height="28" rx="5" fill="#f1f5f9" stroke="#64748b" stroke-width="1.5" />
+  <text x="137" y="343" class="code" fill="#334155">1. VectorField (Gitter)</text>
+
+  <rect x="250" y="324" width="185" height="28" rx="5" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5" />
+  <text x="342" y="343" class="code" fill="#c2410c">2. ScatterLine (Spirale)</text>
+</svg>

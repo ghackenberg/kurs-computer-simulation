@@ -10,7 +10,7 @@
 
   <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
   <text x="135" y="24" class="hdr">Querdynamik des Rades</text>
-  <text x="135" y="42" class="sub">Schraeglaufwinkel alpha &amp; Seitenkraft</text>
+  <text x="135" y="42" class="sub">Schräglaufwinkel alpha &amp; Seitenkraft</text>
 
   <!-- Canvas Graphic: Top View of Wheel Cornering -->
   <g transform="translate(20, 56)">
@@ -65,5 +65,5 @@
   <rect x="15" y="336" width="240" height="72" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
   <text x="135" y="356" class="lbl" style="fill: #004B96;">Symmetrie zu a_x</text>
   <text x="135" y="376" class="desc" style="font-weight: bold; fill: #15803d;">a_y = mu_y(alpha) * g</text>
-  <text x="135" y="394" class="desc" style="fill: #475569;">Masse m kuerzt sich heraus!</text>
+  <text x="135" y="394" class="desc" style="fill: #475569;">Masse m kürzt sich heraus!</text>
 </svg>

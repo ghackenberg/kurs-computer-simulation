@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; }
+      .code { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect x="15" y="15" width="450" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="42" class="hdr" fill="#004B96">Box-Plot: 5 Kennwerte &#8594; O(1) Geometrie pro Box</text>
+
+  <!-- Vertikaler Box-Plot in der Mitte -->
+  <!-- Obere Antenne (WhiskerMax) -->
+  <line x1="205" y1="78" x2="205" y2="135" stroke="#1e40af" stroke-width="3" stroke-dasharray="5,3" />
+  <line x1="170" y1="78" x2="240" y2="78" stroke="#1e40af" stroke-width="3.5" />
+  <text x="260" y="83" class="code" fill="#1e40af">WhiskerMax</text>
+
+  <!-- Box (Q_1 bis Q_3) -->
+  <rect x="145" y="135" width="120" height="120" rx="4" fill="#dbeafe" stroke="#2563eb" stroke-width="3" />
+  <text x="280" y="142" class="code" fill="#2563eb">BoxMax (Q_3, 75%)</text>
+
+  <!-- Median (BoxMiddle, Q_2) -->
+  <line x1="145" y1="198" x2="265" y2="198" stroke="#dc2626" stroke-width="4.5" />
+  <text x="280" y="203" class="code" fill="#dc2626">BoxMiddle (Q_2)</text>
+
+  <text x="280" y="260" class="code" fill="#2563eb">BoxMin (Q_1, 25%)</text>
+
+  <!-- IQR Klammer links -->
+  <line x1="120" y1="135" x2="120" y2="255" stroke="#16a34a" stroke-width="2.5" />
+  <line x1="120" y1="135" x2="133" y2="135" stroke="#16a34a" stroke-width="2.5" />
+  <line x1="120" y1="255" x2="133" y2="255" stroke="#16a34a" stroke-width="2.5" />
+  <text x="108" y="200" class="lbl" fill="#15803d" text-anchor="end">IQR (50%)</text>
+
+  <!-- Untere Antenne (WhiskerMin) -->
+  <line x1="205" y1="255" x2="205" y2="308" stroke="#1e40af" stroke-width="3" stroke-dasharray="5,3" />
+  <line x1="170" y1="308" x2="240" y2="308" stroke="#1e40af" stroke-width="3.5" />
+  <text x="260" y="313" class="code" fill="#1e40af">WhiskerMin</text>
+
+  <!-- Komplexitäts-Leiste unten (ausreichend breit ohne Randkollision) -->
+  <rect x="28" y="324" width="424" height="30" rx="5" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+  <text x="240" y="344" class="code" fill="#1e3a8a" text-anchor="middle">Sortieren: O(N log N) · Zeichnen: O(1) pro Box</text>
+</svg>
