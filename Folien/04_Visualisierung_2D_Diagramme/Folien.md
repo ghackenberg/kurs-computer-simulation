@@ -32,18 +32,18 @@ Präsentation der Ergebnisse aus Termin 03 ([Aufgabenblatt 03](../../Uebungen/Te
 <div class="columns">
 <div class="two">
 
-#### Track A: Industrie (2D-CAD Fachwerkträger)
-- **Geometrie:** Normgerechte Bemaßungsketten (DIN 406), Auto-Fit BoundingBox mit Randabstand.
-- **Interaktion:** Drag-and-Drop der Knoten, mitgeführte Stäbe & Lastpfeile.
-- **Stresstest:** Extremes Fensterformat (21:9) & Knoten-Verschiebung im Live-Test.
+#### Track A: Industrie (2D-CAD Tragwerks-Inspektor)
+- **Geometrie:** Zweistufige DIN-406-Bemaßungsketten, Auto-Fit BoundingBox & $1{,}0\,\text{m}$-Gitter.
+- **Interaktion:** Ziehen der Kraftpfeilspitzen $(F_x, F_y)$, Mausrad-Zoom & Kamera-Panning.
+- **Stresstest:** Extremes Fensterformat (21:9), Pfeilspitzen-Invarianz & JSON-Export.
 
 </div>
 <div class="two">
 
-#### Track B: Game (Radar / Blueprint)
-- **Vektorgrafik:** Space-Radar mit Distanzringen & $\vec{v}/\vec{a}$-Pfeilen ODER Blueprint Sketcher.
-- **Interaktion:** Stufenloser Pan & Zoom mit Maus-Zentrierung (`MatrixTransform`).
-- **Stresstest:** Maximaler Zoom-In/Out & viele Stäbe/Vektoren live einzeichnen.
+#### Track B: Game (Poly Bridge Blueprint-Baumeister)
+- **Vektorgrafik:** Schlucht-Szenerie mit $0{,}5\,\text{m}$-Grid-Snapping, $L_{\max}$-Vorschau & Baubudget.
+- **Interaktion:** Knoten setzen, Stäbe spannen ($L \le 4{,}0\,\text{m}$) und Elemente löschen (`Entf`).
+- **Stresstest:** Maximallängen-Sperre (rot ab $4{,}0\,\text{m}$), Budget-Limit & JSON-Level-Export.
 
 </div>
 </div>

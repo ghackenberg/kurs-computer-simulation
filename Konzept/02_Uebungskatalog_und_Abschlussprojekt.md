@@ -22,7 +22,7 @@
 2. [Kapitelweiser Aufgabenkatalog (Einheit 01 bis 10)](#2-kapitelweiser-aufgabenkatalog-einheit-01-bis-10)
    - [Einheit 01: „Hydraulikzylinder-Dämpfung vs. Artillery Strike / Retro Tanks“ (Kinematik, Euler & Heun)](#einheit-01-hydraulikzylinder-dämpfung-vs-artillery-strike--retro-tanks-kinematik-euler--heun)
    - [Einheit 02: „CPU-Kühlkörper-Optimierung vs. Falling Sand & Doom Fire“ (WriteableBitmap FDM)](#einheit-02-cpu-kühlkörper-optimierung-vs-falling-sand--doom-fire-writeablebitmap-fdm)
-   - [Einheit 03: „2D-CAD Fachwerkträger-Viewer vs. Space Radar / Blueprint Sketcher“ (WPF Canvas Vektoren)](#einheit-03-2d-cad-fachwerkträger-viewer-vs-space-radar--blueprint-sketcher-wpf-canvas-vektoren)
+   - [Einheit 03: „2D-CAD Tragwerks-Inspektor vs. Poly Bridge Blueprint-Baumeister“ (WPF Canvas Vektoren)](#einheit-03-2d-cad-fachwerkträger-viewer-vs-space-radar--blueprint-sketcher-wpf-canvas-vektoren)
    - [Einheit 04: „1-kHz-Vibrationsmonitoring vs. Retro Arcade Racing Telemetry“ (ScottPlot 5 Streaming)](#einheit-04-1-khz-vibrationsmonitoring-vs-retro-arcade-racing-telemetry-scottplot-5-streaming)
    - [Einheit 05: „4-Achs-SCARA-Roboterarm vs. 3D Arcade Claw Crane“ (SharpGL 3D-Szenengraph)](#einheit-05-4-achs-scara-roboterarm-vs-3d-arcade-claw-crane-sharpgl-3d-szenengraph)
    - [Einheit 06: „Parallele Monte-Carlo-Toleranzanalyse vs. 100.000 Boids / Zombie-Horde“ (TPL Parallel.For)](#einheit-06-parallele-monte-carlo-toleranzanalyse-vs-100000-boids--zombie-horde-tpl-parallelfor)
@@ -319,7 +319,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-### Einheit 03: „2D-CAD Fachwerkträger-Viewer vs. Space Radar / Blueprint Sketcher“ (WPF Canvas Vektoren)
+### Einheit 03: „2D-CAD Tragwerks-Inspektor vs. Poly Bridge Blueprint-Baumeister“ (WPF Canvas Vektoren)
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 03: Visualisierung 2D Vektor](../Folien/03_Visualisierung_2D_Vektor/Folien.md) – WPF `Canvas`, Vektor-Primitive (`Line`, `Path`, `Polygon`), Affine Welt-Bildschirm-Transformation, BoundingBox, DIN-Bemaßung, Pan & Zoom, Drag-and-Drop Interaktion.
@@ -384,23 +384,12 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
     - Tooltip oder Statusleiste zeigt während des Ziehens die aktuellen Weltkoordinaten $(X, Y)$ auf $1\,\text{mm}$ genau an.
   - *(Hinweis: Diese interaktive Visualisierung dient als direktes GUI-Frontend für Einheit 07, wo sie mit der Cholesky-Statik-Engine verheiratet wird!)*
 
-- **Track B (Simulation Game): 2D Space Radar & Vector Navigation ODER Bridge Blueprint Sketcher**
-  *(Wählen Sie innerhalb von Track B eine der beiden Game-/CAD-Varianten):*
-  - **Option B.1: „2D Space Radar & Vector Navigation“ (Sci-Fi Vektor-Radar):**
-    - Aufbau eines interaktiven Vektor-Radarschirms im Retro-Vektor-Stil (*Asteroids*, *Elite*).
-    - Spieler-Raumschiff als skaliertes Vektor-Polygon im Zentrum.
-    - Dynamische Geschwindigkeits- ($\vec{v}$) und Beschleunigungspfeile ($\vec{a}$) mit mathematisch sauberer Pfeilspitzengeometrie, die sich an Fluglage und Schub anpassen.
-    - Hindernisse und Raumstationen als geschlossene Polygone mit lokalen Koordinaten.
-    - Kurs-Prädiktor: Vorausschau-Trajektorie (gestrichelte Linie / Punkte), die die interpolierte Flugbahn für die nächsten 5 Sekunden anzeigt.
-    - Interaktive Navigation: Mausrad-Zoom um den Cursor, Pan mit gedrückter mittlerer Maustaste.
-  - **Option B.2: „Bridge Blueprint Sketcher“ (Interaktives Brückenbau-Zeichenbrett):**
-    - Reines interaktives CAD-Zeichenbrett für ein Brückenbauspiel (ohne Statikberechnung):
-    - Klick auf das Canvas platziert neue Trägerknoten (mit zuschaltbarem Grid-Snapping auf ein $0{,}5\,\text{m}$-Raster).
-    - Ziehen einer Verbindungslinie zwischen zwei Knoten erzeugt einen neuen Stab (`Line`).
-    - Kontextmenü zur Definition von Festlagern, Loselagern und Lastangriffspunkten.
-    - Drag-and-Drop zum nachträglichen Justieren gesetzter Knoten mit Live-Aktualisierung der Stablängen.
-    - Taste `Entf` löscht selektierte Stäbe oder Knoten.
-    - Export der erstellten Brückentopologie (Knoten, Stäbe, Lager) als JSON-Datei – diese Topologiedatei bildet in Einheit 07 die Eingangsbasis für den Cholesky-Statiklöser!
+- **Track B (Simulation Game): „Poly Bridge“ Blueprint-Baumeister (Interaktives Brückenbau-Zeichenbrett)**
+  - Reines interaktives CAD-Zeichenbrett über einer Schlucht-Szenerie (`CreateCanyonBlueprintLevel`) mit zwei festen Felswand-Auflagern (ohne Statikberechnung):
+  - Klick auf das Canvas platziert neue Trägerknoten mit exaktem Grid-Snapping auf ein $0{,}5\,\text{m}$-Konstruktionsraster.
+  - Ziehen einer Verbindungslinie zwischen zwei Knoten zeigt eine gestrichelte Stab-Vorschau mit Maximallängen-Prüfung ($L \le 4{,}00\,\text{m}$ grün, $> 4{,}00\,\text{m}$ rot/gesperrt) und Live-Baubudget-Berechnung ($\sum L_i \cdot 1\,000\,\text{EUR/m}$).
+  - Drag-and-Drop zum nachträglichen Justieren gesetzter Knoten sowie Löschen von Knoten/Stäben per Rechtsklick oder Taste `Entf`.
+  - Export und Import der erstellten Brückentopologie (Knoten, Stäbe, Lager, Lasten) als JSON-Datei (`System.Text.Json`) für den Cholesky-Statiklöser in Einheit 07!
 
 - **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
   - [3 P.] Exakte Welt-Bildschirm-Transformation mit Seitenverhältnistreue (Aspect Ratio) und Auto-Fit-BoundingBox.

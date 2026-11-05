@@ -1602,21 +1602,20 @@ Vertiefende Hausübung (10 Pkt., Wahlmodell Track A oder B) – Details siehe [A
 <div class="columns">
 <div class="two">
 
-#### Track A: CAD-Fachwerkträger
-- Pratt-/Warren-Träger (min. 8 Knoten, 13 Stäbe)
-- Auto-Fit BoundingBox mit isotroper Skalierung
-- Normgerechte DIN-406 Bemaßungsketten
-- Analytische Pfeilspitzen für Lager- und Lastvektoren
-- Drag & Drop der Knoten mit interaktivem Maustracking
+#### Track A: 2D-CAD Tragwerks-Inspektor
+- Drittes Industriemodell ($\ge 10$ Knoten) & $1{,}0\,\text{m}$-Gitter
+- Zweistufige horizontale DIN-406-Bemaßungsketten
+- Interaktives Ziehen/Drehen der Kraftpfeilspitzen $(F_x, F_y)$
+- Stufenloser Mausrad-Zoom, Kamera-Pan & JSON-Export
 
 </div>
 <div class="two">
 
-#### Track B: Radar / Blueprint-Sketcher
-- **Option B.1 Space Radar:** Vektorschiff mit Pfeilspitzen für $\vec{v}, \vec{a}$, Distanzringe & Kursprädiktor
-- **Option B.2 Blueprint Sketcher:** Interaktiver CAD-Editor mit Grid-Snapping & Stab-Aufspannen
-- Stufenloses Pan & Zoom via `MatrixTransform`
-- Saubere WPF Canvas / `DrawingVisual`-Architektur
+#### Track B: Poly Bridge Blueprint-Baumeister
+- Schlucht-Szenerie mit $0{,}5\,\text{m}$-Grid-Snapping
+- Knoten setzen, Stäbe spannen ($L \le 4{,}0\,\text{m}$) & löschen (`Entf`)
+- Gestrichelte Stab-Vorschau (grün/rot) & Live-Baubudget-Balken
+- JSON-Level-Export/Import für den LKW-Stresstest in Termin 07
 
 </div>
 </div>
