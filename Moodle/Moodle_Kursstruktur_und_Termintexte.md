@@ -75,9 +75,9 @@ In dieser Einheit widmen wir uns der mechatronischen 2D-Vektorgrafik auf dem WPF
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T02:** Zwei ausgewählte Teams präsentieren ihre FDM-Wärmeleitungs- und Pixelsimulationen am Beamer.
 * 📝 **Moodle-Quiz 1 (15 min):** Erstes summatives Quiz zu den Grundlagen, Pixelgrafik und der CFL-Stabilitätsgrenze (Kapitel 00 bis 02).
-* **Stufe A (In-Class Sprint):** Reversible Koordinatentransformation `Transform2D`, Live-Stablängen, vertikale DIN-406-Bemaßung und Behebung des Bounding-Box-Jitterings beim Ziehen.
-* 🏭 **Stufe B – Track A (Industrie):** *2D-CAD Tragwerks-Inspektor & Last-Editor* – Zweistufige DIN-406-Bemaßungsketten, interaktives Ziehen/Drehen der Kraftpfeilspitzen $(F_x, F_y)$, Mausrad-Zoom/Pan und JSON-Export.
-* 🎮 **Stufe B – Track B (Game):** *„Poly Bridge“ Blueprint-Baumeister* – Interaktives Brückenbau-Zeichenbrett über einer Schlucht mit $0{,}5\,\text{m}$-Grid-Snapping, Maximallängen-Vorschau ($L_{\max} = 4{,}0\,\text{m}$), Live-Baubudget und JSON-Level-Export.
+* **Stufe A (In-Class Sprint):** Reversible Koordinatentransformation Transform2D, Live-Stablängen, vertikale DIN-406-Bemaßung und Behebung des Bounding-Box-Jitterings beim Ziehen.
+* 🏭 **Stufe B – Track A (Industrie):** *2D-CAD Tragwerks-Inspektor & Last-Editor* – Zweistufige DIN-406-Bemaßungsketten, interaktives Ziehen und Drehen der Kraftpfeilspitzen, Mausrad-Zoom/Pan und JSON-Export.
+* 🎮 **Stufe B – Track B (Game):** *„Poly Bridge“ Blueprint-Baumeister* – Interaktives Brückenbau-Zeichenbrett über einer Schlucht mit 0,5-m-Grid-Snapping, Maximallängen-Vorschau (bis 4,0 m), Live-Baubudget und JSON-Level-Export.
 
 ---
 
