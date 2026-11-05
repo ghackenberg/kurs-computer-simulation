@@ -369,7 +369,7 @@ Was passiert bei einer langen Zeitreihe $x(t)$ mit $N = 10^7$ Punkten ($\Delta t
 
 ---
 
-### Blick unter die Haube: Wie `Signal` eine Pixelspalte zeichnet
+### Blick unter die Haube (1/3): Wie `Signal` eine Pixelspalte zeichnet
 
 Fallen mehrere Punkte in dieselbe Pixelspalte $p$, reduziert `Signal` sie auf **4 Eckpunkte** (`yEnter`, `yMin`, `yMax`, `yExit`):
 
@@ -377,24 +377,45 @@ Fallen mehrere Punkte in dieselbe Pixelspalte $p$, reduziert `Signal` sie auf **
 
 ---
 
-### Warum `Signal(ys)` in $\mathcal{O}(W)$ rendert und 50 % RAM spart
+### Blick unter die Haube (2/3): 50 % weniger RAM bei `Signal(ys)`
 
 <div class="columns">
 <div class="two">
 
-Durch die feste Schrittweite `dt` ($t_i = t_0 + i \cdot \Delta t$) nutzt `Signal` drei Optimierungen:
+Durch die feste Schrittweite `dt` ($t_i = t_0 + i \cdot \Delta t$) spart `Signal` die Hälfte des Arbeitsspeichers:
 
-1. **Halbierter Speicher ($1 \times N$ statt $2 \times N$):**
-   - Kein Array `xs` nötig! Nur `ys` plus Skalare `Period` (`dt`) und `XOffset` ($t_0$).
-2. **Sichtbarkeits-Clipping in $\mathcal{O}(1)$:**
-   - Start-Index direkt per Formel $i = \lfloor(t_i - t_0)/\mathrm{d}t\rfloor$ – ohne Suche!
-3. **Konstante GPU-Last $\mathcal{O}(W)$:**
-   - Bei Bildbreite $W = 1.000\,\text{px}$ zeichnet die GPU maximal $4.000$ Punkte statt $10^7$ (60 FPS).
+- **`Scatter(xs, ys)` speichert 2 Arrays ($2 \times N$):**
+  - Bei $N = 10^7$ `double`-Werten (je 8 Byte) belegen `xs` und `ys` zusammen **$160\,\text{MB}$ RAM** und erfordern einen kompletten Schleifendurchlauf ($\mathcal{O}(N)$).
+- **`Signal(ys)` speichert nur 1 Array ($1 \times N$):**
+  - Das Zeit-Array `xs` entfällt komplett! Es genügt `ys` ($80\,\text{MB}$) plus die beiden Zahlen `Period` (`dt`) und `XOffset` ($t_0$).
 
 </div>
 <div class="two">
 
 ![](./Diagramme/Scatter_vs_Signal_Speicher.svg)
+
+</div>
+</div>
+
+---
+
+### Blick unter die Haube (3/3): Sichtbarkeits-Clipping beim Reinzoomen
+
+<div class="columns">
+<div class="two">
+
+Reinzoomen bei $N = 10^7$ Punkten ($\mathrm{d}t = 0{,}001\,\text{s}$) auf $t_{\min} = 5{,}000\,\text{s}$ bis $t_{\max} = 5{,}010\,\text{s}$:
+
+- **`Scatter` sucht blind ($\mathcal{O}(N) =$ 10 Mio. Prüfungen):**
+  - Prüft in einer Schleife alle $10.000.000$ Punkte einzeln.
+- **`Signal` rechnet per Dreisatz ($\mathcal{O}(1) =$ 2 Divisionen!):**
+  - Start-Index $i = (5{,}000 - t_0) / 0{,}001 = 5.000$ (Ende $= 5.010$).
+  - `Signal` liest im Array `ys` **nur diese 11 Werte** – die übrigen $9.999.989$ Punkte werden ignoriert!
+
+</div>
+<div class="two">
+
+![](./Diagramme/Signal_Clipping_Dreisatz_Illu.svg)
 
 </div>
 </div>
@@ -430,7 +451,7 @@ WpfPlot1.Refresh();
 Adaptive DGL-Solver (wie Runge-Kutta RK45) passen ihre Schrittweite $\Delta t$ während der Simulation laufend an:
 
 - **Variabler Punktabstand:** Kleine Schritte ($\Delta t = 0{,}006\,\text{s}$) beim steilen Einschwingen, große Schritte ($\Delta t = 0{,}04\,\text{s}$) im Gleichgewicht.
-- **Grenze von `Signal`:** Da $\Delta t$ variiert, gilt die Index-Formel $i = (t - t_0) / \Delta t$ nicht mehr.
+- **Grenze von `Signal`:** Da $\Delta t$ variiert, gilt die Dreisatz-Formel $i = (t - t_0) / \Delta t$ nicht mehr.
 - **Lösung `Plot.Add.SignalXY(xs, ys)`:** Kombiniert variable Zeitstempel `xs` mit schneller Pixelspalten-Reduktion!
 
 </div>
@@ -443,21 +464,43 @@ Adaptive DGL-Solver (wie Runge-Kutta RK45) passen ihre Schrittweite $\Delta t$ w
 
 ---
 
-### Blick unter die Haube & C#-Code zu `SignalXY`
+### Blick unter die Haube (1/2): Halbierungssuche bei `SignalXY`
 
 <div class="columns">
 <div class="two">
 
-Warum ist `SignalXY` bei Millionen Punkten fast genauso schnell wie `Signal`?
+Beispiel: Gesucht ist die Zoom-Grenze $t_{\min} = 0{,}20\,\text{s}$ im variabel abgetasteten Zeit-Array `xs[0..7]`:
 
-- **Monotonie-Eigenschaft:** In jeder Zeitsimulation wächst `xs` streng monoton ($x_0 < x_1 < \dots$).
-- **Binärsuche in $\mathcal{O}(\log N)$:** Statt alle $N$ Punkte zu durchsuchen, findet `SignalXY` die Spaltengrenzen per `Array.BinarySearch` (bei $10^6$ Punkten nur $\approx 20$ Vergleiche!).
-- **Adaptives Bucketing ($\mathcal{O}(W \log N)$):** Dichte Flanken werden zu Min/Max-Strichen reduziert, weite Abstände direkt verbunden.
+- **1. Schritt (Mitte `[3]`):** `xs[3] = 0.08 < 0.20` (zu klein $\implies$ linke Hälfte `[0..3]` fällt sofort weg!).
+- **2. Schritt (Neue Mitte `[5]`):** `xs[5] = 0.42 > 0.20` (zu groß $\implies$ rechte Seite `[5..7]` fällt weg!).
+- **3. Schritt (Treffer `[4]`):** `xs[4] = 0.20 s` gefunden in **3 Vergleichen** (bei $10^6$ Punkten max. 20 Schritte, $\mathcal{O}(\log N)$).
 
 </div>
 <div class="two">
 
 ![](./Diagramme/SignalXY_Binaersuche_Illu.svg)
+
+</div>
+</div>
+
+---
+
+### Blick unter die Haube (2/2): Adaptives Bucketing bei `SignalXY`
+
+<div class="columns">
+<div class="two">
+
+Nach der Indexsuche zeichnet `SignalXY` die Kurve flexibel je nach lokaler Punktdichte:
+
+- **Zone A – Dichte Schritte (`dt` klein, Einschwingen):**
+  - Fallen mehrere Punkte in dieselbe Pixelspalte $p$ (einen **Bucket**), fasst `SignalXY` sie wie bei `Signal` zu einem vertikalen **4-Punkt Min/Max-Strich** zusammen.
+- **Zone B – Weite Schritte (`dt` groß, Ruhelage):**
+  - Liegen die Punkte weiter als 1 Pixelspalte auseinander (*leere Spalten* dazwischen), verbindet `SignalXY` sie direkt mit einer **Linie** (wie `ScatterLine`).
+
+</div>
+<div class="two">
+
+![](./Diagramme/SignalXY_Adaptives_Bucketing_Illu.svg)
 
 </div>
 </div>

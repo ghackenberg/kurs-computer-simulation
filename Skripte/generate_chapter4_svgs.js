@@ -423,65 +423,241 @@ writeSvg('Scatter_vs_Signal_Speicher.svg', `
 </svg>
 `);
 
-// 5. Reine Illustration (480x380): SignalXY Binärsuche auf variablen Zeitschritten
+// 5. Reine Illustration (570x380): SignalXY Binärsuche mit konkreten Zahlenwerten in 3 Schritten
 writeSvg('SignalXY_Binaersuche_Illu.svg', `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
-      .code { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; text-anchor: middle; }
+      .step { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; }
+      .val { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .idx { font-family: 'Consolas', monospace; font-size: 12.5px; font-weight: bold; text-anchor: middle; }
     </style>
-    <marker id="arr-b2" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb" />
+  </defs>
+
+  <!-- Kopfbereich: Suchauftrag -->
+  <rect x="-25" y="10" width="530" height="38" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" />
+  <text x="240" y="35" class="hdr" fill="#1d4ed8">Gesucht in xs[0..7]: Start-Index für Zoom-Grenze t_min = 0.20 s</text>
+
+  <!-- SCHRITT 1 -->
+  <rect x="-25" y="58" width="530" height="96" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="-10" y="80" class="step" fill="#1e40af">1. Schritt: Mitte [3] prüfen &#8594; 0.08 &lt; 0.20 (zu klein &#8594; [0..3] fällt weg!)</text>
+
+  <g transform="translate(-12, 92)">
+    <!-- [0..2] fällt weg -->
+    <rect x="0"   y="0" width="60" height="34" fill="#fee2e2" stroke="#f87171" stroke-width="1.5" />
+    <text x="30"  y="22" class="val" fill="#991b1b">0.00</text>
+    <text x="30"  y="50" class="idx" fill="#991b1b">[0]</text>
+
+    <rect x="63"  y="0" width="60" height="34" fill="#fee2e2" stroke="#f87171" stroke-width="1.5" />
+    <text x="93"  y="22" class="val" fill="#991b1b">0.01</text>
+    <text x="93"  y="50" class="idx" fill="#991b1b">[1]</text>
+
+    <rect x="126" y="0" width="60" height="34" fill="#fee2e2" stroke="#f87171" stroke-width="1.5" />
+    <text x="156" y="22" class="val" fill="#991b1b">0.03</text>
+    <text x="156" y="50" class="idx" fill="#991b1b">[2]</text>
+
+    <!-- [3] Geprüfte Mitte -->
+    <rect x="189" y="0" width="60" height="34" fill="#fef3c7" stroke="#d97706" stroke-width="2.5" />
+    <text x="219" y="22" class="val" fill="#b45309">0.08</text>
+    <text x="219" y="50" class="idx" fill="#b45309">[3] &lt;</text>
+
+    <!-- [4..7] Verbleibende rechte Hälfte -->
+    <rect x="252" y="0" width="60" height="34" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+    <text x="282" y="22" class="val" fill="#1e40af">0.20</text>
+    <text x="282" y="50" class="idx" fill="#1e40af">[4]</text>
+
+    <rect x="315" y="0" width="60" height="34" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+    <text x="345" y="22" class="val" fill="#1e40af">0.42</text>
+    <text x="345" y="50" class="idx" fill="#1e40af">[5]</text>
+
+    <rect x="378" y="0" width="60" height="34" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+    <text x="408" y="22" class="val" fill="#1e40af">0.85</text>
+    <text x="408" y="50" class="idx" fill="#1e40af">[6]</text>
+
+    <rect x="441" y="0" width="60" height="34" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+    <text x="471" y="22" class="val" fill="#1e40af">1.50</text>
+    <text x="471" y="50" class="idx" fill="#1e40af">[7]</text>
+  </g>
+
+  <!-- SCHRITT 2 -->
+  <rect x="-25" y="164" width="530" height="96" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="-10" y="186" class="step" fill="#b45309">2. Schritt: Neue Mitte [5] prüfen &#8594; 0.42 &gt; 0.20 (zu groß &#8594; [5..7] fällt weg!)</text>
+
+  <g transform="translate(-12, 198)">
+    <!-- [0..3] bereits ausgeschlossen -->
+    <rect x="0"   y="0" width="60" height="34" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="30"  y="22" class="val" fill="#94a3b8">0.00</text>
+    <rect x="63"  y="0" width="60" height="34" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="93"  y="22" class="val" fill="#94a3b8">0.01</text>
+    <rect x="126" y="0" width="60" height="34" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="156" y="22" class="val" fill="#94a3b8">0.03</text>
+    <rect x="189" y="0" width="60" height="34" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="219" y="22" class="val" fill="#94a3b8">0.08</text>
+
+    <!-- [4] bleibt übrig -->
+    <rect x="252" y="0" width="60" height="34" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+    <text x="282" y="22" class="val" fill="#1e40af">0.20</text>
+    <text x="282" y="50" class="idx" fill="#1e40af">[4]</text>
+
+    <!-- [5] Geprüfte neue Mitte -->
+    <rect x="315" y="0" width="60" height="34" fill="#fef3c7" stroke="#d97706" stroke-width="2.5" />
+    <text x="345" y="22" class="val" fill="#b45309">0.42</text>
+    <text x="345" y="50" class="idx" fill="#b45309">[5] &gt;</text>
+
+    <!-- [6..7] fällt weg -->
+    <rect x="378" y="0" width="60" height="34" fill="#fee2e2" stroke="#f87171" stroke-width="1.5" />
+    <text x="408" y="22" class="val" fill="#991b1b">0.85</text>
+    <text x="408" y="50" class="idx" fill="#991b1b">[6]</text>
+
+    <rect x="441" y="0" width="60" height="34" fill="#fee2e2" stroke="#f87171" stroke-width="1.5" />
+    <text x="471" y="22" class="val" fill="#991b1b">1.50</text>
+    <text x="471" y="50" class="idx" fill="#991b1b">[7]</text>
+  </g>
+
+  <!-- SCHRITT 3 -->
+  <rect x="-25" y="270" width="530" height="98" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="2" />
+  <text x="-10" y="292" class="step" fill="#15803d">3. Schritt: Treffer bei [4] &#8594; xs[4] = 0.20 s (Gefunden in nur 3 Vergleichen!)</text>
+
+  <g transform="translate(-12, 304)">
+    <rect x="0"   y="0" width="60" height="34" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="30"  y="22" class="val" fill="#94a3b8">0.00</text>
+    <rect x="63"  y="0" width="60" height="34" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="93"  y="22" class="val" fill="#94a3b8">0.01</text>
+    <rect x="126" y="0" width="60" height="34" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="156" y="22" class="val" fill="#94a3b8">0.03</text>
+    <rect x="189" y="0" width="60" height="34" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="219" y="22" class="val" fill="#94a3b8">0.08</text>
+
+    <!-- [4] TREFFER -->
+    <rect x="252" y="0" width="60" height="34" fill="#dcfce7" stroke="#16a34a" stroke-width="3" />
+    <text x="282" y="22" class="val" fill="#166534">0.20</text>
+    <text x="282" y="52" class="idx" fill="#15803d">[4] Ziel!</text>
+
+    <rect x="315" y="0" width="60" height="34" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="345" y="22" class="val" fill="#94a3b8">0.42</text>
+    <rect x="378" y="0" width="60" height="34" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="408" y="22" class="val" fill="#94a3b8">0.85</text>
+    <rect x="441" y="0" width="60" height="34" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="471" y="22" class="val" fill="#94a3b8">1.50</text>
+  </g>
+</svg>
+`);
+
+// 4b. Reine Illustration (570x380): Signal Sichtbarkeits-Clipping per Dreisatz-Formel in O(1)
+writeSvg('Signal_Clipping_Dreisatz_Illu.svg', `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+    </style>
+    <marker id="cl-arr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#16a34a" />
     </marker>
   </defs>
 
-  <!-- Oben: Nicht-äquidistantes, aber streng monotones Zeitgitter xs -->
-  <rect x="15" y="15" width="450" height="150" rx="10" fill="#f8fafc" stroke="#93c5fd" stroke-width="2" />
-  <text x="240" y="42" class="hdr" fill="#1d4ed8">Adaptive Zeitschritte: x_0 &lt; x_1 &lt; ... streng monoton</text>
+  <!-- Oben: Zoom-Fenster auf der Zeitachse [t_min = 5.000 s ... t_max = 5.010 s] -->
+  <rect x="15" y="15" width="450" height="145" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="2" />
+  <text x="240" y="40" class="hdr" fill="#1d4ed8">1. Reinzoomen: Sichtbares Zeitfenster [5.000 s ... 5.010 s]</text>
 
-  <!-- Kurve mit dichten Punkten links und weiten Punkten rechts -->
-  <line x1="40" y1="135" x2="440" y2="135" stroke="#64748b" stroke-width="2" />
-  <path d="M 45,130 L 58,95 L 70,65 L 82,85 L 95,60 L 108,75 L 122,68 L 165,70 L 230,70 L 320,70 L 425,70" fill="none" stroke="#2563eb" stroke-width="2.5" />
-  <!-- Stützpunkte -->
-  <g fill="#1d4ed8">
-    <circle cx="45" cy="130" r="4.5" />
-    <circle cx="58" cy="95" r="4.5" />
-    <circle cx="70" cy="65" r="4.5" />
-    <circle cx="82" cy="85" r="4.5" />
-    <circle cx="95" cy="60" r="4.5" />
-    <circle cx="108" cy="75" r="4.5" />
-    <circle cx="122" cy="68" r="4.5" />
-  </g>
-  <g fill="#ea580c">
-    <circle cx="165" cy="70" r="5" />
-    <circle cx="230" cy="70" r="5" />
-    <circle cx="320" cy="70" r="5" />
-    <circle cx="425" cy="70" r="5" />
-  </g>
-  <text x="85" y="155" class="code" fill="#1d4ed8">x_0, x_1 dicht</text>
-  <text x="310" y="155" class="code" fill="#ea580c">dt groß (Ruhelage)</text>
+  <!-- Gesamte Zeitachse 0 s bis 10.000 s -->
+  <line x1="40" y1="95" x2="440" y2="95" stroke="#94a3b8" stroke-width="4" />
+  <text x="52" y="122" class="code" fill="#64748b">0 s</text>
+  <text x="420" y="122" class="code" fill="#64748b">10.000 s</text>
 
-  <!-- Unten: Binärsuchbaum O(log N) auf xs -->
-  <rect x="15" y="180" width="450" height="185" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="2" />
-  <text x="240" y="208" class="hdr" fill="#15803d">Indexsuche per Binärsuche in O(log N)</text>
+  <!-- Hervorgehobener Zoom-Ausschnitt in der Mitte -->
+  <rect x="175" y="62" width="130" height="62" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" />
+  <polyline points="182,105 202,75 225,98 248,72 272,92 298,80" fill="none" stroke="#15803d" stroke-width="3" />
+  <text x="175" y="145" class="code" fill="#15803d">t_min = 5.000 s</text>
+  <text x="325" y="145" class="code" fill="#15803d">t_max = 5.010 s</text>
 
-  <!-- Baumknoten -->
-  <rect x="185" y="222" width="110" height="32" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
-  <text x="240" y="243" class="code" fill="#166534">Mitte N/2</text>
+  <!-- Dreisatz-Pfeile nach unten -->
+  <line x1="195" y1="160" x2="195" y2="205" stroke="#16a34a" stroke-width="3" marker-end="url(#cl-arr)" />
+  <line x1="285" y1="160" x2="285" y2="205" stroke="#16a34a" stroke-width="3" marker-end="url(#cl-arr)" />
+  <rect x="95" y="170" width="290" height="26" rx="5" fill="#ffffff" stroke="#16a34a" stroke-width="1.5" />
+  <text x="240" y="188" class="code" fill="#166534">Dreisatz: i = (t - t_0) / dt</text>
 
-  <line x1="210" y1="254" x2="135" y2="278" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arr-b2)" />
-  <line x1="270" y1="254" x2="345" y2="278" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,3" />
+  <!-- Unten: Array ys[0 ... 9.999.999] im RAM -->
+  <rect x="15" y="212" width="450" height="153" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="238" class="hdr" fill="#0f172a">2. Array-Ausschnitt im RAM (O(1) = Nur 2 Divisionen!)</text>
 
-  <rect x="75" y="282" width="110" height="32" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
-  <text x="130" y="303" class="code" fill="#1e40af">Viertel N/4</text>
+  <!-- Links ausgegraut -->
+  <rect x="30" y="254" width="135" height="52" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" />
+  <text x="97" y="276" class="code" fill="#64748b">ys[0..4999]</text>
+  <text x="97" y="296" class="sub" fill="#64748b">Ignoriert!</text>
 
-  <rect x="295" y="282" width="110" height="32" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" />
-  <text x="350" y="303" class="code" fill="#64748b">3·N/4</text>
+  <!-- Mitte aktiv (nur 11 Werte!) -->
+  <rect x="170" y="250" width="140" height="60" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" />
+  <text x="240" y="275" class="code" fill="#166534">ys[5000..5010]</text>
+  <text x="240" y="298" class="sub" fill="#15803d">Nur 11 Werte gelesen!</text>
 
-  <line x1="150" y1="314" x2="210" y2="332" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arr-b2)" />
-  <rect x="165" y="330" width="150" height="26" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
-  <text x="240" y="348" class="code" fill="#b45309">Ziel-Index gefunden!</text>
+  <!-- Rechts ausgegraut -->
+  <rect x="315" y="254" width="135" height="52" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" />
+  <text x="382" y="276" class="code" fill="#64748b">ys[5011..N]</text>
+  <text x="382" y="296" class="sub" fill="#64748b">Ignoriert!</text>
+
+  <text x="240" y="345" class="code" fill="#15803d">9.999.989 Punkte werden im RAM gar nicht erst berührt!</text>
+</svg>
+`);
+
+// 5b. Reine Illustration (570x380): SignalXY Adaptives Bucketing (Dichte Flanke vs. Weite Ruhelage)
+writeSvg('SignalXY_Adaptives_Bucketing_Illu.svg', `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Links: Zone A (Steile Flanke -> Viele Punkte in 1 Pixelspalte / Bucket) -->
+  <rect x="15" y="15" width="218" height="350" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="2" />
+  <text x="124" y="42" class="hdr" fill="#1d4ed8">Zone A: Dichte Schritte</text>
+  <text x="124" y="64" class="sub" fill="#475569">(Einschwingen: dt klein)</text>
+
+  <rect x="30" y="80" width="188" height="200" rx="6" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" />
+  <!-- Hervorgehobene Pixelspalte (Bucket) -->
+  <rect x="92" y="80" width="64" height="200" fill="#dbeafe" opacity="0.7" />
+  <line x1="92" y1="80" x2="92" y2="280" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,4" />
+  <line x1="156" y1="80" x2="156" y2="280" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,4" />
+  <text x="124" y="100" class="code" fill="#1e40af">1 Bucket</text>
+
+  <!-- Vertikaler Min/Max-Strich im Bucket -->
+  <line x1="124" y1="120" x2="124" y2="250" stroke="#2563eb" stroke-width="7" stroke-linecap="round" />
+  <circle cx="124" cy="120" r="5.5" fill="#dc2626" />
+  <circle cx="124" cy="250" r="5.5" fill="#dc2626" />
+  <circle cx="105" cy="210" r="4" fill="#1d4ed8" />
+  <circle cx="115" cy="160" r="4" fill="#1d4ed8" />
+  <circle cx="135" cy="195" r="4" fill="#1d4ed8" />
+  <circle cx="145" cy="145" r="4" fill="#1d4ed8" />
+
+  <text x="124" y="308" class="code" fill="#1e3a8a">&gt; 1 Punkt in Spalte p:</text>
+  <text x="124" y="330" class="sub" fill="#1d4ed8">4-Punkt Min/Max-Strich</text>
+  <text x="124" y="352" class="code" fill="#475569">(wie bei Signal)</text>
+
+  <!-- Rechts: Zone B (Ruhelage -> Wenige Punkte, leere Spalten dazwischen) -->
+  <rect x="247" y="15" width="218" height="350" rx="10" fill="#fff7ed" stroke="#fdba74" stroke-width="2" />
+  <text x="356" y="42" class="hdr" fill="#c2410c">Zone B: Weite Schritte</text>
+  <text x="356" y="64" class="sub" fill="#475569">(Ruhelage: dt groß)</text>
+
+  <rect x="262" y="80" width="188" height="200" rx="6" fill="#ffffff" stroke="#fdba74" stroke-width="1.5" />
+  <!-- Leere Pixelspalten im Hintergrund -->
+  <line x1="305" y1="112" x2="305" y2="280" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4,4" />
+  <line x1="356" y1="112" x2="356" y2="280" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4,4" />
+  <line x1="407" y1="112" x2="407" y2="280" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4,4" />
+  <text x="356" y="100" class="code" fill="#64748b">Leere Spalten</text>
+
+  <!-- Direkte Verbindungslinie zwischen zwei weit entfernten Punkten -->
+  <line x1="282" y1="195" x2="430" y2="165" stroke="#ea580c" stroke-width="4" />
+  <circle cx="282" cy="195" r="6.5" fill="#ea580c" stroke="#ffffff" stroke-width="1.5" />
+  <circle cx="430" cy="165" r="6.5" fill="#ea580c" stroke="#ffffff" stroke-width="1.5" />
+
+  <text x="356" y="308" class="code" fill="#9a3412">Abstand &gt; 1 Pixelspalte:</text>
+  <text x="356" y="330" class="sub" fill="#c2410c">Direkte Verbindungslinie</text>
+  <text x="356" y="352" class="code" fill="#475569">(wie bei ScatterLine)</text>
 </svg>
 `);
 
