@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect x="15" y="15" width="450" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="42" class="hdr" fill="#004B96">Positions-Arithmetik für gruppierte Balken</text>
+
+  <!-- X-Achse -->
+  <line x1="45" y1="265" x2="435" y2="265" stroke="#334155" stroke-width="2.5" />
+
+  <!-- Gruppen-Zentrum positions[i] (nur im unteren Bereich bis y=150, damit kein Text geschnitten wird) -->
+  <line x1="240" y1="155" x2="240" y2="285" stroke="#dc2626" stroke-width="2" stroke-dasharray="6,4" />
+  <circle cx="240" cy="265" r="5" fill="#dc2626" />
+  <text x="240" y="305" class="code" fill="#dc2626">positions[i]</text>
+
+  <!-- Linker Balken (Modell A): pos - width/2 -->
+  <rect x="105" y="105" width="122" height="160" rx="4" fill="#3b82f6" fill-opacity="0.88" stroke="#1d4ed8" stroke-width="2" />
+  <circle cx="166" cy="265" r="4.5" fill="#1e3a8a" />
+  <text x="166" y="90" class="code" fill="#1d4ed8">barsA</text>
+  <text x="166" y="155" class="code" fill="#ffffff">pos - width/2</text>
+  <text x="166" y="215" class="code" fill="#e0f2fe">Breite: width</text>
+
+  <!-- Rechter Balken (Modell B): pos + width/2 -->
+  <rect x="253" y="140" width="122" height="125" rx="4" fill="#f59e0b" fill-opacity="0.88" stroke="#b45309" stroke-width="2" />
+  <circle cx="314" cy="265" r="4.5" fill="#78350f" />
+  <text x="314" y="125" class="code" fill="#b45309">barsB</text>
+  <text x="314" y="195" class="code" fill="#ffffff">pos + width/2</text>
+
+  <!-- Komplexität unten -->
+  <rect x="35" y="322" width="410" height="30" rx="5" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+  <text x="240" y="342" class="code" fill="#166534">Zeichenaufwand: O(G · M) Vektor-Rechtecke</text>
+</svg>

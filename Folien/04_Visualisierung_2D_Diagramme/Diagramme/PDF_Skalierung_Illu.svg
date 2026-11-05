@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; }
+    </style>
+    <marker id="arr-up-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+  </defs>
+
+  <rect x="15" y="15" width="450" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="42" class="hdr" fill="#004B96">Skalierung der Gauß-Dichte f(x) auf Balkenhöhe</text>
+
+  <!-- Achsen -->
+  <line x1="75" y1="300" x2="435" y2="300" stroke="#334155" stroke-width="2.5" />
+  <line x1="75" y1="65" x2="75" y2="300" stroke="#334155" stroke-width="2.5" />
+  <text x="65" y="85" class="code" fill="#1e40af" text-anchor="end">1200</text>
+  <text x="65" y="192" class="code" fill="#1e40af" text-anchor="end">600</text>
+  <text x="65" y="300" class="code" fill="#334155" text-anchor="end">0</text>
+
+  <!-- Histogramm-Balken (Absolute Häufigkeit) -->
+  <g fill="#93c5fd" fill-opacity="0.65" stroke="#2563eb" stroke-width="1.5">
+    <rect x="105" y="270" width="36" height="30" />
+    <rect x="145" y="215" width="36" height="85" />
+    <rect x="185" y="135" width="36" height="165" />
+    <rect x="225" y="80" width="36" height="220" />
+    <rect x="265" y="130" width="36" height="170" />
+    <rect x="305" y="210" width="36" height="90" />
+    <rect x="345" y="265" width="36" height="35" />
+  </g>
+
+  <!-- Unskalierte Dichte f(x) <= 0.08 klebt flach auf der X-Achse -->
+  <line x1="95" y1="297" x2="415" y2="297" stroke="#64748b" stroke-width="3.5" stroke-dasharray="6,4" />
+
+  <!-- Skalierte Kurve cy = pdf * n * binWidth -->
+  <path d="M 95,294 C 145,285 190,78 243,78 C 296,78 340,285 395,294" fill="none" stroke="#dc2626" stroke-width="4" />
+
+  <!-- Skalierungspfeil * (n * binWidth) -->
+  <line x1="243" y1="290" x2="243" y2="96" stroke="#dc2626" stroke-width="3" stroke-dasharray="5,3" marker-end="url(#arr-up-red)" />
+  <rect x="295" y="72" width="140" height="30" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1.8" />
+  <text x="365" y="92" class="code" fill="#dc2626" text-anchor="middle">&#183; n &#183; binWidth</text>
+
+  <rect x="60" y="316" width="360" height="34" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+  <text x="240" y="338" class="code" fill="#1e3a8a" text-anchor="middle">A_Balken = n &#183; binWidth (pdf)</text>
+</svg>

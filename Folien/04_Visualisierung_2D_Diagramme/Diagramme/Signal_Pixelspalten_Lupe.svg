@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1110 470" width="1110" height="470">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; }
+      .code { font-family: 'Consolas', monospace; font-size: 15px; font-weight: bold; }
+    </style>
+    <marker id="arr-g" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+  </defs>
+
+  <!-- Kachel 1: 5.000 Punkte in einer Pixelspalte p -->
+  <rect x="15" y="15" width="345" height="440" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="2" />
+  <text x="187" y="46" class="title" fill="#b91c1c">1. Naives Zeichnen: 5.000 Linien</text>
+
+  <!-- Pixelspalten-Hintergrund (breit genug für Textabstand) -->
+  <rect x="45" y="70" width="285" height="310" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="115" y="70" width="145" height="310" fill="#fee2e2" opacity="0.65" />
+  <line x1="115" y1="70" x2="115" y2="380" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,5" />
+  <line x1="260" y1="70" x2="260" y2="380" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,5" />
+  <text x="187" y="96" class="lbl" fill="#991b1c" text-anchor="middle">Pixelspalte p</text>
+
+  <!-- Dichtes Zickzack in Spalte p -->
+  <polyline points="60,240 100,220 135,230 140,180 145,290 150,160 155,310 160,200 165,270 170,115 175,330 180,190 185,350 190,150 195,280 200,170 205,300 210,140 215,260 220,210 225,295 230,185 240,215 280,195 315,210" fill="none" stroke="#dc2626" stroke-width="2" />
+  <text x="187" y="418" class="code" fill="#991b1b" text-anchor="middle">Scatter: O(N) Übermalungen</text>
+
+  <!-- Kachel 2: Die 4 Kennwerte pro Pixelspalte in Signal -->
+  <rect x="382" y="15" width="345" height="440" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="2" />
+  <text x="554" y="46" class="title" fill="#1d4ed8">2. Signal-Reduktion: 4 Eckpunkte</text>
+
+  <rect x="412" y="70" width="285" height="310" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="470" y="70" width="150" height="310" fill="#dbeafe" opacity="0.55" />
+  <line x1="470" y1="70" x2="470" y2="380" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,5" />
+  <line x1="620" y1="70" x2="620" y2="380" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,5" />
+  <text x="545" y="96" class="lbl" fill="#1e40af" text-anchor="middle">Pixelspalte p</text>
+
+  <!-- Vertikaler Strich yMin bis yMax -->
+  <line x1="545" y1="120" x2="545" y2="345" stroke="#2563eb" stroke-width="7" stroke-linecap="round" />
+
+  <!-- 4 Schlüsselpunkte: yEnter, yMax, yMin, yExit -->
+  <circle cx="485" cy="230" r="6.5" fill="#16a34a" stroke="#ffffff" stroke-width="2" />
+  <text x="462" y="235" class="code" fill="#15803d" text-anchor="end">yEnter</text>
+
+  <circle cx="545" cy="120" r="6.5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+  <text x="562" y="125" class="code" fill="#dc2626" text-anchor="start">yMax</text>
+
+  <circle cx="545" cy="345" r="6.5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+  <text x="562" y="350" class="code" fill="#dc2626" text-anchor="start">yMin</text>
+
+  <circle cx="605" cy="215" r="6.5" fill="#d97706" stroke="#ffffff" stroke-width="2" />
+  <text x="628" y="242" class="code" fill="#b45309" text-anchor="start">yExit</text>
+
+  <!-- Übergang zur Nachbarspalte p+1 -->
+  <circle cx="660" cy="145" r="6.5" fill="#16a34a" stroke="#ffffff" stroke-width="2" />
+  <line x1="605" y1="215" x2="653" y2="152" stroke="#16a34a" stroke-width="3" marker-end="url(#arr-g)" />
+
+  <text x="554" y="418" class="code" fill="#1e40af" text-anchor="middle">yEnter &#8594; yMin &#8594; yMax &#8594; yExit</text>
+
+  <!-- Kachel 3: Nachbarspalten-Verbindung ohne Aliasing -->
+  <rect x="750" y="15" width="345" height="440" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="2" />
+  <text x="922" y="46" class="title" fill="#15803d">3. Ergebnis: Exakte Hüllkurve</text>
+
+  <rect x="780" y="70" width="285" height="310" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <!-- Vertikale Spalten-Balken + Verbindungsbrücken -->
+  <path d="M 800,250 L 800,220 L 800,275 L 800,240 L 840,235 L 840,210 L 840,265 L 840,230 L 880,220 L 880,105 L 880,270 L 880,245 L 920,240 L 920,215 L 920,280 L 920,250 L 960,245 L 960,190 L 960,295 L 960,235 L 1000,230 L 1000,210 L 1000,265 L 1000,240 L 1040,235 L 1040,215 L 1040,260" fill="none" stroke="#2563eb" stroke-width="3.5" stroke-linejoin="round" />
+  <!-- Hervorhebung Peak-Spalte -->
+  <line x1="880" y1="105" x2="880" y2="270" stroke="#16a34a" stroke-width="6" stroke-linecap="round" />
+  <circle cx="880" cy="105" r="6.5" fill="#dc2626" />
+  <text x="900" y="110" class="lbl" fill="#dc2626">Peak erhalten!</text>
+
+  <text x="922" y="418" class="code" fill="#166534" text-anchor="middle">Max. 4·W Punkte auf GPU: O(W)</text>
+</svg>

@@ -10,7 +10,7 @@
 
   <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
   <text x="135" y="24" class="hdr">Bürstenmodell des Reifens</text>
-  <text x="135" y="42" class="sub">Mechanik im Reifenlatsch (Laenge L)</text>
+  <text x="135" y="42" class="sub">Mechanik im Reifenlatsch (Länge L)</text>
 
   <!-- Canvas Graphic: Contact Patch & Bristles -->
   <g transform="translate(20, 56)">
@@ -74,5 +74,5 @@
   <rect x="15" y="336" width="240" height="72" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
   <text x="135" y="356" class="lbl" style="fill: #004B96;">Zweizone-Effekt</text>
   <text x="135" y="376" class="desc" style="font-weight: bold; fill: #15803d;">Vorne (Haftung): Lineare Dehnung</text>
-  <text x="135" y="394" class="desc" style="font-weight: bold; fill: #b91c1c;">Hinten (Gleiten): Reibung saettigt ab</text>
+  <text x="135" y="394" class="desc" style="font-weight: bold; fill: #b91c1c;">Hinten (Gleiten): Reibung sättigt ab</text>
 </svg>

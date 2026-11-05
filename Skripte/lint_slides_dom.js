@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Automated MARP DOM Layout & SVG Font Linter
  * 
  * Verifies that no slide in the curriculum suffers from:
@@ -22,7 +22,7 @@ const CHROME_PATHS = [
 ];
 
 function getPuppeteer() {
-  const customPath = 'C:/Users/P28500/AppData/Roaming/npm/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer';
+  const customPath = path.join(process.env.APPDATA || 'C:/Users/P28500/AppData/Roaming', 'npm/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer');
   if (fs.existsSync(customPath)) {
     return require(customPath);
   }
@@ -106,7 +106,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
   const themePath = path.resolve('Themen/fhooe.css');
   const marpBin = process.platform === 'win32' && fs.existsSync(path.join(process.env.APPDATA || '', 'npm', 'marp.cmd'))
     ? `"${path.join(process.env.APPDATA || '', 'npm', 'marp.cmd')}"`
-    : 'marp';
+    : 'npx --yes @marp-team/marp-cli';
   const cmd = `${marpBin} "${markdownPath}" --theme-set "${themePath}" --html --no-stdin -o "${tempHtml}"`;
   execSync(cmd, { stdio: 'pipe' });
 
@@ -338,7 +338,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     });
   }
 
-  // 3. Schema- und Bildprüfung für Kapitel- und Abschnittsübersichten
+  // 3. Schema- und BildprÃ¼fung fÃ¼r Kapitel- und AbschnittsÃ¼bersichten
   if (!options.skipSchema) {
     const sectionLint = lintSectionDeck(markdownPath);
     if (sectionLint && sectionLint.issues && sectionLint.issues.length > 0) {
@@ -449,25 +449,25 @@ async function main() {
     grandTotalErrors += res.errorSlides.length;
 
     if (res.errorSlides.length === 0) {
-      console.log(`✓ OK (${res.totalSlides} Folien sauber)`);
+      console.log(`âœ“ OK (${res.totalSlides} Folien sauber)`);
     } else {
-      console.log(`✗ ${res.errorSlides.length} Problem-Folien gefunden!`);
+      console.log(`âœ— ${res.errorSlides.length} Problem-Folien gefunden!`);
       for (const err of res.errorSlides) {
         const issues = [];
-        if (err.hasVOverflow) issues.push(`Vertikaler Überlauf: +${err.effectiveVOverflow}px`);
-        if (err.hasHOverflow) issues.push(`Horizontaler Überlauf: +${err.hOverflow}px`);
+        if (err.hasVOverflow) issues.push(`Vertikaler Ãœberlauf: +${err.effectiveVOverflow}px`);
+        if (err.hasHOverflow) issues.push(`Horizontaler Ãœberlauf: +${err.hOverflow}px`);
         if (err.hasHeaderCollision) {
           if (err.headerMargin < 0) {
-            issues.push(`Kopfzeilen-Überdeckung: Überlappung um ${Math.abs(err.headerMargin)}px`);
+            issues.push(`Kopfzeilen-Ãœberdeckung: Ãœberlappung um ${Math.abs(err.headerMargin)}px`);
           } else {
             issues.push(`Kopfzeilen-Abstand zu gering: ${err.headerMargin}px (Mindestabstand: ${minHeaderMargin}px)`);
           }
         }
         if (err.hasFooterCollision) {
           if (err.footerMargin < 0) {
-            issues.push(`Fußzeilen-Überdeckung: Überlappung um ${Math.abs(err.footerMargin)}px`);
+            issues.push(`FuÃŸzeilen-Ãœberdeckung: Ãœberlappung um ${Math.abs(err.footerMargin)}px`);
           } else {
-            issues.push(`Fußzeilen-Abstand zu gering: ${err.footerMargin}px (Mindestabstand: ${minFooterMargin}px)`);
+            issues.push(`FuÃŸzeilen-Abstand zu gering: ${err.footerMargin}px (Mindestabstand: ${minFooterMargin}px)`);
           }
         }
         if (err.hasSvgIssues) {
@@ -488,8 +488,8 @@ async function main() {
 
   console.log(`\n================================================================`);
   console.log(`  ZUSAMMENFASSUNG`);
-  console.log(`  Geprüfte Foliensätze: ${decks.length}`);
-  console.log(`  Geprüfte Folien gesamt: ${grandTotalSlides}`);
+  console.log(`  GeprÃ¼fte FoliensÃ¤tze: ${decks.length}`);
+  console.log(`  GeprÃ¼fte Folien gesamt: ${grandTotalSlides}`);
   console.log(`  Gefundene Problem-Folien: ${grandTotalErrors}`);
   console.log(`================================================================\n`);
 

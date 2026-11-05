@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="arr-b2" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+  </defs>
+
+  <!-- Oben: Nicht-äquidistantes, aber streng monotones Zeitgitter xs -->
+  <rect x="15" y="15" width="450" height="150" rx="10" fill="#f8fafc" stroke="#93c5fd" stroke-width="2" />
+  <text x="240" y="42" class="hdr" fill="#1d4ed8">Adaptive Zeitschritte: x_0 &lt; x_1 &lt; ... streng monoton</text>
+
+  <!-- Kurve mit dichten Punkten links und weiten Punkten rechts -->
+  <line x1="40" y1="135" x2="440" y2="135" stroke="#64748b" stroke-width="2" />
+  <path d="M 45,130 L 58,95 L 70,65 L 82,85 L 95,60 L 108,75 L 122,68 L 165,70 L 230,70 L 320,70 L 425,70" fill="none" stroke="#2563eb" stroke-width="2.5" />
+  <!-- Stützpunkte -->
+  <g fill="#1d4ed8">
+    <circle cx="45" cy="130" r="4.5" />
+    <circle cx="58" cy="95" r="4.5" />
+    <circle cx="70" cy="65" r="4.5" />
+    <circle cx="82" cy="85" r="4.5" />
+    <circle cx="95" cy="60" r="4.5" />
+    <circle cx="108" cy="75" r="4.5" />
+    <circle cx="122" cy="68" r="4.5" />
+  </g>
+  <g fill="#ea580c">
+    <circle cx="165" cy="70" r="5" />
+    <circle cx="230" cy="70" r="5" />
+    <circle cx="320" cy="70" r="5" />
+    <circle cx="425" cy="70" r="5" />
+  </g>
+  <text x="85" y="155" class="code" fill="#1d4ed8">x_0, x_1 dicht</text>
+  <text x="310" y="155" class="code" fill="#ea580c">dt groß (Ruhelage)</text>
+
+  <!-- Unten: Binärsuchbaum O(log N) auf xs -->
+  <rect x="15" y="180" width="450" height="185" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="2" />
+  <text x="240" y="208" class="hdr" fill="#15803d">Indexsuche per Binärsuche in O(log N)</text>
+
+  <!-- Baumknoten -->
+  <rect x="185" y="222" width="110" height="32" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+  <text x="240" y="243" class="code" fill="#166534">Mitte N/2</text>
+
+  <line x1="210" y1="254" x2="135" y2="278" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arr-b2)" />
+  <line x1="270" y1="254" x2="345" y2="278" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,3" />
+
+  <rect x="75" y="282" width="110" height="32" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
+  <text x="130" y="303" class="code" fill="#1e40af">Viertel N/4</text>
+
+  <rect x="295" y="282" width="110" height="32" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" />
+  <text x="350" y="303" class="code" fill="#64748b">3·N/4</text>
+
+  <line x1="150" y1="314" x2="210" y2="332" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arr-b2)" />
+  <rect x="165" y="330" width="150" height="26" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+  <text x="240" y="348" class="code" fill="#b45309">Ziel-Index gefunden!</text>
+</svg>

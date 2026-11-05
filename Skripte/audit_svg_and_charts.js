@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Automated SVG & Chart Inspection Tool
  * 
  * Performs deep visual and structural analysis of all SVGs and raster charts:
@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-const PUPPETEER_PATH = 'C:/Users/P28500/AppData/Roaming/npm/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer';
+const PUPPETEER_PATH = path.join(process.env.APPDATA || 'C:/Users/P28500/AppData/Roaming', 'npm/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer');
 
 function getPuppeteer() {
   if (fs.existsSync(PUPPETEER_PATH)) return require(PUPPETEER_PATH);
@@ -183,7 +183,7 @@ async function auditSvgFile(browser, svgPath, options = {}) {
           });
         } else if (yOverlap >= 6) {
           // 3. Proximity violation (Horizontaler Mindestabstand auf gleicher Zeile):
-          // Getrennte Textelemente auf gleicher visueller Zeile müssen mindestens 10px Mindestabstand halten
+          // Getrennte Textelemente auf gleicher visueller Zeile mÃ¼ssen mindestens 10px Mindestabstand halten
           const horizDist = Math.max(a.rect.left, b.rect.left) - Math.min(a.rect.right, b.rect.right);
           if (horizDist < 10.0) {
             issues.push({
@@ -196,7 +196,7 @@ async function auditSvgFile(browser, svgPath, options = {}) {
     }
 
     // 4. Panel / Card Boundary Margin & Clipping
-    // Prüft, ob Text innerhalb struktureller Boxen/Cards liegt und ausreichend Mindestabstand zu den Rändern einhält
+    // PrÃ¼ft, ob Text innerhalb struktureller Boxen/Cards liegt und ausreichend Mindestabstand zu den RÃ¤ndern einhÃ¤lt
     const cards = Array.from(document.querySelectorAll('rect'))
       .filter(r => !r.closest('defs') && !r.closest('clipPath'))
       .filter(r => {
@@ -319,7 +319,7 @@ async function auditSvgFile(browser, svgPath, options = {}) {
         }
       });
 
-      // Pfad-Abtastung für Freiformkurven (<path>) mit feinem Raster (11x5 Punkte)
+      // Pfad-Abtastung fÃ¼r Freiformkurven (<path>) mit feinem Raster (11x5 Punkte)
       if (!lineCollisionSeen.has(t.text + '_line')) {
         const fractionsX = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
         const fractionsY = [0.2, 0.35, 0.5, 0.65, 0.8];
@@ -693,7 +693,7 @@ async function main() {
     const rel = path.relative(process.cwd(), result.path);
     if (result.issues && result.issues.length > 0) {
       defectCount++;
-      console.log(`✗ ${rel} (Aspect: ${result.aspectRatio}:1):`);
+      console.log(`âœ— ${rel} (Aspect: ${result.aspectRatio}:1):`);
       result.issues.forEach(iss => {
         console.log(`    [${iss.type}] ${iss.message}`);
       });
@@ -704,8 +704,8 @@ async function main() {
 
   console.log(`\n================================================================`);
   console.log(`  ZUSAMMENFASSUNG SVG-AUDIT`);
-  console.log(`  Geprüfte SVGs: ${allSvgs.length} in ${durationSec}s`);
-  console.log(`  SVGs mit Auffälligkeiten: ${defectCount}`);
+  console.log(`  GeprÃ¼fte SVGs: ${allSvgs.length} in ${durationSec}s`);
+  console.log(`  SVGs mit AuffÃ¤lligkeiten: ${defectCount}`);
   console.log(`================================================================\n`);
   process.exit(defectCount > 0 ? 1 : 0);
 }

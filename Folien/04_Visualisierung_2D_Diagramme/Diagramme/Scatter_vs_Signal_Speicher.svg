@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; }
+      .cell { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .math { font-family: 'Consolas', monospace; font-size: 14.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Oben: Scatter (2 Arrays: xs und ys) -->
+  <rect x="15" y="15" width="450" height="160" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="2" />
+  <text x="30" y="42" class="hdr" fill="#b91c1c">Scatter(xs, ys) — 2 Arrays im RAM (2·N)</text>
+
+  <!-- xs Array -->
+  <text x="52" y="78" class="cell" fill="#991b1b">xs:</text>
+  <g transform="translate(80, 56)">
+    <rect x="0" y="0" width="68" height="32" fill="#ffffff" stroke="#ef4444" stroke-width="1.5" />
+    <text x="34" y="21" class="cell" fill="#334155">t_0</text>
+    <rect x="68" y="0" width="68" height="32" fill="#ffffff" stroke="#ef4444" stroke-width="1.5" />
+    <text x="102" y="21" class="cell" fill="#334155">0.01</text>
+    <rect x="136" y="0" width="68" height="32" fill="#ffffff" stroke="#ef4444" stroke-width="1.5" />
+    <text x="170" y="21" class="cell" fill="#334155">t_i</text>
+    <rect x="204" y="0" width="68" height="32" fill="#ffffff" stroke="#ef4444" stroke-width="1.5" />
+    <text x="238" y="21" class="cell" fill="#334155">0.03</text>
+    <rect x="272" y="0" width="85" height="32" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5" />
+    <text x="314" y="21" class="cell" fill="#991b1b">... N</text>
+  </g>
+
+  <!-- ys Array -->
+  <text x="52" y="122" class="cell" fill="#991b1b">ys:</text>
+  <g transform="translate(80, 100)">
+    <rect x="0" y="0" width="68" height="32" fill="#ffffff" stroke="#ef4444" stroke-width="1.5" />
+    <text x="34" y="21" class="cell" fill="#334155">1.24</text>
+    <rect x="68" y="0" width="68" height="32" fill="#ffffff" stroke="#ef4444" stroke-width="1.5" />
+    <text x="102" y="21" class="cell" fill="#334155">1.85</text>
+    <rect x="136" y="0" width="68" height="32" fill="#ffffff" stroke="#ef4444" stroke-width="1.5" />
+    <text x="170" y="21" class="cell" fill="#334155">2.10</text>
+    <rect x="204" y="0" width="68" height="32" fill="#ffffff" stroke="#ef4444" stroke-width="1.5" />
+    <text x="238" y="21" class="cell" fill="#334155">1.92</text>
+    <rect x="272" y="0" width="85" height="32" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5" />
+    <text x="314" y="21" class="cell" fill="#991b1b">... N</text>
+  </g>
+  <text x="240" y="160" class="math" fill="#991b1b">Kompletter Schleifendurchlauf: O(N)</text>
+
+  <!-- Unten: Signal (1 Array ys + Skalar dt) -->
+  <rect x="15" y="195" width="450" height="170" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="2" />
+  <text x="30" y="222" class="hdr" fill="#15803d">Signal(ys) — Nur 1 Array + Skalar dt (1·N)</text>
+
+  <!-- Skalar Box -->
+  <rect x="30" y="240" width="115" height="58" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+  <text x="87" y="264" class="cell" fill="#166534">Period dt</text>
+  <text x="87" y="286" class="cell" fill="#15803d">XOffset t_0</text>
+
+  <!-- ys Array -->
+  <g transform="translate(160, 253)">
+    <rect x="0" y="0" width="58" height="34" fill="#ffffff" stroke="#16a34a" stroke-width="1.5" />
+    <text x="29" y="22" class="cell" fill="#334155">1.24</text>
+    <rect x="58" y="0" width="58" height="34" fill="#ffffff" stroke="#16a34a" stroke-width="1.5" />
+    <text x="87" y="22" class="cell" fill="#334155">1.85</text>
+    <rect x="116" y="0" width="58" height="34" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" />
+    <text x="145" y="22" class="cell" fill="#15803d">ys[i]</text>
+    <rect x="174" y="0" width="58" height="34" fill="#ffffff" stroke="#16a34a" stroke-width="1.5" />
+    <text x="203" y="22" class="cell" fill="#334155">1.92</text>
+    <rect x="232" y="0" width="58" height="34" fill="#ffffff" stroke="#16a34a" stroke-width="1.5" />
+    <text x="261" y="22" class="cell" fill="#15803d">... N</text>
+  </g>
+
+  <rect x="30" y="314" width="420" height="36" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1.5" />
+  <text x="240" y="338" class="math" fill="#166534">Direktzugriff in O(1): (t_i - t_0) / dt</text>
+</svg>

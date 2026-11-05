@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Q1: Zeitreihe x(t) -->
+  <rect x="15" y="15" width="215" height="165" rx="10" fill="#f8fafc" stroke="#93c5fd" stroke-width="2" />
+  <text x="122" y="40" class="hdr" fill="#1d4ed8">1. Zeitreihen x(t)</text>
+  <line x1="35" y1="145" x2="205" y2="145" stroke="#64748b" stroke-width="2" />
+  <line x1="35" y1="55" x2="35" y2="145" stroke="#64748b" stroke-width="2" />
+  <line x1="35" y1="85" x2="205" y2="85" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4" />
+  <path d="M 35 140 C 55 50, 75 125, 95 75 C 115 95, 135 80, 200 85" fill="none" stroke="#2563eb" stroke-width="3" />
+  <text x="122" y="168" class="sub" fill="#334155">Signal / SignalXY</text>
+
+  <!-- Q2: Phasenraum (x1, x2) -->
+  <rect x="250" y="15" width="215" height="165" rx="10" fill="#f8fafc" stroke="#fdba74" stroke-width="2" />
+  <text x="357" y="40" class="hdr" fill="#c2410c">2. Zustandsraum</text>
+  <line x1="275" y1="102" x2="440" y2="102" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="357" y1="55" x2="357" y2="148" stroke="#cbd5e1" stroke-width="1.5" />
+  <path d="M 425 102 C 425 145, 295 145, 305 102 C 312 68, 395 68, 388 102 C 383 122, 335 122, 342 102 C 346 92, 365 92, 357 102" fill="none" stroke="#ea580c" stroke-width="3" />
+  <circle cx="357" cy="102" r="4.5" fill="#dc2626" />
+  <text x="357" y="168" class="sub" fill="#334155">Scatter / VectorField</text>
+
+  <!-- Q3: Statistik & Felder -->
+  <rect x="15" y="200" width="215" height="165" rx="10" fill="#f8fafc" stroke="#86efac" stroke-width="2" />
+  <text x="122" y="225" class="hdr" fill="#15803d">3. Statistik &amp; Felder</text>
+  <line x1="35" y1="330" x2="205" y2="330" stroke="#64748b" stroke-width="2" />
+  <rect x="50" y="305" width="22" height="25" fill="#60a5fa" />
+  <rect x="78" y="275" width="22" height="55" fill="#3b82f6" />
+  <rect x="106" y="250" width="22" height="80" fill="#2563eb" />
+  <rect x="134" y="280" width="22" height="50" fill="#3b82f6" />
+  <rect x="162" y="310" width="22" height="20" fill="#60a5fa" />
+  <path d="M 42 328 Q 117 215 192 328" fill="none" stroke="#dc2626" stroke-width="2.5" />
+  <text x="122" y="353" class="sub" fill="#334155">Bars / Box / Heatmap</text>
+
+  <!-- Q4: Topologie G=(V,E) -->
+  <rect x="250" y="200" width="215" height="165" rx="10" fill="#f8fafc" stroke="#c4b5fd" stroke-width="2" />
+  <text x="357" y="225" class="hdr" fill="#6d28d9">4. Systemtopologie</text>
+  <line x1="305" y1="270" x2="365" y2="270" stroke="#475569" stroke-width="2.5" />
+  <line x1="385" y1="270" x2="425" y2="270" stroke="#475569" stroke-width="2.5" />
+  <path d="M 410 285 L 410 318 L 290 318 L 290 285" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3" />
+  <rect x="270" y="254" width="44" height="32" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="2" />
+  <rect x="335" y="254" width="44" height="32" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="2" />
+  <rect x="400" y="254" width="44" height="32" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+  <text x="357" y="353" class="sub" fill="#334155">MSAGL Graph</text>
+</svg>
