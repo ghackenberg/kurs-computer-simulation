@@ -113,6 +113,30 @@ Ein numerischer Simulator berechnet zunächst nur rohe Zahlenkolonnen. Erst **Di
 
 ---
 
+### Die Render-Engine unter ScottPlot 5: SkiaSharp (`SK...`)
+
+<div class="columns">
+<div class="two">
+
+`ScottPlot 5` nutzt intern **SkiaSharp** (Googles 2D-Engine *Skia*):
+
+1. **`SKPath` (Vektorpfad, wie Termin 03):**
+   - Punktfolge (`MoveTo`, `LineTo`, `Close`) für Linienzüge (`Scatter`, `Signal`) und Polygone (`FillY`).
+2. **`SKBitmap` (Pixel-Puffer, wie Termin 02):**
+   - 32-Bit-Pixel-Array (`uint[]`) für Rasterdaten (`Heatmap`) – **1:1 wie `WriteableBitmap`**!
+3. **`SKCanvas` (Zeichenfläche in `WpfPlot`):**
+   - Rendert `DrawPath(SKPath)` und `DrawBitmap(SKBitmap)` direkt in 1 Bild (0 WPF-`Shape`-Objekte!).
+
+</div>
+<div class="two">
+
+![](./Diagramme/SkiaSharp_Grundbausteine_Illu.svg)
+
+</div>
+</div>
+
+---
+
 ### Blick unter die Haube: Welche Backends nutzen die Bibliotheken?
 
 `ScottPlot 5` und `MSAGL` nutzen intern genau die Techniken aus Termin 02 und Termin 03:
@@ -176,32 +200,7 @@ Die zentrale Klasse in `ScottPlot 5` ist `ScottPlot.Plot`. Das WPF-Control `WpfP
 
 ---
 
-### Einstieg in `Plot.Add.Scatter`: Linien- und Streudiagramme
-
-```csharp
-double[] xs  = { 0.0, 0.1, 0.2, 0.3, 0.4, 0.5 };
-double[] ys1 = { 0.0, 0.8, 1.2, 1.1, 0.9, 1.0 };
-double[] ys2 = { 0.0, 0.5, 0.9, 1.3, 1.5, 1.4 };
-
-var s1 = WpfPlot1.Plot.Add.Scatter(xs, ys1);
-s1.LegendText = "Zustand x1(t)";
-s1.Color = ScottPlot.Colors.SteelBlue;
-
-var s2 = WpfPlot1.Plot.Add.Scatter(xs, ys2);
-s2.LegendText = "Zustand x2(t)";
-s2.Color = ScottPlot.Colors.Crimson;
-s2.LinePattern = ScottPlot.LinePattern.Dashed;
-
-WpfPlot1.Plot.ShowLegend();
-WpfPlot1.Plot.Axes.AutoScale();
-WpfPlot1.Refresh();
-```
-
-- **Hintergrund (`Scatter`):** Da `(xs[i], ys1[i])` und `ys2` beliebig im Raum liegen dürfen, transformiert der Renderer bei jedem Frame alle $N$ Punkte für `s1` und `s2` einzeln in einen Vektorpfad (**Komplexität $\mathcal{O}(N)$**).
-
----
-
-### Anwendungsbeispiel `Scatter`: DC-Motor im Phasenraum
+### Anwendungsbeispiel `Scatter` (1/2): DC-Motor im Phasenraum
 
 <div class="columns">
 <div class="two">
@@ -218,6 +217,27 @@ Antriebssimulation (Übung 4, Track A) beim Anfahren eines Elektromotors:
 <div class="three">
 
 ![](./Illustrationen/ScottPlot_Scatter_Example.png)
+
+</div>
+</div>
+
+---
+
+### Blick unter die Haube: Wie zeichnet `Scatter(xs, ys)`?
+
+<div class="columns">
+<div class="two">
+
+- **Keine Sortier-Annahme ($\mathcal{O}(N)$):**
+  - Da Punkt `[4]` in $x$ rückwärts laufen darf, kann ScottPlot keine Abkürzung nutzen – es durchläuft bei jedem Frame **alle $N$ Punkte (`i = 0 ... N-1`)**!
+- **Zwei Modi desselben Renderers:**
+  - **Modus A (`ScatterLine`):** Verbindet Punkte als `SKPath` (`LineWidth > 0`, `MarkerSize = 0`, z.B. Motorkennfeld).
+  - **Modus B (Punktwolke):** Schaltet die Linie ab (`LineWidth = 0`, `MarkerSize = 10`, z.B. Kamm'scher Kreis).
+
+</div>
+<div class="two">
+
+![](./Diagramme/Scatter_Zeichenlogik_Illu.svg)
 
 </div>
 </div>
@@ -265,7 +285,7 @@ plot.Axes.SetLimits(0, 3200, 0, 12);
 
 ---
 
-### Anwendungsbeispiel `Scatter`: G-G-Diagramm (Kamm'scher Kreis)
+### Anwendungsbeispiel `Scatter` (2/2): G-G-Diagramm (Kamm'scher Kreis)
 
 <div class="columns">
 <div class="two">
@@ -488,41 +508,50 @@ Zustandsraum-Analyse eines gedämpften Schwingers (Federbein mit Auslenkung $x_1
 
 ---
 
-### Der C#-Code & Render-Komplexität von `VectorField`
+### Blick unter die Haube: Gitter-Komplexität $\mathcal{O}(G_x \cdot G_y)$ & Layering
 
 <div class="columns">
 <div class="two">
 
-- **Render-Komplexität $\mathcal{O}(G_x \cdot G_y)$:**
-  - Pro Gitterpunkt zeichnet ScottPlot 3 Linien (Schaft + 2 Pfeilflügel).
-  - Da die Pfeilanzahl **quadratisch** wächst, wählt man ein grobes Gitter ($15 \times 15 = 225$ Vektoren in `vectors`).
+Wie arbeitet `Plot.Add.VectorField` im Hintergrund?
+
+- **Quadratische Zeichenlast $\mathcal{O}(G_x \cdot G_y)$:**
+  - Pro Gitterpunkt zeichnet ScottPlot 3 Vektorlinien (Pfeilschaft + 2 Pfeilflügel).
+  - Da die Pfeilanzahl quadratisch mit der Gitterauflösung wächst, wählt man bewusst ein grobes Gitter (z.B. $15 \times 15 = 225$ Pfeile).
 - **Kombi-Chart (Painter's Algorithm):**
-  - Zuerst `Add.VectorField(vectors)`, danach `Add.ScatterLine(trX, trY)` als `traj` darüber.
-  - Wegen der Bildschirm-Y-Achse wird `-dx2` in `dir` übergeben (`x1`, `x2`, `dx1`, `len`, `scale`, `coord`).
+  - Zuerst wird `VectorField` als Hintergrundebene gerendert, danach `ScatterLine` als Spirale darübergelegt.
 
 </div>
 <div class="two">
 
+![](./Diagramme/VectorField_Gitter_Illu.svg)
+
+</div>
+</div>
+
+---
+
+### Der C#-Code zu `Plot.Add.VectorField`
+
 ```csharp
-var vectors = new List<RootedCoordinateVector>(); // G_x * G_y
+var vectors = new List<RootedCoordinateVector>(); // Gitter G_x * G_y = 15 * 15
 for (double x1 = -2.8; x1 <= 2.8; x1 += 0.4) {
-  for (double x2 = -2.8; x2 <= 2.8; x2 += 0.4) {
-    double dx1 = x2, dx2 = -x1 - 0.3 * x2;
-    double len = Math.Sqrt(dx1*dx1 + dx2*dx2);
-    if (len > 1e-6) {
-      double scale = 0.22 / len;
-      var coord = new Coordinates(x1, x2);
-      var dir = new Vector2((float)(dx1*scale), (float)(-dx2*scale));
-      vectors.Add(new RootedCoordinateVector(coord, dir));
+    for (double x2 = -2.8; x2 <= 2.8; x2 += 0.4) {
+        double dx1 = x2, dx2 = -x1 - 0.3 * x2;
+        double len = Math.Sqrt(dx1 * dx1 + dx2 * dx2);
+        if (len > 1e-6) {
+            double scale = 0.22 / len;
+            var coord = new Coordinates(x1, x2);
+            var dir   = new Vector2((float)(dx1 * scale), (float)(-dx2 * scale));
+            vectors.Add(new RootedCoordinateVector(coord, dir));
+        }
     }
-  }
 }
 plot.Add.VectorField(vectors, Colors.SteelBlue);
 var traj = plot.Add.ScatterLine(trX, trY);
 ```
 
-</div>
-</div>
+- Für jeden Gitterpunkt `(x1, x2)` wird aus `(dx1, dx2)` über `len` und `scale` ein normierter Vektor `(coord, dir)` in `vectors` abgelegt und mit der Trajektorie `traj` (`trX`, `trY`) kombiniert.
 
 ---
 
@@ -547,10 +576,10 @@ var traj = plot.Add.ScatterLine(trX, trY);
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Statistische Diagramme in der Simulation (Monte-Carlo, Rauschen, Varianten)
-- Histogramme & Binning: Datenreduktion von $\mathcal{O}(N)$ auf $\mathcal{O}(k)$ Balken
-- Anwendungsbeispiel & Code: Histogramm mit Gauß-Kurve (Skalierung!)
+- Anwendungsbeispiel Histogramm: Binning ($\mathcal{O}(N) \to \mathcal{O}(k)$) & Gauß-Skalierung
 - Verteilungsvergleiche mit Box-Plots ($\mathcal{O}(N \log N)$ Sortierung $\to \mathcal{O}(1)$ Box)
-- Gruppierte Balken (`Bars`) und 2D-Zustandsfelder (`Heatmap` & `ColorBar`)
+- Gruppierte Balken (`Bars`): Positions-Arithmetik & Render-Komplexität $\mathcal{O}(G \cdot M)$
+- 2D-Zustandsfelder (`Heatmap` & `ColorBar`): Raw-Pixel-Backend & C#-Code
 
 ---
 
@@ -566,29 +595,6 @@ Wenn Zufallsprozesse (Rauschen, Toleranzen) oder mehrere Systemvarianten untersu
    - Gegenüberstellung des Energiebedarfs zweier Modellkonfigurationen über mehrere Laststufen.
 4. **Ortsdiskrete 2D-Zustandsfelder (`Heatmap` & `ColorBar`):**
    - Darstellung einer berechneten 2D-Temperaturmatrix $T[i,j]$ inklusive Farbskala.
-
----
-
-### Wie arbeitet ein Histogramm? Binning & Render-Komplexität
-
-<div class="columns">
-<div class="two">
-
-Ein Histogramm teilt den Wertebereich in $k$ Intervalle (**Bins**) der Breite $h$ ein:
-
-- **Wahl der Klassenbreite $h$:**
-  - *Freedman-Diaconis-Regel:* Nutzt den robusten Interquartilsabstand $\text{IQR} = Q_3 - Q_1$ der mittleren 50 %: $h = 2 \cdot \text{IQR} / \sqrt[3]{N}$.
-- **Zweistufige Pipeline in ScottPlot:**
-  1. **Zählen in $\mathcal{O}(N)$:** `hist.AddRange(samples)` sortiert alle $N = 10.000$ Werte *einmalig* in $k = 24$ Zähler ein.
-  2. **Zeichnen in $\mathcal{O}(k)$:** Die GPU zeichnet bei jedem Frame nur noch **$k = 24$ Rechtecke** (`Add.Bars`)!
-
-</div>
-<div class="two">
-
-![](./Diagramme/Binning_und_IQR_Illu.svg)
-
-</div>
-</div>
 
 ---
 
@@ -613,7 +619,30 @@ Monte-Carlo-Toleranzanalyse ($N = 10.000$ Läufe) einer gefertigten Bauteilläng
 
 ---
 
-### Warum wir die Gauß-Kurve im Code skalieren müssen
+### Blick unter die Haube (1/2): Binning & Render-Komplexität
+
+<div class="columns">
+<div class="two">
+
+Ein Histogramm teilt den Wertebereich in $k$ Intervalle (**Bins**) der Breite $h$ ein:
+
+- **Wahl der Klassenbreite $h$:**
+  - *Freedman-Diaconis-Regel:* Nutzt den robusten Interquartilsabstand $\text{IQR} = Q_3 - Q_1$ der mittleren 50 %: $h = 2 \cdot \text{IQR} / \sqrt[3]{N}$.
+- **Zweistufige Pipeline in ScottPlot:**
+  1. **Zählen in $\mathcal{O}(N)$:** `hist.AddRange(samples)` sortiert alle $N = 10.000$ Werte *einmalig* in $k = 24$ Zähler ein.
+  2. **Zeichnen in $\mathcal{O}(k)$:** Die GPU zeichnet bei jedem Frame nur noch **$k = 24$ Rechtecke** (`Add.Bars`)!
+
+</div>
+<div class="two">
+
+![](./Diagramme/Binning_und_IQR_Illu.svg)
+
+</div>
+</div>
+
+---
+
+### Blick unter die Haube (2/2): Warum wir die Gauß-Kurve skalieren
 
 <div class="columns">
 <div class="two">
@@ -756,29 +785,18 @@ Gegenüberstellung mehrerer Modellvarianten über diskrete Betriebspunkte:
 
 ---
 
-### Blick unter die Haube & C#-Code zu gruppierten Balken
+### Blick unter die Haube: Positions-Arithmetik & $\mathcal{O}(G \cdot M)$
 
 <div class="columns">
 <div class="two">
 
-- **Positions-Arithmetik & Komplexität $\mathcal{O}(G \cdot M)$:**
-  - Für jede der $G = 4$ Stützstellen in `positions` werden $M = 2$ `Bar`-Objekte mit Breite `width = 0.32` erzeugt (`valuesA`, `valuesB` $\to$ `barsA`, `barsB`).
-  - Die GPU zeichnet exakt $G \cdot M = 8$ Vektor-Rechtecke.
+Wie werden gruppierte Balken in `ScottPlot` positioniert und gezeichnet?
 
-```csharp
-double[] positions = { 1.0, 2.0, 3.0, 4.0 };
-double[] valuesA   = { 15.2, 48.6, 92.4, 138.0 };
-double[] valuesB   = { 11.4, 35.8, 71.2, 106.5 };
-double width = 0.32;
-var barsA = new List<Bar>(); var barsB = new List<Bar>();
-for (int i = 0; i < positions.Length; i++) {
-    barsA.Add(new Bar { Position = positions[i] - width/2.0,
-        Value = valuesA[i], Size = width, FillColor = Colors.SteelBlue });
-    barsB.Add(new Bar { Position = positions[i] + width/2.0,
-        Value = valuesB[i], Size = width, FillColor = Colors.DarkOrange });
-}
-plot.Add.Bars(barsA); plot.Add.Bars(barsB);
-```
+- **Explizite X-Koordinaten pro Balken:**
+  - Jede Gruppe $i$ liegt bei einer Basisposition `positions[i]` (z.B. $1{,}0, 2{,}0, \dots$).
+  - Bei Balkenbreite `width = 0.32` wird `barsA` um `- width / 2` nach links und `barsB` um `+ width / 2` nach rechts versetzt, sodass sie exakt aneinanderstoßen.
+- **Render-Komplexität $\mathcal{O}(G \cdot M)$:**
+  - Für $G$ Gruppen und $M$ Modellreihen zeichnet die GPU exakt $G \cdot M$ Vektor-Rechtecke (`DrawRect`).
 
 </div>
 <div class="two">
@@ -787,6 +805,28 @@ plot.Add.Bars(barsA); plot.Add.Bars(barsB);
 
 </div>
 </div>
+
+---
+
+### Der C#-Code zu gruppierten Balken (`Plot.Add.Bars`)
+
+```csharp
+double[] positions = { 1.0, 2.0, 3.0, 4.0 };
+double[] valuesA   = { 15.2, 48.6, 92.4, 138.0 };
+double[] valuesB   = { 11.4, 35.8, 71.2, 106.5 };
+double width       = 0.32;
+
+var barsA = new List<Bar>();
+var barsB = new List<Bar>();
+for (int i = 0; i < positions.Length; i++) {
+    barsA.Add(new Bar { Position = positions[i] - width / 2.0, Value = valuesA[i], Size = width, FillColor = Colors.SteelBlue });
+    barsB.Add(new Bar { Position = positions[i] + width / 2.0, Value = valuesB[i], Size = width, FillColor = Colors.DarkOrange });
+}
+plot.Add.Bars(barsA);
+plot.Add.Bars(barsB);
+```
+
+- Aus den Stützstellen `positions` sowie `valuesA` und `valuesB` entstehen mit Balkenbreite `width` die beiden Serien `barsA` und `barsB`.
 
 ---
 
@@ -811,27 +851,17 @@ Darstellung des 2D-Temperaturfelds $T[i,j]$ aus der FDM-Simulation (Brücke zu T
 
 ---
 
-### Der C#-Code & das Raw-Pixel-Backend von `Heatmap`
+### Blick unter die Haube: Das Raw-Pixel-Backend von `Heatmap`
 
 <div class="columns">
 <div class="two">
 
-- **Raw-Pixel-Backend ($\mathcal{O}(N_x \cdot N_y)$):**
-  - `hm` (`size`, `intensities`, `cb`) schreibt wie `WriteableBitmap` (Termin 02) direkt in **1 Bitmap (`SKBitmap`)**!
+Warum nutzt `Heatmap` ein anderes Backend als `Scatter`, `Signal` oder `Bars`?
 
-```csharp
-int size = 50;
-double[,] intensities = new double[size, size];
-for (int i = 0; i < size; i++)
-    for (int j = 0; j < size; j++)
-        intensities[i, j] = ComputeFdmTemp(i, j);
-// Heatmap als Bitmap-Textur + ColorBar rechts
-var hm = plot.Add.Heatmap(intensities);
-hm.Colormap = new ScottPlot.Colormaps.Turbo();
-var cb = plot.Add.ColorBar(hm);
-cb.Label = "Temperatur T [°C]";
-plot.Axes.SetLimits(0, size, 0, size);
-```
+- **Kein Vektor-Rechteck pro Gitterzelle:**
+  - Ein $500 \times 500$ Gitter hätte $250.000$ Einzel-Rechtecke – als Vektorpfade würde das die Zeichenpipeline ausbremsen.
+- **Raw-Pixel-Puffer (`SKBitmap`) in $\mathcal{O}(N_x \cdot N_y)$:**
+  - Genau wie bei `WriteableBitmap` in **Termin 02** rechnet `Heatmap` die Werte `intensities[i, j]` über die `Colormap` direkt in 32-Bit-Pixel (`uint[]`) um und zeichnet nur **1 Bitmap-Textur**!
 
 </div>
 <div class="two">
@@ -840,6 +870,30 @@ plot.Axes.SetLimits(0, size, 0, size);
 
 </div>
 </div>
+
+---
+
+### Der C#-Code zu `Heatmap` & `ColorBar`
+
+```csharp
+// 1. 2D-Temperaturmatrix der Größe N_x * N_y = 50 * 50 berechnen
+int size = 50;
+double[,] intensities = new double[size, size];
+for (int i = 0; i < size; i++)
+    for (int j = 0; j < size; j++)
+        intensities[i, j] = ComputeFdmTemp(i, j);
+
+// 2. Heatmap als schnelle Bitmap-Textur mit Turbo-Farbpalette anlegen
+var hm = plot.Add.Heatmap(intensities);
+hm.Colormap = new ScottPlot.Colormaps.Turbo();
+
+// 3. Farbskala (ColorBar) rechts neben dem Plot verankern
+var cb = plot.Add.ColorBar(hm);
+cb.Label = "Temperatur T [°C]";
+plot.Axes.SetLimits(0, size, 0, size);
+```
+
+- Das 2D-Array `intensities` der Größe `size` wird als `hm` übergeben und mit der Farblegende `cb` gekoppelt.
 
 ---
 
@@ -1038,27 +1092,18 @@ Wenn der Sollwert $\mu(t)$ in der Simulation einer **zeitabhängigen Kurve** fol
 
 ---
 
-### Blick unter die Haube & C#-Code zu `FillY`
+### Blick unter die Haube: Polygon-Rendering bei `FillY`
 
 <div class="columns">
 <div class="two">
 
-- **Polygon-Rendering ($\mathcal{O}(N)$):**
-  - `fill` baut aus `xs`, `yUpper` und `yLower` **1 geschlossenes Polygon** mit $2N$ Ecken; darüber liegen `meanLine` (`mu`) und `sensLine` (`sensor`).
+Wie zeichnet `Plot.Add.FillY(xs, yLower, yUpper)` eine schattierte Fläche?
 
-```csharp
-// 1. Halbtransparenter Korridor mit FillY
-var fill = plot.Add.FillY(xs, yLower, yUpper);
-fill.FillColor = Colors.CornflowerBlue.WithAlpha(0.35f);
-fill.LineColor = Colors.CornflowerBlue.WithAlpha(0.8f);
-// 2. Nennsignal mu(t) und Sensor y(t) darüberlegen
-var meanLine = plot.Add.ScatterLine(xs, mu);
-meanLine.Color = Colors.MidnightBlue;
-meanLine.LegendText = "Nennsignal μ(t)";
-var sensLine = plot.Add.ScatterLine(xs, sensor);
-sensLine.Color = Colors.Crimson;
-sensLine.LegendText = "Sensor y(t) mit Anomalie";
-```
+- **Ein geschlossener Polygonpfad (`SKPath`):**
+  - **1. Hinweg:** Läuft vorwärts über die obere Hüllkurve `yUpper[0 ... N-1]`.
+  - **2. Rückweg:** Läuft rückwärts über die untere Grenze `yLower[N-1 ... 0]` zurück zum Startpunkt.
+- **Render-Komplexität $\mathcal{O}(N)$:**
+  - Die GPU füllt dieses Polygon mit $2N$ Eckpunkten halbtransparent in einem Durchgang.
 
 </div>
 <div class="two">
@@ -1067,6 +1112,30 @@ sensLine.LegendText = "Sensor y(t) mit Anomalie";
 
 </div>
 </div>
+
+---
+
+### Der C#-Code zu `Plot.Add.FillY`
+
+```csharp
+// 1. Ebene 1 (Hintergrund): Halbtransparenter Toleranzkorridor mit FillY
+var fill = plot.Add.FillY(xs, yLower, yUpper);
+fill.FillColor = Colors.CornflowerBlue.WithAlpha(0.35f);
+fill.LineColor = Colors.CornflowerBlue.WithAlpha(0.8f);
+
+// 2. Ebene 2 (Mitte): Zeitvariables Nennsignal mu(t) darüberlegen
+var meanLine = plot.Add.ScatterLine(xs, mu);
+meanLine.Color      = Colors.MidnightBlue;
+meanLine.LineWidth  = 3.0f;
+meanLine.LegendText = "Nennsignal μ(t)";
+
+// 3. Ebene 3 (Vordergrund): Reales Sensorsignal y(t) mit Ausreißer
+var sensLine = plot.Add.ScatterLine(xs, sensor);
+sensLine.Color      = Colors.Crimson;
+sensLine.LegendText = "Sensor y(t) mit Anomalie";
+```
+
+- Der Korridor `fill` (`xs`, `yLower`, `yUpper`) bildet den Hintergrund für das Nennsignal `meanLine` (`mu`) und die Messung `sensLine` (`sensor`).
 
 ---
 

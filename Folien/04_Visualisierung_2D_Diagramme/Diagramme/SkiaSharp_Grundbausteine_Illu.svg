@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+    </style>
+    <marker id="sk-arr-b" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+    <marker id="sk-arr-o" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#d97706" />
+    </marker>
+  </defs>
+
+  <!-- Links oben: SKPath (Vektorpfad) -->
+  <rect x="15" y="15" width="218" height="190" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="2" />
+  <text x="124" y="40" class="hdr" fill="#1d4ed8">1. SKPath (Vektorpfad)</text>
+  <rect x="32" y="54" width="184" height="92" rx="6" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" />
+  <polyline points="48,125 88,72 135,108 175,68 198,92" fill="none" stroke="#2563eb" stroke-width="3.5" />
+  <circle cx="48" cy="125" r="4.5" fill="#1d4ed8" />
+  <circle cx="88" cy="72" r="4.5" fill="#1d4ed8" />
+  <circle cx="135" cy="108" r="4.5" fill="#1d4ed8" />
+  <circle cx="175" cy="68" r="4.5" fill="#1d4ed8" />
+  <circle cx="198" cy="92" r="4.5" fill="#1d4ed8" />
+  <text x="124" y="168" class="code" fill="#1e3a8a">MoveTo / LineTo / Close</text>
+  <text x="124" y="190" class="sub" fill="#475569">Wie Termin 03 (Vektor)</text>
+
+  <!-- Rechts oben: SKBitmap (Raw-Pixel-Puffer) -->
+  <rect x="247" y="15" width="218" height="190" rx="10" fill="#fffbeb" stroke="#fbbf24" stroke-width="2" />
+  <text x="356" y="40" class="hdr" fill="#b45309">2. SKBitmap (Pixel-Array)</text>
+  <rect x="264" y="54" width="184" height="92" rx="6" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5" />
+  <!-- 4x2 Pixel-Matrix -->
+  <g transform="translate(284, 66)">
+    <rect x="0" y="0" width="34" height="32" fill="#3b82f6" />
+    <rect x="36" y="0" width="34" height="32" fill="#10b981" />
+    <rect x="72" y="0" width="34" height="32" fill="#f59e0b" />
+    <rect x="108" y="0" width="34" height="32" fill="#ef4444" />
+    <rect x="0" y="34" width="34" height="32" fill="#60a5fa" />
+    <rect x="36" y="34" width="34" height="32" fill="#34d399" />
+    <rect x="72" y="34" width="34" height="32" fill="#fbbf24" />
+    <rect x="108" y="34" width="34" height="32" fill="#f87171" />
+  </g>
+  <text x="356" y="168" class="code" fill="#92400e">32-Bit Pixel (uint[])</text>
+  <text x="356" y="190" class="sub" fill="#475569">1:1 wie WriteableBitmap</text>
+
+  <!-- Pfeile nach unten in SKCanvas -->
+  <line x1="124" y1="205" x2="124" y2="238" stroke="#2563eb" stroke-width="3" marker-end="url(#sk-arr-b)" />
+  <line x1="356" y1="205" x2="356" y2="238" stroke="#d97706" stroke-width="3" marker-end="url(#sk-arr-o)" />
+
+  <!-- Unten: SKCanvas (Immediate-Mode Zeichenfläche) -->
+  <rect x="15" y="245" width="450" height="120" rx="10" fill="#f0fdf4" stroke="#4ade80" stroke-width="2.5" />
+  <text x="240" y="274" class="hdr" fill="#15803d">3. SKCanvas (Immediate-Mode Zeichenfläche in WpfPlot)</text>
+  <rect x="35" y="288" width="410" height="34" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1.5" />
+  <text x="240" y="310" class="code" fill="#166534">DrawPath(SKPath)  &#183;  DrawBitmap(SKBitmap)</text>
+  <text x="240" y="348" class="sub" fill="#15803d">Rendert bei Refresh() direkt in 1 Bild (0 WPF-Shape-Objekte!)</text>
+</svg>
