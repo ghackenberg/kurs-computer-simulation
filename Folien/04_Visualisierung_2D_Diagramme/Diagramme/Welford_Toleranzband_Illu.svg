@@ -34,5 +34,5 @@
 
   <!-- Fußzeile: Welford O(1) -->
   <rect x="35" y="312" width="410" height="36" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
-  <text x="240" y="335" class="code" fill="#1e3a8a" text-anchor="middle">Welford-Update pro Messwert x in O(1) Zeit &amp; O(1) RAM</text>
+  <text x="240" y="335" class="code" fill="#1e3a8a" text-anchor="middle">3 Ebenen: DataStreamer + HorizontalLine + Alarm</text>
 </svg>

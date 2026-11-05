@@ -1201,7 +1201,62 @@ writeSvg('Welford_Toleranzband_Illu.svg', `
 
   <!-- Fußzeile: Welford O(1) -->
   <rect x="35" y="312" width="410" height="36" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
-  <text x="240" y="335" class="code" fill="#1e3a8a" text-anchor="middle">Welford-Update pro Messwert x in O(1) Zeit &amp; O(1) RAM</text>
+  <text x="240" y="335" class="code" fill="#1e3a8a" text-anchor="middle">3 Ebenen: DataStreamer + HorizontalLine + Alarm</text>
+</svg>
+`);
+
+// 14b. Reine Illustration (570x380): Kurzzeit-Gedächtnis (Ringpuffer) vs. Langzeit-Gedächtnis (Welford)
+writeSvg('Ringpuffer_vs_Welford_Architektur_Illu.svg', `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+    </style>
+    <marker id="rw-b" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+    <marker id="rw-g" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+  </defs>
+
+  <!-- Oben: Eingehender Messwert x -->
+  <rect x="95" y="12" width="290" height="48" rx="8" fill="#f8fafc" stroke="#475569" stroke-width="2" />
+  <text x="240" y="42" class="hdr" fill="#0f172a">Neuer Simulationswert x (1.000 Hz)</text>
+
+  <!-- Verzweigungspfeile -->
+  <line x1="175" y1="60" x2="115" y2="92" stroke="#2563eb" stroke-width="3" marker-end="url(#rw-b)" />
+  <line x1="305" y1="60" x2="365" y2="92" stroke="#16a34a" stroke-width="3" marker-end="url(#rw-g)" />
+
+  <!-- Links: Kurzzeit-Gedächtnis (Ringpuffer) -->
+  <rect x="-15" y="98" width="242" height="265" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="2" />
+  <text x="106" y="124" class="hdr" fill="#1d4ed8">1. Kurzzeit-Gedächtnis</text>
+  <text x="106" y="146" class="code" fill="#1e40af">Ringpuffer (DataStreamer)</text>
+
+  <rect x="5" y="162" width="202" height="68" rx="6" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" />
+  <text x="106" y="188" class="code" fill="#1e3a8a">double[500] im RAM</text>
+  <text x="106" y="214" class="sub" fill="#475569">Kennt nur letzte 0,5 s</text>
+
+  <rect x="5" y="246" width="202" height="100" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" />
+  <text x="106" y="272" class="sub" fill="#1e40af">Rolle im Dashboard:</text>
+  <text x="106" y="298" class="code" fill="#1d4ed8">Rollende Signalkurve</text>
+  <text x="106" y="324" class="sub" fill="#475569">(Alte Werte überschrieben)</text>
+
+  <!-- Rechts: Langzeit-Gedächtnis (Welford) -->
+  <rect x="253" y="98" width="242" height="265" rx="10" fill="#f0fdf4" stroke="#4ade80" stroke-width="2" />
+  <text x="374" y="124" class="hdr" fill="#15803d">2. Langzeit-Gedächtnis</text>
+  <text x="374" y="146" class="code" fill="#166534">Welford-Rekursion</text>
+
+  <rect x="273" y="162" width="202" height="68" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1.5" />
+  <text x="374" y="188" class="code" fill="#166534">Count · Mean · M2</text>
+  <text x="374" y="214" class="sub" fill="#15803d">Nur 3 Zahlen (24 Byte RAM!)</text>
+
+  <rect x="273" y="246" width="202" height="100" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" />
+  <text x="374" y="272" class="sub" fill="#166534">Rolle im Dashboard:</text>
+  <text x="374" y="298" class="code" fill="#15803d">HorizontalLine (&#177;3&#963;)</text>
+  <text x="374" y="324" class="code" fill="#15803d">&amp; Live-Gauß-Kurve</text>
 </svg>
 `);
 
@@ -1246,6 +1301,83 @@ writeSvg('FillY_Polygon_Illu.svg', `
   <!-- Fußzeile -->
   <rect x="35" y="312" width="410" height="36" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
   <text x="240" y="335" class="code" fill="#1e3a8a">1 geschlossener SKPath mit 2·N Eckpunkten in O(N)</text>
+</svg>
+`);
+
+// 15b. Reine Illustration (570x380): MSAGL Layout-Varianten (Hierarchisch Sugiyama vs. Organisch Force-Directed)
+writeSvg('MSAGL_Layout_Varianten_Illu.svg', `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
+    </style>
+    <marker id="lv-b" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+    <marker id="lv-r" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+  </defs>
+
+  <!-- Oben: Variante 1 - Hierarchisches Schicht-Layout (Sugiyama) -->
+  <rect x="10" y="12" width="460" height="170" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="2" />
+  <text x="240" y="38" class="hdr" fill="#1d4ed8">1. Hierarchisches Schicht-Layout (Sugiyama)</text>
+  <text x="240" y="58" class="sub" fill="#475569">Kausaler Signalfluss (Links &#8594; Rechts) + Rückführung</text>
+
+  <!-- Schicht-Linien -->
+  <line x1="90" y1="70" x2="90" y2="145" stroke="#bfdbfe" stroke-width="2" stroke-dasharray="4,4" />
+  <line x1="240" y1="70" x2="240" y2="145" stroke="#bfdbfe" stroke-width="2" stroke-dasharray="4,4" />
+  <line x1="390" y1="70" x2="390" y2="145" stroke="#bfdbfe" stroke-width="2" stroke-dasharray="4,4" />
+
+  <!-- Vorwärts-Pfeile -->
+  <line x1="132" y1="102" x2="190" y2="102" stroke="#2563eb" stroke-width="2.5" marker-end="url(#lv-b)" />
+  <line x1="282" y1="102" x2="340" y2="102" stroke="#2563eb" stroke-width="2.5" marker-end="url(#lv-b)" />
+
+  <!-- Blöcke -->
+  <rect x="48" y="84" width="84" height="36" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+  <text x="90" y="107" class="code" fill="#1e3a8a">Sum</text>
+
+  <rect x="198" y="84" width="84" height="36" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
+  <text x="240" y="107" class="code" fill="#1e3a8a">Regler</text>
+
+  <rect x="348" y="84" width="84" height="36" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+  <text x="390" y="107" class="code" fill="#1e3a8a">Strecke</text>
+
+  <!-- Feedback-Schleife unten -->
+  <path d="M 390 120 C 390 162, 90 162, 90 125" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#lv-r)" />
+  <text x="240" y="172" class="code" fill="#1e40af">SugiyamaLayoutSettings (Standard)</text>
+
+  <!-- Unten: Variante 2 - Organisches Kräfte-Layout (Force-Directed / MDS) -->
+  <rect x="10" y="196" width="460" height="172" rx="10" fill="#f0fdf4" stroke="#4ade80" stroke-width="2" />
+  <text x="240" y="222" class="hdr" fill="#15803d">2. Organisches Kräfte-Layout (Force-Directed)</text>
+  <text x="240" y="242" class="sub" fill="#475569">Vermaschte Topologie &#8594; Automatische Nachbarschafts-Cluster</text>
+
+  <!-- Kanten (ungerichtet) -->
+  <line x1="145" y1="295" x2="75" y2="268" stroke="#16a34a" stroke-width="2.5" />
+  <line x1="145" y1="295" x2="75" y2="325" stroke="#16a34a" stroke-width="2.5" />
+  <line x1="145" y1="295" x2="335" y2="295" stroke="#0f172a" stroke-width="3" />
+  <line x1="335" y1="295" x2="405" y2="268" stroke="#d97706" stroke-width="2.5" />
+  <line x1="335" y1="295" x2="405" y2="325" stroke="#d97706" stroke-width="2.5" />
+
+  <!-- Knoten Cluster A -->
+  <circle cx="75" cy="268" r="16" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+  <text x="75" y="273" class="code" fill="#166534">S1</text>
+  <circle cx="75" cy="325" r="16" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+  <text x="75" y="330" class="code" fill="#166534">S2</text>
+  <rect x="112" y="277" width="66" height="34" rx="6" fill="#ffffff" stroke="#15803d" stroke-width="2.5" />
+  <text x="145" y="299" class="code" fill="#166534">GW-A</text>
+
+  <!-- Knoten Cluster B -->
+  <rect x="302" y="277" width="66" height="34" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="2.5" />
+  <text x="335" y="299" class="code" fill="#b45309">GW-B</text>
+  <circle cx="405" cy="268" r="16" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+  <text x="405" y="273" class="code" fill="#92400e">R1</text>
+  <circle cx="405" cy="325" r="16" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+  <text x="405" y="330" class="code" fill="#92400e">R2</text>
+
+  <text x="240" y="356" class="code" fill="#166534">MdsLayoutSettings (Feder- &amp; Abstoßungskräfte)</text>
 </svg>
 `);
 

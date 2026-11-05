@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+    </style>
+    <marker id="rw-b" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+    <marker id="rw-g" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+  </defs>
+
+  <!-- Oben: Eingehender Messwert x -->
+  <rect x="95" y="12" width="290" height="48" rx="8" fill="#f8fafc" stroke="#475569" stroke-width="2" />
+  <text x="240" y="42" class="hdr" fill="#0f172a">Neuer Simulationswert x (1.000 Hz)</text>
+
+  <!-- Verzweigungspfeile -->
+  <line x1="175" y1="60" x2="115" y2="92" stroke="#2563eb" stroke-width="3" marker-end="url(#rw-b)" />
+  <line x1="305" y1="60" x2="365" y2="92" stroke="#16a34a" stroke-width="3" marker-end="url(#rw-g)" />
+
+  <!-- Links: Kurzzeit-Gedächtnis (Ringpuffer) -->
+  <rect x="-15" y="98" width="242" height="265" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="2" />
+  <text x="106" y="124" class="hdr" fill="#1d4ed8">1. Kurzzeit-Gedächtnis</text>
+  <text x="106" y="146" class="code" fill="#1e40af">Ringpuffer (DataStreamer)</text>
+
+  <rect x="5" y="162" width="202" height="68" rx="6" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" />
+  <text x="106" y="188" class="code" fill="#1e3a8a">double[500] im RAM</text>
+  <text x="106" y="214" class="sub" fill="#475569">Kennt nur letzte 0,5 s</text>
+
+  <rect x="5" y="246" width="202" height="100" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" />
+  <text x="106" y="272" class="sub" fill="#1e40af">Rolle im Dashboard:</text>
+  <text x="106" y="298" class="code" fill="#1d4ed8">Rollende Signalkurve</text>
+  <text x="106" y="324" class="sub" fill="#475569">(Alte Werte überschrieben)</text>
+
+  <!-- Rechts: Langzeit-Gedächtnis (Welford) -->
+  <rect x="253" y="98" width="242" height="265" rx="10" fill="#f0fdf4" stroke="#4ade80" stroke-width="2" />
+  <text x="374" y="124" class="hdr" fill="#15803d">2. Langzeit-Gedächtnis</text>
+  <text x="374" y="146" class="code" fill="#166534">Welford-Rekursion</text>
+
+  <rect x="273" y="162" width="202" height="68" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1.5" />
+  <text x="374" y="188" class="code" fill="#166534">Count · Mean · M2</text>
+  <text x="374" y="214" class="sub" fill="#15803d">Nur 3 Zahlen (24 Byte RAM!)</text>
+
+  <rect x="273" y="246" width="202" height="100" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" />
+  <text x="374" y="272" class="sub" fill="#166534">Rolle im Dashboard:</text>
+  <text x="374" y="298" class="code" fill="#15803d">HorizontalLine (&#177;3&#963;)</text>
+  <text x="374" y="324" class="code" fill="#15803d">&amp; Live-Gauß-Kurve</text>
+</svg>

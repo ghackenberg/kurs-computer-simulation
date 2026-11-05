@@ -101,7 +101,7 @@ Ein numerischer Simulator berechnet zunächst nur rohe Zahlenkolonnen. Erst **Di
 1. **Zeitreihen (`Signal`, `SignalXY`):** Wie schnell schwingt ein Regler ein? Gibt es Überschwingen?
 2. **Zustandsraum (`Scatter`, `VectorField`):** Werden Leistungs- oder Haftgrenzen im Betrieb verletzt?
 3. **Statistik & Felder (`Bars`, `Box`, `Heatmap`):** Halten Bauteile in $10.000$ Monte-Carlo-Läufen die Toleranz ein?
-4. **Systemtopologie (`MSAGL`):** Wie sind Regler, Aktoren und Sensoren im Modell verschaltet?
+4. **Systemtopologie (`MSAGL`):** Wie sind Blöcke verschaltet (hierarchisch vs. organisch)?
 
 </div>
 <div class="two">
@@ -1052,22 +1052,43 @@ private void OnUiTimerTick(object? s, EventArgs e) => WpfPlot1.Refresh();
 
 ---
 
-### Live-Toleranzüberwachung im Plot: Warum der Welford-Algorithmus?
+### Von der nackten Kurve zu Grenzwert-Linien (`HorizontalLine`)
 
 <div class="columns">
 <div class="two">
 
-- **Ziel im Live-Diagramm:**
-  - Im `DataStreamer` sollen live **Mittelwert $\bar{x}$** und **$\pm 3\sigma$-Warngrenzen** als `HorizontalLine` mitwandern.
-- **Problem beim Ringpuffer:**
-  - Der Ringpuffer hebt nur die letzten 500 Punkte auf – alle älteren Werte sind überschrieben!
-- **Lösung (Welford-Algorithmus, 1962):**
-  - Aktualisiert Mittelwert `Mean` und Streuung `StdDev` bei jedem neuen Messwert `x` rekursiv in **$\mathcal{O}(1)$ Zeit und $\mathcal{O}(1)$ Speicher**!
+Woran erkennt der Bediener in der rollenden `DataStreamer`-Kurve einen **Alarm**? Wir legen optische Leitplanken (`HorizontalLine`) darüber:
+
+- **Fall 1 – Starre Grenze aus dem Datenblatt:**
+  - Z. B. max. Drehzahl $7.200\,\text{U/min}$ $\implies$ einmalig `Add.HorizontalLine(7200)` setzen.
+- **Fall 2 – Prozessabhängige Grenze (`Mean ± 3·StdDev`):**
+  - Bei **Predictive Maintenance** (Lagerschwingung) oder **SPC-Qualitätsregelkarten** müssen wir `Mean` und `StdDev` **live aus dem Strom berechnen**, um die Linien bei `Mean ± 3·StdDev` zu platzieren!
 
 </div>
 <div class="two">
 
 ![](./Diagramme/Welford_Toleranzband_Illu.svg)
+
+</div>
+</div>
+
+---
+
+### Das Ringpuffer-Problem beim Mitrechnen lösen: Welford
+
+<div class="columns">
+<div class="two">
+
+- **Das Problem bei Fall 2 (`Mean ± 3·StdDev` live berechnen):**
+  - Für stabile `HorizontalLine`-Grenzen brauchen wir Mittelwert und Streuung über **alle bisherigen Millionen Messwerte**.
+  - Aber: Unser `DataStreamer`-Ringpuffer überschreibt alles, was älter als $0{,}5\,\text{s}$ (500 Punkte) ist!
+- **Die Lösung (Zwei-Gedächtnis-Architektur):**
+  - Jeder neue Wert `x` geht an den **Ringpuffer** (Kurzzeit-Kurve) UND an die **Welford-Rekursion** (`Count`, `Mean`, `M2` = nur 3 Zahlen / 24 Byte RAM)!
+
+</div>
+<div class="two">
+
+![](./Diagramme/Ringpuffer_vs_Welford_Architektur_Illu.svg)
 
 </div>
 </div>
@@ -1259,6 +1280,28 @@ GraphControl.Graph = graph;
 
 ---
 
+### Zwei Layout-Strategien in MSAGL: Hierarchisch vs. Kräfteorientiert
+
+<div class="columns">
+<div class="two">
+
+Nach welchem Kriterium ordnet `MSAGL` die Knoten im 2D-Raum an? Es gibt **zwei Hauptverfahren**:
+
+1. **Hierarchisches Schicht-Layout (`SugiyamaLayoutSettings`, Standard):**
+   - Für **kausale Signalflüsse** (`Sum` $\to$ `Regler` $\to$ `Strecke`) mit Rückführschleifen wie in *Simulink*-Blockschaltbildern.
+2. **Organisches Kräfte-Layout (`MdsLayoutSettings`, Force-Directed):**
+   - Für **vermaschte Komponentennetze** (`GW-A`, `GW-B` mit Sensoren `S1`, `S2`, `R1`, `R2`), bei denen Nachbarschafts-Cluster sichtbar werden sollen.
+
+</div>
+<div class="two">
+
+![](./Diagramme/MSAGL_Layout_Varianten_Illu.svg)
+
+</div>
+</div>
+
+---
+
 ### Anwendungsbeispiel MSAGL: Hierarchisches Sugiyama-Layout
 
 <div class="columns">
@@ -1302,12 +1345,32 @@ Wie berechnet `MSAGL` aus Knoten und Kanten ein sauberes Blockschaltbild?
 
 ---
 
+### Anwendungsbeispiel MSAGL: Organisches IoT-Netzwerk-Layout
+
+<div class="columns">
+<div class="two">
+
+Für ungerichtete Sensor- oder Kommunikationsnetze einer Industrie-4.0-Fertigungszelle liefert ein kräfteorientiertes Layout (`MdsLayoutSettings`) eine organische Anordnung:
+
+- **Automatische Cluster-Bildung:** Die CNC-Sensoren (blau) gruppieren sich automatisch um `Gateway-A` und die Roboter-Sensoren (orange) um `Gateway-B`.
+- **Zentrale Brückenknoten:** `Gateway-A`, `Gateway-B` und `Edge-Cloud` richten sich im Zentrum zwischen den Teilnetzen aus.
+
+</div>
+<div class="three">
+
+![](./Illustrationen/MSAGL_ForceDirected_Layout.png)
+
+</div>
+</div>
+
+---
+
 ### Blick unter die Haube: Force-Directed Layout (Physik-Simulation!)
 
 <div class="columns">
 <div class="two">
 
-Für ungerichtete Sensor- oder Kommunikationsnetze nutzt `MSAGL` ein zweites Verfahren – **selbst eine kleine physikalische Simulation**:
+Wie entsteht dieses organische Layout? `MSAGL` berechnet intern **selbst eine kleine physikalische Simulation**:
 
 - **1. Kanten als Zugfedern (Hooke):**
   - Verbundene Knoten $v_1, v_2$ ziehen sich an, bis sie den Sollabstand $d_0$ erreichen ($\mathcal{O}(|E|)$).
@@ -1330,26 +1393,6 @@ Für ungerichtete Sensor- oder Kommunikationsnetze nutzt `MSAGL` ein zweites Ver
 Evolution der Knotenpositionen und der Kräftesumme $\sum \|\vec{F}_{\text{net}}\|$ von Iteration 0 bis zum Gleichgewicht (Iteration 50):
 
 ![](./Diagramme/Mini_ForceDirected_Matrix.svg)
-
----
-
-### Anwendungsbeispiel MSAGL: Organisches IoT-Netzwerk-Layout
-
-<div class="columns">
-<div class="two">
-
-Ergebnis des kräfteorientierten Layouts (`MdsLayoutSettings`) für eine Industrie-4.0-Fertigungszelle:
-
-- **Automatische Cluster-Bildung:** Durch die Federkräfte gruppieren sich die CNC-Sensoren (blau) um `Gateway-A` und die Roboter-Sensoren (orange) um `Gateway-B`.
-- **Zentrale Brückenknoten:** `Gateway-A`, `Gateway-B` und `Edge-Cloud` richten sich automatisch im Zentrum zwischen den Teilnetzen aus.
-
-</div>
-<div class="three">
-
-![](./Illustrationen/MSAGL_ForceDirected_Layout.png)
-
-</div>
-</div>
 
 ---
 
