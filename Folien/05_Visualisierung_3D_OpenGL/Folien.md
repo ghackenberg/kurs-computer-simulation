@@ -55,11 +55,26 @@ Präsentation der Hausübung aus Termin 04 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
+- Brücke zu Termin 02–04 und Abschluss des Visualisierungs-Blocks
 - Grundkonzepte von OpenGL (Zustandsmaschine, Grafik-Pipeline)
 - Verwendung von Buffern (Color, Depth)
 - Koordinatensysteme und Transformationen (Projection, ModelView)
 - Projektionsarten (glOrtho vs. gluPerspective, Clipping-Ebenen)
 - Zeichnen von Primitiven und Beleuchtung
+
+---
+
+### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+
+In **Termin 02 bis 04** haben wir die 2D-Welt gemeistert (Pixelraster, 2D-Vektor-Canvas, Echtzeit-Diagramme mit `ScottPlot 5`) – wo stoßen 2D-Ansichten an ihre Grenzen?
+
+- **Rückblick auf Termin 03 & 04 (2D-Projektion & Telemetrie):**
+  - In Termin 03 haben wir Weltkoordinaten $(x_w, y_w)$ auf den flachen Bildschirm abgebildet; in Termin 04 haben wir Zeitreihen und Topologie-Graphen (`MSAGL`) ergänzt.
+- **Der Engpass heute (Räumliche Kinematik & Verdeckung):**
+  - Ein mehrachsiger Industrieroboter (SCARA / Knickarm) oder ein Greifautomat bewegt sich im **dreidimensionalen Raum $(x, y, z)$**: Bauteile verdecken sich gegenseitig, Perspektive verkürzt Längen und Gelenke rotieren um beliebige Raumachsen.
+  - Eine flache 2D-Zeichenfläche kennt weder Tiefenprüfung (**Z-Buffer**) noch Hardware-Beleuchtung oder hierarchische $4\times 4$-Transformationsketten auf der GPU.
+- **Einordnung ins große Ganze (4. Visualisierungs-Säule: 3D-OpenGL):**
+  - Mit `SharpGL` und hierarchischen **3D-Szenengraphen** komplettieren wir heute unseren Visualisierungs-Werkzeugkasten (T02–T05).
 
 ---
 

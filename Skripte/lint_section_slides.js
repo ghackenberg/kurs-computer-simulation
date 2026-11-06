@@ -6,7 +6,7 @@
  * FH OÖ – Campus Wels
  * ==============================================================================
  *
- * Prüft gemäß GEMINI.md:
+ * Prüft gemäß GEMINI.md / AGENTS.md:
  * 1. Kapitelübersicht (# Kapitel N: ...):
  *    - Hintergrundbild '![bg right](./Titelbild.jpg)' (Datei existiert)
  *    - Standard-Einleitung: 'Dieses Kapitel umfasst die folgenden Abschnitte:'
@@ -17,6 +17,9 @@
  *    - Standard-Einleitung: 'Dieser Abschnitt umfasst die folgenden Inhalte:'
  *    - Aufzählungsliste der Inhalte (- ...)
  *    - Konsistenz zwischen Kapitel-Agenda und tatsächlichen Abschnitten
+ *
+ * 3. Kapitel-Brücke & Rückblick in Abschnitt N.1 (Kapitel 01 bis 10):
+ *    - Dedizierte Einstiegsfolie '### Rückblick & Brücke: ...' (oder '### Einordnung & Rückblick: ...')
  * ==============================================================================
  */
 
@@ -181,6 +184,28 @@ function lintSectionDeck(markdownPath) {
       });
     }
   });
+
+  // 5. Kapitel-Brücke & Rückblick-Folie in Abschnitt N.1 (für Kapitel 01 bis 10)
+  const chapNumMatch = deckName.match(/^(\d+)_/);
+  const chapNum = chapNumMatch ? parseInt(chapNumMatch[1], 10) : -1;
+  if (chapNum >= 1 && chapNum <= 10) {
+    const firstSec = actualSectionSlides.find(s => s.secNum === `${chapNum}.1`);
+    if (firstSec) {
+      const nextSec = actualSectionSlides.find(s => s.slideNum > firstSec.slideNum);
+      const endSlideIdx = nextSec ? nextSec.slideNum - 1 : slides.length;
+      const sec1Slides = slides.slice(firstSec.slideNum, endSlideIdx);
+      const hasBridgeSlide = sec1Slides.some(sl =>
+        /###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(sl)
+      );
+      if (!hasBridgeSlide) {
+        issues.push({
+          slideNum: firstSec.slideNum,
+          type: 'MISSING_BRIDGE_SLIDE',
+          message: `Abschnitt ${chapNum}.1 fehlt eine dedizierte Einstiegs-/Brückenfolie ('### Rückblick & Brücke: ...'), die an den vorigen Termin und das große Ganze anknüpft.`
+        });
+      }
+    }
+  }
 
   return {
     markdownPath,

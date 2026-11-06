@@ -57,10 +57,24 @@ Präsentation der Hausübung aus Termin 05 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
+- Brücke zu Termin 02–05 und Scharnier zum Modellierungs-Block (T07–T10)
 - Motivation: Auslastung moderner Mehrkern-Prozessoren
 - Unterschied: Prozess vs. Thread
 - Nebenläufigkeit (Concurrency) vs. echte Parallelität
 - Theoretische Grenzen: Speedup, Effizienz & Amdahlsches Gesetz
+
+---
+
+### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+
+In **Termin 02 bis 05** haben wir leistungsfähige 2D- und 3D-Oberflächen gebaut – warum bildet **Termin 06** heute das architektonische Scharnier zur zweiten Semesterhälfte?
+
+- **Rückblick & Erfahrung aus den bisherigen Showcases (T02–T05):**
+  - Solange Physik und Rendering gemeinsam im **WPF UI-Thread** laufen, stehen für alles zusammen bei $60\,\text{FPS}$ nur **$16{,}6\,\text{ms}$ Budget pro Frame** zur Verfügung.
+- **Der Engpass für komplexe Ingenieursmodelle (T07–T10):**
+  - Sobald wir ab nächster Woche große Gleichungssysteme (T07), hochfrequente Differentialgleichungen (T08) oder Millionen Monte-Carlo-Läufe (T09) berechnen, dauert ein Rechenschritt schnell Sekunden statt Millisekunden $\implies$ **Das WPF-Fenster friert komplett ein ("Keine Rückmeldung")**, und 15 von 16 CPU-Kernen langweilen sich!
+- **Einordnung ins große Ganze (Das Architektur-Scharnier):**
+  - Heute trennen wir **Berechnung (Worker-Threads / `Parallel.For`)** und **Visualisierung (UI-Dispatcher)** sauber voneinander – das Fundament für alle kommenden Solver in **Termin 07 bis 10**.
 
 ---
 

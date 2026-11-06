@@ -32,9 +32,24 @@ Dieses Kapitel umfasst das Folgende:
 
 Dieser Abschnitt beinhaltet das Folgende:
 
+- Brücke zum Prolog und Einordnung in die Semester-Architektur
 - Definition von Modell und Simulation
 - Praktische Anwendungsbeispiele aus verschiedenen Ingenieursdisziplinen
 - Den Nutzen der Simulation zur Kostenreduktion, Risikominimierung und Optimierung
+
+---
+
+### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+
+Nach dem organisatorischen **Prolog (Kapitel 00)** legen wir heute in **Termin 01** das fachliche und mathematische Fundament für das gesamte Semester:
+
+- **Ausgangspunkt (Ingenieur-Herausforderung):**
+  - Reale mechatronische Anlagen (Hydraulikzylinder, Roboter, Fertigungsstraßen) sind zu teuer, zu träge oder zu gefährlich, um neue Regler und Algorithmen direkt an der echten Maschine durch Ausprobieren zu testen.
+- **Was wir heute in Termin 01 aufbauen:**
+  - Wir klären die Systematik der **4 Simulationsmodellarten** (statisch, kontinuierlich, diskret, hybrid) sowie der **4 Visualisierungssäulen** (Pixel, Vektor, Diagramme, 3D).
+  - In der Hausübung programmieren Sie direkt Ihren ersten **expliziten Euler- und Heun-Integrator** für nichtlineare Kinematik und prüfen dessen Stabilitätsgrenzen.
+- **Der rote Faden für das Semester:**
+  - **Block 1 (T02–T05):** Echtzeit-Visualisierung in 2D & 3D $\to$ **Scharnier (T06):** Multithreading $\to$ **Block 2 (T07–T10):** Mathematisch-numerische Solver für alle 4 Modellarten.
 
 ---
 

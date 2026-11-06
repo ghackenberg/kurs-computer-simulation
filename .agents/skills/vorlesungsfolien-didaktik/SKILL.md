@@ -23,12 +23,21 @@ Wenn ein neuer Diagrammtyp, ein Algorithmus oder ein Architekturbaustein eingef�
 3. **Schritt 3 – `Der C#-Code zu ...` (Wie programmiert man es?):**
    - Eine dedizierte, luftige Code-Folie (entweder ganzseitig oder zweispaltig mit kurzer Erklärung), die exakt zeigt, wie das Beispiel in C# (`.NET` / `WPF` / `ScottPlot 5` / `MSAGL` / `Math.NET`) umgesetzt wird.
 
-### 1.2 Nahtlose Storyline-Übergänge (Nichts darf „vom Himmel fallen“!)
+### 1.2 Verbindlicher Kapitel-Einstieg: Rückblick, Engpass-Brücke & Einordnung ins große Ganze
+Jedes Kapitel ab Kapitel `01` (und insbesondere ab Kapitel `02` unmittelbar nach Folie 2 `Live-Showcase & Code-Defense: Termin XX` und der Abschnittsfolie `## N.1: ...`) **MUSS** zu Beginn von Abschnitt `N.1` die Studierenden dort abholen, wo der letzte Termin aufgehört hat, und das neue Kapitel in das große Ganze des Semesters einordnen:
+1. **Die Pflicht-Folie `### Rückblick & Brücke: ...` (1. Inhaltsfolie in Abschnitt `N.1`):**
+   - **Rückblick auf die bisherigen Termine:** Was haben wir im vorigen Termin (bzw. in den bisherigen Terminen) gelernt und in der Hausübung gebaut?
+   - **Der konkrete Engpass / die Grenze des bisherigen Werkzeugs:** An welcher konkreten Ingenieurfrage scheitert das Werkzeug aus dem letzten Termin heute? (z. B. T02 `WriteableBitmap` kennt keine klickbaren Stäbe/Geometrien $\implies$ T03 `WPF Canvas`; T03 `Canvas` hat keine fertigen Achsen/Ticks/Auto-Scaling $\implies$ T04 `ScottPlot`; T07 Statik $\sum\vec{F}=\mathbf{0}$ kennt keine Massenträgheit/Bewegung $\implies$ T08 ODEs $\dot{\mathbf{x}}=\mathbf{f}$; T08 kontinuierlicher $\Delta t$-Solver rechnet Millionen Leerschritte bei Logistik-Warteschlangen $\implies$ T09 Ereignisdiskrete Simulation DES; T08 + T09 einzeln scheitern bei Systemen mit harten Anschlägen/Abtastung $\implies$ T10 Hybride Systeme).
+   - **Einordnung ins große Ganze (Semester-Architektur):** Wo steht das heutige Kapitel im Gesamtbaukasten des Digitalen Zwillings (Visualisierungs-Säulen T02–T05 $\to$ Multithreading-Scharnier T06 $\to$ 4 Modellierungs-Paradigmen T07–T10) und wie greift es auf Vorwissen zurück?
+2. **Automatische Linter-Prüfung (`npm run lint:sections`):**
+   - `Skripte/lint_section_slides.js` prüft für alle Kapitel `01` bis `10`, dass in Abschnitt `N.1` eine Einstiegsfolie mit dem Titel `### Rückblick & Brücke:` (bzw. `### Einordnung & Rückblick:`) vorhanden ist und im Abschnitts-Opener `## N.1:` als erster Punkt angekündigt wird.
+
+### 1.3 Nahtlose Storyline-Übergänge innerhalb des Kapitels (Nichts darf „vom Himmel fallen“!)
 - **Verbot unmotivierter Theorie-Blöcke:** Kein mathematischer Algorithmus (wie Welford, Binärsuche, Cholesky oder Bisektion) darf isoliert ohne direkten Bezug zur unmittelbar vorherigen Folie starten.
 - **Die Problem-Lösungs-Brücke:** Starte immer beim Stand der vorherigen Folie und stelle die natürliche nächste Frage des Entwicklers:
   - *Positivbeispiel (Kapitel 04 – Welford):* Auf Folie 49 rollt die nackte `DataStreamer`-Kurve $\to$ Folie 50: *„Woran erkennt der Bediener einen Alarm? Wir brauchen optische Leitplanken (`HorizontalLine`). Fall 1: Starre Grenze aus Datenblatt. Fall 2: Prozessabhängige Grenze (`Mean ± 3·StdDev`) live lernen.“* $\to$ Folie 51: *„Dilemma bei Fall 2: Unser `DataStreamer`-Ringpuffer vergisst alles nach 500 Punkten! Wie berechnen wir `Mean` und `StdDev` über Millionen Punkte ohne RAM-Explosion? $\implies$ Zwei-Gedächtnis-Architektur mit Welford!“*
 
-### 1.3 Zielgruppen-Anpassung (Automatisierungstechnik statt Theoretischer Informatik)
+### 1.4 Zielgruppen-Anpassung (Automatisierungstechnik statt Theoretischer Informatik)
 - **Keine nackte $\mathcal{O}(\dots)$-Notation ohne konkrete Zahlen:** Studierende der Automatisierungstechnik kennen die Landau-Notation nicht aus dem Effeff. Jede Komplexitätsangabe muss durch ein **konkretes Zahlenbeispiel** greifbar gemacht werden:
   - Statt nur $\mathcal{O}(1)$ beim `Signal`-Clipping: *„Dreisatz-Division `i = (5.000 - t_0) / 0.001 = 5000`: Nur 2 Divisionen und 11 gelesene Array-Werte statt 10 Millionen `if`-Vergleiche!“*
   - Statt nur $\mathcal{O}(\log_2 N)$ bei `SignalXY`: *„Halbierungssuche findet den Startindex unter 10 Mio. Punkten in maximal 24 Vergleichen.“*

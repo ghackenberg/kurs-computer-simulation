@@ -58,10 +58,25 @@ Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
+- Brücke zu Termin 01 (1D-Kinematik) und Auftakt des Visualisierungs-Blocks
 - Diskrete Rasterbilder und 2D-Feldsimulationen
 - Farbmodelle, Bytereihenfolge und Farbtiefe (`Bgra32`)
 - Zeilenweiser linearer Speicher (Row-Major) und `Stride`
 - Mathematische Adressberechnung und Cache-Lokalität
+
+---
+
+### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+
+In **Termin 01** haben wir punktförmige Massen (Zylinderkolben, Projektil) mit wenigen skalaren Zustandsgrößen ($x(t), v(t)$) berechnet – warum reicht das für reale Bauteile oft nicht aus?
+
+- **Rückblick auf Termin 01 (Konzentrierte Parameter):**
+  - Ein einzelner Zahlenwert für Position $x$ oder Temperatur $T$ genügt, solange sich das Bauteil überall gleich verhält.
+- **Der Engpass heute (Ortsaufgelöste 2D-Felder):**
+  - In einem CPU-Kühlkörper oder Reaktor hat **jeder Punkt $(x, y)$ im Raum** eine andere Temperatur $T(x, y, t)$! Bei einem $500 \times 500$-Gitter entstehen **$250.000$ gekoppelte Zustände pro Zeitschritt**.
+  - Klassische Textausgaben oder Standard-UI-Controls brechen bei $250.000$ Werten mit 60 FPS sofort zusammen.
+- **Einordnung ins große Ganze (1. Visualisierungs-Säule: Raw Pixels):**
+  - Wir starten heute den Block **2D/3D-Visualisierung (T02–T05)** auf der hardwarenächsten Ebene: Direkter Speicherzugriff auf 32-Bit-Pixelraster (`WriteableBitmap`) für flächige 2D-Feldsimulationen (Finite Differenzen).
 
 ---
 

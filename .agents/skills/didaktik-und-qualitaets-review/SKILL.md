@@ -43,8 +43,9 @@ Die Studierenden befinden sich im **5. Fachsemester Bachelor Automatisierungstec
   - **Hausübung (Säule 2a: 40 % C#-Code-Portfolio = 10 × 4 %, 5,0 h Selbststudium/Woche):** Sowohl **Stufe 1 (Basisaufgabe auf der C#-Vorlage, Teilaufgaben `1.1`–`1.4`)** als auch **Stufe 2 (Vertiefungsaufgabe im Wahlmodell: Track A `A.1`–`A.4` ODER Track B `B.1`–`B.4`)** sind verpflichtende Teile der Hausübung und werden vollständig zu Hause bearbeitet (Ziffern `1`/`2` = Nacheinander/UND; Buchstaben `A`/`B` = Auswahl/ODER).
 - **Prüffragen:**
   1. **Strikte Rückwärts-Kausalität am Terminbeginn:** Prüfen Showcase und Moodle-Quiz zu Beginn von Termin $k$ ausschließlich den Stoff der vorangegangenen Termine $1 \dots k-1$ (Q1: Kap. 00–02, Q2: Kap. 03–04, Q3: Kap. 05–07, Q4: Kap. 08–09)?
-  2. **Vorgreif-Sperre:** Werden in Folien, Übungen oder Quizzes Konzepte verwendet, die erst in einem späteren Kapitel eingeführt werden?
-  3. **Schnittstellen-Kontinuität:** Passen aufeinander aufbauende Termine technisch nahtlos zusammen (z. B. T03 Geometrie-JSON $\to$ T07 Cholesky-FEM)?
+  2. **Kapitel-Brücke & Einordnung ins große Ganze (`### Rückblick & Brücke: ...`):** Besitzt jedes Kapitel (`01` bis `10`) unmittelbar zu Beginn von Abschnitt `N.1` (nach Showcase und Abschnitts-Opener) eine dedizierte Einstiegsfolie `### Rückblick & Brücke: ...`, die (a) an die Erkenntnisse/Hausübung des Vor-Termins anknüpft, (b) den konkreten Engpass der bisherigen Werkzeuge aufzeigt und (c) das heutige Thema in die Gesamtarchitektur des Kurses (Visualisierung T02–T05 $\to$ Multithreading T06 $\to$ Modellierung T07–T10) einordnet?
+  3. **Vorgreif-Sperre:** Werden in Folien, Übungen oder Quizzes Konzepte verwendet, die erst in einem späteren Kapitel eingeführt werden?
+  4. **Schnittstellen-Kontinuität:** Passen aufeinander aufbauende Termine technisch nahtlos zusammen (z. B. T03 Geometrie-JSON $\to$ T07 Cholesky-FEM)?
 
 ---
 

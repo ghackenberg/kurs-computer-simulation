@@ -3,7 +3,7 @@
 **Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
-**Zuletzt generiert:** 2026-11-06 13:17:07 UTC  
+**Zuletzt generiert:** 2026-11-06 13:48:36 UTC  
 
 Dieses Verzeichnis enthält alle druckreifen, vollständigen PDF-Unterlagen für den Upload auf Moodle.
 
@@ -12,16 +12,16 @@ Dieses Verzeichnis enthält alle druckreifen, vollständigen PDF-Unterlagen für
 | Kapitel | Thema | Moodle-Export-Datei | Dateigröße | Lokale Datei |
 | :--- | :--- | :--- | :---: | :--- |
 | **00** | Prolog | [`00_Prolog_Folien.pdf`](Folien/00_Prolog_Folien.pdf) | 7.05 MB | `Folien/00_Prolog/Folien.pdf` |
-| **01** | Einführung | [`01_Einfuehrung_Folien.pdf`](Folien/01_Einfuehrung_Folien.pdf) | 3.81 MB | `Folien/01_Einführung/Folien.pdf` |
-| **02** | Visualisierung 2D Pixel | [`02_Visualisierung_2D_Pixel_Folien.pdf`](Folien/02_Visualisierung_2D_Pixel_Folien.pdf) | 8.96 MB | `Folien/02_Visualisierung_2D_Pixel/Folien.pdf` |
-| **03** | Visualisierung 2D Vektor | [`03_Visualisierung_2D_Vektor_Folien.pdf`](Folien/03_Visualisierung_2D_Vektor_Folien.pdf) | 4.41 MB | `Folien/03_Visualisierung_2D_Vektor/Folien.pdf` |
+| **01** | Einführung | [`01_Einfuehrung_Folien.pdf`](Folien/01_Einfuehrung_Folien.pdf) | 3.82 MB | `Folien/01_Einführung/Folien.pdf` |
+| **02** | Visualisierung 2D Pixel | [`02_Visualisierung_2D_Pixel_Folien.pdf`](Folien/02_Visualisierung_2D_Pixel_Folien.pdf) | 8.98 MB | `Folien/02_Visualisierung_2D_Pixel/Folien.pdf` |
+| **03** | Visualisierung 2D Vektor | [`03_Visualisierung_2D_Vektor_Folien.pdf`](Folien/03_Visualisierung_2D_Vektor_Folien.pdf) | 4.42 MB | `Folien/03_Visualisierung_2D_Vektor/Folien.pdf` |
 | **04** | Visualisierung 2D Diagramme | [`04_Visualisierung_2D_Diagramme_Folien.pdf`](Folien/04_Visualisierung_2D_Diagramme_Folien.pdf) | 5.06 MB | `Folien/04_Visualisierung_2D_Diagramme/Folien.pdf` |
-| **05** | Visualisierung 3D OpenGL | [`05_Visualisierung_3D_OpenGL_Folien.pdf`](Folien/05_Visualisierung_3D_OpenGL_Folien.pdf) | 3.83 MB | `Folien/05_Visualisierung_3D_OpenGL/Folien.pdf` |
-| **06** | Multithreading | [`06_Multithreading_Folien.pdf`](Folien/06_Multithreading_Folien.pdf) | 1.32 MB | `Folien/06_Multithreading/Folien.pdf` |
-| **07** | Statische Modelle | [`07_Statische_Modelle_Folien.pdf`](Folien/07_Statische_Modelle_Folien.pdf) | 1.19 MB | `Folien/07_Statische_Modelle/Folien.pdf` |
-| **08** | Dynamische Modelle Kontinuierlich | [`08_Dynamische_Modelle_Kontinuierlich_Folien.pdf`](Folien/08_Dynamische_Modelle_Kontinuierlich_Folien.pdf) | 2.33 MB | `Folien/08_Dynamische_Modelle_Kontinuierlich/Folien.pdf` |
-| **09** | Dynamische Modelle Diskret | [`09_Dynamische_Modelle_Diskret_Folien.pdf`](Folien/09_Dynamische_Modelle_Diskret_Folien.pdf) | 4.23 MB | `Folien/09_Dynamische_Modelle_Diskret/Folien.pdf` |
-| **10** | Dynamische Modelle Hybrid | [`10_Dynamische_Modelle_Hybrid_Folien.pdf`](Folien/10_Dynamische_Modelle_Hybrid_Folien.pdf) | 5.39 MB | `Folien/10_Dynamische_Modelle_Hybrid/Folien.pdf` |
+| **05** | Visualisierung 3D OpenGL | [`05_Visualisierung_3D_OpenGL_Folien.pdf`](Folien/05_Visualisierung_3D_OpenGL_Folien.pdf) | 3.84 MB | `Folien/05_Visualisierung_3D_OpenGL/Folien.pdf` |
+| **06** | Multithreading | [`06_Multithreading_Folien.pdf`](Folien/06_Multithreading_Folien.pdf) | 1.34 MB | `Folien/06_Multithreading/Folien.pdf` |
+| **07** | Statische Modelle | [`07_Statische_Modelle_Folien.pdf`](Folien/07_Statische_Modelle_Folien.pdf) | 1.2 MB | `Folien/07_Statische_Modelle/Folien.pdf` |
+| **08** | Dynamische Modelle Kontinuierlich | [`08_Dynamische_Modelle_Kontinuierlich_Folien.pdf`](Folien/08_Dynamische_Modelle_Kontinuierlich_Folien.pdf) | 2.34 MB | `Folien/08_Dynamische_Modelle_Kontinuierlich/Folien.pdf` |
+| **09** | Dynamische Modelle Diskret | [`09_Dynamische_Modelle_Diskret_Folien.pdf`](Folien/09_Dynamische_Modelle_Diskret_Folien.pdf) | 4.25 MB | `Folien/09_Dynamische_Modelle_Diskret/Folien.pdf` |
+| **10** | Dynamische Modelle Hybrid | [`10_Dynamische_Modelle_Hybrid_Folien.pdf`](Folien/10_Dynamische_Modelle_Hybrid_Folien.pdf) | 5.4 MB | `Folien/10_Dynamische_Modelle_Hybrid/Folien.pdf` |
 | **11** | Epilog | [`11_Epilog_Folien.pdf`](Folien/11_Epilog_Folien.pdf) | 1.51 MB | `Folien/11_Epilog/Folien.pdf` |
 
 ## 2. Aufgabenblätter (DIN A4 Handouts)

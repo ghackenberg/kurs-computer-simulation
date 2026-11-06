@@ -59,10 +59,24 @@ Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
+- Brücke zu Termin 03 (2D-CAD) & 06 und Auftakt der 4 Modellarten
 - Definition eines statischen Modells
 - Das Fachwerk als Anwendungsbeispiel
 - Historischer Abriss der Fachwerktheorie
 - Typische Fragestellungen für die Modellierung
+
+---
+
+### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+
+Mit **Termin 06** haben wir unseren Unterbau aus Visualisierung (T02–T05) und Multithreading (T06) abgeschlossen – heute starten wir in die **4 mathematischen Simulationsmodellarten (T07–T10)**!
+
+- **Direkte Brücke zurück zu Termin 03 (2D-Vektorgrafik im Canvas):**
+  - Erinnern Sie sich an Ihren **2D-CAD-Tragwerks-Inspektor bzw. Poly-Bridge-Editor aus Termin 03**: Dort konnten wir Knoten $(x, y)$, Stäbe und Lastpfeile $\vec{F}$ bereits maßstabsgetreu zeichnen und als JSON speichern – aber die Brücke war noch „tot“ (reine Geometrie ohne Kräfteberechnung!).
+- **Was wir heute in Termin 07 ergänzen (1. Modellart: Statik):**
+  - Heute hauchen wir genau dieser Geometrie aus Termin 03 echte **Elastostatik** ein: Wir stellen aus den Knoten und Stäben die globale Steifigkeitsmatrix $\mathbf{K}$ auf und lösen das lineare Gleichungssystem $\mathbf{K} \cdot \mathbf{u} = \mathbf{f}$ über die **Cholesky-Zerlegung** (`Math.NET`).
+- **Einordnung ins große Ganze (Vom Ruhezustand zur Dynamik):**
+  - Statische Modelle beschreiben das **zeitunabhängige Gleichgewicht ($\sum \vec{F} = \mathbf{0}$)** – der logische erste Schritt vor den zeitabhängigen Systemen in Termin 08 bis 10.
 
 ---
 

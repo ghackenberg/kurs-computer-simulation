@@ -62,10 +62,23 @@ Präsentation der Hausübung aus Termin 09 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 Dieser Abschnitt beinhaltet Folgendes:
 
+- Brücke & Synthese: Verschmelzung von Termin 08 (ODE) und Termin 09 (Events).
 - Mathematische Modellierung der Freiflugphase (kontinuierlich).
 - Modellierung des Aufpralls als diskretes Ereignis.
 - Herleitung der analytischen Lösung für die hybride Trajektorie.
 - Simulation der Abfolge von kontinuierlichen Phasen und diskreten Sprüngen.
+
+---
+
+### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+
+In **Termin 08** haben wir rein kontinuierliche Flüsse (ODEs) und in **Termin 09** rein diskrete Ereignissprünge (DES) getrennt voneinander betrachtet – doch wie verhält sich ein realer **Digitaler Zwilling** in der Automatisierungstechnik?
+
+- **Warum weder Termin 08 noch Termin 09 allein ausreichen:**
+  - Eine reale Hydraulikpresse, ein Roboter mit Greifkontakt oder ein geschalteter Stromrichter bewegt sich zwar **kontinuierlich nach Differentialgleichungen (Termin 08)**, trifft aber plötzlich auf **harte mechanische Anschläge, Sicherheits-Lichtschranken, Ventil-Umschaltungen oder digitale SPS-Abtasttakte (Termin 09)**!
+  - Ein reiner RK4-Solver aus Termin 08 überspringt im festen Zeitschritt $\Delta t$ den exakten Aufprallmoment (**Tunneling-Fehler** / Energie-Explosion).
+- **Einordnung ins große Ganze (4. Modellart & Krönung des Kurses):**
+  - Heute verschmelzen wir **kontinuierliche Integration (T08)** und **diskrete Ereignisbehandlung (T09)** zur **Hybriden Simulation** mit **Zero-Crossing-Bisektion** und variablen Abtastzeiten.
 
 ---
 
