@@ -815,7 +815,7 @@ Welche physikalische Zeitspanne $T_{\text{window}}$ (in **Sekunden**) ist im Dia
 * **Wert `0.1667` (± `0.01`) → 50%:** Teilpunkte: Kehrwertfehler! Sie haben f_s / N = 250 / 1500 = 0.1667 statt N / f_s = 6.0 s gerechnet.
 
 **Musterherleitung & Gesamt-Feedback:**
-**Musterherleitung:** Bei $N = 1500$ Abtastpunkten und $\Delta t = \frac{1}{f_s} = \frac{1}{250\,\text{Hz}} = 0{,}004\,\text{s}$ umfasst das sichtbare Zeitfenster $T_{\text{window}} = N \cdot \Delta t = rac{1500}{250} = 6{,}0\,\text{s}$.
+**Musterherleitung:** Bei $N = 1500$ Abtastpunkten und $\Delta t = \frac{1}{f_s} = \frac{1}{250\,\text{Hz}} = 0{,}004\,\text{s}$ umfasst das sichtbare Zeitfenster $T_{\text{window}} = N \cdot \Delta t = \frac{1500}{250} = 6{,}0\,\text{s}$.
 
 ---
 

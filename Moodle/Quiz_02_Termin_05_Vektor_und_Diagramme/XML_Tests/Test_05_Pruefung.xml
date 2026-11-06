@@ -42,7 +42,7 @@
 <p>Welche physikalische Zeitspanne \(T_{\text{window}}\) (in <strong>Sekunden</strong>) ist im Diagrammfenster gleichzeitig sichtbar, sobald der Puffer vollständig gefüllt ist?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong> Bei \(N = 1500\) Abtastpunkten und \(\Delta t = \frac{1}{f_s} = \frac{1}{250\,\text{Hz}} = 0{,}004\,\text{s}\) umfasst das sichtbare Zeitfenster \(T_{\text{window}} = N \cdot \Delta t = rac{1500}{250} = 6{,}0\,\text{s}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong> Bei \(N = 1500\) Abtastpunkten und \(\Delta t = \frac{1}{f_s} = \frac{1}{250\,\text{Hz}} = 0{,}004\,\text{s}\) umfasst das sichtbare Zeitfenster \(T_{\text{window}} = N \cdot \Delta t = \frac{1500}{250} = 6{,}0\,\text{s}\).</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>

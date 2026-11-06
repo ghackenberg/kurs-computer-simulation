@@ -894,7 +894,7 @@ double upperWhiskerLimit = q3 + 1.5 * iqr;</code></pre>
           { value: 6000, tolerance: 10, fraction: 50, feedback: 'Teilpunkte: 6000 ms ist die Dauer in Millisekunden, gefragt war der Wert in Sekunden (6.0 s).' },
           { value: 0.1667, tolerance: 0.01, fraction: 50, feedback: 'Teilpunkte: Kehrwertfehler! Sie haben f_s / N = 250 / 1500 = 0.1667 statt N / f_s = 6.0 s gerechnet.' }
         ],
-        generalFeedback: `<p><strong>Musterherleitung:</strong> Bei \\(N = 1500\\) Abtastpunkten und \\(\\Delta t = \\frac{1}{f_s} = \\frac{1}{250\\,\\text{Hz}} = 0{,}004\\,\\text{s}\\) umfasst das sichtbare Zeitfenster \\(T_{\\text{window}} = N \\cdot \\Delta t = \frac{1500}{250} = 6{,}0\\,\\text{s}\\).</p>`
+        generalFeedback: `<p><strong>Musterherleitung:</strong> Bei \\(N = 1500\\) Abtastpunkten und \\(\\Delta t = \\frac{1}{f_s} = \\frac{1}{250\\,\\text{Hz}} = 0{,}004\\,\\text{s}\\) umfasst das sichtbare Zeitfenster \\(T_{\\text{window}} = N \\cdot \\Delta t = \\frac{1500}{250} = 6{,}0\\,\\text{s}\\).</p>`
       },
       {
         id: 'Q02_T05_Q3',

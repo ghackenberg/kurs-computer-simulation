@@ -61,12 +61,25 @@ function toMoodleXmlMath(str) {
     .replace(/(?<!\\)\$([^\$\n]+?)(?<!\\)\$/g, '\\($1\\)');
 }
 
+function assertNoXmlControlChars(str, contextLabel) {
+  if (typeof str !== 'string') return;
+  const match = str.match(/[\x00-\x08\x0B\x0C\x0E-\x1F]/);
+  if (match) {
+    const code = match[0].charCodeAt(0);
+    throw new Error(
+      `[${contextLabel}] Ungültiges XML-Steuerzeichen (ASCII ${code} / 0x${code.toString(16)}) gefunden! ` +
+      `Typische Ursache: Unmaskiertes LaTeX wie \\frac (\\f = FormFeed 12), \\tau/\\text (\\t), \\beta (\\b). Verwende doppelte Backslashes \\\\frac!`
+    );
+  }
+}
+
 /**
  * Validiert alle 10 Tests eines Quiz auf:
  * - Exakt 10 Tests (3 Vorbereitung, 7 Prüfung)
  * - Exakt 8 Fragen und 10.0 Punkte pro Test
  * - Längen-Symmetrie (max. 25 % Abweichung) bei allen multichoice-Fragen
  * - Vorhandensein von spezifischem Feedback bei allen Antworten
+ * - Freiheit von verbotenen XML-Steuerzeichen (z. B. \f aus unmaskiertem \frac)
  */
 function validateQuizData(quizMeta, tests) {
   if (tests.length !== 10) {
@@ -82,6 +95,22 @@ function validateQuizData(quizMeta, tests) {
     test.questions.forEach((q, qIdx) => {
       const grade = parseFloat(q.grade || '1.0');
       totalPoints += grade;
+
+      assertNoXmlControlChars(q.title, `${test.id} - ${q.id} title`);
+      assertNoXmlControlChars(q.text, `${test.id} - ${q.id} text`);
+      assertNoXmlControlChars(q.generalFeedback, `${test.id} - ${q.id} generalFeedback`);
+      if (q.answers) {
+        q.answers.forEach((a, i) => {
+          assertNoXmlControlChars(a.text, `${test.id} - ${q.id} ans[${i}].text`);
+          assertNoXmlControlChars(a.feedback, `${test.id} - ${q.id} ans[${i}].feedback`);
+        });
+      }
+      if (q.subquestions) {
+        q.subquestions.forEach((sq, i) => {
+          assertNoXmlControlChars(sq.text, `${test.id} - ${q.id} sq[${i}].text`);
+          assertNoXmlControlChars(sq.answer, `${test.id} - ${q.id} sq[${i}].answer`);
+        });
+      }
 
       if (!q.generalFeedback || q.generalFeedback.trim().length < 20) {
         throw new Error(`[${test.id} - ${q.id}] Fehlendes oder zu kurzes generalFeedback!`);
