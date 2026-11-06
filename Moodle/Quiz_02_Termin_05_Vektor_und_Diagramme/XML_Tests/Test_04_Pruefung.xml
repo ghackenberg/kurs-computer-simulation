@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_02_Termin_05/Test_04_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Quiz 02 - Test 04 (Prüfungstest): Vertikales Letterboxing, Welford-Varianz & Box-Plot-IQR</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: Affine 2D-Transformation: Vertikaler Letterboxing-Offset und Y-Screen-Position (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
+    <name>
+      <text>Q02_T04_Q1: Affine 2D-Transformation: Vertikaler Letterboxing-Offset und Y-Screen-Position</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Portalkran mit der Breite \(\Delta X = 25\,\text{m}\) (\(x_{\min}=0\,\text{m}\), \(x_{\max}=25\,\text{m}\)) und der Höhe \(\Delta Y = 5\,\text{m}\) (\(y_{\min}=0\,\text{m}\), \(y_{\max}=5\,\text{m}\)) wird auf einem WPF-Canvas der Gesamthöhe \(H_{\text{canvas}} = 460\,\text{px}\) mit umlaufendem Rand \(\text{margin} = 30\,\text{px}\) dargestellt. Die nutzbare Zeichenfläche beträgt \(W_{\text{eff}} = 500\,\text{px}\) mal \(H_{\text{eff}} = 400\,\text{px}\). Der uniforme Skalierungsfaktor wurde bereits zu \(s = 20\,\text{px/m}\) bestimmt.</p>
+<p><strong>a)</strong> Berechnen Sie den gesamten vertikalen Randabstand \(\text{offset}_Y\) (in \(\text{px}\)) vom unteren Canvas-Rand bis zur Bauteilunterkante \(y_{\min}=0\,\text{m}\) (inklusive <code>margin</code> und vertikaler Letterboxing-Zentrierung): {1:NUMERICAL:=180:0.5#Exakt! Belegte Höhe = 5 * 20 = 100 px; Freiraum = 400 - 100 = 300 px; offset_Y = 30 + 300/2 = 180 px.~%50%150:0.5#Teilpunkte: 150 px ist nur der halbe Freiraum (400-100)/2 ohne den unteren Rand margin = 30 px.}</p>
+<p><strong>b)</strong> Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{screen}}\) (in \(\text{px}\)) für die Laufkatze auf Höhe \(y = 4{,}0\,\text{m}\) unter Beachtung der WPF-Y-Inversion: {1:NUMERICAL:=200:0.5#Richtig! Y_screen = 460 - (180 + 4.0 * 20) = 460 - 260 = 200 px.~%50%260:0.5#Teilpunkte: 260 px ist der Abstand vom unteren Rand ohne Y-Inversion (460 - 260 = 200 px).}</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<ol>
+  <li><strong>Belegte Höhe:</strong> \(H_{\text{used}} = \Delta Y \cdot s = 5\,\text{m} \cdot 20\,\text{px/m} = 100\,\text{px}\).</li>
+  <li><strong>Vertikaler Offset:</strong> \(\text{offset}_Y = \text{margin} + \frac{H_{\text{eff}} - H_{\text{used}}}{2} = 30 + \frac{400 - 100}{2} = 180\,\text{px}\).</li>
+  <li><strong>Y-Screen mit Inversion:</strong> \(Y_{\text{screen}} = H_{\text{canvas}} - (\text{offset}_Y + y \cdot s) = 460 - (180 + 80) = 200\,\text{px}\).</li>
+</ol>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T04_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Welford-Online-Algorithmus: Empirische Stichprobenvarianz aus M2 berechnen (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T04_Q2: Welford-Online-Algorithmus: Empirische Stichprobenvarianz aus M2 berechnen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Nach \(k = 9\) Kraftmessungen an einer Hydraulikpresse enthält das Welford-Statistikobjekt den laufenden Mittelwert \(\mu_9 = 45{,}0\,\text{kN}\) sowie die kumulierte Abweichungsquadratsumme \(M_{2,9} = 72{,}0\,\text{kN}^2\).</p>
+<p>Berechnen Sie die erwartungstreue empirische Stichprobenvarianz \(s^2\) (in \(\text{kN}^2\)) dieser Messreihe.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong> Für die erwartungstreue Stichprobenvarianz gilt \(s^2 = \frac{M_{2,k}}{k - 1} = \frac{72{,}0}{9 - 1} = 9{,}0\,\text{kN}^2\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T04_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>9</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Mit Bessel-Korrektur gilt s^2 = M2 / (k - 1) = 72.0 / (9 - 1) = 72.0 / 8 = 9.0 kN^2.</p>]]></text>
+      </feedback>
+      <tolerance>0.05</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>8</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben durch k = 9 (Populationsvarianz) statt durch k - 1 = 8 (erwartungstreue Stichprobenvarianz) geteilt.</p>]]></text>
+      </feedback>
+      <tolerance>0.05</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>3</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: 3.0 kN ist die Standardabweichung s = sqrt(9), gefragt war aber die Varianz s^2 = 9.0 kN^2.</p>]]></text>
+      </feedback>
+      <tolerance>0.05</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Box-Whisker-Plot Interquartilsabstand (IQR) und oberes Whisker-Limit (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T04_Q3: C#-Code-Tracing: Box-Whisker-Plot Interquartilsabstand (IQR) und oberes Whisker-Limit</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Für einen Box-Whisker-Plot nach Tukey in ScottPlot 5 werden aus einem sortierten Array von Drehmoment-Messwerten (in \(\text{Nm}\)) das erste Quartil <code>q1</code> und das dritte Quartil <code>q3</code> bestimmt:</p>
+<pre><code class="language-csharp">double q1 = 20.0;
+double median = 24.0;
+double q3 = 30.0;
+double iqr = q3 - q1;
+double upperWhiskerLimit = q3 + 1.5 * iqr;</code></pre>
+<p>Welchen numerischen Wert (in \(\text{Nm}\)) erhält <code>upperWhiskerLimit</code>?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong> Der Interquartilsabstand beträgt \(\text{IQR} = Q_3 - Q_1 = 30{,}0 - 20{,}0 = 10{,}0\,\text{Nm}\). Die obere Antennengrenze (Tukey-Fence) liegt bei \(Q_3 + 1{,}5 \cdot \text{IQR} = 30{,}0 + 15{,}0 = 45{,}0\,\text{Nm}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T04_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>45</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! iqr = 30.0 - 20.0 = 10.0 Nm; upperWhiskerLimit = 30.0 + 1.5 * 10.0 = 45.0 Nm.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>39</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben 1.5 * iqr auf den Median (24 + 15 = 39) statt auf das obere Quartil q3 = 30 addiert.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Code-Lückentext: Allokationsfreier Ringpuffer (Circular Buffer) – Einfügen &amp; Überschreiben (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>Q02_T04_Q4: C#-Code-Lückentext: Allokationsfreier Ringpuffer (Circular Buffer) – Einfügen &amp; Überschreiben</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie die Methode <code>Push(double val)</code> eines allokationsfreien Ringpuffers fester Kapazität <code>Capacity</code>, der bei vollem Puffer das älteste Element am Index <code>_head</code> überschreibt:</p>
+<pre><code class="language-csharp">public void Push(double val)
+{
+    int writeIdx = (_head + _count) % [[1]];
+    _buffer[writeIdx] = val;
+    if (_count < Capacity)
+        [[2]]++;
+    else
+        _head = (_head + 1) % [[3]];
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong> Der Schreibindex wickelt sich mittels Modulo <code>Capacity</code> um das Array-Ende. Solange der Puffer noch nicht voll ist, wächst <code>_count</code>; sobald <code>_count == Capacity</code> erreicht ist, wandert der Lesezeiger <code>_head</code> mit Modulo <code>Capacity</code> um eins weiter.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T04_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[Capacity]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[_count]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Capacity]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[_count]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[_head]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[_head]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[writeIdx]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[_count]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[writeIdx]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Pipeline-Reihenfolge: Numerisch stabiler Einzelschritt im Welford-Online-Algorithmus (ddwtos, 1.0000000 Pkt.) -->
+  <question type="ddwtos">
+    <name>
+      <text>Q02_T04_Q5: Pipeline-Reihenfolge: Numerisch stabiler Einzelschritt im Welford-Online-Algorithmus</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Bringen Sie die <strong>vier Rechenschritte des Welford-Online-Algorithmus</strong> beim Eintreffen eines neuen Messwerts \(x_k\) in die zwingend erforderliche Ausführungsreihenfolge:</p>
+<p><strong>Schritt 1:</strong> [[1]] (Stichprobenumfang erhöhen und Differenz zum bisherigen Mittelwert bilden)<br>
+<strong>Schritt 2:</strong> [[2]] (Laufenden Mittelwert anteilig mit dem neuen Stichprobenumfang korrigieren)<br>
+<strong>Schritt 3:</strong> [[3]] (Differenz des Messwerts zum bereits aktualisierten neuen Mittelwert bestimmen)<br>
+<strong>Schritt 4:</strong> [[4]] (Produkt aus alter und neuer Differenz zur Quadratsumme addieren)</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Welford-Reihenfolge:</strong> Entscheidend ist, dass \(\Delta_1\) vor dem Mittelwert-Update und \(\Delta_2\) <em>nach</em> dem Mittelwert-Update berechnet wird, damit \(\Delta_1 \cdot \Delta_2\) exakt die neue Quadratsumme liefert.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T04_Q5</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <dragbox>
+      <text><![CDATA[k = k + 1 und Delta_1 = x_k - mu_{k-1}]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[mu_k = mu_{k-1} + Delta_1 / k]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Delta_2 = x_k - mu_k]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[M2_k = M2_{k-1} + Delta_1 * Delta_2]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[M2_k = M2_{k-1} + x_k * x_k - mu_k * mu_k]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[mu_k = (mu_{k-1} + x_k) / 2.0]]></text>
+      <group>1</group>
+    </dragbox>
+  </question>
+
+  <!-- Question 6: Koordinatentransformation: Warum anisotrope Skalierung (sx != sy) in CAD-Zeichnungen verboten ist (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T04_Q6: Koordinatentransformation: Warum anisotrope Skalierung (sx != sy) in CAD-Zeichnungen verboten ist</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Was passiert geometrisch mit einer technischen 2D-Konstruktionszeichnung, wenn man beim Anpassen an ein breitformatiges WPF-Canvas die horizontale Skalierung \(s_x = W_{\text{eff}} / \Delta X\) und die vertikale Skalierung \(s_y = H_{\text{eff}} / \Delta Y\) getrennt ohne Minimumbildung anwendet (\(s_x \neq s_y\))?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Geometrisches Prinzip:</strong> Technische Zeichnungen erfordern Winkeltreue. Wenn \(s_x \neq s_y\) ist, steht ein im World Space konstruierter Normalenvektor im Screen Space nicht mehr senkrecht auf dem Stab!</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T04_Q6</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Kreise entarten zu Ellipsen, rechte Winkel zwischen Stäben und Maßhilfslinien gehen verloren und schräge Stablängen werden richtungsabhängig verzerrt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Nur eine uniforme Skalierung (s_x = s_y = min) ist winkeltreu (konform) und erhält das Verhältnis aller Längen unabhängig von der Orientierung.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Bauteilgeometrie bleibt vollkommen winkeltreu, aber alle negativen Koordinatenwerte werden automatisch an der X-Achse gespiegelt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Solange sx und sy positiv sind, findet durch unterschiedliche Beträge keine Spiegelung, wohl aber eine massive Winkelverzerrung statt.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Das WPF-Layoutsystem wirft zur Laufzeit eine InvalidOperationException, sobald eine Line unterschiedliche X- und Y-Maßstäbe verwendet.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. WPF kennt die Bedeutung Ihrer Modellkoordinaten nicht und zeichnet die verzerrten Pixelkoordinaten ohne Fehlermeldung.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Alle horizontalen Stäbe werden auf die Länge Null verkürzt, während vertikale Stäbe über den oberen Bildschirmrand hinaus verschoben werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Horizontale Stäbe füllen bei sx = Weff/dX exakt die nutzbare Breite aus, werden also nicht auf Null verkürzt.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 7: C#-Bug-Diagnose: Speicherleck durch Canvas.Children.Add ohne Clear im Render-Loop (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T04_Q7: C#-Bug-Diagnose: Speicherleck durch Canvas.Children.Add ohne Clear im Render-Loop</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einer dynamischen Kinematik-Simulation wird die Methode <code>DrawMechanism()</code> 60-mal pro Sekunde vom <code>CompositionTarget.Rendering</code>-Event aufgerufen. Nach zwei Minuten wird das Programm extrem träge und belegt mehrere Gigabyte RAM:</p>
+<pre><code class="language-csharp">void DrawMechanism() {
+    foreach (var bar in _bars) {
+        var line = new Line { X1 = bar.X1, Y1 = bar.Y1, X2 = bar.X2, Y2 = bar.Y2, Stroke = _pen };
+        SimCanvas.Children.Add(line);
+    }
+}</code></pre>
+<p>Was ist die Ursache für diesen Speicher- und Performance-Einbruch?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Lösung:</strong> Entweder ruft man zu Beginn von <code>DrawMechanism()</code> <code>SimCanvas.Children.Clear()</code> auf, oder – noch besser – man legt die <code>Line</code>-Instanzen einmalig an und aktualisiert im Renderloop nur deren Koordinaten <code>X1, Y1, X2, Y2</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T04_Q7</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Es fehlt SimCanvas.Children.Clear() vor der Schleife, sodass in jedem Frame neue Line-Objekte über die alten gestapelt werden und der Visual Tree endlos wächst.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Im Retained Mode von WPF bleiben alle hinzugefügten Kinder dauerhaft im Speicher und werden in jedem Frame mitgerendert, bis man sie entfernt oder wiederverwendet.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die foreach-Schleife kopiert das gesamte Array _bars bei jedem Durchlauf auf die Festplatte, weshalb zwingend eine rückwärts laufende for-Schleife nötig ist.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Eine foreach-Schleife über ein Array oder eine Liste erzeugt keinerlei Festplattenzugriffe.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Klasse Line besitzt in WPF einen internen Hardware-Timer, der pro Instanz einen eigenen Hintergrund-Thread im Betriebssystem startet.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Line ist ein UIElement auf dem UI-Thread und startet keine eigenen Threads.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Koordinaten X1 bis Y2 müssen nach dem Hinzufügen zum Canvas auf NaN gesetzt werden, damit der Garbage Collector die Linie freigeben kann.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Solange die Line-Referenz in SimCanvas.Children gehalten wird, darf der Garbage Collector sie ohnehin nicht freigeben.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 8: Systemanalyse: ScottPlot 5 DataStreamer-Darstellungsmodi (Wipe vs. Scroll) (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T04_Q8: Systemanalyse: ScottPlot 5 DataStreamer-Darstellungsmodi (Wipe vs. Scroll)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Welche <strong>zwei</strong> Aussagen beschreiben die Funktionsweise des <code>DataStreamer</code> in <strong>ScottPlot 5</strong> bei der Echtzeit-Visualisierung kontinuierlicher Sensorsignale korrekt?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong> <code>DataStreamer</code> nutzt einen festen Ringpuffer für die letzten \(N\) Samples und bietet die Ansichten <code>ViewWipeRight()</code> (stehende Kurve mit Überschreib-Cursor) sowie <code>ViewScrollLeft()</code> (durchlaufendes Band).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T04_Q8</idnumber>
+    <single>false</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Im Wipe-Modus (EKG-Ansicht) wandert ein Schreibzeiger von links nach rechts durch das feste Array und überschreibt zyklisch die ältesten Messwerte vor einer kleinen Lücke.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Wie bei einem medizinischen Patientenmonitor bleibt die Kurve an Ort und Stelle stehen, während der Cursor die ältesten Daten überschreibt.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Da der DataStreamer intern ein vorallokiertes Array fester Länge wiederverwendet, löst das Hinzufügen neuer Messwerte via Add() keine Heap-Allokationen aus.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Durch die feste Puffergröße arbeitet DataStreamer.Add() in O(1) ohne Garbage-Collector-Belastung.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Der DataStreamer vergrößert sein internes Array bei jedem Aufruf von Add() automatisch auf das Doppelte, um sämtliche historischen Daten seit Programmstart zu sichern.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das beschreibt den wachsenden DataLogger, nicht den auf eine feste Fensterbreite begrenzten DataStreamer.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Für jeden neuen Messwert im DataStreamer muss ein vollständiger Zeitstempel vom Typ DateTime übergeben werden, da äquidistante Abtastung nicht unterstützt wird.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. DataStreamer arbeitet gerade mit äquidistanter Abtastung (Period) und nimmt über Add(double value) reine Y-Werte entgegen.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

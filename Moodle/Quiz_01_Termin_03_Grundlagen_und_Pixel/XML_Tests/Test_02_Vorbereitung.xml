@@ -5,301 +5,399 @@
       <text>$course$/Quiz_01_Termin_03/Test_02_Vorbereitung</text>
     </category>
     <info format="html">
-      <text><![CDATA[<p>Test 02 (Vorbereitung) – FDM-Kupfer, Indexierung & Laplace-Vorzeichen</p>]]></text>
+      <text><![CDATA[<p>Test 02 (Vorbereitung) – Grundlagen, Euler & 2D-Wärmeraster (Variante B)</p>]]></text>
     </info>
   </question>
 
-  <!-- Question 1: T02.Q1: FDM-Wärmeleitung & CFL-Stabilitätsgrenze (Kupfer) -->
-  <question type="multichoice">
+  <!-- Question 1: 2D-Wärmeleitung: Stabilitätszahl &amp; 5-Punkt-Stern-Temperaturupdate (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
     <name>
-      <text>T02_Q1_CFL_Berechnung_Kupfer</text>
+      <text>T02_Q1: 2D-Wärmeleitung: Stabilitätszahl &amp; 5-Punkt-Stern-Temperaturupdate</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Sie simulieren die 2D-Wärmeausbreitung in einem massiven Kupfer-Heatspreader mittels explizitem 5-Punkt-FDM-Stern. Folgende Parameter sind vorgegeben:</p>
-<ul>
-  <li>Temperaturleitfähigkeit von Kupfer: \(\alpha = 1{,}11 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
-  <li>Gitterweite des Rasters: \(\Delta x = \Delta y = 1{,}0\,\text{mm} = 1{,}0 \cdot 10^{-3}\,\text{m}\)</li>
-</ul>
-<p>Wie lautet die maximale Zeitschrittweite \(\Delta t_{\max}\), um eine numerische Divergenz zu verhindern?</p>]]></text>
+      <text><![CDATA[<p>Auf einem quadratischen 2D-Gitter mit der Gitterweite \(\Delta x = \Delta y = 5{,}0\,\text{mm}\) wird ein Wärmeleitungsprozess (\(\alpha = 50\,\text{mm}^2/\text{s}\)) mit einer Zeitschrittweite von \(\Delta t = 0{,}10\,\text{s}\) simuliert. Zum Zeitpunkt \(n\) besitzt der Zentralknoten \((i,j)\) die Temperatur \(T_{i,j}^n = 20{,}0\,^\circ\text{C}\), während seine vier direkten Nachbarknoten die Temperaturen \(100{,}0\,^\circ\text{C}\) (links), \(20{,}0\,^\circ\text{C}\) (rechts), \(20{,}0\,^\circ\text{C}\) (oben) und \(20{,}0\,^\circ\text{C}\) (unten) aufweisen.</p><p>a) Berechnen Sie die dimensionslose numerische Fourier-/Stabilitätszahl \(s\) für diese Parametrierung:<br>Antwort: {1:NUMERICAL:=0.2:0.005#Richtig! s = (alpha * dt) / dx^2 = (50 * 0,10) / 25 = 5 / 25 = 0,20 (stabil, da <= 0,25).~%50%1.0:0.01#Teilpunkte (50 %): Sie haben im Nenner dx = 5 statt dx^2 = 25 geteilt.} (dimensionslos)</p><p>b) Welche neue Temperatur \(T_{i,j}^{n+1}\) (in <strong>°C</strong>) nimmt der Zentralknoten nach genau einem expliziten Zeitschritt an?<br>Antwort: {1:NUMERICAL:=36.0:0.1#Richtig! T_neu = 20 + 0,20 * (100 + 20 + 20 + 20 - 4 * 20) = 20 + 0,20 * 80 = 36,0 °C.~%50%52.0:0.1#Teilpunkte (50 %): Sie haben im 5-Punkt-Stern -2*T_ij statt -4*T_ij gerechnet (20 + 0,2 * 160 = 52 °C).} °C</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Stabilitätskriterium: \(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(1{,}0 \cdot 10^{-3})^2}{4 \cdot 1{,}11 \cdot 10^{-4}} = \frac{1{,}0 \cdot 10^{-6}}{4{,}44 \cdot 10^{-4}}\,\text{s} \approx 0{,}002252\,\text{s} \approx 2{,}25\,\text{ms}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (5-Punkt-Stern-Update):</strong></p><p>1. Dimensionslose Stabilitätszahl \(s\):<br>\(s = \frac{\alpha \cdot \Delta t}{\Delta x^2} = \frac{50\,\text{mm}^2/\text{s} \cdot 0{,}10\,\text{s}}{(5{,}0\,\text{mm})^2} = \frac{5}{25} = 0{,}20\). Da \(s = 0{,}20 \le 0{,}25\), ist das Verfahren numerisch stabil.</p><p>2. Diskreter 5-Punkt-Stern:<br>\(T_{i,j}^{n+1} = T_{i,j}^n + s \cdot \left(T_{i-1,j}^n + T_{i+1,j}^n + T_{i,j-1}^n + T_{i,j+1}^n - 4 \cdot T_{i,j}^n\right)\)<br>\(T_{i,j}^{n+1} = 20{,}0 + 0{,}20 \cdot (100{,}0 + 20{,}0 + 20{,}0 + 20{,}0 - 4 \cdot 20{,}0) = 20{,}0 + 0{,}20 \cdot 80{,}0 = 36{,}0\,^\circ\text{C}\).</p>]]></text>
     </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T02_Q1_CFL_Berechnung_Kupfer</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 2{,}25\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! \(\Delta x^2 / (4\alpha) = 10^{-6} / (4{,}44 \cdot 10^{-4})\,\text{s} \approx 2{,}25\,\text{ms}\).</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 4{,}50\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das wäre die 1D-Bedingung \(\Delta x^2 / (2\alpha)\).</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 9{,}01\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Hier wurde der Faktor 4 im Nenner komplett vergessen.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 0{,}56\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das entspricht einer 3D-Bedingung mit Faktor 6.</p>]]></text>
-      </feedback>
-    </answer>
+    <idnumber>T02_Q1</idnumber>
   </question>
 
-  <!-- Question 2: T02.Q2: Code-Analyse: Zeilen- vs. Spaltenindexierung im Bildspeicher -->
-  <question type="multichoice">
+  <!-- Question 2: Ereigniserkennung: Lineare Interpolation des Boden-Auftreffzeitpunkts (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
     <name>
-      <text>T02_Q2_Code_Column_vs_Row_Major</text>
+      <text>T02_Q2: Ereigniserkennung: Lineare Interpolation des Boden-Auftreffzeitpunkts</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einer Bildgenerierungsroutine für ein Simulationsfenster (\(W = 800\), \(H = 600\)) schreibt ein Entwickler folgende Zeigerberechnung:</p>
-<pre><code class="language-csharp">byte* pBackBuffer = (byte*)bitmap.BackBuffer;
-int stride = bitmap.BackBufferStride;
+      <text><![CDATA[<p>Bei der Simulation eines fallenden Balls wird die Bodenebene bei \(y = 0{,}0\,\text{m}\) zwischen zwei diskreten Zeitschritten durchschlagen: Zum Zeitpunkt \(t_n = 1{,}00\,\text{s}\) befindet sich der Ball noch oberhalb des Bodens bei \(y_n = +0{,}60\,\text{m}\), zum nächsten Zeitpunkt \(t_{n+1} = 1{,}10\,\text{s}\) liefert der Zeitschritt bereits eine Eindringtiefe von \(y_{n+1} = -0{,}20\,\text{m}\).</p><p>Berechnen Sie mittels <strong>linearer Sub-Step-Interpolation</strong> den präzisen Auftreffzeitpunkt \(t_{\text{impact}}\) (in <strong>Sekunden</strong>), an dem \(y(t_{\text{impact}}) = 0\) galt.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (Lineare Nullstellen-Interpolation):</strong></p><p>Der relative Zeitschrittanteil \(\tau \in [0, 1]\) bis zum Nulldurchgang beträgt:</p><p>\(\tau = \frac{y_n}{y_n - y_{n+1}} = \frac{0{,}60\,\text{m}}{0{,}60\,\text{m} - (-0{,}20\,\text{m})} = \frac{0{,}60}{0{,}80} = 0{,}75\).</p><p>Mit \(\Delta t = t_{n+1} - t_n = 0{,}10\,\text{s}\) folgt für den interpolierten Auftreffzeitpunkt:<br>\(t_{\text{impact}} = t_n + \tau \cdot \Delta t = 1{,}00\,\text{s} + 0{,}75 \cdot 0{,}10\,\text{s} = 1{,}075\,\text{s}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T02_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>1.075</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! tau = 0,60 / (0,60 - (-0,20)) = 0,60 / 0,80 = 0,75 -> t_impact = 1,00 + 0,75 * 0,10 = 1,075 s.</p>]]></text>
+      </feedback>
+      <tolerance>0.002</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>0.75</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben den relativen Teilfaktor tau = 0,75 berechnet, aber noch nicht in den Zeitpunkt t_impact = t_n + tau * dt umgerechnet.</p>]]></text>
+      </feedback>
+      <tolerance>0.005</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>1.025</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben den komplementären Faktor (1 - tau) = 0,25 statt tau = 0,75 zu t_n addiert.</p>]]></text>
+      </feedback>
+      <tolerance>0.002</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
 
-for (int y = 0; y < height; y++)
+  <!-- Question 3: C#-Code-Tracing: Bit-Shifting für Little-Endian Bgra32-Farbwerte (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T02_Q3: C#-Code-Tracing: Bit-Shifting für Little-Endian Bgra32-Farbwerte</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Auf einer Little-Endian-Architektur (x86/x64) wird ein ganzes Pixel eines <code>WriteableBitmap</code> (Format <code>Bgra32</code>) als einzelner 32-Bit-Wert <code>uint color = 0xFF804020;</code> im Speicher abgelegt (Byte 0 = Blau, Byte 1 = Grün, Byte 2 = Rot, Byte 3 = Alpha). Gegeben sei folgender C#-Ausdruck:</p><pre><code class="language-csharp">uint color = 0xFF804020;
+byte channelValue = (byte)((color >> 8) & 0xFF);</code></pre><p>Welchen <strong>dezimalen</strong> Zahlenwert (Basis 10) besitzt die Variable <code>channelValue</code> (Grün-Kanal) nach der Ausführung?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (Little-Endian uint-Layout bei Bgra32):</strong></p><p>Ein 32-Bit-Wert <code>0xAARRGGBB</code> enthält in den Bits <code>0..7</code> Blau (<code>0x20 = 32</code>), in den Bits <code>8..15</code> Grün (<code>0x40 = 64</code>), in den Bits <code>16..23</code> Rot (<code>0x80 = 128</code>) und in den Bits <code>24..31</code> Alpha (<code>0xFF = 255</code>).</p><p>Die Operation <code>color >> 8</code> schiebt den Wert um 8 Bits nach rechts zu <code>0x00FF8040</code>. Die anschließende Bitmaske <code>&amp; 0xFF</code> isoliert das niederwertigste Byte <code>0x40</code>, was im Dezimalsystem \(4 \cdot 16^1 + 0 \cdot 16^0 = 64\) ergibt.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T02_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>64</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Durch >> 8 rückt das zweite Byte von rechts (0x40) an die unterste Position; 0x40 hex entspricht 4 * 16 = 64 dezimal.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>40</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben das richtige Byte 0x40 isoliert, aber den Hexadezimalwert 40 nicht ins Dezimalsystem (4 * 16 = 64) umgerechnet.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>128</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 128 (0x80) ist der Rot-Kanal bei Bit-Shift >> 16, nicht bei >> 8.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Lückentext: Unsafe-Pointer-Schreibzugriff in WriteableBitmap (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>T02_Q4: C#-Lückentext: Unsafe-Pointer-Schreibzugriff in WriteableBitmap</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie den folgenden C#-Codeausschnitt, der innerhalb eines <code>unsafe</code>-Blocks ein Pixel an den Koordinaten <code>(x, y)</code> im Speicher eines bereits gesperrten <code>WriteableBitmap bmp</code> einfärbt:</p><pre><code class="language-csharp">unsafe
 {
-    for (int x = 0; x < width; x++)
-    {
-        // Verdächtige Adressberechnung:
-        byte* pPixel = pBackBuffer + (x * stride + y * 4);
-        *pPixel = 255;
-    }
-}</code></pre>
-<p>Welches schwerwiegende Problem tritt bei der Ausführung dieses Codes auf?</p>]]></text>
+    byte* pBuffer = (byte*)bmp.[[1]];
+    int stride = bmp.[[2]];
+    int offset = y * stride + x * [[3]];
+    pBuffer[offset + 0] = blue;
+    pBuffer[offset + 1] = green;
+    pBuffer[offset + 2] = red;
+    pBuffer[offset + 3] = 255;
+}</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Der Stride entspricht dem Byte-Abstand zwischen zwei aufeinanderfolgenden Zeilen. Die korrekte Row-Major-Adressierung lautet \(y \cdot \text{stride} + x \cdot 4\). Werden \(x\) und \(y\) vertauscht, wird der Stride mit \(x\) multipliziert. Da \(W = 800 > H = 600\), greift die Schleife bei \(x \ge 600\) weit über den allokierten Speicher hinaus (Speicherzugriffsfehler / Crash).</p>]]></text>
+      <text><![CDATA[<p><strong>Erklärung der WriteableBitmap-Eigenschaften:</strong></p><ul><li><code>[[1]] = BackBuffer</code> liefert den <code>IntPtr</code> auf die Basisadresse des unverwalteten Bildspeichers.</li><li><code>[[2]] = BackBufferStride</code> gibt die exakte Zeilenbreite in Bytes (inklusive eventuellem Alignment-Padding) an.</li><li><code>[[3]] = 4</code> entspricht den 4 Bytes pro Pixel im Format <code>Bgra32</code> (Blau, Grün, Rot, Alpha).</li></ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T02_Q2_Code_Column_vs_Row_Major</idnumber>
+    <idnumber>T02_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[BackBuffer]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[BackBufferStride]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[4]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[PixelWidth]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[SourceRect]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[PixelHeight]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[DpiX]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[3]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[8]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Pipeline-Reihenfolge: WriteableBitmap Render-Zyklus in WPF (ddwtos, 1.0000000 Pkt.) -->
+  <question type="ddwtos">
+    <name>
+      <text>T02_Q5: Pipeline-Reihenfolge: WriteableBitmap Render-Zyklus in WPF</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Bringen Sie die vier erforderlichen Methodenschritte zur Aktualisierung eines <code>WriteableBitmap</code>-Puffers in WPF in die zwingend einzuhaltende zeitliche Ausführungsreihenfolge:</p><p>Schritt 1 (Puffer für den UI-Thread sperren): [[1]]<br>Schritt 2 (Farbwerte im unverwalteten Speicher berechnen): [[2]]<br>Schritt 3 (Geänderten Bildbereich für die GPU-Übertragung vormerken): [[3]]<br>Schritt 4 (Sperre aufheben und Austausch mit dem FrontBuffer freigeben): [[4]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung der WriteableBitmap-Pipeline:</strong></p><p>Vor jedem Direktzugriff auf den <code>BackBuffer</code> muss dieser mit <code>bmp.Lock()</code> gesperrt werden. Nach dem Beschreiben der Bytes via Pointer muss zwingend <em>vor</em> dem Aufruf von <code>bmp.Unlock()</code> mittels <code>bmp.AddDirtyRect(...)</code> definiert werden, welches Rechteck auf die GPU kopiert werden soll.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T02_Q5</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <dragbox>
+      <text><![CDATA[bmp.Lock()]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Schreiben über BackBuffer-Pointer]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[bmp.AddDirtyRect(new Int32Rect(0, 0, w, h))]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[bmp.Unlock()]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[bmp.Freeze()]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[bmp.Clone()]]></text>
+      <group>1</group>
+    </dragbox>
+  </question>
+
+  <!-- Question 6: System-Taxonomie: Klassifikation des 2D-FDM-Wärmeleitungsmodells (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>T02_Q6: System-Taxonomie: Klassifikation des 2D-FDM-Wärmeleitungsmodells</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Wie lässt sich die explizite 2D-Finite-Differenzen-Simulation der Wärmeleitungsgleichung auf einem Pixelgitter in der systemtheoretischen Modell-Taxonomie präzise einordnen?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Einordnung in die System-Taxonomie:</strong></p><ul><li><strong>Deterministisch vs. stochastisch:</strong> Gleiche Anfangs- und Randbedingungen liefern exakt dasselbe Temperaturfeld (deterministisch).</li><li><strong>Verteilte vs. konzentrierte Parameter:</strong> Da die Zustandsgröße \(T(x,y,t)\) vom Ort abhängt (partielle Differentialgleichung, PDE), liegt ein System mit verteilten Parametern vor.</li><li><strong>Zeitdiskret:</strong> Durch die Euler-Diskretisierung wird der Zustand zu diskreten Zeitpunkten \(t_n = n \cdot \Delta t\) berechnet.</li></ul>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T02_Q6</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Vertauschung von Zeilen- und Spaltenkoordinate: Der Stride adressiert Zeilenabstände, wird hier jedoch mit \(x\) multipliziert. Dies führt zu geometrischer Scherung und zu einem Speicherüberlauf (Crash), sobald \(x\) die Bildhöhe überschreitet.]]></text>
+      <text><![CDATA[Es ist ein deterministisches, in der numerischen Berechnung zeitdiskretes Modell mit verteilten Parametern.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Stride gehört zur Zeilenkoordinate y.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Es gibt keinen Zufall (deterministisch), Zeitschritte dt (zeitdiskret) und eine Ortsabhängigkeit T(x,y,t) aus einer PDE (verteilte Parameter).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Der Code kompiliert nicht, da <code>*pPixel = 255</code> in C# nur für <code>int*</code> erlaubt ist.]]></text>
+      <text><![CDATA[Es ist ein stochastisches, rein statisches Modell mit konzentrierten Parametern ohne jede Ortsabhängigkeit.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Dereferenzierung von byte* ist vollkommen gültiges C#.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Das Temperaturfeld hängt sowohl von der Zeit t (dynamisch) als auch von den Raumkoordinaten (x,y) ab und enthält keine Zufallsgrößen.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Die Multiplikation mit 4 ist ungültig, weil Pixel in WPF stets 8 Bytes groß sind.]]></text>
+      <text><![CDATA[Es ist ein ereignisdiskretes Warteschlangenmodell, bei dem Zeitschritte nur bei Kundenankünften stattfinden.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. 32-Bit-Formate belegen exakt 4 Bytes pro Pixel.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Das FDM-Wärmeraster rechnet mit äquidistanten Zeitschritten dt (Time-Stepping), nicht ereignisgetrieben (Event-Advance).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Das Bild wird lediglich um 180 Grad gedreht, bleibt aber stabil im Speicher.]]></text>
+      <text><![CDATA[Es ist ein rein analytisches geschlossenes Modell, das völlig ohne räumliche oder zeitliche Diskretisierung auskommt.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Es tritt ein harter Speicherüberlauf auf, da x * stride weit über die Puffergrenze ragt.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Die Finite-Differenzen-Methode beruht gerade auf der räumlichen (dx, dy) und zeitlichen (dt) Gitter-Diskretisierung.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 3: T02.Q3: Physikalische Interpretation des diskreten Laplace-Operators -->
+  <!-- Question 7: C#-Bug-Diagnose: Fehlende Kanal-Multiplikation beim Bgra32-Pointer (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T02_Q3_Physik_Laplace_Kruemmung</text>
+      <text>T02_Q7: C#-Bug-Diagnose: Fehlende Kanal-Multiplikation beim Bgra32-Pointer</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Beim 2D-FDM-Verfahren wird der Laplace-Operator \(\Delta T = \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2}\) an der Stelle \((i,j)\) diskretisiert durch:</p>
-<p>$$\Delta T_{i,j} \approx \frac{T_{i+1,j} + T_{i-1,j} + T_{i,j+1} + T_{i,j-1} - 4 T_{i,j}}{\Delta x^2}$$</p>
-<p>Welche physikalische Bedeutung hat ein <strong>positiver Wert</strong> dieses Zählers (\(\Delta T_{i,j} > 0\)) für den Gitterpunkt?</p>]]></text>
+      <text><![CDATA[<p>Ein Entwickler möchte in einem <code>WriteableBitmap</code> (Format <code>Bgra32</code>, 4 Bytes pro Pixel) das Pixel an der Spalte <code>x</code> und Zeile <code>y</code> über einen <code>byte*</code>-Pointer weiß färben und schreibt:</p><pre><code class="language-csharp">byte* p = (byte*)bmp.BackBuffer;
+int idx = y * bmp.BackBufferStride + x;
+p[idx] = 255; p[idx + 1] = 255; p[idx + 2] = 255; p[idx + 3] = 255;</code></pre><p>Welches visuelle Fehlverhalten entsteht durch diesen Code auf dem Bildschirm?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Wenn \(\sum T_{\text{Nachbarn}} - 4 T_{i,j} > 0\) ist, bedeutet dies \(\frac{1}{4} \sum T_{\text{Nachbarn}} > T_{i,j}\): Die durchschnittliche Temperatur der vier Nachbarn ist höher als die des Zentrums. Das Zentrum ist eine Wärmesenke und muss sich gemäß Fourier-Gesetz erwärmen.</p>]]></text>
+      <text><![CDATA[<p><strong>Fehleranalyse (Byte-Offset vs. Pixel-Offset):</strong></p><p>Da <code>p</code> als <code>byte*</code> deklariert ist, bewegt sich der Zeiger in 1-Byte-Schritten. Jedes Pixel im Format <code>Bgra32</code> belegt jedoch 4 Bytes. Ohne die Multiplikation <code>x * 4</code> landet Spalte <code>x = 1</code> im Grün-Kanal von Pixel 0, was zu falschen Farben und einer horizontalen Stauchung auf ein Viertel der Bildbreite führt.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T02_Q3_Physik_Laplace_Kruemmung</idnumber>
+    <idnumber>T02_Q7</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Die Nachbarzellen sind im Durchschnitt heißer als die zentrale Zelle (thermische Senke); dem Gitterpunkt strömt netto Wärme zu und seine Temperatur steigt im nächsten Zeitschritt an.]]></text>
+      <text><![CDATA[Da x nicht mit 4 multipliziert wird, verschieben sich die Kanäle pro Spalte um ein Byte und das Bild wird gestaucht.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Ein lokales Minimum (positive Krümmung) saugt Wärme aus der wärmeren Umgebung an.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Bei einem byte*-Pointer adressiert +x nur das x-te Byte statt des x-ten Pixels (x * 4), wodurch Farbkanäle benachbarter Pixel überschrieben werden.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Der Punkt ist ein lokales Maximum (Hotspot); Wärme fließt von ihm ungebremst nach außen ab.]]></text>
+      <text><![CDATA[Der Code funktioniert fehlerfrei, weil der C#-Compiler den Offset x bei Bgra32 automatisch mit vier multipliziert.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Bei einem Hotspot wäre T_{i,j} größer als die Nachbarn und der Laplace-Wert negativ.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Ein Zeiger vom Typ byte* hat die Elementgröße 1 Byte; eine automatische Skalierung um 4 erfolgt nur bei einem uint*- oder int*-Pointer.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Ein positiver Laplace-Wert signalisiert zwingend, dass die Von-Neumann-Stabilitätsgrenze verletzt wurde.]]></text>
+      <text><![CDATA[Die Eigenschaft BackBufferStride muss in dieser Formel noch zusätzlich mit vier multipliziert werden.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Der Laplace-Operator ist die physikalische Krümmung und sagt noch nichts über die Zeitschrittstabilität aus.</p>]]></text>
+        <text><![CDATA[<p>Falsch. BackBufferStride ist bereits in Bytes angegeben (ca. Width * 4) und darf nicht erneut mit 4 multipliziert werden.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Dies zeigt an, dass Wärme gegen den Temperaturgradienten von Kalt nach Heiß fließt.]]></text>
+      <text><![CDATA[Durch den Wert 255 im vierten Byte p[idx + 3] wird das Pixel auf dem Bildschirm vollständig transparent.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das würde dem 2. Hauptsatz widersprechen.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Ein Alpha-Wert von 255 (0xFF) bedeutet 100 % Deckkraft (opak), während 0 vollständig transparent wäre.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 4: T02.Q4: Taxonomie des Digitalen Zwillings nach Kritzinger et al. -->
+  <!-- Question 8: Numerische Stabilität: Verhalten bei Überschreitung der CFL-Grenze (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T02_Q4_Klassifikation_Kritzinger</text>
+      <text>T02_Q8: Numerische Stabilität: Verhalten bei Überschreitung der CFL-Grenze</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In der mechatronischen Fachliteratur (z. B. nach Kritzinger et al., 2018) werden drei Stufen digitaler Repräsentationen unterschieden: <strong>Digital Model</strong>, <strong>Digital Shadow</strong> und <strong>Digital Twin</strong>. Wodurch zeichnen sich diese drei Klassen hinsichtlich ihres Datenflusses aus?</p>]]></text>
+      <text><![CDATA[<p>Was passiert in einer expliziten 2D-Wärmeleitungssimulation (5-Punkt-Stern), wenn die dimensionslose Stabilitätszahl \(s = \frac{\alpha \cdot \Delta t}{\Delta x^2}\) durch eine zu große Zeitschrittweite oder eine Gitterverfeinerung den kritischen Grenzwert von \(0{,}25\) überschreitet? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Digital Model: Manueller Datenfluss in beide Richtungen.<br>Digital Shadow: Automatischer Datenfluss vom physischen zum virtuellen Objekt, manueller Rückfluss.<br>Digital Twin: Vollautomatischer bidirektionaler Datenfluss zwischen beiden Objekten.</p>]]></text>
+      <text><![CDATA[<p><strong>Zusammenfassung (2D-Stabilitätsgrenze):</strong></p><p>Schreibt man den 5-Punkt-Stern als Konvexkombination \(T_{i,j}^{n+1} = (1 - 4s) T_{i,j}^n + s (T_{i-1,j}^n + T_{i+1,j}^n + T_{i,j-1}^n + T_{i,j+1}^n)\), erkennt man sofort: Sobald \(s > 0{,}25\) wird, ist \(1 - 4s < 0\). Rundungsfehler wachsen dann mit jedem Schritt im Vorzeichen alternierend an, bis <code>Double.PositiveInfinity</code> bzw. <code>NaN</code> erreicht wird.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T02_Q4_Klassifikation_Kritzinger</idnumber>
-    <single>true</single>
+    <idnumber>T02_Q8</idnumber>
+    <single>false</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Digital Model: Manuelle Datenübertragung in beide Richtungen. Digital Shadow: Automatisierter Datenfluss von Realität zu Modell, manueller Rückweg. Digital Twin: Vollautomatischer, geschlossener bidirektionaler Datenaustausch.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Das Gewicht des Zentralknotens (1 - 4s) wird negativ und erzeugt unphysikalische Schachbrett-Oszillationen.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Dies ist die international anerkannte Definition nach Kritzinger et al.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Für s > 0,25 wird der Faktor (1 - 4s) < 0, sodass ein heißer Knoten im nächsten Schritt kälter als seine kalten Nachbarn werden kann.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Digital Model enthält 1D-Gleichungen, Digital Shadow 2D-Raster und Digital Twin 3D-CAD-Modelle.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Bei einer Halbierung der Gitterweite dx muss die Zeitschrittweite dt mindestens geviertelt werden, um stabil zu bleiben.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die Unterscheidung basiert auf dem Grad der automatisierten Datenkopplung, nicht auf der geometrischen Dimension.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Da dx im Nenner quadratisch eingeht (s = alpha * dt / dx^2), vervierfacht eine Halbierung von dx den Wert von s bei konstantem dt.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Ein Digital Shadow existiert nur während der Konstruktionsphase, während ein Digital Model erst bei Inbetriebnahme entsteht.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Die Simulation bleibt für beliebig große Zeitschritte stabil, verliert aber geringfügig an Genauigkeit.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Ein Shadow benötigt reale Sensordaten der laufenden Anlage.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Unbedingte Stabilität gilt nur für implizite Verfahren; das explizite Verfahren divergiert für s > 0,25 exponentiell.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Alle drei Begriffe bezeichnen dasselbe Konzept und werden in der Normung synonym verwendet.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Eine Erhöhung der Temperaturleitfähigkeit alpha vergrößert den zulässigen stabilen Zeitschritt dt_max.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die Unterscheidung bezüglich des Automatisierungsgrades ist fundamental.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 5: T02.Q5: Performance-Architektur: WPF Canvas vs. WriteableBitmap -->
-  <question type="multichoice">
-    <name>
-      <text>T02_Q5_WPF_Canvas_vs_WriteableBitmap</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Warum bricht die Render-Framerate einer WPF-Applikation dramatisch ein (unter 5 FPS), wenn ein 2D-Feld aus \(500 \times 500 = 250.000\) Punkten als einzelne <code>Rectangle</code>-Elemente auf einem WPF <code>Canvas</code> dargestellt wird, während dieselbe Darstellung mittels <code>WriteableBitmap</code> mit flüssigen 60 FPS läuft?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>Ein <code>Rectangle</code> auf dem Canvas ist ein vollwertiges WPF-UIElement mit DependencyProperties, Layout-Messungen (Measure/Arrange), Hit-Testing und Event-Routing. 250.000 UIElements belegen hunderte Megabyte Speicher und überlasten den Visual Tree. <code>WriteableBitmap</code> schreibt rohe Pixelwerte direkt in ein zusammenhängendes Byte-Array im Speicher ohne UI-Overhead.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T02_Q5_WPF_Canvas_vs_WriteableBitmap</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Jedes Canvas-Shape ist ein schwergewichtiges <code>UIElement</code> mit <code>DependencyProperty</code>-Overhead, Layout-Pässen und Event-Routing; <code>WriteableBitmap</code> hingegen manipuliert ein allokationsfreies, flaches Byte-Array im Speicher.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! Der Visual Tree kollabiert unter der schieren Anzahl komplexer UI-Objekte.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Der WPF Canvas unterstützt prinzipbedingt maximal 1024 visuelle Elemente pro Fenster.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Es gibt kein hartes Limit, aber die Performance degradiert kontinuierlich.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[<code>WriteableBitmap</code> berechnet alle Operationen automatisch auf den Tensor-Kernen der Grafikkarte.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. WriteableBitmap ist ein CPU-basierter Speicherpuffer in WPF.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Canvas-Elemente dürfen nur aus separaten Worker-Threads gezeichnet werden.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. UIElements sind an den UI-Thread (Dispatcher) gebunden.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Wegen dt_max = dx^2 / (4 * alpha) steht alpha im Nenner: Schnellere Wärmeleitung erfordert kleinere Zeitschritte.</p>]]></text>
       </feedback>
     </answer>
   </question>

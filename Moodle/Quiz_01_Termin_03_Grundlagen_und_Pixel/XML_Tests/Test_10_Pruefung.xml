@@ -5,303 +5,394 @@
       <text>$course$/Quiz_01_Termin_03/Test_10_Pruefung</text>
     </category>
     <info format="html">
-      <text><![CDATA[<p>Test 10 (Prüfung) – Zink, Mehrzonen-Stabilität & Alpha-Kanal</p>]]></text>
+      <text><![CDATA[<p>Test 10 (Prüfung) – Grundlagen, Euler & 2D-Wärmeraster (Klausurvariante J)</p>]]></text>
     </info>
   </question>
 
-  <!-- Question 1: T10.Q1: FDM-Stabilitätsgrenze für Zink-Druckguss -->
-  <question type="multichoice">
+  <!-- Question 1: Echtzeit-Performance: 5-Punkt-Stern-Rechenaufwand &amp; Echtzeitfaktor (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
     <name>
-      <text>T10_Q1_CFL_Zink</text>
+      <text>T10_Q1: Echtzeit-Performance: 5-Punkt-Stern-Rechenaufwand &amp; Echtzeitfaktor</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Zink-Druckgussgehäuse wird thermisch simuliert:</p>
-<ul>
-  <li>Temperaturleitfähigkeit von Zink: \(\alpha = 0{,}41 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
-  <li>Gitterauflösung: \(\Delta x = \Delta y = 1{,}5\,\text{mm} = 1{,}5 \cdot 10^{-3}\,\text{m}\)</li>
-</ul>
-<p>Berechnen Sie die maximale Zeitschrittweite \(\Delta t_{\max}\) für den stabilen 2D-Euler-FDM-Schritt.</p>]]></text>
+      <text><![CDATA[<p>Ein quadratisches 2D-Temperaturgitter besteht aus insgesamt \(102 \times 102\) Gitterpunkten (davon bildet jeweils 1 Reihe an jedem der vier Ränder den Rand, sodass im Inneren ein Block von \(100 \times 100\) inneren Knoten mit dem 5-Punkt-Stern berechnet wird). Pro Sekunde Echtzeit werden genau \(50\) explizite Simulationsschritte ausgeführt.</p><p>a) Wie viele einzelne innere Knoten-Auswertungen des 5-Punkt-Sterns finden in <strong>einem einzigen Zeitschritt</strong> statt?<br>Antwort: {1:NUMERICAL:=10000:0#Richtig! 100 * 100 = 10.000 innere Gitterknoten pro Zeitschritt.~%50%10404:0#Teilpunkte (50 %): Sie haben die Randknoten mitgezählt (102 * 102 = 10.404 statt 100 * 100 = 10.000).} Knoten-Updates</p><p>b) Wie viele Millisekunden (<strong>ms</strong>) Wanduhrzeit (Wall-Clock-Time) darf die Berechnung und Visualisierung eines einzelnen Zeitschritts im Mittel <strong>höchstens</strong> dauern, damit die Simulation mit \(50\,\text{Schritten/s}\) in Echtzeit Schritt hält?<br>Antwort: {1:NUMERICAL:=20.0:0.1#Richtig! 1000 ms / 50 Schritte = 20,0 ms maximales Zeitbudget pro Schritt.~%50%0.02:0.001#Teilpunkte (50 %): Zahlenwert in Sekunden (0,02 s) statt in Millisekunden (20 ms) angegeben.} ms</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(1{,}5 \cdot 10^{-3})^2}{4 \cdot 0{,}41 \cdot 10^{-4}} = \frac{2{,}25 \cdot 10^{-6}}{1{,}64 \cdot 10^{-4}}\,\text{s} \approx 0{,}01372\,\text{s} \approx 13{,}72\,\text{ms}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. Bei \(102 \times 102\) Gesamtknoten entfallen je 2 Knoten pro Raumrichtung auf die Ränder (Index <code>0</code> und Index <code>101</code>). Es verbleiben \(100 \times 100 = 10\,000\) innere Knoten pro Schritt (und \(500\,000\) Updates pro Sekunde).</p><p>2. Für 50 Schritte pro Sekunde Echtzeit steht pro Schritt ein Zeitbudget von \(\Delta t_{\text{wall,max}} = \frac{1000\,\text{ms}}{50} = 20{,}0\,\text{ms}\) zur Verfügung.</p>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T10_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Heun-Verfahren (RK2): Vertikaler Fallschritt mit zeitabhängiger Geschwindigkeit (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T10_Q2: Heun-Verfahren (RK2): Vertikaler Fallschritt mit zeitabhängiger Geschwindigkeit</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Körper fällt ab \(t_0 = 0\,\text{s}\) aus der Ruhe (\(v_0 = 0{,}0\,\text{m/s}\)) von einer Starthöhe \(y_0 = 30{,}0\,\text{m}\) unter konstanter Erdbeschleunigung \(g = 10{,}0\,\text{m/s}^2\) nach unten.</p><p>Berechnen Sie die neue Höhe \(y_1\) (in <strong>Metern</strong>) nach einem Zeitschritt von \(\Delta t = 0{,}40\,\text{s}\) mit dem <strong>zweistufigen Heun-Verfahren (RK2)</strong>.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (Heun-Verfahren beim freien Fall):</strong></p><p>1. <strong>Startsteigungen bei \(t_0\):</strong> \(k_{1,y} = v_0 = 0{,}0\,\text{m/s}\), \(k_{1,v} = -g = -10{,}0\,\text{m/s}^2\).</p><p>2. <strong>Prädiktor bei \(t_1 = 0{,}40\,\text{s}\):</strong><br>\(\tilde{y}_1 = 30{,}0 + 0{,}40 \cdot 0{,}0 = 30{,}0\,\text{m}\), \(\tilde{v}_1 = 0{,}0 + 0{,}40 \cdot (-10{,}0) = -4{,}0\,\text{m/s}\).</p><p>3. <strong>Endsteigungen am Prädiktorpunkt:</strong> \(k_{2,y} = \tilde{v}_1 = -4{,}0\,\text{m/s}\), \(k_{2,v} = -10{,}0\,\text{m/s}^2\).</p><p>4. <strong>Heun-Korrektor für die Höhe:</strong><br>\(y_1 = y_0 + \frac{\Delta t}{2} (k_{1,y} + k_{2,y}) = 30{,}0 + 0{,}20 \cdot (0{,}0 - 4{,}0) = 29{,}2\,\text{m}\).<br><em>Bemerkung:</em> Da das Heun-Verfahren die Ordnung 2 besitzt, integriert es quadratische Parabeln ohne jeden Diskretisierungsfehler exakt!</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T10_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>29.2</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! k1_y = v_0 = 0 m/s; Prädiktor v_pred = -4,0 m/s (= k2_y); Korrektor y_1 = 30,0 + 0,5 * 0,40 * (0 + (-4,0)) = 29,2 m (trifft bei konstanter Beschleunigung exakt die analytische Parabel!).</p>]]></text>
+      </feedback>
+      <tolerance>0.02</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>30</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 30,0 m ist der Prädiktorwert (expliziter Euler y_pred = 30 + 0,4*0), es fehlt noch der Heun-Korrektorschritt.</p>]]></text>
+      </feedback>
+      <tolerance>0.02</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>28.4</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben im Korrektorschritt vergessen, die Summe der Steigungen durch 2 zu teilen (30 - 0,4 * 4,0 = 28,4 m).</p>]]></text>
+      </feedback>
+      <tolerance>0.02</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Extraktion des Rot-Kanals aus einem Bgra32-uint (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T10_Q3: C#-Code-Tracing: Extraktion des Rot-Kanals aus einem Bgra32-uint</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Gegeben sei ein gepackter 32-Bit-Farbwert im Format <code>Bgra32</code> (Little-Endian <code>0xAARRGGBB</code>) sowie folgende Bit-Manipulationszeile in C#:</p><pre><code class="language-csharp">uint packedColor = 0xFFC86432;
+byte channel = (byte)((packedColor >> 16) & 0xFF);</code></pre><p>Welchen <strong>dezimalen</strong> Zahlenwert (Basis 10) hat die Variable <code>channel</code> nach der Ausführung?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>Im Hexadezimalwert <code>0xFFC86432</code> stehen die Bytes für: Alpha = <code>0xFF</code> (255), Rot = <code>0xC8</code> (200), Grün = <code>0x64</code> (100), Blau = <code>0x32</code> (50). Durch den Rechts-Shift <code>&gt;&gt; 16</code> gelangt das Rot-Byte <code>0xC8</code> in die untersten 8 Bits. Umrechnung ins Dezimalsystem: \(\text{C}_{16} = 12\), also \(12 \cdot 16 + 8 = 192 + 8 = 200\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T10_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>200</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! >> 16 schiebt das Rot-Byte 0xC8 an die niedrigste Stelle; 0xC8 = 12 * 16 + 8 = 192 + 8 = 200.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>100</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 100 (0x64) ist der Grün-Kanal bei >> 8, hier wurde aber um 16 Bits nach rechts geschoben (0xC8 = 200).</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>50</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 50 (0x32) ist der Blau-Kanal ohne Bit-Shift (>> 0).</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Lückentext: Symplektischer (semi-impliziter) Euler-Schritt (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>T10_Q4: C#-Lückentext: Symplektischer (semi-impliziter) Euler-Schritt</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie den folgenden C#-Code für einen <strong>semi-impliziten (symplektischen) Euler-Schritt</strong> eines Feder-Masse-Schwingers (Masse <code>m</code>, Federsteifigkeit <code>c</code>), bei dem zuerst die neue Geschwindigkeit berechnet und unmittelbar danach für das Orts-Update genutzt wird:</p><pre><code class="language-csharp">double a = -(c / m) * [[1]];
+v = v + [[2]] * a;
+x = x + dt * [[3]];</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung (Symplektischer Euler):</strong></p><ul><li><code>[[1]] = x</code>: Die Rückstellbeschleunigung \(a_n = -\frac{c}{m} x_n\) hängt von der aktuellen Auslenkung <code>x</code> ab.</li><li><code>[[2]] = dt</code>: Die Geschwindigkeit wird auf \(v_{n+1} = v_n + \Delta t \cdot a_n\) aktualisiert.</li><li><code>[[3]] = v</code>: Das Orts-Update \(x_{n+1} = x_n + \Delta t \cdot v_{n+1}\) nutzt bereits die neue Geschwindigkeit <code>v</code>, wodurch das Verfahren energieerhaltend (symplektisch) wird.</li></ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T10_Q1_CFL_Zink</idnumber>
+    <idnumber>T10_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[x]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[dt]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[v]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[v]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[dt]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[x]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[0.5]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[a]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[x]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Pipeline-Reihenfolge: Vom realen Prozess zum ausführbaren Simulationsprogramm (ddwtos, 1.0000000 Pkt.) -->
+  <question type="ddwtos">
+    <name>
+      <text>T10_Q5: Pipeline-Reihenfolge: Vom realen Prozess zum ausführbaren Simulationsprogramm</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Bringen Sie die vier typischen Entwicklungsphasen bei der Erstellung einer technischen Computersimulation in die logisch richtige Reihenfolge (vom realen System bis zur Laufzeit-Visualisierung):</p><p>Phase 1: [[1]]<br>Phase 2: [[2]]<br>Phase 3: [[3]]<br>Phase 4: [[4]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung des Workflows:</strong></p><p>Jede fundierte Ingenieursimulation beginnt mit der zweckgebundenen Systemabgrenzung (Abstraktion), führt über das mathematisch-physikalische Modell (DGLs + Randbedingungen) zur numerischen Diskretisierung (inklusive Stabilitätsanalyse) und mündet schließlich in die performante Software-Implementierung.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T10_Q5</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <dragbox>
+      <text><![CDATA[Physikalische Systemabgrenzung und Abstraktion (Verkürzung nach Stachowiak)]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Aufstellen der kontinuierlichen Differentialgleichungen (ODE / PDE) und Randbedingungen]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Zeitliche und räumliche Diskretisierung (z. B. Euler-Verfahren, 5-Punkt-Stern, CFL-Prüfung)]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Implementierung in C# mit Double-Buffering und WriteableBitmap-Echtzeit-Rendering]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Löschen aller Randbedingungen zur Vermeidung von Rechenaufwand]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Zufälliges Würfeln der Zeitschrittweite ohne Stabilitätsprüfung]]></text>
+      <group>1</group>
+    </dragbox>
+  </question>
+
+  <!-- Question 6: Randbedingungen: Vergleich zwischen Dirichlet- und Neumann-Rand im stationären Fall (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>T10_Q6: Randbedingungen: Vergleich zwischen Dirichlet- und Neumann-Rand im stationären Fall</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Eine quadratische Metallplatte ohne innere Wärmequellen ist an <strong>allen vier Außenkanten</strong> perfekt thermisch isoliert (rundum homogene Neumann-Randbedingung \(\frac{\partial T}{\partial n} = 0\)). Zu Beginn hat die linke Plattenhälfte \(80\,^\circ\text{C}\) und die rechte Plattenhälfte \(20\,^\circ\text{C}\). Welcher Zustand stellt sich nach langer Zeit (\(t \to \infty\)) ein?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Physikalische Erhaltungseigenschaft bei reinen Neumann-Rändern:</strong></p><p>Ist ein Gebiet rundum adiabat abgeschlossen (\(\frac{\partial T}{\partial n} = 0\) auf dem gesamten Rand), kann keine thermische Energie das Gebiet verlassen. Die Wärmeleitung gleicht lediglich die internen Temperaturunterschiede aus, sodass für \(t \to \infty\) überall der räumliche Mittelwert der Anfangstemperatur \(\bar{T} = \frac{1}{2}(80 + 20) = 50\,^\circ\text{C}\) erreicht wird.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T10_Q6</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 13{,}72\,\text{ms}\)]]></text>
+      <text><![CDATA[Die gesamte Platte nähert sich einer räumlich konstanten Mischtemperatur von exakt 50 °C an.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! \(2{,}25 \cdot 10^{-6} / (1{,}64 \cdot 10^{-4})\,\text{s} \approx 13{,}72\,\text{ms}\).</p>]]></text>
+        <text><![CDATA[<p>Richtig! Da über die isolierten Ränder keine Wärme entweichen kann, bleibt die mittlere thermische Energie erhalten: (80 + 20) / 2 = 50 °C überall.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 27{,}44\,\text{ms}\)]]></text>
+      <text><![CDATA[Die Temperatur sinkt in der gesamten Platte auf 0 °C ab, weil alle Randableitungen Null sind.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Eine Ableitung von Null bedeutet Wärmedämmung (Energieerhaltung), nicht Abkühlung auf 0 °C!</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 6{,}86\,\text{ms}\)]]></text>
+      <text><![CDATA[Die linke Hälfte bleibt dauerhaft auf 80 °C und die rechte Hälfte dauerhaft auf 20 °C stehen.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Faktor 8 statt 4.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Im Inneren der Platte findet weiterhin Wärmeleitung vom heißen zum kalten Bereich statt, bis alle Gradienten ausgeglichen sind.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 1{,}37\,\text{ms}\)]]></text>
+      <text><![CDATA[Die Temperatur wächst in der Plattenmitte unbegrenzt an, weil die Wärme am Rand reflektiert wird.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Nach dem 2. Hauptsatz der Thermodynamik (und dem Maximumprinzip der Wärmeleitungsgleichung) kann ohne Quellen kein neuer Maximalwert > 80 °C entstehen.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 2: T10.Q2: Zeiger-Aliasing & Puffer-Swap-Fehler beim Double-Buffering -->
+  <!-- Question 7: C#-Bug-Diagnose: Fehlender Lock/Unlock-Schutz beim WriteableBitmap-Zugriff (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T10_Q2_Code_Buffer_Swap_Referenzfehler</text>
+      <text>T10_Q7: C#-Bug-Diagnose: Fehlender Lock/Unlock-Schutz beim WriteableBitmap-Zugriff</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Zur Vermeidung von Allokationen implementiert ein Entwickler das Double-Buffering über Referenz-Tausch:</p>
-<pre><code class="language-csharp">double[,] bufferA = new double[width, height];
-double[,] bufferB = new double[width, height];
-
-public void Step()
-{
-    ComputeNextStep(bufferA, bufferB); // Liest A, schreibt B
-    
-    // Entwickler schreibt:
-    bufferA = bufferB; 
-}</code></pre>
-<p>Welcher fatale Fehler tritt ab dem <strong>zweiten Zeitschritt</strong> auf?</p>]]></text>
+      <text><![CDATA[<p>Ein Entwickler schreibt eine Methode zur Aktualisierung eines <code>WriteableBitmap bmp</code>, verzichtet aber vermeintlich zur Optimierung auf die Aufrufe von <code>bmp.Lock()</code> und <code>bmp.Unlock()</code>:</p><pre><code class="language-csharp">unsafe {
+    uint* p = (uint*)bmp.BackBuffer;
+    p[0] = 0xFFFFFFFF;
+}
+bmp.AddDirtyRect(new Int32Rect(0, 0, 1, 1));</code></pre><p>Wie reagiert WPF zur Laufzeit auf den Aufruf von <code>bmp.AddDirtyRect(...)</code> ohne vorheriges <code>bmp.Lock()</code>?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Durch <code>bufferA = bufferB</code> zeigen nun beide Variablen auf dieselbe Speicherinstanz von <code>bufferB</code>! Die ursprüngliche Instanz von <code>bufferA</code> geht verloren. Ab Schritt 2 liest und schreibt die Methode in dasselbe Array; das Double-Buffering ist zerstört und es entstehen In-Place-Schreibfehler.</p>]]></text>
+      <text><![CDATA[<p><strong>Fehleranalyse (Lock/Unlock-Vertrag von WriteableBitmap):</strong></p><p>Die Methode <code>AddDirtyRect</code> darf laut WPF-Spezifikation ausschließlich zwischen einem <code>Lock()</code>- und einem <code>Unlock()</code>-Aufruf ausgeführt werden. Wird <code>AddDirtyRect</code> auf einem ungesperrten Bitmap aufgerufen, wirft die Methode sofort eine <code>System.InvalidOperationException</code> (und ohne Synchronisation mit dem Render-Thread drohen zudem Race-Conditions und Tearing).</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T10_Q2_Code_Buffer_Swap_Referenzfehler</idnumber>
+    <idnumber>T10_Q7</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Referenz-Aliasing: <code>bufferA</code> und <code>bufferB</code> verweisen ab Schritt 2 auf dieselbe Array-Instanz im Speicher. Das Double-Buffering kollabiert zu einem fehlerhaften In-Place-Update.]]></text>
+      <text><![CDATA[AddDirtyRect wirft eine InvalidOperationException, weil der BackBuffer zuvor nicht gesperrt wurde.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Ein echter Tausch erfordert eine Hilfsvariable: temp = bufferA; bufferA = bufferB; bufferB = temp;</p>]]></text>
+        <text><![CDATA[<p>Richtig! WPF prüft in AddDirtyRect zwingend, ob sich das WriteableBitmap im gesperrten Zustand (Lock) befindet, und wirft andernfalls sofort eine InvalidOperationException.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Der C#-Compiler wirft einen Fehler, da Arrays in C# schreibgeschützt (immutable) sind.]]></text>
+      <text><![CDATA[AddDirtyRect ruft intern automatisch Lock und Unlock auf, sodass der Code problemlos funktioniert.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Arrays in C# sind vollkommen veränderlich (mutable).</p>]]></text>
+        <text><![CDATA[<p>Falsch. AddDirtyRect führt kein automatisches Locking durch, sondern setzt einen bestehenden Lock-Kontext zwingend voraus.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Es tritt eine <code>StackOverflowException</code> auf, weil Arrays auf dem Stack rekursiv wachsen.]]></text>
+      <text><![CDATA[Der C#-Compiler verweigert bereits zur Übersetzungszeit den Zugriff auf die Eigenschaft BackBuffer.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Arrays liegen auf dem Managed Heap.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Ob Lock() zuvor aufgerufen wurde, ist eine reine Laufzeiteigenschaft und kann vom C#-Compiler nicht statisch geprüft werden.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Die Werte im Array werden automatisch alle auf den Wert 0 zurückgesetzt.]]></text>
+      <text><![CDATA[Das Pixel wird statt im WriteableBitmap automatisch in der Titelleiste des Windows-Fensters gezeichnet.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die Werte bleiben erhalten, aber beide Zeiger referenzieren dieselbe Instanz.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Es findet kein Zeichnen in fremde Fensterelemente statt, sondern die Laufzeit bricht den Aufruf mit einer InvalidOperationException ab.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 3: T10.Q3: Stabilitätsgrenze bei Mehrzonengittern (Materialmix) -->
+  <!-- Question 8: Synthese: Zusammenwirken von Modellierung, Numerik und Visualisierung (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T10_Q3_Mehrzonengitter_Stabilitaet</text>
+      <text>T10_Q8: Synthese: Zusammenwirken von Modellierung, Numerik und Visualisierung</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einer heterogenen Baugruppe (z. B. Leiterplatte) grenzt ein Kupferbereich (\(\alpha_{\text{Cu}} = 1{,}11 \cdot 10^{-4}\,\text{m}^2/\text{s}\)) unmittelbar an ein Epoxidharz-Substrat (\(\alpha_{\text{FR4}} = 0{,}001 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)). Das räumliche Gitter ist einheitlich äquidistant (\(\Delta x = \text{const}\)). Welcher Materialbereich bestimmt die <strong>global zulässige Zeitschrittweite \(\Delta t_{\max}\)</strong> der Gesamtsimulation?</p>]]></text>
+      <text><![CDATA[<p>Welche der folgenden übergreifenden Aussagen zu den Kernthemen aus Kapitel 00, 01 und 02 (Modellbildung, Zeitintegration und 2D-Pixelvisualisierung) sind <strong>korrekt</strong>? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Das Gesamtsystem wird instabil, sobald auch nur an einem einzigen Gitterpunkt das lokale Kriterium \(s_i \le 0{,}25\) verletzt wird. Da \(\Delta t_{\max} = \frac{\Delta x^2}{4 \alpha}\) umgekehrt proportional zu \(\alpha\) ist, diktiert die Zone mit der <strong>höchsten</strong> Temperaturleitfähigkeit (hier Kupfer) den kleinsten und damit global maßgeblichen Zeitschritt!</p>]]></text>
+      <text><![CDATA[<p><strong>Gesamtzusammenfassung (Quiz 01):</strong></p><ul><li>In der Numerik besteht stets der Grundkonflikt zwischen <strong>Genauigkeit / Stabilität</strong> (kleines \(\Delta t\), kleines \(\Delta x\)) und <strong>Echtzeit-Rechenaufwand</strong>.</li><li>Bei \(s = 0{,}25\) gilt \(1 - 4s = 0\), wodurch der neue Knotenwert genau das arithmetische Mittel seiner vier Nachbarn bildet.</li><li>Für höchste Performance kombiniert man einen echten Pointer-/Referenz-Swap <code>(T, T_next) = (T_next, T)</code> in \(\mathcal{O}(1)\) mit direktem <code>unsafe</code>-Schreibzugriff auf den <code>BackBuffer</code> eines <code>WriteableBitmap</code>.</li></ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T10_Q3_Mehrzonengitter_Stabilitaet</idnumber>
-    <single>true</single>
+    <idnumber>T10_Q8</idnumber>
+    <single>false</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Der Kupferbereich (höchstes \(\alpha\)): Da \(\Delta t_{\max} \propto 1/\alpha\) gilt, erfordert die Zone mit der schnellsten Diffusion den kleinsten Zeitschritt, um lokale Oszillationen zu verhindern.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Eine Verkleinerung der Zeitschrittweite dt senkt den Diskretisierungsfehler, erhöht aber die Rechenlast.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Die steifste bzw. schnellste Komponente limitiert das gesamte explizite Zeitintegrationsverfahren.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Kleinere Schritte dt verringern den Abbruchfehler der Taylor-Reihe, erfordern aber mehr Schritte pro Sekunde Simulationszeit.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Der Epoxidharzbereich (niedrigstes \(\alpha\)), da Isolatoren numerisch am schwierigsten zu berechnen sind.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Im Grenzfall s = 0,25 wird die neue Temperatur im 5-Punkt-Stern exakt zum Mittelwert der vier Nachbarn.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Bei kleinem alpha ist der Zeitschritt unkritisch groß.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Für s = 0,25 verschwindet der Vorfaktor (1 - 4s) = 0 vor T_ij^n, sodass T_ij^{n+1} = 0,25 * (T_links + T_rechts + T_oben + T_unten) gilt.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Der arithmetische Mittelwert aus beiden \(\alpha\)-Werten bestimmt den Zeitschritt.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Explizite Zeitintegrationsverfahren sind für jede beliebig große Schrittweite dt garantiert stabil.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Dann würde Kupfer sofort numerisch explodieren.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Explizite Verfahren besitzen ein beschränktes Stabilitätsgebiet (z. B. s <= 0,25 beim 2D-Wärmeraster) und divergieren bei zu großem dt.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[In C# wird automatisch für jede Zelle ein separater individueller Zeitschritt gewählt.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Die Methode Array.Copy tauscht bei zweidimensionalen Arrays in konstanter Zeit O(1) nur die Zeiger.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Standard-Gitter integrieren mit einem global synchronen Zeitschritt.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 4: T10.Q4: Der Digitale Zwilling im Produktlebenszyklus (As-Designed, As-Manufactured, As-Operated) -->
-  <question type="multichoice">
-    <name>
-      <text>T10_Q4_Lebenszyklus_Digital_Twin</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>In der industriellen Automatisierungstechnik begleitet der Digitale Zwilling den Lebenszyklus einer Maschine. Welche Aussage zur Entwicklung des Digitalen Zwillings von der Konstruktion bis zum Betrieb ist <strong>fachlich korrekt</strong>?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>Im Lebenszyklus wandelt sich der Zwilling: Der 'Digital Twin Prototype / As-Designed' basiert auf CAD und idealen Nennwerten; der 'As-Manufactured' integriert reale Fertigungstoleranzen; der 'Digital Twin Instance / As-Operated' wird im laufenden Leitstand kontinuierlich mit realen Sensordaten gefüttert, um Verschleiß und Restlebensdauer zu berechnen.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T10_Q4_Lebenszyklus_Digital_Twin</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Der Digitale Zwilling entwickelt sich vom 'As-Designed' (ideale CAD/Simulationsmodelle) über 'As-Manufactured' (mit realen Fertigungstoleranzen) bis zum 'As-Operated' (kontinuierlich mit Echtzeit-Betriebsdaten synchronisierte Instanz).]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! Dies spiegelt den ganzheitlichen industriellen Lifecycle-Ansatz wider.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Sobald eine Maschine die Werkshalle verlässt, wird ihr Digitaler Zwilling gelöscht, da er im Betrieb wertlos ist.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Im laufenden Betrieb entfaltet der Zwilling für Predictive Maintenance seinen größten Wert.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Ein Digitaler Zwilling darf während des gesamten Lebenszyklus niemals mit neuen Sensordaten aktualisiert werden.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Kontinuierliche Datenanbindung ist das Kernkriterium nach Grieves.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Der Begriff 'Digital Twin' bezieht sich ausschließlich auf die kaufmännische Buchhaltungssoftware eines Unternehmens.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Es ist ein mechatronisches Ingenieurskonzept.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 5: T10.Q5: Der Alpha-Kanal in Bgra32 und unsichtbare Pixel -->
-  <question type="multichoice">
-    <name>
-      <text>T10_Q5_Alpha_Kanal_Bgra32_Transparenz</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Ein Student schreibt Farbwerte in eine <code>WriteableBitmap</code> im Format <code>PixelFormats.Bgra32</code>:</p>
-<pre><code class="language-csharp">byte* pPixel = pBackBuffer + index;
-pPixel[0] = 0;   // Blau
-pPixel[1] = 0;   // Grün
-pPixel[2] = 255; // Rot = Maximal
-pPixel[3] = 0;   // Alpha</code></pre>
-<p>Auf dem Bildschirm bleibt das entsprechende Pixel vollkommen transparent bzw. nimmt die Hintergrundfarbe des Fensters an, anstatt intensiv rot zu leuchten. Warum?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>Im Format <code>Bgra32</code> repräsentiert das vierte Byte (Offset 3) den linearen Alpha-Kanal (Deckkraft / Opazität). Ein Wert von 0 bedeutet vollkommen transparent (0 % Deckung). Damit ein Pixel sichtbar wird, muss der Alpha-Kanal typischerweise auf 255 (voll deckend / 100 % Opazität) gesetzt werden.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T10_Q5_Alpha_Kanal_Bgra32_Transparenz</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Offset 3 steuert den Alpha-Kanal (Deckkraft); ein Wert von 0 bedeutet 0 % Opazität (vollkommene Transparenz), wodurch die roten Farbwerte unsichtbar bleiben. Sichtbare Pixel erfordern Alpha = 255.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Exakt! In Bgra32 muss der Alphakanal zwingend auf 255 gesetzt werden, wenn der Pixel voll deckend sein soll.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[In WPF bedeutet Alpha = 0 maximale Helligkeit und Alpha = 255 tiefschwarz.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Alpha steuert die Deckkraft/Opazität, nicht die Helligkeit.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Der Grafikkartentreiber unterstützt bei Rot keine Alphakanäle.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Jeder Farbkanal wird gleichmäßig mit Alpha geblendet.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Das Pixel wird nicht angezeigt, weil Rot an Offset 2 statt an Offset 0 steht.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. In Bgra32 steht Rot exakt an Offset 2.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Array.Copy kopiert elementweise den gesamten Speicherblock in O(N); ein Zeigertausch in O(1) erfolgt über Tupel-Zuweisung (T, T_next) = (T_next, T).</p>]]></text>
       </feedback>
     </answer>
   </question>

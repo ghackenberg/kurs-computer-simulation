@@ -5,298 +5,409 @@
       <text>$course$/Quiz_01_Termin_03/Test_03_Vorbereitung</text>
     </category>
     <info format="html">
-      <text><![CDATA[<p>Test 03 (Vorbereitung) – Silizium, Ping-Pong-Puffer & Gitterverfeinerung</p>]]></text>
+      <text><![CDATA[<p>Test 03 (Vorbereitung) – Grundlagen, Euler & 2D-Wärmeraster (Variante C)</p>]]></text>
     </info>
   </question>
 
-  <!-- Question 1: T03.Q1: FDM-Wärmeleitung & CFL-Stabilitätsgrenze (Silizium-Chip) -->
-  <question type="multichoice">
+  <!-- Question 1: WriteableBitmap Speicherlayout: BackBufferStride &amp; Pufferspeicher (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
     <name>
-      <text>T03_Q1_CFL_Berechnung_Silizium</text>
+      <text>T03_Q1: WriteableBitmap Speicherlayout: BackBufferStride &amp; Pufferspeicher</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Mikroprozessor-Hotspot wird auf einem Siliziumsubstrat simuliert:</p>
-<ul>
-  <li>Temperaturleitfähigkeit von Silizium: \(\alpha = 0{,}88 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
-  <li>Feine räumliche Diskretisierung: \(\Delta x = \Delta y = 0{,}5\,\text{mm} = 0{,}5 \cdot 10^{-3}\,\text{m}\)</li>
-</ul>
-<p>Berechnen Sie die maximale Zeitschrittweite \(\Delta t_{\max}\) für das explizite 2D-Euler-FDM-Verfahren.</p>]]></text>
+      <text><![CDATA[<p>Für eine hochauflösende 2D-Temperaturfeld-Visualisierung wird ein <code>WriteableBitmap</code> mit einer Breite von \(W = 256\,\text{Pixeln}\) und einer Höhe von \(H = 128\,\text{Pixeln}\) im Format <code>PixelFormats.Bgra32</code> (32 Bit pro Pixel, ohne zusätzliches Zeilen-Padding) angelegt.</p><p>a) Welchen exakten Wert liefert die Eigenschaft <code>BackBufferStride</code> (Länge einer Bildzeile) in <strong>Bytes</strong>?<br>Antwort: {1:NUMERICAL:=1024:0#Richtig! 256 Pixel * 4 Bytes/Pixel = 1024 Bytes pro Zeile.~%50%256:0#Teilpunkte (50 %): Sie haben die Pixelanzahl (256) statt der Byte-Anzahl (256 * 4 = 1024) angegeben.~%50%8192:0#Teilpunkte (50 %): Sie haben mit 32 (Bits) statt mit 4 (Bytes) multipliziert.} Bytes</p><p>b) Wie groß ist das gesamte Speichervolumen des <code>BackBuffer</code> in <strong>Kibibyte (KiB)</strong> (wobei \(1\,\text{KiB} = 1024\,\text{Bytes}\) gilt)?<br>Antwort: {1:NUMERICAL:=128:0.1#Richtig! (1024 Bytes/Zeile * 128 Zeilen) / 1024 Bytes/KiB = 128 KiB.~%50%131.072:0.1#Teilpunkte (50 %): Sie haben durch 1000 (kB) statt durch 1024 (KiB) geteilt.~%50%32:0.1#Teilpunkte (50 %): Folgefehler aus 1 Byte pro Pixel statt 4 Bytes pro Pixel.} KiB</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(0{,}5 \cdot 10^{-3})^2}{4 \cdot 0{,}88 \cdot 10^{-4}} = \frac{0{,}25 \cdot 10^{-6}}{3{,}52 \cdot 10^{-4}}\,\text{s} \approx 0{,}0007102\,\text{s} \approx 0{,}71\,\text{ms}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (Bgra32-Speicherberechnung):</strong></p><p>1. Im Format <code>Bgra32</code> belegt jedes Pixel \(32\,\text{Bit} = 4\,\text{Bytes}\). Bei \(W = 256\) Pixeln beträgt die Zeilenlänge:<br>\(\text{Stride} = 256 \cdot 4\,\text{Bytes} = 1024\,\text{Bytes}\).</p><p>2. Bei \(H = 128\) Zeilen umfasst der Gesamtpuffer \(1024\,\text{Bytes} \cdot 128 = 131\,072\,\text{Bytes}\). Umgerechnet in Kibibyte (\(1\,\text{KiB} = 1024\,\text{Bytes}\)) sind das exakt \(\frac{131\,072}{1024} = 128\,\text{KiB}\).</p>]]></text>
     </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T03_Q1_CFL_Berechnung_Silizium</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 0{,}71\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Exakt! \(0{,}25 \cdot 10^{-6} / (3{,}52 \cdot 10^{-4})\,\text{s} \approx 0{,}71\,\text{ms}\).</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 1{,}42\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das entspricht der unzulässigen 1D-Bedingung \(\Delta x^2 / (2\alpha)\).</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 2{,}84\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Hier fehlt der Faktor 4 komplett.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 7{,}10\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
-      </feedback>
-    </answer>
+    <idnumber>T03_Q1</idnumber>
   </question>
 
-  <!-- Question 2: T03.Q2: Code-Analyse: In-Place-Überschreiben vs. Ping-Pong-Buffering -->
-  <question type="multichoice">
+  <!-- Question 2: Thermisches RC-Glied: Expliziter Euler vs. Heun-Verfahren (RK2) (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
     <name>
-      <text>T03_Q2_Code_InPlace_Update_Fehler</text>
+      <text>T03_Q2: Thermisches RC-Glied: Expliziter Euler vs. Heun-Verfahren (RK2)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einer Simulationsschleife aktualisiert ein Student ein 2D-Temperaturfeld direkt im selben Array:</p>
-<pre><code class="language-csharp">for (int y = 1; y < height - 1; y++)
+      <text><![CDATA[<p>Die Abkühlung eines Bauteils auf Umgebungstemperatur (\(0\,^\circ\text{C}\)) wird durch die Differentialgleichung \(\dot{T}(t) = -2{,}0\,\text{s}^{-1} \cdot T(t)\) beschrieben. Zum Zeitpunkt \(t_0 = 0\,\text{s}\) beträgt die Starttemperatur \(T_0 = 100{,}0\,^\circ\text{C}\). Es wird ein Zeitschritt von \(\Delta t = 0{,}20\,\text{s}\) betrachtet.</p><p>Berechnen Sie die neue Temperatur \(T_1\) (in <strong>°C</strong>) zum Zeitpunkt \(t_1 = 0{,}20\,\text{s}\) mit dem <strong>Heun-Verfahren (2-stufiges Prädiktor-Korrektor-Verfahren, RK2)</strong>.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (Heun-Verfahren / RK2):</strong></p><p>1. <strong>Steigung am Zeilenanfang (\(k_1\)):</strong><br>\(k_1 = f(T_0) = -2{,}0 \cdot 100{,}0 = -200{,}0\,\text{K/s}\).</p><p>2. <strong>Euler-Prädiktorschritt (\(\tilde{T}_1\)):</strong><br>\(\tilde{T}_1 = T_0 + \Delta t \cdot k_1 = 100{,}0 + 0{,}20 \cdot (-200{,}0) = 60{,}0\,^\circ\text{C}\).</p><p>3. <strong>Steigung am Intervallende (\(k_2\)):</strong><br>\(k_2 = f(\tilde{T}_1) = -2{,}0 \cdot 60{,}0 = -120{,}0\,\text{K/s}\).</p><p>4. <strong>Heun-Korrektorschritt (Trapezregel):</strong><br>\(T_1 = T_0 + \frac{\Delta t}{2} \cdot (k_1 + k_2) = 100{,}0 + 0{,}10 \cdot (-200{,}0 - 120{,}0) = 100{,}0 - 32{,}0 = 68{,}0\,^\circ\text{C}\) (deutlich näher an der exakten Lösung \(100 \cdot e^{-0{,}4} \approx 67{,}03\,^\circ\text{C}\) als der reine Euler-Wert \(60{,}0\,^\circ\text{C}\)).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T03_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>68</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Prädiktor T_pred = 60 °C (k1 = -200, k2 = -120); Korrektor T_1 = 100 + 0,20 * 0,5 * (-200 + (-120)) = 68,0 °C.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>60</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 60,0 °C ist nur der Prädiktor-Zwischenwert (expliziter Euler-Schritt), der Korrektor-Mittelwertschritt fehlt noch.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>76</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben im Korrektorschritt versehentlich nur die Steigung k2 = -120 statt des Mittelwerts 0,5 * (k1 + k2) = -160 verwendet.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Lineare Farbinterpolation (Lerp) für Heatmap (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T03_Q3: C#-Code-Tracing: Lineare Farbinterpolation (Lerp) für Heatmap</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Um eine Temperatur <code>T</code> zwischen <code>Tmin = 20.0</code> und <code>Tmax = 120.0</code> in einen Rot-Farbkanal (zwischen <code>rCold = 50</code> und <code>rHot = 250</code>) umzurechnen, wird folgender C#-Code ausgeführt:</p><pre><code class="language-csharp">double T = 45.0;
+double u = Math.Clamp((T - 20.0) / (120.0 - 20.0), 0.0, 1.0);
+byte red = (byte)(50 + u * (250 - 50));</code></pre><p>Welchen exakten Wert besitzt die Variable <code>red</code> nach der Ausführung?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (Lineare Farbskalen-Interpolation):</strong></p><p>1. Normierter Parameter \(u \in [0, 1]\):<br>\(u = \frac{T - T_{\min}}{T_{\max} - T_{\min}} = \frac{45{,}0 - 20{,}0}{120{,}0 - 20{,}0} = \frac{25{,}0}{100{,}0} = 0{,}25\).</p><p>2. Lineare Interpolation des Rot-Kanals:<br>\(\text{red} = 50 + 0{,}25 \cdot (250 - 50) = 50 + 0{,}25 \cdot 200 = 50 + 50 = 100\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T03_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>100</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! u = (45 - 20) / 100 = 0,25; red = 50 + 0,25 * 200 = 50 + 50 = 100.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>50</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 50 ist nur der Zuwachs u * (250 - 50), Sie haben den Basiswert rCold = 50 am Anfang vergessen zu addieren.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>62</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben mit (250 + 50) = 300 oder ohne Subtraktion von rCold (0,25 * 250 = 62,5) gerechnet.</p>]]></text>
+      </feedback>
+      <tolerance>1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Lückentext: Sub-Step-Bodenreflexion mit Restitutionskoeffizient (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>T03_Q4: C#-Lückentext: Sub-Step-Bodenreflexion mit Restitutionskoeffizient</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zur physikalisch korrekten Behandlung einer Bodenkollision (Boden bei <code>y = 0</code>, Restitutionskoeffizient <code>e</code>), sobald der Zeitschritt von <code>yOld &gt; 0</code> nach <code>yNew &lt; 0</code> unter den Boden geführt hat:</p><pre><code class="language-csharp">if (yNew < 0.0)
 {
-    for (int x = 1; x < width - 1; x++)
-    {
-        // Fehlerhafte In-Place Zuweisung:
-        grid[x, y] = grid[x, y] + s * (
-            grid[x + 1, y] + grid[x - 1, y] +
-            grid[x, y + 1] + grid[x, y - 1] - 4.0 * grid[x, y]
-        );
-    }
-}</code></pre>
-<p>Welcher <strong>fundamentale Simulationsfehler</strong> tritt durch dieses Vorgehen auf?</p>]]></text>
+    double tau = yOld / (yOld - [[1]]);
+    double vImpact = vOld - g * ([[2]] * dt);
+    vNew = [[3]] * vImpact;
+    yNew = 0.0;
+}</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Weil die Schleife zeilenweise von links nach rechts und oben nach unten läuft, wurden die Nachbarn <code>grid[x-1, y]</code> und <code>grid[x, y-1]</code> bereits mit Werten des neuen Zeitschritts \(k+1\) überschrieben, während <code>grid[x+1, y]</code> und <code>grid[x, y+1]</code> noch auf Zeitschritt \(k\) stehen. Dadurch entsteht ein asymmetrischer numerischer Transportfehler (künstliche thermische Drift). Abhilfe schafft Double-Buffering (Ping-Pong).</p>]]></text>
+      <text><![CDATA[<p><strong>Erklärung der Kollisions-Interpolation:</strong></p><ul><li><code>[[1]] = yNew</code>: Da <code>yNew</code> negativ ist, entspricht <code>yOld - yNew</code> der gesamten zurückgelegten vertikalen Strecke im Schritt.</li><li><code>[[2]] = tau</code>: Die Fallgeschwindigkeit bis zum Aufprall wächst nur über den Teilzeitschritt \(\tau \cdot \Delta t\) an.</li><li><code>[[3]] = -e</code>: Beim Aufprall kehrt sich das Vorzeichen der Geschwindigkeit um und ihr Betrag wird mit dem Stoßfaktor \(e \in [0, 1]\) gedämpft.</li></ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T03_Q2_Code_InPlace_Update_Fehler</idnumber>
+    <idnumber>T03_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[yNew]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[tau]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[-e]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[vNew]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[0.0]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[1.0]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[e]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[+e]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[1.0 / e]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Konzept-Zuordnung: Physikalische Randbedingungen der Wärmeleitung (matching, 1.0000000 Pkt.) -->
+  <question type="matching">
+    <name>
+      <text>T03_Q5: Konzept-Zuordnung: Physikalische Randbedingungen der Wärmeleitung</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ordnen Sie die folgenden physikalisch-technischen Randszenarien eines 2D-Wärmeleitungsproblems dem jeweiligen mathematischen Randbedingungstyp bzw. der Diskretisierung zu. Beachten Sie die zwei Überhang-Distraktoren.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Übersicht der drei klassischen Randbedingungen für PDEs:</strong></p><ul><li><strong>1. Art (Dirichlet):</strong> Vorgabe des Zustands selbst, z. B. \(T = T_{\text{Wand}}\).</li><li><strong>2. Art (Neumann):</strong> Vorgabe der Normalenableitung (Wärmestromdichte \(\dot{q} = -\lambda \frac{\partial T}{\partial n}\)). Bei perfekter Isolation gilt \(\frac{\partial T}{\partial n} = 0 \implies T_{\text{Rand}} = T_{\text{Nachbar}}\).</li><li><strong>3. Art (Robin / Cauchy):</strong> Linearkombination aus Randtemperatur und Normalenableitung (Newtonsches Abkühlungsgesetz an Fluidgrenzen).</li></ul>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T03_Q5</idnumber>
+    <shuffleanswers>true</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <subquestion format="html">
+      <text><![CDATA[Eine Plattenseite wird durch ein geregeltes Wasserbad dauerhaft auf exakt 80 °C gehalten.]]></text>
+      <answer>
+        <text><![CDATA[Dirichlet-Randbedingung (1. Art: Fester Funktionswert)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Eine Plattenseite ist perfekt wärmegedämmt (adiabat), sodass kein Wärmestrom über den Rand fließt.]]></text>
+      <answer>
+        <text><![CDATA[Homogene Neumann-Randbedingung (2. Art: Ableitung Null)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Eine Plattenseite gibt Wärme proportional zur Temperaturdifferenz an die vorbeiströmende Luft ab.]]></text>
+      <answer>
+        <text><![CDATA[Robin-Randbedingung (3. Art: Konvektiver Wärmeübergang)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Diskrete Umsetzung am linken Rand (Index 0) durch die Zuweisung T[0, y] = T[1, y] nach jedem Schritt.]]></text>
+      <answer>
+        <text><![CDATA[Numerische Implementierung eines isolierten Neumann-Randes]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Courant-Friedrichs-Lewy-Randbedingung (4. Art)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Stachowiak-Abstraktions-Randbedingung (0. Art)]]></text>
+      </answer>
+    </subquestion>
+  </question>
+
+  <!-- Question 6: Modelltheorie &amp; Echtzeit: Zusammensetzung eines Digitalen Zwillings (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>T03_Q6: Modelltheorie &amp; Echtzeit: Zusammensetzung eines Digitalen Zwillings</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Welche Aussage beschreibt die Grundstruktur eines Digitalen Zwillings nach Michael Grieves sowie die Echtzeitanforderungen an eine gekoppelte Simulation in der Automatisierungstechnik korrekt?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><p>Nach Michael Grieves besteht jedes Digital-Twin-System aus der Dreiheit <em>Physisches Produkt im Realraum</em>, <em>Virtuelles Produkt im Digitalraum</em> und der <em>bidirektionalen Daten- und Informationsverbindung</em>. Echtzeitfähigkeit bedeutet dabei nicht „unendlich schnell“, sondern \(\Delta t_{\text{Berechnung}} \le \Delta t_{\text{Physik}}\) innerhalb einer garantierten Zeitschranke.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T03_Q6</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Asymmetrische Richtungsverzerrung: Bereits berechnete Werte des neuen Zeitschritts gehen sofort in die Nachbarberechnung ein; es entsteht eine künstliche Richtungsdrift nach rechts unten. Es wird zwingend ein zweiter Puffer (Ping-Pong) benötigt.]]></text>
+      <text><![CDATA[Ein Digitaler Zwilling umfasst das reale Objekt, das virtuelle Modell und deren bidirektionale Datenverbindung.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Beim expliziten Zeitschritt müssen alle Nachbarn strikt aus dem alten Zeitschritt k stammen.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Grieves definiert den Digital Twin über genau diese drei Kernkomponenten (Physical Space, Virtual Space, Data/Information Tie).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Der C#-Compiler verweigert die Ausführung mit Compilerfehler CS0123 wegen verbotener Rekursion.]]></text>
+      <text><![CDATA[Ein Digitaler Zwilling erfordert zwingend ein 3D-CAD-Modell, kommt aber ohne reale Sensordaten-Kopplung aus.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Syntaktisch ist das völlig legaler C#-Code.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Ohne automatische Sensordaten- und Aktorkopplung handelt es sich nach Kritzinger lediglich um ein Digital Model, nicht um einen Digital Twin.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Das Verfahren transformiert sich automatisch in ein implizites Verfahren und wird dadurch absolut stabil.]]></text>
+      <text><![CDATA[Echtzeitfähigkeit bedeutet in der Simulation immer, dass ein Zeitschritt weniger als eine Mikrosekunde dauert.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Es handelt sich um ein fehlerhaftes Gauss-Seidel-Mischverfahren mit unkontrollierten Fehlern.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Echtzeit bedeutet, dass die Rechendauer dt_wall kleiner oder gleich der physikalischen Zeitschrittweite dt_sim ist (bei thermischen Prozessen oft Sekunden).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Das Array wirft nach genau einem Durchlauf eine <code>NullReferenceException</code>.]]></text>
+      <text><![CDATA[Nach dem Verkürzungsmerkmal von Stachowiak muss ein Simulationsmodell stets alle Atome des Originals abbilden.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das Array bleibt allokiert.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Das Verkürzungsmerkmal besagt genau das Gegenteil: Irrelevante Mikroeigenschaften werden für den jeweiligen Zweck bewusst weggelassen.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 3: T03.Q3: Auswirkung einer räumlichen Gitterverfeinerung auf den Zeitschritt -->
+  <!-- Question 7: C#-Bug-Diagnose: Integer-Division bei der Farbskalen-Normierung (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T03_Q3_Physik_Gitterverfeinerung_Konsequenz</text>
+      <text>T03_Q7: C#-Bug-Diagnose: Integer-Division bei der Farbskalen-Normierung</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Um feinere thermische Details an einem Kühlkörper aufzulösen, halbiert ein Entwickler die räumliche Schrittweite von \(\Delta x = 1{,}0\,\text{mm}\) auf \(\Delta x = 0{,}5\,\text{mm}\). Wie muss die maximale Zeitschrittweite \(\Delta t\) angepasst werden, damit das explizite FDM-Verfahren stabil bleibt?</p>]]></text>
+      <text><![CDATA[<p>Ein Entwickler speichert Temperaturen als ganzzahlige Werte (<code>int</code>) und möchte daraus einen kontinuierlichen Farbverlauf zwischen Blau (bei <code>Tmin = 0</code>) und Rot (bei <code>Tmax = 100</code>) berechnen:</p><pre><code class="language-csharp">int T = 65, Tmin = 0, Tmax = 100;
+double u = (T - Tmin) / (Tmax - Tmin);
+byte red = (byte)(255 * u);</code></pre><p>Warum bleibt der Rot-Kanal <code>red</code> für alle Temperaturen zwischen <code>0</code> und <code>99</code> dauerhaft auf dem Wert <code>0</code>?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Wegen \(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha}\) geht die räumliche Schrittweite quadratisch in die Zeitschrittbegrenzung ein: \((0{,}5)^2 = 0{,}25\). Eine Halbierung von \(\Delta x\) erfordert eine Viertelung von \(\Delta t\)!</p>]]></text>
+      <text><![CDATA[<p><strong>Fehleranalyse (Ganzzahldivision in C#):</strong></p><p>Da sowohl <code>(T - Tmin)</code> als auch <code>(Tmax - Tmin)</code> vom Typ <code>int</code> sind, führt C# eine Ganzzahldivision durch: <code>65 / 100</code> ergibt <code>0</code>. Erst dieses Ergebnis wird anschließend implizit in <code>double u = 0.0</code> umgewandelt. Abhilfe schafft ein expliziter Cast wie <code>(double)(T - Tmin) / (Tmax - Tmin)</code> oder das Teilen durch <code>100.0</code>.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T03_Q3_Physik_Gitterverfeinerung_Konsequenz</idnumber>
+    <idnumber>T03_Q7</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[\(\Delta t\) muss auf mindestens ein Viertel (\(1/4\)) des vorherigen Werts reduziert werden, da bei parabolischen DGLn eine quadratische Kopplung \(\Delta t \propto \Delta x^2\) gilt.]]></text>
+      <text><![CDATA[Weil beide Operanden vom Typ int sind, schneidet die Ganzzahldivision den Nachkommateil vor der Zuweisung ab.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Die quadratische Abhängigkeit ist der Hauptgrund für den enormen Rechenaufwand feiner FDM-Gitter.</p>]]></text>
+        <text><![CDATA[<p>Richtig! In C# wird 65 / 100 als reine int-Division zu 0 ausgewertet und erst danach als 0.0 in die double-Variable u geschrieben.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t\) muss lediglich halbiert werden (\(1/2\)), da die Schrittweiten linear gekoppelt sind.]]></text>
+      <text><![CDATA[Weil der Datentyp byte in C# nur Werte von -128 bis +127 speichern kann und bei 255 sofort auf 0 überläuft.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das gilt für hyperbolische Wellengleichungen (CFL-Bedingung), nicht für parabolische Diffusion.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Der Typ byte ist in C# vorzeichenlos (unsigned 8-Bit) und umfasst exakt den Wertebereich 0 bis 255 (sbyte wäre -128 bis +127).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t\) bleibt unverändert, da die zeitliche und räumliche Diskretisierung unabhängig voneinander gewählt werden können.]]></text>
+      <text><![CDATA[Weil die Klammern um (T - Tmin) in C# dazu führen, dass der Ausdruck als bitweises XOR ausgewertet wird.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das Verfahren würde sofort explodieren.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Runde Klammern steuern lediglich die Auswertungsreihenfolge; der bitweise XOR-Operator in C# wäre das Zeichen ^.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t\) kann verdoppelt werden, da feinere Gitter numerisch stabiler sind.]]></text>
+      <text><![CDATA[Weil eine implizite Konvertierung von int nach double in C# grundsätzlich den Wert 0.0 zur Folge hat.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Feinere Gitter verlangen zwingend kleinere Zeitschritte.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Die implizite Konvertierung eines int nach double ist verlustfrei; der Verlust passiert bereits vorher bei der int/int-Division.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 4: T03.Q4: Das Diktum von George Box und Modellgrenzen in der Ingenieurpraxis -->
+  <!-- Question 8: Energiediskussion: Symplektischer Euler vs. Expliziter Standard-Euler (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T03_Q4_George_Box_Modellgrenzen</text>
+      <text>T03_Q8: Energiediskussion: Symplektischer Euler vs. Expliziter Standard-Euler</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Der Statistiker George Box prägte das berühmte Zitat: <em>„All models are wrong, but some are useful.“</em> Welche fundamentale Erkenntnis leitet sich daraus für die Modellbildung mechatronischer Systeme ab?</p>]]></text>
+      <text><![CDATA[<p>Welche der folgenden Aussagen zum Zeitintegrationsverhalten mechanischer Systeme (z. B. springender Ball oder ungedämpftes Pendel) mit Euler-Verfahren sind <strong>zutreffend</strong>? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Jedes Modell ist eine Abstraktion und Reduktion der Wirklichkeit. Ein Modell soll die Realität nicht perfekt kopieren, sondern eine konkrete Fragestellung (z. B. thermische Grenztemperatur) mit hinreichender Genauigkeit und vertretbarem Rechenaufwand beantworten.</p>]]></text>
+      <text><![CDATA[<p><strong>Zusammenfassung (Energieverhalten & Stoßmechanik):</strong></p><ul><li>Beim expliziten Standard-Euler wächst der Phasenraum-Radius pro Schritt um den Faktor \(\sqrt{1 + (\omega \Delta t)^2} > 1\) an (künstliches Aufschaukeln).</li><li>Ohne die lineare Aufprall-Interpolation \(\tau = \frac{y_n}{y_n - y_{n+1}}\) führt die zufällige Eindringtiefe \(y_{n+1} < 0\) zu sichtbarem Höhen-Jitter beim Springen.</li></ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T03_Q4_George_Box_Modellgrenzen</idnumber>
-    <single>true</single>
+    <idnumber>T03_Q8</idnumber>
+    <single>false</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Jedes Modell vernachlässigt zwangsläufig reale Effekte; seine Qualität bemisst sich nicht an absoluter Vollständigkeit, sondern daran, ob es das zielgerichtete Verhalten für seinen Zweck hinreichend genau vorhersagt.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Der explizite Standard-Euler führt bei ungedämpften Schwingungen zu einer künstlichen Energiezunahme pro Schritt.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Ingenieure modellieren zielgerichtet („so einfach wie möglich, so detailliert wie nötig“).</p>]]></text>
+        <text><![CDATA[<p>Richtig! Da der Standard-Euler tangential aus den gekrümmten Phasenraum-Trajektorien herausspringt, wächst die Gesamtenergie systematisch an.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Computersimulationen sind prinzipiell fehlerhaft und dürfen deshalb in industriellen Freigabeprozessen niemals eingesetzt werden.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Ohne zeitliche Sub-Step-Interpolation am Boden hängt die Rücksprunghöhe unphysikalisch von der Schrittweite ab.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Simulationen sind das Standardwerkzeug moderner Entwicklung.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Wird einfach bei y < 0 hart auf y = 0 gesetzt, geht die in der Eindringtiefe steckende Lageenergie je nach zufälliger Phasenlage verloren.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Ein Modell ist erst dann wissenschaftlich valide, wenn es bis auf atomare Ebene alle Naturgesetze gleichzeitig abbildet.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Das explizite Standard-Euler-Verfahren ist für alle Schrittweiten exakt energieerhaltend und symplektisch.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Ein solches Modell wäre unberechenbar und verstößt gegen das Verkürzungsmerkmal.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Der Standard-Euler ist nicht symplektisch (erst der semi-implizite Euler v_n+1 -> y_n+1 ist symplektisch).</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Nur rein analytisch gelöste Formeln sind brauchbar, numerische Algorithmen sind grundsätzlich unbrauchbar.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Ein Restitutionskoeffizient von e = 0.8 bedeutet, dass nach jedem Bodenaufprall 80 % der Geschwindigkeit verloren gehen.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Reale industrielle Systeme lassen sich fast nie geschlossen analytisch lösen.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 5: T03.Q5: WPF-Rendering-Pipeline: Lock, Unlock und AddDirtyRect -->
-  <question type="multichoice">
-    <name>
-      <text>T03_Q5_WPF_AddDirtyRect_Lock</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Ein Entwickler aktualisiert den <code>BackBuffer</code> einer <code>WriteableBitmap</code> direkt über Zeiger im RAM. Er vergisst jedoch nach der Schleife den Aufruf von <code>bitmap.AddDirtyRect(...)</code>. Was ist die Folge?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p><code>AddDirtyRect</code> signalisiert der WPF-Render-Pipeline (dem Composition-Engine), welcher Bereich des Back-Buffers verändert wurde und zur GPU kopiert werden muss. Ohne diesen Aufruf weiß WPF nichts von den geänderten Daten und das Fenster zeigt weiterhin das alte Bild.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T03_Q5_WPF_AddDirtyRect_Lock</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Das Anzeigefenster aktualisiert sich nicht (optischer Stillstand), da WPF nicht informiert wird, welcher Bildbereich neu gerendert und an die Grafikkarte übertragen werden muss.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! AddDirtyRect stößt das Dirty-Region-Tracking der WPF-Engine an.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Das Betriebssystem stürzt mit einem Blue-Screen ab, weil DirectX unerlaubt manipuliert wurde.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Es passiert lediglich keine Bildschirmaktualisierung.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[WPF wechselt automatisch in den Software-Rendering-Modus und aktualisiert das Bild nach 5 Sekunden Verzögerung.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Es erfolgt gar kein Update der betroffenen Region.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Es wird automatisch eine <code>InvalidOperationException</code> geworfen.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Fehlt AddDirtyRect, wird keine Exception ausgelöst, das Bild bleibt stumm unverändert.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Wegen v_neu = -e * v_alt bleiben bei e = 0,8 genau 80 % der Geschwindigkeit erhalten (nur 20 % gehen verloren).</p>]]></text>
       </feedback>
     </answer>
   </question>

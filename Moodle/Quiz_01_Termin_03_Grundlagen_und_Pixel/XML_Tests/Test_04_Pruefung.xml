@@ -5,294 +5,401 @@
       <text>$course$/Quiz_01_Termin_03/Test_04_Pruefung</text>
     </category>
     <info format="html">
-      <text><![CDATA[<p>Test 04 (Prüfung) – Messing, Stride-Padding & Ghost-Cells</p>]]></text>
+      <text><![CDATA[<p>Test 04 (Prüfung) – Grundlagen, Euler & 2D-Wärmeraster (Klausurvariante D)</p>]]></text>
     </info>
   </question>
 
-  <!-- Question 1: T04.Q1: FDM-Stabilitätsgrenze für Messing-Kühlkörper -->
-  <question type="multichoice">
+  <!-- Question 1: 2D-Gitterentwurf: Minimale Maschenweite &amp; Gesamt-Knotenanzahl (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
     <name>
-      <text>T04_Q1_CFL_Messing</text>
+      <text>T04_Q1: 2D-Gitterentwurf: Minimale Maschenweite &amp; Gesamt-Knotenanzahl</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Messingbauteil wird thermisch simuliert:</p>
-<ul>
-  <li>Temperaturleitfähigkeit von Messing: \(\alpha = 0{,}34 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
-  <li>Gitterweite: \(\Delta x = \Delta y = 1{,}5\,\text{mm} = 1{,}5 \cdot 10^{-3}\,\text{m}\)</li>
-</ul>
-<p>Wie groß ist die maximale Zeitschrittweite \(\Delta t_{\max}\) nach der 2D-Von-Neumann-Bedingung?</p>]]></text>
+      <text><![CDATA[<p>Eine quadratische Aluminium-Kühlplatte der Kantenlänge \(L_x = L_y = 120\,\text{mm}\) (Temperaturleitfähigkeit \(\alpha = 80\,\text{mm}^2/\text{s}\)) soll mit einer fest durch den SPS-Zyklus vorgegebenen Zeitschrittweite von \(\Delta t = 0{,}05\,\text{s}\) mittels explizitem 2D-Euler-Verfahren (5-Punkt-Stern) numerisch stabil simuliert werden.</p><p>a) Wie groß muss die räumliche Maschenweite \(\Delta x_{\min}\) (in <strong>mm</strong>) mindestens gewählt werden, damit die 2D-Stabilitätsbedingung gerade noch eingehalten wird?<br>Antwort: {1:NUMERICAL:=4.0:0.05#Richtig! Aus s = alpha * dt / dx^2 <= 0,25 folgt dx_min = sqrt(4 * 80 * 0,05) = sqrt(16) = 4,0 mm.~%50%2.828:0.05#Teilpunkte (50 %): Sie haben mit dem 1D-Faktor 2 statt 4 gerechnet (sqrt(8) = 2,83 mm).~%50%16.0:0.1#Teilpunkte (50 %): Sie haben dx^2 = 16 mm^2 berechnet, aber vergessen, am Ende die Quadratwurzel zu ziehen.} mm</p><p>b) In wie viele Teilintervalle \(N_{\text{seg}} = L_x / \Delta x_{\min}\) wird eine Plattenkante dabei unterteilt?<br>Antwort: {1:NUMERICAL:=30:0#Richtig! 120 mm / 4,0 mm = 30 Segmente pro Kante (entspricht 31 * 31 = 961 Gitterknoten inkl. Rändern).~%50%900:0#Teilpunkte (50 %): Sie haben die Fläche 30 * 30 = 900 statt der Kanten-Segmente angegeben.} Segmente</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(1{,}5 \cdot 10^{-3})^2}{4 \cdot 0{,}34 \cdot 10^{-4}} = \frac{2{,}25 \cdot 10^{-6}}{1{,}36 \cdot 10^{-4}}\,\text{s} \approx 0{,}016544\,\text{s} \approx 16{,}54\,\text{ms}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (Inverser Gitterentwurf bei festem \(\Delta t\)):</strong></p><p>1. Umstellen der 2D-Stabilitätsbedingung \(s = \frac{\alpha \cdot \Delta t}{\Delta x^2} \le 0{,}25\) nach \(\Delta x\):<br>\(\Delta x \ge \sqrt{4 \cdot \alpha \cdot \Delta t} = \sqrt{4 \cdot 80\,\text{mm}^2/\text{s} \cdot 0{,}05\,\text{s}} = \sqrt{16\,\text{mm}^2} = 4{,}0\,\text{mm}\).</p><p>2. Anzahl der Kanten-Segmente:<br>\(N_{\text{seg}} = \frac{L_x}{\Delta x_{\min}} = \frac{120\,\text{mm}}{4{,}0\,\text{mm}} = 30\,\text{Segmente}\).</p>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T04_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Expliziter Euler: Zweischritt-Integration der vertikalen Höhe (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T04_Q2: Expliziter Euler: Zweischritt-Integration der vertikalen Höhe</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Körper wird zum Zeitpunkt \(t_0 = 0\,\text{s}\) aus der Ruhe (\(v_0 = 0{,}0\,\text{m/s}\)) in einer Starthöhe von \(y_0 = 20{,}0\,\text{m}\) losgelassen. Er fällt unter dem Einfluss einer konstanten Schwerebeschleunigung von \(g = 10{,}0\,\text{m/s}^2\) nach unten (ohne Luftwiderstand).</p><p>Berechnen Sie die Höhe \(y_2\) (in <strong>Metern</strong>) zum Zeitpunkt \(t_2 = 0{,}40\,\text{s}\) nach exakt <strong>zwei Zeitschritten</strong> der Schrittweite \(\Delta t = 0{,}20\,\text{s}\) mit dem <strong>expliziten Standard-Euler-Verfahren</strong>.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (2 Schritte Expliziter Standard-Euler):</strong></p><p><strong>Schritt 1 (\(t_0 = 0 \to t_1 = 0{,}20\,\text{s}\)):</strong><br>\(y_1 = y_0 + \Delta t \cdot v_0 = 20{,}0 + 0{,}20 \cdot 0{,}0 = 20{,}0\,\text{m}\)<br>\(v_1 = v_0 - \Delta t \cdot g = 0{,}0 - 0{,}20 \cdot 10{,}0 = -2{,}0\,\text{m/s}\).</p><p><strong>Schritt 2 (\(t_1 = 0{,}20 \to t_2 = 0{,}40\,\text{s}\)):</strong><br>\(y_2 = y_1 + \Delta t \cdot v_1 = 20{,}0 + 0{,}20 \cdot (-2{,}0) = 19{,}6\,\text{m}\).<br>(Man erkennt hier anschaulich den globalen Diskretisierungsfehler von \(0{,}4\,\text{m}\) gegenüber dem exakten Wert \(19{,}2\,\text{m}\).)</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T04_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>19.6</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Schritt 1: y_1 = 20 + 0,2*0 = 20,0 m, v_1 = -2,0 m/s. Schritt 2: y_2 = 20,0 + 0,2*(-2,0) = 19,6 m.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>19.2</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 19,2 m ist die analytische Lösung y(0,4) = 20 - 0,5*10*0,16 = 19,2 m (bzw. Heun), nicht das Ergebnis des expliziten Euler!</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>18.8</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 18,8 m entsteht beim semi-impliziten Euler (Schritt 1: 19,6 m, Schritt 2: 18,8 m).</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: 5-Punkt-Stern Array-Update an einem Gitterknoten (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T04_Q3: C#-Code-Tracing: 5-Punkt-Stern Array-Update an einem Gitterknoten</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Gegeben sei folgender C#-Codeausschnitt für einen Zeitschritt auf einem \(3 \times 3\)-Temperaturgitter:</p><pre><code class="language-csharp">double[,] T = {
+    { 10.0, 20.0, 10.0 },
+    { 40.0, 10.0, 20.0 },
+    { 10.0, 30.0, 10.0 }
+};
+double s = 0.25;
+double T_next_1_1 = T[1, 1] + s * (T[0, 1] + T[2, 1] + T[1, 0] + T[1, 2] - 4.0 * T[1, 1]);</code></pre><p>Welchen exakten Zahlenwert hat die Variable <code>T_next_1_1</code> nach der Ausführung?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>Der Zentralknoten ist <code>T[1, 1] = 10.0</code>. Seine vier direkten Nachbarn sind <code>T[0, 1] = 20.0</code>, <code>T[2, 1] = 30.0</code>, <code>T[1, 0] = 40.0</code> und <code>T[1, 2] = 20.0</code> (Summe der Nachbarn \(= 110{,}0\)).</p><p>Einsetzen in die Formel liefert:<br><code>T_next_1_1 = 10.0 + 0.25 * (110.0 - 4.0 * 10.0) = 10.0 + 0.25 * 70.0 = 10.0 + 17.5 = 27.5</code>.<br><em>Hinweis:</em> Im Grenzfall \(s = 0{,}25\) ist \(T_{i,j}^{n+1}\) stets exakt der arithmetische Mittelwert der vier Nachbarknoten (\(110 / 4 = 27{,}5\)).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T04_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>27.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Bei s = 0,25 kürzt sich T[1,1] heraus: T_next = 0,25 * (20 + 30 + 40 + 20) = 0,25 * 110 = 27,5.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>37.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben vergessen, im Klammerausdruck -4.0 * T[1,1] (= -40) abzuziehen (10 + 0,25 * 110 = 37,5).</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>17.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben die Eckknoten (10+10+10+10 = 40) oder einen falschen Nachbarn statt der 4 Kanten-Nachbarn summiert.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Lückentext: Heun-Verfahren (Prädiktor-Korrektor) im Code (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>T04_Q4: C#-Lückentext: Heun-Verfahren (Prädiktor-Korrektor) im Code</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie die folgende C#-Methode, die eine allgemeine Differentialgleichung \(\dot{y} = f(t, y)\) um einen Zeitschritt <code>dt</code> mit dem <strong>Heun-Verfahren (RK2)</strong> integriert:</p><pre><code class="language-csharp">double k1 = f(t, y);
+double yPred = y + [[1]] * k1;
+double k2 = f(t + dt, [[2]]);
+double yNext = y + [[3]] * (k1 + k2);</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung (Heun-Verfahren / Trapezregel):</strong></p><ul><li><code>[[1]] = dt</code>: Der Prädiktorschritt schätzt den Endwert über einen vollen expliziten Euler-Schritt <code>y + dt * k1</code>.</li><li><code>[[2]] = yPred</code>: Die zweite Steigung <code>k2</code> wird am Ende des Intervalls mit dem geschätzten Zustand <code>yPred</code> ausgewertet.</li><li><code>[[3]] = 0.5 * dt</code>: Der Korrektorschritt mittelt beide Steigungen <code>0.5 * (k1 + k2)</code> und multipliziert mit <code>dt</code>.</li></ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T04_Q1_CFL_Messing</idnumber>
+    <idnumber>T04_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[dt]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[yPred]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[0.5 * dt]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[0.5 * dt]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[dt * dt]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[y]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[k1]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[dt]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[2.0 * dt]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Pipeline-Reihenfolge: Ablauf des zweistufigen Heun-Integrationsschritts (ddwtos, 1.0000000 Pkt.) -->
+  <question type="ddwtos">
+    <name>
+      <text>T04_Q5: Pipeline-Reihenfolge: Ablauf des zweistufigen Heun-Integrationsschritts</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Bringen Sie die vier Berechnungsschritte eines einzelnen Zeitschritts beim <strong>Heun-Verfahren (RK2)</strong> in die korrekte mathematisch-algorithmische Ausführungsreihenfolge:</p><p>Schritt 1: [[1]]<br>Schritt 2: [[2]]<br>Schritt 3: [[3]]<br>Schritt 4: [[4]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><p>Das Heun-Verfahren bestimmt zuerst die Tangentensteigung \(k_1\) am Startpunkt, führt damit einen provisorischen Euler-Schritt auf \(\tilde{y}\) aus (Prädiktor), ermittelt dort die Endsteigung \(k_2\) und korrigiert schließlich den Schritt mit dem arithmetischen Mittelwert beider Steigungen.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T04_Q5</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <dragbox>
+      <text><![CDATA[Anfangssteigung k1 = f(t_n, y_n) am aktuellen Zustand berechnen]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Prädiktor-Zustand y_tilde = y_n + dt * k1 vorhersagen]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Endsteigung k2 = f(t_n + dt, y_tilde) am Prädiktorpunkt auswerten]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Korrektor-Update y_n+1 = y_n + 0.5 * dt * (k1 + k2) durchführen]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Schrittweite dt mit dem Faktor 4 multiplizieren]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Zustandsvektor y_n auf 0 zurücksetzen]]></text>
+      <group>1</group>
+    </dragbox>
+  </question>
+
+  <!-- Question 6: System-Taxonomie: Einordnung des gedämpften Einmassenschwingers (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>T04_Q6: System-Taxonomie: Einordnung des gedämpften Einmassenschwingers</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Wie wird die klassische Bewegungsgleichung \(m\ddot{x}(t) + d\dot{x}(t) + cx(t) = F(t)\) eines Feder-Masse-Dämpfer-Systems in der Systemtheorie klassifiziert?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><p>Systeme, deren Bauteile (Masse \(m\), Dämpfer \(d\), Feder \(c\)) räumlich punktförmig zusammengefasst werden, heißen Systeme mit <strong>konzentrierten Parametern</strong> (<em>lumped-parameter systems</em>) und führen auf gewöhnliche Differentialgleichungen (ODEs). Systeme mit Ortsableitungen (wie das 2D-Temperaturfeld) heißen dagegen Systeme mit <strong>verteilten Parametern</strong> (PDEs).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T04_Q6</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 16{,}54\,\text{ms}\)]]></text>
+      <text><![CDATA[Es ist ein deterministisches, zeitkontinuierliches Modell mit konzentrierten Parametern (ODE).]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt richtig! \(2{,}25 \cdot 10^{-6} / (1{,}36 \cdot 10^{-4})\,\text{s} \approx 16{,}54\,\text{ms}\).</p>]]></text>
+        <text><![CDATA[<p>Richtig! Die Masse ist in einem Punkt konzentriert (nur Zeitabhängigkeit t -> gewöhnliche DGL / ODE), und der Verlauf ist deterministisch.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 33{,}09\,\text{ms}\)]]></text>
+      <text><![CDATA[Es ist ein zeitdiskretes Modell mit verteilten Parametern auf einem zweidimensionalen Raumgitter.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert mit Faktor 2 statt 4.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Es gibt hier keine partiellen Ortsableitungen nach x oder y (keine PDE), sondern nur Zeitableitungen.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 8{,}27\,\text{ms}\)]]></text>
+      <text><![CDATA[Es ist ein rein statisches, algebraisches Modell ohne jedes Zeitgedächtnis oder Zustandsgrößen.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Faktor 8 statt 4 verwendet.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Durch die erste und zweite Zeitableitung besitzt das System zwei Energiespeicher (Zustände x und v) und ist somit dynamisch.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 1{,}65\,\text{ms}\)]]></text>
+      <text><![CDATA[Es ist ein stochastisches Warteschlangenmodell zur Beschreibung zufälliger Fertigungsprozesse.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Alle Koeffizienten m, d, c und F(t) sind deterministisch vorgegeben.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 2: T04.Q2: Code-Analyse: Vernachlässigung des Grafiktreiber-Stride-Paddings -->
+  <!-- Question 7: C#-Bug-Diagnose: Fehlender AddDirtyRect-Aufruf bei WriteableBitmap (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T04_Q2_Code_Stride_Padding_Bug</text>
+      <text>T04_Q7: C#-Bug-Diagnose: Fehlender AddDirtyRect-Aufruf bei WriteableBitmap</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Entwickler verwendet folgenden Code zum Zeilenumbruch im unmanaged Back-Buffer:</p>
-<pre><code class="language-csharp">int stride = width * 4; // Feste Annahme ohne Abfrage der Bitmap-Eigenschaft
-byte* pRow = (byte*)bitmap.BackBuffer + (y * stride);</code></pre>
-<p>Auf manchen Systemen oder bei ungeraden Bildbreiten (z. B. \(W = 643\)) erscheint das Bild diagonal zerschnitten und schräg verzerrt. Warum ist die Annahme <code>stride = width * 4</code> gefährlich?</p>]]></text>
+      <text><![CDATA[<p>Eine Entwicklerin aktualisiert in jedem Simulationsschritt den <code>BackBuffer</code> eines <code>WriteableBitmap bmp</code> mit folgendem C#-Code, sieht aber auf dem Bildschirm dauerhaft nur ein leeres Bild:</p><pre><code class="language-csharp">bmp.Lock();
+unsafe {
+    uint* p = (uint*)bmp.BackBuffer;
+    for (int i = 0; i < width * height; i++) p[i] = 0xFFFF0000;
+}
+bmp.Unlock();</code></pre><p>Was ist die Ursache dafür, dass die rote Fläche niemals im WPF-Fenster erscheint?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Grafiktreiber und das Windows-Subsystem richten Zeilenanfänge aus Performancegründen oft auf 16-, 64- oder 128-Byte-Grenzen aus (Padding-Bytes am Zeilenende). Daher kann <code>BackBufferStride</code> größer sein als <code>width * 4</code>. Man muss zwingend immer <code>bitmap.BackBufferStride</code> abfragen!</p>]]></text>
+      <text><![CDATA[<p><strong>Fehleranalyse:</strong></p><p>Weil der Schreibzugriff über einen unverwalteten Pointer (<code>uint* p</code>) direkt im RAM stattfindet, bekommt die WPF-Laufzeitumgebung davon nichts mit. Erst <code>bmp.AddDirtyRect(new Int32Rect(0, 0, width, height))</code> markiert den Bereich als geändert („dirty“) und stößt beim anschließenden <code>bmp.Unlock()</code> den Kopiervorgang in den FrontBuffer der Grafikkarte an.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T04_Q2_Code_Stride_Padding_Bug</idnumber>
+    <idnumber>T04_Q7</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Grafiksysteme fügen zur Speicherausrichtung am Zeilenende oft Padding-Bytes ein, sodass <code>BackBufferStride &gt; width * 4</code> sein kann. Wird dieser Treiber-Stride ignoriert, entsteht bei jeder Zeile ein Versatz.]]></text>
+      <text><![CDATA[Zwischen Lock und Unlock fehlt der Aufruf von AddDirtyRect, sodass WPF kein GPU-Update auslöst.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Niemals den Stride hart berechnen, sondern stets bitmap.BackBufferStride abfragen.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Ohne bmp.AddDirtyRect(new Int32Rect(0, 0, width, height)) weiß das WPF-Render-Subsystem nicht, dass sich der BackBuffer geändert hat.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[<code>width * 4</code> ist in .NET verboten, weil der Garbage Collector nur Zweierpotenzen verarbeiten kann.]]></text>
+      <text><![CDATA[Der Farbwert 0xFFFF0000 besitzt im oberen Byte den Alpha-Wert 0 und ist daher komplett durchsichtig.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. .NET verbietet diese Rechnung nicht, es ist ein Logikfehler bzgl. des Treibers.</p>]]></text>
+        <text><![CDATA[<p>Falsch. In 0xFFFF0000 steht das höchste Byte (Alpha) auf 0xFF = 255 (vollständig deckend) und das zweithöchste Byte (Rot) ebenfalls auf 0xFF.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Bei ungeraden Bildbreiten müssen Farbwerte als 16-Bit-Shorts statt als Bytes abgelegt werden.]]></text>
+      <text><![CDATA[Die Methode Unlock löscht aus Sicherheitsgründen automatisch den gesamten Inhalt des BackBuffers.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das Pixelformat bleibt Bgra32 (8 Bit je Kanal).</p>]]></text>
+        <text><![CDATA[<p>Falsch. Unlock hebt lediglich die Sperre auf und übergibt die per AddDirtyRect markierten Regionen an den Render-Thread.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Die Zeilenlänge muss stets mit 3 multipliziert werden, da der Alphakanal nicht im Stride liegt.]]></text>
+      <text><![CDATA[Ein uint*-Pointer darf in C# grundsätzlich nicht innerhalb einer normalen for-Schleife indiziert werden.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Der Alphakanal ist integraler Bestandteil von Bgra32.</p>]]></text>
+        <text><![CDATA[<p>Falsch. In einem unsafe-Block unterstützt C# die Zeiger-Indizierung p[i] analog zu Arrays vollkommen regulär.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 3: T04.Q3: Randbedingungen: Adiabater Neumann-Rand & Geisterknoten -->
+  <!-- Question 8: Numerik-Vergleich: Expliziter Euler vs. Heun-Verfahren (RK2) (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T04_Q3_Neumann_Ghost_Cells</text>
+      <text>T04_Q8: Numerik-Vergleich: Expliziter Euler vs. Heun-Verfahren (RK2)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>An der linken Begrenzung (\(x=0\)) eines 2D-Kühlkörpers soll eine <strong>ideale thermische Isolation</strong> (adiabater Rand, Neumann-Randbedingung \(\frac{\partial T}{\partial x} = 0\)) simuliert werden. Wie wird dieser Rand im expliziten 5-Punkt-Stern mittels eines Geisterknotens (Ghost Cell \(T_{-1, j}\)) korrekt diskretisiert?</p>]]></text>
+      <text><![CDATA[<p>Welche der folgenden Aussagen zum Vergleich zwischen dem <strong>expliziten Euler-Verfahren</strong> und dem <strong>Heun-Verfahren (RK2)</strong> bei gleicher Zeitschrittweite \(\Delta t\) sind <strong>korrekt</strong>? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Die zentrale Differenz für den Gradienten am Rand lautet \(\frac{\partial T}{\partial x} \approx \frac{T_{1, j} - T_{-1, j}}{2 \Delta x} = 0 \implies T_{-1, j} = T_{1, j}\). Einsetzen in die 5-Punkt-Formel am Rand \(i=0\) ergibt \(T_{1, j} + T_{1, j} + T_{0, j+1} + T_{0, j-1} - 4 T_{0, j} = 2 T_{1, j} + T_{0, j+1} + T_{0, j-1} - 4 T_{0, j}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong></p><p>Das Heun-Verfahren investiert zwei Funktionsauswertungen pro Zeitschritt und erreicht durch die Trapez-Mittelung der Steigungen \(\frac{1}{2}(k_1 + k_2)\) die globale Konvergenzordnung \(\mathcal{O}(\Delta t^2)\) statt \(\mathcal{O}(\Delta t^1)\) beim einfachen Euler-Verfahren.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T04_Q3_Neumann_Ghost_Cells</idnumber>
-    <single>true</single>
+    <idnumber>T04_Q8</idnumber>
+    <single>false</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Der Geisterknoten wird gleich dem inneren Nachbarn gesetzt (\(T_{-1, j} = T_{1, j}\)); dadurch wird der innere Nachbar in der Bilanz zweifach gewichtet und der Wärmestrom über den Rand ist exakt null.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Das Heun-Verfahren wertet die rechte Seite der Differentialgleichung genau zweimal pro Zeitschritt aus.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Dies spiegelt den Gradienten null symmetrisch wider.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Einmal für k1 = f(t_n, y_n) und ein zweites Mal für k2 = f(t_n + dt, y_pred).</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Die Randknoten werden auf konstant 0°C gesetzt (\(T_{0, j} = 0\)).]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Bei einer Zehntelung der Schrittweite sinkt der globale Fehler beim Heun-Verfahren etwa auf ein Hundertstel.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das wäre eine homogene Dirichlet-Randbedingung (Kühlbad), keine Isolation.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Da Heun die globale Konvergenzordnung p = 2 besitzt, skaliert der globale Fehler mit (1/10)^2 = 1/100.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Der Geisterknoten wird negiert (\(T_{-1, j} = -T_{1, j}\)), um den Wärmestrom abzusaugen.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Das Heun-Verfahren benötigt pro Zeitschritt das Lösen eines nichtlinearen Gleichungssystems mit Newton.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das würde zu einem maximalen Wärmestrom führen.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Das zweistufige Heun-Verfahren mit explizitem Euler-Prädiktor ist ein rein explizites Runge-Kutta-Verfahren (RK2).</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Am Rand wird der Laplace-Term komplett zu null gesetzt, sodass der Randpunkt seine Anfangstemperatur ewig behält.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Das explizite Euler-Verfahren besitzt die globale Fehlerordnung 2, während Heun die globale Ordnung 4 hat.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Auch ein isolierter Rand ändert seine Temperatur durch Wärmeleitung von innen.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 4: T04.Q4: Das Verkürzungsmerkmal nach Herbert Stachowiak -->
-  <question type="multichoice">
-    <name>
-      <text>T04_Q4_Stachowiak_Verkuerzung</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>In der allgemeinen Modelltheorie nach Herbert Stachowiak spielt das <strong>Verkürzungsmerkmal</strong> eine tragende Rolle. Was besagt dieses Merkmal im Kontext der Computersimulation?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>Nach Stachowiak erfasst ein Modell nicht alle Attribute des Originals, sondern nur diejenigen, die dem Modellierer für das jeweilige Untersuchungsziel relevant erscheinen. Unwesentliche Details werden abstrahiert.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T04_Q4_Stachowiak_Verkuerzung</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Modelle erfassen im Allgemeinen nicht alle Eigenschaften des Originals, sondern blenden irrelevante Attribute gezielt aus, um die Komplexität beherrschbar zu machen.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! Dies ist das definitorische Verkürzungsmerkmal nach Stachowiak.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Die Simulationszeit muss immer kürzer sein als die reale physikalische Prozesszeit.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das betrifft die Echtzeitfähigkeit, nicht das modelltheoretische Verkürzungsmerkmal.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Numerische Schrittweiten müssen immer kleiner gewählt werden als 1 Millisekunde.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das ist eine numerische Parametrisierungsfrage.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[C#-Quelltexte müssen durch Code-Minifier im Speicher komprimiert werden.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Hat nichts mit Stachowiak zu tun.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 5: T04.Q5: 32-Bit-Integer Bit-Packing für PixelFormats.Bgra32 -->
-  <question type="multichoice">
-    <name>
-      <text>T04_Q5_Bitshift_Bgra32_Packing</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Ein Entwickler möchte 32-Bit-Farbwerte direkt als <code>uint</code> in den Back-Buffer schreiben:</p>
-<pre><code class="language-csharp">uint* pPixel = (uint*)bitmap.BackBuffer + index;
-// Entwickler schreibt:
-*pPixel = (uint)((alpha << 24) | (red << 16) | (green << 8) | blue);</code></pre>
-<p>Auf einem x86/x64-Windows-PC (Little-Endian) entspricht dies im Speicher der Bytefolge <code>[B, G, R, A]</code>. Was geschieht, wenn der Entwickler stattdessen folgende Zeile schreibt?</p>
-<pre><code class="language-csharp">*pPixel = (uint)((alpha << 24) | (blue << 16) | (green << 8) | red);</code></pre>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>In einem Little-Endian 32-Bit-Integer liegt das niederwertigste Byte (Bits 0..7) an der niedrigsten Speicheradresse. Im ersten Fall liegt <code>blue</code> bei Bits 0..7 (Byte 0) und <code>red</code> bei Bits 16..23 (Byte 2) – das entspricht exakt Bgra32! Im zweiten Fall liegt <code>red</code> an Byte 0 und <code>blue</code> an Byte 2. Rot und Blau sind somit im Bild vertauscht.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T04_Q5_Bitshift_Bgra32_Packing</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Rot- und Blau-Kanäle sind auf dem Bildschirm vertauscht: Was rot sein sollte, erscheint blau, und umgekehrt.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! Auf Little-Endian-Systemen belegt der niederwertigste Teil (Bits 0..7) Byte-Offset 0.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Das Bild wird vollkommen transparent, weil der Alpha-Wert durch das Verschieben gelöscht wird.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Alpha liegt in beiden Fällen korrekt bei Bits 24..31.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Der C#-Compiler meldet einen Syntaxfehler, weil Bitshift-Operatoren auf uint nicht definiert sind.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Bitshifts auf uint sind Standard-C#.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Es ändert sich nichts, da der x86-Prozessor Bit-Reihenfolgen automatisch korrigiert.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Der Prozessor führt die Bitshifts exakt so aus wie programmiert.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Expliziter Euler hat die globale Ordnung 1 (lokal 2), Heun hat die globale Ordnung 2 (lokal 3).</p>]]></text>
       </feedback>
     </answer>
   </question>

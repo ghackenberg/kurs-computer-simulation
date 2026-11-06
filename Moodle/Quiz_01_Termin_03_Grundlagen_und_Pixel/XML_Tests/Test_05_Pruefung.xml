@@ -5,309 +5,411 @@
       <text>$course$/Quiz_01_Termin_03/Test_05_Pruefung</text>
     </category>
     <info format="html">
-      <text><![CDATA[<p>Test 05 (Prüfung) – Baustahl, Lock-Synchronisation & Cache-Lokalität</p>]]></text>
+      <text><![CDATA[<p>Test 05 (Prüfung) – Grundlagen, Euler & 2D-Wärmeraster (Klausurvariante E)</p>]]></text>
     </info>
   </question>
 
-  <!-- Question 1: T05.Q1: FDM-Stabilitätsgrenze für Baustahl -->
-  <question type="multichoice">
+  <!-- Question 1: WriteableBitmap GPU-Alignment: Zeilen-Padding &amp; Puffergröße (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
     <name>
-      <text>T05_Q1_CFL_Baustahl</text>
+      <text>T05_Q1: WriteableBitmap GPU-Alignment: Zeilen-Padding &amp; Puffergröße</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Die Erwärmung eines massiven Baustahl-Trägers wird mittels FDM modelliert:</p>
-<ul>
-  <li>Temperaturleitfähigkeit von Baustahl: \(\alpha = 0{,}13 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
-  <li>Gitterauflösung: \(\Delta x = \Delta y = 2{,}0\,\text{mm} = 2{,}0 \cdot 10^{-3}\,\text{m}\)</li>
-</ul>
-<p>Welche maximale Zeitschrittweite \(\Delta t_{\max}\) garantiert numerische Stabilität?</p>]]></text>
+      <text><![CDATA[<p>Ein <code>WriteableBitmap</code> wird mit einer ungeraden Bildbreite von \(W = 101\,\text{Pixeln}\) und einer Höhe von \(H = 50\,\text{Zeilen}\) im Format <code>PixelFormats.Bgra32</code> (4 Bytes pro Pixel) erzeugt. Für optimale DMA-Transfers rundet der Grafiktreiber die Zeilenlänge (<code>BackBufferStride</code>) auf das nächste ganzzahlige Vielfache von <strong>32 Bytes</strong> auf.</p><p>a) Wie viele reine Nutzdaten-Bytes belegen die \(101\,\text{Pixel}\) einer einzelnen Zeile <em>ohne</em> Padding?<br>Antwort: {1:NUMERICAL:=404:0#Richtig! 101 Pixel * 4 Bytes/Pixel = 404 Nutzdaten-Bytes pro Zeile.~%50%101:0#Teilpunkte (50 %): Sie haben die Pixelanzahl (101) statt der Byte-Anzahl (101 * 4 = 404) angegeben.} Bytes</p><p>b) Welchen exakten Wert hat <code>BackBufferStride</code> (in <strong>Bytes</strong>) nach dem Aufrunden auf das nächste Vielfache von 32 Bytes?<br>Antwort: {1:NUMERICAL:=416:0#Richtig! 13 * 32 = 416 Bytes (12 Bytes Padding am Zeilenende, da 12 * 32 = 384 < 404).~%50%408:0#Teilpunkte (50 %): 408 ist ein Vielfaches von 8, aber nicht durch 32 teilbar (408 / 32 = 12,75).~%50%404:0#Teilpunkte (50 %): Sie haben das Aufrunden auf ein Vielfaches von 32 Bytes weggelassen.} Bytes</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(2{,}0 \cdot 10^{-3})^2}{4 \cdot 0{,}13 \cdot 10^{-4}} = \frac{4{,}0 \cdot 10^{-6}}{0{,}52 \cdot 10^{-4}}\,\text{s} = \frac{4{,}0}{52}\,\text{s} \approx 0{,}07692\,\text{s} \approx 76{,}9\,\text{ms}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (Stride vs. Width * 4):</strong></p><p>1. Nutzdaten pro Zeile: \(101\,\text{Pixel} \cdot 4\,\text{Bytes/Pixel} = 404\,\text{Bytes}\).</p><p>2. Aufrunden auf ein Vielfaches von 32 Bytes:<br>\(\lceil 404 / 32 \rceil \cdot 32 = \lceil 12{,}625 \rceil \cdot 32 = 13 \cdot 32 = 416\,\text{Bytes}\).<br>Am Ende jeder Bildzeile liegen somit \(416 - 404 = 12\) ungenutzte Padding-Bytes. Genau deshalb muss im Code zwingend <code>y * bmp.BackBufferStride</code> statt <code>y * width * 4</code> gerechnet werden!</p>]]></text>
     </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T05_Q1_CFL_Baustahl</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 76{,}9\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! \(4{,}0 \cdot 10^{-6} / (0{,}52 \cdot 10^{-4})\,\text{s} \approx 76{,}9\,\text{ms}\).</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 153{,}8\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das ist die unzulässige 1D-Bedingung.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 38{,}5\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Unnötig halbierter Wert.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 7{,}69\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Rechenfehler um den Faktor 10.</p>]]></text>
-      </feedback>
-    </answer>
+    <idnumber>T05_Q1</idnumber>
   </question>
 
-  <!-- Question 2: T05.Q2: Fehlendes Lock() beim Zugriff auf WriteableBitmap -->
-  <question type="multichoice">
+  <!-- Question 2: Fehleranalyse: Globaler Diskretisierungsfehler des Euler-Verfahrens (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
     <name>
-      <text>T05_Q2_Code_Lock_Vergessen</text>
+      <text>T05_Q2: Fehleranalyse: Globaler Diskretisierungsfehler des Euler-Verfahrens</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Student schreibt folgende Render-Methode in WPF:</p>
-<pre><code class="language-csharp">public void UpdateFrame()
+      <text><![CDATA[<p>Ein Bauteil fällt aus der Ruhe (\(y_0 = 50{,}0\,\text{m}\), \(v_0 = 0{,}0\,\text{m/s}\)) im Schwerefeld mit \(g = 10{,}0\,\text{m/s}^2\) nach unten. Die analytisch exakte Höhe lautet \(y_{\text{exakt}}(t) = y_0 - \frac{1}{2} g t^2\).</p><p>Berechnen Sie den <strong>Betrag des globalen Höhenfehlers</strong> \(|y_{\text{Euler}}(t_1) - y_{\text{exakt}}(t_1)|\) (in <strong>Metern</strong>) nach einem einzigen großen expliziten Euler-Zeitschritt der Schrittweite \(\Delta t = 0{,}40\,\text{s}\) (also bei \(t_1 = 0{,}40\,\text{s}\)).</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. <strong>Expliziter Euler nach 1 Schritt (\(\Delta t = 0{,}40\,\text{s}\)):</strong><br>Da \(v_0 = 0\) ist, gilt \(y_{\text{Euler}}(0{,}40) = y_0 + \Delta t \cdot v_0 = 50{,}0\,\text{m}\).</p><p>2. <strong>Analytisch exakte Lösung:</strong><br>\(y_{\text{exakt}}(0{,}40) = 50{,}0 - \frac{1}{2} \cdot 10{,}0 \cdot (0{,}40)^2 = 50{,}0 - 5{,}0 \cdot 0{,}16 = 49{,}2\,\text{m}\).</p><p>3. <strong>Betrag des Fehlers:</strong><br>\(|50{,}0\,\text{m} - 49{,}2\,\text{m}| = 0{,}80\,\text{m}\) (entspricht exakt dem Taylor-Restglied \(\frac{1}{2} g \Delta t^2\)).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T05_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>0.8</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! y_Euler(0,4) = 50,0 m; y_exakt(0,4) = 50 - 0,5 * 10 * 0,16 = 49,2 m; Differenz = |50,0 - 49,2| = 0,8 m.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>49.2</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 49,2 m ist die exakte Höhe y_exakt(0,4), gefragt war aber die Differenz |y_Euler - y_exakt| = 0,8 m.</p>]]></text>
+      </feedback>
+      <tolerance>0.05</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>1.6</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben in der exakten Parabelformel den Faktor 0,5 vor g * t^2 vergessen (10 * 0,16 = 1,6 m statt 0,8 m).</p>]]></text>
+      </feedback>
+      <tolerance>0.02</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Explizite Euler-Integrationsschleife (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T05_Q3: C#-Code-Tracing: Explizite Euler-Integrationsschleife</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Welchen exakten Zahlenwert besitzt die Variable <code>x</code> nach der vollständigen Ausführung der folgenden C#-Schleife?</p><pre><code class="language-csharp">double x = 2.0;
+double v = 3.0;
+double dt = 0.5;
+for (int step = 0; step < 3; step++)
 {
-    // bitmap.Lock() wurde vergessen!
-    unsafe
-    {
-        byte* ptr = (byte*)bitmap.BackBuffer;
-        ptr[0] = 255;
-    }
-    bitmap.AddDirtyRect(new Int32Rect(0, 0, 1, 1));
-    bitmap.Unlock(); // Wirft Ausnahme!
-}</code></pre>
-<p>Welches Problem tritt auf, wenn <code>bitmap.Lock()</code> vor dem Zugriff auf <code>BackBuffer</code> nicht aufgerufen wird?</p>]]></text>
+    x = x + dt * v;
+    v = v + dt * 4.0;
+}</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>In WPF schützt <code>Lock()</code> den Back-Buffer vor gleichzeitigem Zugriff durch den Render-Thread der WPF-Engine. Fehlt <code>Lock()</code>, kann der Zeiger ungültig sein, es drohen Data Races mit der Grafikkarte und der Aufruf von <code>Unlock()</code> wirft eine <code>InvalidOperationException</code>, weil kein aktiver Lock besteht.</p>]]></text>
+      <text><![CDATA[<p><strong>Schritt-für-Schritt-Tracing:</strong></p><ul><li><strong>Start:</strong> <code>x = 2.0</code>, <code>v = 3.0</code></li><li><strong>Iteration <code>step = 0</code>:</strong> <code>x = 2.0 + 0.5 * 3.0 = 3.5</code>; danach <code>v = 3.0 + 0.5 * 4.0 = 5.0</code></li><li><strong>Iteration <code>step = 1</code>:</strong> <code>x = 3.5 + 0.5 * 5.0 = 6.0</code>; danach <code>v = 5.0 + 0.5 * 4.0 = 7.0</code></li><li><strong>Iteration <code>step = 2</code>:</strong> <code>x = 6.0 + 0.5 * 7.0 = 9.5</code>; danach <code>v = 7.0 + 0.5 * 4.0 = 9.0</code></li></ul>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T05_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>9.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! step 0: x=3,5, v=5,0; step 1: x=6,0, v=7,0; step 2: x=9,5, v=9,0.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>6</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 6,0 ist der Wert nach 2 Schleifendurchläufen (step 0 und step 1), die Schleife läuft aber 3-mal (step = 0, 1, 2).</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>12.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 12,5 entsteht, wenn v zuerst aktualisiert und sofort für x verwendet wird (semi-impliziter Ablauf).</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Lückentext: Neumann- und Dirichlet-Randbedingungen setzen (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>T05_Q4: C#-Lückentext: Neumann- und Dirichlet-Randbedingungen setzen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Auf einem 2D-Temperaturgitter <code>double[,] T</code> der Größe <code>nx</code> mal <code>ny</code> soll der linke Rand (<code>x = 0</code>) als feste 100-°C-Heizwand (Dirichlet) und der rechte Rand (<code>x = nx - 1</code>) als perfekt wärmegedämmte Wand (homogene Neumann-Bedingung) programmiert werden. Vervollständigen Sie den Code:</p><pre><code class="language-csharp">for (int y = 0; y < ny; y++)
+{
+    T[[[1]], y] = 100.0;          // Linker Rand: Dirichlet (100 °C)
+    T[nx - 1, y] = T[[[2]], [[3]]]; // Rechter Rand: Neumann (isoliert)
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul><li><code>[[1]] = 0</code> adressiert den linken Rand <code>x = 0</code> und weist ihm fest <code>100.0</code> °C zu.</li><li><code>[[2]] = nx - 2</code> und <code>[[3]] = y</code> kopieren die Temperatur des unmittelbar links daneben liegenden inneren Knotens <code>T[nx - 2, y]</code> auf den Randknoten <code>T[nx - 1, y]</code>, sodass die diskrete Normalenableitung \(\frac{T_{nx-1, y} - T_{nx-2, y}}{\Delta x} = 0\) wird.</li></ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T05_Q2_Code_Lock_Vergessen</idnumber>
+    <idnumber>T05_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[0]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[nx - 2]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[y]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[1]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[nx - 1]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[0]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[nx]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[0]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[ny - 1]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Konzept-Zuordnung: System-Taxonomie anhand technischer Beispiele (matching, 1.0000000 Pkt.) -->
+  <question type="matching">
+    <name>
+      <text>T05_Q5: Konzept-Zuordnung: System-Taxonomie anhand technischer Beispiele</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ordnen Sie die folgenden technischen Simulationsaufgaben der jeweils treffendsten Klasse der System-Taxonomie zu. Beachten Sie die zwei Überhang-Distraktoren.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul><li>Für \(\partial T / \partial t = 0\) entfällt die Zeitabhängigkeit (statisch), die Ortsableitungen \(\partial^2 T / \partial x^2 + \partial^2 T / \partial y^2 = 0\) bleiben jedoch bestehen (verteilte Parameter).</li><li>Der freie Fall einer Punktmasse hängt nur von \(t\) ab (konzentrierte Parameter, zeitkontinuierlich).</li><li>Ein springender Ball vereint kontinuierliche DGL-Dynamik in der Luft mit einem diskreten Zustands-Sprung beim Bodenkontakt (hybrides System).</li></ul>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T05_Q5</idnumber>
+    <shuffleanswers>true</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <subquestion format="html">
+      <text><![CDATA[Berechnung der stationären Temperaturverteilung einer Platte nach unendlich langer Zeit (dT/dt = 0).]]></text>
+      <answer>
+        <text><![CDATA[Statisches System mit verteilten Parametern]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Freier Fall eines starren Körpers unter konstanter Schwerkraft mit gewöhnlicher Differentialgleichung.]]></text>
+      <answer>
+        <text><![CDATA[Dynamisches, zeitkontinuierliches System mit konzentrierten Parametern]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Simulation einer Fertigungsstraße mit zufälligen Bearbeitungsdauern und Maschinenausfällen.]]></text>
+      <answer>
+        <text><![CDATA[Stochastisches, ereignisdiskretes System]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Springender Ball mit kontinuierlicher Flugphase und schlagartiger Geschwindigkeitsumkehr am Boden.]]></text>
+      <answer>
+        <text><![CDATA[Hybrides System (kombiniert kontinuierlich und ereignisdiskret)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Rein qualitatives Verbalmodell ohne mathematische Zustandsgrößen]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Zeitloses System ohne Eingangs- oder Ausgangsgrößen]]></text>
+      </answer>
+    </subquestion>
+  </question>
+
+  <!-- Question 6: Visualisierungs-Architektur: WriteableBitmap vs. WPF-Shape-Objekte (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>T05_Q6: Visualisierungs-Architektur: WriteableBitmap vs. WPF-Shape-Objekte</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Warum wird für die Echtzeit-Darstellung eines \(500 \times 500\)-Temperaturfeldes (\(250\,000\) Gitterzellen) bei 60 FPS in WPF ein <code>WriteableBitmap</code> anstelle von \(250\,000\) einzelnen <code>Rectangle</code>-Elementen im <code>Canvas</code> verwendet?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Architekturvergleich (Retained Mode vs. Direct Pixel Buffer):</strong></p><p>Jedes <code>Rectangle</code> in WPF ist ein vollwertiges <code>UIElement</code> im Visual Tree (Retained Mode) mit hundert Bytes Speicherbedarf, Layout-Pass (Measure/Arrange) und Event-Routing. Bei \(250\,000\) Pixeln bricht die Bildrate auf unter 1 FPS ein. <code>WriteableBitmap</code> umgeht den Visual Tree und erlaubt das direkte Beschreiben eines zusammenhängenden Speicherblocks in wenigen Millisekunden.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T05_Q6</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Es drohen Data Races mit dem WPF-Render-Thread und der Aufruf von <code>Unlock()</code> wirft eine <code>InvalidOperationException</code>, weil die Bitmap nicht zuvor gesperrt wurde.]]></text>
+      <text><![CDATA[Ein WriteableBitmap aktualisiert ein flaches Byte-Array ohne Layout- und Objekt-Overhead pro Zelle.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Lock() und Unlock() müssen stets paarweise aufgerufen werden.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Statt 250.000 DependencyObjects im Retained-Mode-Szenengraphen zu verwalten, werden beim WriteableBitmap nur 1 MB Rohdaten im RAM geändert.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Der C#-Compiler verhindert die Kompilierung bereits im Build-Schritt.]]></text>
+      <text><![CDATA[Ein WPF-Canvas unterstützt technisch maximal 256 Kind-Elemente und wirft darüber eine Exception.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Der Compiler prüft keine Aufrufreihenfolgen von WPF-Methoden.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Es gibt kein hartes Limit von 256 Elementen im Canvas; das Problem bei 250.000 Objekten ist der massive Speicher- und Render-Thread-Overhead.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[WPF ignoriert dies und sperrt die Bitmap automatisch dauerhaft im Hintergrund.]]></text>
+      <text><![CDATA[Die Klasse WriteableBitmap löst die partielle Wärmeleitungsgleichung automatisch im Grafiktreiber.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die interne Sperre muss explizit angefordert werden.</p>]]></text>
+        <text><![CDATA[<p>Falsch. WriteableBitmap stellt lediglich einen schnellen Pixelpuffer bereit; die numerische FDM-Berechnung erfolgt weiterhin im C#-Code.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Es führt lediglich dazu, dass die Bitmap in Graustufen umgewandelt wird.]]></text>
+      <text><![CDATA[Einzelne Rectangle-Elemente können in WPF grundsätzlich nur in Graustufen statt in Farbe dargestellt werden.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Es handelt sich um ein gravierendes Synchronisations- und API-Problem.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Jedes Rectangle unterstützt beliebige SolidColorBrushes, ist aber als einzelnes UIElement für hunderttausende Pixel viel zu schwergewichtig.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 3: T05.Q3: Physikalischer Vorzeichenfehler im Laplace-Differenzenstern -->
+  <!-- Question 7: C#-Bug-Diagnose: Falsche Reihenfolge der Euler-Zustandsaktualisierung (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T05_Q3_Physik_Vorzeichenfehler_Laplace</text>
+      <text>T05_Q7: C#-Bug-Diagnose: Falsche Reihenfolge der Euler-Zustandsaktualisierung</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einer FDM-Implementierung unterläuft einem Entwickler ein Vorzeichenfehler in der Zeitschritt-Aktualisierung:</p>
-<p>$$T_{i,j}^{n+1} = T_{i,j}^n - s \cdot \left( T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 T_{i,j}^n \right)$$</p>
-<p>Welche physikalische Konsequenz hat dieses <strong>Minuszeichen vor dem Diffusionsausdruck</strong>?</p>]]></text>
+      <text><![CDATA[<p>Für einen harmonischen Oszillator mit den Zustandsgleichungen \(\dot{x} = v\) und \(\dot{v} = -\omega^2 x\) möchte ein Student den <strong>reinen expliziten Standard-Euler</strong> implementieren und schreibt:</p><pre><code class="language-csharp">x = x + dt * v;
+v = v - dt * omegaSq * x;</code></pre><p>Warum implementiert dieser zweizeilige Code <strong>nicht</strong> das mathematische explizite Standard-Euler-Verfahren?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Die Wärmeleitungsgleichung beschreibt einen irreversiblen Dissipationsprozess (2. Hauptsatz der Thermodynamik). Ein negatives Vorzeichen kehrt die Diffusionsrichtung um: Wärme fließt von Kalt nach Heiß, Temperaturunterschiede steilen sich auf und die Simulation explodiert antikausal.</p>]]></text>
+      <text><![CDATA[<p><strong>Fehleranalyse:</strong></p><p>Beim expliziten Standard-Euler lautet die Vorschrift \(\mathbf{z}_{n+1} = \mathbf{z}_n + \Delta t \cdot \mathbf{f}(\mathbf{z}_n)\). Alle Komponenten der rechten Seite müssen den Zustand \(\mathbf{z}_n\) vom Beginn des Zeitschritts verwenden. Überschreibt man <code>x</code> direkt in Zeile 1 ohne Zwischenvariable <code>double xOld = x;</code>, verwendet Zeile 2 bereits \(x_{n+1}\) (was zufällig das symplektische Euler-Verfahren ergibt, aber nicht den geforderten Standard-Euler).</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T05_Q3_Physik_Vorzeichenfehler_Laplace</idnumber>
+    <idnumber>T05_Q7</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Verletzung des 2. Hauptsatzes der Thermodynamik: Wärme fließt von kalten zu heißen Zonen; Temperaturgradienten verstärken sich antikausal selbst und das System divergiert sofort.]]></text>
+      <text><![CDATA[Die zweite Zeile nutzt bereits das überschriebene x des neuen Schritts statt des alten Zustands x_n.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Dies entspräche einer 'Rückwärts-Wärmeleitungsgleichung', die mathematisch extrem instabil ist.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Da x in Zeile 1 in-place überschrieben wurde, berechnet Zeile 2 die Beschleunigung mit x_{n+1} statt x_n (das entspricht dem symplektischen Euler).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Das System erreicht den thermischen Gleichgewichtszustand doppelt so schnell.]]></text>
+      <text><![CDATA[Die Zeitschrittweite dt muss beim expliziten Euler-Verfahren in beiden Zeilen quadriert werden.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Es divergiert und erreicht nie ein Gleichgewicht.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Beim Euler-Verfahren 1. Ordnung geht die Schrittweite dt linear ein: y_{n+1} = y_n + dt * f(y_n).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Die physikalische Ausbreitung bleibt identisch, lediglich die Achsen sind gespiegelt.]]></text>
+      <text><![CDATA[In C# wird die zweite Zeile vor der ersten ausgeführt, weil Multiplikationen höhere Priorität haben.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die Vorzeichenumkehr invertiert das physikalische Fließverhalten fundamental.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Anweisungen (Statements), die durch Semikolon getrennt sind, werden in C# strikt sequenziell von oben nach unten ausgeführt.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Die Temperatur fällt überall schlagartig auf den absoluten Nullpunkt (0 Kelvin).]]></text>
+      <text><![CDATA[Das Minuszeichen in der zweiten Zeile muss für eine rücktreibende Federkraft zwingend ein Plus sein.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die Werte explodieren zu plus/minus unendlich.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Eine rücktreibende Federkraft wirkt immer entgegen der Auslenkung x (F = -c*x), das Minuszeichen ist physikalisch völlig korrekt.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 4: T05.Q4: Die drei Säulen des Digitalen Zwillings nach Michael Grieves -->
+  <!-- Question 8: Gitter-Diskretisierung: Konsequenzen einer räumlichen Gitterverfeinerung (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T05_Q4_Grieves_Drei_Elemente</text>
+      <text>T05_Q8: Gitter-Diskretisierung: Konsequenzen einer räumlichen Gitterverfeinerung</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Michael Grieves formulierte 2002/2014 das Ursprungskonzept des <strong>Digitalen Zwillings (Digital Twin)</strong>. Aus welchen <strong>drei fundamentalen Entitäten</strong> besteht dieses Konzept zwingend?</p>]]></text>
+      <text><![CDATA[<p>In einer expliziten 2D-Wärmeleitungssimulation wird die räumliche Maschenweite in beide Raumrichtungen exakt <strong>halbiert</strong> (\(\Delta x_{\text{neu}} = 0{,}5 \cdot \Delta x_{\text{alt}}\), \(\Delta y_{\text{neu}} = 0{,}5 \cdot \Delta y_{\text{alt}}\)). Welche Konsequenzen ergeben sich daraus für die Simulation derselben physikalischen Zeitspanne? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Nach Grieves besteht der Digitale Zwilling aus: 1. Dem physischen Produkt im realen Raum, 2. dem virtuellen Produkt im virtuellen Raum, 3. den Datenverbindungen, die Daten aus dem realen Raum in den virtuellen Raum und Informationen/Steuerbefehle aus dem virtuellen Raum in den realen Raum übertragen.</p>]]></text>
+      <text><![CDATA[<p><strong>Der „Fluch der Dimensionen“ bei expliziten 2D-PDE-Lösern:</strong></p><p>Halbiert man \(\Delta x\) und \(\Delta y\), vervierfacht sich die Anzahl der Pixel (\(2 \times 2 = 4\)). Gleichzeitig zwingt die quadratische Stabilitätsbedingung \(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha}\) zu einer Viertelung der Zeitschrittweite (also 4-mal so vielen Schritten pro Sekunde). Der gesamte Rechenaufwand steigt somit um den Faktor \(4 \cdot 4 = 16\)!</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T05_Q4_Grieves_Drei_Elemente</idnumber>
-    <single>true</single>
+    <idnumber>T05_Q8</idnumber>
+    <single>false</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[1. Reales Produkt im physischen Raum, 2. virtuelles Produkt im virtuellen Raum, 3. automatisierte Daten- und Informationsverbindungen zwischen beiden Räumen.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Die Anzahl der zu berechnenden Gitterzellen im zweidimensionalen Gebiet vervierfacht sich.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Dies ist das 3-Säulen-Modell nach Grieves.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Da sowohl nx als auch ny verdoppelt werden, steigt die Knotenanzahl im 2D-Gebiet um den Faktor 2 * 2 = 4.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[1. CAD-Modell, 2. PDF-Dokumentation, 3. Kaufmännisches ERP-System.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Wegen der viermal kleineren maximalen Zeitschrittweite vervielfacht sich der Gesamtrechenaufwand um Faktor 16.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Reine Dokumente ohne Verhaltensmodell und Datenkopplung bilden keinen Digitalen Zwilling.</p>]]></text>
+        <text><![CDATA[<p>Richtig! 4-mal so viele Gitterknoten kombiniert mit 4-mal so vielen Zeitschritten (dt_max ~ dx^2) ergibt den Faktor 4 * 4 = 16 an Rechenoperationen.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[1. Sensor, 2. Mikrocontroller, 3. LCD-Display.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Die maximal zulässige Zeitschrittweite dt_max darf bei feinerem Gitter doppelt so groß gewählt werden.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das sind Standard-Hardwarekomponenten eines eingebetteten Systems.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Aus dt_max = dx^2 / (4 * alpha) folgt, dass sich dt_max bei halbiertem dx auf ein Viertel reduziert.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[1. Finite-Elemente-Mesh, 2. Cloud-Speicher, 3. Mobilfunkvertrag.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Der räumliche Diskretisierungsfehler des zentralen Differenzenquotienten wächst um das Vierfache an.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Grieves definiert ein allgemeines systemisches Modell.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 5: T05.Q5: Cache-Lokalität: Row-Major vs. Column-Major in C# -->
-  <question type="multichoice">
-    <name>
-      <text>T05_Q5_Cache_Lokalitaet_Row_Major</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Warum ist Schleife A in C# bei einem großen 2D-Gitter (\(4000 \times 4000\) <code>double</code>) typischerweise um ein Vielfaches schneller als Schleife B?</p>
-<pre><code class="language-csharp">// Schleife A:
-for (int y = 0; y < height; y++)
-    for (int x = 0; x < width; x++)
-        sum += grid[y, x];
-
-// Schleife B:
-for (int x = 0; x < width; x++)
-    for (int y = 0; y < height; y++)
-        sum += grid[y, x];</code></pre>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>In C# werden mehrdimensionale Arrays im <strong>Row-Major-Format</strong> abgelegt: Elemente einer Zeile liegen im Speicher direkt hintereinander. Schleife A liest linearen Speicher und nutzt geladene Cache-Lines (typisch 64 Bytes) optimal aus (räumliche Lokalität). Schleife B springt bei jedem Schritt um eine ganze Zeile im Speicher weiter, was zu ständigen Cache-Misses führt.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T05_Q5_Cache_Lokalitaet_Row_Major</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Schleife A greift sequenziell auf den linearen Speicher zu (Row-Major); dies maximiert die Ausnutzung von CPU-Cache-Lines (Spatial Locality), während Schleife B bei jedem Schritt Cache-Misses erzeugt.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! Hardwarenahe Softwarearchitektur erfordert strikte Beachtung der Speicherlinearisierung.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Schleife B wird vom JIT-Compiler aus Sicherheitsgründen nicht optimiert.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Der JIT optimiert beide Schleifen, kann aber die Speicherzugriffsmuster nicht völlig umstrukturieren.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[In C# dürfen Arrays per Sprachstandard nur mit der Variablen 'y' in der äußeren Schleife iteriert werden.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Variablennamen spielen für die Ausführung keine Rolle.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Schleife A nutzt automatisch die GPU, während Schleife B auf der CPU läuft.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Beide Schleifen laufen auf der CPU.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Der zentrale Differenzenquotient hat die Konsistenzordnung O(dx^2); bei Halbierung von dx sinkt der räumliche Fehler auf ein Viertel.</p>]]></text>
       </feedback>
     </answer>
   </question>

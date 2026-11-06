@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_02_Termin_05/Test_03_Vorbereitung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Quiz 02 - Test 03 (Vorbereitungstest): Inverse Transformation, 3-Sigma-Grenzen & ScottPlot-Refresh</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: Inverse 2D-Transformation (ScreenToWorld): Mausklick in Weltkoordinaten umrechnen (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
+    <name>
+      <text>Q02_T03_Q1: Inverse 2D-Transformation (ScreenToWorld): Mausklick in Weltkoordinaten umrechnen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Auf einem WPF-Canvas der Gesamthöhe \(H_{\text{canvas}} = 500\,\text{px}\) wird ein Maschinenfundament mit \(x_{\min} = -5{,}0\,\text{m}\) und \(y_{\min} = 0{,}0\,\text{m}\) dargestellt. Die aktuelle Transformation nutzt den uniformen Skalierungsfaktor \(s = 40\,\text{px/m}\), den horizontalen Offset \(\text{offset}_X = 60\,\text{px}\) und den vertikalen Offset vom unteren Rand \(\text{offset}_Y = 50\,\text{px}\). Ein Ingenieur klickt mit der Maus exakt auf die Bildschirmkoordinate \((X_{\text{screen}}, Y_{\text{screen}}) = (300\,\text{px}, 170\,\text{px})\).</p>
+<p><strong>a)</strong> Berechnen Sie die zugehörige physikalische Weltkoordinate \(X_{\text{world}}\) in \(\text{m}\): {1:NUMERICAL:=1.0:0.05#Exakt! X_world = x_min + (300 - 60) / 40 = -5.0 + 240 / 40 = -5.0 + 6.0 = 1.0 m.~%50%6.0:0.05#Teilpunkte: 6.0 m ist der relative Abstand (300 - 60)/40 ohne Addition des Ursprungswerts x_min = -5.0 m.}</p>
+<p><strong>b)</strong> Berechnen Sie die zugehörige physikalische Weltkoordinate \(Y_{\text{world}}\) in \(\text{m}\) unter Berücksichtigung der Y-Inversion: {1:NUMERICAL:=7.0:0.05#Richtig! y_bottom = 500 - 170 = 330 px; Y_world = 0.0 + (330 - 50) / 40 = 280 / 40 = 7.0 m.~%50%3.0:0.05#Teilpunkte: Sie haben die Y-Inversion vergessen und direkt (170 - 50) / 40 = 3.0 m gerechnet!}</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (ScreenToWorld):</strong></p>
+<ol>
+  <li><strong>X-Rücktransformation:</strong> \(X_{\text{world}} = x_{\min} + \frac{X_{\text{screen}} - \text{offset}_X}{s} = -5{,}0 + \frac{300 - 60}{40} = -5{,}0 + 6{,}0 = 1{,}0\,\text{m}\).</li>
+  <li><strong>Y-Rücktransformation (inkl. Y-Inversion):</strong> Abstand vom unteren Rand \(y_{\text{bottom}} = H_{\text{canvas}} - Y_{\text{screen}} = 500 - 170 = 330\,\text{px}\). Damit gilt \(Y_{\text{world}} = y_{\min} + \frac{330 - \text{offset}_Y}{s} = 0{,}0 + \frac{330 - 50}{40} = \frac{280}{40} = 7{,}0\,\text{m}\).</li>
+</ol>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T03_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Statistische Prozesskontrolle (SPC): Obere 3-Sigma-Warngrenze aus Welford-Daten (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T03_Q2: Statistische Prozesskontrolle (SPC): Obere 3-Sigma-Warngrenze aus Welford-Daten</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Welford-Online-Tracker hat für die Spindeldrehzahl einer CNC-Fräse nach \(k = 26\) Messwerten den Mittelwert \(\mu = 100{,}0\,\text{U/s}\) und die Abweichungsquadratsumme \(M_2 = 400{,}0\,(\text{U/s})^2\) ermittelt. Im Live-Diagramm soll die obere statistische Prozesskontrollgrenze (Upper Control Limit) bei \(\text{UCL} = \mu + 3 \cdot s\) (mit der empirischen Stichprobenstandardabweichung \(s\)) als horizontale Warnlinie eingezeichnet werden.</p>
+<p>Berechnen Sie den numerischen Wert dieser oberen \(3\sigma\)-Grenze \(\text{UCL}\) in \(\text{U/s}\).</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<ol>
+  <li><strong>Empirische Stichprobenvarianz (mit Bessel-Korrektur):</strong> \(s^2 = \frac{M_2}{k - 1} = \frac{400{,}0}{26 - 1} = \frac{400{,}0}{25} = 16{,}0\,(\text{U/s})^2\).</li>
+  <li><strong>Standardabweichung:</strong> \(s = \sqrt{16{,}0} = 4{,}0\,\text{U/s}\).</li>
+  <li><strong>Obere \(3\sigma\)-Grenze:</strong> \(\text{UCL} = \mu + 3s = 100{,}0 + 3 \cdot 4{,}0 = 112{,}0\,\text{U/s}\).</li>
+</ol>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T03_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>112</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Stichprobenvarianz s^2 = M2 / (k - 1) = 400 / 25 = 16; Standardabweichung s = 4.0 U/s; UCL = 100 + 3 * 4.0 = 112.0 U/s.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>148</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben mu + 3 * s^2 = 100 + 3 * 16 = 148 gerechnet (Wurzelziehen für die Standardabweichung s vergessen!).</p>]]></text>
+      </feedback>
+      <tolerance>0.5</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>111.77</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben durch k = 26 statt durch k - 1 = 25 (Bessel-Korrektur für Stichprobenvarianz) geteilt.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Gruppiertes Balkendiagramm (Bar Plot Offset) in ScottPlot 5 (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T03_Q3: C#-Code-Tracing: Gruppiertes Balkendiagramm (Bar Plot Offset) in ScottPlot 5</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Um in ScottPlot 5 für jede Kategorie <code>i</code> zwei Balken (Soll vs. Ist) nebeneinander ohne Überlappung zu zeichnen, wird folgender C#-Code ausgeführt:</p>
+<pre><code class="language-csharp">int categoryIndex = 3;
+double groupWidth = 0.6;
+double singleBarWidth = groupWidth / 2.0;
+double rightBarCenter = categoryIndex + singleBarWidth / 2.0;</code></pre>
+<p>Welchen numerischen X-Positionswert besitzt <code>rightBarCenter</code>?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong> Jeder der zwei Einzelbalken hat die Breite \(w = \frac{0{,}6}{2} = 0{,}3\). Da die Balken bei der Kategorienmitte \(x = 3\) aneinanderstoßen sollen, liegt die Mitte des linken Balkens bei \(3 - \frac{0{,}3}{2} = 2{,}85\) und die Mitte des rechten Balkens bei \(3 + \frac{0{,}3}{2} = 3{,}15\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T03_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>3.15</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! singleBarWidth = 0.3; rightBarCenter = 3 + 0.3 / 2.0 = 3.15.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>3.3</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben um die volle Balkenbreite singleBarWidth = 0.3 statt um die halbe Balkenbreite 0.15 verschoben (Lücke zwischen den Balken!).</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Code-Lückentext: Welford-Online-Update in C# implementieren (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>Q02_T03_Q4: C#-Code-Lückentext: Welford-Online-Update in C# implementieren</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie die C#-Methode <code>AddSample(double x)</code> für die numerisch stabile Online-Berechnung von Mittelwert und Varianz nach Welford:</p>
+<pre><code class="language-csharp">public void AddSample(double x)
+{
+    Count++;
+    double delta1 = x - [[1]];
+    Mean += delta1 / [[2]];
+    double delta2 = x - [[3]];
+    M2 += delta1 * delta2;
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong> Zuerst wird <code>delta1 = x - Mean</code> (mit dem <em>alten</em> Mittelwert) berechnet, danach <code>Mean += delta1 / Count</code> aktualisiert, und schließlich <code>delta2 = x - Mean</code> (mit dem bereits <em>aktualisierten</em> Mittelwert) bestimmt, bevor <code>M2 += delta1 * delta2</code> ausgeführt wird.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T03_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[Mean]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Count]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Mean]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[M2]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Count]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Count - 1]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[M2]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[delta1]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[M2]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Konzept-Zuordnung: Geometrie- und Layout-Komponenten in Kapitel 03 &amp; 04 (matching, 1.0000000 Pkt.) -->
+  <question type="matching">
+    <name>
+      <text>Q02_T03_Q5: Konzept-Zuordnung: Geometrie- und Layout-Komponenten in Kapitel 03 &amp; 04</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ordnen Sie den vier technischen Anforderungen aus Kapitel 03 und 04 jeweils die passende Klasse bzw. Methode zu (beachten Sie die zwei Überhang-Distraktoren).</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Lösung:</strong> <code>SugiyamaLayoutSettings</code> erzeugt hierarchische Ebenen, <code>MdsLayoutSettings</code> nutzt Distanz-/Kräfteminimierung, <code>DrawingVisual</code> umgeht den UIElement-Overhead und <code>Math.Min(scaleX, scaleY)</code> sichert die Winkeltreue.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T03_Q5</idnumber>
+    <shuffleanswers>true</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <subquestion format="html">
+      <text><![CDATA[Hierarchisches Schichtenlayout für gerichtete Signalflussgraphen mit automatischer Kreuzungsminimierung]]></text>
+      <answer>
+        <text><![CDATA[SugiyamaLayoutSettings (MSAGL Layered Layout)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Kräftebasiertes Layout für ungerichtete Kommunikations- oder Rohrknotennetze anhand idealer Kantenlängen]]></text>
+      <answer>
+        <text><![CDATA[MdsLayoutSettings / FastIncrementalLayoutSettings (MSAGL)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Leichtgewichtige WPF-Zeichenschicht für zehntausende Primitiven ohne einzelnen UIElement-Layout-Overhead]]></text>
+      <answer>
+        <text><![CDATA[DrawingVisual mit DrawingContext.DrawLine()]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Verzerrungsfreie Einpassung eines Bauteils in das Canvas unter Beibehaltung des Seitenverhältnisses]]></text>
+      <answer>
+        <text><![CDATA[Math.Min(scaleX, scaleY) mit Letterboxing-Zentrierung]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Math.Max(scaleX, scaleY) mit anisotroper Streckung]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[WriteableBitmap.AddDirtyRect() mit 3D-Tiefenpuffer]]></text>
+      </answer>
+    </subquestion>
+  </question>
+
+  <!-- Question 6: ScottPlot 5 Performance: Warum Signal-Plots bei großen Zeitreihen schneller sind als Scatter-Plots (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T03_Q6: ScottPlot 5 Performance: Warum Signal-Plots bei großen Zeitreihen schneller sind als Scatter-Plots</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Warum kann ein <code>Signal</code>-Plot in <strong>ScottPlot 5</strong> eine Zeitreihe mit \(10\,\text{Millionen}\) Messpunkten flüssig mit \(60\,\text{FPS}\) zoomen und schwenken, während ein <code>Scatter</code>-Plot bei derselben Punktanzahl merklich einbricht?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Technischer Hintergrund:</strong> Bei äquidistanten Zeitreihen ist \(i = \lfloor (t - t_0) / \Delta t \rfloor\) in \(\mathcal{O}(1)\) berechenbar. Für jede Bildschirmspalte (z. B. 1000 Pixel breit) bestimmt <code>Signal</code> das Minimum und Maximum des zugehörigen Index-Slices und zeichnet nur einen vertikalen Strich pro Pixelspalte.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T03_Q6</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Weil Signal ein festes Abtastintervall voraussetzt und dadurch sichtbare Indexbereiche in O(1) berechnet sowie pro Pixelspalte nur Min/Max-Extrema zeichnet.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Durch die Äquidistanz entfällt das X-Array komplett; der sichtbare Array-Ausschnitt steht sofort fest und wird spaltenweise auf Min/Max-Linien reduziert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil Signal alle Gleitkommawerte beim Laden automatisch auf 8-Bit-Ganzzahlen rundet und damit 87,5 Prozent des Arbeitsspeichers verwirft.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Signal arbeitet unverändert mit der vollen double- oder float-Präzision des übergebenen Arrays.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil Scatter-Plots in ScottPlot 5 grundsätzlich keine Hardwarebeschleunigung unterstützen und jeden Punkt einzeln über die Windows-Registry protokollieren.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Beide Plottables nutzen SkiaSharp zum Rendern; der Unterschied liegt im Speicherlayout und im Index-Zugriff.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil Signal-Plots intern nur jeden tausendsten Messwert im Speicher behalten und alle hochfrequenten Spitzenwerte beim Import dauerhaft löschen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Durch das Min/Max-Spalten-Downsampling bleiben gerade alle Spitzen (Peaks/Ausreißer) visuell exakt erhalten, und beim Hineinzoomen erscheinen alle Einzelpunkte.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 7: C#-Bug-Diagnose: Hohe CPU-Last durch verfrühtes WpfPlot.Refresh() in Schleifen (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T03_Q7: C#-Bug-Diagnose: Hohe CPU-Last durch verfrühtes WpfPlot.Refresh() in Schleifen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einer Mehrkanal-Überwachung werden 50 Temperatursensoren mit jeweils \(100\,\text{Hz}\) ausgelesen. Der folgende Code führt sofort zu \(100\,\%\) CPU-Auslastung und einer eingefrorenen WPF-Oberfläche:</p>
+<pre><code class="language-csharp">void OnSensorPacketReceived(double[] channelValues) {
+    for (int ch = 0; ch < 50; ch++) {
+        _streamers[ch].Add(channelValues[ch]);
+        MainPlot.Refresh();
+    }
+}</code></pre>
+<p>Worin liegt der gravierende Architekturfehler in dieser Methode?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Best Practice (Kapitel 04):</strong> Sensordaten werden im Hintergrund oder im Paket-Handler ausschließlich in den Ringpuffer geschrieben (<code>_streamers[ch].Add(...)</code>). Ein separater <code>DispatcherTimer</code> mit \(30\text{–}60\,\text{Hz}\) ruft genau einmal pro Frame <code>MainPlot.Refresh()</code> auf.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T03_Q7</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[MainPlot.Refresh() wird innerhalb der Kanal-Schleife 50-mal pro Paket aufgerufen und erzwingt damit 5000 komplette SkiaSharp-Renderdurchläufe pro Sekunde.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Datenaufnahme (.Add) und Bildschirmdarstellung (.Refresh) müssen entkoppelt werden: Refresh() gehört aus der Schleife heraus in einen 30/60-Hz-UI-Timer.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Methode DataStreamer.Add() kopiert bei jedem Aufruf die gesamte Festplatte auf die Grafikkarte, weshalb maximal ein Kanal pro Anwendung erlaubt ist.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. DataStreamer.Add() schreibt nur einen einzelnen double-Wert in einen extrem schnellen RAM-Ringpuffer (wenige Nanosekunden).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[In C# dürfen Arrays vom Typ double[] nicht als Methodenparameter übergeben werden, ohne zuvor mit dem Schlüsselwort fixed im Speicher gepinnt zu werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Normale verwaltete Array-Referenzen werden in C# ohne fixed-Block völlig problemlos als Referenz übergeben.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Laufvariable ch der for-Schleife muss als double deklariert werden, da ganzzahlige Indizes in ScottPlot 5 eine teure Typkonvertierung auslösen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Array- und Listenindizes in C# sind nativ vom Typ int.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 8: Systemanalyse: DIN-406-Bemaßungsgeometrie &amp; Vektornormalen im 2D-Raum (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T03_Q8: Systemanalyse: DIN-406-Bemaßungsgeometrie &amp; Vektornormalen im 2D-Raum</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Welche <strong>zwei</strong> geometrischen Aussagen treffen auf die programmgesteuerte Konstruktion einer normgerechten <strong>DIN-406-Bemaßung</strong> für einen schräg im 2D-Raum liegenden Fachwerkstab zu?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong> Eine saubere CAD-Bemaßung nutzt den Einheitsrichtungsvektor \(\vec{u} = (u_x, u_y)\) entlang des Stabs und den Einheitsnormalenvektor \(\vec{n} = (-u_y, u_x)\) senkrecht dazu, kombiniert mit einer Lesbarkeitskorrektur des Textwinkels.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T03_Q8</idnumber>
+    <single>false</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Die Maßlinie verläuft exakt parallel zum Stab in einem festen Normalenabstand, während die beiden Maßhilfslinien senkrecht vom Stab über die Maßlinie hinausragen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Der Normalenvektor (-uy, ux) verschiebt die Maßlinie parallel zum Stab; die Maßhilfslinien besitzen zudem einen normierten Überstand von ca. 2–3 mm (bzw. 6–8 px).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Der Drehwinkel der Maßzahl wird mit Math.Atan2(dy, dx) bestimmt und bei Kopfüber-Winkeln um 180 Grad korrigiert, damit der Text von unten oder rechts lesbar bleibt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Nach DIN 406 dürfen Maßzahlen niemals auf dem Kopf stehen; liegt der Winkel zwischen +90° und +180° bzw. -90° und -180°, wird die Textorientierung gedreht.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Maßlinien dürfen in technischen Zeichnungen grundsätzlich nur streng horizontal oder streng vertikal am Bildschirmrand ausgerichtet werden, niemals parallel zu schrägen Stäben.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Gerade für die wahre Stablänge schräger Bauteile wird die Maßlinie parallel zur Bauteilkante orientiert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Der senkrechte 2D-Normalenvektor zu einem Einheitsrichtungsvektor (ux, uy) ergibt sich durch Quadrieren beider Komponenten zu (ux * ux, uy * uy).]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Ein 90°-gedrehter Normalenvektor entsteht durch Vertauschen und Vorzeichenwechsel einer Komponente: (-uy, ux) oder (uy, -ux).</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

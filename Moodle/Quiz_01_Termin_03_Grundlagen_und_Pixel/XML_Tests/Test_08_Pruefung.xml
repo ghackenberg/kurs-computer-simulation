@@ -5,294 +5,393 @@
       <text>$course$/Quiz_01_Termin_03/Test_08_Pruefung</text>
     </category>
     <info format="html">
-      <text><![CDATA[<p>Test 08 (Prüfung) – Titan, Dimensionsabhängigkeit & Neumann-Falle</p>]]></text>
+      <text><![CDATA[<p>Test 08 (Prüfung) – Grundlagen, Euler & 2D-Wärmeraster (Klausurvariante H)</p>]]></text>
     </info>
   </question>
 
-  <!-- Question 1: T08.Q1: FDM-Stabilitätsgrenze für ein Titanbauteil -->
-  <question type="multichoice">
+  <!-- Question 1: 2D-Wärmeleitung: Gitterverfeinerung &amp; Rechenzeitfaktor (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
     <name>
-      <text>T08_Q1_CFL_Titan</text>
+      <text>T08_Q1: 2D-Wärmeleitung: Gitterverfeinerung &amp; Rechenzeitfaktor</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Titan besitzt eine sehr geringe Temperaturleitfähigkeit:</p>
-<ul>
-  <li>Temperaturleitfähigkeit von Titan: \(\alpha = 0{,}09 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
-  <li>Gitterweite: \(\Delta x = \Delta y = 1{,}0\,\text{mm} = 1{,}0 \cdot 10^{-3}\,\text{m}\)</li>
-</ul>
-<p>Welche maximale Zeitschrittweite \(\Delta t_{\max}\) ergibt sich für das explizite 2D-FDM-Verfahren?</p>]]></text>
+      <text><![CDATA[<p>Eine explizite 2D-Wärmeleitungssimulation (\(\alpha = 25\,\text{mm}^2/\text{s}\)) läuft auf einem Ausgangsgitter mit \(\Delta x_{\text{alt}} = 4{,}0\,\text{mm}\) zunächst mit der maximal stabilen Schrittweite \(\Delta t_{\max,\text{alt}} = 0{,}16\,\text{s}\). Für eine höhere Detailauflösung wird die Gitterweite in beide Raumrichtungen auf \(\Delta x_{\text{neu}} = 2{,}0\,\text{mm}\) halbiert.</p><p>a) Wie groß ist die neue maximal zulässige Zeitschrittweite \(\Delta t_{\max,\text{neu}}\) in <strong>Millisekunden (ms)</strong> auf dem feineren Gitter?<br>Antwort: {1:NUMERICAL:=40:0.1#Richtig! dt_max,neu = dx_neu^2 / (4 * alpha) = 4,0 / 100 = 0,04 s = 40 ms (ein Viertel von 160 ms).~%50%80:0.1#Teilpunkte (50 %): Sie haben dt_max nur halbiert (80 ms) statt geviertelt, oder mit dem 1D-Faktor 2 gerechnet.~%50%0.04:0.001#Teilpunkte (50 %): Zahlenwert in Sekunden statt in Millisekunden (ms) angegeben.} ms</p><p>b) Wie viele explizite Zeitschritte \(N_{\text{steps}}\) sind auf dem feinen Gitter nötig, um eine physikalische Dauer von \(t_{\text{end}} = 2{,}0\,\text{s}\) bei \(\Delta t = \Delta t_{\max,\text{neu}}\) zu simulieren?<br>Antwort: {1:NUMERICAL:=50:0#Richtig! N = 2,0 s / 0,04 s = 50 Zeitschritte.~%50%25:0#Teilpunkte (50 %): Folgefehler aus dt = 80 ms (2,0 s / 0,08 s = 25 Schritte).} Schritte</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(1{,}0 \cdot 10^{-3})^2}{4 \cdot 0{,}09 \cdot 10^{-4}} = \frac{1{,}0 \cdot 10^{-6}}{0{,}36 \cdot 10^{-4}}\,\text{s} = \frac{1}{36}\,\text{s} \approx 0{,}02778\,\text{s} \approx 27{,}78\,\text{ms}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. Aus \(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha}\) folgt für \(\Delta x_{\text{neu}} = 2{,}0\,\text{mm}\):<br>\(\Delta t_{\max,\text{neu}} = \frac{(2{,}0\,\text{mm})^2}{4 \cdot 25\,\text{mm}^2/\text{s}} = \frac{4}{100}\,\text{s} = 0{,}04\,\text{s} = 40\,\text{ms}\).</p><p>2. Für \(t_{\text{end}} = 2{,}0\,\text{s}\) werden damit \(N_{\text{steps}} = \frac{2{,}0\,\text{s}}{0{,}04\,\text{s}} = 50\,\text{Schritte}\) benötigt.</p>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T08_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Kinematik: Zweischritt-Euler eines vertikal nach oben geworfenen Körpers (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T08_Q2: Kinematik: Zweischritt-Euler eines vertikal nach oben geworfenen Körpers</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Körper wird zum Zeitpunkt \(t_0 = 0\,\text{s}\) vom Boden aus (\(y_0 = 0{,}0\,\text{m}\)) mit einer Anfangsgeschwindigkeit von \(v_0 = +15{,}0\,\text{m/s}\) senkrecht nach oben abgeworfen (Erdbeschleunigung \(g = 10{,}0\,\text{m/s}^2\) nach unten).</p><p>Berechnen Sie die Höhe \(y_2\) (in <strong>Metern</strong>) zum Zeitpunkt \(t_2 = 1{,}0\,\text{s}\) nach exakt <strong>zwei Zeitschritten</strong> der Länge \(\Delta t = 0{,}50\,\text{s}\) mit dem <strong>expliziten Standard-Euler-Verfahren</strong>.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (2 Schritte Expliziter Standard-Euler):</strong></p><p><strong>Schritt 1 (\(t_0 = 0 \to t_1 = 0{,}50\,\text{s}\)):</strong><br>\(y_1 = y_0 + \Delta t \cdot v_0 = 0{,}0 + 0{,}50 \cdot 15{,}0 = 7{,}5\,\text{m}\)<br>\(v_1 = v_0 - \Delta t \cdot g = 15{,}0 - 0{,}50 \cdot 10{,}0 = 10{,}0\,\text{m/s}\).</p><p><strong>Schritt 2 (\(t_1 = 0{,}50 \to t_2 = 1{,}00\,\text{s}\)):</strong><br>\(y_2 = y_1 + \Delta t \cdot v_1 = 7{,}5 + 0{,}50 \cdot 10{,}0 = 12{,}5\,\text{m}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T08_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>12.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Schritt 1: y_1 = 0 + 0,5 * 15 = 7,5 m, v_1 = 15 - 0,5 * 10 = 10,0 m/s. Schritt 2: y_2 = 7,5 + 0,5 * 10,0 = 12,5 m.</p>]]></text>
+      </feedback>
+      <tolerance>0.02</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>10</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 10,0 m ist die analytische Höhe y(1,0) = 15*1 - 0,5*10*1 = 10,0 m (bzw. Heun), nicht der explizite Euler!</p>]]></text>
+      </feedback>
+      <tolerance>0.02</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>7.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 7,5 m ist die Höhe y_1 nach nur einem Schritt (bei t_1 = 0,5 s), bzw. das Ergebnis des semi-impliziten Euler.</p>]]></text>
+      </feedback>
+      <tolerance>0.02</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Zeiger-Arithmetik mit uint* vs. byte* (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T08_Q3: C#-Code-Tracing: Zeiger-Arithmetik mit uint* vs. byte*</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Anstelle eines <code>byte*</code>-Pointers wird in folgendem C#-Code ein <code>uint*</code>-Pointer (4 Bytes pro Element) verwendet, um ganze Pixel auf einmal zu schreiben:</p><pre><code class="language-csharp">int strideBytes = 128; // BackBufferStride in Bytes
+int pixelsPerRow = strideBytes / 4;
+int x = 10, y = 4;
+int uintIndex = y * pixelsPerRow + x;</code></pre><p>Welchen exakten ganzzahligen Wert hat die Variable <code>uintIndex</code> nach der Ausführung?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (uint*-Pointer-Adressierung):</strong></p><p>Da ein <code>uint*</code>-Zeiger bei jeder Erhöhung um 1 automatisch um <code>sizeof(uint) = 4</code> Bytes im Speicher weiterwandert, umfasst eine Zeile von <code>128 Bytes</code> genau <code>pixelsPerRow = 128 / 4 = 32</code> <code>uint</code>-Elemente. Für Zeile <code>y = 4</code> und Spalte <code>x = 10</code> ergibt sich somit der Element-Index <code>4 * 32 + 10 = 138</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T08_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>138</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! pixelsPerRow = 128 / 4 = 32; uintIndex = 4 * 32 + 10 = 128 + 10 = 138.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>552</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 552 (= 138 * 4) ist der Byte-Index für einen byte*-Pointer; für uint* wurde strideBytes bereits durch 4 geteilt.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>522</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben 4 * 128 + 10 = 522 gerechnet und die Division durch 4 bei pixelsPerRow übersehen.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Lückentext: Lineare Farbinterpolation (Lerp) mit Math.Clamp (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>T08_Q4: C#-Lückentext: Lineare Farbinterpolation (Lerp) mit Math.Clamp</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie die C#-Hilfsmethode, die eine Temperatur <code>T</code> sicher auf das Intervall <code>[0.0, 1.0]</code> normiert und anschließend den Blau-Kanal von <code>255</code> (bei <code>u = 0</code>) linear auf <code>0</code> (bei <code>u = 1</code>) absenkt:</p><pre><code class="language-csharp">double rawU = (T - Tmin) / ([[1]] - Tmin);
+double u = Math.[[2]](rawU, 0.0, 1.0);
+byte blue = (byte)(255.0 * ([[3]] - u));</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul><li><code>[[1]] = Tmax</code> bildet die Spannweite <code>Tmax - Tmin</code> im Nenner.</li><li><code>[[2]] = Clamp</code> begrenzt Ausreißer sicher auf das Intervall <code>[0.0, 1.0]</code>, damit der anschließende Cast nach <code>byte</code> nicht überläuft.</li><li><code>[[3]] = 1.0</code> sorgt dafür, dass Blau bei <code>u = 0.0</code> den Maximalwert <code>255</code> und bei <code>u = 1.0</code> den Wert <code>0</code> erhält.</li></ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T08_Q1_CFL_Titan</idnumber>
+    <idnumber>T08_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[Tmax]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Clamp]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[1.0]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[T]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[0.0]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Round]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Abs]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[255.0]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[0.0]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Pipeline-Reihenfolge: Ereignisbehandlung beim Bodenaufprall (Hybrid-Step) (ddwtos, 1.0000000 Pkt.) -->
+  <question type="ddwtos">
+    <name>
+      <text>T08_Q5: Pipeline-Reihenfolge: Ereignisbehandlung beim Bodenaufprall (Hybrid-Step)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Bringen Sie die vier Teilschritte zur präzisen Behandlung einer Bodenkollision (sobald der reguläre Zeitschritt eine negative Höhe <code>yNew &lt; 0</code> geliefert hat) in die richtige algorithmische Reihenfolge:</p><p>Schritt 1: [[1]]<br>Schritt 2: [[2]]<br>Schritt 3: [[3]]<br>Schritt 4: [[4]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><p>Zuerst wird der Vorzeichenwechsel der Höhe erkannt (Zero-Crossing Detection). Danach liefert die Sekantenformel den Teilfaktor \(\tau\), mit dem die exakte Geschwindigkeit \(v_{\text{impact}}\) im Moment des Aufpralls bestimmt und schließlich über das Stoßgesetz \(-e \cdot v_{\text{impact}}\) umgekehrt wird.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T08_Q5</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <dragbox>
+      <text><![CDATA[Nulldurchgangs-Bedingung yOld > 0 und yNew < 0 detektieren]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Relativen Teilzeitschritt tau = yOld / (yOld - yNew) interpolieren]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Aufprallgeschwindigkeit vImpact = vOld - g * (tau * dt) berechnen]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Geschwindigkeit mit vNew = -e * vImpact reflektieren]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Erdbeschleunigung g dauerhaft auf 0 setzen]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Zeitschrittweite dt mit -1 multiplizieren]]></text>
+      <group>1</group>
+    </dragbox>
+  </question>
+
+  <!-- Question 6: Räumliche Diskretisierung: Fehlerordnung des zentralen Differenzenquotienten (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>T08_Q6: Räumliche Diskretisierung: Fehlerordnung des zentralen Differenzenquotienten</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Warum verwendet der 5-Punkt-Stern für die zweite Ortsableitung \(\frac{\partial^2 T}{\partial x^2}\) den symmetrischen Ausdruck \(\frac{T_{i-1} - 2T_i + T_{i+1}}{\Delta x^2}\) und welche räumliche Konsistenzordnung wird damit erreicht?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Taylor-Herleitung des zentralen Differenzenquotienten 2. Ordnung:</strong></p><p>Addiert man \(T(x+\Delta x) = T + \Delta x T' + \frac{\Delta x^2}{2} T'' + \frac{\Delta x^3}{6} T''' + \frac{\Delta x^4}{24} T^{(4)}\) und \(T(x-\Delta x) = T - \Delta x T' + \frac{\Delta x^2}{2} T'' - \frac{\Delta x^3}{6} T''' + \frac{\Delta x^4}{24} T^{(4)}\), so fallen die ungeraden Terme \(T'\) und \(T'''\) exakt heraus. Nach Division durch \(\Delta x^2\) verbleibt ein führender Abbruchfehler von \(\frac{\Delta x^2}{12} T^{(4)} \in \mathcal{O}(\Delta x^2)\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T08_Q6</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 27{,}78\,\text{ms}\)]]></text>
+      <text><![CDATA[In der Taylor-Summe kürzen sich alle ungeraden Ableitungen weg, was Fehlerordnung zwei in dx liefert.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! \(1{,}0 \cdot 10^{-6} / (0{,}36 \cdot 10^{-4})\,\text{s} \approx 27{,}78\,\text{ms}\).</p>]]></text>
+        <text><![CDATA[<p>Richtig! Die Terme erster und dritter Ordnung (+dT/dx und -dT/dx sowie +d^3T/dx^3 und -d^3T/dx^3) heben sich exakt auf; es bleibt O(dx^2).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 55{,}56\,\text{ms}\)]]></text>
+      <text><![CDATA[Der Ausdruck vermeidet jede Division und erreicht dadurch eine räumliche Fehlerordnung von vier.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Es wird durch dx^2 dividiert, und die vierte Ableitung kürzt sich nicht weg, sodass die Fehlerordnung 2 (nicht 4) beträgt.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 13{,}89\,\text{ms}\)]]></text>
+      <text><![CDATA[Die Formel berücksichtigt nur den linken Nachbarn und hat deshalb die räumliche Fehlerordnung eins.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Faktor 8 statt 4 verwendet.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Sowohl der linke (i-1) als auch der rechte Nachbar (i+1) gehen symmetrisch ein, was die Ordnung auf 2 erhöht.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 2{,}78\,\text{ms}\)]]></text>
+      <text><![CDATA[Durch diese symmetrische Formel wird das explizite Zeitverfahren für beliebig große dt stabil.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Auch mit dem symmetrischen zentralen Differenzenquotienten unterliegt das explizite Euler-Verfahren der Grenze s <= 0,25.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 2: T08.Q2: Die Kühlakku-Falle: Verwechslung von Neumann- und Dirichlet-Rand -->
+  <!-- Question 7: C#-Bug-Diagnose: Byte-Überlauf ohne Begrenzung (Clamping) bei Heatmap (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T08_Q2_Code_Neumann_Kuehlakku_Falle</text>
+      <text>T08_Q7: C#-Bug-Diagnose: Byte-Überlauf ohne Begrenzung (Clamping) bei Heatmap</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Student soll einen isolierten Rand (adiabater Rand, kein Wärmeaustausch) programmieren. Er implementiert dies im Code wie folgt:</p>
-<pre><code class="language-csharp">// Randbehandlung für die linke Kante (x = 0):
-for (int y = 0; y < height; y++)
-{
-    grid[0, y] = 0.0; // Student denkt: 0 bedeutet kein Wärmefluss
-}</code></pre>
-<p>Welchen physikalischen Effekt erzeugt dieser Code tatsächlich?</p>]]></text>
+      <text><![CDATA[<p>Eine Farbskala ist auf den Bereich <code>0 °C</code> bis <code>100 °C</code> ausgelegt. Durch eine lokale Wärmequelle steigt die Temperatur eines Knotens jedoch auf <code>T = 120.0</code> °C an. Der Farbwert wird ohne <code>Math.Clamp</code> wie folgt berechnet:</p><pre><code class="language-csharp">double u = T / 100.0; // u = 1.2
+byte red = (byte)(255.0 * u);</code></pre><p>Welcher Effekt tritt in einem standardmäßigen C#-Projekt (<code>unchecked</code>-Kontext) bei dieser Konvertierung auf?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><code>grid[0, y] = 0.0</code> setzt die Temperatur am Rand fest auf 0°C. Das ist eine homogene <strong>Dirichlet-Randbedingung</strong> (ein unendliches Kühlbad / Eisbad), die dem System permanent Wärme entzieht. Eine echte Neumann-Isolationsbedingung erfordert \(\frac{\partial T}{\partial x} = 0\), also <code>grid[0, y] = grid[1, y]</code>.</p>]]></text>
+      <text><![CDATA[<p><strong>Fehleranalyse (Unchecked Byte Overflow):</strong></p><p>Für <code>T = 120.0</code> ergibt <code>255.0 * 1.2</code> den Wert <code>306.0</code>. Da ein <code>byte</code> nur 8 Bits (0..255) fasst, geht beim ungeschützten Cast <code>(byte)306</code> das 9. Bit (Wertigkeit 256) verloren: \(306 \bmod 256 = 50\). Heißere Regionen springen dadurch optisch plötzlich wieder auf dunkle/kalte Farbtöne zurück. Deshalb ist <code>Math.Clamp(u, 0.0, 1.0)</code> zwingend erforderlich.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T08_Q2_Code_Neumann_Kuehlakku_Falle</idnumber>
+    <idnumber>T08_Q7</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Der Rand wirkt wie ein ideales Kühlbad mit konstanter Temperatur 0°C (Dirichlet-Rand); er saugt permanent Wärme aus dem System ab, anstatt es thermisch zu isolieren.]]></text>
+      <text><![CDATA[Der Wert 306 läuft modulo 256 auf 50 über, sodass die heißeste Stelle plötzlich dunkel erscheint.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Dies ist der klassische Fehler: Verwechslung von Gradient 0 (Neumann) mit Absolutwert 0 (Dirichlet).</p>]]></text>
+        <text><![CDATA[<p>Richtig! Im Standard-Kontext (unchecked) schneidet (byte)306 die oberen Bits ab (306 - 256 = 50), was zu einem dunklen Farbsprung mitten im Hotspot führt.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Der Rand ist perfekt isoliert, da bei 0.0 keine Energie vorhanden ist.]]></text>
+      <text><![CDATA[Der C#-Cast nach byte begrenzt alle Zahlen über 255 automatisch und sicher auf das Maximum 255.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Temperatur ist eine intensive Zustandsgröße; 0°C ist ein Kühlbad.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Ein einfacher (byte)-Cast führt in C# kein Sättigungs-Clamping durch, sondern ein Abschneiden der höherwertigen Bits (Modulo 256).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Das Gitter stürzt sofort mit einer <code>DivideByZeroException</code> ab.]]></text>
+      <text><![CDATA[Die Variable red nimmt automatisch den speziellen Gleitkommawert Byte.NaN für ungültige Farben an.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Es wird durch keinen Wert geteilt.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Ganzzahltypen wie byte besitzen keinen NaN-Wert; NaN existiert nur bei IEEE-754-Gleitkommatypen (float, double).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Die Wärme reflektiert am Rand mit doppelter Energie.]]></text>
+      <text><![CDATA[Das WriteableBitmap skaliert alle übergroßen Farbwerte beim Unlock automatisch auf den Bereich 0..255.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Sie wird vernichtet.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Der Überlauf passiert bereits vor dem Speichern in die 8-Bit-Variable red; das WriteableBitmap sieht danach nur noch den Wert 50.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 3: T08.Q3: Dimensionale Abhängigkeit der CFL-Stabilitätsgrenze (1D, 2D, 3D) -->
+  <!-- Question 8: Modelltheorie: Die drei Hauptmerkmale des allgemeinen Modellbegriffs nach Stachowiak (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T08_Q3_Physik_Dimensionsabhaengigkeit_CFL</text>
+      <text>T08_Q8: Modelltheorie: Die drei Hauptmerkmale des allgemeinen Modellbegriffs nach Stachowiak</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Für die explizite Finite-Differenzen-Methode der Diffusionsgleichung lautet das Stabilitätskriterium in Abhängigkeit von der Raumdimension \(d\):</p>
-<p>$$s = \frac{\alpha \Delta t}{\Delta x^2} \le s_{\max}$$</p>
-<p>Wie verhält sich \(s_{\max}\) für 1D-, 2D- und 3D-Gitter und was ist die mathematische Ursache?</p>]]></text>
+      <text><![CDATA[<p>Welche der folgenden Aussagen zu den drei klassischen Hauptmerkmalen eines Modells nach Herbert Stachowiak (1973) sind <strong>zutreffend</strong>? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Beim expliziten Euler-Schritt lautet das zentrale Gewicht \((1 - 2d \cdot s)\), da in jeder Raumdimension zwei Nachbarn existieren (1D: 2, 2D: 4, 3D: 6 Nachbarn). Damit das zentrale Gewicht nicht negativ wird, muss \(1 - 2d \cdot s \ge 0 \implies s \le \frac{1}{2d}\) gelten: 1D: \(s \le 1/2\), 2D: \(s \le 1/4\), 3D: \(s \le 1/6\).</p>]]></text>
+      <text><![CDATA[<p><strong>Zusammenfassung (Allgemeine Modelltheorie nach Stachowiak):</strong></p><p>Jedes Modell ist durch drei fundamentale Merkmale gekennzeichnet: 1. <strong>Abbildungsmerkmal</strong> (Repräsentation eines Originals), 2. <strong>Verkürzungsmerkmal</strong> (Abstraktion durch Beschränkung auf relevante Attribute) und 3. <strong>Pragmatisches Merkmal</strong> (Ausrichtung auf Subjekt, Zeitintervall und Untersuchungszweck).</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T08_Q3_Physik_Dimensionsabhaengigkeit_CFL</idnumber>
-    <single>true</single>
+    <idnumber>T08_Q8</idnumber>
+    <single>false</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[1D: \(s \le 1/2\), 2D: \(s \le 1/4\), 3D: \(s \le 1/6\). Ursache: In \(d\) Dimensionen gibt es \(2d\) Nachbarn; das zentrale Gewicht \((1 - 2d \cdot s)\) darf nicht negativ werden.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Gemäß Abbildungsmerkmal ist jedes Modell stets die Repräsentation eines natürlichen oder künstlichen Originals.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Die Stabilitätsgrenze sinkt reziprok mit der Anzahl der Nachbarn.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Ein Modell steht immer in einer Zuordnungsbeziehung zu einem Original (das selbst wiederum ein Modell sein kann).</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[In allen Dimensionen gilt konstant \(s \le 0{,}5\), da die Zeitschrittweite unabhängig vom Raum ist.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Das pragmatische Merkmal fordert die Angabe, für wen, wann und zu welchem Zweck das Modell eingesetzt wird.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Zusätzliche Raumdimensionen addieren Wärmeströme.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Modelle sind nicht nur Abbilder von etwas, sondern erfüllen ihre Ersetzungsfunktion für bestimmte Subjekte, Zeiten und Zwecke.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[1D: \(s \le 1\), 2D: \(s \le 2\), 3D: \(s \le 3\), da mehr Raum mehr Wärme aufnehmen kann.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Das Verkürzungsmerkmal verlangt, dass der Programmcode eines Modells höchstens 100 Zeilen umfassen darf.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das Gegenteil ist der Fall.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Verkürzung (Präterition) bezieht sich auf das Weglassen irrelevanter Original-Eigenschaften bei der Abstraktion, nicht auf die C#-Codezeilen.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Die Stabilitätsgrenze hängt ausschließlich vom Material \(\alpha\) ab, nicht von den Raumdimensionen.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Nach Stachowiak ist ein Modell nur dann gültig, wenn es sämtliche Eigenschaften des Originals 1:1 kopiert.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die Gittergeometrie bestimmt den Stabilitätsfaktor s_max maßgeblich.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 4: T08.Q4: Taxonomie: Statische vs. Dynamische Modelle -->
-  <question type="multichoice">
-    <name>
-      <text>T08_Q4_Statisch_vs_Dynamisch</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Was ist der definitorische Unterschied zwischen einem <strong>statischen</strong> und einem <strong>dynamischen</strong> mechatronischen Modell?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>Ein statisches Modell beschreibt einen zeitunabhängigen Gleichgewichtszustand (z. B. Biegung eines Balkens unter konstanter Last, \(\dot{x} = 0\)), typischerweise modelliert durch algebraische Gleichungssysteme. Ein dynamisches Modell besitzt Energiespeicher (Trägheiten, Kapazitäten) und beschreibt den zeitlichen Übergang (Trajektorie) über Differentialgleichungen.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T08_Q4_Statisch_vs_Dynamisch</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Statische Modelle beschreiben zeitunabhängige Gleichgewichtszustände ohne Gedächtnis/Speicher (algebraische Gleichungen); dynamische Modelle besitzen Energiespeicher und bilden die zeitliche Veränderung von Zuständen ab (DGLn).]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! Dies trennt Statik (Termin 07) von Dynamik (Termin 08).</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Statische Modelle sind in C# programmiert, dynamische Modelle in C++.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Hat keinen Bezug zur Programmiersprache.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Statische Modelle berücksichtigen Reibung, dynamische Modelle sind stets reibungsfrei.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Beide können Reibung enthalten.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Statische Modelle dürfen nur als PDF gezeichnet werden, niemals am Computer berechnet werden.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Statische FE-Systeme werden hochgradig am Computer gerechnet.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 5: T08.Q5: Allokationsfreie Speicherabstraktion mit Span<T> in modernem C# -->
-  <question type="multichoice">
-    <name>
-      <text>T08_Q5_Span_Memory_Modern_Net</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>In modernem C# (.NET 8) wird zunehmend <code>Span&lt;T&gt;</code> und <code>ReadOnlySpan&lt;T&gt;</code> für simulationsnahe Puffer eingesetzt. Welchen entscheidenden Vorteil bietet <code>Span&lt;T&gt;</code> gegenüber herkömmlichen Array-Slices (wie <code>array.Skip(...).Take(...)</code>)?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p><code>Span&lt;T&gt;</code> ist ein <code>ref struct</code>, das auf dem Stack allokiert wird und eine typisierte Sicht auf einen beliebigen zusammenhängenden Speicherbereich (Heap, Stack via <code>stackalloc</code> oder unmanaged Speicher) darstellt. Es entstehen absolut null Heap-Allokationen und kein GC-Overhead.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T08_Q5_Span_Memory_Modern_Net</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[<code>Span&lt;T&gt;</code> ermöglicht performante, speichersichere Slices direkt im bestehenden Speicher ohne jegliche Heap-Allokationen (0 Byte Garbage Collection Overhead).]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! Span<T> ist der Schlüssel zu moderner High-Performance in .NET.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[<code>Span&lt;T&gt;</code> führt Berechnungen automatisch parallel auf allen CPU-Kernen aus.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Span<T> ist eine Datenstruktur, kein Multithreading-Scheduler.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[<code>Span&lt;T&gt;</code> kann nur Daten auf der Festplatte lesen.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Span arbeitet im flüchtigen Hauptspeicher.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[<code>Span&lt;T&gt;</code> schaltet das Typsystem von C# komplett ab.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Span ist strikt typsicher.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Eine vollständige 1:1-Kopie aller Attribute widerspricht direkt dem Verkürzungsmerkmal und wäre das Original selbst.</p>]]></text>
       </feedback>
     </answer>
   </question>

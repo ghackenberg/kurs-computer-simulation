@@ -5,300 +5,402 @@
       <text>$course$/Quiz_01_Termin_03/Test_06_Pruefung</text>
     </category>
     <info format="html">
-      <text><![CDATA[<p>Test 06 (Prüfung) – Gold, GC-Allokationsfreiheit & Robin-Rand</p>]]></text>
+      <text><![CDATA[<p>Test 06 (Prüfung) – Grundlagen, Euler & 2D-Wärmeraster (Klausurvariante F)</p>]]></text>
     </info>
   </question>
 
-  <!-- Question 1: T06.Q1: FDM-Stabilitätsgrenze für eine Gold-Kontaktbeschichtung -->
-  <question type="multichoice">
+  <!-- Question 1: 2D-Wärmeleitung: Stationäres Gleichgewicht &amp; Schritt-Konvergenz (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
     <name>
-      <text>T06_Q1_CFL_Gold</text>
+      <text>T06_Q1: 2D-Wärmeleitung: Stationäres Gleichgewicht &amp; Schritt-Konvergenz</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Eine Bonddraht-Kontaktfläche aus Gold wird thermisch untersucht:</p>
-<ul>
-  <li>Temperaturleitfähigkeit von Gold: \(\alpha = 1{,}27 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
-  <li>Gitterweite: \(\Delta x = \Delta y = 2{,}5\,\text{mm} = 2{,}5 \cdot 10^{-3}\,\text{m}\)</li>
-</ul>
-<p>Berechnen Sie die maximale Zeitschrittweite \(\Delta t_{\max}\) für den stabilen 2D-Euler-FDM-Schritt.</p>]]></text>
+      <text><![CDATA[<p>In einem quadratischen 2D-Wärmeraster (\(\Delta x = \Delta y\)) hat der innere Knoten \((i,j)\) zum Zeitpunkt \(n\) die Temperatur \(T_{i,j}^n = 50{,}0\,^\circ\text{C}\). Seine vier direkten Nachbarknoten werden konstant auf den Temperaturen \(T_{\text{links}} = 80{,}0\,^\circ\text{C}\), \(T_{\text{rechts}} = 40{,}0\,^\circ\text{C}\), \(T_{\text{oben}} = 60{,}0\,^\circ\text{C}\) und \(T_{\text{unten}} = 20{,}0\,^\circ\text{C}\) gehalten.</p><p>a) Welchen Wert hat der diskrete 2D-Laplace-Zähler \(L = T_{i-1,j}^n + T_{i+1,j}^n + T_{i,j-1}^n + T_{i,j+1}^n - 4 T_{i,j}^n\) (in <strong>°C</strong> bzw. <strong>K</strong>) für diesen Zustand?<br>Antwort: {1:NUMERICAL:=0.0:0.01#Richtig! Summe der 4 Nachbarn = 80 + 40 + 60 + 20 = 200 °C; abzüglich 4 * 50 = 200 °C ergibt exakt 0,0 K.~%50%200.0:0.1#Teilpunkte (50 %): 200 °C ist nur die Summe der vier Nachbarn, es fehlt noch die Subtraktion von 4 * T_ij (= 200 °C).~%50%100.0:0.1#Teilpunkte (50 %): Sie haben nur 2 * T_ij statt 4 * T_ij abgezogen.} K</p><p>b) Welche Temperatur \(T_{i,j}^{n+1}\) (in <strong>°C</strong>) besitzt der Zentralknoten im nächsten Zeitschritt bei einer Stabilitätszahl von \(s = 0{,}20\)?<br>Antwort: {1:NUMERICAL:=50.0:0.05#Richtig! Da der Laplace-Term 0 ist, befindet sich der Knoten exakt im lokalen thermischen Gleichgewicht (harmonische Eigenschaft: Mittelwert der Nachbarn = 200/4 = 50 °C).} °C</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(2{,}5 \cdot 10^{-3})^2}{4 \cdot 1{,}27 \cdot 10^{-4}} = \frac{6{,}25 \cdot 10^{-6}}{5{,}08 \cdot 10^{-4}}\,\text{s} \approx 0{,}012303\,\text{s} \approx 12{,}30\,\text{ms}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (Stationäres Gleichgewicht der Laplace-Gleichung):</strong></p><p>1. Summe der vier Nachbarn: \(80 + 40 + 60 + 20 = 200\,^\circ\text{C}\).<br>Abzüglich \(4 \cdot T_{i,j}^n = 4 \cdot 50 = 200\,^\circ\text{C}\) ergibt sich \(L = 200 - 200 = 0{,}0\,\text{K}\).</p><p>2. Damit folgt unabhängig von \(s\): \(T_{i,j}^{n+1} = 50{,}0 + 0{,}20 \cdot 0{,}0 = 50{,}0\,^\circ\text{C}\). Im stationären Zustand (\(\partial T / \partial t = 0\)) ist die Temperatur jedes Knotens exakt der arithmetische Mittelwert seiner vier Nachbarknoten!</p>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T06_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Bodenkollision: Rücksprunggeschwindigkeit nach teilelastischem Stoß (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T06_Q2: Bodenkollision: Rücksprunggeschwindigkeit nach teilelastischem Stoß</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein fallender Körper hat zu Beginn eines Zeitschritts (\(t_n = 0{,}50\,\text{s}\)) die Geschwindigkeit \(v_n = -8{,}0\,\text{m/s}\) (nach unten). Die lineare Höhen-Interpolation ergibt, dass der Körper nach dem relativen Zeitschrittanteil \(\tau = 0{,}50\) eines Zeitschritts der Länge \(\Delta t = 0{,}20\,\text{s}\) auf dem Boden aufschlägt (Erdbeschleunigung \(g = 10{,}0\,\text{m/s}^2\)). Der Boden besitzt den Restitutionskoeffizienten \(e = 0{,}80\).</p><p>Berechnen Sie die neue vertikale Geschwindigkeit \(v_{\text{after}}\) (in <strong>m/s</strong>, positiv nach oben) unmittelbar <strong>nach</strong> der teilelastischen Reflexion am Boden.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (Sub-Step-Stoßgesetz):</strong></p><p>1. Bis zum Aufprall vergeht die Teilzeit \(\Delta t_{\text{impact}} = \tau \cdot \Delta t = 0{,}50 \cdot 0{,}20\,\text{s} = 0{,}10\,\text{s}\).</p><p>2. Aufprallgeschwindigkeit unmittelbar vor dem Bodenkontakt:<br>\(v_{\text{impact}} = v_n - g \cdot \Delta t_{\text{impact}} = -8{,}0\,\text{m/s} - 10{,}0\,\text{m/s}^2 \cdot 0{,}10\,\text{s} = -9{,}0\,\text{m/s}\).</p><p>3. Geschwindigkeit unmittelbar nach dem teilelastischen Stoß:<br>\(v_{\text{after}} = -e \cdot v_{\text{impact}} = -0{,}80 \cdot (-9{,}0\,\text{m/s}) = +7{,}2\,\text{m/s}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T06_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>7.2</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! v_impact = -8,0 - 10,0 * (0,50 * 0,20) = -9,0 m/s; v_after = -0,80 * (-9,0) = +7,2 m/s.</p>]]></text>
+      </feedback>
+      <tolerance>0.02</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>-7.2</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Betrag 7,2 m/s ist richtig, aber nach der Reflexion am Boden zeigt die Geschwindigkeit nach oben (+7,2 m/s).</p>]]></text>
+      </feedback>
+      <tolerance>0.02</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>6.4</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben mit v_n = -8,0 m/s statt mit der bis zum Aufprall beschleunigten Geschwindigkeit v_impact = -9,0 m/s gerechnet.</p>]]></text>
+      </feedback>
+      <tolerance>0.02</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>8</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben über den vollen Zeitschritt dt = 0,20 s (v = -10 m/s -> 8,0 m/s) statt über tau * dt = 0,10 s beschleunigt.</p>]]></text>
+      </feedback>
+      <tolerance>0.02</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Rückrechnung der Gitterspalte aus einem 1D-Byte-Offset (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T06_Q3: C#-Code-Tracing: Rückrechnung der Gitterspalte aus einem 1D-Byte-Offset</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Aus einem gegebenen 1D-Byte-Index <code>byteOffset</code> in einem <code>WriteableBitmap</code> (Format <code>Bgra32</code>, 4 Bytes pro Pixel) werden Zeile <code>y</code> und Spalte <code>x</code> mit folgendem C#-Code zurückgerechnet:</p><pre><code class="language-csharp">int stride = 400; // Bytes pro Zeile
+int byteOffset = 830;
+int y = byteOffset / stride;
+int x = (byteOffset % stride) / 4;</code></pre><p>Welchen exakten ganzzahligen Wert hat die Spaltenkoordinate <code>x</code> nach der Ausführung?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. Zeilenindex: <code>y = 830 / 400 = 2</code> (Ganzzahldivision).</p><p>2. Byte-Rest innerhalb der Zeile 2: <code>830 % 400 = 30</code>.</p><p>3. Spaltenindex: <code>x = 30 / 4 = 7</code> (Ganzzahldivision; die Bytes 28, 29, 30, 31 gehören alle zu Pixel <code>x = 7</code>).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T06_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>7</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! 830 % 400 = 30 (Byte-Offset in Zeile 2); 30 / 4 = 7 (Ganzzahldivision in C#, Byte 2 ist der Rot-Kanal von Pixel x = 7).</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>7.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben 30 / 4 = 7,5 als Gleitkommazahl berechnet; da beide Operanden int sind, schneidet C# den Nachkommateil zu 7 ab.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>30</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 30 ist der Byte-Offset innerhalb der Zeile (830 % 400), es fehlt noch die Division durch 4 Bytes pro Pixel.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Lückentext: Packen von ARGB-Kanälen in einen 32-Bit-uint (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>T06_Q4: C#-Lückentext: Packen von ARGB-Kanälen in einen 32-Bit-uint</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie die folgende C#-Anweisung, die vier <code>byte</code>-Variablen (<code>alpha</code>, <code>red</code>, <code>green</code>, <code>blue</code>) auf einem Little-Endian-System zu einem einzigen <code>uint</code>-Farbwert für <code>PixelFormats.Bgra32</code> zusammenpackt:</p><pre><code class="language-csharp">uint pixel = ((uint)alpha << [[1]])
+           | ((uint)red   << [[2]])
+           | ((uint)green << [[3]])
+           |  (uint)blue;</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung (Little-Endian Bgra32 uint-Packing):</strong></p><p>Auf Little-Endian-CPUs liegt das niederwertigste Byte (Bits 0..7) an der kleinsten Speicheradresse (Offset +0 = <code>blue</code>). <code>green</code> (Offset +1) muss um <code>8</code> Bits, <code>red</code> (Offset +2) um <code>16</code> Bits und <code>alpha</code> (Offset +3) um <code>24</code> Bits nach links verschoben werden.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T06_Q1_CFL_Gold</idnumber>
+    <idnumber>T06_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[24]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[16]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[8]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[32]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[0]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[12]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[4]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[2]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[1]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Pipeline-Reihenfolge: Simulationsschleife des 2D-Wärmerasters (ddwtos, 1.0000000 Pkt.) -->
+  <question type="ddwtos">
+    <name>
+      <text>T06_Q5: Pipeline-Reihenfolge: Simulationsschleife des 2D-Wärmerasters</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Bringen Sie die vier Teilschritte innerhalb eines einzelnen Frames der gekoppelten 2D-Wärmeleitungs- und Visualisierungsschleife in die logisch korrekte Ausführungsreihenfolge:</p><p>Schritt 1: [[1]]<br>Schritt 2: [[2]]<br>Schritt 3: [[3]]<br>Schritt 4: [[4]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung des Simulationszyklus:</strong></p><p>Zuerst werden alle inneren Gitterpunkte aus dem alten Zustand <code>T</code> nach <code>T_next</code> integriert, anschließend werden die Ränder von <code>T_next</code> gemäß Randbedingungen aktualisiert. Nach dem Puffer-Tausch (<code>T_next &rarr; T</code>) ist der neue Zeitschritt vollständig und wird als Falschfarbenbild in den <code>BackBuffer</code> gerendert.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T06_Q5</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <dragbox>
+      <text><![CDATA[Innere Knoten mit 5-Punkt-Stern aus T in T_next berechnen]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Randbedingungen (Dirichlet / Neumann) auf T_next anwenden]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Zustandspuffer tauschen bzw. T_next nach T kopieren]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Temperaturen T in Bgra32-Farben umrechnen und in BackBuffer schreiben]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Gitterweite dx durch Null teilen]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[UI-Thread mit Thread.Sleep(5000) blockieren]]></text>
+      <group>1</group>
+    </dragbox>
+  </question>
+
+  <!-- Question 6: Partielle Differentialgleichungen: Bedeutung der Temperaturleitfähigkeit (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>T06_Q6: Partielle Differentialgleichungen: Bedeutung der Temperaturleitfähigkeit</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In der 2D-Wärmeleitungsgleichung \(\frac{\partial T}{\partial t} = \alpha \left(\frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2}\right)\) tritt der Materialparameter \(\alpha = \frac{\lambda}{\rho \cdot c_p}\) auf. Welche physikalische Aussage über \(\alpha\) ist korrekt?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Physikalische Interpretation:</strong></p><p>Die Temperaturleitfähigkeit \(\alpha = \frac{\lambda}{\rho c_p}\) (Einheit \(\text{m}^2/\text{s}\)) setzt das Wärmeleitvermögen \(\lambda\) ins Verhältnis zur volumetrischen Wärmespeicherfähigkeit \(\rho c_p\). Je größer \(\alpha\) ist, desto rascher breiten sich Temperaturfronten aus und desto kleiner muss \(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha}\) gewählt werden.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T06_Q6</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 12{,}30\,\text{ms}\)]]></text>
+      <text><![CDATA[Ein großes alpha bewirkt einen schnellen Temperaturausgleich bei gleichzeitig kleinerer Stabilitätsgrenze dt_max.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! \(6{,}25 \cdot 10^{-6} / (5{,}08 \cdot 10^{-4})\,\text{s} \approx 12{,}30\,\text{ms}\).</p>]]></text>
+        <text><![CDATA[<p>Richtig! Hohe Wärmeleitfähigkeit lambda und geringe Wärmekapazität rho*c_p beschleunigen die Diffusion, verkleinern aber dt_max = dx^2 / (4*alpha).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 24{,}61\,\text{ms}\)]]></text>
+      <text><![CDATA[Die Größe alpha besitzt die SI-Einheit Watt pro Kelvin und hängt nur von der Bauteilmasse ab.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Die Temperaturleitfähigkeit alpha hat die Einheit m^2/s (bzw. mm^2/s) und ist eine reine Materialkonstante.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 6{,}15\,\text{ms}\)]]></text>
+      <text><![CDATA[Ein großes alpha bedeutet, dass das Material Wärme extrem schlecht leitet und perfekt isoliert.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Faktor 8 statt 4.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Da die Wärmeleitfähigkeit lambda im Zähler steht, haben gute Wärmeleiter (wie Kupfer oder Silber) ein besonders großes alpha.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 1{,}23\,\text{ms}\)]]></text>
+      <text><![CDATA[Der Parameter alpha verändert nur die stationäre Endtemperatur, nicht aber die Geschwindigkeit des Ausgleichs.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Im stationären Zustand (dT/dt = 0) kürzt sich alpha aus der Laplace-Gleichung heraus; alpha bestimmt ausschließlich die Ausgleichsgeschwindigkeit!</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 2: T06.Q2: Garbage Collection Spikes durch Allokationen in der Renderschleife -->
+  <!-- Question 7: C#-Bug-Diagnose: Array-Grenzüberschreitung am Plattenrand (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T06_Q2_Code_GC_Spikes_Allokation</text>
+      <text>T06_Q7: C#-Bug-Diagnose: Array-Grenzüberschreitung am Plattenrand</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Eine 60-FPS-Simulationsschleife aktualisiert die Bildschirmanzeige:</p>
-<pre><code class="language-csharp">private void Timer_Tick(object sender, EventArgs e)
-{
-    // Simulationsschritt durchführen:
-    StepSimulation();
-
-    // Anzeige aktualisieren:
-    int stride = width * 4;
-    byte[] pixelBuffer = new byte[stride * height]; // Im 60-Hz-Tick neu angelegt!
-    FillPixels(pixelBuffer);
-    bitmap.WritePixels(new Int32Rect(0, 0, width, height), pixelBuffer, stride, 0);
-}</code></pre>
-<p>Welches schwerwiegende Performanceproblem tritt nach einigen Sekunden Betrieb auf?</p>]]></text>
+      <text><![CDATA[<p>Ein Student programmiert die räumliche Schleife für den 5-Punkt-Stern auf einem 2D-Array <code>double[,] T = new double[nx, ny]</code> wie folgt:</p><pre><code class="language-csharp">for (int y = 0; y < ny; y++)
+    for (int x = 0; x < nx; x++)
+        T_next[x, y] = T[x, y] + s * (T[x-1, y] + T[x+1, y] + T[x, y-1] + T[x, y+1] - 4 * T[x, y]);</code></pre><p>Welcher Laufzeitfehler tritt beim Start dieser Methode sofort im ersten Schleifendurchlauf (<code>x = 0, y = 0</code>) auf?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Wird bei jedem Frame (60-mal pro Sekunde) ein großes Byte-Array allokiert (z. B. \(1920 \times 1080 \times 4 \approx 8{,}3\,\text{MB}\)), erzeugt dies hunderte Megabyte Müll pro Sekunde auf dem Large Object Heap (LOH). Der .NET Garbage Collector muss regelmäßig anhalten (Stop-the-World GC-Pausen), was zu massiven Framerate-Einbrüchen und Rucklern führt. Lösung: Array einmalig vorallokieren.</p>]]></text>
+      <text><![CDATA[<p><strong>Fehleranalyse (Innere Knoten vs. Randknoten):</strong></p><p>Da der 5-Punkt-Stern auf <code>x - 1</code>, <code>x + 1</code>, <code>y - 1</code> und <code>y + 1</code> zugreift, darf er ausschließlich auf den <strong>inneren Gitterknoten</strong> (<code>x = 1 ... nx - 2</code> und <code>y = 1 ... ny - 2</code>) ausgeführt werden. Die Randknoten bei <code>0</code> und <code>nx - 1</code> bzw. <code>ny - 1</code> werden separat über die Randbedingungen gesetzt.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T06_Q2_Code_GC_Spikes_Allokation</idnumber>
+    <idnumber>T06_Q7</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Der Garbage Collector muss ständig riesige Speichermengen auf dem Heap freiräumen; dies führt zu regelmäßigen 'Stop-the-World'-GC-Pausen und spürbaren Rucklern in der Visualisierung.]]></text>
+      <text><![CDATA[Der Zugriff auf T[x-1, y] versucht den negativen Index -1 zu lesen und wirft eine IndexOutOfRangeException.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Null-Allokations-Politik in zeitkritischen Schleifen ist Pflicht.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Für x = 0 ist x - 1 = -1 (und am oberen Ende für x = nx - 1 ist x + 1 = nx); die Innenschleife darf nur von 1 bis nx - 2 laufen.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Das Betriebssystem schließt das Programm sofort mit einem OutOfMemory-Crash nach genau 10 Frames.]]></text>
+      <text><![CDATA[C# interpretiert den Index -1 automatisch als periodische Randbedingung und liest den rechten Rand nx - 1.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Der GC räumt den Speicher zwar frei, bremst die Anwendung dabei jedoch massiv aus.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Anders als Python unterstützt die reguläre Array-Indizierung in C# keine negativen Wrap-Around-Indizes, sondern prüft streng auf >= 0.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Der DispatcherTimer verliert seine Zeitbasis und zählt rückwärts.]]></text>
+      <text><![CDATA[Das zweidimensionale Array T_next wird durch die Schleife automatisch um zwei Zeilen und Spalten vergrößert.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die Zeitbasis wird nicht invertiert.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Arrays haben in C# eine feste Größe; ein Schreib- oder Lesezugriff außerhalb von 0..Length-1 führt sofort zu einer Exception.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[<code>WritePixels</code> akzeptiert keine Arrays, die im selben Frame instanziiert wurden.]]></text>
+      <text><![CDATA[Der Compiler verweigert die Übersetzung, weil die Schleifenvariablen x und y nicht vom Typ double sind.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. WritePixels akzeptiert das Array, leidet aber unter dem Allokationsoverhead.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Array-Indizes müssen in C# ganzzahlig (z. B. int) sein; double-Indizes wären gar nicht kompilierbar.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 3: T06.Q3: Die Robin-Randbedingung (Konvektiver Wärmeübergang) -->
+  <!-- Question 8: Digital-Twin-Reifegrade: Unterscheidung nach Kritzinger et al. (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T06_Q3_Physik_Robin_Randbedingung</text>
+      <text>T06_Q8: Digital-Twin-Reifegrade: Unterscheidung nach Kritzinger et al.</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>An den Kühlrippen eines Kühlkörpers wird der Wärmeübergang an die umgebende Luft über eine <strong>Robin-Randbedingung (Randbedingung 3. Art)</strong> modelliert:</p>
-<p>$$-\lambda \frac{\partial T}{\partial n} = h \left( T_{\text{Rand}} - T_{\infty} \right)$$</p>
-<p>Welche Grenzwertbetrachtung bezüglich des Wärmeübergangskoeffizienten \(h\) ist <strong>physikalisch korrekt</strong>?</p>]]></text>
+      <text><![CDATA[<p>Welche der folgenden Aussagen zur Klassifikation von <em>Digital Model</em>, <em>Digital Shadow</em> und <em>Digital Twin</em> nach Kritzinger et al. sind <strong>korrekt</strong>? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Geht \(h \to 0\), verschwindet der Wärmestrom \(q = 0 \implies \frac{\partial T}{\partial n} = 0\); dies entspricht einer perfekten thermischen Isolation (homogene Neumann-Bedingung). Geht \(h \to \infty\), wird der Widerstand an der Oberfläche null und die Randtemperatur gleicht sich instantan der Umgebungstemperatur an (\(T_{\text{Rand}} = T_{\infty}\), Dirichlet-Bedingung).</p>]]></text>
+      <text><![CDATA[<p><strong>Zusammenfassung (Kritzinger-Reifegrade):</strong></p><p>Kritzinger et al. (2018) unterscheiden strikt nach dem Grad der Datenintegration: 1. <strong>Digital Model</strong> (beide Richtungen manuell), 2. <strong>Digital Shadow</strong> (Physisch &rarr; Digital automatisch, Rückweg manuell), 3. <strong>Digital Twin</strong> (beide Richtungen vollautomatisch gekoppelt).</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T06_Q3_Physik_Robin_Randbedingung</idnumber>
-    <single>true</single>
+    <idnumber>T06_Q8</idnumber>
+    <single>false</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Für \(h \to 0\) geht die Robin-Bedingung in eine adiabate Isolation (Neumann) über; für \(h \to \infty\) geht sie in eine feste Umgebungstemperatur (Dirichlet) über.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Beim Digital Shadow fließen Sensordaten automatisch in das Modell, aber es gibt keinen automatischen Rückeingriff.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Die Robin-Bedingung verbindet Neumann und Dirichlet über den konvektiven Übergang.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Ein Digital Shadow spiegelt den Zustand der realen Anlage in Echtzeit wider (One-Way-Automatisierung), steuert sie aber nicht selbsttätig.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Für \(h \to \infty\) wird die Platte vollkommen isoliert, da unendlich viel Wärme abgestoßen wird.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Erst beim Digital Twin existiert ein vollautomatischer Datenfluss in beide Richtungen zwischen Realität und Modell.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Bei h -> unendlich gleicht sich die Randtemperatur sofort der Umgebung an.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Der Digital Twin schließt den Regelkreis: Sensordaten aktualisieren das Modell, und das Modell greift automatisch auf die reale Anlage zurück.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Der Wärmeübergangskoeffizient \(h\) hat dieselbe Dimension wie die Temperaturleitfähigkeit \(\alpha\).]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Ein reines Offline-Simulationsmodell ohne Live-Anbindung wird bei Kritzinger bereits als Digital Twin bezeichnet.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. h hat die Einheit W/(m² K), alpha die Einheit m²/s.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Ein Modell mit rein manuellem Datenaustausch ist nach Kritzinger lediglich ein Digital Model, noch kein Digital Twin.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Die Robin-Bedingung kann nur bei statischen Problemen verwendet werden, bei dynamischen FDM-Gittern ist sie mathematisch verboten.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Der Unterschied zwischen Digital Shadow und Digital Twin liegt ausschließlich in der Auflösung des Monitors.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Robin-Bedingungen sind der Standard bei dynamischen Kühlkörper-Simulationen.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 4: T06.Q4: Modell-Taxonomie: Kontinuierliche vs. Diskrete Systeme -->
-  <question type="multichoice">
-    <name>
-      <text>T06_Q4_Taxonomie_Kontinuierlich_Diskret</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>In Kapitel 01 wird die Taxonomie technischer Modelle besprochen. Was ist das wesentliche Unterscheidungsmerkmal zwischen <strong>kontinuierlichen</strong> und <strong>diskreten</strong> dynamischen Modellen hinsichtlich ihrer Zustandsvariablen?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>Kontinuierliche dynamische Modelle besitzen Zustände, die sich stetig über der Zeit verändern (beschrieben durch Differentialgleichungen wie Temperatur, Druck, Geschwindigkeit). Diskrete Modelle ändern ihren Zustand sprunghaft zu isolierten Ereigniszeitpunkten (beschrieben durch Zähler, Warteschlangen, Zustandsautomaten).</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T06_Q4_Taxonomie_Kontinuierlich_Diskret</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[In kontinuierlichen Modellen ändern sich Zustände stetig im Zeitverlauf (DGLn); in diskreten Modellen ändert sich der Zustand sprunghaft zu diskreten Ereigniszeitpunkten (DES / Automaten).]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! Dies bildet die fundamentale Trennlinie in der Modelltheorie.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Kontinuierliche Modelle können nur auf Analogrechnern ausgeführt werden, diskrete Modelle nur auf PCs.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Beide Modellklassen werden auf Digitalrechnern simuliert (kontinuierliche via Zeitschrittintegration).</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Diskrete Modelle berücksichtigen keine Zeit, sondern nur Kosten und Gewichte.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Ereignisdiskrete Simulationen (DES) besitzen eine explizite Simulationszeitachse.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Kontinuierliche Modelle haben keine physikalischen Einheiten.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Sie basieren direkt auf physikalischen SI-Größen.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 5: T06.Q5: Performance-Optimierung durch Farbtabellen (Lookup Tables, LUT) -->
-  <question type="multichoice">
-    <name>
-      <text>T06_Q5_LUT_Falschfarben_Performance</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Zur Visualisierung einer 2D-Temperaturverteilung (Werte von 0 bis 255) erzeugt ein Algorithmus eine Falschfarben-Heatmap (Blau \(\to\) Grün \(\to\) Rot). Warum verwendet man hierfür in performantem C# eine vorab berechnete <strong>Lookup Table (LUT)</strong> mit 256 <code>uint</code>-Einträgen, anstatt die Farbwerte pro Pixel und Frame über mathematische Formeln zu berechnen?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>Bei einem Bild mit \(800 \times 600 = 480.000\) Pixeln und 60 FPS müssten pro Sekunde fast 30 Millionen Farbinterpolationstransformationen gerechnet werden. Mit einer vorab berechneten LUT (256 Einträge im schnellen CPU-L1-Cache) reduziert sich die Farbzuordnung auf einen einzigen O(1) Array-Zugriff <code>lut[heatByte]</code>.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T06_Q5_LUT_Falschfarben_Performance</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Die LUT reduziert die Farbzuordnung pro Pixel auf einen O(1)-Speicherzugriff im CPU-Cache und eliminiert Millionen rechenintensiver Verzweigungen und mathematischer Interpolationen pro Sekunde.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Exakt! Lookup Tables sind ein Eckpfeiler hardwarenaher Echtzeitgrafik.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Weil C# keine mathematischen Funktionen wie Sinus oder lineare Interpolation in Schleifen unterstützt.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. C# unterstützt diese mathematischen Funktionen problemlos, sie kosten jedoch Rechenzeit.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Weil WPF keine Bilder anzeigen kann, wenn die Pixel nicht vorab in einer Tabelle registriert wurden.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. WPF interessiert sich nur für den fertigen Pufferinhalt.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Eine LUT wird zwingend benötigt, um den Garbage Collector daran zu hindern, Pixeldaten zu löschen.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das hat keinen Bezug zum GC.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Das Unterscheidungskriterium bei Kritzinger et al. ist ausschließlich der Automatisierungsgrad des bidirektionalen Datenflusses.</p>]]></text>
       </feedback>
     </answer>
   </question>

@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_02_Termin_05/Test_01_Vorbereitung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Quiz 02 - Test 01 (Vorbereitungstest): 2D-Vektorgrafik, Transformationen & Echtzeit-Diagramme</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: Affine 2D-Transformation: Uniform Scaling und Y-Inversion (WorldToScreen) (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
+    <name>
+      <text>Q02_T01_Q1: Affine 2D-Transformation: Uniform Scaling und Y-Inversion (WorldToScreen)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein ebenes Brückenfachwerk besitzt die physikalische Ausdehnung \(\Delta X = 40\,\text{m}\) (von \(x_{\min}=0\,\text{m}\) bis \(x_{\max}=40\,\text{m}\)) und \(\Delta Y = 10\,\text{m}\) (von \(y_{\min}=0\,\text{m}\) bis \(y_{\max}=10\,\text{m}\)). Es soll verzerrungsfrei (Uniform Scaling) auf einem WPF-Canvas mit einer nutzbaren Zeichenfläche (nach Randabzug) von \(W_{\text{eff}} = 800\,\text{px}\) Breite und \(H_{\text{eff}} = 300\,\text{px}\) Höhe dargestellt werden. Die Gesamthöhe des Canvas beträgt \(H_{\text{canvas}} = 360\,\text{px}\), und das Bauteil wird vertikal mit einem unteren Randabstand (Offset) von \(\text{offset}_Y = 80\,\text{px}\) vom unteren Bildschirmrand zentriert.</p>
+<p><strong>a)</strong> Berechnen Sie den verzerrungsfreien Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=20:0.1#Exakt! s = min(800/40, 300/10) = min(20, 30) = 20 px/m.~%50%30:0.1#Teilpunkte: Sie haben max(sx, sy) = 30 px/m statt min(sx, sy) gewählt (Bauteil ragt horizontal aus dem Canvas!).}</p>
+<p><strong>b)</strong> Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{screen}}\) (in \(\text{px}\)) für einen Oberkanten-Knoten bei \(y = 7{,}0\,\text{m}\) unter Berücksichtigung der WPF-Y-Achsen-Inversion: {1:NUMERICAL:=140:0.5#Richtig! Y_screen = 360 - (80 + 7.0 * 20) = 360 - 220 = 140 px.~%50%220:0.5#Teilpunkte: 220 px ist der Abstand vom unteren Rand ohne Y-Inversion (360 - 220 = 140 px).}</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<ol>
+  <li><strong>Horizontaler und vertikaler Skalierungsfaktor:</strong> \(s_x = \frac{800\,\text{px}}{40\,\text{m}} = 20\,\text{px/m}\), \(s_y = \frac{300\,\text{px}}{10\,\text{m}} = 30\,\text{px/m}\).</li>
+  <li><strong>Uniform Scaling (Verzerrungsfreiheit):</strong> \(s = \min(s_x, s_y) = \min(20, 30) = 20\,\text{px/m}\).</li>
+  <li><strong>Y-Transformation mit Achseninversion:</strong> Da die WPF-Y-Achse nach unten zeigt, gilt \(Y_{\text{screen}} = H_{\text{canvas}} - (\text{offset}_Y + (y - y_{\min}) \cdot s) = 360 - (80 + 7{,}0 \cdot 20) = 360 - 220 = 140\,\text{px}\).</li>
+</ol>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T01_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Welford-Online-Algorithmus: Laufende Mittelwert-Aktualisierung (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T01_Q2: Welford-Online-Algorithmus: Laufende Mittelwert-Aktualisierung</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Prüfstand überwacht die Lagertemperatur fortlaufend mittels des numerisch stabilen Welford-Online-Algorithmus. Nach \(k-1 = 4\) Messwerten beträgt der laufende Mittelwert \(\mu_4 = 50{,}0\,^\circ\text{C}\). Nun trifft als \(k = 5\)-ter Messwert \(x_5 = 60{,}0\,^\circ\text{C}\) ein.</p>
+<p>Berechnen Sie den neuen laufenden Mittelwert \(\mu_5\) (in \(^\circ\text{C}\)) unmittelbar nach Verarbeitung des fünften Messwerts.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (Welford-Schritt für \(k=5\)):</strong></p>
+<p>Abweichung vom bisherigen Mittelwert: \(\Delta_1 = x_5 - \mu_4 = 60{,}0 - 50{,}0 = 10{,}0\,^\circ\text{C}\).<br>
+Aktualisierter Mittelwert: \(\mu_5 = \mu_4 + \frac{\Delta_1}{k} = 50{,}0 + \frac{10{,}0}{5} = 52{,}0\,^\circ\text{C}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T01_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>52</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Delta_1 = 60 - 50 = 10 °C; mu_5 = 50 + 10 / 5 = 52.0 °C.</p>]]></text>
+      </feedback>
+      <tolerance>0.05</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>52.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben durch k-1 = 4 statt durch die neue Stichprobengröße k = 5 geteilt (50 + 10/4 = 52.5).</p>]]></text>
+      </feedback>
+      <tolerance>0.05</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Allokationsfreier Ringpuffer (Modulo-Arithmetik) (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T01_Q3: C#-Code-Tracing: Allokationsfreier Ringpuffer (Modulo-Arithmetik)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Gegeben sei folgender Ausschnitt eines allokationsfreien Ringpuffers für Echtzeit-Sensordaten:</p>
+<pre><code class="language-csharp">int capacity = 10;
+int head = 7;     // Index des ältesten Elements
+int logicalIndex = 5; // 0-basierter logischer Index (5 = sechstes Element)
+int physicalIndex = (head + logicalIndex) % capacity;</code></pre>
+<p>Welchen numerischen Wert besitzt <code>physicalIndex</code> nach der Ausführung?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<p>Der Ringpuffer bildet den logischen Index über Modulo-Arithmetik auf das interne Array ab: \((7 + 5) \bmod 10 = 12 \bmod 10 = 2\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T01_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>2</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! (7 + 5) % 10 = 12 % 10 = 2 (Wrap-Around am Array-Ende).</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>3</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Off-by-One-Fehler (1-basierte statt 0-basierte Zählung beim Wrap-Around).</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Code-Lückentext: Gedrehte Pfeilspitze im Screen Space konstruieren (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>Q02_T01_Q4: C#-Code-Lückentext: Gedrehte Pfeilspitze im Screen Space konstruieren</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zur Berechnung des linken Flügelpunkts <code>leftWing</code> einer Kraftpfeilspitze mit konstanter Pixellänge <code>arrowLen = 12.0</code> und halber Pfeilbreite <code>arrowWidth = 5.0</code> an der Pfeilspitze <code>tip</code> (Einheitsrichtungsvektor <code>(ux, uy)</code> im Screen Space):</p>
+<pre><code class="language-csharp">double nx = [[1]]; // Normalenvektor X-Komponente (90 Grad gedreht)
+double ny = [[2]]; // Normalenvektor Y-Komponente
+Point leftWing = new Point(
+    tip.X - [[3]] * arrowLen + nx * arrowWidth,
+    tip.Y - uy * arrowLen + ny * arrowWidth);</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong> Der zum Richtungsvektor \((u_x, u_y)\) senkrechte 2D-Einheitsnormalenvektor lautet \((n_x, n_y) = (-u_y, u_x)\). Vom Spitzenpunkt <code>tip</code> geht man um <code>arrowLen</code> entgegen der Pfeilrichtung \((-u_x, -u_y)\) zurück und um <code>arrowWidth</code> entlang der Normalen \((n_x, n_y)\) nach außen.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T01_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[-uy]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[ux]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[ux]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[uy]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[-ux]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[-uy]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[1.0 / ux]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[ny]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[tip.X]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Konzept-Zuordnung: ScottPlot-5-Plottable-Typen für Ingenieursdaten (matching, 1.0000000 Pkt.) -->
+  <question type="matching">
+    <name>
+      <text>Q02_T01_Q5: Konzept-Zuordnung: ScottPlot-5-Plottable-Typen für Ingenieursdaten</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ordnen Sie den vier Visualisierungsaufgaben in <strong>ScottPlot 5</strong> jeweils den architektonisch optimalen Plottable-Typ zu (beachten Sie die zwei Überhang-Distraktoren).</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Lösung:</strong> <code>Signal</code> ist auf äquidistante Daten optimiert, <code>Scatter</code> benötigt explizite X/Y-Paare, <code>DataStreamer</code> verwaltet Echtzeit-Ringpuffer und <code>Boxes</code> zeichnet Box-Whisker-Plots.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T01_Q5</idnumber>
+    <shuffleanswers>true</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <subquestion format="html">
+      <text><![CDATA[Statisches Zeitreihen-Signal mit 1 Million äquidistant abgetasteten Messpunkten (konstantes dt)]]></text>
+      <answer>
+        <text><![CDATA[Add.Signal() – nutzt festes X-Intervall für schnelles Min/Max-Downsampling ohne X-Array]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Phasenraum-Trajektorie (x über v) mit unregelmäßigen Abständen und Schleifenbildung]]></text>
+      <answer>
+        <text><![CDATA[Add.Scatter() – speichert explizite (X, Y)-Koordinatenpaare für beliebige Kurvenverläufe]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Kontinuierlich einlaufendes Live-Sensorsignal in einem Oszilloskop-Fenster fester Breite]]></text>
+      <answer>
+        <text><![CDATA[Add.DataStreamer() – überschreibt Daten in einem Ringpuffer fester Größe (Wipe- oder Scroll-Modus)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Statistische Verteilung mehrerer Versuchsreihen mit Median, Interquartilsabstand (IQR) und Whiskers]]></text>
+      <answer>
+        <text><![CDATA[Add.Boxes() – stellt 5-Punkte-Zusammenfassungen (Q1, Median, Q3, Antennen) dar]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Add.Pie() – erzeugt Kreissektoren für prozentuale Anteile ohne Zeitbezug]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Add.Heatmap() – rendert 2D-Skalarfelder als farbcodierte Pixelmatrix]]></text>
+      </answer>
+    </subquestion>
+  </question>
+
+  <!-- Question 6: DIN-406-Bemaßung: Warum Pfeilspitzen im Screen Space berechnet werden (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T01_Q6: DIN-406-Bemaßung: Warum Pfeilspitzen im Screen Space berechnet werden</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Warum werden bei einer technischen CAD-/FEM-Zeichnung nach DIN 406 (Maßpfeile, Maßhilfslinien-Überstände und Maßzahlen) die Pfeilspitzen und Schriftgrößen erst <strong>nach</strong> der Transformation im <strong>Screen Space (Pixelkoordinaten)</strong> konstruiert und nicht im World Space (Meter)?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Begründung:</strong> Technische Annotationen (Pfeilspitzen, Strichstärken, Textgrößen) sind wahrnehmungsgebundene Größen. Würde man einen Pfeil mit \(0{,}2\,\text{m}\) im World Space definieren, wäre er beim Herauszoomen unsichtbar klein und beim Hineinzoomen bildschirmfüllend.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T01_Q6</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Weil Pfeile und Texte sonst beim Zoomen oder bei stark unterschiedlichen Bauteilabmessungen entweder unleserlich winzig oder riesig skaliert würden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Im Screen Space bleiben eine Pfeillänge von 10 px und eine Schriftgröße von 12 pt unabhängig vom Zoomfaktor exakt normgerecht lesbar.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil die WPF-Klasse Canvas geometrische Linien und Polygone grundsätzlich nur mit ganzzahligen Pixelkoordinaten ohne Nachkommastellen rendern kann.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. WPF arbeitet intern komplett mit Gleitkommazahlen (double) in geräteunabhängigen Einheiten (DIP).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil trigonometrische Funktionen wie Math.Atan2 und Math.Sqrt in C# nur für positive Bildschirmkoordinaten im ersten Quadranten definiert sind.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Math.Atan2(dy, dx) ist auf dem gesamten Wertebereich (-pi bis +pi) für alle vier Quadranten definiert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil eine Skalierung im World Space die Richtung der Stabnormalen invertieren und sämtliche Maßlinien auf die falsche Bauteilseite spiegeln würde.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Eine uniforme Skalierung ändert keine Winkel; erst die Y-Inversion kehrt den Umlaufsinn um, was aber kein Grund gegen World-Space-Längen ist.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 7: C#-Bug-Diagnose: Bounding-Box-Jitter beim interaktiven Knoten-Dragging (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T01_Q7: C#-Bug-Diagnose: Bounding-Box-Jitter beim interaktiven Knoten-Dragging</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Studierender implementiert das Verschieben eines Randknotens per Maus (<code>MouseMove</code>) auf dem WPF-Canvas. Sobald er den äußersten rechten Knoten zieht, zittert und springt das gesamte Fachwerk heftig hin und her:</p>
+<pre><code class="language-csharp">void OnCanvasMouseMove(object sender, MouseEventArgs e) {
+    if (_draggedNode == null) return;
+    var transform = ComputeAutoFitTransform(_truss.GetBoundingBox());
+    _draggedNode.Position = transform.ScreenToWorld(e.GetPosition(MainCanvas));
+    RedrawTruss(transform);
+}</code></pre>
+<p>Was ist die exakte mathematisch-architektonische Ursache dieses Jitter-Bugs?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Lösung:</strong> Während einer laufenden Drag-Operation muss die zu Beginn (in <code>MouseDown</code>) gültige <code>Transform2D</code> eingefroren (gecacht) bleiben, bis die Maustaste in <code>MouseUp</code> wieder losgelassen wird.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T01_Q7</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Die Bounding-Box und Skalierung werden in jedem MouseMove-Event neu berechnet, sodass sich das Koordinatensystem während des Ziehens rückgekoppelt selbst verschiebt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Wenn der Randknoten verschoben wird, ändert sich sofort die BoundingBox und damit die Transformation für das nächste MouseMove-Event (Rückkopplungsschleife).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Methode e.GetPosition(MainCanvas) liefert Koordinaten relativ zum gesamten Computermonitor statt relativ zur linken oberen Ecke des WPF-Canvas-Elements.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. GetPosition(MainCanvas) liefert bereits exakt die lokalen Koordinaten relativ zum übergebenen UIElement MainCanvas.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Das Neuzeichnen in OnCanvasMouseMove blockiert den Garbage Collector, wodurch ältere Maus-Events in zufälliger Reihenfolge aus der Windows-Queue gelesen werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die Windows-Message-Queue ist streng FIFO-geordnet; das Springen entsteht rein mathematisch durch den wechselnden Maßstab.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[In WPF darf die Position eines Datenmodell-Objekts niemals innerhalb eines UI-Event-Handlers geändert werden, da dies einen Thread-Deadlock auslöst.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. MouseMove läuft bereits auf dem UI-Thread; das Ändern einer Modelleigenschaft verursacht dort keinen Deadlock.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 8: Systemanalyse: MSAGL-Graphenlayout (Sugiyama vs. Force-Directed) (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T01_Q8: Systemanalyse: MSAGL-Graphenlayout (Sugiyama vs. Force-Directed)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Welche <strong>zwei</strong> Aussagen charakterisieren die Layout-Algorithmen in <strong>Microsoft Automatic Graph Layout (MSAGL)</strong> und deren Integration in WPF zutreffend?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong> MSAGL trennt Layout-Mathematik (Sugiyama für hierarchische DAGs, MDS/FastIncremental für ungerichtete Netzwerke) strikt vom Rendering auf dem WPF-Canvas.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T01_Q8</idnumber>
+    <single>false</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Das Sugiyama-Schichtenlayout eignet sich ideal für gerichtete Ursache-Wirkungs-Ketten und ordnet Knoten in hierarchischen Ebenen mit minimalen Kantenkreuzungen an.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Sugiyama (Layered Layout) ist der Standard für gerichtete Graphen (DAGs), Ablaufpläne und Signalflussgraphen.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="50" format="html">
+      <text><![CDATA[MSAGL berechnet als reine Geometrie-Engine ausschließlich Knoten- und Kantenkoordinaten im Speicher und überlässt das Zeichnen der UI-Schicht (z. B. WPF Canvas).]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Durch die Nutzung von Microsoft.Msagl (Core) bleibt die Layoutberechnung sauber vom WPF-Rendering entkoppelt.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Das Sugiyama-Layout platziert alle Knoten ausschließlich durch elektrostatische Abstoßung und Federkräfte auf konzentrischen Kreisen ohne Hierarchierichtung.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Das beschreibt Kräfte-/Feder-Layouts (Force-Directed / MDS), nicht den hierarchischen Sugiyama-Algorithmus.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[MSAGL erfordert zwingend eine aktive OpenGL-3D-Grafikkartenbeschleunigung, da die Knotenpositionen über einen Pixel-Shader auf der GPU gelöst werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. MSAGL arbeitet rein CPU-basiert auf mathematischen Graphenstrukturen und benötigt keinerlei GPU-Shader.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

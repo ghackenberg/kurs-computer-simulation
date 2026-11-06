@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_02_Termin_05/Test_07_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Quiz 02 - Test 07 (Prüfungstest): Negative Weltkoordinaten, Pfeilflügel & GC-Allokationsfallen</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: Affine 2D-Transformation: Ursprungsverschiebung bei negativen Weltkoordinaten (x_min &lt; 0) (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
+    <name>
+      <text>Q02_T07_Q1: Affine 2D-Transformation: Ursprungsverschiebung bei negativen Weltkoordinaten (x_min &lt; 0)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein symmetrisches Roboter-Arbeitsfeld erstreckt sich in X-Richtung von \(x_{\min} = -4{,}0\,\text{m}\) bis \(x_{\max} = +6{,}0\,\text{m}\) und in Y-Richtung von \(y_{\min} = -2{,}0\,\text{m}\) bis \(y_{\max} = +3{,}0\,\text{m}\). Es wird verzerrungsfrei auf eine nutzbare Canvas-Fläche von \(W_{\text{eff}} = 500\,\text{px}\) mal \(H_{\text{eff}} = 300\,\text{px}\) abgebildet; der linke Offset beträgt \(\text{offset}_X = 50\,\text{px}\).</p>
+<p><strong>a)</strong> Berechnen Sie den verzerrungsfreien Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=50:0.1#Exakt! Delta_X = 6 - (-4) = 10 m, Delta_Y = 3 - (-2) = 5 m; s = min(500/10, 300/5) = min(50, 60) = 50 px/m.~%50%60:0.1#Teilpunkte: Sie haben sy = 300/5 = 60 px/m statt min(50, 60) = 50 px/m gewählt.}</p>
+<p><strong>b)</strong> Berechnen Sie die horizontale Bildschirmkoordinate \(X_{\text{screen}}\) (in \(\text{px}\)) des Koordinatenursprungs \(x = 0{,}0\,\text{m}\): {1:NUMERICAL:=250:0.5#Richtig! X_screen = offset_X + (0.0 - (-4.0)) * 50 = 50 + 4.0 * 50 = 250 px.~%50%50:0.5#Teilpunkte: Sie haben (x - x_min) vergessen und nur offset_X + 0 * 50 = 50 px gerechnet (50 px liegt aber bei x_min = -4.0 m!).}</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<ol>
+  <li><strong>Spannweiten:</strong> \(\Delta X = 6{,}0 - (-4{,}0) = 10{,}0\,\text{m}\), \(\Delta Y = 3{,}0 - (-2{,}0) = 5{,}0\,\text{m}\).</li>
+  <li><strong>Uniform Scaling:</strong> \(s = \min(500/10, 300/5) = \min(50, 60) = 50\,\text{px/m}\).</li>
+  <li><strong>Screen-Position für \(x = 0\):</strong> Wichtig ist die Subtraktion von \(x_{\min}\): \(X_{\text{screen}} = \text{offset}_X + (x - x_{\min}) \cdot s = 50 + (0 - (-4{,}0)) \cdot 50 = 50 + 200 = 250\,\text{px}\).</li>
+</ol>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T07_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Pfeilspitzen-Geometrie im Screen Space: Flügelpunkt-Koordinate berechnen (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T07_Q2: Pfeilspitzen-Geometrie im Screen Space: Flügelpunkt-Koordinate berechnen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein vertikaler Kraftpfeil zeigt auf dem WPF-Canvas exakt senkrecht nach unten (Einheitsrichtungsvektor im Screen Space \(u_x = 0{,}0\), \(u_y = +1{,}0\); Normalenvektor \(n_x = -u_y = -1{,}0\), \(n_y = u_x = 0{,}0\)). Die Pfeilspitze liegt am Bildschirm-Punkt \(\text{tip} = (200\,\text{px}, 300\,\text{px})\). Die Pfeilspitzenlänge beträgt \(L_{\text{arrow}} = 14\,\text{px}\) und die halbe Pfeilbreite \(W_{\text{arrow}} = 6\,\text{px}\).</p>
+<p>Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{wing}}\) (in \(\text{px}\)) der beiden hinteren Pfeilflügel-Eckpunkte.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong> Für die Flügeleckpunkte gilt \(\vec{P}_{\text{wing}} = \vec{P}_{\text{tip}} - L_{\text{arrow}} \cdot \vec{u} \pm W_{\text{arrow}} \cdot \vec{n}\). Für die Y-Komponente folgt \(Y_{\text{wing}} = 300 - 14 \cdot 1{,}0 \pm 6 \cdot 0{,}0 = 286\,\text{px}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T07_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>286</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Y_wing = tip.Y - uy * L_arrow + ny * W_arrow = 300 - 1.0 * 14 + 0 * 6 = 286.0 px.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>314</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Vorzeichenfehler! Sie haben + uy * L_arrow (300 + 14 = 314) gerechnet, die Flügel liegen aber entgegen der Pfeilrichtung hinter der Spitze.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>194</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: 194 px (200 - 6) ist die X-Koordinate des linken Flügels, gefragt war aber die Y-Koordinate (286 px).</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Welford-Varianz nach drei konkreten Messwerten (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T07_Q3: C#-Code-Tracing: Welford-Varianz nach drei konkreten Messwerten</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Verfolgen Sie die Ausführung des Welford-Algorithmus für die drei Messwerte <code>x = { 10.0, 20.0, 30.0 }</code>:</p>
+<pre><code class="language-csharp">double mean = 0.0, m2 = 0.0;
+int count = 0;
+foreach (double x in new[] { 10.0, 20.0, 30.0 }) {
+    count++;
+    double d1 = x - mean;
+    mean += d1 / count;
+    double d2 = x - mean;
+    m2 += d1 * d2;
+}</code></pre>
+<p>Welchen numerischen Wert hat die Variable <code>m2</code> nach Abschluss der Schleife?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Schritt-für-Schritt-Tracing:</strong></p>
+<ul>
+  <li><code>x = 10</code>: <code>count = 1</code>, <code>d1 = 10</code>, <code>mean = 10</code>, <code>d2 = 0</code>, <code>m2 = 0</code>.</li>
+  <li><code>x = 20</code>: <code>count = 2</code>, <code>d1 = 10</code>, <code>mean = 15</code>, <code>d2 = 5</code>, <code>m2 = 0 + 10 * 5 = 50</code>.</li>
+  <li><code>x = 30</code>: <code>count = 3</code>, <code>d1 = 15</code>, <code>mean = 20</code>, <code>d2 = 10</code>, <code>m2 = 50 + 15 * 10 = 200</code>.</li>
+</ul>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T07_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>200</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Schritt 1: mean=10, m2=0; Schritt 2: d1=10, mean=15, d2=5, m2=50; Schritt 3: d1=15, mean=20, d2=10, m2=50+150=200.0.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>100</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: 100.0 ist bereits die durch (count - 1) = 2 geteilte Stichprobenvarianz s^2, gefragt war aber die ungeteilte Summe m2 = 200.0.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Code-Lückentext: Statische WPF-Pinsel mit Freeze() für High-FPS optimieren (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>Q02_T07_Q4: C#-Code-Lückentext: Statische WPF-Pinsel mit Freeze() für High-FPS optimieren</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie die statische Initialisierung eines wiederverwendbaren, thread-sicheren und maximal performanten WPF-Pinsels für Zugstäbe:</p>
+<pre><code class="language-csharp">private static readonly [[1]] TensionBrush = CreateFrozenBrush(Colors.RoyalBlue);
+
+private static SolidColorBrush CreateFrozenBrush(Color color)
+{
+    var brush = new [[2]](color);
+    if (brush.CanFreeze)
+        brush.[[3]]();
+    return brush;
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong> Ein <code>SolidColorBrush</code> erbt von <code>Freezable</code>. Durch den Aufruf von <code>brush.Freeze()</code> wird das Objekt schreibgeschützt, gibt seine internen Change-Tracking-Strukturen frei und kann ohne Performance-Verlust tausendfach wiederverwendet werden.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T07_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[SolidColorBrush]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[SolidColorBrush]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Freeze]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[WriteableBitmap]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[DoubleCollection]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[LineGeometry]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[TransformGroup]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Clear]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Clone]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Konzept-Zuordnung: Fehlerbilder in der 2D-Vektorgrafik und ihre technischen Ursachen (matching, 1.0000000 Pkt.) -->
+  <question type="matching">
+    <name>
+      <text>Q02_T07_Q5: Konzept-Zuordnung: Fehlerbilder in der 2D-Vektorgrafik und ihre technischen Ursachen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ordnen Sie den vier typischen visuellen Fehlerbildern beim Programmieren eines 2D-Viewers (Kapitel 03/04) jeweils die exakte mathematische bzw. programmiertechnische Ursache zu (beachten Sie die zwei Überhang-Distraktoren).</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Lösung:</strong> Diese vier klassischen Bugs (fehlende Y-Inversion, <code>Math.Max</code> statt <code>Math.Min</code>, anisotrope Skalierung und Live-Bounding-Box-Neuberechnung beim Dragging) sind die wichtigsten Diagnosefälle aus Kapitel 03.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T07_Q5</idnumber>
+    <shuffleanswers>true</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <subquestion format="html">
+      <text><![CDATA[Das gesamte Fachwerk steht auf dem Bildschirm spiegelverkehrt auf dem Kopf (Stützlager hängen oben an der Decke)]]></text>
+      <answer>
+        <text><![CDATA[Fehlende Y-Achsen-Inversion (offsetY + y*s statt canvasHeight - (offsetY + y*s))]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Das Bauteil füllt zwar die Höhe perfekt aus, ragt aber rechts weit über den sichtbaren Canvas-Rand hinaus]]></text>
+      <answer>
+        <text><![CDATA[Verwendung von Math.Max(sx, sy) statt Math.Min(sx, sy) beim Uniform Scaling]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Kreisförmige Gelenkknoten erscheinen als flachgedrückte Ellipsen und rechte Winkel sind schief]]></text>
+      <answer>
+        <text><![CDATA[Getrennte anisotrope Skalierung mit sx != sy ohne einheitlichen Skalierungsfaktor]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Beim Ziehen eines äußeren Knotens zuckt und skaliert das gesamte Bauteil unkontrolliert hin und her]]></text>
+      <answer>
+        <text><![CDATA[Neuberechnung der Auto-Fit-Bounding-Box in jedem MouseMove-Event während des Draggings]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Verwendung von 64-Bit-double statt 32-Bit-float für die Knoten-Koordinaten]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Aktivierung von ClearType-Kantenglättung für die Maßzahlen-Textblöcke]]></text>
+      </answer>
+    </subquestion>
+  </question>
+
+  <!-- Question 6: MSAGL-Architektur: Wahl zwischen Sugiyama-Schichtenlayout und Force-Directed Layout (MDS) (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T07_Q6: MSAGL-Architektur: Wahl zwischen Sugiyama-Schichtenlayout und Force-Directed Layout (MDS)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Für welche Art von technischem Systemmodell ist ein <strong>kräftebasiertes bzw. distanzbasiertes Layout</strong> (<code>MdsLayoutSettings</code> / <code>FastIncrementalLayoutSettings</code>) in MSAGL besser geeignet als das hierarchische Sugiyama-Layout?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Entscheidungsregel:</strong> Feste Geometrie \(\to\) direkte affine Transformation (<code>Transform2D</code>); gerichtete Hierarchie/Kausalität \(\to\) MSAGL Sugiyama; ungerichtete Topologie/Mesh \(\to\) MSAGL MDS / Force-Directed.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T07_Q6</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Für ungerichtete vermaschte Versorgungs-, Sensor- oder Kommunikationsnetze ohne eindeutige Start-Ende-Hierarchie, bei denen symmetrische Cluster gesucht sind.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! In vermaschten ungerichteten Netzen (z. B. Funk-Mesh, Wassernetz) gibt es kein „Oben nach Unten“; Kräfte-/MDS-Layouts decken Nachbarschaftscluster natürlich auf.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Für streng sequenzielle SPS-Ablaufketten (GRAFCET / Schrittketten), bei denen Schritt 1 zwingend ganz oben und der Endschritt ganz unten stehen muss.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Für streng gerichtete Ablaufketten von oben nach unten ist das hierarchische Sugiyama-Schichtenlayout ideal.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Für äquidistante 1D-Zeitreihen aus einem Temperatursensor, die mit 1000 Hz in einem Oszilloskop-Fenster über der Zeitachse aufgetragen werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Zeitreihen sind überhaupt kein Fall für MSAGL-Graphenlayout, sondern für ScottPlot Signal/DataStreamer.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Für maßstabsgetreue 2D-CAD-Bauteilzeichnungen, bei denen jeder Knoten bereits feste metrische Konstruktionskoordinaten (x, y) in Metern besitzt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Wenn ein Bauteil feste physikalische Geometrie-Koordinaten besitzt, darf kein automatisches Graphenlayout die Knotenpositionen verschieben!</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 7: C#-Bug-Diagnose: Garbage-Collection-Stottern durch Array-Neuallokation im 60-Hz-Timer (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T07_Q7: C#-Bug-Diagnose: Garbage-Collection-Stottern durch Array-Neuallokation im 60-Hz-Timer</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Entwickler möchte ein Live-Signal mit \(500.000\) Punkten in ScottPlot 5 aktualisieren und schreibt im \(60\,\text{Hz}\)-Timer folgenden Code. Alle paar Sekunden friert das Bild kurz ein (GC-Pausen):</p>
+<pre><code class="language-csharp">void OnTimerTick(object? sender, EventArgs e) {
+    double[] copy = _ringBuffer.ToArray(); // erzeugt neues double[500000]
+    MainPlot.Plot.Clear();
+    MainPlot.Plot.Add.Signal(copy);
+    MainPlot.Refresh();
+}</code></pre>
+<p>Warum belastet dieser Code den .NET Garbage Collector (insbesondere den Large Object Heap) massiv?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Lösung:</strong> In .NET wandern Objekte ab \(85.000\,\text{Bytes}\) direkt auf den <strong>Large Object Heap (LOH)</strong>. In einem 60-Hz-Renderloop darf niemals mit <code>.ToArray()</code> und <code>Plot.Clear()</code> gearbeitet werden; stattdessen nutzt man einen festen Puffer oder <code>DataStreamer</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T07_Q7</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Jeder Tick allokiert ein 4 MB großes double-Array auf dem Large Object Heap und verwirft alle Plot-Objekte, statt einen vorallokierten Puffer zu nutzen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! 500.000 * 8 Bytes = 4 MB (> 85 KB LOH-Schwelle). Bei 60 Hz werden 240 MB/s auf dem Large Object Heap allokiert, was teure Gen-2/LOH-Collections erzwingt.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Methode MainPlot.Plot.Clear() löscht bei jedem Aufruf die Lizenzdatei von ScottPlot auf der Festplatte und lädt sie aus dem Internet nach.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. ScottPlot ist Open Source (MIT) ohne Lizenzdatei oder Netzwerkzugriffe.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der Parameter object? sender im Event-Handler zwingt C# dazu, bei jedem Tick den gesamten Maschinencode des Programms neu zu kompilieren.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Nullable-Referenzannotationen (object?) sind reine Compiler-Metadaten ohne Laufzeitkosten.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Arrays mit mehr als 65.536 Elementen werden in .NET grundsätzlich in die Windows-Auslagerungsdatei auf der SSD ausgelagert.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Solange genügend physischer RAM vorhanden ist, liegen auch große Arrays im schnellen Hauptspeicher (auf dem LOH).</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 8: Systemanalyse: Koordinatensysteme in WPF, ScottPlot 5 und MSAGL (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T07_Q8: Systemanalyse: Koordinatensysteme in WPF, ScottPlot 5 und MSAGL</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Welche <strong>zwei</strong> Aussagen über den Umgang mit 2D-Koordinatensystemen in <strong>WPF Canvas</strong>, <strong>ScottPlot 5</strong> und <strong>MSAGL</strong> sind zutreffend?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong> Beim eigenen Zeichnen auf dem <code>Canvas</code> (Kap. 03) verantworten wir Skalierung und Y-Inversion selbst (<code>Transform2D</code>); in <code>ScottPlot 5</code> (Kap. 04) übergeben wir direkt die physikalischen Größen, da das Chart-Control die Achsentransformation kapselt.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T07_Q8</idnumber>
+    <single>false</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Auf einem nativen WPF-Canvas liegt der Ursprung (0,0) links oben mit nach unten wachsender Y-Achse, weshalb physikalische Höhenwerte invertiert werden müssen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Ohne Y-Inversion (canvasHeight - y) würden Kräfte und Geometrien vertikal gespiegelt dargestellt.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="50" format="html">
+      <text><![CDATA[ScottPlot 5 besitzt ein eigenes kartesisches Achsensystem mit nach oben wachsender Y-Achse, sodass Messwerte direkt ohne manuelle Y-Inversion übergeben werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! ScottPlot übernimmt die Transformation von Datenkoordinaten in Pixelkoordinaten (inkl. Y-Inversion) intern automatisch.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[WPF Canvas verwendet standardmäßig Polarkoordinaten (Radius und Winkel in Grad), sodass kartesische Punkte vor dem Zeichnen umgerechnet werden müssen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. WPF Canvas arbeitet mit kartesischen Bildschirmkoordinaten (X nach rechts, Y nach unten).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[ScottPlot 5 akzeptiert auf der Y-Achse ausschließlich normierte Werte zwischen 0.0 und 1.0 und schneidet alle größeren physikalischen Messwerte ab.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. ScottPlot verarbeitet beliebige double-Wertebereiche und skaliert die Achsen über Axes.AutoScale() automatisch.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

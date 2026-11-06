@@ -5,298 +5,412 @@
       <text>$course$/Quiz_01_Termin_03/Test_07_Pruefung</text>
     </category>
     <info format="html">
-      <text><![CDATA[<p>Test 07 (Prüfung) – Silber, Off-by-One & Energieerhaltung</p>]]></text>
+      <text><![CDATA[<p>Test 07 (Prüfung) – Grundlagen, Euler & 2D-Wärmeraster (Klausurvariante G)</p>]]></text>
     </info>
   </question>
 
-  <!-- Question 1: T07.Q1: FDM-Stabilitätsgrenze für Reinsilber -->
-  <question type="multichoice">
+  <!-- Question 1: 2D-Wärmeleitung: Rückrechnung der Temperaturleitfähigkeit &amp; Grenzschrittweite (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
     <name>
-      <text>T07_Q1_CFL_Silber</text>
+      <text>T07_Q1: 2D-Wärmeleitung: Rückrechnung der Temperaturleitfähigkeit &amp; Grenzschrittweite</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Silber besitzt die höchste thermische Leitfähigkeit aller Metalle:</p>
-<ul>
-  <li>Temperaturleitfähigkeit von Silber: \(\alpha = 1{,}74 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
-  <li>Gitterweite: \(\Delta x = \Delta y = 1{,}0\,\text{mm} = 1{,}0 \cdot 10^{-3}\,\text{m}\)</li>
-</ul>
-<p>Wie lautet die maximale Zeitschrittweite \(\Delta t_{\max}\) für ein stabiles 2D-FDM-Verfahren?</p>]]></text>
+      <text><![CDATA[<p>In einer 2D-Wärmeleitungssimulation mit der Maschenweite \(\Delta x = \Delta y = 3{,}0\,\text{mm}\) und der eingestellten Zeitschrittweite \(\Delta t = 0{,}05\,\text{s}\) beträgt die dimensionslose Stabilitätszahl aktuell exakt \(s = 0{,}20\).</p><p>a) Wie groß ist die im Modell hinterlegte Temperaturleitfähigkeit \(\alpha\) des Materials in <strong>\(\text{mm}^2/\text{s}\)</strong>?<br>Antwort: {1:NUMERICAL:=36.0:0.1#Richtig! Aus s = alpha * dt / dx^2 folgt alpha = s * dx^2 / dt = 0,20 * 9,0 / 0,05 = 1,8 / 0,05 = 36,0 mm^2/s.~%50%12.0:0.1#Teilpunkte (50 %): Sie haben mit dx = 3 statt mit dx^2 = 9 gerechnet (0,20 * 3 / 0,05 = 12).} \(\text{mm}^2/\text{s}\)</p><p>b) Auf welchen Maximalwert \(\Delta t_{\max}\) (in <strong>Millisekunden (ms)</strong>) dürfte die Zeitschrittweite bei diesem Gitter und Material höchstens erhöht werden, bevor Instabilität (\(s > 0{,}25\)) eintritt?<br>Antwort: {1:NUMERICAL:=62.5:0.2#Richtig! dt_max = dx^2 / (4 * alpha) = 9,0 / (4 * 36,0) = 9 / 144 = 0,0625 s = 62,5 ms (bzw. 0,05 s * (0,25 / 0,20) = 62,5 ms).~%50%0.0625:0.001#Teilpunkte (50 %): Zahlenwert in Sekunden statt in Millisekunden (ms) angegeben.~%50%125.0:0.5#Teilpunkte (50 %): Sie haben die 1D-Stabilitätsgrenze s = 0,50 statt der 2D-Grenze s = 0,25 angesetzt.} ms</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(1{,}0 \cdot 10^{-3})^2}{4 \cdot 1{,}74 \cdot 10^{-4}} = \frac{1{,}0 \cdot 10^{-6}}{6{,}96 \cdot 10^{-4}}\,\text{s} \approx 0{,}0014368\,\text{s} \approx 1{,}44\,\text{ms}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. Auflösen von \(s = \frac{\alpha \cdot \Delta t}{\Delta x^2}\) nach \(\alpha\):<br>\(\alpha = \frac{s \cdot \Delta x^2}{\Delta t} = \frac{0{,}20 \cdot (3{,}0\,\text{mm})^2}{0{,}05\,\text{s}} = \frac{1{,}8}{0{,}05}\,\text{mm}^2/\text{s} = 36{,}0\,\text{mm}^2/\text{s}\).</p><p>2. Da \(s\) proportional zu \(\Delta t\) ist, erreicht \(s\) den Grenzwert \(0{,}25\) bei:<br>\(\Delta t_{\max} = \Delta t \cdot \frac{0{,}25}{0{,}20} = 50\,\text{ms} \cdot 1{,}25 = 62{,}5\,\text{ms}\).</p>]]></text>
     </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T07_Q1_CFL_Silber</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 1{,}44\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! \(1{,}0 \cdot 10^{-6} / (6{,}96 \cdot 10^{-4})\,\text{s} \approx 1{,}44\,\text{ms}\).</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 2{,}87\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 5{,}75\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Faktor 4 im Nenner fehlt.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 0{,}72\,\text{ms}\)]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Unnötig halbiert.</p>]]></text>
-      </feedback>
-    </answer>
+    <idnumber>T07_Q1</idnumber>
   </question>
 
-  <!-- Question 2: T07.Q2: Code-Analyse: Off-by-One Fehler bei der Differenzenstern-Iteration -->
-  <question type="multichoice">
+  <!-- Question 2: Expliziter Euler: Relaxation eines geregelten Antriebs 1. Ordnung (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
     <name>
-      <text>T07_Q2_Code_OffByOne_Rand</text>
+      <text>T07_Q2: Expliziter Euler: Relaxation eines geregelten Antriebs 1. Ordnung</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Student schreibt folgende FDM-Berechnungsschleife für ein Gitter der Dimension \(W \times H\):</p>
-<pre><code class="language-csharp">for (int y = 0; y < height; y++)
+      <text><![CDATA[<p>Die Drehzahlregelung eines Antriebs wird durch die Differentialgleichung 1. Ordnung \(\dot{v}(t) = 5{,}0\,\text{s}^{-1} \cdot (v_{\text{soll}} - v(t))\) mit dem Sollwert \(v_{\text{soll}} = 10{,}0\,\text{m/s}\) und dem Startwert \(v_0 = 0{,}0\,\text{m/s}\) beschrieben.</p><p>Berechnen Sie die Geschwindigkeit \(v_2\) (in <strong>m/s</strong>) nach exakt <strong>zwei Zeitschritten</strong> der Schrittweite \(\Delta t = 0{,}10\,\text{s}\) (also bei \(t_2 = 0{,}20\,\text{s}\)) mit dem <strong>expliziten Euler-Verfahren</strong>.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p><strong>Schritt 1 (\(t_0 = 0 \to t_1 = 0{,}10\,\text{s}\)):</strong><br>\(\dot{v}_0 = 5{,}0 \cdot (10{,}0 - 0{,}0) = 50{,}0\,\text{m/s}^2\)<br>\(v_1 = v_0 + \Delta t \cdot \dot{v}_0 = 0{,}0 + 0{,}10 \cdot 50{,}0 = 5{,}0\,\text{m/s}\).</p><p><strong>Schritt 2 (\(t_1 = 0{,}10 \to t_2 = 0{,}20\,\text{s}\)):</strong><br>\(\dot{v}_1 = 5{,}0 \cdot (10{,}0 - 5{,}0) = 25{,}0\,\text{m/s}^2\)<br>\(v_2 = v_1 + \Delta t \cdot \dot{v}_1 = 5{,}0 + 0{,}10 \cdot 25{,}0 = 7{,}5\,\text{m/s}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T07_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>7.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Schritt 1: v_1 = 0 + 0,1 * 5 * (10 - 0) = 5,0 m/s. Schritt 2: v_2 = 5,0 + 0,1 * 5 * (10 - 5,0) = 5,0 + 2,5 = 7,5 m/s.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 5,0 m/s ist der Zwischenwert v_1 nach nur einem Zeitschritt (t_1 = 0,10 s), gefragt war aber v_2 nach zwei Schritten.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>10</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben im zweiten Schritt erneut mit der Anfangssteigung 50 m/s^2 statt mit der reduzierten Steigung 5 * (10 - 5) = 25 m/s^2 gerechnet.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Neumann-Randbedingung + 5-Punkt-Stern am Randnachbarn (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T07_Q3: C#-Code-Tracing: Neumann-Randbedingung + 5-Punkt-Stern am Randnachbarn</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einer 1D-Scheibe eines Wärmegitters wird zuerst der linke Rand <code>T[0]</code> isoliert (homogene Neumann-Randbedingung) und unmittelbar danach der Knoten <code>T[1]</code> aktualisiert:</p><pre><code class="language-csharp">double[] T = { 0.0, 20.0, 60.0 };
+double s = 0.25;
+T[0] = T[1]; // Isolierter Neumann-Rand links
+double T1_next = T[1] + s * (T[0] + T[2] - 2.0 * T[1]);</code></pre><p>Welchen exakten Zahlenwert hat die Variable <code>T1_next</code> nach der Ausführung?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. Die Zuweisung <code>T[0] = T[1];</code> setzt <code>T[0]</code> von <code>0.0</code> auf <code>20.0</code> (kein Temperaturgradient zwischen Index 0 und Index 1).</p><p>2. Damit lautet die Klammer: <code>T[0] + T[2] - 2.0 * T[1] = 20.0 + 60.0 - 2.0 * 20.0 = 40.0</code>.</p><p>3. Multipliziert mit <code>s = 0.25</code> ergibt sich <code>T1_next = 20.0 + 0.25 * 40.0 = 30.0</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T07_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>30</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Durch T[0] = T[1] = 20.0 wird T1_next = 20 + 0,25 * (20 + 60 - 40) = 20 + 0,25 * 40 = 30,0.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>25</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben für T[0] noch den alten Startwert 0.0 statt des kopierten Neumann-Wertes T[0] = 20.0 eingesetzt (20 + 0,25 * 20 = 25).</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>40</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben s = 0,50 statt s = 0,25 gerechnet.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Lückentext: Vollständiger WriteableBitmap-Update-Rahmen (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>T07_Q4: C#-Lückentext: Vollständiger WriteableBitmap-Update-Rahmen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie den Methodenrahmen zur sicheren Aktualisierung eines <code>WriteableBitmap bmp</code> der Breite <code>w</code> und Höhe <code>h</code>:</p><pre><code class="language-csharp">bmp.[[1]]();
+try
 {
-    for (int x = 0; x < width; x++)
-    {
-        // 5-Punkt-Stern:
-        nextGrid[x, y] = grid[x, y] + s * (
-            grid[x + 1, y] + grid[x - 1, y] +
-            grid[x, y + 1] + grid[x, y - 1] - 4 * grid[x, y]
-        );
-    }
-}</code></pre>
-<p>Was geschieht bei der Ausführung dieser Schleife?</p>]]></text>
+    WriteHeatmapPixels(bmp.BackBuffer, bmp.BackBufferStride, w, h);
+    bmp.[[2]](new Int32Rect(0, 0, w, h));
+}
+finally
+{
+    bmp.[[3]]();
+}</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Bei \(x = 0\) greift <code>grid[x-1, y]</code> auf den Index -1 zu; bei \(x = width - 1\) greift <code>grid[x+1, y]</code> auf den Index <code>width</code> zu. Dasselbe gilt für \(y\). Die Schleife wirft sofort beim ersten Pixel eine <code>IndexOutOfRangeException</code>. Die inneren Punkte müssen von 1 bis Dimension - 2 laufen, während die Ränder separat behandelt werden müssen.</p>]]></text>
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><p>Das Muster <code>bmp.Lock()</code> &rarr; <code>try { ... bmp.AddDirtyRect(...); }</code> &rarr; <code>finally { bmp.Unlock(); }</code> stellt sicher, dass der unverwaltete Speicherpuffer auch im Falle einer Exception zuverlässig wieder entsperrt wird.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T07_Q2_Code_OffByOne_Rand</idnumber>
+    <idnumber>T07_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[Lock]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[AddDirtyRect]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Unlock]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[BeginInit]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Freeze]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[WritePixels]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[ClearRect]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[EndInit]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Dispose]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Konzept-Zuordnung: Numerische Verfahren &amp; Stabilitätsbegriffe (matching, 1.0000000 Pkt.) -->
+  <question type="matching">
+    <name>
+      <text>T07_Q5: Konzept-Zuordnung: Numerische Verfahren &amp; Stabilitätsbegriffe</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ordnen Sie die folgenden Charakteristika dem jeweils passenden numerischen Konzept aus Kapitel 01 und 02 zu. Beachten Sie die zwei Überhang-Distraktoren.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong></p><ul><li><strong>Standard-Euler:</strong> \(y_{n+1} = y_n + \Delta t f(t_n, y_n)\), Ordnung 1.</li><li><strong>Heun (RK2):</strong> Prädiktor-Korrektor-Verfahren, Ordnung 2.</li><li><strong>Symplektischer Euler:</strong> Nutzt \(v_{n+1}\) für das Orts-Update \(y_{n+1}\) und erhält das Phasenraumvolumen bei Hamilton-Systemen.</li><li><strong>2D-Stabilitätsgrenze:</strong> \(s = \frac{\alpha \Delta t}{\Delta x^2} \le 0{,}25\).</li></ul>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T07_Q5</idnumber>
+    <shuffleanswers>true</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <subquestion format="html">
+      <text><![CDATA[Einstufiges Verfahren 1. Ordnung, das nur die Tangente am aktuellen Zeitpunkt t_n auswertet.]]></text>
+      <answer>
+        <text><![CDATA[Explizites Standard-Euler-Verfahren]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Zweistufiges Verfahren 2. Ordnung, das den Mittelwert aus Start- und Prädiktor-Steigung bildet.]]></text>
+      <answer>
+        <text><![CDATA[Heun-Verfahren (Runge-Kutta 2. Ordnung)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Modifiziertes Euler-Verfahren, das zuerst v_n+1 berechnet und damit y_n+1 energieerhaltend fortschreibt.]]></text>
+      <answer>
+        <text><![CDATA[Semi-implizites (symplektisches) Euler-Verfahren]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Bedingung s <= 0,25, die verhindert, dass sich Fehler im expliziten 2D-Wärmegitter aufschaukeln.]]></text>
+      <answer>
+        <text><![CDATA[2D-Von-Neumann- / CFL-Stabilitätsbedingung]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Cholesky-Matrixfaktorisierung für statische Fachwerke]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Ereignisdiskrete Warteschlangen-Simulation (Kendall)]]></text>
+      </answer>
+    </subquestion>
+  </question>
+
+  <!-- Question 6: Physikalische Modellierung: Bedeutung eines Neumann-Randes an einer Symmetrieachse (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>T07_Q6: Physikalische Modellierung: Bedeutung eines Neumann-Randes an einer Symmetrieachse</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Eine rechteckige Platte ist geometrisch und thermisch exakt spiegelsymmetrisch zu ihrer vertikalen Mittellinie. Um Rechenzeit zu sparen, soll nur die linke Plattenhälfte simuliert werden. Welche Randbedingung muss dafür entlang der vertikalen Symmetrielinie angesetzt werden?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Symmetrie-Ausnutzung in der Simulation:</strong></p><p>An einer Spiegelsymmetrieebene ist das Temperaturprofil links und rechts identisch, sodass kein Netto-Wärmestrom über die Symmetrielinie fließt (\(\dot{q}_x = -\lambda \frac{\partial T}{\partial x} = 0\)). Eine Symmetrieebene wird daher numerisch exakt wie eine perfekt wärmegedämmte Wand über eine homogene Neumann-Randbedingung (\(T_{\text{Rand}} = T_{\text{Nachbar}}\)) abgebildet.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T07_Q6</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Es tritt sofort beim ersten Durchlauf (\(x=0, y=0\)) eine <code>IndexOutOfRangeException</code> auf, da auf negative Indizes (\(x-1\)) und Indizes außerhalb des Arrays zugegriffen wird.]]></text>
+      <text><![CDATA[Eine homogene Neumann-Randbedingung (dT/dx = 0), da aus Symmetriegründen kein Wärmestrom die Mitte kreuzt.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Randpunkte müssen gesondert über Randbedingungen behandelt werden.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Wegen T(-x) = T(+x) verschwindet an der Symmetrieachse die horizontale Ableitung dT/dx = 0, was exakt einer adiabaten Neumann-Wand entspricht.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[C# setzt ungültige Indizes automatisch auf 0 zurück, sodass die Randberechnung fehlerfrei weiterläuft.]]></text>
+      <text><![CDATA[Eine Dirichlet-Randbedingung mit T = 0 °C, weil sich die Wärmeströme in der Plattenmitte zu Null addieren.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. C# prüft Array-Grenzen strikt und wirft Ausnahmen.</p>]]></text>
+        <text><![CDATA[<p>Falsch. An der Symmetrieachse ist der Wärmestrom (die Ableitung dT/dx) gleich Null, nicht aber die Temperatur T selbst!</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Die Schleife wird ausgeführt, aber das Bild wird um ein Pixel nach links verschoben.]]></text>
+      <text><![CDATA[Eine zufällig schwankende Temperaturvorgabe, um die fehlende rechte Plattenhälfte statistisch zu ersetzen.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das Programm bricht sofort ab.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Das Wärmeleitungsproblem ist rein deterministisch; Zufallswerte würden die physikalische Lösung verfälschen.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Es entsteht ein Compilerfehler, da zweidimensionale Arrays in C# nicht mit 's' skaliert werden dürfen.]]></text>
+      <text><![CDATA[Gar keine Randbedingung, sodass der 5-Punkt-Stern am rechten Rand einfach auf nicht existente Indizes zugreift.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das ist syntaktisch gültig.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Jeder Rand eines diskreten Rechengebiets benötigt eine wohldefinierte Randbedingung, sonst entsteht eine IndexOutOfRangeException.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 3: T07.Q3: Physikalische Konsistenzprüfung: Energieerhaltung bei adiabaten Rändern -->
+  <!-- Question 7: C#-Bug-Diagnose: Referenz-Aliasing statt echtem Double-Buffering (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T07_Q3_Physik_Energieerhaltung_Neumann</text>
+      <text>T07_Q7: C#-Bug-Diagnose: Referenz-Aliasing statt echtem Double-Buffering</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einer thermischen Simulation ist eine Platte an allen vier Außenrändern <strong>vollständig thermisch isoliert</strong> (adiabate Neumann-Ränder, \(\partial T / \partial n = 0\)). Es gibt keine inneren Wärmequellen. Welche fundamentale physikalische Invariante muss das numerische FDM-Verfahren über die gesamte Simulationszeit hinweg exakt einhalten?</p>]]></text>
+      <text><![CDATA[<p>Um sich nach dem 2D-Wärmeleitungsschritt den Aufruf von <code>Array.Copy(T_next, T, T.Length)</code> zu sparen, schreibt ein Student am Ende der Zeitschritt-Methode einfach:</p><pre><code class="language-csharp">// Am Ende von Step():
+T = T_next;</code></pre><p>Welcher schwerwiegende Fehler entsteht dadurch ab dem <strong>zweiten</strong> Zeitschritt?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Nach dem 1. Hauptsatz der Thermodynamik (Energieerhaltung) kann aus einem allseitig isolierten System ohne Quellen weder Energie entweichen noch hinzukommen. Das Integral der Temperatur über die Fläche bzw. die Summe aller Zelltemperaturen \(\sum_{i,j} T_{i,j}\) muss zeitlich exakt konstant bleiben (bis auf Maschinengenauigkeit).</p>]]></text>
+      <text><![CDATA[<p><strong>Fehleranalyse (Referenz-Aliasing vs. Pointer-Swap):</strong></p><p>Da Arrays in C# Referenztypen sind, bewirkt <code>T = T_next;</code>, dass beide Variablen auf <strong>exakt dasselbe Array im Heap</strong> verweisen (das ursprüngliche <code>T</code>-Array geht verloren). Im nächsten Zeitschritt liest und schreibt der Code somit im selben Array! Möchte man <code>Array.Copy</code> durch einen schnellen Referenztausch ersetzen, muss man beide Referenzen dreieckstauschen: <code>(T, T_next) = (T_next, T);</code>.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T07_Q3_Physik_Energieerhaltung_Neumann</idnumber>
+    <idnumber>T07_Q7</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Die Summe bzw. das Integral der thermischen Energie über alle Gitterpunkte (\(\sum T_{i,j}\)) muss über alle Zeitschritte hinweg konstant bleiben (Energieerhaltungssatz).]]></text>
+      <text><![CDATA[Beide Variablen zeigen danach auf dasselbe Array-Objekt im Heap, sodass ab Schritt 2 in-place überschrieben wird.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Dies ist der wichtigste Validierungstest für die Korrektheit der Neumann-Randimplementierung.</p>]]></text>
+        <text><![CDATA[<p>Richtig! T = T_next kopiert nur die Speicherreferenz; ab dem nächsten Schritt zeigen T und T_next auf denselben Speicherblock (für einen echten Swap bräuchte man (T, T_next) = (T_next, T)).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Die maximale Temperatur im Gitter muss mit jedem Zeitschritt ansteigen.]]></text>
+      <text><![CDATA[In C# ist die Zuweisung einer Array-Variablen an eine andere syntaktisch verboten und kompiliert nicht.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Ohne Wärmequellen kann das Maximum nur fallen (Dissipation).</p>]]></text>
+        <text><![CDATA[<p>Falsch. Arrays sind in C# Referenztypen; die Zuweisung T = T_next ist syntaktisch völlig legal, erzeugt aber das gefährliche Referenz-Aliasing.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Die Temperatur aller Zellen muss innerhalb eines einzigen Zeitschritts auf 0°C absinken.]]></text>
+      <text><![CDATA[Der Garbage Collector löscht durch diese Zeile sofort beide Arrays noch während des laufenden Schritts.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Wärme verteilt sich stetig, sie verschwindet nicht.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Solange eine aktive Variable (T und T_next) auf das zweite Array verweist, wird dieses Array niemals vom Garbage Collector freigegeben.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Die Entropie des Systems muss kontinuierlich abnehmen.]]></text>
+      <text><![CDATA[Die Zuweisung T = T_next setzt alle gespeicherten Temperaturwerte im Array automatisch auf 0.0 zurück.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Der 2. Hauptsatz besagt, dass die Entropie bei irreversibler Wärmeleitung zunimmt.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Eine Referenz-Zuweisung verändert keine Array-Inhalte, sondern biegt lediglich den Zeiger T auf das Objekt von T_next um.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 4: T07.Q4: Das Pragmatische Merkmal nach Herbert Stachowiak -->
+  <!-- Question 8: Speicher- &amp; Farbarchitektur: Eigenschaften von PixelFormats.Bgra32 (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T07_Q4_Stachowiak_Pragmatismus</text>
+      <text>T07_Q8: Speicher- &amp; Farbarchitektur: Eigenschaften von PixelFormats.Bgra32</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Was versteht Herbert Stachowiak unter dem <strong>Pragmatischen Merkmal</strong> eines Modells?</p>]]></text>
+      <text><![CDATA[<p>Welche der folgenden Aussagen zum Pixelformat <code>PixelFormats.Bgra32</code> in WPF und dessen Adressierung auf x86/x64-Prozessoren (Little-Endian) sind <strong>korrekt</strong>? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Das pragmatische Merkmal besagt: Modelle sind ihren Originalen nicht per se zugeordnet, sondern erfüllen eine Ersetzungsfunktion für bestimmte Subjekte (Nutzer), innerhalb bestimmter Zeitintervalle und unter Einschränkung auf bestimmte gedankliche oder tatsächliche Operationen (Zweck).</p>]]></text>
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong></p><p>In <code>Bgra32</code> belegt jedes Pixel \(4\,\text{Bytes} = 32\,\text{Bit}\). Im Speicher folgen aufeinander: <code>[B, G, R, A]</code>. Liest oder schreibt man diese 4 Bytes auf einer Little-Endian-CPU als einzelnen <code>uint</code>, kehrt sich die Wertigkeitsreihenfolge zu <code>0xAARRGGBB</code> um.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T07_Q4_Stachowiak_Pragmatismus</idnumber>
-    <single>true</single>
+    <idnumber>T07_Q8</idnumber>
+    <single>false</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Ein Modell ist nicht universell gültig, sondern erfüllt seine Ersetzungsfunktion stets nur für bestimmte Nutzer (Subjekte), innerhalb definierter Zeitspannen und für einen ganz konkreten Anwendungszweck.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Beim Zugriff über einen byte*-Pointer liegt der Blau-Kanal am Offset +0 und der Alpha-Kanal am Offset +3.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Kein Modell ohne Zweck.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Der Name Bgra32 gibt exakt die Byte-Reihenfolge im Speicher an: Byte 0 = B, Byte 1 = G, Byte 2 = R, Byte 3 = A.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Ein Modell muss pragmatisch programmiert werden, d. h. ohne objektorientierte Klassen.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Beim Schreiben als 32-Bit-uint repräsentiert das Hex-Literal 0xFFFF0000 ein voll deckendes rotes Pixel.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Hat nichts mit Programmierparadigmen zu tun.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Wegen Little-Endian landet das höchste Byte 0xFF an Offset +3 (Alpha = 255) und das zweithöchste Byte 0xFF an Offset +2 (Rot = 255).</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Ein Modell darf maximal 100 Zeilen Quellcode umfassen.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Jeder einzelne Farbkanal (B, G, R, A) wird in Bgra32 als 32-Bit-Gleitkommazahl (float) gespeichert.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das ist keine wissenschaftliche Definition.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Die 32 im Namen Bgra32 steht für 32 Bit pro gesamtem Pixel (also 4 Kanäle zu je 8 Bit = 1 Byte), nicht für 32 Bit pro Kanal.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Pragmatismus bedeutet, dass physikalische Gesetze in Simulationen ignoriert werden dürfen.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Ein Alpha-Kanalwert von 0 bewirkt in WPF, dass das Pixel mit maximaler Leuchtkraft dargestellt wird.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Physik ist das Fundament mechatronischer Modelle.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 5: T07.Q5: Performancevorteil von Unsafe-Pointern gegenüber regulären 2D-Arrays -->
-  <question type="multichoice">
-    <name>
-      <text>T07_Q5_Unsafe_Pointer_vs_Array_Speed</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Warum ist der direkte Speicherzugriff über <code>unsafe byte*</code> in C# bei intensiven Pixel- und FDM-Berechnungen messbar schneller als der Zugriff über ein Standard-C#-Array <code>byte[,]</code>?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>Bei jedem Zugriff auf ein sicheres C#-Array (<code>array[i, j]</code>) prüft die CLR zur Laufzeit, ob der Index innerhalb der deklarierten Grenzen liegt (Array Bounds Checking). Bei <code>unsafe byte*</code> entfallen diese Prüfungen vollständig; die CPU führt reine Zeigeradditionen ohne Verzweigungen aus.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T07_Q5_Unsafe_Pointer_vs_Array_Speed</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Bei Zeigeroperationen entfällt das von der .NET-CLR bei jedem regulären Array-Zugriff durchgeführte automatische 'Array Bounds Checking' (Bereichsprüfung), was Verzweigungen im Maschinencode eliminiert.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! Bounds Checking kostet in tiefen Schleifen erhebliche Prozessorzyklen.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Weil Pointer in C# automatisch im L1-Cache festgefroren werden.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die Hardware steuert das Caching, nicht das unsafe-Schlüsselwort.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Weil reguläre Arrays in C# auf der Festplatte zwischengespeichert werden.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Arrays liegen wie alle Objekte im Arbeitsspeicher (RAM).</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Weil unsafe Pointer immer auf 128 Bit parallel vektorisiert werden.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Vektorisierung erfordert explizite SIMD-Instruktionen.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Alpha = 0 bedeutet 0 % Deckkraft (vollständig transparent), während Alpha = 255 für volle Sichtbarkeit steht.</p>]]></text>
       </feedback>
     </answer>
   </question>

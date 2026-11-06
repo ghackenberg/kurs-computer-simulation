@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_02_Termin_05/Test_09_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Quiz 02 - Test 09 (Prüfungstest): Canvas-Größenberechnung, Untere 3-Sigma-Grenze & MSAGL-BBox</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: Affine 2D-Transformation: Nutzbare Zeichenfläche nach Randabzug und Uniform Scaling (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
+    <name>
+      <text>Q02_T09_Q1: Affine 2D-Transformation: Nutzbare Zeichenfläche nach Randabzug und Uniform Scaling</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein WPF-Canvas besitzt die Gesamtgröße \(W_{\text{canvas}} = 700\,\text{px}\) Breite und \(H_{\text{canvas}} = 500\,\text{px}\) Höhe. Damit Knotensymbole und DIN-406-Maßzahlen am Rand nicht abgeschnitten werden, wird auf <strong>allen vier Seiten</strong> (links, rechts, oben, unten) jeweils ein Sicherheitsrand von \(\text{margin} = 50\,\text{px}\) freigehalten. Auf der verbleibenden nutzbaren Fläche soll eine Fertigungsstraße der Länge \(\Delta X = 30\,\text{m}\) und Breite \(\Delta Y = 10\,\text{m}\) verzerrungsfrei dargestellt werden.</p>
+<p><strong>a)</strong> Berechnen Sie die effektiv nutzbare Zeichenbreite \(W_{\text{eff}}\) in \(\text{px}\) nach Abzug des linken und rechten Sicherheitsrands: {1:NUMERICAL:=600:0.5#Exakt! W_eff = W_canvas - 2 * margin = 700 - 2 * 50 = 600 px.~%50%650:0.5#Teilpunkte: Sie haben margin = 50 px nur einmal statt zweimal (links UND rechts) abgezogen!}</p>
+<p><strong>b)</strong> Berechnen Sie den resultierenden verzerrungsfreien uniformen Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=20:0.1#Richtig! H_eff = 500 - 2*50 = 400 px; s = min(600/30, 400/10) = min(20, 40) = 20 px/m.~%50%40:0.1#Teilpunkte: Sie haben max(sx, sy) = 40 px/m statt min(sx, sy) = 20 px/m gewählt.}</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<ol>
+  <li><strong>Nutzbare Dimensionen (beidseitiger Randabzug!):</strong> \(W_{\text{eff}} = W_{\text{canvas}} - 2 \cdot \text{margin} = 700 - 100 = 600\,\text{px}\) und \(H_{\text{eff}} = H_{\text{canvas}} - 2 \cdot \text{margin} = 500 - 100 = 400\,\text{px}\).</li>
+  <li><strong>Uniform Scaling:</strong> \(s = \min\left(\frac{600}{30}, \frac{400}{10}\right) = \min(20, 40) = 20\,\text{px/m}\).</li>
+</ol>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T09_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Statistische Prozesskontrolle (SPC): Untere 3-Sigma-Warngrenze (LCL) bestimmen (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T09_Q2: Statistische Prozesskontrolle (SPC): Untere 3-Sigma-Warngrenze (LCL) bestimmen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Welford-Statistikmodul überwacht den Förderstrom einer Dosierpumpe. Nach \(k = 10\) Messwerten beträgt der laufende Mittelwert \(\mu = 50{,}0\,\text{l/min}\) und die Quadratsumme der Abweichungen \(M_2 = 36{,}0\,(\text{l/min})^2\). Für die Live-Überwachung in ScottPlot 5 wird die untere \(3\sigma\)-Kontrollgrenze \(\text{LCL} = \mu - 3 \cdot s\) (mit der empirischen Stichprobenstandardabweichung \(s\)) berechnet.</p>
+<p>Berechnen Sie den numerischen Wert von \(\text{LCL}\) in \(\text{l/min}\).</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<ol>
+  <li><strong>Stichprobenvarianz:</strong> \(s^2 = \frac{M_2}{k - 1} = \frac{36{,}0}{9} = 4{,}0\,(\text{l/min})^2 \implies s = \sqrt{4{,}0} = 2{,}0\,\text{l/min}\).</li>
+  <li><strong>Untere \(3\sigma\)-Grenze:</strong> \(\text{LCL} = \mu - 3s = 50{,}0 - 3 \cdot 2{,}0 = 44{,}0\,\text{l/min}\).</li>
+</ol>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T09_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>44</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! s^2 = M2 / (10 - 1) = 36.0 / 9 = 4.0 => s = 2.0 l/min; LCL = 50.0 - 3 * 2.0 = 44.0 l/min.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>56</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: 56.0 l/min (50 + 6) ist die obere Kontrollgrenze UCL, gefragt war aber die untere Grenze LCL = 50 - 6 = 44.0 l/min.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>38</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben 50 - 3 * s^2 = 50 - 12 = 38 gerechnet (Quadratwurzel für s vergessen!).</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Horizontale Pfeilspitzen-Rückverschiebung im Screen Space (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T09_Q3: C#-Code-Tracing: Horizontale Pfeilspitzen-Rückverschiebung im Screen Space</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein horizontaler Kraftpfeil zeigt nach rechts von <code>start = (100, 200)</code> zur Spitze <code>tip = (250, 200)</code>. Der folgende C#-Code berechnet die X-Koordinate <code>wingX</code> der Pfeilflügel:</p>
+<pre><code class="language-csharp">double ux = 1.0, uy = 0.0;
+double nx = -uy, ny = ux;
+double arrowLength = 15.0, arrowHalfWidth = 6.0;
+double wingX = 250.0 - ux * arrowLength + nx * arrowHalfWidth;</code></pre>
+<p>Welchen numerischen Wert (in \(\text{px}\)) besitzt <code>wingX</code>?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong> Da der Pfeil horizontal nach rechts zeigt (\(u_x = 1, u_y = 0\)), steht der Normalenvektor vertikal (\(n_x = 0, n_y = 1\)). In X-Richtung gehen die Flügel daher einfach um <code>arrowLength = 15.0</code> hinter die Spitze bei \(250\,\text{px}\) zurück: \(250{,}0 - 15{,}0 = 235{,}0\,\text{px}\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T09_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>235</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Da nx = -uy = 0.0 ist, gilt wingX = 250.0 - 1.0 * 15.0 + 0.0 * 6.0 = 235.0 px.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>229</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben arrowHalfWidth = 6.0 ebenfalls von X abgezogen; bei einem horizontalen Pfeil wirkt die Breite aber rein vertikal in Y-Richtung (nx = 0).</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Code-Lückentext: Horizontale Warnlinie und Toleranzband in ScottPlot 5 einzeichnen (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>Q02_T09_Q4: C#-Code-Lückentext: Horizontale Warnlinie und Toleranzband in ScottPlot 5 einzeichnen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie den C#-Code, um in <strong>ScottPlot 5</strong> den Mittelwert <code>mean</code> als horizontale Linie und den \(\pm 3\sigma\)-Bereich von <code>lcl</code> bis <code>ucl</code> als farbiges Toleranzband einzuzeichnen:</p>
+<pre><code class="language-csharp">var meanLine = MainPlot.Plot.Add.[[1]](mean);
+var band = MainPlot.Plot.Add.[[2]](lcl, ucl);
+MainPlot.[[3]]();</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong> Eine durchgehende waagerechte Referenzlinie bei einem Y-Wert erzeugt man mit <code>Plot.Add.HorizontalLine(y)</code>, ein waagerechtes Band zwischen \(y_1\) und \(y_2\) mit <code>Plot.Add.HorizontalSpan(y1, y2)</code>. Abschließend aktualisiert <code>MainPlot.Refresh()</code> die Anzeige.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T09_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[HorizontalLine]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[HorizontalSpan]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Refresh]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[VerticalLine]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Pie]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[DataStreamer]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Scatter]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Freeze]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Dispose]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Konzept-Zuordnung: Mathematische Kennzahlen der Echtzeit-Statistik (Kapitel 04) (matching, 1.0000000 Pkt.) -->
+  <question type="matching">
+    <name>
+      <text>Q02_T09_Q5: Konzept-Zuordnung: Mathematische Kennzahlen der Echtzeit-Statistik (Kapitel 04)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ordnen Sie den vier statistischen Größen aus Kapitel 04 jeweils ihre korrekte mathematische Definition und Bedeutung im Monitoring-Dashboard zu (beachten Sie die zwei Überhang-Distraktoren).</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Lösung:</strong> Diese vier Beziehungen (Welford-Mittelwert, Bessel-korrigierte Stichprobenvarianz \(M_2/(k-1)\), Interquartilsabstand \(Q_3 - Q_1\) und \(\mu \pm 3s\)-Prozessgrenzen) bilden das mathematische Rückgrat von Kapitel 04.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T09_Q5</idnumber>
+    <shuffleanswers>true</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <subquestion format="html">
+      <text><![CDATA[Inkrementelles Mittelwert-Update im Welford-Algorithmus beim k-ten Messwert]]></text>
+      <answer>
+        <text><![CDATA[mu_k = mu_{k-1} + (x_k - mu_{k-1}) / k]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Erwartungstreue empirische Stichprobenvarianz aus der Welford-Quadratsumme M2]]></text>
+      <answer>
+        <text><![CDATA[s^2 = M2 / (k - 1) mit Bessel-Korrektur für k >= 2]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Interquartilsabstand (IQR) zur Beschreibung der Box-Höhe im Box-Whisker-Plot]]></text>
+      <answer>
+        <text><![CDATA[Q3 - Q1 (Spannweite der mittleren 50 Prozent der sortierten Messwerte)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Obere und untere Eingriffsgrenze (Control Limits) im statistischen Prozessband]]></text>
+      <answer>
+        <text><![CDATA[mu + 3*s und mu - 3*s (umfasst bei Normalverteilung ca. 99,73 Prozent der Werte)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[s^2 = (sumX / k)^2 (Quadrat des arithmetischen Mittelwerts)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Q3 + Q1 (Summe aus erstem und drittem Quartil)]]></text>
+      </answer>
+    </subquestion>
+  </question>
+
+  <!-- Question 6: MSAGL-Rendering auf WPF Canvas: Warum die Bounding-Box des Graphen transformiert werden muss (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T09_Q6: MSAGL-Rendering auf WPF Canvas: Warum die Bounding-Box des Graphen transformiert werden muss</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Nachdem <code>LayoutHelpers.CalculateLayout(graph, settings, null)</code> die Knoten- und Kantenpositionen eines MSAGL-Graphen berechnet hat, sollen diese auf einem WPF-Canvas gezeichnet werden. Warum reicht es nicht, die berechneten MSAGL-Koordinaten <code>node.Center.X</code> und <code>node.Center.Y</code> unverändert als Pixelkoordinaten zu übernehmen?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>wichtige Brücke zwischen Kap. 03 und Kap. 04:</strong> Die Klasse <code>Transform2D</code> aus Kapitel 03 lässt sich 1:1 wiederverwenden, um die <code>graph.BoundingBox</code> eines MSAGL-Graphen verzerrungsfrei und zentriert auf das WPF-Canvas abzubilden!</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T09_Q6</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Weil MSAGL ein eigenes Koordinatensystem mit beliebiger BoundingBox und nach oben zeigender Y-Achse nutzt, das erst in das Canvas eingepasst werden muss.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Genau wie bei einem CAD-Bauteil liest man graph.BoundingBox (Left, Right, Bottom, Top) aus und bildet sie per Uniform Scaling und Y-Inversion auf das Canvas ab.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil MSAGL sämtliche Koordinaten ausschließlich als verschlüsselte Hexadezimal-Strings speichert, die erst über einen Dienst entschlüsselt werden müssen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. node.Center.X und Y sind normale, direkt lesbare double-Gleitkommazahlen.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil MSAGL die Knotenpositionen grundsätzlich in geographischen Kugelkoordinaten (Längengrad, Breitengrad und Erdradius) für Weltkarten berechnet.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. MSAGL arbeitet in einem ebenen kartesischen 2D-Koordinatensystem.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil das WPF-Canvas keine Ellipsen oder Rechtecke darstellen kann, solange deren Mittelpunkte nicht ganzzahlig durch 100 ohne Rest teilbar sind.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. WPF zeichnet Shapes an beliebigen Gleitkomma-Positionen.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 7: C#-Bug-Diagnose: Division durch Null beim Welford-Start (SampleVariance bei Count &lt; 2) (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T09_Q7: C#-Bug-Diagnose: Division durch Null beim Welford-Start (SampleVariance bei Count &lt; 2)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einer <code>WelfordStatistics</code>-Klasse ist die Eigenschaft für die Stichprobenvarianz wie folgt implementiert: <code>public double SampleVariance =&gt; M2 / (Count - 1);</code>. Unmittelbar nach dem allerersten Messwert (<code>Count == 1</code>) zeigt das angebundene ScottPlot-Diagramm plötzlich <code>NaN</code>-Fehler an. Warum?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Robuste Implementierung:</strong> In <code>WelfordStatistics</code> schützt man die Varianz-Eigenschaft stets mit einer Fallunterscheidung: <code>public double SampleVariance =&gt; Count &gt; 1 ? M2 / (Count - 1) : 0.0;</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T09_Q7</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Für Count == 1 sind sowohl M2 == 0.0 als auch (Count - 1) == 0, sodass die Gleitkommadivision 0.0 / 0.0 nach IEEE 754 den Wert double.NaN liefert.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Nach nur einem Messwert ist M2 exakt 0.0 und der Nenner (1 - 1) ebenfalls 0; in IEEE-754 ergibt 0.0 / 0.0 den Wert NaN, der alle Folgeplots infiziert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[In C# löst jede Division eines double-Werts durch Null sofort einen blauen Bildschirmabsturz (Blue Screen of Death) des Windows-Kernels aus.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Gleitkommadivision durch 0.0 wirft in C# nicht einmal eine Exception, sondern liefert +Infinity, -Infinity oder (bei 0.0/0.0) NaN.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Variable Count startet bei einem neuen C#-Objekt standardmäßig beim Wert -2147483648, sofern man keinen Konstruktor mit Parameter aufruft.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Felder vom Typ int werden in C# automatisch mit 0 initialisiert.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der Ausdruck (Count - 1) dekrementiert das Feld Count dauerhaft im Speicher, sodass der Zähler niemals über den Wert 0 hinauswachsen kann.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Count - 1 berechnet nur eine temporäre Differenz ohne Seiteneffekt (im Gegensatz zu --Count).</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 8: Systemanalyse: Vergleich der 2D-Grafiktechnologien im Kurs (Kapitel 02, 03 und 04) (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T09_Q8: Systemanalyse: Vergleich der 2D-Grafiktechnologien im Kurs (Kapitel 02, 03 und 04)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Welche <strong>zwei</strong> Architektur-Entscheidungen wählen für das jeweilige Simulationsproblem die technisch optimale 2D-Visualisierungstechnologie aus den bisherigen Kapiteln?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Architektur-Kompass:</strong> Dichte 2D-Rasterfelder \(\to\) <code>WriteableBitmap</code> (Kap. 02); interaktive Konstruktions-/CAD-Geometrie \(\to\) <code>WPF Canvas / DrawingVisual</code> (Kap. 03); Zeitreihen, Statistik & Graphentopologie \(\to\) <code>ScottPlot 5 & MSAGL</code> (Kap. 04).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T09_Q8</idnumber>
+    <single>false</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Für ein interaktives 2D-Fachwerk mit 50 Stäben, Knoten-Hit-Testing, Tooltips und scharfer DIN-406-Bemaßung nutzt man Vektorgrafik auf dem WPF Canvas.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Vektorgrafik auf dem Canvas skaliert gestochen scharf und unterstützt direktes Maus-Interaktionsverhalten an einzelnen Knoten und Stäben.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Für das Echtzeit-Monitoring mehrerer 1-kHz-Sensorkanäle inklusive Achsenskalierung und Toleranzbändern nutzt man ScottPlot 5 mit DataStreamer.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! ScottPlot 5 liefert fertige wissenschaftliche Achsen, Legenden, Downsampling und Ringpuffer-Streaming out-of-the-box.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Für ein kontinuierliches 2D-Temperaturfeld mit 500 x 500 = 250.000 Gitterzellen erzeugt man 250.000 einzelne Rectangle-UIElemente im WPF Canvas.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch! 250.000 UIElemente im Canvas legen WPF komplett lahm; für dichte 2D-Skalarfelder nutzt man ein WriteableBitmap (Kap. 02) oder eine Heatmap.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Für einen gerichteten System-Signalflussgraphen mit 30 Knoten berechnet man das Layout über einen 2D-Wärmeleitungs-Löser auf einem Pixel-Array.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch! Für gerichtete Graphen nutzt man MSAGL (Sugiyama-Layout) in Kombination mit Vektorgrafik.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

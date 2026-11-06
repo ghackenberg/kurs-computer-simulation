@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_02_Termin_05/Test_10_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Quiz 02 - Test 10 (Prüfungstest): Knotenabstand aus Screen-Koordinaten, Welford-Rückrechnung & DPI</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: Affine 2D-Transformation: Wahre Bauteil-Spannweite aus Bildschirm-Koordinaten bestimmen (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
+    <name>
+      <text>Q02_T10_Q1: Affine 2D-Transformation: Wahre Bauteil-Spannweite aus Bildschirm-Koordinaten bestimmen</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Prüfstandsrahmen mit der physikalischen Breite \(\Delta X = 8{,}0\,\text{m}\) und Höhe \(\Delta Y = 5{,}0\,\text{m}\) ist verzerrungsfrei (Uniform Scaling) in ein nutzbares Canvas-Fenster von \(W_{\text{eff}} = 640\,\text{px}\) Breite und \(H_{\text{eff}} = 500\,\text{px}\) Höhe eingepasst. Auf dem Bildschirm messen Sie zwischen zwei Lagermittelpunkten einen horizontalen Pixelabstand von \(\Delta X_{\text{screen}} = 240\,\text{px}\) und einen vertikalen Pixelabstand von \(\Delta Y_{\text{screen}} = 320\,\text{px}\) (d. h. eine schräge Bildschirmdistanz von \(L_{\text{screen}} = \sqrt{240^2 + 320^2} = 400\,\text{px}\)).</p>
+<p><strong>a)</strong> Berechnen Sie den verwendeten uniformen Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=80:0.1#Exakt! s = min(640 / 8.0, 500 / 5.0) = min(80, 100) = 80 px/m.~%50%100:0.1#Teilpunkte: Sie haben sy = 500 / 5.0 = 100 px/m statt min(80, 100) = 80 px/m gewählt.}</p>
+<p><strong>b)</strong> Berechnen Sie den wahren physikalischen Euklidischen Abstand \(L_{\text{world}}\) (in \(\text{m}\)) zwischen den beiden Lagern im World Space: {1:NUMERICAL:=5.0:0.05#Richtig! L_world = L_screen / s = 400 px / 80 (px/m) = 5.0 m (bzw. sqrt(3.0^2 + 4.0^2) = 5.0 m).~%50%4.0:0.05#Teilpunkte: Folgefehler aus Teil a (400 / 100 = 4.0 m) oder nur die vertikale Komponente 320 / 80 = 4.0 m betrachtet.}</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<ol>
+  <li><strong>Uniform Scaling:</strong> \(s = \min\left(\frac{640}{8{,}0}, \frac{500}{5{,}0}\right) = \min(80, 100) = 80\,\text{px/m}\).</li>
+  <li><strong>Wahre Distanz im World Space:</strong> \(\Delta X_{\text{world}} = \frac{240}{80} = 3{,}0\,\text{m}\), \(\Delta Y_{\text{world}} = \frac{320}{80} = 4{,}0\,\text{m}\), also \(L_{\text{world}} = \sqrt{3{,}0^2 + 4{,}0^2} = \frac{400\,\text{px}}{80\,\text{px/m}} = 5{,}0\,\text{m}\).</li>
+</ol>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T10_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Welford-Online-Algorithmus: Erforderliche Quadratsumme M2 für gegebene Standardabweichung (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T10_Q2: Welford-Online-Algorithmus: Erforderliche Quadratsumme M2 für gegebene Standardabweichung</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einem automatisierten Unit-Test für Ihre <code>WelfordStatistics</code>-Klasse wurden \(k = 11\) Temperaturmesswerte verarbeitet. Die empirische Stichprobenstandardabweichung wird von der Klasse als \(s = 3{,}0\,\text{K}\) ausgewiesen.</p>
+<p>Welchen numerischen Wert (in \(\text{K}^2\)) muss das interne Akkumulatorfeld \(M_2\) zu diesem Zeitpunkt exakt besitzen?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong> Aus \(s = \sqrt{\frac{M_2}{k - 1}} = 3{,}0\,\text{K}\) folgt durch Quadrieren \(s^2 = \frac{M_2}{k - 1} = 9{,}0\,\text{K}^2\). Multiplikation mit \(k - 1 = 11 - 1 = 10\) ergibt \(M_2 = 9{,}0 \cdot 10 = 90{,}0\,\text{K}^2\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T10_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>90</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Da s = 3.0 K => Stichprobenvarianz s^2 = 9.0 K^2. Aus s^2 = M2 / (k - 1) folgt M2 = s^2 * (11 - 1) = 9.0 * 10 = 90.0 K^2.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>99</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben mit k = 11 statt mit (k - 1) = 10 multipliziert (9.0 * 11 = 99.0).</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>30</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben s * (k - 1) = 3.0 * 10 = 30.0 gerechnet (Quadrieren der Standardabweichung zu s^2 = 9.0 vergessen!).</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Einheitsnormalenvektor eines schrägen Stabs (3-4-5-Dreieck) (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T10_Q3: C#-Code-Tracing: Einheitsnormalenvektor eines schrägen Stabs (3-4-5-Dreieck)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Für einen schrägen Fachwerkstab von <code>(100, 100)</code> nach <code>(160, 180)</code> im Screen Space wird der Einheitsnormalenvektor <code>(nx, ny)</code> berechnet:</p>
+<pre><code class="language-csharp">double dx = 160.0 - 100.0; // 60.0
+double dy = 180.0 - 100.0; // 80.0
+double len = Math.Sqrt(dx * dx + dy * dy);
+double ux = dx / len;
+double uy = dy / len;
+double nx = -uy;</code></pre>
+<p>Welchen numerischen Wert (als Dezimalzahl) erhält <code>nx</code>?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong> Mit \(dx = 60\) und \(dy = 80\) beträgt die Länge \(\text{len} = \sqrt{60^2 + 80^2} = 100\). Damit ist \(u_x = 0{,}6\), \(u_y = 0{,}8\) und die X-Komponente des Normalenvektors \(n_x = -u_y = -0{,}8\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T10_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>-0.8</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! len = sqrt(60^2 + 80^2) = sqrt(3600 + 6400) = 100.0; uy = 80.0 / 100.0 = 0.8; nx = -uy = -0.8.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>0.8</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Vorzeichenfehler! nx ist als -uy = -0.8 definiert.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>0.6</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: 0.6 ist die Komponente ux = dx / len = 60 / 100 (bzw. ny), gefragt war aber nx = -uy = -0.8.</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Code-Lückentext: Box-Whisker-Plot-Element in ScottPlot 5 konfigurieren (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>Q02_T10_Q4: C#-Code-Lückentext: Box-Whisker-Plot-Element in ScottPlot 5 konfigurieren</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zum Anlegen einer einzelnen Box (Median <code>50</code>, Quartile <code>40</code> und <code>60</code>, Antennen <code>25</code> bis <code>85</code>) für einen <strong>ScottPlot 5</strong> Box-Whisker-Plot:</p>
+<pre><code class="language-csharp">var box = new ScottPlot.Box {
+    Position = 1,
+    BoxMin = [[1]],
+    BoxMax = [[2]],
+    BoxMiddle = 50,
+    WhiskerMin = 25,
+    WhiskerMax = 85
+};
+MainPlot.Plot.Add.[[3]](new[] { box });</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong> In <code>ScottPlot.Box</code> definieren <code>BoxMin</code> und <code>BoxMax</code> das 25-%-Quartil (\(Q_1 = 40\)) und das 75-%-Quartil (\(Q_3 = 60\)), <code>BoxMiddle</code> den Median (<code>50</code>) und <code>WhiskerMin/Max</code> die Antennenenden. Hinzugefügt wird die Liste über <code>Plot.Add.Boxes(...)</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T10_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[40]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[60]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Boxes]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[25]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[85]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[40]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[25]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[DataStreamer]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Signal]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Konzept-Zuordnung: WPF-Vektorgrafik-Elemente und Eigenschaften (Kapitel 03) (matching, 1.0000000 Pkt.) -->
+  <question type="matching">
+    <name>
+      <text>Q02_T10_Q5: Konzept-Zuordnung: WPF-Vektorgrafik-Elemente und Eigenschaften (Kapitel 03)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ordnen Sie den vier WPF-Eigenschaften bzw. Klassen aus Kapitel 03 jeweils ihre technische Funktion beim Zeichnen von 2D-Vektorgrafiken zu (beachten Sie die zwei Überhang-Distraktoren).</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Lösung:</strong> <code>StrokeDashArray</code> steuert Strichelungen, <code>Panel.ZIndex</code> die Überdeckungsreihenfolge (z. B. Stäbe hinten, Knoten/Texte vorne), <code>SetLeft/Top</code> mit <code>-radius</code> zentriert Kreise und <code>RotateTransform</code> richtet Maßzahlen aus.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T10_Q5</idnumber>
+    <shuffleanswers>true</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <subquestion format="html">
+      <text><![CDATA[StrokeDashArray = new DoubleCollection { 4, 2 }]]></text>
+      <answer>
+        <text><![CDATA[Erzeugt ein gestricheltes Linienmuster (4 Einheiten Strich, 2 Einheiten Lücke) für Hilfslinien oder Symmetrieachsen]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Panel.SetZIndex(uiElement, 10)]]></text>
+      <answer>
+        <text><![CDATA[Steuert die Zeichenreihenfolge (Tiefenebene) im Canvas, damit Knoten und Bemaßungen vor den Stäben liegen]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Canvas.SetLeft(element, x - radius) und Canvas.SetTop(element, y - radius)]]></text>
+      <answer>
+        <text><![CDATA[Positioniert ein kreisförmiges Knoten-Ellipse-Element zentriert auf dem berechneten Screen-Punkt (x, y)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[RenderTransform = new RotateTransform(angleDeg, centerX, centerY)]]></text>
+      <answer>
+        <text><![CDATA[Dreht einen Bemaßungs-TextBlock im Screen Space exakt parallel zur Neigung des zugehörigen Stabs]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Aktiviert den 3D-Tiefenpuffer (GL_DEPTH_TEST) der Grafikkarte für Dreiecksnetze]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[Berechnet die numerische Cholesky-Zerlegung der globalen Steifigkeitsmatrix]]></text>
+      </answer>
+    </subquestion>
+  </question>
+
+  <!-- Question 6: WPF-Koordinaten: Geräteunabhängige Pixel (DIP) und High-DPI-Skalierung (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T10_Q6: WPF-Koordinaten: Geräteunabhängige Pixel (DIP) und High-DPI-Skalierung</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Warum bleiben eine im WPF-Canvas gezeichnete Vektorlinie mit <code>StrokeThickness = 2.0</code> und eine Schriftgröße von <code>12.0</code> auch auf einem hochauflösenden 4K-Monitor mit \(200\,\%\) Windows-Skalierung (\(192\,\text{DPI}\)) exakt gleich groß und gestochen scharf?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Vorteil von Vektorgrafik (Kap. 03):</strong> Durch die Kombination aus mathematischer Vektorbeschreibung und geräteunabhängigen Einheiten (DIP = \(1/96\,\text{Zoll}\)) sind WPF-Canvas-Zeichnungen vollständig auflösungsunabhängig.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T10_Q6</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Weil WPF in geräteunabhängigen Einheiten (1/96 Zoll) rechnet und Vektorgeometrien vor der Rasterisierung automatisch mit dem Monitor-DPI-Faktor multipliziert.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Eine WPF-Einheit entspricht 1/96 Zoll. Bei 192 DPI (200 % Skalierung) rendert die Vektor-Engine eine Linie der Dicke 2.0 DIP automatisch mit 4 physischen Monitorpixeln.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil WPF auf 4K-Monitoren die Bildschirmauflösung der Grafikkarte beim Programmstart zwangsweise auf Full-HD (1920 x 1080) herunterstellt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. WPF ändert niemals die native Bildschirmauflösung des Betriebssystems.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil Canvas-Elemente intern als komprimierte JPEG-Bitmaps gespeichert werden, die ein neuronales Netz im Grafiktreiber nachschärft.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. WPF Canvas speichert echte mathematische Vektorbeschreibungen, keine JPEG-Bitmaps.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Weil die Eigenschaft ActualWidth eines Canvas die physische Monitorbreite in Zentimetern über die Webcam des Laptops optisch vermisst.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Die Umrechnung basiert rein auf dem im Betriebssystem hinterlegten DPI-Skalierungsfaktor (96 DPI Basis).</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 7: C#-Bug-Diagnose: Dezentrierte Knotenkreise durch fehlenden Radius-Abzug bei Canvas.SetLeft/Top (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T10_Q7: C#-Bug-Diagnose: Dezentrierte Knotenkreise durch fehlenden Radius-Abzug bei Canvas.SetLeft/Top</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Studierender zeichnet die Stäbe eines Fachwerks exakt zwischen den Screen-Koordinaten <code>(sx, sy)</code> der Knoten. Anschließend zeichnet er jeden Gelenkknoten als Kreis (<code>Ellipse</code> mit <code>Width = 12, Height = 12</code>) über <code>Canvas.SetLeft(ellipse, sx); Canvas.SetTop(ellipse, sy);</code>. Auf dem Bildschirm hängen alle Knotenkreise schräg rechts unterhalb der Stab-Endpunkte! Warum?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Merksatz für WPF Canvas:</strong> Während <code>Line.X1/Y1</code> direkt Punktkoordinaten sind, positionieren <code>Canvas.SetLeft(el, x)</code> und <code>Canvas.SetTop(el, y)</code> stets die <strong>linke obere Ecke</strong> des Elements. Für einen zentrierten Kreis vom Radius \(r\) gilt daher: <code>SetLeft(el, sx - r)</code> und <code>SetTop(el, sy - r)</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T10_Q7</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Canvas.SetLeft und SetTop positionieren die linke obere Ecke der Bounding-Box der Ellipse, weshalb der halbe Durchmesser (Radius 6 px) abgezogen werden muss.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Damit der Kreismittelpunkt auf (sx, sy) liegt, muss die linke obere Ecke der 12x12-Ellipse auf (sx - 6, sy - 6) gesetzt werden.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Klasse Ellipse besitzt in WPF einen Konstruktionsfehler und zeichnet Kreise grundsätzlich um 45 Grad phasenverschoben zum Koordinatenursprung.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Ellipse arbeitet absolut präzise; Bezugspunkt aller UIElemente im Canvas ist immer deren linke obere Ecke.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Für Kreise müssen Width und Height in WPF negativ angegeben werden, damit der Mittelpunkt automatisch in das Zentrum der Linie wandert.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Negative Breiten oder Höhen werfen in WPF sofort eine Laufzeit-Exception.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Methoden Canvas.SetLeft und SetTop erwarten die Koordinaten in Millimetern statt in Pixeln, während Line.X1 und Y1 in Pixeln arbeiten.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Sowohl Line.X1/Y1 als auch Canvas.SetLeft/SetTop verwenden exakt dieselben geräteunabhängigen Einheiten (DIP).</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 8: Systemanalyse: Entkopplung von Datenmodell, Layout-Mathematik und UI-Rendering (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T10_Q8: Systemanalyse: Entkopplung von Datenmodell, Layout-Mathematik und UI-Rendering</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Welche <strong>zwei</strong> Software-Architekturprinzipien aus Kapitel 03 und 04 sorgen für wartbare, testbare und ruckelfreie Simulationsanwendungen?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong> Saubere Simulationsarchitektur trennt das <strong>physikalische Modell</strong> (World Space, SI-Einheiten, Welford-Statistik) strikt von der <strong>Darstellungsschicht</strong> (<code>Transform2D</code>, <code>Canvas</code>, <code>ScottPlot 5</code>).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T10_Q8</idnumber>
+    <single>false</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Das physikalische Domänenmodell speichert alle Größen ausschließlich in SI-Einheiten (Meter, Newton, Kelvin) und kennt keinerlei Pixel- oder Canvas-Klassen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Durch die strikte Trennung von World Space (Domänenmodell) und Screen Space (View/Transform2D) bleibt die Physik unabhängig von der Fenstergröße.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Bei Fenstergrößenänderungen (SizeChanged) wird nur die Transformationsvorschrift (Transform2D) aktualisiert und neu gezeichnet, ohne die Simulation neu zu rechnen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Ein Resize des Anwendungsfensters ändert nur die Projektion auf den Bildschirm (View), nicht aber den physikalischen Zustand des Digitalen Zwillings.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Die Knoten-Koordinaten im physikalischen Berechnungsmodell müssen bei jedem Zoomen direkt mit dem aktuellen Pixelmaßstab überschrieben werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch! Würde man die Modellkoordinaten beim Zoomen mit Pixelwerten überschreiben, würden sich alle Stablängen und Steifigkeiten im Physik-Löser verfälschen.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Statistische Kennwerte wie der Welford-Mittelwert dürfen nur durch Auslesen der Bildschirm-Pixelfarben aus der fertigen Grafik-Bitmap ermittelt werden.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch! Statistik wird präzise auf den numerischen double-Rohdaten im Datenmodell berechnet, niemals aus gerasterten Bildschirm-Pixeln.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

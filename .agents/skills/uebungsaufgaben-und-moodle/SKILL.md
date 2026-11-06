@@ -85,22 +85,61 @@ Da jedes Quiz in den ersten 15 Minuten **vor** dem Theorie-Impuls des jeweiligen
 | **Quiz 03** | Zu Beginn von **Termin 08** | **Kapitel 05, 06, 07** *(T05, T06 & T07)* | SharpGL 3D-Pipeline, Kugelkoordinaten-Orbit-Kamera & Gimbal-Lock-Schutz, homogene $4\times 4$-Matrizen, Szenengraph (`glPushMatrix`/`glPopMatrix`), Vorwärtskinematik, Phong-Beleuchtung; TPL (`Parallel.For`, Partitionierung, Race Conditions, `Interlocked` vs. `lock`, False Sharing auf Cache-Lines, Amdahlsches Gesetz & Speedup); Statische 2D-FEM-Fachwerke ($EA/L$, globale Steifigkeitsmatrix $\mathbf{K}$, Blockpartitionierung $\mathbf{K}_{ff}$, Starrkörpermoden & Lagerungen, Cholesky-Zerlegung $\mathbf{K}_{ff} = \mathbf{L}\mathbf{L}^\top$). | **Noch keine kontinuierlichen ODE-Solver höherer Ordnung (RK4), keine S-Functions, kein Anti-Windup (Kap. 08 wird erst nach dem Quiz gelehrt!)**, kein DES! |
 | **Quiz 04** | Zu Beginn von **Termin 10** | **Kapitel 08, 09** *(T08 & T09)* | Zustandsraumdarstellung 1. Ordnung, Euler vs. Heun (RK2) vs. RK4 (Butcher-Tableau, Konsistenz-/Konvergenzordnung, Stabilitätsgebiete), Simulink-analoge S-Functions (`ComputeDerivatives`, `ComputeOutputs`), Aktor-Sättigung & Anti-Windup Clamping; Diskrete Ereignissimulation (DES, Next-Event-Time-Advance, Future Event List via `PriorityQueue`, Kendall-Notation $M/M/1$ & $M/M/c/K$, zeitgewichtetes Flächenintegral `areaUnderL`, Little's Gesetz $\bar{L} = \lambda_{\text{eff}} \bar{W}$), Stochastik (Inversionsmethode $-\frac{1}{\lambda}\ln(1-U)$, Box-Muller). | **Noch keine hybride Zero-Crossing-Bisektion, kein Zeno-Kollaps, kein FMI/VIBN (Kap. 10/11 werden erst nach dem Quiz gelehrt!)** |
 
-### 3.2 Zielumfang für 15 Minuten Prüfungszeit: 8 Fragen / 10,0 Punkte
-Damit Studierende die 15 Minuten konzentriert nutzen und nicht nach 4 Minuten durch Raten fertig sind, besteht jedes Quiz (`Quiz_0X.md` und `Quiz_0X.gift.txt`) aus **exakt 8 Fragen (Summe: 10,0 Punkte)**:
-- **3 Numerische Berechnungs- & Code-Tracing-Fragen (Freitext-Zahleneingabe `{#...}` im GIFT-Format, zusammen 5,0 Punkte: 1× 2,0 P. + 2× 1,5 P.):**
-  - Mindestens 2 mehrstufige Ingenieurs-Rechenfragen (ohne vorgegebene Lösungsformel im Text!) und 1 C#-Code-Tracing-Frage (bei der der exakte numerische Ausgabewert, Index oder Zustand nach Ausführung eines kurzen Code-Snippets frei eingetippt werden muss).
-- **3 Single-Choice-Fragen (4 Optionen A–D, genau 1 richtig, je 1,0 Punkt = 3,0 Punkte):**
-  - Fokus auf tiefes Konzeptverständnis, subtile C#-Bug-Diagnose („Find the Bug“) und numerisch-physikalische Phänomene.
-- **2 Multiple-Select-Fragen (4 Optionen A–D, 2 oder 3 richtig mit symmetrischer Teilpunkte-Gewichtung in GIFT, je 1,0 Punkt = 2,0 Punkte):**
-  - Prüfung vernetzter Zusammenhänge über beide/alle Kapitel des jeweiligen Quiz-Zeitraums.
+### 3.2 Datenverwaltung & 10-Varianten-Architektur in Moodle XML (`XML_Tests/Test_01..10.xml`)
+Für jedes finalisierte Moodle-Quiz (abgeschlossen vor dem jeweiligen Prüfungstermin, sobald die zugehörigen Folien final sind) gilt folgende verbindliche **10-Varianten-Taktik und Dateistruktur**:
+- **Ordnernamen (gemäß Rückwärts-Kausalität):**
+  - `Moodle/Quiz_01_Termin_03_Grundlagen_und_Pixel/`
+  - `Moodle/Quiz_02_Termin_05_Vektor_und_Diagramme/`
+  - `Moodle/Quiz_03_Termin_08_3D_Multithreading_Statik/`
+  - `Moodle/Quiz_04_Termin_10_DGL_und_DES/`
+- **Single Source of Truth (Generator-Skript `Skripte/generate_moodle_xml_quiz_0X.js` + Shared Builder `Skripte/moodle_xml_builder.js`):**
+  - Jedes finalisierte Quiz wird über ein dediziertes Node.js-Skript `Skripte/generate_moodle_xml_quiz_0X.js` generiert, das zwingend das zentrale Builder- und Validierungsmodul [`Skripte/moodle_xml_builder.js`](../../Skripte/moodle_xml_builder.js) (`exportMoodleQuiz({...})`) nutzt.
+  - **Architektur- & Chunking-Pflicht gegen Stream-Timeouts (KRITISCH für Agenten & Subagenten!):**
+    1. **Kein Boilerplate-Duplikat:** XML-Serialisierung, CDATA-Wrapping, Markdown-Katalog-Formatierung und Psychometrie-Checks (8 Fragen = 10,0 Pkt., $\le 25\,\%$ Längen-Symmetrie bei `multichoice`, Pflicht-Feedbacks) liegen zentral in `Skripte/moodle_xml_builder.js`. Die Skripte `Skripte/generate_moodle_xml_quiz_0X.js` enthalten ausschließlich das Daten-Array `tests` und den Aufruf `exportMoodleQuiz(...)`.
+    2. **Inkrementelles Schreiben in 3 Chunks:** Da 10 Tests × 8 Fragen mit ausführlichem Feedback ca. 1.000–1.500 Zeilen umfassen, darf ein Agent `generate_moodle_xml_quiz_0X.js` **niemals in einem einzigen monolithischen `write_file`-Aufruf** schreiben (Gefahr von 5-Minuten-Stream-Timeouts!). Stattdessen ist die Datei zwingend in **3 kleinen Teilschritten** aufzubauen:
+       - *Schritt 1 (`write_file`):* Grundgerüst mit `Tests 01–03` (Vorbereitung) anlegen.
+       - *Schritt 2 (`edit_file`):* `Tests 04–07` (Prüfung Teil 1) einfügen.
+       - *Schritt 3 (`edit_file`):* `Tests 08–10` (Prüfung Teil 2) einfügen und sofort `node Skripte/generate_moodle_xml_quiz_0X.js` ausführen.
+    3. **Kontext-Disziplin:** Beim Erstellen der Quiz-Skripte nicht die kompletten, tausende Zeilen langen `Folien.md`-Dateien in denselben Agenten-Kontext laden, sondern gezielt mit den kompakten Formeln und Themen aus Abschnitt 3.1 arbeiten.
+  - Es dürfen **keine konkurrierenden Einzel-Dateien (`Quiz_0X.md` / `.gift.txt`)** parallel zu den generierten 10 XML-Tests im Ordner liegen (Einzel-Entwürfe dienen nur als vorläufiger Blueprint für spätere Termine, deren Folien noch nicht final sind).
+  - Das Skript generiert im jeweiligen Quiz-Ordner:
+    1. `XML_Tests/Test_01_Vorbereitung.xml` bis `Test_03_Vorbereitung.xml` (**3 Vorbereitungstests**, die den Studierenden vorab in Moodle zum unbegrenzten Üben mit vollem Lösungsfeedback freigeschaltet werden).
+    2. `XML_Tests/Test_04_Pruefung.xml` bis `Test_10_Pruefung.xml` (**7 Prüfungstests**, aus denen zu Beginn der Präsenzveranstaltung zufällig genau 1 Test für die 15-minütige Prüfung gezogen wird).
+    3. `Quiz_0X_Termin_YY_Alle_10_Tests_Master.xml` (Master-Importdatei mit allen 10 Kategorien `$course$/Quiz_0X_Termin_YY/Test_ZZ_...`).
+    4. `Uebersicht_10_Moodle_Tests.md` (vollständiger, menschenlesbarer Katalog aller 10 Tests mit Übersichtstabelle, allen Fragen, Antwortoptionen, Toleranzen und Musterherleitungen).
 
-### 3.3 Strikte Anti-Bias-Regeln für Antwortoptionen (Verbot von „Giveaways“)
-1. **Längen-Symmetrie (Kein Length Bias!):**
-   - Alle 4 Antwortoptionen (A, B, C, D) einer Frage **müssen gleich lang und gleich detailliert formuliert sein** (jeweils 1–2 präzise Sätze; die Zeichenlänge der längsten Option darf maximal $25\,\%$ über der kürzesten Option liegen).
-   - **Verboten:** Eine 3-zeilige Lehrbuch-Erklärung als richtige Antwort neben drei kurzen Einzeilern als Falschantworten! Ausführliche Herleitungen gehören ausschließlich in das `####Feedback` bzw. den Lösungsblock unter der Frage, niemals in den Auswahltext selbst.
-2. **Technisch plausible Ingenieurs-Fehlkonzepte statt Scherzantworten:**
-   - Absurde Distraktoren (*„WPF unterstützt `Math.Sin` nur im Screen Space“*, *„funktioniert nur unter Linux“*, *„Kosinus verbraucht zu viele Register“*) sind **streng verboten**.
-   - Jede falsche Option muss einen **echten, häufigen Denkfehler von Studierenden oder LLMs** repräsentieren (z. B. 1D-Stabilitätsgrenze $s \le 0{,}5$ statt 2D-Grenze $s \le 0{,}25$; Vergessen der Y-Invertierung; `Math.Max` statt `Math.Min` beim Letterboxing; Kommutativitätsfehler $\mathbf{R}\cdot\mathbf{T}$ statt $\mathbf{T}\cdot\mathbf{R}$; Verwechslung von lokalem Fehler $\mathcal{O}(h^{p+1})$ und globalem Fehler $\mathcal{O}(h^p)$; Verwendung von $\lambda$ statt $\lambda_{\text{eff}} = \lambda(1 - P_{\text{Block}})$ bei endlichem Puffer $K$).
-3. **Keine Formeln oder Zwischenschritte im Fragetext verraten:**
+### 3.3 Zielumfang, voller Moodle-Fragetypen-Mix (100 % Auto-Grading) & Feedback-Pflicht
+Jeder der 10 Tests (`Test_01` bis `Test_10`) besteht aus **exakt 8 Fragen (Summe: 10,0 Punkte)** für 15 Minuten Prüfungszeit und wird von Moodle **zu 100 % vollautomatisch korrigiert** (0 Minuten manueller Korrekturaufwand; keine offenen Freitext-Aufsatzfragen `essay`!).
+
+Um maximale didaktische Abwechslung, faire Teilpunkte und Schutz gegen Raten zu gewährleisten, wird in jedem Test der **volle Mix aus nativen Moodle-XML-Fragetypen** passend zum jeweiligen Stoff eingesetzt:
+1. **Rechen- & Code-Tracing-Fragen (2–3 Fragen, zusammen ca. 4,0–5,0 Punkte):**
+   - **`<question type="numerical">` (Numerisch):** Zahleneingabe mit exaktem Zielwert und `<tolerance>`. **Wichtig:** Hinterlege neben der `100 %`-Hauptantwort (`fraction="100"`) auch **automatische `50 %`-Teilpunkte-Antworten (`fraction="50"`)** für typische Einheiten-/Zehnerpotenz- oder Vorzeichenfehler (z. B. Eingabe in `s` statt `ms`, oder fehlende Y-Inversion) inklusive spezifischem `<feedback>`, das genau diesen Fehler erklärt!
+   - **`<question type="cloze">` (Eingebettete Antworten / Lückentext für mehrstufige Rechnungen):** Erlaubt innerhalb einer mehrstufigen Rechenaufgabe separate Eingabefelder für Zwischenschritte und Endergebnis (z. B. `{1:NUMERICAL:=20:0.1#Exakt! Skalierungsfaktor s = min(sx, sy).~%50%25:0.1#Teilpunkte: Hier wurde sx statt min(sx, sy) gewählt.}` und `{1:NUMERICAL:=220:0.5#Richtig! Y_screen inkl. Y-Inversion.}`), sodass Folgefehler nicht zum Punktverlust für richtige Zwischenschritte führen.
+2. **Interaktive Code- & Pipeline-Fragen (1–2 Fragen, je 1,0 Punkt):**
+   - **`<question type="gapselect">` (Lückentext-Auswahl / „Fill in the C# Code“):** Ein C#-Code-Block mit 2–4 Lücken `[[1]]`, `[[2]]`, `[[3]]`, die per Inline-Dropdown (`<selectoption><text>...</text><group>1</group></selectoption>`) direkt im Code vervollständigt werden (automatische Teilpunkte pro richtiger Lücke, 0 % Längen-Bias).
+   - **`<question type="ddwtos">` (Drag-and-Drop in Text / Pipeline- & Matrix-Reihenfolge):** Ziehen von 3–4 Pipeline-Schritten oder Matrix-Operatoren in die richtige Ausführungsreihenfolge `[[1]]` $\to$ `[[2]]` $\to$ `[[3]]` $\to$ `[[4]]` (`<dragbox><text>...</text><group>1</group></dragbox>`).
+3. **Konzept- & Architektur-Zuordnung (1 Frage, 1,0 Punkt):**
+   - **`<question type="matching">` (Zuordnungsfrage mit Überhang-Distraktoren):** 4 Stamm-Einträge (`<subquestion>` mit `<text>` und `<answer>`) plus **1–2 zusätzliche leere `<subquestion><text></text><answer>...</answer></subquestion>` als Überhang-Distraktoren**, damit das vierte Paar nicht per Ausschlussprinzip erraten werden kann (automatische 25 % Teilpunkte pro richtigem Paar).
+4. **Klassische Diagnose- & Systemverständnis-Fragen (2–3 Fragen, je 1,0 Punkt):**
+   - **`<question type="multichoice">` mit `<single>true</single>` (Single-Choice):** 4 längensymmetrische Optionen A–D (`fraction="100"` / `fraction="0"`) zu subtilen C#-Bugs oder numerisch-physikalischen Phänomenen.
+   - **`<question type="multichoice">` mit `<single>false</single>` (Multiple-Select):** 4 längensymmetrische Optionen A–D (z. B. 2 richtig mit je `fraction="50"` und 2 falsch mit je `fraction="-50"`).
+
+#### Verbindliche Moodle-Feedback-Architektur für ALLE Fragen:
+Jede Frage in Moodle XML **muss** den automatischen Feedback-Mechanismus von Moodle auf allen Ebenen voll ausschöpfen:
+- **Spezifisches Options-/Antwort-Feedback (`<feedback format="html">` bzw. `#Feedback` in Cloze):** Bei `multichoice` (Single & Multiple) und `numerical` muss **jede einzelne Antwortoption** (sowohl die richtigen als auch jede einzelne falsche Option bzw. Teilpunkte-Antwort!) ein eigenes, fachlich präzises `<feedback>` besitzen, das dem Studierenden sofort erklärt, *warum* diese Option richtig ist bzw. *welcher konkrete Ingenieurs-/Programmier-Denkfehler* zu dieser Falschantwort geführt hat.
+- **Kombiniertes Status-Feedback (`<correctfeedback>`, `<partiallycorrectfeedback>`, `<incorrectfeedback>`):** Bei allen `multichoice`-, `gapselect`-, `ddwtos`- und `matching`-Fragen stets aussagekräftig befüllen.
+- **Ausführliches Gesamt-Feedback (`<generalfeedback format="html">`):** Enthält die vollständige mathematische Schritt-für-Schritt-Musterherleitung bzw. den korrigierten C#-Code.
+
+### 3.4 Strikte Anti-Bias- & Anti-Schablonen-Regeln (Verbot von „Giveaways“ und Muster-Auswendiglernen)
+1. **Variation der Fragerichtung zwischen Vorbereitung (`Test_01`–`03`) und Prüfung (`Test_04`–`10`):**
+   - Da die Studierenden `Test_01` bis `Test_03` zur Vorbereitung kennen, dürfen `Test_04` bis `Test_10` **nicht bloß dieselben 8 Fragetexte mit ausgetauschten Zahlen** sein!
+   - Variiere über die 10 Tests hinweg systematisch die **gesuchte Zielgröße / Rechenrichtung** (z. B. bei affiner 2D-Transformation mal Skalierungsfaktor $s$, mal Bildschirmkoordinate $Y_{\text{screen}}$ mit Y-Inversion, mal $X_{\text{screen}}$ mit Zentrierungsoffset, mal Rücktransformation `ScreenToWorld` bei Maus-Klick, mal Pfeilspitzen-Eckpunkt oder DIN-406-Gesamthöhe; beim Code-Tracing mal Ringpuffer-Modulo-Index, mal Welford-Mittelwert $\mu_k$, mal Welford-$M_{2,k}$, mal Downsampling-Index) sowie die konkreten Code-Bugs und Diagnose-Szenarien in den MC-/MS-Fragen.
+2. **Längen-Symmetrie (Kein Length Bias!):**
+   - Alle 4 Antwortoptionen (A, B, C, D) einer Single-Choice- oder Multiple-Select-Frage **müssen gleich lang und gleich detailliert formuliert sein** (jeweils 1–2 präzise Sätze; die Zeichenlänge der längsten Option darf maximal $25\,\%$ über der kürzesten Option liegen).
+   - **Verboten:** Eine 3-zeilige Lehrbuch-Erklärung als richtige Antwort neben drei kurzen Einzeilern als Falschantworten! Ausführliche Herleitungen gehören ausschließlich in das `<generalfeedback>` bzw. Antwort-`<feedback>`, niemals in den Auswahltext selbst.
+3. **Technisch plausible Ingenieurs-Fehlkonzepte statt Scherzantworten:**
+   - Absurde Distraktoren (*„WPF unterstützt `Math.Sin` nur im Screen Space“*, *„WritePixels darf nur aus einem GPU-Shader aufgerufen werden“*) sind **streng verboten**.
+   - Jede falsche Option muss einen **echten, häufigen Denkfehler von Studierenden oder LLMs** repräsentieren (z. B. 1D-Stabilitätsgrenze $s \le 0{,}5$ statt 2D-Grenze $s \le 0{,}25$; Vergessen der Y-Invertierung; `Math.Max` statt `Math.Min` beim Letterboxing; Kommutativitätsfehler $\mathbf{R}\cdot\mathbf{T}$ statt $\mathbf{T}\cdot\mathbf{R}$; Verwendung von $\lambda$ statt $\lambda_{\text{eff}} = \lambda(1 - P_{\text{Block}})$).
+4. **Keine Formeln oder Zwischenschritte im Fragetext verraten:**
    - Der Fragetext nennt ausschließlich das physikalisch-technische Szenario und die gegebenen Rohgrößen (mit Einheiten).
    - **Verboten im Fragetext:** Das Abdrucken der gesuchten Grundformeln (wie $\Delta t_{\max} = \frac{\Delta x^2}{4\alpha}$, `ys = canvasHeight - (offsetY + ...)`, Amdahls Formel $S(N) = \dots$, Welford-Update, Cholesky-Gleichung, Little's Law $L = \lambda W$, Inversionsformel) oder das Vorrechnen von Zwischenwerten (wie $s = 0{,}375 > 0{,}25$ oder $W = 10\,\text{Min} = \frac{1}{6}\,\text{h}$).

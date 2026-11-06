@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_02_Termin_05/Test_02_Vorbereitung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Quiz 02 - Test 02 (Vorbereitungstest): Letterboxing-Offsets, Welford-M2 & ScottPlot-Streaming</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: Affine 2D-Transformation: Letterboxing-Zentrierung und X-Screen-Koordinate (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
+    <name>
+      <text>Q02_T02_Q1: Affine 2D-Transformation: Letterboxing-Zentrierung und X-Screen-Koordinate</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein hydraulischer Steuerblock mit den Abmessungen \(\Delta X = 2{,}0\,\text{m}\) (\(x_{\min}=0\,\text{m}\), \(x_{\max}=2{,}0\,\text{m}\)) und \(\Delta Y = 2{,}0\,\text{m}\) soll mit einem umlaufenden Rand von \(\text{margin} = 40\,\text{px}\) verzerrungsfrei auf einem WPF-Canvas der Gesamtgröße \(W_{\text{canvas}} = 680\,\text{px}\) mal \(H_{\text{canvas}} = 480\,\text{px}\) zentriert werden (nutzbare Fläche \(W_{\text{eff}} = 600\,\text{px}\), \(H_{\text{eff}} = 400\,\text{px}\)). Der uniforme Skalierungsfaktor beträgt \(s = 200\,\text{px/m}\).</p>
+<p><strong>a)</strong> Berechnen Sie den gesamten horizontalen Randabstand \(\text{offset}_X\) (in \(\text{px}\)) vom linken Canvas-Rand bis zum Beginn des Bauteils bei \(x_{\min}=0\,\text{m}\) (inklusive <code>margin</code> und Letterboxing-Zentrierung): {1:NUMERICAL:=140:0.5#Exakt! Gebrauchte Breite = 2.0 * 200 = 400 px; Freiraum = 600 - 400 = 200 px; offset_X = 40 + 200/2 = 140 px.~%50%100:0.5#Teilpunkte: 100 px ist nur der halbe Letterboxing-Freiraum (600-400)/2 ohne den linken Rand margin = 40 px.}</p>
+<p><strong>b)</strong> Berechnen Sie die horizontale Bildschirmkoordinate \(X_{\text{screen}}\) (in \(\text{px}\)) für eine Ventilbohrung bei \(x = 1{,}25\,\text{m}\): {1:NUMERICAL:=390:0.5#Richtig! X_screen = 140 + 1.25 * 200 = 140 + 250 = 390 px.~%50%290:0.5#Teilpunkte: Folgefehler aus Teil a (40 px margin vergessen: 40 + 250 = 290 px) oder unzentriert gerechnet.}</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<ol>
+  <li><strong>Belegte Breite in Pixeln:</strong> \(W_{\text{used}} = \Delta X \cdot s = 2{,}0\,\text{m} \cdot 200\,\text{px/m} = 400\,\text{px}\).</li>
+  <li><strong>Horizontaler Letterboxing-Offset:</strong> \(\text{offset}_X = \text{margin} + \frac{W_{\text{eff}} - W_{\text{used}}}{2} = 40 + \frac{600 - 400}{2} = 40 + 100 = 140\,\text{px}\).</li>
+  <li><strong>Bildschirmkoordinate:</strong> \(X_{\text{screen}} = \text{offset}_X + (x - x_{\min}) \cdot s = 140 + 1{,}25 \cdot 200 = 390\,\text{px}\).</li>
+</ol>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T02_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Welford-Online-Algorithmus: Aktualisierung der Abweichungsquadratsumme M2 (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T02_Q2: Welford-Online-Algorithmus: Aktualisierung der Abweichungsquadratsumme M2</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einer Welford-Statistik-Instanz liegen nach \(k-1 = 3\) Messungen der Mittelwert \(\mu_3 = 10{,}0\,\text{bar}\) und die Quadratsumme \(M_{2,3} = 14{,}0\,\text{bar}^2\) vor. Der \(k = 4\)-te Messwert beträgt \(x_4 = 18{,}0\,\text{bar}\), woraus sich \(\Delta_1 = 8{,}0\,\text{bar}\) und der neue Mittelwert \(\mu_4 = 12{,}0\,\text{bar}\) ergeben.</p>
+<p>Berechnen Sie den neuen Wert der Quadratsumme \(M_{2,4}\) (in \(\text{bar}^2\)) nach dem vierten Messwert.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<p>Im Welford-Algorithmus wird \(M_2\) mit dem Produkt aus der Abweichung vom <em>alten</em> Mittelwert (\(\Delta_1 = x_k - \mu_{k-1} = 8{,}0\)) und der Abweichung vom <em>neuen</em> Mittelwert (\(\Delta_2 = x_k - \mu_k = 18{,}0 - 12{,}0 = 6{,}0\)) aktualisiert:<br>
+\(M_{2,4} = M_{2,3} + \Delta_1 \cdot \Delta_2 = 14{,}0 + 8{,}0 \cdot 6{,}0 = 62{,}0\,\text{bar}^2\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T02_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>62</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Delta_2 = x_4 - mu_4 = 18.0 - 12.0 = 6.0; M2_4 = 14.0 + 8.0 * 6.0 = 14.0 + 48.0 = 62.0 bar^2.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>78</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben M2 + Delta_1^2 = 14 + 64 = 78 gerechnet statt Delta_1 * Delta_2 (mit dem neuen Mittelwert mu_4) zu verwenden!</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Hit-Testing-Abstandsquadrat im Screen Space (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T02_Q3: C#-Code-Tracing: Hit-Testing-Abstandsquadrat im Screen Space</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Beim Maus-Klick auf ein WPF-Canvas prüft folgende Methode, ob ein Fachwerkknoten bei <code>nodeScreen = (120, 200)</code> innerhalb des Fangradius <code>snapRadius = 10.0</code> getroffen wurde:</p>
+<pre><code class="language-csharp">double mouseX = 126.0, mouseY = 192.0;
+double dx = mouseX - 120.0;
+double dy = mouseY - 200.0;
+double distSquared = dx * dx + dy * dy;</code></pre>
+<p>Welchen numerischen Wert hat <code>distSquared</code> (in \(\text{px}^2\))?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong> \(\Delta x = 126 - 120 = 6\,\text{px}\), \(\Delta y = 192 - 200 = -8\,\text{px}\). Damit ist \(\text{distSquared} = 6^2 + (-8)^2 = 36 + 64 = 100\,\text{px}^2\). Da man im Hit-Testing <code>distSquared &lt;= snapRadius * snapRadius</code> prüft, spart man sich den teuren <code>Math.Sqrt</code>-Aufruf.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T02_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>100</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! dx = 6, dy = -8; distSquared = 6^2 + (-8)^2 = 36 + 64 = 100 px^2.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>10</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: 10 px ist die gezogene Wurzel ( euklidische Distanz), gefragt war aber distSquared = 100 px^2.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Code-Lückentext: Rücktransformation ScreenToWorld für Maus-Interaktion (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>Q02_T02_Q4: C#-Code-Lückentext: Rücktransformation ScreenToWorld für Maus-Interaktion</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie die Methode <code>ScreenToWorld</code> in der Klasse <code>Transform2D</code>, die einen Mausklick <code>(xScreen, yScreen)</code> zurück in physikalische Weltkoordinaten <code>(xWorld, yWorld)</code> umrechnet:</p>
+<pre><code class="language-csharp">public (double xWorld, double yWorld) ScreenToWorld(double xScreen, double yScreen)
+{
+    double xWorld = XMin + (xScreen - OffsetX) / [[1]];
+    double yFromBottom = [[2]] - yScreen;
+    double yWorld = YMin + (yFromBottom - [[3]]) / Scale;
+    return (xWorld, yWorld);
+}</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong> Zur Umkehrung von \(X_{\text{screen}} = \text{OffsetX} + (x - X_{\min}) \cdot \text{Scale}\) subtrahiert man <code>OffsetX</code> und teilt durch <code>Scale</code>. Für Y macht man zuerst die Y-Inversion über <code>CanvasHeight - yScreen</code> rückgängig, zieht <code>OffsetY</code> ab und teilt durch <code>Scale</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T02_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[Scale]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[CanvasHeight]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[OffsetY]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[CanvasWidth]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[OffsetX]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[yScreen]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[YMax]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[XMin]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Scale]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Pipeline-Reihenfolge: Die 4 Phasen des Sugiyama-Schichtenlayouts in MSAGL (ddwtos, 1.0000000 Pkt.) -->
+  <question type="ddwtos">
+    <name>
+      <text>Q02_T02_Q5: Pipeline-Reihenfolge: Die 4 Phasen des Sugiyama-Schichtenlayouts in MSAGL</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Bringen Sie die <strong>vier klassischen Algorithmus-Phasen des Sugiyama-Schichtenlayouts</strong> (Layered Graph Drawing in MSAGL) in die korrekte Ausführungspipeline:</p>
+<p><strong>Schritt 1:</strong> [[1]] (temporäres Umkehren von Rückwärtskanten, um einen azyklischen Graphen DAG zu erzeugen)<br>
+<strong>Schritt 2:</strong> [[2]] (Einteilung aller Knoten in diskrete horizontale bzw. vertikale Hierarchie-Ebenen)<br>
+<strong>Schritt 3:</strong> [[3]] (Permutieren der Knotenreihenfolge innerhalb der Schichten zur Minimierung von Kantenüberschneidungen)<br>
+<strong>Schritt 4:</strong> [[4]] (Bestimmung der exakten metrischen X/Y-Koordinaten und Spline-Kontrollpunkte)</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Sugiyama-Pipeline:</strong> 1. Cycle Removal \(\to\) 2. Layer Assignment \(\to\) 3. Crossing Reduction \(\to\) 4. Coordinate Assignment & Edge Routing.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T02_Q5</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <dragbox>
+      <text><![CDATA[Cycle Removal (Zyklenbeseitigung)]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Layer Assignment (Schichtenzuweisung)]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Crossing Reduction (Kreuzungsminimierung)]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Coordinate Assignment (Koordinatenberechnung)]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Delaunay Triangulation (Vernetzung)]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Z-Buffer Rasterization (Tiefentest)]]></text>
+      <group>1</group>
+    </dragbox>
+  </question>
+
+  <!-- Question 6: WPF-Architektur: Retained Mode (Canvas) vs. Immediate-Mode-nahes DrawingVisual (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T02_Q6: WPF-Architektur: Retained Mode (Canvas) vs. Immediate-Mode-nahes DrawingVisual</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In Kapitel 03 wird das klassische <code>Canvas</code> mit <code>Shape</code>-Elementen (<code>Line</code>, <code>Ellipse</code>) dem leichtgewichtigen <code>DrawingVisual</code> / <code>DrawingContext</code> gegenübergestellt. Wann stößt das <code>Canvas</code> mit einzelnen <code>Shape</code>-Objekten an seine Performance-Grenze?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Architektur-Vergleich:</strong> Für moderate Objektzahlen (z. B. Fachwerk mit 50–500 Stäben und direktem Hit-Testing/Tooltips) ist <code>Canvas</code> ideal. Für Partikelschwärme mit 20.000 Elementen nutzt man <code>DrawingVisual</code> oder <code>WriteableBitmap</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T02_Q6</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Wenn tausende Geometrie-Elemente mit 60 Hz neu erzeugt werden, weil jedes Shape ein schweres UIElement mit Layout- und DependencyProperty-Overhead ist.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Jedes Shape im Visual Tree durchläuft Measure/Arrange und verwaltet Dutzende DependencyProperties; ab einigen tausend Objekten bricht die Framerate ein.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Sobald mehr als 16 verschiedene Farben im selben Canvas verwendet werden, weil die WPF-Farbpalette pro Panel auf einen 4-Bit-Index beschränkt ist.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. WPF unterstützt volle 32-Bit-ARGB-Farben für beliebig viele Brushes ohne Palettenlimit.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Wenn das Canvas-Element innerhalb eines Grid-Containers platziert wird, da das Grid alle Kind-Koordinaten automatisch auf den Ursprung zurücksetzt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Ein Canvas innerhalb einer Grid-Zelle behält seine eigene absolute Koordinatenlogik (Canvas.Left/Top) vollständig bei.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Sobald negative Weltkoordinaten im Simulationsmodell auftreten, weil die Klasse Line in WPF nur positive Bildschirm-Koordinatenwerte akzeptiert.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Erstens transformiert man Weltkoordinaten ohnehin in positive Screen-Koordinaten, und zweitens akzeptiert Line auch negative double-Werte.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 7: C#-Bug-Diagnose: Katastrophale Auslöschung bei der naiven Ein-Pass-Varianzformel (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T02_Q7: C#-Bug-Diagnose: Katastrophale Auslöschung bei der naiven Ein-Pass-Varianzformel</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Ingenieur misst einen hochstabilen Systemdruck um \(10^8\,\text{Pa}\) mit minimalem Rauschen von \(\pm 1\,\text{Pa}\) und berechnet die Varianz in C# mit folgender „Lehrbuch-Verschiebungsformel“:</p>
+<pre><code class="language-csharp">double mean = sumX / n;
+double variance = (sumXSquared / n) - (mean * mean);</code></pre>
+<p>Bei der Ausführung liefert <code>variance</code> plötzlich <code>0.0</code> oder sogar einen <strong>negativen</strong> Wert! Warum?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Lösung:</strong> Genau wegen dieser katastrophalen Auslöschung (Catastrophic Cancellation) bei großem Offset und kleiner Streuung verwendet man in der Messtechnik den <strong>Welford-Online-Algorithmus</strong>, der nur Differenzen \(x_k - \mu\) quadriert.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T02_Q7</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Durch die Subtraktion zweier fast identischer Riesenzahlen um 10^16 geht die kleine Varianz in den hinteren Mantissenbits von double durch Auslöschung komplett verloren.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! IEEE-754 double hat ca. 15–17 signifikante Dezimalstellen. Bei (10^8)^2 = 10^16 liegen die Schwankungen von +-1 Pa genau an der Rundungsgrenze (Catastrophic Cancellation).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[In C# wird der Ausdruck mean * mean standardmäßig in 32-Bit-Ganzzahlarithmetik (int) ausgewertet, sodass es ab 46341 zu einem Integer-Overflow kommt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Da mean vom Typ double ist, erfolgt die Multiplikation in 64-Bit-Gleitkommaarithmetik (bis ca. 1.8 * 10^308).</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Die Division durch n rundet in C# automatisch auf die nächste ganze Zahl ab, solange der Divisor n als ganzzahliger Typ int deklariert wurde.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Sobald der Dividend sumXSquared ein double ist, führt C# eine exakte Gleitkommadivision durch.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Der JIT-Compiler von .NET optimiert aufeinanderfolgende Multiplikationen derselben Variable weg und ersetzt mean * mean fehlerhaft durch 2 * mean.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Der JIT-Compiler verändert niemals die mathematische Bedeutung von x * x zu 2 * x.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 8: Systemanalyse: WPF-Ressourcen-Management &amp; Pen/Brush-Freezing (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T02_Q8: Systemanalyse: WPF-Ressourcen-Management &amp; Pen/Brush-Freezing</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Welche <strong>zwei</strong> Maßnahmen steigern die Rendering-Performance und Speichereffizienz beim Zeichnen dynamischer 2D-Vektorgrafiken in WPF signifikant?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Merksatz:</strong> In WPF gilt für zeitkritische 2D-Grafik: <code>Brush</code>/<code>Pen</code>-Instanzen einmalig erzeugen, mit <code>.Freeze()</code> einfrieren und über alle Frames hinweg wiederverwenden.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T02_Q8</idnumber>
+    <single>false</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Das Aufrufen von Freeze() auf statischen SolidColorBrush- und Pen-Instanzen macht diese unveränderlich und entfernt den teuren Änderungsbenachrichtigungs-Overhead.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Eingefrorene Freezable-Objekte benötigen keine Event-Handler für PropertyChanged mehr und sind zudem thread-safe.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Häufig benötigte Pinsel und Stifte werden einmalig als statische oder Klassen-Felder angelegt, statt in jedem Render-Frame tausende neue Brush-Objekte zu allokieren.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Das gecachte Wiederverwenden von Brushes vermeidet massiven Garbage-Collection-Druck im 60-Hz-Renderloop.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Jede einzelne Linie auf dem Canvas sollte in ein eigenes verschachteltes Unter-Canvas verpackt werden, um die Tiefensortierung auf der CPU zu beschleunigen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Zusätzliche Container-Elemente blähen den Visual Tree massiv auf und verschlechtern die Layout-Performance.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Vor jedem Zeichenschritt muss GC.Collect() manuell im UI-Thread aufgerufen werden, damit die Grafikkarte den Videospeicher für neue Linien freigibt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Manuelles GC.Collect() im Renderloop erzwingt teure Stop-the-World-Pausen und verursacht starkes Mikroruckeln.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>

@@ -5,301 +5,404 @@
       <text>$course$/Quiz_01_Termin_03/Test_09_Pruefung</text>
     </category>
     <info format="html">
-      <text><![CDATA[<p>Test 09 (Prüfung) – Nickel, Pointerarithmetik & Diffusionslänge</p>]]></text>
+      <text><![CDATA[<p>Test 09 (Prüfung) – Grundlagen, Euler & 2D-Wärmeraster (Klausurvariante I)</p>]]></text>
     </info>
   </question>
 
-  <!-- Question 1: T09.Q1: FDM-Stabilitätsgrenze für Nickellegierung -->
-  <question type="multichoice">
+  <!-- Question 1: 2D-Wärmeleitung: Adiabate Neumann-Ecke &amp; 5-Punkt-Stern-Update (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
     <name>
-      <text>T09_Q1_CFL_Nickel</text>
+      <text>T09_Q1: 2D-Wärmeleitung: Adiabate Neumann-Ecke &amp; 5-Punkt-Stern-Update</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Eine Hochtemperatur-Nickellegierung wird simuliert:</p>
-<ul>
-  <li>Temperaturleitfähigkeit von Nickel: \(\alpha = 0{,}23 \cdot 10^{-4}\,\frac{\text{m}^2}{\text{s}}\)</li>
-  <li>Gitterweite: \(\Delta x = \Delta y = 2{,}0\,\text{mm} = 2{,}0 \cdot 10^{-3}\,\text{m}\)</li>
-</ul>
-<p>Wie groß ist die maximale Zeitschrittweite \(\Delta t_{\max}\) für das explizite 2D-FDM-Verfahren?</p>]]></text>
+      <text><![CDATA[<p>Auf einem 2D-Wärmeraster mit der Stabilitätszahl \(s = 0{,}20\) besitzt der innere Knoten \((1,1)\) aktuell die Temperatur \(T_{1,1}^n = 40{,}0\,^\circ\text{C}\). Seine inneren Nachbarn haben die Werte \(T_{2,1}^n = 60{,}0\,^\circ\text{C}\) (rechts) und \(T_{1,2}^n = 80{,}0\,^\circ\text{C}\) (oben). Sowohl der linke Rand (\(i=0\)) als auch der untere Rand (\(j=0\)) sind <strong>perfekt wärmegedämmt (homogene Neumann-Randbedingung)</strong>.</p><p>a) Welche Temperatur \(T_{0,1}^n\) (in <strong>°C</strong>) wird dem linken Randknoten \((0,1)\) durch die homogene Neumann-Bedingung zugewiesen?<br>Antwort: {1:NUMERICAL:=40.0:0.1#Richtig! Am isolierten Rand gilt dT/dn = 0, also T[0,1] = T[1,1] = 40,0 °C.~%50%0.0:0.1#Teilpunkte (50 %): 0 °C wäre eine feste Eiskühlung (homogene Dirichlet-Bedingung), keine Wärmeisolation!} °C</p><p>b) Welche neue Temperatur \(T_{1,1}^{n+1}\) (in <strong>°C</strong>) erhält der Knoten \((1,1)\) nach einem expliziten Zeitschritt mit dem 5-Punkt-Stern (wenn auch unten \(T_{1,0}^n = T_{1,1}^n\) gilt)?<br>Antwort: {1:NUMERICAL:=52.0:0.1#Richtig! T_neu = 40 + 0,20 * (40 + 60 + 40 + 80 - 4 * 40) = 40 + 0,20 * 60 = 52,0 °C.~%50%36.0:0.1#Teilpunkte (50 %): Folgefehler aus T[0,1] = 0 und T[1,0] = 0 (40 + 0,20 * (140 - 160) = 36,0 °C).} °C</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>\(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha} = \frac{(2{,}0 \cdot 10^{-3})^2}{4 \cdot 0{,}23 \cdot 10^{-4}} = \frac{4{,}0 \cdot 10^{-6}}{0{,}92 \cdot 10^{-4}}\,\text{s} = \frac{4{,}0}{92}\,\text{s} \approx 0{,}043478\,\text{s} \approx 43{,}48\,\text{ms}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (5-Punkt-Stern an einer isolierten Ecke):</strong></p><p>1. Durch die beiden isolierten Ränder (Neumann \(\partial T / \partial n = 0\)) nehmen die Randknoten die Temperatur ihres jeweiligen Innennachbarn an: \(T_{0,1}^n = T_{1,1}^n = 40{,}0\,^\circ\text{C}\) und \(T_{1,0}^n = T_{1,1}^n = 40{,}0\,^\circ\text{C}\).</p><p>2. Einsetzen in den 5-Punkt-Stern:<br>\(T_{1,1}^{n+1} = 40{,}0 + 0{,}20 \cdot (40{,}0 + 60{,}0 + 40{,}0 + 80{,}0 - 4 \cdot 40{,}0) = 40{,}0 + 0{,}20 \cdot (220{,}0 - 160{,}0) = 40{,}0 + 12{,}0 = 52{,}0\,^\circ\text{C}\).</p>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T09_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Bodenkollision: Berechnung des relativen Teilzeitschritts tau (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T09_Q2: Bodenkollision: Berechnung des relativen Teilzeitschritts tau</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einer Fallsimulation befindet sich die Unterkante eines Prüfkörpers zu Beginn des Zeitschritts bei \(y_n = +0{,}45\,\text{m}\) oberhalb der Bodenplatte (\(y = 0\)). Am Ende des Zeitschritts liefert das Integrationsverfahren die vorläufige Position \(y_{n+1} = -0{,}15\,\text{m}\) unterhalb der Bodenplatte.</p><p>Berechnen Sie den dimensionslosen relativen Zeitschrittanteil \(\tau \in [0, 1]\), der angibt, welcher Bruchteil des Zeitschritts \(\Delta t\) bis zum exakten Aufprall (\(y = 0\)) vergangen ist.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>Innerhalb des Zeitschritts legt der Körper vertikal die Gesamtstrecke \(\Delta s = y_n - y_{n+1} = 0{,}45\,\text{m} - (-0{,}15\,\text{m}) = 0{,}60\,\text{m}\) nach unten zurück. Bis zum Boden bei \(y = 0\) sind es davon \(0{,}45\,\text{m}\). Der relative Zeitanteil beträgt folglich:<br>\(\tau = \frac{y_n}{y_n - y_{n+1}} = \frac{0{,}45}{0{,}60} = 0{,}75\).</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T09_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>0.75</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! tau = y_n / (y_n - y_{n+1}) = 0,45 / (0,45 - (-0,15)) = 0,45 / 0,60 = 0,75.</p>]]></text>
+      </feedback>
+      <tolerance>0.005</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>0.25</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 0,25 ist der verbleibende Restanteil (1 - tau) nach dem Aufprall bzw. |y_{n+1}| / (y_n - y_{n+1}).</p>]]></text>
+      </feedback>
+      <tolerance>0.005</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>1.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): Vorzeichenfehler im Nenner: Sie haben 0,45 / (0,45 - 0,15) = 0,45 / 0,30 = 1,5 gerechnet (tau muss immer zwischen 0 und 1 liegen!).</p>]]></text>
+      </feedback>
+      <tolerance>0.01</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: 1D-Array-Indexierung eines 2D-Gitters (Row-Major) (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>T09_Q3: C#-Code-Tracing: 1D-Array-Indexierung eines 2D-Gitters (Row-Major)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein zweidimensionales Temperaturgitter mit <code>nx = 20</code> Spalten und <code>ny = 15</code> Zeilen wird für maximale Cache-Lokalität in einem flachen 1D-Array <code>double[] T = new double[nx * ny]</code> zeilenweise (Row-Major) gespeichert. Gegeben sei folgender C#-Code:</p><pre><code class="language-csharp">int nx = 20;
+int x = 6, y = 4;
+int idx = y * nx + x;
+int southNeighborIdx = idx + nx;</code></pre><p>Welchen exakten ganzzahligen Wert hat die Variable <code>southNeighborIdx</code> (der Index des Nachbarknotens in Zeile <code>y + 1</code>, Spalte <code>x</code>)?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (Row-Major 1D-Addressing):</strong></p><p>In einem flachen 1D-Array der Zeilenbreite <code>nx = 20</code> liegt der Knoten <code>(x = 6, y = 4)</code> am Index <code>idx = 4 * 20 + 6 = 86</code>. Um eine Zeile tiefer (<code>y + 1 = 5</code>) bei gleicher Spalte <code>x = 6</code> zu gelangen, muss exakt eine Zeilenbreite <code>nx = 20</code> addiert werden: <code>86 + 20 = 106</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T09_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>106</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! idx = 4 * 20 + 6 = 86; southNeighborIdx = 86 + 20 = 106 (entspricht (4 + 1) * 20 + 6).</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>86</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 86 ist der Index idx des Zentralknotens (4, 6) selbst, es fehlt noch + nx (= +20) für die nächste Zeile.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>87</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte (50 %): 87 (= idx + 1) ist der rechte Nachbar (x + 1), nicht der untere Nachbar in Zeile y + 1.</p>]]></text>
+      </feedback>
+      <tolerance>0</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Lückentext: Berechnung der maximal stabilen Zeitschrittweite (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>T09_Q4: C#-Lückentext: Berechnung der maximal stabilen Zeitschrittweite</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie den folgenden C#-Code, der für eine gegebene Maschenweite <code>dx</code> und Temperaturleitfähigkeit <code>alpha</code> zuerst die theoretische 2D-Stabilitätsgrenze <code>dtMax</code> berechnet und anschließend mit 80 % Sicherheitsfaktor die Stabilitätszahl <code>s</code> bestimmt:</p><pre><code class="language-csharp">double dtMax = (dx * [[1]]) / ([[2]] * alpha);
+double dt = 0.8 * dtMax;
+double s = (alpha * [[3]]) / (dx * dx);</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul><li><code>[[1]] = dx</code> und <code>[[2]] = 4.0</code> setzen die 2D-Grenzformel \(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha}\) um.</li><li><code>[[3]] = dt</code> berechnet die tatsächliche Fourier-Zahl \(s = \frac{\alpha \cdot \Delta t}{\Delta x^2}\) (die durch den Faktor <code>0.8</code> sicher bei \(0{,}8 \cdot 0{,}25 = 0{,}20\) liegt).</li></ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T09_Q1_CFL_Nickel</idnumber>
+    <idnumber>T09_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[dx]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[4.0]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[dt]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[alpha]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[4.0]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[2.0]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[0.25]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[dx]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[dtMax]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Konzept-Zuordnung: WPF-Speicherbegriffe rund um WriteableBitmap (matching, 1.0000000 Pkt.) -->
+  <question type="matching">
+    <name>
+      <text>T09_Q5: Konzept-Zuordnung: WPF-Speicherbegriffe rund um WriteableBitmap</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ordnen Sie die folgenden Eigenschaften und Methoden der Klasse <code>WriteableBitmap</code> ihrer exakten technischen Funktion zu. Beachten Sie die zwei Überhang-Distraktoren.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Übersicht der WriteableBitmap-Member:</strong></p><ul><li><code>BackBuffer</code>: Basiszeiger (<code>IntPtr</code>) auf das Pixel-Array im unverwalteten Speicher.</li><li><code>BackBufferStride</code>: Zeilenlänge in <strong>Bytes</strong> (mindestens <code>PixelWidth * BytesPerPixel</code>).</li><li><code>PixelWidth</code> / <code>PixelHeight</code>: Bildabmessungen in <strong>Pixeln</strong>.</li><li><code>AddDirtyRect</code>: Invalidiert den geänderten Teilbereich für das Hardware-Rendering.</li></ul>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T09_Q5</idnumber>
+    <shuffleanswers>true</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <subquestion format="html">
+      <text><![CDATA[Liefert als IntPtr die Speicheradresse des ersten Bytes im unverwalteten Bildpuffer.]]></text>
+      <answer>
+        <text><![CDATA[BackBuffer]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Gibt die Speicherbreite einer einzelnen Bildzeile in Bytes inklusive Zeilen-Padding an.]]></text>
+      <answer>
+        <text><![CDATA[BackBufferStride]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Gibt die horizontale Auflösung des Bildes als Anzahl der sichtbaren Pixel pro Zeile an.]]></text>
+      <answer>
+        <text><![CDATA[PixelWidth]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Markiert ein geändertes Rechteck im Puffer, damit WPF diesen Bereich an die GPU überträgt.]]></text>
+      <answer>
+        <text><![CDATA[AddDirtyRect(Int32Rect)]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[SolveLaplaceEquation()]]></text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[]]></text>
+      <answer>
+        <text><![CDATA[AutoCalculateTimeStep()]]></text>
+      </answer>
+    </subquestion>
+  </question>
+
+  <!-- Question 6: Anfangswertprobleme: Stationärer Endzustand vs. Anfangsverteilung (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>T09_Q6: Anfangswertprobleme: Stationärer Endzustand vs. Anfangsverteilung</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Eine quadratische Platte ohne innere Wärmequellen wird an allen vier Außenrändern durch Dirichlet-Randbedingungen dauerhaft auf festen Temperaturen gehalten. Welchen Einfluss hat die Wahl der <strong>Anfangstemperaturverteilung</strong> \(T(x, y, t=0)\) im Inneren der Platte auf den stationären Endzustand für \(t \to \infty\)?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Physikalisch-mathematischer Hintergrund:</strong></p><p>Im stationären Grenzfall (\(\frac{\partial T}{\partial t} = 0\)) geht die Wärmeleitungsgleichung in die elliptische Laplace-Gleichung \(\nabla^2 T = 0\) über. Bei reinen Dirichlet-Randbedingungen besitzt diese Gleichung eine <strong>eindeutige Lösung</strong>, die ausschließlich von den Randwerten abhängt – das System „vergisst“ seine Anfangsbedingung über die Zeit vollständig.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>T09_Q6</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 43{,}48\,\text{ms}\)]]></text>
+      <text><![CDATA[Der stationäre Endzustand hängt nur von den Dirichlet-Rändern ab und ist unabhängig vom Startfeld.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! \(4{,}0 \cdot 10^{-6} / (0{,}92 \cdot 10^{-4})\,\text{s} \approx 43{,}48\,\text{ms}\).</p>]]></text>
+        <text><![CDATA[<p>Richtig! Für t -> unendlich klingt der Einfluss der Anfangsbedingung exponentiell ab; die eindeutige Lösung der Laplace-Gleichung wird allein durch die Ränder bestimmt.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 86{,}96\,\text{ms}\)]]></text>
+      <text><![CDATA[Verdoppelt man die Anfangstemperatur im Inneren, verdoppelt sich auch die stationäre Endtemperatur.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das ist der 1D-Wert.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Überschüssige Anfangswärme fließt vollständig über die auf fester Temperatur gehaltenen Dirichlet-Ränder ab.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 21{,}74\,\text{ms}\)]]></text>
+      <text><![CDATA[Die Anfangstemperatur legt dauerhaft fest, an welchen Rändern später Wärme ein- oder ausströmt.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Faktor 8 statt 4.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Die Anfangsverteilung beeinflusst nur den transienten Einschwingvorgang, nicht aber das langfristige stationäre Gleichgewicht.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[\(\Delta t_{\max} \approx 4{,}35\,\text{ms}\)]]></text>
+      <text><![CDATA[Ein stationärer Zustand wird nur erreicht, wenn die Anfangstemperatur überall exakt 0 °C beträgt.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Zehnerpotenzfehler um Faktor 10.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Solange die Simulation numerisch stabil ist (s <= 0,25), konvergiert jedes beliebige Anfangsfeld gegen dieselbe stationäre Lösung.</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 2: T09.Q2: Zeigerarithmetik-Falle bei uint* vs. byte* -->
+  <!-- Question 7: C#-Bug-Diagnose: Falsche Zeilenadressierung bei GPU-Stride-Padding (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T09_Q2_Code_Pointer_Arithmetik_Uint</text>
+      <text>T09_Q7: C#-Bug-Diagnose: Falsche Zeilenadressierung bei GPU-Stride-Padding</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Entwickler castet den Back-Buffer auf <code>uint*</code>, um 32-Bit-Pixelwerte auf einmal zu schreiben. Zum Zeilenvorschub verwendet er den ermittelten <code>bitmap.BackBufferStride</code> (gemessen in Bytes!):</p>
-<pre><code class="language-csharp">uint* pBuffer = (uint*)bitmap.BackBuffer;
-int strideInBytes = bitmap.BackBufferStride;
-
-for (int y = 0; y < height; y++)
-{
-    // Fataler Zeilenvorschub:
-    uint* pRow = pBuffer + (y * strideInBytes);
-    for (int x = 0; x < width; x++)
-    {
-        pRow[x] = 0xFF0000FF; // Rot
-    }
-}</code></pre>
-<p>Welcher fatale Denkfehler liegt bei der Zeigerarithmetik in C# vor?</p>]]></text>
+      <text><![CDATA[<p>Auf einem Notebook mit dedizierter GPU hat ein <code>WriteableBitmap</code> der Breite <code>width = 101</code> Pixel einen durch 64 teilbaren <code>BackBufferStride = 448</code> Bytes (statt \(101 \cdot 4 = 404\) Bytes). Der Entwickler berechnet den Byte-Index jedoch über:</p><pre><code class="language-csharp">int byteIndex = (y * width + x) * 4;</code></pre><p>Welcher charakteristische Darstellungsfehler ist dadurch im angezeigten Wärmebild zu beobachten?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>In C/C# und C# zählt Zeigerarithmetik immer in Einheiten des zugrundeliegenden Datentyps! Die Erhöhung eines <code>uint*</code> um 1 verschiebt die Speicheradresse um <code>sizeof(uint) = 4</code> Bytes. Addiert man zu einem <code>uint*</code> den Wert <code>y * strideInBytes</code>, verschiebt sich die Adresse um \(y \times \text{strideInBytes} \times 4\) Bytes – also viermal zu weit! Nach einem Viertel der Bildhöhe stürzt das Programm mit Speicherverletzung ab.</p>]]></text>
+      <text><![CDATA[<p><strong>Fehleranalyse (Scherungs-Artefakt bei Stride-Ignorierung):</strong></p><p>Wenn der Grafiktreiber am Ende jeder Zeile Padding-Bytes einfügt (hier \(448 - 404 = 44\,\text{Bytes} = 11\,\text{Pixel}\)), beginnt Zeile \(y = 1\) im Speicher erst bei Byte <code>448</code>. Schreibt der Code Zeile 1 jedoch schon ab Byte <code>404</code>, landen die ersten 11 Pixel von Zeile 1 im unsichtbaren Padding-Bereich von Zeile 0, und jede folgende Zeile verschiebt sich um weitere 11 Pixel schräg nach links.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T09_Q2_Code_Pointer_Arithmetik_Uint</idnumber>
+    <idnumber>T09_Q7</idnumber>
     <single>true</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
     <answer fraction="100" format="html">
-      <text><![CDATA[Zeigerarithmetik auf <code>uint*</code> multipliziert den Offset intern mit <code>sizeof(uint) = 4</code>. Die Addition von <code>strideInBytes</code> springt daher viermal zu weit im Speicher und führt zum Crash.]]></text>
+      <text><![CDATA[Ab der zweiten Zeile verschiebt sich das Bild pro Zeile seitlich, sodass ein schräges Streifenmuster entsteht.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Bei uint* muss der Byte-Stride durch 4 geteilt werden (pBuffer + y * (stride / 4)) oder als byte* adressiert werden.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Da jede geschriebene Zeile 44 Bytes zu früh beginnt (404 statt 448), wandert das Bild von Zeile zu Zeile um 11 Pixel schräg nach links (Scherungs-Artefakt).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[<code>0xFF0000FF</code> ist keine gültige Hexadezimalzahl in C#.]]></text>
+      <text><![CDATA[Das Bild wird geometrisch völlig korrekt angezeigt, aber die Farben Rot und Blau sind miteinander vertauscht.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. 0xFF0000FF ist ein absolut reguläres uint-Literal.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Ein um ein Vielfaches von 4 Bytes falscher Zeilen-Stride verschiebt die Pixelpositionen horizontal, vertauscht aber nicht R und B.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[In C# dürfen Zeiger niemals mit Schleifenvariablen multipliziert werden.]]></text>
+      <text><![CDATA[WPF wirft beim Aufruf von Unlock sofort eine InvalidStrideException und beendet die gesamte Anwendung.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Das ist Standardzeigerarithmetik.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Da (y * width + x) * 4 kleiner ist als y * BackBufferStride + x * 4, bleibt der Zugriff innerhalb des gültigen Puffers und löst keine Exception aus.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Der Code funktioniert tadellos, da die CLR Typunterschiede bei Pointern ignoriert.]]></text>
+      <text><![CDATA[Die erste Zeile y = 0 wird komplett schwarz gezeichnet, während alle weiteren Zeilen normal aussehen.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die CLR bzw. der C#-Compiler skaliert Pointerarithmetik streng nach Typgröße.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Gerade für die erste Zeile (y = 0) ist y * width * 4 = 0 identisch mit y * BackBufferStride = 0; der Versatz wächst erst mit steigendem y!</p>]]></text>
       </feedback>
     </answer>
   </question>
 
-  <!-- Question 3: T09.Q3: Physikalisches Skalierungsgesetz: Die thermische Diffusionslänge -->
+  <!-- Question 8: unsafe C# &amp; Speichersicherheit: Direkter Pointer-Zugriff in .NET (multichoice, 1.0000000 Pkt.) -->
   <question type="multichoice">
     <name>
-      <text>T09_Q3_Physik_Diffusionslaenge_Wurzel</text>
+      <text>T09_Q8: unsafe C# &amp; Speichersicherheit: Direkter Pointer-Zugriff in .NET</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Für die Ausbreitung einer Temperaturfront in einem homogenen Medium gilt näherungsweise das Diffusionsgesetz für die thermische Eindringtiefe:</p>
-<p>$$L \approx \sqrt{2 \alpha t}$$</p>
-<p>Was bedeutet dieser mathematische Zusammenhang, wenn Sie die Eindringtiefe der Wärmewelle <strong>verdoppeln</strong> wollen (\(L_2 = 2 L_1\))?</p>]]></text>
+      <text><![CDATA[<p>Welche der folgenden Aussagen zur Verwendung von <code>unsafe</code>-Codeblöcken und Zeigern (<code>byte*</code> / <code>uint*</code>) bei der <code>WriteableBitmap</code>-Programmierung in C# sind <strong>korrekt</strong>? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p>Wegen \(L \propto \sqrt{t}\) bzw. \(t \propto L^2\) erfordert eine Verdopplung der Eindringtiefe \(L\) die vierfache Zeit: \(t_2 = 4 t_1\). Die Wärmeausbreitung verlangsamt sich mit zunehmender Tiefe drastisch.</p>]]></text>
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong></p><p>Das Schlüsselwort <code>unsafe</code> (mit <code>&lt;AllowUnsafeBlocks&gt;true&lt;/AllowUnsafeBlocks&gt;</code>) gestattet direkte C-ähnliche Zeigerarithmetik ohne den Overhead von Bounds-Checks oder Array-Kopien. Da <code>bmp.BackBuffer</code> bereits ein unverwalteter Speicherbereich ist, genügt der Cast <code>(byte*)bmp.BackBuffer</code> zwischen <code>Lock()</code> und <code>Unlock()</code>.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <idnumber>T09_Q3_Physik_Diffusionslaenge_Wurzel</idnumber>
-    <single>true</single>
+    <idnumber>T09_Q8</idnumber>
+    <single>false</single>
     <shuffleanswers>true</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <showstandardinstruction>0</showstandardinstruction>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Die dafür erforderliche Zeit vervierfacht sich (\(t_2 = 4 t_1\)), da die Diffusionslänge nur mit der Quadratwurzel der Zeit wächst.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Für die Übersetzung von unsafe-Blöcken muss in der Projektdatei AllowUnsafeBlocks aktiviert werden.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Dies ist das universelle Gesetz aller Diffusionsvorgänge.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Ohne <AllowUnsafeBlocks>true</AllowUnsafeBlocks> in der .csproj-Datei lehnt der C#-Compiler jeden unsafe-Block ab.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Die dafür erforderliche Zeit verdoppelt sich (\(t_2 = 2 t_1\)), da Ausbreitungsprozesse linear ablaufen.]]></text>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Bei Zeigerzugriffen findet keine automatische Array-Grenzenprüfung durch die .NET-Laufzeit statt.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Wellenausbreitung ist linear, Diffusion ist parabolisch-quadratisch.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Genau dieser Wegfall der Bounds-Checks macht Pointer so schnell, erfordert aber höchste Sorgfalt bei der Indexberechnung.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Die Zeit bleibt gleich, lediglich die Temperatur verdoppelt sich.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Der BackBuffer eines WriteableBitmap liegt im verwalteten GC-Heap und erfordert ein fixed-Statement.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die Wärmefront benötigt Zeit zum Vordringen.</p>]]></text>
+        <text><![CDATA[<p>Falsch! Der BackBuffer von WriteableBitmap liegt bereits im unverwalteten Speicher (IntPtr) und wird durch bmp.Lock() statt durch fixed fixiert.</p>]]></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Die Zeit verkürzt sich auf die Hälfte, da heiße Körper schneller diffundieren.]]></text>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Ein unsafe-Block schaltet automatisch die 2D-Wärmeleitung auf alle Kerne der Grafikkarte frei.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Völlig unphysikalisch.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 4: T09.Q4: Modellvalidität & Gültigkeitsbereich (Operational Design Domain) -->
-  <question type="multichoice">
-    <name>
-      <text>T09_Q4_Gueltigkeitsbereich_Modell</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Ein lineares thermisches FDM-Modell nutzt eine konstante Temperaturleitfähigkeit \(\alpha = \text{const}\). Unter welcher Betriebsbedingung verliert dieses Modell in der mechatronischen Praxis schlagartig seine Gültigkeit?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>Reale Werkstoffe ändern ihre thermischen Parameter mit der Temperatur. Insbesondere bei Phasenübergängen (z. B. Schmelzen von Lötzinn bei 217°C oder Phasenwechsel in Heatpipes) wird enorme latente Schmelzwärme umgesetzt, ohne dass die Temperatur steigt. Ein lineares Modell ohne Phasenübergang versagt hier vollständig.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T09_Q4_Gueltigkeitsbereich_Modell</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Sobald ein Phasenwechsel eintritt (z. B. Aufschmelzen von Lötstellen), da latente Schmelzwärme umgesetzt wird und \(\alpha\) stark temperaturabhängig wird.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! Die Gültigkeitsgrenzen des linearen Modells müssen im Vorfeld definiert sein.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Sobald die Außentemperatur genau 20°C (Raumtemperatur) erreicht.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Bei Raumtemperatur sind lineare Modelle meist hervorragend gültig.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Wenn die Simulation länger als 10 Sekunden Echtzeit dauert.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Reine Simulationsdauer limitiert nicht die physikalische Gültigkeit.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Wenn das Modell in C# statt in Python ausgeführt wird.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die Programmiersprache ändert nichts an der Physik.</p>]]></text>
-      </feedback>
-    </answer>
-  </question>
-
-  <!-- Question 5: T09.Q5: Thread-Entkopplung: Simulation vs. UI-Dispatcher -->
-  <question type="multichoice">
-    <name>
-      <text>T09_Q5_UI_Dispatcher_Entkopplung</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Warum darf eine rechenintensive FDM-Feldsimulation (z. B. \(1000 \times 1000\) Gitterpunkte mit 100 Iterationen pro Frame) <strong>niemals direkt synchron auf dem WPF-UI-Thread</strong> ausgeführt werden?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text><![CDATA[<p>In WPF verarbeitet der UI-Thread über den Dispatcher sämtliche Windows-Nachrichten, Eingaben (Maus, Tastatur) und Render-Aufrufe. Wird dieser Thread durch eine Sekunden dauernde FDM-Schleife blockiert, friert das gesamte Anwendungsfenster ein („Keine Rückmeldung“). Simulation und UI müssen über Hintergrund-Threads bzw. Background-Worker entkoppelt werden.</p>]]></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <idnumber>T09_Q5_UI_Dispatcher_Entkopplung</idnumber>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>abc</answernumbering>
-    <showstandardinstruction>0</showstandardinstruction>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Begründung.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Teilweise richtig.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Falsch. Bitte studieren Sie das Feedback zur korrekten mathematischen und physikalischen Modellierung.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect/>
-    <answer fraction="100" format="html">
-      <text><![CDATA[Weil der UI-Thread sämtliche Benutzerinteraktionen und Fensterbotschaften verarbeitet; eine synchrone Blockierung führt zum sofortigen Einfrieren der Benutzeroberfläche ('Keine Rückmeldung').]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Richtig! Dies verletzt die fundamentale Architekturregel der Lehrveranstaltung.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Weil die Grafikkarte nur Daten von Worker-Threads akzeptieren kann.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die WPF-Engine rendert über ihren eigenen Render-Thread.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Weil Berechnungen auf dem UI-Thread mathematisch falsche Rundungsfehler erzeugen.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Die FPU rechnet auf allen Threads mit identischer Präzision.</p>]]></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="html">
-      <text><![CDATA[Weil Windows C#-Programme nach 100 Schleifendurchläufen automatisch beendet.]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>Falsch. Es gibt kein solches Schleifenlimit.</p>]]></text>
+        <text><![CDATA[<p>Falsch! unsafe erlaubt lediglich CPU-seitige Zeigerarithmetik; der Code läuft weiterhin ganz normal auf der CPU.</p>]]></text>
       </feedback>
     </answer>
   </question>

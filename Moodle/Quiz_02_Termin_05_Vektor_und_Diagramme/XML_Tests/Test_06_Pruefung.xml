@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Quiz_02_Termin_05/Test_06_Pruefung</text>
+    </category>
+    <info format="html">
+      <text><![CDATA[<p>Quiz 02 - Test 06 (Prüfungstest): DIN-406-Maßhilfslinien, 3-Sigma-Spannweite & Ringpuffer-Wrap</p>]]></text>
+    </info>
+  </question>
+
+  <!-- Question 1: DIN-406-Bemaßungsgeometrie: Gesamtlänge der Maßhilfslinie und Endpunkt-Koordinate (cloze, 2.0000000 Pkt.) -->
+  <question type="cloze">
+    <name>
+      <text>Q02_T06_Q1: DIN-406-Bemaßungsgeometrie: Gesamtlänge der Maßhilfslinie und Endpunkt-Koordinate</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein horizontaler Träger verläuft auf dem WPF-Canvas exakt entlang der Bildschirm-Horizontalen bei \(Y_{\text{stab}} = 300\,\text{px}\) (von \(X_1 = 100\,\text{px}\) bis \(X_2 = 500\,\text{px}\)). Nach DIN 406 soll oberhalb des Trägers (also in Richtung kleinerer WPF-Y-Werte, Normalenvektor \(n_x = 0, n_y = -1\)) eine Maßlinie im Abstand \(d_{\text{dim}} = 28\,\text{px}\) gezeichnet werden. Die beiden vertikalen Maßhilfslinien beginnen mit einem kleinen Spalt von \(g = 4\,\text{px}\) vom Träger entfernt und ragen um den normgerechten Überstand \(e = 8\,\text{px}\) über die Maßlinie hinaus.</p>
+<p><strong>a)</strong> Berechnen Sie die gezeichnete sichtbare Strichlänge \(L_{\text{ext}}\) (in \(\text{px}\)) einer solchen Maßhilfslinie (vom Spaltende bis zum Ende des Überstands): {1:NUMERICAL:=32:0.1#Exakt! Die Maßhilfslinie reicht von Abstand g = 4 px bis (d_dim + e) = 28 + 8 = 36 px; ihre Länge ist 36 - 4 = 32 px.~%50%36:0.1#Teilpunkte: 36 px ist der Gesamtabstand vom Bauteil (28 + 8) ohne Abzug des 4-px-Spalts g am Bauteilrand.}</p>
+<p><strong>b)</strong> Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{end}}\) (in \(\text{px}\)) des äußeren oberen Endpunkts der Maßhilfslinie (inklusive Überstand \(e\)): {1:NUMERICAL:=264:0.5#Richtig! Y_end = Y_stab - (d_dim + e) = 300 - (28 + 8) = 300 - 36 = 264 px.~%50%272:0.5#Teilpunkte: 272 px (300 - 28) ist die Koordinate der Maßlinie selbst ohne den 8-px-Überstand e der Maßhilfslinie!}</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung (DIN-406-Maßhilfslinie):</strong></p>
+<ol>
+  <li><strong>Start- und Endabstand vom Stab:</strong> Die Maßhilfslinie startet bei \(d_{\text{start}} = g = 4\,\text{px}\) und endet bei \(d_{\text{end}} = d_{\text{dim}} + e = 28 + 8 = 36\,\text{px}\).</li>
+  <li><strong>Gezeichnete Strichlänge:</strong> \(L_{\text{ext}} = d_{\text{end}} - d_{\text{start}} = 36 - 4 = 32\,\text{px}\).</li>
+  <li><strong>Oberer Endpunkt im Screen Space:</strong> Da „oben“ im WPF-Canvas kleineren Y-Werten entspricht, gilt \(Y_{\text{end}} = Y_{\text{stab}} - d_{\text{end}} = 300 - 36 = 264\,\text{px}\).</li>
+</ol>]]></text>
+    </generalfeedback>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T06_Q1</idnumber>
+  </question>
+
+  <!-- Question 2: Statistische Prozesskontrolle: Breite des gesamten ±3-Sigma-Toleranzbands (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T06_Q2: Statistische Prozesskontrolle: Breite des gesamten ±3-Sigma-Toleranzbands</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In einem ScottPlot-5-Echtzeitdiagramm wird das symmetrische \(\mu \pm 3s\)-Prozessband (von der unteren Eingriffsgrenze \(\text{LCL} = \mu - 3s\) bis zur oberen Eingriffsgrenze \(\text{UCL} = \mu + 3s\)) als farbig hinterlegtes HorizontalSpan eingezeichnet. Aus dem Welford-Tracker liegen nach \(k = 17\) Messungen der Mittelwert \(\mu = 80{,}0\,\text{mm}\) und die Quadratsumme \(M_2 = 36{,}0\,\text{mm}^2\) vor.</p>
+<p>Berechnen Sie die gesamte vertikale Breite \(\Delta B = \text{UCL} - \text{LCL}\) (in \(\text{mm}\)) dieses \(\pm 3s\)-Toleranzbands.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<ol>
+  <li><strong>Stichprobenvarianz & Standardabweichung:</strong> \(s^2 = \frac{M_2}{k - 1} = \frac{36{,}0}{16} = 2{,}25\,\text{mm}^2 \implies s = \sqrt{2{,}25} = 1{,}5\,\text{mm}\).</li>
+  <li><strong>Gesamtbreite des \(\pm 3s\)-Bands:</strong> \(\Delta B = (\mu + 3s) - (\mu - 3s) = 6s = 6 \cdot 1{,}5\,\text{mm} = 9{,}0\,\text{mm}\).</li>
+</ol>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T06_Q2</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>9</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! s^2 = M2 / (17 - 1) = 36 / 16 = 2.25 mm^2 => s = 1.5 mm. Bandbreite von -3s bis +3s ist 6 * s = 6 * 1.5 = 9.0 mm.</p>]]></text>
+      </feedback>
+      <tolerance>0.05</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>4.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: 4.5 mm ist nur die halbe Bandbreite (3 * s = 3 * 1.5), gefragt war die volle Spanne UCL - LCL = 6 * s = 9.0 mm.</p>]]></text>
+      </feedback>
+      <tolerance>0.05</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>13.5</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: Sie haben 6 * s^2 = 6 * 2.25 = 13.5 gerechnet (Quadratwurzel für s vergessen!).</p>]]></text>
+      </feedback>
+      <tolerance>0.05</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 3: C#-Code-Tracing: Ringpuffer-Zustand nach Überlauf (Wrap-Around) (numerical, 1.5000000 Pkt.) -->
+  <question type="numerical">
+    <name>
+      <text>Q02_T06_Q3: C#-Code-Tracing: Ringpuffer-Zustand nach Überlauf (Wrap-Around)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein kleiner Ringpuffer der Kapazität <code>cap = 4</code> wird nacheinander mit 6 Werten (<code>10, 20, 30, 40, 50, 60</code>) befüllt:</p>
+<pre><code class="language-csharp">double[] buf = new double[4];
+for (int step = 0; step < 6; step++) {
+    buf[step % 4] = (step + 1) * 10.0;
+}
+double result = buf[0] + buf[2];</code></pre>
+<p>Welchen numerischen Wert besitzt <code>result</code> nach Abschluss der Schleife?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
+<ul>
+  <li><code>step = 0..3</code> schreibt <code>[10, 20, 30, 40]</code> an die Indizes <code>0..3</code>.</li>
+  <li><code>step = 4</code> (<code>4 % 4 == 0</code>) überschreibt <code>buf[0] = 50</code>.</li>
+  <li><code>step = 5</code> (<code>5 % 4 == 1</code>) überschreibt <code>buf[1] = 60</code>.</li>
+</ul>
+<p>Damit lautet das Array <code>[50, 60, 30, 40]</code>, und <code>buf[0] + buf[2] = 50 + 30 = 80</code>.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.5000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T06_Q3</idnumber>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>80</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Nach 6 Schritten gilt: buf[0]=50 (step=4), buf[1]=60 (step=5), buf[2]=30 (step=2), buf[3]=40 (step=3). Also buf[0] + buf[2] = 50 + 30 = 80.</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <answer fraction="50" format="moodle_auto_format">
+      <text>40</text>
+      <feedback format="html">
+        <text><![CDATA[<p>Teilpunkte: 10 + 30 = 40 wäre der Wert vor dem Überschreiben von buf[0] im 5. Schleifendurchlauf (step=4).</p>]]></text>
+      </feedback>
+      <tolerance>0.1</tolerance>
+    </answer>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+  </question>
+
+  <!-- Question 4: C#-Code-Lückentext: ScottPlot 5 DataStreamer im Wipe-Modus konfigurieren (gapselect, 1.0000000 Pkt.) -->
+  <question type="gapselect">
+    <name>
+      <text>Q02_T06_Q4: C#-Code-Lückentext: ScottPlot 5 DataStreamer im Wipe-Modus konfigurieren</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zur Initialisierung eines <strong>ScottPlot 5</strong> <code>DataStreamer</code> für 2000 Messpunkte mit einer Abtastperiode von <code>0.01</code> Sekunden im Oszilloskop-Wipe-Modus:</p>
+<pre><code class="language-csharp">var streamer = MainPlot.Plot.Add.[[1]](2000);
+streamer.[[2]] = 0.01;
+streamer.[[3]]();</code></pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Erklärung:</strong> Mit <code>Plot.Add.DataStreamer(2000)</code> wird der Ringpuffer-Plottable erzeugt, über die Eigenschaft <code>Period = 0.01</code> der horizontale Punktabstand in Sekunden gesetzt und mit <code>ViewWipeRight()</code> die überschreibende Oszilloskop-Ansicht aktiviert.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T06_Q4</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <selectoption>
+      <text><![CDATA[DataStreamer]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Period]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[ViewWipeRight]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Pie]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Boxes]]></text>
+      <group>1</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Capacity]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Color]]></text>
+      <group>2</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[ClearAll]]></text>
+      <group>3</group>
+    </selectoption>
+    <selectoption>
+      <text><![CDATA[Dispose]]></text>
+      <group>3</group>
+    </selectoption>
+  </question>
+
+  <!-- Question 5: Pipeline-Reihenfolge: 2D-Transformationskette vom Bauteilmodell zum WPF-Canvas (ddwtos, 1.0000000 Pkt.) -->
+  <question type="ddwtos">
+    <name>
+      <text>Q02_T06_Q5: Pipeline-Reihenfolge: 2D-Transformationskette vom Bauteilmodell zum WPF-Canvas</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Bringen Sie die <strong>vier Berechnungsphasen der 2D-Visualisierungspipeline (WorldToScreen)</strong> beim Zeichnen eines Bauteils auf ein WPF-Canvas in die logisch korrekte Reihenfolge:</p>
+<p><strong>Schritt 1:</strong> [[1]] (Extremwerte \(x_{\min}, x_{\max}, y_{\min}, y_{\max}\) aller Knoten im Weltkoordinatensystem ermitteln)<br>
+<strong>Schritt 2:</strong> [[2]] (Verzerrungsfreien Maßstab \(s = \min(s_x, s_y)\) und zentrierte Letterboxing-Offsets bestimmen)<br>
+<strong>Schritt 3:</strong> [[3]] (Weltkoordinaten skalieren, verschieben und die vertikale Achse an \(H_{\text{canvas}}\) invertieren)<br>
+<strong>Schritt 4:</strong> [[4]] (Linien, Pfeilspitzen konstanter Pixellänge und gedrehte Maßtexte im Screen Space rendern)</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Pipeline:</strong> 1. Bounding-Box im World Space \(\to\) 2. Maßstab & Letterboxing \(\to\) 3. WorldToScreen inkl. Y-Inversion \(\to\) 4. Zeichnen inkl. Screen-Space-Pfeilspitzen/Bemaßung.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T06_Q5</idnumber>
+    <shuffleanswers>1</shuffleanswers>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <dragbox>
+      <text><![CDATA[Bounding-Box-Analyse im World Space]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Uniform-Scaling- & Letterboxing-Berechnung]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Affine Koordinatentransformation & Y-Inversion]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Screen-Space-Annotation & WPF-Rendering]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[Cholesky-Matrixinversion der Pixelwerte]]></text>
+      <group>1</group>
+    </dragbox>
+    <dragbox>
+      <text><![CDATA[3D-Z-Buffer-Tiefensortierung der Dreiecke]]></text>
+      <group>1</group>
+    </dragbox>
+  </question>
+
+  <!-- Question 6: Visualisierungs-Didaktik: Wann Box-Whisker-Plots einem Liniendiagramm überlegen sind (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T06_Q6: Visualisierungs-Didaktik: Wann Box-Whisker-Plots einem Liniendiagramm überlegen sind</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In welchem ingenieurwissenschaftlichen Analyseszenario ist ein <strong>Box-Whisker-Plot</strong> (<code>Add.Boxes()</code>) einem klassischen Zeitreihen-Liniendiagramm (<code>Add.Signal()</code>) methodisch klar überlegen?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Merksatz:</strong> Zeitreihen-Plots zeigen den <em>zeitlichen Verlauf</em>, während Box-Whisker-Plots die <em>statistische Verteilung</em> (Median, 50-%-Kernbereich IQR, Whisker-Grenzen und Ausreißer) mehrerer Gruppen vergleichen.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T06_Q6</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Wenn man die robuste Lage (Median), Streuung (IQR), Schiefe und Ausreißer der Taktzeiten von fünf verschiedenen Fertigungszellen direkt miteinander vergleichen will.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Box-Plots komprimieren ganze Stichprobenverteilungen auf 5 robuste Kennwerte und machen Gruppenvergleiche sowie Asymmetrien auf einen Blick sichtbar.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Wenn man die exakte Phasenverschiebung und Frequenz einer hochfrequenten harmonischen Sinusschwingung im Millisekundenbereich ablesen möchte.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Ein Box-Plot aggregiert über die Zeit; Frequenz- und Phaseninformationen gehen dabei vollständig verloren.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Wenn für jeden einzelnen Messpunkt nur ein einziger Skalarwert vorliegt und überhaupt keine wiederholten Messungen oder Stichprobengruppen existieren.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Für einen einzelnen Skalarwert pro Kategorie sind Quartile (Q1, Median, Q3) sinnlos; hier nutzt man ein Balkendiagramm.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Wenn die gerichtete Topologie und Hierarchieebenen eines komplexen Rohrleitungsnetzwerks mit möglichst wenigen Kantenkreuzungen dargestellt werden sollen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Für Netzwerktopologien nutzt man MSAGL-Graphenlayouts, keine Box-Whisker-Plots.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 7: C#-Bug-Diagnose: Auf dem Kopf stehende Maßzahlen bei Stäben von rechts nach links (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T06_Q7: C#-Bug-Diagnose: Auf dem Kopf stehende Maßzahlen bei Stäben von rechts nach links</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Ein Studierender richtet den Bemaßungstext eines Fachwerkstabs mit dem Winkel <code>double angleDeg = Math.Atan2(dyScreen, dxScreen) * 180.0 / Math.PI;</code> aus. Bei Stäben, die von links nach rechts verlaufen (\(x_2 > x_1\)), ist die Maßzahl perfekt lesbar. Bei Stäben, die von rechts nach links definiert wurden (\(x_2 < x_1\)), steht die Zahl jedoch <strong>auf dem Kopf</strong>. Welche Korrektur behebt diesen DIN-406-Verstoß?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Standard-Code für DIN-406-Textrotation:</strong><br>
+<code>if (angleDeg &gt; 90.0) angleDeg -= 180.0; else if (angleDeg &lt; -90.0) angleDeg += 180.0;</code></p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T06_Q7</idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Wenn der Winkel größer als +90 Grad oder kleiner als -90 Grad ist, muss man 180 Grad addieren bzw. subtrahieren, um die Textorientierung umzudrehen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Exakt! Nach DIN 406 müssen Maßzahlen immer von unten oder von rechts lesbar sein; Winkel in der linken Halbebene (|angle| > 90°) werden daher um 180° gedreht.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Man muss den berechneten Winkel vor der Übergabe an RotateTransform immer mit Math.Abs() in einen positiven Betrag umwandeln.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Math.Abs(-150°) liefert +150° (weiterhin kopfüber!) und zerstört zudem die korrekte Neigungsrichtung bei Stäben mit -30°.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Man muss die Schriftgröße FontSize des TextBlocks negativ setzen, damit WPF die Buchstaben automatisch an der Grundlinie spiegelt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Eine negative FontSize ist in WPF unzulässig und wirft sofort eine ArgumentException.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Man darf in Math.Atan2 niemals Bildschirmkoordinaten übergeben, sondern muss die Textdrehung zwingend vor der Skalierung im 1D-Array berechnen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Auch im World Space hat ein Vektor von rechts nach links einen Winkel von 180°; die Lesbarkeitskorrektur um 180° ist in jedem Fall nötig.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+  <!-- Question 8: Systemanalyse: Numerische Eigenschaften des Welford-Online-Algorithmus (multichoice, 1.0000000 Pkt.) -->
+  <question type="multichoice">
+    <name>
+      <text>Q02_T06_Q8: Systemanalyse: Numerische Eigenschaften des Welford-Online-Algorithmus</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Welche <strong>zwei</strong> Eigenschaften machen den <strong>Welford-Online-Algorithmus</strong> zum Industriestandard für die laufende Varianzberechnung in Echtzeit-Simulations- und Messsystemen?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong> Welford kombiniert \(\mathcal{O}(1)\)-Streaming-Effizienz (One-Pass) mit der hohen numerischen Stabilität der klassischen Zwei-Pass-Varianzformel.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber>Q02_T06_Q8</idnumber>
+    <single>false</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <showstandardinstruction>0</showstandardinstruction>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Richtig! Ausgezeichnete ingenieurwissenschaftliche Analyse.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Teilweise richtig. Prüfen Sie die verbleibenden Teilaspekte anhand der Musterherleitung.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Leider nicht korrekt. Studieren Sie das detaillierte Feedback und die Musterherleitung.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect/>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Er benötigt nur konstanten Speicherplatz O(1) für Count, Mean und M2, ohne die gesamte Historie vergangener Messwerte im RAM vorhalten zu müssen.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Als Streaming-/Online-Algorithmus verarbeitet Welford jeden neuen Messwert in O(1) Zeit und O(1) Speicher.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="50" format="html">
+      <text><![CDATA[Durch die Multiplikation der zentrierten Differenzen zum alten und neuen Mittelwert ist er numerisch immun gegen katastrophale Auslöschung bei großen Offsets.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Richtig! Da vor dem Quadrieren bereits der Mittelwert subtrahiert wird, bleiben die Differenzen klein und präzise darstellbar.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Er sortiert nach jedem neuen Messwert das gesamte bisherige Datenarray neu, um gleichzeitig den exakten Median in O(n log n) zu aktualisieren.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Welford speichert gar kein Array und berechnet weder Sortierungen noch Mediane.</p>]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="-50" format="html">
+      <text><![CDATA[Er kommt komplett ohne Gleitkommadivisionen aus, weil der laufende Mittelwert ausschließlich durch Bit-Shifting von Ganzzahlen angenähert wird.]]></text>
+      <feedback format="html">
+        <text><![CDATA[<p>Falsch. Der Schritt Mean += delta1 / Count enthält eine reguläre Gleitkommadivision durch die Stichprobengröße.</p>]]></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>
