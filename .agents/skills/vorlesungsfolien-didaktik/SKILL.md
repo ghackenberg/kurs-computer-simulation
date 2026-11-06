@@ -45,8 +45,12 @@ Wenn ein neuer Diagrammtyp, ein Algorithmus oder ein Architekturbaustein eingef�
 - **Abschnitts-Folie (`## N.M: ...`):**
   - Besitzt `![bg right](./Illustrationen/Abschnitt_M.jpg)` ($896 \times 1200\,\text{px}$, 3:4, minimalistisch, textfrei) und exakt den Einleitungssatz: `Dieser Abschnitt umfasst die folgenden Inhalte:`
 
-### 2.2 Mehrspaltiges Layout & reine Bildsyntax
-- Spalten werden über `<div class="columns">` und `<div class="one|two|three|four|five|six">` definiert.
+### 2.2 Mehrspaltiges Layout (`flex-grow`-Gewichte!) & reine Bildsyntax
+- Spalten werden über `<div class="columns">` und die CSS-Klassen `one`, `two`, `three`, `four`, `five`, `six` definiert.
+- **Wichtig (`fhooe.css`):** Die Klassennamen `one` bis `six` sind **KEINE Spaltennummern**, sondern **relative `flex-grow`-Breitengewichte** (`flex-grow: 1` bis `6` bei `flex-basis: 1rem`)!
+  - Zwei gleich breite Spalten (50 % / 50 %): `<div class="one">...</div>` + `<div class="one">...</div>` (oder zweimal `class="two"`).
+  - Asymmetrischer Split 40 % Text links / 60 % großer Plot rechts: `<div class="two">...</div>` + `<div class="three">...</div>` (Verhältnis $2 : 3$).
+  - Asymmetrischer Split 33 % schmale Spalte / 67 % breite Spalte: `<div class="one">...</div>` + `<div class="two">...</div>` (Verhältnis $1 : 2$).
 - **Reine Markdown-Bildsyntax:** Niemals `w:`, `h:`, `width:`, `height:` oder `center` im Markdown-Alt-Text verwenden! Immer `![](./Diagramme/Name.svg)` schreiben – das CSS-Theme skaliert Bilder automatisch auf 100 % Spaltenbreite.
 
 ---
