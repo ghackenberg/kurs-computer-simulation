@@ -17,12 +17,12 @@
 
 In dieser Lehrveranstaltung erlernen Sie das mechatronische Modellieren, numerische Simulieren und performante Visualisieren dynamischer und statischer Systeme mit **C# und .NET 8**. Wir schlagen den Bogen vom mathematischen Differentialgleichungssystem bis zum interaktiven Digitalen Zwilling.
 
-**Leistungsbeurteilung (2-Säulen-Modell: 40 % Theorie / 60 % Praxis & Diskurs):**
+**Leistungsbeurteilung (2-Säulen-Modell: 40 % Theorie / 60 % Praxis & Live-Showcase):**
 * **Säule 1 (40 %):** 4 kurze Moodle-Quizzes zu je 10 % (in Termin 03, 05, 08 und 10) zur Überprüfung des theoretisch-numerischen Grundlagenwissens.
-* **Säule 2 (60 %):** Kontinuierlicher Übungsbetrieb im 2er-Team mit **30 % C#-Code-Portfolio** (10 wöchentliche Übungsabgaben), **15 % Showcase-Präsentationen** (Live-Vorführung am Beamer im Rotationsverfahren) und **15 % Peer-Review & Plenumsfragen** (kritischer fachlicher Diskurs).
+* **Säule 2 (60 %):** Kontinuierlicher Übungsbetrieb im 2er-Team mit **40 % C#-Code-Portfolio** (10 wöchentliche Übungsabgaben à 4 %) und **20 % Live-Showcase & Code-Defense** (Live-Vorführung am Beamer im Rotationsverfahren mit Code-Erklärung und Parameter-Stresstest).
 
 **Wöchentlicher Ablauf ab Termin 02:**
-* Zu Beginn jeder Einheit stellen zwei ausgewählte Teams (je 1x Track A und 1x Track B) ihre Lösungen der Vorwoche live am Beamer vor. Das Plenum stellt dazu fachliche Fragen.
+* Zu Beginn jeder Einheit stellen zwei ausgewählte Teams (je 1x Track A und 1x Track B) ihre Lösungen der Vorwoche live am Beamer vor und erläutern ihre Implementierung im Rahmen einer kurzen Code-Defense.
 * An vier Terminen (T03, T05, T08, T10) findet vor der Vorlesung zusätzlich ein kurzes 15-minütiges Moodle-Quiz statt.
 * Im Anschluss folgt die interaktive Vorlesung (mathematische Modellierung, numerische Lösungsverfahren und detaillierte Besprechung der C#-Implementierung anhand der Vorlesungsfolien). Die praktische Programmierübung (Stufe 1 Basisaufgabe und Stufe 2 Vertiefungsaufgabe) wird als wöchentliche Hausübung im 2er-Team bearbeitet.
 
@@ -58,7 +58,7 @@ Zum Auftakt klären wir die Taxonomie technischer Modelle, das Konzept des Digit
 Heute steigen wir in die High-Performance-Pixelgrafik unter WPF ein. Wir analysieren die Performance-Grenzen herkömmlicher UI-Controls bei Feldsimulationen und nutzen Direct-Memory-Zugriffe auf den Bildspeicher einer WriteableBitmap (Stride-Berechnung, Zeigerarithmetik, allokationsfreier Pointer-Swap). Darauf aufbauend diskretisieren wir die 2D-Wärmeleitungsgleichung mittels Finite-Differenzen-Methode (FDM 5-Punkt-Stern) und beweisen die fundamentale CFL-Stabilitätsgrenze (Stabilitätsfaktor s kleiner oder gleich 0,25).
 
 **Ablauf & Übungsaufgaben:**
-* 🎤 **Showcase T01:** Zwei ausgewählte Teams (1x Track A, 1x Track B) führen ihre Ballistiklösungen der Vorwoche live am Beamer vor. Das Plenum stellt Fragen zur Modellierung und Stabilität.
+* 🎤 **Showcase T01:** Zwei ausgewählte Teams (1x Track A, 1x Track B) führen ihre Ballistiklösungen der Vorwoche live am Beamer vor (inkl. Code-Defense und Parameter-Stresstest).
 * **Stufe 1 (Basisaufgabe):** Interaktive WPF-Heatmap mit Direct-Pointer-Transfer und stabiler 2D-Diffusionsschleife.
 * 🏭 **Stufe 2 – Track A (Industrie):** *CPU-Kühlkörper-Optimierung* – Mehrzonengitter aus Silizium und Kupfer mit Konvektionsrand und Hotspot-Thermometrie.
 * 🎮 **Stufe 2 – Track B (Game):** *„Falling Sand & Doom Fire / Lava“* – Interaktive zelluläre Pixel-Physik mit aufsteigender Glut und Maus-Zeichenfunktion.

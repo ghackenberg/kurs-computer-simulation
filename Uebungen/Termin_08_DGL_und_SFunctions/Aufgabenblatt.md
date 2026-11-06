@@ -261,11 +261,11 @@ Falls Sie KI-Assistenten verwenden, beachten Sie folgende Vorgaben zur Vermeidun
 
 ---
 
-## 8. 🔍 Peer-Review-Leitfragen für das Auditorium
+## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 
-Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen anhand folgender Fragen:
+Beim wöchentlichen Live-Showcase am Beamer prüfen wir die vorgeführten Lösungen anhand folgender Kernfragen und Stresstests:
 
 1. **Windup-Verhalten im Diagramm:** Schießt der I-Anteil während der Störung (Werkzeugeintritt oder Windböe) in astronomische Höhen, oder friert der Wert bei Sättigung sofort auf einer horizontalen Linie ein?
 2. **Reversibilität des Clamping:** Reagiert der Regler sofort ohne Verzögerung, sobald die Störung wegfällt und der Fehler das Vorzeichen wechselt, oder bleibt der Integrator blockiert?
-3. **Echtes RK4 vs. verstecktes Euler-Verfahren:** Werden im Solver wirklich 4 Zwischenstufen berechnet? *(Auditorium-Test: Schrittweite von $h = 0{,}5\,\text{ms}$ auf $h = 10\,\text{ms}$ vergrößern – bleibt das System mit RK4 stabil, während Euler längst explodiert?)*
+3. **Echtes RK4 vs. verstecktes Euler-Verfahren:** Werden im Solver wirklich 4 Zwischenstufen berechnet? *(Live-Stresstest: Schrittweite von $h = 0{,}5\,\text{ms}$ auf $h = 10\,\text{ms}$ vergrößern – bleibt das System mit RK4 stabil, während Euler längst explodiert?)*
 4. **Physikalische Konsistenz des Modells:** Werden Momenten- und Spannungsgleichungen konsistent aufgelöst? Stimmen die Einheiten von $k_{\text{m}}$ und $k_{\text{e}}$ überein?

@@ -230,7 +230,7 @@ Nutzen Sie zur Vorbereitung und Vertiefung folgende Quellen:
 
 ---
 
-## 8. 🔍 Peer-Review-Leitfragen für das Plenum (Showcase & Peer-Challenge)
+## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 
 1. **Der UI-Freeze- & Fenster-Verschiebe-Test:**
    *„Starten Sie eine lange Simulation und verschieben Sie währenddessen das WPF-Fenster mit der Maus oder betätigen Sie den Thread-Slider: Reagiert die Oberfläche verzögerungsfrei, oder hängt der UI-Thread?“*

@@ -27,7 +27,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-### Showcase & Peer-Challenge: Termin 08
+### Live-Showcase & Code-Defense: Termin 08
 
 Präsentation der Hausübung aus Termin 08 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 08](../../Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.md)):
 
@@ -39,7 +39,7 @@ Präsentation der Hausübung aus Termin 08 (**Stufe 1: Basisaufgabe** + **Stufe 
 - Verfahrensvergleich Euler vs. Heun vs. RK4
 - PID-Lageregelung mit Lastsprung & Derating
 - Anti-Windup Clamping gegen Überschwingen
-- *Peer Review:* Verhalten bei Aktor-Sättigung
+- *Code-Defense:* Verhalten bei Aktor-Sättigung
 
 </div>
 <div class="two">
@@ -49,12 +49,12 @@ Präsentation der Hausübung aus Termin 08 (**Stufe 1: Basisaufgabe** + **Stufe 
 - Gekoppelte Translation & Drehträgheit
 - Kaskadierter PID & Schubvektor-Gimbal
 - Balancer gegen Inverted-Pendulum-Kippen
-- *Peer Review:* RK4-Stabilität & Regelparameter
+- *Code-Defense:* RK4-Stabilität & Regelparameter
 
 </div>
 </div>
 
-> **Peer-Challenge (Säule 2b):** Live-Demonstration am Beamer. Fokus: Anti-Windup Clamping unter Lastsprung und RK4- vs. Euler-Stabilitätsgrenze.
+> **Code-Defense (Säule 2b, 20 %):** Live-Demonstration am Beamer. Fokus: Anti-Windup Clamping unter Lastsprung und RK4- vs. Euler-Stabilitätsgrenze.
 
 ---
 

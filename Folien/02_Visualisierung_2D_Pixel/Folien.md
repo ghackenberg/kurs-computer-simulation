@@ -25,7 +25,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-### Showcase & Peer-Challenge: Termin 01
+### Live-Showcase & Code-Defense: Termin 01
 
 Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 01](../../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md)):
 
@@ -48,7 +48,7 @@ Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 
 </div>
 </div>
 
-> **Peer-Challenge (Säule 2b):** Fragen aus dem Plenum zu Stabilitätsgrenzen, Energieerhaltung und linearer Schnittpunkt-Interpolation.
+> **Code-Defense (Säule 2b, 20 %):** Prüfung auf Stabilitätsgrenzen, Energieerhaltung und lineare Schnittpunkt-Interpolation.
 
 ---
 

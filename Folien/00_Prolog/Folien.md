@@ -167,7 +167,7 @@ Die Lehrveranstaltung ist eine **Integrierte Lehrveranstaltung (ILV)** mit 3 ECT
 - **Interaktive Vorlesung (110–125 min):** Vermittlung der mathematischen Grundlagen, Algorithmen und C#-Implementierungen.
 - **Hausübung Stufe 1 – Basisaufgabe (~60 min):** Gemeinsames Fundament auf der C#-Projektvorlage mit automatisierten Unit-Tests (`1.1`–`1.4`).
 - **Hausübung Stufe 2 – Vertiefungsaufgabe (1 Woche):** Autonome Erweiterung im 2er-Team im gewählten Track (`Track A` Industrie vs. `Track B` Game).
-- **Showcase & Peer-Challenge (20 min):** Rotierende Beamer-Präsentationen und Plenumsdiskussion.
+- **Live-Showcase & Code-Defense (20 min):** Rotierende Beamer-Präsentationen, Code-Erklärung und Live-Parameter-Stresstest.
 
 ---
 
@@ -196,9 +196,9 @@ Für die vertiefenden Laboraufgaben (Stufe 2) wählen Sie im 2er-Team frei zwisc
 
 ---
 
-## Das 2-Säulen-Notenmodell
+## Das 2-Säulen-Notenmodell (40 – 40 – 20)
 
-Transparente Beurteilung von Theorie, praktischer Implementierung und wissenschaftlichem Diskurs:
+Transparente Beurteilung von Theorie, praktischer Implementierung und Live-Verteidigung:
 
 <div class="columns">
 <div class="two">
@@ -217,24 +217,24 @@ Transparente Beurteilung von Theorie, praktischer Implementierung und wissenscha
 </div>
 <div class="two">
 
-**Säule 2: Übungen & Diskurs (60 %)**
-- **30 % C#-Code-Portfolio:** 10 wöchentliche Hausübungen (Stufe 1 + Stufe 2: Track A oder B)
-- **15 % Showcase-Demo:** Live-Vorführung & Ad-hoc-Stresstest am Beamer
-- **15 % Peer-Review:** Kritische Fachfragen aus dem Plenum
+**Säule 2: Übungen & Showcase (60 %)**
+- **40 % C#-Code-Portfolio:** 10 wöchentliche Hausübungen à 4 % (Stufe 1 + Stufe 2: Track A oder B)
+- **20 % Live-Showcase & Code-Defense:** Rotierende Live-Vorführung, Code-Erklärung & Stresstest am Beamer
+- **Keine separate Plenumsnote:** Voller Fokus auf eigenen Code & eigene Live-Verteidigung
 
 </div>
 </div>
 
 ---
 
-### Showcase-Kultur & Peer-Challenge
+### Live-Showcase & Code-Defense (Säule 2b)
 
 Zu Beginn jedes Folgetermins demonstrieren zwei zufällig ausgewählte Teams ihre Lösung live am Beamer:
 
 <div class="columns">
 <div class="two">
 
-#### Showcase & Micro-Defense (Säule 2b)
+#### Live-Demonstration & Stresstest
 - **Live-Demonstration:** Flüssig laufende Simulation ($\ge 30\,\text{FPS}$) im Hörsaal.
 - **Code-Inspection:** Exakte Begründung jeder Codezeile (kein blindes „Vibe Coding“!).
 - **Live-Parameter-Stresstest:** Ad-hoc-Modifikation (z. B. Schrittweite verzehnfachen).
@@ -242,10 +242,10 @@ Zu Beginn jedes Folgetermins demonstrieren zwei zufällig ausgewählte Teams ihr
 </div>
 <div class="two">
 
-#### Peer-Review & Fragenkultur (Säule 2c)
-- **Kritisches Auditorium:** Das Plenum prüft Konsistenz, Erhaltungssätze und Stabilität.
+#### Code-Defense („Warum genau diese Zeile?“)
+- **Gezielte Code-Inspection:** Jedes Teammitglied erklärt den eingereichten Code im Detail.
 - **Enttarnung von Schein-Animationen:** Echte Physik-DGL statt reiner UI-Animation!
-- **Aktive Beteiligung:** Fundierte Fachfragen fließen direkt in die Teilnote von Säule 2c ein.
+- **Schutz gegen blindes „Vibe Coding“:** KI-Tools sind erlaubt, aber unverstandener Code kostet Punkte.
 
 </div>
 </div>

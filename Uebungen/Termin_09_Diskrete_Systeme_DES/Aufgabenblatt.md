@@ -273,11 +273,11 @@ Falls Sie KI-Assistenten verwenden, beachten Sie folgende Vorgaben zur Vermeidun
 
 ---
 
-## 8. 🔍 Peer-Review-Leitfragen für das Auditorium
+## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 
-Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen anhand folgender Fragen:
+Beim wöchentlichen Live-Showcase am Beamer prüfen wir die vorgeführten Lösungen anhand folgender Kernfragen und Stresstests:
 
-1. **Prüfung von Little's Gesetz:** Stimmt $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ überein? *(Auditorium-Test: Wurde bei der Berechnung von $\lambda_{\text{eff}}$ der Ausschuss / die geblockten Kunden herausgerechnet, oder wurde naiv die Brutto-Ankunftsrate $\lambda$ eingesetzt, was bei $K=25$ zu einem eklatanten Rechenfehler führt?)*
+1. **Prüfung von Little's Gesetz:** Stimmt $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ überein? *(Live-Stresstest: Wurde bei der Berechnung von $\lambda_{\text{eff}}$ der Ausschuss / die geblockten Kunden herausgerechnet, oder wurde naiv die Brutto-Ankunftsrate $\lambda$ eingesetzt, was bei $K=25$ zu einem eklatanten Rechenfehler führt?)*
 2. **Ereignisdiskreter Ablauf vs. Pseudo-Timer:** Gibt es im Quellcode irgendeine Schleife mit festem $\Delta t$ oder `Thread.Sleep`, oder springt die Simulation blitzschnell über $50\,000$ Stunden in wenigen Millisekunden rein über die `PriorityQueue`?
 3. **Prioritätslogik (Non-preemptive):** Überholt ein eintreffender Eilauftrag sofort alle wartenden Standardaufträge in der Schlange? Bleibt ein bereits in Bearbeitung befindlicher Auftrag ungestört bis zu seinem Departure-Event?
 4. **Statistische Signifikanz:** Wurden 100 Replikationen gerechnet und ein 95%-Konfidenzintervall angegeben, oder basiert die Aussage auf einem einzigen Zufallslauf?

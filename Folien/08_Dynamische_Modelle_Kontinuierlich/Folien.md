@@ -25,7 +25,7 @@ math: mathjax
 
 ---
 
-### Showcase & Peer-Challenge: Termin 07
+### Live-Showcase & Code-Defense: Termin 07
 
 Präsentation der Hausübung aus Termin 07 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 07](../../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md)):
 
@@ -37,7 +37,7 @@ Präsentation der Hausübung aus Termin 07 (**Stufe 1: Basisaufgabe** + **Stufe 
 - Wandernde Kranlast ($F_{\text{Last}} = 50\,\text{kN}$)
 - Überhöhte Verformungsdarstellung im Canvas
 - Reale Normalkräfte (Zug blau, Druck rot)
-- *Peer Review:* Euler-Knicknachweis & Kondition
+- *Code-Defense:* Euler-Knicknachweis & Kondition
 
 </div>
 <div class="two">
@@ -47,12 +47,12 @@ Präsentation der Hausübung aus Termin 07 (**Stufe 1: Basisaufgabe** + **Stufe 
 - Schrittweise Cholesky-LGS-Lösung
 - Bauteilversagen bei Grenzspannung $S_{\text{krit}}$
 - Physikalischer Kollaps & Trägerwerk-Einsturz
-- *Peer Review:* Singularität bei Stab-Ausfall
+- *Code-Defense:* Singularität bei Stab-Ausfall
 
 </div>
 </div>
 
-> **Peer-Challenge (Säule 2b):** Live-Demonstration am Beamer. Fokus: Numerische Stabilität, Konditionszahl $\kappa(\mathbf{K}_{ff})$ und Singularität bei Unterbestimmtheit.
+> **Code-Defense (Säule 2b, 20 %):** Live-Demonstration am Beamer. Fokus: Numerische Stabilität, Konditionszahl $\kappa(\mathbf{K}_{ff})$ und Singularität bei Unterbestimmtheit.
 
 ---
 

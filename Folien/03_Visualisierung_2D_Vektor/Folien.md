@@ -25,7 +25,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-### Showcase & Peer-Challenge: Termin 02
+### Live-Showcase & Code-Defense: Termin 02
 
 Präsentation der Hausübung aus Termin 02 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 02](../../Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.md)):
 
@@ -48,7 +48,7 @@ Präsentation der Hausübung aus Termin 02 (**Stufe 1: Basisaufgabe** + **Stufe 
 </div>
 </div>
 
-> **Peer-Challenge (Säule 2b):** Prüfung auf physikalisches Double-Buffering (kein In-Place-Überschreiben) und 0 B GC-Allokationen im Render-Tick.
+> **Code-Defense (Säule 2b, 20 %):** Prüfung auf physikalisches Double-Buffering (kein In-Place-Überschreiben) und 0 B GC-Allokationen im Render-Tick.
 
 ---
 

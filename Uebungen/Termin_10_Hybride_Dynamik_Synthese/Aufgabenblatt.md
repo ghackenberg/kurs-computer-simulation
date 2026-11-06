@@ -275,9 +275,9 @@ Falls Sie KI-Assistenten verwenden, beachten Sie folgende Vorgaben zur Vermeidun
 
 ---
 
-## 8. 🔍 Peer-Review-Leitfragen für das Auditorium
+## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 
-Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen anhand folgender Fragen:
+Beim Live-Showcase am Beamer bzw. bei der finalen Abnahme prüfen wir die vorgeführten Lösungen anhand folgender Kernfragen:
 
 1. **Tunneling-Stresstest bei Höchstgeschwindigkeit:** Was passiert, wenn die Geschwindigkeit der Kugel bzw. der Pneumatikdruck verfünffacht wird? Schlägt die Kugel durch die Wand hindurch (Tunneling), oder fängt die Zero-Crossing-Bisektion das Event stets absolut zuverlässig ab?
 2. **Zeno-Stabilitätstest:** Was passiert, wenn der Ball auf der schrägen Rampe ausrollt bzw. der Pneumatikzylinder am Endanschlag prellt? Friert die Simulation in einer unendlichen Bisektionskaskade ein (CPU-Kern auf $100\,\%$, Zeit bleibt stehen), oder schaltet das System sauber und ruckelfrei in den Roll-/Haftmodus um?

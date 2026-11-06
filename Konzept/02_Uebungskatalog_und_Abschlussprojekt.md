@@ -30,7 +30,7 @@
    - [Einheit 08: „DC-Servomotor-Regelung vs. SpaceX Falcon Hop“ (S-Function, RK4 & PID Anti-Windup)](#einheit-08-dc-servomotor-regelung-vs-spacex-falcon-hop-s-function-rk4--pid-anti-windup)
    - [Einheit 09: „Automobil-Lackierstraße vs. Theme Park Rush / Express-Pass“ (Diskrete Ereignissimulation DES)](#einheit-09-automobil-lackierstraße-vs-theme-park-rush--express-pass-diskrete-ereignissimulation-des)
    - [Einheit 10: „VIBN Pneumatikzylinder vs. Arcade Pinball Wizard“ (Hybride Systeme & Zero-Crossing)](#einheit-10-vibn-pneumatikzylinder-vs-arcade-pinball-wizard-hybride-systeme--zero-crossing)
-3. [Das 10-teilige C#-Simulations-Portfolio (Säule 2a, 30 %)](#3-das-10-teilige-c-simulations-portfolio-säule-2a-30-)
+3. [Das 10-teilige C#-Simulations-Portfolio (Säule 2a, 40 %)](#3-das-10-teilige-c-simulations-portfolio-säule-2a-40-)
    - 3.1 Zielsetzung & didaktischer Anspruch
    - 3.2 Software-Architekturrahmen („Goldene Regel der Simulationsarchitektur“)
    - 3.3 Die 4 gebündelten Labor-Meilensteine
@@ -52,7 +52,7 @@ Die Lehrveranstaltung *Systemsimulation / Digitaler Zwilling* am Campus Wels der
 flowchart LR
     VL["Interaktive Vorlesung\n(Präsenz, 110–125 min)\nMathematik, Zahlenbeispiele,\nSVG-Diagramme & C#-Snippets"] --> Stage1["Stufe 1: Basisaufgabe\n(Hausübung Teil 1, ~60 min)\nGemeinsames Fundament\nauf C#-Vorlage + Unit-Tests"]
     Stage1 --> Ext["Stufe 2: Vertiefungsaufgabe\n(Hausübung Teil 2, ~3–4 h)\nWahlmodell: Track A ODER Track B"]
-    Ext --> Portfolio["C#-Simulations-Portfolio\n(10 Module, 30 %)\nIndustrie-Zwillinge & Sim-Games"]
+    Ext --> Portfolio["C#-Simulations-Portfolio\n(10 Module, 40 %)\nIndustrie-Zwillinge & Sim-Games"]
     style VL fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
     style Stage1 fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
     style Ext fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
@@ -234,7 +234,7 @@ $$\dot{v}_x = -\frac{k_d}{m} v_{\text{rel}} (v_x - w_x), \quad \dot{v}_y = -g - 
 
 ---
 
-#### 🔍 Peer-Review & Leitfragen für das Plenum
+#### 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
 - **Fake-Physik vs. echte DGL:** Wird der Luftwiderstand bzw. die Blendenreibung in jedem Zeitschritt aus dem aktuellen Zustand berechnet, oder handelt es sich um eine vereinfachte analytische Parabel?
 - **Schrittweiten-Fehler bei Euler:** Warum überschätzt der explizite Euler beim schiefen Wurf die Höhe und landet um $\Delta t / 2$ zu spät? Wie verbessert das Heun-Verfahren (RK2) die Ordnung von $\mathcal{O}(\Delta t)$ auf $\mathcal{O}(\Delta t^2)$?
@@ -302,7 +302,7 @@ $$T_{x,y}^{k+1} = T_{x,y}^k + \frac{\alpha_{x,y} \Delta t}{\Delta x^2} \left( T_
 
 ---
 
-#### 🔍 Peer-Review & Leitfragen für das Plenum
+#### 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
 - **Gitterexplosion & Von-Neumann-Stabilität:** Was passiert, wenn die Schrittweite $\Delta t$ live am Beamer über das theoretische Limit $s = 0{,}25$ angehoben wird? Zeigt das Gitter das charakteristische oszillierende Schachbrettmuster, oder wurde die Instabilität künstlich durch ein `Math.Clamp` im Solver maskiert?
 - **Render-Performance & UI-Thread:** Werden die Pixel tatsächlich im unmanaged Speicher über `WriteableBitmap.Lock()` und direkten Zeigerzugriff aktualisiert?
@@ -399,7 +399,7 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
 
 ---
 
-#### 🔍 Peer-Review & Leitfragen für das Plenum
+#### 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
 - **Verzerrung des Seitenverhältnisses (Aspect Ratio Distortion):** Was passiert, wenn das Anwendungsfenster stark in die Breite oder Höhe gezogen wird? Verzerren sich Trägerdreiecke, Kreise oder Raumschiffe unphysikalisch, oder skaliert der `CoordinateTransformer` mit einem einheitlichen isotropen Maßstab $s = \min(s_x, s_y)$ unter automatischer Randzentrierung?
 - **Y-Achseninversion der Grafikausgabe:** Zeigen Vektoren mit positiver vertikaler Komponente nach oben (mathematisches Welt-Koordinatensystem), oder wurde die hardwareseitige WPF-Achsenrichtung (Y positiv nach unten) fälschlicherweise nicht invertiert?
@@ -468,7 +468,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### 🔍 Peer-Review & Leitfragen für das Plenum
+#### 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
 - **GC-Druck & Speicherallokationen im Render-Loop:** Allokiert der Timer-Tick bei jedem Frame neue `double[]`-Arrays oder LINQ-Abfragen auf dem Heap, oder wird strikt in vorallokierte Ringpuffer geschrieben?
 - **Welford-Rekursion vs. naive Summation:** Werden Mittelwert und Varianz tatsächlich online nach der Welford-Formel ohne Vergangenheits-Array aktualisiert, oder wird naiv mit `Sum()` und $\sum x^2$ gerechnet (Gefahr von Auslöschung)?
@@ -536,7 +536,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### 🔍 Peer-Review & Leitfragen für das Plenum
+#### 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
 - **Hierarchischer Szenengraph & Matrix-Stack:** Bewegen sich die Subkomponenten rein über lokale Transformationen via `gl.PushMatrix()` und `gl.PopMatrix()` mit, und warum darf `Sx = L1` nicht auf den Transformationsknoten selbst gesetzt werden (Verzerrung der Kind-Achsen)?
 - **Kardanfehler & Gimbal Lock der Kamera:** Ist die Elevation $\phi$ sauber auf $[-89^\circ, +89^\circ]$ begrenzt?
@@ -600,7 +600,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### 🔍 Peer-Review & Leitfragen für das Plenum
+#### 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
 - **Race Conditions & Nicht-Determinismus:** Liefert die parallele Simulation bei festem Seed reproduzierbare Ergebnisse, oder entstehen durch ungeschützte Zugriffe Datenrennen?
 - **Thread-Sicherheit von `System.Random`:** Warum liefert `new Random()` ohne Seed in parallelen Tasks identische Zahlenfolgen oder korrupte Zustände (0-Werte)?
@@ -666,7 +666,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### 🔍 Peer-Review & Leitfragen für das Plenum
+#### 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
 - **Globales Kraftgleichgewicht & Invarianten:** Ergibt die vektorielle Summe aller Auflagerreaktionskräfte $\mathbf{f}_p$ und eingeleiteten äußeren Lasten $\mathbf{f}_{\text{ext}}$ exakt $\vec{0}$ bis auf Maschinengenauigkeit ($< 10^{-9}\,\text{N}$)?
 - **Blockpartitionierung vs. Penalty-Pfusch:** Wurden die Lagerbedingungen mathematisch exakt über Submatrizen ($\mathbf{K}_{ff}, \mathbf{K}_{pf}$) partitioniert und gelöst?
@@ -731,7 +731,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### 🔍 Peer-Review & Leitfragen für das Plenum
+#### 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
 - **Windup-Effekt & Überschwingen bei Aktorsättigung:** Warum darf der Integrator nur dann angehalten werden, wenn der Ausgang in der Sättigung ist *und* der Regelfehler $e$ dasselbe Vorzeichen wie die Überschreitung hat?
 - **Echte 4-Stufen-RK4 vs. Euler:** Warum muss der Zeitparameter bei $\mathbf{k}_2$ und $\mathbf{k}_3$ auf $t + 0{,}5\Delta t$ und bei $\mathbf{k}_4$ auf $t + \Delta t$ gesetzt werden?
@@ -794,7 +794,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### 🔍 Peer-Review & Leitfragen für das Plenum
+#### 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
 - **Zeitgewichtetes Integral vs. Event-Durchschnitt:** Warum liefert der ungewichtete Durchschnitt von $N(t)$ an den Event-Zeitpunkten ein falsches $\bar{L}$, und warum ist $\frac{1}{T_{\text{sim}}}\int_0^{T_{\text{sim}}} N(t)\,\mathrm{d}t$ zwingend erforderlich?
 - **Effektive Ankunftsrate bei endlichem Puffer $K$:** Warum muss in einem $M/M/c/K$-System mit $\lambda_{\text{eff}} = \lambda(1 - P_{\text{Block}})$ statt mit $\lambda$ gerechnet werden?
@@ -856,7 +856,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### 🔍 Peer-Review & Leitfragen für das Plenum
+#### 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
 - **Warum verliert der naive Festschritt beim freien Fall Energie?** Weil der Ball am Schrittende bei $y_{k+1} < 0$ bereits unter dem Boden ist, dort umkehrt und die potenzielle Energie $m g |y_{k+1}|$ beim Hochsetzen auf $y=0$ vernichtet wird!
 - **Teil-Schritt-Aufteilung ($\Delta t_1$ und $\Delta t_2$):** Warum muss nach der Stoßumkehr bei $t^* = t_k + \alpha^* \Delta t$ noch die Restzeit $\Delta t_2 = (1 - \alpha^*)\Delta t$ integriert werden?
@@ -872,7 +872,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-## 3. Das 10-teilige C#-Simulations-Portfolio (Säule 2a, 30 %)
+## 3. Das 10-teilige C#-Simulations-Portfolio (Säule 2a, 40 %)
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -929,7 +929,7 @@ Die 10 Aufgaben werden über das Semester in 4 logischen Meilensteinen zur Zwisc
 
 ---
 
-### 3.4 Bewertungsrubrik für das C#-Code-Portfolio (Säule 2a, 30 %)
+### 3.4 Bewertungsrubrik für das C#-Code-Portfolio (Säule 2a, 40 %)
 
 | Dimension | Max. Pkt. | Hervorragend (100–90 %) | Gut (89–75 %) | Befriedigend / Genügend (74–50 %) | Nicht Genügend (< 50 %) |
 | :--- | :---: | :--- | :--- | :--- | :--- |

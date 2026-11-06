@@ -69,7 +69,7 @@ Jedes Aufgabenblatt enthält standardmäßig:
 5. *Akzeptanzkriterien & Definition of Done*
 6. *Recherche-Box* (Doku-Links, gezielte englische Suchbegriffe)
 7. *Vibe-Coding Prompt-Vorlagen*
-8. *🔍 Peer-Review-Leitfragen für das Auditorium*
+8. *🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)*
 
 ### Arbeitspaket 2: Moodle-Quizzes (10-Varianten-Moodle-XML & Blueprints)
 - **Worker M1:**

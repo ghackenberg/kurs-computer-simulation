@@ -192,7 +192,7 @@ Ergänze zudem den JSON-Import/Export mit System.Text.Json und binde KEINE FEM- 
 
 ---
 
-## 8. 🔍 Peer-Review-Leitfragen für das Plenum (Showcase & Peer-Challenge)
+## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 
 1. **Seitenverhältnis-Stresstest:**  
    *„Ziehen Sie das Anwendungsfenster am Rand ganz schmal und breit: Behalten die Träger-Dreiecke, Bemaßungen und das Konstruktionsraster ihre exakten Winkel und Proportionen, ohne zu verzerren?“*

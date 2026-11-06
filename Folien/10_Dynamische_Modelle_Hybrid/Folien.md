@@ -25,7 +25,7 @@ Dieses Kapitel beinhaltet Folgendes:
 
 ---
 
-### Showcase & Peer-Challenge: Termin 09
+### Live-Showcase & Code-Defense: Termin 09
 
 Präsentation der Hausübung aus Termin 09 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 09](../../Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.md)):
 
@@ -37,7 +37,7 @@ Präsentation der Hausübung aus Termin 09 (**Stufe 1: Basisaufgabe** + **Stufe 
 - Puffer mit Blocking ($K = 25$) & Abweisung
 - Prioritätswarteschlange (Express vs. Standard)
 - Numerische Verifikation via Little's Gesetz
-- *Peer Review:* Welford-Varianz & Konfidenz
+- *Code-Defense:* Welford-Varianz & Konfidenz
 
 </div>
 <div class="two">
@@ -47,12 +47,12 @@ Präsentation der Hausübung aus Termin 09 (**Stufe 1: Basisaufgabe** + **Stufe 
 - Stochastische Peaks & Zwischenankünfte
 - VIP-Fastpass mit `PriorityQueue`
 - Interaktives Dashboard gegen Queue-Kollaps
-- *Peer Review:* Stochastische Kausalität & Seeds
+- *Code-Defense:* Stochastische Kausalität & Seeds
 
 </div>
 </div>
 
-> **Peer-Challenge (Säule 2b):** Live-Demonstration am Beamer. Fokus: Little's Gesetz ($\bar{L} = \lambda_{\text{eff}}\bar{W}$), Pufferüberlauf und Monte-Carlo-Konfidenzintervalle.
+> **Code-Defense (Säule 2b, 20 %):** Live-Demonstration am Beamer. Fokus: Little's Gesetz ($\bar{L} = \lambda_{\text{eff}}\bar{W}$), Pufferüberlauf und Monte-Carlo-Konfidenzintervalle.
 
 ---
 

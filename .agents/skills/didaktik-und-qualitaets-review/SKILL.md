@@ -36,11 +36,11 @@ Die Studierenden befinden sich im **5. Fachsemester Bachelor Automatisierungstec
 
 ## Dimension 2: Chronologische & Kausale Integrität (Makro-Dramaturgie T01–T10)
 
-- **Ablauf eines 150-Minuten-Präsenztermins (Realistisches Zeitbudget):**
-  - Zu Beginn (ab T02): **Showcase & Peer-Review** der Hausübung der Vorwoche (1× Track A, 1× Track B am Beamer + Plenumsfragen, ca. 20–25 min).
-  - An T03, T05, T08, T10 zusätzlich zu Beginn: **Moodle-Quiz** (15 min).
+- **Ablauf eines 150-Minuten-Präsenztermins (Realistisches Zeitbudget & 40-40-20-Bewertungsmodell):**
+  - Zu Beginn (ab T02): **Live-Showcase & Code-Defense (Säule 2b, 20 %)** der Hausübung der Vorwoche (1× Track A, 1× Track B am Beamer + Code-Erklärung & Parameter-Stresstest durch den Dozenten, ca. 20 min; keine separate Plenumsfragen-Note).
+  - An T03, T05, T08, T10 zusätzlich zu Beginn: **Moodle-Quiz (Säule 1, 40 % = 4 × 10 %)** (15 min).
   - Hauptteil (110–125 min): **Interaktive Vorlesung anhand der Folien** (Konzept, Mathematik, Zahlenbeispiele, SVG-Diagramme und Besprechung der abgedruckten C#-Code-Snippets – **kein Live-Coding** und **keine Programmierphase im Hörsaal**).
-  - **Hausübung (5,0 h Selbststudium/Woche):** Sowohl **Stufe 1 (Basisaufgabe auf der C#-Vorlage, Teilaufgaben `1.1`–`1.4`)** als auch **Stufe 2 (Vertiefungsaufgabe im Wahlmodell: Track A `A.1`–`A.4` ODER Track B `B.1`–`B.4`)** sind verpflichtende Teile der Hausübung und werden vollständig zu Hause bearbeitet (Ziffern `1`/`2` = Nacheinander/UND; Buchstaben `A`/`B` = Auswahl/ODER).
+  - **Hausübung (Säule 2a: 40 % C#-Code-Portfolio = 10 × 4 %, 5,0 h Selbststudium/Woche):** Sowohl **Stufe 1 (Basisaufgabe auf der C#-Vorlage, Teilaufgaben `1.1`–`1.4`)** als auch **Stufe 2 (Vertiefungsaufgabe im Wahlmodell: Track A `A.1`–`A.4` ODER Track B `B.1`–`B.4`)** sind verpflichtende Teile der Hausübung und werden vollständig zu Hause bearbeitet (Ziffern `1`/`2` = Nacheinander/UND; Buchstaben `A`/`B` = Auswahl/ODER).
 - **Prüffragen:**
   1. **Strikte Rückwärts-Kausalität am Terminbeginn:** Prüfen Showcase und Moodle-Quiz zu Beginn von Termin $k$ ausschließlich den Stoff der vorangegangenen Termine $1 \dots k-1$ (Q1: Kap. 00–02, Q2: Kap. 03–04, Q3: Kap. 05–07, Q4: Kap. 08–09)?
   2. **Vorgreif-Sperre:** Werden in Folien, Übungen oder Quizzes Konzepte verwendet, die erst in einem späteren Kapitel eingeführt werden?

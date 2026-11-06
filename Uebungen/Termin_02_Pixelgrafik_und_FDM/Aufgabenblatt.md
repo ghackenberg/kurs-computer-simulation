@@ -220,7 +220,7 @@ Implementiere ein ortsabhängiges Materialgitter float[,] _alphaMap sowie für T
 
 ---
 
-## 8. 🔍 Peer-Review-Leitfragen für das Plenum (Showcase & Peer-Challenge)
+## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 
 1. **Stabilitätstest am Beamer:**  
    *„Erhöhen Sie den Zeitschritt $\Delta t$ oder die Wärmeleitfähigkeit live am Schieberegler um 25 %. Zeigt das Gitter sofort das charakteristische alternierende Schachbrettmuster der Instabilität, oder wurde das Problem durch künstliches `Math.Clamp()` verschleiert?“*

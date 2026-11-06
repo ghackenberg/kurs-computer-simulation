@@ -68,9 +68,9 @@ Angehende Automatisierer nutzen Simulationen nicht als theoretischen Selbstzweck
 
 Das an österreichischen Fachhochschulen etablierte Format der **Integrierten Lehrveranstaltung (ILV)** verzahnt theoretisch-mathematische Herleitung, Code-Architektur-Analyse und studentischen Fachdiskurs in einem gemeinsamen Präsenzformat:
 - **Einheitlicher Raum:** Der Unterricht findet in multimedial ausgestatteten Hörsälen oder Seminarräumen statt.
-- **Fokussierte Präsenzzeit (150 min ohne Live-Coding / ohne In-Class-Programmierphase):** Die Präsenzzeit widmet sich vollständig dem **Showcase & Peer-Review** der Hausübung der Vorwoche (ab T02, ca. 20–25 min), an 4 Terminen zu Beginn dem **Moodle-Quiz** (15 min) sowie der **interaktiven Vorlesung anhand der Folien** (110–125 min: Konzepte, mathematische Herleitungen, konkrete Zahlenbeispiele, SVG-Diagramme und detaillierte Besprechung der abgedruckten C#-Code-Snippets auf den Folien). In der Präsenzveranstaltung findet **kein Live-Coding durch den Dozenten** und **keine In-Class-Programmierphase im Hörsaal** statt.
+- **Fokussierte Präsenzzeit (150 min ohne Live-Coding / ohne In-Class-Programmierphase):** Die Präsenzzeit widmet sich vollständig dem **Live-Showcase & Code-Defense** der Hausübung der Vorwoche (ab T02, ca. 20–25 min), an 4 Terminen zu Beginn dem **Moodle-Quiz** (15 min) sowie der **interaktiven Vorlesung anhand der Folien** (110–125 min: Konzepte, mathematische Herleitungen, konkrete Zahlenbeispiele, SVG-Diagramme und detaillierte Besprechung der abgedruckten C#-Code-Snippets auf den Folien). In der Präsenzveranstaltung findet **kein Live-Coding durch den Dozenten** und **keine In-Class-Programmierphase im Hörsaal** statt.
 - **Zweistufige Hausübung im 2er-Team (zu Hause):** Die gesamte praktische Programmierarbeit (Stufe 1 Basisaufgabe auf der C#-Projektvorlage + Stufe 2 Ausbau-Aufgabe im Wahlmodell Track A oder Track B) erfolgt als wöchentliche Hausübung im 2er-Team.
-- **Prüfungsimmanenter Charakter:** Es gibt keine isolierte Abschluss-Schriftklausur; die Gesamtnote speist sich aus kontinuierlichen Teilleistungen (4 Moodle-Tests, 10-teiliges C#-Simulations-Portfolio, Showcase-Präsentationen und qualifiziertes Peer-Review im Plenum).
+- **Prüfungsimmanenter Charakter:** Es gibt keine isolierte Abschluss-Schriftklausur; die Gesamtnote speist sich aus kontinuierlichen Teilleistungen (4 Moodle-Tests à 10 %, 10-teiliges C#-Simulations-Portfolio à 4 % sowie Live-Showcases & Code-Defenses mit 20 %).
 
 ### 1.3 Workload-Kalkulation nach ECTS-Richtlinien
 
@@ -85,8 +85,8 @@ Die Lehrveranstaltung ist mit **3 ECTS-Punkten** (entsprechend einem Gesamt-Work
 | **Gesamtsumme** | **1 ECTS = 25 Echtstunden** | **75,0 h** | **100,0 %** |
 
 > [!IMPORTANT]
-> **Verbindliche Verankerung von Showcase & Plenumsdiskussion im Workload:**  
-> Sowohl das **Präsentieren der eigenen Lösung auf der Beamer-Bühne (Showcase im Rotationsprinzip)** als auch das **qualifizierte, fundierte Fragenstellen im Peer Review während der Plenumsdiskussion** sind verbindliche, prüfungsrelevante Bestandteile der Lehrveranstaltung. Sie sind direkt im Notenschema (Säule 2) verankert; eine rein passive Hörsaal-Anwesenheit genügt den Leistungsanforderungen nicht.
+> **Verbindliche Verankerung von Live-Showcase & Code-Defense im Workload:**  
+> Das **Präsentieren der eigenen Lösung auf der Beamer-Bühne (Live-Showcase im Rotationsprinzip)** inklusive **mündlicher Code-Erklärung ("Warum genau diese Zeile?") und Live-Parameter-Stresstest (Code-Defense)** ist ein verbindlicher, prüfungsrelevanter Bestandteil der Lehrveranstaltung (Säule 2b, 20 %).
 
 ---
 
@@ -95,9 +95,9 @@ Die Lehrveranstaltung ist mit **3 ECTS-Punkten** (entsprechend einem Gesamt-Work
 ### 2.1 Constructive Alignment nach Biggs
 
 Das Curriculum folgt dem Prinzip des **Constructive Alignment** (John Biggs):
-1. **Intended Learning Outcomes (ILOs):** Die Studierenden können physikalisch-technische Systeme als mathematische Modelle formulieren, numerische Algorithmen (LGS, ODE, DES, Hybride Solver) in modernem C# (.NET 8) ohne vorgefertigte Blackbox-Simulatoren implementieren, echtzeitfähige 2D/3D-Dashboards realisieren und Simulationslösungen im Fachdiskurs kritisch analysieren und verteidigen.
-2. **Teaching/Learning Activities (TLAs):** **Showcase, Peer Review & Plenumsdiskussion (Track A vs. Track B)** ➔ **Interaktive Vorlesung anhand der Folien (Konzepte, Mathematik, Zahlenbeispiele, SVG-Diagramme & Besprechung der C#-Code-Snippets)** ➔ **Zweistufige Hausübung im 2er-Team zu Hause (Stufe 1 Basisaufgabe mit Unit-Tests + Stufe 2 Track-Erweiterung)**.
-3. **Assessment Tasks (ATs):** Moodle-Tests prüfen das theoretische und numerische Fundament; wöchentliche Hausübungen inklusive **Showcase-Präsentation und qualifiziertem Peer-Review-Fragenstellen** fordern und bewerten sauberen Code sowie Diskursfähigkeit; das 10-teilige C#-Simulations-Portfolio verlangt die ganzheitliche Synthese, Code-Qualität und automatisierte Validierung.
+1. **Intended Learning Outcomes (ILOs):** Die Studierenden können physikalisch-technische Systeme als mathematische Modelle formulieren, numerische Algorithmen (LGS, ODE, DES, Hybride Solver) in modernem C# (.NET 8) ohne vorgefertigte Blackbox-Simulatoren implementieren, echtzeitfähige 2D/3D-Dashboards realisieren und Simulationslösungen in der Code-Defense kritisch analysieren und verteidigen.
+2. **Teaching/Learning Activities (TLAs):** **Live-Showcase & Code-Defense (Track A vs. Track B)** ➔ **Interaktive Vorlesung anhand der Folien (Konzepte, Mathematik, Zahlenbeispiele, SVG-Diagramme & Besprechung der C#-Code-Snippets)** ➔ **Zweistufige Hausübung im 2er-Team zu Hause (Stufe 1 Basisaufgabe mit Unit-Tests + Stufe 2 Track-Erweiterung)**.
+3. **Assessment Tasks (ATs):** Moodle-Tests (40 %) prüfen das theoretische und numerische Fundament; das 10-teilige C#-Simulations-Portfolio (40 %) verlangt die ganzheitliche Synthese, Code-Qualität und automatisierte Validierung; **Live-Showcase & Code-Defense am Beamer (20 %)** fordern und bewerten sauberen Code, mündliche Auskunftsfähigkeit sowie das Bestehen von Live-Parameter-Stresstests.
 
 ### 2.2 Active Learning & Interaktive Folien-Vorlesung
 
@@ -267,11 +267,11 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 - **Zweistufige Hausübung im 2er-Team (zu Hause):**
   - **Stufe 1 – Basisaufgabe (Gemeinsames Fundament, ca. 60 min zu Hause):** Erweiterung der Vorlage [`PixelHeatFDM.sln`](../Uebungen/Termin_02_Pixelgrafik_und_FDM/Vorlage/PixelHeatFDM.sln) um 256-Stufen-LUT, ortsabhängiges Materialgitter (`AlphaMap`) mit adiabaten Neumann-Isolatorwänden und interaktives Maus-Zeichnen (`dotnet test`).
   - **Stufe 2 – Ausbau-Aufgabe im Wahlmodell (Track A ODER Track B, ca. 3–4 h zu Hause):** CPU-Kühlkörper-Optimierung mit Robin-Rand (Track A) oder Falling Sand & Doom Fire / Lava-Simulator (Track B).
-- **Showcase, Peer Review & Plenumsdiskussion (20–25 min):**
+- **Live-Showcase & Code-Defense (20–25 min):**
   - *Showcase Track A (5–7 min):* 1x Team zeigt 2D-Temperaturfeldsimulation des CPU-Kühlkörpers mit `WriteableBitmap` und Farbverlauf.
   - *Showcase Track B (5–7 min):* 1x Team führt Falling-Sand- / Doom-Fire-Pixelwelt vor (Pointerarithmetik, allokationsfreie BackBuffer-Updates).
-  - *Peer Review & Plenumsdiskussion (ca. 10 min):* Plenumsfragen zu Speicherlinearisierung, Stride-Padding und Von-Neumann-Stabilitätsgrenze ($s = \frac{\alpha \cdot \Delta t}{\Delta x^2} \le 0{,}25$).
-  - *Dozenten-Feedback & Stresstest (ca. 5 min):* Erhöhung von $\Delta t$ auf $s = 0{,}28$ direkt im Code ➔ Demonstration der numerischen Gitterexplosion im Plenum.
+  - *Code-Defense & Leitfragen (ca. 5–7 min):* Code-Erklärung zu Speicherlinearisierung, Stride-Padding und Von-Neumann-Stabilitätsgrenze ($s = \frac{\alpha \cdot \Delta t}{\Delta x^2} \le 0{,}25$).
+  - *Live-Parameter-Stresstest (ca. 3–5 min):* Erhöhung von $\Delta t$ auf $s = 0{,}28$ direkt im Code ➔ Demonstration der numerischen Gitterexplosion am Beamer.
 - **Online-Recherche-Tipp:**
   - *Suchbegriffe:* `"WriteableBitmap Lock BackBuffer unsafe C#" site:learn.microsoft.com`, `"Von Neumann stability heat equation 2D"`.
   - *Doku-Link:* [Microsoft Learn: WriteableBitmap-Klasse](https://learn.microsoft.com/de-de/dotnet/api/system.windows.media.imaging.writeablebitmap)
@@ -576,36 +576,36 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
 
 ## 4. Ablaufstruktur eines 150-Minuten-Präsenztermins
 
-Das 150-Minuten-Format (2,5 Zeitstunden) ist didaktisch straff getaktet. In der Präsenzveranstaltung finden **kein Live-Coding durch den Dozenten** und **keine In-Class-Programmierphase im Hörsaal** statt – die gesamte Programmierarbeit (Stufe 1 Basisaufgabe + Stufe 2 Vertiefungsaufgabe) erfolgt zu Hause im 2er-Team. Die Präsenzzeit widmet sich vollständig dem Peer-Review-Diskurs, den Kurztests und der tiefgründigen interaktiven Vorlesung anhand der Folien.
+Das 150-Minuten-Format (2,5 Zeitstunden) ist didaktisch straff getaktet. In der Präsenzveranstaltung finden **kein Live-Coding durch den Dozenten** und **keine In-Class-Programmierphase im Hörsaal** statt – die gesamte Programmierarbeit (Stufe 1 Basisaufgabe + Stufe 2 Vertiefungsaufgabe) erfolgt zu Hause im 2er-Team. Die Präsenzzeit widmet sich vollständig dem Live-Showcase & Code-Defense, den Kurztests und der tiefgründigen interaktiven Vorlesung anhand der Folien.
 
 ### 4.1 Die Präsenz-Taktung (Showcase, Quiz & Interaktive Vorlesung)
 
 ```mermaid
 flowchart LR
-    Q["Optional (T03, T05, T08, T10):\nMoodle-Quiz zu Beginn (15 min)"] --> S["Phase 1 (ab T02, 20–25 min):\nShowcase & Peer-Review der Vorwoche\n(1x Track A, 1x Track B + Plenum)"]
+    Q["Optional (T03, T05, T08, T10):\nMoodle-Quiz zu Beginn (15 min)"] --> S["Phase 1 (ab T02, 20–25 min):\nLive-Showcase & Code-Defense der Vorwoche\n(1x Track A, 1x Track B am Beamer)"]
     S --> V["Phase 2 (110–125 min):\nInteraktive Vorlesung anhand der Folien\n(Konzepte, Herleitung, Zahlenbeispiele,\nSVG-Diagramme & C#-Code-Snippets)"]
     V --> A["Ausblick (5 min):\nVorstellung der Hausübung\n(Stufe 1 Basis + Stufe 2 Track A/B)"]
 ```
 
 | Phase | Zeitfenster (Standard / Quiz-Termin) | Dauer | Didaktische Funktion | Aktivitäten & Methoden |
 | :---: | :---: | :---: | :--- | :--- |
-| **Moodle-Quiz** *(nur T03, T05, T08, T10)* | 00:00 – 00:15 | **15 min** | **Summativer Kurztest (Rückwärts-Kausalität)** | - 8 Fragen / 10 Punkte über die vorangegangenen Kapitel (3 numerische Freitext-/Code-Tracing-Fragen, 3 Single-Choice, 2 Multiple-Select) |
-| **Phase 1** *(ab T02)* | 00:00 – 00:25 *(bzw. 00:15 – 00:35)* | **20–25 min** | **Showcase, Peer Review & Plenumsdiskussion** | - **Live-Showcase Track A:** 1x Team Industrie stellt Hausübung der Vorwoche live am Beamer vor (5–7 min)<br>- **Live-Showcase Track B:** 1x Team Simulation Game stellt Lösung live vor (5–7 min)<br>- **Peer Review & Plenumsdiskussion:** Gezielte Fachfragen aus dem Plenum (ca. 5–7 min)<br>- **Dozenten-Feedback & Stresstest:** Live-Ad-hoc-Parameterstresstest (ca. 3–5 min) |
+| **Moodle-Quiz** *(nur T03, T05, T08, T10)* | 00:00 – 00:15 | **15 min** | **Summativer Kurztest (Rückwärts-Kausalität)** | - 8 Fragen / 10 Punkte über die vorangegangenen Kapitel (100 % automatisch korrigierbare Moodle-XML-Fragetypen) |
+| **Phase 1** *(ab T02)* | 00:00 – 00:25 *(bzw. 00:15 – 00:35)* | **20–25 min** | **Live-Showcase & Code-Defense (Säule 2b)** | - **Live-Showcase Track A:** 1x Team Industrie stellt Hausübung der Vorwoche live am Beamer vor (5–7 min)<br>- **Live-Showcase Track B:** 1x Team Simulation Game stellt Lösung live vor (5–7 min)<br>- **Code-Defense & Leitfragen:** Code-Erklärung (*„Warum genau diese Zeile?“*) anhand der 4 Leitfragen (ca. 5–7 min)<br>- **Live-Parameter-Stresstest:** Spontane Parameter-Modifikation live im Quellcode (ca. 3–5 min) |
 | **Phase 2** | 00:25 – 02:25 *(inkl. kurzer Lüftungspause)* | **110–125 min** | **Interaktive Vorlesung anhand der Folien (ohne Live-Coding)** | - **3-Schritt-Rhythmus pro Sektion:** 1. Anwendungsbeispiel & Engpass-Motivation $\to$ 2. Mathematische Herleitung, Zahlenbeispiel & SVG-Diagramm $\to$ 3. Detaillierte Besprechung der abgedruckten C#-Code-Snippets auf den Folien<br>- Diskussion typischer numerischer und softwaretechnischer Fallstricke |
 | **Phase 3** | 02:25 – 02:30 | **5 min** | **Synthese & Hausübungs-Briefing** | - Vorstellung der letzten Folie („Laborübung Termin XX“): Überblick über **Stufe 1 (Basisaufgabe auf der C#-Vorlage)** und **Stufe 2 (Vertiefungsaufgabe: Track A ODER Track B)** für die Heimarbeit |
 
-### 4.2 Showcase, Peer Review & Plenumsdiskussion im Detail
+### 4.2 Live-Showcase & Code-Defense im Detail
 
-Die Showcase-Phase zu Beginn jedes Termins (ab T02) bildet das didaktische Herzstück der aktiven Reflexion und des Peer-Learnings über die Hausübung der Vorwoche.
+Die Showcase-Phase zu Beginn jedes Termins (ab T02) bildet das didaktische Herzstück der aktiven Reflexion und der mündlichen Verteidigung der Hausübung der Vorwoche.
 
 ```mermaid
 flowchart TD
-    subgraph Showcase_Phase["Showcase, Peer Review & Plenumsdiskussion (20–25 min zu Terminbeginn)"]
+    subgraph Showcase_Phase["Live-Showcase & Code-Defense (20–25 min zu Terminbeginn)"]
         direction TB
         A["1. Showcase Track A: Industrie (5–7 min)\nLive-Demo am Beamer, DGL/LGS-Herleitung, C#-Code"]
         B["2. Showcase Track B: Simulation Game (5–7 min)\nLive-Gameloop, FPS/GC-Check, interaktive Steuerung"]
-        C["3. Peer Review & Plenumsdiskussion (ca. 5–7 min)\nKritische Fragen der anderen Teams: Stabilität, Grenzfälle, Code-Design"]
-        D["4. Dozenten-Feedback & Ad-hoc-Stresstest (ca. 3–5 min)\nSpontane Parameter-Modifikation am Beamer, Noten-Feedback"]
+        C["3. Code-Defense & Leitfragen (ca. 5–7 min)\nErklärung von Codezeilen, Stabilitätsgrenzen & Randfällen"]
+        D["4. Live-Parameter-Stresstest (ca. 3–5 min)\nSpontane Parameter-Modifikation am Beamer, Noten-Feedback"]
         A --> B --> C --> D
     end
 ```
@@ -618,38 +618,33 @@ flowchart TD
 2. **Schritt 2: Live-Showcase Track B – Arcade / Simulation Game (ca. 5–7 min):**
    - Ein eingeteiltes 2er-Team aus Track B stellt das spielerische Gegenstück (Stufe 1 + Stufe 2 Track B) vor.
    - Fokus: Flüssiger Gameloop (60 FPS), allokationsfreie Datenstrukturen zur Vermeidung von Garbage-Collection-Rucklern, responsive Benutzerinteraktion und physikalisch plausibles Verhalten (z. B. Partikelkollisionen, Anti-Tunneling).
-3. **Schritt 3: Peer Review & Plenumsdiskussion (ca. 5–7 min):**
-   - Das Auditorium (die anderen Teams) hört keineswegs passiv zu, sondern agiert als **kritisches Peer-Review-Gremium**.
-   - Die Studierenden stellen gezielte, anspruchsvolle Fachfragen zu:
+3. **Schritt 3: Code-Defense & Leitfragen (ca. 5–7 min):**
+   - Das präsentierende Team verteidigt seinen Code im Dialog mit dem Dozenten (und optionalen Fragen aus dem Plenum) anhand der 4 Leitfragen aus Abschnitt 8 des Aufgabenblatts:
      - **Kritische Analyse & Randfälle:** *„Wie verhält sich euer Solver, wenn die Masse gegen Null strebt oder die Dämpfung negativ wird?“*
      - **Stabilitätsgrenzen & Numerik:** *„Wo liegt bei eurem Gitterabstand die Von-Neumann- bzw. CFL-Stabilitätsgrenze? Was passiert, wenn ihr den Zeitschritt $h$ verdoppelt?“*
      - **Code-Verständnis & Software-Architektur:** *„Warum habt ihr an dieser Stelle `WriteableBitmap` statt eines `Canvas` gewählt? Entstehen in der inneren Schleife versteckte Heap-Allokationen?“*
-4. **Schritt 4: Dozenten-Feedback & Ad-hoc-Stresstest (ca. 3–5 min):**
+4. **Schritt 4: Live-Parameter-Stresstest & Dozenten-Feedback (ca. 3–5 min):**
    - Der Dozent fasst Stärken und Optimierungspotenziale der beiden Lösungen zusammen.
    - Zur Verifikation fordert der Lehrende einen **Live-Ad-hoc-Stresstest**: Eine spontane Parameteränderung direkt im Quellcode am Beamer (z. B. Schrittweite $h \times 5$, asymmetrische Last, Deaktivierung von Anti-Windup), um die Grenzen des Modells transparent zu demonstrieren.
 
 #### 4.2.2 Das verbindliche Rotationsprinzip
-- Über das Semester hinweg kommt **jedes 2er-Team mindestens einmal als Showcase-Präsentator auf die Bühne**.
-- Ein transparenter Rotationsplan (auf Moodle bereitgestellt) legt zu Semesterbeginn fest, welches Team an welchem Termin für Track A bzw. Track B vorträgt.
-- Bei 10 Terminen und ca. 12–16 Teams im Jahrgang wird garantiert, dass jedes Team einmal im Rampenlicht steht und seinen Code öffentlich verteidigt.
+- Über das Semester hinweg (9 Showcase-Termine T02–T10 à 2 Teams = 18 Slots) kommt bei 13 Kursteilnehmern (~6–7 Teams) **jedes 2er-Team 2- bis 3-mal als Showcase-Präsentator auf die Bühne**.
+- Ein transparenter Rotationsplan legt fest, welches Team an welchem Termin für Track A bzw. Track B vorträgt.
 
 #### 4.2.3 Verbindliche Verankerung im Syllabus & Notenschema
-- **Doppelte Verpflichtung:**
-  1. **Präsentationsleistung:** Das souveräne Präsentieren der eigenen Lösung auf der Beamer-Bühne im zugewiesenen Termin ist eine **verbindliche Prüfungsvorleistung**.
-  2. **Plenumsbeteiligung & Peer Review:** Das Einbringen von fundierten, qualifizierten Fachfragen aus dem Plenum ist kein optionales Extra, sondern **fester Bestandteil der Beurteilung von Säule 2 (Übungsmeilensteine & Micro-Defenses)**.
-- Teams, die passiv im Hörsaal verweilen, ohne fundierte Fragen zu stellen oder ihre Showcase-Pflicht zu erfüllen, können in Säule 2 keine positive Beurteilung erreichen.
+- Das souveräne Präsentieren der eigenen Lösung auf der Beamer-Bühne inklusive Code-Erklärung und Live-Parameter-Stresstest fließt als **Säule 2b mit 20 %** direkt in die Gesamtnote ein (neben **40 % C#-Code-Portfolio** für alle 10 wöchentlichen Hausübungs-Abgaben in Säule 2a und **40 % Moodle-Quizzes** in Säule 1).
 
 ### 4.3 Rollenprofile von Lehrendem und Studierenden
 
 ```mermaid
 flowchart LR
     subgraph Lehrender
-        L1[Showcase & Peer-Review: Moderator, Stresstester & Reviewer]
+        L1[Live-Showcase & Defense: Prüfer, Stresstester & Moderator]
         L2[Interaktive Vorlesung: Erklärer der Konzepte, Herleitungen & C#-Folien-Snippets]
-        L3[Hausübungs-Briefing: Syntheseur & Meilenstein-Leiter]
+        L3[Hausübungs-Briefing: Syntheseur & Aufgaben-Leiter]
     end
     subgraph Studierende
-        S1[Showcase: Präsentator Track A/B & kritisches Plenum-Peer-Review]
+        S1[Live-Showcase & Defense: Präsentator Track A/B & Code-Verteidigung]
         S2[Interaktive Vorlesung: Aktives Mitdenken, Nachrechnen & Code-Analyse]
         S3[Heimarbeit im 2er-Team: Stufe 1 Basisaufgabe + Stufe 2 Track-Ausbau]
     end
@@ -658,7 +653,7 @@ flowchart LR
     L3 --> S3
 ```
 
-- **Im Showcase & Peer-Review:** Die eingeteilten Teams präsentieren ihre Hausübung auf der Bühne; das Plenum führt das strukturierte Peer Review mit fundierten Fachfragen; der Lehrende moderiert und führt den Ad-hoc-Stresstest durch.
+- **Im Live-Showcase & Code-Defense:** Die eingeteilten Teams präsentieren ihre Hausübung auf der Bühne, erklären ihren Code im Detail und absolvieren den Ad-hoc-Parameter-Stresstest des Lehrenden.
 - **In der interaktiven Vorlesung:** Der Dozierende führt anhand der Folien durch Anwendungsbeispiel, mathematische Herleitung, Zahlenbeispiele und die abgedruckten C#-Code-Snippets (ohne Live-Coding im Editor). Studierende stellen Zwischenfragen und vollziehen die Design-Entscheidungen nach.
 - **In der Hausübung (Heimarbeit):** Die Studierenden lösen im 2er-Team zu Hause zunächst gemeinsam **Stufe 1 (Basisaufgabe auf der C#-Vorlage mit Unit-Tests)** und bauen diese anschließend in **Stufe 2 (Vertiefungsaufgabe im gewählten Track A oder B)** aus.
 
@@ -695,7 +690,7 @@ flowchart TD
     D --> F[Heimarbeit Stufe 2: Vertiefungsaufgabe im Wahlmodell Track A ODER Track B]
     F --> G[Ausbau: Nichtlinearitäten, UI, Benchmarks & README]
     G --> H[Git Push & PR im 2er-Team]
-    H --> I[Showcase & Peer-Review im nächsten Präsenztermin]
+    H --> I[Live-Showcase & Code-Defense im nächsten Präsenztermin]
 ```
 
 ### 5.2 Kollaborationsmodell: 2er-Teams, Pair Programming & Git-Workflow
@@ -756,33 +751,31 @@ Das Benotungsschema ist zu 100 % mit dem Dokument `Konzept/03_Benotung_Moodle_Te
 │                                GESAMTNOTE (100 %)                                      │
 ├────────────────────────────────────────────┬───────────────────────────────────────────┤
 │    SÄULE 1: 40 %                           │    SÄULE 2: 60 %                          │
-│    Moodle Multiple-Choice-Tests            │    Kontinuierlicher Übungsbetrieb         │
-│    (Theorie, Stabilität & Code-Mutationen) │    • 30 % C#-Code-Portfolio (10 Module)   │
-│    • 4 Tests à 10 % (Q1, Q2, Q3, Q4)       │    • 15 % Showcase-Demos (Rotationsbasis) │
-│                                            │    • 15 % Peer-Review & Plenumsfragen     │
+│    Moodle-Quizzes (100 % Auto-Grading)     │    Kontinuierlicher Übungsbetrieb         │
+│    (Theorie, Stabilität & Code-Tracing)    │    • 40 % C#-Code-Portfolio (10 Module)   │
+│    • 4 Tests à 10 % (Q1, Q2, Q3, Q4)       │    • 20 % Live-Showcase & Code-Defense    │
 └────────────────────────────────────────────┴───────────────────────────────────────────┘
 ```
 
-#### Säule 1: Moodle Multiple-Choice-Tests (40 %)
+#### Säule 1: Moodle-Quizzes (40 %)
 - **Test 1 (zu Beginn von Termin 03):** Grundlagen, Modellarten, Expliziter Euler, Pixel-Stride, 2D-FDM-Stabilität, Fünfpunktstern ($s \le 0{,}25$) (Kapitel 00–02) [10 %].
 - **Test 2 (zu Beginn von Termin 05):** 2D-Vektorgrafik (Canvas, Welt-Screen-Transformation, DIN-Bemaßung), ScottPlot 5 Datenstreaming, Ringpuffer, Welford-Statistik, MSAGL (Kapitel 03–04) [10 %].
 - **Test 3 (zu Beginn von Termin 08):** 3D-OpenGL & Szenengraphen ($4\times 4$-Matrizen, OrbitCamera), Multithreading (TPL, Amdahl, False Sharing), Statische FEM-Fachwerke & Cholesky-Zerlegung (Kapitel 05–07) [10 %].
 - **Test 4 (zu Beginn von Termin 10):** Kontinuierliche Dynamik (S-Functions, RK4, Anti-Windup Clamping) sowie Diskrete Ereignissimulation (DES, PriorityQueue, Inversionsmethode, Little's Gesetz) (Kapitel 08–09) [10 %].
-- *Charakteristik:* 4 Tests (je 15 Minuten, 8 Fragen, 10 Punkte) zu Beginn des jeweiligen Termins (strikte Rückwärts-Kausalität auf die vorangegangenen Termine); Kombination aus Freitext-Berechnungs-/Code-Tracing-Fragen und Multiple-Choice-Fragen mit technisch plausiblen Ingenieurs-Distraktoren.
+- *Charakteristik:* 4 Tests (je 15 Minuten, 8 Fragen, 10 Punkte) zu Beginn des jeweiligen Termins (strikte Rückwärts-Kausalität auf die vorangegangenen Termine); 100 % automatische Auswertung in Moodle über den vollen Fragetypen-Mix (`cloze`, `numerical`, `gapselect`, `matching`, `ddwtos`, `multichoice`).
 
-#### Säule 2: Kontinuierlicher Übungsbetrieb & Diskurskultur (60 %)
+#### Säule 2: Kontinuierlicher Übungsbetrieb & Live-Showcase (60 %)
 
-Säule 2 verbindet praktisches Software-Engineering mit einer universitären Diskussions- und Reviewkultur:
-- **30 % C#-Code-Portfolio (Säule 2a):** Bewertung des gesamten Git-Repositories mit den 10 wöchentlichen Übungen (im gewählten Track A oder B). Kriterien: Saubere Entkopplung nach der Goldenen Regel, Vermeidung von GC-Allokationen im Zeitschritt, Thread-Sicherheit und automatisierte MSTest-Unit-Tests.
-- **15 % Showcase-Präsentation & Lösungsgüte (Säule 2b):** Live-Vorführung ausgewählter Meilensteinlösungen am Beamer im Rahmen des verbindlichen **Rotationsprinzips** (über das Semester kommt jedes 2er-Team mindestens einmal mit 5–7 min Showcase auf die Beamer-Bühne), spontane Code-Inspection und Bestehen des Live-Parameter-Stresstests des Dozenten.
-- **15 % Fachliche Plenumsbeteiligung & Peer-Review (Säule 2c):** Kontinuierliches, qualifiziertes und konstruktiv-kritisches Fragenstellen aus dem Plenum bei den Showcases anderer Teams (kritische Analyse, Stabilitätsgrenzen, Randfallbetrachtung, GC-Allokationsfreiheit und Code-Design).
-- **Verbindlichkeitsklausel:** Sowohl die eigene **Showcase-Präsentation** als auch das **qualifizierte Fragenstellen im Peer Review** sind verbindliche Prüfungsteile der Lehrveranstaltung. Eine rein passive Hörsaal-Anwesenheit ohne qualifizierte Wortmeldungen reicht für eine positive Beurteilung dieser Säule nicht aus.
+Säule 2 verbindet kontinuierliches Software-Engineering mit einer mündlichen Live-Verteidigung (Code-Defense):
+- **40 % C#-Code-Portfolio (Säule 2a, 10 Module à 4 %):** Bewertung des gesamten Git-Repositories mit den 10 wöchentlichen Übungen (Stufe 1 Basisaufgabe + Stufe 2 im gewählten Track A oder B). Kriterien: Saubere Entkopplung nach der Goldenen Regel, Vermeidung von GC-Allokationen im Zeitschritt, Thread-Sicherheit und automatisierte MSTest-Unit-Tests.
+- **20 % Live-Showcase & Code-Defense (Säule 2b):** Live-Vorführung ausgewählter Lösungen am Beamer im Rahmen des verbindlichen **Rotationsprinzips** (über das Semester kommt jedes Team mehrfach auf die Beamer-Bühne), spontane Code-Inspection (*„Warum genau diese Zeile?“*) und Bestehen des Live-Parameter-Stresstests durch den Dozenten.
+- **Verbindlichkeitsklausel:** Die aktive **Live-Showcase-Präsentation & Code-Defense** bei Auslosung ist ein verbindlicher Prüfungsteil der Lehrveranstaltung.
 
 > [!NOTE]
 > **Wahlmodell („Pick your Track: Industrie vs. Gaming“):**  
-> Die Studierenden müssen **NICHT** beide Aufgaben bearbeiten! Jedes 2er-Team wählt für jede Woche **GENAU EINE** der beiden Aufgaben (**Track A: Industrie ODER Track B: Game**). Beide Tracks führen zu denselben Lernergebnissen (ILOs), erfordern dieselbe Software-Architektur und besitzen denselben Workload.
+> Die Studierenden müssen in Stufe 2 **NICHT** beide Tracks bearbeiten! Jedes 2er-Team löst zunächst die gemeinsame **Stufe 1 (Basisaufgabe)** und wählt anschließend für **Stufe 2** **GENAU EINEN** der beiden Tracks (**Track A: Industrie ODER Track B: Game**). Beide Tracks führen zu denselben Lernergebnissen (ILOs), erfordern dieselbe Software-Architektur und besitzen denselben Workload.
 
-- Vier gebündelte Labor-Meilensteine zur Zwischenabnahme (je 3,75 % für den Showcase):
+- Vier gebündelte Labor-Meilensteine zur Zwischenabnahme (je 5 % für den Showcase):
   - **Meilenstein 1 (nach T02/T03, fällig T04):** 2D-Visualisierung & Simulation (FDM-Kühlkörper vs. Falling Sand/Lava).
   - **Meilenstein 2 (nach T04/T05, fällig T07):** Echtzeit-Dashboard & 3D-Kinematik (SCARA-Arm vs. 3D Arcade Claw Crane).
   - **Meilenstein 3 (nach T06/T07, fällig T09):** High-Performance & Statik (Portalkran Cholesky vs. Bridge Constructor Cholesky & Boids).
@@ -792,7 +785,7 @@ Säule 2 verbindet praktisches Software-Engineering mit einer universitären Dis
 
 ### 6.3 Benotungsrichtlinie & Bewertungsrubrik
 
-$$\text{Gesamtprozent } P = 0{,}40 \cdot P_{\text{Moodle}} + 0{,}30 \cdot P_{\text{Portfolio}} + 0{,}15 \cdot P_{\text{Showcase}} + 0{,}15 \cdot P_{\text{Plenum}}$$
+$$\text{Gesamtprozent } P = 0{,}40 \cdot P_{\text{Moodle}} + 0{,}40 \cdot P_{\text{Portfolio}} + 0{,}20 \cdot P_{\text{Showcase}}$$
 
 #### Bestehenskriterien (Hürden):
 - Gesamtnote $\ge 50\,\%$
@@ -806,7 +799,7 @@ $$\text{Gesamtprozent } P = 0{,}40 \cdot P_{\text{Moodle}} + 0{,}30 \cdot P_{\te
 - **Genügend (4):** $\ge 60\,\%$
 - **Nicht Genügend (5):** $< 60\,\%$
 
-#### Bewertungsrubrik für das 10-teilige C#-Simulations-Portfolio (Säule 2a, 30 %):
+#### Bewertungsrubrik für das 10-teilige C#-Simulations-Portfolio (Säule 2a, 40 %):
 
 | Kriterium | Exzellent (90–100 %) | Gut (80–89 %) | Befriedigend/Genügend (60–79 %) | Nicht Genügend (< 60 %) |
 | :--- | :--- | :--- | :--- | :--- |

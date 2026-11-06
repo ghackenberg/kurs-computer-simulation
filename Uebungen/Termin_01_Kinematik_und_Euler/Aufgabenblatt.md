@@ -224,9 +224,9 @@ Verwende KEIN WPF, KEIN ScottPlot und KEIN Multithreading.
 
 ---
 
-## 8. 🔍 Peer-Review-Leitfragen für das Plenum (Showcase & Peer-Challenge)
+## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 
-Beim wöchentlichen Showcase-Starttermin werden zwei Teams an das Beamer-Pult gerufen. Das Auditorium prüft die Lösung anhand folgender Kernfragen:
+Beim wöchentlichen Live-Showcase am Beamer werden zwei Teams ausgelost. Bereiten Sie sich als Team auf folgende Kernfragen und Live-Stresstests zur Verteidigung Ihrer Implementierung vor:
 
 1. **Vektorkonsistenz des Widerstands:**  
    *„Wird die Reibungskraft in jedem Zeitschritt echt vektoriell aus dem Betrag der Relativgeschwindigkeit $\|\vec{v} - \vec{w}\|$ skaliert, oder wurden $x$- und $y$-Komponente unzulässig unabhängig voneinander quadriert?“*

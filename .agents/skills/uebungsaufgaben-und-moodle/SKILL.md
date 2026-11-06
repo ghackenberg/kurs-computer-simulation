@@ -53,7 +53,7 @@ Für das Wahlmodell in **Stufe 2** gelten vier eiserne Regeln:
 Wenn sich der Inhalt oder Zuschnitt einer Übungsaufgabe für Termin `XX` ändert, müssen **alle 6 folgenden Orte** synchron aktualisiert werden:
 
 1. **Das Aufgabenblatt selbst:**
-   - `Uebungen/Termin_XX_.../Aufgabenblatt.md` (inkl. ASCII-Auswahlbaum, Arbeitspakete, 10-Punkte-Rubrik, LLM-Prompt und Peer-Review-Fragen).
+   - `Uebungen/Termin_XX_.../Aufgabenblatt.md` (inkl. ASCII-Auswahlbaum, Arbeitspakete, 10-Punkte-Rubrik, LLM-Prompt und Leitfragen für den Live-Showcase & Code-Defense).
    - Prüfen: **Kein `€`-Symbol innerhalb von `$ ... $` Mathe-Umgebungen** verwenden (immer `\text{EUR}` schreiben, da KaTeX beim PDF-Export sonst eine Unicode-Warnung wirft!).
    - PDF neu generieren: `npm run export:pdf:uebung:XX`.
 2. **Die C#-Projektvorlage:**
@@ -61,7 +61,7 @@ Wenn sich der Inhalt oder Zuschnitt einer Übungsaufgabe für Termin `XX` änder
 3. **Die Hausübungs-Folie am Ende von Vorlesungskapitel `XX`:**
    - Letzte Folie (`### Hausübung Termin XX: ...`) in `Folien/XX_.../Folien.md` anpassen (nennt oben **Stufe 1: Basisaufgabe** für alle Teams und darunter zweispaltig **Stufe 2: Vertiefungsaufgabe** mit **Track A** links und **Track B** rechts) + `npm run lint:slides:XX` & `npm run export:pdf:XX`.
 4. **Die Showcase-Folie am Anfang des Folgekapitels `XX+1`:**
-   - Folie 2 (`### Showcase & Peer-Challenge: Termin XX`) in `Folien/[XX+1]_.../Folien.md` anpassen + `npm run lint:slides:[XX+1]` & `npm run export:pdf:[XX+1]`.
+   - Folie 2 (`### Live-Showcase & Code-Defense: Termin XX`) in `Folien/[XX+1]_.../Folien.md` anpassen + `npm run lint:slides:[XX+1]` & `npm run export:pdf:[XX+1]`.
 5. **Die Konzept-Dokumente:**
    - `Konzept/01_Lehrveranstaltungsstruktur_und_Syllabus.md` (Übersichtstabelle & Termin-Steckbrief)
    - `Konzept/02_Uebungskatalog_und_Abschlussprojekt.md`

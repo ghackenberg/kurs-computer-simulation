@@ -24,7 +24,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-### Showcase & Peer-Challenge: Termin 04
+### Live-Showcase & Code-Defense: Termin 04
 
 Präsentation der Hausübung aus Termin 04 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 04](../../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md)):
 
@@ -47,7 +47,7 @@ Präsentation der Hausübung aus Termin 04 (**Stufe 1: Basisaufgabe** + **Stufe 
 </div>
 </div>
 
-> **Peer-Challenge (Säule 2b):** Prüfung auf allokationsfreies Streaming (keine GC-Spikes im Diagnostic Tool), Single-Pass-Welford und UI-Entkopplung.
+> **Code-Defense (Säule 2b, 20 %):** Prüfung auf allokationsfreies Streaming (keine GC-Spikes im Diagnostic Tool), Single-Pass-Welford und UI-Entkopplung.
 
 ---
 

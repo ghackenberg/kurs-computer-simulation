@@ -26,7 +26,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-### Showcase & Peer-Challenge: Termin 05
+### Live-Showcase & Code-Defense: Termin 05
 
 Präsentation der Hausübung aus Termin 05 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 05](../../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md)):
 
@@ -49,7 +49,7 @@ Präsentation der Hausübung aus Termin 05 (**Stufe 1: Basisaufgabe** + **Stufe 
 </div>
 </div>
 
-> **Peer-Challenge (Säule 2b):** Live-Demonstration am Beamer. Das Plenum prüft Gelenkhierarchien, lokalen Matrix-Stack und Kardanfehler.
+> **Code-Defense (Säule 2b, 20 %):** Live-Demonstration am Beamer mit Prüfung von Gelenkhierarchien, lokalem Matrix-Stack und Kardanfehler-Schutz.
 
 ---
 

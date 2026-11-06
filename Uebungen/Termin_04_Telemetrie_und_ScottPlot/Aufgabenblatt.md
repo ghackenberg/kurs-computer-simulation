@@ -180,7 +180,7 @@ Das Streaming muss 50 Mal pro Sekunde ohne Garbage-Collection-Allokationen (kein
 
 ---
 
-## 8. 🔍 Peer-Review-Leitfragen für das Plenum (Showcase & Peer-Challenge)
+## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 
 1. **GC-Audit im Profiler live am Beamer:**  
    *„Starten Sie das Diagnose-Tool in Visual Studio: Steigt der Arbeitsspeicher (Heap) während des Streamings kontinuierlich an oder bleibt die Allokationsrate bei exakt 0 B pro Frame?“*

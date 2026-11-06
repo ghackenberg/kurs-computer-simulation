@@ -266,11 +266,11 @@ Falls Sie KI-Assistenten verwenden, beachten Sie folgende Vorgaben zur Vermeidun
 
 ---
 
-## 8. 🔍 Peer-Review-Leitfragen für das Auditorium
+## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 
-Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen anhand folgender Fragen:
+Beim wöchentlichen Live-Showcase am Beamer prüfen wir die vorgeführten Lösungen anhand folgender Kernfragen und Stresstests:
 
-1. **Globales Gleichgewicht & Invarianten-Check:** Ergibt die Vektorsumme aller Auflagerkräfte $\mathbf{f}_p$ plus der aktuellen Wanderlast exakt $\vec{0}$? *(Auditorium-Test: Live-Abfrage von $\sum F_y$ am Beamer – weicht der Wert um mehr als $10^{-9}\,\text{N}$ ab?)*
+1. **Globales Gleichgewicht & Invarianten-Check:** Ergibt die Vektorsumme aller Auflagerkräfte $\mathbf{f}_p$ plus der aktuellen Wanderlast exakt $\vec{0}$? *(Live-Stresstest: Abfrage von $\sum F_y$ am Beamer – weicht der Wert um mehr als $10^{-9}\,\text{N}$ ab?)*
 2. **Mathematische Partitionierung vs. Diagonale-Tricks:** Wurde das LGS sauber über Submatrizen partitioniert, oder wurden Lagerbedingungen durch Überschreiben von Zeilen mit $1{,}0$ und $0$ erzwungen (was die Cholesky-Symmetrie zerstören kann)?
 3. **Verhalten bei Mechanismen / Stabbruch:** Was geschieht in Track B, wenn ein zentraler Stab entfernt wird? Fängt der Code die singuläre Matrix sauber über einen Try-Catch-Block (`ArgumentException` / `InvalidOperationException`) ab, oder stürzt die WPF-Anwendung mit einem unbehandelten Fehler ab?
 4. **Physikalische Plausibilität der Verformung:** Verformen sich die Stäbe stetig unter der wandernden Last, oder springen Knoten sprunghaft hin und her (was auf falsche Indizierung in der Assemblierungsschleife hinweist)?

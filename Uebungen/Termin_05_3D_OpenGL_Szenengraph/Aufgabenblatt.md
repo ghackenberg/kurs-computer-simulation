@@ -211,7 +211,7 @@ Implementiere eine Orbit-Kamera in Kugelkoordinaten, deren Elevation phi auf max
 
 ---
 
-## 8. 🔍 Peer-Review-Leitfragen für das Plenum (Showcase & Peer-Challenge)
+## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 
 1. **Der Kinematik-Ablösetest:**  
    *„Verfahren Sie die Basis bzw. den Hauptschlitten live am Beamer: Bleiben Unterarm, Greifer und Werkstück fest an der Kinematikkette montiert, oder löst sich die Subkomponente im Raum ab (Zeichen für manuelle statt hierarchische Transformation)?“*

@@ -25,7 +25,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-### Showcase & Peer-Challenge: Termin 06
+### Live-Showcase & Code-Defense: Termin 06
 
 Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 06](../../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md)):
 
@@ -37,7 +37,7 @@ Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 
 - $10\,000\,000$ Bauteile parallel berechnet
 - Datenparallelität mit `Parallel.For` & TPL
 - Thread-sichere Aggregation (`Interlocked` / lokal)
-- *Peer Review:* Skalierung & UI-Entkopplung
+- *Code-Defense:* Skalierung & UI-Entkopplung
 
 </div>
 <div class="two">
@@ -47,12 +47,12 @@ Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 
 - $50\,000+$ Boids mit Nachbarschaftssuche
 - CPU-Skalierung: Von 12 FPS auf flüssige 60 FPS
 - Asynchroner Task-Loop mit `CancellationToken`
-- *Peer Review:* Race Conditions & Not-Aus-Stresstest
+- *Code-Defense:* Race Conditions & Not-Aus-Stresstest
 
 </div>
 </div>
 
-> **Peer-Challenge (Säule 2b):** Live-Vorführung am Beamer. Stresstest des kooperativen Not-Aus-Abbruchs (`CancellationToken`) unter Volllast.
+> **Code-Defense (Säule 2b, 20 %):** Live-Vorführung am Beamer. Stresstest des kooperativen Not-Aus-Abbruchs (`CancellationToken`) unter Volllast.
 
 ---
 ## 7.1: Einführung und historische Entwicklung
