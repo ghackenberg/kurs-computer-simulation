@@ -72,8 +72,8 @@ public class GeometryTests
     [TestMethod]
     public void Test_TrussGeometry_BoundsCalculation()
     {
-        var sprint = TrussGeometry.CreateSprintTriangle();
-        var (xMin, xMax, yMin, yMax) = sprint.GetBounds();
+        var stage1 = TrussGeometry.CreateStage1Triangle();
+        var (xMin, xMax, yMin, yMax) = stage1.GetBounds();
 
         // Dreieck: (0,0), (4,0), (2,2)
         Assert.AreEqual(0.0, xMin, 1e-6);

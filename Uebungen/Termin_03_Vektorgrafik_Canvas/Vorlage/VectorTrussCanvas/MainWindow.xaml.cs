@@ -17,7 +17,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        _truss = TrussGeometry.CreateSprintTriangle();
+        _truss = TrussGeometry.CreateStage1Triangle();
     }
 
     private void Redraw()
@@ -247,7 +247,7 @@ public partial class MainWindow : Window
 
         _truss = CmbModelSelection.SelectedIndex == 1 
             ? TrussGeometry.CreateIndustrialPrattTruss() 
-            : TrussGeometry.CreateSprintTriangle();
+            : TrussGeometry.CreateStage1Triangle();
 
         Redraw();
     }
@@ -256,7 +256,7 @@ public partial class MainWindow : Window
     {
         _truss = CmbModelSelection.SelectedIndex == 1 
             ? TrussGeometry.CreateIndustrialPrattTruss() 
-            : TrussGeometry.CreateSprintTriangle();
+            : TrussGeometry.CreateStage1Triangle();
 
         TxtInfo.Text = "Modell zurückgesetzt.";
         Redraw();

@@ -62,7 +62,7 @@ $$\vec{p}_{\text{left}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} 
 ### 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
 **Basis-Projekt:** Öffnen Sie die bereitgestellte Projektvorlage `Vorlage/VectorTrussCanvas.sln` (`Transform2D.cs`, `VectorArrow.cs`, `TrussGeometry.cs`, `MainWindow.xaml.cs`).  
-Die Vorlage enthält bereits die Basisklasse `Transform2D`, das Dreieckstragwerk `CreateSprintTriangle()` sowie die Pfeilspitzen-Methode `VectorArrow.AddForceArrow` und die horizontale Gesamtmaßkette `AddHorizontalDimensionLine`.  
+Die Vorlage enthält bereits die Basisklasse `Transform2D`, das Dreieckstragwerk `CreateStage1Triangle()` sowie die Pfeilspitzen-Methode `VectorArrow.AddForceArrow` und die horizontale Gesamtmaßkette `AddHorizontalDimensionLine`.  
 **Ziel der Basisaufgabe (Stufe 1):** Analysieren Sie die Welt-zu-Bildschirm-Transformation, beheben Sie das Koordinaten-Jittering beim Drag-and-Drop und erweitern Sie den Viewer um Live-Stablängen und eine vertikale DIN-406-Höhenbemaßung (als direktes Fundament für Stufe 2 Track A und Track B!).
 
 ### Aufgabenstellung (auf Basis von `Vorlage/VectorTrussCanvas.sln`):

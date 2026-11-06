@@ -26,9 +26,9 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock Text="Modell:" Foreground="#D4D4D4" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                    <ComboBox x:Name="CmbModelSelection" Width="190" SelectionChanged="CmbModelSelection_SelectionChanged">
+                    <ComboBox x:Name="CmbModelSelection" Width="245" SelectionChanged="CmbModelSelection_SelectionChanged">
                         <ComboBoxItem Content="Stufe 1: Dreieck (3 Knoten)" IsSelected="True"/>
-                        <ComboBoxItem Content="Track A: Pratt-Träger (8 Knoten)"/>
+                        <ComboBoxItem Content="Stufe 2 (Track A): Pratt-Träger (8 Knoten)"/>
                     </ComboBox>
                     <Button x:Name="BtnReset" Content="Reset" Click="BtnReset_Click" Margin="8,0,0,0" Padding="12,4"/>
                 </StackPanel>

@@ -50,11 +50,11 @@ Die Lehrveranstaltung *Systemsimulation / Digitaler Zwilling* am Campus Wels der
 
 ```mermaid
 flowchart LR
-    VL["Interaktive Vorlesung\n(Präsenz, 110–125 min)\nMathematik, Zahlenbeispiele,\nSVG-Diagramme & C#-Snippets"] --> Sprint["Stufe 1: Basisaufgabe\n(Hausübung Teil 1, ~60 min)\nGemeinsames Fundament\nauf C#-Vorlage + Unit-Tests"]
-    Sprint --> Ext["Stufe 2: Vertiefungsaufgabe\n(Hausübung Teil 2, ~3–4 h)\nWahlmodell: Track A ODER Track B"]
+    VL["Interaktive Vorlesung\n(Präsenz, 110–125 min)\nMathematik, Zahlenbeispiele,\nSVG-Diagramme & C#-Snippets"] --> Stage1["Stufe 1: Basisaufgabe\n(Hausübung Teil 1, ~60 min)\nGemeinsames Fundament\nauf C#-Vorlage + Unit-Tests"]
+    Stage1 --> Ext["Stufe 2: Vertiefungsaufgabe\n(Hausübung Teil 2, ~3–4 h)\nWahlmodell: Track A ODER Track B"]
     Ext --> Portfolio["C#-Simulations-Portfolio\n(10 Module, 30 %)\nIndustrie-Zwillinge & Sim-Games"]
     style VL fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
-    style Sprint fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    style Stage1 fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
     style Ext fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
     style Portfolio fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
 ```
@@ -557,7 +557,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 06: Multithreading](../Folien/06_Multithreading/Folien.md) – Task Parallel Library (TPL), `Parallel.For`, Thread-Sicherheit (`Interlocked`, Double-Buffering), Amdahlsches Gesetz, False Sharing.
-- **Übungsblatt & Vorlage:** [`Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md`](../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md), [`Vorlage/TplParticleSprint.sln`](../Uebungen/Termin_06_Multithreading_und_TPL/Vorlage/TplParticleSprint.sln).
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md`](../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md), [`Vorlage/MultithreadingBenchmark.sln`](../Uebungen/Termin_06_Multithreading_und_TPL/Vorlage/MultithreadingBenchmark.sln).
 - **Technologie-Status:** TPL, Multithreading, Benchmarking mit `Stopwatch`. Noch *KEIN* Math.NET Cholesky! Noch *KEINE* kontinuierlichen S-Functions!
 - **Lernziele:**
   1. Praktische Beherrschung von `Parallel.For` und Vermeidung von Race Conditions (Read/Write-Double-Buffering, `Interlocked`).
@@ -569,7 +569,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 #### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „Paralleler Partikelfeld-Schritt & Determinismus-Check“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md)):**
-  1. Öffnen Sie die Vorlage [`TplParticleSprint.sln`](../Uebungen/Termin_06_Multithreading_und_TPL/Vorlage/TplParticleSprint.sln) ($N = 200\,000$ Partikel).
+  1. Öffnen Sie die Vorlage [`MultithreadingBenchmark.sln`](../Uebungen/Termin_06_Multithreading_und_TPL/Vorlage/MultithreadingBenchmark.sln) ($N = 100\,000$ Partikel).
   2. Implementieren Sie `ParticleFieldSimulator.StepParallel` mittels `Parallel.For` und `ParallelOptions { MaxDegreeOfParallelism = maxDegreeOfParallelism }`.
   3. Prüfen Sie mit `dotnet test`, dass der parallele Lauf über alle Kerne bitweise (bzw. auf $10^{-12}$) exakt dasselbe Ergebnis liefert wie der serielle Referenzlauf (`StepSerial`).
 - **Erwartetes Ergebnis:** Alle 3 Unit-Tests grün; deutlicher Multi-Core-Speedup in der Konsolen-Benchmark-Tabelle.

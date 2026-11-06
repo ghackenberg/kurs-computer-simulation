@@ -91,7 +91,7 @@ public class TrussGeometry
     /// Erstellt das Dreieckstragwerk aus Stufe 1 (Basisaufgabe).
     /// K1 = (0, 0), K2 = (4, 0), K3 = (2, 2) mit Last F = (0, -20 kN) an K3.
     /// </summary>
-    public static TrussGeometry CreateSprintTriangle()
+    public static TrussGeometry CreateStage1Triangle()
     {
         var truss = new TrussGeometry();
         truss.Nodes.Add(new TrussNode(1, "K1", 0.0, 0.0, isFixed: true));

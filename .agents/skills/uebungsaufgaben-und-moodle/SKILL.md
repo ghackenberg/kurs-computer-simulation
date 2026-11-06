@@ -37,6 +37,7 @@ Für das Wahlmodell in **Stufe 2** gelten vier eiserne Regeln:
 2. **Beide Tracks müssen direkt auf Stufe 1 (`Vorlage/...sln`) aufbauen:**
    - Weder Track A noch Track B darf verlangen, dass die Studierenden den Code aus Stufe 1 verwerfen und auf der grünen Wiese neu beginnen.
    - In der C#-Vorlage (`MainWindow.xaml.cs` bzw. `Program.cs`) müssen für Stufe 1 (`// TODO: [Stufe 1 - Aufgabe 1.X: ...]`) sowie für **beide** Tracks in Stufe 2 (`// TODO: [Stufe 2 Track A: ...]` und `// TODO: [Stufe 2 Track B: ...]`) klare Kommentarblöcke vorhanden sein.
+   - **UI-Kontext & Methodennamen in den Vorlagen:** Wenn in einer WPF-Oberfläche (`MainWindow.xaml`, z. B. `ComboBoxItem`) oder einem Konsolenmenü (`Program.cs`) zwischen der Basisaufgabe und den Vertiefungstracks umgeschaltet wird, müssen Track A und Track B **immer explizit in den Kontext von Stufe 2** gesetzt werden (z. B. `Stufe 1: ...` vs. `Stufe 2 (Track A): ...` / `Stufe 2 (Track B): ...`, niemals `Stufe 1: ...` direkt neben kontextlosem `Track A: ...`). Methoden- und Klassennamen für Stufe 1 verwenden `Stage1` oder `Base` (niemals das veraltete `Sprint`).
 3. **Exakt gleicher Umfang (Symmetrische Arbeitspakete), aber null Redundanz:**
    - Beide Tracks werden in gleich viele (typischerweise **4**) symmetrische Arbeitspakete mit identischem Programmieraufwand und identischer Punkteverteilung in der Bewertungsrubrik (10 Punkte) gegliedert.
    - Inhaltlich müssen sich Track A und Track B klar unterscheiden (keine 80-%-Doppelung!):

@@ -101,7 +101,7 @@ namespace TrussFemSolver.Fem
         /// Knoten 3: (2,2) frei [4, 5], vertikale Last Fy = -10 kN
         /// E = 210 GPa, A = 1 cm^2 = 1e-4 m^2
         /// </summary>
-        public static GlobalStiffnessMatrix CreateSprintModel(double loadFy = -10_000.0)
+        public static GlobalStiffnessMatrix CreateStage1Model(double loadFy = -10_000.0)
         {
             var model = new GlobalStiffnessMatrix();
 
@@ -134,7 +134,7 @@ namespace TrussFemSolver.Fem
         }
 
         // TODO [Stufe 1 - Aufgabe 1.2]:
-        // Implementieren Sie hier public static GlobalStiffnessMatrix CreateCantileverSprintModel(double loadFy = -10_000.0)
+        // Implementieren Sie hier public static GlobalStiffnessMatrix CreateCantileverStage1Model(double loadFy = -10_000.0)
         // für einen 5-Knoten-Auslegerkran (7 Stäbe) mit Wandlager links bei (0,0) und (0,2) sowie Kraglast rechts bei (4,0).
     }
 }

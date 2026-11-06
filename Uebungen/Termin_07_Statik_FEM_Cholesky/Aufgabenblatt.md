@@ -68,7 +68,7 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
 
 ### Thema: „FEM-Dreiecksträger validieren, Auflager-/Kraftpfeile im Canvas & 5-Knoten-Auslegerkran“
 
-Öffnen Sie das vorbereitete WPF-Starter-Projekt `Vorlage/TrussFemSolver.sln`. Es enthält bereits die vollständige 2D-FEM-Engine (`Fem/TrussElement.cs`, `Fem/GlobalStiffnessMatrix.cs`, `Fem/CholeskySolver.cs`) sowie die verformte Darstellung eines 3-Knoten-Dreiecksträgers (`CreateSprintModel`) auf dem WPF-`Canvas`.
+Öffnen Sie das vorbereitete WPF-Starter-Projekt `Vorlage/TrussFemSolver.sln`. Es enthält bereits die vollständige 2D-FEM-Engine (`Fem/TrussElement.cs`, `Fem/GlobalStiffnessMatrix.cs`, `Fem/CholeskySolver.cs`) sowie die verformte Darstellung eines 3-Knoten-Dreiecksträgers (`CreateStage1Model`) auf dem WPF-`Canvas`.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -105,14 +105,14 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
    - Aktuell zeichnet `RenderCanvas()` in `MainWindow.xaml.cs` nur Stäbe und Knotenpunkte, aber **keine Lager und keine Kräfte**. Ergänzen Sie in `RenderCanvas()` *(Tipp: Sie können `VectorArrow.cs` und Ihre Lager-Zeichenmethode direkt aus Ihrem `Termin_03`-Projekt `VectorTrussCanvas` übernehmen!)*:
      - **Auflager-Dreiecke** für Knoten mit gesperrten Freiheitsgraden (`_currentModel.FixedDofs`): Festlager ($X$ und $Y$ gesperrt) als volles Dreieck, Loselager (nur $Y$ gesperrt) mit zusätzlicher horizontaler Rollenspur.
      - **Kraftpfeile:** Rote Kraftpfeile für alle angreifenden äußeren Lasten (`_currentModel.ExternalForces[dof] != 0`) und grüne Kraftpfeile für die berechneten Auflagerreaktionen (`_currentSolution.ReactionForces`).
-2. **Aufgabe 1.2 – 5-Knoten-Auslegerkran (`CreateCantileverSprintModel`) modellieren:**
-   - Implementieren Sie in `Fem/CholeskySolver.cs` eine statische Methode `CreateCantileverSprintModel(double loadFy = -10_000.0)` für einen 2-feldrigen Auslegerkran mit **5 Knoten und 7 Stäben**:
+2. **Aufgabe 1.2 – 5-Knoten-Auslegerkran (`CreateCantileverStage1Model`) modellieren:**
+   - Implementieren Sie in `Fem/CholeskySolver.cs` eine statische Methode `CreateCantileverStage1Model(double loadFy = -10_000.0)` für einen 2-feldrigen Auslegerkran mit **5 Knoten und 7 Stäben**:
      - Wandlager links: Knoten 0 bei $(0, 0)\,\text{m}$ (Festlager: $u_x, u_y$ fest) und Knoten 1 bei $(0, 2)\,\text{m}$ (Horizontal-Führung: $u_x$ fest).
      - Mittelfeld: Knoten 2 bei $(2, 0)\,\text{m}$, Knoten 3 bei $(2, 2)\,\text{m}$.
      - Kragspitze rechts: Knoten 4 bei $(4, 0)\,\text{m}$ mit vertikaler Punktlast `loadFy`.
      - Verbinden Sie die 5 Knoten mit 7 Stäben (Untergurt, Obergurt, Pfosten, Diagonalen) zu einem statisch bestimmten Fachwerk und testen Sie die Verformung im Canvas!
 3. **Aufgabe 1.3 – Singularitäts-Test (Was passiert bei unterbestimmter Lagerung?):**
-   - Kommentieren Sie testweise in `CreateSprintModel` die Zeile `model.FixDof(n1.DofX);` aus (sodass beide Lager in X-Richtung verschieblich sind $\to$ horizontale Starrkörper-Bewegung möglich).
+   - Kommentieren Sie testweise in `CreateStage1Model` die Zeile `model.FixDof(n1.DofX);` aus (sodass beide Lager in X-Richtung verschieblich sind $\to$ horizontale Starrkörper-Bewegung möglich).
    - Beobachten Sie, warum `kff.Cholesky()` in `CholeskySolver.Solve()` eine Exception wirft (Symmetrisch Positiv Definite Matrix $\mathbf{K}_{ff}$ erfordert $\det(\mathbf{K}_{ff}) > 0$ ohne Eigenwert $0$!) und machen Sie die Änderung anschließend wieder rückgängig.
 
 ---

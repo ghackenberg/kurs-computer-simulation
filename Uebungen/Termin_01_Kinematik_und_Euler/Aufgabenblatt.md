@@ -63,7 +63,7 @@ $$\tau = \frac{0 - y_k}{y_{k+1} - y_k} \in [0, 1] \implies t^* = t_k + \tau \cdo
    - Vervollständigen Sie in `Solvers/EulerIntegrator.cs` die Methode `StepEuler(...)` für die DGL 2. Ordnung ($\dot{x} = v_x, \; \dot{y} = v_y, \; \dot{v}_x = a_x, \; \dot{v}_y = a_y$) sowie `InterpolateGroundImpact(previous, current)` mittels linearer Nullstellen-Interpolation $\tau = \frac{0 - y_k}{y_{k+1} - y_k}$.
    - Führen Sie `dotnet test` aus und verifizieren Sie, dass die Unit-Tests für `StepEuler` und `InterpolateGroundImpact` grün durchlaufen!
 3. **Aufgabe 1.3 – Prädiktor-Korrektor nach Heun (`StepHeun`) & Konvergenzvergleich im Vakuum:**
-   - Implementieren Sie in `Solvers/EulerIntegrator.cs` zusätzlich die Methode `StepHeun(...)` (Abschnitt 2.3) und vergleichen Sie in `Program.RunSprint_BallisticTrajectory()` beide Verfahren für:
+   - Implementieren Sie in `Solvers/EulerIntegrator.cs` zusätzlich die Methode `StepHeun(...)` (Abschnitt 2.3) und vergleichen Sie in `Program.RunStage1_BallisticTrajectory()` beide Verfahren für:
      - Startposition: $x_0 = 0\,\text{m}, \; y_0 = 0\,\text{m}$, Abgangsgeschwindigkeit: $v_0 = 150\,\text{m/s}$, Winkel: $\alpha = 45^\circ$ ($g = 9{,}81\,\text{m/s}^2$)
      - Schrittweiten: $\Delta t = 0{,}1\,\text{s}$ und $\Delta t = 0{,}01\,\text{s}$
    - Vergleichen Sie Wurfweite $x_{\text{impact}}$, Flugzeit $t_{\text{impact}}$ und Scheitelhöhe $y_{\max}$ mit den analytischen Vakuumlösungen:

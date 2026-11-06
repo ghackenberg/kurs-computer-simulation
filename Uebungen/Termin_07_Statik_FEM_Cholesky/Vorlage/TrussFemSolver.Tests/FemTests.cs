@@ -29,10 +29,10 @@ namespace TrussFemSolver.Tests
         }
 
         [TestMethod]
-        public void TestSprintModelCholeskySolutionAndEquilibrium()
+        public void TestStage1ModelCholeskySolutionAndEquilibrium()
         {
             // Erstellt das 3-Knoten-Dreieckstragwerk mit Fy = -10 kN am Spitzenknoten
-            var model = CholeskySolver.CreateSprintModel(loadFy: -10_000.0);
+            var model = CholeskySolver.CreateStage1Model(loadFy: -10_000.0);
             var solution = CholeskySolver.Solve(model);
 
             // 1. Vektorgleichgewicht als Invariante prüfen

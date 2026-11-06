@@ -77,7 +77,7 @@ namespace SFunctionSimulation.Tests
         }
 
         [TestMethod]
-        public void TestDCMotorIdleSpeedSprintVerification()
+        public void TestDCMotorIdleSpeedStage1Verification()
         {
             // Stufe 1 (Basisaufgabe):
             // U_A = 24 V, R_A = 2 Ohm, L_A = 0.05 H, Km = 0.1, Ke = 0.1, J = 0.005, d = 0.001
@@ -102,12 +102,12 @@ namespace SFunctionSimulation.Tests
             int steps = 8000;
             double[] x = new double[3] { 0.0, 0.0, 0.0 }; // [iA, omega, theta]
 
-            var sprintModel = new MotorSprintModel(RA, LA, Km, Ke, J, D);
+            var stage1Model = new MotorStage1Model(RA, LA, Km, Ke, J, D);
             double[] u = new double[] { uA, mLoad };
 
             for (int i = 0; i < steps; i++)
             {
-                x = RungeKutta4Solver.Step(sprintModel, i * dt, x, u, dt);
+                x = RungeKutta4Solver.Step(stage1Model, i * dt, x, u, dt);
             }
 
             double simulatedOmega = x[1];
@@ -145,10 +145,10 @@ namespace SFunctionSimulation.Tests
                 $"Ohne Anti-Windup muss xi drastisch höher liegen: Unclamped={xiUnclamped}, Clamped={xiClamped}");
         }
 
-        private class MotorSprintModel : ISFunction
+        private class MotorStage1Model : ISFunction
         {
             private readonly double _ra, _la, _km, _ke, _j, _d;
-            public MotorSprintModel(double ra, double la, double km, double ke, double j, double d)
+            public MotorStage1Model(double ra, double la, double km, double ke, double j, double d)
             {
                 _ra = ra; _la = la; _km = km; _ke = ke; _j = j; _d = d;
             }

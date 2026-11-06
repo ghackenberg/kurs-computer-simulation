@@ -32,7 +32,7 @@ internal class Program
                 RunTrackB_ArtilleryGame();
                 break;
             default:
-                RunSprint_BallisticTrajectory();
+                RunStage1_BallisticTrajectory();
                 break;
         }
     }
@@ -41,7 +41,7 @@ internal class Program
     /// Stufe 1: Basisaufgabe - Schiefer Wurf im Vakuum.
     /// Vergleich des expliziten Euler-Verfahrens mit der geschlossenen analytischen Lösung.
     /// </summary>
-    public static void RunSprint_BallisticTrajectory()
+    public static void RunStage1_BallisticTrajectory()
     {
         Console.WriteLine("\n--- [Stufe 1 Basisaufgabe] Schiefer Wurf im Vakuum ---");
 
