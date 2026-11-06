@@ -26,12 +26,12 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ### Showcase & Peer-Challenge: Termin 04
 
-Präsentation der Ergebnisse aus Termin 04 ([Aufgabenblatt 04](../../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md)):
+Präsentation der Hausübung aus Termin 04 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 04](../../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md)):
 
 <div class="columns">
 <div class="two">
 
-#### Track A: Industrie (Antriebsprüfstand)
+#### Stufe 2 – Track A: Industrie (Antriebsprüfstand)
 - **Signal-Streaming:** Drehzahl $n(t)$ & Moment $M(t)$ mit dynamischen $\pm 3\sigma$-Toleranzbändern.
 - **Topologie:** MSAGL-Antriebsstrang mit visueller Kavitations-/Alarmanzeige.
 - **Stresstest:** Abtastfrequenz drastisch erhöhen & Welford-Hüllkurven im Betrieb prüfen.
@@ -39,7 +39,7 @@ Präsentation der Ergebnisse aus Termin 04 ([Aufgabenblatt 04](../../Uebungen/Te
 </div>
 <div class="two">
 
-#### Track B: Game (Racing HUD)
+#### Stufe 2 – Track B: Game (Racing HUD)
 - **Cockpit-Telemetrie:** Speed/RPM mit Shift-Flash & G-Kräfte (Kamm'scher Kreis).
 - **Statistik:** Rundenzeiten-Histogramm & Streckenabschnitts-Topologie (MSAGL).
 - **Stresstest:** Grenzbereich-Fahrt mit Haftungsabriss ($a_{\text{res}} > \mu \cdot g$) provozieren.
@@ -1541,16 +1541,15 @@ private void OnMouseMove(object sender, MouseEventArgs e)
 
 ---
 
-### Laborübung Termin 05: 3D-OpenGL & Szenengraph
+### Hausübung Termin 05: 3D-OpenGL & Szenengraph
 
-In-Class Sprint (Stufe A) & Hausübung (Stufe B, 10 Pkt.) – Details: [Aufgabenblatt 05](../../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md):
+**Stufe 1 (Basisaufgabe `1.1`–`1.3` für alle Teams auf `SceneGraph3D.sln`):** `_rootNode.Render`, Kamera-Panning & 3D-Werkstück ([Aufgabenblatt 05](../../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">
 
-#### Track A: Industrie & Mechatronik
-**4-Achs-SCARA mit Parallelgreifer & Teach-In**
-- Ausbau auf 4 Achsen: $\theta_1, \theta_2, d_3$ + Handgelenk $\theta_4$ & 2-Backen-Parallelgreifer ($g_{\text{width}}$)
+#### Stufe 2 – Track A: 4-Achs-SCARA mit Parallelgreifer
+- Ausbau auf 4 Achsen: $\theta_1, \theta_2, d_3$ + Handgelenk $\theta_4$ & Parallelgreifer ($g_{\text{width}}$)
 - Einheitliches Szenengraph-Rendering (`_rootNode.Render`)
 - Animiertes Teach-In (`DispatcherTimer`) zwischen Pose A, Pose B & Home
 - Interaktives Pick-and-Place von 3D-Werkstücken
@@ -1558,16 +1557,12 @@ In-Class Sprint (Stufe A) & Hausübung (Stufe B, 10 Pkt.) – Details: [Aufgaben
 </div>
 <div class="two">
 
-#### Track B: Simulation Game
-**3D Arcade Claw Crane (Greifarm)**
+#### Stufe 2 – Track B: 3D Arcade Claw Crane (Greifarm)
 - 3D-Gehäuse mit Preisen & Auswurfschacht
-- 3-Achs-Portalbrücke & Seilwinde
+- 3-Achs-Portalbrücke & Seilwinde im Szenengraphen
 - Schließender 3-Finger-Greifmechanismus
-- Tastatursteuerung & 3D-Kollisionsprüfung
-- Physikalisches Greifen und Ablegen
+- Tastatursteuerung, 3D-Kollisionsprüfung & physikalisches Ablegen
 
 </div>
 </div>
-
-> Flüssiges 3D-Rendering mit SharpGL & OrbitCamera ($\ge 30\,\text{FPS}$) – Wahlmodell: Track A oder B.
 

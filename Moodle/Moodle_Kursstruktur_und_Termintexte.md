@@ -24,7 +24,7 @@ In dieser Lehrveranstaltung erlernen Sie das mechatronische Modellieren, numeris
 **Wöchentlicher Ablauf ab Termin 02:**
 * Zu Beginn jeder Einheit stellen zwei ausgewählte Teams (je 1x Track A und 1x Track B) ihre Lösungen der Vorwoche live am Beamer vor. Das Plenum stellt dazu fachliche Fragen.
 * An vier Terminen (T03, T05, T08, T10) findet vor der Vorlesung zusätzlich ein kurzes 15-minütiges Moodle-Quiz statt.
-* Im Anschluss folgt der interaktive Theorie-Impuls (mathematische Modellierung, numerische Lösungsverfahren und Architektur-Walkthrough), gefolgt von der praktischen Laborphase (In-Class Sprint).
+* Im Anschluss folgt die interaktive Vorlesung (mathematische Modellierung, numerische Lösungsverfahren und detaillierte Besprechung der C#-Implementierung anhand der Vorlesungsfolien). Die praktische Programmierübung (Stufe 1 Basisaufgabe und Stufe 2 Vertiefungsaufgabe) wird als wöchentliche Hausübung im 2er-Team bearbeitet.
 
 **Wahlmodell (Pick your Track):**
 Pro Termin wählt Ihr 2er-Team verbindlich **GENAU EINEN** Track – keine Doppelbelastung!
@@ -43,10 +43,10 @@ Pro Termin wählt Ihr 2er-Team verbindlich **GENAU EINEN** Track – keine Doppe
 Zum Auftakt klären wir die Taxonomie technischer Modelle, das Konzept des Digitalen Zwillings nach Michael Grieves sowie die Grundlagen der numerischen Zeitdiskretisierung. Wir überführen kontinuierliche Bewegungsgleichungen zweiter Ordnung unter Erdbeschleunigung in Zustandsraumdarstellungen erster Ordnung und implementieren den expliziten Euler-Integrator in C#.
 
 **Übungsaufgaben für diesen Termin:**
-* **Stufe A (In-Class Sprint):** C#-Konsolenmodell für den freien Fall und schiefen Wurf im Vakuum sowie analytischer Abgleich mit der geschlossenen Freifall-Lösung.
-* 🏭 **Stufe B – Track A (Industrie):** *Hydraulikzylinder-Dämpfung* – Modellierung nichtlinearer Blendenreibung, Parameterstudie und Vergleich mit dem Heun-Verfahren (Runge-Kutta 2. Ordnung).
-* 🎮 **Stufe B – Track B (Game):** *„Artillery Strike / Retro Tanks“* – 2D-Ballistik mit quadratischem Luftwiderstand, dynamischen Windböen und exakter Bodenkollisions-Interpolation.
-* *(Hinweis: Wählen Sie für Stufe B genau einen Track – Track A ODER Track B!)*
+* **Stufe 1 (Basisaufgabe):** C#-Konsolenmodell für den freien Fall und schiefen Wurf im Vakuum sowie analytischer Abgleich mit der geschlossenen Freifall-Lösung.
+* 🏭 **Stufe 2 – Track A (Industrie):** *Hydraulikzylinder-Dämpfung* – Modellierung nichtlinearer Blendenreibung, Parameterstudie und Vergleich mit dem Heun-Verfahren (Runge-Kutta 2. Ordnung).
+* 🎮 **Stufe 2 – Track B (Game):** *„Artillery Strike / Retro Tanks“* – 2D-Ballistik mit quadratischem Luftwiderstand, dynamischen Windböen und exakter Bodenkollisions-Interpolation.
+* *(Hinweis: Wählen Sie für Stufe 2 genau einen Track – Track A ODER Track B!)*
 
 ---
 
@@ -59,9 +59,9 @@ Heute steigen wir in die High-Performance-Pixelgrafik unter WPF ein. Wir analysi
 
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T01:** Zwei ausgewählte Teams (1x Track A, 1x Track B) führen ihre Ballistiklösungen der Vorwoche live am Beamer vor. Das Plenum stellt Fragen zur Modellierung und Stabilität.
-* **Stufe A (In-Class Sprint):** Interaktive WPF-Heatmap mit Direct-Pointer-Transfer und stabiler 2D-Diffusionsschleife.
-* 🏭 **Stufe B – Track A (Industrie):** *CPU-Kühlkörper-Optimierung* – Mehrzonengitter aus Silizium und Kupfer mit Konvektionsrand und Hotspot-Thermometrie.
-* 🎮 **Stufe B – Track B (Game):** *„Falling Sand & Doom Fire / Lava“* – Interaktive zelluläre Pixel-Physik mit aufsteigender Glut und Maus-Zeichenfunktion.
+* **Stufe 1 (Basisaufgabe):** Interaktive WPF-Heatmap mit Direct-Pointer-Transfer und stabiler 2D-Diffusionsschleife.
+* 🏭 **Stufe 2 – Track A (Industrie):** *CPU-Kühlkörper-Optimierung* – Mehrzonengitter aus Silizium und Kupfer mit Konvektionsrand und Hotspot-Thermometrie.
+* 🎮 **Stufe 2 – Track B (Game):** *„Falling Sand & Doom Fire / Lava“* – Interaktive zelluläre Pixel-Physik mit aufsteigender Glut und Maus-Zeichenfunktion.
 
 ---
 
@@ -75,9 +75,9 @@ In dieser Einheit widmen wir uns der mechatronischen 2D-Vektorgrafik auf dem WPF
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T02:** Zwei ausgewählte Teams präsentieren ihre FDM-Wärmeleitungs- und Pixelsimulationen am Beamer.
 * 📝 **Moodle-Quiz 1 (15 min):** Erstes summatives Quiz zu den Grundlagen, Pixelgrafik und der CFL-Stabilitätsgrenze (Kapitel 00 bis 02).
-* **Stufe A (In-Class Sprint):** Reversible Koordinatentransformation Transform2D, Live-Stablängen, vertikale DIN-406-Bemaßung und Behebung des Bounding-Box-Jitterings beim Ziehen.
-* 🏭 **Stufe B – Track A (Industrie):** *2D-CAD Tragwerks-Inspektor & Last-Editor* – Zweistufige DIN-406-Bemaßungsketten, interaktives Ziehen und Drehen der Kraftpfeilspitzen, Mausrad-Zoom/Pan und JSON-Export.
-* 🎮 **Stufe B – Track B (Game):** *„Poly Bridge“ Blueprint-Baumeister* – Interaktives Brückenbau-Zeichenbrett über einer Schlucht mit 0,5-m-Grid-Snapping, Maximallängen-Vorschau (bis 4,0 m), Live-Baubudget und JSON-Level-Export.
+* **Stufe 1 (Basisaufgabe):** Reversible Koordinatentransformation Transform2D, Live-Stablängen, vertikale DIN-406-Bemaßung und Behebung des Bounding-Box-Jitterings beim Ziehen.
+* 🏭 **Stufe 2 – Track A (Industrie):** *2D-CAD Tragwerks-Inspektor & Last-Editor* – Zweistufige DIN-406-Bemaßungsketten, interaktives Ziehen und Drehen der Kraftpfeilspitzen, Mausrad-Zoom/Pan und JSON-Export.
+* 🎮 **Stufe 2 – Track B (Game):** *„Poly Bridge“ Blueprint-Baumeister* – Interaktives Brückenbau-Zeichenbrett über einer Schlucht mit 0,5-m-Grid-Snapping, Maximallängen-Vorschau (bis 4,0 m), Live-Baubudget und JSON-Level-Export.
 
 ---
 
@@ -90,9 +90,9 @@ Simulationen erfordern den kontinuierlichen Einblick in Zustandsverläufe. In di
 
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T03:** Zwei ausgewählte Teams präsentieren ihre Canvas-Vektorgrafiken und Fachwerkträger-Viewer am Beamer.
-* **Stufe A (In-Class Sprint):** Ruckelfreies ScottPlot 5 Dashboard mit Datenstreaming und Welford-Statistik.
-* 🏭 **Stufe B – Track A (Industrie):** *1-kHz-Vibrationsmonitoring & Leitstand* – Spektrale Grenzwertüberwachung, historische Trends und Anomalie-Erkennung.
-* 🎮 **Stufe B – Track B (Game):** *„Retro Arcade Racing Telemetry“* – Live-G-Kräfte, Geschwindigkeits-Streaming und Streckenprofil-Graph via MSAGL.
+* **Stufe 1 (Basisaufgabe):** Ruckelfreies ScottPlot 5 Dashboard mit Datenstreaming und Welford-Statistik.
+* 🏭 **Stufe 2 – Track A (Industrie):** *1-kHz-Vibrationsmonitoring & Leitstand* – Spektrale Grenzwertüberwachung, historische Trends und Anomalie-Erkennung.
+* 🎮 **Stufe 2 – Track B (Game):** *„Retro Arcade Racing Telemetry“* – Live-G-Kräfte, Geschwindigkeits-Streaming und Streckenprofil-Graph via MSAGL.
 
 ---
 
@@ -105,10 +105,10 @@ Wir erweitern unseren Visualisierungsraum in die dritte Dimension! Mittels Sharp
 
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T04:** Zwei ausgewählte Teams präsentieren ihre Telemetrie-Dashboards und ScottPlot-Visualisierungen am Beamer.
-* 📝 **Moodle-Quiz 2 (15 min):** Zweites summatives Quiz zu Vektorgrafik, Telemetrie, ScottPlot 5 und 3D-Matrizentransformationen (Kapitel 03 bis 05).
-* **Stufe A (In-Class Sprint):** Einrichten des OpenGLControl, Kugelkoordinaten-Kamera und Aufbau eines hierarchischen 2-Segment-Armes.
-* 🏭 **Stufe B – Track A (Industrie):** *4-Achs-SCARA-Roboterarm* – Analytische Vorwärtskinematik, TCP-Positionskontrolle und interaktive Gelenkslider.
-* 🎮 **Stufe B – Track B (Game):** *„3D Arcade Claw Crane“* – Jahrmarkt-Greifarm mit Tastatursteuerung, Ausleger-Kinematik und Kisten-Aufnahme.
+* 📝 **Moodle-Quiz 2 (15 min):** Zweites summatives Quiz zu 2D-Vektorgrafik, Koordinatentransformation, Echtzeit-Telemetrie, ScottPlot 5, Welford-Statistik und MSAGL (Kapitel 03 und 04).
+* **Stufe 1 (Basisaufgabe):** Einrichten des OpenGLControl, Kugelkoordinaten-Kamera und Aufbau eines hierarchischen 2-Segment-Armes.
+* 🏭 **Stufe 2 – Track A (Industrie):** *4-Achs-SCARA-Roboterarm* – Analytische Vorwärtskinematik, TCP-Positionskontrolle und interaktive Gelenkslider.
+* 🎮 **Stufe 2 – Track B (Game):** *„3D Arcade Claw Crane“* – Jahrmarkt-Greifarm mit Tastatursteuerung, Ausleger-Kinematik und Kisten-Aufnahme.
 
 ---
 
@@ -121,9 +121,9 @@ Komplexe mechatronische Simulationen erfordern massive Rechenleistung. In dieser
 
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T05:** Zwei ausgewählte Teams präsentieren ihre 3D-Roboter und Greifarme am Beamer.
-* **Stufe A (In-Class Sprint):** Paralleler Partikelfeld-Schritt mit Parallel.For, Messung der Rechenzeit und Nachweis der Ergebnisidentität zur seriellen Schleife.
-* 🏭 **Stufe B – Track A (Industrie):** *Parallele Monte-Carlo-Toleranzanalyse* – Statistische Maßkettenrechnung für Bauteilpassungen mit automatischem Amdahl-Fit.
-* 🎮 **Stufe B – Track B (Game):** *„100.000 Boids / Zombie-Horde“* – Hochparalleler Schwarm-Benchmark mit Flocking-Verhalten und Kernskalierungs-Analyse.
+* **Stufe 1 (Basisaufgabe):** Paralleler Partikelfeld-Schritt mit Parallel.For, Messung der Rechenzeit und Nachweis der Ergebnisidentität zur seriellen Schleife.
+* 🏭 **Stufe 2 – Track A (Industrie):** *Parallele Monte-Carlo-Toleranzanalyse* – Statistische Maßkettenrechnung für Bauteilpassungen mit automatischem Amdahl-Fit.
+* 🎮 **Stufe 2 – Track B (Game):** *„100.000 Boids / Zombie-Horde“* – Hochparalleler Schwarm-Benchmark mit Flocking-Verhalten und Kernskalierungs-Analyse.
 
 ---
 
@@ -136,9 +136,9 @@ Heute erwecken wir die Vektor-Fachwerke aus Termin 03 statisch zum Leben! Wir le
 
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T06:** Zwei ausgewählte Teams präsentieren ihre Multithreading-Benchmarks und Speedup-Messungen am Beamer.
-* **Stufe A (In-Class Sprint):** Aufstellen der Elementmatrix und Cholesky-Lösung für einen 3-Knoten-Kragträger mit Vergleich gegen geschlossene Handrechnung.
-* 🏭 **Stufe B – Track A (Industrie):** *Portalkran-Verformung unter Wanderlast* – Verschiebung mit Überhöhung, Nachweis des globalen Kräftegleichgewichts und Spannungs-Farbcodierung.
-* 🎮 **Stufe B – Track B (Game):** *„Bridge Constructor Physics Engine“* – Kontinuierliche Cholesky-Berechnung bei LKW-Überfahrt mit Stabbruch bei Grenzlast und animiertem Einsturz.
+* **Stufe 1 (Basisaufgabe):** Aufstellen der Elementmatrix und Cholesky-Lösung für einen 3-Knoten-Kragträger mit Vergleich gegen geschlossene Handrechnung.
+* 🏭 **Stufe 2 – Track A (Industrie):** *Portalkran-Verformung unter Wanderlast* – Verschiebung mit Überhöhung, Nachweis des globalen Kräftegleichgewichts und Spannungs-Farbcodierung.
+* 🎮 **Stufe 2 – Track B (Game):** *„Bridge Constructor Physics Engine“* – Kontinuierliche Cholesky-Berechnung bei LKW-Überfahrt mit Stabbruch bei Grenzlast und animiertem Einsturz.
 
 ---
 
@@ -151,10 +151,10 @@ Wir betrachten die kontinuierliche Dynamik im Zeitbereich. Wir adaptieren das in
 
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T07:** Zwei ausgewählte Teams präsentieren ihre FEM-Fachwerklöser und Cholesky-Berechnungen am Beamer.
-* 📝 **Moodle-Quiz 3 (15 min):** Drittes summatives Quiz zu Multithreading, statischen Fachwerken/Cholesky und kontinuierlichen DGL-Integratoren (Kapitel 06 bis 08).
-* **Stufe A (In-Class Sprint):** Aufbau des S-Function-Kerns mit RK4-Solver und Nachweis der Energieerhaltung am ungedämpften Federpendel.
-* 🏭 **Stufe B – Track A (Industrie):** *DC-Servomotor-Regelung* – Störlastsprung, Aktorsättigung und Nachweis der Überschwingungsreduktion durch Anti-Windup Clamping.
-* 🎮 **Stufe B – Track B (Game):** *„SpaceX Falcon Hop / Booster Landing“* – Raketen-Vertikallandung mit Schubvektorregelung, variabler Treibstoffmasse und RK4.
+* 📝 **Moodle-Quiz 3 (15 min):** Drittes summatives Quiz zu 3D-Computergrafik und Szenengraphen, Multithreading mit TPL/Amdahl sowie statischen FEM-Fachwerken und Cholesky-Zerlegung (Kapitel 05 bis 07).
+* **Stufe 1 (Basisaufgabe):** Aufbau des S-Function-Kerns mit RK4-Solver und Nachweis der Energieerhaltung am ungedämpften Federpendel.
+* 🏭 **Stufe 2 – Track A (Industrie):** *DC-Servomotor-Regelung* – Störlastsprung, Aktorsättigung und Nachweis der Überschwingungsreduktion durch Anti-Windup Clamping.
+* 🎮 **Stufe 2 – Track B (Game):** *„SpaceX Falcon Hop / Booster Landing“* – Raketen-Vertikallandung mit Schubvektorregelung, variabler Treibstoffmasse und RK4.
 
 ---
 
@@ -167,9 +167,9 @@ Nicht alle Systeme ändern sich kontinuierlich – viele industrielle Prozesse w
 
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T08:** Zwei ausgewählte Teams präsentieren ihre S-Function-Modelle und Regelkreise mit Anti-Windup am Beamer.
-* **Stufe A (In-Class Sprint):** Event-Queue-Schleife mit zeitgewichteter Schlängelänge und Durchlaufzeit.
-* 🏭 **Stufe B – Track A (Industrie):** *Automobil-Lackierstraße* – Mehrkanal-Wartesystem mit Puffergrößenoptimierung und Abgleich gegen Littles Gesetz.
-* 🎮 **Stufe B – Track B (Game):** *„Theme Park Rush / Rollercoaster Queue“* – Freizeitpark-Warteschlangen mit Fastpass-Prioritäten und Monte-Carlo-Simulation.
+* **Stufe 1 (Basisaufgabe):** Event-Queue-Schleife mit zeitgewichteter Schlängelänge und Durchlaufzeit.
+* 🏭 **Stufe 2 – Track A (Industrie):** *Automobil-Lackierstraße* – Mehrkanal-Wartesystem mit Puffergrößenoptimierung und Abgleich gegen Littles Gesetz.
+* 🎮 **Stufe 2 – Track B (Game):** *„Theme Park Rush / Rollercoaster Queue“* – Freizeitpark-Warteschlangen mit Fastpass-Prioritäten und Monte-Carlo-Simulation.
 
 ---
 
@@ -182,8 +182,8 @@ In unserem großen Finale verschmelzen kontinuierliche Dynamik und diskrete Erei
 
 **Ablauf & Aufgaben:**
 * 🎤 **Showcase T09:** Zwei ausgewählte Teams präsentieren ihre diskreten Ereignissimulationen und Warteschlangensysteme am Beamer.
-* 📝 **Moodle-Quiz 4 (20 min):** Viertes summatives Quiz zu DES, Littles Gesetz, Zero-Crossing, Zeno-Vermeidung und VIBN (Kapitel 09 bis 11).
-* **Stufe A (In-Class Sprint):** Bisektions-Nullstellensuche für Kontaktstöße mit Heun-Substepping.
-* 🏭 **Stufe B – Track A (Industrie):** *Virtuelle Inbetriebnahme (VIBN)* – Pneumatikzylinder mit digitalen Endschaltern, SPS-Kopplung und Taktzeitmessung.
-* 🎮 **Stufe B – Track B (Game):** *„Arcade Pinball Wizard“* – Flipperautomat mit Bumper-Bisektion, Schwerkraft-Ruhelage und Punktezähler.
+* 📝 **Moodle-Quiz 4 (15 min):** Viertes summatives Quiz zu kontinuierlicher Dynamik, S-Functions, RK4 und Anti-Windup sowie Diskreter Ereignissimulation, Inversionsmethode und Littles Gesetz (Kapitel 08 und 09).
+* **Stufe 1 (Basisaufgabe):** Bisektions-Nullstellensuche für Kontaktstöße mit Heun-Substepping.
+* 🏭 **Stufe 2 – Track A (Industrie):** *Virtuelle Inbetriebnahme (VIBN)* – Pneumatikzylinder mit digitalen Endschaltern, SPS-Kopplung und Taktzeitmessung.
+* 🎮 **Stufe 2 – Track B (Game):** *„Arcade Pinball Wizard“* – Flipperautomat mit Bumper-Bisektion, Schwerkraft-Ruhelage und Punktezähler.
 * 📦 **Portfolio-Abschluss:** Die finale Abgabe von Termin 10 erfolgt genau eine Woche nach dem letzten Präsenztermin über Ihr Team-Git-Repository, wo alle 10 Übungsmodule das bewertete C#-Simulations-Portfolio bilden. Herzlichen Glückwunsch zum erfolgreichen Semesterabschluss!

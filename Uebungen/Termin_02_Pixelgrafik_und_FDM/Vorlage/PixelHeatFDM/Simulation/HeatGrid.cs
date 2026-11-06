@@ -199,7 +199,7 @@ public class HeatGrid
     public float[,] GetCurrentGrid() => _tCurrent;
 
     // =========================================================================
-    // TODO: [Stufe A In-Class Sprint]
+    // TODO: [Stufe 1 - Basisaufgabe (Aufgabe 1.1 bis 1.3)]
     // 1. Stabilitäts-Stresstest: Erhöhen Sie Dt über CriticalDt (s > 0.25) und
     //    beobachten Sie das Schachbrett-Oszillationsmuster bis zum Magenta-Überlauf.
     // 2. Ortsabhängiges Materialgitter: Ergänzen Sie ein Array float[,] _alphaMap,
@@ -212,7 +212,7 @@ public class HeatGrid
     // =========================================================================
 
     // =========================================================================
-    // TODO: [Stufe B Track A: Industrie - CPU-Kühlkörper-Optimizer]
+    // TODO: [Stufe 2 Track A: Industrie - CPU-Kühlkörper-Optimizer]
     // - Modellieren Sie das 200x200 Materialgitter mit Alpha(x, y):
     //     Silizium-Die, Wärmeleitpaste (TIM), Kupfer-Heatspreader, 10 Aluminium-Finnen.
     // - Implementieren Sie den Verlustleistungs-Quellterm dot_q_v im CPU-Die.
@@ -221,7 +221,7 @@ public class HeatGrid
     // =========================================================================
 
     // =========================================================================
-    // TODO: [Stufe B Track B: Simulation Game - Falling Sand / Doom Fire]
+    // TODO: [Stufe 2 Track B: Simulation Game - Falling Sand / Doom Fire]
     // - Erweitern Sie das 200x200 Gitter um den Materie-Layer (Luft, Sand, Lava,
     //   Stein, Holz), Gravitations-Rutschregeln und Doom-Fire-Konvektion.
     // =========================================================================

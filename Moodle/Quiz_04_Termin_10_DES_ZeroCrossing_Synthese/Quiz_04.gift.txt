@@ -1,75 +1,106 @@
 // ==============================================================================
-// Moodle GIFT Quiz 04: Diskrete Ereignissimulation, Hybride Dynamik & Synthese
+// Moodle GIFT Quiz 04 (Zu Beginn von Termin 10): Kontinuierliche DGL-Solver, S-Functions & DES
 // Lehrveranstaltung: Systemsimulation / Digitaler Zwilling (FH OÖ, Campus Wels)
-// Stoff: Kapitel 09 bis 11 (Termin 9 bis 10/11)
+// Geprüfter Stoff (Rückwärts-Kausalität): Kapitel 08, 09 (Termin 08 & 09)
+// Umfang: 8 Fragen (3 Numerisch = 5.0 P., 3 Single-Choice = 3.0 P., 2 Multiple-Select = 2.0 P.) -> 10.0 Punkte
 // ==============================================================================
 
-$CATEGORY: $course$/Quiz_04_DES_ZeroCrossing_Synthese
+$CATEGORY: $course$/Quiz_04_ODE_SFunctions_DES
 
-::Q4_1_Littles_Gesetz_Berechnung::[markdown]Eine automatisierte Prüfstation in einer flexiblen Fertigungszelle wird als stationäres $M/M/1$-Warteschlangensystem betrieben\:
-* Mittlere Ankunftsrate neuer Werkstücke\: $\lambda \= 24\,\frac\{\mathrm\{Teile\}\}\{\mathrm\{h\}\}$ (Poisson-Prozess)
-* Mittlere Prüfdauer an der Station\: $\bar\{t\}_s \= 2{,}0\,\mathrm\{Minuten\} \= \frac\{1\}\{30\}\,\mathrm\{h\}$ (exponentialverteilt mit Servicerate $\mu \= 30\,\frac\{\mathrm\{Teile\}\}\{\mathrm\{h\}\}$)
+::Q4_1_Littles_Gesetz_Mit_Blockierung::[markdown]Eine automatisierte optische Prüfstation in einer Fertigungslinie besitzt einen begrenzten Eingangspuffer und wird im stationären Zustand betrieben. Aus einer Langzeitsimulation sind folgende Betriebskennzahlen bekannt\:
+* Externe Ankunftsrate der Rohteile am Systemeingang\: $\lambda \= 30\,\mathrm\{Teile/h\}$
+* Anteil der wegen vollem Eingangspuffer abgewiesenen (blockierten) Teile\: $P_{\text\{Block\}} \= 20\,\% \= 0{,}20$
+* Mittlere Gesamtdurchlaufzeit eines angenommenen Werkstücks (Wartezeit im Puffer plus Prüfdauer in der Station)\: $\bar\{W\} \= 10{,}0\,\mathrm\{Minuten\}$
 
-Die mittlere Verweildauer eines Werkstücks im Gesamtsystem (Warteschlange + Prüfvorgang) beträgt\:
-$$W \= \frac\{1\}\{\mu - \lambda\} \= \frac\{1\}\{30 - 24\}\,\mathrm\{h\} \= \frac\{1\}\{6\}\,\mathrm\{h\} \= 10{,}0\,\mathrm\{Minuten\}$$
-
-Berechnen Sie die **mittlere Anzahl an Bauteilen $L$ im Gesamtsystem** (Puffer + Prüfstation) unter Anwendung von **Little's Gesetz**\:
-$$L \= \lambda \cdot W$$
-
-*(Geben Sie die Bauteilanzahl als Dezimalzahl ohne Einheit an)*
-{#4.0:0.1#Exakt 4.0 Bauteile! Berechnung: L = lambda * W = 24 h^(-1) * (1/6) h = 4.0 Bauteile. Alternativ über die Systemauslastung rho = 24/30 = 0.80: L = rho / (1 - rho) = 0.80 / 0.20 = 4.0.}
+Berechnen Sie die **zeitlich gemittelte Anzahl an Werkstücken $\bar\{L\}$ im Gesamtsystem** (Warteschlange plus Prüfstation). *(Geben Sie die mittlere Teileanzahl als Dezimalzahl ohne Einheit ein)*
+{#4.0:0.1#Richtig! Effektive Ankunftsrate: lambda_eff = 30 * (1 - 0.20) = 24 Teile/h. Mittlere Verweildauer: W = 10 Min = 1/6 h. Nach Little's Gesetz gilt L = lambda_eff * W = 24 * (1/6) = 4.0 Werkstücke.}
 
 
-::Q4_2_Stochastik_Inversionsmethode::[markdown]Zur Generierung stochastischer Zwischenankunftszeiten $\Delta t$ eines Poisson-Prozesses mit Rate $\lambda$ wird die analytische **Inversionsmethode** verwendet. Die Verteilungsfunktion der Exponentialverteilung lautet $F(t) \= 1 - e^\{-\lambda t\}$. Durch Inversion mit $U \sim \mathcal\{U\}(0,1)$ folgt\:
-$$t \= -\frac\{1\}\{\lambda\} \ln(1 - U)$$
+::Q4_2_Heun_RK2_Einzelschritt::[markdown]Gegeben sei das skalare Anfangswertproblem erster Ordnung für den Zustand $x(t)$\:
+$$\dot\{x\}(t) \= -2 \cdot x(t) + 4 \quad \text\{mit dem Anfangswert \} x(0) \= 1{,}0$$
 
-In professionellen Simulations-Engines findet man im C\#-Code jedoch häufig folgende Zeile\:
+Berechnen Sie ausgehend von $t_0 \= 0\,\mathrm\{s\}$ mit einer konstanten Schrittweite von **$h \= 0{,}5\,\mathrm\{s\}$** den numerischen Näherungswert **$x_1 \approx x(0{,}5\,\mathrm\{s\})$ nach exakt einem Zeitschritt mit dem zweistufigen Verfahren von Heun (Runge-Kutta 2. Ordnung, Prädiktor-Korrektor)**. *(Geben Sie den exakten Zahlenwert ohne Einheit ein)*
+{#1.5:0.02#Richtig! Steigung k1 = -2*(1.0) + 4 = 2.0. Prädiktor x_tilde = 1.0 + 0.5 * 2.0 = 2.0. Steigung k2 = -2*(2.0) + 4 = 0.0. Korrektor x1 = 1.0 + (0.5 / 2) * (2.0 + 0.0) = 1.5.}
+
+
+::Q4_3_CodeTracing_DES_AreaUnderL::[markdown]In einer diskreten Ereignissimulation (DES) wird die mittlere Anzahl der Werkstücke im System (`meanL`) über das zeitgewichtete Flächenintegral `areaUnderL` bestimmt. Verfolgen Sie folgenden C\#-Codeausschnitt über drei aufeinanderfolgende Ereignisse zum Zeitpunkt `eventTimes[i]`\:
+
 ```csharp
-double dt \= -Math.Log(random.NextDouble()) / lambda;
-```
-Hier wird direkt `Math.Log(U)` anstelle von `Math.Log(1.0 - U)` berechnet.
+double clock \= 0.0;
+double areaUnderL \= 0.0;
+int L \= 0;
 
-Warum ist diese Codezeile **mathematisch exakt äquivalent** und führt zur identischen Verteilung? {
-=Wenn U auf dem offenen Intervall (0, 1) standard-gleichverteilt ist, dann ist auch V = (1 - U) identisch standard-gleichverteilt auf (0, 1). Da beide Variablen dieselbe Wahrscheinlichkeitsdichte besitzen, erzeugen beide Formeln exakt dieselbe Exponentialverteilung, spart jedoch eine Gleitkomma-Subtraktion ein. #Richtig! Die Symmetrie der kontinuierlichen Gleichverteilung U(0,1) bewirkt, dass U und 1 - U statistisch ununterscheidbar sind.
-~Der natürliche Logarithmus kehrt das Vorzeichen von (1 - U) im Prozessor automatisch um, sodass 1 - U = U gilt. #Falsch. Mathematisch gilt ln(1-x) != ln(x).
-~Die Methode random.NextDouble() liefert nur negative Zahlen, weshalb das Vorzeichen vor dem Logarithmus wegfällt. #Falsch. NextDouble() liefert positive Zahlen zwischen 0.0 und 1.0.
-~Dies ist ein bekannter KI-Halluzinationsfehler; der Code erzeugt eine Poisson-Verteilung statt einer Exponentialverteilung. #Falsch. Der Code erzeugt exakt eine Exponentialverteilung.
-}
+double[] eventTimes \= \{ 2.0, 5.0, 10.0 \};
+int[] deltaL        \= \{  +2,  +1,   -2 \};
 
-
-::Q4_3_ZeroCrossing_Bisektion_Tunneling::[markdown]In einer hybriden mechatronischen Simulation prallt ein Körper (Radius $R$, Masse $m$) mit hoher Geschwindigkeit $v$ auf eine starre Wand bei $x \= x_{\text\{Wand\}}$. Die Kontakt-Schaltfunktion lautet $z(\mathbf\{x\}) \= x(t) + R - x_{\text\{Wand\}}$.
-
-Ein naiver Festschritt-Simulator prüft die Kollision erst am Ende jedes Zeitschritts $h$\:
-```csharp
-if (x + R >= x_Wand)
+for (int i \= 0; i < eventTimes.Length; i++)
 \{
-    vx \= -e * vx; // Stoßumkehr
+    double tNow \= eventTimes[i];
+    double dt \= tNow - clock;
+    areaUnderL += L * dt;
+    L += deltaL[i];
+    clock \= tNow;
 \}
+
+double meanL \= areaUnderL / clock;
 ```
 
-Welche gravierenden physikalischen Fehler treten bei diesem naiven Ansatz auf, und wie löst ein **hybrider Simulator mit Zero-Crossing-Bisektion** das Problem? {
-=Tunneling und falsche Energiebilanz: Bei hohem v * h durchdringt der Ball die Wand unbemerkt (Tunneling) oder kehrt tief im Material um, was künstliche Energie erzeugt. Die Zero-Crossing-Bisektion überwacht Vorzeichenwechsel von z(x), stoppt den Integrator, sucht den exakten Kontaktzeitpunkt t* via Bisektion bis |z| < eps, führt den Stoß exakt an der Oberfläche aus und setzt die Integration neu auf. #Hervorragend! Zero-Crossing mit Bisektion garantiert exakte Impulsübertragung an der geometrischen Berührfläche ohne numerisches Tunneling oder Geisterhaftung.
-~Der naive Ansatz funktioniert exakt; Zero-Crossing wird in der Praxis nur verwendet, um DirectX-Grafiken zu glätten. #Falsch. Der naive Ansatz zerstört die physikalische Erhaltung und führt zu Tunneling.
-~Das Tunneling lässt sich ohne Bisektion verhindern, indem man die Stoßzahl e auf Werte größer als 1.0 anhebt. #Falsch. e > 1 würde dem System bei jedem Stoß Energie zuführen (Explosion).
-~Bei Festschritt-Simulationen tritt Tunneling prinzipiell niemals auf, da Computer keine kontinuierlichen Räume kennen. #Falsch. Diskrete Schritte überspringen dünne Barrieren gerade bei hohen Geschwindigkeiten.
+Welchen exakten numerischen Wert hat die Variable `meanL` nach dem vollständigen Durchlauf der Schleife? *(Geben Sie den Zahlenwert als Dezimalzahl ohne Einheit ein)*
+{#2.1:0.05#Richtig! Intervall [0, 2]: L=0 -> Fläche 0. Intervall [2, 5]: L=2, dt=3 -> Fläche 6.0. Intervall [5, 10]: L=3, dt=5 -> Fläche 15.0. Gesamtfläche areaUnderL = 21.0 bei clock = 10.0, also meanL = 21.0 / 10.0 = 2.1.}
+
+
+::Q4_4_ODE_Euler_vs_RK4_Stabilitaet::[markdown]Ein ungedämpfter harmonischer Einmassenschwinger ($m\ddot\{x\} + c x \= 0$, Eigenkreisfrequenz $\omega_0 \= \sqrt\{c/m\}$) besitzt in der Zustandsraumdarstellung erster Ordnung rein imaginäre Eigenwerte $\lambda_\{1,2\} \= \pm\mathrm\{i\}\omega_0$.
+
+Welches Verhalten zeigt die numerische Zeitintegration bei konstanter Schrittweite $h \= 0{,}02\,\mathrm\{s\}$ mit dem **expliziten Euler-Verfahren** im Vergleich zum klassischen **Runge-Kutta-Verfahren 4. Ordnung (RK4)**? {
+=Da das Stabilitätsgebiet des expliziten Euler-Verfahrens die imaginäre Achse nicht enthält (|1 +- i*h*omega_0| > 1), führt es künstliche Energie zu und die Amplitude wächst exponentiell, während RK4 die imaginäre Achse bis 2*sqrt(2) stabil abdeckt. #Exakt! Der explizite Euler erzeugt bei ungedämpften Schwingern eine unphysikalische Aufkling-Spirale, während RK4 einen großen Abschnitt der imaginären Achse stabil integriert.
+~Das explizite Euler-Verfahren dämpft die Schwingungsamplitude aufgrund seiner numerischen Viskosität erster Ordnung innerhalb weniger Perioden auf Null ab, während RK4 für alle beliebig großen Schrittweiten h -> Unendlich bedingungslos A-stabil bleibt. #Falsch. Das explizite Euler-Verfahren bläst das System energetisch auf (instabil), und kein explizites Runge-Kutta-Verfahren ist unbeschränkt A-stabil.
+~Beide Einschrittverfahren liefern für lineare Differentialgleichungen mit konstanten Koeffizienten bis auf die 16. Nachkommastelle exakt dieselbe Phasenraumtrajektorie, unterscheiden sich jedoch um den Faktor vier im Speicherbedarf des Zustandsvektors. #Falsch. Die Trajektorien driften qualitativ und quantitativ auseinander (Euler divergiert, RK4 bleibt phasen- und amplitudentreu).
+~Das klassische RK4-Verfahren erzeugt bei konservativen Schwingern einen systematischen Phasenversatz von 90° pro Schritt, wohingegen das explizite Euler-Verfahren als symplektischer Integrator die mechanische Gesamtenergie exakt erhält. #Falsch. Weder der explizite Standard-Euler noch RK4 sind symplektisch; insbesondere verletzt der explizite Euler die Energieerhaltung massiv.
 }
 
 
-::Q4_4_Zeno_Effekt_Chattering::[markdown]Ein elastischer Ball fällt unter Erdbeschleunigung $g$ auf eine Bodenplatte und prallt mit einer Stoßzahl $e \= 0{,}8$ wiederholt ab ($v^+ \= -e \cdot v^-$).  
-Welche Aussagen zum **Zeno-Effekt (Chattering)** und dessen mechatronischer Beherrschung in Simulationsmodellen sind **fachlich zutreffend**? *(Wählen Sie alle richtigen Aussagen)* {
-~%33.33333%Die Zeitintervalle zwischen aufeinanderfolgenden Stößen bilden eine geometrische Folge (dt_k = e * dt_{k-1}), deren unendliche Summe gegen eine endliche Zeit konvergiert: Unendlich viele Stöße finden in endlicher Zeit statt. #Richtig! Dies ist die mathematische Ursache des Zeno-Phänomens.
-~%33.33333%Ein rein ereignisgesteuerter Zero-Crossing-Simulator ohne Schutzlogik friert ein (Zeno-Kollaps), weil die Schrittweiten gegen Null streben und die Simulationszeit nicht mehr voranschreitet. #Richtig! Der Integrator bleibt in unendlich kleinen Zeitschritten stecken.
-~%33.33333%In der Praxis wird Chattering durch einen Geschwindigkeits-Schwellwert v_thresh vermieden: Fällt |v| < v_thresh, schaltet das System von Prellen auf statischen Kontakt (Haften: v=0, a=0, FN=mg) um. #Richtig! Die Modusumschaltung auf algebraische Zwangsbedingungen beendet die Zeno-Schleife.
-~%-50%Der Zeno-Effekt tritt ausschließlich dann auf, wenn die Stoßzahl e > 1.0 beträgt und das System unendlich viel Energie erzeugt. #Falsch. Bei e > 1 wachsen die Zeitintervalle; Zeno erfordert e < 1.
-~%-50%Das Zeno-Problem lässt sich vollständig lösen, indem man den RK4-Solver durch einen Runge-Kutta 8. Ordnung ersetzt. #Falsch. Höhere Integratorordnung löst keine unendliche Folge diskreter Events.
+::Q4_5_SFunction_AntiWindup_Clamping::[markdown]In der S-Function (`ComputeDerivatives`) eines geregelten mechatronischen Linearantriebs ist der Stellkraft-Ausgang des PID-Reglers durch die maximale Motorkraft $\pm F_{\max}$ begrenzt\:
+
+```csharp
+double error  \= setpoint - x[0];
+double u_pid  \= Kp * error + Ki * x[2] - Kd * x[1]; // x[2] ist der I-Zustand
+double thrust \= Math.Clamp(u_pid, -F_max, F_max);
+
+if (thrust \=\= u_pid || (thrust >= F_max && error < 0) || (thrust <= -F_max && error > 0))
+    dxdt[2] \= error;
+else
+    dxdt[2] \= 0.0;
+```
+
+Welches dynamische Fehlverhalten des geschlossenen Regelkreises wird durch diese `if/else`-Verzweigung (**Anti-Windup Clamping**) gezielt verhindert? {
+=Ohne das Einfrieren der Ableitung auf 0.0 würde der Integratorzustand während einer Aktor-Sättigung ungebremst weiter anwachsen, sodass der Antrieb nach Erreichen des Sollwerts erst nach massivem Überschwingen wieder aus der Begrenzung kommt. #Hervorragend! Conditional Integration (Clamping) stoppt die Integration des Regelfehlers, sobald der Aktor in der Begrenzung sitzt und der Fehler in dieselbe Richtung wirkt.
+~Die Verzweigung verhindert, dass der differentielle D-Anteil bei einem plötzlichen Sollwertsprung von setpoint gegen Unendlich divergiert und in der nachfolgenden RK4-Stufe eine DivideByZeroException auslöst. #Falsch. Der D-Anteil wird hier ohnehin nur auf die Rückführgröße (Geschwindigkeit) angewendet, und es tritt keine Division auf.
+~Durch das Setzen der Ableitung auf 0.0 wird die Eigenfrequenz der mechanischen Regelstrecke künstlich verdoppelt, damit der Antrieb auch im gesättigten Zustand ohne Phasenverlust dem Sollwert folgt. #Falsch. Die physikalischen Streckenparameter (Masse, Dämpfung) bleiben durch den Reglercode unverändert.
+~Die Bedingung schaltet den numerischen ODE-Solver bei Erreichen der Stellgrößenbegrenzung automatisch von der vierten Ordnung (RK4) auf die erste Ordnung (Euler) zurück, um Rechenzeit auf der SPS einzusparen. #Falsch. Die S-Function gibt nur den Ableitungsvektor dxdt zurück und verändert nicht die Ordnung des aufrufenden Solvers.
 }
 
 
-::Q4_5_FMI_ModelExchange_vs_CoSimulation::[markdown]Bei der Virtuellen Inbetriebnahme (VIBN) und Co-Simulation mechatronischer Digitaler Zwillinge ist das **Functional Mock-up Interface (FMI)** der weltweite Industriestandard. Eine Simulationskomponente wird als **FMU (Functional Mock-up Unit)** bereitgestellt.
+::Q4_6_Stochastik_Inversionsmethode::[markdown]Um in einer diskreten Ereignissimulation exponentiell verteilte Zwischenankunftszeiten $\Delta t \sim \text\{Exp\}(\lambda)$ aus einer gleichverteilten Zufallszahl $U \sim \mathcal\{U\}(0, 1)$ zu erzeugen, liefert die analytische Umkehrung der Verteilungsfunktion $F(t) \= 1 - \mathrm\{e\}^\{-\lambda t\}$ zunächst den Ausdruck $t \= -\frac\{1\}\{\lambda\}\ln(1 - U)$.
 
-Was ist der **fundamentale softwaretechnische und numerische Unterschied** zwischen **FMI for Model Exchange (ME)** und **FMI for Co-Simulation (CS)**? {
-=Model Exchange: Die FMU enthält ausschließlich die Modellgleichungen (Zustandsableitungen); der übergeordnete Master-Simulator stellt den Integrator bereit. Co-Simulation: Die FMU kapselt das Modell zusammen mit einem eigenen numerischen Solver und führt eigenständig Zeitschritte aus; mit dem Master werden nur Kopplungsvariablen ausgetauscht. #Exakt! ME überlässt die Zeitintegration dem Master (starke Kopplung), während CS autonome Solver in jeder FMU voraussetzt (lose Kopplung, IP-Schutz).
-~Model Exchange funktioniert nur unter Linux, während Co-Simulation ausschließlich für Windows spezifiziert ist. #Falsch. FMI ist plattformunabhängig und unterstützt Windows, Linux und macOS.
-~Bei Model Exchange dürfen nur diskrete Warteschlangen simuliert werden, während Co-Simulation ausschließlich 3D-CAD-Grafiken streamt. #Falsch. Beide Standards bedienen kontinuierliche und hybride physikalische Modelle.
-~Model Exchange erfordert zwingend eine Internetverbindung zur Cloud, während Co-Simulation offline auf der SPS läuft. #Falsch. Beide Ausprägungen laufen vollständig offline lokal oder in Echtzeit-Zielsystemen.
+Warum wird in produktiven C\#-Simulationskernen stattdessen fast immer die Anweisung `double dt = -Math.Log(1.0 - rng.NextDouble()) / lambda;` bzw. bei offenem Intervall direkt `-Math.Log(u) / lambda` verwendet, und welche Besonderheit gilt für `Random.NextDouble()` in .NET? {
+=Da 1.0 - U auf (0, 1) dieselbe Gleichverteilung wie U besitzt, sind beide Formeln stochastisch äquivalent; weil rng.NextDouble() jedoch das Intervall von 0.0 (inklusive) bis 1.0 (exklusive) liefert, schützt 1.0 - rng.NextDouble() vor Math.Log(0.0). #Richtig! 1.0 - NextDouble() bildet das Intervall sicher auf (0.0, 1.0] ab und verhindert den numerischen Sonderfall ln(0).
+~Die Funktion Math.Log(x) berechnet in C\# standardmäßig den dekadischen Logarithmus zur Basis 10, weshalb die Differenz 1.0 - U zwingend als Näherungsreihe für die Eulersche Zahl e zur Basisumrechnung eingesetzt werden muss. #Falsch. Math.Log berechnet in C# den natürlichen Logarithmus ln(x) zur Basis e (der Zehnerlogarithmus heißt Math.Log10).
+~Durch die Verwendung des natürlichen Logarithmus wird aus einer einzelnen gleichverteilten Zufallszahl U ohne trigonometrische Funktionen direkt eine standardnormalverteilte Gauß-Glocke N(0, 1) nach Box-Muller erzeugt. #Falsch. Für die Box-Muller-Transformation einer Normalverteilung werden zwei unabhängige Zufallszahlen U1, U2 sowie eine Kosinus-/Sinus-Funktion benötigt.
+~Die Methode rng.NextDouble() erzeugt in .NET bereits intern exponentiell verteilte Zufallszahlen mit der normierten Rate eins, sodass der Aufruf von Math.Log lediglich der nachträglichen Skalierung auf die gewünschte Varianz dient. #Falsch. NextDouble() liefert eine kontinuierliche Gleichverteilung auf [0.0, 1.0).
+}
+
+
+::Q4_7_Zustandsraum_Butcher_und_Fehlerordnung::[markdown]Welche der folgenden Aussagen zur Überführung mechanischer Differentialgleichungen in den Zustandsraum sowie zu expliziten Runge-Kutta-Verfahren sind **mathematisch und numerisch zutreffend**? *(Wählen Sie alle richtigen Aussagen)* {
+~%50%Eine Bewegungsgleichung zweiter Ordnung (m*x'' + d*x' + c*x = F(t)) wird über den Zustandsvektors x = (x1, x2)^T = (x, x')^T in ein System aus zwei gekoppelten Differentialgleichungen erster Ordnung überführt. #Richtig! Jede DGL n-ter Ordnung lässt sich in ein System von n DGLs 1. Ordnung transformieren.
+~%50%Das klassische Runge-Kutta-Verfahren 4. Ordnung (RK4) wertet die rechte Seite pro Zeitschritt viermal aus (k1, k2, k3, k4) und besitzt einen lokalen Fehler der Ordnung O(h^5) sowie einen globalen Fehler von O(h^4). #Richtig! Bei Einschrittverfahren ist die globale Fehlerordnung stets um eins niedriger als die lokale Fehlerordnung.
+~%-50%Halbiert man beim expliziten Euler-Verfahren (Konvergenzordnung p = 1) die Zeitschrittweite h -> h/2, so sinkt der globale Integrationsfehler am Ende des Simulationsintervalls auf ein Sechzehntel (1/16) seines ursprünglichen Werts. #Falsch! Beim Euler-Verfahren (p = 1) halbiert sich der globale Fehler lediglich auf 1/2; der Faktor 1/16 = (1/2)^4 gilt nur für RK4.
+~%-50%In einer Simulink-analogen S-Function müssen die Zustandsvariablen bereits innerhalb der Methode ComputeOutputs mit der Zeitschrittweite dt überschrieben werden, damit ComputeDerivatives überhaupt keine Parameter mehr benötigt. #Falsch! Weder ComputeOutputs noch ComputeDerivatives dürfen den Zustandsvektor direkt überschreiben; die Zeitintegration erfolgt ausschließlich im ODE-Solver.
+}
+
+
+::Q4_8_DES_PriorityQueue_TimeAdvance_Kendall::[markdown]Bei der Entwicklung einer ereignisdiskreten Simulations-Engine (DES) in C\# für Produktions- und Logistiksysteme kommen das Next-Event-Time-Advance-Prinzip, eine Future Event List (FEL) und die Kendall-Notation zum Einsatz. Welche der folgenden Aussagen sind **fachlich zutreffend**? *(Wählen Sie alle richtigen Aussagen)* {
+~%50%In C\# wird die Future Event List (FEL) als PriorityQueue<SimEvent, double> mit dem Ereigniszeitpunkt tEvent als Schlüssel implementiert, sodass Dequeue() in O(log N) stets das chronologisch nächste Ereignis liefert. #Richtig! Ein Min-Heap (PriorityQueue) garantiert schnelles Einfügen und Entnehmen des nächsten Ereignisses.
+~%50%Beim Next-Event-Time-Advance-Mechanismus springt die Simulationsuhr clock direkt von Ereigniszeitpunkt zu Ereigniszeitpunkt, ohne dazwischenliegende ereignisfreie Zeitintervalle mit festen dt-Schritten abtasten zu müssen. #Richtig! Da sich der Systemzustand zwischen zwei Ereignissen nicht ändert, werden Leerlaufzeiten exakt übersprungen.
+~%-50%Ein Warteschlangensystem mit der Kendall-Notation M/M/2/10 besitzt genau 10 parallele Bearbeitungsstationen (Server) und eine unendlich große Warteschlangenkapazität für exponentialverteilte Zwischenankunftszeiten. #Falsch! In M/M/c/K bezeichnet c = 2 die Anzahl der parallelen Server und K = 10 die maximale Systemkapazität.
+~%-50%Ein stationäres M/M/1-Warteschlangensystem mit unendlichem Puffer bleibt auch für einen Auslastungsgrad von rho = lambda / mu = 1.25 > 1 dauerhaft stabil, sofern die Future Event List nach dem FIFO-Prinzip abgearbeitet wird. #Falsch! Bei einem unbeschränkten M/M/1-System erfordert Stationarität zwingend rho < 1; für rho >= 1 wächst die Warteschlange unbegrenzt.
 }

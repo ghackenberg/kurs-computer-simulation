@@ -25,12 +25,14 @@ math: mathjax
 
 ---
 
-### Showcase & Peer Review: Termin 07 (Statik & Cholesky-FEM)
+### Showcase & Peer-Challenge: Termin 07
+
+Präsentation der Hausübung aus Termin 07 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 07](../../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md)):
 
 <div class="columns">
 <div class="two">
 
-**Track A: Portalkran-FEM-Statik (Industrie)**
+#### Stufe 2 – Track A: Portalkran-FEM-Statik (Industrie)
 - Erweckung der T03-Geometrie via Cholesky
 - Wandernde Kranlast ($F_{\text{Last}} = 50\,\text{kN}$)
 - Überhöhte Verformungsdarstellung im Canvas
@@ -40,7 +42,7 @@ math: mathjax
 </div>
 <div class="two">
 
-**Track B: Bridge Constructor Engine (Game)**
+#### Stufe 2 – Track B: Bridge Constructor Engine (Game)
 - Interaktive Fachwerkbrücke mit LKW-Überfahrt
 - Schrittweise Cholesky-LGS-Lösung
 - Bauteilversagen bei Grenzspannung $S_{\text{krit}}$
@@ -50,8 +52,7 @@ math: mathjax
 </div>
 </div>
 
-> [!NOTE]
-> **Showcase & Plenumsdiskussion:** Live-Demonstration beider Tracks auf der Beamer-Bühne. Fokus: Numerische Stabilität, Konditionszahl $\kappa(\mathbf{K})$ und Cholesky-Performance. Details: [Aufgabenblatt Termin 07](../../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md).
+> **Peer-Challenge (Säule 2b):** Live-Demonstration am Beamer. Fokus: Numerische Stabilität, Konditionszahl $\kappa(\mathbf{K}_{ff})$ und Singularität bei Unterbestimmtheit.
 
 ---
 
@@ -1815,12 +1816,14 @@ while (solver.Time <= 0.6) // 600 ms Regelung
 
 ---
 
-### Hands-on Labor: Termin 08 – Pick your Track!
+### Hausübung Termin 08: DGL-Solver, S-Functions & Anti-Windup
+
+**Stufe 1 (Basisaufgabe `1.1`–`1.3` für alle Teams auf `SFunctionSimulation.sln`):** Expliziter Euler vs. RK4 Stabilitätsgrenze, `PidController` & Anti-Windup-Overlay ([Aufgabenblatt 08](../../Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">
 
-**Track A: DC-Servomotor (Industrie)**
+#### Stufe 2 – Track A: DC-Servomotor (Industrie)
 - **Szenario:** Vorschubachse Werkzeugmaschine
 - DGL-System: $i_A(t), \omega(t), \theta(t), x_i(t)$ + Wicklungstemperatur $T_{\text{Cu}}(t)$
 - Verfahrensvergleich: Euler (RK1) vs. Heun (RK2) vs. RK4
@@ -1830,7 +1833,7 @@ while (solver.Time <= 0.6) // 600 ms Regelung
 </div>
 <div class="two">
 
-**Track B: SpaceX Falcon Hop (Game)**
+#### Stufe 2 – Track B: SpaceX Falcon Hop (Game)
 - **Szenario:** Raketen-Schwebeflug & Landung
 - Gekoppelte Translation ($y, v$) & Rotation ($\phi, \omega$)
 - RK4-Flugphysik mit Gravitation & Trägheit
@@ -1839,8 +1842,4 @@ while (solver.Time <= 0.6) // 600 ms Regelung
 
 </div>
 </div>
-
-> [!TIP]
-> **Arbeitsauftrag:** Bearbeiten Sie im 2er-Team **GENAU EINEN** der beiden Tracks!
-> Aufgabenstellung & Vorlagen: [Aufgabenblatt Termin 08](../../Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.md).
 

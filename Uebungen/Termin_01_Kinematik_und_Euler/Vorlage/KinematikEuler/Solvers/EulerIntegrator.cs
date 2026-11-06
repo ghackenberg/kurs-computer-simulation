@@ -74,7 +74,7 @@ public static class EulerIntegrator
         double dt,
         Func<KinematicState, (double ax, double ay)> accelerationFunc)
     {
-        // TODO [Stufe A Aufgabe A2 & Stufe B]:
+        // TODO [Stufe 1 - Aufgabe 1.3 & Stufe 2]:
         // 1. Steigung k1 am Intervallanfang t_k berechnen: var (ax1, ay1) = accelerationFunc(current);
         // 2. Prädiktor-Zustand (Euler-Schritt) tildeState = StepEuler(current, dt, accelerationFunc) bilden.
         // 3. Steigung k2 am Intervallende t_{k+1} berechnen: var (ax2, ay2) = accelerationFunc(tildeState);
@@ -93,7 +93,7 @@ public static class EulerIntegrator
     }
 
     // =========================================================================
-    // TODO: [Stufe B Track A: Industrie - Hydraulikzylinder-Endlagendämpfung]
+    // TODO: [Stufe 2 Track A: Industrie - Hydraulikzylinder-Endlagendämpfung]
     // - Nutzen Sie StepEuler und StepHeun für den Konvergenzvergleich am Zylinder.
     // - Implementieren Sie die nichtlineare Zylinderkraft mit Blendenreibung:
     //     F_daempf = d_lin * v + c_blend * v * |v|
@@ -101,7 +101,7 @@ public static class EulerIntegrator
     // =========================================================================
 
     // =========================================================================
-    // TODO: [Stufe B Track B: Simulation Game - Artillery Duel mit Newton-Drag]
+    // TODO: [Stufe 2 Track B: Simulation Game - Artillery Duel mit Newton-Drag]
     // - Erweitern Sie die Beschleunigungsfunktion um den quadratischen Luftwiderstand:
     //     F_d = 0.5 * rho * Cw * A * |v_rel|^2
     // - Berücksichtigen Sie relative Windvektoren v_rel = v - v_wind(t).

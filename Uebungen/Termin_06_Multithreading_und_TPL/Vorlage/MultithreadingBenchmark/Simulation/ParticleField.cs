@@ -200,16 +200,16 @@ namespace MultithreadingBenchmark.Simulation
         }
 
         // ====================================================================
-        // STUFE B: Erweiterungspfade (Wahlmodell Track A oder Track B)
+        // STUFE 2: Erweiterungspfade (Wahlmodell Track A oder Track B)
         // ====================================================================
 
-        // TODO [Track A - Industrie: Parallele Monte-Carlo-Toleranzanalyse in WPF]:
+        // TODO [Stufe 2 Track A - Industrie: Parallele Monte-Carlo-Toleranzanalyse in WPF]:
         // - Simulieren Sie N = 10.000.000 Bauteil-Kombinationen S = L1 - (L2 + L3 + L4).
         // - Nutzen Sie Random.Shared oder ThreadLocal<Random> (NIEMALS gemeinsames Random ohne Lock!).
         // - Nutzen Sie thread-lokale Zähler und Interlocked.Add für die Ausschussquote und Histogramm-Bins.
         // - Melden Sie den Fortschritt via IProgress<T> an die WPF-ProgressBar und unterstützen Sie CancellationToken!
 
-        // TODO [Track B - Simulation Game: Boids & Zombie-Horde in WPF]:
+        // TODO [Stufe 2 Track B - Simulation Game: Boids & Zombie-Horde in WPF]:
         // - Simulieren Sie 50.000 - 100.000 autonome Agenten mit Nachbarschafts-Abstoßung und Zielverfolgung.
         // - Verwenden Sie striktes Double-Buffering (StateCurrent[] -> StateNext[]), um Race Conditions zu verhindern.
         // - Vergleichen Sie im reaktiven WPF-Dashboard live die Framerate (FPS) zwischen Single-Thread und Parallel.For!

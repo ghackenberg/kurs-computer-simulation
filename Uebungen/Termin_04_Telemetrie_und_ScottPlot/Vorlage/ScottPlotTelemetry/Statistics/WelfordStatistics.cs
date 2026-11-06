@@ -77,7 +77,7 @@ public class WelfordStatistics
     }
 
     // =========================================================================
-    // TODO: [Stufe A In-Class Sprint (in MainWindow.xaml.cs)]
+    // TODO: [Stufe 1 - Basisaufgabe (Aufgabe 1.1 bis 1.3 in MainWindow.xaml.cs)]
     // 1. GC-Leak-Fix: Ersetzen Sie die 'new SolidColorBrush(...)' Allokationen
     //    in OnTelemetryTick durch statische, eingefrorene (Freeze()) Brushes.
     // 2. Gleitende Fenster-Statistik: Lesen Sie _buffer via CopyTo in ein
@@ -86,14 +86,14 @@ public class WelfordStatistics
     // =========================================================================
 
     // =========================================================================
-    // TODO: [Stufe B Track A: Industrie - Antriebsprüfstand]
+    // TODO: [Stufe 2 Track A: Industrie - Antriebsprüfstand]
     // - Mehrkanal-Tracking: Instanziieren Sie Tracker für Drehzahl n(t), Moment M(t), Schwingung a(t).
     // - Alarmierung: Detektieren Sie Kavitation/Schlupf bei > 3 konsekutiven Grenzwertverletzungen.
     // - ScottPlot 5 Phasenraum-Betriebskennfeld (M vs n), Schwingungs-Histogramm & MSAGL-Graph.
     // =========================================================================
 
     // =========================================================================
-    // TODO: [Stufe B Track B: Simulation Game - Retro Racing HUD]
+    // TODO: [Stufe 2 Track B: Simulation Game - Retro Racing HUD]
     // - Telemetrie für Geschwindigkeit v(t), Querbeschleunigung a_y(t) und Motordrehzahl RPM.
     // - Kamm'scher Kreis (a_y vs a_x Scatter), Brems-Histogramm & MSAGL-Streckentopologie.
     // =========================================================================

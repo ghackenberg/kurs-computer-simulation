@@ -125,18 +125,18 @@ public partial class MainWindow : Window
             $"{totalLength:F2} m");
 
         // =====================================================================
-        // TODO: [Stufe A In-Class Sprint]
+        // TODO: [Stufe 1 - Basisaufgabe (Aufgabe 1.2 bis 1.4)]
         // 1. Euklidische Stablänge berechnen (L = sqrt(dx^2 + dy^2)) und als
-        //    TextBlock-Label mittig an jedem Stab anzeigen.
+        //    TextBlock-Label mittig an jedem Stab anzeigen (Aufgabe 1.2).
         // 2. Vertikale DIN-406-Bemaßungskette (VectorArrow.AddVerticalDimensionLine)
-        //    für die Gesamthöhe (yMax - yMin) links vom Tragwerk einzeichnen.
+        //    für die Gesamthöhe (yMax - yMin) links vom Tragwerk einzeichnen (Aufgabe 1.3).
         // 3. Bounding-Box-Jittering beim Ziehen beheben: _transform.Update(...)
         //    oben in Redraw() nur aufrufen, wenn _draggedNode == null ist, und
-        //    Koordinaten in TrussCanvas_MouseMove auf Millimeter (:F3) runden.
+        //    Koordinaten in TrussCanvas_MouseMove auf Millimeter (:F3) runden (Aufgabe 1.4).
         // =====================================================================
 
         // =====================================================================
-        // TODO: [Stufe B Track A: 2D-CAD Tragwerks-Inspektor & Last-Editor]
+        // TODO: [Stufe 2 Track A: 2D-CAD Tragwerks-Inspektor & Last-Editor]
         // 1. Drittes Industriemodell CreateCantileverCraneTruss() (>= 10 Knoten)
         //    in TrussGeometry.cs ergänzen + 1.0m-Hintergrundgitter zeichnen.
         // 2. Zweistufige horizontale DIN-406-Bemaßung: Innere Maßkette für alle
@@ -146,7 +146,7 @@ public partial class MainWindow : Window
         // =====================================================================
 
         // =====================================================================
-        // TODO: [Stufe B Track B: Poly Bridge Blueprint-Baumeister]
+        // TODO: [Stufe 2 Track B: Poly Bridge Blueprint-Baumeister]
         // 1. Start-Szene CreateCanyonBlueprintLevel() mit Felswand-Polygonen +
         //    0.5m-Konstruktionsraster mit Grid-Snapping (Math.Round(val * 2.0) / 2.0).
         // 2. Gestrichelte Stab-Vorschau mit Maximallänge L_max = 4.0m (grün/rot) +

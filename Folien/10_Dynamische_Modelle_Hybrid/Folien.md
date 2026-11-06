@@ -25,12 +25,14 @@ Dieses Kapitel beinhaltet Folgendes:
 
 ---
 
-### Showcase & Peer Review: Termin 09 (Diskrete Systeme & DES)
+### Showcase & Peer-Challenge: Termin 09
+
+Präsentation der Hausübung aus Termin 09 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 09](../../Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.md)):
 
 <div class="columns">
 <div class="two">
 
-**Track A: Lackierstraße M/M/c (Industrie)**
+#### Stufe 2 – Track A: Lackierstraße M/M/c (Industrie)
 - Automobil-Lackierstraße mit 3 Kabinen
 - Puffer mit Blocking ($K = 25$) & Abweisung
 - Prioritätswarteschlange (Express vs. Standard)
@@ -40,7 +42,7 @@ Dieses Kapitel beinhaltet Folgendes:
 </div>
 <div class="two">
 
-**Track B: Theme Park Queue (Game)**
+#### Stufe 2 – Track B: Theme Park Queue (Game)
 - Achterbahn-Warteschlangen-Rush
 - Stochastische Peaks & Zwischenankünfte
 - VIP-Fastpass mit `PriorityQueue`
@@ -50,8 +52,7 @@ Dieses Kapitel beinhaltet Folgendes:
 </div>
 </div>
 
-> [!NOTE]
-> **Showcase & Plenumsdiskussion:** Live-Demonstration beider Tracks auf der Beamer-Bühne. Fokus: Little's Gesetz, Pufferüberlauf-Wahrscheinlichkeiten und Welford-Akkumulation. Details: [Aufgabenblatt Termin 09](../../Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.md).
+> **Peer-Challenge (Säule 2b):** Live-Demonstration am Beamer. Fokus: Little's Gesetz ($\bar{L} = \lambda_{\text{eff}}\bar{W}$), Pufferüberlauf und Monte-Carlo-Konfidenzintervalle.
 
 ---
 
@@ -1597,12 +1598,14 @@ Das gesamte Methodenspektrum steht nun zur Verfügung:
 
 ---
 
-### Hands-on Labor: Termin 10 – Pick your Track!
+### Hausübung Termin 10: Hybride Dynamik, Bisektion & Zeno
+
+**Stufe 1 (Basisaufgabe `1.1`–`1.3` für alle Teams auf `HybridZeroCrossing.sln`):** Festschritt vs. Bisektion, Zeno-Wakeup & Energie-Telemetrie ([Aufgabenblatt 10](../../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">
 
-**Track A: VIBN Pneumatikzylinder (Industrie)**
+#### Stufe 2 – Track A: VIBN Pneumatikzylinder (Industrie)
 - **Szenario:** Virtuelle Inbetriebnahme Taktvorschub
 - Kontinuierliche Kammer-Druckdynamik ($p_1, p_2$)
 - Anschlag bei $x_{\max}$ mit Zero-Crossing-Bisektion
@@ -1612,7 +1615,7 @@ Das gesamte Methodenspektrum steht nun zur Verfügung:
 </div>
 <div class="two">
 
-**Track B: Arcade Pinball Wizard (Game)**
+#### Stufe 2 – Track B: Arcade Pinball Wizard (Game)
 - **Szenario:** Flipper-Kugel-Dynamik & Bumper
 - Stetige Gravitations- & Rampentrajektorie
 - Bisektion verhindert Hindernis-Durchtunneln
@@ -1621,9 +1624,5 @@ Das gesamte Methodenspektrum steht nun zur Verfügung:
 
 </div>
 </div>
-
-> [!TIP]
-> **Arbeitsauftrag:** Bearbeiten Sie im 2er-Team **GENAU EINEN** der beiden Tracks!
-> Aufgabenstellung & Vorlagen: [Aufgabenblatt Termin 10](../../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.md).
 
 

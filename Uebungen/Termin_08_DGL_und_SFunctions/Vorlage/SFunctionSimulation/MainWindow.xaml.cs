@@ -97,7 +97,7 @@ namespace SFunctionSimulation
             StatusNote.Foreground = antiWindup ? System.Windows.Media.Brushes.ForestGreen : System.Windows.Media.Brushes.Crimson;
 
             // ScottPlot 5 Visualisierung
-            // TODO [Stufe A - Aufgabe A3]:
+            // TODO [Stufe 1 - Aufgabe 1.3]:
             // Führen Sie in RunSimulation() parallel einen zweiten Simulationslauf mit AntiWindupEnabled = false durch
             // und übergeben Sie dessen Drehwinkel-Verlauf als zusätzliche Kurve (rot gestrichelt) an UpdatePlots(...),
             // damit beide Varianten (MIT vs. OHNE Clamping) direkt übereinander im selben Diagramm verglichen werden können!

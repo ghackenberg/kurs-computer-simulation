@@ -147,7 +147,7 @@ Das folgende Master-Board bietet eine vollständige, transparente Übersicht all
 
 | Säule & Anteil | Teilkomponente | Gewicht (LV-Note) | Termine / Taktung | Prüfungsformat & Setting | Kernkriterien & Gegenstand | Mindestanforderung (Hürde) |
 | :--- | :--- | :---: | :--- | :--- | :--- | :--- |
-| **Säule 1 (40 %)**<br>Theoretische & numerische Grundlagen | **Moodle MCQ-Tests 1–4** | **40 %**<br>*(4 × 10 %)* | • Q1: T03 (Kap. 00–02)<br>• Q2: T05 (Kap. 03–05)<br>• Q3: T08 (Kap. 06–08)<br>• Q4: T10 (Kap. 09–11) | Präsenz-Moodle-Quiz (15–20 min)<br>Safe Exam Browser / PC-Pool | • Bildgestützte Fehlerdiagnose<br>• CFL-Stabilitätsgrenzen & Schrittweiten<br>• LGS-Konditionierung, Cholesky<br>• ODEs, Anti-Windup, Zero-Crossing, DES<br>• Berechnungsfragen mit Zufallsvariablen | Mind. **50 %** in Säule 1<br>(mind. 20 von 40 Pkt.) |
+| **Säule 1 (40 %)**<br>Theoretische & numerische Grundlagen | **Moodle MCQ-Tests 1–4** | **40 %**<br>*(4 × 10 %)* | • Q1: T03 (Kap. 00–02)<br>• Q2: T05 (Kap. 03–04)<br>• Q3: T08 (Kap. 05–07)<br>• Q4: T10 (Kap. 08–09) | Präsenz-Moodle-Quiz (15 min, 8 Fragen, 10 Pkt.)<br>Safe Exam Browser / PC-Pool | • Freitext-Berechnung & Code-Tracing<br>• CFL-Stabilitätsgrenzen & Schrittweiten<br>• 2D/3D-Transformationen & ScottPlot/Welford<br>• TPL/Amdahl, FEM-LGS & Cholesky<br>• ODEs (RK4, Anti-Windup) & DES (Little's Gesetz) | Mind. **50 %** in Säule 1<br>(mind. 20 von 40 Pkt.) |
 | **Säule 2 (60 %)**<br>Kontinuierlicher Übungsbetrieb & Diskurs | **Säule 2a: C#-Code-Portfolio** | **30 %**<br>*(10 Module)* | Wöchentlich T01–T10 | Git-Repository-Review & automatisierte Testabnahme | • Goldene Regel (Physik $\leftrightarrow$ MVVM $\leftrightarrow$ GUI)<br>• Numerische Solidität & Stabilität<br>• Allokationsfreie Schleifen, MSTests<br>• Git-Historie & Code-Konsistenz | Mind. **50 %** in Säule 2a<br>(mind. 15 von 30 Pkt.) |
 | | **Säule 2b: Showcase-Präsentationen** | **15 %**<br>*(4 Meilensteine)* | • M1: T04 (Kap. 02/03)<br>• M2: T07 (Kap. 04/05)<br>• M3: T09 (Kap. 06/07)<br>• M4: T10 (Kap. 08/09) | Live-Showcase am Beamer (rotierend) & Labor-Tischabnahmen | • Lauffähige Lösung ($\ge 30\,\text{FPS}$)<br>• Saubere physikalische Modellierung (DGL/LGS)<br>• Code-Inspection (Erklärung jeder Zeile)<br>• Ad-hoc Live-Parameter-Stresstest | Mind. **50 %** in Säule 2b<br>(mind. 7,5 von 15 Pkt.) |
 | | **Säule 2c: Plenumsbeteiligung & Peer-Review** | **15 %** | Fortlaufend T02–T10 (Showcase-Sessions & Diskurs) | Aktives Peer-Review im Plenum (Fragenkultur & fachlicher Diskurs) | • Schärfe & Tiefe mechatronischer Fragen<br>• Aufdecken physikalischer Widersprüche<br>• Prüfen von Stabilität, CFL & Entkopplung<br>• Aufdecken von KI-Schein-Animationen | Mind. **50 %** in Säule 2c<br>(mind. 7,5 von 15 Pkt.) |
@@ -163,10 +163,10 @@ Um faire Prüfungsbedingungen zu gewährleisten, ist der Stoff für jeden Test s
 
 ```mermaid
 flowchart LR
-    T01["Termin 1-2\nTaxonomie, Pixel\nFDM-Wärmeraster"] --> Q1["Quiz 1 (T02/T03)\nPixel, Wärmeraster\nCFL-Bedingung"]
-    T03["Termin 3-5\nVektorgrafik, ScottPlot\n3D-Szenengraph"] --> Q2["Quiz 2 (T05)\n3D-Matrizen, Telemetrie\nUX & API-Recherche"]
-    T06["Termin 6-8\nMultithreading, Statik\nODEs & S-Functions"] --> Q3["Quiz 3 (T08)\nRK4, Anti-Windup\nLGS & Cholesky"]
-    T09["Termin 9-10\nDES-Warteschlange\nHybride Stoßphysik"] --> Q4["Quiz 4 (T10)\nZero-Crossing, Zeno\nLittle's Gesetz, VIBN"]
+    T01["Termin 1-2 (Kap. 00-02)\nTaxonomie, Euler, Pixel\nFDM-Wärmeraster"] --> Q1["Quiz 1 (Anfang T03)\nEuler, Pixel, Wärmeraster\nCFL-Bedingung"]
+    T03["Termin 3-4 (Kap. 03-04)\n2D-Vektorgrafik, ScottPlot 5\nRingpuffer, Welford, MSAGL"] --> Q2["Quiz 2 (Anfang T05)\nWelt-Screen-Transf., DIN\nScottPlot, Welford, MSAGL"]
+    T06["Termin 5-7 (Kap. 05-07)\n3D-Szenengraph, Multithreading\nStatische FEM & Cholesky"] --> Q3["Quiz 3 (Anfang T08)\n3D-Matrizen, TPL & Amdahl\nFEM-LGS & Cholesky"]
+    T09["Termin 8-9 (Kap. 08-09)\nKont. ODEs (RK4, S-Function)\nDES-Warteschlange & Stochastik"] --> Q4["Quiz 4 (Anfang T10)\nRK4, Anti-Windup, S-Functions\nDES, Inversionsmeth., Little"]
 ```
 
 * **Quiz 1 (zu Beginn von Termin 2 bzw. 3):**
@@ -175,22 +175,23 @@ flowchart LR
   - **Ausdrücklich AUSGESCHLOSSEN:** Vektorgrafik-Matrizen, ScottPlot, OpenGL/3D, Multithreading, LGS-Solver, Runge-Kutta, S-Functions, DES, Hybride Events.
 
 * **Quiz 2 (zu Beginn von Termin 5):**
-  - **Behandelter Stoff:** Kapitel 03 (2D-Vektorgrafik & Bemaßung), Kapitel 04 (Echtzeit-Telemetrie & Diagramme), Kapitel 05 (3D-Visualisierung & OpenGL).
-  - **Themen:** Koordinatentransformation (Welt $\leftrightarrow$ Screen), Viewport-Skalierung unter Aspektverhältnis-Erhaltung, Inversion der Y-Achse, WPF Canvas & `DrawingVisual`, geometrische Bemaßung (Dimensioning, Maßketten, Pfeilspitzen), ScottPlot 5 Datenstreaming, Ringpuffer (`CircularBuffer`), 3D-Computergrafik (SharpGL, homogene $4 \times 4$-Matrizen, Euler-Winkel vs. Transformationen, hierarchische Szenengraphen für Roboter/Fahrzeuge, Orbit-Kamera, Beleuchtungsmodelle), API-Recherchekompetenz.
-  - **Ausdrücklich AUSGESCHLOSSEN:** Multithreading-Parallelisierung, FE-Fachwerke & lineare Gleichungssysteme (LGS), Steifigkeitsmatrizen, Cholesky-Zerlegung, ODE-Integratoren, S-Functions, Ereignissimulation.
+  - **Behandelter Stoff:** Kapitel 03 (2D-Vektorgrafik & Bemaßung), Kapitel 04 (Echtzeit-Telemetrie, Diagramme, Welford & MSAGL).
+  - **Themen:** Koordinatentransformation (Welt $\leftrightarrow$ Screen), Viewport-Skalierung unter Aspektverhältnis-Erhaltung ($s = \min(s_x, s_y)$), Inversion der Y-Achse, WPF Canvas & `DrawingVisual`, geometrische Bemaßung nach DIN 406 (Maßketten, Pfeilspitzen im Screen Space), ScottPlot 5 Datenstreaming (`Signal` vs. `Scatter`, `DataStreamer`), Ringpuffer (`CircularBuffer`), Welford-Online-Varianz ($\mu \pm 3\sigma$), Graphentopologien mit MSAGL (`SugiyamaLayoutSettings` vs. `MdsLayoutSettings`).
+  - **Ausdrücklich AUSGESCHLOSSEN:** 3D-Computergrafik / OpenGL (wird erst *nach* dem Quiz in Termin 05 gelehrt!), Multithreading-Parallelisierung, FE-Fachwerke & lineare Gleichungssysteme (LGS), Steifigkeitsmatrizen, Cholesky-Zerlegung, ODE-Integratoren, S-Functions, Ereignissimulation.
   > [!IMPORTANT]
   > **Kausalitätsprüfung & Konsistenz für Termin 3 & Quiz 2:**  
   > In Termin 3 (Kapitel 03) und im zugehörigen Quiz 2 werden **keinerlei Fachwerk-Gleichungssysteme ($\mathbf{K} \cdot \mathbf{u} = \mathbf{f}$), Steifigkeitsmatrizen oder Cholesky-Zerlegungen** abgeprüft! Diese mathematischen FE-Methoden werden erst in Kapitel 07 / Termin 7 vermittelt und in Quiz 3 / Meilenstein 3 geprüft.  
   > In Termin 3 und Quiz 2 stehen bezüglich Kapitel 03 **ausschließlich** die 2D-Vektorgrafik auf dem WPF Canvas, affine Koordinatentransformationen (Welt $\leftrightarrow$ Screen), isotrope Viewport-Skalierung, Inversion der Y-Achse sowie Bemaßungen (Dimensioning, Maßketten, Pfeilgeometrien) im Fokus.
 
 * **Quiz 3 (zu Beginn von Termin 8):**
-  - **Behandelter Stoff:** Kapitel 06 (Multithreading & Parallele Simulation), Kapitel 07 (Statische Modelle & LGS), Kapitel 08 (Kontinuierliche dynamische Modelle & S-Functions).
-  - **Themen:** TPL (`Parallel.For`, Partitionierung, Race Conditions, False Sharing, Thread-Synchronisation), statische FE-Fachwerke (Steifigkeitsmatrix $\mathbf{K}$, Lastvektor $\mathbf{f}$, Lagerbedingungen, Cholesky-Zerlegung $\mathbf{L}\mathbf{L}^\top$, Konditionszahl $\kappa(\mathbf{K})$, Singularitäten), kontinuierliche DGL-Systeme (expliziter Euler, Heun, RK4, Butcher-Tableau, Stabilitätsgebiete, steife Systeme), S-Function-Paradigma (`CalculateDerivatives`), Regelkreise mit Sättigung & Anti-Windup Clamping (Raketenantrieb, DC-Servomotor).
-  - **Ausdrücklich AUSGESCHLOSSEN:** Diskrete Ereignissimulation (DES), Queues, Stochastik, Zero-Crossing-Bisektion, Zeno-Kollaps.
+  - **Behandelter Stoff:** Kapitel 05 (3D-Visualisierung & OpenGL), Kapitel 06 (Multithreading & Parallele Simulation), Kapitel 07 (Statische Modelle, FEM-Fachwerke & Cholesky).
+  - **Themen:** 3D-Computergrafik (SharpGL, Kugelkoordinaten-Orbit-Kamera, Gimbal-Lock-Schutz, homogene $4 \times 4$-Matrizen, hierarchische Szenengraphen `glPushMatrix`/`glPopMatrix`, Vorwärtskinematik, Phong-Beleuchtung), TPL (`Parallel.For`, Partitionierung, Race Conditions, `Interlocked` vs. `lock`, False Sharing, Amdahlsches Gesetz), statische FE-Fachwerke (Steifigkeitsmatrix $\mathbf{K}$, Blockpartitionierung $\mathbf{K}_{ff}$, Lagerbedingungen, Cholesky-Zerlegung $\mathbf{L}\mathbf{L}^\top$, Konditionszahl $\kappa(\mathbf{K})$, Singularitäten).
+  - **Ausdrücklich AUSGESCHLOSSEN:** Kontinuierliche DGL-Systeme höherer Ordnung (RK4), S-Functions & Anti-Windup (werden erst *nach* dem Quiz in Termin 08 gelehrt!), Diskrete Ereignissimulation (DES), Queues, Stochastik, Zero-Crossing-Bisektion, Zeno-Kollaps.
 
 * **Quiz 4 (zu Beginn von Termin 10):**
-  - **Behandelter Stoff:** Kapitel 09 (Diskrete dynamische Modelle & Stochastik), Kapitel 10 (Hybride dynamische Modelle), Kapitel 11 (Epilog & Synthese).
-  - **Themen:** Diskrete Ereignissimulation (DES, Future Event List / PriorityQueue, Kendall-Notation, Little's Gesetz $L = \lambda W$, Poisson-Prozesse, Erlang-C), Stochastik (Inversionsmethode für Zufallsvariablen, Box-Muller, Monte-Carlo-Replikation mit Welford-Statistik), Hybride Dynamik (Zero-Crossing-Funktionen $z(\mathbf{x}) = 0$, Bisektionssuche vs. Durchdringung/Tunneling, elastischer/plastischer Stoß, Coulomb-Reibung mit Stick-Slip, Zeno-Kollaps & Chattering-Vermeidung), VIBN-Kopplung.
+  - **Behandelter Stoff:** Kapitel 08 (Kontinuierliche dynamische Modelle, S-Functions & RK4), Kapitel 09 (Diskrete dynamische Modelle, DES & Stochastik).
+  - **Themen:** Kontinuierliche DGL-Systeme (expliziter Euler, Heun, RK4, Butcher-Tableau, Stabilitätsgebiete, steife Systeme), S-Function-Paradigma (`ComputeDerivatives`, `ComputeOutputs`), Regelkreise mit Sättigung & Anti-Windup Clamping (Raketenantrieb, DC-Servomotor); Diskrete Ereignissimulation (DES, Future Event List / `PriorityQueue`, Kendall-Notation, Little's Gesetz $\bar{L} = \lambda_{\text{eff}} \bar{W}$, zeitgewichtetes Flächenintegral), Stochastik (Inversionsmethode $-\frac{1}{\lambda}\ln(1-U)$, Box-Muller, Monte-Carlo-Replikation).
+  - **Ausdrücklich AUSGESCHLOSSEN:** Hybride Dynamik (Zero-Crossing-Bisektion, Zeno-Kollaps, Sticking) & FMI/VIBN (werden erst *nach* dem Quiz in Termin 10 gelehrt!).
 
 ---
 
@@ -261,7 +262,7 @@ Beim Start der Applikation erscheint das Bild diagonal zerrissen und verzerrt; n
 
 ---
 
-#### Quiz 2 (Termin 5): 2D-Vektorgrafik, Telemetrie & 3D-Szenengraph
+#### Quiz 2 (zu Beginn von Termin 5): 2D-Vektorgrafik, Telemetrie, ScottPlot 5 & MSAGL (Kapitel 03–04)
 
 > [!NOTE]
 > **Kausalitätshinweis zum Prüfungsumfang:**  
@@ -305,7 +306,9 @@ Beim Start der Applikation erscheint das Bild diagonal zerrissen und verzerrt; n
     Werden Pfeilspitzen im Weltkoordinatensystem als Geometrie modelliert, skalieren sie beim Zoomen oder bei Fenstergrößenänderungen mit. Dadurch würden Pfeile bei starkem Zoom riesig oder bei kleinem Zoom unsichtbar klein. Durch Berechnung der Pfeilflügel im Screen Space (feste Pixellänge $L = 12\,\text{px}$, Drehung um $\pm 30^\circ$ relativ zum normierten Richtungsvektor der Maßlinie $\mathbf{u}_{\text{screen}}$) bleiben Pfeile, Maßhilfslinien und Schriftgrößen typografisch konstant und normgerecht.
 * **Didaktischer Mehrwert:** Prüft exakt das mechatronische 2D-Rendering von Termin 3 (Y-Inversion, isotropes Viewport-Mapping, Bemaßungsgeometrie) ohne vorzeitigen Vorgriff auf Gleichungssysteme oder Cholesky.
 
-##### Frage 2.2: Homogene Transformationsmatrizen im 3D-Szenengraph
+#### Quiz 3 (zu Beginn von Termin 8): 3D-Szenengraph, Multithreading & Statische FEM-Fachwerke (Kapitel 05–07)
+
+##### Frage 3.1: Homogene Transformationsmatrizen im 3D-Szenengraph
 * **Fragentyp:** Multiple-Choice Multiple-Select
 * **Chronologischer Kontext:** Kapitel 05 (3D-Computergrafik mit SharpGL, Szenengraph)
 * **Aufgabenstellung:**
@@ -325,7 +328,7 @@ Beim Start der Applikation erscheint das Bild diagonal zerrissen und verzerrt; n
 * [x] D) Im Szenengraph profitiert die Kinematik davon, dass beim Rendern von Armsegment 2 der Matrix-Stack (`glPushMatrix` / `glPopMatrix` bzw. moderne Matrix-Hierarchien) genutzt wird, wodurch Transformationen von Armsegment 1 automatisch auf alle Kindknoten vererbt werden.
 * [ ] E) Um Rechenzeit zu sparen, können Rotationsmatrizen im 3D-Raum ohne Informationsverlust durch einfache Skalare (Drehwinkel $\theta$) addiert werden.
 
-##### Frage 2.3: ScottPlot 5 Datenstreaming, CircularBuffer & API-Integration
+##### Frage 2.2 (in Quiz 2): ScottPlot 5 Datenstreaming, CircularBuffer & API-Integration
 * **Fragentyp:** Code-Analyse & Multiple-Choice Single-Select
 * **Chronologischer Kontext:** Kapitel 04 (ScottPlot 5, Echtzeit-Telemetrie)
 * **Aufgabenstellung:**
@@ -360,9 +363,9 @@ Welche professionelle Architektur- und API-Lösung behebt dieses Performance-Pro
 
 ---
 
-#### Quiz 3 (Termin 8): Multithreading, Statische Fachwerke, ODEs & S-Functions
+#### Quiz 4 (zu Beginn von Termin 10): Kontinuierliche ODEs (RK4, S-Functions, Anti-Windup) & Diskrete Ereignissimulation (Kapitel 08–09)
 
-##### Frage 3.1: Kontinuierliche Dynamik & Raketenregelung: RK4 vs. Euler & Anti-Windup Clamping
+##### Frage 4.1 (in Quiz 4): Kontinuierliche Dynamik & Raketenregelung: RK4 vs. Euler & Anti-Windup Clamping
 * **Fragentyp:** Multiple-Choice Single-Select mit mechatronischem Bezug
 * **Chronologischer Kontext:** Kapitel 08 (Kontinuierliche Modelle, ODEs, S-Functions)
 * **Aufgabenstellung:**
@@ -400,7 +403,7 @@ Warum ist das gezeigte **Clamping (Conditional Integration)** unverzichtbar, und
 * [ ] C) Das Clamping dient der Beseitigung von Chattering beim elastischen Aufprall auf die Startrampe; RK4 ist ein impliziter Solver und erfordert daher eine Newton-Raphson-Iteration.
 * [ ] D) Ohne Clamping würde die Steifigkeitsmatrix der Raketenstruktur singulär; Euler ist für S-Functions stets stabiler als RK4.
 
-##### Frage 3.2: Statische Fachwerke: Singularität, Starrkörperbewegungen & Cholesky-Zerlegung
+##### Frage 3.2 (in Quiz 3): Statische Fachwerke: Singularität, Starrkörperbewegungen & Cholesky-Zerlegung
 * **Fragentyp:** Multiple-Choice Multiple-Select
 * **Chronologischer Kontext:** Kapitel 07 (Statische Modelle, LGS, Math.NET)
 * **Aufgabenstellung:**
@@ -417,9 +420,9 @@ Welche Bedingungen müssen erfüllt sein, damit die Cholesky-Zerlegung erfolgrei
 
 ---
 
-#### Quiz 4 (Termin 10): Diskrete Dynamik, Stochastik & Hybride Spiel-/Kontaktdynamik
+#### Vertiefungsbeispiel (für Portfolio-Abnahme T10): Hybride Spiel-/Kontaktdynamik (Kapitel 10)
 
-##### Frage 4.1: Hybride Spielphysik & Kontaktdynamik: Zero-Crossing Bisektion vs. Tunneling & Zeno-Effekt
+##### Portfolio-Diskussionsfrage T10: Hybride Spielphysik & Kontaktdynamik: Zero-Crossing Bisektion vs. Tunneling & Zeno-Effekt
 * **Fragentyp:** Multiple-Choice Single-Select mit Diagramm- und Algorithmus-Bezug
 * **Chronologischer Kontext:** Kapitel 10 (Hybride dynamische Modelle, Stoßmechanik)
 * **Aufgabenstellung:**

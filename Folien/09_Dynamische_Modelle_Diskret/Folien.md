@@ -27,22 +27,24 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-### Showcase & Peer Review: Termin 08 (Kontinuierliche Dynamik & RK4)
+### Showcase & Peer-Challenge: Termin 08
+
+Präsentation der Hausübung aus Termin 08 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 08](../../Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.md)):
 
 <div class="columns">
 <div class="two">
 
-**Track A: DC-Servomotor (Industrie)**
-- Zustandsraum-Modellierung ($i, \omega, \theta$)
-- 4-stufige RK4-Integration ($h = 1\,\text{ms}$)
-- PI-Lageregelung mit Lastsprung
+#### Stufe 2 – Track A: DC-Servomotor (Industrie)
+- Zustandsraum-Modellierung ($i, \omega, \theta, T_{\text{Cu}}$)
+- Verfahrensvergleich Euler vs. Heun vs. RK4
+- PID-Lageregelung mit Lastsprung & Derating
 - Anti-Windup Clamping gegen Überschwingen
 - *Peer Review:* Verhalten bei Aktor-Sättigung
 
 </div>
 <div class="two">
 
-**Track B: SpaceX Falcon Hop (Game)**
+#### Stufe 2 – Track B: SpaceX Falcon Hop (Game)
 - Raketen-Schwebeflug & dynamische Landung
 - Gekoppelte Translation & Drehträgheit
 - Kaskadierter PID & Schubvektor-Gimbal
@@ -52,8 +54,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 </div>
 </div>
 
-> [!NOTE]
-> **Showcase & Plenumsdiskussion:** Live-Demonstration beider Tracks auf der Beamer-Bühne. Fokus: Anti-Windup Clamping unter Lastsprung und RK4-Schrittweitenwahl. Details: [Aufgabenblatt Termin 08](../../Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.md).
+> **Peer-Challenge (Säule 2b):** Live-Demonstration am Beamer. Fokus: Anti-Windup Clamping unter Lastsprung und RK4- vs. Euler-Stabilitätsgrenze.
 
 ---
 
@@ -1453,12 +1454,14 @@ In der Praxis existieren kontinuierliche Physik und diskrete Ereignisse selten g
 
 ---
 
-### Hands-on Labor: Termin 09 – Pick your Track!
+### Hausübung Termin 09: Diskrete Ereignissimulation (DES)
+
+**Stufe 1 (Basisaufgabe `1.1`–`1.3` für alle Teams auf `DiscreteEventSimulation.sln`):** Wartepuffer $K$ & Little's Gesetz, Box-Muller Log-Normal & Monte-Carlo ([Aufgabenblatt 09](../../Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">
 
-**Track A: Lackierstraße M/M/c (Industrie)**
+#### Stufe 2 – Track A: Lackierstraße M/M/c (Industrie)
 - **Szenario:** Automobil-Lackierstraße ($c = 3$)
 - Puffer mit Blocking ($K = 25$) & Abweisung
 - Prioritätswarteschlange (Express vs. Standard)
@@ -1468,7 +1471,7 @@ In der Praxis existieren kontinuierliche Physik und diskrete Ereignisse selten g
 </div>
 <div class="two">
 
-**Track B: Theme Park Queue (Game)**
+#### Stufe 2 – Track B: Theme Park Queue (Game)
 - **Szenario:** Achterbahn-Warteschlangen-Rush
 - Kundenströme mit stochastischen Spitzen
 - VIP-Fastpass-Prio mit `PriorityQueue`
@@ -1477,9 +1480,5 @@ In der Praxis existieren kontinuierliche Physik und diskrete Ereignisse selten g
 
 </div>
 </div>
-
-> [!TIP]
-> **Arbeitsauftrag:** Bearbeiten Sie im 2er-Team **GENAU EINEN** der beiden Tracks!
-> Aufgabenstellung & Vorlagen: [Aufgabenblatt Termin 09](../../Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.md).
 
 

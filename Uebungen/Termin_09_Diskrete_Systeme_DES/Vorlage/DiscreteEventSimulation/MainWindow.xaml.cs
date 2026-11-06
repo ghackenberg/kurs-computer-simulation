@@ -58,7 +58,7 @@ namespace DiscreteEventSimulation
 
             double pBlock = res.TotalArrivals > 0 ? (double)res.BlockedCustomers / res.TotalArrivals : 0.0;
 
-            // Vergleich: Little's Gesetz mit lambda_eff vs. naivem Brutto-lambda (Aufgabe A1)
+            // Vergleich: Little's Gesetz mit lambda_eff vs. naivem Brutto-lambda (Stufe 1 - Aufgabe 1.1)
             double naivePredictedL = lambda * res.MeanSystemTimeW;
             double naiveErrorL = res.MeanSystemCustomersL > 0
                 ? Math.Abs(res.MeanSystemCustomersL - naivePredictedL) / res.MeanSystemCustomersL
@@ -146,7 +146,7 @@ namespace DiscreteEventSimulation
             var (lambda, mu, servers, capacity, _, logNormalStd) = ReadParameters();
             double tMaxReplication = 10_000.0;
 
-            // TODO [Aufgabe A3]:
+            // TODO [Stufe 1 - Aufgabe 1.3]:
             // Erhöhen Sie die Anzahl der Replikationen auf R = 100 und parallelisieren Sie
             // die Schleife mittels `Parallel.For(0, replications, r => ...)`!
             // Nutzen Sie den deterministischen Seed `42 + r * 104729` (vgl. Kapitel 09, Abschnitt 9.7).

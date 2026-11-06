@@ -164,16 +164,16 @@ Dieser Kurs umfasst die folgenden Themenblöcke:
 
 Die Lehrveranstaltung ist eine **Integrierte Lehrveranstaltung (ILV)** mit 3 ECTS (75 h Workload):
 
-- **Theorie & Live-Hacking (45 min):** Kompakte Vermittlung der mathematischen & technischen Grundlagen.
-- **In-Class Sprint (60 min):** Betreute Paarprogrammierung an einem lauffähigen Minimal Viable Product (MVP).
-- **Homework Extension (1 Woche):** Autonome Vertiefung im 2er-Team im gewählten Track (Industrie vs. Game).
+- **Interaktive Vorlesung (110–125 min):** Vermittlung der mathematischen Grundlagen, Algorithmen und C#-Implementierungen.
+- **Hausübung Stufe 1 – Basisaufgabe (~60 min):** Gemeinsames Fundament auf der C#-Projektvorlage mit automatisierten Unit-Tests (`1.1`–`1.4`).
+- **Hausübung Stufe 2 – Vertiefungsaufgabe (1 Woche):** Autonome Erweiterung im 2er-Team im gewählten Track (`Track A` Industrie vs. `Track B` Game).
 - **Showcase & Peer-Challenge (20 min):** Rotierende Beamer-Präsentationen und Plenumsdiskussion.
 
 ---
 
 ### Freie Track-Wahl: Industrie vs. Simulation Game
 
-Für die vertiefenden Laboraufgaben (Stufe B) wählen Sie im 2er-Team frei zwischen zwei gleichwertigen Pfaden:
+Für die vertiefenden Laboraufgaben (Stufe 2) wählen Sie im 2er-Team frei zwischen zwei gleichwertigen Pfaden:
 
 <div class="columns">
 <div class="two">
@@ -218,7 +218,7 @@ Transparente Beurteilung von Theorie, praktischer Implementierung und wissenscha
 <div class="two">
 
 **Säule 2: Übungen & Diskurs (60 %)**
-- **30 % C#-Code-Portfolio:** 10 wöchentliche Übungsabgaben (Track A oder B)
+- **30 % C#-Code-Portfolio:** 10 wöchentliche Hausübungen (Stufe 1 + Stufe 2: Track A oder B)
 - **15 % Showcase-Demo:** Live-Vorführung & Ad-hoc-Stresstest am Beamer
 - **15 % Peer-Review:** Kritische Fachfragen aus dem Plenum
 

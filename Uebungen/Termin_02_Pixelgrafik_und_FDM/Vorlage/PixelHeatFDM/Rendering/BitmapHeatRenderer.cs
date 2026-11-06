@@ -34,7 +34,7 @@ public class BitmapHeatRenderer
         float[,] tData = grid.GetCurrentGrid();
         float range = Math.Max(maxTemp - minTemp, 1e-4f);
 
-        // TODO: [Stufe A In-Class Sprint]
+        // TODO: [Stufe 1 - Aufgabe 1.2 & 1.3]
         // Ersetzen Sie den direkten Aufruf von MapTemperatureToColor(...) pro Pixel
         // durch eine im Konstruktor vorberechnete 256-Farben Look-Up-Table (uint[256] _colorLut)
         // für O(1)-Speicherzugriff (analog zu Abschnitt 2.4 der Vorlesungsfolien)

@@ -13,8 +13,8 @@
 ## Inhaltsverzeichnis
 
 1. [Didaktisches Gesamtkonzept & Labororganisation](#1-didaktisches-gesamtkonzept--labororganisation)
-   - 1.1 Verzahnung von Vorlesung, Hands-on-Labor und Vibe-Coding / KI-gestütztem Arbeiten
-   - 1.2 Das 2-Stufen-Übungsmodell mit Wahlkonzept („Pick your Track: Industrie vs. Gaming“)
+   - 1.1 Verzahnung von Vorlesung, zweistufiger Hausübung und Vibe-Coding / KI-gestütztem Arbeiten
+   - 1.2 Das 2-Stufen-Hausübungsmodell mit Wahlkonzept („Pick your Track: Industrie vs. Gaming“)
    - 1.3 Wöchentliches „Showcase & Peer-Challenge“-Format (Live-Vorführung & Peer-Questioning)
    - 1.4 Matrix der chronologischen Technologie-Freigabe (Strikte Konsistenz!)
    - 1.5 Architektur- und Software-Qualitätsstandards („Goldene Regel“)
@@ -41,17 +41,17 @@
 
 ## 1. Didaktisches Gesamtkonzept & Labororganisation
 
-### 1.1 Verzahnung von Vorlesung, Hands-on-Labor und Vibe-Coding / KI-gestütztem Arbeiten
+### 1.1 Verzahnung von Vorlesung, zweistufiger Hausübung und Vibe-Coding / KI-gestütztem Arbeiten
 
-Die Lehrveranstaltung *Systemsimulation / Digitaler Zwilling* am Campus Wels der FH Oberösterreich qualifiziert angehende Automatisierungsingenieurinnen und -ingenieure für die Entwicklung digitaler Repräsentanten industrieller Systeme. Sie zeichnet sich durch eine synchrone Trias aus:
-1. **Theoretische Fundierung (Vorlesung, 90 min):** Herleitung der mathematisch-physikalischen DGLn, Diskretisierungsverfahren, Stabilitätskriterien und Algorithmen.
-2. **Hands-on In-Class Sprint (Labor, 60 min):** Unmittelbare praktische Umsetzung des Kernalgorithmus in C# unter Betreuung. Der Fokus liegt rein auf Mathematik, Logik und schneller Verifikation.
-3. **Vertiefende Homework Extension (2er-Team, 1 Woche):** Modellkomplexitätssteigerung, Gamification-Elemente, reale Nichtlinearitäten, Parametervariationen, numerische Fehleranalysen und professionelle Visualisierung.
+Die Lehrveranstaltung *Systemsimulation / Digitaler Zwilling* am Campus Wels der FH Oberösterreich qualifiziert angehende Automatisierungsingenieurinnen und -ingenieure für die Entwicklung digitaler Repräsentanten industrieller Systeme. Sie zeichnet sich durch eine klar strukturierte Trias aus:
+1. **Interaktive Vorlesung anhand der Folien (Präsenz, 110–125 min neben Showcase & Quiz):** Herleitung der mathematisch-physikalischen DGLn, Diskretisierungsverfahren, Stabilitätskriterien, konkreter Zahlenbeispiele und detaillierte Besprechung der abgedruckten C#-Code-Snippets auf den Folien (ohne Live-Coding und ohne In-Class-Programmierphase im Hörsaal).
+2. **Stufe 1: Basisaufgabe (Gemeinsames Fundament zu Hause, ca. 60 min):** Alle Teams starten zu Hause auf Basis der bereitgestellten C#-Projektvorlage (`Vorlage/...sln`) inklusive vorbereiteter Unit-Tests (`dotnet test`). Sie lösen die geführten Basisaufgaben, um die Kernmechanik der aktuellen Vorlesung am lauffähigen Code zu verankern, bis alle Unit-Tests grün sind.
+3. **Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell im 2er-Team zu Hause, ca. 3–4 h):** Aufbauend auf der funktionierenden Stufe-1-Lösung setzt das Team zu Hause genau einen gewählten Track (Track A Industrie ODER Track B Simulation Game) um (Modellkomplexitätssteigerung, Gamification-Elemente, reale Nichtlinearitäten, Parametervariationen und professionelle Visualisierung).
 
 ```mermaid
 flowchart LR
-    VL["Theoretische Fundierung\n(Vorlesung, 90 min)\nMathematik, Physik, DGL"] --> Sprint["Stufe A: In-Class Sprint\n(Labor, 60 min)\nKernalgorithmus, C# Engine"]
-    Sprint --> Ext["Stufe B: Homework Extension\n(Teamarbeit, 1 Woche)\nGamification, UI, Benchmarks"]
+    VL["Interaktive Vorlesung\n(Präsenz, 110–125 min)\nMathematik, Zahlenbeispiele,\nSVG-Diagramme & C#-Snippets"] --> Sprint["Stufe 1: Basisaufgabe\n(Hausübung Teil 1, ~60 min)\nGemeinsames Fundament\nauf C#-Vorlage + Unit-Tests"]
+    Sprint --> Ext["Stufe 2: Vertiefungsaufgabe\n(Hausübung Teil 2, ~3–4 h)\nWahlmodell: Track A ODER Track B"]
     Ext --> Portfolio["C#-Simulations-Portfolio\n(10 Module, 30 %)\nIndustrie-Zwillinge & Sim-Games"]
     style VL fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
     style Sprint fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
@@ -65,24 +65,24 @@ flowchart LR
 
 ---
 
-### 1.2 Das 2-Stufen-Übungsmodell mit Wahlkonzept („Pick your Track: Industrie vs. Gaming“)
+### 1.2 Das 2-Stufen-Hausübungsmodell mit Wahlkonzept („Pick your Track: Industrie vs. Gaming“)
 
-Jede der Einheiten 01 bis 10 folgt einer strikten Zweistufigkeit:
+Die gesamte wöchentliche Übung (Stufe 1 + Stufe 2) wird als Hausübung im festen 2er-Team zu Hause bearbeitet und folgt in allen Einheiten 01 bis 10 einer strikten Zweistufigkeit:
 
-- **Stufe A (In-Class Sprint – 60 min, Einzelarbeit oder Tandem):**
-  - **Fokus:** Direkte Umsetzung des mathematischen Kerns ohne grafischen Ballast.
-  - **Umfang:** Minimales C#-Konsolenprogramm oder vorgefertigte Starter-Vorlage.
-  - **Erfolgsmetrik:** Ein lauffähiger Algorithmus nach spätestens 50 Minuten; 10 Minuten gemeinsame Auswertung & Fehlerdiskussion im Plenum.
-- **Stufe B (Homework Extension – 1 Woche, festes 2er-Team):**
-  - **Fokus:** Vertiefung, Parametervariation, Nichtlinearitäten und professionelle Visualisierung.
+- **Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 min zu Hause):**
+  - **Fokus:** Geführte Umsetzung und Verankerung der Kernmechanik auf Basis der bereitgestellten C#-Projektvorlage (`Vorlage/...sln`).
+  - **Umfang:** 3–4 präzise spezifizierte Teilaufgaben inklusive automatisierter MSTest-Unit-Tests (`dotnet test`).
+  - **Erfolgsmetrik:** Alle mitgelieferten Unit-Tests laufen grün; das Ergebnis von Stufe 1 bildet das **direkte technische Fundament für beide Ausbau-Tracks in Stufe 2**!
+- **Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B, Richtwert ca. 3–4 h zu Hause):**
+  - **Fokus:** Aufbauend auf Stufe 1 folgen Vertiefung, Parametervariation, Nichtlinearitäten und professionelle Visualisierung in 4 symmetrischen Arbeitspaketen.
   - **Das Wahlmodell („Pick your Track: Industrie vs. Simulation Game“):**  
     > [!IMPORTANT]
-    > **Keine Doppelbelastung – Genau EINE Aufgabe pro Woche!**  
-    > Bei jeder wöchentlichen Hausübung (Termine T01 bis T10) wählen die 2er-Teams **GENAU EINE** der beiden angebotenen Aufgaben:
+    > **Keine Doppelbelastung in Stufe 2 – Genau EIN Track pro Woche!**  
+    > Sowohl Stufe 1 als auch Stufe 2 sind Pflichtbestandteile der wöchentlichen Hausübung. In Stufe 2 wählen die 2er-Teams jedoch **GENAU EINEN** der beiden angebotenen Ausbau-Tracks:
     > - **Track A (Industrie & Mechatronik):** Industrienahe Ingenieuraufgaben, digitale Zwillinge realer Produktionssysteme, mechatronische Prüfstände, Tragwerksstatik und Regelungstechnik.
-    > - **Track B (Simulation Game & Gaming-Physik):** Gamification-Konzepte, Arcade- und Retro-Game-Physik, Sci-Fi-Navigation, interaktive Blueprint-Editoren und Spielemechaniken.
+    > - **Track B (Simulation Game & Gaming-Physik):** Gamification-Konzepte, Arcade- und Retro-Game-Physik, interaktive Blueprint-Editoren und Spielemechaniken.
     > 
-    > Beide Tracks basieren auf **exakt denselben mathematisch-physikalischen Vorlesungsinhalten** und erfordern denselben Programmier- und Modellierungsaufwand (ca. 4–5 Stunden pro Teamwoche). Es muss **nur ein Track pro Woche** bearbeitet und abgegeben werden – eine Doppelbelastung ist weder vorgesehen noch erforderlich! Beide Tracks führen zur maximalen Punktzahl (10 Punkte). Die Teams dürfen wöchentlich frei zwischen Track A und Track B wechseln oder sich semesterbegleitend auf einen Schwerpunkt festlegen.
+    > Beide Tracks bauen direkt auf der Stufe-1-Vorlage auf, basieren auf **exakt denselben mathematisch-physikalischen Vorlesungsinhalten** und erfordern denselben Programmier- und Modellierungsaufwand. Es muss **nur ein Track in Stufe 2** bearbeitet und abgegeben werden! Beide Tracks führen zur maximalen Punktzahl (10 Punkte). Die Teams dürfen wöchentlich frei zwischen Track A und Track B wechseln oder sich semesterbegleitend auf einen Schwerpunkt festlegen.
   - **Dokumentation:** Markdown-Bericht (`README.md` im Übungsordner) inklusive Konvergenzdiagrammen, Messreihen und Parameteranalysen.
   - **Codequalität:** Strikte Einhaltung der OOP- und MVVM-Paradigmen, Entkopplung von Physik und UI, Clean Code nach C#-Styleguide.
 
@@ -198,7 +198,7 @@ $$\dot{v}_x = -\frac{k_d}{m} v_{\text{rel}} (v_x - w_x), \quad \dot{v}_y = -g - 
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Freier Fall & Schiefer Wurf im Vakuum (Analytischer Abgleich)“
+#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „Freier Fall & Schiefer Wurf im Vakuum (Analytischer Abgleich)“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md)):**
   1. Öffnen Sie die vorbereitete Solution [`KinematikEuler.sln`](../Uebungen/Termin_01_Kinematik_und_Euler/Vorlage/KinematikEuler.sln).
   2. Vervollständigen Sie `EulerIntegrator.Step` und `EulerIntegrator.StepHeun` für das `KinematicState`-Struct.
@@ -208,7 +208,7 @@ $$\dot{v}_x = -\frac{k_d}{m} v_{\text{rel}} (v_x - w_x), \quad \dot{v}_y = -g - 
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+#### Stufe 2: Vertiefungsaufgabe / Track-Ausbau (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
@@ -270,7 +270,7 @@ $$T_{x,y}^{k+1} = T_{x,y}^k + \frac{\alpha_{x,y} \Delta t}{\Delta x^2} \left( T_
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Heatmap-Renderer & 5-Punkt-Stern in WriteableBitmap“
+#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „Heatmap-Renderer & 5-Punkt-Stern in WriteableBitmap“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.md)):**
   1. Öffnen Sie die Vorlage [`PixelHeatFDM.sln`](../Uebungen/Termin_02_Pixelgrafik_und_FDM/Vorlage/PixelHeatFDM.sln) ($200 \times 200$ Gitter).
   2. Implementieren Sie in `HeatGrid.Step` den 5-Punkt-Laplace-Stern mit Double-Buffering (`_tCurrent` $\leftrightarrow$ `_tNext`) und lokalen Neumann-Spiegelungen an Isolator-Hindernissen ($\alpha = 0$).
@@ -279,7 +279,7 @@ $$T_{x,y}^{k+1} = T_{x,y}^k + \frac{\alpha_{x,y} \Delta t}{\Delta x^2} \left( T_
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+#### Stufe 2: Vertiefungsaufgabe / Track-Ausbau (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
@@ -344,7 +344,7 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „2D-Trägergeometrie & Vektorpfeile auf WPF Canvas“
+#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „2D-Trägergeometrie & Vektorpfeile auf WPF Canvas“
 - **Aufgabenstellung:**
   1. Öffnen Sie ein leeres WPF-Projekt mit `<Canvas x:Name="TrussCanvas"/>`.
   2. Implementieren Sie eine Klasse `CoordinateTransformer`, die Weltkoordinaten (Meter) seitenverhältnistreu ($s_x = s_y = s$) mit BoundingBox und Margin auf Canvas-Pixel abbildet (inklusive Umkehrung der vertikalen Bildschirmachse).
@@ -358,7 +358,7 @@ $$\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}, \quad \vec{p}_{\text{left}} = \ve
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+#### Stufe 2: Vertiefungsaufgabe / Track-Ausbau (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
@@ -430,7 +430,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „High-Speed Signal-Streamer & Welford-Statistik mit ScottPlot 5“
+#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „High-Speed Signal-Streamer & Welford-Statistik mit ScottPlot 5“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md)):**
   1. Öffnen Sie die Vorlage [`ScottPlotTelemetry.sln`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Vorlage/ScottPlotTelemetry.sln).
   2. Implementieren Sie `RingBuffer.CopyChronologicalTo` ohne Heap-Allokationen.
@@ -440,7 +440,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+#### Stufe 2: Vertiefungsaufgabe / Track-Ausbau (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
@@ -499,7 +499,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Orbit-Kamera & 2-Segment-Roboterarm in SharpGL“
+#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „Orbit-Kamera & 2-Segment-Roboterarm in SharpGL“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md)):**
   1. Öffnen Sie die Vorlage [`OpenGLSceneGraph.sln`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Vorlage/OpenGLSceneGraph.sln).
   2. Implementieren Sie die Kugelkoordinaten-Kamera in `OrbitCamera.ApplyViewTransform` (Elevation $\phi$ auf $[-89^\circ, +89^\circ]$ geklemmt).
@@ -509,7 +509,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+#### Stufe 2: Vertiefungsaufgabe / Track-Ausbau (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
@@ -567,7 +567,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Paralleler Partikelfeld-Schritt & Determinismus-Check“
+#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „Paralleler Partikelfeld-Schritt & Determinismus-Check“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md)):**
   1. Öffnen Sie die Vorlage [`TplParticleSprint.sln`](../Uebungen/Termin_06_Multithreading_und_TPL/Vorlage/TplParticleSprint.sln) ($N = 200\,000$ Partikel).
   2. Implementieren Sie `ParticleFieldSimulator.StepParallel` mittels `Parallel.For` und `ParallelOptions { MaxDegreeOfParallelism = maxDegreeOfParallelism }`.
@@ -576,7 +576,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+#### Stufe 2: Vertiefungsaufgabe / Track-Ausbau (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
@@ -634,7 +634,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Assemblierung & Cholesky-Löser für den 3-Knoten-Kragträger“
+#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „Assemblierung & Cholesky-Löser für den 3-Knoten-Kragträger“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md)):**
   1. Öffnen Sie die Vorlage [`FemTrussCholesky.sln`](../Uebungen/Termin_07_Statik_FEM_Cholesky/Vorlage/FemTrussCholesky.sln).
   2. Implementieren Sie in `TrussSolver.Solve` die Assemblierung der $4\times 4$-Elementmatrizen in `kGlobal`, die Extraktion von `kff` und `ff`, die Cholesky-Lösung `kff.Cholesky().Solve(ff)` und die Stabkraftberechnung $N_e = \frac{EA}{L}\Delta L$.
@@ -643,7 +643,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+#### Stufe 2: Vertiefungsaufgabe / Track-Ausbau (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
@@ -697,7 +697,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „S-Function-Kern & RK4-Energieerhaltung am Federpendel“
+#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „S-Function-Kern & RK4-Energieerhaltung am Federpendel“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_08_Kontinuierliche_Dynamik_RK4/Aufgabenblatt.md)):**
   1. Öffnen Sie die Vorlage [`ContinuousOdeRk4.sln`](../Uebungen/Termin_08_Kontinuierliche_Dynamik_RK4/Vorlage/ContinuousOdeRk4.sln).
   2. Implementieren Sie in `Rk4Solver.Step` die 4 Zwischenstufen ($\mathbf{k}_1, \mathbf{k}_2, \mathbf{k}_3, \mathbf{k}_4$) ohne `new double[]`-Allokationen in der Schleife.
@@ -707,7 +707,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+#### Stufe 2: Vertiefungsaufgabe / Track-Ausbau (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
@@ -761,7 +761,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Future Event List & M/M/1-Warteschlange“
+#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „Future Event List & M/M/1-Warteschlange“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_09_Diskrete_Ereignisse_DES/Aufgabenblatt.md)):**
   1. Öffnen Sie die Vorlage [`DesQueueSim.sln`](../Uebungen/Termin_09_Diskrete_Ereignisse_DES/Vorlage/DesQueueSim.sln).
   2. Implementieren Sie die Inversionsmethode in `SampleExponential`, das zeitgewichtete Flächenintegral `areaUnderL += numberInSystem * dt` und die Ereignisbehandlung (`Arrival` / `Departure`) in `Mm1QueueSimulation.Run`.
@@ -770,7 +770,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+#### Stufe 2: Vertiefungsaufgabe / Track-Ausbau (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
@@ -824,7 +824,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe A: In-Class Sprint (60 min) – „Bouncing Ball: Festschritt vs. Bisektions-Zero-Crossing“
+#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „Bouncing Ball: Festschritt vs. Bisektions-Zero-Crossing“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.md)):**
   1. Öffnen Sie die Vorlage [`HybridZeroCrossing.sln`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Vorlage/HybridZeroCrossing.sln).
   2. Implementieren Sie die Bisektionsschleife in `BisectionRootFinder.FindRoot` (Vorzeichenwechsel $g(\alpha_{\text{low}}) \cdot g(\alpha_{\text{mid}}) \le 0$).
@@ -834,7 +834,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 ---
 
-#### Stufe B: Homework Extension (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
+#### Stufe 2: Vertiefungsaufgabe / Track-Ausbau (2er-Team, 1 Woche) – Wahlmodell („Pick your Track“)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  

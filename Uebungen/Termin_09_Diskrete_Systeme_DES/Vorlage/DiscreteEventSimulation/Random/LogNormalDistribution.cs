@@ -3,7 +3,7 @@ using System;
 namespace DiscreteEventSimulation.Random
 {
     /// <summary>
-    /// Stochastischer Zufallsgenerator für Log-Normalverteilte Zufallszeiten (Aufgabe A2).
+    /// Stochastischer Zufallsgenerator für Log-Normalverteilte Zufallszeiten (Stufe 1 - Aufgabe 1.2).
     /// Garantiert strikt positive Bedienzeiten X > 0 (stochastische Kausalität) bei frei
     /// wählbarem Soll-Mittelwert m = E[X] und Soll-Standardabweichung s = sqrt(Var[X]).
     /// </summary>
@@ -39,14 +39,14 @@ namespace DiscreteEventSimulation.Random
         /// </summary>
         public double Sample()
         {
-            // TODO [Aufgabe A2]:
+            // TODO [Stufe 1 - Aufgabe 1.2]:
             // Implementieren Sie hier die Box-Muller-Transformation für Z ~ N(0, 1)
             // und geben Sie X = Math.Exp(MuLog + SigmaLog * z) zurück:
             //   double u1 = 1.0 - _random.NextDouble();
             //   double u2 = 1.0 - _random.NextDouble();
             //   double z = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Cos(2.0 * Math.PI * u2);
             //   return Math.Exp(MuLog + SigmaLog * z);
-            return Mean; // Platzhalter (deterministische Bedienzeit M/D/1 bis Aufgabe A2 gelöst ist)
+            return Mean; // Platzhalter (deterministische Bedienzeit M/D/1 bis Aufgabe 1.2 gelöst ist)
         }
     }
 }

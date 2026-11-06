@@ -3,9 +3,9 @@
 **Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
-**Bearbeitungsform:** 
-- **Stufe A (In-Class Sprint):** Einzelarbeit oder 2er-Tandem (Labor, 60 min)
-- **Stufe B (Homework Extension):** Festes 2er-Team (1 Woche, ca. 2–3 h pro Person)
+**Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
+- **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
+- **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `SharpGL.WPF.OpenGLControl`.  
 > [!CAUTION]
 > **Vorgreif-Sperre für Termin 05:**  
@@ -66,31 +66,31 @@ $$I = I_{\text{a}} k_{\text{a}} + I_{\text{d}} k_{\text{d}} (\vec{n} \cdot \vec{
 
 ---
 
-## 3. Stufe A: In-Class Sprint (ca. 30–45 Minuten)
+## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
 **Thema:** Szenengraph-Traversierung vereinen, Kamera-Panning & 3D-Werkstück-Distanzprüfung auf Basis des Starter-Kits  
-**Ziel:** Analysieren Sie das ausführbare Starter-Projekt `Vorlage/SceneGraph3D.sln` (das bereits die `OrbitCamera`, Phong-Beleuchtung und eine 3-Achs-SCARA-Grundstruktur mitbringt), beheben Sie die Trennung zwischen Matrix-Baum und OpenGL-Rendering und ergänzen Sie Kamera-Panning sowie ein 3D-Werkstück.
+**Ziel der Basisaufgabe (Stufe 1):** Analysieren Sie das ausführbare Starter-Projekt `Vorlage/SceneGraph3D.sln` (das bereits die `OrbitCamera`, Phong-Beleuchtung und eine 3-Achs-SCARA-Grundstruktur mitbringt), beheben Sie die Trennung zwischen Matrix-Baum und OpenGL-Rendering und ergänzen Sie Kamera-Panning sowie ein 3D-Werkstück (als gemeinsames Fundament für Stufe 2 Track A und Track B).
 
 ### Aufgabenstellung:
 1. **Starter-Kit untersuchen (`Vorlage/SceneGraph3D.sln`):**
    - Starten Sie die Anwendung und prüfen Sie die 3 Gelenk-Slider ($\theta_1, \theta_2, d_3$) sowie die Deckung der gelben analytischen TCP-Kugel (`CalculateAnalyticTcp`) mit der Szenengraph-Matrix (`_pinoleNode.GetWorldPosition()`).
    - Öffnen Sie `MainWindow.xaml.cs` und vergleichen Sie `BuildSceneGraph()` mit `RenderRobot(OpenGL gl)`: Aktuell wird `_rootNode` zwar für `GetWorldPosition()` genutzt, aber `RenderRobot(gl)` zeichnet die Geometrie über manuell duplizierte `gl.PushMatrix()`-Aufrufe, statt `_rootNode.Render(gl)` aufzurufen!
-2. **Aufgabe A1 – Szenengraph-Rendering vereinen (`RenderCustomGeometry` & `_rootNode.Render`):**
+2. **Aufgabe 1.1 – Szenengraph-Rendering vereinen (`RenderCustomGeometry` & `_rootNode.Render`):**
    - Weisen Sie in `BuildSceneGraph()` jedem Knoten (`_baseNode`, `_arm1Node`, `_arm2Node`, `_pinoleNode`) über die Eigenschaft `RenderCustomGeometry = gl => { ... }` seine lokale Zeichenlogik zu.
    - *Wichtiger Hinweis zur Skalierung:* Behalten Sie `gl.PushMatrix(); gl.Translate(L1 / 2.0f, 0, 0); gl.Scale(L1, 0.14f, 0.18f); DrawCube(gl); gl.PopMatrix();` **innerhalb** von `RenderCustomGeometry` bei (setzen Sie **nicht** `_arm1Node.Sx = L1`, da eine Knotenskalierung über den Matrix-Stack auch alle Kindknoten wie `_arm2Node` und `_pinoleNode` verzerren würde!).
    - Ersetzen Sie den gesamten Rumpf von `RenderRobot(OpenGL gl)` durch den einzigen rekursiven Aufruf `_rootNode.Render(gl);`.
    - Überprüfen Sie, dass der Roboter optisch exakt gleich aussieht und der Deckungsfehler $\Delta = 0{,}000\,\text{mm}$ erhalten bleibt.
-3. **Aufgabe A2 – Kamera-Panning mit rechter Maustaste (`OrbitCamera.Pan`):**
+3. **Aufgabe 1.2 – Kamera-Panning mit rechter Maustaste (`OrbitCamera.Pan`):**
    - Ergänzen Sie in `Camera/OrbitCamera.cs` eine Methode `public void Pan(double deltaRight, double deltaUp)`, welche den Zielpunkt (`LookAtX`, `LookAtY`, `LookAtZ`) quer zur aktuellen horizontalen Blickrichtung ($\theta$) und vertikal entlang $Y$ verschiebt:
      $$\Delta x_{\text{look}} = -\Delta_{\text{right}} \cdot \cos\theta, \quad \Delta z_{\text{look}} = +\Delta_{\text{right}} \cdot \sin\theta, \quad \Delta y_{\text{look}} = \Delta_{\text{up}}$$
    - Binden Sie in `MainWindow.xaml.cs` (`OpenGlView_MouseDown` / `MouseMove` / `MouseUp`) die **rechte Maustaste** an `_camera.Pan(dx * 0.01, dy * 0.01)`, sodass Sie das Zentrum der 3D-Szene frei verschieben können.
-4. **Aufgabe A3 – 3D-Werkstück auf dem Hallenboden & TCP-Distanzanzeige:**
+4. **Aufgabe 1.3 – 3D-Werkstück auf dem Hallenboden & TCP-Distanzanzeige:**
    - Fügen Sie in `BuildSceneGraph()` einen weiteren Kindknoten `_workpieceNode = new SceneNode("Workpiece")` unter `_rootNode` bei der Bodenposition $(1{,}10, 0{,}06, -0{,}40)\,\text{m}$ hinzu, der einen orangen Würfel (Kantenlänge $0{,}12\,\text{m}$) zeichnet.
    - Berechnen Sie in `UpdateTcpCalculations()` den euklidischen 3D-Abstand $d = \|\vec{p}_{\text{TCP}} - \vec{p}_{\text{Workpiece}}\|$ und geben Sie ihn in der Statusleiste (`TxtStatus`) aus. Färben Sie das Werkstück grün, sobald sich der TCP in Greifdistanz ($d < 0{,}12\,\text{m}$) befindet!
 
 ---
 
-## 4. Stufe B: Homework Extension (Wahlmodell)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
 > [!IMPORTANT]
 > **Wahlmodell – GENAU EINE Aufgabe (keine Doppelbelastung!):**  
@@ -124,13 +124,13 @@ Da die ersten 3 Achsen ($\theta_1, \theta_2, d_3$) und die TCP-Validierung berei
 3. **Pneumatischer 2-Backen-Parallelgreifer ($g_{\text{width}}$):** Zwei Kindknoten `_leftFingerNode` und `_rightFingerNode` unter `_wristNode`, die sich bei Verstellung der Öffnungsweite $g_{\text{width}} \in [0{,}02, 0{,}16]\,\text{m}$ symmetrisch um $\pm g_{\text{width}}/2$ entlang der lokalen Querachse öffnen und schließen.
 
 #### Aufgabenstellung Track A:
-1. **Hierarchischer Szenengraph für Achse 4 & Parallelgreifer:**
+1. **Arbeitspaket A.1 – Hierarchischer Szenengraph für Achse 4 & Parallelgreifer:**
    - Erweitern Sie den Szenengraphen um `_wristNode`, `_leftFingerNode` und `_rightFingerNode` und ergänzen Sie in der Sidebar zwei neue GUI-Slider für $\theta_4 \in [-180^\circ, +180^\circ]$ und die Greiferöffnung $g_{\text{width}} \in [0{,}02, 0{,}16]\,\text{m}$.
    - Stellen Sie sicher, dass sich die beiden Greiferbacken bei Änderung von $\theta_1, \theta_2, d_3, \theta_4$ ohne manuelle Weltkoordinaten-Rechnung automatisch im lokalen Koordinatensystem des Handgelenks mitdrehen.
-2. **Animierte Teach-In-Steuerung (`DispatcherTimer`):**
+2. **Arbeitspaket A.2 – Animierte Teach-In-Steuerung (`DispatcherTimer`):**
    - Ergänzen Sie eine Teach-In-Steuerung, mit der mindestens 3 Posen („Aufnahmeposition A“, „Ablageposition B“, „Home“) gespeichert und per Button angefahren werden können.
    - Beim Klick auf eine Pose (oder „Pick & Place Zyklus starten“) dürfen die Gelenke **nicht unphysikalisch springen**, sondern müssen über einen `DispatcherTimer` (ca. 60 Hz) kontinuierlich und flüssig (z. B. lineare oder kubische Interpolation aller Gelenkwerte $\theta_1, \theta_2, d_3, \theta_4, g_{\text{width}}$) zur Zielpose verfahren.
-3. **Interaktiver Pick-and-Place-Werkstücktransport:**
+3. **Arbeitspaket A.3 – Interaktiver Pick-and-Place-Werkstücktransport:**
    - Platzieren Sie auf dem Hallenboden eine **Aufnahmestation A** (mit Werkstück) und eine **Ablagestation B** (Zielplattform).
    - Schließt sich der Parallelgreifer ($g_{\text{width}} \le g_{\text{grip}}$), während sich der TCP innerhalb des Greifradius ($d < r_{\text{grab}}$) zum Werkstück befindet, wird das Werkstück gegriffen (entweder durch dynamisches Umhängen `Reparenting` von `_rootNode` unter `_wristNode` oder durch Mitführen mit Position & Orientierung $\theta_1 + \theta_2 + \theta_4$) und beim Öffnen des Greifers über Station B dort abgesetzt.
 
@@ -150,18 +150,18 @@ Vollständige mechatronische 3D-Simulation eines Jahrmarkt-Greifarm-Automaten (*
 6. **Spielobjekte (Preise):** Mehrere bunte Würfel und Kugeln auf dem Automatenboden.
 
 #### Aufgabenstellung Track B:
-1. **Hierarchischer Szenengraph:** Modellierung der Kette Gehäuse $\to X$-Brücke $\to Y$-Katze $\to Z$-Seil $\to$ Greiferbacken via `SceneNode` (`glPushMatrix` / `glPopMatrix`).
-2. **Interaktive Tastatur-Steuerung:**
+1. **Arbeitspaket B.1 – Hierarchischer Szenengraph:** Modellierung der Kette Gehäuse $\to X$-Brücke $\to Y$-Katze $\to Z$-Seil $\to$ Greiferbacken via `SceneNode` (`glPushMatrix` / `glPopMatrix`).
+2. **Arbeitspaket B.2 – Interaktive Tastatur-Steuerung:**
    - Pfeiltasten: Bewegen die Laufkatze in der horizontalen Ebene ($X/Z$).
    - Leertaste: Startet den vollautomatischen Greifzyklus:
      1. Klaue senkt sich ab bis kurz über den Boden.
      2. Finger schließen sich.
      3. Klaue fährt wieder nach ganz oben.
      4. Laufkatze fährt zur Auswurfposition über dem Schacht und öffnet die Klaue.
-3. **Greifmechanik (Kollisions-Snap):**
+3. **Arbeitspaket B.3 – Greifmechanik (Kollisions-Snap):**
    - Prüfen Sie den 3D-Euklidischen Abstand zwischen Greifer-Zentrum und den Spielzeug-Objekten: $d = \|\vec{p}_{\text{claw}} - \vec{p}_{\text{objekt}}\|$.
    - Liegt ein Objekt innerhalb des Greifradius ($d < r_{\text{grab}}$), wird es gegriffen und folgt ab diesem Moment der Bewegung der Klaue.
-4. **Atmosphärische Beleuchtung:**
+4. **Arbeitspaket B.4 – Atmosphärische Beleuchtung:**
    - Aktivieren Sie einen lokalen Spotlight-Scheinwerfer (`GL_LIGHT1`), der von der Decke des Automaten senkrecht auf die Spielfläche strahlt.
 
 ---

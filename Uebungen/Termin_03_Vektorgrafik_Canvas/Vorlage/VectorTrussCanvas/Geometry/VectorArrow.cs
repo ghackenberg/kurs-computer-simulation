@@ -176,7 +176,7 @@ public static class VectorArrow
     }
 
     // =========================================================================
-    // TODO: [Stufe A In-Class Sprint]
+    // TODO: [Stufe 1 - Aufgabe 1.3]
     // Implementieren Sie analog zu AddHorizontalDimensionLine die Methode:
     //   public static void AddVerticalDimensionLine(
     //       Canvas canvas, Point pBottom, Point pTop, double xScreen,

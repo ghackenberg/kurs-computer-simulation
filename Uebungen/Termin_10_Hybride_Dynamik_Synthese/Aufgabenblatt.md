@@ -10,7 +10,7 @@
 | **Themenschwerpunkt:** | Hybride Automaten, Zero-Crossing-Funktionen $z(\mathbf{x})=0$, Bisektions-Nullstellensuche & Zeno-Schutz |
 | **Technologie-Stack:** | C# 12 / .NET 8/10, S-Functions, Bisektion, WPF Canvas / ScottPlot 5 |
 | **Vorgreif-Sperre:** | **Keine Vorgreif-Sperre!** Der gesamte Semester-Stack (DGL, S-Functions, TPL, WPF Canvas, ScottPlot 5) steht uneingeschränkt zur Verfügung! |
-| **Zeitbudget:** | **In-Class Sprint:** 60 Minuten (Laborpräsenz)<br>**Homework Extension:** 2–3 Stunden (2er-Team, 1 Woche) |
+| **Bearbeitungsform & Zeitbudget:** | **Zweistufige Hausübung im festen 2er-Team (1 Woche):**<br>• **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)<br>• **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause) |
 | **Abgabeform:** | Git-Repository: Sourcecode, Unit-Tests und Markdown-Bericht (`README.md`) |
 
 ---
@@ -79,15 +79,15 @@ In endlicher physikalischer Zeit treten unendlich viele Stöße auf (**Zeno-Verh
 
 ---
 
-## 3. Stufe A: In-Class Sprint (60 min)
+## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
 ### Thema: „Bouncing Ball: Naiver Festschritt vs. Bisektion, Zeno-Wakeup & Energie-Telemetrie in `HybridZeroCrossing.sln`“
 
-In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/HybridZeroCrossing.sln`) sind das hybride Kontaktmodell (`BouncingContactModel`), der Bisektions-Wurzelsucher (`BisectionRootFinder`) sowie die gekoppelte `WPF Canvas`- und `ScottPlot.WPF`-Ansicht (`MainWindow.xaml`) bereits als ausführbare Baseline vorimplementiert. Starten Sie die Anwendung und bearbeiten Sie im Live-Sprint die folgenden **3 Erweiterungsaufgaben**:
+In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/HybridZeroCrossing.sln`) sind das hybride Kontaktmodell (`BouncingContactModel`), der Bisektions-Wurzelsucher (`BisectionRootFinder`) sowie die gekoppelte `WPF Canvas`- und `ScottPlot.WPF`-Ansicht (`MainWindow.xaml`) bereits als ausführbare Baseline vorimplementiert. Starten Sie die Anwendung und bearbeiten Sie als ersten Schritt Ihrer Hausübung (Stufe 1) die folgenden **3 Basisaufgaben**:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ STUFE A: BOUNCING BALL EXPERIMENT (WPF CANVAS + SCOTTPLOT 5)           │
+│ STUFE 1: BOUNCING BALL EXPERIMENT (WPF CANVAS + SCOTTPLOT 5)           │
 │                                                                        │
 │   Start: y_0 = 5.0 m, v_0 = 0 m/s, Ballradius R = 0.1 m, e = 0.80      │
 │   Zero-Crossing Funktion: z(y) = y - R = 0                             │
@@ -102,29 +102,29 @@ In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/HybridZeroCrossing.sln`) s
 
 #### Aufgabenstellung (Schritt für Schritt):
 
-1. **Aufgabe A1 – Bodenpenetration & Energieverhältnis beim naiven Festschritt messen (`BouncingContactModel.cs`):**
+1. **Aufgabe 1.1 – Bodenpenetration & Energieverhältnis beim naiven Festschritt messen (`BouncingContactModel.cs`):**
    - Starten Sie die Vorlage im Modus **„Bisektion (Zero-Crossing exakt)“** und beobachten Sie in der Statusleiste die maximale Bodenpenetration (`Max. Penetr.: 0.00 mm`) sowie das exakte Energieverhältnis $\frac{E_{\text{nach}}}{E_{\text{vor}}} = e^2 = 0{,}6400$.
    - Wechseln Sie in der ComboBox auf **„Naiver Festschritt (h = 0.048 s)“**: Sie stellen fest, dass `Stöße: 0` und `Max. Penetr.: 0.00 mm` stehenbleiben, weil die Messwerte in `StepNaive(...)` noch fehlen.
-   - Öffnen Sie `Models/BouncingContactModel.cs` bei `// TODO [Aufgabe A1]` in `StepNaive(...)` und ergänzen Sie:
+   - Öffnen Sie `Models/BouncingContactModel.cs` bei `// TODO [Aufgabe 1.1]` in `StepNaive(...)` und ergänzen Sie:
      - Hochzählen von `BounceCount++`,
      - Aktualisieren von `if (penetration > MaxPenetration) MaxPenetration = penetration;`,
      - Berechnen von `LastEnergyRatio = eAfter / eBefore` vor und nach der Geschwindigkeitsumkehr.
    - Vergleichen Sie die gemessene Bodenpenetration ($> 30\,\text{mm}$!) und den Energiefehler im naiven Modus mit der Bisektion.
-2. **Aufgabe A2 – Aufwärts-Impuls („⚡ Kick“) & Rückkehr aus dem Zeno-Ruhezustand (`BouncingContactModel.cs`):**
+2. **Aufgabe 1.2 – Aufwärts-Impuls („⚡ Kick“) & Rückkehr aus dem Zeno-Ruhezustand (`BouncingContactModel.cs`):**
    - Lassen Sie den Ball hüpfen, bis der Zeno-Schutz (`|v| < VStick`) greift und der Automat in den diskreten Zustand `RestingOnGround` wechselt.
    - Klicken Sie nun auf den Button **„⚡ Kick (+6 m/s)“**: Obwohl in `ApplyVerticalImpulse(...)` die Geschwindigkeit `x[1] += deltaV` erhöht wird, bleibt der Ball am Boden kleben, weil `ComputeDerivatives` im Zustand `RestingOnGround` weiterhin $\dot{y} = 0, \dot{v} = 0$ erzwingt!
-   - Öffnen Sie `Models/BouncingContactModel.cs` bei `// TODO [Aufgabe A2]` in `ApplyVerticalImpulse(ref double[] x, double deltaV)` und schalten Sie den Automaten wieder in den Zustand `ContactState.FreeFlight` zurück, sobald `State == ContactState.RestingOnGround && x[1] > VStick` gilt (analog zum Losbrechen aus der Haftreibung in Track A bzw. dem Flipperfinger-Stoß in Track B).
-3. **Aufgabe A3 – Simultane Höhen- & Energie-Trajektorie in `ScottPlot.WPF` (`MainWindow.xaml.cs`):**
-   - Öffnen Sie `MainWindow.xaml.cs` in der Methode `UpdatePlot()` bei `// TODO [Aufgabe A3]`.
+   - Öffnen Sie `Models/BouncingContactModel.cs` bei `// TODO [Aufgabe 1.2]` in `ApplyVerticalImpulse(ref double[] x, double deltaV)` und schalten Sie den Automaten wieder in den Zustand `ContactState.FreeFlight` zurück, sobald `State == ContactState.RestingOnGround && x[1] > VStick` gilt (analog zum Losbrechen aus der Haftreibung in Track A bzw. dem Flipperfinger-Stoß in Track B).
+3. **Aufgabe 1.3 – Simultane Höhen- & Energie-Trajektorie in `ScottPlot.WPF` (`MainWindow.xaml.cs`):**
+   - Öffnen Sie `MainWindow.xaml.cs` in der Methode `UpdatePlot()` bei `// TODO [Aufgabe 1.3]`.
    - Fügen Sie neben der roten Energiekurve $E_{\text{tot}}(t)$ (die im freien Flug horizontal verläuft und bei jedem Stoß stufenförmig um den Faktor $e^2$ abfällt) die skalierte Ballhöhe $10 \cdot y(t)$ aus `_heightLog` als zweite `Scatter`-Kurve (`Colors.DodgerBlue`) hinzu, sodass Parabelbögen und Energiestufen zeitgleich sichtbar werden.
 
-**Erwartetes Ergebnis nach dem Sprint:**  
+**Erwartetes Ergebnis nach Stufe 1:**  
 - Im naiven Modus wird eine Bodenpenetration von $> 30\,\text{mm}$ und ein verfälschtes Energieverhältnis sichtbar, während die Bisektion $< 1\,\mu\text{m}$ Fehler und $\frac{E^+}{E^-} = 0{,}6400$ garantiert.  
 - Der Kick-Button holt den Ball jederzeit zuverlässig aus dem Zeno-Ruhezustand `RestingOnGround` zurück in den Freiflug.
 
 ---
 
-## 4. Stufe B: Homework Extension (Wahlmodell – GENAU EINE Aufgabe!)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell – GENAU EINE Aufgabe!)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – KEINE Doppelbelastung!):**  
@@ -158,23 +158,23 @@ In automatisierten Fertigungslinien schieben pneumatische Zylinder Werkstücke g
 
 #### Aufgabenstellung Track A:
 
-1. **Pneumatik-Modell (Kontinuierlicher Fluss):**
+1. **Arbeitspaket A.1 – Pneumatik-Modell (Kontinuierlicher Fluss):**
    - Kolbenmasse $m = 2{,}5\,\text{kg}$, Kolbenfläche $A_1 = 2 \times 10^{-3}\,\text{m}^2$, $A_2 = 1{,}8 \times 10^{-3}\,\text{m}^2$, Hub $L = 0{,}3\,\text{m}$ ($x \in [0, L]$).
    - Druckaufbau in den Kammern (vereinfachtes Füllmodell mit Versorgungsdruck $p_0 = 6 \times 10^5\,\text{Pa}$, Umgebungsdruck $p_{\text{amb}} = 10^5\,\text{Pa}$ und Zeitkonstante $\tau = 0{,}05\,\text{s}$):
      $$\dot{p}_1 = \frac{p_{\text{soll}, 1} - p_1}{\tau}, \quad \dot{p}_2 = \frac{p_{\text{soll}, 2} - p_2}{\tau}$$
    - Bewegungsgleichung bei freier Fahrt:
      $$m \ddot{x} = p_1 A_1 - p_2 A_2 - d \cdot \dot{x} - F_{\text{Coulomb}} \cdot \operatorname{sign}(\dot{x})$$
-2. **Hybride Anschlagmechanik & Bisektion:**
+2. **Arbeitspaket A.2 – Hybride Anschlagmechanik & Bisektion:**
    - Mechanische Anschläge bei $x_{\min} = 0$ und $x_{\max} = 0{,}3\,\text{m}$.
    - Zero-Crossing-Funktionen:
      $$z_{\text{links}}(x) = x - x_{\min}, \quad z_{\text{rechts}}(x) = x_{\max} - x$$
    - Bei Vorzeichenwechsel: Bisektionssuche nach $t^*$ bis $|z| < 10^{-6}\,\text{m}$.
    - Anschlagstoß mit Restitutionskoeffizient $e = 0{,}30$.
-3. **Zeno-Vermeidung (Übergang in Endlagen-Haftreibung):**
+3. **Arbeitspaket A.3 – Zeno-Vermeidung (Übergang in Endlagen-Haftreibung):**
    - Unterschreitet die Rückprallgeschwindigkeit nach einem Stoß $|v| < \epsilon_v = 0{,}015\,\text{m/s}$, wird der Kolben im diskreten Zustand `AtStop` arretiert:
      $$x = x_{\text{Anschlag}}, \quad v = 0, \quad a = 0$$
    - Er verbleibt in Haftreibung, bis die pneumatische Nettokraft $|p_1 A_1 - p_2 A_2|$ die Haftreibungskraft $F_{\text{Haft}} = 80\,\text{N}$ übersteigt.
-4. **SPS-Taktsteuerung & Visualisierung:**
+4. **Arbeitspaket A.4 – SPS-Taktsteuerung & Visualisierung:**
    - Modellieren Sie eine einfache SPS-Schrittkette:
      - Endschalter $S_1$ meldet: $x \ge x_{\max} - 0{,}001\,\text{m}$.
      - SPS startet Timer ($200\,\text{ms}$ Verweilzeit) und schaltet dann das 5/2-Wegeventil um (Kammer 2 belüften, Kammer 1 entlüften).
@@ -211,21 +211,21 @@ Ein klassischer Flipperautomat lebt von rasanter Kugelmechanik. Trifft die Metal
 
 #### Aufgabenstellung Track B:
 
-1. **Spielfeld-Dynamik & Kugelbewegung:**
+1. **Arbeitspaket B.1 – Spielfeld-Dynamik & Kugelbewegung:**
    - Spielfeldneigung $\alpha = 6{,}5^\circ \implies g_{\text{eff}} = 9{,}81 \cdot \sin(6{,}5^\circ) \approx 1{,}11\,\text{m/s}^2$ entlang der Y-Achse nach unten.
    - Kugelzustand $\mathbf{x} = \begin{bmatrix} x & y & v_x & v_y \end{bmatrix}^\top$ mit Radius $R = 15\,\text{mm}$ und Masse $m = 0{,}08\,\text{kg}$.
-2. **Bumper-Kollision & Bisektion:**
+2. **Arbeitspaket B.2 – Bumper-Kollision & Bisektion:**
    - Platzieren Sie mindestens 3 kreisförmige Bumper ($R_B = 30\,\text{mm}$) und 4 lineare Führungswände.
    - Zero-Crossing-Funktion für Kugel gegen Bumper an Position $\mathbf{p}_B$:
      $$z_{\text{Bumper}}(\mathbf{x}) = \|\mathbf{p}_{\text{Kugel}} - \mathbf{p}_B\| - (R + R_B)$$
    - Bei Vorzeichenwechsel ($z_k > 0$ und $z_{k+1} \le 0$): Bisektion auf $|z| < 10^{-6}\,\text{m}$.
    - **Aktiver Bumper-Impuls:** Stoßzahl $e = 1{,}20$ (Kugel gewinnt Energie!):
      $$\vec{n} = \frac{\mathbf{p}_{\text{Kugel}} - \mathbf{p}_B}{\|\mathbf{p}_{\text{Kugel}} - \mathbf{p}_B\|}, \quad v_n^- = \mathbf{v}^- \cdot \vec{n}, \quad \mathbf{v}^+ = \mathbf{v}^- - (1 + e) v_n^- \vec{n}$$
-3. **Zeno-Schutz auf Führungsrampen:**
+3. **Arbeitspaket B.3 – Zeno-Schutz auf Führungsrampen:**
    - Rollt die Kugel eine geneigte Führungswand hinab, treten Mikrostöße auf.
    - Ist die Stoß-Normalkomponente $|v_n^-| < \epsilon_v = 0{,}02\,\text{m/s}$, schalten Sie in den Zustand `Rolling`:
      $$v_n = 0, \quad \mathbf{a}_{\text{roll}} = \mathbf{g}_{\text{eff},\parallel} - \mu_{\text{roll}} g_{\text{eff},\perp} \frac{\mathbf{v}_{\parallel}}{\|\mathbf{v}_{\parallel}\|}$$
-4. **Interaktiver Flipperfinger & Punktezähler:**
+4. **Arbeitspaket B.4 – Interaktiver Flipperfinger & Punktezähler:**
    - Steuerbarer Flipperhebel am unteren Spielfeldrand (Tastendruck dreht den Hebel mit $\omega = 25\,\text{rad/s}$ nach oben).
    - Bei Kollision der Kugel mit dem rotierenden Hebel wird die Umfangsgeschwindigkeit $\mathbf{v}_{\text{hebel}} = \vec{\omega} \times \vec{r}$ auf den Stoß aufaddiert.
    - Grafische Anzeige der Kugelbewegung im WPF Canvas und Punktestand-Overlay.

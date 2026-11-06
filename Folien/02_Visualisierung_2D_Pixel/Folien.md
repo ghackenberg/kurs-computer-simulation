@@ -27,12 +27,12 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ### Showcase & Peer-Challenge: Termin 01
 
-Präsentation der Ergebnisse aus Termin 01 ([Aufgabenblatt 01](../../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md)):
+Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 01](../../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md)):
 
 <div class="columns">
 <div class="two">
 
-#### Track A: Industrie (Hydraulikzylinder)
+#### Stufe 2 – Track A: Industrie (Hydraulikzylinder)
 - **Modell:** Viskose vs. quadratische Blendenreibung, harter Anschlag mit Federkraft.
 - **Numerik:** Euler vs. Heun (RK2). Ab welcher Schrittweite $\Delta t$ explodiert Euler?
 - **Stresstest:** $\Delta t$ live verzehnfachen.
@@ -40,7 +40,7 @@ Präsentation der Ergebnisse aus Termin 01 ([Aufgabenblatt 01](../../Uebungen/Te
 </div>
 <div class="two">
 
-#### Track B: Game (Artillery Duel)
+#### Stufe 2 – Track B: Game (Artillery Duel)
 - **Modell:** Ballistik mit quadratischem Newton-Drag, stochastischem Wind & Terrain.
 - **Numerik:** Schnittpunkt-Interpolation bei Kollision, KI-Winkelsuche ($\pm 1{,}5\,\text{m}$).
 - **Stresstest:** Gegenwind live auf $+25\,\text{m/s}$ setzen.
@@ -974,12 +974,12 @@ $$\boxed{1 - 4s \ge 0 \quad \Longleftrightarrow \quad s = \frac{\alpha \cdot \De
 
 ---
 
-### Innere Isolator-Wände: Die „Kühlakku“-Stolperfalle (Sprint A3)
+### Innere Isolator-Wände: Die „Kühlakku“-Stolperfalle (Basisaufgabe 1.3)
 
 <div class="columns">
 <div class="three">
 
-Im Live-Sprint zeichnen wir per rechter Maustaste **Isolator-Wände** ($\alpha_{x,y} = 0$) mitten in das Gitter:
+In der Basisaufgabe zeichnen wir per rechter Maustaste **Isolator-Wände** ($\alpha_{x,y} = 0$) mitten in das Gitter:
 
 - **Was passiert, wenn wir nur `_alphaMap[x, y] = 0` setzen?**
   - Die Wandzelle ändert ihre Temperatur zwar nicht mehr und bleibt dauerhaft auf ihrer Starttemperatur ($20\,^\circ\mathrm{C}$).
@@ -1158,14 +1158,14 @@ private unsafe void RenderKernel(
 
 ---
 
-### Laborübung Termin 02: Pixelgrafik & FDM
+### Hausübung Termin 02: Pixelgrafik & FDM
 
-Vertiefende Hausübung (Stufe B, 10 Pkt., Wahlmodell Track A oder B) – Details siehe [Aufgabenblatt 02](../../Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.md):
+**Stufe 1 (Basisaufgabe `1.1`–`1.3` für alle Teams auf `PixelHeatFDM.sln`):** Von-Neumann-Test, 256-Farben-LUT & Maus-Zeichnen ([Aufgabenblatt 02](../../Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">
 
-#### Track A: CPU-Kühlkörper-Optimizer
+#### Stufe 2 – Track A: CPU-Kühlkörper-Optimizer
 - Inhomogenes Gitter ($a_{\text{Si}}, a_{\text{TIM}}, a_{\text{Cu}}, a_{\text{Al}}$)
 - 10 Kühlrippen mit Robin-Randbedingung
 - Lüfterbetrieb vs. Ausfall ($h = 250 \to 20\,\text{W/m}^2\text{K}$)
@@ -1174,7 +1174,7 @@ Vertiefende Hausübung (Stufe B, 10 Pkt., Wahlmodell Track A oder B) – Details
 </div>
 <div class="two">
 
-#### Track B: Falling Sand & Lava-Simulator
+#### Stufe 2 – Track B: Falling Sand & Lava-Simulator
 - Doppellagiges Gitter ($200 \times 200$): FDM + Automat
 - Gravitation für Sand- und Lava-Pixel
 - Doom-Fire Konvektion & Asche-Zerfall

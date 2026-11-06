@@ -755,15 +755,15 @@ In den folgenden Kapiteln erarbeiten wir zunächst die Werkzeuge und vertiefen a
 
 ---
 
-### Laborübung Termin 01: Kinematik & Expliziter Euler
+### Hausübung Termin 01: Kinematik & Expliziter Euler
 
-Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details siehe [Aufgabenblatt 01](../../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md):
+**Stufe 1 (Basisaufgabe `1.1`–`1.2` für alle Teams auf `KinematikEuler.sln`):** `StepEuler`, Boden-Interpolation & `StepHeun` ([Aufgabenblatt 01](../../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">
 
-#### Track A: Industrie & Mechatronik
-**Hydraulikzylinder-Endlagendämpfung**
+#### Stufe 2 – Track A: Industrie & Mechatronik
+**Hydraulikzylinder-Endlagendämpfung (`A.1`–`A.4`)**
 - $m \ddot{x} = F_{\text{vor}} - F_{\text{dämpf}}(x,v) - F_{\text{anschlag}}(x)$
 - Nichtlineare viskose & Blendenreibung
 - Fester Anschlag mit Kontaktfederkraft
@@ -773,17 +773,16 @@ Vertiefende Hausübung (Stufe B, 10 Pkt.) – Details siehe [Aufgabenblatt 01](.
 </div>
 <div class="two">
 
-#### Track B: Simulation Game
-**Retro Artillery Duel mit Newton-Drag**
+#### Stufe 2 – Track B: Simulation Game
+**Retro Artillery Duel mit Newton-Drag (`B.1`–`B.4`)**
 - $\ddot{\mathbf{r}} = \mathbf{g} - \frac{\rho c_{\text{w}} A}{2m} \|\mathbf{v}_{\text{rel}}\| \mathbf{v}_{\text{rel}}$
 - Stochastischer Wind $\vec{w} = [w_x, 0]^\top$
 - Nichtlineares Terrain $y_{\text{terrain}}(x)$
 - **Bodenkollision:** Schnittpunkt-Interpolation
-- **KI-Zielrechner:** Schusswinkel-Finder
-- Stochastische Runden & ASCII-Plot
+- **KI-Zielrechner:** Schusswinkel-Finder & ASCII-Plot
 
 </div>
 </div>
 
-> Reine C#-Konsolenapplikation (.NET 8/10, `Vector2`) – Keine GUI! Freie Wahl zwischen Track A und B.
+> Reine C#-Konsolenapplikation (.NET 8/10, `Vector2`) – Keine GUI! Beide Stufen als Hausübung im 2er-Team.
 

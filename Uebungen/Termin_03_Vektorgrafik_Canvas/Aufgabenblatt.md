@@ -3,9 +3,9 @@
 **Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
-**Bearbeitungsform:** 
-- **Stufe A (In-Class Sprint):** Einzelarbeit oder 2er-Tandem (Labor, 60 min)
-- **Stufe B (Homework Extension):** Festes 2er-Team (1 Woche, ca. 2–3 h pro Person)
+**Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
+- **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
+- **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `System.Windows.Controls.Canvas` und 2D-Vektorprimitiven (`Line`, `Path`, `Polygon`, `Ellipse`).  
 > [!CAUTION]
 > **Vorgreif-Sperre & Didaktische Kausalitäts-Sperre für Termin 03:**  
@@ -59,37 +59,37 @@ $$\vec{p}_{\text{left}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} 
 
 ---
 
-### 3. Stufe A: In-Class Sprint (60 Minuten)
+### 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
 **Basis-Projekt:** Öffnen Sie die bereitgestellte Projektvorlage `Vorlage/VectorTrussCanvas.sln` (`Transform2D.cs`, `VectorArrow.cs`, `TrussGeometry.cs`, `MainWindow.xaml.cs`).  
 Die Vorlage enthält bereits die Basisklasse `Transform2D`, das Dreieckstragwerk `CreateSprintTriangle()` sowie die Pfeilspitzen-Methode `VectorArrow.AddForceArrow` und die horizontale Gesamtmaßkette `AddHorizontalDimensionLine`.  
-**Ziel des Live-Sprints:** Analysieren Sie die Welt-zu-Bildschirm-Transformation, beheben Sie das Koordinaten-Jittering beim Drag-and-Drop und erweitern Sie den Viewer um Live-Stablängen und eine vertikale DIN-406-Höhenbemaßung (als direktes Fundament für Stufe B Track A und Track B!).
+**Ziel der Basisaufgabe (Stufe 1):** Analysieren Sie die Welt-zu-Bildschirm-Transformation, beheben Sie das Koordinaten-Jittering beim Drag-and-Drop und erweitern Sie den Viewer um Live-Stablängen und eine vertikale DIN-406-Höhenbemaßung (als direktes Fundament für Stufe 2 Track A und Track B!).
 
-### Aufgabenstellung (Live im Hörsaal):
-1. **Code-Walkthrough & Seitenverhältnis-Test (`Transform2D.cs`):**
+### Aufgabenstellung (auf Basis von `Vorlage/VectorTrussCanvas.sln`):
+1. **Aufgabe 1.1 – Code-Walkthrough & Seitenverhältnis-Test (`Transform2D.cs`):**
    - Starten Sie `VectorTrussCanvas` und führen Sie die bestehenden Unit-Tests (`dotnet test`) aus.
    - Ziehen Sie das Anwendungsfenster extrem schmal und extrem breit: Prüfen Sie, wie `s = Math.Min(sx, sy)` und die Zentrierungs-Offsets `OffsetX`, `OffsetY` das Dreieck ($K_1=(0,0)$, $K_2=(4,0)$, $K_3=(2,2)$) verzerrungsfrei zentrieren.
-2. **Euklidische Stablängen & Mittelpunkts-Beschriftung (`TrussGeometry.cs` / `MainWindow.xaml.cs`):**
+2. **Aufgabe 1.2 – Euklidische Stablängen & Mittelpunkts-Beschriftung (`TrussGeometry.cs` / `MainWindow.xaml.cs`):**
    - Berechnen Sie für jeden Stab `bar` die exakte euklidische Länge in Weltkoordinaten (Metern):
      $$L = \sqrt{(X_B - X_A)^2 + (Y_B - Y_A)^2}$$
    - Platzieren Sie in `Redraw()` am Bildschirm-Mittelpunkt $\vec{p}_{\text{mid}} = \frac{1}{2}(\vec{p}_A + \vec{p}_B)$ jedes Stabes ein gut lesbares `TextBlock`-Label mit der aktuellen Stablänge (z. B. `"2.83 m"` in Gelb/Cyan).
-3. **Vertikale DIN-406-Bemaßungskette (`VectorArrow.cs`):**
+3. **Aufgabe 1.3 – Vertikale DIN-406-Bemaßungskette (`VectorArrow.cs`):**
    - In `VectorArrow.cs` ist bereits `AddHorizontalDimensionLine(...)` für die horizontale Gesamtlänge implementiert.
    - Implementieren Sie analog dazu die Methode `public static void AddVerticalDimensionLine(Canvas canvas, Point pBottom, Point pTop, double xScreen, string dimensionText, Brush? strokeColor = null)` mit waagerechten gestrichelten Maßhilfslinien, senkrechter Maßlinie, oberen/unteren Maßpfeilen (`Polygon`) und mittig platziertem Maßtext.
    - Rufen Sie diese Methode in `Redraw()` auf, um die Gesamthöhe $(y_{\max} - y_{\min})$ links neben dem Tragwerk (`xScreen = pLeft.X - 35.0`) normgerecht zu bemaßen.
-4. **Fix des Bounding-Box-Jitterings beim Maus-Dragging & Millimeter-Auflösung (`MainWindow.xaml.cs`):**
+4. **Aufgabe 1.4 – Fix des Bounding-Box-Jitterings beim Maus-Dragging & Millimeter-Auflösung (`MainWindow.xaml.cs`):**
    - **Beobachten Sie den Bug:** Wenn Sie aktuell den oberen Knoten $K_3$ oder einen Randknoten mit der Maus nach außen ziehen (`TrussCanvas_MouseMove`), ruft `Redraw()` in jedem Frame `_truss.GetBounds()` und `_transform.Update(...)` neu auf. Dadurch skaliert und verschiebt sich das Koordinatensystem *während des Ziehens* unter dem Mauszeiger weg!
    - **Ihre Lösung:** Aktualisieren Sie `_transform.Update(...)` in `Redraw()` **nur dann**, wenn gerade **kein** Knoten gezogen wird (`if (_draggedNode == null)`). Erst beim Loslassen der Maustaste (`TrussCanvas_MouseUp`) darf das Auto-Fit auf die neue Bounding Box nachgeführt werden!
    - Erhöhen Sie zudem die Koordinaten-Rundung in `TrussCanvas_MouseMove` von Zentimetern auf **Millimeter-Auflösung (`Math.Round(worldX, 3)` und `:F3`)**.
 
 ---
 
-## 4. Stufe B: Homework Extension (Wahlmodell)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
 > [!IMPORTANT]
 > **Wahlmodell – GENAU EINE Aufgabe (keine Doppelbelastung!):**  
 > Wählen Sie als 2er-Team für die Hausübung **entweder Track A (Industrie)** ODER **Track B (Simulation Game)**.  
-> Beide Tracks bauen direkt auf Ihrem Ergebnis aus Stufe A (`VectorTrussCanvas.sln`) auf, haben exakt denselben Umfang (4 Arbeitspakete) und führen zur Höchstpunktzahl (10 Punkte).
+> Beide Tracks bauen direkt auf Ihrem Ergebnis aus Stufe 1 (`VectorTrussCanvas.sln`) auf, haben exakt denselben Umfang (4 Arbeitspakete) und führen zur Höchstpunktzahl (10 Punkte).
 
 ```
                     ┌──────────────────────────────────────────────┐
@@ -110,19 +110,19 @@ Die Vorlage enthält bereits die Basisklasse `Transform2D`, das Dreieckstragwerk
 ### Track A (Industrie): Interaktiver 2D-CAD Tragwerks-Inspektor & Last-Editor
 
 #### Industrielles Szenario:
-In der Tragwerksplanung werden Brücken- und Hallenträger als normgerechte 2D-Vektorzeichnungen geprüft und belastet. Aufbauend auf Ihrer Lösung aus Stufe A (`VectorTrussCanvas`) entwickeln Sie einen interaktiven 2D-CAD-Inspektor mit zweistufiger DIN-406-Bemaßung, direkt greifbaren Kraftvektor-Spitzen, Kamera-Zoom/Pan und JSON-Persistenz, der in Einheit 07 direkt mit dem FEM-Cholesky-Löser gekoppelt wird.
+In der Tragwerksplanung werden Brücken- und Hallenträger als normgerechte 2D-Vektorzeichnungen geprüft und belastet. Aufbauend auf Ihrer Lösung aus Stufe 1 (`VectorTrussCanvas`) entwickeln Sie einen interaktiven 2D-CAD-Inspektor mit zweistufiger DIN-406-Bemaßung, direkt greifbaren Kraftvektor-Spitzen, Kamera-Zoom/Pan und JSON-Persistenz, der in Einheit 07 direkt mit dem FEM-Cholesky-Löser gekoppelt wird.
 
 #### Funktionsumfang & Anforderungen (4 Arbeitspakete):
-1. **Erweiterte Tragwerks-Topologie & Hintergrund-Koordinatengitter (`TrussGeometry.cs` / `MainWindow.xaml.cs`):**
+1. **Arbeitspaket A.1 – Erweiterte Tragwerks-Topologie & Hintergrund-Koordinatengitter (`TrussGeometry.cs` / `MainWindow.xaml.cs`):**
    - Ergänzen Sie neben dem Dreieck und dem Pratt-Träger ein drittes industrielles Modell `CreateCantileverCraneTruss()` (asymmetrischer Hallen-Auslegerkran oder Satteldachbinder mit **mindestens 10 Knoten**) und binden Sie es in die ComboBox `CmbModelSelection` ein.
    - Zeichnen Sie in `Redraw()` als unterste Ebene ein dezentes, maßstabsgetreues $1{,}0\,\text{m}$-Hintergrundgitter (`Line` mit dunklem Grau).
-2. **Zweistufige normgerechte DIN-406-Bemaßungsketten (`VectorArrow.cs` / `MainWindow.xaml.cs`):**
-   - **Stufe 1 (Innere horizontale Maßkette bei `dimY = +30 px`):** Automatische Einzel-Teilbemaßung aller benachbarten Untergurt-Abschnitte (z. B. `4.00 m | 4.00 m | 4.00 m`).
-   - **Stufe 2 (Äußere horizontale Maßkette bei `dimY = +60 px`):** Gesamtlängenbemaßung über die gesamte Spannweite (z. B. `12.00 m`).
-3. **Interaktiver Lastvektor-Editor (Pfeilspitzen-Dragging) & Kamera-Steuerung (Zoom & Pan):**
+2. **Arbeitspaket A.2 – Zweistufige normgerechte DIN-406-Bemaßungsketten (`VectorArrow.cs` / `MainWindow.xaml.cs`):**
+   - **Ebene 1 (Innere horizontale Maßkette bei `dimY = +30 px`):** Automatische Einzel-Teilbemaßung aller benachbarten Untergurt-Abschnitte (z. B. `4.00 m | 4.00 m | 4.00 m`).
+   - **Ebene 2 (Äußere horizontale Maßkette bei `dimY = +60 px`):** Gesamtlängenbemaßung über die gesamte Spannweite (z. B. `12.00 m`).
+3. **Arbeitspaket A.3 – Interaktiver Lastvektor-Editor (Pfeilspitzen-Dragging) & Kamera-Steuerung (Zoom & Pan):**
    - Machen Sie die Pfeilspitzen der angreifenden Kräfte (`TrussLoad`) per Maus greifbar: Zieht man die Spitze eines Kraftpfeils mit der Maus, werden $(F_x, F_y)$ in $\text{kN}$ live aus dem Differenzvektor zum Angriffsknoten aktualisiert; die Pfeilrichtung ($\operatorname{atan2}$) und Pfeillänge passen sich sofort an, während die Pfeilspitze exakt ihre feste Pixelgröße ($14\,\text{px}$) behält!
    - Implementieren Sie stufenlosen **Mausrad-Zoom (`MouseWheel`)** und **Kamera-Panning (Rechte/Mittlere Maustaste ziehen)** über einen Zoomfaktor und Kamera-Offset in `Transform2D`.
-4. **JSON-Import/Export & Freeze-Optimierung (`System.Text.Json`):**
+4. **Arbeitspaket A.4 – JSON-Import/Export & Freeze-Optimierung (`System.Text.Json`):**
    - Frieren Sie statisch verwendete `SolidColorBrush`-Instanzen ein (`Freeze()`), um GC-Allokationen beim Dragging zu minimieren.
    - Fügen Sie zwei Buttons **„JSON Speichern“** und **„JSON Laden“** hinzu, mit denen das aktuelle Tragwerk (Knoten, Stäbe, Lager, Lasten) als `.json`-Datei exportiert und wieder eingeladen werden kann.
 
@@ -131,19 +131,19 @@ In der Tragwerksplanung werden Brücken- und Hallenträger als normgerechte 2D-V
 ### Track B (Simulation Game): „Poly Bridge“ Blueprint-Baumeister
 
 #### Gaming-Szenario:
-Im Konstruktionsmodus von Physik-Brückenbauspielen (*Poly Bridge*, *Bridge Constructor*) entwirft der Spieler eine frei tragende Fachwerkbrücke über eine tiefe Schlucht unter strikten Material- und Budgetvorgaben. Aufbauend auf Ihrer Lösung aus Stufe A (`VectorTrussCanvas`) entwickeln Sie ein interaktives Brückenbau-Zeichenbrett mit Grid-Snapping, Längengrenzen-Vorschau, Live-Baubudget und JSON-Level-Export für den LKW-Belastungstest in Einheit 07.
+Im Konstruktionsmodus von Physik-Brückenbauspielen (*Poly Bridge*, *Bridge Constructor*) entwirft der Spieler eine frei tragende Fachwerkbrücke über eine tiefe Schlucht unter strikten Material- und Budgetvorgaben. Aufbauend auf Ihrer Lösung aus Stufe 1 (`VectorTrussCanvas`) entwickeln Sie ein interaktives Brückenbau-Zeichenbrett mit Grid-Snapping, Längengrenzen-Vorschau, Live-Baubudget und JSON-Level-Export für den LKW-Belastungstest in Einheit 07.
 
 #### Funktionsumfang & Anforderungen (4 Arbeitspakete):
-1. **Schlucht-Szenerie & $0{,}5\,\text{m}$-Konstruktionsraster mit Grid-Snapping (`TrussGeometry.cs` / `MainWindow.xaml.cs`):**
+1. **Arbeitspaket B.1 – Schlucht-Szenerie & $0{,}5\,\text{m}$-Konstruktionsraster mit Grid-Snapping (`TrussGeometry.cs` / `MainWindow.xaml.cs`):**
    - Ergänzen Sie in `TrussGeometry.cs` eine Start-Szene `CreateCanyonBlueprintLevel()` (Spannweite $12{,}0\,\text{m}$ mit einem Festlager am linken Felsrand $(0,0)$ und einem Loselager am rechten Felsrand $(12,0)$) und zeichnen Sie in `Redraw()` die beiden Felswände sowie den Fluss/Abgrund als farbige `Polygon`-Flächen ein.
    - Zeichnen Sie im Baufenster ein Konstruktionsraster (Gitterweite $0{,}5\,\text{m}$) und runden Sie alle Maus-Weltkoordinaten beim Setzen und Verschieben von Knoten exakt auf dieses $0{,}5\,\text{m}$-Gitter (`Math.Round(val * 2.0) / 2.0`).
-2. **Stab-Vorschau mit Maximallängen-Prüfung ($L_{\max}$) & Live-Baubudget-HUD:**
+2. **Arbeitspaket B.2 – Stab-Vorschau mit Maximallängen-Prüfung ($L_{\max}$) & Live-Baubudget-HUD:**
    - Während der Spieler mit der Maus von einem Startknoten zu einem Zielpunkt zieht, wird eine gestrichelte **Vorschau-Linie** mit Live-Längenangabe gezeichnet: Ist die Länge $L \le 4{,}00\,\text{m}$, leuchtet die Vorschau **grün** (gültig); überschreitet sie $L_{\max} = 4{,}00\,\text{m}$, färbt sie sich **rot** und der Stab kann nicht gebaut werden!
    - Berechnen Sie in `Redraw()` laufend die Gesamtbaukosten der Brücke ($\text{Kosten} = \sum L_i \cdot 1\,000\,\text{EUR/m}$ bei einem Maximalbudget von z. B. $35\,000\,\text{EUR}$) und stellen Sie die Auslastung als farbigen Budget-Fortschrittsbalken mit Prozent- und Euro-Anzeige im HUD dar.
-3. **Interaktives Konstruieren (Knoten setzen, Stäbe spannen & Elemente löschen):**
-   - **Knoten setzen & verschieben:** Ein Klick ins freie $0{,}5\,\text{m}$-Raster legt einen neuen Knoten an; bestehende Knoten lassen sich (wie in Stufe A) per Drag-and-Drop verschieben.
+3. **Arbeitspaket B.3 – Interaktives Konstruieren (Knoten setzen, Stäbe spannen & Elemente löschen):**
+   - **Knoten setzen & verschieben:** Ein Klick ins freie $0{,}5\,\text{m}$-Raster legt einen neuen Knoten an; bestehende Knoten lassen sich (wie in Stufe 1) per Drag-and-Drop verschieben.
    - **Stäbe spannen & löschen:** Ziehen von Knoten A zu Knoten B (oder Klick-Klick im Baumodus) erzeugt bei $L \le 4{,}00\,\text{m}$ und ausreichendem Budget einen neuen `TrussBar` (keine doppelten Stäbe!). Ein Rechtsklick oder die Taste `Entf` auf einen Knoten/Stab löscht das Element samt angrenzender Stäbe (die beiden Felswand-Auflagerknoten sind unlöschbar).
-4. **JSON-Level-Import/Export & Freeze-Optimierung (`System.Text.Json`):**
+4. **Arbeitspaket B.4 – JSON-Level-Import/Export & Freeze-Optimierung (`System.Text.Json`):**
    - Frieren Sie statisch verwendete `SolidColorBrush`-Instanzen ein (`Freeze()`), um GC-Allokationen beim Zeichnen zu minimieren.
    - Fügen Sie zwei Buttons **„JSON Speichern“** und **„JSON Laden“** hinzu, mit denen der konstruierte Brücken-Entwurf (Knoten, Stäbe, Lager, Lasten) als `.json`-Datei für den LKW-Überfahrt-Test in Einheit 07 gespeichert und geladen werden kann.
 
@@ -153,11 +153,11 @@ Im Konstruktionsmodus von Physik-Brückenbauspielen (*Poly Bridge*, *Bridge Cons
 
 | Kriterium | Punkte | Beschreibung |
 | :--- | :---: | :--- |
-| **Mathematische Transformation & Auto-Fit (Stufe A & B)** | 2 P. | Isotropes $s = \min(s_x, s_y)$, korrekte $Y$-Inversion, BoundingBox-Zentrierung ohne Jittering beim Drag-and-Drop. |
-| **Vektorpfeile, Stablängen & Vertikalbemaßung (Stufe A)** | 2 P. | Exakt rotierte Pfeilspitzen (`Polygon`) mit fixer Pixelgröße, euklidische Stablängen-Labels und vertikale DIN-406-Höhenmaßkette. |
-| **Track-Spezialisierung Geometrie (Arbeitspaket 1 & 2)** | 2 P. | **Track A:** Neues Kran-/Dachbindermodell + zweistufige horizontale DIN-406-Bemaßungskette.<br>**Track B:** Schlucht-Polygon-Szene mit $0{,}5\,\text{m}$-Grid-Snapping + $L_{\max}$-Vorschau & Live-Baubudget-Balken. |
-| **Track-Spezialisierung Interaktion (Arbeitspaket 3)** | 2 P. | **Track A:** Interaktives Ziehen/Drehen der Lastpfeilspitzen $(F_x, F_y)$ + Mausrad-Zoom & Kamera-Pan.<br>**Track B:** Interaktives Knoten-Setzen, Stäbe-Spannen ($L \le 4\,\text{m}$) und Löschen (`Entf`/Rechtsklick). |
-| **JSON-Persistenz, Freeze & Code-Qualität (Arbeitspaket 4)** | 2 P. | Funktionierender JSON-Export/Import (`System.Text.Json`), eingefrorene Brushes (`Freeze()`) und kurze `README.md`. |
+| **Mathematische Transformation & Auto-Fit (Stufe 1 & 2)** | 2 P. | Isotropes $s = \min(s_x, s_y)$, korrekte $Y$-Inversion, BoundingBox-Zentrierung ohne Jittering beim Drag-and-Drop. |
+| **Vektorpfeile, Stablängen & Vertikalbemaßung (Stufe 1)** | 2 P. | Exakt rotierte Pfeilspitzen (`Polygon`) mit fixer Pixelgröße, euklidische Stablängen-Labels und vertikale DIN-406-Höhenmaßkette. |
+| **Track-Spezialisierung Geometrie (Arbeitspaket A.1/A.2 bzw. B.1/B.2)** | 2 P. | **Track A:** Neues Kran-/Dachbindermodell + zweistufige horizontale DIN-406-Bemaßungskette.<br>**Track B:** Schlucht-Polygon-Szene mit $0{,}5\,\text{m}$-Grid-Snapping + $L_{\max}$-Vorschau & Live-Baubudget-Balken. |
+| **Track-Spezialisierung Interaktion (Arbeitspaket A.3 bzw. B.3)** | 2 P. | **Track A:** Interaktives Ziehen/Drehen der Lastpfeilspitzen $(F_x, F_y)$ + Mausrad-Zoom & Kamera-Pan.<br>**Track B:** Interaktives Knoten-Setzen, Stäbe-Spannen ($L \le 4\,\text{m}$) und Löschen (`Entf`/Rechtsklick). |
+| **JSON-Persistenz, Freeze & Code-Qualität (Arbeitspaket A.4 bzw. B.4)** | 2 P. | Funktionierender JSON-Export/Import (`System.Text.Json`), eingefrorene Brushes (`Freeze()`) und kurze `README.md`. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
 ---

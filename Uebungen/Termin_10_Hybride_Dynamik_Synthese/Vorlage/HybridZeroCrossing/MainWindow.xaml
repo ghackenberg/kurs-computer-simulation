@@ -36,7 +36,7 @@
             </WrapPanel>
         </Border>
 
-        <!-- Hauptbereich: Links WPF Canvas, Rechts ScottPlot 5 Telemetrie (Aufgabe A3) -->
+        <!-- Hauptbereich: Links WPF Canvas, Rechts ScottPlot 5 Telemetrie (Stufe 1 - Aufgabe 1.3) -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>

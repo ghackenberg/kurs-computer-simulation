@@ -3,9 +3,9 @@
 **Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
-**Bearbeitungsform:** 
-- **Stufe A (In-Class Sprint):** Einzelarbeit oder 2er-Tandem (Labor, 60 min)
-- **Stufe B (Homework Extension):** Festes 2er-Team (1 Woche, ca. 2–3 h pro Person)
+**Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
+- **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
+- **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10 Konsolenapplikation (`System.Numerics.Vector2`).  
 > [!CAUTION]
 > **Vorgreif-Sperre für Termin 01:**  
@@ -48,28 +48,29 @@ $$\tau = \frac{0 - y_k}{y_{k+1} - y_k} \in [0, 1] \implies t^* = t_k + \tau \cdo
 
 ---
 
-## 3. Stufe A: In-Class Sprint (60 Minuten)
+## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
 **Basis-Projekt:** Öffnen Sie die bereitgestellte Projektvorlage `Vorlage/KinematikEuler.sln` (`Program.cs`, `Models/KinematicState.cs`, `Solvers/EulerIntegrator.cs`, `Tests/KinematikEulerTests.cs`).  
-**Ziel:** Vervollständigen Sie den expliziten Euler-Integrator (`StepEuler`), die lineare Schnittpunkt-Interpolation (`InterpolateGroundImpact`) sowie das Prädiktor-Korrektor-Verfahren nach Heun (`StepHeun`), bringen Sie alle Unit-Tests (`dotnet test`) auf Grün und analysieren Sie den systematischen Höhen- und Reichweitenfehler beim schiefen Wurf im Vakuum.
+**Ziel:** Vervollständigen Sie als ersten Schritt Ihrer Hausübung (**Stufe 1**) den expliziten Euler-Integrator (`StepEuler`), die lineare Schnittpunkt-Interpolation (`InterpolateGroundImpact`) sowie das Prädiktor-Korrektor-Verfahren nach Heun (`StepHeun`), bringen Sie alle Unit-Tests (`dotnet test`) auf Grün und analysieren Sie den systematischen Höhen- und Reichweitenfehler beim schiefen Wurf im Vakuum.
 
-### Aufgabenstellung (Live im Hörsaal auf Basis von `Vorlage/KinematikEuler.sln`):
-1. Öffnen Sie `Vorlage/KinematikEuler.sln` und betrachten Sie das unveränderliche Zustands-Struct in `Models/KinematicState.cs`:
+### Aufgabenstellung (auf Basis von `Vorlage/KinematikEuler.sln`):
+1. **Aufgabe 1.1 – Zustandsraum-Inspektion (`Models/KinematicState.cs`):**
+   - Öffnen Sie `Vorlage/KinematikEuler.sln` und betrachten Sie das unveränderliche Zustands-Struct in `Models/KinematicState.cs`:
    ```csharp
    public readonly record struct KinematicState(double Time, double X, double Y, double Vx, double Vy);
    ```
-2. **Aufgabe A1 – Expliziter Euler (`StepEuler`) & Boden-Interpolation (`InterpolateGroundImpact`):**
+2. **Aufgabe 1.2 – Expliziter Euler (`StepEuler`) & Boden-Interpolation (`InterpolateGroundImpact`):**
    - Vervollständigen Sie in `Solvers/EulerIntegrator.cs` die Methode `StepEuler(...)` für die DGL 2. Ordnung ($\dot{x} = v_x, \; \dot{y} = v_y, \; \dot{v}_x = a_x, \; \dot{v}_y = a_y$) sowie `InterpolateGroundImpact(previous, current)` mittels linearer Nullstellen-Interpolation $\tau = \frac{0 - y_k}{y_{k+1} - y_k}$.
    - Führen Sie `dotnet test` aus und verifizieren Sie, dass die Unit-Tests für `StepEuler` und `InterpolateGroundImpact` grün durchlaufen!
-3. **Aufgabe A2 – Prädiktor-Korrektor nach Heun (`StepHeun`) & Konvergenzvergleich im Vakuum:**
+3. **Aufgabe 1.3 – Prädiktor-Korrektor nach Heun (`StepHeun`) & Konvergenzvergleich im Vakuum:**
    - Implementieren Sie in `Solvers/EulerIntegrator.cs` zusätzlich die Methode `StepHeun(...)` (Abschnitt 2.3) und vergleichen Sie in `Program.RunSprint_BallisticTrajectory()` beide Verfahren für:
      - Startposition: $x_0 = 0\,\text{m}, \; y_0 = 0\,\text{m}$, Abgangsgeschwindigkeit: $v_0 = 150\,\text{m/s}$, Winkel: $\alpha = 45^\circ$ ($g = 9{,}81\,\text{m/s}^2$)
      - Schrittweiten: $\Delta t = 0{,}1\,\text{s}$ und $\Delta t = 0{,}01\,\text{s}$
    - Vergleichen Sie Wurfweite $x_{\text{impact}}$, Flugzeit $t_{\text{impact}}$ und Scheitelhöhe $y_{\max}$ mit den analytischen Vakuumlösungen:
      $$t_{\text{ana}} = \frac{2 v_0 \sin \alpha}{g} \approx 21{,}623\,\text{s}, \quad x_{\text{ana}} = \frac{v_0^2 \sin(2\alpha)}{g} \approx 2293{,}58\,\text{m}, \quad y_{\max,\text{ana}} = \frac{(v_0 \sin\alpha)^2}{2g} \approx 573{,}39\,\text{m}$$
-4. **Erwartete Konsolenausgabe & Physikalische Erkenntnis:**
+4. **Aufgabe 1.4 – Erwartete Konsolenausgabe & Physikalische Erkenntnis:**
    ```text
-   === SPRINT-ERGEBNISSE: SCHIEFER WURF IM VAKUUM ===
+   === STUFE-1-ERGEBNISSE: SCHIEFER WURF IM VAKUUM ===
    Analytisch:  t = 21.623 s | x_impact = 2293.58 m | y_max = 573.39 m
    Euler dt=0.10s: t = 21.673 s (+0.0500 s) | x_impact = 2298.89 m (+5.310 m) | y_max = 578.69 m (+5.297 m)
    Euler dt=0.01s: t = 21.628 s (+0.0050 s) | x_impact = 2294.11 m (+0.530 m) | y_max = 573.92 m (+0.530 m)
@@ -79,7 +80,7 @@ $$\tau = \frac{0 - y_k}{y_{k+1} - y_k} \in [0, 1] \implies t^* = t_k + \tau \cdo
 
 ---
 
-## 4. Stufe B: Homework Extension (Wahlmodell)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
 > [!IMPORTANT]
 > **Wahlmodell – GENAU EINE Aufgabe (keine Doppelbelastung!):**  
@@ -125,14 +126,14 @@ $$m \ddot{x} = F_{\text{vor}} - F_{\text{dämpf}}(x, v) - F_{\text{anschlag}}(x)
    mit $c_{\text{kontakt}} = 5 \times 10^7\,\text{N/m}$ und $d_{\text{kontakt}} = 40\,000\,\text{N}\cdot\text{s/m}$.
 
 #### Aufgabenstellung Track A:
-1. Implementieren Sie die Zustandsableitung $\dot{\mathbf{x}} = \mathbf{f}(t, \mathbf{x})$ in einer separaten Klasse `HydraulicCylinderModel`.
-2. Implementieren Sie zwei Solver-Algorithmen:
+1. **Arbeitspaket A.1 – Zustandsableitung:** Implementieren Sie die Zustandsableitung $\dot{\mathbf{x}} = \mathbf{f}(t, \mathbf{x})$ in einer separaten Klasse `HydraulicCylinderModel`.
+2. **Arbeitspaket A.2 – Numerische Integratoren:** Implementieren Sie zwei Solver-Algorithmen:
    - `EulerSolver` (expliziter Euler)
    - `HeunSolver` (Heun RK2)
-3. **Parameterstudie zur Schrittweitenstabilität:**
+3. **Arbeitspaket A.3 – Parameterstudie zur Schrittweitenstabilität:**
    - Simulieren Sie den Vorgang bis zum Stillstand ($t_{\text{end}} = 0{,}10\,\text{s}$) mit Schrittweiten $\Delta t \in \{10\,\mu\text{s}, 100\,\mu\text{s}, 500\,\mu\text{s}, 2\,\text{ms}\}$.
    - Zeigen Sie, ab welcher Schrittweite der explizite Euler am Kontaktanschlag instabil wird (Oszillation/Explosion), während Heun noch stabiles Einschwingen zeigt.
-4. **Ausgabe & Auswertung:**
+4. **Arbeitspaket A.4 – Ausgabe & Auswertung:**
    - Schreiben Sie die Trajektoriedaten ($t, x, v, a, F_{\text{dämpf}}$) in eine `.csv`-Datei (`simulation_cylinder.csv`).
    - Geben Sie eine ASCII-Übersichtstabelle der Spitzenverzögerung $a_{\min}$ und des maximalen Anschlagwegs $x_{\max}$ auf der Konsole aus.
 
@@ -162,14 +163,13 @@ Physikalische Parameter:
 - Zielkoordinate: Feindlicher Bunker bei $x_{\text{ziel}} = 1400\,\text{m}, \; y_{\text{ziel}} = y_{\text{terrain}}(1400) \approx 28{,}77\,\text{m}$.
 
 #### Aufgabenstellung Track B:
-1. Implementieren Sie die Modellklasse `BallisticEngine` mit gekapselter Vektorrechnung.
-2. Implementieren Sie `EulerSolver` und `HeunSolver` (RK2).
-3. **Kollisionserkennung & Geländeschnittpunkt:**
+1. **Arbeitspaket B.1 – Aerodynamik-Modell & Integratoren:** Implementieren Sie die Modellklasse `BallisticEngine` mit gekapselter Vektorrechnung sowie `EulerSolver` und `HeunSolver` (RK2).
+2. **Arbeitspaket B.2 – Kollisionserkennung & Geländeschnittpunkt:**
    - Die Kollision findet statt, sobald $y_k \le y_{\text{terrain}}(x_k)$.
    - Berechnen Sie den Einschlagspunkt $x_{\text{impact}}$ über lineare Interpolation zwischen Schritt $k$ und $k+1$.
-4. **Automatischer Schusswinkel-Finder (KI-Zielrechner):**
+3. **Arbeitspaket B.3 – Automatischer Schusswinkel-Finder (KI-Zielrechner):**
    - Implementieren Sie einen Zielsuch-Algorithmus (Bisektion oder Winkelsweep in Intervallen $[10^\circ, 80^\circ]$ mit Schrittweite $0{,}1^\circ$), der bei gegebener Windgeschwindigkeit $w_x$ den Schusswinkel $\alpha$ ermittelt, bei dem das Projektil das Ziel auf $\pm 1{,}5\,\text{m}$ trifft.
-5. **Stochastische Runden-Simulation:**
+4. **Arbeitspaket B.4 – Stochastische Runden-Simulation:**
    - Simulieren Sie 5 Schussfolgen mit stochastischem Wind $w_x \sim \mathcal{U}(-15, +15)\,\text{m/s}$.
    - Geben Sie pro Schuss den berechneten Zielwinkel $\alpha$, die Flugdauer und eine einfache ASCII-Plot-Darstellung der Flugbahn (Matrix $80 \times 25$ Zeichen) oder einen CSV-Export aus.
 

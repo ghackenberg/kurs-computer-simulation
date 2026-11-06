@@ -89,7 +89,7 @@ public partial class MainWindow : Window
         _buffer.Add(signal);
         _welford.Add(signal);
 
-        // TODO: [Stufe A In-Class Sprint - Aufgabe 2 & 3]
+        // TODO: [Stufe 1 - Aufgabe 1.2 & 1.3]
         // - Nutzen Sie _buffer.CopyTo(_windowCopy) auf einem vorallokierten Array,
         //   um Min/Max/Mittelwert des gleitenden 10s-Fensters in TxtFooter anzuzeigen.
         // - Fügen Sie einen zweiten DataStreamer für das ungestörte Referenzsignal hinzu.
@@ -104,7 +104,7 @@ public partial class MainWindow : Window
             _upperLine.Y = upper;
             _lowerLine.Y = lower;
 
-            // TODO: [Stufe A In-Class Sprint - Aufgabe 1 (GC-Leak-Fix)]
+            // TODO: [Stufe 1 - Aufgabe 1.1 (GC-Leak-Fix)]
             // Vermeiden Sie 'new SolidColorBrush(...)' in jedem 50-Hz-Tick!
             // Verwenden Sie stattdessen statisch vorallokierte, eingefrorene (Freeze()) Brushes
             // und ergänzen Sie einen Anomalie-Zähler + Haltezeit (Entprellung).

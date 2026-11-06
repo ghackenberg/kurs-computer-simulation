@@ -35,7 +35,10 @@ Detailregeln für Folien, SVGs und Übungsblätter sind modular in **Workspace-S
    - **Kerninhalte:** Standard-Maße (`viewBox="-45 0 570 380"` für `<div class="two">`), Mindestschriftgröße ($\ge 11{,}5\,\text{px}$ nach CTM), konkrete Zahlenwerte in Algorithmen-Grafiken, FH-OÖ-Farbsemantik, UTF-8-Sicherheit.
 3. **[`uebungsaufgaben-und-moodle`](.agents/skills/uebungsaufgaben-und-moodle/SKILL.md):**
    - **Aktivieren bei:** Erstellen oder Ändern von `Uebungen/**`, `Moodle/**` oder `Konzept/**`.
-   - **Kerninhalte:** Symmetrischer Aufbau (Stufe A Sprint $\to$ Stufe B mit genau 1 Track A und 1 Track B auf Basis der Stufe-A-Vorlage), 6-Punkte-Synchronisations-Checkliste, **striktes Verbot von LaTeX-Formeln (`$...$`) und Backticks in `Moodle_Kursstruktur_und_Termintexte.md`**.
+   - **Kerninhalte:** Zweistufige Hausübung zu Hause (**Stufe 1: Basisaufgabe** mit Ziffern `1.1`–`1.4` auf der Vorlage $\to$ **Stufe 2: Vertiefungsaufgabe** mit Buchstaben **Track A** `A.1`–`A.4` ODER **Track B** `B.1`–`B.4`; **kein Live-Coding / kein In-Class-Sprint im Hörsaal**), 6-Punkte-Synchronisations-Checkliste, Moodle-Quiz-Design (strikte Rückwärts-Kausalität, 8 Fragen / 10 Pkt., kein Längen-Bias, keine Formeln im Fragetext verraten), **striktes Verbot von LaTeX-Formeln (`$...$`) und Backticks in `Moodle_Kursstruktur_und_Termintexte.md`**.
+4. **[`didaktik-und-qualitaets-review`](.agents/skills/didaktik-und-qualitaets-review/SKILL.md):**
+   - **Aktivieren bei:** Inhaltlichen Reviews, Qualitäts-Audits oder vor dem Release/Merge eines Kapitels bzw. Termins (insbesondere durch einen unabhängigen Review-Subagenten nach dem Vier-Augen-Prinzip).
+   - **Kerninhalte:** 6-Dimensionen-Prüfraster (Curriculare Einbettung 5. Sem. AT Wels, Kausalität & 150-Min.-Taktung ohne Live-Coding, Storyline & Engpass-Motivation, Visuelle Evidenz, Übungs-Symmetrie, Quiz-Psychometrie).
 
 ---
 

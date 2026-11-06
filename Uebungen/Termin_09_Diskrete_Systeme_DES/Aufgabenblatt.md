@@ -10,7 +10,7 @@
 | **Themenschwerpunkt:** | Diskrete Ereignissimulation (DES), Future Event List (FEL), Inversionsmethode, $M/M/c/K$-Systeme & Little's Gesetz |
 | **Technologie-Stack:** | C# 12 / .NET 8/10, `System.Collections.Generic.PriorityQueue<TElement, TPriority>`, TPL `Parallel.For`, ScottPlot 5 |
 | **Vorgreif-Sperre:** | **Erlaubt:** `PriorityQueue`, stochastische Zufallsgeneratoren, Inversionsmethode, TPL für Replikationen, ScottPlot 5.<br>**Strengstens verboten:** *KEINE* kontinuierlichen DGL-Schaltfunktionen (Zero-Crossing Wurzelsuche)! |
-| **Zeitbudget:** | **In-Class Sprint:** 60 Minuten (Laborpräsenz)<br>**Homework Extension:** 2–3 Stunden (2er-Team, 1 Woche) |
+| **Bearbeitungsform & Zeitbudget:** | **Zweistufige Hausübung im festen 2er-Team (1 Woche):**<br>• **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)<br>• **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause) |
 | **Abgabeform:** | Git-Repository: Sourcecode, Unit-Tests und Markdown-Bericht (`README.md`) |
 
 ---
@@ -73,15 +73,15 @@ $$\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}, \quad \bar{L}_{\text{q}} = \lamb
 
 ---
 
-## 3. Stufe A: In-Class Sprint (60 min)
+## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
 ### Thema: „FEL-Engine, Puffergrenzen, Log-Normal-Kausalität & Monte-Carlo in `DiscreteEventSimulation.sln`“
 
-In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/DiscreteEventSimulation.sln`) sind die ereignisdiskrete Future Event List (`EventQueue`), die Exponentialverteilung (`ExponentialDistribution`), das Basis-Warteschlangenmodell (`QueueSystem`) sowie das `ScottPlot.WPF`-Dashboard (`MainWindow.xaml.cs`) bereits als lauffähige Baseline vorimplementiert. Starten Sie die Anwendung und bearbeiten Sie im Live-Sprint die folgenden **3 Erweiterungsaufgaben**:
+In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/DiscreteEventSimulation.sln`) sind die ereignisdiskrete Future Event List (`EventQueue`), die Exponentialverteilung (`ExponentialDistribution`), das Basis-Warteschlangenmodell (`QueueSystem`) sowie das `ScottPlot.WPF`-Dashboard (`MainWindow.xaml.cs`) bereits als lauffähige Baseline vorimplementiert. Starten Sie die Anwendung und bearbeiten Sie als ersten Schritt Ihrer Hausübung (Stufe 1) die folgenden **3 Basisaufgaben**:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ STUFE A: M/M/1/K- UND M/G/1-WARTESYSTEM (WPF + SCOTTPLOT 5)            │
+│ STUFE 1: M/M/1/K- UND M/G/1-WARTESYSTEM (WPF + SCOTTPLOT 5)            │
 │                                                                        │
 │   Ankünfte           Wartepuffer (max K)           Bedienstation       │
 │   lambda = 4/min     Queue<Customer>               c = 1 (mu = 5/min)  │
@@ -93,12 +93,12 @@ In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/DiscreteEventSimulation.sl
 
 #### Aufgabenstellung (Schritt für Schritt):
 
-1. **Aufgabe A1 – Wartepuffer-Kapazität $K$ vs. Systemkapazität & Little's Gesetz unter Blocking (`QueueSystem.cs`):**
+1. **Aufgabe 1.1 – Wartepuffer-Kapazität $K$ vs. Systemkapazität & Little's Gesetz unter Blocking (`QueueSystem.cs`):**
    - Starten Sie die Vorlage zunächst mit den Standardwerten ($\lambda = 4{,}0/\text{min}$, $\mu = 5{,}0/\text{min}$, $c = 1$, $K = 0 \implies \infty$) und vergleichen Sie die gemessene mittlere Warteschlangenlänge $\bar{L}_q$ mit dem analytischen Erlang-Wert $L_q = \frac{\rho^2}{1 - \rho} = 3{,}20$.
-   - Öffnen Sie `Models/QueueSystem.cs` beim Kommentar `// TODO [Aufgabe A1]`: Aktuell prüft der Code `totalInSystem >= Capacity` (Gesamtsystem-Kapazität inkl. Server). Ändern Sie die Abfrage so, dass `Capacity` die reine **Wartepuffer-Kapazität** `waitingQueue.Count >= Capacity` begrenzt.
+   - Öffnen Sie `Models/QueueSystem.cs` beim Kommentar `// TODO [Aufgabe 1.1]`: Aktuell prüft der Code `totalInSystem >= Capacity` (Gesamtsystem-Kapazität inkl. Server). Ändern Sie die Abfrage so, dass `Capacity` die reine **Wartepuffer-Kapazität** `waitingQueue.Count >= Capacity` begrenzt.
    - Setzen Sie in der GUI die Kapazität auf $K = 10$ (und anschließend im Überlastfall $\lambda = 6{,}0/\text{min} > \mu$). Vergleichen Sie im Dashboard den relativen Fehler von Little's Gesetz mit der **effektiven Ankunftsrate** $\lambda_{\text{eff}} = \lambda (1 - P_{\text{Block}})$ gegenüber dem naiven Einsetzen der Brutto-Ankunftsrate $\lambda$!
-2. **Aufgabe A2 – Log-Normalverteilte Bedienzeiten via Box-Muller & $M/G/1$-Effekt (`LogNormalDistribution.cs`):**
-   - Öffnen Sie `Random/LogNormalDistribution.cs` bei `// TODO [Aufgabe A2]`. Aktuell gibt `Sample()` lediglich den konstanten Mittelwert `Mean` zurück (deterministische Bedienzeit $M/D/1$ – testen Sie dies kurz in der GUI per Checkbox: $\bar{L}_q$ halbiert sich auf $\approx 1{,}60$!).
+2. **Aufgabe 1.2 – Log-Normalverteilte Bedienzeiten via Box-Muller & $M/G/1$-Effekt (`LogNormalDistribution.cs`):**
+   - Öffnen Sie `Random/LogNormalDistribution.cs` bei `// TODO [Aufgabe 1.2]`. Aktuell gibt `Sample()` lediglich den konstanten Mittelwert `Mean` zurück (deterministische Bedienzeit $M/D/1$ – testen Sie dies kurz in der GUI per Checkbox: $\bar{L}_q$ halbiert sich auf $\approx 1{,}60$!).
    - Implementieren Sie in `Sample()` die **Box-Muller-Transformation** für $Z \sim \mathcal{N}(0, 1)$ und geben Sie $X = \exp(\mu_{\ln} + \sigma_{\ln} Z) > 0$ zurück (vgl. Folienabschnitt 9.6):
      ```csharp
      double u1 = 1.0 - _random.NextDouble();
@@ -107,18 +107,18 @@ In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/DiscreteEventSimulation.sl
      return Math.Exp(MuLog + SigmaLog * z);
      ```
    - Aktivieren Sie in der GUI die Checkbox *„Log-Normal-Bedienzeit aktivieren“* mit $\sigma_{\text{service}} = 0{,}40\,\text{min}$ (bei gleichem Mittelwert $1/\mu = 0{,}20\,\text{min}$) und beobachten Sie im Histogramm sowie an $\bar{L}_q$, wie stark Rechtsschiefe (Heavy Tail) die Warteschlange trotz unveränderter Auslastung $\rho = 80\,\%$ aufbläht (Pollaczek-Khinchine-Effekt)!
-3. **Aufgabe A3 – Parallele Monte-Carlo-Replikationen (`Parallel.For`) & 95%-Konfidenzintervall (`MainWindow.xaml.cs`):**
-   - Öffnen Sie `MainWindow.xaml.cs` in der Methode `RunMonteCarloSimulation()` bei `// TODO [Aufgabe A3]`.
+3. **Aufgabe 1.3 – Parallele Monte-Carlo-Replikationen (`Parallel.For`) & 95%-Konfidenzintervall (`MainWindow.xaml.cs`):**
+   - Öffnen Sie `MainWindow.xaml.cs` in der Methode `RunMonteCarloSimulation()` bei `// TODO [Aufgabe 1.3]`.
    - Erhöhen Sie die Anzahl der Replikationen von `replications = 5` auf `replications = 100` und parallelisieren Sie die Schleife mittels `Parallel.For(0, replications, r => { ... })` unter Verwendung des deterministischen Prime-Stride-Seeds `int seed = 42 + r * 104729;` (vgl. Folienabschnitt 9.7).
    - Prüfen Sie im unteren ScottPlot-Diagramm, wie sich der Standardfehler $\text{SE} = s_W / \sqrt{R}$ und die Breite des 95%-Konfidenzintervalls $\bar{W} \pm 1{,}96 \cdot \text{SE}$ durch Verzwanzigfachung der Stichprobe verkleinern.
 
-**Erwartetes Ergebnis nach dem Sprint:**  
+**Erwartetes Ergebnis nach Stufe 1:**  
 - Bei $K = 10$ gilt $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ exakt ($< 0{,}5\,\%$ Fehler), während $\lambda \cdot \bar{W}$ um die Blockierwahrscheinlichkeit $P_{\text{Block}}$ abweicht.  
 - Bei $R = 100$ parallelen Läufen schrumpft das 95%-Konfidenzintervall für $\mathbb{E}[W]$ auf ca. $\pm 0{,}015\,\text{min}$ um den theoretischen Wert $W = 1{,}00\,\text{min}$.
 
 ---
 
-## 4. Stufe B: Homework Extension (Wahlmodell – GENAU EINE Aufgabe!)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell – GENAU EINE Aufgabe!)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – KEINE Doppelbelastung!):**  
@@ -158,16 +158,16 @@ In der Automobilendmontage werden Rohkarosserien durch eine Lackierstraße gesch
 
 #### Aufgabenstellung Track A:
 
-1. **Systemkonfiguration & Multi-Server Logik:**
+1. **Arbeitspaket A.1 – Systemkonfiguration & Multi-Server Logik:**
    - $c = 3$ identische parallele Lackierkabinen, jede mit Bedienrate $\mu = 1{,}5\,\text{Karosserien/h}$.
    - Gesamte Ankunftsrate: $\lambda = 4{,}0\,\text{Karosserien/h}$ (Exponentialverteilung via Inversionsmethode).
    - Gesamtauslastung $\rho = \frac{\lambda}{c \cdot \mu} = \frac{4{,}0}{4{,}5} \approx 0{,}889$.
    - Puffergrenze: $K = 25$ (warten bereits 25 Karosserien, wird jede weitere Ankunft abgewiesen).
-2. **Prioritäts-Warteschlange (Non-preemptive Priority):**
+2. **Arbeitspaket A.2 – Prioritäts-Warteschlange (Non-preemptive Priority):**
    - $80\,\%$ der Karosserien sind Standard-Aufträge (Priorität 1).
    - $20\,\%$ sind Express-Serien / Eilaufträge (Priorität 0, höchster Vorrang).
    - Express-Karosserien reihen sich vor wartenden Standard-Karosserien ein. Bereits lackierende Aufträge werden jedoch nicht unterbrochen.
-3. **Statistische Verifikation von Little's Gesetz:**
+3. **Arbeitspaket A.3 – Statistische Verifikation von Little's Gesetz:**
    - Verfolgen Sie jede einzelne Karosserie mit individueller Eintrittszeit $t_{\text{in}}$ und Austrittszeit $t_{\text{out}}$.
    - Berechnen Sie über $T_{\max} = 50\,000\,\text{h}$:
      - Gemessene Blocking-Wahrscheinlichkeit: $P_{\text{Block}} = \frac{N_{\text{rejected}}}{N_{\text{total}}}$.
@@ -175,7 +175,7 @@ In der Automobilendmontage werden Rohkarosserien durch eine Lackierstraße gesch
      - Mittlere Verweilzeit $\bar{W}$ und mittlere reine Wartezeit $\bar{W}_{\text{q}}$ getrennt für Express und Standard.
      - Mittlere Bestände $\bar{L}$ und $\bar{L}_{\text{q}}$ über das zeitgewichtete Integral.
    - **Beweis:** Zeigen Sie im Bericht, dass $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ bis auf $< 1\,\%$ übereinstimmt.
-4. **Multithreadete Monte-Carlo-Replikation & ScottPlot:**
+4. **Arbeitspaket A.4 – Multithreadete Monte-Carlo-Replikation & ScottPlot:**
    - Führen Sie 100 Replikationen (mit unterschiedlichen Seeds via `Parallel.For`) über je $5000\,\text{h}$ durch.
    - Berechnen Sie den Mittelwert und das 95%-Konfidenzintervall:
      $$\text{CI}_{95\%} = \bar{W} \pm 1{,}96 \cdot \frac{s_W}{\sqrt{N_{\text{runs}}}}$$
@@ -211,18 +211,18 @@ In Freizeitpark-Aufbauspielen (*RollerCoaster Tycoon*, *Planet Coaster*) entsche
 
 #### Aufgabenstellung Track B:
 
-1. **Achterbahn-Drehkreuze & Einlasslogik:**
+1. **Arbeitspaket B.1 – Achterbahn-Drehkreuze & Einlasslogik:**
    - $c = 3$ Abfertigungsstationen (Drehkreuze), Bedienrate $\mu = 1{,}5\,\text{Gäste/min}$.
    - Ankunftsrate: $\lambda = 4{,}0\,\text{Gäste/min}$ (Inversionsmethode).
    - Maximaler Wartebereich vor den Drehkreuzen: $K = 25$ Personen. Kommen weitere Gäste, verlassen sie verärgert die Warteschlange (Lost Visitors).
-2. **FastPass-Vorrangsystem:**
+2. **Arbeitspaket B.2 – FastPass-Vorrangsystem:**
    - VIP/FastPass-Gäste ($20\,\%$) haben absolute Priorität vor regulären Parkbesuchern ($80\,\%$).
    - Wird ein Drehkreuz frei, wird zuerst die VIP-Warteschlange bedient.
-3. **Statistische Verifikation von Little's Gesetz:**
+3. **Arbeitspaket B.3 – Statistische Verifikation von Little's Gesetz:**
    - Messen Sie die individuelle Aufenthaltsdauer aller Gäste.
    - Berechnen Sie $\bar{W}_{\text{VIP}}$ vs. $\bar{W}_{\text{Standard}}$.
    - Verifizieren Sie empirisch Little's Gesetz: $\bar{L}_{\text{system}} = \lambda_{\text{eff}} \cdot \bar{W}_{\text{system}}$.
-4. **Multithreadete Monte-Carlo-Simulation:**
+4. **Arbeitspaket B.4 – Multithreadete Monte-Carlo-Simulation:**
    - 100 Replikationen via `Parallel.For` über je einen 12-Stunden-Öffnungstag ($720\,\text{min}$).
    - Ermitteln Sie das 95%-Konfidenzintervall der maximalen Wartezeit eines regulären Gastes.
    - Visualisieren Sie die Wartezeitverteilung in ScottPlot 5.

@@ -45,15 +45,15 @@ public partial class MainWindow : Window
         _arm1Node.AddChild(_arm2Node);
         _arm2Node.AddChild(_pinoleNode);
 
-        // TODO [Stufe A - Aufgabe A1]:
+        // TODO [Stufe 1 - Aufgabe 1.1]:
         // Weisen Sie hier _baseNode, _arm1Node, _arm2Node und _pinoleNode jeweils
         // ihre lokale Zeichenlogik über RenderCustomGeometry = gl => { ... } zu,
         // damit RenderRobot(gl) nur noch _rootNode.Render(gl) aufrufen muss!
 
-        // TODO [Stufe A - Aufgabe A3]:
+        // TODO [Stufe 1 - Aufgabe 1.3]:
         // Fügen Sie einen Knoten _workpieceNode bei (1.10f, 0.06f, -0.40f) unter _rootNode hinzu.
 
-        // TODO [Stufe B - Track A]:
+        // TODO [Stufe 2 - Track A]:
         // Erweitern Sie den Baum unter _pinoleNode um _wristNode (theta4) sowie
         // _leftFingerNode und _rightFingerNode (symmetrischer 2-Backen-Parallelgreifer g_width).
 
@@ -150,7 +150,7 @@ public partial class MainWindow : Window
 
     private void RenderRobot(OpenGL gl)
     {
-        // TODO [Stufe A - Aufgabe A1]:
+        // TODO [Stufe 1 - Aufgabe 1.1]:
         // Aktuell wird die Kinematik hier manuell über gl.PushMatrix() gezeichnet,
         // statt den Szenengraphen (_rootNode) zu traversieren!
         // Verschieben Sie die Zeichenaufrufe der einzelnen Glieder in BuildSceneGraph()

@@ -64,8 +64,8 @@ flowchart TD
 Jedes Aufgabenblatt enthält standardmäßig:
 1. *Metadaten & Terminstruktur* (Termin, Thema, ECTS-Workload, Zeitbudget)
 2. *Lernziele (ILOs)*
-3. *Stufe A: In-Class Sprint (60 min)* (Gemeinsamer Kern, lauffähiges MVP)
-4. *Stufe B: Pick your Track* (Track A Industrie ODER Track B Game – freie Wahl!)
+3. *Stufe 1: Basisaufgabe (ca. 60 min)* (Gemeinsames Fundament auf der C#-Projektvorlage, lauffähiges MVP)
+4. *Stufe 2: Vertiefungsaufgabe / Pick your Track* (Track A Industrie ODER Track B Game – freie Wahl!)
 5. *Akzeptanzkriterien & Definition of Done*
 6. *Recherche-Box* (Doku-Links, gezielte englische Suchbegriffe)
 7. *Vibe-Coding Prompt-Vorlagen*
@@ -73,10 +73,10 @@ Jedes Aufgabenblatt enthält standardmäßig:
 
 ### Arbeitspaket 2: Moodle-Quizzes im GIFT-Format
 - **Worker M1:**
-  - `Moodle/Quiz_01_Termin_03/` (Pixel, Stride, FDM, CFL-Bedingung)
-  - `Moodle/Quiz_02_Termin_05/` (Canvas, ScottPlot 5, 3D-Szenengraph-Matrizen)
-  - `Moodle/Quiz_03_Termin_08/` (Amdahl, Cholesky, RK4, Anti-Windup)
-  - `Moodle/Quiz_04_Termin_10/` (DES, Little's Gesetz, Zero-Crossing, Zeno)
+  - `Moodle/Quiz_01_Termin_03/` (Kap. 00–02: Euler, Pixel, Stride, FDM, CFL-Bedingung)
+  - `Moodle/Quiz_02_Termin_05/` (Kap. 03–04: Canvas, Koordinatentransformation, DIN-Bemaßung, ScottPlot 5, Welford, MSAGL)
+  - `Moodle/Quiz_03_Termin_08/` (Kap. 05–07: 3D-Szenengraph-Matrizen, TPL & Amdahl, Statische FEM & Cholesky)
+  - `Moodle/Quiz_04_Termin_10/` (Kap. 08–09: S-Functions, RK4, Anti-Windup, DES, Inversionsmethode, Little's Gesetz)
   Jedes Quiz enthält Markdown zur Einsicht und `.gift.txt` für den 1-Klick-Import in Moodle.
 
 ### Arbeitspaket 3: MARP-Folienüberarbeitung

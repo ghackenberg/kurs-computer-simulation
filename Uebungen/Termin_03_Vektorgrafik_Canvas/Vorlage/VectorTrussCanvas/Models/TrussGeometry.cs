@@ -88,7 +88,7 @@ public class TrussGeometry
     }
 
     /// <summary>
-    /// Erstellt das Dreieckstragwerk aus Stufe A (In-Class Sprint).
+    /// Erstellt das Dreieckstragwerk aus Stufe 1 (Basisaufgabe).
     /// K1 = (0, 0), K2 = (4, 0), K3 = (2, 2) mit Last F = (0, -20 kN) an K3.
     /// </summary>
     public static TrussGeometry CreateSprintTriangle()
@@ -107,7 +107,7 @@ public class TrussGeometry
     }
 
     /// <summary>
-    /// Erstellt ein industrielles Warren-/Pratt-Fachwerk für Stufe B Track A (8 Knoten, 13 Stäbe).
+    /// Erstellt ein industrielles Warren-/Pratt-Fachwerk für Stufe 2 Track A (8 Knoten, 13 Stäbe).
     /// </summary>
     public static TrussGeometry CreateIndustrialPrattTruss()
     {

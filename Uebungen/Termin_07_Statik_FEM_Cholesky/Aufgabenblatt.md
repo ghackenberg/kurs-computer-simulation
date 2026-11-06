@@ -10,7 +10,7 @@
 | **Themenschwerpunkt:** | Finite-Elemente-Methode (FEM) für 2D-Fachwerke, `MathNet.Numerics`, Cholesky-Zerlegung & Blockpartitionierung |
 | **Technologie-Stack:** | C# 12 / .NET 8/10, `MathNet.Numerics`, WPF Canvas (Frontend aus Termin 03) |
 | **Vorgreif-Sperre:** | **Erlaubt:** `MathNet.Numerics` (DenseMatrix, Vector, Cholesky), WPF Canvas Vektorgrafik.<br>**Strengstens verboten:** *KEINE* dynamischen DGL-Integratoren (RK4), *KEINE* S-Functions, *KEINE* Event-Queues! |
-| **Zeitbudget:** | **In-Class Sprint:** 60 Minuten (Laborpräsenz)<br>**Homework Extension:** 2–3 Stunden (2er-Team, 1 Woche) |
+| **Bearbeitungsform & Zeitbudget:** | **Zweistufige Hausübung im festen 2er-Team (1 Woche):**<br>• **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)<br>• **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause) |
 | **Abgabeform:** | Git-Repository: Sourcecode, Unit-Tests und Markdown-Bericht (`README.md`) |
 
 ---
@@ -64,7 +64,7 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
 
 ---
 
-## 3. Stufe A: In-Class Sprint (ca. 35–45 min)
+## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
 ### Thema: „FEM-Dreiecksträger validieren, Auflager-/Kraftpfeile im Canvas & 5-Knoten-Auslegerkran“
 
@@ -72,7 +72,7 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ STUFE A: 3-KNOTEN-FACHWERK (DREIECKSTRÄGER IM STARTER-KIT)             │
+│ STUFE 1: 3-KNOTEN-FACHWERK (DREIECKSTRÄGER IM STARTER-KIT)             │
 │                                                                        │
 │                      Knoten 3 (x=2m, y=2m)                             │
 │                           ▲                                            │
@@ -100,24 +100,24 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
 
 #### Aufgabenstellung (Schritt für Schritt auf Basis von `Vorlage/TrussFemSolver.sln`):
 
-1. **Aufgabe A1 – Auflager-Symbole sowie Last- und Reaktionskraft-Pfeile in `RenderCanvas()` ergänzen:**
+1. **Aufgabe 1.1 – Auflager-Symbole sowie Last- und Reaktionskraft-Pfeile in `RenderCanvas()` ergänzen:**
    - Starten Sie `TrussFemSolver` und verifizieren Sie, dass die Telemetrie exakt `Max. Verschiebung: 1,823 mm` und `F_y1: 5,00 kN | F_y2: 5,00 kN` anzeigt.
    - Aktuell zeichnet `RenderCanvas()` in `MainWindow.xaml.cs` nur Stäbe und Knotenpunkte, aber **keine Lager und keine Kräfte**. Ergänzen Sie in `RenderCanvas()` *(Tipp: Sie können `VectorArrow.cs` und Ihre Lager-Zeichenmethode direkt aus Ihrem `Termin_03`-Projekt `VectorTrussCanvas` übernehmen!)*:
      - **Auflager-Dreiecke** für Knoten mit gesperrten Freiheitsgraden (`_currentModel.FixedDofs`): Festlager ($X$ und $Y$ gesperrt) als volles Dreieck, Loselager (nur $Y$ gesperrt) mit zusätzlicher horizontaler Rollenspur.
      - **Kraftpfeile:** Rote Kraftpfeile für alle angreifenden äußeren Lasten (`_currentModel.ExternalForces[dof] != 0`) und grüne Kraftpfeile für die berechneten Auflagerreaktionen (`_currentSolution.ReactionForces`).
-2. **Aufgabe A2 – 5-Knoten-Auslegerkran (`CreateCantileverSprintModel`) modellieren:**
+2. **Aufgabe 1.2 – 5-Knoten-Auslegerkran (`CreateCantileverSprintModel`) modellieren:**
    - Implementieren Sie in `Fem/CholeskySolver.cs` eine statische Methode `CreateCantileverSprintModel(double loadFy = -10_000.0)` für einen 2-feldrigen Auslegerkran mit **5 Knoten und 7 Stäben**:
      - Wandlager links: Knoten 0 bei $(0, 0)\,\text{m}$ (Festlager: $u_x, u_y$ fest) und Knoten 1 bei $(0, 2)\,\text{m}$ (Horizontal-Führung: $u_x$ fest).
      - Mittelfeld: Knoten 2 bei $(2, 0)\,\text{m}$, Knoten 3 bei $(2, 2)\,\text{m}$.
      - Kragspitze rechts: Knoten 4 bei $(4, 0)\,\text{m}$ mit vertikaler Punktlast `loadFy`.
      - Verbinden Sie die 5 Knoten mit 7 Stäben (Untergurt, Obergurt, Pfosten, Diagonalen) zu einem statisch bestimmten Fachwerk und testen Sie die Verformung im Canvas!
-3. **Aufgabe A3 – Singularitäts-Test (Was passiert bei unterbestimmter Lagerung?):**
+3. **Aufgabe 1.3 – Singularitäts-Test (Was passiert bei unterbestimmter Lagerung?):**
    - Kommentieren Sie testweise in `CreateSprintModel` die Zeile `model.FixDof(n1.DofX);` aus (sodass beide Lager in X-Richtung verschieblich sind $\to$ horizontale Starrkörper-Bewegung möglich).
    - Beobachten Sie, warum `kff.Cholesky()` in `CholeskySolver.Solve()` eine Exception wirft (Symmetrisch Positiv Definite Matrix $\mathbf{K}_{ff}$ erfordert $\det(\mathbf{K}_{ff}) > 0$ ohne Eigenwert $0$!) und machen Sie die Änderung anschließend wieder rückgängig.
 
 ---
 
-## 4. Stufe B: Homework Extension (Wahlmodell – GENAU EINE Aufgabe!)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell – GENAU EINE Aufgabe!)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – KEINE Doppelbelastung!):**  
@@ -151,28 +151,26 @@ In Industriehallen fahren Portalkräne mit schweren Lasten über Fachwerkträger
 
 #### Aufgabenstellung Track A:
 
-1. **Tragwerkstopologie & Verheiratung mit T03:**
+1. **Arbeitspaket A.1 – Tragwerkstopologie & Verheiratung mit T03:**
    - Modellieren Sie einen Fachwerkträger mit mindestens 16 Knoten und 30–40 Stäben (z. B. Spannweite $24\,\text{m}$, Höhe $3\,\text{m}$).
    - Binden Sie die Vektorvisualisierung aus Termin 03 (WPF Canvas) als Frontend ein:
      - Welt-zu-Bildschirm-Transformation mit Y-Achse nach oben.
      - Darstellung von Knoten (Punkte/Kreise), Stäben (`Line`) und Auflagern (Dreieckssymbole).
-2. **Dynamische Wanderlast:**
+2. **Arbeitspaket A.2 – Dynamische Wanderlast:**
    - Auf den oberen Knoten verfährt eine Wanderlast $F_{\text{Last}} = 50\,\text{kN}$ (Laufkatze) schrittweise von links nach rechts ($x = 0 \to 24\,\text{m}$).
    - In jedem Inkrement wird die Last auf die benachbarten Knoten interpoliert, $\mathbf{f}_f$ aktualisiert und das LGS via Cholesky gelöst.
-3. **Echtzeit-Farbcodierung & Verformung:**
+3. **Arbeitspaket A.3 – Echtzeit-Farbcodierung & Verformung:**
    - **Spannungs-Farbcodierung:**
      - Zugstäbe ($N > 0$): Blau, Linienstärke $w = 2 + 3 \cdot \frac{|N|}{N_{\max}}$.
      - Druckstäbe ($N < 0$): Rot, Linienstärke $w = 2 + 3 \cdot \frac{|N|}{N_{\max}}$.
    - **Skalierte Verformungsanzeige:** Knotenpositionen werden für die Visualisierung mit einem Überhöhungsfaktor (z. B. $100\times$) animiert dargestellt (`Line.X1, Y1, X2, Y2` angepasst).
    - **Lagerkraft-Pfeile:** An den Auflagern werden die berechneten Reaktionskräfte $\mathbf{f}_p$ als Pfeile mit Pfeilspitzen eingeblendet.
-4. **Euler-Knicknachweis:**
+4. **Arbeitspaket A.4 – Euler-Knicknachweis & Gleichgewichtskontrolle:**
    - Für jeden Druckstab ($N < 0$) wird die kritische Euler-Knicklast berechnet:
      $$N_{\text{knick}} = \frac{\pi^2 E I}{L^2}$$
      wobei das Flächenträgheitsmoment für ein Kreisrohr ($D = 80\,\text{mm}, t = 5\,\text{mm}$) $I = \frac{\pi}{64}(D^4 - (D - 2t)^4)$ beträgt.
    - Überschreitet die Druckkraft die Knicklast ($|N| \ge N_{\text{knick}}$), blinkt der entsprechende Stab im Canvas gelb/orange als Warnanzeige.
-5. **Gleichgewichtskontrolle & Dokumentation:**
-   - Überprüfen Sie in jedem Simulationsschritt automatisiert $\sum \vec{F}_{\text{Lager}} + \sum \vec{F}_{\text{Last}} = \vec{0}$.
-   - Dokumentieren Sie die Biegelinie und die maximalen Stabkräfte im Markdown-Bericht.
+   - Überprüfen Sie in jedem Simulationsschritt automatisiert $\sum \vec{F}_{\text{Lager}} + \sum \vec{F}_{\text{Last}} = \vec{0}$ und dokumentieren Sie die Ergebnisse im Markdown-Bericht.
 
 ---
 
@@ -198,16 +196,16 @@ Im Simulationsspiel-Klassiker *Bridge Constructor* entwerfen Spieler Brücken ü
 
 #### Aufgabenstellung Track B:
 
-1. **Verheiratung mit dem T03 Blueprint Sketcher:**
+1. **Arbeitspaket B.1 – Verheiratung mit dem T03 Blueprint Sketcher:**
    - Laden Sie eine Brückentopologie (z. B. Pratt- oder Warren-Fachwerk mit $L = 20\,\text{m}$, zwei feste Felswand-Auflager links und rechts).
    - Visualisierung auf dem WPF Canvas: Fahrbahn, Diagonalen, Pfosten und Knoten.
-2. **Kontinuierliche LKW-Überfahrt:**
+2. **Arbeitspaket B.2 – Kontinuierliche LKW-Überfahrt:**
    - Ein zweiachsiger LKW (Vorderachse $15\,\text{kN}$, Hinterachse $25\,\text{kN}$, Achsabstand $3\,\text{m}$) fährt mit konstanter Geschwindigkeit über die Brückenfahrbahn.
    - Die Achslasten werden proportional zur Position auf die Fahrbahnknoten eingeleitet.
    - In jedem Zeitschritt ($50\,\text{ms}$) wird das statische Gleichgewicht via Math.NET Cholesky berechnet.
-3. **Echtzeit-Spannungsanzeige:**
+3. **Arbeitspaket B.3 – Echtzeit-Spannungsanzeige:**
    - Stäbe ändern flüssig ihre Farbe: Grün ($< 50\,\%$ Belastung) $\to$ Gelb ($50\text{--}80\,\%$) $\to$ Rot ($80\text{--}99\,\%$).
-4. **Stabbruch & Kollaps-Dynamik:**
+4. **Arbeitspaket B.4 – Stabbruch, Kollaps-Dynamik & Gleichgewichtsnachweis:**
    - Jeder Stab besitzt eine maximale Zug-/Druckfestigkeit $N_{\text{zul}} = 30\,\text{kN}$.
    - Übersteigt $|N_i| > N_{\text{zul}}$, **bricht der Stab**:
      - Der Stab wird aus der Topologie und der Steifigkeitsmatrix gelöscht.
@@ -221,7 +219,6 @@ Im Simulationsspiel-Klassiker *Bridge Constructor* entwerfen Spieler Brücken ü
        }
        ```
      - Bei Kollaps: Animieren Sie den Einsturz (Knoten fallen unter Gravitation nach unten).
-5. **Validierung vor dem Einsturz:**
    - Bis zum Bruch muss das Vektorgleichgewicht in jedem Zeitschritt exakt $\sum \vec{F} = \vec{0}$ erfüllen.
 
 ---

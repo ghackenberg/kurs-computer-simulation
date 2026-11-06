@@ -975,7 +975,7 @@ Die Benotung erfolgt vollständig semesterbegleitend aus zwei transparenten Säu
 <div class="two">
 
 **Säule 2: Übungen & Diskurs (60 %)**
-- **30 % C#-Code-Portfolio:** 10 wöchentliche Übungen (Track A oder B, Goldene Regel, MSTests)
+- **30 % C#-Code-Portfolio:** 10 wöchentliche Hausübungen (Stufe 1 + Stufe 2: Track A oder B, MSTests)
 - **15 % Showcase-Präsentationen:** Live-Vorführung der Lösungen im Rotationsprinzip
 - **15 % Peer-Review:** Konstruktiv-kritische Fachfragen aus dem Plenum
 

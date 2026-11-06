@@ -1,9 +1,9 @@
-# Moodle-Quiz 3 (Termin 8): Multithreading, Statische Fachwerke, ODEs & S-Functions
+# Moodle-Quiz 3 (Zu Beginn von Termin 8): 3D-Visualisierung, Multithreading & Statische Fachwerke
 
 **Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
 **Studiengang:** Bachelor Automatisierungstechnik (FH Oberösterreich, Campus Wels)  
-**Prüfungszeitpunkt:** Beginn Termin 8  
-**Bearbeitungszeit:** 15–20 Minuten  
+**Prüfungszeitpunkt:** Zu Beginn von Termin 8 (erste 15 Minuten vor dem Theorie-Impuls zu Kapitel 08)  
+**Bearbeitungszeit:** 15 Minuten  
 **Säule:** Säule 1 (Theoretische & numerische Grundlagen, Gewicht: 7,5 % der Gesamtnote)  
 **Prüfungsmodus:** Präsenz im EDV-Labor / Safe Exam Browser in Moodle  
 **Zulässige Hilfsmittel:** Taschenrechner (nicht-programmierbar) oder Windows-Rechner; keine LLM-Nutzung / Closed-Book
@@ -12,164 +12,220 @@
 
 ## Didaktische Zielsetzung & Einbettung
 
-Dieses Quiz überprüft die parallele Hochleistungsverarbeitung in C#/.NET (TPL), das Aufstellen und Lösen linearer Gleichungssysteme elastischer Fachwerke mit `Math.NET Numerics` (Cholesky-Faktorisierung) sowie die numerische Lösung kontinuierlicher Differentialgleichungen (ODEs) mittels S-Functions und Anti-Windup-Regelungsstrategien.
+Dieses Quiz überprüft zu Beginn von Termin 08 nach dem Prinzip der strikten Rückwärts-Kausalität ausschließlich den Stoff der vorangegangenen Termine 05, 06 und 07 (Kapitel 05, 06 und 07): die mathematische 3D-Visualisierung mit `SharpGL`/OpenGL (Szenengraph, homogene Matrizen, Kugelkoordinaten-Orbitkamera), die parallele Hochleistungsverarbeitung in C#/.NET (TPL, Amdahlsches Gesetz, Race Conditions, False Sharing) sowie das Aufstellen und Lösen linearer Gleichungssysteme elastischer 2D-Fachwerke mit `Math.NET Numerics` (Steifigkeitsmatrix, Lagerung, Cholesky-Zerlegung).
 
-### Stoffabgrenzung & Tabu-Grenzen
-* **Inhalte:** Kapitel 06 (Multithreading mit TPL, `Parallel.For`, Amdahlsches Gesetz, Speedup, Race Conditions, False Sharing, thread-lokale Akkumulation), Kapitel 07 (Statische FE-Fachwerke, globale Steifigkeitsmatrix $\mathbf{K}$, Lagerungsbedingungen, reduzierte Matrix der freien Freiheitsgrade $\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f$, Cholesky-Zerlegung $\mathbf{L}\mathbf{L}^\top$, Singularität & Mechanismen), Kapitel 08 (Kontinuierliche Modelle, S-Functions, expliziter Euler vs. Runge-Kutta-4 (RK4), Butcher-Tableau, Stabilitätsgebiete bei Oszillatoren, Aktor-Sättigung und Anti-Windup Clamping).
-* **Strikte Tabu-Grenzen:**
-  - ❌ **KEINE** diskreten Ereignissysteme (DES) oder Warteschlangen (Kapitel 09)
-  - ❌ **KEIN** Little's Gesetz oder M/M/1-Warteschlangen (Kapitel 09)
-  - ❌ **KEINE** Zero-Crossing-Bisektion oder hybriden Kontaktmodelle (Kapitel 10)
-  - ❌ **KEINE** VIBN / FMI / Co-Simulation (Kapitel 11)
+### Stoffabgrenzung & Tabu-Grenzen (Rückwärts-Kausalität)
+* **Geprüfte Inhalte (Termin 05, 06 & 07):** Kapitel 05 (SharpGL 3D-Pipeline, Kugelkoordinaten-Orbit-Kamera & Gimbal-Lock-Schutz, homogene $4 \times 4$-Matrizen, Szenengraph `glPushMatrix`/`glPopMatrix`, Vorwärtskinematik, Phong-Beleuchtung), Kapitel 06 (TPL `Parallel.For`, Partitionierung, Race Conditions, `Interlocked` vs. `lock`, False Sharing auf CPU-Cache-Lines, Amdahlsches Gesetz & Speedup), Kapitel 07 (Statische 2D-FEM-Fachwerke, Federsteifigkeit $k = EA/L$, globale Steifigkeitsmatrix $\mathbf{K}$, Blockpartitionierung $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$, Starrkörpermoden & Lagerungen, Cholesky-Zerlegung $\mathbf{K}_{ff} = \mathbf{L}\mathbf{L}^\top$).
+* **Strikte Tabu-Grenzen (ab Termin 08+):**
+  - ❌ **KEINE** kontinuierlichen ODE-Solver höherer Ordnung wie Heun (RK2) oder Runge-Kutta-4 (RK4), Butcher-Tableaus, S-Functions oder Anti-Windup Clamping (Kapitel 08 – wird erst nach dem Quiz gelehrt!)
+  - ❌ **KEINE** diskreten Ereignissysteme (DES), `PriorityQueue` oder Warteschlangen nach Little's Gesetz (Kapitel 09)
+  - ❌ **KEINE** hybride Zero-Crossing-Bisektion oder Zeno-Effekte (Kapitel 10)
 
 ---
 
-## Fragenübersicht
+## Fragenübersicht (8 Fragen / 10,0 Punkte)
 
 | Nr. | Thema | Fragentyp | Bloom-Taxonomie | Punkte |
-| :---: | :--- | :--- | :--- | :---: |
-| **Q3.1** | Amdahlsches Gesetz & Speedup-Berechnung | Numerische Berechnung | Anwenden / Berechnen (L3) | 2,0 |
-| **Q3.2** | TPL `Parallel.For` & Race Conditions | Code-Mutation (Single-Choice) | Analysieren / Debuggen (L4) | 1,5 |
-| **Q3.3** | Statik FEM: LGS $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$ & Cholesky-Bedingungen | FE-Mechanik & Numerik (Multiple-Select) | Verstehen / Differenzieren (L3) | 1,5 |
-| **Q3.4** | ODE-Solver: Runge-Kutta-4 vs. Expliziter Euler bei Schwingern | Stabilitätsanalyse (Single-Choice) | Bewerten / Urteilen (L5) | 1,5 |
-| **Q3.5** | S-Functions: Aktor-Sättigung & Anti-Windup Clamping | Mechatronische Regelung (Single-Choice) | Verstehen / Analysieren (L3) | 1,5 |
-| **Gesamt** | | | | **8,0 Pkt.** |
+| :---: | :--- | :--- | :---: | :---: |
+| **Q3.1** | Amdahlsches Gesetz & Paralleler Speedup auf Multicore-CPUs | Numerische Berechnung (Freitext `{#...}`) | Anwenden / Berechnen (L3) | 2,0 |
+| **Q3.2** | Statische 1D/2D-FEM: Axiale Stabsteifigkeit & Knotenverschiebung | Numerische Berechnung (Freitext `{#...}`) | Anwenden / Berechnen (L3) | 1,5 |
+| **Q3.3** | Code-Tracing: Assemblierung der globalen Steifigkeitsmatrix $\mathbf{K}$ | Code-Tracing (Freitext `{#...}`) | Analysieren / Berechnen (L4) | 1,5 |
+| **Q3.4** | TPL `Parallel.For`: Race Conditions & Thread-lokale Reduktion | Code-Diagnose (Single-Choice, 4 Optionen) | Analysieren / Debuggen (L4) | 1,0 |
+| **Q3.5** | 3D-Orbitkamera: Kugelkoordinaten & Pol-Singularität (Gimbal Lock) | 3D-Kinematik (Single-Choice, 4 Optionen) | Analysieren (L4) | 1,0 |
+| **Q3.6** | Multicore-Speicherarchitektur: False Sharing auf CPU-Cache-Lines | Performance-Analyse (Single-Choice, 4 Optionen) | Analysieren / Bewerten (L4) | 1,0 |
+| **Q3.7** | Homogene $4 \times 4$-Matrizen, Szenengraph & Phong-Beleuchtung | Vernetztes Wissen (Multiple-Select, 4 Optionen) | Verstehen / Analysieren (L3) | 1,0 |
+| **Q3.8** | Statik-FEM: Reduziertes System $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$ & Cholesky-Zerlegung | Vernetztes Wissen (Multiple-Select, 4 Optionen) | Verstehen / Differenzieren (L3) | 1,0 |
+| **Gesamt** | **3× Numerisch (5,0 P.) + 3× Single-Choice (3,0 P.) + 2× Multiple-Select (2,0 P.)** | | | **10,0 Pkt.** |
 
 ---
 
 ## Detaillierte Fragen & Musterlösungen
 
-### Frage 3.1: Amdahlsches Gesetz & Speedup-Berechnung (Berechnung)
+### Frage 3.1: Amdahlsches Gesetz & Paralleler Speedup auf Multicore-CPUs (Numerisch – 2,0 Punkte)
 
 #### Fragetext
-Ein simulationsgestützter Finite-Elemente-Algorithmus verbringt $20\,\%$ seiner gesamten Rechenzeit in sequentiellen Vorbereitungs-, Dateizugriffs- und UI-Synchronisationsroutinen ($s = 0{,}20$). Der verbleibende Anteil von $80\,\%$ ($p = 0{,}80$) kann perfekt auf parallele CPU-Threads aufgeteilt werden.
+Ein simulationsgestützter Berechnungsalgorithmus benötigt für einen Zeitschritt auf einem einzelnen Prozessorkern genau $100\,\text{ms}$. Eine Profiling-Analyse ergibt, dass $20\,\%$ dieser Laufzeit auf zwingend sequentielle Vorbereitungs-, Dateizugriffs- und UI-Synchronisationsroutinen entfallen ($s = 0{,}20$). Der verbleibende Anteil von $80\,\%$ ($p = 0{,}80$) lässt sich ohne Kommunikationsverlust parallelisieren.
 
-Berechnen Sie den **theoretisch maximal erreichbaren Speedup $S(N)$** bei Ausführung des Algorithmus auf einer Workstation mit **$N = 4$ physikalischen Prozessorkernen** nach Amdahls Gesetz:
-$$S(N) = \frac{1}{s + \frac{1 - s}{N}}$$
-
-*(Geben Sie den Beschleunigungsfaktor als Dezimalzahl ohne Einheit an, z. B. `3.75`)*
+Berechnen Sie den **theoretisch maximal erreichbaren Gesamt-Speedup $S$** bei Ausführung des Algorithmus auf einer Workstation mit **$N = 4$ identischen Prozessorkernen**.  
+*(Geben Sie den Beschleunigungsfaktor als Dezimalzahl ohne Einheit ein, z. B. `3.25`)*
 
 #### Antwortwert
-* **Musterlösung:** `2.50` (akzeptierter Toleranzbereich: `2.45` bis `2.55`)
+* **Musterlösung:** `2.5` (akzeptierter Toleranzbereich: `2.45` bis `2.55`)
 
 #### Mathematische Herleitung & Didaktik
-Gegeben:
-* Serieller Anteil: $s = 0{,}20$
-* Paralleler Anteil: $p = 1 - s = 0{,}80$
-* Anzahl Prozessorkerne: $N = 4$
+Nach dem Amdahlschen Gesetz setzt sich die normierte Gesamtlaufzeit auf $N$ Kernen aus dem unveränderlichen seriellen Anteil $s$ und dem durch $N$ geteilten parallelen Anteil $(1 - s) / N$ zusammen:
+$$S(N) = \frac{1}{s + \frac{1 - s}{N}} = \frac{1}{0{,}20 + \frac{0{,}80}{4}} = \frac{1}{0{,}20 + 0{,}20} = \frac{1}{0{,}40} = 2{,}50$$
 
-Einsetzen in Amdahls Gesetz:
-$$S(4) = \frac{1}{0{,}20 + \frac{0{,}80}{4}} = \frac{1}{0{,}20 + 0{,}20} = \frac{1}{0{,}40} = 2{,}50$$
-
-*Didaktischer Zusatzhinweis:* Selbst bei unendlich vielen Prozessorkernen ($N \to \infty$) ist der theoretische Speedup asymptotisch durch $\frac{1}{s} = \frac{1}{0{,}20} = 5{,}0$ gedeckelt. Ein 4-Kern-System erreicht somit bereits die Hälfte des absoluten theoretischen Maximums.
+*(Alternativ über die Laufzeit: $T(4) = 20\,\text{ms} + \frac{80\,\text{ms}}{4} = 40\,\text{ms} \implies S = \frac{100\,\text{ms}}{40\,\text{ms}} = 2{,}50$).*
 
 ---
 
-### Frage 3.2: TPL `Parallel.For` & Race Conditions (Code-Mutation)
+### Frage 3.2: Statische 1D/2D-FEM: Axiale Stabsteifigkeit & Knotenverschiebung (Numerisch – 1,5 Punkte)
 
 #### Fragetext
-Ein Entwickler möchte die gesamte kinetische Energie eines Teilchensystems ($N = 1\,000\,000$ Partikel) parallel mit der .NET Task Parallel Library (TPL) berechnen:
+Ein horizontaler Zugstab eines ebenen Fachwerks ist am linken Knoten $0$ fest eingespannt ($u_{0x} = 0$, $u_{0y} = 0$) und wird am rechten Knoten $1$ in positiver X-Richtung mit einer statischen Horizontalkraft von **$F_x = 42\,\text{kN}$** belastet.
+
+Gegeben sind die Material- und Geometriekennwerte des Stabs:
+* Elastizitätsmodul (Stahl): $E = 210\,\text{GPa} = 2{,}1 \cdot 10^{11}\,\frac{\text{N}}{\text{m}^2}$
+* Querschnittsfläche des Stabs: $A = 1{,}0\,\text{cm}^2 = 1{,}0 \cdot 10^{-4}\,\text{m}^2$
+* Unverformte Stablänge: $L = 2{,}0\,\text{m}$
+
+Berechnen Sie die resultierende **horizontale Knotenverschiebung $u_{1x}$ in Millimetern $[\text{mm}]$**.  
+*(Geben Sie den Zahlenwert in Millimetern ohne Einheit ein, z. B. `1.5`)*
+
+#### Antwortwert
+* **Musterlösung:** `4.0` (akzeptierter Toleranzbereich: `3.9` bis `4.1`)
+
+#### Mathematische Herleitung & Didaktik
+1. Axiale Federsteifigkeit $k$ des Fachwerkstabs:
+   $$k = \frac{E \cdot A}{L} = \frac{2{,}1 \cdot 10^{11}\,\frac{\text{N}}{\text{m}^2} \cdot 1{,}0 \cdot 10^{-4}\,\text{m}^2}{2{,}0\,\text{m}} = \frac{2{,}1 \cdot 10^7\,\text{N}}{2{,}0\,\text{m}} = 1{,}05 \cdot 10^7\,\frac{\text{N}}{\text{m}}$$
+2. Gleichgewicht am freien Freiheitsgrad $u_{1x}$ ($k \cdot u_{1x} = F_x$ mit $F_x = 42\,\text{kN} = 4{,}2 \cdot 10^4\,\text{N}$):
+   $$u_{1x} = \frac{F_x}{k} = \frac{4{,}2 \cdot 10^4\,\text{N}}{1{,}05 \cdot 10^7\,\frac{\text{N}}{\text{m}}} = 4{,}0 \cdot 10^{-3}\,\text{m} = 4{,}0\,\text{mm}$$
+
+---
+
+### Frage 3.3: Code-Tracing: Assemblierung der globalen Steifigkeitsmatrix $\mathbf{K}$ (Numerisch – 1,5 Punkte)
+
+#### Fragetext
+Zwei kollineare 1D-Federelemente (Element $A$ zwischen Knoten $0$ und $1$ mit Steifigkeit `kA = 150.0`, Element $B$ zwischen Knoten $1$ und $2$ mit Steifigkeit `kB = 250.0`) werden im folgenden C#-Code in die globale $3 \times 3$-Steifigkeitsmatrix `K` assembliert:
 
 ```csharp
-double totalKineticEnergy = 0.0;
+double[,] K = new double[3, 3];
+double[] kElem = { 150.0, 250.0 };
+int[,] nodes   = { { 0, 1 }, { 1, 2 } };
 
+for (int e = 0; e < 2; e++)
+{
+    int i = nodes[e, 0];
+    int j = nodes[e, 1];
+    double ke = kElem[e];
+
+    K[i, i] += ke;
+    K[i, j] -= ke;
+    K[j, i] -= ke;
+    K[j, j] += ke;
+}
+
+double traceCenter = K[1, 1] + K[0, 1];
+```
+
+Welchen exakten numerischen Wert hat die Variable `traceCenter` nach Abschluss der Assemblierungsschleife?  
+*(Geben Sie den Zahlenwert ohne Einheit ein, z. B. `100.0`)*
+
+#### Antwortwert
+* **Musterlösung:** `250.0` (akzeptierter Toleranzbereich: `249.9` bis `250.1`)
+
+#### Mathematische Herleitung & Didaktik
+1. **Element `e = 0` (`i = 0, j = 1, ke = 150.0`):**
+   * `K[0, 0] += 150.0` $\to 150.0$
+   * `K[0, 1] -= 150.0` $\to -150.0$
+   * `K[1, 0] -= 150.0` $\to -150.0$
+   * `K[1, 1] += 150.0` $\to 150.0$
+2. **Element `e = 1` (`i = 1, j = 2, ke = 250.0`):**
+   * `K[1, 1] += 250.0` $\to 150.0 + 250.0 = 400.0$ (Überlappung am Mittelknoten 1!)
+   * `K[1, 2] -= 250.0` $\to -250.0$
+   * `K[2, 1] -= 250.0` $\to -250.0$
+   * `K[2, 2] += 250.0` $\to 250.0$
+3. **Auswertung von `traceCenter`:**
+   $$\text{traceCenter} = K[1, 1] + K[0, 1] = 400{,}0 + (-150{,}0) = 250{,}0$$
+
+---
+
+### Frage 3.4: TPL `Parallel.For`: Race Conditions & Thread-lokale Reduktion (Single-Choice – 1,0 Punkte)
+
+#### Fragetext
+Ein Entwickler möchte die gesamte kinetische Energie eines Partikelsystems ($N = 1\,000\,000$ Partikel) parallel mit der .NET Task Parallel Library (TPL) aufsummieren:
+
+```csharp
+double totalEnergy = 0.0;
 Parallel.For(0, particles.Length, i =>
 {
     double e = 0.5 * particles[i].Mass * particles[i].VelocitySquared;
-    totalKineticEnergy += e; // Summation über alle Partikel
+    totalEnergy += e;
 });
-
-Console.WriteLine($"Gesamtenergie: {totalKineticEnergy} J");
 ```
 
-Bei jedem Testlauf gibt das Programm einen völlig anderen, deutlich zu geringen Energiewert aus. Was ist die **exakte Ursache** und wie lautet die professionelle C#/.NET-Lösung?
+Bei jedem Programmlauf liefert `totalEnergy` ein anderes, deutlich zu kleines Ergebnis. Was ist die exakte Ursache und wie lautet das performante Standardmuster zur Behebung in C#?
 
 #### Antwortoptionen
-* [ ] A) `Parallel.For` bricht bei großen Arrays automatisch nach dem ersten Core ab; man muss stattdessen eine `while`-Schleife mit `Thread.Sleep(1)` verwenden.
-* [x] B) Auf die Variable `totalKineticEnergy` greifen mehrere Threads gleichzeitig unkoordiniert schreibend zu (Race Condition / Data Race). Die Anweisung `+=` ist nicht atomar (Laden, Inkrementieren, Speichern). Die professionelle Lösung nutzt die Thread-lokale Überladung von `Parallel.For<double>` mit Initialisierer, lokalem Akkumulator und synchronisiertem `Interlocked.Add` / `lock` in `localFinally`, oder PLINQs `.AsParallel().Sum(...)`.
-* [ ] C) Fließkommazahlen (`double`) dürfen in C# nicht im Arbeitsspeicher addiert werden; Berechnungen müssen im Grafikspeicher als Vektoren deklariert werden.
-* [ ] D) Das Array `particles` muss vor der Schleife mit `Array.Reverse` invertiert werden, um Cache-Konflikte zu vermeiden.
+* [ ] A) Der Thread-Pool bricht `Parallel.For`-Schleifen ab einer Million Iterationen vorzeitig ab, weshalb die Schleife zwingend durch manuell instanziierte `new Thread()`-Objekte mit `ThreadPriority.Highest` ersetzt werden muss.
+* [x] B) Die Operation `totalEnergy += e` ist eine nicht-atomare Read-Modify-Write-Sequenz mit **Lost Updates (Race Condition)**; gelöst wird dies durch `Parallel.For<double>` mit Thread-lokalen Teilakkumulatoren und abschließendem `lock` im `localFinally`-Block.
+* [ ] C) Da `double`-Variablen auf 64-Bit-Architekturen nicht im CPU-Cache gehalten werden können, genügt das Voranstellen des Schlüsselworts `volatile` vor `totalEnergy`, um alle parallelen Additionen verlustfrei zu serialisieren.
+* [ ] D) Die Methode `Parallel.For` durchläuft das Array rückwärts, wodurch bei der Gleitkomma-Addition Rundungsfehler kumulieren; ein vorgeschaltetes `Array.Sort(particles)` stellt die deterministische Summengenauigkeit wieder her.
 
 #### Didaktische Begründung
-* *Option B beschreibt exakt die fundamentale Multithreading-Falle:* Ohne Thread-lokale Reduktion überschreiben sich parallele CPU-Cores gegenseitig die Zwischenergebnisse im Cache (Lost Updates).
-* *Distraktor A, C, D sind technisch haltlos.*
+* *Option B ist korrekt:* Mehrere Threads lesen gleichzeitig denselben alten Wert von `totalEnergy` in ihre Register, addieren ihr `e` und überschreiben sich beim Zurückschreiben gegenseitig. Ein `lock` in *jedem* einzelnen Schleifendurchlauf würde die Parallelisierung durch Lock-Contention zerstören; daher akkumuliert jeder Worker-Thread zunächst lock-frei in einer Thread-lokalen Variable (`localInit` / `body`) und führt nur einmal am Ende seiner Partition im `localFinally` ein synchronisiertes Update durch.
 
 ---
 
-### Frage 3.3: Statik FEM: LGS $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$ & Cholesky-Bedingungen (Multiple-Select)
+### Frage 3.5: 3D-Orbitkamera: Kugelkoordinaten & Pol-Singularität (Gimbal Lock) (Single-Choice – 1,0 Punkte)
 
 #### Fragetext
-Bei der statischen FE-Berechnung eines 2D-Fachwerks mit der Knoten-Freiwertmethode wird das Gleichungssystem für die ungebundenen (freien) Freiheitsgrade aufgestellt:
-$$\mathbf{K}_{ff} \cdot \mathbf{u}_f = \mathbf{f}_f$$
-Zur Lösung soll die performante **Cholesky-Zerlegung** ($\mathbf{K}_{ff} = \mathbf{L} \cdot \mathbf{L}^\top$) mit `Math.NET Numerics` verwendet werden.
+In einer 3D-Anwendung (`SharpGL` / OpenGL) bewegt sich eine Orbitkamera auf einer Kugeloberfläche mit Radius $R$ um den Zielpunkt $(0, 0, 0)$. Ihre kartesische Position wird aus dem Azimutwinkel $\theta$ und dem Elevationswinkel $\phi$ bestimmt, während der globale Up-Vektor der Kamera in `gluLookAt` fest auf $\mathbf{u} = (0, 1, 0)^\top$ gesetzt ist.
 
-Welche Bedingungen müssen **zwingend erfüllt sein**, damit die Cholesky-Zerlegung mathematisch existiert und numerisch stabil durchläuft?  
-*(Wählen Sie alle richtigen Aussagen)*
+Warum muss der Elevationswinkel $\phi$ in der Maussteuerung zwingend auf ein Intervall wie $[-89^\circ, +89^\circ]$ begrenzt (geclampt) werden?
 
 #### Antwortoptionen
-* [x] A) Die reduzierte Steifigkeitsmatrix $\mathbf{K}_{ff}$ muss **symmetrisch und positiv definit** (SPD) sein, d. h. $\mathbf{x}^\top \mathbf{K}_{ff} \mathbf{x} > 0$ für alle Vektoren $\mathbf{x} \neq \mathbf{0}$.
-* [x] B) Alle Starrkörperbewegungen in der Ebene (zwei Translationen $u_x, u_y$ und eine Rotation $\varphi$) müssen durch mindestens 3 linear unabhängige Lagerbedingungen vollständig gesperrt sein.
-* [x] C) Die Fachwerkstruktur darf keine kinematischen Mechanismen enthalten (z. B. gelenkige Vierecksfelder ohne Aussteifungsdiagonale), da sonst mindestens ein Eigenwert Null wird ($\det(\mathbf{K}_{ff}) = 0$) und die Cholesky-Zerlegung mit einer Division durch Null bzw. Wurzel aus einer negativen Zahl abbricht.
-* [ ] D) Die Diagonalelemente der Matrix müssen alle identisch groß sein, da Cholesky sonst eine Matrix-Transformation ins Frequenzgebiet verlangt.
-* [ ] E) Der Lastvektor $\mathbf{f}_f$ darf an keinem Knoten Null sein, da die Cholesky-Zerlegung sonst auf singuläre Lasten stößt.
+* [x] A) Bei $\phi = \pm 90^\circ$ liegt die Blickrichtung exakt parallel zum festen Up-Vektor $(0, 1, 0)^\top$, sodass deren Kreuzprodukt zur Berechnung des Kamera-Rechtsvektors zum Nullvektor entartet und die View-Matrix kollabiert.
+* [ ] B) Oberhalb von $\phi = 89^\circ$ schneidet die Near-Clipping-Plane der perspektivischen Projektionsmatrix zwangsläufig den Koordinatenursprung, wodurch sämtliche Dreiecks-Primitive durch den Z-Buffer-Test verworfen werden.
+* [ ] C) Die trigonometrischen Funktionen `Math.Sin` und `Math.Cos` sind in der IEEE-754-Gleitkommaarithmetik nur im offenen Intervall $(-\pi/2, +\pi/2)$ definiert und werfen exakt bei $\pm 90^\circ$ eine `ArithmeticException`.
+* [ ] D) Ab einem Elevationswinkel von $90^\circ$ kehrt sich in OpenGL der Umlaufsinn (Winding Order) aller Polygon-Eckpunkte von gegen den Uhrzeigersinn (CCW) auf im Uhrzeigersinn (CW) um, sodass das Backface-Culling das Modell ausblendet.
 
 #### Didaktische Begründung
-* *A, B, C sind die zentralen Voraussetzungen:* Symmetrie folgt aus dem Satz von Betti/Maxwell, positive Definitheit erfordert die Beseitigung aller Starrkörperbewegungen und inneren Mechanismen (Eigenwerte alle strikt positiv: $\lambda_i > 0$).
-* *D und E sind sachlich falsch:* Diagonalelemente variieren mit Stabsteifigkeit; der Lastvektor $\mathbf{f}_f$ beeinflusst die Matrixzerlegung $\mathbf{K} = \mathbf{L} \mathbf{L}^\top$ überhaupt nicht.
+* *Option A ist korrekt:* `gluLookAt` konstruiert ein orthonormales Kamerakoordinatensystem über das Kreuzprodukt $\mathbf{s} = \mathbf{f} \times \mathbf{u}$ aus Blickrichtungsvektor $\mathbf{f}$ und Up-Vektor $\mathbf{u}$. Steht die Kamera exakt im Zenit oder Nadir ($\phi = \pm 90^\circ$), ist $\mathbf{f} \parallel \mathbf{u}$, somit $\mathbf{f} \times \mathbf{u} = \mathbf{0}$, und die Normierung $\mathbf{s} / \|\mathbf{s}\|$ dividiert durch Null (`NaN`).
 
 ---
 
-### Frage 3.4: ODE-Solver: Runge-Kutta-4 vs. Expliziter Euler bei Schwingern (Stabilität)
+### Frage 3.6: Multicore-Speicherarchitektur: False Sharing auf CPU-Cache-Lines (Single-Choice – 1,0 Punkte)
 
 #### Fragetext
-Ein ungedämpfter harmonischer Feder-Masse-Schwinger ($m \ddot{x} + c x = 0$) wird als Zustandsraummodell erster Ordnung formuliert:
-$$\begin{pmatrix} \dot{x}_1 \\ \dot{x}_2 \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ -\omega_0^2 & 0 \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}, \quad \text{mit } x_1 = x, \, x_2 = v, \, \omega_0 = \sqrt{\frac{c}{m}}$$
-Die Eigenwerte der Systemmatrix liegen exakt auf der imaginären Achse der komplexen Zahlenebene: $\lambda_{1,2} = \pm i \omega_0$.
+Um in einer `Parallel.For`-Schleife über $4$ Threads jegliche Race Condition ohne `lock` zu vermeiden, legt ein Entwickler ein gemeinsames Array `double[] partialSums = new double[4]` an, in dem Thread `t` bei jeder Iteration direkt auf sein eigenes Element `partialSums[t] += val` schreibt.
 
-Was geschieht bei der numerischen Integration dieses Systems mit dem **expliziten Euler-Verfahren** im Vergleich zum klassischen **Runge-Kutta-Verfahren 4. Ordnung (RK4)** bei fester Schrittweite $h = 0{,}02\,\text{s}$?
+Obwohl das Ergebnis mathematisch exakt stimmt, ist die parallele Version deutlich langsamer als ein einzelner Thread. Welcher Hardware-Effekt verursacht diesen massiven Performance-Einbruch?
 
 #### Antwortoptionen
-* [x] A) **Der explizite Euler destabilisiert das System künstlich:** Da das Stabilitätsgebiet des expliziten Eulers ($|1 + h\lambda| \le 1$) die imaginäre Achse außer im Ursprung nirgends berührt, gilt stets $|1 \pm i \omega_0 h| = \sqrt{1 + \omega_0^2 h^2} > 1$. Der Integrator führt dem System unphysikalische Energie zu; die Amplitude wächst exponentiell an (Phasenraumtrajektorie spiralt nach außen). **RK4** hingegen schließt Teile der imaginären Achse stabil ein (bis $|h\omega_0| \le 2\sqrt{2} \approx 2{,}83$) und integriert die Schwingung mit einem lokalen Fehler von $\mathcal{O}(h^5)$ hochpräzise und phasenstabil.
-* [ ] B) Der explizite Euler ist absolut exakt, während RK4 die Schwingung sofort bis zum Stillstand dämpft, da Zwischensteigungen $k_1 \dots k_4$ Reibungskräfte erzeugen.
-* [ ] C) Beide Solver erzeugen exakt dieselbe Trajektorie; RK4 benötigt lediglich viermal mehr Speicher auf der Festplatte.
-* [ ] D) Der explizite Euler friert die Simulation ein, weil rein imaginäre Eigenwerte von C# nicht als `double` dargestellt werden können.
+* [ ] A) Der Garbage Collector von .NET verschiebt Arrays mit weniger als $8$ Elementen bei jedem Schreibzugriff zwischen Generation 0 und dem Large Object Heap (LOH), was permanente Speicher-Kopieroperationen auslöst.
+* [x] B) Da die vier benachbarten `double`-Werte ($32\,\text{Bytes}$) in derselben $64\,\text{Byte}$ großen **CPU-Cache-Line** liegen, invalidieren die Kerne über das Cache-Kohärenzprotokoll bei jedem Schreibzugriff gegenseitig ihre L1-Caches (**False Sharing**).
+* [ ] C) Der JIT-Compiler deaktiviert bei Zugriffen auf eindimensionale `double`-Arrays innerhalb von Lambda-Ausdrücken die Hardware-Gleitkommaeinheit (FPU) und emuliert die Addition langsam in Software auf dem Stack.
+* [ ] D) Durch die feste Array-Größe von $4$ Elementen kommt es in der Arbeitsspeicher-Bank zu einem Adress-Aliasing, bei dem der Speicherkontroller alle vier Kerne über einen gemeinsamen Betriebssystem-Mutex blockiert.
 
 #### Didaktische Begründung
-* *Option A ist das klassische Lehrbuchbeispiel für numerische Stabilität dynamischer Systeme:* Expliziter Euler ist für konservative, ungedämpfte Oszillatoren unbrauchbar, da er das System kontinuierlich energetisch anbläst. RK4 besitzt ein Stabilitätsgebiet, das bis $2{,}83$ auf der imaginären Achse reicht.
+* *Option B ist korrekt:* Moderne CPUs verwalten ihren Cache nicht byte- oder variablenweise, sondern in Blöcken von $64\,\text{Bytes}$ (*Cache Lines*). Liegen `partialSums[0]` bis `partialSums[3]` direkt hintereinander im Speicher, teilen sie sich dieselbe Cache-Line. Schreibt Kern 0 auf `partialSums[0]`, wird die gesamte Cache-Line für Kern 1, 2 und 3 als ungültig (*Invalid*) markiert und muss über den Bus neu geladen werden (*Cache-Line Ping-Pong*).
 
 ---
 
-### Frage 3.5: S-Functions: Aktor-Sättigung & Anti-Windup Clamping (Regelung)
+### Frage 3.7: Homogene $4 \times 4$-Matrizen, Szenengraph & Phong-Beleuchtung (Multiple-Select – 1,0 Punkte)
 
 #### Fragetext
-In der kontinuierlichen Simulation eines geregelten mechatronischen Antriebs ($m \ddot{x} = F_{\text{Aktor}} - d \dot{x}$) wird ein PID-Positionsregler eingesetzt. Der Aktor verfügt über eine physikalische Begrenzung der Maximalkraft:
-$$F_{\text{Aktor}} = \text{clamp}(u_{\text{PID}}, -F_{\max}, +F_{\max})$$
-
-Im Ableitungs-Schritt der S-Function (`CalculateDerivatives`) ist folgende Logik implementiert:
-```csharp
-// x[2] ist der Integrator-Zustand des I-Anteils (xi)
-double error = setpoint - x[0];
-double u_pid = Kp * error + Ki * x[2] - Kd * x[1];
-double thrust = Math.Clamp(u_pid, -F_max, F_max);
-
-// Anti-Windup: Conditional Integration (Clamping)
-if (thrust == u_pid || (thrust >= F_max && error < 0) || (thrust <= -F_max && error > 0))
-{
-    dxdt[2] = error; // Normal integrieren
-}
-else
-{
-    dxdt[2] = 0.0;   // Integrator einfrieren!
-}
-```
-
-Welches mechatronische Fehlverhalten wird durch dieses **Clamping** verhindert?
+In einer 3D-Simulation eines Mehrachs-Industrieroboters (`SharpGL`) werden die Armsegmente über einen hierarchischen Szenengraphen mit homogenen $4 \times 4$-Transformationsmatrizen positioniert und mit dem Phong-Beleuchtungsmodell schattiert. Welche der folgenden Aussagen sind **mathematisch und technisch zutreffend**?  
+*(Wählen Sie alle richtigen Aussagen; 2 bis 3 Antworten sind korrekt)*
 
 #### Antwortoptionen
-* [x] A) Es verhindert den **Integrator-Windup**: Wenn der Aktor in der Begrenzung ist, würde der I-Anteil ohne Clamping den Regelfehler ungebremst weiter aufintegrieren. Erreicht das System schließlich die Zielposition, bleibt der Regler aufgrund des riesigen gespeicherten I-Werts noch lange in der Sättigung hängen, was zu massivem Überschwingen und Instabilität führt. Clamping friert den Integrator ein, sobald der Aktor gesättigt ist und der Fehler den Aktor noch weiter übersteuern würde.
-* [ ] B) Es verhindert, dass die Masse des Objekts durch Rundungsfehler negativ wird.
-* [ ] C) Es schützt den Prozessor vor einer Division durch Null bei der Berechnung von `Kd * x[1]`.
-* [ ] D) Es sorgt dafür, dass die Schrittweite $h$ automatisch auf Null gesetzt wird, sobald der Motor warm läuft.
+* [x] A) Da die Matrixmultiplikation nicht kommutativ ist ($\mathbf{T} \cdot \mathbf{R} \neq \mathbf{R} \cdot \mathbf{T}$), bestimmt die Reihenfolge von Translation und Rotation, ob ein Bauteil um seinen lokalen Ursprung gedreht oder um den Weltursprung geschwenkt wird.
+* [x] B) Durch das Sichern und Wiederherstellen der aktuellen ModelView-Matrix mittels `glPushMatrix()` und `glPopMatrix()` im Szenengraphen wirken Transformationen eines Elternknotens auf alle Kindknoten, ohne Geschwisterknoten zu verändern.
+* [ ] C) Im Phong-Beleuchtungsmodell hängt die Intensität des diffusen Reflexionsanteils (Lambert-Strahlung) ausschließlich vom Winkel zwischen dem Kamerablickvektor und dem Ausfallswinkel ab und ist unabhängig vom Normalenvektor $\mathbf{n}$.
+* [ ] D) Homogene $4 \times 4$-Matrizen werden in der 3D-Grafik nur für reine Drehungen benötigt, da eine dreidimensionale Translation $\mathbf{v}' = \mathbf{v} + \mathbf{t}$ bereits durch eine reguläre lineare $3 \times 3$-Matrixmultiplikation exakt darstellbar ist.
 
 #### Didaktische Begründung
-* *Option A ist die exakte Definition und mechatronische Begründung von Anti-Windup via Clamping:* Der Integrator darf nur weiterintegrieren, wenn der Fehler dazu beiträgt, den Aktor wieder *aus* der Sättigung herauszubringen.
+* *A und B sind korrekt (+50 % je Option).*
+* *C ist falsch (-50 %):* Der diffuse Anteil nach Lambert ist proportional zum Skalarprodukt $\max(0, \mathbf{n} \cdot \mathbf{l})$ aus Oberflächennormale $\mathbf{n}$ und Lichtrichtungsvektor $\mathbf{l}$ (unabhängig vom Kameravektor $\mathbf{v}$, aber direkt abhängig von $\mathbf{n}$). Der Blickvektor $\mathbf{v}$ bestimmt den *spekularen* Glanzpunkt.
+* *D ist falsch (-50 %):* Eine $3 \times 3$-Matrix bildet den Nullvektor $\mathbf{0}$ immer auf $\mathbf{0}$ ab ($\mathbf{A}\cdot\mathbf{0} = \mathbf{0}$) und kann daher *keine* Translation darstellen. Erst der Übergang zu homogenen Koordinaten $(x, y, z, 1)^\top$ macht die Translation zu einer linearen Matrixmultiplikation in $\mathbb{R}^4$.
+
+---
+
+### Frage 3.8: Statik-FEM: Reduziertes System $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$ & Cholesky-Zerlegung (Multiple-Select – 1,0 Punkte)
+
+#### Fragetext
+Bei der statischen FE-Berechnung eines ebenen 2D-Fachwerks wird nach dem Einbau der Randbedingungen (Lagerungen) das reduzierte lineare Gleichungssystem $\mathbf{K}_{ff} \cdot \mathbf{u}_f = \mathbf{f}_f$ für die freien Freiheitsgrade mittels **Cholesky-Zerlegung** ($\mathbf{K}_{ff} = \mathbf{L} \cdot \mathbf{L}^\top$) in `Math.NET Numerics` gelöst. Welche Bedingungen und Eigenschaften sind **zwingend zutreffend**?  
+*(Wählen Sie alle richtigen Aussagen; 2 bis 3 Antworten sind korrekt)*
+
+#### Antwortoptionen
+* [x] A) Damit die reduzierte Steifigkeitsmatrix $\mathbf{K}_{ff}$ symmetrisch positiv definit (SPD) ist, müssen in der 2D-Ebene alle drei Starrkörpermoden (zwei Translationen, eine Rotation) durch Lagerungen sowie innere Mechanismen verhindert sein.
+* [x] B) Die Cholesky-Zerlegung nutzt die Symmetrie und positive Definitheit von $\mathbf{K}_{ff}$ gezielt aus, benötigt im Vergleich zur allgemeinen LU-Zerlegung nur etwa halb so viele Gleitkommaoperationen und kommt ohne Zeilenpivotisierung aus.
+* [ ] C) Die ungefilterte Gesamtsteifigkeitsmatrix $\mathbf{K}$ (vor dem Streichen der gelagerten Freiheitsgrade) besitzt ausschließlich strikt positive Eigenwerte und kann daher immer direkt ohne Randbedingungen per Cholesky faktorisiert werden.
+* [ ] D) Wenn an einem unbelasteten freien Knoten des Fachwerks der äußere Lastvektor-Eintrag gleich Null ist ($f_i = 0$), wird die zugehörige Hauptdiagonale in $\mathbf{K}_{ff}$ automatisch zu Null und die Cholesky-Zerlegung bricht mit einer Division durch Null ab.
+
+#### Didaktische Begründung
+* *A und B sind korrekt (+50 % je Option).*
+* *C ist falsch (-50 %):* Vor dem Einbau der Lagerungen kann sich das gesamte Tragwerk frei im Raum verschieben und drehen (Starrkörperbewegung ohne Formänderungsenergie $\mathbf{u}^\top \mathbf{K} \mathbf{u} = 0$). Die ungelagerte Gesamtmatrix $\mathbf{K}$ ist daher nur positiv *semidefinit* ($\det(\mathbf{K}) = 0$, mindestens 3 Eigenwerte sind Null) und singulär!
+* *D ist falsch (-50 %):* Die Steifigkeitsmatrix $\mathbf{K}_{ff}$ hängt ausschließlich von der Geometrie und den Stabsteifigkeiten $EA/L$ ab, niemals vom äußeren Lastvektor $\mathbf{f}_f$. Auch unbelastete Knoten besitzen durch die angeschlossenen Stäbe strikt positive Diagonaleinträge.

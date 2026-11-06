@@ -25,24 +25,26 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-### Showcase & Peer Review: Termin 06 (Multithreading & TPL)
+### Showcase & Peer-Challenge: Termin 06
+
+Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 06](../../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md)):
 
 <div class="columns">
 <div class="two">
 
-**Track A: Monte-Carlo-Toleranzanalyse (Industrie)**
+#### Stufe 2 – Track A: Monte-Carlo-Toleranzanalyse (Industrie)
 - Getriebe-Passungsspiel mit Maßketten
 - $10\,000\,000$ Bauteile parallel berechnet
 - Datenparallelität mit `Parallel.For` & TPL
-- Thread-sichere Aggregation (`Interlocked`)
+- Thread-sichere Aggregation (`Interlocked` / lokal)
 - *Peer Review:* Skalierung & UI-Entkopplung
 
 </div>
 <div class="two">
 
-**Track B: 100.000 Boids & Zombie-Horde (Game)**
+#### Stufe 2 – Track B: Boids & Zombie-Horde (Game)
 - Schwarm-Simulation à la Craig Reynolds
-- $100\,000$ Boids mit Nachbarschaftssuche
+- $50\,000+$ Boids mit Nachbarschaftssuche
 - CPU-Skalierung: Von 12 FPS auf flüssige 60 FPS
 - Asynchroner Task-Loop mit `CancellationToken`
 - *Peer Review:* Race Conditions & Not-Aus-Stresstest
@@ -50,8 +52,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 </div>
 </div>
 
-> [!NOTE]
-> **Showcase & Plenumsdiskussion:** Live-Vorführung beider Tracks auf der Beamer-Bühne. Stresstest des Not-Aus-Abbruchs unter Volllast. Details: [Aufgabenblatt Termin 06](../../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md).
+> **Peer-Challenge (Säule 2b):** Live-Vorführung am Beamer. Stresstest des kooperativen Not-Aus-Abbruchs (`CancellationToken`) unter Volllast.
 
 ---
 ## 7.1: Einführung und historische Entwicklung
@@ -1072,12 +1073,14 @@ Vector<double> fp = kpf.Multiply(uf); // Auflagerreaktionskräfte
 
 ---
 
-### Hands-on Labor: Termin 07 – Pick your Track!
+### Hausübung Termin 07: Statik, FEM & Cholesky
+
+**Stufe 1 (Basisaufgabe `1.1`–`1.3` für alle Teams auf `TrussFemSolver.sln`):** Auflager-/Kraftpfeile, 5-Knoten-Auslegerkran & Singularitäts-Test ([Aufgabenblatt 07](../../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">
 
-**Track A: Portalkran-FEM (Industrie)**
+#### Stufe 2 – Track A: Portalkran-FEM (Industrie)
 - **Verheiratung mit T03:** 2D-WPF-Canvas
 - Reale Hallenkran-Geometrie ($24\,\text{m}$)
 - Wanderlast $F_{\text{Last}} = 50\,\text{kN}$ (Laufkatze)
@@ -1087,7 +1090,7 @@ Vector<double> fp = kpf.Multiply(uf); // Auflagerreaktionskräfte
 </div>
 <div class="two">
 
-**Track B: Bridge Constructor (Game)**
+#### Stufe 2 – Track B: Bridge Constructor (Game)
 - **Verheiratung mit T03:** Interaktive Brücke
 - LKW-Überfahrt mit dynamischer Achslast
 - Cholesky-Statik in jedem Zeitschritt
@@ -1096,8 +1099,4 @@ Vector<double> fp = kpf.Multiply(uf); // Auflagerreaktionskräfte
 
 </div>
 </div>
-
-> [!TIP]
-> **Arbeitsauftrag:** Bearbeiten Sie im 2er-Team **GENAU EINEN** der beiden Tracks!
-> Aufgabenstellung & Vorlagen: [Aufgabenblatt Termin 07](../../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md).
 

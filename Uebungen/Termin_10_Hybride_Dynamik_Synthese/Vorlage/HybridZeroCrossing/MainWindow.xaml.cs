@@ -18,7 +18,7 @@ namespace HybridZeroCrossing
         private double _simTime = 0.0;
         private bool _isRunning = false;
 
-        // Telemetrie-Puffer für ScottPlot (Aufgabe A3)
+        // Telemetrie-Puffer für ScottPlot (Stufe 1 - Aufgabe 1.3)
         private readonly List<double> _timeLog = new();
         private readonly List<double> _energyLog = new();
         private readonly List<double> _heightLog = new();
@@ -78,7 +78,7 @@ namespace HybridZeroCrossing
 
         private void Kick_Click(object sender, RoutedEventArgs e)
         {
-            // Vertikaler Impuls nach oben (Aufgabe A2)
+            // Vertikaler Impuls nach oben (Stufe 1 - Aufgabe 1.2)
             _model.ApplyVerticalImpulse(ref _state, deltaV: 6.0);
             UpdateVisuals();
         }
@@ -128,7 +128,7 @@ namespace HybridZeroCrossing
             sigE.MarkerSize = 0;
             sigE.LegendText = "Gesamtenergie E_tot(t) [J]";
 
-            // TODO [Aufgabe A3]:
+            // TODO [Stufe 1 - Aufgabe 1.3]:
             // Plotten Sie zusätzlich die Ballhöhe `_heightLog.ToArray()` (skaliert mit `* 10.0`, damit beide
             // Kurven im selben Wertebereich liegen) als zweite Kurve in `EnergyPlot.Plot.Add.Scatter(...)`!
 

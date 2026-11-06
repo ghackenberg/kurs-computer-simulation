@@ -27,12 +27,12 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ### Showcase & Peer-Challenge: Termin 02
 
-Präsentation der Ergebnisse aus Termin 02 ([Aufgabenblatt 02](../../Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.md)):
+Präsentation der Hausübung aus Termin 02 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 02](../../Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.md)):
 
 <div class="columns">
 <div class="two">
 
-#### Track A: Industrie (CPU-Kühlkörper)
+#### Stufe 2 – Track A: Industrie (CPU-Kühlkörper)
 - **FDM-Modell:** Inhomogene Materialien (Si, Cu, Al) & Robin-Randbedingungen an Finnen.
 - **Numerik:** Stabilitätsgrenze $\Delta t \le \frac{\Delta x^2}{4 a_{\max}}$ für Kupfer nachweisen.
 - **Stresstest:** Lüfterausfall live schalten ($h: 250 \to 20\,\text{W/m}^2\text{K}$) oder $\Delta t$ verdoppeln.
@@ -40,7 +40,7 @@ Präsentation der Ergebnisse aus Termin 02 ([Aufgabenblatt 02](../../Uebungen/Te
 </div>
 <div class="two">
 
-#### Track B: Game (Doom Fire & Lava)
+#### Stufe 2 – Track B: Game (Doom Fire & Lava)
 - **Hybrid-Gitter:** 5-Punkt-FDM Wärmefeld gekoppelt mit zellulärem Sand-/Lava-Automat.
 - **Performance:** Allokationsfreier Render-Loop auf `WriteableBitmap.BackBuffer` ($\ge 45\,\text{FPS}$).
 - **Stresstest:** Diffusionsfaktor überkriechen lassen oder Großbrand live auslösen.
@@ -1182,8 +1182,8 @@ DrawTruss();
 - `ReleaseMouseCapture();`
 - Erst jetzt darf `Redraw()` die Bounding Box aktualisieren und das Modell neu einpassen.
 
-> **Sprint-Bezug:**  
-> Genau diesen Bugfix setzt ihr in Sprint-Aufgabe 4 live in [`VectorTrussCanvas`](../../Uebungen/Termin_03_Vektorgrafik_Canvas/Vorlage/VectorTrussCanvas/MainWindow.xaml.cs) um!
+> **Übungs-Bezug:**  
+> Genau diesen Bugfix setzt ihr in Basisaufgabe 1.4 in [`VectorTrussCanvas`](../../Uebungen/Termin_03_Vektorgrafik_Canvas/Vorlage/VectorTrussCanvas/MainWindow.xaml.cs) um!
 
 </div>
 </div>
@@ -1595,14 +1595,14 @@ public class SimpleRenderCanvas : FrameworkElement
 
 ---
 
-### Laborübung Termin 03: Vektorgrafik auf Canvas
+### Hausübung Termin 03: Vektorgrafik auf Canvas
 
-Vertiefende Hausübung (10 Pkt., Wahlmodell Track A oder B) – Details siehe [Aufgabenblatt 03](../../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md):
+**Stufe 1 (Basisaufgabe `1.1`–`1.4` für alle Teams auf `VectorTrussCanvas.sln`):** Stablängen, vertikale DIN-406-Maßkette & Jittering-Fix ([Aufgabenblatt 03](../../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">
 
-#### Track A: 2D-CAD Tragwerks-Inspektor
+#### Stufe 2 – Track A: 2D-CAD Tragwerks-Inspektor
 - Drittes Industriemodell ($\ge 10$ Knoten) & $1{,}0\,\text{m}$-Gitter
 - Zweistufige horizontale DIN-406-Bemaßungsketten
 - Interaktives Ziehen/Drehen der Kraftpfeilspitzen $(F_x, F_y)$
@@ -1611,7 +1611,7 @@ Vertiefende Hausübung (10 Pkt., Wahlmodell Track A oder B) – Details siehe [A
 </div>
 <div class="two">
 
-#### Track B: Poly Bridge Blueprint-Baumeister
+#### Stufe 2 – Track B: Poly Bridge Blueprint-Baumeister
 - Schlucht-Szenerie mit $0{,}5\,\text{m}$-Grid-Snapping
 - Knoten setzen, Stäbe spannen ($L \le 4{,}0\,\text{m}$) & löschen (`Entf`)
 - Gestrichelte Stab-Vorschau (grün/rot) & Live-Baubudget-Balken

@@ -34,7 +34,7 @@ namespace MultithreadingBenchmark
         private readonly uint[] _pixelBuffer;
         private double _baselineSequentialStepMs = 0.0;
 
-        // TODO [Stufe A - Aufgabe A2]: CancellationTokenSource für den kooperativen Not-Aus verwalten
+        // TODO [Stufe 1 - Aufgabe 1.2]: CancellationTokenSource für den kooperativen Not-Aus verwalten
         private CancellationTokenSource? _cts;
 
         public MainWindow()
@@ -116,7 +116,7 @@ namespace MultithreadingBenchmark
             int threads = (int)SliderThreads.Value;
 
             // =========================================================================
-            // TODO [Stufe A - Aufgabe A1 & A2]: UI-Freeze beheben!
+            // TODO [Stufe 1 - Aufgabe 1.1 & 1.2]: UI-Freeze beheben!
             // Aktuell läuft die Simulationsschleife SYNCHRON im WPF-UI-Thread.
             // Dadurch friert das gesamte Fenster (inklusive ProgressBar und Not-Aus-Button)
             // während der 200 Zeitschritte komplett ein!
@@ -175,7 +175,7 @@ namespace MultithreadingBenchmark
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            // TODO [Stufe A - Aufgabe A2]:
+            // TODO [Stufe 1 - Aufgabe 1.2]:
             // Lösen Sie hier den kooperativen Abbruch über _cts?.Cancel() aus!
             _cts?.Cancel();
         }
@@ -183,7 +183,7 @@ namespace MultithreadingBenchmark
         private void BtnRunScaling_Click(object sender, RoutedEventArgs e)
         {
             // =========================================================================
-            // TODO [Stufe A - Aufgabe A3]:
+            // TODO [Stufe 1 - Aufgabe 1.3]:
             // Führen Sie die Amdahl-Skalierungsreihe (ParallelRunner.RunScalingSeries)
             // asynchron über await Task.Run(...) aus, damit das UI während der Messreihe
             // über 1 .. P Kerne reaktionsfähig bleibt!

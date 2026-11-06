@@ -20,7 +20,7 @@ namespace HybridZeroCrossing.Models
         public ContactState State { get; set; } = ContactState.FreeFlight;
 
         public int BounceCount { get; private set; } = 0;
-        public double MaxPenetration { get; private set; } = 0.0;      // [m] für Aufgabe A1
+        public double MaxPenetration { get; private set; } = 0.0;      // [m] für Stufe 1 - Aufgabe 1.1
         public double LastEnergyRatio { get; private set; } = 0.0;     // E_nach / E_vor beim letzten Stoß
 
         public void Reset(double initialHeight = 5.0, double initialVelocity = 0.0)
@@ -36,7 +36,7 @@ namespace HybridZeroCrossing.Models
         /// </summary>
         public void ApplyVerticalImpulse(ref double[] x, double deltaV)
         {
-            // TODO [Aufgabe A2]:
+            // TODO [Stufe 1 - Aufgabe 1.2]:
             // 1. Addieren Sie `deltaV` auf die Vertikalgeschwindigkeit `x[1]`.
             // 2. Falls sich das System bereits im Zeno-Ruhezustand (`State == ContactState.RestingOnGround`)
             //    befindet und `x[1] > VStick` gilt, schalten Sie den Automaten wieder in `ContactState.FreeFlight`!
@@ -180,7 +180,7 @@ namespace HybridZeroCrossing.Models
                 penetration = Radius - xNext[0];
                 bounced = true;
 
-                // TODO [Aufgabe A1]:
+                // TODO [Stufe 1 - Aufgabe 1.1]:
                 // 1. Zählen Sie `BounceCount++` auch im naiven Modus hoch!
                 // 2. Speichern Sie die maximale Bodenpenetration: `if (penetration > MaxPenetration) MaxPenetration = penetration;`
                 // 3. Berechnen Sie vor dem Schritt `double eBefore = ComputeTotalEnergy(x);` und nach der Geschwindigkeitsumkehr

@@ -27,12 +27,12 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ### Showcase & Peer-Challenge: Termin 03
 
-Präsentation der Ergebnisse aus Termin 03 ([Aufgabenblatt 03](../../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md)):
+Präsentation der Hausübung aus Termin 03 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 03](../../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md)):
 
 <div class="columns">
 <div class="two">
 
-#### Track A: Industrie (2D-CAD Tragwerks-Inspektor)
+#### Stufe 2 – Track A: Industrie (2D-CAD Tragwerks-Inspektor)
 - **Geometrie:** Zweistufige DIN-406-Bemaßungsketten, Auto-Fit BoundingBox & $1{,}0\,\text{m}$-Gitter.
 - **Interaktion:** Ziehen der Kraftpfeilspitzen $(F_x, F_y)$, Mausrad-Zoom & Kamera-Panning.
 - **Stresstest:** Extremes Fensterformat (21:9), Pfeilspitzen-Invarianz & JSON-Export.
@@ -40,7 +40,7 @@ Präsentation der Ergebnisse aus Termin 03 ([Aufgabenblatt 03](../../Uebungen/Te
 </div>
 <div class="two">
 
-#### Track B: Game (Poly Bridge Blueprint-Baumeister)
+#### Stufe 2 – Track B: Game (Poly Bridge Blueprint-Baumeister)
 - **Vektorgrafik:** Schlucht-Szenerie mit $0{,}5\,\text{m}$-Grid-Snapping, $L_{\max}$-Vorschau & Baubudget.
 - **Interaktion:** Knoten setzen, Stäbe spannen ($L \le 4{,}0\,\text{m}$) und Elemente löschen (`Entf`).
 - **Stresstest:** Maximallängen-Sperre (rot ab $4{,}0\,\text{m}$), Budget-Limit & JSON-Level-Export.
@@ -1468,6 +1468,33 @@ GraphControl.Graph     = graph;
 - **4. Live-Streaming & Topologie (4.4 & 4.5):**
   - Fester **Ringpuffer (`DataStreamer`)** + **Taktentkopplung** (1.000 Hz Sim vs. 50 Hz `DispatcherTimer`).
   - **Welford** liefert $\mathcal{O}(1)$ Online-Statistik für `HorizontalLine`, `FillY` zeichnet Toleranzkorridore, `MSAGL` layoutet Graphen.
+
+</div>
+</div>
+
+---
+
+### Hausübung Termin 04: Echtzeit-Telemetrie & ScottPlot 5
+
+**Stufe 1 (Basisaufgabe `1.1`–`1.3` für alle Teams auf `ScottPlotTelemetry.sln`):** GC-Leak-Fix (`Freeze`), Ringpuffer-Fenster & Welford-Toleranzbänder ([Aufgabenblatt 04](../../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
+
+<div class="columns">
+<div class="two">
+
+#### Stufe 2 – Track A: Industrie-4.0 Schwingungs-Leitstand
+- 1-kHz-Vibrationsmonitoring mit `DataStreamer` & Zwei-Y-Achsen ($n, M$)
+- Welford $\pm 3\sigma$-Toleranzbänder & Kavitations-/Schlupf-Alarmlogik
+- Phasenraum-Kennfeld ($M$ vs. $n$) & Live-Vibrations-Histogramm (20 Bins)
+- MSAGL-Antriebsstrang-Topologie mit dynamischer Knoten-Alarmfärbung
+
+</div>
+<div class="two">
+
+#### Stufe 2 – Track B: Retro Arcade Racing Telemetry
+- Live Speed- & RPM-Streamer mit Welford-Schaltpunkt & Shift-Flash
+- G-Kräfte-Phasenplot (Kamm'scher Kreis $a_{\text{res}} \le \mu g$) mit Grip-Farben
+- Bremsverzögerungs-Histogramm mit überlagerter Gauß-Glockenkurve
+- MSAGL-Streckentopologie mit Live-Sektor-Tracking des Boliden
 
 </div>
 </div>

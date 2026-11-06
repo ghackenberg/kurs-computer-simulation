@@ -79,7 +79,7 @@ namespace SFunctionSimulation.Tests
         [TestMethod]
         public void TestDCMotorIdleSpeedSprintVerification()
         {
-            // Stufe A In-Class Sprint:
+            // Stufe 1 (Basisaufgabe):
             // U_A = 24 V, R_A = 2 Ohm, L_A = 0.05 H, Km = 0.1, Ke = 0.1, J = 0.005, d = 0.001
             // Analytisch: omega_inf = 200.0 rad/s
             var motor = new DCMotorWithAntiWindup
@@ -89,7 +89,7 @@ namespace SFunctionSimulation.Tests
                 AntiWindupEnabled = false
             };
 
-            // Eigene einfache S-Function für den reinen Motor aus Stufe A:
+            // Eigene einfache S-Function für den reinen Motor aus Stufe 1:
             double RA = motor.RA, LA = motor.LA, Km = motor.Km, Ke = motor.Ke, J = motor.J, D = motor.D;
             double uA = 24.0;
             double mLoad = 0.0;

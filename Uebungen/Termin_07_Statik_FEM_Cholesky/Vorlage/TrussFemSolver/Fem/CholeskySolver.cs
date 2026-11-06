@@ -95,7 +95,7 @@ namespace TrussFemSolver.Fem
         }
 
         /// <summary>
-        /// Erstellt das standardisierte 3-Knoten-Dreieckstragwerk (Stufe A In-Class Sprint).
+        /// Erstellt das standardisierte 3-Knoten-Dreieckstragwerk (Stufe 1 Basisaufgabe).
         /// Knoten 1: (0,0) fest [0, 1]
         /// Knoten 2: (4,0) loselager Y fest [3], X frei [2]
         /// Knoten 3: (2,2) frei [4, 5], vertikale Last Fy = -10 kN
@@ -121,7 +121,7 @@ namespace TrussFemSolver.Fem
             model.AddElement(new TrussElement(3, n1, n2, E, A)); // Stab 3: 1 -> 2
 
             // Randbedingungen:
-            // TODO [Stufe A - Aufgabe A3 (Singularitäts-Test)]:
+            // TODO [Stufe 1 - Aufgabe 1.3 (Singularitäts-Test)]:
             // Kommentieren Sie testweise FixDof(n1.DofX) aus und beobachten Sie, warum Cholesky() fehlschlägt!
             model.FixDof(n1.DofX); // 0 fest
             model.FixDof(n1.DofY); // 1 fest
@@ -133,7 +133,7 @@ namespace TrussFemSolver.Fem
             return model;
         }
 
-        // TODO [Stufe A - Aufgabe A2]:
+        // TODO [Stufe 1 - Aufgabe 1.2]:
         // Implementieren Sie hier public static GlobalStiffnessMatrix CreateCantileverSprintModel(double loadFy = -10_000.0)
         // für einen 5-Knoten-Auslegerkran (7 Stäbe) mit Wandlager links bei (0,0) und (0,2) sowie Kraglast rechts bei (4,0).
     }

@@ -48,18 +48,18 @@
                         <TextBlock Grid.Row="4" Grid.Column="0" Text="Simulationsdauer T_max [min]:" VerticalAlignment="Center" Margin="0,3"/>
                         <TextBox x:Name="TxtTMax" Grid.Row="4" Grid.Column="1" Text="20000" Margin="0,3" Padding="4,2" Background="#313244" Foreground="White" BorderThickness="0"/>
 
-                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Log-Normal σ_service (Aufg. A2):" VerticalAlignment="Center" Margin="0,3"/>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Log-Normal σ_service (Aufg. 1.2):" VerticalAlignment="Center" Margin="0,3"/>
                         <TextBox x:Name="TxtLogNormalStd" Grid.Row="5" Grid.Column="1" Text="0.40" Margin="0,3" Padding="4,2" Background="#313244" Foreground="White" BorderThickness="0"/>
                     </Grid>
 
-                    <CheckBox x:Name="ChkUseLogNormal" Content="Log-Normal-Bedienzeit aktivieren (Aufgabe A2)" Foreground="#F9E2AF" Margin="0,4,0,10"/>
+                    <CheckBox x:Name="ChkUseLogNormal" Content="Log-Normal-Bedienzeit aktivieren (Aufgabe 1.2)" Foreground="#F9E2AF" Margin="0,4,0,10"/>
 
                     <!-- Aktionsbuttons -->
                     <Button x:Name="BtnRunSingle" Content="▶ 1. Einzellauf simulieren (FEL + Histogramm)"
                             Click="BtnRunSingle_Click"
                             Background="#89B4FA" Foreground="#11111B" FontWeight="Bold" Padding="10,8" Margin="0,0,0,8" BorderThickness="0"/>
 
-                    <Button x:Name="BtnRunMonteCarlo" Content="⚡ 2. Monte-Carlo Replikationen (Aufgabe A3)"
+                    <Button x:Name="BtnRunMonteCarlo" Content="⚡ 2. Monte-Carlo Replikationen (Aufgabe 1.3)"
                             Click="BtnRunMonteCarlo_Click"
                             Background="#A6E3A1" Foreground="#11111B" FontWeight="Bold" Padding="10,8" Margin="0,0,0,12" BorderThickness="0"/>
 
@@ -75,7 +75,7 @@
                     <!-- Monte-Carlo Konfidenzintervall -->
                     <Border Background="#11111B" CornerRadius="6" Padding="10" Margin="0,10,0,0" BorderBrush="#313244" BorderThickness="1">
                         <StackPanel>
-                            <TextBlock Text="Monte-Carlo 95%-Konfidenzintervall (Aufgabe A3)" FontWeight="Bold" Foreground="#F9E2AF" Margin="0,0,0,6"/>
+                            <TextBlock Text="Monte-Carlo 95%-Konfidenzintervall (Aufgabe 1.3)" FontWeight="Bold" Foreground="#F9E2AF" Margin="0,0,0,6"/>
                             <TextBlock x:Name="TxtMonteCarloSummary" FontFamily="Consolas" FontSize="12" TextWrapping="Wrap" Foreground="#CDD6F4"
                                        Text="Noch keine Replikationen berechnet."/>
                         </StackPanel>

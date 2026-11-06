@@ -15,7 +15,7 @@
             <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="Modell:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,8,0"/>
                 <ComboBox x:Name="ModelSelector" Width="220" SelectedIndex="0" SelectionChanged="ModelSelector_SelectionChanged" Margin="0,0,20,0">
-                    <ComboBoxItem Content="Stufe A: 3-Knoten-Dreiecksträger"/>
+                    <ComboBoxItem Content="Stufe 1: 3-Knoten-Dreiecksträger"/>
                     <ComboBoxItem Content="Track A: Portalkran (Wahlaufgabe)"/>
                     <ComboBoxItem Content="Track B: Bridge Truss (Wahlaufgabe)"/>
                 </ComboBox>

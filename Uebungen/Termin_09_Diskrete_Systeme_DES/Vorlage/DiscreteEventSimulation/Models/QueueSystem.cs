@@ -31,7 +31,7 @@ namespace DiscreteEventSimulation.Models
 
     /// <summary>
     /// Simuliert ein M/M/c bzw. M/G/c-Warteschlangensystem über diskrete Ereignissimulation mit FEL.
-    /// Unterstützt optionale Pufferbegrenzung K (M/M/c/K) sowie Log-Normalverteilte Bedienzeiten (Aufgabe A2).
+    /// Unterstützt optionale Pufferbegrenzung K (M/M/c/K) sowie Log-Normalverteilte Bedienzeiten (Stufe 1 - Aufgabe 1.2).
     /// </summary>
     public class QueueSystem
     {
@@ -39,7 +39,7 @@ namespace DiscreteEventSimulation.Models
         public double ServiceRate { get; }             // mu
         public int Servers { get; }                    // c
         public int Capacity { get; }                   // K (int.MaxValue für unbegrenzt)
-        public double? LogNormalServiceStdDev { get; } // Optional für Aufgabe A2 (M/G/1)
+        public double? LogNormalServiceStdDev { get; } // Optional für Stufe 1 - Aufgabe 1.2 (M/G/1)
 
         public QueueSystem(
             double arrivalRate,
@@ -123,7 +123,7 @@ namespace DiscreteEventSimulation.Models
                     double nextArrival = currentTime + expArrival.Sample();
                     fel.Enqueue(new SimEvent(SimEventType.Arrival, nextArrival, EntityId: ++totalArrivals));
 
-                    // TODO [Aufgabe A1]:
+                    // TODO [Stufe 1 - Aufgabe 1.1]:
                     // Aktuell prüft der Code `totalInSystem >= Capacity` (Gesamtsystem-Kapazität inkl. Server).
                     // Laut Aufgabenblatt bezeichnet K jedoch die reine Wartepuffer-Kapazität (`waitingQueue.Count >= Capacity`).
                     // Ändern Sie die Bedingung auf `waitingQueue.Count >= Capacity` und testen Sie K = 10!
@@ -261,16 +261,16 @@ namespace DiscreteEventSimulation.Models
         }
 
         // ====================================================================
-        // STUFE B: Erweiterungspfade (Wahlmodell Track A oder Track B)
+        // STUFE 2: Vertiefungsaufgabe (Wahlmodell Track A oder Track B)
         // ====================================================================
 
-        // TODO [Track A - Industrie (Automobil-Lackierstraße M/M/3/25 mit Priorität)]:
+        // TODO [Stufe 2 Track A - Industrie (Automobil-Lackierstraße M/M/3/25 mit Priorität)]:
         // - c = 3 parallele Lackierkabinen (mu = 1.5 /h), lambda = 4.0 /h, Puffergrenze K = 25.
         // - Non-preemptive Priority Queuing: 20 % Express-Karosserien (Prio 0) überholen
         //   80 % Standard-Karosserien (Prio 1) im Wartepuffer.
         // - Getrennte Wartezeitauswertung W_q,Express vs. W_q,Standard und Nachweis von Little's Gesetz.
 
-        // TODO [Track B - Simulation Game (Freizeitpark Achterbahn-Drehkreuze M/M/3/25 mit FastPass)]:
+        // TODO [Stufe 2 Track B - Simulation Game (Freizeitpark Achterbahn-Drehkreuze M/M/3/25 mit FastPass)]:
         // - c = 3 Drehkreuze (mu = 1.5 /min), lambda = 4.0 /min, Wartebereich K = 25 (Lost Visitors).
         // - 20 % VIP-FastPass-Gäste (Prio 0) vs. 80 % reguläre Parkbesucher (Prio 1).
         // - 100 Monte-Carlo-Replikationen über einen 12-Stunden-Tag (720 min) & ScottPlot-Histogramm.

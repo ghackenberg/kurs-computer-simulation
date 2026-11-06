@@ -10,7 +10,7 @@
 | **Themenschwerpunkt:** | Kontinuierliche DGL-Systeme, S-Function-Architektur, Runge-Kutta 4 (RK4) & PID Anti-Windup Clamping |
 | **Technologie-Stack:** | C# 12 / .NET 8/10, S-Function-Klassenstruktur, ScottPlot 5 / WPF |
 | **Vorgreif-Sperre:** | **Erlaubt:** RK4-Integrator, S-Functions (`Derivatives`, `Outputs`), PID-Clamping, ScottPlot 5.<br>**Strengstens verboten:** *KEINE* Diskrete Ereignissimulation (DES, `PriorityQueue`), *KEINE* Zero-Crossing Wurzelsuche! |
-| **Zeitbudget:** | **In-Class Sprint:** 60 Minuten (Laborpräsenz)<br>**Homework Extension:** 2–3 Stunden (2er-Team, 1 Woche) |
+| **Bearbeitungsform & Zeitbudget:** | **Zweistufige Hausübung im festen 2er-Team (1 Woche):**<br>• **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)<br>• **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause) |
 | **Abgabeform:** | Git-Repository: Sourcecode, Unit-Tests und Markdown-Bericht (`README.md`) |
 
 ---
@@ -83,7 +83,7 @@ $$\frac{\mathrm{d}x_{\text{i}}}{\mathrm{d}t} = \begin{cases} 0 & \text{wenn ges�
 
 ---
 
-## 3. Stufe A: In-Class Sprint (ca. 30–40 min)
+## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
 ### Thema: „Expliziter Euler vs. RK4 Stabilitätsgrenze, `PidController`-Kapselung & Anti-Windup-Overlay“
 
@@ -91,7 +91,7 @@ $$\frac{\mathrm{d}x_{\text{i}}}{\mathrm{d}t} = \begin{cases} 0 & \text{wenn ges�
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ STUFE A: GLEICHSTROM-SERVOMOTOR & ELEKTROMECHANISCHE ZEITKONSTANTEN    │
+│ STUFE 1: GLEICHSTROM-SERVOMOTOR & ELEKTROMECHANISCHE ZEITKONSTANTEN    │
 │                                                                        │
 │   U_A ──[ R_A ]──[ L_A ]──(+)───>  i_A (Ankerstrom)                    │
 │                            │ -                                         │
@@ -112,19 +112,19 @@ $$\frac{\mathrm{d}x_{\text{i}}}{\mathrm{d}t} = \begin{cases} 0 & \text{wenn ges�
 
 #### Aufgabenstellung (Schritt für Schritt auf Basis von `Vorlage/SFunctionSimulation.sln`):
 
-1. **Aufgabe A1 – Expliziter Euler (`EulerExplicitSolver.Step`) & Stabilitätsgrenze testen:**
+1. **Aufgabe 1.1 – Expliziter Euler (`EulerExplicitSolver.Step`) & Stabilitätsgrenze testen:**
    - Erstellen Sie im Ordner `Solvers/` (oder in `RungeKutta4Solver.cs`) eine statische Methode `EulerExplicitSolver.Step(ISFunction system, double t, double[] x, double[] u, double h)`:
      $$\mathbf{x}_{k+1} = \mathbf{x}_k + h \cdot \mathbf{f}(t_k, \mathbf{x}_k, \mathbf{u}_k)$$
    - Testen Sie in `MainWindow.xaml.cs` (`RunSimulation`) für größere Schrittweiten (z. B. $h = 0{,}025\,\text{s}$ bzw. $h = 0{,}055\,\text{s}$), ab welcher Schrittweite der explizite Euler wegen des schnellen elektrischen Eigenwerts ($\lambda_{\text{el}} \approx -40\,\text{s}^{-1}$, Dahlquist-Grenze $|1 + h\lambda| \le 1 \implies h_{\max,\text{Euler}} \approx 50\,\text{ms}$) numerisch oszilliert/explodiert, während `RungeKutta4Solver` ($|R(h\lambda)| \le 1$ bis $|h\lambda| \approx 2{,}785$) stabil bleibt!
-2. **Aufgabe A2 – Eigenständige Klasse `PidController` extrahieren:**
+2. **Aufgabe 1.2 – Eigenständige Klasse `PidController` extrahieren:**
    - Aktuell ist das PID-Regelgesetz und die Clamping-Bedingung direkt in `DCMotorWithAntiWindup.ComputeDerivatives` einkodiert.
    - Erstellen Sie im Ordner `Models/` eine sauber gekapselte Klasse `PidController` (`Kp, Ki, Kd, UMin, UMax, AntiWindupEnabled`) mit den Methoden `ComputeControl(double e, double eDot, double xi, out double uSat, out double uRaw)` und `ComputeIntegratorDerivative(double e, double uRaw)`, und rufen Sie diese in `DCMotorWithAntiWindup` auf.
-3. **Aufgabe A3 – Direktvergleich MIT vs. OHNE Anti-Windup im selben Diagramm:**
+3. **Aufgabe 1.3 – Direktvergleich MIT vs. OHNE Anti-Windup im selben Diagramm:**
    - Erweitern Sie `RunSimulation()` in `MainWindow.xaml.cs` so, dass bei jedem Klick auf „Simulation starten“ **beide** Konfigurationen (`AntiWindupEnabled = true` und `AntiWindupEnabled = false`) berechnet und im oberen Plot (`PlotPosition`) direkt übereinander gezeichnet werden (Blau durchgezogen = mit Clamping, Rot gestrichelt = ohne Anti-Windup).
 
 ---
 
-## 4. Stufe B: Homework Extension (Wahlmodell – GENAU EINE Aufgabe!)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell – GENAU EINE Aufgabe!)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – KEINE Doppelbelastung!):**  
@@ -155,18 +155,18 @@ Da der 4-Zustands-Basisregelkreis bereits im Starter-Kit enthalten ist, erweiter
 
 #### Aufgabenstellung Track A:
 
-1. **Verfahrensvergleich: Euler (RK1) vs. Heun (RK2) vs. Klassisches RK4 (`HeunSolver.cs`):**
+1. **Arbeitspaket A.1 – Verfahrensvergleich: Euler (RK1) vs. Heun (RK2) vs. Klassisches RK4 (`HeunSolver.cs`):**
    - Implementieren Sie im Ordner `Solvers/` zusätzlich das 2-stufige **Verfahren von Heun (RK2)** (`HeunSolver.Step`):
      $$\mathbf{k}_1 = \mathbf{f}(t_k, \mathbf{x}_k, \mathbf{u}_k), \quad \mathbf{k}_2 = \mathbf{f}(t_k + h, \mathbf{x}_k + h\mathbf{k}_1, \mathbf{u}_k), \quad \mathbf{x}_{k+1} = \mathbf{x}_k + \frac{h}{2}(\mathbf{k}_1 + \mathbf{k}_2)$$
    - Ergänzen Sie im WPF-UI eine Auswahl für den Integrator (`Euler RK1`, `Heun RK2`, `Runge-Kutta RK4`) sowie die Schrittweite $h$ (z. B. $0{,}5\,\text{ms} \dots 50\,\text{ms}$) und bestimmen Sie den maximalen globalen Winkelfehler $\|\theta_h - \theta_{\text{ref}}\|_{\infty}$ gegenüber einer hochauflösenden RK4-Referenz ($h_{\text{ref}} = 0{,}05\,\text{ms}$).
-2. **Elektro-Thermisches Kopplungsmodell (5. Zustand $x[4] = T_{\text{Cu}}$):**
+2. **Arbeitspaket A.2 – Elektro-Thermisches Kopplungsmodell (5. Zustand $x[4] = T_{\text{Cu}}$):**
    - Erweitern Sie den Zustandsvektor des Servomotors auf **5 kontinuierliche Zustände**: $\mathbf{x} = \begin{bmatrix} i_{\text{A}} & \omega & \theta & x_{\text{i}} & T_{\text{Cu}} \end{bmatrix}^\top$ mit Anfangstemperatur $T_{\text{Cu}}(0) = T_{\text{Amb}} = 20{,}0\,^\circ\text{C}$.
    - **Temperaturabhängiger Kupferwiderstand:**
      $$R_{\text{A}}(T_{\text{Cu}}) = R_{\text{A},20} \cdot \left(1 + \alpha_{\text{Cu}} \cdot (T_{\text{Cu}} - 20{,}0)\right) \quad \text{mit } R_{\text{A},20} = 2{,}0\,\Omega, \; \alpha_{\text{Cu}} = 0{,}00393\,\text{K}^{-1}$$
    - **Thermische Differentialgleichung der Ankerwicklung:**
      $$\frac{\mathrm{d}T_{\text{Cu}}}{\mathrm{d}t} = \frac{1}{C_{\text{th}}} \left( \underbrace{R_{\text{A}}(T_{\text{Cu}}) \cdot i_{\text{A}}^2}_{\text{Kupferverluste } P_{\text{V}}} - \underbrace{\frac{T_{\text{Cu}} - T_{\text{Amb}}}{R_{\text{th}}}}_{\text{Kühlleistung}} \right)$$
      *(Wählen Sie für eine im $4\,\text{s}$-Fenster gut beobachtbare Erwärmung eine kompakte thermische Kapazität $C_{\text{th}} = 1{,}5\,\text{J/K}$ und $R_{\text{th}} = 2{,}0\,\text{K/W}$.)*
-3. **Thermisches Derating & Mehrstufen-Lastprofil:**
+3. **Arbeitspaket A.3 – Thermisches Derating & Mehrstufen-Lastprofil:**
    - Überschreitet die Wicklungstemperatur den Schwellenwert $T_{\text{warn}} = 80\,^\circ\text{C}$, reduziert das Steuergerät automatisch die maximal zulässige Stellspannung linear ($u_{\max}(T_{\text{Cu}})$ sinkt von $24\,\text{V}$ auf $12\,\text{V}$ bei $T_{\text{crit}} = 120\,^\circ\text{C}$), wobei das Anti-Windup Clamping sofort auf die reduzierte Sättigungsgrenze reagiert!
    - Visualisieren Sie im ScottPlot-Dashboard Drehwinkel $\theta(t)$, Stellspannung $u_{\text{A}}(t)$, Ankerstrom $i_{\text{A}}(t)$ und Wicklungstemperatur $T_{\text{Cu}}(t)$ und diskutieren Sie die Ergebnisse im `README.md`-Bericht.
 
@@ -196,7 +196,7 @@ Die spektakulären Landungen der SpaceX Falcon 9 Erststufen erfordern eine hochp
 
 #### Aufgabenstellung Track B:
 
-1. **Nichtlineare Flugdynamik (DGL 6. Ordnung als `ISFunction`):**
+1. **Arbeitspaket B.1 – Nichtlineare Flugdynamik (DGL 6. Ordnung als `ISFunction`):**
    - Zustandsvektor $\mathbf{x} = \begin{bmatrix} x & y & \theta & v_x & v_y & \omega \end{bmatrix}^\top$ (optional 7. Zustand Masse $m(t)$).
    - Bewegungsgleichungen unter Gravitation, Schubkraft $F$ und Gimbal-Winkel $\delta$:
      $$\dot{x} = v_x, \quad \dot{y} = v_y, \quad \dot{\theta} = \omega$$
@@ -204,14 +204,14 @@ Die spektakulären Landungen der SpaceX Falcon 9 Erststufen erfordern eine hochp
      $$\dot{\omega} = \frac{F \cdot L_{\text{cg}} \cdot \sin(\delta)}{J}$$
    - Treibstoffverbrauch: $\dot{m} = -\frac{F}{I_{\text{sp}} g_0}$ mit $I_{\text{sp}} = 300\,\text{s}$, $g_0 = 9{,}81\,\text{m/s}^2$.
    - Geometrie: Raketenhöhe $L = 20\,\text{m}$, Masse leer $m_{\text{dry}} = 5000\,\text{kg}$, Treibstoff $m_{\text{fuel}} = 2000\,\text{kg}$, $L_{\text{cg}} = 8{,}0\,\text{m}$, Trägheitsmoment $J = \frac{1}{12} m(t) L^2$.
-2. **Triebwerksgrenzen & Aktorsättigung:**
+2. **Arbeitspaket B.2 – Triebwerksgrenzen & Aktorsättigung:**
    - Schubkraft-Modulation: $F \in [30\,\text{kN}, 80\,\text{kN}]$ (kann nicht komplett auf 0 gedrosselt werden!).
    - Gimbal-Sättigung: $\delta \in [-15^\circ, +15^\circ]$.
-3. **Kaskadierte PID-Lageregelung (`PidController`) mit Anti-Windup:**
+3. **Arbeitspaket B.3 – Kaskadierte PID-Lageregelung (`PidController`) mit Anti-Windup:**
    - Äußerer Regler: Vertikalgeschwindigkeit $v_{y,\text{soll}}$ für sanftes Touchdown ($v_y \approx -0{,}5\,\text{m/s}$ bei $y=0$).
    - Innerer Regler: Aufrichtungswinkel $\theta_{\text{soll}} = 0^\circ$ über Gimbal $\delta$.
    - Anti-Windup Clamping auf beide Stellgrößen ($F$ und $\delta$).
-4. **Störungs-Challenge (Windböe vor dem Aufsetzen):**
+4. **Arbeitspaket B.4 – Störungs-Challenge (Windböe vor dem Aufsetzen):**
    - Anfangsbedingungen bei $t = 0$: Höhe $y_0 = 100\,\text{m}$, $v_{y0} = -15\,\text{m/s}$, $\theta_0 = +5^\circ$.
    - Bei $t = 3{,}0\,\text{s}$ trifft eine seitliche Windböe ($F_{\text{wind}} = 12\,\text{kN}$) für $0{,}5\,\text{s}$ auf den Booster.
    - Simulieren Sie MIT vs. OHNE Anti-Windup und zeigen Sie im ScottPlot-Diagramm, dass der Booster mit Anti-Windup stabil aufsetzt ($|v_y| \le 1\,\text{m/s}, |\theta| \le 2^\circ$), während er ohne Anti-Windup durch übersteuernden Gimbal umkippt.

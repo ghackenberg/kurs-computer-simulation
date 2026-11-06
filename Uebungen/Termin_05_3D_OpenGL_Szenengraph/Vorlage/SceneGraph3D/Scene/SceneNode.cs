@@ -116,7 +116,7 @@ public class SceneNode
     }
 
     // =========================================================================
-    // TODO [Stufe A - Aufgabe A1 & A3]:
+    // TODO [Stufe 1 - Aufgabe 1.1 & 1.3]:
     // - Nutzen Sie in MainWindow.BuildSceneGraph() die Eigenschaft RenderCustomGeometry,
     //   um jedem Knoten (_baseNode, _arm1Node, _arm2Node, _pinoleNode) seine lokale
     //   Zeichenlogik zuzuweisen, und rufen Sie in RenderRobot(gl) nur noch _rootNode.Render(gl) auf!
@@ -124,7 +124,7 @@ public class SceneNode
     // =========================================================================
 
     // =========================================================================
-    // TODO [Stufe B Track A: Industrie - 4-Achs-SCARA mit Parallelgreifer & Teach-In]:
+    // TODO [Stufe 2 Track A: Industrie - 4-Achs-SCARA mit Parallelgreifer & Teach-In]:
     // - Erweitern Sie den Szenengraphen unter _pinoleNode um:
     //     1. _wristNode (Achse 4: Rotation Ry = theta4 in [-180°, +180°])
     //     2. _leftFingerNode & _rightFingerNode (symmetrischer 2-Backen-Parallelgreifer, g_width in [0.02, 0.16] m)
@@ -133,7 +133,7 @@ public class SceneNode
     // =========================================================================
 
     // =========================================================================
-    // TODO [Stufe B Track B: Simulation Game - 3D Arcade Claw Crane]:
+    // TODO [Stufe 2 Track B: Simulation Game - 3D Arcade Claw Crane]:
     // - 3D-Greifarm mit X/Z-Laufkatze, Seilzug (Y-Achse), 3-Finger-Greifer (120°)
     //   sowie automatischem Greifzyklus (Leertaste) und Spotlight (GL_LIGHT1).
     // =========================================================================
