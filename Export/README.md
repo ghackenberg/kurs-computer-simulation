@@ -3,7 +3,7 @@
 **Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
-**Zuletzt generiert:** 2026-11-09 20:59:44 UTC  
+**Zuletzt generiert:** 2026-11-09 21:12:04 UTC  
 
 Dieses Verzeichnis enthält alle druckreifen, vollständigen PDF-Unterlagen für den Upload auf Moodle.
 
@@ -16,7 +16,7 @@ Dieses Verzeichnis enthält alle druckreifen, vollständigen PDF-Unterlagen für
 | **02** | Visualisierung 2D Pixel | [`02_Visualisierung_2D_Pixel_Folien.pdf`](Folien/02_Visualisierung_2D_Pixel_Folien.pdf) | 8.56 MB | `Folien/02_Visualisierung_2D_Pixel/Folien.pdf` |
 | **03** | Visualisierung 2D Vektor | [`03_Visualisierung_2D_Vektor_Folien.pdf`](Folien/03_Visualisierung_2D_Vektor_Folien.pdf) | 4.41 MB | `Folien/03_Visualisierung_2D_Vektor/Folien.pdf` |
 | **04** | Visualisierung 2D Diagramme | [`04_Visualisierung_2D_Diagramme_Folien.pdf`](Folien/04_Visualisierung_2D_Diagramme_Folien.pdf) | 5.03 MB | `Folien/04_Visualisierung_2D_Diagramme/Folien.pdf` |
-| **05** | Visualisierung 3D OpenGL | [`05_Visualisierung_3D_OpenGL_Folien.pdf`](Folien/05_Visualisierung_3D_OpenGL_Folien.pdf) | 4.12 MB | `Folien/05_Visualisierung_3D_OpenGL/Folien.pdf` |
+| **05** | Visualisierung 3D OpenGL | [`05_Visualisierung_3D_OpenGL_Folien.pdf`](Folien/05_Visualisierung_3D_OpenGL_Folien.pdf) | 3.41 MB | `Folien/05_Visualisierung_3D_OpenGL/Folien.pdf` |
 | **06** | Multithreading | [`06_Multithreading_Folien.pdf`](Folien/06_Multithreading_Folien.pdf) | 1.32 MB | `Folien/06_Multithreading/Folien.pdf` |
 | **07** | Statische Modelle | [`07_Statische_Modelle_Folien.pdf`](Folien/07_Statische_Modelle_Folien.pdf) | 1.18 MB | `Folien/07_Statische_Modelle/Folien.pdf` |
 | **08** | Dynamische Modelle Kontinuierlich | [`08_Dynamische_Modelle_Kontinuierlich_Folien.pdf`](Folien/08_Dynamische_Modelle_Kontinuierlich_Folien.pdf) | 2.37 MB | `Folien/08_Dynamische_Modelle_Kontinuierlich/Folien.pdf` |

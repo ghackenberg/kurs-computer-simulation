@@ -126,14 +126,14 @@ Die Bibliothek `SharpGL.WPF` stellt das Steuerelement `OpenGLControl` bereit, da
 
 ### Initialisierung der Szene: `OpenGLInitialized`
 
-In der Ereignisroutine `OpenGlView_OpenGLInitialized` konfigurieren wir einmalig die Zustandsmaschine der Grafikkarte über das Objekt `gl` (`args.OpenGL`):
+In `OpenGlView_OpenGLInitialized` konfigurieren wir einmalig die Zustandsmaschine über `gl` (`args.OpenGL` – Farben in OpenGL sind auf $[0{,}0 \dots 1{,}0]$ normiert statt `0..255`):
 
 ```csharp
 private void OpenGlView_OpenGLInitialized(object sender, OpenGLRoutedEventArgs args)
 {
     OpenGL gl = args.OpenGL;
 
-    // 1. Hintergrundfarbe festlegen (Clear Color: Dunkles Anthrazit)
+    // 1. Hintergrundfarbe festlegen (Clear Color: normiertes RGBA [0..1], dunkles CAD-Anthrazit)
     gl.ClearColor(0.08f, 0.08f, 0.08f, 1.0f);
 
     // 2. Tiefenpuffer (Z-Buffer) für korrekte 3D-Verdeckung aktivieren
@@ -147,29 +147,6 @@ private void OpenGlView_OpenGLInitialized(object sender, OpenGLRoutedEventArgs a
     gl.ShadeModel(OpenGL.GL_SMOOTH);
 }
 ```
-
----
-
-### Hintergrundfarbe festlegen: `gl.ClearColor`
-
-<div class="columns">
-<div class="two">
-
-Die Methode `gl.ClearColor` definiert die RGBA-Farbe, mit der der Bildschirmpuffer zu Beginn jedes neuen Frames geleert wird:
-
-- **Normierter Wertebereich $[0{,}0 \dots 1{,}0]$:**
-  - Anders als beim 8-Bit-Byte (`0..255`) in `WriteableBitmap` arbeitet OpenGL mit `float`-Werten von `0.0f` bis `1.0f`.
-  - `(0, 0, 0, 1)` entspricht Schwarz, `(1, 1, 1, 1)` entspricht Weiß.
-- **Konfiguration im Code:**
-  - `gl.ClearColor(0.08f, 0.08f, 0.08f, 1.0f)` setzt den Hintergrund in unserer Laborvorlage auf ein ruhiges, kontrastreiches CAD-Anthrazit (bzw. `(0.1f, 0.2f, 0.3f, 1.0f)` für Dunkelblau).
-
-</div>
-<div class="one">
-
-![](./Illustrationen/RGB_Cube.png)
-
-</div>
-</div>
 
 ---
 
@@ -196,34 +173,12 @@ In 2D übermalt das zuletzt gezeichnete Objekt alles Vorherige (**Maler-Prinzip*
 
 ---
 
-### Beleuchtung aktivieren: Warum brauchen wir Licht in 3D?
+### Das Phong-Beleuchtungsmodell im Überblick (`GL_LIGHTING`)
 
 <div class="columns">
 <div class="two">
 
-Ohne Beleuchtungsrechnung erscheint ein einfarbiger 3D-Körper als völlig flache 2D-Silhouette – Kanten, Krümmungen und Raumtiefe sind unsichtbar:
-
-- **`gl.Enable(OpenGL.GL_LIGHTING)`:**
-  - Schaltet die hardwareseitige Licht- und Schattierungsberechnung der OpenGL-Pipeline ein.
-- **Plastische Raumwahrnehmung:**
-  - Erst durch den Helligkeitsverlauf zwischen beleuchteter Vorderseite, mattem Übergang und glänzendem Lichtreflex erkennt das menschliche Auge die 3D-Form von Roboterarmen, Zylindern und Gelenkkugeln.
-
-</div>
-<div class="two">
-
-![](./Illustrationen/OpenGL_Pipeline_Image77.gif)
-
-</div>
-</div>
-
----
-
-### Das Phong-Beleuchtungsmodell im Überblick
-
-<div class="columns">
-<div class="two">
-
-Das klassische **Phong-Beleuchtungsmodell** (`GL_LIGHTING`) berechnet die sichtbare Helligkeit $I_f$ eines Oberflächenpunktes als Summe von drei physikalisch motivierten Anteilen:
+Ohne Beleuchtung wirkt ein 3D-Körper wie eine flache 2D-Silhouette. Das **Phong-Modell** (`GL_LIGHTING`) berechnet die Helligkeit $I_f$ als Summe von drei Anteilen:
 
 $$I_f = I_a + I_d + I_s$$
 
@@ -491,7 +446,7 @@ Die Projektionsmatrix bestimmt die Form des Sichtvolumens (*View Volume*) und ob
 
 ---
 
-### Orthogonale Projektion (`gl.Ortho`) vs. Perspektive (`gl.Perspective`)
+### Orthogonale Projektion vs. Perspektive *(Mathematischer Deep Dive)*
 
 <div class="columns">
 <div class="two">
@@ -638,9 +593,9 @@ public virtual void Render(OpenGL gl)
 
 ---
 
-### Lokale & Globale Matrix in C#: `GetLocalMatrix` & `GetWorldMatrix`
+### `GetLocalMatrix` & `GetWorldMatrix` *(Deep Dive – fertig in der Vorlage)*
 
-Für den analytischen TCP-Deckungstest berechnet `SceneNode` seine $4\times 4$-Weltmatrix auf der CPU mit `System.Numerics.Matrix4x4`:
+Für `GetWorldPosition()` berechnet `SceneNode` seine $4\times 4$-Weltmatrix auf der CPU (bereits fertig in `SceneNode.cs` implementiert):
 
 ```csharp
 public Matrix4x4 GetLocalMatrix()
@@ -762,19 +717,20 @@ In **Stufe 1 (Aufgabe 1.1)** weisen wir jedem Knoten (`_baseNode`, `_arm1Node`, 
 ```csharp
 private void BuildSceneGraph()
 {
-    _rootNode.AddChild(_baseNode);  _baseNode.AddChild(_arm1Node);
-    _arm1Node.AddChild(_arm2Node);  _arm2Node.AddChild(_pinoleNode);
+    _rootNode.AddChild(_baseNode);
+    _baseNode.AddChild(_arm1Node);
+    _arm1Node.AddChild(_arm2Node);
+    _arm2Node.AddChild(_pinoleNode);
 
-    _baseNode.RenderCustomGeometry = gl => {
-        gl.Color(0.4f, 0.45f, 0.5f); DrawCylinder(gl, 0.22f, HBase, 24);
-    };
     _arm1Node.RenderCustomGeometry = gl => {
-        gl.Color(0.2f, 0.6f, 0.9f); DrawSphere(gl, 0.18f);
+        gl.Color(0.2f, 0.6f, 0.9f);
+        DrawSphere(gl, 0.18f);
         gl.PushMatrix(); // Wichtig: Skalierung L1 lokal kapseln, damit Arm2 unverzerrt bleibt!
-        gl.Translate(L1 / 2.0f, 0.0f, 0.0f); gl.Scale(L1, 0.14f, 0.18f); DrawCube(gl);
+        gl.Translate(L1 / 2.0f, 0.0f, 0.0f);
+        gl.Scale(L1, 0.14f, 0.18f);
+        DrawCube(gl);
         gl.PopMatrix();
-    };
-    // ... analog für _arm2Node (L2) und _pinoleNode -> danach in RenderRobot: _rootNode.Render(gl);
+    }; // ... analog für _baseNode (HBase), _arm2Node (L2) und _pinoleNode -> _rootNode.Render(gl);
 }
 ```
 
@@ -787,9 +743,12 @@ Bewegt man einen Slider (`_theta1Deg`, `_theta2Deg`, `_d3`), aktualisiert `Updat
 ```csharp
 private void UpdateJointTransforms()
 {
-    _arm1Node.Ty = HBase;  _arm1Node.Ry = _theta1Deg; // Schulter auf Höhe HBase, Drehung theta1
-    _arm2Node.Tx = L1;     _arm2Node.Ry = _theta2Deg; // Ellenbogen bei L1, Relativwinkel theta2
-    _pinoleNode.Tx = L2;   _pinoleNode.Ty = -_d3;     // Pinole bei L2, Vertikalhub -d3
+    _arm1Node.Ty = HBase;
+    _arm1Node.Ry = _theta1Deg; // Schulter auf Höhe HBase, Drehung theta1
+    _arm2Node.Tx = L1;
+    _arm2Node.Ry = _theta2Deg; // Ellenbogen bei L1, Relativwinkel theta2
+    _pinoleNode.Tx = L2;
+    _pinoleNode.Ty = -_d3;     // Pinole bei L2, Vertikalhub -d3
 }
 
 private (float X, float Y, float Z) CalculateAnalyticTcp()
@@ -811,13 +770,35 @@ Warum wird das 3D-Werkstück (`_workpieceNode`) in **Aufgabe 1.3** als **Geschwi
 
 ```csharp
 // 1. In BuildSceneGraph(): Werkstück als Geschwisterknoten direkt unter _rootNode einhängen
-_workpieceNode.Tx = 1.10f;  _workpieceNode.Ty = 0.06f;  _workpieceNode.Tz = -0.40f;
+_workpieceNode.Tx = 1.10f;
+_workpieceNode.Ty = 0.06f;
+_workpieceNode.Tz = -0.40f;
 _rootNode.AddChild(_workpieceNode);
 
 // 2. In UpdateTcpCalculations(): Euklidischer 3D-Abstand dist = ||tcpPos - boxPos||_2 prüfen
-Vector3 tcpPos = _pinoleNode.GetWorldPosition(), boxPos = _workpieceNode.GetWorldPosition();
+Vector3 tcpPos = _pinoleNode.GetWorldPosition();
+Vector3 boxPos = _workpieceNode.GetWorldPosition();
 float dist = Vector3.Distance(tcpPos, boxPos);
 bool canGrab = dist < 0.12f; // Bei dist < 0.12 m färbt sich der Würfel von Orange auf Grün!
+```
+
+---
+
+### Ausbau in Stufe 2: Parallelgreifer-Verzweigung & Pick-and-Place
+
+In **Stufe 2 (Track A & B)** wird aus der linearen Kette ein **verzweigter Szenengraph** mit aktiver Greiflogik:
+
+- **1. Baum-Verzweigung am Greifer (`_wristNode` mit Geschwisterknoten):**
+  - Unter der Pinole hängt das Handgelenk `_wristNode` (`Ry = _theta4Deg`).
+  - Daran hängen **zwei symmetrische Geschwisterknoten** `_leftFingerNode` (`Tz = -_gripWidth / 2`) und `_rightFingerNode` (`Tz = +_gripWidth / 2`), die alle Drehungen und den Vertikalhub der Elternknoten erben!
+- **2. Dynamisches Greifen (`Reparenting` / Mitführen bei Pick-and-Place):**
+  - Schließt sich der Greifer am Werkstück, wird `_workpieceNode` an `_wristNode` gekoppelt und schwenkt beim Teach-In-Transport (`DispatcherTimer`) automatisch zur Ablagestation B mit:
+
+```csharp
+// Symmetrische Öffnungsweite _gripWidth [0.02 .. 0.16 m] der beiden Greiferbacken unter _wristNode:
+_wristNode.Ry = _theta4Deg;
+_leftFingerNode.Tz  = -_gripWidth / 2.0f;
+_rightFingerNode.Tz = +_gripWidth / 2.0f;
 ```
 
 ---
@@ -953,17 +934,17 @@ private void OpenGlView_MouseDown(object sender, MouseButtonEventArgs e)
 {
     if (e.LeftButton == MouseButtonState.Pressed || e.RightButton == MouseButtonState.Pressed)
     {
-        _isDragging = true;  _lastMousePos = e.GetPosition(OpenGlView);
+        _isDragging = true;
+        _lastMousePos = e.GetPosition(OpenGlView);
         OpenGlView.CaptureMouse(); // Mausfang auch über den Fensterrand hinaus!
     }
 }
-
 private void OpenGlView_MouseMove(object sender, MouseEventArgs e)
 {
     if (!_isDragging) return;
     Point currentPos = e.GetPosition(OpenGlView);
-    double dx = currentPos.X - _lastMousePos.X, dy = currentPos.Y - _lastMousePos.Y;
-
+    double dx = currentPos.X - _lastMousePos.X;
+    double dy = currentPos.Y - _lastMousePos.Y;
     if (e.LeftButton == MouseButtonState.Pressed)       _camera.Rotate(dx * 0.4, -dy * 0.4);
     else if (e.RightButton == MouseButtonState.Pressed) _camera.Pan(dx * 0.01, dy * 0.01);
     _lastMousePos = currentPos;

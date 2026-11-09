@@ -85,3 +85,5 @@ npm run lint:slides:XX
 npm run export:pdf:XX
 ```
 - **Hinweis bei Windows Dateisperren:** Falls `edit_file` auf `Folien.md` kurzzeitig `user-mapped section open` meldet (durch VS Code / Marp Preview), den Edit-Aufruf einfach einmal wiederholen.
+- **Keine `%20` URL-Kodierung in SVG-Bildpfaden:** Verwende in `Folien.md` niemals URL-kodierte Leerzeichen wie `![](./Diagramme/Mein%20Bild.svg)`, da `fs.existsSync` in `lint_variable_consistency.js` sonst die Datei auf der Festplatte nicht findet. Nutze stattdessen immer Unterstrich-Dateinamen (`![](./Diagramme/Mein_Bild.svg)`).
+- **Ein-Befehl-pro-Zeile in C#-Codeblöcken & `*(Deep Dive)*`-Kennzeichnung:** Packe für maximale Hörsaal-Lesbarkeit keine mehreren C#-Statements mit Semikolon `;` in dieselbe Zeile. Wenn C#-Code auf einer Folie gezeigt wird, der in der Vorlage bereits fertig implementiert ist und eine abweichende Bibliotheks-Konvention nutzt (wie Zeilenvektoren in `System.Numerics.Matrix4x4`), kennzeichne den Folientitel explizit mit `*(Deep Dive – fertig in der Vorlage)*`.
