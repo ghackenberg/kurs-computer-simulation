@@ -13,17 +13,16 @@ math: mathjax
 
 ![bg right](./Titelbild.jpg)
 
-# Anhang: Mathematische Geometrieherleitung & Normalenvektoren
+# Anhang: 3D-Normalen
 
-## Ergänzung zu Kapitel 5: 3D-Visualisierung mit OpenGL
+## Kapitel 5: 3D-Visualisierung mit OpenGL
 
-Dieser Anhang vertieft die analytische Herleitung und manuelle Triangulation parametrischer 3D-Grundkörper:
+Analytische Herleitung parametrischer 3D-Körper:
 
-- Kugelkoordinaten & Normalen auf der Einheitskugel
-- Parametrisierung von Zylindern, Kegeln und Kegelstümpfen
-- 2D-Querschnitts-Herleitung der Kegel- und Zylindernormalen
-- 3D-Rotation des Normalenvektors um die Symmetrieachse
-- Triangulation via `GL_QUAD_STRIP` und `GL_TRIANGLE_FAN`
+- Kugelkoordinaten & Einheitskugel-Normalen
+- Parametrisierung von Zylindern & Kegelstümpfen
+- 2D-Querschnitts-Herleitung der Kegelnormalen
+- Triangulation (`GL_QUAD_STRIP`, `GL_TRIANGLE_FAN`)
 
 ---
 
@@ -32,16 +31,12 @@ Dieser Anhang vertieft die analytische Herleitung und manuelle Triangulation par
 <div class="columns">
 <div class="two">
 
-### Parametrisierung der Kugeloberfläche
-
 Jeder Punkt $P(x, y, z)$ einer Kugel mit Radius $r$ lässt sich über zwei Winkel beschreiben:
 
-- **Polarwinkel $\phi \in [0, \pi]$**: Winkel von der positiven Y-Achse ($0 = \text{Nordpol}$, $\pi = \text{Südpol}$; *Hinweis: in den Hauptfolien als Elevation $\phi \in [-\pi/2, +\pi/2]$ ab dem Äquator parametrisiert*).
-- **Azimutwinkel $\theta \in [0, 2\pi]$**: Winkel in der XZ-Ebene um die Y-Achse.
-
-Diskrete Abtastung mit `stacks` ($i = 0 \dots \text{stacks}$) und `slices` ($j = 0 \dots \text{slices}$):
-
-$$\phi_i = \frac{i}{\text{stacks}} \cdot \pi, \quad \theta_j = \frac{j}{\text{slices}} \cdot 2\pi$$
+- **Polarwinkel $\phi \in [0, \pi]$:** Winkel ab $+Y$ ($0 = \text{Nordpol}$, $\pi = \text{Südpol}$; *in den Hauptfolien als Elevation ab Äquator*).
+- **Azimutwinkel $\theta \in [0, 2\pi]$:** Umlaufwinkel in der XZ-Ebene um die Y-Achse.
+- **Abtastung** mit `stacks` ($i = 0 \dots \text{stacks}$) und `slices` ($j = 0 \dots \text{slices}$):
+  $$\phi_i = \frac{i}{\text{stacks}} \cdot \pi, \quad \theta_j = \frac{j}{\text{slices}} \cdot 2\pi$$
 
 </div>
 <div class="one">
@@ -228,19 +223,17 @@ private (float x, float y, float z) ComputeCoordinate(
 
 ---
 
+### Herleitung der Zylinder-Normalen in 2D
+
 <div class="columns">
 <div class="two">
 
-### Herleitung der Zylinder-Normalen in 2D
-
 Die Herleitung erfolgt über einen Schnitt in der XY-Ebene ($\theta = 0$):
 
-1. **Eckpunkte der Mantellinie**:
-   - $P_1 = (r_1, 0)$
-   - $P_2 = (r_2, h)$
-2. **Richtungsvektor der Mantellinie**:
+1. **Eckpunkte der Mantellinie:** $P_1 = (r_1, 0)$ und $P_2 = (r_2, h)$.
+2. **Richtungsvektor der Mantellinie:**
    $$\vec{v} = P_2 - P_1 = \begin{pmatrix} r_2 - r_1 \\ h \end{pmatrix}$$
-3. **Orthogonalitätsbedingung ($\vec{v} \cdot \vec{n}_{2D} = 0$)**:
+3. **Orthogonalitätsbedingung ($\vec{v} \cdot \vec{n}_{2D} = 0$):**
    $$\vec{n}_{2D} = \begin{pmatrix} h \\ -(r_2 - r_1) \end{pmatrix} = \begin{pmatrix} h \\ r_1 - r_2 \end{pmatrix}$$
    Zeigt für $h > 0$ stets nach außen.
 
@@ -254,18 +247,16 @@ Die Herleitung erfolgt über einen Schnitt in der XY-Ebene ($\theta = 0$):
 
 ---
 
+### 3D-Rotation des Normalenvektors
+
 <div class="columns">
 <div class="two">
-
-### 3D-Rotation des Normalenvektors
 
 Um den 3D-Normalenvektor $\vec{P}_\theta$ für jeden Winkel $\theta$ zu erhalten, wird der 2D-Vektor $\vec{n}_{2D}$ um die Y-Achse rotiert:
 
 - Die vertikale Komponente $n_y = r_1 - r_2$ bleibt unverändert.
 - Die radiale Komponente $n_x = h$ projiziert sich auf X und Z:
-  $$P_x = h \cdot \cos(\theta)$$
-  $$P_y = r_1 - r_2$$
-  $$P_z = h \cdot \sin(\theta)$$
+  $$P_x = h \cdot \cos(\theta), \quad P_y = r_1 - r_2, \quad P_z = h \cdot \sin(\theta)$$
 
 $$\vec{P}_\theta = \begin{pmatrix} h \cdot \cos(\theta) \\ r_1 - r_2 \\ h \cdot \sin(\theta) \end{pmatrix}$$
 
@@ -286,7 +277,7 @@ Zur Verwendung in OpenGL muss der analytische Vektor noch auf die euklidische L�
 ```csharp
 private (float nx, float ny, float nz) ComputeNormal(int j)
 {
-    float theta = (float)Math.PI * 2.0f / slices * j;
+    float theta = (float)Math.PI * 2.0f / Slices * j;
 
     // Unnormierter Normalenvektor aus der 2D/3D-Herleitung
     float nx = Length * (float)Math.Cos(theta);
@@ -300,8 +291,7 @@ private (float nx, float ny, float nz) ComputeNormal(int j)
 }
 ```
 
-> [!NOTE]
-> Für den Spezialfall eines geraden Zylinders ($r_1 = r_2$) ist $n_y = 0$. Die Normale vereinfacht sich zu $(\cos\theta, 0, \sin\theta)^T$, was exakt dem horizontalen Einheitskreis entspricht.
+> **Hinweis:** Für den Spezialfall eines geraden Zylinders ($r_1 = r_2$) ist $n_y = 0$. Die Normale vereinfacht sich zu $(\cos\theta, 0, \sin\theta)^\top$, was exakt dem horizontalen Einheitskreis entspricht.
 
 ---
 

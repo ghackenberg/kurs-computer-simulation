@@ -380,7 +380,7 @@ private void OpenGlView_OpenGLDraw(object sender, OpenGLRoutedEventArgs args)
     gl.MatrixMode(OpenGL.GL_MODELVIEW);
     gl.LoadIdentity();
 
-    // 3. Kamera-Sichtmatrix setzen (Blick von Eye (5,5,5) auf Ursprung (0,0,0), Up = +Y)
+    // 3. Kamera-Sichtmatrix setzen (statisch (5,5,5) -> in der Vorlage via _camera.Apply(gl))
     gl.LookAt(5.0, 5.0, 5.0,  0.0, 0.0, 0.0,  0.0, 1.0, 0.0);
 
     // 4. Koordinatenachsen, Bodengitter und 3D-Objekte zeichnen ...
@@ -769,9 +769,9 @@ Warum hängt das 3D-Werkstück (`_workpieceNode`) in **Aufgabe 1.3** als **Gesch
 - **3D-Abstand (`UpdateTcpCalculations`):** `Vector3.Distance(tcpPos, boxPos)` prüft `dist < 0.12f` (`canGrab` – *Tipp:* `62°`, `-100°`, `0.44 m`):
 
 ```csharp
-// 1. In BuildSceneGraph(): Werkstück als Geschwisterknoten direkt unter _rootNode einhängen
+// 1. In BuildSceneGraph(): Werkstück (0.12m via gl.Scale(0.12f,...)) direkt unter _rootNode
 _workpieceNode.Tx = 1.10f;
-_workpieceNode.Ty = 0.06f;
+_workpieceNode.Ty = 0.06f; // Halbe Kantenlänge 0.06m -> steht exakt auf dem Boden y = 0!
 _workpieceNode.Tz = -0.40f;
 _rootNode.AddChild(_workpieceNode);
 
@@ -795,7 +795,7 @@ In **Stufe 2 (Track A & B)** wird aus der Kette ein **verzweigter Szenengraph**:
   - Unter der Pinole hängt `_wristNode` (`Ry = _theta4Deg`).
   - Daran hängen zwei symmetrische Geschwisterknoten `_leftFingerNode` (`Tz = -_gripWidth / 2`) und `_rightFingerNode` (`Tz = +_gripWidth / 2`).
 - **2. Greifen (`Reparenting`):**
-  - Schließt der Greifer am Werkstück (`0.12 m`), wird `_workpieceNode` an `_wristNode` gekoppelt (`DispatcherTimer`).
+  - Schließt der Greifer am Werkstück (`0.12 m`), wird `_workpieceNode` lokal `(0,0,0)` an `_wristNode` gekoppelt (`DispatcherTimer`).
 
 </div>
 <div class="two">

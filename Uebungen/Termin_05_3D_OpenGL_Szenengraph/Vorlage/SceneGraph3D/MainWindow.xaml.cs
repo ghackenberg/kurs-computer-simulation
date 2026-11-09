@@ -52,6 +52,8 @@ public partial class MainWindow : Window
 
         // TODO [Stufe 1 - Aufgabe 1.3]:
         // Fügen Sie einen Knoten _workpieceNode bei (1.10f, 0.06f, -0.40f) unter _rootNode hinzu.
+        // Wichtig: Da DrawCube(gl) einen Einheitswürfel (1.0 m) zeichnet, in RenderCustomGeometry
+        // mit gl.PushMatrix(); gl.Scale(0.12f, 0.12f, 0.12f); DrawCube(gl); gl.PopMatrix(); skalieren!
 
         // TODO [Stufe 2 - Track A]:
         // Erweitern Sie den Baum unter _pinoleNode um _wristNode (theta4) sowie
@@ -409,7 +411,9 @@ public partial class MainWindow : Window
         double dy = currentPos.Y - _lastMousePos.Y;
 
         // Orbit-Drehung anpassen (Maus-Empfindlichkeit 0.4 Grad/Pixel)
-        // TODO [Stufe 1 - Aufgabe 1.2]: Bei gedrückter rechter Maustaste _camera.Pan(dx * 0.01, dy * 0.01) aufrufen!
+        // TODO [Stufe 1 - Aufgabe 1.2]:
+        // Nur bei e.LeftButton == MouseButtonState.Pressed _camera.Rotate(...) aufrufen,
+        // im Zweig else if (e.RightButton == MouseButtonState.Pressed) stattdessen _camera.Pan(dx * 0.01, dy * 0.01)!
         _camera.Rotate(dx * 0.4, -dy * 0.4);
         _lastMousePos = currentPos;
     }

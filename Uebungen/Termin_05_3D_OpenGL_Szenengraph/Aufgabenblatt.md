@@ -86,6 +86,7 @@ $$I = I_{\text{a}} k_{\text{a}} + I_{\text{d}} k_{\text{d}} (\vec{n} \cdot \vec{
    - Binden Sie in `MainWindow.xaml.cs` (`OpenGlView_MouseDown` / `MouseMove` / `MouseUp`) die **rechte Maustaste** an `_camera.Pan(dx * 0.01, dy * 0.01)`, sodass Sie das Zentrum der 3D-Szene frei verschieben können.
 4. **Aufgabe 1.3 – 3D-Werkstück auf dem Hallenboden & TCP-Distanzanzeige:**
    - Fügen Sie in `BuildSceneGraph()` einen weiteren Kindknoten `_workpieceNode = new SceneNode("Workpiece")` unter `_rootNode` bei der Bodenposition $(1{,}10, 0{,}06, -0{,}40)\,\text{m}$ hinzu, der einen orangen Würfel (Kantenlänge $0{,}12\,\text{m}$) zeichnet.
+   - *Hinweis zur Würfelgröße:* Da `DrawCube(gl)` einen Einheitswürfel ($[-0{,}5, +0{,}5]^3$, Kantenlänge $1{,}0\,\text{m}$) zeichnet, skalieren Sie ihn in `_workpieceNode.RenderCustomGeometry` mit `gl.PushMatrix(); gl.Scale(0.12f, 0.12f, 0.12f); DrawCube(gl); gl.PopMatrix();` auf $0{,}12\,\text{m}$ (sein Mittelpunkt liegt dann bei `Ty = 0.06f` exakt auf dem Boden $y = 0$).
    - Berechnen Sie in `UpdateTcpCalculations()` den euklidischen 3D-Abstand $d = \|\vec{p}_{\text{TCP}} - \vec{p}_{\text{Workpiece}}\|$ und geben Sie ihn in der Statusleiste (`TxtStatus`) aus. Färben Sie das Werkstück grün, sobald sich der TCP in Greifdistanz ($d < 0{,}12\,\text{m}$) befindet!
    - *Selbsttest-Tipp:* Stellen Sie die Gelenk-Slider auf $\theta_1 = 62^\circ, \theta_2 = -100^\circ, d_3 = 0{,}44\,\text{m}$ (oder $\theta_1 = -22^\circ, \theta_2 = +100^\circ, d_3 = 0{,}44\,\text{m}$) – der TCP trifft das Werkstück dann bis auf $d \approx 0{,}010\,\text{m} \ll 0{,}12\,\text{m}$ und der Würfel leuchtet sofort grün auf!
 
@@ -133,7 +134,8 @@ Da die ersten 3 Achsen ($\theta_1, \theta_2, d_3$) und die TCP-Validierung berei
    - Beim Klick auf eine Pose (oder „Pick & Place Zyklus starten“) dürfen die Gelenke **nicht unphysikalisch springen**, sondern müssen über einen `DispatcherTimer` (ca. 60 Hz) kontinuierlich und flüssig (z. B. lineare oder kubische Interpolation aller Gelenkwerte $\theta_1, \theta_2, d_3, \theta_4, g_{\text{width}}$) zur Zielpose verfahren.
 3. **Arbeitspaket A.3 – Interaktiver Pick-and-Place-Werkstücktransport:**
    - Platzieren Sie auf dem Hallenboden eine **Aufnahmestation A** (mit Werkstück) und eine **Ablagestation B** (Zielplattform).
-   - Schließt sich der Parallelgreifer ($g_{\text{width}} \le g_{\text{grip}}$), während sich der TCP innerhalb des Greifradius ($d < r_{\text{grab}}$) zum Werkstück befindet, wird das Werkstück gegriffen (entweder durch dynamisches Umhängen `Reparenting` von `_rootNode` unter `_wristNode` oder durch Mitführen mit Position & Orientierung $\theta_1 + \theta_2 + \theta_4$) und beim Öffnen des Greifers über Station B dort abgesetzt.
+   - Schließt sich der Parallelgreifer ($g_{\text{width}} \le g_{\text{grip}}$), während sich der TCP innerhalb des Greifradius ($d < r_{\text{grab}}$) zum Werkstück befindet, wird das Werkstück gegriffen (entweder durch dynamisches Umhängen `Reparenting` via `_wristNode.AddChild(_workpieceNode)` oder durch Mitführen mit Position & Orientierung $\theta_1 + \theta_2 + \theta_4$) und beim Öffnen des Greifers über Station B dort abgesetzt.
+   - *Wichtiger Praxis-Tipp zum `Reparenting`:* Beim Umhängen von `_workpieceNode` unter `_wristNode` müssen Sie dessen lokale Koordinaten auf `(Tx = 0, Ty = 0, Tz = 0)` relativ zum Greiferzentrum zurücksetzen (sonst bliebe `(1.10, 0.06, -0.40)` als lokaler Offset erhalten!); beim Ablegen unter `_rootNode` setzen Sie `(Tx, Ty, Tz)` auf die aktuelle Weltposition von Station B!
 4. **Arbeitspaket A.4 – Arbeitszellen-Spotlight & Optische Status-Signalisierung (`GL_LIGHT1`):**
    - Aktivieren Sie eine zweite Lichtquelle (`GL_LIGHT1`) als lokales Arbeitszellen-Spotlight oberhalb der Fertigungszelle und signalisieren Sie den aktuellen Greifstatus visuell an der Zelle bzw. am Greifer (z. B. Statusleuchte am Handgelenk oder Stations-Indikator: Orange = Werkstück bereit, Grün = Gegriffen/Transport aktiv, Blau = Auf Station B abgelegt).
 
@@ -163,7 +165,7 @@ Vollständige mechatronische 3D-Simulation eines Jahrmarkt-Greifarm-Automaten (*
      4. Laufkatze fährt zur Auswurfposition über dem Schacht und öffnet die Klaue.
 3. **Arbeitspaket B.3 – Greifmechanik (Kollisions-Snap):**
    - Prüfen Sie den 3D-Euklidischen Abstand zwischen Greifer-Zentrum und den Spielzeug-Objekten: $d = \|\vec{p}_{\text{claw}} - \vec{p}_{\text{objekt}}\|$.
-   - Liegt ein Objekt innerhalb des Greifradius ($d < r_{\text{grab}}$), wird es gegriffen und folgt ab diesem Moment der Bewegung der Klaue.
+   - Liegt ein Objekt innerhalb des Greifradius ($d < r_{\text{grab}}$), wird es gegriffen (beim `Reparenting` unter den Klauenknoten lokale Koordinaten `(Tx, Ty, Tz) = (0, 0, 0)` setzen!) und folgt ab diesem Moment der Bewegung der Klaue bis zum Abwurf über dem Schacht.
 4. **Arbeitspaket B.4 – Atmosphärische Beleuchtung:**
    - Aktivieren Sie einen lokalen Spotlight-Scheinwerfer (`GL_LIGHT1`), der von der Decke des Automaten senkrecht auf die Spielfläche strahlt.
 
@@ -201,14 +203,14 @@ Vollständige mechatronische 3D-Simulation eines Jahrmarkt-Greifarm-Automaten (*
 > [!WARNING]
 > **Typischer KI-Fehler bei Termin 05:**
 > - KIs verwenden häufig veraltetes Windows-Forms-GlControl oder versuchen moderne OpenGL 4 Core Profile Shader (GLSL) einzubauen, die in SharpGL-WPF-Standardprojekten oft Treiberprobleme verursachen.
-> - KIs vergessen oft `glNormal3f`, was zu völlig flachen, pechschwarzen Körpern führt, sobald `GL_LIGHTING` eingeschaltet wird.
+> - KIs vergessen oft `gl.Normal(nx, ny, nz)`, was zu völlig flachen, pechschwarzen Körpern führt, sobald `GL_LIGHTING` eingeschaltet wird.
 
 ### Empfohlener Prompt für LLMs:
 ```text
 Erstelle mir eine C#-Klasse für einen hierarchischen Szenengraphen mit SharpGL in WPF.
-Nutze die Fixed-Function-Pipeline (OpenGL 2.1) mit glPushMatrix() und glPopMatrix().
+Nutze die Fixed-Function-Pipeline (OpenGL 2.1) mit gl.PushMatrix() und gl.PopMatrix().
 Jeder Knoten (SceneNode) besitzt eine Liste von Kindknoten und eine Render-Methode.
-Berechne für alle Flächen (Würfel, Zylinder) saubere Normalenvektoren mit gl.Normal3f(), damit die Phong-Beleuchtung (GL_LIGHTING) plastisch wirkt.
+Berechne für alle Flächen (Würfel, Zylinder) saubere Normalenvektoren mit gl.Normal(nx, ny, nz), damit die Phong-Beleuchtung (GL_LIGHTING) plastisch wirkt.
 Implementiere eine Orbit-Kamera in Kugelkoordinaten, deren Elevation phi auf maximal +-85 Grad geklemmt ist.
 ```
 

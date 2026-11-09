@@ -45,8 +45,23 @@ public class SceneNode
     public void AddChild(SceneNode child)
     {
         ArgumentNullException.ThrowIfNull(child);
+        child.Parent?.Children.Remove(child);
         child.Parent = this;
         Children.Add(child);
+    }
+
+    /// <summary>
+    /// Entfernt einen Kindknoten und löscht dessen Eltern-Referenz (z. B. für Reparenting beim Greifen).
+    /// </summary>
+    public bool RemoveChild(SceneNode child)
+    {
+        ArgumentNullException.ThrowIfNull(child);
+        if (Children.Remove(child))
+        {
+            child.Parent = null;
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
