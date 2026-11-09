@@ -62,23 +62,23 @@
 
   <rect x="270" y="144" width="190" height="46" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
   <text x="365" y="166" class="code" fill="#b45309">Workpiece (Würfel)</text>
-  <text x="365" y="184" class="sub" fill="#334155">Pos (1.10, 0.06, -0.40)</text>
+  <text x="365" y="184" class="sub" fill="#334155">Werkstück am Boden</text>
 
   <line x1="115" y1="190" x2="115" y2="222" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
 
   <rect x="20" y="226" width="190" height="46" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
   <text x="115" y="248" class="code" fill="#15803d">UpperArm (Arm 1)</text>
-  <text x="115" y="266" class="sub" fill="#334155">Ty = HBase, Ry = theta1</text>
+  <text x="115" y="266" class="sub" fill="#334155">Schulter (Winkel theta_1)</text>
 
   <line x1="210" y1="249" x2="265" y2="249" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
 
   <rect x="270" y="226" width="190" height="46" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
   <text x="365" y="248" class="code" fill="#15803d">ForeArm (Arm 2)</text>
-  <text x="365" y="266" class="sub" fill="#334155">Tx = L1, Ry = theta2</text>
+  <text x="365" y="266" class="sub" fill="#334155">Ellenbogen (Winkel theta_2)</text>
 
   <line x1="365" y1="272" x2="365" y2="304" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
 
   <rect x="20" y="308" width="440" height="48" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2" />
-  <text x="240" y="330" class="code" fill="#991b1b">Pinole &amp; Greifer (TCP): Tx = L2, Ty = -d3</text>
+  <text x="240" y="330" class="code" fill="#991b1b">Pinole &amp; Greifer (TCP): Vertikalhub d_3</text>
   <text x="240" y="349" class="sub" fill="#334155">Erbt automatisch alle Drehungen und Verschiebungen der Elternknoten!</text>
 </svg>

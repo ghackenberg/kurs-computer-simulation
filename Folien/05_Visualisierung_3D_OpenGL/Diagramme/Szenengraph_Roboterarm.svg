@@ -72,15 +72,15 @@
   <!-- Beschriftungen frei von Linien -->
   <text x="72" y="232" class="code" fill="#1e40af">Base</text>
   <path d="M 185 250 A 65 65 0 0 0 176 217" fill="none" stroke="#d97706" stroke-width="2.5" />
-  <text x="242" y="236" class="code" fill="#b45309">theta1 = 30°</text>
+  <text x="242" y="236" class="code" fill="#b45309">theta_1 = 30°</text>
   <text x="190" y="168" class="code" fill="#1d4ed8">L1 = 1.0 m</text>
   <text x="365" y="148" class="code" fill="#15803d">L2 = 0.8 m</text>
   <text x="438" y="222" class="code" fill="#b45309">TCP (x, y, z)</text>
 
   <!-- Unten links: Vertikalhub Y -->
   <rect x="44" y="325" width="474" height="84" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.8" />
-  <text x="281" y="352" class="code" fill="#1e40af">Vertikale Höhe (Y-Achse):  y = HBase - d3</text>
-  <text x="281" y="378" class="sub" fill="#334155">Mit HBase = 0.50 m und Hub d3 = 0.15 m &#8594; y = 0.350 m</text>
+  <text x="281" y="352" class="code" fill="#1e40af">Vertikale Höhe (Y-Achse):  y = HBase - d_3</text>
+  <text x="281" y="378" class="sub" fill="#334155">Mit HBase = 0.50 m und Hub d_3 = 0.15 m &#8594; y = 0.350 m</text>
 
   <!-- RECHTS: Matrix-Stack vs. Analytische Vorwärtskinematik -->
   <rect x="556" y="24" width="498" height="402" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
@@ -89,17 +89,17 @@
   <!-- Weg 1: Analytische Trigonometrie -->
   <rect x="576" y="72" width="458" height="145" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.8" />
   <text x="805" y="98" class="code" fill="#15803d">Weg 1: Analytische Trigonometrie (CalculateAnalyticTcp)</text>
-  <text x="805" y="126" class="math" fill="#0f172a">x = L1 * cos(theta1) + L2 * cos(theta1 + theta2)</text>
-  <text x="805" y="152" class="math" fill="#0f172a">z = -( L1 * sin(theta1) + L2 * sin(theta1 + theta2) )</text>
-  <text x="805" y="180" class="code" fill="#166534">Für theta1=30°, theta2=-45° &#8594; x = 1.639 m, z = -0.293 m</text>
+  <text x="805" y="126" class="math" fill="#0f172a">x = L1 * cos(theta_1) + L2 * cos(theta_1 + theta_2)</text>
+  <text x="805" y="152" class="math" fill="#0f172a">z = -( L1 * sin(theta_1) + L2 * sin(theta_1 + theta_2) )</text>
+  <text x="805" y="180" class="code" fill="#166534">Für theta_1=30°, theta_2=-45° &#8594; x = 1.639 m, z = -0.293 m</text>
   <text x="805" y="203" class="sub" fill="#475569">Gelbe Kontrollkugel im 3D-Viewport</text>
 
   <!-- Weg 2: Szenengraph Matrix-Kette -->
   <rect x="576" y="232" width="458" height="176" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.8" />
   <text x="805" y="258" class="code" fill="#b45309">Weg 2: Szenengraph Matrix-Kette (GetWorldPosition)</text>
-  <text x="805" y="286" class="code" fill="#0f172a">M_TCP = T_Base * R_y(theta1) * T(L1) * R_y(theta2) * T(L2)</text>
+  <text x="805" y="286" class="code" fill="#0f172a">M_TCP = T(HBase) * R_y(theta_1) * T(L1) * R_y(theta_2) * T(L2)</text>
   <text x="805" y="314" class="code" fill="#92400e">_pinoleNode.GetWorldPosition() &#8594; (1.639, 0.350, -0.293) m</text>
   <rect x="592" y="332" width="426" height="60" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
-  <text x="805" y="357" class="code" fill="#15803d">Deckungsfehler Delta = ||p_ana - p_mat|| = 0.000 mm</text>
+  <text x="805" y="357" class="code" fill="#15803d">Deckungsfehler Delta = 0.000 mm (Exakte Deckung!)</text>
   <text x="805" y="381" class="sub" fill="#334155">Beweist die Korrektheit des Szenengraphen in Echtzeit!</text>
 </svg>

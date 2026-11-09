@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; }
+      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .code-l { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; }
+      .math { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#d97706" />
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#475569" />
+    </marker>
+    <radialGradient id="grad-amb" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </radialGradient>
+    <radialGradient id="grad-diff" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#60a5fa" />
+      <stop offset="65%" stop-color="#1d4ed8" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </radialGradient>
+    <radialGradient id="grad-spec" cx="35%" cy="30%" r="35%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="30%" stop-color="#93c5fd" />
+      <stop offset="70%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </radialGradient>
+    <radialGradient id="grad-phong" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="18%" stop-color="#93c5fd" />
+      <stop offset="55%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1e3a8a" />
+    </radialGradient>
+  </defs>
+
+  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="36" class="hdr" fill="#1e40af">3D-Rotation des Normalenvektors um den Winkel theta (XZ-Ebene)</text>
+
+  <line x1="60" y1="200" x2="420" y2="200" stroke="#475569" stroke-width="2" marker-end="url(#arr-slate)" />
+  <line x1="220" y1="335" x2="220" y2="65" stroke="#475569" stroke-width="2" marker-end="url(#arr-slate)" />
+  <text x="442" y="205" class="code" fill="#475569">+X</text>
+  <text x="220" y="54" class="code" fill="#475569">+Z</text>
+
+  <circle cx="220" cy="200" r="95" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
+
+  <!-- Winkel theta = 35° -->
+  <line x1="220" y1="200" x2="298" y2="145" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3" />
+  <line x1="298" y1="145" x2="380" y2="88" stroke="#16a34a" stroke-width="3.5" marker-end="url(#arr-green)" />
+  <text x="395" y="75" class="code" fill="#15803d">P_theta</text>
+
+  <path d="M 265 200 A 45 45 0 0 0 257 174" fill="none" stroke="#d97706" stroke-width="2.5" />
+  <text x="285" y="190" class="code" fill="#b45309">theta</text>
+
+  <rect x="-10" y="308" width="500" height="46" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" />
+  <text x="240" y="336" class="code" fill="#0f172a">P_x = h * cos(theta)  |  P_y = r_1 - r_2  |  P_z = h * sin(theta)</text>
+</svg>

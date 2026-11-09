@@ -88,6 +88,6 @@
 
   <!-- Formel-Box unten -->
   <rect x="-20" y="302" width="520" height="56" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.8" />
-  <text x="240" y="325" class="code" fill="#0f172a">r = 2 * (n · l) * n - l   |   Ambient: I_a = k_a * I_La</text>
+  <text x="240" y="325" class="code" fill="#0f172a">r = 2 * (n · l) * n - l   (Gespiegelter Lichtstrahl)</text>
   <text x="240" y="347" class="sub" fill="#475569">Alle 4 Vektoren n, l, v, r sind auf Länge 1 normiert</text>
 </svg>

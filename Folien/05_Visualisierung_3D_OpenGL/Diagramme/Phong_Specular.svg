@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; }
+      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .code-l { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; }
+      .math { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#d97706" />
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#475569" />
+    </marker>
+    <radialGradient id="grad-amb" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </radialGradient>
+    <radialGradient id="grad-diff" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#60a5fa" />
+      <stop offset="65%" stop-color="#1d4ed8" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </radialGradient>
+    <radialGradient id="grad-spec" cx="35%" cy="30%" r="35%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="30%" stop-color="#93c5fd" />
+      <stop offset="70%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </radialGradient>
+    <radialGradient id="grad-phong" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="18%" stop-color="#93c5fd" />
+      <stop offset="55%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1e3a8a" />
+    </radialGradient>
+  </defs>
+
+  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="36" class="hdr" fill="#b45309">Spekularer Glanzpunkt: I_s = k_s * I_Ls * (r · v)^alpha_shiny</text>
+
+  <!-- Links: Reflexionskeule um r -->
+  <rect x="-20" y="54" width="250" height="225" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.8" />
+  <text x="105" y="78" class="code" fill="#1e40af">Reflexionskeule um r</text>
+  <line x1="20" y1="230" x2="195" y2="230" stroke="#475569" stroke-width="3" />
+  <line x1="105" y1="230" x2="105" y2="115" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
+  <text x="105" y="104" class="code" fill="#15803d">n</text>
+  <line x1="105" y1="230" x2="35" y2="140" stroke="#d97706" stroke-width="2.5" marker-end="url(#arr-amber)" />
+  <text x="28" y="132" class="code" fill="#b45309">l</text>
+  <!-- Glanzkeule -->
+  <path d="M 105 230 C 125 145, 165 110, 180 125 C 195 140, 160 180, 105 230 Z" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5" />
+  <line x1="105" y1="230" x2="175" y2="130" stroke="#dc2626" stroke-width="3" marker-end="url(#arr-red)" />
+  <text x="184" y="122" class="code" fill="#991b1b">r</text>
+  <line x1="105" y1="230" x2="195" y2="175" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arr-blue)" />
+  <text x="208" y="175" class="code" fill="#1d4ed8">v</text>
+  <text x="105" y="262" class="sub" fill="#334155">Maximal wenn Kamera v = r</text>
+
+  <!-- Rechts: Einfluss von alpha_shiny -->
+  <rect x="250" y="54" width="250" height="225" rx="8" fill="#ffffff" stroke="#fcd34d" stroke-width="1.8" />
+  <text x="375" y="78" class="code" fill="#b45309">Exponent alpha_shiny</text>
+  <line x1="280" y1="225" x2="475" y2="225" stroke="#475569" stroke-width="2" />
+  <line x1="375" y1="225" x2="375" y2="100" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" />
+  <!-- Breite Kurve (alpha_shiny = 8) -->
+  <path d="M 285 225 Q 375 80 465 225" fill="none" stroke="#3b82f6" stroke-width="3" />
+  <text x="315" y="145" class="code" fill="#1d4ed8">alpha_shiny=8</text>
+  <!-- Schmale Kurve (alpha_shiny = 64) -->
+  <path d="M 340 225 Q 375 75 410 225" fill="none" stroke="#dc2626" stroke-width="3" />
+  <text x="425" y="120" class="code" fill="#991b1b">64 (Metall)</text>
+  <text x="375" y="258" class="sub" fill="#334155">Großes alpha_shiny &#8594; enger Fokus</text>
+
+  <!-- Unten: Zahlenbeispiel -->
+  <rect x="-20" y="294" width="520" height="64" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="1.8" />
+  <text x="240" y="319" class="code" fill="#92400e">Bei r · v = 0.90 gilt:  0.90^8 = 0.43  vs.  0.90^64 = 0.001</text>
+  <text x="240" y="344" class="sub" fill="#334155">Parameter k_s, I_Ls und alpha_shiny steuern Glanzstärke und Schärfe</text>
+</svg>

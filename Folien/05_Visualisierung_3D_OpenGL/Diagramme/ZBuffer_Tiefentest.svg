@@ -77,6 +77,6 @@
 
   <!-- Unten: Z-Buffer Regel -->
   <rect x="-20" y="290" width="520" height="68" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.8" />
-  <text x="240" y="316" class="code" fill="#1e40af">gl.Enable(OpenGL.GL_DEPTH_TEST) + gl.Clear(GL_DEPTH_BUFFER_BIT)</text>
+  <text x="240" y="316" class="code" fill="#1e40af">gl.Enable(OpenGL.GL_DEPTH_TEST)  (Z-Buffer aktiv)</text>
   <text x="240" y="342" class="sub" fill="#334155">Speichert pro Bildschirmpixel den kleinsten Abstand z zur Kamera</text>
 </svg>

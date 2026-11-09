@@ -51,20 +51,20 @@
   <text x="240" y="36" class="hdr" fill="#1e40af">OpenGL Matrix-Stack: PushMatrix() &amp; PopMatrix()</text>
 
   <rect x="-20" y="56" width="235" height="52" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
-  <text x="97" y="78" class="code" fill="#1d4ed8">1. M_0 = Welt / Kamera</text>
+  <text x="97" y="78" class="code" fill="#1d4ed8">1. Eltern-Matrix M_0</text>
   <text x="97" y="98" class="sub" fill="#475569">gl.PushMatrix() sichert M_0</text>
 
   <line x1="97" y1="108" x2="97" y2="132" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arr-blue)" />
 
   <rect x="-20" y="136" width="235" height="52" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
-  <text x="97" y="158" class="code" fill="#15803d">2. M_1 = M_0 * T_1 * R_1</text>
-  <text x="97" y="178" class="sub" fill="#166534">Oberarm (Arm 1) + PushMatrix()</text>
+  <text x="97" y="158" class="code" fill="#15803d">2. Kind-Matrix M_1</text>
+  <text x="97" y="178" class="sub" fill="#166534">M_1 = M_0 * T_1 * R_1</text>
 
   <line x1="97" y1="188" x2="97" y2="212" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
 
   <rect x="-20" y="216" width="235" height="52" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
-  <text x="97" y="238" class="code" fill="#b45309">3. M_2 = M_1 * T_2 * R_2</text>
-  <text x="97" y="258" class="sub" fill="#92400e">Unterarm (Arm 2) + PopMatrix()</text>
+  <text x="97" y="238" class="code" fill="#b45309">3. Enkel-Matrix M_2</text>
+  <text x="97" y="258" class="sub" fill="#92400e">M_2 = M_1 * T_2 * R_2</text>
 
   <!-- Rechts: Wichtige Skalierungs-Falle (Aufgabe 1.1) -->
   <rect x="232" y="56" width="268" height="212" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2" />
@@ -81,6 +81,6 @@
 
   <!-- Unten: Zusammenfassung -->
   <rect x="-20" y="286" width="520" height="68" rx="8" fill="#ffffff" stroke="#475569" stroke-width="1.8" />
-  <text x="240" y="312" class="code" fill="#0f172a">M_world = M_local * M_parent_world  (System.Numerics)</text>
+  <text x="240" y="312" class="code" fill="#0f172a">gl.PushMatrix() merkt M_0  |  gl.PopMatrix() restauriert M_0</text>
   <text x="240" y="338" class="sub" fill="#334155">PopMatrix() stellt das Eltern-Koordinatensystem wieder her</text>
 </svg>

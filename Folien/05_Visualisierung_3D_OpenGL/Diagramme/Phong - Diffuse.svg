@@ -76,6 +76,6 @@
 
   <!-- Unten: Formel & Rückseiten-Abschneidung -->
   <rect x="-20" y="294" width="520" height="64" rx="8" fill="#ffffff" stroke="#64748b" stroke-width="1.8" />
-  <text x="240" y="319" class="math" fill="#0f172a">I_d = k_d * I_Ld * max(0, n · l)</text>
-  <text x="240" y="344" class="sub" fill="#dc2626">Für delta &gt; 90° ist n · l &lt; 0 (Rückseite im Eigenschatten &#8594; I_d = 0)</text>
+  <text x="240" y="319" class="math" fill="#0f172a">I_a = k_a * I_La   |   I_d = k_d * I_Ld * max(0, n · l)</text>
+  <text x="240" y="344" class="sub" fill="#dc2626">Für delta &gt; 90° ist n · l &lt; 0 (Rückseite im Eigenschatten &#8594; nur I_a bleibt)</text>
 </svg>

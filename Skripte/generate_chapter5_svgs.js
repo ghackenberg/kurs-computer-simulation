@@ -14,6 +14,12 @@ function writeSvg(name, content) {
   const filePath = path.join(outDir, name);
   fs.writeFileSync(filePath, content.trim() + '\n', 'utf8');
   console.log('Generated:', name);
+  // Auch eine leerzeichenfreie Variante schreiben, damit Markdown-Links ohne %20 auskommen:
+  if (name.includes(' - ')) {
+    const cleanName = name.replace(/ - /g, '_').replace(/ /g, '_');
+    fs.writeFileSync(path.join(outDir, cleanName), content.trim() + '\n', 'utf8');
+    console.log('Generated alias:', cleanName);
+  }
 }
 
 const COMMON_DEFS = `
@@ -149,7 +155,7 @@ writeSvg('Phong - Vektoren.svg', `
 
   <!-- Formel-Box unten -->
   <rect x="-20" y="302" width="520" height="56" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.8" />
-  <text x="240" y="325" class="code" fill="#0f172a">r = 2 * (n · l) * n - l   |   Ambient: I_a = k_a * I_La</text>
+  <text x="240" y="325" class="code" fill="#0f172a">r = 2 * (n · l) * n - l   (Gespiegelter Lichtstrahl)</text>
   <text x="240" y="347" class="sub" fill="#475569">Alle 4 Vektoren n, l, v, r sind auf Länge 1 normiert</text>
 </svg>
 `);
@@ -187,8 +193,8 @@ writeSvg('Phong - Diffuse.svg', `
 
   <!-- Unten: Formel & Rückseiten-Abschneidung -->
   <rect x="-20" y="294" width="520" height="64" rx="8" fill="#ffffff" stroke="#64748b" stroke-width="1.8" />
-  <text x="240" y="319" class="math" fill="#0f172a">I_d = k_d * I_Ld * max(0, n · l)</text>
-  <text x="240" y="344" class="sub" fill="#dc2626">Für delta &gt; 90° ist n · l &lt; 0 (Rückseite im Eigenschatten &#8594; I_d = 0)</text>
+  <text x="240" y="319" class="math" fill="#0f172a">I_a = k_a * I_La   |   I_d = k_d * I_Ld * max(0, n · l)</text>
+  <text x="240" y="344" class="sub" fill="#dc2626">Für delta &gt; 90° ist n · l &lt; 0 (Rückseite im Eigenschatten &#8594; nur I_a bleibt)</text>
 </svg>
 `);
 
@@ -369,7 +375,7 @@ writeSvg('ZBuffer_Tiefentest.svg', `
 
   <!-- Unten: Z-Buffer Regel -->
   <rect x="-20" y="290" width="520" height="68" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.8" />
-  <text x="240" y="316" class="code" fill="#1e40af">gl.Enable(OpenGL.GL_DEPTH_TEST) + gl.Clear(GL_DEPTH_BUFFER_BIT)</text>
+  <text x="240" y="316" class="code" fill="#1e40af">gl.Enable(OpenGL.GL_DEPTH_TEST)  (Z-Buffer aktiv)</text>
   <text x="240" y="342" class="sub" fill="#334155">Speichert pro Bildschirmpixel den kleinsten Abstand z zur Kamera</text>
 </svg>
 `);
@@ -467,24 +473,24 @@ writeSvg('Szenengraph.svg', `
 
   <rect x="270" y="144" width="190" height="46" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
   <text x="365" y="166" class="code" fill="#b45309">Workpiece (Würfel)</text>
-  <text x="365" y="184" class="sub" fill="#334155">Pos (1.10, 0.06, -0.40)</text>
+  <text x="365" y="184" class="sub" fill="#334155">Werkstück am Boden</text>
 
   <line x1="115" y1="190" x2="115" y2="222" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
 
   <rect x="20" y="226" width="190" height="46" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
   <text x="115" y="248" class="code" fill="#15803d">UpperArm (Arm 1)</text>
-  <text x="115" y="266" class="sub" fill="#334155">Ty = HBase, Ry = theta1</text>
+  <text x="115" y="266" class="sub" fill="#334155">Schulter (Winkel theta_1)</text>
 
   <line x1="210" y1="249" x2="265" y2="249" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
 
   <rect x="270" y="226" width="190" height="46" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
   <text x="365" y="248" class="code" fill="#15803d">ForeArm (Arm 2)</text>
-  <text x="365" y="266" class="sub" fill="#334155">Tx = L1, Ry = theta2</text>
+  <text x="365" y="266" class="sub" fill="#334155">Ellenbogen (Winkel theta_2)</text>
 
   <line x1="365" y1="272" x2="365" y2="304" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
 
   <rect x="20" y="308" width="440" height="48" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2" />
-  <text x="240" y="330" class="code" fill="#991b1b">Pinole &amp; Greifer (TCP): Tx = L2, Ty = -d3</text>
+  <text x="240" y="330" class="code" fill="#991b1b">Pinole &amp; Greifer (TCP): Vertikalhub d_3</text>
   <text x="240" y="349" class="sub" fill="#334155">Erbt automatisch alle Drehungen und Verschiebungen der Elternknoten!</text>
 </svg>
 `);
@@ -497,20 +503,20 @@ writeSvg('MatrixStack_PushPop_Illu.svg', `
   <text x="240" y="36" class="hdr" fill="#1e40af">OpenGL Matrix-Stack: PushMatrix() &amp; PopMatrix()</text>
 
   <rect x="-20" y="56" width="235" height="52" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
-  <text x="97" y="78" class="code" fill="#1d4ed8">1. M_0 = Welt / Kamera</text>
+  <text x="97" y="78" class="code" fill="#1d4ed8">1. Eltern-Matrix M_0</text>
   <text x="97" y="98" class="sub" fill="#475569">gl.PushMatrix() sichert M_0</text>
 
   <line x1="97" y1="108" x2="97" y2="132" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arr-blue)" />
 
   <rect x="-20" y="136" width="235" height="52" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
-  <text x="97" y="158" class="code" fill="#15803d">2. M_1 = M_0 * T_1 * R_1</text>
-  <text x="97" y="178" class="sub" fill="#166534">Oberarm (Arm 1) + PushMatrix()</text>
+  <text x="97" y="158" class="code" fill="#15803d">2. Kind-Matrix M_1</text>
+  <text x="97" y="178" class="sub" fill="#166534">M_1 = M_0 * T_1 * R_1</text>
 
   <line x1="97" y1="188" x2="97" y2="212" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
 
   <rect x="-20" y="216" width="235" height="52" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
-  <text x="97" y="238" class="code" fill="#b45309">3. M_2 = M_1 * T_2 * R_2</text>
-  <text x="97" y="258" class="sub" fill="#92400e">Unterarm (Arm 2) + PopMatrix()</text>
+  <text x="97" y="238" class="code" fill="#b45309">3. Enkel-Matrix M_2</text>
+  <text x="97" y="258" class="sub" fill="#92400e">M_2 = M_1 * T_2 * R_2</text>
 
   <!-- Rechts: Wichtige Skalierungs-Falle (Aufgabe 1.1) -->
   <rect x="232" y="56" width="268" height="212" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2" />
@@ -527,7 +533,7 @@ writeSvg('MatrixStack_PushPop_Illu.svg', `
 
   <!-- Unten: Zusammenfassung -->
   <rect x="-20" y="286" width="520" height="68" rx="8" fill="#ffffff" stroke="#475569" stroke-width="1.8" />
-  <text x="240" y="312" class="code" fill="#0f172a">M_world = M_local * M_parent_world  (System.Numerics)</text>
+  <text x="240" y="312" class="code" fill="#0f172a">gl.PushMatrix() merkt M_0  |  gl.PopMatrix() restauriert M_0</text>
   <text x="240" y="338" class="sub" fill="#334155">PopMatrix() stellt das Eltern-Koordinatensystem wieder her</text>
 </svg>
 `);
@@ -561,15 +567,15 @@ writeSvg('Szenengraph_Roboterarm.svg', `
   <!-- Beschriftungen frei von Linien -->
   <text x="72" y="232" class="code" fill="#1e40af">Base</text>
   <path d="M 185 250 A 65 65 0 0 0 176 217" fill="none" stroke="#d97706" stroke-width="2.5" />
-  <text x="242" y="236" class="code" fill="#b45309">theta1 = 30°</text>
+  <text x="242" y="236" class="code" fill="#b45309">theta_1 = 30°</text>
   <text x="190" y="168" class="code" fill="#1d4ed8">L1 = 1.0 m</text>
   <text x="365" y="148" class="code" fill="#15803d">L2 = 0.8 m</text>
   <text x="438" y="222" class="code" fill="#b45309">TCP (x, y, z)</text>
 
   <!-- Unten links: Vertikalhub Y -->
   <rect x="44" y="325" width="474" height="84" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.8" />
-  <text x="281" y="352" class="code" fill="#1e40af">Vertikale Höhe (Y-Achse):  y = HBase - d3</text>
-  <text x="281" y="378" class="sub" fill="#334155">Mit HBase = 0.50 m und Hub d3 = 0.15 m &#8594; y = 0.350 m</text>
+  <text x="281" y="352" class="code" fill="#1e40af">Vertikale Höhe (Y-Achse):  y = HBase - d_3</text>
+  <text x="281" y="378" class="sub" fill="#334155">Mit HBase = 0.50 m und Hub d_3 = 0.15 m &#8594; y = 0.350 m</text>
 
   <!-- RECHTS: Matrix-Stack vs. Analytische Vorwärtskinematik -->
   <rect x="556" y="24" width="498" height="402" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
@@ -578,18 +584,18 @@ writeSvg('Szenengraph_Roboterarm.svg', `
   <!-- Weg 1: Analytische Trigonometrie -->
   <rect x="576" y="72" width="458" height="145" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.8" />
   <text x="805" y="98" class="code" fill="#15803d">Weg 1: Analytische Trigonometrie (CalculateAnalyticTcp)</text>
-  <text x="805" y="126" class="math" fill="#0f172a">x = L1 * cos(theta1) + L2 * cos(theta1 + theta2)</text>
-  <text x="805" y="152" class="math" fill="#0f172a">z = -( L1 * sin(theta1) + L2 * sin(theta1 + theta2) )</text>
-  <text x="805" y="180" class="code" fill="#166534">Für theta1=30°, theta2=-45° &#8594; x = 1.639 m, z = -0.293 m</text>
+  <text x="805" y="126" class="math" fill="#0f172a">x = L1 * cos(theta_1) + L2 * cos(theta_1 + theta_2)</text>
+  <text x="805" y="152" class="math" fill="#0f172a">z = -( L1 * sin(theta_1) + L2 * sin(theta_1 + theta_2) )</text>
+  <text x="805" y="180" class="code" fill="#166534">Für theta_1=30°, theta_2=-45° &#8594; x = 1.639 m, z = -0.293 m</text>
   <text x="805" y="203" class="sub" fill="#475569">Gelbe Kontrollkugel im 3D-Viewport</text>
 
   <!-- Weg 2: Szenengraph Matrix-Kette -->
   <rect x="576" y="232" width="458" height="176" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.8" />
   <text x="805" y="258" class="code" fill="#b45309">Weg 2: Szenengraph Matrix-Kette (GetWorldPosition)</text>
-  <text x="805" y="286" class="code" fill="#0f172a">M_TCP = T_Base * R_y(theta1) * T(L1) * R_y(theta2) * T(L2)</text>
+  <text x="805" y="286" class="code" fill="#0f172a">M_TCP = T(HBase) * R_y(theta_1) * T(L1) * R_y(theta_2) * T(L2)</text>
   <text x="805" y="314" class="code" fill="#92400e">_pinoleNode.GetWorldPosition() &#8594; (1.639, 0.350, -0.293) m</text>
   <rect x="592" y="332" width="426" height="60" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
-  <text x="805" y="357" class="code" fill="#15803d">Deckungsfehler Delta = ||p_ana - p_mat|| = 0.000 mm</text>
+  <text x="805" y="357" class="code" fill="#15803d">Deckungsfehler Delta = 0.000 mm (Exakte Deckung!)</text>
   <text x="805" y="381" class="sub" fill="#334155">Beweist die Korrektheit des Szenengraphen in Echtzeit!</text>
 </svg>
 `);
