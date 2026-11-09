@@ -87,6 +87,7 @@ $$I = I_{\text{a}} k_{\text{a}} + I_{\text{d}} k_{\text{d}} (\vec{n} \cdot \vec{
 4. **Aufgabe 1.3 – 3D-Werkstück auf dem Hallenboden & TCP-Distanzanzeige:**
    - Fügen Sie in `BuildSceneGraph()` einen weiteren Kindknoten `_workpieceNode = new SceneNode("Workpiece")` unter `_rootNode` bei der Bodenposition $(1{,}10, 0{,}06, -0{,}40)\,\text{m}$ hinzu, der einen orangen Würfel (Kantenlänge $0{,}12\,\text{m}$) zeichnet.
    - Berechnen Sie in `UpdateTcpCalculations()` den euklidischen 3D-Abstand $d = \|\vec{p}_{\text{TCP}} - \vec{p}_{\text{Workpiece}}\|$ und geben Sie ihn in der Statusleiste (`TxtStatus`) aus. Färben Sie das Werkstück grün, sobald sich der TCP in Greifdistanz ($d < 0{,}12\,\text{m}$) befindet!
+   - *Selbsttest-Tipp:* Stellen Sie die Gelenk-Slider auf $\theta_1 = 62^\circ, \theta_2 = -100^\circ, d_3 = 0{,}44\,\text{m}$ (oder $\theta_1 = -22^\circ, \theta_2 = +100^\circ, d_3 = 0{,}44\,\text{m}$) – der TCP trifft das Werkstück dann bis auf $d \approx 0{,}010\,\text{m} \ll 0{,}12\,\text{m}$ und der Würfel leuchtet sofort grün auf!
 
 ---
 

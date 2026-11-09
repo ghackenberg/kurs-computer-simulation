@@ -3,7 +3,7 @@
 **Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
-**Zuletzt generiert:** 2026-11-09 21:12:04 UTC  
+**Zuletzt generiert:** 2026-11-09 21:21:49 UTC  
 
 Dieses Verzeichnis enthält alle druckreifen, vollständigen PDF-Unterlagen für den Upload auf Moodle.
 
@@ -32,7 +32,7 @@ Dieses Verzeichnis enthält alle druckreifen, vollständigen PDF-Unterlagen für
 | **Termin 02** | Pixelgrafik und FDM | [`Termin_02_Aufgabenblatt.pdf`](Uebungen/Termin_02_Aufgabenblatt.pdf) | 361.07 KB | `Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.pdf` |
 | **Termin 03** | Vektorgrafik Canvas | [`Termin_03_Aufgabenblatt.pdf`](Uebungen/Termin_03_Aufgabenblatt.pdf) | 337.77 KB | `Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.pdf` |
 | **Termin 04** | Telemetrie und ScottPlot | [`Termin_04_Aufgabenblatt.pdf`](Uebungen/Termin_04_Aufgabenblatt.pdf) | 314.65 KB | `Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.pdf` |
-| **Termin 05** | 3D OpenGL Szenengraph | [`Termin_05_Aufgabenblatt.pdf`](Uebungen/Termin_05_Aufgabenblatt.pdf) | 365.89 KB | `Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.pdf` |
+| **Termin 05** | 3D OpenGL Szenengraph | [`Termin_05_Aufgabenblatt.pdf`](Uebungen/Termin_05_Aufgabenblatt.pdf) | 368.03 KB | `Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.pdf` |
 | **Termin 06** | Multithreading und TPL | [`Termin_06_Aufgabenblatt.pdf`](Uebungen/Termin_06_Aufgabenblatt.pdf) | 421.95 KB | `Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.pdf` |
 | **Termin 07** | Statik FEM Cholesky | [`Termin_07_Aufgabenblatt.pdf`](Uebungen/Termin_07_Aufgabenblatt.pdf) | 383.08 KB | `Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.pdf` |
 | **Termin 08** | DGL und SFunctions | [`Termin_08_Aufgabenblatt.pdf`](Uebungen/Termin_08_Aufgabenblatt.pdf) | 368.92 KB | `Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.pdf` |

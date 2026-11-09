@@ -88,10 +88,10 @@
                         <Border Background="#1B2B3A" CornerRadius="3" Padding="8">
                             <StackPanel>
                                 <TextBlock Text="Analytische Vorwärtskinematik:" Foreground="#4EC9B0" FontSize="11" FontWeight="SemiBold"/>
-                                <TextBlock x:Name="TxtTcpAnalytic" Text="X = 1.45 m | Y = 0.35 m | Z = -0.28 m" Foreground="#FFFFFF" FontFamily="Consolas" FontSize="11" Margin="0,2,0,6"/>
+                                <TextBlock x:Name="TxtTcpAnalytic" Text="X = 1.639 m | Y = 0.350 m | Z = -0.293 m" Foreground="#FFFFFF" FontFamily="Consolas" FontSize="11" Margin="0,2,0,6"/>
                                 
                                 <TextBlock Text="Szenengraph-Matrix (OpenGL):" Foreground="#9CDCFE" FontSize="11" FontWeight="SemiBold"/>
-                                <TextBlock x:Name="TxtTcpMatrix" Text="X = 1.45 m | Y = 0.35 m | Z = -0.28 m" Foreground="#FFFFFF" FontFamily="Consolas" FontSize="11" Margin="0,2,0,4"/>
+                                <TextBlock x:Name="TxtTcpMatrix" Text="X = 1.639 m | Y = 0.350 m | Z = -0.293 m" Foreground="#FFFFFF" FontFamily="Consolas" FontSize="11" Margin="0,2,0,4"/>
 
                                 <TextBlock x:Name="TxtTcpDiff" Text="Deckungsfehler Delta = 0.000 mm" Foreground="#98FB98" FontSize="11" FontWeight="Bold"/>
                             </StackPanel>

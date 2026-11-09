@@ -763,5 +763,49 @@ writeSvg('Zylindernormale - Querschnitt XY.svg', `
 </svg>
 `);
 
+// 19. Szenengraph_Greifer_Verzweigung.svg (Halbseitig: Verzweigung am Greifer & Reparenting)
+writeSvg('Szenengraph_Greifer_Verzweigung.svg', `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  ${COMMON_DEFS}
+  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="36" class="hdr" fill="#1e40af">Stufe 2: Greifer-Verzweigung &amp; Pick-and-Place</text>
+
+  <!-- Elternknoten _wristNode -->
+  <rect x="125" y="54" width="230" height="46" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2.2" />
+  <text x="240" y="75" class="code" fill="#1d4ed8">_wristNode (Achse 4)</text>
+  <text x="240" y="93" class="sub" fill="#334155">Rotation Ry = _theta4Deg</text>
+
+  <!-- Pfeile zu den 2 Finger-Geschwisterknoten -->
+  <line x1="185" y1="100" x2="95" y2="144" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
+  <line x1="295" y1="100" x2="385" y2="144" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
+
+  <!-- Linke Backe -->
+  <rect x="-15" y="148" width="220" height="52" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
+  <text x="95" y="170" class="code" fill="#15803d">_leftFingerNode</text>
+  <text x="95" y="190" class="code" fill="#0f172a">Tz = -_gripWidth / 2</text>
+
+  <!-- Rechte Backe -->
+  <rect x="275" y="148" width="220" height="52" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
+  <text x="385" y="170" class="code" fill="#15803d">_rightFingerNode</text>
+  <text x="385" y="190" class="code" fill="#0f172a">Tz = +_gripWidth / 2</text>
+
+  <!-- Unten: Geometrie & Reparenting von _workpieceNode -->
+  <rect x="-15" y="218" width="510" height="140" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
+  <text x="240" y="242" class="code" fill="#b45309">Greifvorgang (Reparenting): _workpieceNode (0.12 m)</text>
+
+  <!-- Traverse + 2 Finger + Werkstück in der Mitte -->
+  <rect x="105" y="255" width="270" height="14" rx="3" fill="#64748b" />
+  <rect x="135" y="269" width="22" height="48" rx="3" fill="#16a34a" stroke="#166534" stroke-width="1.5" />
+  <rect x="323" y="269" width="22" height="48" rx="3" fill="#16a34a" stroke="#166534" stroke-width="1.5" />
+  <rect x="195" y="272" width="90" height="44" rx="5" fill="#f59e0b" stroke="#b45309" stroke-width="2" />
+  <text x="240" y="299" class="code" fill="#ffffff">Workpiece</text>
+
+  <!-- Pfeile nach innen -->
+  <line x1="85" y1="293" x2="128" y2="293" stroke="#15803d" stroke-width="2.5" marker-end="url(#arr-green)" />
+  <line x1="395" y1="293" x2="352" y2="293" stroke="#15803d" stroke-width="2.5" marker-end="url(#arr-green)" />
+
+  <text x="240" y="342" class="sub" fill="#334155">Öffnungsweite _gripWidth [0.02 .. 0.16 m] &#8594; Transport via DispatcherTimer</text>
+</svg>
+`);
 
 console.log('All Chapter 05 SVGs regenerated successfully!');

@@ -4,7 +4,7 @@
 **Studiengang:** Bachelor Automatisierungstechnik (FH Oberösterreich, Campus Wels)  
 **Prüfungszeitpunkt:** Zu Beginn von Termin 8 (erste 15 Minuten vor dem Theorie-Impuls zu Kapitel 08)  
 **Bearbeitungszeit:** 15 Minuten  
-**Säule:** Säule 1 (Theoretische & numerische Grundlagen, Gewicht: 7,5 % der Gesamtnote)  
+**Säule:** Säule 1 (Theoretische & numerische Grundlagen, Gewicht: 10 % der Gesamtnote)  
 **Prüfungsmodus:** Präsenz im EDV-Labor / Safe Exam Browser in Moodle  
 **Zulässige Hilfsmittel:** Taschenrechner (nicht-programmierbar) oder Windows-Rechner; keine LLM-Nutzung / Closed-Book
 

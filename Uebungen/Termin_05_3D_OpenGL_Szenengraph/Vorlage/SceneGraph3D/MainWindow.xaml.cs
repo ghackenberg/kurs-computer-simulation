@@ -391,6 +391,7 @@ public partial class MainWindow : Window
     // Kamera-Maus-Events
     private void OpenGlView_MouseDown(object sender, MouseButtonEventArgs e)
     {
+        // TODO [Stufe 1 - Aufgabe 1.2]: Auch auf e.RightButton == MouseButtonState.Pressed prüfen!
         if (e.LeftButton == MouseButtonState.Pressed)
         {
             _isDragging = true;
@@ -408,6 +409,7 @@ public partial class MainWindow : Window
         double dy = currentPos.Y - _lastMousePos.Y;
 
         // Orbit-Drehung anpassen (Maus-Empfindlichkeit 0.4 Grad/Pixel)
+        // TODO [Stufe 1 - Aufgabe 1.2]: Bei gedrückter rechter Maustaste _camera.Pan(dx * 0.01, dy * 0.01) aufrufen!
         _camera.Rotate(dx * 0.4, -dy * 0.4);
         _lastMousePos = currentPos;
     }

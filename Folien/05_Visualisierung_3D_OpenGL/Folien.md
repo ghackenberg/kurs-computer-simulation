@@ -763,10 +763,10 @@ private (float X, float Y, float Z) CalculateAnalyticTcp()
 
 ### Werkstück-Knoten & 3D-Greifabstand (Aufgabe 1.3)
 
-Warum wird das 3D-Werkstück (`_workpieceNode`) in **Aufgabe 1.3** als **Geschwisterknoten** direkt unter `_rootNode` (und *nicht* unter `_baseNode` oder `_arm1Node`) eingehängt?
+Warum hängt das 3D-Werkstück (`_workpieceNode`) in **Aufgabe 1.3** als **Geschwisterknoten** direkt unter `_rootNode` (statt unter `_baseNode`)?
 
-- **Statische Weltlage vor dem Greifen:** Solange das Werkstück frei auf dem Hallenboden bei $(1{,}10;\; 0{,}06;\; -0{,}40)\,\text{m}$ liegt, darf es sich bei einer Schulterdrehung **nicht** mit dem Roboter mitdrehen!
-- **Euklidische 3D-Abstandsprüfung:** In `UpdateTcpCalculations()` prüfen wir mit `Vector3.Distance` den Abstand `dist` zwischen Greifer (`tcpPos`) und Werkstück (`boxPos`) auf `canGrab` (`dist < 0.12f`):
+- **Statische Weltlage:** Am Boden bei $(1{,}10;\; 0{,}06;\; -0{,}40)\,\text{m}$ darf es sich vor dem Greifen **nicht** mit dem Roboter mitdrehen!
+- **3D-Abstand (`UpdateTcpCalculations`):** `Vector3.Distance(tcpPos, boxPos)` prüft `dist < 0.12f` (`canGrab` – *Tipp:* `62°`, `-100°`, `0.44 m`):
 
 ```csharp
 // 1. In BuildSceneGraph(): Werkstück als Geschwisterknoten direkt unter _rootNode einhängen
@@ -784,22 +784,26 @@ bool canGrab = dist < 0.12f; // Bei dist < 0.12 m färbt sich der Würfel von Or
 
 ---
 
-### Ausbau in Stufe 2: Parallelgreifer-Verzweigung & Pick-and-Place
+### Ausbau in Stufe 2: Parallelgreifer & Pick-and-Place
 
-In **Stufe 2 (Track A & B)** wird aus der linearen Kette ein **verzweigter Szenengraph** mit aktiver Greiflogik:
+<div class="columns">
+<div class="two">
 
-- **1. Baum-Verzweigung am Greifer (`_wristNode` mit Geschwisterknoten):**
-  - Unter der Pinole hängt das Handgelenk `_wristNode` (`Ry = _theta4Deg`).
-  - Daran hängen **zwei symmetrische Geschwisterknoten** `_leftFingerNode` (`Tz = -_gripWidth / 2`) und `_rightFingerNode` (`Tz = +_gripWidth / 2`), die alle Drehungen und den Vertikalhub der Elternknoten erben!
-- **2. Dynamisches Greifen (`Reparenting` / Mitführen bei Pick-and-Place):**
-  - Schließt sich der Greifer am Werkstück, wird `_workpieceNode` an `_wristNode` gekoppelt und schwenkt beim Teach-In-Transport (`DispatcherTimer`) automatisch zur Ablagestation B mit:
+In **Stufe 2 (Track A & B)** wird aus der Kette ein **verzweigter Szenengraph**:
 
-```csharp
-// Symmetrische Öffnungsweite _gripWidth [0.02 .. 0.16 m] der beiden Greiferbacken unter _wristNode:
-_wristNode.Ry = _theta4Deg;
-_leftFingerNode.Tz  = -_gripWidth / 2.0f;
-_rightFingerNode.Tz = +_gripWidth / 2.0f;
-```
+- **1. Baum-Verzweigung am Greifer:**
+  - Unter der Pinole hängt `_wristNode` (`Ry = _theta4Deg`).
+  - Daran hängen zwei symmetrische Geschwisterknoten `_leftFingerNode` (`Tz = -_gripWidth / 2`) und `_rightFingerNode` (`Tz = +_gripWidth / 2`).
+- **2. Greifen (`Reparenting`):**
+  - Schließt der Greifer am Werkstück (`0.12 m`), wird `_workpieceNode` an `_wristNode` gekoppelt (`DispatcherTimer`).
+
+</div>
+<div class="two">
+
+![](./Diagramme/Szenengraph_Greifer_Verzweigung.svg)
+
+</div>
+</div>
 
 ---
 
