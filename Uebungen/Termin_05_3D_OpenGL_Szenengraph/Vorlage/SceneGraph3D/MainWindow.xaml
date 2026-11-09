@@ -102,6 +102,7 @@
                         <!-- Camera Guide -->
                         <TextBlock Text="Kamerasteuerung (Orbit):" FontWeight="Bold" Foreground="#DCDCDC" Margin="0,0,0,4"/>
                         <TextBlock Text="• Linke Maustaste + Bewegen: Orbit-Rotation (Azimut &amp; Elevation)" Foreground="#888888" TextWrapping="Wrap" FontSize="11" Margin="0,0,0,2"/>
+                        <TextBlock Text="• Rechte Maustaste + Bewegen: Zielpunkt-Panning (Aufgabe 1.2)" Foreground="#888888" TextWrapping="Wrap" FontSize="11" Margin="0,0,0,2"/>
                         <TextBlock Text="• Mausrad: Zoom (Distanz verändern)" Foreground="#888888" TextWrapping="Wrap" FontSize="11" Margin="0,0,0,4"/>
                         <TextBlock Text="• Elevation ist kardanfehlerfrei auf [-85°, +85°] beschränkt." Foreground="#CE9178" TextWrapping="Wrap" FontSize="11"/>
                     </StackPanel>

@@ -36,7 +36,7 @@ Dieser Anhang vertieft die analytische Herleitung und manuelle Triangulation par
 
 Jeder Punkt $P(x, y, z)$ einer Kugel mit Radius $r$ lässt sich über zwei Winkel beschreiben:
 
-- **Polarwinkel $\phi \in [0, \pi]$**: Winkel von der positiven Y-Achse ($0 = \text{Nordpol}$, $\pi = \text{Südpol}$).
+- **Polarwinkel $\phi \in [0, \pi]$**: Winkel von der positiven Y-Achse ($0 = \text{Nordpol}$, $\pi = \text{Südpol}$; *Hinweis: in den Hauptfolien als Elevation $\phi \in [-\pi/2, +\pi/2]$ ab dem Äquator parametrisiert*).
 - **Azimutwinkel $\theta \in [0, 2\pi]$**: Winkel in der XZ-Ebene um die Y-Achse.
 
 Diskrete Abtastung mit `stacks` ($i = 0 \dots \text{stacks}$) und `slices` ($j = 0 \dots \text{slices}$):
@@ -44,7 +44,7 @@ Diskrete Abtastung mit `stacks` ($i = 0 \dots \text{stacks}$) und `slices` ($j =
 $$\phi_i = \frac{i}{\text{stacks}} \cdot \pi, \quad \theta_j = \frac{j}{\text{slices}} \cdot 2\pi$$
 
 </div>
-<div>
+<div class="one">
 
 ![](./Illustrationen/Sphere_Slices_Stacks.png)
 
@@ -58,7 +58,7 @@ $$\phi_i = \frac{i}{\text{stacks}} \cdot \pi, \quad \theta_j = \frac{j}{\text{sl
 Die Umrechnung der sphärischen Parameter $(\phi, \theta)$ in kartesische Koordinaten $(x, y, z)$ erfolgt trigonometrisch:
 
 <div class="columns top">
-<div>
+<div class="two">
 
 **Analytische Gleichungen:**
 
@@ -71,7 +71,7 @@ $$z = r \cdot \sin(\phi) \cdot \sin(\theta)$$
 - Am Südpol ($\phi = \pi$): $(0, -r, 0)$.
 
 </div>
-<div>
+<div class="two">
 
 **C#-Implementierung:**
 
@@ -100,7 +100,7 @@ private (float x, float y, float z) ComputeCoordinate(
 Für die Phong-Beleuchtung benötigt OpenGL an jedem Vertex einen normierten Normalenvektor $\vec{n}$ mit $\|\vec{n}\| = 1$.
 
 <div class="columns top">
-<div>
+<div class="two">
 
 **Mathematische Eigenschaft:**
 
@@ -111,7 +111,7 @@ $$\vec{n}_{\phi,\theta} = \frac{\vec{p}}{\|\vec{p}\|} = \frac{1}{r} \begin{pmatr
 Der Normalenvektor entspricht identisch den Koordinaten des Punktes auf einer **Einheitskugel** ($r = 1$).
 
 </div>
-<div>
+<div class="two">
 
 **C#-Normalen-Berechnung:**
 
@@ -178,7 +178,7 @@ Ein rotationssymmetrischer Körper entlang der Y-Achse mit Höhe $h$, unterem Ra
 - $r(\phi) = r_1 + \phi \cdot (r_2 - r_1)$: Linear interpolierter Radius.
 
 </div>
-<div>
+<div class="one">
 
 ![](./Illustrationen/Cylinder_Slices.png)
 
@@ -190,7 +190,7 @@ Ein rotationssymmetrischer Körper entlang der Y-Achse mit Höhe $h$, unterem Ra
 ### Koordinatenberechnung in C#
 
 <div class="columns top">
-<div>
+<div class="two">
 
 **Formeln:**
 
@@ -203,7 +203,7 @@ $$y = h \cdot \phi_i$$
 $$z = r(\phi_i) \cdot \sin(\theta_j)$$
 
 </div>
-<div>
+<div class="two">
 
 **C#-Methode:**
 
@@ -245,9 +245,9 @@ Die Herleitung erfolgt über einen Schnitt in der XY-Ebene ($\theta = 0$):
    Zeigt für $h > 0$ stets nach außen.
 
 </div>
-<div>
+<div class="two">
 
-![](./Diagramme/Zylindernormale%20-%20Normalenvektor%20XY.svg)
+![](./Diagramme/Zylindernormale_Normalenvektor_XY.svg)
 
 </div>
 </div>
@@ -270,9 +270,9 @@ Um den 3D-Normalenvektor $\vec{P}_\theta$ für jeden Winkel $\theta$ zu erhalten
 $$\vec{P}_\theta = \begin{pmatrix} h \cdot \cos(\theta) \\ r_1 - r_2 \\ h \cdot \sin(\theta) \end{pmatrix}$$
 
 </div>
-<div>
+<div class="two">
 
-![](./Diagramme/Zylindernormale%20-%20Normalenvektor%20XZ.svg)
+![](./Diagramme/Zylindernormale_Normalenvektor_XZ.svg)
 
 </div>
 </div>

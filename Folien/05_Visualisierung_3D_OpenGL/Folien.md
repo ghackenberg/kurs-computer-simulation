@@ -70,12 +70,12 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 In **Termin 02 bis 04** haben wir die 2D-Welt gemeistert (Pixelraster, 2D-Vektor-Canvas, Echtzeit-Diagramme mit `ScottPlot 5`) – wo stoßen 2D-Ansichten an ihre Grenzen?
 
 - **Rückblick auf Termin 03 & 04 (2D-Projektion & Telemetrie):**
-  - In Termin 03 haben wir Weltkoordinaten $(x_w, y_w)$ auf den flachen Bildschirm abgebildet; in Termin 04 haben wir Zeitreihen und Topologie-Graphen (`MSAGL`) ergänzt.
+  - Weltkoordinaten $(x_w, y_w)$ auf dem 2D-Bildschirm sowie Zeitreihen und Topologie-Graphen (`MSAGL`).
 - **Der Engpass heute (Räumliche Kinematik & Verdeckung):**
-  - Ein mehrachsiger Industrieroboter (SCARA / Knickarm) oder ein Greifautomat bewegt sich im **dreidimensionalen Raum $(x, y, z)$**: Bauteile verdecken sich gegenseitig, Perspektive verkürzt Längen und Gelenke rotieren um beliebige Raumachsen.
-  - Eine flache 2D-Zeichenfläche kennt weder Tiefenprüfung (**Z-Buffer**) noch Hardware-Beleuchtung oder hierarchische $4\times 4$-Transformationsketten auf der GPU.
-- **Einordnung ins große Ganze (4. Visualisierungs-Säule: 3D-OpenGL):**
-  - Mit `SharpGL` und hierarchischen **3D-Szenengraphen** komplettieren wir heute unseren Visualisierungs-Werkzeugkasten (T02–T05).
+  - Ein mehrachsiger Industrieroboter bewegt sich im **3D-Raum $(x, y, z)$**: Bauteile verdecken sich gegenseitig, Perspektive verkürzt Längen und Gelenke rotieren um Raumachsen.
+  - Ein flaches 2D-Canvas kennt weder Tiefenprüfung (**Z-Buffer**) noch Hardware-Beleuchtung oder $4\times 4$-Matrix-Stacks.
+- **Halbzeit-Meilenstein (Abschluss des Visualisierungs-Blocks T02–T05):**
+  - Mit `SharpGL` komplettieren wir heute unsere 4 Visualisierungs-Säulen, bevor ab Termin 06 (Multithreading) und Termin 07–10 die Systemmodellierung & Gleichungslöser starten.
 
 ---
 
@@ -161,7 +161,7 @@ Die Methode `gl.ClearColor` definiert die RGBA-Farbe, mit der der Bildschirmpuff
   - Anders als beim 8-Bit-Byte (`0..255`) in `WriteableBitmap` arbeitet OpenGL mit `float`-Werten von `0.0f` bis `1.0f`.
   - `(0, 0, 0, 1)` entspricht Schwarz, `(1, 1, 1, 1)` entspricht Weiß.
 - **Konfiguration im Code:**
-  - `gl.ClearColor(0.1f, 0.2f, 0.3f, 1.0f)` setzt den Hintergrund auf ein ruhiges, kontrastreiches Dunkelblau (bzw. `(0.08f, 0.08f, 0.08f, 1.0f)` für dunkles CAD-Grau in unserer Laborvorlage).
+  - `gl.ClearColor(0.08f, 0.08f, 0.08f, 1.0f)` setzt den Hintergrund in unserer Laborvorlage auf ein ruhiges, kontrastreiches CAD-Anthrazit (bzw. `(0.1f, 0.2f, 0.3f, 1.0f)` für Dunkelblau).
 
 </div>
 <div class="one">
@@ -476,7 +476,7 @@ Wie wird aus einem lokalen 3D-Bauteilpunkt $\vec{v}_{\text{obj}} = (x, y, z, 1)^
 
 $$\vec{v}_{\text{world}} = \mathbf{M}_{\text{model}} \cdot \vec{v}_{\text{obj}} \;\longrightarrow\; \vec{v}_{\text{eye}} = \mathbf{M}_{\text{view}} \cdot \vec{v}_{\text{world}} \;\longrightarrow\; \vec{v}_{\text{clip}} = \mathbf{M}_{\text{proj}} \cdot \vec{v}_{\text{eye}}$$
 
-1. **Model-Matrix ($\mathbf{M}_{\text{model}}$):** Platziert das Bauteil (Translation, Rotation, Skalierung) in der 3D-Welt.
+1. **Model-Matrix ($\mathbf{M}_{\text{model}}$, homogen $4\times 4$):** Platziert das Bauteil in der 3D-Welt. *Warum $4\times 4$ mit $w = 1$?* Eine $3\times 3$-Matrix bildet $\vec{0}$ immer auf $\vec{0}$ ab und kann **keine Translation** $\vec{v} + \vec{t}$ darstellen (analog zu $3\times 3$ in 2D aus Termin 03)! Zudem gilt **Nicht-Kommutativität**: $\mathbf{T}\cdot\mathbf{R} \neq \mathbf{R}\cdot\mathbf{T}$!
 2. **View-Matrix ($\mathbf{M}_{\text{view}}$):** Transformiert die Welt in das Koordinatensystem der Kamera (`gl.LookAt`). In OpenGL sind beide kombiniert als **`GL_MODELVIEW`**.
 3. **Projection-Matrix ($\mathbf{M}_{\text{proj}}$, `GL_PROJECTION`):** Bestimmt das Sichtvolumen (`gl.Ortho` oder `gl.Perspective`) und projiziert auf Clipping-Koordinaten.
 4. **Viewport-Transformation (`gl.Viewport`):** Rechnet die normierten Koordinaten $[-1, 1]^3$ auf die Fensterpixel $(0 \dots w, 0 \dots h)$ um.
@@ -638,6 +638,29 @@ public virtual void Render(OpenGL gl)
 
 ---
 
+### Lokale & Globale Matrix in C#: `GetLocalMatrix` & `GetWorldMatrix`
+
+Für den analytischen TCP-Deckungstest berechnet `SceneNode` seine $4\times 4$-Weltmatrix auf der CPU mit `System.Numerics.Matrix4x4`:
+
+```csharp
+public Matrix4x4 GetLocalMatrix()
+{
+    var t  = Matrix4x4.CreateTranslation(Tx, Ty, Tz);
+    var rx = Matrix4x4.CreateRotationX(Rx * MathF.PI / 180.0f);
+    var ry = Matrix4x4.CreateRotationY(Ry * MathF.PI / 180.0f);
+    var rz = Matrix4x4.CreateRotationZ(Rz * MathF.PI / 180.0f);
+    var s  = Matrix4x4.CreateScale(Sx, Sy, Sz);
+    return s * (rz * rx * ry) * t; // Zeilenvektor-Konvention: Scale -> Rotate -> Translate
+}
+
+public Matrix4x4 GetWorldMatrix()
+    => Parent == null ? GetLocalMatrix() : GetLocalMatrix() * Parent.GetWorldMatrix();
+```
+
+- **Wichtiger Praxis-Fallstrick (Spalten- vs. Zeilenvektoren):** OpenGL multipliziert Spaltenvektoren von rechts ($\mathbf{M}_{\text{parent}} \cdot \mathbf{M}_{\text{local}} \cdot \vec{v}$); `.NET System.Numerics` (`t`, `rx`, `ry`, `rz`, `s`) nutzt **Zeilenvektoren** ($\vec{v}^\top \cdot \mathbf{M}_{\text{local}} \cdot \mathbf{M}_{\text{parent}}$) $\implies$ umgekehrte Reihenfolge `GetLocalMatrix() * Parent.GetWorldMatrix()`!
+
+---
+
 ### Grundkörper mit Normalen (`DrawCube` & `DrawCylinder`)
 
 <div class="columns">
@@ -715,13 +738,14 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Serielle Kinematik im Szenengraphen: Der SCARA-Roboter
 
-In der Automatisierungstechnik (z. B. Montagezellen, Pick-and-Place, Leiterplattenbestückung) sind **SCARA-Roboter** (*Selective Compliance Assembly Robot Arm*) der Industriestandard für schnelle Handhabungsaufgaben:
+In der Automatisierungstechnik sind **SCARA-Roboter** der Standard für schnelle Pick-and-Place-Aufgaben:
 
-- **Aufbau der kinematischen Kette in unserer Laborvorlage (`SceneGraph3D.sln`):**
-  1. **Basis (`_baseNode`):** Steht fest im Ursprung $(0, 0, 0)$ auf dem Hallenboden (Höhe `HBase = 0.50 m`).
-  2. **Schulter & Oberarm (`_arm1Node`, Länge `L1 = 1.00 m`):** Sitzt auf der Basis (`Ty = HBase`) und rotiert mit $\mathbf{R}_y(\theta_1)$ horizontal um die vertikale Y-Achse um den Gelenkwinkel $\theta_1$.
-  3. **Ellenbogen & Unterarm (`_arm2Node`, Länge `L2 = 0.80 m`):** Sitzt am Ende von Arm 1 (`Tx = L1`) und rotiert mit $\mathbf{R}_y(\theta_2)$ relativ zu Arm 1 um den Winkel $\theta_2$ um die Y-Achse.
-  4. **Pinole & Greifer (`_pinoleNode`, Weltmatrix $\mathbf{M}_{\text{TCP}}$):** Sitzt am Ende von Arm 2 (`Tx = L2`) und fährt vertikal um den Hub $-d_3$ entlang der Y-Achse nach unten.
+- **Rechtshändiges OpenGL-Koordinatensystem & Rechte-Hand-Regel:**
+  - $+X$ zeigt nach rechts, $+Y$ nach oben und $+Z$ **aus dem Bildschirm heraus zum Betrachter** (anders als das linkshändige 2D-Canvas in Termin 03!).
+  - Zeigt der Daumen der rechten Hand nach oben ($+Y$), dreht ein positiver Winkel $\theta_1 > 0$ (`gl.Rotate(theta1, 0, 1, 0)`) den Arm von $+X$ **nach hinten in Richtung $-Z$** $\implies$ daher das Minuszeichen bei $z = -(L_1\sin\theta_1 + L_2\sin(\theta_1+\theta_2))$!
+- **Aufbau der Kette in `SceneGraph3D.sln` (`HBase = 0.50 m`, `L1 = 1.00 m`, `L2 = 0.80 m`):**
+  1. **Basis (`_baseNode`):** Steht im Ursprung $(0, 0, 0)$ $\to$ **Schulter (`_arm1Node`):** Auf `Ty = HBase`, Drehung $\mathbf{R}_y(\theta_1)$ um $\theta_1$.
+  2. **Ellenbogen (`_arm2Node`):** Am Ende von Arm 1 (`Tx = L1`), Drehung $\mathbf{R}_y(\theta_2)$ um $\theta_2$ $\to$ **Pinole (`_pinoleNode`, $\mathbf{M}_{\text{TCP}}$):** Bei `Tx = L2`, Hub $-d_3$.
 
 ---
 
@@ -774,6 +798,26 @@ private (float X, float Y, float Z) CalculateAnalyticTcp()
     float t12 = (_theta1Deg + _theta2Deg) * MathF.PI / 180.0f;
     return (L1 * MathF.Cos(t1) + L2 * MathF.Cos(t12), HBase - _d3, -(L1 * MathF.Sin(t1) + L2 * MathF.Sin(t12)));
 }
+```
+
+---
+
+### Werkstück-Knoten & 3D-Greifabstand (Aufgabe 1.3)
+
+Warum wird das 3D-Werkstück (`_workpieceNode`) in **Aufgabe 1.3** als **Geschwisterknoten** direkt unter `_rootNode` (und *nicht* unter `_baseNode` oder `_arm1Node`) eingehängt?
+
+- **Statische Weltlage vor dem Greifen:** Solange das Werkstück frei auf dem Hallenboden bei $(1{,}10;\; 0{,}06;\; -0{,}40)\,\text{m}$ liegt, darf es sich bei einer Schulterdrehung **nicht** mit dem Roboter mitdrehen!
+- **Euklidische 3D-Abstandsprüfung:** In `UpdateTcpCalculations()` prüfen wir mit `Vector3.Distance` den Abstand `dist` zwischen Greifer (`tcpPos`) und Werkstück (`boxPos`) auf `canGrab` (`dist < 0.12f`):
+
+```csharp
+// 1. In BuildSceneGraph(): Werkstück als Geschwisterknoten direkt unter _rootNode einhängen
+_workpieceNode.Tx = 1.10f;  _workpieceNode.Ty = 0.06f;  _workpieceNode.Tz = -0.40f;
+_rootNode.AddChild(_workpieceNode);
+
+// 2. In UpdateTcpCalculations(): Euklidischer 3D-Abstand dist = ||tcpPos - boxPos||_2 prüfen
+Vector3 tcpPos = _pinoleNode.GetWorldPosition(), boxPos = _workpieceNode.GetWorldPosition();
+float dist = Vector3.Distance(tcpPos, boxPos);
+bool canGrab = dist < 0.12f; // Bei dist < 0.12 m färbt sich der Würfel von Orange auf Grün!
 ```
 
 ---
@@ -854,7 +898,8 @@ gl.LookAt(
 <div class="two">
 
 - **Warum klemmen wir $\phi$ auf $[-85^\circ, +85^\circ]$?**
-  - Bei $\phi = \pm 90^\circ$ liegt der Blickvektor parallel zum Up-Vektor $(0, 1, 0)$ $\implies$ das Bild kippt um (**Gimbal Lock**)!
+  - `gl.LookAt` berechnet den horizontalen Kamera-Rechtsvektor über das **Kreuzprodukt** $\vec{f} \times \vec{e}_{\text{up}}$ aus Blickrichtung $\vec{f}$ und Up-Vektor $(0, 1, 0)^\top$.
+  - Bei $\phi = \pm 90^\circ$ steht $\vec{f}$ exakt parallel zu $\vec{e}_{\text{up}}$, das Kreuzprodukt entartet zum **Nullvektor $\vec{0}$** und das Bild kippt um (**Gimbal Lock**)!
 - **Umrechnung in `OrbitCamera.cs`:**
   - Aus `_azimuthDeg` (`thetaRad`), `_elevationDeg` (`phiRad`) und `_distance` wird `(eyeX, eyeY, eyeZ)` relativ zu `(LookAtX, LookAtY, LookAtZ)` berechnet.
 
@@ -887,8 +932,6 @@ public (double EyeX, double EyeY, double EyeZ) GetEyePosition()
 
 ### Maussteuerung & Kamera-Panning (Aufgabe 1.2)
 
-Wie steuert man die Kamera per Maus – und wie funktioniert **Panning (Aufgabe 1.2)**?
-
 | Mausaktion | Methode | Mathematische Wirkung |
 | :--- | :--- | :--- |
 | **Links ziehen** ($\Delta x, \Delta y$) | `_camera.Rotate(dAz, dEl)` | Dreht Azimut $\theta \mathrel{+}= 0{,}4 \Delta x$ und Elevation $\phi \mathrel{-}= 0{,}4 \Delta y$. |
@@ -896,6 +939,7 @@ Wie steuert man die Kamera per Maus – und wie funktioniert **Panning (Aufgabe 
 | **Rechts ziehen** *(Aufg. 1.2)* | `_camera.Pan(dRight, dUp)` | Verschiebt `(LookAtX, LookAtY, LookAtZ)` quer zur Blickrichtung $\theta$! |
 
 - **Herleitung für `Pan(double deltaRight, double deltaUp)` (Aufgabe 1.2):**
+  - Der Kamera-Rechtsvektor $\vec{e}_{\text{right}} = (\cos\theta, 0, -\sin\theta)^\top$ steht senkrecht auf dem Kamerastrahl $(\sin\theta, 0, \cos\theta)^\top$; Rechtsziehen der Szene verschiebt $\vec{p}_{\text{look}}$ um $-\Delta_{\text{right}} \cdot \vec{e}_{\text{right}}$ (bei $\theta = 0^\circ$: $\Delta x_{\text{look}} = -\Delta_{\text{right}}, \Delta z_{\text{look}} = 0$):
   $$\Delta x_{\text{look}} = -\Delta_{\text{right}} \cdot \cos(\theta), \quad \Delta z_{\text{look}} = +\Delta_{\text{right}} \cdot \sin(\theta), \quad \Delta y_{\text{look}} = \Delta_{\text{up}}$$
 
 ---
@@ -930,10 +974,11 @@ private void OpenGlView_MouseMove(object sender, MouseEventArgs e)
 
 # Zusammenfassung Kapitel 5
 
-- **3D-Grafik-Pipeline & Z-Buffer:** OpenGL transformiert 3D-Körper über `GL_MODELVIEW` und `GL_PROJECTION` auf den Bildschirm; `GL_DEPTH_TEST` löst Verdeckungen pixelgenau über den Tiefenpuffer auf.
-- **Phong-Beleuchtung & Shading:** Die Überlagerung aus Ambient ($I_a$), Diffuse ($I_d \propto \vec{n}\cdot\vec{l}$) und Specular ($I_s \propto (\vec{r}\cdot\vec{v})^{\alpha_{\text{shiny}}}$) erzeugt mit `GL_SMOOTH` und sauberen Normalenvektoren plastische 3D-Oberflächen.
-- **Hierarchischer Szenengraph (`SceneNode`):** Kaskadiert lokale Bauteil-Transformationen automatisch über `gl.PushMatrix()` und `gl.PopMatrix()` – verifiziert durch den Echtzeit-Deckungstest ($\Delta = 0{,}000\,\text{mm}$) zwischen analytischer Vorwärtskinematik und `GetWorldPosition()`.
-- **Interaktive `OrbitCamera`:** Ermöglicht über Kugelkoordinaten ($r, \theta, \phi$), Gimbal-Lock-Clamping ($[-85^\circ, +85^\circ]$) und Zielpunkt-Panning eine natürliche 3D-Navigation wie im industriellen CAD/CAM-Leitstand.
+- **3D-Pipeline & Z-Buffer:** OpenGL projiziert 3D-Körper über `GL_MODELVIEW` und `GL_PROJECTION`; `GL_DEPTH_TEST` löst Verdeckungen pixelgenau über den Tiefenpuffer auf.
+- **Phong-Beleuchtung & Shading:** Ambient ($I_a$), Diffuse ($I_d \propto \vec{n}\cdot\vec{l}$) und Specular ($I_s \propto (\vec{r}\cdot\vec{v})^{\alpha_{\text{shiny}}}$) erzeugen mit `GL_SMOOTH` und Normalenvektoren plastische 3D-Oberflächen.
+- **Hierarchischer Szenengraph (`SceneNode`):** Kaskadiert Transformationen über `PushMatrix`/`PopMatrix` – verifiziert durch den Deckungstest ($\Delta = 0{,}000\,\text{mm}$) zwischen Analytik und `GetWorldPosition()`.
+- **Interaktive `OrbitCamera`:** Kugelkoordinaten ($r, \theta, \phi$), Gimbal-Lock-Clamping ($[-85^\circ, +85^\circ]$) und Zielpunkt-Panning für natürliche CAD-Navigation.
+- **Ausblick auf Block 2 (T06–T10 – Modellierung & Gleichungslöser):** Nach der *Vorwärtskinematik* $(\theta_1, \theta_2) \mapsto (x, y, z)$ folgen ab T06/T07 Multithreading, Gleichungssysteme ($\mathbf{K}\cdot\mathbf{u}=\mathbf{f}$), *Inverse Kinematik* (Newton-Raphson) und Dynamik (ODEs)!
 
 ---
 
@@ -945,19 +990,19 @@ private void OpenGlView_MouseMove(object sender, MouseEventArgs e)
 <div class="two">
 
 #### Stufe 2 – Track A: 4-Achs-SCARA mit Parallelgreifer
-- Ausbau auf 4 Achsen: $\theta_1, \theta_2, d_3$ + Handgelenk $\theta_4$ & Parallelgreifer ($g_{\text{width}}$)
-- Einheitliches Szenengraph-Rendering (`_rootNode.Render`)
-- Animiertes Teach-In (`DispatcherTimer`) zwischen Pose A, Pose B & Home
-- Interaktives Pick-and-Place von 3D-Werkstücken
+- **A.1:** 4 Achsen ($\theta_1, \theta_2, d_3, \theta_4$) & Parallelgreifer ($g_{\text{width}}$)
+- **A.2:** Animiertes Teach-In (`DispatcherTimer`) für Posen A, B & Home
+- **A.3:** Interaktives Pick-and-Place von 3D-Werkstücken
+- **A.4:** Arbeitszellen-Spotlight (`GL_LIGHT1`) & Status-Anzeige
 
 </div>
 <div class="two">
 
 #### Stufe 2 – Track B: 3D Arcade Claw Crane (Greifarm)
-- 3D-Gehäuse mit Preisen & Auswurfschacht
-- 3-Achs-Portalbrücke & Seilwinde im Szenengraphen
-- Schließender 3-Finger-Greifmechanismus
-- Tastatursteuerung, 3D-Kollisionsprüfung & physikalisches Ablegen
+- **B.1:** 3-Achs-Portalbrücke, Seilwinde & 3-Finger-Greifklaue
+- **B.2:** Interaktive Tastatursteuerung & automatischer Greifzyklus
+- **B.3:** 3D-Kollisionsprüfung (`Reparenting`) & Schacht-Abwurf
+- **B.4:** Atmosphärisches Automaten-Spotlight (`GL_LIGHT1`)
 
 </div>
 </div>

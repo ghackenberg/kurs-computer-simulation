@@ -133,6 +133,8 @@ Da die ersten 3 Achsen ($\theta_1, \theta_2, d_3$) und die TCP-Validierung berei
 3. **Arbeitspaket A.3 – Interaktiver Pick-and-Place-Werkstücktransport:**
    - Platzieren Sie auf dem Hallenboden eine **Aufnahmestation A** (mit Werkstück) und eine **Ablagestation B** (Zielplattform).
    - Schließt sich der Parallelgreifer ($g_{\text{width}} \le g_{\text{grip}}$), während sich der TCP innerhalb des Greifradius ($d < r_{\text{grab}}$) zum Werkstück befindet, wird das Werkstück gegriffen (entweder durch dynamisches Umhängen `Reparenting` von `_rootNode` unter `_wristNode` oder durch Mitführen mit Position & Orientierung $\theta_1 + \theta_2 + \theta_4$) und beim Öffnen des Greifers über Station B dort abgesetzt.
+4. **Arbeitspaket A.4 – Arbeitszellen-Spotlight & Optische Status-Signalisierung (`GL_LIGHT1`):**
+   - Aktivieren Sie eine zweite Lichtquelle (`GL_LIGHT1`) als lokales Arbeitszellen-Spotlight oberhalb der Fertigungszelle und signalisieren Sie den aktuellen Greifstatus visuell an der Zelle bzw. am Greifer (z. B. Statusleuchte am Handgelenk oder Stations-Indikator: Orange = Werkstück bereit, Grün = Gegriffen/Transport aktiv, Blau = Auf Station B abgelegt).
 
 ---
 

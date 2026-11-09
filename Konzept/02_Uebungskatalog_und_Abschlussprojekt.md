@@ -489,23 +489,23 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 
 #### Fachlicher Bezug & Lernziele
 - **Vorlesung:** [Kapitel 05: Visualisierung 3D OpenGL](../Folien/05_Visualisierung_3D_OpenGL/Folien.md) – OpenGL Pipeline, SharpGL, Szenengraph-Hierarchie, Transformationsmatrizen (`glPushMatrix`/`glPopMatrix`), Orbit-Kamera.
-- **Übungsblatt & Vorlage:** [`Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md), [`Vorlage/OpenGLSceneGraph.sln`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Vorlage/OpenGLSceneGraph.sln).
+- **Übungsblatt & Vorlage:** [`Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md), [`Vorlage/SceneGraph3D.sln`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Vorlage/SceneGraph3D.sln).
 - **Quellen-Referenz:** [`Quellen/WS25/VorlageSzenengraph3D`](../Quellen/WS25/VorlageSzenengraph3D), [`Quellen/WS25/VorlageVisualisierung3D`](../Quellen/WS25/VorlageVisualisierung3D).
 - **Technologie-Status:** SharpGL (`OpenGLControl`) mit 3D-Szenengraph (`SceneNode`). Noch *KEIN* Multithreading! Noch *KEINE* Math.NET LGS!
 - **Lernziele:**
   1. Mathematische Beherrschung der 3D-Sicht- und Modelltransformationen (`LookAt`, Translation, Rotation).
-  2. Implementierung einer kardanfehlerfreien Orbit-Kamera in Kugelkoordinaten ($r, \theta, \phi$).
+  2. Implementierung einer kardanfehlerfreien Orbit-Kamera in Kugelkoordinaten ($r, \theta, \phi$) inklusive Zielpunkt-Panning.
   3. Aufbau eines hierarchischen Szenengraphen (`SceneNode`) zur Verwaltung mechatronischer Gelenkketten und Vorwärtskinematik.
 
 ---
 
-#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „Orbit-Kamera & 2-Segment-Roboterarm in SharpGL“
+#### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „Szenengraph-Rendering vereinen, Kamera-Panning & 3D-Werkstück“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md)):**
-  1. Öffnen Sie die Vorlage [`OpenGLSceneGraph.sln`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Vorlage/OpenGLSceneGraph.sln).
-  2. Implementieren Sie die Kugelkoordinaten-Kamera in `OrbitCamera.ApplyViewTransform` (Elevation $\phi$ auf $[-89^\circ, +89^\circ]$ geklemmt).
-  3. Vervollständigen Sie die rekursive Matrix-Stack-Traversierung in `SceneNode.Render(OpenGL gl)` (`PushMatrix` $\to$ `Translate` $\to$ `Rotate` $\to$ `Scale` $\to$ `Children` $\to$ `PopMatrix`).
-  4. Bauen Sie in `MainWindow.BuildRobotSceneGraph` den hierarchischen 2-Segment-Arm auf (`_baseNode` $\to$ `_arm1Node` $\to$ `_arm2Node`).
-- **Erwartetes Ergebnis:** Flüssige interaktive 3D-Kamerafahrt und hierarchisch gekoppelte Gelenkrotation über die UI-Slider.
+  1. Öffnen Sie die Vorlage [`SceneGraph3D.sln`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Vorlage/SceneGraph3D.sln) (mit vorkonfigurierter `OrbitCamera` mit Elevation $\phi \in [-85^\circ, +85^\circ]$, Phong-Beleuchtung und 3-Achs-SCARA-Grundstruktur).
+  2. **Aufgabe 1.1:** Weisen Sie in `BuildSceneGraph()` jedem Knoten (`_baseNode`, `_arm1Node`, `_arm2Node`, `_pinoleNode`) über `RenderCustomGeometry` seine lokale Zeichenlogik zu und ersetzen Sie `RenderRobot(gl)` durch `_rootNode.Render(gl)`.
+  3. **Aufgabe 1.2:** Ergänzen Sie `OrbitCamera.Pan(double deltaRight, double deltaUp)` und binden Sie die rechte Maustaste an das Zielpunkt-Panning an.
+  4. **Aufgabe 1.3:** Fügen Sie unter `_rootNode` einen Geschwisterknoten `_workpieceNode` bei $(1{,}10, 0{,}06, -0{,}40)\,\text{m}$ hinzu und prüfen Sie den euklidischen 3D-Abstand $d = \|\vec{p}_{\text{TCP}} - \vec{p}_{\text{Workpiece}}\|_2 < 0{,}12\,\text{m}$.
+- **Erwartetes Ergebnis:** Einheitliches Szenengraph-Rendering mit $\Delta = 0{,}000\,\text{mm}$ Deckung, flüssiges Kamera-Panning und visuelle Greifbereich-Erkennung.
 
 ---
 
@@ -515,31 +515,35 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 > **Pick your Track (Wahlmodell – GENAU EINE Aufgabe):**  
 > Jedes 2er-Team wählt für die Homework Extension **GENAU EINE** der beiden folgenden Aufgaben: **Track A (Industrie)** ODER **Track B (Simulation Game)**. Eine Bearbeitung beider Tracks ist weder gefordert noch nötig (keine Doppelbelastung!). Beide Tracks basieren auf dem SharpGL-3D-Szenengraph und führen zur maximalen Punktzahl (10 Punkte).
 
-- **Track A (Industrie): 4-Achs-SCARA-Roboterarm (Analytische Vorwärtskinematik & TCP-Kontrolle)**
-  - **Industrie-Szenario:** Digitaler 3D-Zwilling eines 4-Achs-SCARA-Bestückungsroboters ($L_1 = 2{,}0\,\text{m}, L_2 = 1{,}5\,\text{m}$).
-  - **Hierarchischer Szenengraph & Kinematik:**
-    - Basis-Schultergelenk ($\theta_1$ um $Y$), Ellbogengelenk ($\theta_2$ um $Y$ am Ende von Arm 1), vertikale Hubpinole ($d_3 \in [0{,}2\,\text{m}; 1{,}2\,\text{m}]$) und Handgelenk-Rotation ($\theta_4$) mit 2-Backen-Parallelgreifer.
-  - **Analytische Vorwärtskinematik & TCP-Marker:** Berechnen Sie die Weltkoordinaten des Tool Center Points:
-    $$x_{\text{TCP}} = L_1 \cos(\theta_1) + L_2 \cos(\theta_1 + \theta_2), \quad z_{\text{TCP}} = -L_1 \sin(\theta_1) - L_2 \sin(\theta_1 + \theta_2), \quad y_{\text{TCP}} = h_{\text{Basis}} - d_3$$
-    Zeichnen Sie einen Kontrollmarker exakt an $(x_{\text{TCP}}, y_{\text{TCP}}, z_{\text{TCP}})$ zum visuellen Deckungsbeweis mit der OpenGL-Hierarchie.
+- **Track A (Industrie): 4-Achs-SCARA-Roboterarm mit Parallelgreifer, Teach-In & Pick-and-Place**
+  - **Industrie-Szenario:** Digitaler 3D-Zwilling eines 4-Achs-SCARA-Bestückungsroboters ($H_{\text{Base}} = 0{,}50\,\text{m}, L_1 = 1{,}00\,\text{m}, L_2 = 0{,}80\,\text{m}$).
+  - **Arbeitspakete (`A.1`–`A.4`):**
+    - **A.1:** Ausbau des Szenengraphen um Achse 4 (`_wristNode`, Handgelenk $\theta_4 \in [-180^\circ, +180^\circ]$) und einen symmetrischen 2-Backen-Parallelgreifer (`_leftFingerNode`, `_rightFingerNode`, Öffnungsweite $g_{\text{width}} \in [0{,}02, 0{,}16]\,\text{m}$).
+    - **A.2:** Animierte Teach-In-Bahnsteuerung (`DispatcherTimer`, 60 Hz) zwischen mindestens 3 Posen (Station A, Station B, Home).
+    - **A.3:** Interaktiver Pick-and-Place-Werkstücktransport von Aufnahmestation A zu Ablagestation B (`Reparenting` bzw. Mitführen).
+    - **A.4:** Arbeitszellen-Spotlight (`GL_LIGHT1`) und optische Status-Signalisierung des Greifzustands.
 
 - **Track B (Simulation Game): „3D Arcade Claw Crane“ (Jahrmarkt-Greifarm mit Kisten-Aufnahme)**
   - **Game-Szenario:** Interaktiver Jahrmarkt-Greifautomat im 3D-Raum.
-  - **Hierarchischer Szenengraph:** Portalbrücke ($X$-Fahrt) $\to$ Laufkatze ($Z$-Fahrt) $\to$ Seilwinde ($Y$-Hub) $\to$ 3-Finger-Greifklaue.
-  - **Interaktive Steuerung & Greifmechanik:** Tastatursteuerung (`W`/`A`/`S`/`D`, `Space` für Absenk-/Greifzyklus), bunte Gewinn-Boxen auf dem Boden und euklidische Distanz-Kollisionsprüfung: Ein ergriffener Preis wird im Szenengraphen dynamisch vom Wurzelknoten an den Klauenknoten umgehängt (Re-Parenting) und über dem Auswurfschacht abgeworfen.
+  - **Arbeitspakete (`B.1`–`B.4`):**
+    - **B.1:** Hierarchischer Szenengraph: Gehäuse $\to X$-Portalbrücke $\to Z$-Laufkatze $\to Y$-Seilwinde $\to$ 3-Finger-Greifklaue ($\gamma \in [0^\circ, 45^\circ]$).
+    - **B.2:** Interaktive Tastatursteuerung (Pfeiltasten für Horizontalfahrt, Leertaste für vollautomatischen Absenk-, Greif- und Rückführzyklus zum Auswurfschacht).
+    - **B.3:** Greifmechanik (Kollisions-Snap via 3D-Abstandsprüfung $d < r_{\text{grab}}$ und Mitführen/Abwerfen der Preise).
+    - **B.4:** Atmosphärisches Automaten-Spotlight (`GL_LIGHT1`) von der Gehäusedecke.
 
 - **Bewertungskriterien (10 Punkte – einheitlich für Track A und Track B):**
-  - [3 P.] Korrekter hierarchischer Szenengraph mit mindestens 4 Freiheitsgraden (`PushMatrix`/`PopMatrix`).
-  - [3 P.] Stabile Orbit-Kamera mit Gimbal-Lock-Schutz und flüssiger Interaktion.
-  - [2 P.] Korrekte Flächennormalen (`gl.Normal`) und plastische Beleuchtung.
-  - [2 P.] Analytischer TCP-Kontrollabgleich (Track A) bzw. Re-Parenting-Greifmechanik (Track B).
+  - [3 P.] Korrekter hierarchischer Szenengraph mit mindestens 4 Freiheitsgraden + beweglichen Greiferbacken (`_rootNode.Render(gl)`).
+  - [2 P.] Stabile Orbit-Kamera mit Gimbal-Lock-Schutz ($[-85^\circ, +85^\circ]$) und Zielpunkt-Panning.
+  - [2 P.] Korrekte Flächennormalen (`gl.Normal`) und plastische Phong-Beleuchtung (`GL_LIGHT0` & `GL_LIGHT1`).
+  - [2 P.] Animierte Bahnsteuerung (`DispatcherTimer`) & Pick-and-Place- bzw. Greif-Interaktion.
+  - [1 P.] Dokumentation & Code-Qualität (`README.md` mit Screenshot und Kinematik-Schema).
 
 ---
 
 #### 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vorgeführten Lösungen beider Tracks kritisch auf folgende typische Schwachstellen und Fallstricke:
 - **Hierarchischer Szenengraph & Matrix-Stack:** Bewegen sich die Subkomponenten rein über lokale Transformationen via `gl.PushMatrix()` und `gl.PopMatrix()` mit, und warum darf `Sx = L1` nicht auf den Transformationsknoten selbst gesetzt werden (Verzerrung der Kind-Achsen)?
-- **Kardanfehler & Gimbal Lock der Kamera:** Ist die Elevation $\phi$ sauber auf $[-89^\circ, +89^\circ]$ begrenzt?
+- **Kardanfehler & Gimbal Lock der Kamera:** Ist die Elevation $\phi$ sauber auf $[-85^\circ, +85^\circ]$ begrenzt?
 - **Flächennormalen & Beleuchtung:** Wirken die 3D-Körper plastisch schattiert (`gl.Normal`), oder sind Seitenflächen gleichförmig flach?
 - **TCP-Deckungsgleichheit bzw. Re-Parenting:** Liegt der analytisch berechnete TCP-Marker bei beliebigen Winkeln $\theta_1, \theta_2$ exakt im Greiferzentrum?
 
@@ -549,7 +553,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 - **Empfohlene Suchbegriffe:** `SharpGL WPF OpenGLControl camera LookAt`, `OpenGL spherical coordinates orbit camera`, `OpenGL hierarchical matrix stack glPushMatrix`.
 - **Offizielle Dokumentation:** [SharpGL GitHub Repository](https://github.com/dwmkerr/sharpgl), [OpenGL 2.1 Reference Pages](https://registry.khronos.org/OpenGL-Refpages/gl2.1/).
 - **Vibe-Coding Prompting-Tipp:**
-  > *„Erstelle eine C#-Klasse für eine OpenGL Orbit-Kamera mit SharpGL. Berechne die Kameraposition aus Kugelkoordinaten $(r, \theta, \phi)$ und rufe `gl.LookAt()` auf. Beachte: Elevation $\phi$ muss gegen Gimbal Lock geschützt sein (auf $\pm 89^\circ$ clamped).“*
+  > *„Erstelle eine C#-Klasse für eine OpenGL Orbit-Kamera mit SharpGL. Berechne die Kameraposition aus Kugelkoordinaten $(r, \theta, \phi)$ und rufe `gl.LookAt()` auf. Beachte: Elevation $\phi$ muss gegen Gimbal Lock geschützt sein (auf $\pm 85^\circ$ clamped).“*
 
 ---
 

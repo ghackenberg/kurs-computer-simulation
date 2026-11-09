@@ -163,11 +163,11 @@ Bei jedem Programmlauf liefert `totalEnergy` ein anderes, deutlich zu kleines Er
 #### Fragetext
 In einer 3D-Anwendung (`SharpGL` / OpenGL) bewegt sich eine Orbitkamera auf einer Kugeloberfläche mit Radius $R$ um den Zielpunkt $(0, 0, 0)$. Ihre kartesische Position wird aus dem Azimutwinkel $\theta$ und dem Elevationswinkel $\phi$ bestimmt, während der globale Up-Vektor der Kamera in `gluLookAt` fest auf $\mathbf{u} = (0, 1, 0)^\top$ gesetzt ist.
 
-Warum muss der Elevationswinkel $\phi$ in der Maussteuerung zwingend auf ein Intervall wie $[-89^\circ, +89^\circ]$ begrenzt (geclampt) werden?
+Warum muss der Elevationswinkel $\phi$ in der Maussteuerung zwingend auf ein Intervall wie $[-85^\circ, +85^\circ]$ begrenzt (geclampt) werden?
 
 #### Antwortoptionen
 * [x] A) Bei $\phi = \pm 90^\circ$ liegt die Blickrichtung exakt parallel zum festen Up-Vektor $(0, 1, 0)^\top$, sodass deren Kreuzprodukt zur Berechnung des Kamera-Rechtsvektors zum Nullvektor entartet und die View-Matrix kollabiert.
-* [ ] B) Oberhalb von $\phi = 89^\circ$ schneidet die Near-Clipping-Plane der perspektivischen Projektionsmatrix zwangsläufig den Koordinatenursprung, wodurch sämtliche Dreiecks-Primitive durch den Z-Buffer-Test verworfen werden.
+* [ ] B) Oberhalb von $\phi = 85^\circ$ schneidet die Near-Clipping-Plane der perspektivischen Projektionsmatrix zwangsläufig den Koordinatenursprung, wodurch sämtliche Dreiecks-Primitive durch den Z-Buffer-Test verworfen werden.
 * [ ] C) Die trigonometrischen Funktionen `Math.Sin` und `Math.Cos` sind in der IEEE-754-Gleitkommaarithmetik nur im offenen Intervall $(-\pi/2, +\pi/2)$ definiert und werfen exakt bei $\pm 90^\circ$ eine `ArithmeticException`.
 * [ ] D) Ab einem Elevationswinkel von $90^\circ$ kehrt sich in OpenGL der Umlaufsinn (Winding Order) aller Polygon-Eckpunkte von gegen den Uhrzeigersinn (CCW) auf im Uhrzeigersinn (CW) um, sodass das Backface-Culling das Modell ausblendet.
 
