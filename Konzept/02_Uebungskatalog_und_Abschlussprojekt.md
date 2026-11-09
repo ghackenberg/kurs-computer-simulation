@@ -433,9 +433,9 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
 #### Stufe 1: Basisaufgabe (Gemeinsames Fundament, ca. 60 min) – „High-Speed Signal-Streamer & Welford-Statistik mit ScottPlot 5“
 - **Aufgabenstellung (siehe [`Aufgabenblatt.md`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md)):**
   1. Öffnen Sie die Vorlage [`ScottPlotTelemetry.sln`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Vorlage/ScottPlotTelemetry.sln).
-  2. Implementieren Sie `RingBuffer.CopyChronologicalTo` ohne Heap-Allokationen.
-  3. Implementieren Sie die Welford-Rekursion in `WelfordStats.Push(double x)`.
-  4. Zeichnen Sie in `MainWindow.OnRenderTimerTick` die $\pm 3\sigma$-Toleranzbänder und aktualisieren Sie den Plot flüssig mit 50 Hz.
+  2. **Aufgabe 1.1:** Implementieren Sie `CircularBuffer<T>.CopyTo(T[] destination)` ohne Heap-Allokationen.
+  3. **Aufgabe 1.2:** Implementieren Sie die Welford-Rekursion in `WelfordStatistics.Add(double x)` und bringen Sie die Unit-Tests (`dotnet test`) auf Grün.
+  4. **Aufgabe 1.3 & 1.4:** Beheben Sie das GC-Memory-Leak in `MainWindow.OnRenderTimerTick` (einmaliges `Plot.Add.Signal` im Konstruktor) und zeichnen Sie die dynamischen $\pm 3\sigma$-Horizontallinien ein.
 - **Erwartetes Ergebnis:** Ein absolut ruckelfreies, flüssig durchlaufendes Diagramm mit dynamischer $\pm 3\sigma$-Hüllkurve bei $50\text{--}60\,\text{FPS}$.
 
 ---
@@ -505,6 +505,7 @@ Beim wöchentlichen „Showcase & Peer-Challenge“ prüft das Auditorium die vo
   2. **Aufgabe 1.1:** Weisen Sie in `BuildSceneGraph()` jedem Knoten (`_baseNode`, `_arm1Node`, `_arm2Node`, `_pinoleNode`) über `RenderCustomGeometry` seine lokale Zeichenlogik zu und ersetzen Sie `RenderRobot(gl)` durch `_rootNode.Render(gl)`.
   3. **Aufgabe 1.2:** Ergänzen Sie `OrbitCamera.Pan(double deltaRight, double deltaUp)` und binden Sie die rechte Maustaste an das Zielpunkt-Panning an.
   4. **Aufgabe 1.3:** Fügen Sie unter `_rootNode` einen Geschwisterknoten `_workpieceNode` bei $(1{,}10, 0{,}06, -0{,}40)\,\text{m}$ hinzu und prüfen Sie den euklidischen 3D-Abstand $d = \|\vec{p}_{\text{TCP}} - \vec{p}_{\text{Workpiece}}\|_2 < 0{,}12\,\text{m}$.
+  5. **Aufgabe 1.4:** Kommentieren Sie in `Tests/SceneGraphTests.cs` die Assertions für `OrbitCamera.Pan(...)` ein und bringen Sie alle 5 Unit-Tests (`dotnet test`) auf Grün.
 - **Erwartetes Ergebnis:** Einheitliches Szenengraph-Rendering mit $\Delta = 0{,}000\,\text{mm}$ Deckung, flüssiges Kamera-Panning und visuelle Greifbereich-Erkennung.
 
 ---

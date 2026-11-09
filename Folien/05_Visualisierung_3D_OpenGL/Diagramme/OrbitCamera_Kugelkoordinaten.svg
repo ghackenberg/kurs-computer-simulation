@@ -69,6 +69,7 @@
 
   <!-- Projektion am Boden & Kamera-Position p_eye -->
   <line x1="175" y1="215" x2="305" y2="250" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3" />
+  <text x="262" y="256" class="code" fill="#475569">r_xz</text>
   <line x1="305" y1="250" x2="305" y2="115" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3" />
   <line x1="175" y1="215" x2="305" y2="115" stroke="#d97706" stroke-width="3.5" />
   <text x="218" y="145" class="code" fill="#b45309">Distanz r</text>

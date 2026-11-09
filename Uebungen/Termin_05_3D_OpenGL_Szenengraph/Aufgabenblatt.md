@@ -72,23 +72,26 @@ $$I = I_{\text{a}} k_{\text{a}} + I_{\text{d}} k_{\text{d}} (\vec{n} \cdot \vec{
 **Ziel der Basisaufgabe (Stufe 1):** Analysieren Sie das ausführbare Starter-Projekt `Vorlage/SceneGraph3D.sln` (das bereits die `OrbitCamera`, Phong-Beleuchtung und eine 3-Achs-SCARA-Grundstruktur mitbringt), beheben Sie die Trennung zwischen Matrix-Baum und OpenGL-Rendering und ergänzen Sie Kamera-Panning sowie ein 3D-Werkstück (als gemeinsames Fundament für Stufe 2 Track A und Track B).
 
 ### Aufgabenstellung:
-1. **Starter-Kit untersuchen (`Vorlage/SceneGraph3D.sln`):**
-   - Starten Sie die Anwendung und prüfen Sie die 3 Gelenk-Slider ($\theta_1, \theta_2, d_3$) sowie die Deckung der gelben analytischen TCP-Kugel (`CalculateAnalyticTcp`) mit der Szenengraph-Matrix (`_pinoleNode.GetWorldPosition()`).
-   - Öffnen Sie `MainWindow.xaml.cs` und vergleichen Sie `BuildSceneGraph()` mit `RenderRobot(OpenGL gl)`: Aktuell wird `_rootNode` zwar für `GetWorldPosition()` genutzt, aber `RenderRobot(gl)` zeichnet die Geometrie über manuell duplizierte `gl.PushMatrix()`-Aufrufe, statt `_rootNode.Render(gl)` aufzurufen!
-2. **Aufgabe 1.1 – Szenengraph-Rendering vereinen (`RenderCustomGeometry` & `_rootNode.Render`):**
+**Vorbereitung – Starter-Kit untersuchen (`Vorlage/SceneGraph3D.sln`):**
+- Starten Sie die Anwendung und prüfen Sie die 3 Gelenk-Slider ($\theta_1, \theta_2, d_3$) sowie die Deckung der gelben analytischen TCP-Kugel (`CalculateAnalyticTcp`) mit der Szenengraph-Matrix (`_pinoleNode.GetWorldPosition()`).
+- Öffnen Sie `MainWindow.xaml.cs` und vergleichen Sie `BuildSceneGraph()` mit `RenderRobot(OpenGL gl)`: Aktuell wird `_rootNode` zwar für `GetWorldPosition()` genutzt, aber `RenderRobot(gl)` zeichnet die Geometrie über manuell duplizierte `gl.PushMatrix()`-Aufrufe, statt `_rootNode.Render(gl)` aufzurufen!
+
+1. **Aufgabe 1.1 – Szenengraph-Rendering vereinen (`RenderCustomGeometry` & `_rootNode.Render`):**
    - Weisen Sie in `BuildSceneGraph()` jedem Knoten (`_baseNode`, `_arm1Node`, `_arm2Node`, `_pinoleNode`) über die Eigenschaft `RenderCustomGeometry = gl => { ... }` seine lokale Zeichenlogik zu.
    - *Wichtiger Hinweis zur Skalierung:* Behalten Sie `gl.PushMatrix(); gl.Translate(L1 / 2.0f, 0, 0); gl.Scale(L1, 0.14f, 0.18f); DrawCube(gl); gl.PopMatrix();` **innerhalb** von `RenderCustomGeometry` bei (setzen Sie **nicht** `_arm1Node.Sx = L1`, da eine Knotenskalierung über den Matrix-Stack auch alle Kindknoten wie `_arm2Node` und `_pinoleNode` verzerren würde!).
    - Ersetzen Sie den gesamten Rumpf von `RenderRobot(OpenGL gl)` durch den einzigen rekursiven Aufruf `_rootNode.Render(gl);`.
    - Überprüfen Sie, dass der Roboter optisch exakt gleich aussieht und der Deckungsfehler $\Delta = 0{,}000\,\text{mm}$ erhalten bleibt.
-3. **Aufgabe 1.2 – Kamera-Panning mit rechter Maustaste (`OrbitCamera.Pan`):**
+2. **Aufgabe 1.2 – Kamera-Panning mit rechter Maustaste (`OrbitCamera.Pan`):**
    - Ergänzen Sie in `Camera/OrbitCamera.cs` eine Methode `public void Pan(double deltaRight, double deltaUp)`, welche den Zielpunkt (`LookAtX`, `LookAtY`, `LookAtZ`) quer zur aktuellen horizontalen Blickrichtung ($\theta$) und vertikal entlang $Y$ verschiebt:
      $$\Delta x_{\text{look}} = -\Delta_{\text{right}} \cdot \cos\theta, \quad \Delta z_{\text{look}} = +\Delta_{\text{right}} \cdot \sin\theta, \quad \Delta y_{\text{look}} = \Delta_{\text{up}}$$
    - Binden Sie in `MainWindow.xaml.cs` (`OpenGlView_MouseDown` / `MouseMove` / `MouseUp`) die **rechte Maustaste** an `_camera.Pan(dx * 0.01, dy * 0.01)`, sodass Sie das Zentrum der 3D-Szene frei verschieben können.
-4. **Aufgabe 1.3 – 3D-Werkstück auf dem Hallenboden & TCP-Distanzanzeige:**
+3. **Aufgabe 1.3 – 3D-Werkstück auf dem Hallenboden & TCP-Distanzanzeige:**
    - Fügen Sie in `BuildSceneGraph()` einen weiteren Kindknoten `_workpieceNode = new SceneNode("Workpiece")` unter `_rootNode` bei der Bodenposition $(1{,}10, 0{,}06, -0{,}40)\,\text{m}$ hinzu, der einen orangen Würfel (Kantenlänge $0{,}12\,\text{m}$) zeichnet.
    - *Hinweis zur Würfelgröße:* Da `DrawCube(gl)` einen Einheitswürfel ($[-0{,}5, +0{,}5]^3$, Kantenlänge $1{,}0\,\text{m}$) zeichnet, skalieren Sie ihn in `_workpieceNode.RenderCustomGeometry` mit `gl.PushMatrix(); gl.Scale(0.12f, 0.12f, 0.12f); DrawCube(gl); gl.PopMatrix();` auf $0{,}12\,\text{m}$ (sein Mittelpunkt liegt dann bei `Ty = 0.06f` exakt auf dem Boden $y = 0$).
    - Berechnen Sie in `UpdateTcpCalculations()` den euklidischen 3D-Abstand $d = \|\vec{p}_{\text{TCP}} - \vec{p}_{\text{Workpiece}}\|$ und geben Sie ihn in der Statusleiste (`TxtStatus`) aus. Färben Sie das Werkstück grün, sobald sich der TCP in Greifdistanz ($d < 0{,}12\,\text{m}$) befindet!
    - *Selbsttest-Tipp:* Stellen Sie die Gelenk-Slider auf $\theta_1 = 62^\circ, \theta_2 = -100^\circ, d_3 = 0{,}44\,\text{m}$ (oder $\theta_1 = -22^\circ, \theta_2 = +100^\circ, d_3 = 0{,}44\,\text{m}$) – der TCP trifft das Werkstück dann bis auf $d \approx 0{,}010\,\text{m} \ll 0{,}12\,\text{m}$ und der Würfel leuchtet sofort grün auf!
+4. **Aufgabe 1.4 – Unit-Tests für Kamera-Panning & Reparenting prüfen (`Tests/SceneGraphTests.cs`):**
+   - Öffnen Sie `Tests/SceneGraphTests.cs`, kommentieren Sie in `Test_SceneNode_Reparenting_And_OrbitCamera_Pan()` den `TODO`-Block für `OrbitCamera.Pan(...)` ein und führen Sie `dotnet test` aus, bis alle **5 Unit-Tests** auf Grün stehen.
 
 ---
 
@@ -128,7 +131,7 @@ Da die ersten 3 Achsen ($\theta_1, \theta_2, d_3$) und die TCP-Validierung berei
 #### Aufgabenstellung Track A:
 1. **Arbeitspaket A.1 – Hierarchischer Szenengraph für Achse 4 & Parallelgreifer:**
    - Erweitern Sie den Szenengraphen um `_wristNode`, `_leftFingerNode` und `_rightFingerNode` und ergänzen Sie in der Sidebar zwei neue GUI-Slider für $\theta_4 \in [-180^\circ, +180^\circ]$ und die Greiferöffnung $g_{\text{width}} \in [0{,}02, 0{,}16]\,\text{m}$.
-   - Stellen Sie sicher, dass sich die beiden Greiferbacken bei Änderung von $\theta_1, \theta_2, d_3, \theta_4$ ohne manuelle Weltkoordinaten-Rechnung automatisch im lokalen Koordinatensystem des Handgelenks mitdrehen.
+   - Stellen Sie sicher, dass sich die beiden Greiferbacken bei Änderung von $\theta_1, \theta_2, d_3, \theta_4$ ohne manuelle Weltkoordinaten-Rechnung automatisch im lokalen Koordinatensystem des Handgelenks mitdrehen. *(Geometrie-Tipp: Ersetzen Sie die rote Platzhalter-Kugel in `_pinoleNode` durch den neuen Greifer – z. B. Traverse in `_wristNode` leicht oberhalb bei $y = +0{,}06\,\text{m}$ und die beiden Greiferbacken zentriert um den TCP $y = 0$, damit sie den $0{,}12\,\text{m}$-Würfel seitlich umschließen).*
 2. **Arbeitspaket A.2 – Animierte Teach-In-Steuerung (`DispatcherTimer`):**
    - Ergänzen Sie eine Teach-In-Steuerung, mit der mindestens 3 Posen („Aufnahmeposition A“, „Ablageposition B“, „Home“) gespeichert und per Button angefahren werden können.
    - Beim Klick auf eine Pose (oder „Pick & Place Zyklus starten“) dürfen die Gelenke **nicht unphysikalisch springen**, sondern müssen über einen `DispatcherTimer` (ca. 60 Hz) kontinuierlich und flüssig (z. B. lineare oder kubische Interpolation aller Gelenkwerte $\theta_1, \theta_2, d_3, \theta_4, g_{\text{width}}$) zur Zielpose verfahren.
@@ -157,7 +160,7 @@ Vollständige mechatronische 3D-Simulation eines Jahrmarkt-Greifarm-Automaten (*
 #### Aufgabenstellung Track B:
 1. **Arbeitspaket B.1 – Hierarchischer Szenengraph:** Modellierung der Kette Gehäuse $\to X$-Brücke $\to Y$-Katze $\to Z$-Seil $\to$ Greiferbacken via `SceneNode` (`glPushMatrix` / `glPopMatrix`).
 2. **Arbeitspaket B.2 – Interaktive Tastatur-Steuerung:**
-   - Pfeiltasten: Bewegen die Laufkatze in der horizontalen Ebene ($X/Z$).
+   - Pfeiltasten: Bewegen die Laufkatze in der horizontalen Ebene ($X/Z$). *(WPF-Tipp: Nutzen Sie am `Window` das `PreviewKeyDown`-Event mit `e.Handled = true;`, damit die Slider und Buttons in der Sidebar die Pfeiltasten und die Leertaste nicht abfangen).*
    - Leertaste: Startet den vollautomatischen Greifzyklus:
      1. Klaue senkt sich ab bis kurz über den Boden.
      2. Finger schließen sich.

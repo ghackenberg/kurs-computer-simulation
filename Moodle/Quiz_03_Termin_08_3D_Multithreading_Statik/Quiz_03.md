@@ -149,7 +149,7 @@ Bei jedem Programmlauf liefert `totalEnergy` ein anderes, deutlich zu kleines Er
 
 #### Antwortoptionen
 * [ ] A) Der Thread-Pool bricht `Parallel.For`-Schleifen ab einer Million Iterationen vorzeitig ab, weshalb die Schleife zwingend durch manuell instanziierte `new Thread()`-Objekte mit `ThreadPriority.Highest` ersetzt werden muss.
-* [x] B) Die Operation `totalEnergy += e` ist eine nicht-atomare Read-Modify-Write-Sequenz mit **Lost Updates (Race Condition)**; gelöst wird dies durch `Parallel.For<double>` mit Thread-lokalen Teilakkumulatoren und abschließendem `lock` im `localFinally`-Block.
+* [x] B) Die Operation `totalEnergy += e` ist eine nicht-atomare Read-Modify-Write-Sequenz (**Race Condition**); gelöst wird dies durch `Parallel.For<double>` mit Thread-lokalen Teilakkumulatoren und `lock` im `localFinally`.
 * [ ] C) Da `double`-Variablen auf 64-Bit-Architekturen nicht im CPU-Cache gehalten werden können, genügt das Voranstellen des Schlüsselworts `volatile` vor `totalEnergy`, um alle parallelen Additionen verlustfrei zu serialisieren.
 * [ ] D) Die Methode `Parallel.For` durchläuft das Array rückwärts, wodurch bei der Gleitkomma-Addition Rundungsfehler kumulieren; ein vorgeschaltetes `Array.Sort(particles)` stellt die deterministische Summengenauigkeit wieder her.
 

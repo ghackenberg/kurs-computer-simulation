@@ -124,4 +124,41 @@ public class SceneGraphTests
         Assert.AreEqual(13.0f, worldPos.Y, 1e-5f);
         Assert.AreEqual(0.0f, worldPos.Z, 1e-5f);
     }
+
+    [TestMethod]
+    public void Test_SceneNode_Reparenting_And_OrbitCamera_Pan()
+    {
+        // 1. Reparenting-Test (AddChild löst Kind automatisch vom bisherigen Elternknoten)
+        var root = new SceneNode("Root");
+        var wrist = new SceneNode("Wrist") { Tx = 1.0f, Ty = 0.5f, Tz = -0.4f };
+        var workpiece = new SceneNode("Workpiece") { Tx = 1.10f, Ty = 0.06f, Tz = -0.40f };
+
+        root.AddChild(wrist);
+        root.AddChild(workpiece);
+        Assert.AreEqual(2, root.Children.Count);
+
+        // Umhängen (Reparenting) unter wrist + lokale Koordinaten auf (0, 0, 0) zurücksetzen
+        workpiece.Tx = 0.0f;
+        workpiece.Ty = 0.0f;
+        workpiece.Tz = 0.0f;
+        wrist.AddChild(workpiece);
+
+        Assert.AreEqual(1, root.Children.Count, "Workpiece muss aus root.Children entfernt worden sein.");
+        Assert.AreEqual(wrist, workpiece.Parent, "Neuer Elternknoten muss wrist sein.");
+        Vector3 grabbedWorldPos = workpiece.GetWorldPosition();
+        Assert.AreEqual(1.0f, grabbedWorldPos.X, 1e-5f);
+        Assert.AreEqual(0.5f, grabbedWorldPos.Y, 1e-5f);
+        Assert.AreEqual(-0.4f, grabbedWorldPos.Z, 1e-5f);
+
+        // 2. TODO [Stufe 1 - Aufgabe 1.4]:
+        // Kommentieren Sie nach Implementierung von OrbitCamera.Pan(...) (Aufgabe 1.2)
+        // die folgenden Assertions ein, um Ihre Panning-Formel mit dotnet test zu prüfen:
+        /*
+        var camera = new OrbitCamera { AzimuthDeg = 0.0, LookAtX = 0.0, LookAtY = 0.0, LookAtZ = 0.0 };
+        camera.Pan(deltaRight: 2.0, deltaUp: 1.5);
+        Assert.AreEqual(-2.0, camera.LookAtX, 1e-5, "Bei theta = 0° verschiebt Pan(2, 1.5) LookAtX um -2.");
+        Assert.AreEqual(1.5, camera.LookAtY, 1e-5, "Pan(2, 1.5) verschiebt LookAtY um +1.5.");
+        Assert.AreEqual(0.0, camera.LookAtZ, 1e-5, "Bei theta = 0° bleibt LookAtZ unverändert.");
+        */
+    }
 }

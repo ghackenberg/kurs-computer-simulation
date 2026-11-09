@@ -11,15 +11,13 @@ const outDir = path.join(__dirname, '..', 'Folien', '05_Visualisierung_3D_OpenGL
 fs.mkdirSync(outDir, { recursive: true });
 
 function writeSvg(name, content) {
-  const filePath = path.join(outDir, name);
-  fs.writeFileSync(filePath, content.trim() + '\n', 'utf8');
-  console.log('Generated:', name);
-  // Auch eine leerzeichenfreie Variante schreiben, damit Markdown-Links ohne %20 auskommen:
-  if (name.includes(' - ')) {
-    const cleanName = name.replace(/ - /g, '_').replace(/ /g, '_');
-    fs.writeFileSync(path.join(outDir, cleanName), content.trim() + '\n', 'utf8');
-    console.log('Generated alias:', cleanName);
+  const cleanName = name.replace(/ - /g, '_').replace(/ /g, '_');
+  if (name !== cleanName && fs.existsSync(path.join(outDir, name))) {
+    fs.unlinkSync(path.join(outDir, name));
   }
+  const filePath = path.join(outDir, cleanName);
+  fs.writeFileSync(filePath, content.trim() + '\n', 'utf8');
+  console.log('Generated:', cleanName);
 }
 
 const COMMON_DEFS = `
@@ -203,7 +201,7 @@ writeSvg('Phong - Specular.svg', `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   ${COMMON_DEFS}
   <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
-  <text x="240" y="36" class="hdr" fill="#b45309">Spekularer Glanzpunkt: I_s = k_s * I_Ls * (r · v)^alpha_shiny</text>
+  <text x="240" y="36" class="hdr" fill="#b45309">Spekularer Glanzpunkt: I_s = k_s * I_Ls * max(0, r · v)^alpha_shiny</text>
 
   <!-- Links: Reflexionskeule um r -->
   <rect x="-20" y="54" width="250" height="225" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.8" />
@@ -626,6 +624,7 @@ writeSvg('OrbitCamera_Kugelkoordinaten.svg', `
 
   <!-- Projektion am Boden & Kamera-Position p_eye -->
   <line x1="175" y1="215" x2="305" y2="250" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3" />
+  <text x="262" y="256" class="code" fill="#475569">r_xz</text>
   <line x1="305" y1="250" x2="305" y2="115" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3" />
   <line x1="175" y1="215" x2="305" y2="115" stroke="#d97706" stroke-width="3.5" />
   <text x="218" y="145" class="code" fill="#b45309">Distanz r</text>

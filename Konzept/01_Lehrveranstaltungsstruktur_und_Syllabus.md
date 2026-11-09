@@ -362,7 +362,7 @@ Zur Abbildung auf 10 Präsenztermine à 150 Minuten werden Prolog und Einführun
   - *Neu eingeführt:* **SharpGL.WPF**, 3D-Grafikpipeline, Kugelkoordinaten-OrbitCamera, Szenengraph (`SceneNode`), Vorwärtskinematik.
   - *Strikte Tabus:* **Kein Multithreading (`Parallel.For` erst in T06!), noch keine FEM-Matrizen!**
 - **Verwendete Werkzeuge & Pakete:**
-  - NuGet: `SharpGL.WPF`, `SharpGL.SceneGraph`.
+  - NuGet / .NET: `SharpGL`, `SharpGL.WPF`, `System.Numerics.Matrix4x4`.
 - **Lernziele (Bloom):**
   - *Verstehen:* Die 3D-Grafikpipeline (Model-View-Projection), Tiefenpufferung (`glEnable(GL_DEPTH_TEST)`) und Kugelkoordinaten.
   - *Anwenden:* Einen hierarchischen Szenengraphen mit relativen Transformationsmatrizen (`glPushMatrix`, `glPopMatrix`) implementieren.

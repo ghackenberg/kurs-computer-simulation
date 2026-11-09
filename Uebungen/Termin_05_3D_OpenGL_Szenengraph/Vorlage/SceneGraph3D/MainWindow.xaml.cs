@@ -57,7 +57,14 @@ public partial class MainWindow : Window
 
         // TODO [Stufe 2 - Track A]:
         // Erweitern Sie den Baum unter _pinoleNode um _wristNode (theta4) sowie
-        // _leftFingerNode und _rightFingerNode (symmetrischer 2-Backen-Parallelgreifer g_width).
+        // _leftFingerNode (Tz = -_gripWidth / 2) und _rightFingerNode (Tz = +_gripWidth / 2).
+        // Tipp: Ersetzen Sie die rote Platzhalter-Kugel (r = 0.07 m) in _pinoleNode durch den
+        // neuen Greifer (_wristNode-Traverse z. B. bei y = +0.06 m, Greiferbacken zentriert um TCP y = 0).
+
+        // TODO [Stufe 2 - Track B]:
+        // Modellieren Sie die Portal-Kette (_bridgeXNode -> _trolleyZNode -> _ropeYNode -> 3 Klauenfinger).
+        // Tipp für B.2: Nutzen Sie am Window das PreviewKeyDown-Event (mit e.Handled = true), damit
+        // die WPF-Slider und Buttons in der Sidebar die Pfeiltasten und die Leertaste nicht abfangen!
 
         UpdateJointTransforms();
     }
@@ -205,7 +212,7 @@ public partial class MainWindow : Window
         DrawCylinder(gl, 0.035f, 0.35f, 16);
         gl.PopMatrix();
 
-        // Greiferkopf
+        // Greiferkopf (Platzhalter-Kugel in Stufe 1; in Track A durch _wristNode + Greiferbacken ersetzen)
         gl.Color(0.9f, 0.3f, 0.2f);
         DrawSphere(gl, 0.07f);
 

@@ -106,7 +106,7 @@ Wir erweitern unseren Visualisierungsraum in die dritte Dimension! Mittels Sharp
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T04:** Zwei ausgewählte Teams präsentieren ihre Telemetrie-Dashboards und ScottPlot-Visualisierungen am Beamer.
 * 📝 **Moodle-Quiz 2 (15 min):** Zweites summatives Quiz zu 2D-Vektorgrafik, Koordinatentransformation, Echtzeit-Telemetrie, ScottPlot 5, Welford-Statistik und MSAGL (Kapitel 03 und 04).
-* **Stufe 1 (Basisaufgabe):** Vereinheitlichung der Szenengraph-Traversierung auf der Vorlage, Kamera-Panning mit rechter Maustaste und 3D-Werkstück mit Greifdistanz-Anzeige.
+* **Stufe 1 (Basisaufgabe):** Vereinheitlichung der Szenengraph-Traversierung auf der Vorlage, Kamera-Panning mit rechter Maustaste, 3D-Werkstück mit Greifdistanz-Anzeige und Unit-Test-Verifikation.
 * 🏭 **Stufe 2 – Track A (Industrie):** *4-Achs-SCARA mit Parallelgreifer* – Handgelenks- und Greiferkinematik, animierte Teach-In-Bahnsteuerung, Pick-and-Place-Werkstücktransport und Arbeitszellen-Spotlight.
 * 🎮 **Stufe 2 – Track B (Game):** *„3D Arcade Claw Crane“* – Jahrmarkt-Greifarm mit 3-Achs-Portalbrücke, Tastatursteuerung, automatischem Greifzyklus, Kisten-Aufnahme und Automaten-Spotlight.
 

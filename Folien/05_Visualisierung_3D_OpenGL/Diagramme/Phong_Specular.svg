@@ -48,7 +48,7 @@
   </defs>
 
   <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
-  <text x="240" y="36" class="hdr" fill="#b45309">Spekularer Glanzpunkt: I_s = k_s * I_Ls * (r · v)^alpha_shiny</text>
+  <text x="240" y="36" class="hdr" fill="#b45309">Spekularer Glanzpunkt: I_s = k_s * I_Ls * max(0, r · v)^alpha_shiny</text>
 
   <!-- Links: Reflexionskeule um r -->
   <rect x="-20" y="54" width="250" height="225" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.8" />

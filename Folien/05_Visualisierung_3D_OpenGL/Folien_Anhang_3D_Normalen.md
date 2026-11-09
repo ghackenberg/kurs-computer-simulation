@@ -64,6 +64,7 @@ $$z = r \cdot \sin(\phi) \cdot \sin(\theta)$$
 - Am Nordpol ($\phi = 0$): $(0, r, 0)$.
 - Am Äquator ($\phi = \frac{\pi}{2}$): $(r\cos\theta, 0, r\sin\theta)$.
 - Am Südpol ($\phi = \pi$): $(0, -r, 0)$.
+- *Brücke zu `DrawSphere` (Elevation $\phi_{\text{elev}} = \frac{\pi}{2}-\phi$ ab Äquator):* $\sin\phi \leftrightarrow \cos\phi_{\text{elev}}$.
 
 </div>
 <div class="two">

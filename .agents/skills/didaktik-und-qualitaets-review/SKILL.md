@@ -63,7 +63,7 @@ Die Studierenden befinden sich im **5. Fachsemester Bachelor Automatisierungstec
 
 - **Prüffragen:**
   1. **Selbsterklärungskraft:** Zeigt jedes SVG-Diagramm den fachlichen Kontrast (z. B. Soll vs. Ist, stabil vs. instabil, $\mathcal{O}(N)$ vs. $\mathcal{O}(W)$) visuell und mit konkreten Zahlenwerten, statt nur leere Boxen zu stapeln?
-  2. **Spaltengewichtung & Layout-Balance:** Sind die Flex-Gewichte (`one` bis `six`) passend zum Platzbedarf von Text/Code vs. Grafik gewählt?
+  2. **Spaltengewichtung, Layout-Balance & Anhang-Folien:** Sind die Flex-Gewichte (`one` bis `six`) passend zum Platzbedarf von Text/Code vs. Grafik gewählt? Bestehen neben `Folien.md` auch optionale Anhang-Foliensätze (`Folien_Anhang_*.md`) die DOM-Layoutprüfung (`node Skripte/lint_slides_dom.js <Pfad> --skip-schema`) mit 0 Fehlern und ohne verwaiste Leerzeichen-SVGs im Ordner `Diagramme/`?
 
 ---
 
@@ -72,7 +72,7 @@ Die Studierenden befinden sich im **5. Fachsemester Bachelor Automatisierungstec
 - **Prüffragen:**
   1. **Zweistufige Hausübung ohne Bruch (`Stufe 1` $\to$ `Stufe 2`):** Bauen in Stufe 2 beide Tracks (Track A und Track B) direkt auf dem Code von Stufe 1 (`Vorlage/...sln`) auf? Werden Stufen konsequent mit Ziffern (`Stufe 1`, `Stufe 2`) und Tracks mit Buchstaben (`Track A`, `Track B`) bezeichnet?
   2. **Symmetrie ohne Redundanz:** Haben Track A (Industrie) und Track B (Game) exakt gleich viele Arbeitspakete (4 APs, 10 Punkte), aber klar getrennte fachliche Schwerpunkte ohne 80-%-Überschneidung?
-  3. **Schutz gegen KI-Scheinsimulation:** Prüfen die mitgelieferten Unit-Tests (`dotnet test`) echte physikalisch-numerische Invarianten und analytische Grenzfälle?
+  3. **Schutz gegen KI-Scheinsimulation & 4er-Symmetrie in Stufe 1:** Sind die Teilaufgaben in Stufe 1 synchron als `1. Aufgabe 1.1` bis `4. Aufgabe 1.4` nummeriert (ohne Verschiebung durch einen vorangestellten Punkt „Starter-Kit untersuchen“), und prüfen die mitgelieferten Unit-Tests (`dotnet test`) neben dem Vorlagen-Code auch echte Invarianten der Studierenden-Aufgaben?
 
 ---
 
