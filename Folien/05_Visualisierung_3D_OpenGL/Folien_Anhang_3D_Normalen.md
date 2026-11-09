@@ -39,7 +39,7 @@ Jeder Punkt $P(x, y, z)$ einer Kugel mit Radius $r$ lässt sich über zwei Winke
   $$\phi_i = \frac{i}{\text{stacks}} \cdot \pi, \quad \theta_j = \frac{j}{\text{slices}} \cdot 2\pi$$
 
 </div>
-<div class="one">
+<div class="two">
 
 ![](./Illustrationen/Sphere_Slices_Stacks.png)
 
@@ -160,9 +160,9 @@ for (int i = 0; i < stacks; i++)
 <div class="columns">
 <div class="two">
 
-### Geometrische Modellierung
+**Geometrische Modellierung:**
 
-Ein rotationssymmetrischer Körper entlang der Y-Achse mit Höhe $h$, unterem Radius $r_1$ und oberem Radius $r_2$:
+Rotationskörper um $+Y$ mit Höhe $h$ und Radien $r_1, r_2$:
 
 - $r_1 = r_2$: Kreiszylinder
 - $r_1 > 0, r_2 = 0$: Kreiskegel mit Spitze oben
@@ -174,9 +174,9 @@ Ein rotationssymmetrischer Körper entlang der Y-Achse mit Höhe $h$, unterem Ra
 - $r(\phi) = r_1 + \phi \cdot (r_2 - r_1)$: Linear interpolierter Radius.
 
 </div>
-<div class="one">
+<div class="two">
 
-![](./Illustrationen/Cylinder_Slices.png)
+![](./Diagramme/Zylindernormale_Querschnitt_XY.svg)
 
 </div>
 </div>

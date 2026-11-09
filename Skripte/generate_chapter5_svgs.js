@@ -647,56 +647,13 @@ writeSvg('OrbitCamera_Kugelkoordinaten.svg', `
 </svg>
 `);
 
+// Alte ungenutzte Zwischen-SVGs bereinigen, falls vorhanden:
+for (const obsolete of ['Zylindernormale_Eckpunkte_XY.svg', 'Zylindernormale_Verbindungsvektor_2D.svg']) {
+  const p = path.join(outDir, obsolete);
+  if (fs.existsSync(p)) fs.unlinkSync(p);
+}
+
 // 14–16. Zylindernormale SVGs für den Anhang (saubere 570x380 SVGs ohne SHIELD_TEXT_OVERFLOW)
-writeSvg('Zylindernormale - Eckpunkte XY.svg', `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
-  ${COMMON_DEFS}
-  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
-  <text x="240" y="36" class="hdr" fill="#1e40af">2D-Querschnitt in der XY-Ebene: Eckpunkte P_1 und P_2</text>
-
-  <line x1="120" y1="310" x2="430" y2="310" stroke="#475569" stroke-width="2.5" marker-end="url(#arr-slate)" />
-  <line x1="120" y1="310" x2="120" y2="65" stroke="#475569" stroke-width="2.5" marker-end="url(#arr-slate)" />
-  <text x="450" y="315" class="code" fill="#475569">+X</text>
-  <text x="120" y="52" class="code" fill="#475569">+Y</text>
-
-  <!-- Kegelstumpf-Querschnitt -->
-  <polygon points="120,310 340,310 250,120 120,120" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
-  <line x1="340" y1="310" x2="250" y2="120" stroke="#dc2626" stroke-width="3.5" />
-
-  <circle cx="340" cy="310" r="6" fill="#dc2626" />
-  <text x="385" y="295" class="code" fill="#991b1b">P_1 = (r_1, 0)</text>
-
-  <circle cx="250" cy="120" r="6" fill="#dc2626" />
-  <text x="335" y="108" class="code" fill="#991b1b">P_2 = (r_2, h)</text>
-
-  <text x="85" y="215" class="code" fill="#1e40af">h</text>
-  <text x="230" y="335" class="code" fill="#1e40af">r_1</text>
-  <text x="185" y="108" class="code" fill="#1e40af">r_2</text>
-</svg>
-`);
-
-writeSvg('Zylindernormale - Verbindungsvektor 2D.svg', `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
-  ${COMMON_DEFS}
-  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
-  <text x="240" y="36" class="hdr" fill="#1e40af">Mantellinie: Richtungsvektor v = P_2 - P_1</text>
-
-  <line x1="120" y1="310" x2="430" y2="310" stroke="#475569" stroke-width="2.5" marker-end="url(#arr-slate)" />
-  <line x1="120" y1="310" x2="120" y2="65" stroke="#475569" stroke-width="2.5" marker-end="url(#arr-slate)" />
-
-  <polygon points="120,310 340,310 250,120 120,120" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
-  <line x1="340" y1="310" x2="250" y2="120" stroke="#2563eb" stroke-width="3.5" marker-end="url(#arr-blue)" />
-
-  <circle cx="340" cy="310" r="6" fill="#1d4ed8" />
-  <text x="385" y="295" class="code" fill="#1e40af">P_1 = (r_1, 0)</text>
-
-  <circle cx="250" cy="120" r="6" fill="#1d4ed8" />
-  <text x="335" y="108" class="code" fill="#1e40af">P_2 = (r_2, h)</text>
-
-  <text x="365" y="215" class="code" fill="#1d4ed8">v = (r_2 - r_1, h)</text>
-</svg>
-`);
-
 writeSvg('Zylindernormale - Normalenvektor XY.svg', `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   ${COMMON_DEFS}
@@ -804,6 +761,149 @@ writeSvg('Szenengraph_Greifer_Verzweigung.svg', `
   <line x1="395" y1="293" x2="352" y2="293" stroke="#15803d" stroke-width="2.5" marker-end="url(#arr-green)" />
 
   <text x="240" y="342" class="sub" fill="#334155">Öffnungsweite _gripWidth [0.02 .. 0.16 m] &#8594; Transport via DispatcherTimer</text>
+</svg>
+`);
+
+// 20. OpenGL_Primitive_Modi.svg (Halbseitig: 2x2 Übersicht GL_LINES, GL_LINE_STRIP, GL_QUADS, GL_QUAD_STRIP)
+writeSvg('OpenGL_Primitive_Modi.svg', `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  ${COMMON_DEFS}
+  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="36" class="hdr" fill="#1e40af">OpenGL-Primitive: gl.Begin(mode) ... gl.End()</text>
+
+  <!-- 1. GL_LINES -->
+  <rect x="-20" y="54" width="250" height="145" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.8" />
+  <text x="105" y="76" class="code" fill="#1d4ed8">GL_LINES (DrawFloorGrid)</text>
+  <line x1="35" y1="145" x2="90" y2="105" stroke="#2563eb" stroke-width="3" />
+  <line x1="130" y1="145" x2="185" y2="105" stroke="#2563eb" stroke-width="3" />
+  <circle cx="35" cy="145" r="4.5" fill="#dc2626" /><text x="14" y="150" class="code" fill="#0f172a">v1</text>
+  <circle cx="90" cy="105" r="4.5" fill="#dc2626" /><text x="68" y="102" class="code" fill="#0f172a">v2</text>
+  <circle cx="130" cy="145" r="4.5" fill="#dc2626" /><text x="110" y="150" class="code" fill="#0f172a">v3</text>
+  <circle cx="185" cy="105" r="4.5" fill="#dc2626" /><text x="206" y="108" class="code" fill="#0f172a">v4</text>
+  <text x="105" y="186" class="sub" fill="#475569">Je 2 Vertices = 1 Einzelstrecke</text>
+
+  <!-- 2. GL_LINE_STRIP -->
+  <rect x="250" y="54" width="250" height="145" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.8" />
+  <text x="375" y="76" class="code" fill="#1d4ed8">GL_LINE_STRIP (Bahnspur)</text>
+  <polyline points="295,145 345,105 400,145 455,105" fill="none" stroke="#16a34a" stroke-width="3" />
+  <circle cx="295" cy="145" r="4.5" fill="#dc2626" /><text x="274" y="150" class="code" fill="#0f172a">v1</text>
+  <circle cx="345" cy="105" r="4.5" fill="#dc2626" /><text x="324" y="102" class="code" fill="#0f172a">v2</text>
+  <circle cx="400" cy="145" r="4.5" fill="#dc2626" /><text x="422" y="152" class="code" fill="#0f172a">v3</text>
+  <circle cx="455" cy="105" r="4.5" fill="#dc2626" /><text x="476" y="108" class="code" fill="#0f172a">v4</text>
+  <text x="375" y="186" class="sub" fill="#475569">Verbundener Linienzug (v1-v2-v3-v4)</text>
+
+  <!-- 3. GL_QUADS -->
+  <rect x="-20" y="212" width="250" height="148" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.8" />
+  <text x="105" y="234" class="code" fill="#15803d">GL_QUADS (DrawCube: 6x4)</text>
+  <polygon points="40,315 150,315 168,265 58,265" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" />
+  <circle cx="40" cy="315" r="4.5" fill="#15803d" /><text x="18" y="320" class="code" fill="#0f172a">v1</text>
+  <circle cx="150" cy="315" r="4.5" fill="#15803d" /><text x="172" y="320" class="code" fill="#0f172a">v2</text>
+  <circle cx="168" cy="265" r="4.5" fill="#15803d" /><text x="190" y="269" class="code" fill="#0f172a">v3</text>
+  <circle cx="58" cy="265" r="4.5" fill="#15803d" /><text x="36" y="269" class="code" fill="#0f172a">v4</text>
+  <line x1="105" y1="292" x2="105" y2="250" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arr-red)" />
+  <text x="122" y="258" class="code" fill="#991b1b">n</text>
+  <text x="105" y="348" class="sub" fill="#475569">Je 4 Vertices = 1 Facette + Normale</text>
+
+  <!-- 4. GL_QUAD_STRIP -->
+  <rect x="250" y="212" width="250" height="148" rx="8" fill="#ffffff" stroke="#fcd34d" stroke-width="1.8" />
+  <text x="375" y="234" class="code" fill="#b45309">GL_QUAD_STRIP (DrawCylinder)</text>
+  <polygon points="300,312 300,268 375,262 375,306" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+  <polygon points="375,306 375,262 450,268 450,312" fill="#fde68a" stroke="#d97706" stroke-width="2" />
+  <circle cx="300" cy="312" r="4" fill="#b45309" /><text x="278" y="316" class="code" fill="#0f172a">v1</text>
+  <circle cx="300" cy="268" r="4" fill="#b45309" /><text x="278" y="272" class="code" fill="#0f172a">v2</text>
+  <circle cx="450" cy="312" r="4" fill="#b45309" /><text x="472" y="316" class="code" fill="#0f172a">v5</text>
+  <circle cx="450" cy="268" r="4" fill="#b45309" /><text x="472" y="272" class="code" fill="#0f172a">v6</text>
+  <text x="375" y="348" class="sub" fill="#475569">Durchgehendes Band (slices = 24)</text>
+</svg>
+`);
+
+// 21. Transformations_Pipeline_TR_vs_RT.svg (Halbseitig: 4x4-Pipeline & T*R vs R*T)
+writeSvg('Transformations_Pipeline_TR_vs_RT.svg', `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  ${COMMON_DEFS}
+  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="36" class="hdr" fill="#1e40af">Homogene 4x4-Pipeline &amp; Reihenfolge: T · R != R · T</text>
+
+  <!-- Oben: 4 Stufen der Pipeline -->
+  <rect x="-20" y="50" width="520" height="62" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8" />
+  <text x="240" y="73" class="code" fill="#1d4ed8">v_obj &#8594; [M_model] &#8594; v_world &#8594; [M_view] &#8594; v_eye &#8594; [M_proj] &#8594; v_clip</text>
+  <text x="240" y="97" class="sub" fill="#334155">GL_MODELVIEW = M_view · M_model  |  GL_PROJECTION = M_proj</text>
+
+  <!-- Unten links: T * R (Richtig im Szenengraph) -->
+  <rect x="-20" y="124" width="250" height="236" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
+  <text x="105" y="148" class="code" fill="#15803d">1. T · R: Translate &#8594; Rotate</text>
+  <text x="105" y="168" class="sub" fill="#166534">(Szenengraph: Drehung im Gelenk!)</text>
+
+  <!-- Ursprung (0,0) bis Gelenk (135, 260) -->
+  <circle cx="25" cy="260" r="5" fill="#475569" />
+  <text x="30" y="282" class="code" fill="#475569">(0,0)</text>
+  <line x1="25" y1="260" x2="130" y2="260" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arr-blue)" />
+  <text x="78" y="246" class="code" fill="#1d4ed8">1. T(L1)</text>
+
+  <!-- Gelenkpunkt + gedrehter Arm vor Ort -->
+  <circle cx="135" cy="260" r="6" fill="#16a34a" />
+  <line x1="135" y1="260" x2="205" y2="195" stroke="#16a34a" stroke-width="6" stroke-linecap="round" />
+  <path d="M 175 260 A 40 40 0 0 0 164 232" fill="none" stroke="#d97706" stroke-width="2.5" />
+  <text x="198" y="252" class="code" fill="#b45309">2. R</text>
+  <text x="105" y="318" class="sub" fill="#15803d">Erst zum Gelenk verschieben,</text>
+  <text x="105" y="338" class="sub" fill="#15803d">dann vor Ort drehen &#10003;</text>
+
+  <!-- Unten rechts: R * T (Falsch herum!) -->
+  <rect x="250" y="124" width="250" height="236" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2" />
+  <text x="375" y="148" class="code" fill="#991b1b">2. R · T: Rotate &#8594; Translate</text>
+  <text x="375" y="168" class="sub" fill="#991b1b">(Schwenkt auf Kreisbahn!)</text>
+
+  <!-- Ursprung (295, 275) + gedrehte Achse -->
+  <circle cx="295" cy="275" r="5" fill="#475569" />
+  <text x="300" y="296" class="code" fill="#475569">(0,0)</text>
+  <path d="M 410 275 A 115 115 0 0 0 380 195" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3" />
+  <line x1="295" y1="275" x2="380" y2="195" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arr-red)" />
+  <text x="318" y="220" class="code" fill="#991b1b">2. T(L1)</text>
+  <line x1="380" y1="195" x2="420" y2="195" stroke="#ef4444" stroke-width="7" stroke-linecap="round" />
+  <text x="375" y="318" class="sub" fill="#991b1b">Translation läuft entlang der</text>
+  <text x="375" y="338" class="sub" fill="#991b1b">bereits gedrehten Achse!</text>
+</svg>
+`);
+
+// 22. OrbitCamera_Panning_XZ.svg (Halbseitig: XZ-Draufsicht für Kamera-Panning Aufgabe 1.2)
+writeSvg('OrbitCamera_Panning_XZ.svg', `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  ${COMMON_DEFS}
+  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="36" class="hdr" fill="#1e40af">Kamera-Panning in der XZ-Draufsicht (Aufgabe 1.2)</text>
+
+  <!-- XZ-Koordinatenachsen im Punkt p_look (210, 165) -->
+  <line x1="60" y1="165" x2="435" y2="165" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-slate)" />
+  <text x="458" y="170" class="code" fill="#475569">+X</text>
+  <line x1="210" y1="62" x2="210" y2="282" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-slate)" />
+  <text x="238" y="284" class="code" fill="#475569">+Z</text>
+
+  <!-- Kamerastrahl von p_look (210, 165) zu p_eye (310, 265) unter Winkel theta zur +Z-Achse -->
+  <line x1="210" y1="165" x2="310" y2="265" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,4" />
+  <circle cx="310" cy="265" r="8" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+  <text x="382" y="270" class="code" fill="#1d4ed8">p_eye (Kamera)</text>
+
+  <!-- Azimut-Bogen theta von +Z zum Kamerastrahl -->
+  <path d="M 210 225 A 60 60 0 0 0 252 207" fill="none" stroke="#2563eb" stroke-width="2.5" />
+  <text x="242" y="242" class="code" fill="#1d4ed8">theta</text>
+
+  <!-- Kamera-Rechtsvektor e_right = (cos(theta), 0, -sin(theta)) senkrecht zum Strahl -->
+  <line x1="210" y1="165" x2="305" y2="75" stroke="#d97706" stroke-width="2.5" marker-end="url(#arr-amber)" />
+  <text x="385" y="72" class="code" fill="#b45309">e_right = (cos, -sin)</text>
+
+  <!-- Panning-Verschiebung Delta p_look = -dRight * e_right -->
+  <line x1="210" y1="165" x2="115" y2="255" stroke="#16a34a" stroke-width="3.5" marker-end="url(#arr-green)" />
+  <circle cx="115" cy="255" r="6" fill="#16a34a" />
+  <text x="68" y="225" class="code" fill="#15803d">-dRight * e_right</text>
+
+  <!-- Zielpunkt p_look -->
+  <circle cx="210" cy="165" r="7" fill="#dc2626" />
+  <text x="155" y="148" class="code" fill="#991b1b">p_look</text>
+
+  <!-- Unten: Eselsbrücke -->
+  <rect x="-20" y="298" width="520" height="62" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" />
+  <text x="240" y="321" class="code" fill="#0f172a">dX_look = -dRight * cos(theta)  |  dZ_look = +dRight * sin(theta)</text>
+  <text x="240" y="344" class="sub" fill="#15803d">"Greife-die-Welt": Rechtsziehen (dRight &gt; 0) schiebt Fokus p_look nach links!</text>
 </svg>
 `);
 

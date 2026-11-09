@@ -278,8 +278,8 @@ Bei $n$ aktiven Lichtquellen (`GL_LIGHT0`, `GL_LIGHT1` bis `GL_LIGHT7`) addiert 
 $$I_f = I_a + \sum_{i=1}^{n} \left(I_{d,i} + I_{s,i}\right)$$
 
 - **C#-Setup in unserer Laborvorlage (`MainWindow.xaml.cs`):**
-  - Wir positionieren `GL_LIGHT0` schräg oberhalb des Roboters bei `(10, 20, 15)` (`w = 1` für Punktlichtquelle).
-  - Über `GL_COLOR_MATERIAL` koppeln wir die Materialfarbe ($k_a, k_d$) bequem direkt an `gl.Color(r, g, b)`!
+  - `GL_LIGHT0` sitzt bei `(10, 20, 15)` mit `w = 1` (**Punktlichtquelle** im Raum; `w = 0` wäre Sonnen-/Richtungslicht).
+  - Über `GL_COLOR_MATERIAL` steuert `gl.Color(r, g, b)` direkt $k_a, k_d$ (ohne dies bliebe bei aktivem Licht alles grau!).
 
 </div>
 <div class="two">
@@ -383,7 +383,7 @@ private void OpenGlView_OpenGLDraw(object sender, OpenGLRoutedEventArgs args)
     // 3. Kamera-Sichtmatrix setzen (statisch (5,5,5) -> in der Vorlage via _camera.Apply(gl))
     gl.LookAt(5.0, 5.0, 5.0,  0.0, 0.0, 0.0,  0.0, 1.0, 0.0);
 
-    // 4. Koordinatenachsen, Bodengitter und 3D-Objekte zeichnen ...
+    // 4. Achsen & Gitter (kurz gl.Disable(GL_LIGHTING), da Linien keine Normalen haben!) + 3D-Objekte ...
 }
 ```
 
@@ -410,15 +410,16 @@ Zwischen `gl.Begin(mode)` und `gl.End()` übergeben wir Vertices (`gl.Vertex`), 
 <div class="two">
 
 - **Linien (`GL_LINES` vs. `GL_LINE_STRIP`):**
-  - `DrawFloorGrid` zeichnet das Bodenraster im Modus `GL_LINES` (ohne Licht).
+  - `DrawFloorGrid` zeichnet Einzelstrecken (`v1`-`v2`, `v3`-`v4`) im Modus `GL_LINES` (ohne Licht).
+  - `GL_LINE_STRIP` verbindet `v1`-`v2`-`v3`-`v4` durchgehend.
 - **Vierecke (`GL_QUADS` & `GL_QUAD_STRIP`):**
-  - `DrawCube` besteht aus $6 \times 4 = 24$ Vertices im Modus `GL_QUADS` mit je 1 Flächennormalen.
-  - `DrawCylinder` nutzt `GL_QUAD_STRIP`: Mit `slices = 24` entsteht ein geschlossener Zylindermantel.
+  - `DrawCube` nutzt $6 \times 4 = 24$ Vertices (`GL_QUADS`) mit je 1 Flächennormalen $\vec{n}$.
+  - `DrawCylinder` verbindet `v1`..`v6` als `GL_QUAD_STRIP` (`slices = 24`).
 
 </div>
-<div class="one">
+<div class="two">
 
-![](./Screenshots/OpenGL_Primitives_Quads.png)
+![](./Diagramme/OpenGL_Primitive_Modi.svg)
 
 </div>
 </div>
@@ -427,14 +428,23 @@ Zwischen `gl.Begin(mode)` und `gl.End()` übergeben wir Vertices (`gl.Vertex`), 
 
 ### Die Transformations-Pipeline in OpenGL
 
-Wie wird aus einem lokalen 3D-Bauteilpunkt $\vec{v}_{\text{obj}} = (x, y, z, 1)^\top$ ein 2D-Bildschirmpixel? OpenGL durchläuft 4 Stufen:
+<div class="columns">
+<div class="two">
 
-$$\vec{v}_{\text{world}} = \mathbf{M}_{\text{model}} \cdot \vec{v}_{\text{obj}} \;\longrightarrow\; \vec{v}_{\text{eye}} = \mathbf{M}_{\text{view}} \cdot \vec{v}_{\text{world}} \;\longrightarrow\; \vec{v}_{\text{clip}} = \mathbf{M}_{\text{proj}} \cdot \vec{v}_{\text{eye}}$$
+Vom Bauteilpunkt $\vec{v}_{\text{obj}}$ über $\mathbf{M}_{\text{model}}, \mathbf{M}_{\text{view}}, \mathbf{M}_{\text{proj}}$ zum Clip-Raum ($\vec{v}_{\text{world}}, \vec{v}_{\text{eye}}, \vec{v}_{\text{clip}}$):
 
-1. **Model-Matrix ($\mathbf{M}_{\text{model}}$, homogen $4\times 4$):** Platziert das Bauteil in der 3D-Welt. *Warum $4\times 4$ mit $w = 1$?* Eine $3\times 3$-Matrix bildet $\vec{0}$ immer auf $\vec{0}$ ab und kann **keine Translation** $\vec{v} + \vec{t}$ darstellen (analog zu $3\times 3$ in 2D aus Termin 03)! Zudem gilt **Nicht-Kommutativität**: $\mathbf{T}\cdot\mathbf{R} \neq \mathbf{R}\cdot\mathbf{T}$!
-2. **View-Matrix ($\mathbf{M}_{\text{view}}$):** Transformiert die Welt in das Koordinatensystem der Kamera (`gl.LookAt`). In OpenGL sind beide kombiniert als **`GL_MODELVIEW`**.
-3. **Projection-Matrix ($\mathbf{M}_{\text{proj}}$, `GL_PROJECTION`):** Bestimmt das Sichtvolumen (`gl.Ortho` oder `gl.Perspective`) und projiziert auf Clipping-Koordinaten.
-4. **Viewport-Transformation (`gl.Viewport`):** Rechnet die normierten Koordinaten $[-1, 1]^3$ auf die Fensterpixel $(0 \dots w, 0 \dots h)$ um.
+1. **Model ($\mathbf{M}_{\text{model}}$, $4\times 4$):** $3\times 3$ bildet $\vec{0}\mapsto\vec{0}$ ab (keine Translation!). **Reihenfolge ($\mathbf{T}\cdot\mathbf{R} \neq \mathbf{R}\cdot\mathbf{T}$):**
+   - `T(L1) · R`: Verschiebt zum Gelenk `L1` und dreht dort vor Ort $\checkmark$
+   - `R · T(L1)`: Bauteil schwenkt auf Kreisbahn um `(0,0)`!
+2. **View ($\mathbf{M}_{\text{view}}$) & Projection ($\mathbf{M}_{\text{proj}}$):** Kombiniert als **`GL_MODELVIEW`** und **`GL_PROJECTION`**.
+
+</div>
+<div class="two">
+
+![](./Diagramme/Transformations_Pipeline_TR_vs_RT.svg)
+
+</div>
+</div>
 
 ---
 
@@ -624,9 +634,9 @@ public Matrix4x4 GetWorldMatrix()
 In `MainWindow.xaml.cs` zeichnen drei Hilfsmethoden Grundkörper mit **exakten Normalen** (`gl.Normal`):
 
 - **`DrawCube(OpenGL gl)`:**
-  - Einheitswürfel ($[-0{,}5, +0{,}5]^3$) via `GL_QUADS` mit 6 festen Flächennormalen.
+  - Einheitswürfel ($[-0{,}5, +0{,}5]^3$, Ursprung `(0,0,0)` **im Zentrum** $\implies$ erklärt `Translate(L1/2)` & `Ty = 0.06f`!) via `GL_QUADS`.
 - **`DrawCylinder(gl, radius, height, slices)`:**
-  - Zylindermantel entlang $+Y$ als `GL_QUAD_STRIP`.
+  - Zylindermantel entlang $+Y$ von $y = 0$ (Fußpunkt) bis `height` als `GL_QUAD_STRIP`.
   - Für jeden Winkel `theta` zeigt die Einheitsnormale radial nach außen: `nx = cos(theta)`, `nz = sin(theta)`!
 
 </div>
@@ -661,7 +671,7 @@ private static void DrawCylinder(
 <div class="columns">
 <div class="two">
 
-Für Gelenke (`DrawSphere`) wird eine Kugel ($r$) in Breitengrade (`stacks`, $\phi$) und Längengrade (`slices`, $\theta$) zerlegt:
+Für Gelenke (`DrawSphere`) wird eine Kugel ($r$) in Breitengrade (`stacks`, Elevation $\phi \in [-90^\circ, +90^\circ]$ ab Äquator) und Längengrade (`slices`, $\theta$) zerlegt:
 
 - **Normalenformel der Kugel:**
   - Auf einer zentrierten Kugel steht der Ortsvektor jedes Punktes senkrecht auf der Oberfläche ($r = 1$):
@@ -861,7 +871,7 @@ gl.LookAt(
 `OrbitCamera` beschreibt $\vec{p}_{\text{eye}}$ relativ zum Ziel $\vec{p}_{\text{look}} = (x_{\text{look}}, y_{\text{look}}, z_{\text{look}})$:
 
 1. **Azimut $\theta$ (`AzimuthDeg` $\in [0^\circ, 360^\circ)$):**
-   - Horizontaler Umlaufwinkel um die $+Y$-Achse.
+   - Horizontaler Winkel ab $+Z$ (Blick von vorne bei $\theta = 0^\circ \implies x_{\text{eye}} \propto \sin\theta, z_{\text{eye}} \propto \cos\theta$).
 2. **Elevation $\phi$ (`ElevationDeg` $\in [-85^\circ, +85^\circ]$):**
    - Vertikaler Neigungswinkel zur XZ-Ebene.
 3. **Distanz $r$ (`Distance` $> 0$):**
@@ -917,15 +927,23 @@ public (double EyeX, double EyeY, double EyeZ) GetEyePosition()
 
 ### Maussteuerung & Kamera-Panning (Aufgabe 1.2)
 
-| Mausaktion | Methode | Mathematische Wirkung |
-| :--- | :--- | :--- |
-| **Links ziehen** ($\Delta x, \Delta y$) | `_camera.Rotate(dAz, dEl)` | Dreht Azimut $\theta \mathrel{+}= 0{,}4 \Delta x$ und Elevation $\phi \mathrel{-}= 0{,}4 \Delta y$. |
-| **Mausrad** (`e.Delta`) | `_camera.Zoom(delta)` | Ändert den Kugelradius $r \in [1{,}0, 100{,}0]$. |
-| **Rechts ziehen** *(Aufg. 1.2)* | `_camera.Pan(dRight, dUp)` | Verschiebt `(LookAtX, LookAtY, LookAtZ)` quer zur Blickrichtung $\theta$! |
+<div class="columns">
+<div class="two">
 
-- **Herleitung für `Pan(double deltaRight, double deltaUp)` (Aufgabe 1.2):**
-  - Der Kamera-Rechtsvektor $\vec{e}_{\text{right}} = (\cos\theta, 0, -\sin\theta)^\top$ steht senkrecht auf dem Kamerastrahl $(\sin\theta, 0, \cos\theta)^\top$; Rechtsziehen der Szene verschiebt $\vec{p}_{\text{look}}$ um $-\Delta_{\text{right}} \cdot \vec{e}_{\text{right}}$ (bei $\theta = 0^\circ$: $\Delta x_{\text{look}} = -\Delta_{\text{right}}, \Delta z_{\text{look}} = 0$):
-  $$\Delta x_{\text{look}} = -\Delta_{\text{right}} \cdot \cos(\theta), \quad \Delta z_{\text{look}} = +\Delta_{\text{right}} \cdot \sin(\theta), \quad \Delta y_{\text{look}} = \Delta_{\text{up}}$$
+- **Links ziehen:** `_camera.Rotate` ($\theta, \phi$).
+- **Mausrad:** `_camera.Zoom` (Radius $r$).
+- **Rechts ziehen (Aufg. 1.2 – `Pan(dRight, dUp)`):**
+  - Auf dem Strahl von $\vec{p}_{\text{look}}$ zu $\vec{p}_{\text{eye}}$ steht der Kamera-Rechtsvektor $\vec{e}_{\text{right}} = (\cos\theta, 0, -\sin\theta)^\top$ senkrecht.
+  - **„Greife-die-Welt“-Prinzip:** Rechtsziehen (`dRight` $> 0$) schiebt $\vec{p}_{\text{look}}$ um $-\text{dRight}\cdot\vec{e}_{\text{right}}$ (`dX_look`, `dZ_look`, `dUp`):
+    $$\text{dX\_look} = -\text{dRight} \cdot \cos\theta, \quad \text{dZ\_look} = +\text{dRight} \cdot \sin\theta$$
+
+</div>
+<div class="two">
+
+![](./Diagramme/OrbitCamera_Panning_XZ.svg)
+
+</div>
+</div>
 
 ---
 
