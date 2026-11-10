@@ -22,7 +22,7 @@ Der Kurs vermittelt die mathematische Modellierung, numerische Simulation und Ec
 - **[`./Uebungen/`](./Uebungen/)** – Die 10 wöchentlichen Übungsmodule (`Termin_01_*` bis `Termin_10_*`) mit `Aufgabenblatt.md` und kompilierbaren C#-Projektvorlagen (`./Vorlage/` inkl. xUnit-Tests).
 - **[`./Moodle/`](./Moodle/)** – Selbständige Moodle-Abschnittsordner ([`00_Kurs_Kopfbereich/`](./Moodle/00_Kurs_Kopfbereich/Text.md) bis [`10_Termin_10_Hybride_Dynamik_Synthese/`](./Moodle/10_Termin_10_Hybride_Dynamik_Synthese/Text.md), jeweils mit formelfreiem `Text.md`, `Banner.jpg` sowie – in T03, T05, T08, T10 – dem Unterordner `Quiz/` mit `Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`).
 - **[`./Export/`](./Export/)** – Druckreife PDFs der Vorlesungsfolien (`./Export/Folien/`) und Übungsblätter (`./Export/Uebungen/`) sowie die importfertigen Moodle-Master-XML-Quizzes (`./Export/Moodle/`).
-- **[`./Skripte/`](./Skripte/)** – Automatisierte Node.js-Prüf-, SVG-Generierungs-, Moodle-XML- und PDF-Exportskripte.
+- **[`./Skripte/`](./Skripte/)** – Node.js-Skripte für Build Management (`export_to_pdf.js`, `moodle_xml_builder.js`) und Quality Control (`lint_slides_dom.js`, `lint_section_slides.js`, `lint_variable_consistency.js`, `audit_svg_and_charts.js`).
 - **[`./Quellen/`](./Quellen/) & [`./Werkzeuge/`](./Werkzeuge/)** – Reiner C#-Referenzcode (`Quellen.sln`, dessen Architektur- und Modellklassen auf den Vorlesungsfolien erklärt werden) sowie der HiDPI-Plotgenerator (`Werkzeuge/GrafikGenerator/`).
 
 ---

@@ -1,14 +1,14 @@
 ---
 name: svg-diagramme
 description: >-
-  Vorlesungsübergreifende Richtlinien für den Entwurf, die Bemaßung, Typografie und Generierung
-  von SVG-Diagrammen (Folien/**/Diagramme/*.svg und Skripte/generate_*_svgs.js).
-  IMMER aktivieren, wenn SVG-Grafiken oder SVG-Generierungsskripte erstellt, geprüft oder überarbeitet werden.
+  Vorlesungsübergreifende Richtlinien für den Entwurf, die Bemaßung, Typografie und Pflege
+  von SVG-Diagrammen (Folien/**/Diagramme/*.svg).
+  IMMER aktivieren, wenn SVG-Grafiken erstellt, geprüft oder überarbeitet werden.
 ---
 
 # Skill: SVG-Diagramme & Visuelle Mentale Modelle (`Diagramme/*.svg`)
 
-Verbindliche Gestaltungs-, Typografie- und Prüfregeln für SVG-Illustrationen in MARP-Vorlesungsfolien (`1280x720`-Viewport).
+Verbindliche Gestaltungs-, Typografie- und Prüfregeln für SVG-Illustrationen in MARP-Vorlesungsfolien (`1280x720`-Viewport). Die `.svg`-Dateien unter `Folien/**/Diagramme/` sind direkt die *Single Source of Truth* (keine redundanten JS-Generator-Skripte unter `Skripte/` anlegen!).
 
 ---
 
@@ -46,9 +46,8 @@ Verbindliche Gestaltungs-, Typografie- und Prüfregeln für SVG-Illustrationen i
 
 - **Vermeidung von `SHIELD_TEXT_OVERFLOW`-Fehlalarmen:** Zeichne geneigte Stäbe oder schmale Bauteile dicht neben `<text>`-Labels als dicke `<line stroke-linecap="round">` oder `<polygon>` statt als kleines `<rect>` (der SVG-Auditor stuft kleine `<rect>`-Elemente nahe Text als zu enge Text-Hintergrundboxen ein).
 - **Saubere Dateinamen & UTF-8:** Nur Unterstrich-Dateinamen (`Mein_Diagramm.svg`) ohne verwaiste Alt-Dateien im Ordner `Diagramme/` erzeugen; saubere UTF-8-Umlaute bzw. XML-Entities (`&#8594;`, `&#177;`, `&amp;`, `&lt;`, `&gt;`) nutzen.
-- **Pflicht-Prüfung nach jeder SVG-Generierung:**
+- **Pflicht-Prüfung nach jeder SVG-Änderung:**
   ```powershell
-  node Skripte/generate_chapterX_svgs.js
   npm run lint:svg:XX
   npm run lint:variables:XX
   npm run lint:slides:XX

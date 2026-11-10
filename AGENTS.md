@@ -22,8 +22,8 @@
 - `./Uebungen/[Termin_XX_Bezeichnung]/` – Aufgabenblätter (`Aufgabenblatt.md`, `Aufgabenblatt.pdf`) und C#-Projektvorlagen (`./Vorlage/`).
 - `./Moodle/` – Selbständige Moodle-Abschnittsordner (`./Moodle/00_Kurs_Kopfbereich/` bis `./Moodle/10_Termin_10_Hybride_Dynamik_Synthese/`, jeweils mit formelfreiem `Text.md`, lokalem `Banner.jpg` sowie – in T03, T05, T08, T10 – dem Unterordner `Quiz/` mit `README.md` und den 10 modularen Test-Markdown-Dateien `Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`).
 - `./Export/` – Druckreife Moodle-PDFs (`./Export/Folien/` und `./Export/Uebungen/`) sowie die importfertigen Moodle-Master-XML-Quizzes (`./Export/Moodle/Quiz_0X_Termin_YY.xml`).
-- `./Skripte/` – Plattformunabhängige Node.js-Prüf-, Generierungs- und Exportskripte.
-- `./Quellen/` & `./Werkzeuge/` – Reiner C#-Referenzcode (`Quellen.sln`, ohne eingebettete Bild-/Diagramm-Assets) und HiDPI-Grafikgeneratoren (`Werkzeuge/GrafikGenerator/`).
+- `./Skripte/` – Plattformunabhängige Node.js-Skripte für Build Management (PDF- & Moodle-XML-Export) und Quality Control (Linter für Folien-DOM, Abschnittsschema, SVGs, Variablen-Konsistenz und Quizzes).
+- `./Quellen/` & `./Werkzeuge/` – Reiner C#-Referenzcode (`Quellen.sln`, ohne eingebettete Bild-/Diagramm-Assets) und C#-HiDPI-Grafikgeneratoren (`Werkzeuge/GrafikGenerator/`).
 
 ---
 
@@ -41,7 +41,7 @@ Alle vorlesungsübergreifenden Regeln sind modular in **6 fokussierten Workspace
    - **Aktivieren bei:** Lesen, Planen, Erstellen oder Überarbeiten von `Folien/**/Folien.md` und `Folien_Anhang_*.md`.
    - **Kerninhalte:** Netto-Folienkorridor (40–48 Folien), Pflicht-Einstiegsfolie `### Rückblick & Brücke:`, 3-Schritt-Rhythmus, Konventions-Brücken, MARP-Layout (`fhooe.css` Spaltengewichte `one`–`six`, reine Bildsyntax), Variablen-Konsistenz (`lint:variables` Regeln 1–4).
 3. **[`svg-diagramme`](.agents/skills/svg-diagramme/SKILL.md):**
-   - **Aktivieren bei:** Erstellen oder Ändern von SVG-Grafiken (`Folien/**/Diagramme/*.svg`, `Skripte/generate_*_svgs.js`).
+   - **Aktivieren bei:** Erstellen oder Ändern von SVG-Grafiken (`Folien/**/Diagramme/*.svg`).
    - **Kerninhalte:** Kontrast-SVGs (*Naiv/Falsch vs. Richtig*), echte Zahlenwerte im Diagramm, Standard-Maße (`viewBox="-45 0 570 380"` vs. `1080x450`), Mindestschriftgröße ($\ge 11{,}5\,\text{px}$ nach CTM), Farbsemantik, Vermeidung von `SHIELD_TEXT_OVERFLOW`.
 4. **[`uebungsaufgaben`](.agents/skills/uebungsaufgaben/SKILL.md):**
    - **Aktivieren bei:** Erstellen oder Ändern von `Uebungen/Termin_XX_*/Aufgabenblatt.md` und `Vorlage/**`.
