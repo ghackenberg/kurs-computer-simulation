@@ -13,10 +13,11 @@
 
 ## 2. Repository-Struktur & Single Source of Truth
 
-- `./Konzept/` – Redundanzfreie Single-Source-of-Truth-Konzeptdokumente:
-  1. [`01_Lehrkonzept_und_Syllabus.md`](Konzept/01_Lehrkonzept_und_Syllabus.md) – Zielgruppenprofil, Lernziele (Bloom-Kaskade), Motivation (*Pick your Track*), Anspruchsniveau (*Low Floor, High Ceiling*), 150-Min.-Taktung, **Semester-Übersichtsmatrix**, **Kapitel-Abhängigkeits- & Fern-Schnittstellen-Matrix** sowie Vorlesungs-Steckbriefe `T01`–`T10`.
-  2. [`02_Uebungskatalog.md`](Konzept/02_Uebungskatalog.md) – Detailkatalog der 10 wöchentlichen zweistufigen Hausübungen (`Stufe 1: 1.1–1.4` + `Stufe 2: Track A | Track B`, kein separates Abschlussprojekt), Goldene Architektur-Regel & Showcase-Leitfragen.
-  3. [`03_Beurteilung_und_Lernfortschritt.md`](Konzept/03_Beurteilung_und_Lernfortschritt.md) – 5-stufige Lernfortschrittskontrolle, 2-Säulen-Benotungsmodell (40 % Quiz / 40 % wöchentliche Hausübungen / 20 % Showcase), Notenschlüssel, 4-Stufen-Stresstest & AI Honor Code.
+- `./Konzept/` – Redundanzfreie, modular nummerierte Single-Source-of-Truth-Konzeptdokumente (`01`–`13`):
+  1. [`01_Didaktik_und_Lernziele.md`](Konzept/01_Didaktik_und_Lernziele.md) – Zielgruppenprofil, übergeordnete Lernziele (ILOs), ECTS-Workload, Bloom-Kaskade, Motivation (*Pick your Track*), Anspruchsniveau (*Low Floor, High Ceiling*) und 150-Min.-Taktung.
+  2. [`02_Semestermatrix_und_Abhaengigkeiten.md`](Konzept/02_Semestermatrix_und_Abhaengigkeiten.md) – **Semester-Übersichtsmatrix**, **Kapitel-Abhängigkeits- & Fern-Schnittstellen-Matrix**, 2-Stufen-Hausübungsmodell und Goldene Architektur-Regel.
+  3. [`03_Beurteilung_und_Pruefungen.md`](Konzept/03_Beurteilung_und_Pruefungen.md) – 5-stufige Lernfortschrittskontrolle, 2-Säulen-Benotungsmodell (40 % Quiz / 40 % wöchentliche Hausübungen / 20 % Showcase), Notenschlüssel, Quiz-Stoffabgrenzung, 4-Stufen-Stresstest & AI Honor Code.
+  4. [`04_Termin_01_Kinematik_und_Euler.md`](Konzept/04_Termin_01_Kinematik_und_Euler.md) bis [`13_Termin_10_Hybride_Dynamik_Synthese.md`](Konzept/13_Termin_10_Hybride_Dynamik_Synthese.md) – 10 kompakte, autarke Termin-Steckbriefe (Artefakte, Vorgreif-Sperre, Rückwärts-/Vorwärts-Brücken, Bloom-Lernziele, Hausübung Stufe 1 + Track A/B & Showcase-Fokus pro Termin für gezieltes Context-Loading).
 - `./Folien/[XX_Kapitel_Bezeichnung]/` – MARP-Vorlesungsfolien (`Folien.md`, `Folien_Anhang_*.md`), `Titelbild.jpg`, `./Diagramme/*.svg` (inkl. `.mmd`), `./Illustrationen/`, `./Screenshots/` und `./Tafelbilder/`.
 - `./Uebungen/[Termin_XX_Bezeichnung]/` – Aufgabenblätter (`Aufgabenblatt.md`, `Aufgabenblatt.pdf`) und C#-Projektvorlagen (`./Vorlage/`).
 - `./Moodle/` – Formelfreie Moodle-Termintexte (`Moodle_Kursstruktur_und_Termintexte.md`) und 10-Varianten-Moodle-XML-Quizzes (`Quiz_01_*` bis `Quiz_04_*`).

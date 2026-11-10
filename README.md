@@ -13,10 +13,11 @@ Der Kurs vermittelt die mathematische Modellierung, numerische Simulation und Ec
 
 ## Repository-Struktur
 
-- **[`./Konzept/`](./Konzept/)** – Redundanzfreie Single-Source-of-Truth-Konzeptdokumente:
-  1. [`01_Lehrkonzept_und_Syllabus.md`](./Konzept/01_Lehrkonzept_und_Syllabus.md) – Zielgruppenprofil, Lernziele (Bloom-Kaskade), Motivation (*Pick your Track*), Semester-Übersichtsmatrix, Kapitel-Abhängigkeitsmatrix und Vorlesungs-Steckbriefe `T01`–`T10`.
-  2. [`02_Uebungskatalog.md`](./Konzept/02_Uebungskatalog.md) – Detailkatalog der 10 wöchentlichen zweistufigen Hausübungen (`Stufe 1: 1.1–1.4` + `Stufe 2: Track A | Track B`).
-  3. [`03_Beurteilung_und_Lernfortschritt.md`](./Konzept/03_Beurteilung_und_Lernfortschritt.md) – 5-stufige Lernfortschrittskontrolle, Benotungsmodell (40 % Quiz / 40 % Hausübungen / 20 % Showcase) und AI Honor Code.
+- **[`./Konzept/`](./Konzept/)** – Redundanzfreie, modular nummerierte Single-Source-of-Truth-Konzeptdokumente (`01`–`13`):
+  1. [`01_Didaktik_und_Lernziele.md`](./Konzept/01_Didaktik_und_Lernziele.md) – Zielgruppenprofil, Lernziele (Bloom-Kaskade), Motivation (*Pick your Track*), *Low Floor, High Ceiling* und 150-Min.-Taktung.
+  2. [`02_Semestermatrix_und_Abhaengigkeiten.md`](./Konzept/02_Semestermatrix_und_Abhaengigkeiten.md) – Semester-Übersichtsmatrix, Kapitel-Abhängigkeitsmatrix, 2-Stufen-Hausübungsmodell & Goldene Architektur-Regel.
+  3. [`03_Beurteilung_und_Pruefungen.md`](./Konzept/03_Beurteilung_und_Pruefungen.md) – 5-stufige Lernfortschrittskontrolle, Benotungsmodell (40 % Quiz / 40 % Hausübungen / 20 % Showcase) und AI Honor Code.
+  4. [`04_Termin_01_Kinematik_und_Euler.md`](./Konzept/04_Termin_01_Kinematik_und_Euler.md) bis [`13_Termin_10_Hybride_Dynamik_Synthese.md`](./Konzept/13_Termin_10_Hybride_Dynamik_Synthese.md) – Die 10 autarken Termin-Steckbriefe (Vorlesung + Hausübung + Schnittstellen pro Termin).
 - **[`./Folien/`](./Folien/)** – MARP-Vorlesungsfolien (`00_Prolog` bis `11_Epilog`) inkl. lokaler `Diagramme/*.svg`, `Illustrationen/`, `Screenshots/` und `Tafelbilder/`.
 - **[`./Uebungen/`](./Uebungen/)** – Die 10 wöchentlichen Übungsmodule (`Termin_01_*` bis `Termin_10_*`) mit `Aufgabenblatt.md` und kompilierbaren C#-Projektvorlagen (`./Vorlage/` inkl. xUnit-Tests).
 - **[`./Moodle/`](./Moodle/)** – Formelfreie Moodle-Termintexte ([`Moodle_Kursstruktur_und_Termintexte.md`](./Moodle/Moodle_Kursstruktur_und_Termintexte.md)) und 10-Varianten-Moodle-XML-Quizzes (`Quiz_01_*` bis `Quiz_04_*`).

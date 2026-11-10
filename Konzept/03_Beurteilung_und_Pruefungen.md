@@ -1,11 +1,12 @@
 # Lernfortschrittskontrolle, 2-Säulen-Benotung & Vibe-Coding-Assessment
 ## Lehrveranstaltung: Systemsimulation / Digitaler Zwilling
 
-**Dokument-ID:** `Konzept/03_Beurteilung_und_Lernfortschritt.md`  
+**Dokument-ID:** `Konzept/03_Beurteilung_und_Pruefungen.md`  
 **Studiengang:** Bachelor Automatisierungstechnik (5. Fachsemester), FH Oberösterreich, Campus Wels  
 **Begleitdokumente (Single Source of Truth):**
-- [`Konzept/01_Lehrkonzept_und_Syllabus.md`](./01_Lehrkonzept_und_Syllabus.md) – Lehrkonzept, Lernziele, Motivation & Semester-Syllabus
-- [`Konzept/02_Uebungskatalog.md`](./02_Uebungskatalog.md) – Detailkatalog der 10 wöchentlichen zweistufigen Hausübungen (`Stufe 1` + `Stufe 2`)
+- [`Konzept/01_Didaktik_und_Lernziele.md`](./01_Didaktik_und_Lernziele.md) – Lehrkonzept, Lernziele, Motivation & 150-Min.-Taktung
+- [`Konzept/02_Semestermatrix_und_Abhaengigkeiten.md`](./02_Semestermatrix_und_Abhaengigkeiten.md) – Semester-Übersichtsmatrix, Kapitel-Abhängigkeitsmatrix & Goldene Architektur-Regel
+- [`Konzept/04_Termin_01_*.md`](./04_Termin_01_Kinematik_und_Euler.md) bis [`13_Termin_10_*.md`](./13_Termin_10_Hybride_Dynamik_Synthese.md) – Autarke Termin-Steckbriefe (Vorlesung + Hausübung + Schnittstellen pro Termin)
 
 ---
 
@@ -62,7 +63,7 @@ $$\text{Gesamtprozent } P = 0{,}40 \cdot P_{\text{Quiz}} + 0{,}40 \cdot P_{\text
 ## 3. Säule 1 im Detail: Moodle-Quizzes & 10-Varianten-Architektur (`40 %`)
 
 ### 3.1 Strikte Rückwärts-Kausalität & Stoffabgrenzung (`Quiz 01` bis `Quiz 04`)
-Da jedes Quiz in den ersten 15 Minuten **vor** dem Theorie-Impuls stattfindet, gilt strikte Rückwärts-Kausalität (siehe auch Kapitel-Abhängigkeitsmatrix in [`Konzept/01_Lehrkonzept_und_Syllabus.md`](./01_Lehrkonzept_und_Syllabus.md)):
+Da jedes Quiz in den ersten 15 Minuten **vor** dem Theorie-Impuls stattfindet, gilt strikte Rückwärts-Kausalität (siehe auch Kapitel-Abhängigkeitsmatrix in [`Konzept/02_Semestermatrix_und_Abhaengigkeiten.md`](./02_Semestermatrix_und_Abhaengigkeiten.md)):
 
 | Quiz | Zeitpunkt | Geprüfte Kapitel | Kernthemen | Strengstens ausgeschlossen (Tabu!) |
 | :---: | :---: | :---: | :--- | :--- |
