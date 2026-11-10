@@ -103,7 +103,7 @@ Typische Anwendungsbeispiele sind:
 <div>
 
 
-![](../../Grafiken/Modellarten%20-%20Diskret.svg)
+![](./Diagramme/Modellarten_Diskret.svg)
 
 </div>
 </div>
@@ -319,7 +319,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
     b.  **Uhr vorstellen:** Die Simulationsuhr auf den Zeitstempel dieses Ereignisses setzen.
     c.  **Ereignis behandeln:** Die Zustandsänderungen für das Ereignis durchführen und ggf. neue Ereignisse generieren und in die Ereignisliste einfügen.
 
-![](../../Grafiken/Next-Event-Time-Advance.svg)
+![](./Diagramme/Next_Event_Time_Advance.svg)
 
 ---
 
@@ -814,7 +814,7 @@ Das Ergebnis einer einzelnen Simulation ist damit selbst eine **Zufallsvariable*
 </div>
 <div>
 
-![](../../Grafiken/Modellarten%20-%20Probabilistisch.svg)
+![](./Diagramme/Modellarten_Probabilistisch.svg)
 
 </div>
 </div>

@@ -68,7 +68,7 @@ Es erfasst die wesentlichen Aspekte, die für eine bestimmte Fragestellung relev
 </div>
 <div>
 
-![](../../Grafiken/Realität-und-Modell.jpg)
+![](./Illustrationen/Realitaet_und_Modell.jpg)
 
 </div>
 </div>
@@ -91,7 +91,7 @@ Simulation ermöglicht es uns, "Was-wäre-wenn"-Szenarien zu untersuchen.
 </div>
 <div>
 
-![Nutzen von Modellen](../../Grafiken/Modell-Nutzen.jpg)
+![Nutzen von Modellen](./Illustrationen/Modell_Nutzen_Schema.jpg)
 
 </div>
 </div>
@@ -274,14 +274,14 @@ Diese Unterscheidung ist vor allem bei **dynamischen Modellen** relevant.
 
 **Kontinuierliche Modelle**
 
-![Kontinuierliche Modelle](../../Grafiken/Modellarten%20-%20Kontinuierlich.svg)
+![Kontinuierliche Modelle](./Diagramme/Modellarten_Kontinuierlich.svg)
 
 </div>
 <div class="one">
 
 **Diskrete Modelle**
 
-![Diskrete Modelle](../../Grafiken/Modellarten%20-%20Diskret.svg)
+![Diskrete Modelle](./Diagramme/Modellarten_Diskret.svg)
 
 </div>
 </div>
@@ -320,14 +320,14 @@ Diskrete Modelle können weiter unterteilt werden:
 
 **Zeitdiskret (konstanter Zeitschritt)**
 
-![Zeitdiskrete Modelle](../../Grafiken/Modellarten%20-%20Diskret%20-%20Konstant%20-%20Delta.svg)
+![Zeitdiskrete Modelle](./Diagramme/Modellarten_Diskret_Konstant_Delta.svg)
 
 </div>
 <div class="one">
 
 **Ereignisdiskret**
 
-![Ereignisdiskrete Modelle](../../Grafiken/Modellarten%20-%20Diskret%20-%20Ereignis.svg)
+![Ereignisdiskrete Modelle](./Diagramme/Modellarten_Diskret_Ereignis.svg)
 
 </div>
 </div>
@@ -365,14 +365,14 @@ Diskrete Modelle können weiter unterteilt werden:
 
 **Deterministische Modelle**
 
-![](../../Grafiken/Modellarten%20-%20Deterministisch.svg)
+![](./Diagramme/Modellarten_Deterministisch.svg)
 
 </div>
 <div class="one">
 
 **Stochastische Modelle**
 
-![](../../Grafiken/Modellarten%20-%20Probabilistisch.svg)
+![](./Diagramme/Modellarten_Probabilistisch.svg)
 
 </div>
 </div>
