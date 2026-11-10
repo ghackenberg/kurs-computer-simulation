@@ -44,10 +44,9 @@ Dieser Skill stellt sicher, dass alle SVG-Illustrationen in den Vorlesungsfolien
    - **Rot (`#fef2f2` / `#fee2e2` Füllung, `#dc2626` Rahmen, `#991b1b` Text):** Ausgeschlossener Bereich, Alarm-Ausreißer, Engpass / Verbot.
    - **Grau (`#e2e8f0` Füllung, `#94a3b8` Text):** Bereits erledigte / im RAM ignorierte Elemente.
 3. **Vermeidung von Variablen-Linter-Konflikten:**
-- **Vermeidung von Variablen-Linter-Konflikten:**
    - Alle alleinstehenden mathematischen Bezeichner oder `Consolas`-Variablen im SVG werden von `npm run lint:variables` geprüft. Verwende im SVG exakt dieselben Variablennamen wie im Folientext (oder nutze klare deutsche Begriffe wie `Mittelwert`, `Obere Grenze`).
 4. **Visuelle Kontrast-Modelle & Technische Auditor-Regeln (`lint:svg`):**
-   - **Visueller Direktvergleich (*Falsch/Naiv vs. Richtig*):** Wo immer eine Reihenfolge, Speicheranordnung oder ein numerischer Fehler erklärt wird (z. B. $\mathbf{T}\cdot\mathbf{R}$ vs. $\mathbf{R}\cdot\mathbf{T}$ in T05, *False Sharing* in einer 64-Byte-Cache-Line vs. Thread-lokal in T06, Euler vs. RK4 in T08, festes $\Delta t$ vs. Bisektion in T10), stelle beide Fälle nebeneinander in einem SVG gegenüber.
+   - **Visueller Direktvergleich (*Falsch/Naiv vs. Richtig*):** Wo immer eine Reihenfolge, Speicheranordnung oder ein algorithmischer Fehler erklärt wird (z. B. Matrizenreihenfolge $\mathbf{T}\cdot\mathbf{R}$ vs. $\mathbf{R}\cdot\mathbf{T}$, *False Sharing* in einer Cache-Line vs. Thread-lokale Akkumulation, expliziter vs. genauerer Integrator, festes Zeitraster vs. Ereignis-Detektion), stelle beide Fälle nebeneinander in einem SVG gegenüber.
    - **Vermeidung von `SHIELD_TEXT_OVERFLOW`-Fehlalarmen:** Zeichne geneigte Stäbe oder schmale Bauteile dicht neben `<text>`-Labels als dicke `<line stroke-linecap="round">` oder `<polygon>` statt als kleines `<rect>`, da `audit_svg_and_charts.js` kleine `<rect>`-Elemente nahe Text als zu enge Text-Hintergrundboxen einstuft.
    - **Keine verwaisten oder Leerzeichen-Duplikate:** Generierungsskripte (`Skripte/generate_*_svgs.js`) dürfen nur Unterstrich-Dateinamen (`Mein_Diagramm.svg`) schreiben und keine ungenutzten Alt-SVGs im Ordner `Diagramme/` hinterlassen.
 

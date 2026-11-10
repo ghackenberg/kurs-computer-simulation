@@ -16,7 +16,7 @@
 - `./Folien/[XX_Kapitel_Bezeichnung]/` – MARP-Vorlesungsfolien (`Folien.md`), `Titelbild.jpg`, `./Diagramme/` (`*.svg`, `*.tikz.tex`, `*.mmd`), `./Illustrationen/`, `./Screenshots/`.
 - `./Uebungen/[Termin_XX_Bezeichnung]/` – Aufgabenblätter (`Aufgabenblatt.md`, `Aufgabenblatt.pdf`) und C#-Projektvorlagen (`./Vorlage/`).
 - `./Moodle/` – Formelfreie Moodle-Termintexte (`Moodle_Kursstruktur_und_Termintexte.md`) und Moodle-Quizzes.
-- `./Konzept/` – Syllabus, Übungskatalog und Beurteilungskonzept.
+- `./Konzept/` – Syllabus inkl. **Kapitel-Abhängigkeits- & Fern-Schnittstellen-Matrix** (`01_Lehrveranstaltungsstruktur_und_Syllabus.md`), Übungskatalog (`02_Uebungskatalog_und_Abschlussprojekt.md`) und Beurteilungskonzept (`03_Beurteilungskonzept_und_Notenschluessel.md`).
 - `./Export/` – Druckreife Moodle-PDFs (`./Export/Folien/` und `./Export/Uebungen/`).
 - `./Skripte/` – Plattformunabhängige Node.js-Prüf-, Generierungs- und Exportskripte.
 - `./Quellen/` & `./Werkzeuge/` – C#-Referenzimplementierungen und Grafikgeneratoren.
@@ -25,7 +25,7 @@
 
 ## 3. Spezialisierte Workspace-Skills (`.agents/skills/`)
 
-Detailregeln für Folien, SVGs und Übungsblätter sind modular in **Workspace-Skills** ausgelagert. **Du MUSST den jeweiligen Skill vor Beginn der Arbeit mit `read_file` aktivieren:**
+Detailregeln für Folien, SVGs, Übungsblätter und Reviews sind **fach- und vorlesungsübergreifend wiederverwendbar** in **Workspace-Skills** ausgelagert, während vorlesungsspezifische Daten (Studierendenprofil, Lernziele, Kapitel-Abhängigkeits- & Fern-Schnittstellen-Matrix, Quiz-Cluster) in `AGENTS.md` und `Konzept/01_Lehrveranstaltungsstruktur_und_Syllabus.md` liegen. **Du MUSST den jeweiligen Skill vor Beginn der Arbeit mit `read_file` aktivieren:**
 
 1. **[`vorlesungsfolien-didaktik`](.agents/skills/vorlesungsfolien-didaktik/SKILL.md):**
    - **Aktivieren bei:** Lesen, Planen, Erstellen oder Überarbeiten von `Folien/**/Folien.md`.
