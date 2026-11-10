@@ -4,7 +4,9 @@
   "description": "Lehrmaterialien für Systemsimulation / Digitaler Zwilling an der FH Oberösterreich Campus Wels",
   "private": true,
   "scripts": {
-    "lint": "npm run lint:slides && npm run lint:sections && npm run lint:svg && npm run lint:variables",
+    "lint": "npm run lint:slides && npm run lint:sections && npm run lint:svg && npm run lint:variables && npm run lint:moodle",
+    "lint:moodle": "node Skripte/moodle_xml_builder.js --check",
+    "export:moodle": "node Skripte/moodle_xml_builder.js",
     "lint:variables": "node Skripte/lint_variable_consistency.js",
     "lint:variables:00": "node Skripte/lint_variable_consistency.js 00",
     "lint:variables:01": "node Skripte/lint_variable_consistency.js 01",

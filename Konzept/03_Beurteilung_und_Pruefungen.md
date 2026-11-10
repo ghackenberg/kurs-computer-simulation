@@ -73,7 +73,7 @@ Da jedes Quiz in den ersten 15 Minuten **vor** dem Theorie-Impuls stattfindet, g
 | **Quiz 04** | Beginn **T10** | **Kap. 08–09** | S-Functions (`ComputeDerivatives`/`Outputs`), Butcher-Tableaus (Euler, Heun, RK4), Steifigkeit, PID Anti-Windup Clamping; DES (`PriorityQueue`, Kendall, Inversionsmethode, Box-Muller, Little's Gesetz $\bar{L} = \lambda_{\text{eff}}\bar{W}$). | Hybride Zero-Crossing-Bisektion, Zeno-Sticking & FMI/VIBN (Kap. 10–11). |
 
 ### 3.2 Technische Architektur & Psychometrie der 10 Varianten (`Skripte/moodle_xml_builder.js`)
-- **Single Source of Truth:** Jedes finalisierte Quiz wird über `Skripte/generate_moodle_xml_quiz_0X.js` generiert und erzeugt 3 Vorbereitungstests (`Test_01..03`), 7 Prüfungstests (`Test_04..10`), die Master-XML sowie den Katalog `Uebersicht_10_Moodle_Tests.md`.
+- **Single Source of Truth:** Jedes Quiz liegt redundanzfrei als 10 modulare Markdown-Dateien (`Test_01_Vorbereitung.md` bis `Test_03_Vorbereitung.md` und `Test_04_Pruefung.md` bis `Test_10_Pruefung.md` samt `README.md`) im jeweiligen Unterordner `Moodle/XX_Termin_XX_*/Quiz/` und wird über `npm run export:moodle` (`Skripte/moodle_xml_builder.js`) zu einer einzigen importfertigen Master-XML unter `Export/Moodle/Quiz_0X_Termin_YY.xml` kompiliert.
 - **Voller Fragetypen-Mix (8 Fragen = 10,0 Pkt., 100 % Auto-Grading):**
   - 2–3 Rechen-/Code-Tracing-Fragen (`numerical` mit 50-%-Teilpunkte-Antworten für typische Einheiten-/Vorzeichenfallen sowie `cloze` für mehrstufige Rechnungen),
   - 1–2 interaktive Code-/Pipeline-Fragen (`gapselect` & `ddwtos`),

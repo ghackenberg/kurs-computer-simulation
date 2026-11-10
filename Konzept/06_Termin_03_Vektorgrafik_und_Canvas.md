@@ -8,7 +8,7 @@
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensatz:** [`03_Visualisierung_2D_Vektor/Folien.md`](../Folien/03_Visualisierung_2D_Vektor/Folien.md)
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](../Moodle/03_Termin_03_Vektorgrafik_und_Canvas/Text.md) | [`VectorTrussCanvas.sln`](../Uebungen/Termin_03_Vektorgrafik_Canvas/Vorlage/VectorTrussCanvas.sln)
-- **Assessment zu Terminbeginn:** **Moodle-Test 1** ([`Quiz_01_Grundlagen_und_Pixel`](../Moodle/03_Termin_03_Vektorgrafik_und_Canvas/Quiz_01_Grundlagen_und_Pixel/Uebersicht_10_Moodle_Tests.md), 15 Min., prüft ausschließlich Kap. 00–02).
+- **Assessment zu Terminbeginn:** **Moodle-Test 1** ([`Quiz/README.md`](../Moodle/03_Termin_03_Vektorgrafik_und_Canvas/Quiz/README.md), 15 Min., prüft ausschließlich Kap. 00–02).
 - **Vorgreif-Sperre (Technologie-Stand T03):** Rein geometrisch auf WPF `Canvas` / `DrawingVisual`. *Strikte Tabus:* **Keine Fachwerk-Statik, keine Steifigkeitsmatrix $\mathbf{K}$, kein Math.NET Cholesky (erst in T07!)** – alle Kräfte sind fest vorgegebene Vektoren.
 - **Kapitel-Brücken & Quiz-Zuordnung:**
   - **Vorwärts ($\to$):** [`T05`](./08_Termin_05_3D_OpenGL_Szenengraph.md) (Verallgemeinerung von 2D-Transformationen $3\times 3$ mit $+Y$ unten auf 3D $4\times 4$ mit $+Y$ oben, $+Z$ zum Betrachter und `aspect`-Skalierung); [`T07`](./10_Termin_07_Statik_FEM_Cholesky.md) (Das in T03 rein geometrisch gezeichnete 2D-Fachwerk samt JSON-Format erhält in T07 seinen Cholesky-Statiklöser $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$).

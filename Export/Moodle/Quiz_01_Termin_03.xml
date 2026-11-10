@@ -46,7 +46,7 @@
     <answer fraction="100" format="moodle_auto_format">
       <text>9</text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Beim expliziten Euler gilt y_1 = y_0 + dt * v_0 = 10,0 + 0,5 * (-2,0) = 9,0 m.</p>]]></text>
+        <text><![CDATA[<p>Exakt! Beim expliziten Euler gilt y_1 = y_0 + dt <em> v_0 = 10,0 + 0,5 </em> (-2,0) = 9,0 m.</p>]]></text>
       </feedback>
       <tolerance>0.01</tolerance>
     </answer>
@@ -76,13 +76,19 @@
       <text>T01_Q3: C#-Code-Tracing: Bgra32 Byte-Offset im BackBuffer</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Gegeben sei folgender C#-Codeausschnitt zur direkten Adressierung eines Pixels in einem <code>WriteableBitmap</code> mit dem Pixelformat <code>PixelFormats.Bgra32</code> (4 Bytes pro Pixel in der Reihenfolge Blau, Grün, Rot, Alpha):</p><pre><code class="language-csharp">int stride = 80; // BackBufferStride in Bytes
+      <text><![CDATA[<p>Gegeben sei folgender C#-Codeausschnitt zur direkten Adressierung eines Pixels in einem <code>WriteableBitmap</code> mit dem Pixelformat <code>PixelFormats.Bgra32</code> (4 Bytes pro Pixel in der Reihenfolge Blau, Grün, Rot, Alpha):</p><pre><code>int stride = 80; // BackBufferStride in Bytes
 int x = 5;
 int y = 3;
 int redByteIndex = y * stride + x * 4 + 2;</code></pre><p>Welchen exakten ganzzahligen Wert hat die Variable <code>redByteIndex</code> (Byte-Offset des Rot-Kanals relativ zum Pufferanfang) nach der Ausführung?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (Lineare 1D-Speicheradressierung bei Bgra32):</strong></p><p>1. Zeilen-Offset für Zeile \(y = 3\): \(3 \cdot 80\,\text{Bytes} = 240\,\text{Bytes}\).</p><p>2. Spalten-Offset für Spalte \(x = 5\): \(5 \cdot 4\,\text{Bytes} = 20\,\text{Bytes}\) (Startadresse des Pixels bei Byte 260 = Blau-Kanal).</p><p>3. Im Format <code>Bgra32</code> liegt Blau auf Offset <code>+0</code>, Grün auf <code>+1</code>, Rot auf <code>+2</code> und Alpha auf <code>+3</code>. Damit ergibt sich <code>redByteIndex = 240 + 20 + 2 = 262</code>.</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (Lineare 1D-Speicheradressierung bei Bgra32):</strong></p><ol>
+  <li>Zeilen-Offset für Zeile \(y = 3\): \(3 \cdot 80\,\text{Bytes} = 240\,\text{Bytes}\).</li>
+</ol><ol>
+  <li>Spalten-Offset für Spalte \(x = 5\): \(5 \cdot 4\,\text{Bytes} = 20\,\text{Bytes}\) (Startadresse des Pixels bei Byte 260 = Blau-Kanal).</li>
+</ol><ol>
+  <li>Im Format <code>Bgra32</code> liegt Blau auf Offset <code>+0</code>, Grün auf <code>+1</code>, Rot auf <code>+2</code> und Alpha auf <code>+3</code>. Damit ergibt sich <code>redByteIndex = 240 + 20 + 2 = 262</code>.</li>
+</ol>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -91,7 +97,7 @@ int redByteIndex = y * stride + x * 4 + 2;</code></pre><p>Welchen exakten ganzza
     <answer fraction="100" format="moodle_auto_format">
       <text>262</text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! 3 * 80 + 5 * 4 + 2 = 240 + 20 + 2 = 262.</p>]]></text>
+        <text><![CDATA[<p>Richtig! 3 <em> 80 + 5 </em> 4 + 2 = 240 + 20 + 2 = 262.</p>]]></text>
       </feedback>
       <tolerance>0</tolerance>
     </answer>
@@ -105,7 +111,7 @@ int redByteIndex = y * stride + x * 4 + 2;</code></pre><p>Welchen exakten ganzza
     <answer fraction="50" format="moodle_auto_format">
       <text>414</text>
       <feedback format="html">
-        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben x und y vertauscht (5 * 80 + 3 * 4 + 2 = 414).</p>]]></text>
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben x und y vertauscht (5 <em> 80 + 3 </em> 4 + 2 = 414).</p>]]></text>
       </feedback>
       <tolerance>0</tolerance>
     </answer>
@@ -121,14 +127,18 @@ int redByteIndex = y * stride + x * 4 + 2;</code></pre><p>Welchen exakten ganzza
       <text>T01_Q4: C#-Lückentext: Double-Buffering beim 5-Punkt-Stern</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie den folgenden C#-Code für einen expliziten 2D-Wärmeleitungsschritt auf den flachen 1D-Arrays <code>T</code> (aktueller Zustand) und <code>T_next</code> (neuer Zustand) einer Gitterbreite <code>nx</code>:</p><pre><code class="language-csharp">int idx = y * nx + x;
+      <text><![CDATA[<p>Vervollständigen Sie den folgenden C#-Code für einen expliziten 2D-Wärmeleitungsschritt auf den flachen 1D-Arrays <code>T</code> (aktueller Zustand) und <code>T_next</code> (neuer Zustand) einer Gitterbreite <code>nx</code>:</p><pre><code>int idx = y * nx + x;
 double laplace = T[idx - 1] + T[idx + 1] + T[idx - nx] + T[idx + nx] - [[1]] * T[idx];
 [[2]][idx] = T[idx] + s * laplace;
 // Nach Abschluss beider Raumschleifen (x, y):
 [[3]](T_next, T, T.Length);</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung des 2D-FDM-Codes:</strong></p><ul><li><code>[[1]] = 4.0</code>: Im 2D-5-Punkt-Stern stehen den 4 Nachbarknoten (links, rechts, oben, unten) das \(-4\)-fache des Zentralknotens gegenüber.</li><li><code>[[2]] = T_next</code>: Um In-Place-Überschreibfehler (Gauß-Seidel-Verfälschung während der laufenden Iteration) zu verhindern, muss zwingend in das separate Ziel-Array <code>T_next</code> geschrieben werden.</li><li><code>[[3]] = Array.Copy</code>: Nach Abschluss des gesamten Zeitschritts wird der neue Zustand für den nächsten Schritt in <code>T</code> übernommen.</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Erklärung des 2D-FDM-Codes:</strong></p><ul>
+  <li><code>[[1]] = 4.0</code>: Im 2D-5-Punkt-Stern stehen den 4 Nachbarknoten (links, rechts, oben, unten) das \(-4\)-fache des Zentralknotens gegenüber.</li>
+  <li><code>[[2]] = T_next</code>: Um In-Place-Überschreibfehler (Gauß-Seidel-Verfälschung während der laufenden Iteration) zu verhindern, muss zwingend in das separate Ziel-Array <code>T_next</code> geschrieben werden.</li>
+  <li><code>[[3]] = Array.Copy</code>: Nach Abschluss des gesamten Zeitschritts wird der neue Zustand für den nächsten Schritt in <code>T</code> übernommen.</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -192,7 +202,13 @@ double laplace = T[idx - 1] + T[idx + 1] + T[idx - nx] + T[idx + nx] - [[1]] * T
       <text><![CDATA[<p>Ordnen Sie die folgenden Beschreibungen den korrekten Begriffen der Allgemeinen Modelltheorie (nach Stachowiak) bzw. den Integrationsstufen nach Kritzinger et al. zu. Beachten Sie die zwei Überhang-Distraktoren.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung (Modelltheorie & Kritzinger-Klassifikation):</strong></p><ul><li><strong>Verkürzungsmerkmal:</strong> Gezielte Abstraktion durch Weglassen irrelevanter Attribute.</li><li><strong>Pragmatisches Merkmal:</strong> Zweck-, Nutzer- und Zeitgebundenheit jedes Modells (Für wen? Wann? Wozu?).</li><li><strong>Digital Model:</strong> Rein manueller Datenfluss in beide Richtungen.</li><li><strong>Digital Shadow:</strong> Automatischer Datenfluss vom physischen zum digitalen Objekt, aber manueller Rückfluss.</li><li><strong>Digital Twin:</strong> Vollautomatischer Datenfluss in beide Richtungen (Closed-Loop).</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Erklärung (Modelltheorie & Kritzinger-Klassifikation):</strong></p><ul>
+  <li><strong>Verkürzungsmerkmal:</strong> Gezielte Abstraktion durch Weglassen irrelevanter Attribute.</li>
+  <li><strong>Pragmatisches Merkmal:</strong> Zweck-, Nutzer- und Zeitgebundenheit jedes Modells (Für wen? Wann? Wozu?).</li>
+  <li><strong>Digital Model:</strong> Rein manueller Datenfluss in beide Richtungen.</li>
+  <li><strong>Digital Shadow:</strong> Automatischer Datenfluss vom physischen zum digitalen Objekt, aber manueller Rückfluss.</li>
+  <li><strong>Digital Twin:</strong> Vollautomatischer Datenfluss in beide Richtungen (Closed-Loop).</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -308,8 +324,8 @@ double laplace = T[idx - 1] + T[idx + 1] + T[idx - nx] + T[idx + nx] - [[1]] * T
       <text>T01_Q7: C#-Bug-Diagnose: In-Place-Überschreibung im 2D-Wärmeraster</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Studierender implementiert den expliziten 2D-Wärmeleitungsschritt (5-Punkt-Stern) mit folgender Doppelschleife auf einem einzigen Array <code>double[,] T</code>:</p><pre><code class="language-csharp">for (int y = 1; y < ny - 1; y++)
-    for (int x = 1; x < nx - 1; x++)
+      <text><![CDATA[<p>Ein Studierender implementiert den expliziten 2D-Wärmeleitungsschritt (5-Punkt-Stern) mit folgender Doppelschleife auf einem einzigen Array <code>double[,] T</code>:</p><pre><code>for (int y = 1; y &lt; ny - 1; y++)
+    for (int x = 1; x &lt; nx - 1; x++)
         T[x, y] = T[x, y] + s * (T[x-1, y] + T[x+1, y] + T[x, y-1] + T[x, y+1] - 4.0 * T[x, y]);</code></pre><p>Welcher fundamentale numerische Fehler tritt bei dieser Implementierung auf?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -368,7 +384,11 @@ double laplace = T[idx - 1] + T[idx + 1] + T[idx - nx] + T[idx + nx] - [[1]] * T
       <text><![CDATA[<p>Welche der folgenden Aussagen zur hochperformanten 2D-Visualisierung mit <code>WriteableBitmap</code> und zur numerischen Behandlung von Randbedingungen im Wärmeraster sind <strong>korrekt</strong>? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Zusammenfassung:</strong></p><ul><li>In der <code>WriteableBitmap</code>-Pipeline (<code>Lock()</code> &rarr; <code>BackBuffer</code> beschreiben &rarr; <code>AddDirtyRect()</code> &rarr; <code>Unlock()</code>) teilt erst <code>AddDirtyRect</code> dem WPF-Kompositor mit, welcher Bereich neu auf die Grafikkarte geladen werden muss.</li><li>Ein adiabater (isolierter) Rand entspricht einer homogenen Neumann-Bedingung \(\frac{\partial T}{\partial n} = 0\), diskretisiert als \(T_0 = T_1\).</li><li><code>BackBufferStride</code> ist in <strong>Bytes</strong> angegeben (oft \(\ge \text{Width} \cdot 4\)), und <code>WriteableBitmap</code> vermeidet genau den Overhead tausender einzelner WPF-UI-Objekte.</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong></p><ul>
+  <li>In der <code>WriteableBitmap</code>-Pipeline (<code>Lock()</code> → <code>BackBuffer</code> beschreiben → <code>AddDirtyRect()</code> → <code>Unlock()</code>) teilt erst <code>AddDirtyRect</code> dem WPF-Kompositor mit, welcher Bereich neu auf die Grafikkarte geladen werden muss.</li>
+  <li>Ein adiabater (isolierter) Rand entspricht einer homogenen Neumann-Bedingung \(\frac{\partial T}{\partial n} = 0\), diskretisiert als \(T_0 = T_1\).</li>
+  <li><code>BackBufferStride</code> ist in <strong>Bytes</strong> angegeben (oft \(\ge \text{Width} \cdot 4\)), und <code>WriteableBitmap</code> vermeidet genau den Overhead tausender einzelner WPF-UI-Objekte.</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -432,7 +452,7 @@ double laplace = T[idx - 1] + T[idx + 1] + T[idx - nx] + T[idx + nx] - [[1]] * T
       <text>T02_Q1: 2D-Wärmeleitung: Stabilitätszahl &amp; 5-Punkt-Stern-Temperaturupdate</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Auf einem quadratischen 2D-Gitter mit der Gitterweite \(\Delta x = \Delta y = 5{,}0\,\text{mm}\) wird ein Wärmeleitungsprozess (\(\alpha = 50\,\text{mm}^2/\text{s}\)) mit einer Zeitschrittweite von \(\Delta t = 0{,}10\,\text{s}\) simuliert. Zum Zeitpunkt \(n\) besitzt der Zentralknoten \((i,j)\) die Temperatur \(T_{i,j}^n = 20{,}0\,^\circ\text{C}\), während seine vier direkten Nachbarknoten die Temperaturen \(100{,}0\,^\circ\text{C}\) (links), \(20{,}0\,^\circ\text{C}\) (rechts), \(20{,}0\,^\circ\text{C}\) (oben) und \(20{,}0\,^\circ\text{C}\) (unten) aufweisen.</p><p>a) Berechnen Sie die dimensionslose numerische Fourier-/Stabilitätszahl \(s\) für diese Parametrierung:<br>Antwort: {1:NUMERICAL:=0.2:0.005#Richtig! s = (alpha * dt) / dx^2 = (50 * 0,10) / 25 = 5 / 25 = 0,20 (stabil, da <= 0,25).~%50%1.0:0.01#Teilpunkte (50 %): Sie haben im Nenner dx = 5 statt dx^2 = 25 geteilt.} (dimensionslos)</p><p>b) Welche neue Temperatur \(T_{i,j}^{n+1}\) (in <strong>°C</strong>) nimmt der Zentralknoten nach genau einem expliziten Zeitschritt an?<br>Antwort: {1:NUMERICAL:=36.0:0.1#Richtig! T_neu = 20 + 0,20 * (100 + 20 + 20 + 20 - 4 * 20) = 20 + 0,20 * 80 = 36,0 °C.~%50%52.0:0.1#Teilpunkte (50 %): Sie haben im 5-Punkt-Stern -2*T_ij statt -4*T_ij gerechnet (20 + 0,2 * 160 = 52 °C).} °C</p>]]></text>
+      <text><![CDATA[<p>Auf einem quadratischen 2D-Gitter mit der Gitterweite \(\Delta x = \Delta y = 5{,}0\,\text{mm}\) wird ein Wärmeleitungsprozess (\(\alpha = 50\,\text{mm}^2/\text{s}\)) mit einer Zeitschrittweite von \(\Delta t = 0{,}10\,\text{s}\) simuliert. Zum Zeitpunkt \(n\) besitzt der Zentralknoten \((i,j)\) die Temperatur \(T_{i,j}^n = 20{,}0\,^\circ\text{C}\), während seine vier direkten Nachbarknoten die Temperaturen \(100{,}0\,^\circ\text{C}\) (links), \(20{,}0\,^\circ\text{C}\) (rechts), \(20{,}0\,^\circ\text{C}\) (oben) und \(20{,}0\,^\circ\text{C}\) (unten) aufweisen.</p><p>a) Berechnen Sie die dimensionslose numerische Fourier-/Stabilitätszahl \(s\) für diese Parametrierung:<br>Antwort: {1:NUMERICAL:=0.2:0.005#Richtig! s = (alpha <em> dt) / dx^2 = (50 </em> 0,10) / 25 = 5 / 25 = 0,20 (stabil, da <= 0,25).~%50%1.0:0.01#Teilpunkte (50 %): Sie haben im Nenner dx = 5 statt dx^2 = 25 geteilt.} (dimensionslos)</p><p>b) Welche neue Temperatur \(T_{i,j}^{n+1}\) (in <strong>°C</strong>) nimmt der Zentralknoten nach genau einem expliziten Zeitschritt an?<br>Antwort: {1:NUMERICAL:=36.0:0.1#Richtig! T_neu = 20 + 0,20 <em> (100 + 20 + 20 + 20 - 4 </em> 20) = 20 + 0,20 <em> 80 = 36,0 °C.~%50%52.0:0.1#Teilpunkte (50 %): Sie haben im 5-Punkt-Stern -2</em>T_ij statt -4<em>T_ij gerechnet (20 + 0,2 </em> 160 = 52 °C).} °C</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung (5-Punkt-Stern-Update):</strong></p><p>1. Dimensionslose Stabilitätszahl \(s\):<br>\(s = \frac{\alpha \cdot \Delta t}{\Delta x^2} = \frac{50\,\text{mm}^2/\text{s} \cdot 0{,}10\,\text{s}}{(5{,}0\,\text{mm})^2} = \frac{5}{25} = 0{,}20\). Da \(s = 0{,}20 \le 0{,}25\), ist das Verfahren numerisch stabil.</p><p>2. Diskreter 5-Punkt-Stern:<br>\(T_{i,j}^{n+1} = T_{i,j}^n + s \cdot \left(T_{i-1,j}^n + T_{i+1,j}^n + T_{i,j-1}^n + T_{i,j+1}^n - 4 \cdot T_{i,j}^n\right)\)<br>\(T_{i,j}^{n+1} = 20{,}0 + 0{,}20 \cdot (100{,}0 + 20{,}0 + 20{,}0 + 20{,}0 - 4 \cdot 20{,}0) = 20{,}0 + 0{,}20 \cdot 80{,}0 = 36{,}0\,^\circ\text{C}\).</p>]]></text>
@@ -490,11 +510,11 @@ double laplace = T[idx - 1] + T[idx + 1] + T[idx - nx] + T[idx + nx] - [[1]] * T
       <text>T02_Q3: C#-Code-Tracing: Bit-Shifting für Little-Endian Bgra32-Farbwerte</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Auf einer Little-Endian-Architektur (x86/x64) wird ein ganzes Pixel eines <code>WriteableBitmap</code> (Format <code>Bgra32</code>) als einzelner 32-Bit-Wert <code>uint color = 0xFF804020;</code> im Speicher abgelegt (Byte 0 = Blau, Byte 1 = Grün, Byte 2 = Rot, Byte 3 = Alpha). Gegeben sei folgender C#-Ausdruck:</p><pre><code class="language-csharp">uint color = 0xFF804020;
-byte channelValue = (byte)((color >> 8) & 0xFF);</code></pre><p>Welchen <strong>dezimalen</strong> Zahlenwert (Basis 10) besitzt die Variable <code>channelValue</code> (Grün-Kanal) nach der Ausführung?</p>]]></text>
+      <text><![CDATA[<p>Auf einer Little-Endian-Architektur (x86/x64) wird ein ganzes Pixel eines <code>WriteableBitmap</code> (Format <code>Bgra32</code>) als einzelner 32-Bit-Wert <code>uint color = 0xFF804020;</code> im Speicher abgelegt (Byte 0 = Blau, Byte 1 = Grün, Byte 2 = Rot, Byte 3 = Alpha). Gegeben sei folgender C#-Ausdruck:</p><pre><code>uint color = 0xFF804020;
+byte channelValue = (byte)((color &gt;&gt; 8) &amp; 0xFF);</code></pre><p>Welchen <strong>dezimalen</strong> Zahlenwert (Basis 10) besitzt die Variable <code>channelValue</code> (Grün-Kanal) nach der Ausführung?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (Little-Endian uint-Layout bei Bgra32):</strong></p><p>Ein 32-Bit-Wert <code>0xAARRGGBB</code> enthält in den Bits <code>0..7</code> Blau (<code>0x20 = 32</code>), in den Bits <code>8..15</code> Grün (<code>0x40 = 64</code>), in den Bits <code>16..23</code> Rot (<code>0x80 = 128</code>) und in den Bits <code>24..31</code> Alpha (<code>0xFF = 255</code>).</p><p>Die Operation <code>color >> 8</code> schiebt den Wert um 8 Bits nach rechts zu <code>0x00FF8040</code>. Die anschließende Bitmaske <code>&amp; 0xFF</code> isoliert das niederwertigste Byte <code>0x40</code>, was im Dezimalsystem \(4 \cdot 16^1 + 0 \cdot 16^0 = 64\) ergibt.</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (Little-Endian uint-Layout bei Bgra32):</strong></p><p>Ein 32-Bit-Wert <code>0xAARRGGBB</code> enthält in den Bits <code>0..7</code> Blau (<code>0x20 = 32</code>), in den Bits <code>8..15</code> Grün (<code>0x40 = 64</code>), in den Bits <code>16..23</code> Rot (<code>0x80 = 128</code>) und in den Bits <code>24..31</code> Alpha (<code>0xFF = 255</code>).</p><p>Die Operation <code>color &gt;&gt; 8</code> schiebt den Wert um 8 Bits nach rechts zu <code>0x00FF8040</code>. Die anschließende Bitmaske <code>&amp; 0xFF</code> isoliert das niederwertigste Byte <code>0x40</code>, was im Dezimalsystem \(4 \cdot 16^1 + 0 \cdot 16^0 = 64\) ergibt.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -533,7 +553,7 @@ byte channelValue = (byte)((color >> 8) & 0xFF);</code></pre><p>Welchen <strong>
       <text>T02_Q4: C#-Lückentext: Unsafe-Pointer-Schreibzugriff in WriteableBitmap</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie den folgenden C#-Codeausschnitt, der innerhalb eines <code>unsafe</code>-Blocks ein Pixel an den Koordinaten <code>(x, y)</code> im Speicher eines bereits gesperrten <code>WriteableBitmap bmp</code> einfärbt:</p><pre><code class="language-csharp">unsafe
+      <text><![CDATA[<p>Vervollständigen Sie den folgenden C#-Codeausschnitt, der innerhalb eines <code>unsafe</code>-Blocks ein Pixel an den Koordinaten <code>(x, y)</code> im Speicher eines bereits gesperrten <code>WriteableBitmap bmp</code> einfärbt:</p><pre><code>unsafe
 {
     byte* pBuffer = (byte*)bmp.[[1]];
     int stride = bmp.[[2]];
@@ -545,7 +565,11 @@ byte channelValue = (byte)((color >> 8) & 0xFF);</code></pre><p>Welchen <strong>
 }</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung der WriteableBitmap-Eigenschaften:</strong></p><ul><li><code>[[1]] = BackBuffer</code> liefert den <code>IntPtr</code> auf die Basisadresse des unverwalteten Bildspeichers.</li><li><code>[[2]] = BackBufferStride</code> gibt die exakte Zeilenbreite in Bytes (inklusive eventuellem Alignment-Padding) an.</li><li><code>[[3]] = 4</code> entspricht den 4 Bytes pro Pixel im Format <code>Bgra32</code> (Blau, Grün, Rot, Alpha).</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Erklärung der WriteableBitmap-Eigenschaften:</strong></p><ul>
+  <li><code>[[1]] = BackBuffer</code> liefert den <code>IntPtr</code> auf die Basisadresse des unverwalteten Bildspeichers.</li>
+  <li><code>[[2]] = BackBufferStride</code> gibt die exakte Zeilenbreite in Bytes (inklusive eventuellem Alignment-Padding) an.</li>
+  <li><code>[[3]] = 4</code> entspricht den 4 Bytes pro Pixel im Format <code>Bgra32</code> (Blau, Grün, Rot, Alpha).</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -661,7 +685,11 @@ byte channelValue = (byte)((color >> 8) & 0xFF);</code></pre><p>Welchen <strong>
       <text><![CDATA[<p>Wie lässt sich die explizite 2D-Finite-Differenzen-Simulation der Wärmeleitungsgleichung auf einem Pixelgitter in der systemtheoretischen Modell-Taxonomie präzise einordnen?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Einordnung in die System-Taxonomie:</strong></p><ul><li><strong>Deterministisch vs. stochastisch:</strong> Gleiche Anfangs- und Randbedingungen liefern exakt dasselbe Temperaturfeld (deterministisch).</li><li><strong>Verteilte vs. konzentrierte Parameter:</strong> Da die Zustandsgröße \(T(x,y,t)\) vom Ort abhängt (partielle Differentialgleichung, PDE), liegt ein System mit verteilten Parametern vor.</li><li><strong>Zeitdiskret:</strong> Durch die Euler-Diskretisierung wird der Zustand zu diskreten Zeitpunkten \(t_n = n \cdot \Delta t\) berechnet.</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Einordnung in die System-Taxonomie:</strong></p><ul>
+  <li><strong>Deterministisch vs. stochastisch:</strong> Gleiche Anfangs- und Randbedingungen liefern exakt dasselbe Temperaturfeld (deterministisch).</li>
+  <li><strong>Verteilte vs. konzentrierte Parameter:</strong> Da die Zustandsgröße \(T(x,y,t)\) vom Ort abhängt (partielle Differentialgleichung, PDE), liegt ein System mit verteilten Parametern vor.</li>
+  <li><strong>Zeitdiskret:</strong> Durch die Euler-Diskretisierung wird der Zustand zu diskreten Zeitpunkten \(t_n = n \cdot \Delta t\) berechnet.</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -713,7 +741,7 @@ byte channelValue = (byte)((color >> 8) & 0xFF);</code></pre><p>Welchen <strong>
       <text>T02_Q7: C#-Bug-Diagnose: Fehlende Kanal-Multiplikation beim Bgra32-Pointer</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Entwickler möchte in einem <code>WriteableBitmap</code> (Format <code>Bgra32</code>, 4 Bytes pro Pixel) das Pixel an der Spalte <code>x</code> und Zeile <code>y</code> über einen <code>byte*</code>-Pointer weiß färben und schreibt:</p><pre><code class="language-csharp">byte* p = (byte*)bmp.BackBuffer;
+      <text><![CDATA[<p>Ein Entwickler möchte in einem <code>WriteableBitmap</code> (Format <code>Bgra32</code>, 4 Bytes pro Pixel) das Pixel an der Spalte <code>x</code> und Zeile <code>y</code> über einen <code>byte*</code>-Pointer weiß färben und schreibt:</p><pre><code>byte* p = (byte*)bmp.BackBuffer;
 int idx = y * bmp.BackBufferStride + x;
 p[idx] = 255; p[idx + 1] = 255; p[idx + 2] = 255; p[idx + 3] = 255;</code></pre><p>Welches visuelle Fehlverhalten entsteht durch diesen Code auf dem Bildschirm?</p>]]></text>
     </questiontext>
@@ -741,13 +769,13 @@ p[idx] = 255; p[idx + 1] = 255; p[idx + 2] = 255; p[idx + 3] = 255;</code></pre>
     <answer fraction="100" format="html">
       <text><![CDATA[Da x nicht mit 4 multipliziert wird, verschieben sich die Kanäle pro Spalte um ein Byte und das Bild wird gestaucht.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Bei einem byte*-Pointer adressiert +x nur das x-te Byte statt des x-ten Pixels (x * 4), wodurch Farbkanäle benachbarter Pixel überschrieben werden.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Bei einem byte<em>-Pointer adressiert +x nur das x-te Byte statt des x-ten Pixels (x </em> 4), wodurch Farbkanäle benachbarter Pixel überschrieben werden.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
       <text><![CDATA[Der Code funktioniert fehlerfrei, weil der C#-Compiler den Offset x bei Bgra32 automatisch mit vier multipliziert.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Ein Zeiger vom Typ byte* hat die Elementgröße 1 Byte; eine automatische Skalierung um 4 erfolgt nur bei einem uint*- oder int*-Pointer.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Ein Zeiger vom Typ byte<em> hat die Elementgröße 1 Byte; eine automatische Skalierung um 4 erfolgt nur bei einem uint</em>- oder int*-Pointer.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
@@ -837,10 +865,12 @@ p[idx] = 255; p[idx + 1] = 255; p[idx + 2] = 255; p[idx + 3] = 255;</code></pre>
       <text>T03_Q1: WriteableBitmap Speicherlayout: BackBufferStride &amp; Pufferspeicher</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Für eine hochauflösende 2D-Temperaturfeld-Visualisierung wird ein <code>WriteableBitmap</code> mit einer Breite von \(W = 256\,\text{Pixeln}\) und einer Höhe von \(H = 128\,\text{Pixeln}\) im Format <code>PixelFormats.Bgra32</code> (32 Bit pro Pixel, ohne zusätzliches Zeilen-Padding) angelegt.</p><p>a) Welchen exakten Wert liefert die Eigenschaft <code>BackBufferStride</code> (Länge einer Bildzeile) in <strong>Bytes</strong>?<br>Antwort: {1:NUMERICAL:=1024:0#Richtig! 256 Pixel * 4 Bytes/Pixel = 1024 Bytes pro Zeile.~%50%256:0#Teilpunkte (50 %): Sie haben die Pixelanzahl (256) statt der Byte-Anzahl (256 * 4 = 1024) angegeben.~%50%8192:0#Teilpunkte (50 %): Sie haben mit 32 (Bits) statt mit 4 (Bytes) multipliziert.} Bytes</p><p>b) Wie groß ist das gesamte Speichervolumen des <code>BackBuffer</code> in <strong>Kibibyte (KiB)</strong> (wobei \(1\,\text{KiB} = 1024\,\text{Bytes}\) gilt)?<br>Antwort: {1:NUMERICAL:=128:0.1#Richtig! (1024 Bytes/Zeile * 128 Zeilen) / 1024 Bytes/KiB = 128 KiB.~%50%131.072:0.1#Teilpunkte (50 %): Sie haben durch 1000 (kB) statt durch 1024 (KiB) geteilt.~%50%32:0.1#Teilpunkte (50 %): Folgefehler aus 1 Byte pro Pixel statt 4 Bytes pro Pixel.} KiB</p>]]></text>
+      <text><![CDATA[<p>Für eine hochauflösende 2D-Temperaturfeld-Visualisierung wird ein <code>WriteableBitmap</code> mit einer Breite von \(W = 256\,\text{Pixeln}\) und einer Höhe von \(H = 128\,\text{Pixeln}\) im Format <code>PixelFormats.Bgra32</code> (32 Bit pro Pixel, ohne zusätzliches Zeilen-Padding) angelegt.</p><p>a) Welchen exakten Wert liefert die Eigenschaft <code>BackBufferStride</code> (Länge einer Bildzeile) in <strong>Bytes</strong>?<br>Antwort: {1:NUMERICAL:=1024:0#Richtig! 256 Pixel <em> 4 Bytes/Pixel = 1024 Bytes pro Zeile.~%50%256:0#Teilpunkte (50 %): Sie haben die Pixelanzahl (256) statt der Byte-Anzahl (256 </em> 4 = 1024) angegeben.~%50%8192:0#Teilpunkte (50 %): Sie haben mit 32 (Bits) statt mit 4 (Bytes) multipliziert.} Bytes</p><p>b) Wie groß ist das gesamte Speichervolumen des <code>BackBuffer</code> in <strong>Kibibyte (KiB)</strong> (wobei \(1\,\text{KiB} = 1024\,\text{Bytes}\) gilt)?<br>Antwort: {1:NUMERICAL:=128:0.1#Richtig! (1024 Bytes/Zeile * 128 Zeilen) / 1024 Bytes/KiB = 128 KiB.~%50%131.072:0.1#Teilpunkte (50 %): Sie haben durch 1000 (kB) statt durch 1024 (KiB) geteilt.~%50%32:0.1#Teilpunkte (50 %): Folgefehler aus 1 Byte pro Pixel statt 4 Bytes pro Pixel.} KiB</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (Bgra32-Speicherberechnung):</strong></p><p>1. Im Format <code>Bgra32</code> belegt jedes Pixel \(32\,\text{Bit} = 4\,\text{Bytes}\). Bei \(W = 256\) Pixeln beträgt die Zeilenlänge:<br>\(\text{Stride} = 256 \cdot 4\,\text{Bytes} = 1024\,\text{Bytes}\).</p><p>2. Bei \(H = 128\) Zeilen umfasst der Gesamtpuffer \(1024\,\text{Bytes} \cdot 128 = 131\,072\,\text{Bytes}\). Umgerechnet in Kibibyte (\(1\,\text{KiB} = 1024\,\text{Bytes}\)) sind das exakt \(\frac{131\,072}{1024} = 128\,\text{KiB}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (Bgra32-Speicherberechnung):</strong></p><p>1. Im Format <code>Bgra32</code> belegt jedes Pixel \(32\,\text{Bit} = 4\,\text{Bytes}\). Bei \(W = 256\) Pixeln beträgt die Zeilenlänge:<br>\(\text{Stride} = 256 \cdot 4\,\text{Bytes} = 1024\,\text{Bytes}\).</p><ol>
+  <li>Bei \(H = 128\) Zeilen umfasst der Gesamtpuffer \(1024\,\text{Bytes} \cdot 128 = 131\,072\,\text{Bytes}\). Umgerechnet in Kibibyte (\(1\,\text{KiB} = 1024\,\text{Bytes}\)) sind das exakt \(\frac{131\,072}{1024} = 128\,\text{KiB}\).</li>
+</ol>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -865,7 +895,7 @@ p[idx] = 255; p[idx + 1] = 255; p[idx + 2] = 255; p[idx + 3] = 255;</code></pre>
     <answer fraction="100" format="moodle_auto_format">
       <text>68</text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Prädiktor T_pred = 60 °C (k1 = -200, k2 = -120); Korrektor T_1 = 100 + 0,20 * 0,5 * (-200 + (-120)) = 68,0 °C.</p>]]></text>
+        <text><![CDATA[<p>Exakt! Prädiktor T_pred = 60 °C (k1 = -200, k2 = -120); Korrektor T_1 = 100 + 0,20 <em> 0,5 </em> (-200 + (-120)) = 68,0 °C.</p>]]></text>
       </feedback>
       <tolerance>0.1</tolerance>
     </answer>
@@ -895,7 +925,7 @@ p[idx] = 255; p[idx + 1] = 255; p[idx + 2] = 255; p[idx + 3] = 255;</code></pre>
       <text>T03_Q3: C#-Code-Tracing: Lineare Farbinterpolation (Lerp) für Heatmap</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Um eine Temperatur <code>T</code> zwischen <code>Tmin = 20.0</code> und <code>Tmax = 120.0</code> in einen Rot-Farbkanal (zwischen <code>rCold = 50</code> und <code>rHot = 250</code>) umzurechnen, wird folgender C#-Code ausgeführt:</p><pre><code class="language-csharp">double T = 45.0;
+      <text><![CDATA[<p>Um eine Temperatur <code>T</code> zwischen <code>Tmin = 20.0</code> und <code>Tmax = 120.0</code> in einen Rot-Farbkanal (zwischen <code>rCold = 50</code> und <code>rHot = 250</code>) umzurechnen, wird folgender C#-Code ausgeführt:</p><pre><code>double T = 45.0;
 double u = Math.Clamp((T - 20.0) / (120.0 - 20.0), 0.0, 1.0);
 byte red = (byte)(50 + u * (250 - 50));</code></pre><p>Welchen exakten Wert besitzt die Variable <code>red</code> nach der Ausführung?</p>]]></text>
     </questiontext>
@@ -939,7 +969,7 @@ byte red = (byte)(50 + u * (250 - 50));</code></pre><p>Welchen exakten Wert besi
       <text>T03_Q4: C#-Lückentext: Sub-Step-Bodenreflexion mit Restitutionskoeffizient</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zur physikalisch korrekten Behandlung einer Bodenkollision (Boden bei <code>y = 0</code>, Restitutionskoeffizient <code>e</code>), sobald der Zeitschritt von <code>yOld &gt; 0</code> nach <code>yNew &lt; 0</code> unter den Boden geführt hat:</p><pre><code class="language-csharp">if (yNew < 0.0)
+      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zur physikalisch korrekten Behandlung einer Bodenkollision (Boden bei <code>y = 0</code>, Restitutionskoeffizient <code>e</code>), sobald der Zeitschritt von <code>yOld &gt; 0</code> nach <code>yNew &lt; 0</code> unter den Boden geführt hat:</p><pre><code>if (yNew &lt; 0.0)
 {
     double tau = yOld / (yOld - [[1]]);
     double vImpact = vOld - g * ([[2]] * dt);
@@ -948,7 +978,11 @@ byte red = (byte)(50 + u * (250 - 50));</code></pre><p>Welchen exakten Wert besi
 }</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung der Kollisions-Interpolation:</strong></p><ul><li><code>[[1]] = yNew</code>: Da <code>yNew</code> negativ ist, entspricht <code>yOld - yNew</code> der gesamten zurückgelegten vertikalen Strecke im Schritt.</li><li><code>[[2]] = tau</code>: Die Fallgeschwindigkeit bis zum Aufprall wächst nur über den Teilzeitschritt \(\tau \cdot \Delta t\) an.</li><li><code>[[3]] = -e</code>: Beim Aufprall kehrt sich das Vorzeichen der Geschwindigkeit um und ihr Betrag wird mit dem Stoßfaktor \(e \in [0, 1]\) gedämpft.</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Erklärung der Kollisions-Interpolation:</strong></p><ul>
+  <li><code>[[1]] = yNew</code>: Da <code>yNew</code> negativ ist, entspricht <code>yOld - yNew</code> der gesamten zurückgelegten vertikalen Strecke im Schritt.</li>
+  <li><code>[[2]] = tau</code>: Die Fallgeschwindigkeit bis zum Aufprall wächst nur über den Teilzeitschritt \(\tau \cdot \Delta t\) an.</li>
+  <li><code>[[3]] = -e</code>: Beim Aufprall kehrt sich das Vorzeichen der Geschwindigkeit um und ihr Betrag wird mit dem Stoßfaktor \(e \in [0, 1]\) gedämpft.</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -1012,7 +1046,11 @@ byte red = (byte)(50 + u * (250 - 50));</code></pre><p>Welchen exakten Wert besi
       <text><![CDATA[<p>Ordnen Sie die folgenden physikalisch-technischen Randszenarien eines 2D-Wärmeleitungsproblems dem jeweiligen mathematischen Randbedingungstyp bzw. der Diskretisierung zu. Beachten Sie die zwei Überhang-Distraktoren.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Übersicht der drei klassischen Randbedingungen für PDEs:</strong></p><ul><li><strong>1. Art (Dirichlet):</strong> Vorgabe des Zustands selbst, z. B. \(T = T_{\text{Wand}}\).</li><li><strong>2. Art (Neumann):</strong> Vorgabe der Normalenableitung (Wärmestromdichte \(\dot{q} = -\lambda \frac{\partial T}{\partial n}\)). Bei perfekter Isolation gilt \(\frac{\partial T}{\partial n} = 0 \implies T_{\text{Rand}} = T_{\text{Nachbar}}\).</li><li><strong>3. Art (Robin / Cauchy):</strong> Linearkombination aus Randtemperatur und Normalenableitung (Newtonsches Abkühlungsgesetz an Fluidgrenzen).</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Übersicht der drei klassischen Randbedingungen für PDEs:</strong></p><ul>
+  <li><strong>1. Art (Dirichlet):</strong> Vorgabe des Zustands selbst, z. B. \(T = T_{\text{Wand}}\).</li>
+  <li><strong>2. Art (Neumann):</strong> Vorgabe der Normalenableitung (Wärmestromdichte \(\dot{q} = -\lambda \frac{\partial T}{\partial n}\)). Bei perfekter Isolation gilt \(\frac{\partial T}{\partial n} = 0 \implies T_{\text{Rand}} = T_{\text{Nachbar}}\).</li>
+  <li><strong>3. Art (Robin / Cauchy):</strong> Linearkombination aus Randtemperatur und Normalenableitung (Newtonsches Abkühlungsgesetz an Fluidgrenzen).</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -1128,7 +1166,7 @@ byte red = (byte)(50 + u * (250 - 50));</code></pre><p>Welchen exakten Wert besi
       <text>T03_Q7: C#-Bug-Diagnose: Integer-Division bei der Farbskalen-Normierung</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Entwickler speichert Temperaturen als ganzzahlige Werte (<code>int</code>) und möchte daraus einen kontinuierlichen Farbverlauf zwischen Blau (bei <code>Tmin = 0</code>) und Rot (bei <code>Tmax = 100</code>) berechnen:</p><pre><code class="language-csharp">int T = 65, Tmin = 0, Tmax = 100;
+      <text><![CDATA[<p>Ein Entwickler speichert Temperaturen als ganzzahlige Werte (<code>int</code>) und möchte daraus einen kontinuierlichen Farbverlauf zwischen Blau (bei <code>Tmin = 0</code>) und Rot (bei <code>Tmax = 100</code>) berechnen:</p><pre><code>int T = 65, Tmin = 0, Tmax = 100;
 double u = (T - Tmin) / (Tmax - Tmin);
 byte red = (byte)(255 * u);</code></pre><p>Warum bleibt der Rot-Kanal <code>red</code> für alle Temperaturen zwischen <code>0</code> und <code>99</code> dauerhaft auf dem Wert <code>0</code>?</p>]]></text>
     </questiontext>
@@ -1188,7 +1226,10 @@ byte red = (byte)(255 * u);</code></pre><p>Warum bleibt der Rot-Kanal <code>red<
       <text><![CDATA[<p>Welche der folgenden Aussagen zum Zeitintegrationsverhalten mechanischer Systeme (z. B. springender Ball oder ungedämpftes Pendel) mit Euler-Verfahren sind <strong>zutreffend</strong>? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Zusammenfassung (Energieverhalten & Stoßmechanik):</strong></p><ul><li>Beim expliziten Standard-Euler wächst der Phasenraum-Radius pro Schritt um den Faktor \(\sqrt{1 + (\omega \Delta t)^2} > 1\) an (künstliches Aufschaukeln).</li><li>Ohne die lineare Aufprall-Interpolation \(\tau = \frac{y_n}{y_n - y_{n+1}}\) führt die zufällige Eindringtiefe \(y_{n+1} < 0\) zu sichtbarem Höhen-Jitter beim Springen.</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Zusammenfassung (Energieverhalten & Stoßmechanik):</strong></p><ul>
+  <li>Beim expliziten Standard-Euler wächst der Phasenraum-Radius pro Schritt um den Faktor \(\sqrt{1 + (\omega \Delta t)^2} > 1\) an (künstliches Aufschaukeln).</li>
+  <li>Ohne die lineare Aufprall-Interpolation \(\tau = \frac{y_n}{y_n - y_{n+1}}\) führt die zufällige Eindringtiefe \(y_{n+1} < 0\) zu sichtbarem Höhen-Jitter beim Springen.</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -1252,7 +1293,7 @@ byte red = (byte)(255 * u);</code></pre><p>Warum bleibt der Rot-Kanal <code>red<
       <text>T04_Q1: 2D-Gitterentwurf: Minimale Maschenweite &amp; Gesamt-Knotenanzahl</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Eine quadratische Aluminium-Kühlplatte der Kantenlänge \(L_x = L_y = 120\,\text{mm}\) (Temperaturleitfähigkeit \(\alpha = 80\,\text{mm}^2/\text{s}\)) soll mit einer fest durch den SPS-Zyklus vorgegebenen Zeitschrittweite von \(\Delta t = 0{,}05\,\text{s}\) mittels explizitem 2D-Euler-Verfahren (5-Punkt-Stern) numerisch stabil simuliert werden.</p><p>a) Wie groß muss die räumliche Maschenweite \(\Delta x_{\min}\) (in <strong>mm</strong>) mindestens gewählt werden, damit die 2D-Stabilitätsbedingung gerade noch eingehalten wird?<br>Antwort: {1:NUMERICAL:=4.0:0.05#Richtig! Aus s = alpha * dt / dx^2 <= 0,25 folgt dx_min = sqrt(4 * 80 * 0,05) = sqrt(16) = 4,0 mm.~%50%2.828:0.05#Teilpunkte (50 %): Sie haben mit dem 1D-Faktor 2 statt 4 gerechnet (sqrt(8) = 2,83 mm).~%50%16.0:0.1#Teilpunkte (50 %): Sie haben dx^2 = 16 mm^2 berechnet, aber vergessen, am Ende die Quadratwurzel zu ziehen.} mm</p><p>b) In wie viele Teilintervalle \(N_{\text{seg}} = L_x / \Delta x_{\min}\) wird eine Plattenkante dabei unterteilt?<br>Antwort: {1:NUMERICAL:=30:0#Richtig! 120 mm / 4,0 mm = 30 Segmente pro Kante (entspricht 31 * 31 = 961 Gitterknoten inkl. Rändern).~%50%900:0#Teilpunkte (50 %): Sie haben die Fläche 30 * 30 = 900 statt der Kanten-Segmente angegeben.} Segmente</p>]]></text>
+      <text><![CDATA[<p>Eine quadratische Aluminium-Kühlplatte der Kantenlänge \(L_x = L_y = 120\,\text{mm}\) (Temperaturleitfähigkeit \(\alpha = 80\,\text{mm}^2/\text{s}\)) soll mit einer fest durch den SPS-Zyklus vorgegebenen Zeitschrittweite von \(\Delta t = 0{,}05\,\text{s}\) mittels explizitem 2D-Euler-Verfahren (5-Punkt-Stern) numerisch stabil simuliert werden.</p><p>a) Wie groß muss die räumliche Maschenweite \(\Delta x_{\min}\) (in <strong>mm</strong>) mindestens gewählt werden, damit die 2D-Stabilitätsbedingung gerade noch eingehalten wird?<br>Antwort: {1:NUMERICAL:=4.0:0.05#Richtig! Aus s = alpha <em> dt / dx^2 <= 0,25 folgt dx_min = sqrt(4 </em> 80 * 0,05) = sqrt(16) = 4,0 mm.~%50%2.828:0.05#Teilpunkte (50 %): Sie haben mit dem 1D-Faktor 2 statt 4 gerechnet (sqrt(8) = 2,83 mm).~%50%16.0:0.1#Teilpunkte (50 %): Sie haben dx^2 = 16 mm^2 berechnet, aber vergessen, am Ende die Quadratwurzel zu ziehen.} mm</p><p>b) In wie viele Teilintervalle \(N_{\text{seg}} = L_x / \Delta x_{\min}\) wird eine Plattenkante dabei unterteilt?<br>Antwort: {1:NUMERICAL:=30:0#Richtig! 120 mm / 4,0 mm = 30 Segmente pro Kante (entspricht 31 <em> 31 = 961 Gitterknoten inkl. Rändern).~%50%900:0#Teilpunkte (50 %): Sie haben die Fläche 30 </em> 30 = 900 statt der Kanten-Segmente angegeben.} Segmente</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung (Inverser Gitterentwurf bei festem \(\Delta t\)):</strong></p><p>1. Umstellen der 2D-Stabilitätsbedingung \(s = \frac{\alpha \cdot \Delta t}{\Delta x^2} \le 0{,}25\) nach \(\Delta x\):<br>\(\Delta x \ge \sqrt{4 \cdot \alpha \cdot \Delta t} = \sqrt{4 \cdot 80\,\text{mm}^2/\text{s} \cdot 0{,}05\,\text{s}} = \sqrt{16\,\text{mm}^2} = 4{,}0\,\text{mm}\).</p><p>2. Anzahl der Kanten-Segmente:<br>\(N_{\text{seg}} = \frac{L_x}{\Delta x_{\min}} = \frac{120\,\text{mm}}{4{,}0\,\text{mm}} = 30\,\text{Segmente}\).</p>]]></text>
@@ -1280,14 +1321,14 @@ byte red = (byte)(255 * u);</code></pre><p>Warum bleibt der Rot-Kanal <code>red<
     <answer fraction="100" format="moodle_auto_format">
       <text>19.6</text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Schritt 1: y_1 = 20 + 0,2*0 = 20,0 m, v_1 = -2,0 m/s. Schritt 2: y_2 = 20,0 + 0,2*(-2,0) = 19,6 m.</p>]]></text>
+        <text><![CDATA[<p>Exakt! Schritt 1: y_1 = 20 + 0,2<em>0 = 20,0 m, v_1 = -2,0 m/s. Schritt 2: y_2 = 20,0 + 0,2</em>(-2,0) = 19,6 m.</p>]]></text>
       </feedback>
       <tolerance>0.01</tolerance>
     </answer>
     <answer fraction="50" format="moodle_auto_format">
       <text>19.2</text>
       <feedback format="html">
-        <text><![CDATA[<p>Teilpunkte (50 %): 19,2 m ist die analytische Lösung y(0,4) = 20 - 0,5*10*0,16 = 19,2 m (bzw. Heun), nicht das Ergebnis des expliziten Euler!</p>]]></text>
+        <text><![CDATA[<p>Teilpunkte (50 %): 19,2 m ist die analytische Lösung y(0,4) = 20 - 0,5<em>10</em>0,16 = 19,2 m (bzw. Heun), nicht das Ergebnis des expliziten Euler!</p>]]></text>
       </feedback>
       <tolerance>0.01</tolerance>
     </answer>
@@ -1310,7 +1351,7 @@ byte red = (byte)(255 * u);</code></pre><p>Warum bleibt der Rot-Kanal <code>red<
       <text>T04_Q3: C#-Code-Tracing: 5-Punkt-Stern Array-Update an einem Gitterknoten</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Gegeben sei folgender C#-Codeausschnitt für einen Zeitschritt auf einem \(3 \times 3\)-Temperaturgitter:</p><pre><code class="language-csharp">double[,] T = {
+      <text><![CDATA[<p>Gegeben sei folgender C#-Codeausschnitt für einen Zeitschritt auf einem \(3 \times 3\)-Temperaturgitter:</p><pre><code>double[,] T = {
     { 10.0, 20.0, 10.0 },
     { 40.0, 10.0, 20.0 },
     { 10.0, 30.0, 10.0 }
@@ -1328,14 +1369,14 @@ double T_next_1_1 = T[1, 1] + s * (T[0, 1] + T[2, 1] + T[1, 0] + T[1, 2] - 4.0 *
     <answer fraction="100" format="moodle_auto_format">
       <text>27.5</text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Bei s = 0,25 kürzt sich T[1,1] heraus: T_next = 0,25 * (20 + 30 + 40 + 20) = 0,25 * 110 = 27,5.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Bei s = 0,25 kürzt sich T[1,1] heraus: T_next = 0,25 <em> (20 + 30 + 40 + 20) = 0,25 </em> 110 = 27,5.</p>]]></text>
       </feedback>
       <tolerance>0.01</tolerance>
     </answer>
     <answer fraction="50" format="moodle_auto_format">
       <text>37.5</text>
       <feedback format="html">
-        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben vergessen, im Klammerausdruck -4.0 * T[1,1] (= -40) abzuziehen (10 + 0,25 * 110 = 37,5).</p>]]></text>
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben vergessen, im Klammerausdruck -4.0 <em> T[1,1] (= -40) abzuziehen (10 + 0,25 </em> 110 = 37,5).</p>]]></text>
       </feedback>
       <tolerance>0.01</tolerance>
     </answer>
@@ -1358,13 +1399,17 @@ double T_next_1_1 = T[1, 1] + s * (T[0, 1] + T[2, 1] + T[1, 0] + T[1, 2] - 4.0 *
       <text>T04_Q4: C#-Lückentext: Heun-Verfahren (Prädiktor-Korrektor) im Code</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie die folgende C#-Methode, die eine allgemeine Differentialgleichung \(\dot{y} = f(t, y)\) um einen Zeitschritt <code>dt</code> mit dem <strong>Heun-Verfahren (RK2)</strong> integriert:</p><pre><code class="language-csharp">double k1 = f(t, y);
+      <text><![CDATA[<p>Vervollständigen Sie die folgende C#-Methode, die eine allgemeine Differentialgleichung \(\dot{y} = f(t, y)\) um einen Zeitschritt <code>dt</code> mit dem <strong>Heun-Verfahren (RK2)</strong> integriert:</p><pre><code>double k1 = f(t, y);
 double yPred = y + [[1]] * k1;
 double k2 = f(t + dt, [[2]]);
 double yNext = y + [[3]] * (k1 + k2);</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung (Heun-Verfahren / Trapezregel):</strong></p><ul><li><code>[[1]] = dt</code>: Der Prädiktorschritt schätzt den Endwert über einen vollen expliziten Euler-Schritt <code>y + dt * k1</code>.</li><li><code>[[2]] = yPred</code>: Die zweite Steigung <code>k2</code> wird am Ende des Intervalls mit dem geschätzten Zustand <code>yPred</code> ausgewertet.</li><li><code>[[3]] = 0.5 * dt</code>: Der Korrektorschritt mittelt beide Steigungen <code>0.5 * (k1 + k2)</code> und multipliziert mit <code>dt</code>.</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Erklärung (Heun-Verfahren / Trapezregel):</strong></p><ul>
+  <li><code>[[1]] = dt</code>: Der Prädiktorschritt schätzt den Endwert über einen vollen expliziten Euler-Schritt <code>y + dt * k1</code>.</li>
+  <li><code>[[2]] = yPred</code>: Die zweite Steigung <code>k2</code> wird am Ende des Intervalls mit dem geschätzten Zustand <code>yPred</code> ausgewertet.</li>
+  <li><code>[[3]] = 0.5 * dt</code>: Der Korrektorschritt mittelt beide Steigungen <code>0.5 * (k1 + k2)</code> und multipliziert mit <code>dt</code>.</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -1458,7 +1503,7 @@ double yNext = y + [[3]] * (k1 + k2);</code></pre>]]></text>
       <group>1</group>
     </dragbox>
     <dragbox>
-      <text><![CDATA[Korrektor-Update y_n+1 = y_n + 0.5 * dt * (k1 + k2) durchführen]]></text>
+      <text><![CDATA[Korrektor-Update y_n+1 = y_n + 0.5 <em> dt </em> (k1 + k2) durchführen]]></text>
       <group>1</group>
     </dragbox>
     <dragbox>
@@ -1532,10 +1577,10 @@ double yNext = y + [[3]] * (k1 + k2);</code></pre>]]></text>
       <text>T04_Q7: C#-Bug-Diagnose: Fehlender AddDirtyRect-Aufruf bei WriteableBitmap</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Eine Entwicklerin aktualisiert in jedem Simulationsschritt den <code>BackBuffer</code> eines <code>WriteableBitmap bmp</code> mit folgendem C#-Code, sieht aber auf dem Bildschirm dauerhaft nur ein leeres Bild:</p><pre><code class="language-csharp">bmp.Lock();
+      <text><![CDATA[<p>Eine Entwicklerin aktualisiert in jedem Simulationsschritt den <code>BackBuffer</code> eines <code>WriteableBitmap bmp</code> mit folgendem C#-Code, sieht aber auf dem Bildschirm dauerhaft nur ein leeres Bild:</p><pre><code>bmp.Lock();
 unsafe {
     uint* p = (uint*)bmp.BackBuffer;
-    for (int i = 0; i < width * height; i++) p[i] = 0xFFFF0000;
+    for (int i = 0; i &lt; width * height; i++) p[i] = 0xFFFF0000;
 }
 bmp.Unlock();</code></pre><p>Was ist die Ursache dafür, dass die rote Fläche niemals im WPF-Fenster erscheint?</p>]]></text>
     </questiontext>
@@ -1659,10 +1704,12 @@ bmp.Unlock();</code></pre><p>Was ist die Ursache dafür, dass die rote Fläche n
       <text>T05_Q1: WriteableBitmap GPU-Alignment: Zeilen-Padding &amp; Puffergröße</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein <code>WriteableBitmap</code> wird mit einer ungeraden Bildbreite von \(W = 101\,\text{Pixeln}\) und einer Höhe von \(H = 50\,\text{Zeilen}\) im Format <code>PixelFormats.Bgra32</code> (4 Bytes pro Pixel) erzeugt. Für optimale DMA-Transfers rundet der Grafiktreiber die Zeilenlänge (<code>BackBufferStride</code>) auf das nächste ganzzahlige Vielfache von <strong>32 Bytes</strong> auf.</p><p>a) Wie viele reine Nutzdaten-Bytes belegen die \(101\,\text{Pixel}\) einer einzelnen Zeile <em>ohne</em> Padding?<br>Antwort: {1:NUMERICAL:=404:0#Richtig! 101 Pixel * 4 Bytes/Pixel = 404 Nutzdaten-Bytes pro Zeile.~%50%101:0#Teilpunkte (50 %): Sie haben die Pixelanzahl (101) statt der Byte-Anzahl (101 * 4 = 404) angegeben.} Bytes</p><p>b) Welchen exakten Wert hat <code>BackBufferStride</code> (in <strong>Bytes</strong>) nach dem Aufrunden auf das nächste Vielfache von 32 Bytes?<br>Antwort: {1:NUMERICAL:=416:0#Richtig! 13 * 32 = 416 Bytes (12 Bytes Padding am Zeilenende, da 12 * 32 = 384 < 404).~%50%408:0#Teilpunkte (50 %): 408 ist ein Vielfaches von 8, aber nicht durch 32 teilbar (408 / 32 = 12,75).~%50%404:0#Teilpunkte (50 %): Sie haben das Aufrunden auf ein Vielfaches von 32 Bytes weggelassen.} Bytes</p>]]></text>
+      <text><![CDATA[<p>Ein <code>WriteableBitmap</code> wird mit einer ungeraden Bildbreite von \(W = 101\,\text{Pixeln}\) und einer Höhe von \(H = 50\,\text{Zeilen}\) im Format <code>PixelFormats.Bgra32</code> (4 Bytes pro Pixel) erzeugt. Für optimale DMA-Transfers rundet der Grafiktreiber die Zeilenlänge (<code>BackBufferStride</code>) auf das nächste ganzzahlige Vielfache von <strong>32 Bytes</strong> auf.</p><p>a) Wie viele reine Nutzdaten-Bytes belegen die \(101\,\text{Pixel}\) einer einzelnen Zeile <em>ohne</em> Padding?<br>Antwort: {1:NUMERICAL:=404:0#Richtig! 101 Pixel <em> 4 Bytes/Pixel = 404 Nutzdaten-Bytes pro Zeile.~%50%101:0#Teilpunkte (50 %): Sie haben die Pixelanzahl (101) statt der Byte-Anzahl (101 </em> 4 = 404) angegeben.} Bytes</p><p>b) Welchen exakten Wert hat <code>BackBufferStride</code> (in <strong>Bytes</strong>) nach dem Aufrunden auf das nächste Vielfache von 32 Bytes?<br>Antwort: {1:NUMERICAL:=416:0#Richtig! 13 <em> 32 = 416 Bytes (12 Bytes Padding am Zeilenende, da 12 </em> 32 = 384 < 404).~%50%408:0#Teilpunkte (50 %): 408 ist ein Vielfaches von 8, aber nicht durch 32 teilbar (408 / 32 = 12,75).~%50%404:0#Teilpunkte (50 %): Sie haben das Aufrunden auf ein Vielfaches von 32 Bytes weggelassen.} Bytes</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (Stride vs. Width * 4):</strong></p><p>1. Nutzdaten pro Zeile: \(101\,\text{Pixel} \cdot 4\,\text{Bytes/Pixel} = 404\,\text{Bytes}\).</p><p>2. Aufrunden auf ein Vielfaches von 32 Bytes:<br>\(\lceil 404 / 32 \rceil \cdot 32 = \lceil 12{,}625 \rceil \cdot 32 = 13 \cdot 32 = 416\,\text{Bytes}\).<br>Am Ende jeder Bildzeile liegen somit \(416 - 404 = 12\) ungenutzte Padding-Bytes. Genau deshalb muss im Code zwingend <code>y * bmp.BackBufferStride</code> statt <code>y * width * 4</code> gerechnet werden!</p>]]></text>
+      <text><![CDATA[<p>**Musterherleitung (Stride vs. Width * 4):**</p><ol>
+  <li>Nutzdaten pro Zeile: \(101\,\text{Pixel} \cdot 4\,\text{Bytes/Pixel} = 404\,\text{Bytes}\).</li>
+</ol><p>2. Aufrunden auf ein Vielfaches von 32 Bytes:<br>\(\lceil 404 / 32 \rceil \cdot 32 = \lceil 12{,}625 \rceil \cdot 32 = 13 \cdot 32 = 416\,\text{Bytes}\).<br>Am Ende jeder Bildzeile liegen somit \(416 - 404 = 12\) ungenutzte Padding-Bytes. Genau deshalb muss im Code zwingend <code>y * bmp.BackBufferStride</code> statt <code>y * width * 4</code> gerechnet werden!</p>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -1687,7 +1734,7 @@ bmp.Unlock();</code></pre><p>Was ist die Ursache dafür, dass die rote Fläche n
     <answer fraction="100" format="moodle_auto_format">
       <text>0.8</text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! y_Euler(0,4) = 50,0 m; y_exakt(0,4) = 50 - 0,5 * 10 * 0,16 = 49,2 m; Differenz = |50,0 - 49,2| = 0,8 m.</p>]]></text>
+        <text><![CDATA[<p>Exakt! y_Euler(0,4) = 50,0 m; y_exakt(0,4) = 50 - 0,5 <em> 10 </em> 0,16 = 49,2 m; Differenz = |50,0 - 49,2| = 0,8 m.</p>]]></text>
       </feedback>
       <tolerance>0.01</tolerance>
     </answer>
@@ -1701,7 +1748,7 @@ bmp.Unlock();</code></pre><p>Was ist die Ursache dafür, dass die rote Fläche n
     <answer fraction="50" format="moodle_auto_format">
       <text>1.6</text>
       <feedback format="html">
-        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben in der exakten Parabelformel den Faktor 0,5 vor g * t^2 vergessen (10 * 0,16 = 1,6 m statt 0,8 m).</p>]]></text>
+        <text><![CDATA[<p>Teilpunkte (50 %): Sie haben in der exakten Parabelformel den Faktor 0,5 vor g <em> t^2 vergessen (10 </em> 0,16 = 1,6 m statt 0,8 m).</p>]]></text>
       </feedback>
       <tolerance>0.02</tolerance>
     </answer>
@@ -1717,17 +1764,22 @@ bmp.Unlock();</code></pre><p>Was ist die Ursache dafür, dass die rote Fläche n
       <text>T05_Q3: C#-Code-Tracing: Explizite Euler-Integrationsschleife</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Welchen exakten Zahlenwert besitzt die Variable <code>x</code> nach der vollständigen Ausführung der folgenden C#-Schleife?</p><pre><code class="language-csharp">double x = 2.0;
+      <text><![CDATA[<p>Welchen exakten Zahlenwert besitzt die Variable <code>x</code> nach der vollständigen Ausführung der folgenden C#-Schleife?</p><pre><code>double x = 2.0;
 double v = 3.0;
 double dt = 0.5;
-for (int step = 0; step < 3; step++)
+for (int step = 0; step &lt; 3; step++)
 {
     x = x + dt * v;
     v = v + dt * 4.0;
 }</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Schritt-für-Schritt-Tracing:</strong></p><ul><li><strong>Start:</strong> <code>x = 2.0</code>, <code>v = 3.0</code></li><li><strong>Iteration <code>step = 0</code>:</strong> <code>x = 2.0 + 0.5 * 3.0 = 3.5</code>; danach <code>v = 3.0 + 0.5 * 4.0 = 5.0</code></li><li><strong>Iteration <code>step = 1</code>:</strong> <code>x = 3.5 + 0.5 * 5.0 = 6.0</code>; danach <code>v = 5.0 + 0.5 * 4.0 = 7.0</code></li><li><strong>Iteration <code>step = 2</code>:</strong> <code>x = 6.0 + 0.5 * 7.0 = 9.5</code>; danach <code>v = 7.0 + 0.5 * 4.0 = 9.0</code></li></ul>]]></text>
+      <text><![CDATA[<p><strong>Schritt-für-Schritt-Tracing:</strong></p><ul>
+  <li><strong>Start:</strong> <code>x = 2.0</code>, <code>v = 3.0</code></li>
+  <li><strong>Iteration <code>step = 0</code>:</strong> <code>x = 2.0 + 0.5 * 3.0 = 3.5</code>; danach <code>v = 3.0 + 0.5 * 4.0 = 5.0</code></li>
+  <li><strong>Iteration <code>step = 1</code>:</strong> <code>x = 3.5 + 0.5 * 5.0 = 6.0</code>; danach <code>v = 5.0 + 0.5 * 4.0 = 7.0</code></li>
+  <li><strong>Iteration <code>step = 2</code>:</strong> <code>x = 6.0 + 0.5 * 7.0 = 9.5</code>; danach <code>v = 7.0 + 0.5 * 4.0 = 9.0</code></li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -1766,14 +1818,17 @@ for (int step = 0; step < 3; step++)
       <text>T05_Q4: C#-Lückentext: Neumann- und Dirichlet-Randbedingungen setzen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Auf einem 2D-Temperaturgitter <code>double[,] T</code> der Größe <code>nx</code> mal <code>ny</code> soll der linke Rand (<code>x = 0</code>) als feste 100-°C-Heizwand (Dirichlet) und der rechte Rand (<code>x = nx - 1</code>) als perfekt wärmegedämmte Wand (homogene Neumann-Bedingung) programmiert werden. Vervollständigen Sie den Code:</p><pre><code class="language-csharp">for (int y = 0; y < ny; y++)
+      <text><![CDATA[<p>Auf einem 2D-Temperaturgitter <code>double[,] T</code> der Größe <code>nx</code> mal <code>ny</code> soll der linke Rand (<code>x = 0</code>) als feste 100-°C-Heizwand (Dirichlet) und der rechte Rand (<code>x = nx - 1</code>) als perfekt wärmegedämmte Wand (homogene Neumann-Bedingung) programmiert werden. Vervollständigen Sie den Code:</p><pre><code>for (int y = 0; y &lt; ny; y++)
 {
     T[[[1]], y] = 100.0;          // Linker Rand: Dirichlet (100 °C)
     T[nx - 1, y] = T[[[2]], [[3]]]; // Rechter Rand: Neumann (isoliert)
 }</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul><li><code>[[1]] = 0</code> adressiert den linken Rand <code>x = 0</code> und weist ihm fest <code>100.0</code> °C zu.</li><li><code>[[2]] = nx - 2</code> und <code>[[3]] = y</code> kopieren die Temperatur des unmittelbar links daneben liegenden inneren Knotens <code>T[nx - 2, y]</code> auf den Randknoten <code>T[nx - 1, y]</code>, sodass die diskrete Normalenableitung \(\frac{T_{nx-1, y} - T_{nx-2, y}}{\Delta x} = 0\) wird.</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul>
+  <li><code>[[1]] = 0</code> adressiert den linken Rand <code>x = 0</code> und weist ihm fest <code>100.0</code> °C zu.</li>
+  <li><code>[[2]] = nx - 2</code> und <code>[[3]] = y</code> kopieren die Temperatur des unmittelbar links daneben liegenden inneren Knotens <code>T[nx - 2, y]</code> auf den Randknoten <code>T[nx - 1, y]</code>, sodass die diskrete Normalenableitung \(\frac{T_{nx-1, y} - T_{nx-2, y}}{\Delta x} = 0\) wird.</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -1837,7 +1892,11 @@ for (int step = 0; step < 3; step++)
       <text><![CDATA[<p>Ordnen Sie die folgenden technischen Simulationsaufgaben der jeweils treffendsten Klasse der System-Taxonomie zu. Beachten Sie die zwei Überhang-Distraktoren.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul><li>Für \(\partial T / \partial t = 0\) entfällt die Zeitabhängigkeit (statisch), die Ortsableitungen \(\partial^2 T / \partial x^2 + \partial^2 T / \partial y^2 = 0\) bleiben jedoch bestehen (verteilte Parameter).</li><li>Der freie Fall einer Punktmasse hängt nur von \(t\) ab (konzentrierte Parameter, zeitkontinuierlich).</li><li>Ein springender Ball vereint kontinuierliche DGL-Dynamik in der Luft mit einem diskreten Zustands-Sprung beim Bodenkontakt (hybrides System).</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul>
+  <li>Für \(\partial T / \partial t = 0\) entfällt die Zeitabhängigkeit (statisch), die Ortsableitungen \(\partial^2 T / \partial x^2 + \partial^2 T / \partial y^2 = 0\) bleiben jedoch bestehen (verteilte Parameter).</li>
+  <li>Der freie Fall einer Punktmasse hängt nur von \(t\) ab (konzentrierte Parameter, zeitkontinuierlich).</li>
+  <li>Ein springender Ball vereint kontinuierliche DGL-Dynamik in der Luft mit einem diskreten Zustands-Sprung beim Bodenkontakt (hybrides System).</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -1953,7 +2012,7 @@ for (int step = 0; step < 3; step++)
       <text>T05_Q7: C#-Bug-Diagnose: Falsche Reihenfolge der Euler-Zustandsaktualisierung</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Für einen harmonischen Oszillator mit den Zustandsgleichungen \(\dot{x} = v\) und \(\dot{v} = -\omega^2 x\) möchte ein Student den <strong>reinen expliziten Standard-Euler</strong> implementieren und schreibt:</p><pre><code class="language-csharp">x = x + dt * v;
+      <text><![CDATA[<p>Für einen harmonischen Oszillator mit den Zustandsgleichungen \(\dot{x} = v\) und \(\dot{v} = -\omega^2 x\) möchte ein Student den <strong>reinen expliziten Standard-Euler</strong> implementieren und schreibt:</p><pre><code>x = x + dt * v;
 v = v - dt * omegaSq * x;</code></pre><p>Warum implementiert dieser zweizeilige Code <strong>nicht</strong> das mathematische explizite Standard-Euler-Verfahren?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -2076,10 +2135,12 @@ v = v - dt * omegaSq * x;</code></pre><p>Warum implementiert dieser zweizeilige 
       <text>T06_Q1: 2D-Wärmeleitung: Stationäres Gleichgewicht &amp; Schritt-Konvergenz</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einem quadratischen 2D-Wärmeraster (\(\Delta x = \Delta y\)) hat der innere Knoten \((i,j)\) zum Zeitpunkt \(n\) die Temperatur \(T_{i,j}^n = 50{,}0\,^\circ\text{C}\). Seine vier direkten Nachbarknoten werden konstant auf den Temperaturen \(T_{\text{links}} = 80{,}0\,^\circ\text{C}\), \(T_{\text{rechts}} = 40{,}0\,^\circ\text{C}\), \(T_{\text{oben}} = 60{,}0\,^\circ\text{C}\) und \(T_{\text{unten}} = 20{,}0\,^\circ\text{C}\) gehalten.</p><p>a) Welchen Wert hat der diskrete 2D-Laplace-Zähler \(L = T_{i-1,j}^n + T_{i+1,j}^n + T_{i,j-1}^n + T_{i,j+1}^n - 4 T_{i,j}^n\) (in <strong>°C</strong> bzw. <strong>K</strong>) für diesen Zustand?<br>Antwort: {1:NUMERICAL:=0.0:0.01#Richtig! Summe der 4 Nachbarn = 80 + 40 + 60 + 20 = 200 °C; abzüglich 4 * 50 = 200 °C ergibt exakt 0,0 K.~%50%200.0:0.1#Teilpunkte (50 %): 200 °C ist nur die Summe der vier Nachbarn, es fehlt noch die Subtraktion von 4 * T_ij (= 200 °C).~%50%100.0:0.1#Teilpunkte (50 %): Sie haben nur 2 * T_ij statt 4 * T_ij abgezogen.} K</p><p>b) Welche Temperatur \(T_{i,j}^{n+1}\) (in <strong>°C</strong>) besitzt der Zentralknoten im nächsten Zeitschritt bei einer Stabilitätszahl von \(s = 0{,}20\)?<br>Antwort: {1:NUMERICAL:=50.0:0.05#Richtig! Da der Laplace-Term 0 ist, befindet sich der Knoten exakt im lokalen thermischen Gleichgewicht (harmonische Eigenschaft: Mittelwert der Nachbarn = 200/4 = 50 °C).} °C</p>]]></text>
+      <text><![CDATA[<p>In einem quadratischen 2D-Wärmeraster (\(\Delta x = \Delta y\)) hat der innere Knoten \((i,j)\) zum Zeitpunkt \(n\) die Temperatur \(T_{i,j}^n = 50{,}0\,^\circ\text{C}\). Seine vier direkten Nachbarknoten werden konstant auf den Temperaturen \(T_{\text{links}} = 80{,}0\,^\circ\text{C}\), \(T_{\text{rechts}} = 40{,}0\,^\circ\text{C}\), \(T_{\text{oben}} = 60{,}0\,^\circ\text{C}\) und \(T_{\text{unten}} = 20{,}0\,^\circ\text{C}\) gehalten.</p><p>a) Welchen Wert hat der diskrete 2D-Laplace-Zähler \(L = T_{i-1,j}^n + T_{i+1,j}^n + T_{i,j-1}^n + T_{i,j+1}^n - 4 T_{i,j}^n\) (in <strong>°C</strong> bzw. <strong>K</strong>) für diesen Zustand?<br>Antwort: {1:NUMERICAL:=0.0:0.01#Richtig! Summe der 4 Nachbarn = 80 + 40 + 60 + 20 = 200 °C; abzüglich 4 <em> 50 = 200 °C ergibt exakt 0,0 K.~%50%200.0:0.1#Teilpunkte (50 %): 200 °C ist nur die Summe der vier Nachbarn, es fehlt noch die Subtraktion von 4 </em> T_ij (= 200 °C).~%50%100.0:0.1#Teilpunkte (50 %): Sie haben nur 2 <em> T_ij statt 4 </em> T_ij abgezogen.} K</p><p>b) Welche Temperatur \(T_{i,j}^{n+1}\) (in <strong>°C</strong>) besitzt der Zentralknoten im nächsten Zeitschritt bei einer Stabilitätszahl von \(s = 0{,}20\)?<br>Antwort: {1:NUMERICAL:=50.0:0.05#Richtig! Da der Laplace-Term 0 ist, befindet sich der Knoten exakt im lokalen thermischen Gleichgewicht (harmonische Eigenschaft: Mittelwert der Nachbarn = 200/4 = 50 °C).} °C</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (Stationäres Gleichgewicht der Laplace-Gleichung):</strong></p><p>1. Summe der vier Nachbarn: \(80 + 40 + 60 + 20 = 200\,^\circ\text{C}\).<br>Abzüglich \(4 \cdot T_{i,j}^n = 4 \cdot 50 = 200\,^\circ\text{C}\) ergibt sich \(L = 200 - 200 = 0{,}0\,\text{K}\).</p><p>2. Damit folgt unabhängig von \(s\): \(T_{i,j}^{n+1} = 50{,}0 + 0{,}20 \cdot 0{,}0 = 50{,}0\,^\circ\text{C}\). Im stationären Zustand (\(\partial T / \partial t = 0\)) ist die Temperatur jedes Knotens exakt der arithmetische Mittelwert seiner vier Nachbarknoten!</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (Stationäres Gleichgewicht der Laplace-Gleichung):</strong></p><p>1. Summe der vier Nachbarn: \(80 + 40 + 60 + 20 = 200\,^\circ\text{C}\).<br>Abzüglich \(4 \cdot T_{i,j}^n = 4 \cdot 50 = 200\,^\circ\text{C}\) ergibt sich \(L = 200 - 200 = 0{,}0\,\text{K}\).</p><ol>
+  <li>Damit folgt unabhängig von \(s\): \(T_{i,j}^{n+1} = 50{,}0 + 0{,}20 \cdot 0{,}0 = 50{,}0\,^\circ\text{C}\). Im stationären Zustand (\(\partial T / \partial t = 0\)) ist die Temperatur jedes Knotens exakt der arithmetische Mittelwert seiner vier Nachbarknoten!</li>
+</ol>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -2095,7 +2156,9 @@ v = v - dt * omegaSq * x;</code></pre><p>Warum implementiert dieser zweizeilige 
       <text><![CDATA[<p>Ein fallender Körper hat zu Beginn eines Zeitschritts (\(t_n = 0{,}50\,\text{s}\)) die Geschwindigkeit \(v_n = -8{,}0\,\text{m/s}\) (nach unten). Die lineare Höhen-Interpolation ergibt, dass der Körper nach dem relativen Zeitschrittanteil \(\tau = 0{,}50\) eines Zeitschritts der Länge \(\Delta t = 0{,}20\,\text{s}\) auf dem Boden aufschlägt (Erdbeschleunigung \(g = 10{,}0\,\text{m/s}^2\)). Der Boden besitzt den Restitutionskoeffizienten \(e = 0{,}80\).</p><p>Berechnen Sie die neue vertikale Geschwindigkeit \(v_{\text{after}}\) (in <strong>m/s</strong>, positiv nach oben) unmittelbar <strong>nach</strong> der teilelastischen Reflexion am Boden.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (Sub-Step-Stoßgesetz):</strong></p><p>1. Bis zum Aufprall vergeht die Teilzeit \(\Delta t_{\text{impact}} = \tau \cdot \Delta t = 0{,}50 \cdot 0{,}20\,\text{s} = 0{,}10\,\text{s}\).</p><p>2. Aufprallgeschwindigkeit unmittelbar vor dem Bodenkontakt:<br>\(v_{\text{impact}} = v_n - g \cdot \Delta t_{\text{impact}} = -8{,}0\,\text{m/s} - 10{,}0\,\text{m/s}^2 \cdot 0{,}10\,\text{s} = -9{,}0\,\text{m/s}\).</p><p>3. Geschwindigkeit unmittelbar nach dem teilelastischen Stoß:<br>\(v_{\text{after}} = -e \cdot v_{\text{impact}} = -0{,}80 \cdot (-9{,}0\,\text{m/s}) = +7{,}2\,\text{m/s}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (Sub-Step-Stoßgesetz):</strong></p><ol>
+  <li>Bis zum Aufprall vergeht die Teilzeit \(\Delta t_{\text{impact}} = \tau \cdot \Delta t = 0{,}50 \cdot 0{,}20\,\text{s} = 0{,}10\,\text{s}\).</li>
+</ol><p>2. Aufprallgeschwindigkeit unmittelbar vor dem Bodenkontakt:<br>\(v_{\text{impact}} = v_n - g \cdot \Delta t_{\text{impact}} = -8{,}0\,\text{m/s} - 10{,}0\,\text{m/s}^2 \cdot 0{,}10\,\text{s} = -9{,}0\,\text{m/s}\).</p><p>3. Geschwindigkeit unmittelbar nach dem teilelastischen Stoß:<br>\(v_{\text{after}} = -e \cdot v_{\text{impact}} = -0{,}80 \cdot (-9{,}0\,\text{m/s}) = +7{,}2\,\text{m/s}\).</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -2104,7 +2167,7 @@ v = v - dt * omegaSq * x;</code></pre><p>Warum implementiert dieser zweizeilige 
     <answer fraction="100" format="moodle_auto_format">
       <text>7.2</text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! v_impact = -8,0 - 10,0 * (0,50 * 0,20) = -9,0 m/s; v_after = -0,80 * (-9,0) = +7,2 m/s.</p>]]></text>
+        <text><![CDATA[<p>Exakt! v_impact = -8,0 - 10,0 <em> (0,50 </em> 0,20) = -9,0 m/s; v_after = -0,80 * (-9,0) = +7,2 m/s.</p>]]></text>
       </feedback>
       <tolerance>0.02</tolerance>
     </answer>
@@ -2141,13 +2204,19 @@ v = v - dt * omegaSq * x;</code></pre><p>Warum implementiert dieser zweizeilige 
       <text>T06_Q3: C#-Code-Tracing: Rückrechnung der Gitterspalte aus einem 1D-Byte-Offset</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Aus einem gegebenen 1D-Byte-Index <code>byteOffset</code> in einem <code>WriteableBitmap</code> (Format <code>Bgra32</code>, 4 Bytes pro Pixel) werden Zeile <code>y</code> und Spalte <code>x</code> mit folgendem C#-Code zurückgerechnet:</p><pre><code class="language-csharp">int stride = 400; // Bytes pro Zeile
+      <text><![CDATA[<p>Aus einem gegebenen 1D-Byte-Index <code>byteOffset</code> in einem <code>WriteableBitmap</code> (Format <code>Bgra32</code>, 4 Bytes pro Pixel) werden Zeile <code>y</code> und Spalte <code>x</code> mit folgendem C#-Code zurückgerechnet:</p><pre><code>int stride = 400; // Bytes pro Zeile
 int byteOffset = 830;
 int y = byteOffset / stride;
 int x = (byteOffset % stride) / 4;</code></pre><p>Welchen exakten ganzzahligen Wert hat die Spaltenkoordinate <code>x</code> nach der Ausführung?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. Zeilenindex: <code>y = 830 / 400 = 2</code> (Ganzzahldivision).</p><p>2. Byte-Rest innerhalb der Zeile 2: <code>830 % 400 = 30</code>.</p><p>3. Spaltenindex: <code>x = 30 / 4 = 7</code> (Ganzzahldivision; die Bytes 28, 29, 30, 31 gehören alle zu Pixel <code>x = 7</code>).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ol>
+  <li>Zeilenindex: <code>y = 830 / 400 = 2</code> (Ganzzahldivision).</li>
+</ol><ol>
+  <li>Byte-Rest innerhalb der Zeile 2: <code>830 % 400 = 30</code>.</li>
+</ol><ol>
+  <li>Spaltenindex: <code>x = 30 / 4 = 7</code> (Ganzzahldivision; die Bytes 28, 29, 30, 31 gehören alle zu Pixel <code>x = 7</code>).</li>
+</ol>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -2186,9 +2255,9 @@ int x = (byteOffset % stride) / 4;</code></pre><p>Welchen exakten ganzzahligen W
       <text>T06_Q4: C#-Lückentext: Packen von ARGB-Kanälen in einen 32-Bit-uint</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie die folgende C#-Anweisung, die vier <code>byte</code>-Variablen (<code>alpha</code>, <code>red</code>, <code>green</code>, <code>blue</code>) auf einem Little-Endian-System zu einem einzigen <code>uint</code>-Farbwert für <code>PixelFormats.Bgra32</code> zusammenpackt:</p><pre><code class="language-csharp">uint pixel = ((uint)alpha << [[1]])
-           | ((uint)red   << [[2]])
-           | ((uint)green << [[3]])
+      <text><![CDATA[<p>Vervollständigen Sie die folgende C#-Anweisung, die vier <code>byte</code>-Variablen (<code>alpha</code>, <code>red</code>, <code>green</code>, <code>blue</code>) auf einem Little-Endian-System zu einem einzigen <code>uint</code>-Farbwert für <code>PixelFormats.Bgra32</code> zusammenpackt:</p><pre><code>uint pixel = ((uint)alpha &lt;&lt; [[1]])
+           | ((uint)red   &lt;&lt; [[2]])
+           | ((uint)green &lt;&lt; [[3]])
            |  (uint)blue;</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -2256,7 +2325,7 @@ int x = (byteOffset % stride) / 4;</code></pre><p>Welchen exakten ganzzahligen W
       <text><![CDATA[<p>Bringen Sie die vier Teilschritte innerhalb eines einzelnen Frames der gekoppelten 2D-Wärmeleitungs- und Visualisierungsschleife in die logisch korrekte Ausführungsreihenfolge:</p><p>Schritt 1: [[1]]<br>Schritt 2: [[2]]<br>Schritt 3: [[3]]<br>Schritt 4: [[4]]</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung des Simulationszyklus:</strong></p><p>Zuerst werden alle inneren Gitterpunkte aus dem alten Zustand <code>T</code> nach <code>T_next</code> integriert, anschließend werden die Ränder von <code>T_next</code> gemäß Randbedingungen aktualisiert. Nach dem Puffer-Tausch (<code>T_next &rarr; T</code>) ist der neue Zeitschritt vollständig und wird als Falschfarbenbild in den <code>BackBuffer</code> gerendert.</p>]]></text>
+      <text><![CDATA[<p><strong>Erklärung des Simulationszyklus:</strong></p><p>Zuerst werden alle inneren Gitterpunkte aus dem alten Zustand <code>T</code> nach <code>T_next</code> integriert, anschließend werden die Ränder von <code>T_next</code> gemäß Randbedingungen aktualisiert. Nach dem Puffer-Tausch (<code>T_next → T</code>) ist der neue Zeitschritt vollständig und wird als Falschfarbenbild in den <code>BackBuffer</code> gerendert.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -2331,7 +2400,7 @@ int x = (byteOffset % stride) / 4;</code></pre><p>Welchen exakten ganzzahligen W
     <answer fraction="100" format="html">
       <text><![CDATA[Ein großes alpha bewirkt einen schnellen Temperaturausgleich bei gleichzeitig kleinerer Stabilitätsgrenze dt_max.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Hohe Wärmeleitfähigkeit lambda und geringe Wärmekapazität rho*c_p beschleunigen die Diffusion, verkleinern aber dt_max = dx^2 / (4*alpha).</p>]]></text>
+        <text><![CDATA[<p>Richtig! Hohe Wärmeleitfähigkeit lambda und geringe Wärmekapazität rho<em>c_p beschleunigen die Diffusion, verkleinern aber dt_max = dx^2 / (4</em>alpha).</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
@@ -2360,8 +2429,8 @@ int x = (byteOffset % stride) / 4;</code></pre><p>Welchen exakten ganzzahligen W
       <text>T06_Q7: C#-Bug-Diagnose: Array-Grenzüberschreitung am Plattenrand</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Student programmiert die räumliche Schleife für den 5-Punkt-Stern auf einem 2D-Array <code>double[,] T = new double[nx, ny]</code> wie folgt:</p><pre><code class="language-csharp">for (int y = 0; y < ny; y++)
-    for (int x = 0; x < nx; x++)
+      <text><![CDATA[<p>Ein Student programmiert die räumliche Schleife für den 5-Punkt-Stern auf einem 2D-Array <code>double[,] T = new double[nx, ny]</code> wie folgt:</p><pre><code>for (int y = 0; y &lt; ny; y++)
+    for (int x = 0; x &lt; nx; x++)
         T_next[x, y] = T[x, y] + s * (T[x-1, y] + T[x+1, y] + T[x, y-1] + T[x, y+1] - 4 * T[x, y]);</code></pre><p>Welcher Laufzeitfehler tritt beim Start dieser Methode sofort im ersten Schleifendurchlauf (<code>x = 0, y = 0</code>) auf?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -2420,7 +2489,7 @@ int x = (byteOffset % stride) / 4;</code></pre><p>Welchen exakten ganzzahligen W
       <text><![CDATA[<p>Welche der folgenden Aussagen zur Klassifikation von <em>Digital Model</em>, <em>Digital Shadow</em> und <em>Digital Twin</em> nach Kritzinger et al. sind <strong>korrekt</strong>? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Zusammenfassung (Kritzinger-Reifegrade):</strong></p><p>Kritzinger et al. (2018) unterscheiden strikt nach dem Grad der Datenintegration: 1. <strong>Digital Model</strong> (beide Richtungen manuell), 2. <strong>Digital Shadow</strong> (Physisch &rarr; Digital automatisch, Rückweg manuell), 3. <strong>Digital Twin</strong> (beide Richtungen vollautomatisch gekoppelt).</p>]]></text>
+      <text><![CDATA[<p><strong>Zusammenfassung (Kritzinger-Reifegrade):</strong></p><p>Kritzinger et al. (2018) unterscheiden strikt nach dem Grad der Datenintegration: 1. <strong>Digital Model</strong> (beide Richtungen manuell), 2. <strong>Digital Shadow</strong> (Physisch → Digital automatisch, Rückweg manuell), 3. <strong>Digital Twin</strong> (beide Richtungen vollautomatisch gekoppelt).</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -2484,7 +2553,7 @@ int x = (byteOffset % stride) / 4;</code></pre><p>Welchen exakten ganzzahligen W
       <text>T07_Q1: 2D-Wärmeleitung: Rückrechnung der Temperaturleitfähigkeit &amp; Grenzschrittweite</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einer 2D-Wärmeleitungssimulation mit der Maschenweite \(\Delta x = \Delta y = 3{,}0\,\text{mm}\) und der eingestellten Zeitschrittweite \(\Delta t = 0{,}05\,\text{s}\) beträgt die dimensionslose Stabilitätszahl aktuell exakt \(s = 0{,}20\).</p><p>a) Wie groß ist die im Modell hinterlegte Temperaturleitfähigkeit \(\alpha\) des Materials in <strong>\(\text{mm}^2/\text{s}\)</strong>?<br>Antwort: {1:NUMERICAL:=36.0:0.1#Richtig! Aus s = alpha * dt / dx^2 folgt alpha = s * dx^2 / dt = 0,20 * 9,0 / 0,05 = 1,8 / 0,05 = 36,0 mm^2/s.~%50%12.0:0.1#Teilpunkte (50 %): Sie haben mit dx = 3 statt mit dx^2 = 9 gerechnet (0,20 * 3 / 0,05 = 12).} \(\text{mm}^2/\text{s}\)</p><p>b) Auf welchen Maximalwert \(\Delta t_{\max}\) (in <strong>Millisekunden (ms)</strong>) dürfte die Zeitschrittweite bei diesem Gitter und Material höchstens erhöht werden, bevor Instabilität (\(s > 0{,}25\)) eintritt?<br>Antwort: {1:NUMERICAL:=62.5:0.2#Richtig! dt_max = dx^2 / (4 * alpha) = 9,0 / (4 * 36,0) = 9 / 144 = 0,0625 s = 62,5 ms (bzw. 0,05 s * (0,25 / 0,20) = 62,5 ms).~%50%0.0625:0.001#Teilpunkte (50 %): Zahlenwert in Sekunden statt in Millisekunden (ms) angegeben.~%50%125.0:0.5#Teilpunkte (50 %): Sie haben die 1D-Stabilitätsgrenze s = 0,50 statt der 2D-Grenze s = 0,25 angesetzt.} ms</p>]]></text>
+      <text><![CDATA[<p>In einer 2D-Wärmeleitungssimulation mit der Maschenweite \(\Delta x = \Delta y = 3{,}0\,\text{mm}\) und der eingestellten Zeitschrittweite \(\Delta t = 0{,}05\,\text{s}\) beträgt die dimensionslose Stabilitätszahl aktuell exakt \(s = 0{,}20\).</p><p>a) Wie groß ist die im Modell hinterlegte Temperaturleitfähigkeit \(\alpha\) des Materials in <strong>\(\text{mm}^2/\text{s}\)</strong>?<br>Antwort: {1:NUMERICAL:=36.0:0.1#Richtig! Aus s = alpha <em> dt / dx^2 folgt alpha = s </em> dx^2 / dt = 0,20 <em> 9,0 / 0,05 = 1,8 / 0,05 = 36,0 mm^2/s.~%50%12.0:0.1#Teilpunkte (50 %): Sie haben mit dx = 3 statt mit dx^2 = 9 gerechnet (0,20 </em> 3 / 0,05 = 12).} \(\text{mm}^2/\text{s}\)</p><p>b) Auf welchen Maximalwert \(\Delta t_{\max}\) (in <strong>Millisekunden (ms)</strong>) dürfte die Zeitschrittweite bei diesem Gitter und Material höchstens erhöht werden, bevor Instabilität (\(s > 0{,}25\)) eintritt?<br>Antwort: {1:NUMERICAL:=62.5:0.2#Richtig! dt_max = dx^2 / (4 <em> alpha) = 9,0 / (4 </em> 36,0) = 9 / 144 = 0,0625 s = 62,5 ms (bzw. 0,05 s * (0,25 / 0,20) = 62,5 ms).~%50%0.0625:0.001#Teilpunkte (50 %): Zahlenwert in Sekunden statt in Millisekunden (ms) angegeben.~%50%125.0:0.5#Teilpunkte (50 %): Sie haben die 1D-Stabilitätsgrenze s = 0,50 statt der 2D-Grenze s = 0,25 angesetzt.} ms</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. Auflösen von \(s = \frac{\alpha \cdot \Delta t}{\Delta x^2}\) nach \(\alpha\):<br>\(\alpha = \frac{s \cdot \Delta x^2}{\Delta t} = \frac{0{,}20 \cdot (3{,}0\,\text{mm})^2}{0{,}05\,\text{s}} = \frac{1{,}8}{0{,}05}\,\text{mm}^2/\text{s} = 36{,}0\,\text{mm}^2/\text{s}\).</p><p>2. Da \(s\) proportional zu \(\Delta t\) ist, erreicht \(s\) den Grenzwert \(0{,}25\) bei:<br>\(\Delta t_{\max} = \Delta t \cdot \frac{0{,}25}{0{,}20} = 50\,\text{ms} \cdot 1{,}25 = 62{,}5\,\text{ms}\).</p>]]></text>
@@ -2512,7 +2581,7 @@ int x = (byteOffset % stride) / 4;</code></pre><p>Welchen exakten ganzzahligen W
     <answer fraction="100" format="moodle_auto_format">
       <text>7.5</text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Schritt 1: v_1 = 0 + 0,1 * 5 * (10 - 0) = 5,0 m/s. Schritt 2: v_2 = 5,0 + 0,1 * 5 * (10 - 5,0) = 5,0 + 2,5 = 7,5 m/s.</p>]]></text>
+        <text><![CDATA[<p>Exakt! Schritt 1: v_1 = 0 + 0,1 <em> 5 </em> (10 - 0) = 5,0 m/s. Schritt 2: v_2 = 5,0 + 0,1 <em> 5 </em> (10 - 5,0) = 5,0 + 2,5 = 7,5 m/s.</p>]]></text>
       </feedback>
       <tolerance>0.01</tolerance>
     </answer>
@@ -2542,13 +2611,19 @@ int x = (byteOffset % stride) / 4;</code></pre><p>Welchen exakten ganzzahligen W
       <text>T07_Q3: C#-Code-Tracing: Neumann-Randbedingung + 5-Punkt-Stern am Randnachbarn</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einer 1D-Scheibe eines Wärmegitters wird zuerst der linke Rand <code>T[0]</code> isoliert (homogene Neumann-Randbedingung) und unmittelbar danach der Knoten <code>T[1]</code> aktualisiert:</p><pre><code class="language-csharp">double[] T = { 0.0, 20.0, 60.0 };
+      <text><![CDATA[<p>In einer 1D-Scheibe eines Wärmegitters wird zuerst der linke Rand <code>T[0]</code> isoliert (homogene Neumann-Randbedingung) und unmittelbar danach der Knoten <code>T[1]</code> aktualisiert:</p><pre><code>double[] T = { 0.0, 20.0, 60.0 };
 double s = 0.25;
 T[0] = T[1]; // Isolierter Neumann-Rand links
 double T1_next = T[1] + s * (T[0] + T[2] - 2.0 * T[1]);</code></pre><p>Welchen exakten Zahlenwert hat die Variable <code>T1_next</code> nach der Ausführung?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. Die Zuweisung <code>T[0] = T[1];</code> setzt <code>T[0]</code> von <code>0.0</code> auf <code>20.0</code> (kein Temperaturgradient zwischen Index 0 und Index 1).</p><p>2. Damit lautet die Klammer: <code>T[0] + T[2] - 2.0 * T[1] = 20.0 + 60.0 - 2.0 * 20.0 = 40.0</code>.</p><p>3. Multipliziert mit <code>s = 0.25</code> ergibt sich <code>T1_next = 20.0 + 0.25 * 40.0 = 30.0</code>.</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ol>
+  <li>Die Zuweisung <code>T[0] = T[1];</code> setzt <code>T[0]</code> von <code>0.0</code> auf <code>20.0</code> (kein Temperaturgradient zwischen Index 0 und Index 1).</li>
+</ol><ol>
+  <li>Damit lautet die Klammer: <code>T[0] + T[2] - 2.0 * T[1] = 20.0 + 60.0 - 2.0 * 20.0 = 40.0</code>.</li>
+</ol><ol>
+  <li>Multipliziert mit <code>s = 0.25</code> ergibt sich <code>T1_next = 20.0 + 0.25 * 40.0 = 30.0</code>.</li>
+</ol>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -2557,7 +2632,7 @@ double T1_next = T[1] + s * (T[0] + T[2] - 2.0 * T[1]);</code></pre><p>Welchen e
     <answer fraction="100" format="moodle_auto_format">
       <text>30</text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Durch T[0] = T[1] = 20.0 wird T1_next = 20 + 0,25 * (20 + 60 - 40) = 20 + 0,25 * 40 = 30,0.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Durch T[0] = T[1] = 20.0 wird T1_next = 20 + 0,25 <em> (20 + 60 - 40) = 20 + 0,25 </em> 40 = 30,0.</p>]]></text>
       </feedback>
       <tolerance>0.01</tolerance>
     </answer>
@@ -2587,7 +2662,7 @@ double T1_next = T[1] + s * (T[0] + T[2] - 2.0 * T[1]);</code></pre><p>Welchen e
       <text>T07_Q4: C#-Lückentext: Vollständiger WriteableBitmap-Update-Rahmen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie den Methodenrahmen zur sicheren Aktualisierung eines <code>WriteableBitmap bmp</code> der Breite <code>w</code> und Höhe <code>h</code>:</p><pre><code class="language-csharp">bmp.[[1]]();
+      <text><![CDATA[<p>Vervollständigen Sie den Methodenrahmen zur sicheren Aktualisierung eines <code>WriteableBitmap bmp</code> der Breite <code>w</code> und Höhe <code>h</code>:</p><pre><code>bmp.[[1]]();
 try
 {
     WriteHeatmapPixels(bmp.BackBuffer, bmp.BackBufferStride, w, h);
@@ -2599,7 +2674,7 @@ finally
 }</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung:</strong></p><p>Das Muster <code>bmp.Lock()</code> &rarr; <code>try { ... bmp.AddDirtyRect(...); }</code> &rarr; <code>finally { bmp.Unlock(); }</code> stellt sicher, dass der unverwaltete Speicherpuffer auch im Falle einer Exception zuverlässig wieder entsperrt wird.</p>]]></text>
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><p>Das Muster <code>bmp.Lock()</code> → <code>try { ... bmp.AddDirtyRect(...); }</code> → <code>finally { bmp.Unlock(); }</code> stellt sicher, dass der unverwaltete Speicherpuffer auch im Falle einer Exception zuverlässig wieder entsperrt wird.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -2663,7 +2738,12 @@ finally
       <text><![CDATA[<p>Ordnen Sie die folgenden Charakteristika dem jeweils passenden numerischen Konzept aus Kapitel 01 und 02 zu. Beachten Sie die zwei Überhang-Distraktoren.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Zusammenfassung:</strong></p><ul><li><strong>Standard-Euler:</strong> \(y_{n+1} = y_n + \Delta t f(t_n, y_n)\), Ordnung 1.</li><li><strong>Heun (RK2):</strong> Prädiktor-Korrektor-Verfahren, Ordnung 2.</li><li><strong>Symplektischer Euler:</strong> Nutzt \(v_{n+1}\) für das Orts-Update \(y_{n+1}\) und erhält das Phasenraumvolumen bei Hamilton-Systemen.</li><li><strong>2D-Stabilitätsgrenze:</strong> \(s = \frac{\alpha \Delta t}{\Delta x^2} \le 0{,}25\).</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Zusammenfassung:</strong></p><ul>
+  <li><strong>Standard-Euler:</strong> \(y_{n+1} = y_n + \Delta t f(t_n, y_n)\), Ordnung 1.</li>
+  <li><strong>Heun (RK2):</strong> Prädiktor-Korrektor-Verfahren, Ordnung 2.</li>
+  <li><strong>Symplektischer Euler:</strong> Nutzt \(v_{n+1}\) für das Orts-Update \(y_{n+1}\) und erhält das Phasenraumvolumen bei Hamilton-Systemen.</li>
+  <li><strong>2D-Stabilitätsgrenze:</strong> \(s = \frac{\alpha \Delta t}{\Delta x^2} \le 0{,}25\).</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -2779,7 +2859,7 @@ finally
       <text>T07_Q7: C#-Bug-Diagnose: Referenz-Aliasing statt echtem Double-Buffering</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Um sich nach dem 2D-Wärmeleitungsschritt den Aufruf von <code>Array.Copy(T_next, T, T.Length)</code> zu sparen, schreibt ein Student am Ende der Zeitschritt-Methode einfach:</p><pre><code class="language-csharp">// Am Ende von Step():
+      <text><![CDATA[<p>Um sich nach dem 2D-Wärmeleitungsschritt den Aufruf von <code>Array.Copy(T_next, T, T.Length)</code> zu sparen, schreibt ein Student am Ende der Zeitschritt-Methode einfach:</p><pre><code>// Am Ende von Step():
 T = T_next;</code></pre><p>Welcher schwerwiegende Fehler entsteht dadurch ab dem <strong>zweiten</strong> Zeitschritt?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -2905,7 +2985,9 @@ T = T_next;</code></pre><p>Welcher schwerwiegende Fehler entsteht dadurch ab dem
       <text><![CDATA[<p>Eine explizite 2D-Wärmeleitungssimulation (\(\alpha = 25\,\text{mm}^2/\text{s}\)) läuft auf einem Ausgangsgitter mit \(\Delta x_{\text{alt}} = 4{,}0\,\text{mm}\) zunächst mit der maximal stabilen Schrittweite \(\Delta t_{\max,\text{alt}} = 0{,}16\,\text{s}\). Für eine höhere Detailauflösung wird die Gitterweite in beide Raumrichtungen auf \(\Delta x_{\text{neu}} = 2{,}0\,\text{mm}\) halbiert.</p><p>a) Wie groß ist die neue maximal zulässige Zeitschrittweite \(\Delta t_{\max,\text{neu}}\) in <strong>Millisekunden (ms)</strong> auf dem feineren Gitter?<br>Antwort: {1:NUMERICAL:=40:0.1#Richtig! dt_max,neu = dx_neu^2 / (4 * alpha) = 4,0 / 100 = 0,04 s = 40 ms (ein Viertel von 160 ms).~%50%80:0.1#Teilpunkte (50 %): Sie haben dt_max nur halbiert (80 ms) statt geviertelt, oder mit dem 1D-Faktor 2 gerechnet.~%50%0.04:0.001#Teilpunkte (50 %): Zahlenwert in Sekunden statt in Millisekunden (ms) angegeben.} ms</p><p>b) Wie viele explizite Zeitschritte \(N_{\text{steps}}\) sind auf dem feinen Gitter nötig, um eine physikalische Dauer von \(t_{\text{end}} = 2{,}0\,\text{s}\) bei \(\Delta t = \Delta t_{\max,\text{neu}}\) zu simulieren?<br>Antwort: {1:NUMERICAL:=50:0#Richtig! N = 2,0 s / 0,04 s = 50 Zeitschritte.~%50%25:0#Teilpunkte (50 %): Folgefehler aus dt = 80 ms (2,0 s / 0,08 s = 25 Schritte).} Schritte</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. Aus \(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha}\) folgt für \(\Delta x_{\text{neu}} = 2{,}0\,\text{mm}\):<br>\(\Delta t_{\max,\text{neu}} = \frac{(2{,}0\,\text{mm})^2}{4 \cdot 25\,\text{mm}^2/\text{s}} = \frac{4}{100}\,\text{s} = 0{,}04\,\text{s} = 40\,\text{ms}\).</p><p>2. Für \(t_{\text{end}} = 2{,}0\,\text{s}\) werden damit \(N_{\text{steps}} = \frac{2{,}0\,\text{s}}{0{,}04\,\text{s}} = 50\,\text{Schritte}\) benötigt.</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. Aus \(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha}\) folgt für \(\Delta x_{\text{neu}} = 2{,}0\,\text{mm}\):<br>\(\Delta t_{\max,\text{neu}} = \frac{(2{,}0\,\text{mm})^2}{4 \cdot 25\,\text{mm}^2/\text{s}} = \frac{4}{100}\,\text{s} = 0{,}04\,\text{s} = 40\,\text{ms}\).</p><ol>
+  <li>Für \(t_{\text{end}} = 2{,}0\,\text{s}\) werden damit \(N_{\text{steps}} = \frac{2{,}0\,\text{s}}{0{,}04\,\text{s}} = 50\,\text{Schritte}\) benötigt.</li>
+</ol>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -2930,14 +3012,14 @@ T = T_next;</code></pre><p>Welcher schwerwiegende Fehler entsteht dadurch ab dem
     <answer fraction="100" format="moodle_auto_format">
       <text>12.5</text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Schritt 1: y_1 = 0 + 0,5 * 15 = 7,5 m, v_1 = 15 - 0,5 * 10 = 10,0 m/s. Schritt 2: y_2 = 7,5 + 0,5 * 10,0 = 12,5 m.</p>]]></text>
+        <text><![CDATA[<p>Exakt! Schritt 1: y_1 = 0 + 0,5 <em> 15 = 7,5 m, v_1 = 15 - 0,5 </em> 10 = 10,0 m/s. Schritt 2: y_2 = 7,5 + 0,5 * 10,0 = 12,5 m.</p>]]></text>
       </feedback>
       <tolerance>0.02</tolerance>
     </answer>
     <answer fraction="50" format="moodle_auto_format">
       <text>10</text>
       <feedback format="html">
-        <text><![CDATA[<p>Teilpunkte (50 %): 10,0 m ist die analytische Höhe y(1,0) = 15*1 - 0,5*10*1 = 10,0 m (bzw. Heun), nicht der explizite Euler!</p>]]></text>
+        <text><![CDATA[<p>Teilpunkte (50 %): 10,0 m ist die analytische Höhe y(1,0) = 15<em>1 - 0,5</em>10*1 = 10,0 m (bzw. Heun), nicht der explizite Euler!</p>]]></text>
       </feedback>
       <tolerance>0.02</tolerance>
     </answer>
@@ -2960,13 +3042,13 @@ T = T_next;</code></pre><p>Welcher schwerwiegende Fehler entsteht dadurch ab dem
       <text>T08_Q3: C#-Code-Tracing: Zeiger-Arithmetik mit uint* vs. byte*</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Anstelle eines <code>byte*</code>-Pointers wird in folgendem C#-Code ein <code>uint*</code>-Pointer (4 Bytes pro Element) verwendet, um ganze Pixel auf einmal zu schreiben:</p><pre><code class="language-csharp">int strideBytes = 128; // BackBufferStride in Bytes
+      <text><![CDATA[<p>Anstelle eines <code>byte*</code>-Pointers wird in folgendem C#-Code ein <code>uint*</code>-Pointer (4 Bytes pro Element) verwendet, um ganze Pixel auf einmal zu schreiben:</p><pre><code>int strideBytes = 128; // BackBufferStride in Bytes
 int pixelsPerRow = strideBytes / 4;
 int x = 10, y = 4;
 int uintIndex = y * pixelsPerRow + x;</code></pre><p>Welchen exakten ganzzahligen Wert hat die Variable <code>uintIndex</code> nach der Ausführung?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (uint*-Pointer-Adressierung):</strong></p><p>Da ein <code>uint*</code>-Zeiger bei jeder Erhöhung um 1 automatisch um <code>sizeof(uint) = 4</code> Bytes im Speicher weiterwandert, umfasst eine Zeile von <code>128 Bytes</code> genau <code>pixelsPerRow = 128 / 4 = 32</code> <code>uint</code>-Elemente. Für Zeile <code>y = 4</code> und Spalte <code>x = 10</code> ergibt sich somit der Element-Index <code>4 * 32 + 10 = 138</code>.</p>]]></text>
+      <text><![CDATA[<p>**Musterherleitung (uint*-Pointer-Adressierung):**</p><p>Da ein <code>uint*</code>-Zeiger bei jeder Erhöhung um 1 automatisch um <code>sizeof(uint) = 4</code> Bytes im Speicher weiterwandert, umfasst eine Zeile von <code>128 Bytes</code> genau <code>pixelsPerRow = 128 / 4 = 32</code> <code>uint</code>-Elemente. Für Zeile <code>y = 4</code> und Spalte <code>x = 10</code> ergibt sich somit der Element-Index <code>4 * 32 + 10 = 138</code>.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -2982,7 +3064,7 @@ int uintIndex = y * pixelsPerRow + x;</code></pre><p>Welchen exakten ganzzahlige
     <answer fraction="50" format="moodle_auto_format">
       <text>552</text>
       <feedback format="html">
-        <text><![CDATA[<p>Teilpunkte (50 %): 552 (= 138 * 4) ist der Byte-Index für einen byte*-Pointer; für uint* wurde strideBytes bereits durch 4 geteilt.</p>]]></text>
+        <text><![CDATA[<p>Teilpunkte (50 %): 552 (= 138 <em> 4) ist der Byte-Index für einen byte</em>-Pointer; für uint* wurde strideBytes bereits durch 4 geteilt.</p>]]></text>
       </feedback>
       <tolerance>0</tolerance>
     </answer>
@@ -3005,12 +3087,16 @@ int uintIndex = y * pixelsPerRow + x;</code></pre><p>Welchen exakten ganzzahlige
       <text>T08_Q4: C#-Lückentext: Lineare Farbinterpolation (Lerp) mit Math.Clamp</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie die C#-Hilfsmethode, die eine Temperatur <code>T</code> sicher auf das Intervall <code>[0.0, 1.0]</code> normiert und anschließend den Blau-Kanal von <code>255</code> (bei <code>u = 0</code>) linear auf <code>0</code> (bei <code>u = 1</code>) absenkt:</p><pre><code class="language-csharp">double rawU = (T - Tmin) / ([[1]] - Tmin);
+      <text><![CDATA[<p>Vervollständigen Sie die C#-Hilfsmethode, die eine Temperatur <code>T</code> sicher auf das Intervall <code>[0.0, 1.0]</code> normiert und anschließend den Blau-Kanal von <code>255</code> (bei <code>u = 0</code>) linear auf <code>0</code> (bei <code>u = 1</code>) absenkt:</p><pre><code>double rawU = (T - Tmin) / ([[1]] - Tmin);
 double u = Math.[[2]](rawU, 0.0, 1.0);
 byte blue = (byte)(255.0 * ([[3]] - u));</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul><li><code>[[1]] = Tmax</code> bildet die Spannweite <code>Tmax - Tmin</code> im Nenner.</li><li><code>[[2]] = Clamp</code> begrenzt Ausreißer sicher auf das Intervall <code>[0.0, 1.0]</code>, damit der anschließende Cast nach <code>byte</code> nicht überläuft.</li><li><code>[[3]] = 1.0</code> sorgt dafür, dass Blau bei <code>u = 0.0</code> den Maximalwert <code>255</code> und bei <code>u = 1.0</code> den Wert <code>0</code> erhält.</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul>
+  <li><code>[[1]] = Tmax</code> bildet die Spannweite <code>Tmax - Tmin</code> im Nenner.</li>
+  <li><code>[[2]] = Clamp</code> begrenzt Ausreißer sicher auf das Intervall <code>[0.0, 1.0]</code>, damit der anschließende Cast nach <code>byte</code> nicht überläuft.</li>
+  <li><code>[[3]] = 1.0</code> sorgt dafür, dass Blau bei <code>u = 0.0</code> den Maximalwert <code>255</code> und bei <code>u = 1.0</code> den Wert <code>0</code> erhält.</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -3100,7 +3186,7 @@ byte blue = (byte)(255.0 * ([[3]] - u));</code></pre>]]></text>
       <group>1</group>
     </dragbox>
     <dragbox>
-      <text><![CDATA[Aufprallgeschwindigkeit vImpact = vOld - g * (tau * dt) berechnen]]></text>
+      <text><![CDATA[Aufprallgeschwindigkeit vImpact = vOld - g <em> (tau </em> dt) berechnen]]></text>
       <group>1</group>
     </dragbox>
     <dragbox>
@@ -3178,7 +3264,7 @@ byte blue = (byte)(255.0 * ([[3]] - u));</code></pre>]]></text>
       <text>T08_Q7: C#-Bug-Diagnose: Byte-Überlauf ohne Begrenzung (Clamping) bei Heatmap</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Eine Farbskala ist auf den Bereich <code>0 °C</code> bis <code>100 °C</code> ausgelegt. Durch eine lokale Wärmequelle steigt die Temperatur eines Knotens jedoch auf <code>T = 120.0</code> °C an. Der Farbwert wird ohne <code>Math.Clamp</code> wie folgt berechnet:</p><pre><code class="language-csharp">double u = T / 100.0; // u = 1.2
+      <text><![CDATA[<p>Eine Farbskala ist auf den Bereich <code>0 °C</code> bis <code>100 °C</code> ausgelegt. Durch eine lokale Wärmequelle steigt die Temperatur eines Knotens jedoch auf <code>T = 120.0</code> °C an. Der Farbwert wird ohne <code>Math.Clamp</code> wie folgt berechnet:</p><pre><code>double u = T / 100.0; // u = 1.2
 byte red = (byte)(255.0 * u);</code></pre><p>Welcher Effekt tritt in einem standardmäßigen C#-Projekt (<code>unchecked</code>-Kontext) bei dieser Konvertierung auf?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -3301,10 +3387,12 @@ byte red = (byte)(255.0 * u);</code></pre><p>Welcher Effekt tritt in einem stand
       <text>T09_Q1: 2D-Wärmeleitung: Adiabate Neumann-Ecke &amp; 5-Punkt-Stern-Update</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Auf einem 2D-Wärmeraster mit der Stabilitätszahl \(s = 0{,}20\) besitzt der innere Knoten \((1,1)\) aktuell die Temperatur \(T_{1,1}^n = 40{,}0\,^\circ\text{C}\). Seine inneren Nachbarn haben die Werte \(T_{2,1}^n = 60{,}0\,^\circ\text{C}\) (rechts) und \(T_{1,2}^n = 80{,}0\,^\circ\text{C}\) (oben). Sowohl der linke Rand (\(i=0\)) als auch der untere Rand (\(j=0\)) sind <strong>perfekt wärmegedämmt (homogene Neumann-Randbedingung)</strong>.</p><p>a) Welche Temperatur \(T_{0,1}^n\) (in <strong>°C</strong>) wird dem linken Randknoten \((0,1)\) durch die homogene Neumann-Bedingung zugewiesen?<br>Antwort: {1:NUMERICAL:=40.0:0.1#Richtig! Am isolierten Rand gilt dT/dn = 0, also T[0,1] = T[1,1] = 40,0 °C.~%50%0.0:0.1#Teilpunkte (50 %): 0 °C wäre eine feste Eiskühlung (homogene Dirichlet-Bedingung), keine Wärmeisolation!} °C</p><p>b) Welche neue Temperatur \(T_{1,1}^{n+1}\) (in <strong>°C</strong>) erhält der Knoten \((1,1)\) nach einem expliziten Zeitschritt mit dem 5-Punkt-Stern (wenn auch unten \(T_{1,0}^n = T_{1,1}^n\) gilt)?<br>Antwort: {1:NUMERICAL:=52.0:0.1#Richtig! T_neu = 40 + 0,20 * (40 + 60 + 40 + 80 - 4 * 40) = 40 + 0,20 * 60 = 52,0 °C.~%50%36.0:0.1#Teilpunkte (50 %): Folgefehler aus T[0,1] = 0 und T[1,0] = 0 (40 + 0,20 * (140 - 160) = 36,0 °C).} °C</p>]]></text>
+      <text><![CDATA[<p>Auf einem 2D-Wärmeraster mit der Stabilitätszahl \(s = 0{,}20\) besitzt der innere Knoten \((1,1)\) aktuell die Temperatur \(T_{1,1}^n = 40{,}0\,^\circ\text{C}\). Seine inneren Nachbarn haben die Werte \(T_{2,1}^n = 60{,}0\,^\circ\text{C}\) (rechts) und \(T_{1,2}^n = 80{,}0\,^\circ\text{C}\) (oben). Sowohl der linke Rand (\(i=0\)) als auch der untere Rand (\(j=0\)) sind <strong>perfekt wärmegedämmt (homogene Neumann-Randbedingung)</strong>.</p><p>a) Welche Temperatur \(T_{0,1}^n\) (in <strong>°C</strong>) wird dem linken Randknoten \((0,1)\) durch die homogene Neumann-Bedingung zugewiesen?<br>Antwort: {1:NUMERICAL:=40.0:0.1#Richtig! Am isolierten Rand gilt dT/dn = 0, also T[0,1] = T[1,1] = 40,0 °C.~%50%0.0:0.1#Teilpunkte (50 %): 0 °C wäre eine feste Eiskühlung (homogene Dirichlet-Bedingung), keine Wärmeisolation!} °C</p><p>b) Welche neue Temperatur \(T_{1,1}^{n+1}\) (in <strong>°C</strong>) erhält der Knoten \((1,1)\) nach einem expliziten Zeitschritt mit dem 5-Punkt-Stern (wenn auch unten \(T_{1,0}^n = T_{1,1}^n\) gilt)?<br>Antwort: {1:NUMERICAL:=52.0:0.1#Richtig! T_neu = 40 + 0,20 <em> (40 + 60 + 40 + 80 - 4 </em> 40) = 40 + 0,20 <em> 60 = 52,0 °C.~%50%36.0:0.1#Teilpunkte (50 %): Folgefehler aus T[0,1] = 0 und T[1,0] = 0 (40 + 0,20 </em> (140 - 160) = 36,0 °C).} °C</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (5-Punkt-Stern an einer isolierten Ecke):</strong></p><p>1. Durch die beiden isolierten Ränder (Neumann \(\partial T / \partial n = 0\)) nehmen die Randknoten die Temperatur ihres jeweiligen Innennachbarn an: \(T_{0,1}^n = T_{1,1}^n = 40{,}0\,^\circ\text{C}\) und \(T_{1,0}^n = T_{1,1}^n = 40{,}0\,^\circ\text{C}\).</p><p>2. Einsetzen in den 5-Punkt-Stern:<br>\(T_{1,1}^{n+1} = 40{,}0 + 0{,}20 \cdot (40{,}0 + 60{,}0 + 40{,}0 + 80{,}0 - 4 \cdot 40{,}0) = 40{,}0 + 0{,}20 \cdot (220{,}0 - 160{,}0) = 40{,}0 + 12{,}0 = 52{,}0\,^\circ\text{C}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (5-Punkt-Stern an einer isolierten Ecke):</strong></p><ol>
+  <li>Durch die beiden isolierten Ränder (Neumann \(\partial T / \partial n = 0\)) nehmen die Randknoten die Temperatur ihres jeweiligen Innennachbarn an: \(T_{0,1}^n = T_{1,1}^n = 40{,}0\,^\circ\text{C}\) und \(T_{1,0}^n = T_{1,1}^n = 40{,}0\,^\circ\text{C}\).</li>
+</ol><p>2. Einsetzen in den 5-Punkt-Stern:<br>\(T_{1,1}^{n+1} = 40{,}0 + 0{,}20 \cdot (40{,}0 + 60{,}0 + 40{,}0 + 80{,}0 - 4 \cdot 40{,}0) = 40{,}0 + 0{,}20 \cdot (220{,}0 - 160{,}0) = 40{,}0 + 12{,}0 = 52{,}0\,^\circ\text{C}\).</p>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -3359,7 +3447,7 @@ byte red = (byte)(255.0 * u);</code></pre><p>Welcher Effekt tritt in einem stand
       <text>T09_Q3: C#-Code-Tracing: 1D-Array-Indexierung eines 2D-Gitters (Row-Major)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein zweidimensionales Temperaturgitter mit <code>nx = 20</code> Spalten und <code>ny = 15</code> Zeilen wird für maximale Cache-Lokalität in einem flachen 1D-Array <code>double[] T = new double[nx * ny]</code> zeilenweise (Row-Major) gespeichert. Gegeben sei folgender C#-Code:</p><pre><code class="language-csharp">int nx = 20;
+      <text><![CDATA[<p>Ein zweidimensionales Temperaturgitter mit <code>nx = 20</code> Spalten und <code>ny = 15</code> Zeilen wird für maximale Cache-Lokalität in einem flachen 1D-Array <code>double[] T = new double[nx * ny]</code> zeilenweise (Row-Major) gespeichert. Gegeben sei folgender C#-Code:</p><pre><code>int nx = 20;
 int x = 6, y = 4;
 int idx = y * nx + x;
 int southNeighborIdx = idx + nx;</code></pre><p>Welchen exakten ganzzahligen Wert hat die Variable <code>southNeighborIdx</code> (der Index des Nachbarknotens in Zeile <code>y + 1</code>, Spalte <code>x</code>)?</p>]]></text>
@@ -3374,7 +3462,7 @@ int southNeighborIdx = idx + nx;</code></pre><p>Welchen exakten ganzzahligen Wer
     <answer fraction="100" format="moodle_auto_format">
       <text>106</text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! idx = 4 * 20 + 6 = 86; southNeighborIdx = 86 + 20 = 106 (entspricht (4 + 1) * 20 + 6).</p>]]></text>
+        <text><![CDATA[<p>Richtig! idx = 4 <em> 20 + 6 = 86; southNeighborIdx = 86 + 20 = 106 (entspricht (4 + 1) </em> 20 + 6).</p>]]></text>
       </feedback>
       <tolerance>0</tolerance>
     </answer>
@@ -3404,12 +3492,15 @@ int southNeighborIdx = idx + nx;</code></pre><p>Welchen exakten ganzzahligen Wer
       <text>T09_Q4: C#-Lückentext: Berechnung der maximal stabilen Zeitschrittweite</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie den folgenden C#-Code, der für eine gegebene Maschenweite <code>dx</code> und Temperaturleitfähigkeit <code>alpha</code> zuerst die theoretische 2D-Stabilitätsgrenze <code>dtMax</code> berechnet und anschließend mit 80 % Sicherheitsfaktor die Stabilitätszahl <code>s</code> bestimmt:</p><pre><code class="language-csharp">double dtMax = (dx * [[1]]) / ([[2]] * alpha);
+      <text><![CDATA[<p>Vervollständigen Sie den folgenden C#-Code, der für eine gegebene Maschenweite <code>dx</code> und Temperaturleitfähigkeit <code>alpha</code> zuerst die theoretische 2D-Stabilitätsgrenze <code>dtMax</code> berechnet und anschließend mit 80 % Sicherheitsfaktor die Stabilitätszahl <code>s</code> bestimmt:</p><pre><code>double dtMax = (dx * [[1]]) / ([[2]] * alpha);
 double dt = 0.8 * dtMax;
 double s = (alpha * [[3]]) / (dx * dx);</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul><li><code>[[1]] = dx</code> und <code>[[2]] = 4.0</code> setzen die 2D-Grenzformel \(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha}\) um.</li><li><code>[[3]] = dt</code> berechnet die tatsächliche Fourier-Zahl \(s = \frac{\alpha \cdot \Delta t}{\Delta x^2}\) (die durch den Faktor <code>0.8</code> sicher bei \(0{,}8 \cdot 0{,}25 = 0{,}20\) liegt).</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Erklärung:</strong></p><ul>
+  <li><code>[[1]] = dx</code> und <code>[[2]] = 4.0</code> setzen die 2D-Grenzformel \(\Delta t_{\max} = \frac{\Delta x^2}{4\alpha}\) um.</li>
+  <li><code>[[3]] = dt</code> berechnet die tatsächliche Fourier-Zahl \(s = \frac{\alpha \cdot \Delta t}{\Delta x^2}\) (die durch den Faktor <code>0.8</code> sicher bei \(0{,}8 \cdot 0{,}25 = 0{,}20\) liegt).</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -3473,7 +3564,12 @@ double s = (alpha * [[3]]) / (dx * dx);</code></pre>]]></text>
       <text><![CDATA[<p>Ordnen Sie die folgenden Eigenschaften und Methoden der Klasse <code>WriteableBitmap</code> ihrer exakten technischen Funktion zu. Beachten Sie die zwei Überhang-Distraktoren.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Übersicht der WriteableBitmap-Member:</strong></p><ul><li><code>BackBuffer</code>: Basiszeiger (<code>IntPtr</code>) auf das Pixel-Array im unverwalteten Speicher.</li><li><code>BackBufferStride</code>: Zeilenlänge in <strong>Bytes</strong> (mindestens <code>PixelWidth * BytesPerPixel</code>).</li><li><code>PixelWidth</code> / <code>PixelHeight</code>: Bildabmessungen in <strong>Pixeln</strong>.</li><li><code>AddDirtyRect</code>: Invalidiert den geänderten Teilbereich für das Hardware-Rendering.</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Übersicht der WriteableBitmap-Member:</strong></p><ul>
+  <li><code>BackBuffer</code>: Basiszeiger (<code>IntPtr</code>) auf das Pixel-Array im unverwalteten Speicher.</li>
+  <li><code>BackBufferStride</code>: Zeilenlänge in <strong>Bytes</strong> (mindestens <code>PixelWidth * BytesPerPixel</code>).</li>
+  <li><code>PixelWidth</code> / <code>PixelHeight</code>: Bildabmessungen in <strong>Pixeln</strong>.</li>
+  <li><code>AddDirtyRect</code>: Invalidiert den geänderten Teilbereich für das Hardware-Rendering.</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -3589,7 +3685,7 @@ double s = (alpha * [[3]]) / (dx * dx);</code></pre>]]></text>
       <text>T09_Q7: C#-Bug-Diagnose: Falsche Zeilenadressierung bei GPU-Stride-Padding</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Auf einem Notebook mit dedizierter GPU hat ein <code>WriteableBitmap</code> der Breite <code>width = 101</code> Pixel einen durch 64 teilbaren <code>BackBufferStride = 448</code> Bytes (statt \(101 \cdot 4 = 404\) Bytes). Der Entwickler berechnet den Byte-Index jedoch über:</p><pre><code class="language-csharp">int byteIndex = (y * width + x) * 4;</code></pre><p>Welcher charakteristische Darstellungsfehler ist dadurch im angezeigten Wärmebild zu beobachten?</p>]]></text>
+      <text><![CDATA[<p>Auf einem Notebook mit dedizierter GPU hat ein <code>WriteableBitmap</code> der Breite <code>width = 101</code> Pixel einen durch 64 teilbaren <code>BackBufferStride = 448</code> Bytes (statt \(101 \cdot 4 = 404\) Bytes). Der Entwickler berechnet den Byte-Index jedoch über:</p><pre><code>int byteIndex = (y * width + x) * 4;</code></pre><p>Welcher charakteristische Darstellungsfehler ist dadurch im angezeigten Wärmebild zu beobachten?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Fehleranalyse (Scherungs-Artefakt bei Stride-Ignorierung):</strong></p><p>Wenn der Grafiktreiber am Ende jeder Zeile Padding-Bytes einfügt (hier \(448 - 404 = 44\,\text{Bytes} = 11\,\text{Pixel}\)), beginnt Zeile \(y = 1\) im Speicher erst bei Byte <code>448</code>. Schreibt der Code Zeile 1 jedoch schon ab Byte <code>404</code>, landen die ersten 11 Pixel von Zeile 1 im unsichtbaren Padding-Bereich von Zeile 0, und jede folgende Zeile verschiebt sich um weitere 11 Pixel schräg nach links.</p>]]></text>
@@ -3627,13 +3723,13 @@ double s = (alpha * [[3]]) / (dx * dx);</code></pre>]]></text>
     <answer fraction="0" format="html">
       <text><![CDATA[WPF wirft beim Aufruf von Unlock sofort eine InvalidStrideException und beendet die gesamte Anwendung.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Da (y * width + x) * 4 kleiner ist als y * BackBufferStride + x * 4, bleibt der Zugriff innerhalb des gültigen Puffers und löst keine Exception aus.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Da (y <em> width + x) </em> 4 kleiner ist als y <em> BackBufferStride + x </em> 4, bleibt der Zugriff innerhalb des gültigen Puffers und löst keine Exception aus.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
       <text><![CDATA[Die erste Zeile y = 0 wird komplett schwarz gezeichnet, während alle weiteren Zeilen normal aussehen.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Gerade für die erste Zeile (y = 0) ist y * width * 4 = 0 identisch mit y * BackBufferStride = 0; der Versatz wächst erst mit steigendem y!</p>]]></text>
+        <text><![CDATA[<p>Falsch. Gerade für die erste Zeile (y = 0) ist y <em> width </em> 4 = 0 identisch mit y * BackBufferStride = 0; der Versatz wächst erst mit steigendem y!</p>]]></text>
       </feedback>
     </answer>
   </question>
@@ -3670,7 +3766,7 @@ double s = (alpha * [[3]]) / (dx * dx);</code></pre>]]></text>
     <answer fraction="50" format="html">
       <text><![CDATA[Für die Übersetzung von unsafe-Blöcken muss in der Projektdatei AllowUnsafeBlocks aktiviert werden.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Ohne <AllowUnsafeBlocks>true</AllowUnsafeBlocks> in der .csproj-Datei lehnt der C#-Compiler jeden unsafe-Block ab.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Ohne <code>&lt;AllowUnsafeBlocks&gt;true&lt;/AllowUnsafeBlocks&gt;</code> in der .csproj-Datei lehnt der C#-Compiler jeden unsafe-Block ab.</p>]]></text>
       </feedback>
     </answer>
     <answer fraction="50" format="html">
@@ -3711,10 +3807,14 @@ double s = (alpha * [[3]]) / (dx * dx);</code></pre>]]></text>
       <text>T10_Q1: Echtzeit-Performance: 5-Punkt-Stern-Rechenaufwand &amp; Echtzeitfaktor</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein quadratisches 2D-Temperaturgitter besteht aus insgesamt \(102 \times 102\) Gitterpunkten (davon bildet jeweils 1 Reihe an jedem der vier Ränder den Rand, sodass im Inneren ein Block von \(100 \times 100\) inneren Knoten mit dem 5-Punkt-Stern berechnet wird). Pro Sekunde Echtzeit werden genau \(50\) explizite Simulationsschritte ausgeführt.</p><p>a) Wie viele einzelne innere Knoten-Auswertungen des 5-Punkt-Sterns finden in <strong>einem einzigen Zeitschritt</strong> statt?<br>Antwort: {1:NUMERICAL:=10000:0#Richtig! 100 * 100 = 10.000 innere Gitterknoten pro Zeitschritt.~%50%10404:0#Teilpunkte (50 %): Sie haben die Randknoten mitgezählt (102 * 102 = 10.404 statt 100 * 100 = 10.000).} Knoten-Updates</p><p>b) Wie viele Millisekunden (<strong>ms</strong>) Wanduhrzeit (Wall-Clock-Time) darf die Berechnung und Visualisierung eines einzelnen Zeitschritts im Mittel <strong>höchstens</strong> dauern, damit die Simulation mit \(50\,\text{Schritten/s}\) in Echtzeit Schritt hält?<br>Antwort: {1:NUMERICAL:=20.0:0.1#Richtig! 1000 ms / 50 Schritte = 20,0 ms maximales Zeitbudget pro Schritt.~%50%0.02:0.001#Teilpunkte (50 %): Zahlenwert in Sekunden (0,02 s) statt in Millisekunden (20 ms) angegeben.} ms</p>]]></text>
+      <text><![CDATA[<p>Ein quadratisches 2D-Temperaturgitter besteht aus insgesamt \(102 \times 102\) Gitterpunkten (davon bildet jeweils 1 Reihe an jedem der vier Ränder den Rand, sodass im Inneren ein Block von \(100 \times 100\) inneren Knoten mit dem 5-Punkt-Stern berechnet wird). Pro Sekunde Echtzeit werden genau \(50\) explizite Simulationsschritte ausgeführt.</p><p>a) Wie viele einzelne innere Knoten-Auswertungen des 5-Punkt-Sterns finden in <strong>einem einzigen Zeitschritt</strong> statt?<br>Antwort: {1:NUMERICAL:=10000:0#Richtig! 100 <em> 100 = 10.000 innere Gitterknoten pro Zeitschritt.~%50%10404:0#Teilpunkte (50 %): Sie haben die Randknoten mitgezählt (102 </em> 102 = 10.404 statt 100 * 100 = 10.000).} Knoten-Updates</p><p>b) Wie viele Millisekunden (<strong>ms</strong>) Wanduhrzeit (Wall-Clock-Time) darf die Berechnung und Visualisierung eines einzelnen Zeitschritts im Mittel <strong>höchstens</strong> dauern, damit die Simulation mit \(50\,\text{Schritten/s}\) in Echtzeit Schritt hält?<br>Antwort: {1:NUMERICAL:=20.0:0.1#Richtig! 1000 ms / 50 Schritte = 20,0 ms maximales Zeitbudget pro Schritt.~%50%0.02:0.001#Teilpunkte (50 %): Zahlenwert in Sekunden (0,02 s) statt in Millisekunden (20 ms) angegeben.} ms</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>1. Bei \(102 \times 102\) Gesamtknoten entfallen je 2 Knoten pro Raumrichtung auf die Ränder (Index <code>0</code> und Index <code>101</code>). Es verbleiben \(100 \times 100 = 10\,000\) innere Knoten pro Schritt (und \(500\,000\) Updates pro Sekunde).</p><p>2. Für 50 Schritte pro Sekunde Echtzeit steht pro Schritt ein Zeitbudget von \(\Delta t_{\text{wall,max}} = \frac{1000\,\text{ms}}{50} = 20{,}0\,\text{ms}\) zur Verfügung.</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ol>
+  <li>Bei \(102 \times 102\) Gesamtknoten entfallen je 2 Knoten pro Raumrichtung auf die Ränder (Index <code>0</code> und Index <code>101</code>). Es verbleiben \(100 \times 100 = 10\,000\) innere Knoten pro Schritt (und \(500\,000\) Updates pro Sekunde).</li>
+</ol><ol>
+  <li>Für 50 Schritte pro Sekunde Echtzeit steht pro Schritt ein Zeitbudget von \(\Delta t_{\text{wall,max}} = \frac{1000\,\text{ms}}{50} = 20{,}0\,\text{ms}\) zur Verfügung.</li>
+</ol>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -3730,7 +3830,11 @@ double s = (alpha * [[3]]) / (dx * dx);</code></pre>]]></text>
       <text><![CDATA[<p>Ein Körper fällt ab \(t_0 = 0\,\text{s}\) aus der Ruhe (\(v_0 = 0{,}0\,\text{m/s}\)) von einer Starthöhe \(y_0 = 30{,}0\,\text{m}\) unter konstanter Erdbeschleunigung \(g = 10{,}0\,\text{m/s}^2\) nach unten.</p><p>Berechnen Sie die neue Höhe \(y_1\) (in <strong>Metern</strong>) nach einem Zeitschritt von \(\Delta t = 0{,}40\,\text{s}\) mit dem <strong>zweistufigen Heun-Verfahren (RK2)</strong>.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (Heun-Verfahren beim freien Fall):</strong></p><p>1. <strong>Startsteigungen bei \(t_0\):</strong> \(k_{1,y} = v_0 = 0{,}0\,\text{m/s}\), \(k_{1,v} = -g = -10{,}0\,\text{m/s}^2\).</p><p>2. <strong>Prädiktor bei \(t_1 = 0{,}40\,\text{s}\):</strong><br>\(\tilde{y}_1 = 30{,}0 + 0{,}40 \cdot 0{,}0 = 30{,}0\,\text{m}\), \(\tilde{v}_1 = 0{,}0 + 0{,}40 \cdot (-10{,}0) = -4{,}0\,\text{m/s}\).</p><p>3. <strong>Endsteigungen am Prädiktorpunkt:</strong> \(k_{2,y} = \tilde{v}_1 = -4{,}0\,\text{m/s}\), \(k_{2,v} = -10{,}0\,\text{m/s}^2\).</p><p>4. <strong>Heun-Korrektor für die Höhe:</strong><br>\(y_1 = y_0 + \frac{\Delta t}{2} (k_{1,y} + k_{2,y}) = 30{,}0 + 0{,}20 \cdot (0{,}0 - 4{,}0) = 29{,}2\,\text{m}\).<br><em>Bemerkung:</em> Da das Heun-Verfahren die Ordnung 2 besitzt, integriert es quadratische Parabeln ohne jeden Diskretisierungsfehler exakt!</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (Heun-Verfahren beim freien Fall):</strong></p><ol>
+  <li><strong>Startsteigungen bei \(t_0\):</strong> \(k_{1,y} = v_0 = 0{,}0\,\text{m/s}\), \(k_{1,v} = -g = -10{,}0\,\text{m/s}^2\).</li>
+</ol><p>2. <strong>Prädiktor bei \(t_1 = 0{,}40\,\text{s}\):</strong><br>\(\tilde{y}_1 = 30{,}0 + 0{,}40 \cdot 0{,}0 = 30{,}0\,\text{m}\), \(\tilde{v}_1 = 0{,}0 + 0{,}40 \cdot (-10{,}0) = -4{,}0\,\text{m/s}\).</p><ol>
+  <li><strong>Endsteigungen am Prädiktorpunkt:</strong> \(k_{2,y} = \tilde{v}_1 = -4{,}0\,\text{m/s}\), \(k_{2,v} = -10{,}0\,\text{m/s}^2\).</li>
+</ol><p>4. <strong>Heun-Korrektor für die Höhe:</strong><br>\(y_1 = y_0 + \frac{\Delta t}{2} (k_{1,y} + k_{2,y}) = 30{,}0 + 0{,}20 \cdot (0{,}0 - 4{,}0) = 29{,}2\,\text{m}\).<br><em>Bemerkung:</em> Da das Heun-Verfahren die Ordnung 2 besitzt, integriert es quadratische Parabeln ohne jeden Diskretisierungsfehler exakt!</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -3739,7 +3843,7 @@ double s = (alpha * [[3]]) / (dx * dx);</code></pre>]]></text>
     <answer fraction="100" format="moodle_auto_format">
       <text>29.2</text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! k1_y = v_0 = 0 m/s; Prädiktor v_pred = -4,0 m/s (= k2_y); Korrektor y_1 = 30,0 + 0,5 * 0,40 * (0 + (-4,0)) = 29,2 m (trifft bei konstanter Beschleunigung exakt die analytische Parabel!).</p>]]></text>
+        <text><![CDATA[<p>Exakt! k1_y = v_0 = 0 m/s; Prädiktor v_pred = -4,0 m/s (= k2_y); Korrektor y_1 = 30,0 + 0,5 <em> 0,40 </em> (0 + (-4,0)) = 29,2 m (trifft bei konstanter Beschleunigung exakt die analytische Parabel!).</p>]]></text>
       </feedback>
       <tolerance>0.02</tolerance>
     </answer>
@@ -3769,8 +3873,8 @@ double s = (alpha * [[3]]) / (dx * dx);</code></pre>]]></text>
       <text>T10_Q3: C#-Code-Tracing: Extraktion des Rot-Kanals aus einem Bgra32-uint</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Gegeben sei ein gepackter 32-Bit-Farbwert im Format <code>Bgra32</code> (Little-Endian <code>0xAARRGGBB</code>) sowie folgende Bit-Manipulationszeile in C#:</p><pre><code class="language-csharp">uint packedColor = 0xFFC86432;
-byte channel = (byte)((packedColor >> 16) & 0xFF);</code></pre><p>Welchen <strong>dezimalen</strong> Zahlenwert (Basis 10) hat die Variable <code>channel</code> nach der Ausführung?</p>]]></text>
+      <text><![CDATA[<p>Gegeben sei ein gepackter 32-Bit-Farbwert im Format <code>Bgra32</code> (Little-Endian <code>0xAARRGGBB</code>) sowie folgende Bit-Manipulationszeile in C#:</p><pre><code>uint packedColor = 0xFFC86432;
+byte channel = (byte)((packedColor &gt;&gt; 16) &amp; 0xFF);</code></pre><p>Welchen <strong>dezimalen</strong> Zahlenwert (Basis 10) hat die Variable <code>channel</code> nach der Ausführung?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>Im Hexadezimalwert <code>0xFFC86432</code> stehen die Bytes für: Alpha = <code>0xFF</code> (255), Rot = <code>0xC8</code> (200), Grün = <code>0x64</code> (100), Blau = <code>0x32</code> (50). Durch den Rechts-Shift <code>&gt;&gt; 16</code> gelangt das Rot-Byte <code>0xC8</code> in die untersten 8 Bits. Umrechnung ins Dezimalsystem: \(\text{C}_{16} = 12\), also \(12 \cdot 16 + 8 = 192 + 8 = 200\).</p>]]></text>
@@ -3812,12 +3916,16 @@ byte channel = (byte)((packedColor >> 16) & 0xFF);</code></pre><p>Welchen <stron
       <text>T10_Q4: C#-Lückentext: Symplektischer (semi-impliziter) Euler-Schritt</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie den folgenden C#-Code für einen <strong>semi-impliziten (symplektischen) Euler-Schritt</strong> eines Feder-Masse-Schwingers (Masse <code>m</code>, Federsteifigkeit <code>c</code>), bei dem zuerst die neue Geschwindigkeit berechnet und unmittelbar danach für das Orts-Update genutzt wird:</p><pre><code class="language-csharp">double a = -(c / m) * [[1]];
+      <text><![CDATA[<p>Vervollständigen Sie den folgenden C#-Code für einen <strong>semi-impliziten (symplektischen) Euler-Schritt</strong> eines Feder-Masse-Schwingers (Masse <code>m</code>, Federsteifigkeit <code>c</code>), bei dem zuerst die neue Geschwindigkeit berechnet und unmittelbar danach für das Orts-Update genutzt wird:</p><pre><code>double a = -(c / m) * [[1]];
 v = v + [[2]] * a;
 x = x + dt * [[3]];</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Erklärung (Symplektischer Euler):</strong></p><ul><li><code>[[1]] = x</code>: Die Rückstellbeschleunigung \(a_n = -\frac{c}{m} x_n\) hängt von der aktuellen Auslenkung <code>x</code> ab.</li><li><code>[[2]] = dt</code>: Die Geschwindigkeit wird auf \(v_{n+1} = v_n + \Delta t \cdot a_n\) aktualisiert.</li><li><code>[[3]] = v</code>: Das Orts-Update \(x_{n+1} = x_n + \Delta t \cdot v_{n+1}\) nutzt bereits die neue Geschwindigkeit <code>v</code>, wodurch das Verfahren energieerhaltend (symplektisch) wird.</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Erklärung (Symplektischer Euler):</strong></p><ul>
+  <li><code>[[1]] = x</code>: Die Rückstellbeschleunigung \(a_n = -\frac{c}{m} x_n\) hängt von der aktuellen Auslenkung <code>x</code> ab.</li>
+  <li><code>[[2]] = dt</code>: Die Geschwindigkeit wird auf \(v_{n+1} = v_n + \Delta t \cdot a_n\) aktualisiert.</li>
+  <li><code>[[3]] = v</code>: Das Orts-Update \(x_{n+1} = x_n + \Delta t \cdot v_{n+1}\) nutzt bereits die neue Geschwindigkeit <code>v</code>, wodurch das Verfahren energieerhaltend (symplektisch) wird.</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -3985,7 +4093,7 @@ x = x + dt * [[3]];</code></pre>]]></text>
       <text>T10_Q7: C#-Bug-Diagnose: Fehlender Lock/Unlock-Schutz beim WriteableBitmap-Zugriff</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Entwickler schreibt eine Methode zur Aktualisierung eines <code>WriteableBitmap bmp</code>, verzichtet aber vermeintlich zur Optimierung auf die Aufrufe von <code>bmp.Lock()</code> und <code>bmp.Unlock()</code>:</p><pre><code class="language-csharp">unsafe {
+      <text><![CDATA[<p>Ein Entwickler schreibt eine Methode zur Aktualisierung eines <code>WriteableBitmap bmp</code>, verzichtet aber vermeintlich zur Optimierung auf die Aufrufe von <code>bmp.Lock()</code> und <code>bmp.Unlock()</code>:</p><pre><code>unsafe {
     uint* p = (uint*)bmp.BackBuffer;
     p[0] = 0xFFFFFFFF;
 }
@@ -4047,7 +4155,11 @@ bmp.AddDirtyRect(new Int32Rect(0, 0, 1, 1));</code></pre><p>Wie reagiert WPF zur
       <text><![CDATA[<p>Welche der folgenden übergreifenden Aussagen zu den Kernthemen aus Kapitel 00, 01 und 02 (Modellbildung, Zeitintegration und 2D-Pixelvisualisierung) sind <strong>korrekt</strong>? (Mehrere Antworten möglich)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Gesamtzusammenfassung (Quiz 01):</strong></p><ul><li>In der Numerik besteht stets der Grundkonflikt zwischen <strong>Genauigkeit / Stabilität</strong> (kleines \(\Delta t\), kleines \(\Delta x\)) und <strong>Echtzeit-Rechenaufwand</strong>.</li><li>Bei \(s = 0{,}25\) gilt \(1 - 4s = 0\), wodurch der neue Knotenwert genau das arithmetische Mittel seiner vier Nachbarn bildet.</li><li>Für höchste Performance kombiniert man einen echten Pointer-/Referenz-Swap <code>(T, T_next) = (T_next, T)</code> in \(\mathcal{O}(1)\) mit direktem <code>unsafe</code>-Schreibzugriff auf den <code>BackBuffer</code> eines <code>WriteableBitmap</code>.</li></ul>]]></text>
+      <text><![CDATA[<p><strong>Gesamtzusammenfassung (Quiz 01):</strong></p><ul>
+  <li>In der Numerik besteht stets der Grundkonflikt zwischen <strong>Genauigkeit / Stabilität</strong> (kleines \(\Delta t\), kleines \(\Delta x\)) und <strong>Echtzeit-Rechenaufwand</strong>.</li>
+  <li>Bei \(s = 0{,}25\) gilt \(1 - 4s = 0\), wodurch der neue Knotenwert genau das arithmetische Mittel seiner vier Nachbarn bildet.</li>
+  <li>Für höchste Performance kombiniert man einen echten Pointer-/Referenz-Swap <code>(T, T_next) = (T_next, T)</code> in \(\mathcal{O}(1)\) mit direktem <code>unsafe</code>-Schreibzugriff auf den <code>BackBuffer</code> eines <code>WriteableBitmap</code>.</li>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>

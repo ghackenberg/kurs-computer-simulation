@@ -18,17 +18,16 @@
       <text>Q02_T01_Q1: Affine 2D-Transformation: Uniform Scaling und Y-Inversion (WorldToScreen)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein ebenes Brückenfachwerk besitzt die physikalische Ausdehnung \(\Delta X = 40\,\text{m}\) (von \(x_{\min}=0\,\text{m}\) bis \(x_{\max}=40\,\text{m}\)) und \(\Delta Y = 10\,\text{m}\) (von \(y_{\min}=0\,\text{m}\) bis \(y_{\max}=10\,\text{m}\)). Es soll verzerrungsfrei (Uniform Scaling) auf einem WPF-Canvas mit einer nutzbaren Zeichenfläche (nach Randabzug) von \(W_{\text{eff}} = 800\,\text{px}\) Breite und \(H_{\text{eff}} = 300\,\text{px}\) Höhe dargestellt werden. Die Gesamthöhe des Canvas beträgt \(H_{\text{canvas}} = 360\,\text{px}\), und das Bauteil wird vertikal mit einem unteren Randabstand (Offset) von \(\text{offset}_Y = 80\,\text{px}\) vom unteren Bildschirmrand zentriert.</p>
-<p><strong>a)</strong> Berechnen Sie den verzerrungsfreien Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=20:0.1#Exakt! s = min(800/40, 300/10) = min(20, 30) = 20 px/m.~%50%30:0.1#Teilpunkte: Sie haben max(sx, sy) = 30 px/m statt min(sx, sy) gewählt (Bauteil ragt horizontal aus dem Canvas!).}</p>
-<p><strong>b)</strong> Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{screen}}\) (in \(\text{px}\)) für einen Oberkanten-Knoten bei \(y = 7{,}0\,\text{m}\) unter Berücksichtigung der WPF-Y-Achsen-Inversion: {1:NUMERICAL:=140:0.5#Richtig! Y_screen = 360 - (80 + 7.0 * 20) = 360 - 220 = 140 px.~%50%220:0.5#Teilpunkte: 220 px ist der Abstand vom unteren Rand ohne Y-Inversion (360 - 220 = 140 px).}</p>]]></text>
+      <text><![CDATA[<p>Ein ebenes Brückenfachwerk besitzt die physikalische Ausdehnung \(\Delta X = 40\,\text{m}\) (von \(x_{\min}=0\,\text{m}\) bis \(x_{\max}=40\,\text{m}\)) und \(\Delta Y = 10\,\text{m}\) (von \(y_{\min}=0\,\text{m}\) bis \(y_{\max}=10\,\text{m}\)). Es soll verzerrungsfrei (Uniform Scaling) auf einem WPF-Canvas mit einer nutzbaren Zeichenfläche (nach Randabzug) von \(W_{\text{eff}} = 800\,\text{px}\) Breite und \(H_{\text{eff}} = 300\,\text{px}\) Höhe dargestellt werden. Die Gesamthöhe des Canvas beträgt \(H_{\text{canvas}} = 360\,\text{px}\), und das Bauteil wird vertikal mit einem unteren Randabstand (Offset) von \(\text{offset}_Y = 80\,\text{px}\) vom unteren Bildschirmrand zentriert.</p><p><strong>a)</strong> Berechnen Sie den verzerrungsfreien Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=20:0.1#Exakt! s = min(800/40, 300/10) = min(20, 30) = 20 px/m.~%50%30:0.1#Teilpunkte: Sie haben max(sx, sy) = 30 px/m statt min(sx, sy) gewählt (Bauteil ragt horizontal aus dem Canvas!).}</p><p><strong>b)</strong> Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{screen}}\) (in \(\text{px}\)) für einen Oberkanten-Knoten bei \(y = 7{,}0\,\text{m}\) unter Berücksichtigung der WPF-Y-Achsen-Inversion: {1:NUMERICAL:=140:0.5#Richtig! Y_screen = 360 - (80 + 7.0 * 20) = 360 - 220 = 140 px.~%50%220:0.5#Teilpunkte: 220 px ist der Abstand vom unteren Rand ohne Y-Inversion (360 - 220 = 140 px).}</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ul>
   <li><strong>Horizontaler und vertikaler Skalierungsfaktor:</strong> \(s_x = \frac{800\,\text{px}}{40\,\text{m}} = 20\,\text{px/m}\), \(s_y = \frac{300\,\text{px}}{10\,\text{m}} = 30\,\text{px/m}\).</li>
+</ul><ul>
   <li><strong>Uniform Scaling (Verzerrungsfreiheit):</strong> \(s = \min(s_x, s_y) = \min(20, 30) = 20\,\text{px/m}\).</li>
+</ul><ul>
   <li><strong>Y-Transformation mit Achseninversion:</strong> Da die WPF-Y-Achse nach unten zeigt, gilt \(Y_{\text{screen}} = H_{\text{canvas}} - (\text{offset}_Y + (y - y_{\min}) \cdot s) = 360 - (80 + 7{,}0 \cdot 20) = 360 - 220 = 140\,\text{px}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -41,13 +40,10 @@
       <text>Q02_T01_Q2: Welford-Online-Algorithmus: Laufende Mittelwert-Aktualisierung</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Prüfstand überwacht die Lagertemperatur fortlaufend mittels des numerisch stabilen Welford-Online-Algorithmus. Nach \(k-1 = 4\) Messwerten beträgt der laufende Mittelwert \(\mu_4 = 50{,}0\,^\circ\text{C}\). Nun trifft als \(k = 5\)-ter Messwert \(x_5 = 60{,}0\,^\circ\text{C}\) ein.</p>
-<p>Berechnen Sie den neuen laufenden Mittelwert \(\mu_5\) (in \(^\circ\text{C}\)) unmittelbar nach Verarbeitung des fünften Messwerts.</p>]]></text>
+      <text><![CDATA[<p>Ein Prüfstand überwacht die Lagertemperatur fortlaufend mittels des numerisch stabilen Welford-Online-Algorithmus. Nach \(k-1 = 4\) Messwerten beträgt der laufende Mittelwert \(\mu_4 = 50{,}0\,^\circ\text{C}\). Nun trifft als \(k = 5\)-ter Messwert \(x_5 = 60{,}0\,^\circ\text{C}\) ein.</p><p>Berechnen Sie den neuen laufenden Mittelwert \(\mu_5\) (in \(^\circ\text{C}\)) unmittelbar nach Verarbeitung des fünften Messwerts.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (Welford-Schritt für \(k=5\)):</strong></p>
-<p>Abweichung vom bisherigen Mittelwert: \(\Delta_1 = x_5 - \mu_4 = 60{,}0 - 50{,}0 = 10{,}0\,^\circ\text{C}\).<br>
-Aktualisierter Mittelwert: \(\mu_5 = \mu_4 + \frac{\Delta_1}{k} = 50{,}0 + \frac{10{,}0}{5} = 52{,}0\,^\circ\text{C}\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung (Welford-Schritt für \(k=5\)):</strong></p><p>Abweichung vom bisherigen Mittelwert: \(\Delta_1 = x_5 - \mu_4 = 60{,}0 - 50{,}0 = 10{,}0\,^\circ\text{C}\).</p><p>Aktualisierter Mittelwert: \(\mu_5 = \mu_4 + \frac{\Delta_1}{k} = 50{,}0 + \frac{10{,}0}{5} = 52{,}0\,^\circ\text{C}\).</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -79,16 +75,13 @@ Aktualisierter Mittelwert: \(\mu_5 = \mu_4 + \frac{\Delta_1}{k} = 50{,}0 + \frac
       <text>Q02_T01_Q3: C#-Code-Tracing: Allokationsfreier Ringpuffer (Modulo-Arithmetik)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Gegeben sei folgender Ausschnitt eines allokationsfreien Ringpuffers für Echtzeit-Sensordaten:</p>
-<pre><code class="language-csharp">int capacity = 10;
+      <text><![CDATA[<p>Gegeben sei folgender Ausschnitt eines allokationsfreien Ringpuffers für Echtzeit-Sensordaten:</p><pre><code>int capacity = 10;
 int head = 7;     // Index des ältesten Elements
 int logicalIndex = 5; // 0-basierter logischer Index (5 = sechstes Element)
-int physicalIndex = (head + logicalIndex) % capacity;</code></pre>
-<p>Welchen numerischen Wert besitzt <code>physicalIndex</code> nach der Ausführung?</p>]]></text>
+int physicalIndex = (head + logicalIndex) % capacity;</code></pre><p>Welchen numerischen Wert besitzt <code>physicalIndex</code> nach der Ausführung?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<p>Der Ringpuffer bildet den logischen Index über Modulo-Arithmetik auf das interne Array ab: \((7 + 5) \bmod 10 = 12 \bmod 10 = 2\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>Der Ringpuffer bildet den logischen Index über Modulo-Arithmetik auf das interne Array ab: \((7 + 5) \bmod 10 = 12 \bmod 10 = 2\).</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -120,8 +113,7 @@ int physicalIndex = (head + logicalIndex) % capacity;</code></pre>
       <text>Q02_T01_Q4: C#-Code-Lückentext: Gedrehte Pfeilspitze im Screen Space konstruieren</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zur Berechnung des linken Flügelpunkts <code>leftWing</code> einer Kraftpfeilspitze mit konstanter Pixellänge <code>arrowLen = 12.0</code> und halber Pfeilbreite <code>arrowWidth = 5.0</code> an der Pfeilspitze <code>tip</code> (Einheitsrichtungsvektor <code>(ux, uy)</code> im Screen Space):</p>
-<pre><code class="language-csharp">double nx = [[1]]; // Normalenvektor X-Komponente (90 Grad gedreht)
+      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zur Berechnung des linken Flügelpunkts <code>leftWing</code> einer Kraftpfeilspitze mit konstanter Pixellänge <code>arrowLen = 12.0</code> und halber Pfeilbreite <code>arrowWidth = 5.0</code> an der Pfeilspitze <code>tip</code> (Einheitsrichtungsvektor <code>(ux, uy)</code> im Screen Space):</p><pre><code>double nx = [[1]]; // Normalenvektor X-Komponente (90 Grad gedreht)
 double ny = [[2]]; // Normalenvektor Y-Komponente
 Point leftWing = new Point(
     tip.X - [[3]] * arrowLen + nx * arrowWidth,
@@ -308,14 +300,12 @@ Point leftWing = new Point(
       <text>Q02_T01_Q7: C#-Bug-Diagnose: Bounding-Box-Jitter beim interaktiven Knoten-Dragging</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Studierender implementiert das Verschieben eines Randknotens per Maus (<code>MouseMove</code>) auf dem WPF-Canvas. Sobald er den äußersten rechten Knoten zieht, zittert und springt das gesamte Fachwerk heftig hin und her:</p>
-<pre><code class="language-csharp">void OnCanvasMouseMove(object sender, MouseEventArgs e) {
+      <text><![CDATA[<p>Ein Studierender implementiert das Verschieben eines Randknotens per Maus (<code>MouseMove</code>) auf dem WPF-Canvas. Sobald er den äußersten rechten Knoten zieht, zittert und springt das gesamte Fachwerk heftig hin und her:</p><pre><code>void OnCanvasMouseMove(object sender, MouseEventArgs e) {
     if (_draggedNode == null) return;
     var transform = ComputeAutoFitTransform(_truss.GetBoundingBox());
     _draggedNode.Position = transform.ScreenToWorld(e.GetPosition(MainCanvas));
     RedrawTruss(transform);
-}</code></pre>
-<p>Was ist die exakte mathematisch-architektonische Ursache dieses Jitter-Bugs?</p>]]></text>
+}</code></pre><p>Was ist die exakte mathematisch-architektonische Ursache dieses Jitter-Bugs?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Lösung:</strong> Während einer laufenden Drag-Operation muss die zu Beginn (in <code>MouseDown</code>) gültige <code>Transform2D</code> eingefroren (gecacht) bleiben, bis die Maustaste in <code>MouseUp</code> wieder losgelassen wird.</p>]]></text>
@@ -437,17 +427,16 @@ Point leftWing = new Point(
       <text>Q02_T02_Q1: Affine 2D-Transformation: Letterboxing-Zentrierung und X-Screen-Koordinate</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein hydraulischer Steuerblock mit den Abmessungen \(\Delta X = 2{,}0\,\text{m}\) (\(x_{\min}=0\,\text{m}\), \(x_{\max}=2{,}0\,\text{m}\)) und \(\Delta Y = 2{,}0\,\text{m}\) soll mit einem umlaufenden Rand von \(\text{margin} = 40\,\text{px}\) verzerrungsfrei auf einem WPF-Canvas der Gesamtgröße \(W_{\text{canvas}} = 680\,\text{px}\) mal \(H_{\text{canvas}} = 480\,\text{px}\) zentriert werden (nutzbare Fläche \(W_{\text{eff}} = 600\,\text{px}\), \(H_{\text{eff}} = 400\,\text{px}\)). Der uniforme Skalierungsfaktor beträgt \(s = 200\,\text{px/m}\).</p>
-<p><strong>a)</strong> Berechnen Sie den gesamten horizontalen Randabstand \(\text{offset}_X\) (in \(\text{px}\)) vom linken Canvas-Rand bis zum Beginn des Bauteils bei \(x_{\min}=0\,\text{m}\) (inklusive <code>margin</code> und Letterboxing-Zentrierung): {1:NUMERICAL:=140:0.5#Exakt! Gebrauchte Breite = 2.0 * 200 = 400 px; Freiraum = 600 - 400 = 200 px; offset_X = 40 + 200/2 = 140 px.~%50%100:0.5#Teilpunkte: 100 px ist nur der halbe Letterboxing-Freiraum (600-400)/2 ohne den linken Rand margin = 40 px.}</p>
-<p><strong>b)</strong> Berechnen Sie die horizontale Bildschirmkoordinate \(X_{\text{screen}}\) (in \(\text{px}\)) für eine Ventilbohrung bei \(x = 1{,}25\,\text{m}\): {1:NUMERICAL:=390:0.5#Richtig! X_screen = 140 + 1.25 * 200 = 140 + 250 = 390 px.~%50%290:0.5#Teilpunkte: Folgefehler aus Teil a (40 px margin vergessen: 40 + 250 = 290 px) oder unzentriert gerechnet.}</p>]]></text>
+      <text><![CDATA[<p>Ein hydraulischer Steuerblock mit den Abmessungen \(\Delta X = 2{,}0\,\text{m}\) (\(x_{\min}=0\,\text{m}\), \(x_{\max}=2{,}0\,\text{m}\)) und \(\Delta Y = 2{,}0\,\text{m}\) soll mit einem umlaufenden Rand von \(\text{margin} = 40\,\text{px}\) verzerrungsfrei auf einem WPF-Canvas der Gesamtgröße \(W_{\text{canvas}} = 680\,\text{px}\) mal \(H_{\text{canvas}} = 480\,\text{px}\) zentriert werden (nutzbare Fläche \(W_{\text{eff}} = 600\,\text{px}\), \(H_{\text{eff}} = 400\,\text{px}\)). Der uniforme Skalierungsfaktor beträgt \(s = 200\,\text{px/m}\).</p><p><strong>a)</strong> Berechnen Sie den gesamten horizontalen Randabstand \(\text{offset}_X\) (in \(\text{px}\)) vom linken Canvas-Rand bis zum Beginn des Bauteils bei \(x_{\min}=0\,\text{m}\) (inklusive <code>margin</code> und Letterboxing-Zentrierung): {1:NUMERICAL:=140:0.5#Exakt! Gebrauchte Breite = 2.0 * 200 = 400 px; Freiraum = 600 - 400 = 200 px; offset_X = 40 + 200/2 = 140 px.~%50%100:0.5#Teilpunkte: 100 px ist nur der halbe Letterboxing-Freiraum (600-400)/2 ohne den linken Rand margin = 40 px.}</p><p><strong>b)</strong> Berechnen Sie die horizontale Bildschirmkoordinate \(X_{\text{screen}}\) (in \(\text{px}\)) für eine Ventilbohrung bei \(x = 1{,}25\,\text{m}\): {1:NUMERICAL:=390:0.5#Richtig! X_screen = 140 + 1.25 * 200 = 140 + 250 = 390 px.~%50%290:0.5#Teilpunkte: Folgefehler aus Teil a (40 px margin vergessen: 40 + 250 = 290 px) oder unzentriert gerechnet.}</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ul>
   <li><strong>Belegte Breite in Pixeln:</strong> \(W_{\text{used}} = \Delta X \cdot s = 2{,}0\,\text{m} \cdot 200\,\text{px/m} = 400\,\text{px}\).</li>
+</ul><ul>
   <li><strong>Horizontaler Letterboxing-Offset:</strong> \(\text{offset}_X = \text{margin} + \frac{W_{\text{eff}} - W_{\text{used}}}{2} = 40 + \frac{600 - 400}{2} = 40 + 100 = 140\,\text{px}\).</li>
+</ul><ul>
   <li><strong>Bildschirmkoordinate:</strong> \(X_{\text{screen}} = \text{offset}_X + (x - x_{\min}) \cdot s = 140 + 1{,}25 \cdot 200 = 390\,\text{px}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -460,13 +449,10 @@ Point leftWing = new Point(
       <text>Q02_T02_Q2: Welford-Online-Algorithmus: Aktualisierung der Abweichungsquadratsumme M2</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einer Welford-Statistik-Instanz liegen nach \(k-1 = 3\) Messungen der Mittelwert \(\mu_3 = 10{,}0\,\text{bar}\) und die Quadratsumme \(M_{2,3} = 14{,}0\,\text{bar}^2\) vor. Der \(k = 4\)-te Messwert beträgt \(x_4 = 18{,}0\,\text{bar}\), woraus sich \(\Delta_1 = 8{,}0\,\text{bar}\) und der neue Mittelwert \(\mu_4 = 12{,}0\,\text{bar}\) ergeben.</p>
-<p>Berechnen Sie den neuen Wert der Quadratsumme \(M_{2,4}\) (in \(\text{bar}^2\)) nach dem vierten Messwert.</p>]]></text>
+      <text><![CDATA[<p>In einer Welford-Statistik-Instanz liegen nach \(k-1 = 3\) Messungen der Mittelwert \(\mu_3 = 10{,}0\,\text{bar}\) und die Quadratsumme \(M_{2,3} = 14{,}0\,\text{bar}^2\) vor. Der \(k = 4\)-te Messwert beträgt \(x_4 = 18{,}0\,\text{bar}\), woraus sich \(\Delta_1 = 8{,}0\,\text{bar}\) und der neue Mittelwert \(\mu_4 = 12{,}0\,\text{bar}\) ergeben.</p><p>Berechnen Sie den neuen Wert der Quadratsumme \(M_{2,4}\) (in \(\text{bar}^2\)) nach dem vierten Messwert.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<p>Im Welford-Algorithmus wird \(M_2\) mit dem Produkt aus der Abweichung vom <em>alten</em> Mittelwert (\(\Delta_1 = x_k - \mu_{k-1} = 8{,}0\)) und der Abweichung vom <em>neuen</em> Mittelwert (\(\Delta_2 = x_k - \mu_k = 18{,}0 - 12{,}0 = 6{,}0\)) aktualisiert:<br>
-\(M_{2,4} = M_{2,3} + \Delta_1 \cdot \Delta_2 = 14{,}0 + 8{,}0 \cdot 6{,}0 = 62{,}0\,\text{bar}^2\).</p>]]></text>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><p>Im Welford-Algorithmus wird \(M_2\) mit dem Produkt aus der Abweichung vom <em>alten</em> Mittelwert (\(\Delta_1 = x_k - \mu_{k-1} = 8{,}0\)) und der Abweichung vom <em>neuen</em> Mittelwert (\(\Delta_2 = x_k - \mu_k = 18{,}0 - 12{,}0 = 6{,}0\)) aktualisiert:</p><p>\(M_{2,4} = M_{2,3} + \Delta_1 \cdot \Delta_2 = 14{,}0 + 8{,}0 \cdot 6{,}0 = 62{,}0\,\text{bar}^2\).</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -498,12 +484,10 @@ Point leftWing = new Point(
       <text>Q02_T02_Q3: C#-Code-Tracing: Hit-Testing-Abstandsquadrat im Screen Space</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Beim Maus-Klick auf ein WPF-Canvas prüft folgende Methode, ob ein Fachwerkknoten bei <code>nodeScreen = (120, 200)</code> innerhalb des Fangradius <code>snapRadius = 10.0</code> getroffen wurde:</p>
-<pre><code class="language-csharp">double mouseX = 126.0, mouseY = 192.0;
+      <text><![CDATA[<p>Beim Maus-Klick auf ein WPF-Canvas prüft folgende Methode, ob ein Fachwerkknoten bei <code>nodeScreen = (120, 200)</code> innerhalb des Fangradius <code>snapRadius = 10.0</code> getroffen wurde:</p><pre><code>double mouseX = 126.0, mouseY = 192.0;
 double dx = mouseX - 120.0;
 double dy = mouseY - 200.0;
-double distSquared = dx * dx + dy * dy;</code></pre>
-<p>Welchen numerischen Wert hat <code>distSquared</code> (in \(\text{px}^2\))?</p>]]></text>
+double distSquared = dx * dx + dy * dy;</code></pre><p>Welchen numerischen Wert hat <code>distSquared</code> (in \(\text{px}^2\))?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong> \(\Delta x = 126 - 120 = 6\,\text{px}\), \(\Delta y = 192 - 200 = -8\,\text{px}\). Damit ist \(\text{distSquared} = 6^2 + (-8)^2 = 36 + 64 = 100\,\text{px}^2\). Da man im Hit-Testing <code>distSquared &lt;= snapRadius * snapRadius</code> prüft, spart man sich den teuren <code>Math.Sqrt</code>-Aufruf.</p>]]></text>
@@ -538,8 +522,7 @@ double distSquared = dx * dx + dy * dy;</code></pre>
       <text>Q02_T02_Q4: C#-Code-Lückentext: Rücktransformation ScreenToWorld für Maus-Interaktion</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie die Methode <code>ScreenToWorld</code> in der Klasse <code>Transform2D</code>, die einen Mausklick <code>(xScreen, yScreen)</code> zurück in physikalische Weltkoordinaten <code>(xWorld, yWorld)</code> umrechnet:</p>
-<pre><code class="language-csharp">public (double xWorld, double yWorld) ScreenToWorld(double xScreen, double yScreen)
+      <text><![CDATA[<p>Vervollständigen Sie die Methode <code>ScreenToWorld</code> in der Klasse <code>Transform2D</code>, die einen Mausklick <code>(xScreen, yScreen)</code> zurück in physikalische Weltkoordinaten <code>(xWorld, yWorld)</code> umrechnet:</p><pre><code>public (double xWorld, double yWorld) ScreenToWorld(double xScreen, double yScreen)
 {
     double xWorld = XMin + (xScreen - OffsetX) / [[1]];
     double yFromBottom = [[2]] - yScreen;
@@ -609,11 +592,7 @@ double distSquared = dx * dx + dy * dy;</code></pre>
       <text>Q02_T02_Q5: Pipeline-Reihenfolge: Die 4 Phasen des Sugiyama-Schichtenlayouts in MSAGL</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Bringen Sie die <strong>vier klassischen Algorithmus-Phasen des Sugiyama-Schichtenlayouts</strong> (Layered Graph Drawing in MSAGL) in die korrekte Ausführungspipeline:</p>
-<p><strong>Schritt 1:</strong> [[1]] (temporäres Umkehren von Rückwärtskanten, um einen azyklischen Graphen DAG zu erzeugen)<br>
-<strong>Schritt 2:</strong> [[2]] (Einteilung aller Knoten in diskrete horizontale bzw. vertikale Hierarchie-Ebenen)<br>
-<strong>Schritt 3:</strong> [[3]] (Permutieren der Knotenreihenfolge innerhalb der Schichten zur Minimierung von Kantenüberschneidungen)<br>
-<strong>Schritt 4:</strong> [[4]] (Bestimmung der exakten metrischen X/Y-Koordinaten und Spline-Kontrollpunkte)</p>]]></text>
+      <text><![CDATA[<p>Bringen Sie die <strong>vier klassischen Algorithmus-Phasen des Sugiyama-Schichtenlayouts</strong> (Layered Graph Drawing in MSAGL) in die korrekte Ausführungspipeline:</p><p><strong>Schritt 1:</strong> [[1]] (temporäres Umkehren von Rückwärtskanten, um einen azyklischen Graphen DAG zu erzeugen)</p><p><strong>Schritt 2:</strong> [[2]] (Einteilung aller Knoten in diskrete horizontale bzw. vertikale Hierarchie-Ebenen)</p><p><strong>Schritt 3:</strong> [[3]] (Permutieren der Knotenreihenfolge innerhalb der Schichten zur Minimierung von Kantenüberschneidungen)</p><p><strong>Schritt 4:</strong> [[4]] (Bestimmung der exakten metrischen X/Y-Koordinaten und Spline-Kontrollpunkte)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Sugiyama-Pipeline:</strong> 1. Cycle Removal \(\to\) 2. Layer Assignment \(\to\) 3. Crossing Reduction \(\to\) 4. Coordinate Assignment & Edge Routing.</p>]]></text>
@@ -720,10 +699,8 @@ double distSquared = dx * dx + dy * dy;</code></pre>
       <text>Q02_T02_Q7: C#-Bug-Diagnose: Katastrophale Auslöschung bei der naiven Ein-Pass-Varianzformel</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Ingenieur misst einen hochstabilen Systemdruck um \(10^8\,\text{Pa}\) mit minimalem Rauschen von \(\pm 1\,\text{Pa}\) und berechnet die Varianz in C# mit folgender „Lehrbuch-Verschiebungsformel“:</p>
-<pre><code class="language-csharp">double mean = sumX / n;
-double variance = (sumXSquared / n) - (mean * mean);</code></pre>
-<p>Bei der Ausführung liefert <code>variance</code> plötzlich <code>0.0</code> oder sogar einen <strong>negativen</strong> Wert! Warum?</p>]]></text>
+      <text><![CDATA[<p>Ein Ingenieur misst einen hochstabilen Systemdruck um \(10^8\,\text{Pa}\) mit minimalem Rauschen von \(\pm 1\,\text{Pa}\) und berechnet die Varianz in C# mit folgender „Lehrbuch-Verschiebungsformel“:</p><pre><code>double mean = sumX / n;
+double variance = (sumXSquared / n) - (mean * mean);</code></pre><p>Bei der Ausführung liefert <code>variance</code> plötzlich <code>0.0</code> oder sogar einen <strong>negativen</strong> Wert! Warum?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Lösung:</strong> Genau wegen dieser katastrophalen Auslöschung (Catastrophic Cancellation) bei großem Offset und kleiner Streuung verwendet man in der Messtechnik den <strong>Welford-Online-Algorithmus</strong>, der nur Differenzen \(x_k - \mu\) quadriert.</p>]]></text>
@@ -765,9 +742,9 @@ double variance = (sumXSquared / n) - (mean * mean);</code></pre>
       </feedback>
     </answer>
     <answer fraction="0" format="html">
-      <text><![CDATA[Der JIT-Compiler von .NET optimiert aufeinanderfolgende Multiplikationen derselben Variable weg und ersetzt mean * mean fehlerhaft durch 2 * mean.]]></text>
+      <text><![CDATA[Der JIT-Compiler von .NET optimiert aufeinanderfolgende Multiplikationen derselben Variable weg und ersetzt mean <em> mean fehlerhaft durch 2 </em> mean.]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>Falsch. Der JIT-Compiler verändert niemals die mathematische Bedeutung von x * x zu 2 * x.</p>]]></text>
+        <text><![CDATA[<p>Falsch. Der JIT-Compiler verändert niemals die mathematische Bedeutung von x <em> x zu 2 </em> x.</p>]]></text>
       </feedback>
     </answer>
   </question>
@@ -845,16 +822,14 @@ double variance = (sumXSquared / n) - (mean * mean);</code></pre>
       <text>Q02_T03_Q1: Inverse 2D-Transformation (ScreenToWorld): Mausklick in Weltkoordinaten umrechnen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Auf einem WPF-Canvas der Gesamthöhe \(H_{\text{canvas}} = 500\,\text{px}\) wird ein Maschinenfundament mit \(x_{\min} = -5{,}0\,\text{m}\) und \(y_{\min} = 0{,}0\,\text{m}\) dargestellt. Die aktuelle Transformation nutzt den uniformen Skalierungsfaktor \(s = 40\,\text{px/m}\), den horizontalen Offset \(\text{offset}_X = 60\,\text{px}\) und den vertikalen Offset vom unteren Rand \(\text{offset}_Y = 50\,\text{px}\). Ein Ingenieur klickt mit der Maus exakt auf die Bildschirmkoordinate \((X_{\text{screen}}, Y_{\text{screen}}) = (300\,\text{px}, 170\,\text{px})\).</p>
-<p><strong>a)</strong> Berechnen Sie die zugehörige physikalische Weltkoordinate \(X_{\text{world}}\) in \(\text{m}\): {1:NUMERICAL:=1.0:0.05#Exakt! X_world = x_min + (300 - 60) / 40 = -5.0 + 240 / 40 = -5.0 + 6.0 = 1.0 m.~%50%6.0:0.05#Teilpunkte: 6.0 m ist der relative Abstand (300 - 60)/40 ohne Addition des Ursprungswerts x_min = -5.0 m.}</p>
-<p><strong>b)</strong> Berechnen Sie die zugehörige physikalische Weltkoordinate \(Y_{\text{world}}\) in \(\text{m}\) unter Berücksichtigung der Y-Inversion: {1:NUMERICAL:=7.0:0.05#Richtig! y_bottom = 500 - 170 = 330 px; Y_world = 0.0 + (330 - 50) / 40 = 280 / 40 = 7.0 m.~%50%3.0:0.05#Teilpunkte: Sie haben die Y-Inversion vergessen und direkt (170 - 50) / 40 = 3.0 m gerechnet!}</p>]]></text>
+      <text><![CDATA[<p>Auf einem WPF-Canvas der Gesamthöhe \(H_{\text{canvas}} = 500\,\text{px}\) wird ein Maschinenfundament mit \(x_{\min} = -5{,}0\,\text{m}\) und \(y_{\min} = 0{,}0\,\text{m}\) dargestellt. Die aktuelle Transformation nutzt den uniformen Skalierungsfaktor \(s = 40\,\text{px/m}\), den horizontalen Offset \(\text{offset}_X = 60\,\text{px}\) und den vertikalen Offset vom unteren Rand \(\text{offset}_Y = 50\,\text{px}\). Ein Ingenieur klickt mit der Maus exakt auf die Bildschirmkoordinate \((X_{\text{screen}}, Y_{\text{screen}}) = (300\,\text{px}, 170\,\text{px})\).</p><p><strong>a)</strong> Berechnen Sie die zugehörige physikalische Weltkoordinate \(X_{\text{world}}\) in \(\text{m}\): {1:NUMERICAL:=1.0:0.05#Exakt! X_world = x_min + (300 - 60) / 40 = -5.0 + 240 / 40 = -5.0 + 6.0 = 1.0 m.~%50%6.0:0.05#Teilpunkte: 6.0 m ist der relative Abstand (300 - 60)/40 ohne Addition des Ursprungswerts x_min = -5.0 m.}</p><p><strong>b)</strong> Berechnen Sie die zugehörige physikalische Weltkoordinate \(Y_{\text{world}}\) in \(\text{m}\) unter Berücksichtigung der Y-Inversion: {1:NUMERICAL:=7.0:0.05#Richtig! y_bottom = 500 - 170 = 330 px; Y_world = 0.0 + (330 - 50) / 40 = 280 / 40 = 7.0 m.~%50%3.0:0.05#Teilpunkte: Sie haben die Y-Inversion vergessen und direkt (170 - 50) / 40 = 3.0 m gerechnet!}</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (ScreenToWorld):</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung (ScreenToWorld):</strong></p><ul>
   <li><strong>X-Rücktransformation:</strong> \(X_{\text{world}} = x_{\min} + \frac{X_{\text{screen}} - \text{offset}_X}{s} = -5{,}0 + \frac{300 - 60}{40} = -5{,}0 + 6{,}0 = 1{,}0\,\text{m}\).</li>
+</ul><ul>
   <li><strong>Y-Rücktransformation (inkl. Y-Inversion):</strong> Abstand vom unteren Rand \(y_{\text{bottom}} = H_{\text{canvas}} - Y_{\text{screen}} = 500 - 170 = 330\,\text{px}\). Damit gilt \(Y_{\text{world}} = y_{\min} + \frac{330 - \text{offset}_Y}{s} = 0{,}0 + \frac{330 - 50}{40} = \frac{280}{40} = 7{,}0\,\text{m}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -867,16 +842,16 @@ double variance = (sumXSquared / n) - (mean * mean);</code></pre>
       <text>Q02_T03_Q2: Statistische Prozesskontrolle (SPC): Obere 3-Sigma-Warngrenze aus Welford-Daten</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Welford-Online-Tracker hat für die Spindeldrehzahl einer CNC-Fräse nach \(k = 26\) Messwerten den Mittelwert \(\mu = 100{,}0\,\text{U/s}\) und die Abweichungsquadratsumme \(M_2 = 400{,}0\,(\text{U/s})^2\) ermittelt. Im Live-Diagramm soll die obere statistische Prozesskontrollgrenze (Upper Control Limit) bei \(\text{UCL} = \mu + 3 \cdot s\) (mit der empirischen Stichprobenstandardabweichung \(s\)) als horizontale Warnlinie eingezeichnet werden.</p>
-<p>Berechnen Sie den numerischen Wert dieser oberen \(3\sigma\)-Grenze \(\text{UCL}\) in \(\text{U/s}\).</p>]]></text>
+      <text><![CDATA[<p>Ein Welford-Online-Tracker hat für die Spindeldrehzahl einer CNC-Fräse nach \(k = 26\) Messwerten den Mittelwert \(\mu = 100{,}0\,\text{U/s}\) und die Abweichungsquadratsumme \(M_2 = 400{,}0\,(\text{U/s})^2\) ermittelt. Im Live-Diagramm soll die obere statistische Prozesskontrollgrenze (Upper Control Limit) bei \(\text{UCL} = \mu + 3 \cdot s\) (mit der empirischen Stichprobenstandardabweichung \(s\)) als horizontale Warnlinie eingezeichnet werden.</p><p>Berechnen Sie den numerischen Wert dieser oberen \(3\sigma\)-Grenze \(\text{UCL}\) in \(\text{U/s}\).</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ul>
   <li><strong>Empirische Stichprobenvarianz (mit Bessel-Korrektur):</strong> \(s^2 = \frac{M_2}{k - 1} = \frac{400{,}0}{26 - 1} = \frac{400{,}0}{25} = 16{,}0\,(\text{U/s})^2\).</li>
+</ul><ul>
   <li><strong>Standardabweichung:</strong> \(s = \sqrt{16{,}0} = 4{,}0\,\text{U/s}\).</li>
+</ul><ul>
   <li><strong>Obere \(3\sigma\)-Grenze:</strong> \(\text{UCL} = \mu + 3s = 100{,}0 + 3 \cdot 4{,}0 = 112{,}0\,\text{U/s}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -892,7 +867,7 @@ double variance = (sumXSquared / n) - (mean * mean);</code></pre>
     <answer fraction="50" format="moodle_auto_format">
       <text>148</text>
       <feedback format="html">
-        <text><![CDATA[<p>Teilpunkte: Sie haben mu + 3 * s^2 = 100 + 3 * 16 = 148 gerechnet (Wurzelziehen für die Standardabweichung s vergessen!).</p>]]></text>
+        <text><![CDATA[<p>Teilpunkte: Sie haben mu + 3 <em> s^2 = 100 + 3 </em> 16 = 148 gerechnet (Wurzelziehen für die Standardabweichung s vergessen!).</p>]]></text>
       </feedback>
       <tolerance>0.5</tolerance>
     </answer>
@@ -915,12 +890,10 @@ double variance = (sumXSquared / n) - (mean * mean);</code></pre>
       <text>Q02_T03_Q3: C#-Code-Tracing: Gruppiertes Balkendiagramm (Bar Plot Offset) in ScottPlot 5</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Um in ScottPlot 5 für jede Kategorie <code>i</code> zwei Balken (Soll vs. Ist) nebeneinander ohne Überlappung zu zeichnen, wird folgender C#-Code ausgeführt:</p>
-<pre><code class="language-csharp">int categoryIndex = 3;
+      <text><![CDATA[<p>Um in ScottPlot 5 für jede Kategorie <code>i</code> zwei Balken (Soll vs. Ist) nebeneinander ohne Überlappung zu zeichnen, wird folgender C#-Code ausgeführt:</p><pre><code>int categoryIndex = 3;
 double groupWidth = 0.6;
 double singleBarWidth = groupWidth / 2.0;
-double rightBarCenter = categoryIndex + singleBarWidth / 2.0;</code></pre>
-<p>Welchen numerischen X-Positionswert besitzt <code>rightBarCenter</code>?</p>]]></text>
+double rightBarCenter = categoryIndex + singleBarWidth / 2.0;</code></pre><p>Welchen numerischen X-Positionswert besitzt <code>rightBarCenter</code>?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong> Jeder der zwei Einzelbalken hat die Breite \(w = \frac{0{,}6}{2} = 0{,}3\). Da die Balken bei der Kategorienmitte \(x = 3\) aneinanderstoßen sollen, liegt die Mitte des linken Balkens bei \(3 - \frac{0{,}3}{2} = 2{,}85\) und die Mitte des rechten Balkens bei \(3 + \frac{0{,}3}{2} = 3{,}15\).</p>]]></text>
@@ -955,8 +928,7 @@ double rightBarCenter = categoryIndex + singleBarWidth / 2.0;</code></pre>
       <text>Q02_T03_Q4: C#-Code-Lückentext: Welford-Online-Update in C# implementieren</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie die C#-Methode <code>AddSample(double x)</code> für die numerisch stabile Online-Berechnung von Mittelwert und Varianz nach Welford:</p>
-<pre><code class="language-csharp">public void AddSample(double x)
+      <text><![CDATA[<p>Vervollständigen Sie die C#-Methode <code>AddSample(double x)</code> für die numerisch stabile Online-Berechnung von Mittelwert und Varianz nach Welford:</p><pre><code>public void AddSample(double x)
 {
     Count++;
     double delta1 = x - [[1]];
@@ -1146,14 +1118,12 @@ double rightBarCenter = categoryIndex + singleBarWidth / 2.0;</code></pre>
       <text>Q02_T03_Q7: C#-Bug-Diagnose: Hohe CPU-Last durch verfrühtes WpfPlot.Refresh() in Schleifen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einer Mehrkanal-Überwachung werden 50 Temperatursensoren mit jeweils \(100\,\text{Hz}\) ausgelesen. Der folgende Code führt sofort zu \(100\,\%\) CPU-Auslastung und einer eingefrorenen WPF-Oberfläche:</p>
-<pre><code class="language-csharp">void OnSensorPacketReceived(double[] channelValues) {
-    for (int ch = 0; ch < 50; ch++) {
+      <text><![CDATA[<p>In einer Mehrkanal-Überwachung werden 50 Temperatursensoren mit jeweils \(100\,\text{Hz}\) ausgelesen. Der folgende Code führt sofort zu \(100\,\%\) CPU-Auslastung und einer eingefrorenen WPF-Oberfläche:</p><pre><code>void OnSensorPacketReceived(double[] channelValues) {
+    for (int ch = 0; ch &lt; 50; ch++) {
         _streamers[ch].Add(channelValues[ch]);
         MainPlot.Refresh();
     }
-}</code></pre>
-<p>Worin liegt der gravierende Architekturfehler in dieser Methode?</p>]]></text>
+}</code></pre><p>Worin liegt der gravierende Architekturfehler in dieser Methode?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Best Practice (Kapitel 04):</strong> Sensordaten werden im Hintergrund oder im Paket-Handler ausschließlich in den Ringpuffer geschrieben (<code>_streamers[ch].Add(...)</code>). Ein separater <code>DispatcherTimer</code> mit \(30\text{–}60\,\text{Hz}\) ruft genau einmal pro Frame <code>MainPlot.Refresh()</code> auf.</p>]]></text>
@@ -1250,7 +1220,7 @@ double rightBarCenter = categoryIndex + singleBarWidth / 2.0;</code></pre>
       </feedback>
     </answer>
     <answer fraction="-50" format="html">
-      <text><![CDATA[Der senkrechte 2D-Normalenvektor zu einem Einheitsrichtungsvektor (ux, uy) ergibt sich durch Quadrieren beider Komponenten zu (ux * ux, uy * uy).]]></text>
+      <text><![CDATA[Der senkrechte 2D-Normalenvektor zu einem Einheitsrichtungsvektor (ux, uy) ergibt sich durch Quadrieren beider Komponenten zu (ux <em> ux, uy </em> uy).]]></text>
       <feedback format="html">
         <text><![CDATA[<p>Falsch. Ein 90°-gedrehter Normalenvektor entsteht durch Vertauschen und Vorzeichenwechsel einer Komponente: (-uy, ux) oder (uy, -ux).</p>]]></text>
       </feedback>
@@ -1275,17 +1245,16 @@ double rightBarCenter = categoryIndex + singleBarWidth / 2.0;</code></pre>
       <text>Q02_T04_Q1: Affine 2D-Transformation: Vertikaler Letterboxing-Offset und Y-Screen-Position</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Portalkran mit der Breite \(\Delta X = 25\,\text{m}\) (\(x_{\min}=0\,\text{m}\), \(x_{\max}=25\,\text{m}\)) und der Höhe \(\Delta Y = 5\,\text{m}\) (\(y_{\min}=0\,\text{m}\), \(y_{\max}=5\,\text{m}\)) wird auf einem WPF-Canvas der Gesamthöhe \(H_{\text{canvas}} = 460\,\text{px}\) mit umlaufendem Rand \(\text{margin} = 30\,\text{px}\) dargestellt. Die nutzbare Zeichenfläche beträgt \(W_{\text{eff}} = 500\,\text{px}\) mal \(H_{\text{eff}} = 400\,\text{px}\). Der uniforme Skalierungsfaktor wurde bereits zu \(s = 20\,\text{px/m}\) bestimmt.</p>
-<p><strong>a)</strong> Berechnen Sie den gesamten vertikalen Randabstand \(\text{offset}_Y\) (in \(\text{px}\)) vom unteren Canvas-Rand bis zur Bauteilunterkante \(y_{\min}=0\,\text{m}\) (inklusive <code>margin</code> und vertikaler Letterboxing-Zentrierung): {1:NUMERICAL:=180:0.5#Exakt! Belegte Höhe = 5 * 20 = 100 px; Freiraum = 400 - 100 = 300 px; offset_Y = 30 + 300/2 = 180 px.~%50%150:0.5#Teilpunkte: 150 px ist nur der halbe Freiraum (400-100)/2 ohne den unteren Rand margin = 30 px.}</p>
-<p><strong>b)</strong> Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{screen}}\) (in \(\text{px}\)) für die Laufkatze auf Höhe \(y = 4{,}0\,\text{m}\) unter Beachtung der WPF-Y-Inversion: {1:NUMERICAL:=200:0.5#Richtig! Y_screen = 460 - (180 + 4.0 * 20) = 460 - 260 = 200 px.~%50%260:0.5#Teilpunkte: 260 px ist der Abstand vom unteren Rand ohne Y-Inversion (460 - 260 = 200 px).}</p>]]></text>
+      <text><![CDATA[<p>Ein Portalkran mit der Breite \(\Delta X = 25\,\text{m}\) (\(x_{\min}=0\,\text{m}\), \(x_{\max}=25\,\text{m}\)) und der Höhe \(\Delta Y = 5\,\text{m}\) (\(y_{\min}=0\,\text{m}\), \(y_{\max}=5\,\text{m}\)) wird auf einem WPF-Canvas der Gesamthöhe \(H_{\text{canvas}} = 460\,\text{px}\) mit umlaufendem Rand \(\text{margin} = 30\,\text{px}\) dargestellt. Die nutzbare Zeichenfläche beträgt \(W_{\text{eff}} = 500\,\text{px}\) mal \(H_{\text{eff}} = 400\,\text{px}\). Der uniforme Skalierungsfaktor wurde bereits zu \(s = 20\,\text{px/m}\) bestimmt.</p><p><strong>a)</strong> Berechnen Sie den gesamten vertikalen Randabstand \(\text{offset}_Y\) (in \(\text{px}\)) vom unteren Canvas-Rand bis zur Bauteilunterkante \(y_{\min}=0\,\text{m}\) (inklusive <code>margin</code> und vertikaler Letterboxing-Zentrierung): {1:NUMERICAL:=180:0.5#Exakt! Belegte Höhe = 5 * 20 = 100 px; Freiraum = 400 - 100 = 300 px; offset_Y = 30 + 300/2 = 180 px.~%50%150:0.5#Teilpunkte: 150 px ist nur der halbe Freiraum (400-100)/2 ohne den unteren Rand margin = 30 px.}</p><p><strong>b)</strong> Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{screen}}\) (in \(\text{px}\)) für die Laufkatze auf Höhe \(y = 4{,}0\,\text{m}\) unter Beachtung der WPF-Y-Inversion: {1:NUMERICAL:=200:0.5#Richtig! Y_screen = 460 - (180 + 4.0 * 20) = 460 - 260 = 200 px.~%50%260:0.5#Teilpunkte: 260 px ist der Abstand vom unteren Rand ohne Y-Inversion (460 - 260 = 200 px).}</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ul>
   <li><strong>Belegte Höhe:</strong> \(H_{\text{used}} = \Delta Y \cdot s = 5\,\text{m} \cdot 20\,\text{px/m} = 100\,\text{px}\).</li>
+</ul><ul>
   <li><strong>Vertikaler Offset:</strong> \(\text{offset}_Y = \text{margin} + \frac{H_{\text{eff}} - H_{\text{used}}}{2} = 30 + \frac{400 - 100}{2} = 180\,\text{px}\).</li>
+</ul><ul>
   <li><strong>Y-Screen mit Inversion:</strong> \(Y_{\text{screen}} = H_{\text{canvas}} - (\text{offset}_Y + y \cdot s) = 460 - (180 + 80) = 200\,\text{px}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -1298,8 +1267,7 @@ double rightBarCenter = categoryIndex + singleBarWidth / 2.0;</code></pre>
       <text>Q02_T04_Q2: Welford-Online-Algorithmus: Empirische Stichprobenvarianz aus M2 berechnen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Nach \(k = 9\) Kraftmessungen an einer Hydraulikpresse enthält das Welford-Statistikobjekt den laufenden Mittelwert \(\mu_9 = 45{,}0\,\text{kN}\) sowie die kumulierte Abweichungsquadratsumme \(M_{2,9} = 72{,}0\,\text{kN}^2\).</p>
-<p>Berechnen Sie die erwartungstreue empirische Stichprobenvarianz \(s^2\) (in \(\text{kN}^2\)) dieser Messreihe.</p>]]></text>
+      <text><![CDATA[<p>Nach \(k = 9\) Kraftmessungen an einer Hydraulikpresse enthält das Welford-Statistikobjekt den laufenden Mittelwert \(\mu_9 = 45{,}0\,\text{kN}\) sowie die kumulierte Abweichungsquadratsumme \(M_{2,9} = 72{,}0\,\text{kN}^2\).</p><p>Berechnen Sie die erwartungstreue empirische Stichprobenvarianz \(s^2\) (in \(\text{kN}^2\)) dieser Messreihe.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong> Für die erwartungstreue Stichprobenvarianz gilt \(s^2 = \frac{M_{2,k}}{k - 1} = \frac{72{,}0}{9 - 1} = 9{,}0\,\text{kN}^2\).</p>]]></text>
@@ -1341,13 +1309,11 @@ double rightBarCenter = categoryIndex + singleBarWidth / 2.0;</code></pre>
       <text>Q02_T04_Q3: C#-Code-Tracing: Box-Whisker-Plot Interquartilsabstand (IQR) und oberes Whisker-Limit</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Für einen Box-Whisker-Plot nach Tukey in ScottPlot 5 werden aus einem sortierten Array von Drehmoment-Messwerten (in \(\text{Nm}\)) das erste Quartil <code>q1</code> und das dritte Quartil <code>q3</code> bestimmt:</p>
-<pre><code class="language-csharp">double q1 = 20.0;
+      <text><![CDATA[<p>Für einen Box-Whisker-Plot nach Tukey in ScottPlot 5 werden aus einem sortierten Array von Drehmoment-Messwerten (in \(\text{Nm}\)) das erste Quartil <code>q1</code> und das dritte Quartil <code>q3</code> bestimmt:</p><pre><code>double q1 = 20.0;
 double median = 24.0;
 double q3 = 30.0;
 double iqr = q3 - q1;
-double upperWhiskerLimit = q3 + 1.5 * iqr;</code></pre>
-<p>Welchen numerischen Wert (in \(\text{Nm}\)) erhält <code>upperWhiskerLimit</code>?</p>]]></text>
+double upperWhiskerLimit = q3 + 1.5 * iqr;</code></pre><p>Welchen numerischen Wert (in \(\text{Nm}\)) erhält <code>upperWhiskerLimit</code>?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong> Der Interquartilsabstand beträgt \(\text{IQR} = Q_3 - Q_1 = 30{,}0 - 20{,}0 = 10{,}0\,\text{Nm}\). Die obere Antennengrenze (Tukey-Fence) liegt bei \(Q_3 + 1{,}5 \cdot \text{IQR} = 30{,}0 + 15{,}0 = 45{,}0\,\text{Nm}\).</p>]]></text>
@@ -1382,12 +1348,11 @@ double upperWhiskerLimit = q3 + 1.5 * iqr;</code></pre>
       <text>Q02_T04_Q4: C#-Code-Lückentext: Allokationsfreier Ringpuffer (Circular Buffer) – Einfügen &amp; Überschreiben</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie die Methode <code>Push(double val)</code> eines allokationsfreien Ringpuffers fester Kapazität <code>Capacity</code>, der bei vollem Puffer das älteste Element am Index <code>_head</code> überschreibt:</p>
-<pre><code class="language-csharp">public void Push(double val)
+      <text><![CDATA[<p>Vervollständigen Sie die Methode <code>Push(double val)</code> eines allokationsfreien Ringpuffers fester Kapazität <code>Capacity</code>, der bei vollem Puffer das älteste Element am Index <code>_head</code> überschreibt:</p><pre><code>public void Push(double val)
 {
     int writeIdx = (_head + _count) % [[1]];
     _buffer[writeIdx] = val;
-    if (_count < Capacity)
+    if (_count &lt; Capacity)
         [[2]]++;
     else
         _head = (_head + 1) % [[3]];
@@ -1455,11 +1420,7 @@ double upperWhiskerLimit = q3 + 1.5 * iqr;</code></pre>
       <text>Q02_T04_Q5: Pipeline-Reihenfolge: Numerisch stabiler Einzelschritt im Welford-Online-Algorithmus</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Bringen Sie die <strong>vier Rechenschritte des Welford-Online-Algorithmus</strong> beim Eintreffen eines neuen Messwerts \(x_k\) in die zwingend erforderliche Ausführungsreihenfolge:</p>
-<p><strong>Schritt 1:</strong> [[1]] (Stichprobenumfang erhöhen und Differenz zum bisherigen Mittelwert bilden)<br>
-<strong>Schritt 2:</strong> [[2]] (Laufenden Mittelwert anteilig mit dem neuen Stichprobenumfang korrigieren)<br>
-<strong>Schritt 3:</strong> [[3]] (Differenz des Messwerts zum bereits aktualisierten neuen Mittelwert bestimmen)<br>
-<strong>Schritt 4:</strong> [[4]] (Produkt aus alter und neuer Differenz zur Quadratsumme addieren)</p>]]></text>
+      <text><![CDATA[<p>Bringen Sie die <strong>vier Rechenschritte des Welford-Online-Algorithmus</strong> beim Eintreffen eines neuen Messwerts \(x_k\) in die zwingend erforderliche Ausführungsreihenfolge:</p><p><strong>Schritt 1:</strong> [[1]] (Stichprobenumfang erhöhen und Differenz zum bisherigen Mittelwert bilden)</p><p><strong>Schritt 2:</strong> [[2]] (Laufenden Mittelwert anteilig mit dem neuen Stichprobenumfang korrigieren)</p><p><strong>Schritt 3:</strong> [[3]] (Differenz des Messwerts zum bereits aktualisierten neuen Mittelwert bestimmen)</p><p><strong>Schritt 4:</strong> [[4]] (Produkt aus alter und neuer Differenz zur Quadratsumme addieren)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Welford-Reihenfolge:</strong> Entscheidend ist, dass \(\Delta_1\) vor dem Mittelwert-Update und \(\Delta_2\) <em>nach</em> dem Mittelwert-Update berechnet wird, damit \(\Delta_1 \cdot \Delta_2\) exakt die neue Quadratsumme liefert.</p>]]></text>
@@ -1496,7 +1457,7 @@ double upperWhiskerLimit = q3 + 1.5 * iqr;</code></pre>
       <group>1</group>
     </dragbox>
     <dragbox>
-      <text><![CDATA[M2_k = M2_{k-1} + x_k * x_k - mu_k * mu_k]]></text>
+      <text><![CDATA[M2_k = M2_{k-1} + x_k <em> x_k - mu_k </em> mu_k]]></text>
       <group>1</group>
     </dragbox>
     <dragbox>
@@ -1566,14 +1527,12 @@ double upperWhiskerLimit = q3 + 1.5 * iqr;</code></pre>
       <text>Q02_T04_Q7: C#-Bug-Diagnose: Speicherleck durch Canvas.Children.Add ohne Clear im Render-Loop</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einer dynamischen Kinematik-Simulation wird die Methode <code>DrawMechanism()</code> 60-mal pro Sekunde vom <code>CompositionTarget.Rendering</code>-Event aufgerufen. Nach zwei Minuten wird das Programm extrem träge und belegt mehrere Gigabyte RAM:</p>
-<pre><code class="language-csharp">void DrawMechanism() {
+      <text><![CDATA[<p>In einer dynamischen Kinematik-Simulation wird die Methode <code>DrawMechanism()</code> 60-mal pro Sekunde vom <code>CompositionTarget.Rendering</code>-Event aufgerufen. Nach zwei Minuten wird das Programm extrem träge und belegt mehrere Gigabyte RAM:</p><pre><code>void DrawMechanism() {
     foreach (var bar in _bars) {
         var line = new Line { X1 = bar.X1, Y1 = bar.Y1, X2 = bar.X2, Y2 = bar.Y2, Stroke = _pen };
         SimCanvas.Children.Add(line);
     }
-}</code></pre>
-<p>Was ist die Ursache für diesen Speicher- und Performance-Einbruch?</p>]]></text>
+}</code></pre><p>Was ist die Ursache für diesen Speicher- und Performance-Einbruch?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Lösung:</strong> Entweder ruft man zu Beginn von <code>DrawMechanism()</code> <code>SimCanvas.Children.Clear()</code> auf, oder – noch besser – man legt die <code>Line</code>-Instanzen einmalig an und aktualisiert im Renderloop nur deren Koordinaten <code>X1, Y1, X2, Y2</code>.</p>]]></text>
@@ -1695,17 +1654,16 @@ double upperWhiskerLimit = q3 + 1.5 * iqr;</code></pre>
       <text>Q02_T05_Q1: Affine 2D-Transformation: Uniform Scaling und resultierende Stablänge im Screen Space</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein ebenes Kragarm-Fachwerk besitzt eine Gesamtbreite von \(\Delta X = 12\,\text{m}\) und eine Gesamthöhe von \(\Delta Y = 8\,\text{m}\). Es wird verzerrungsfrei (Uniform Scaling) in ein nutzbares WPF-Canvas-Rechteck von \(W_{\text{eff}} = 600\,\text{px}\) Breite und \(H_{\text{eff}} = 320\,\text{px}\) Höhe eingepasst. Im Fachwerk befindet sich ein schräger Diagonalstab, der den Knoten \(A(0\,\text{m}, 0\,\text{m})\) mit dem Knoten \(B(3{,}0\,\text{m}, 4{,}0\,\text{m})\) verbindet.</p>
-<p><strong>a)</strong> Berechnen Sie den verzerrungsfreien uniformen Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=40:0.1#Exakt! s = min(600/12, 320/8) = min(50, 40) = 40 px/m.~%50%50:0.1#Teilpunkte: Sie haben sx = 600/12 = 50 px/m statt min(50, 40) = 40 px/m gewählt.}</p>
-<p><strong>b)</strong> Berechnen Sie die euklidische Länge \(L_{\text{screen}}\) (in \(\text{px}\)) dieses Diagonalstabs \(\overline{AB}\) auf dem Bildschirm nach der Transformation: {1:NUMERICAL:=200:0.5#Richtig! Physikalische Länge L = sqrt(3^2 + 4^2) = 5.0 m; L_screen = 5.0 m * 40 px/m = 200 px.~%50%250:0.5#Teilpunkte: Folgefehler aus Teil a (5.0 m * 50 px/m = 250 px) oder Manhattan-Distanz (3+4)*40 = 280 px.}</p>]]></text>
+      <text><![CDATA[<p>Ein ebenes Kragarm-Fachwerk besitzt eine Gesamtbreite von \(\Delta X = 12\,\text{m}\) und eine Gesamthöhe von \(\Delta Y = 8\,\text{m}\). Es wird verzerrungsfrei (Uniform Scaling) in ein nutzbares WPF-Canvas-Rechteck von \(W_{\text{eff}} = 600\,\text{px}\) Breite und \(H_{\text{eff}} = 320\,\text{px}\) Höhe eingepasst. Im Fachwerk befindet sich ein schräger Diagonalstab, der den Knoten \(A(0\,\text{m}, 0\,\text{m})\) mit dem Knoten \(B(3{,}0\,\text{m}, 4{,}0\,\text{m})\) verbindet.</p><p><strong>a)</strong> Berechnen Sie den verzerrungsfreien uniformen Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=40:0.1#Exakt! s = min(600/12, 320/8) = min(50, 40) = 40 px/m.~%50%50:0.1#Teilpunkte: Sie haben sx = 600/12 = 50 px/m statt min(50, 40) = 40 px/m gewählt.}</p><p><strong>b)</strong> Berechnen Sie die euklidische Länge \(L_{\text{screen}}\) (in \(\text{px}\)) dieses Diagonalstabs \(\overline{AB}\) auf dem Bildschirm nach der Transformation: {1:NUMERICAL:=200:0.5#Richtig! Physikalische Länge L = sqrt(3^2 + 4^2) = 5.0 m; L_screen = 5.0 m <em> 40 px/m = 200 px.~%50%250:0.5#Teilpunkte: Folgefehler aus Teil a (5.0 m </em> 50 px/m = 250 px) oder Manhattan-Distanz (3+4)*40 = 280 px.}</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ul>
   <li><strong>Uniform Scaling:</strong> \(s_x = \frac{600}{12} = 50\,\text{px/m}\), \(s_y = \frac{320}{8} = 40\,\text{px/m} \implies s = \min(50, 40) = 40\,\text{px/m}\).</li>
+</ul><ul>
   <li><strong>Stablänge im World Space:</strong> \(L_{\text{world}} = \sqrt{(3{,}0 - 0)^2 + (4{,}0 - 0)^2} = \sqrt{9 + 16} = 5{,}0\,\text{m}\).</li>
+</ul><ul>
   <li><strong>Stablänge im Screen Space:</strong> Da die Skalierung uniform ist, gilt \(L_{\text{screen}} = s \cdot L_{\text{world}} = 40\,\text{px/m} \cdot 5{,}0\,\text{m} = 200\,\text{px}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -1718,8 +1676,7 @@ double upperWhiskerLimit = q3 + 1.5 * iqr;</code></pre>
       <text>Q02_T05_Q2: ScottPlot 5 Signal-Konfiguration: Zeitdauer eines Ringpuffer-Fensters berechnen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Schwingungssensor an einem Getriebeprüfstand tastet die Beschleunigung mit einer festen Abtastfrequenz von \(f_s = 250\,\text{Hz}\) (d. h. Abtastperiode \(\Delta t = 0{,}004\,\text{s}\)) ab. In ScottPlot 5 wird ein <code>DataStreamer</code> mit einer festen Pufferkapazität von \(N = 1500\) Datenpunkten initialisiert.</p>
-<p>Welche physikalische Zeitspanne \(T_{\text{window}}\) (in <strong>Sekunden</strong>) ist im Diagrammfenster gleichzeitig sichtbar, sobald der Puffer vollständig gefüllt ist?</p>]]></text>
+      <text><![CDATA[<p>Ein Schwingungssensor an einem Getriebeprüfstand tastet die Beschleunigung mit einer festen Abtastfrequenz von \(f_s = 250\,\text{Hz}\) (d. h. Abtastperiode \(\Delta t = 0{,}004\,\text{s}\)) ab. In ScottPlot 5 wird ein <code>DataStreamer</code> mit einer festen Pufferkapazität von \(N = 1500\) Datenpunkten initialisiert.</p><p>Welche physikalische Zeitspanne \(T_{\text{window}}\) (in <strong>Sekunden</strong>) ist im Diagrammfenster gleichzeitig sichtbar, sobald der Puffer vollständig gefüllt ist?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong> Bei \(N = 1500\) Abtastpunkten und \(\Delta t = \frac{1}{f_s} = \frac{1}{250\,\text{Hz}} = 0{,}004\,\text{s}\) umfasst das sichtbare Zeitfenster \(T_{\text{window}} = N \cdot \Delta t = \frac{1500}{250} = 6{,}0\,\text{s}\).</p>]]></text>
@@ -1761,14 +1718,12 @@ double upperWhiskerLimit = q3 + 1.5 * iqr;</code></pre>
       <text>Q02_T05_Q3: C#-Code-Tracing: Einheitsrichtungsvektor und Maßlinien-Versatz (DIN 406)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Für einen horizontal im Screen Space verlaufenden Stab von <code>p1 = (100, 250)</code> nach <code>p2 = (300, 250)</code> berechnet folgender C#-Code den Y-Wert <code>dimY1</code> des verschobenen Maßlinien-Startpunkts (Abstand <code>dimOffset = 25.0</code> Pixel):</p>
-<pre><code class="language-csharp">double dx = 300.0 - 100.0;
+      <text><![CDATA[<p>Für einen horizontal im Screen Space verlaufenden Stab von <code>p1 = (100, 250)</code> nach <code>p2 = (300, 250)</code> berechnet folgender C#-Code den Y-Wert <code>dimY1</code> des verschobenen Maßlinien-Startpunkts (Abstand <code>dimOffset = 25.0</code> Pixel):</p><pre><code>double dx = 300.0 - 100.0;
 double dy = 250.0 - 250.0;
 double len = Math.Sqrt(dx * dx + dy * dy);
 double ux = dx / len, uy = dy / len;
 double nx = -uy, ny = ux;
-double dimY1 = 250.0 - ny * 25.0;</code></pre>
-<p>Welchen numerischen Wert (in \(\text{px}\)) erhält <code>dimY1</code>?</p>]]></text>
+double dimY1 = 250.0 - ny * 25.0;</code></pre><p>Welchen numerischen Wert (in \(\text{px}\)) erhält <code>dimY1</code>?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong> Da \(dx = 200\) und \(dy = 0\), ist \(u_x = 1{,}0\) und \(u_y = 0{,}0\). Damit wird \(n_y = u_x = 1{,}0\), und \(\text{dimY1} = 250{,}0 - 1{,}0 \cdot 25{,}0 = 225{,}0\,\text{px}\) (die Maßlinie liegt 25 Pixel oberhalb des Stabs).</p>]]></text>
@@ -1803,8 +1758,7 @@ double dimY1 = 250.0 - ny * 25.0;</code></pre>
       <text>Q02_T05_Q4: C#-Code-Lückentext: MSAGL-Graphen erstellen und Sugiyama-Layout berechnen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie den C#-Code, um in <strong>MSAGL</strong> einen gerichteten Graphen mit einer Kante von Knoten <code>"Pumpe"</code> nach <code>"Ventil"</code> anzulegen und das hierarchische Sugiyama-Layout zu berechnen:</p>
-<pre><code class="language-csharp">var graph = new GeometryGraph();
+      <text><![CDATA[<p>Vervollständigen Sie den C#-Code, um in <strong>MSAGL</strong> einen gerichteten Graphen mit einer Kante von Knoten <code>"Pumpe"</code> nach <code>"Ventil"</code> anzulegen und das hierarchische Sugiyama-Layout zu berechnen:</p><pre><code>var graph = new GeometryGraph();
 // ... Knoten "Pumpe" und "Ventil" wurden angelegt ...
 graph.Edges.Add(new Edge(nodePumpe, [[1]]));
 var settings = new [[2]]();
@@ -2076,7 +2030,7 @@ LayoutHelpers.CalculateLayout(graph, [[3]], null);</code></pre>]]></text>
       </feedback>
     </answer>
     <answer fraction="50" format="html">
-      <text><![CDATA[Bei der Suche nach dem nächstgelegenen Knoten vergleicht man die quadratischen Abstände dx*dx + dy*dy mit R*R, um unnötige Wurzelberechnungen zu sparen.]]></text>
+      <text><![CDATA[Bei der Suche nach dem nächstgelegenen Knoten vergleicht man die quadratischen Abstände dx<em>dx + dy</em>dy mit R*R, um unnötige Wurzelberechnungen zu sparen.]]></text>
       <feedback format="html">
         <text><![CDATA[<p>Richtig! Da die Quadratwurzel auf positiven Zahlen streng monoton wachsend ist, liefert der Vergleich der Abstandsquadrate exakt dasselbe Ergebnis ohne Math.Sqrt.</p>]]></text>
       </feedback>
@@ -2113,17 +2067,16 @@ LayoutHelpers.CalculateLayout(graph, [[3]], null);</code></pre>]]></text>
       <text>Q02_T06_Q1: DIN-406-Bemaßungsgeometrie: Gesamtlänge der Maßhilfslinie und Endpunkt-Koordinate</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein horizontaler Träger verläuft auf dem WPF-Canvas exakt entlang der Bildschirm-Horizontalen bei \(Y_{\text{stab}} = 300\,\text{px}\) (von \(X_1 = 100\,\text{px}\) bis \(X_2 = 500\,\text{px}\)). Nach DIN 406 soll oberhalb des Trägers (also in Richtung kleinerer WPF-Y-Werte, Normalenvektor \(n_x = 0, n_y = -1\)) eine Maßlinie im Abstand \(d_{\text{dim}} = 28\,\text{px}\) gezeichnet werden. Die beiden vertikalen Maßhilfslinien beginnen mit einem kleinen Spalt von \(g = 4\,\text{px}\) vom Träger entfernt und ragen um den normgerechten Überstand \(e = 8\,\text{px}\) über die Maßlinie hinaus.</p>
-<p><strong>a)</strong> Berechnen Sie die gezeichnete sichtbare Strichlänge \(L_{\text{ext}}\) (in \(\text{px}\)) einer solchen Maßhilfslinie (vom Spaltende bis zum Ende des Überstands): {1:NUMERICAL:=32:0.1#Exakt! Die Maßhilfslinie reicht von Abstand g = 4 px bis (d_dim + e) = 28 + 8 = 36 px; ihre Länge ist 36 - 4 = 32 px.~%50%36:0.1#Teilpunkte: 36 px ist der Gesamtabstand vom Bauteil (28 + 8) ohne Abzug des 4-px-Spalts g am Bauteilrand.}</p>
-<p><strong>b)</strong> Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{end}}\) (in \(\text{px}\)) des äußeren oberen Endpunkts der Maßhilfslinie (inklusive Überstand \(e\)): {1:NUMERICAL:=264:0.5#Richtig! Y_end = Y_stab - (d_dim + e) = 300 - (28 + 8) = 300 - 36 = 264 px.~%50%272:0.5#Teilpunkte: 272 px (300 - 28) ist die Koordinate der Maßlinie selbst ohne den 8-px-Überstand e der Maßhilfslinie!}</p>]]></text>
+      <text><![CDATA[<p>Ein horizontaler Träger verläuft auf dem WPF-Canvas exakt entlang der Bildschirm-Horizontalen bei \(Y_{\text{stab}} = 300\,\text{px}\) (von \(X_1 = 100\,\text{px}\) bis \(X_2 = 500\,\text{px}\)). Nach DIN 406 soll oberhalb des Trägers (also in Richtung kleinerer WPF-Y-Werte, Normalenvektor \(n_x = 0, n_y = -1\)) eine Maßlinie im Abstand \(d_{\text{dim}} = 28\,\text{px}\) gezeichnet werden. Die beiden vertikalen Maßhilfslinien beginnen mit einem kleinen Spalt von \(g = 4\,\text{px}\) vom Träger entfernt und ragen um den normgerechten Überstand \(e = 8\,\text{px}\) über die Maßlinie hinaus.</p><p><strong>a)</strong> Berechnen Sie die gezeichnete sichtbare Strichlänge \(L_{\text{ext}}\) (in \(\text{px}\)) einer solchen Maßhilfslinie (vom Spaltende bis zum Ende des Überstands): {1:NUMERICAL:=32:0.1#Exakt! Die Maßhilfslinie reicht von Abstand g = 4 px bis (d_dim + e) = 28 + 8 = 36 px; ihre Länge ist 36 - 4 = 32 px.~%50%36:0.1#Teilpunkte: 36 px ist der Gesamtabstand vom Bauteil (28 + 8) ohne Abzug des 4-px-Spalts g am Bauteilrand.}</p><p><strong>b)</strong> Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{end}}\) (in \(\text{px}\)) des äußeren oberen Endpunkts der Maßhilfslinie (inklusive Überstand \(e\)): {1:NUMERICAL:=264:0.5#Richtig! Y_end = Y_stab - (d_dim + e) = 300 - (28 + 8) = 300 - 36 = 264 px.~%50%272:0.5#Teilpunkte: 272 px (300 - 28) ist die Koordinate der Maßlinie selbst ohne den 8-px-Überstand e der Maßhilfslinie!}</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (DIN-406-Maßhilfslinie):</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung (DIN-406-Maßhilfslinie):</strong></p><ul>
   <li><strong>Start- und Endabstand vom Stab:</strong> Die Maßhilfslinie startet bei \(d_{\text{start}} = g = 4\,\text{px}\) und endet bei \(d_{\text{end}} = d_{\text{dim}} + e = 28 + 8 = 36\,\text{px}\).</li>
+</ul><ul>
   <li><strong>Gezeichnete Strichlänge:</strong> \(L_{\text{ext}} = d_{\text{end}} - d_{\text{start}} = 36 - 4 = 32\,\text{px}\).</li>
+</ul><ul>
   <li><strong>Oberer Endpunkt im Screen Space:</strong> Da „oben“ im WPF-Canvas kleineren Y-Werten entspricht, gilt \(Y_{\text{end}} = Y_{\text{stab}} - d_{\text{end}} = 300 - 36 = 264\,\text{px}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -2136,15 +2089,14 @@ LayoutHelpers.CalculateLayout(graph, [[3]], null);</code></pre>]]></text>
       <text>Q02_T06_Q2: Statistische Prozesskontrolle: Breite des gesamten ±3-Sigma-Toleranzbands</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einem ScottPlot-5-Echtzeitdiagramm wird das symmetrische \(\mu \pm 3s\)-Prozessband (von der unteren Eingriffsgrenze \(\text{LCL} = \mu - 3s\) bis zur oberen Eingriffsgrenze \(\text{UCL} = \mu + 3s\)) als farbig hinterlegtes HorizontalSpan eingezeichnet. Aus dem Welford-Tracker liegen nach \(k = 17\) Messungen der Mittelwert \(\mu = 80{,}0\,\text{mm}\) und die Quadratsumme \(M_2 = 36{,}0\,\text{mm}^2\) vor.</p>
-<p>Berechnen Sie die gesamte vertikale Breite \(\Delta B = \text{UCL} - \text{LCL}\) (in \(\text{mm}\)) dieses \(\pm 3s\)-Toleranzbands.</p>]]></text>
+      <text><![CDATA[<p>In einem ScottPlot-5-Echtzeitdiagramm wird das symmetrische \(\mu \pm 3s\)-Prozessband (von der unteren Eingriffsgrenze \(\text{LCL} = \mu - 3s\) bis zur oberen Eingriffsgrenze \(\text{UCL} = \mu + 3s\)) als farbig hinterlegtes HorizontalSpan eingezeichnet. Aus dem Welford-Tracker liegen nach \(k = 17\) Messungen der Mittelwert \(\mu = 80{,}0\,\text{mm}\) und die Quadratsumme \(M_2 = 36{,}0\,\text{mm}^2\) vor.</p><p>Berechnen Sie die gesamte vertikale Breite \(\Delta B = \text{UCL} - \text{LCL}\) (in \(\text{mm}\)) dieses \(\pm 3s\)-Toleranzbands.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ul>
   <li><strong>Stichprobenvarianz & Standardabweichung:</strong> \(s^2 = \frac{M_2}{k - 1} = \frac{36{,}0}{16} = 2{,}25\,\text{mm}^2 \implies s = \sqrt{2{,}25} = 1{,}5\,\text{mm}\).</li>
+</ul><ul>
   <li><strong>Gesamtbreite des \(\pm 3s\)-Bands:</strong> \(\Delta B = (\mu + 3s) - (\mu - 3s) = 6s = 6 \cdot 1{,}5\,\text{mm} = 9{,}0\,\text{mm}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -2153,21 +2105,21 @@ LayoutHelpers.CalculateLayout(graph, [[3]], null);</code></pre>]]></text>
     <answer fraction="100" format="moodle_auto_format">
       <text>9</text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! s^2 = M2 / (17 - 1) = 36 / 16 = 2.25 mm^2 => s = 1.5 mm. Bandbreite von -3s bis +3s ist 6 * s = 6 * 1.5 = 9.0 mm.</p>]]></text>
+        <text><![CDATA[<p>Exakt! s^2 = M2 / (17 - 1) = 36 / 16 = 2.25 mm^2 => s = 1.5 mm. Bandbreite von -3s bis +3s ist 6 <em> s = 6 </em> 1.5 = 9.0 mm.</p>]]></text>
       </feedback>
       <tolerance>0.05</tolerance>
     </answer>
     <answer fraction="50" format="moodle_auto_format">
       <text>4.5</text>
       <feedback format="html">
-        <text><![CDATA[<p>Teilpunkte: 4.5 mm ist nur die halbe Bandbreite (3 * s = 3 * 1.5), gefragt war die volle Spanne UCL - LCL = 6 * s = 9.0 mm.</p>]]></text>
+        <text><![CDATA[<p>Teilpunkte: 4.5 mm ist nur die halbe Bandbreite (3 <em> s = 3 </em> 1.5), gefragt war die volle Spanne UCL - LCL = 6 * s = 9.0 mm.</p>]]></text>
       </feedback>
       <tolerance>0.05</tolerance>
     </answer>
     <answer fraction="50" format="moodle_auto_format">
       <text>13.5</text>
       <feedback format="html">
-        <text><![CDATA[<p>Teilpunkte: Sie haben 6 * s^2 = 6 * 2.25 = 13.5 gerechnet (Quadratwurzel für s vergessen!).</p>]]></text>
+        <text><![CDATA[<p>Teilpunkte: Sie haben 6 <em> s^2 = 6 </em> 2.25 = 13.5 gerechnet (Quadratwurzel für s vergessen!).</p>]]></text>
       </feedback>
       <tolerance>0.05</tolerance>
     </answer>
@@ -2183,22 +2135,20 @@ LayoutHelpers.CalculateLayout(graph, [[3]], null);</code></pre>]]></text>
       <text>Q02_T06_Q3: C#-Code-Tracing: Ringpuffer-Zustand nach Überlauf (Wrap-Around)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein kleiner Ringpuffer der Kapazität <code>cap = 4</code> wird nacheinander mit 6 Werten (<code>10, 20, 30, 40, 50, 60</code>) befüllt:</p>
-<pre><code class="language-csharp">double[] buf = new double[4];
-for (int step = 0; step < 6; step++) {
+      <text><![CDATA[<p>Ein kleiner Ringpuffer der Kapazität <code>cap = 4</code> wird nacheinander mit 6 Werten (<code>10, 20, 30, 40, 50, 60</code>) befüllt:</p><pre><code>double[] buf = new double[4];
+for (int step = 0; step &lt; 6; step++) {
     buf[step % 4] = (step + 1) * 10.0;
 }
-double result = buf[0] + buf[2];</code></pre>
-<p>Welchen numerischen Wert besitzt <code>result</code> nach Abschluss der Schleife?</p>]]></text>
+double result = buf[0] + buf[2];</code></pre><p>Welchen numerischen Wert besitzt <code>result</code> nach Abschluss der Schleife?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<ul>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ul>
   <li><code>step = 0..3</code> schreibt <code>[10, 20, 30, 40]</code> an die Indizes <code>0..3</code>.</li>
+</ul><ul>
   <li><code>step = 4</code> (<code>4 % 4 == 0</code>) überschreibt <code>buf[0] = 50</code>.</li>
+</ul><ul>
   <li><code>step = 5</code> (<code>5 % 4 == 1</code>) überschreibt <code>buf[1] = 60</code>.</li>
-</ul>
-<p>Damit lautet das Array <code>[50, 60, 30, 40]</code>, und <code>buf[0] + buf[2] = 50 + 30 = 80</code>.</p>]]></text>
+</ul><p>Damit lautet das Array <code>[50, 60, 30, 40]</code>, und <code>buf[0] + buf[2] = 50 + 30 = 80</code>.</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -2230,8 +2180,7 @@ double result = buf[0] + buf[2];</code></pre>
       <text>Q02_T06_Q4: C#-Code-Lückentext: ScottPlot 5 DataStreamer im Wipe-Modus konfigurieren</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zur Initialisierung eines <strong>ScottPlot 5</strong> <code>DataStreamer</code> für 2000 Messpunkte mit einer Abtastperiode von <code>0.01</code> Sekunden im Oszilloskop-Wipe-Modus:</p>
-<pre><code class="language-csharp">var streamer = MainPlot.Plot.Add.[[1]](2000);
+      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zur Initialisierung eines <strong>ScottPlot 5</strong> <code>DataStreamer</code> für 2000 Messpunkte mit einer Abtastperiode von <code>0.01</code> Sekunden im Oszilloskop-Wipe-Modus:</p><pre><code>var streamer = MainPlot.Plot.Add.[[1]](2000);
 streamer.[[2]] = 0.01;
 streamer.[[3]]();</code></pre>]]></text>
     </questiontext>
@@ -2297,11 +2246,7 @@ streamer.[[3]]();</code></pre>]]></text>
       <text>Q02_T06_Q5: Pipeline-Reihenfolge: 2D-Transformationskette vom Bauteilmodell zum WPF-Canvas</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Bringen Sie die <strong>vier Berechnungsphasen der 2D-Visualisierungspipeline (WorldToScreen)</strong> beim Zeichnen eines Bauteils auf ein WPF-Canvas in die logisch korrekte Reihenfolge:</p>
-<p><strong>Schritt 1:</strong> [[1]] (Extremwerte \(x_{\min}, x_{\max}, y_{\min}, y_{\max}\) aller Knoten im Weltkoordinatensystem ermitteln)<br>
-<strong>Schritt 2:</strong> [[2]] (Verzerrungsfreien Maßstab \(s = \min(s_x, s_y)\) und zentrierte Letterboxing-Offsets bestimmen)<br>
-<strong>Schritt 3:</strong> [[3]] (Weltkoordinaten skalieren, verschieben und die vertikale Achse an \(H_{\text{canvas}}\) invertieren)<br>
-<strong>Schritt 4:</strong> [[4]] (Linien, Pfeilspitzen konstanter Pixellänge und gedrehte Maßtexte im Screen Space rendern)</p>]]></text>
+      <text><![CDATA[<p>Bringen Sie die <strong>vier Berechnungsphasen der 2D-Visualisierungspipeline (WorldToScreen)</strong> beim Zeichnen eines Bauteils auf ein WPF-Canvas in die logisch korrekte Reihenfolge:</p><p><strong>Schritt 1:</strong> [[1]] (Extremwerte \(x_{\min}, x_{\max}, y_{\min}, y_{\max}\) aller Knoten im Weltkoordinatensystem ermitteln)</p><p><strong>Schritt 2:</strong> [[2]] (Verzerrungsfreien Maßstab \(s = \min(s_x, s_y)\) und zentrierte Letterboxing-Offsets bestimmen)</p><p><strong>Schritt 3:</strong> [[3]] (Weltkoordinaten skalieren, verschieben und die vertikale Achse an \(H_{\text{canvas}}\) invertieren)</p><p><strong>Schritt 4:</strong> [[4]] (Linien, Pfeilspitzen konstanter Pixellänge und gedrehte Maßtexte im Screen Space rendern)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Pipeline:</strong> 1. Bounding-Box im World Space \(\to\) 2. Maßstab & Letterboxing \(\to\) 3. WorldToScreen inkl. Y-Inversion \(\to\) 4. Zeichnen inkl. Screen-Space-Pfeilspitzen/Bemaßung.</p>]]></text>
@@ -2411,8 +2356,7 @@ streamer.[[3]]();</code></pre>]]></text>
       <text><![CDATA[<p>Ein Studierender richtet den Bemaßungstext eines Fachwerkstabs mit dem Winkel <code>double angleDeg = Math.Atan2(dyScreen, dxScreen) * 180.0 / Math.PI;</code> aus. Bei Stäben, die von links nach rechts verlaufen (\(x_2 > x_1\)), ist die Maßzahl perfekt lesbar. Bei Stäben, die von rechts nach links definiert wurden (\(x_2 < x_1\)), steht die Zahl jedoch <strong>auf dem Kopf</strong>. Welche Korrektur behebt diesen DIN-406-Verstoß?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Standard-Code für DIN-406-Textrotation:</strong><br>
-<code>if (angleDeg &gt; 90.0) angleDeg -= 180.0; else if (angleDeg &lt; -90.0) angleDeg += 180.0;</code></p>]]></text>
+      <text><![CDATA[<p><strong>Standard-Code für DIN-406-Textrotation:</strong></p><p><code>if (angleDeg &gt; 90.0) angleDeg -= 180.0; else if (angleDeg &lt; -90.0) angleDeg += 180.0;</code></p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -2531,17 +2475,16 @@ streamer.[[3]]();</code></pre>]]></text>
       <text>Q02_T07_Q1: Affine 2D-Transformation: Ursprungsverschiebung bei negativen Weltkoordinaten (x_min &lt; 0)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein symmetrisches Roboter-Arbeitsfeld erstreckt sich in X-Richtung von \(x_{\min} = -4{,}0\,\text{m}\) bis \(x_{\max} = +6{,}0\,\text{m}\) und in Y-Richtung von \(y_{\min} = -2{,}0\,\text{m}\) bis \(y_{\max} = +3{,}0\,\text{m}\). Es wird verzerrungsfrei auf eine nutzbare Canvas-Fläche von \(W_{\text{eff}} = 500\,\text{px}\) mal \(H_{\text{eff}} = 300\,\text{px}\) abgebildet; der linke Offset beträgt \(\text{offset}_X = 50\,\text{px}\).</p>
-<p><strong>a)</strong> Berechnen Sie den verzerrungsfreien Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=50:0.1#Exakt! Delta_X = 6 - (-4) = 10 m, Delta_Y = 3 - (-2) = 5 m; s = min(500/10, 300/5) = min(50, 60) = 50 px/m.~%50%60:0.1#Teilpunkte: Sie haben sy = 300/5 = 60 px/m statt min(50, 60) = 50 px/m gewählt.}</p>
-<p><strong>b)</strong> Berechnen Sie die horizontale Bildschirmkoordinate \(X_{\text{screen}}\) (in \(\text{px}\)) des Koordinatenursprungs \(x = 0{,}0\,\text{m}\): {1:NUMERICAL:=250:0.5#Richtig! X_screen = offset_X + (0.0 - (-4.0)) * 50 = 50 + 4.0 * 50 = 250 px.~%50%50:0.5#Teilpunkte: Sie haben (x - x_min) vergessen und nur offset_X + 0 * 50 = 50 px gerechnet (50 px liegt aber bei x_min = -4.0 m!).}</p>]]></text>
+      <text><![CDATA[<p>Ein symmetrisches Roboter-Arbeitsfeld erstreckt sich in X-Richtung von \(x_{\min} = -4{,}0\,\text{m}\) bis \(x_{\max} = +6{,}0\,\text{m}\) und in Y-Richtung von \(y_{\min} = -2{,}0\,\text{m}\) bis \(y_{\max} = +3{,}0\,\text{m}\). Es wird verzerrungsfrei auf eine nutzbare Canvas-Fläche von \(W_{\text{eff}} = 500\,\text{px}\) mal \(H_{\text{eff}} = 300\,\text{px}\) abgebildet; der linke Offset beträgt \(\text{offset}_X = 50\,\text{px}\).</p><p><strong>a)</strong> Berechnen Sie den verzerrungsfreien Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=50:0.1#Exakt! Delta_X = 6 - (-4) = 10 m, Delta_Y = 3 - (-2) = 5 m; s = min(500/10, 300/5) = min(50, 60) = 50 px/m.~%50%60:0.1#Teilpunkte: Sie haben sy = 300/5 = 60 px/m statt min(50, 60) = 50 px/m gewählt.}</p><p><strong>b)</strong> Berechnen Sie die horizontale Bildschirmkoordinate \(X_{\text{screen}}\) (in \(\text{px}\)) des Koordinatenursprungs \(x = 0{,}0\,\text{m}\): {1:NUMERICAL:=250:0.5#Richtig! X_screen = offset_X + (0.0 - (-4.0)) <em> 50 = 50 + 4.0 </em> 50 = 250 px.~%50%50:0.5#Teilpunkte: Sie haben (x - x_min) vergessen und nur offset_X + 0 * 50 = 50 px gerechnet (50 px liegt aber bei x_min = -4.0 m!).}</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ul>
   <li><strong>Spannweiten:</strong> \(\Delta X = 6{,}0 - (-4{,}0) = 10{,}0\,\text{m}\), \(\Delta Y = 3{,}0 - (-2{,}0) = 5{,}0\,\text{m}\).</li>
+</ul><ul>
   <li><strong>Uniform Scaling:</strong> \(s = \min(500/10, 300/5) = \min(50, 60) = 50\,\text{px/m}\).</li>
+</ul><ul>
   <li><strong>Screen-Position für \(x = 0\):</strong> Wichtig ist die Subtraktion von \(x_{\min}\): \(X_{\text{screen}} = \text{offset}_X + (x - x_{\min}) \cdot s = 50 + (0 - (-4{,}0)) \cdot 50 = 50 + 200 = 250\,\text{px}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -2554,8 +2497,7 @@ streamer.[[3]]();</code></pre>]]></text>
       <text>Q02_T07_Q2: Pfeilspitzen-Geometrie im Screen Space: Flügelpunkt-Koordinate berechnen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein vertikaler Kraftpfeil zeigt auf dem WPF-Canvas exakt senkrecht nach unten (Einheitsrichtungsvektor im Screen Space \(u_x = 0{,}0\), \(u_y = +1{,}0\); Normalenvektor \(n_x = -u_y = -1{,}0\), \(n_y = u_x = 0{,}0\)). Die Pfeilspitze liegt am Bildschirm-Punkt \(\text{tip} = (200\,\text{px}, 300\,\text{px})\). Die Pfeilspitzenlänge beträgt \(L_{\text{arrow}} = 14\,\text{px}\) und die halbe Pfeilbreite \(W_{\text{arrow}} = 6\,\text{px}\).</p>
-<p>Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{wing}}\) (in \(\text{px}\)) der beiden hinteren Pfeilflügel-Eckpunkte.</p>]]></text>
+      <text><![CDATA[<p>Ein vertikaler Kraftpfeil zeigt auf dem WPF-Canvas exakt senkrecht nach unten (Einheitsrichtungsvektor im Screen Space \(u_x = 0{,}0\), \(u_y = +1{,}0\); Normalenvektor \(n_x = -u_y = -1{,}0\), \(n_y = u_x = 0{,}0\)). Die Pfeilspitze liegt am Bildschirm-Punkt \(\text{tip} = (200\,\text{px}, 300\,\text{px})\). Die Pfeilspitzenlänge beträgt \(L_{\text{arrow}} = 14\,\text{px}\) und die halbe Pfeilbreite \(W_{\text{arrow}} = 6\,\text{px}\).</p><p>Berechnen Sie die vertikale Bildschirmkoordinate \(Y_{\text{wing}}\) (in \(\text{px}\)) der beiden hinteren Pfeilflügel-Eckpunkte.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong> Für die Flügeleckpunkte gilt \(\vec{P}_{\text{wing}} = \vec{P}_{\text{tip}} - L_{\text{arrow}} \cdot \vec{u} \pm W_{\text{arrow}} \cdot \vec{n}\). Für die Y-Komponente folgt \(Y_{\text{wing}} = 300 - 14 \cdot 1{,}0 \pm 6 \cdot 0{,}0 = 286\,\text{px}\).</p>]]></text>
@@ -2567,7 +2509,7 @@ streamer.[[3]]();</code></pre>]]></text>
     <answer fraction="100" format="moodle_auto_format">
       <text>286</text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Y_wing = tip.Y - uy * L_arrow + ny * W_arrow = 300 - 1.0 * 14 + 0 * 6 = 286.0 px.</p>]]></text>
+        <text><![CDATA[<p>Exakt! Y_wing = tip.Y - uy <em> L_arrow + ny </em> W_arrow = 300 - 1.0 <em> 14 + 0 </em> 6 = 286.0 px.</p>]]></text>
       </feedback>
       <tolerance>0.1</tolerance>
     </answer>
@@ -2597,8 +2539,7 @@ streamer.[[3]]();</code></pre>]]></text>
       <text>Q02_T07_Q3: C#-Code-Tracing: Welford-Varianz nach drei konkreten Messwerten</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Verfolgen Sie die Ausführung des Welford-Algorithmus für die drei Messwerte <code>x = { 10.0, 20.0, 30.0 }</code>:</p>
-<pre><code class="language-csharp">double mean = 0.0, m2 = 0.0;
+      <text><![CDATA[<p>Verfolgen Sie die Ausführung des Welford-Algorithmus für die drei Messwerte <code>x = { 10.0, 20.0, 30.0 }</code>:</p><pre><code>double mean = 0.0, m2 = 0.0;
 int count = 0;
 foreach (double x in new[] { 10.0, 20.0, 30.0 }) {
     count++;
@@ -2606,14 +2547,14 @@ foreach (double x in new[] { 10.0, 20.0, 30.0 }) {
     mean += d1 / count;
     double d2 = x - mean;
     m2 += d1 * d2;
-}</code></pre>
-<p>Welchen numerischen Wert hat die Variable <code>m2</code> nach Abschluss der Schleife?</p>]]></text>
+}</code></pre><p>Welchen numerischen Wert hat die Variable <code>m2</code> nach Abschluss der Schleife?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Schritt-für-Schritt-Tracing:</strong></p>
-<ul>
+      <text><![CDATA[<p><strong>Schritt-für-Schritt-Tracing:</strong></p><ul>
   <li><code>x = 10</code>: <code>count = 1</code>, <code>d1 = 10</code>, <code>mean = 10</code>, <code>d2 = 0</code>, <code>m2 = 0</code>.</li>
+</ul><ul>
   <li><code>x = 20</code>: <code>count = 2</code>, <code>d1 = 10</code>, <code>mean = 15</code>, <code>d2 = 5</code>, <code>m2 = 0 + 10 * 5 = 50</code>.</li>
+</ul><ul>
   <li><code>x = 30</code>: <code>count = 3</code>, <code>d1 = 15</code>, <code>mean = 20</code>, <code>d2 = 10</code>, <code>m2 = 50 + 15 * 10 = 200</code>.</li>
 </ul>]]></text>
     </generalfeedback>
@@ -2647,8 +2588,7 @@ foreach (double x in new[] { 10.0, 20.0, 30.0 }) {
       <text>Q02_T07_Q4: C#-Code-Lückentext: Statische WPF-Pinsel mit Freeze() für High-FPS optimieren</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie die statische Initialisierung eines wiederverwendbaren, thread-sicheren und maximal performanten WPF-Pinsels für Zugstäbe:</p>
-<pre><code class="language-csharp">private static readonly [[1]] TensionBrush = CreateFrozenBrush(Colors.RoyalBlue);
+      <text><![CDATA[<p>Vervollständigen Sie die statische Initialisierung eines wiederverwendbaren, thread-sicheren und maximal performanten WPF-Pinsels für Zugstäbe:</p><pre><code>private static readonly [[1]] TensionBrush = CreateFrozenBrush(Colors.RoyalBlue);
 
 private static SolidColorBrush CreateFrozenBrush(Color color)
 {
@@ -2743,7 +2683,7 @@ private static SolidColorBrush CreateFrozenBrush(Color color)
     <subquestion format="html">
       <text><![CDATA[Das gesamte Fachwerk steht auf dem Bildschirm spiegelverkehrt auf dem Kopf (Stützlager hängen oben an der Decke)]]></text>
       <answer>
-        <text><![CDATA[Fehlende Y-Achsen-Inversion (offsetY + y*s statt canvasHeight - (offsetY + y*s))]]></text>
+        <text><![CDATA[Fehlende Y-Achsen-Inversion (offsetY + y<em>s statt canvasHeight - (offsetY + y</em>s))]]></text>
       </answer>
     </subquestion>
     <subquestion format="html">
@@ -2839,14 +2779,12 @@ private static SolidColorBrush CreateFrozenBrush(Color color)
       <text>Q02_T07_Q7: C#-Bug-Diagnose: Garbage-Collection-Stottern durch Array-Neuallokation im 60-Hz-Timer</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Entwickler möchte ein Live-Signal mit \(500.000\) Punkten in ScottPlot 5 aktualisieren und schreibt im \(60\,\text{Hz}\)-Timer folgenden Code. Alle paar Sekunden friert das Bild kurz ein (GC-Pausen):</p>
-<pre><code class="language-csharp">void OnTimerTick(object? sender, EventArgs e) {
+      <text><![CDATA[<p>Ein Entwickler möchte ein Live-Signal mit \(500.000\) Punkten in ScottPlot 5 aktualisieren und schreibt im \(60\,\text{Hz}\)-Timer folgenden Code. Alle paar Sekunden friert das Bild kurz ein (GC-Pausen):</p><pre><code>void OnTimerTick(object? sender, EventArgs e) {
     double[] copy = _ringBuffer.ToArray(); // erzeugt neues double[500000]
     MainPlot.Plot.Clear();
     MainPlot.Plot.Add.Signal(copy);
     MainPlot.Refresh();
-}</code></pre>
-<p>Warum belastet dieser Code den .NET Garbage Collector (insbesondere den Large Object Heap) massiv?</p>]]></text>
+}</code></pre><p>Warum belastet dieser Code den .NET Garbage Collector (insbesondere den Large Object Heap) massiv?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Lösung:</strong> In .NET wandern Objekte ab \(85.000\,\text{Bytes}\) direkt auf den <strong>Large Object Heap (LOH)</strong>. In einem 60-Hz-Renderloop darf niemals mit <code>.ToArray()</code> und <code>Plot.Clear()</code> gearbeitet werden; stattdessen nutzt man einen festen Puffer oder <code>DataStreamer</code>.</p>]]></text>
@@ -2968,16 +2906,14 @@ private static SolidColorBrush CreateFrozenBrush(Color color)
       <text>Q02_T08_Q1: Inverse 2D-Transformation beim Maus-Dragging: Verschiebungsvektor in Weltkoordinaten</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einem interaktiven 2D-Kinematik-Editor mit dem eingefrorenen uniformen Skalierungsfaktor \(s = 25\,\text{px/m}\) zieht eine Ingenieurin einen Gelenkknoten mit gedrückter Maustaste von der Start-Bildschirmkoordinate \(P_{\text{start}} = (150\,\text{px}, 300\,\text{px})\) zur neuen Bildschirmkoordinate \(P_{\text{end}} = (225\,\text{px}, 200\,\text{px})\) (beachten Sie: der Bildschirmwert \(Y_{\text{screen}}\) ist von \(300\,\text{px}\) auf \(200\,\text{px}\) gesunken, die Maus wurde also auf dem Monitor nach <strong>oben</strong> bewegt).</p>
-<p><strong>a)</strong> Berechnen Sie die resultierende horizontale Verschiebung \(\Delta X_{\text{world}} = X_{\text{world,end}} - X_{\text{world,start}}\) des Knotens in Metern (\(\text{m}\)): {1:NUMERICAL:=3.0:0.05#Exakt! Delta_X_screen = 225 - 150 = +75 px; Delta_X_world = +75 / 25 = +3.0 m.~%50%-3.0:0.05#Teilpunkte: Vorzeichenfehler! Eine Bewegung nach rechts (von 150 auf 225 px) vergrößert X_world um +3.0 m.}</p>
-<p><strong>b)</strong> Berechnen Sie die resultierende vertikale Verschiebung \(\Delta Y_{\text{world}} = Y_{\text{world,end}} - Y_{\text{world,start}}\) des Knotens in Metern (\(\text{m}\)) unter Beachtung der WPF-Y-Achsen-Inversion: {1:NUMERICAL:=4.0:0.05#Richtig! Da Y_screen um 100 px nach oben (von 300 auf 200) wandert, steigt die physikalische Höhe um Delta_Y_world = -(200 - 300) / 25 = +4.0 m.~%50%-4.0:0.05#Teilpunkte: Sie haben die Y-Inversion vergessen und (200 - 300) / 25 = -4.0 m gerechnet (Bewegung nach oben bedeutet positives Delta_Y_world!).}</p>]]></text>
+      <text><![CDATA[<p>In einem interaktiven 2D-Kinematik-Editor mit dem eingefrorenen uniformen Skalierungsfaktor \(s = 25\,\text{px/m}\) zieht eine Ingenieurin einen Gelenkknoten mit gedrückter Maustaste von der Start-Bildschirmkoordinate \(P_{\text{start}} = (150\,\text{px}, 300\,\text{px})\) zur neuen Bildschirmkoordinate \(P_{\text{end}} = (225\,\text{px}, 200\,\text{px})\) (beachten Sie: der Bildschirmwert \(Y_{\text{screen}}\) ist von \(300\,\text{px}\) auf \(200\,\text{px}\) gesunken, die Maus wurde also auf dem Monitor nach <strong>oben</strong> bewegt).</p><p><strong>a)</strong> Berechnen Sie die resultierende horizontale Verschiebung \(\Delta X_{\text{world}} = X_{\text{world,end}} - X_{\text{world,start}}\) des Knotens in Metern (\(\text{m}\)): {1:NUMERICAL:=3.0:0.05#Exakt! Delta_X_screen = 225 - 150 = +75 px; Delta_X_world = +75 / 25 = +3.0 m.~%50%-3.0:0.05#Teilpunkte: Vorzeichenfehler! Eine Bewegung nach rechts (von 150 auf 225 px) vergrößert X_world um +3.0 m.}</p><p><strong>b)</strong> Berechnen Sie die resultierende vertikale Verschiebung \(\Delta Y_{\text{world}} = Y_{\text{world,end}} - Y_{\text{world,start}}\) des Knotens in Metern (\(\text{m}\)) unter Beachtung der WPF-Y-Achsen-Inversion: {1:NUMERICAL:=4.0:0.05#Richtig! Da Y_screen um 100 px nach oben (von 300 auf 200) wandert, steigt die physikalische Höhe um Delta_Y_world = -(200 - 300) / 25 = +4.0 m.~%50%-4.0:0.05#Teilpunkte: Sie haben die Y-Inversion vergessen und (200 - 300) / 25 = -4.0 m gerechnet (Bewegung nach oben bedeutet positives Delta_Y_world!).}</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung (Differenz-Transformation):</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung (Differenz-Transformation):</strong></p><ul>
   <li><strong>Horizontale Änderung:</strong> \(\Delta X_{\text{world}} = \frac{X_{\text{screen,end}} - X_{\text{screen,start}}}{s} = \frac{225 - 150}{25} = +3{,}0\,\text{m}\).</li>
+</ul><ul>
   <li><strong>Vertikale Änderung (mit Y-Inversion):</strong> Da \(Y_{\text{screen}}\) nach unten wächst, gilt für Differenzen \(\Delta Y_{\text{world}} = -\frac{Y_{\text{screen,end}} - Y_{\text{screen,start}}}{s} = -\frac{200 - 300}{25} = +4{,}0\,\text{m}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -2990,8 +2926,7 @@ private static SolidColorBrush CreateFrozenBrush(Color color)
       <text>Q02_T08_Q2: ScottPlot 5 Signal-Downsampling: Kompressionsrate pro Pixelspalte berechnen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Prüfstands-Datensatz mit \(N = 400.000\) äquidistanten Druckmesswerten wird in einem <strong>ScottPlot 5</strong> <code>Signal</code>-Plot vollständig dargestellt. Die Zeichenfläche (Data Area) des Diagramms auf dem Monitor hat eine Breite von exakt \(W_{\text{plot}} = 800\,\text{Pixelspalten}\).</p>
-<p>Wie viele Roh-Messwerte \(M\) fasst der interne Min/Max-Downsampling-Algorithmus von <code>Signal</code> im Durchschnitt in <strong>jeder einzelnen Pixelspalte</strong> zusammen?</p>]]></text>
+      <text><![CDATA[<p>Ein Prüfstands-Datensatz mit \(N = 400.000\) äquidistanten Druckmesswerten wird in einem <strong>ScottPlot 5</strong> <code>Signal</code>-Plot vollständig dargestellt. Die Zeichenfläche (Data Area) des Diagramms auf dem Monitor hat eine Breite von exakt \(W_{\text{plot}} = 800\,\text{Pixelspalten}\).</p><p>Wie viele Roh-Messwerte \(M\) fasst der interne Min/Max-Downsampling-Algorithmus von <code>Signal</code> im Durchschnitt in <strong>jeder einzelnen Pixelspalte</strong> zusammen?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong> Auf \(W_{\text{plot}} = 800\) horizontale Pixelspalten verteilen sich \(N = 400.000\) Samples. Damit entfallen \(M = \frac{400.000}{800} = 500\) Samples auf jede Pixelspalte, aus denen jeweils das Minimum und Maximum bestimmt wird.</p>]]></text>
@@ -3033,11 +2968,10 @@ private static SolidColorBrush CreateFrozenBrush(Color color)
       <text>Q02_T08_Q3: C#-Code-Tracing: Lesbarkeitskorrektur des Bemaßungswinkels nach DIN 406</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein schräger Stab verläuft auf dem Bildschirm nach links oben und besitzt vor der Korrektur den Orientierungswinkel <code>angleDeg = -135.0</code> Grad. Welchen Wert hat <code>angleDeg</code> nach Ausführung der DIN-406-Lesbarkeitskorrektur?</p>
-<pre><code class="language-csharp">double angleDeg = -135.0;
-if (angleDeg > 90.0)
+      <text><![CDATA[<p>Ein schräger Stab verläuft auf dem Bildschirm nach links oben und besitzt vor der Korrektur den Orientierungswinkel <code>angleDeg = -135.0</code> Grad. Welchen Wert hat <code>angleDeg</code> nach Ausführung der DIN-406-Lesbarkeitskorrektur?</p><pre><code>double angleDeg = -135.0;
+if (angleDeg &gt; 90.0)
     angleDeg -= 180.0;
-else if (angleDeg < -90.0)
+else if (angleDeg &lt; -90.0)
     angleDeg += 180.0;</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -3073,13 +3007,12 @@ else if (angleDeg < -90.0)
       <text>Q02_T08_Q4: C#-Code-Lückentext: Wurzelfreies Hit-Testing für Knotenauswahl im Screen Space</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie die C#-Methode zur Suche des nächstgelegenen Fachwerkknotens innerhalb eines Fangradius <code>snapRadiusPx = 10.0</code> um die Mausposition <code>(mouseX, mouseY)</code>:</p>
-<pre><code class="language-csharp">double bestDistSq = [[1]];
+      <text><![CDATA[<p>Vervollständigen Sie die C#-Methode zur Suche des nächstgelegenen Fachwerkknotens innerhalb eines Fangradius <code>snapRadiusPx = 10.0</code> um die Mausposition <code>(mouseX, mouseY)</code>:</p><pre><code>double bestDistSq = [[1]];
 Node? hitNode = null;
 foreach (var node in _nodes) {
     var (sx, sy) = _transform.[[2]](node.X, node.Y);
     double dSq = (mouseX - sx) * (mouseX - sx) + (mouseY - sy) * (mouseY - sy);
-    if (dSq <= [[3]]) { bestDistSq = dSq; hitNode = node; }
+    if (dSq &lt;= [[3]]) { bestDistSq = dSq; hitNode = node; }
 }</code></pre>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -3144,11 +3077,7 @@ foreach (var node in _nodes) {
       <text>Q02_T08_Q5: Pipeline-Reihenfolge: Entkoppeltes Echtzeit-Datenstreaming mit Ringpuffer und UI-Timer</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Bringen Sie die <strong>vier Schritte einer entkoppelten Echtzeit-Visualisierungspipeline</strong> (Kapitel 04) vom Eintreffen eines Messwerts bis zum Bildschirm-Frame in die korrekte Reihenfolge:</p>
-<p><strong>Schritt 1:</strong> [[1]] (Neuen Rohmesswert in O(1) an der aktuellen Schreibposition in den vorallokierten Puffer eintragen)<br>
-<strong>Schritt 2:</strong> [[2]] (Laufenden Mittelwert und Abweichungsquadratsumme M2 inkrementell nach Welford aktualisieren)<br>
-<strong>Schritt 3:</strong> [[3]] (Abwarten des nächsten 30/60-Hz-Takts des UI-Timers ohne Blockade des Messkanals)<br>
-<strong>Schritt 4:</strong> [[4]] (Position der 3-Sigma-Linien anpassen und einmalig pro Frame WpfPlot.Refresh() auslösen)</p>]]></text>
+      <text><![CDATA[<p>Bringen Sie die <strong>vier Schritte einer entkoppelten Echtzeit-Visualisierungspipeline</strong> (Kapitel 04) vom Eintreffen eines Messwerts bis zum Bildschirm-Frame in die korrekte Reihenfolge:</p><p><strong>Schritt 1:</strong> [[1]] (Neuen Rohmesswert in O(1) an der aktuellen Schreibposition in den vorallokierten Puffer eintragen)</p><p><strong>Schritt 2:</strong> [[2]] (Laufenden Mittelwert und Abweichungsquadratsumme M2 inkrementell nach Welford aktualisieren)</p><p><strong>Schritt 3:</strong> [[3]] (Abwarten des nächsten 30/60-Hz-Takts des UI-Timers ohne Blockade des Messkanals)</p><p><strong>Schritt 4:</strong> [[4]] (Position der 3-Sigma-Linien anpassen und einmalig pro Frame WpfPlot.Refresh() auslösen)</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Echtzeit-Architektur:</strong> Schnelle Datenaufnahme (Ringpuffer + Welford in \(\mathcal{O}(1)\)) wird zeitlich über einen <code>DispatcherTimer</code> vom aufwendigen Grafik-Rendering (<code>WpfPlot.Refresh()</code>) getrennt.</p>]]></text>
@@ -3377,16 +3306,14 @@ foreach (var node in _nodes) {
       <text>Q02_T09_Q1: Affine 2D-Transformation: Nutzbare Zeichenfläche nach Randabzug und Uniform Scaling</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein WPF-Canvas besitzt die Gesamtgröße \(W_{\text{canvas}} = 700\,\text{px}\) Breite und \(H_{\text{canvas}} = 500\,\text{px}\) Höhe. Damit Knotensymbole und DIN-406-Maßzahlen am Rand nicht abgeschnitten werden, wird auf <strong>allen vier Seiten</strong> (links, rechts, oben, unten) jeweils ein Sicherheitsrand von \(\text{margin} = 50\,\text{px}\) freigehalten. Auf der verbleibenden nutzbaren Fläche soll eine Fertigungsstraße der Länge \(\Delta X = 30\,\text{m}\) und Breite \(\Delta Y = 10\,\text{m}\) verzerrungsfrei dargestellt werden.</p>
-<p><strong>a)</strong> Berechnen Sie die effektiv nutzbare Zeichenbreite \(W_{\text{eff}}\) in \(\text{px}\) nach Abzug des linken und rechten Sicherheitsrands: {1:NUMERICAL:=600:0.5#Exakt! W_eff = W_canvas - 2 * margin = 700 - 2 * 50 = 600 px.~%50%650:0.5#Teilpunkte: Sie haben margin = 50 px nur einmal statt zweimal (links UND rechts) abgezogen!}</p>
-<p><strong>b)</strong> Berechnen Sie den resultierenden verzerrungsfreien uniformen Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=20:0.1#Richtig! H_eff = 500 - 2*50 = 400 px; s = min(600/30, 400/10) = min(20, 40) = 20 px/m.~%50%40:0.1#Teilpunkte: Sie haben max(sx, sy) = 40 px/m statt min(sx, sy) = 20 px/m gewählt.}</p>]]></text>
+      <text><![CDATA[<p>Ein WPF-Canvas besitzt die Gesamtgröße \(W_{\text{canvas}} = 700\,\text{px}\) Breite und \(H_{\text{canvas}} = 500\,\text{px}\) Höhe. Damit Knotensymbole und DIN-406-Maßzahlen am Rand nicht abgeschnitten werden, wird auf <strong>allen vier Seiten</strong> (links, rechts, oben, unten) jeweils ein Sicherheitsrand von \(\text{margin} = 50\,\text{px}\) freigehalten. Auf der verbleibenden nutzbaren Fläche soll eine Fertigungsstraße der Länge \(\Delta X = 30\,\text{m}\) und Breite \(\Delta Y = 10\,\text{m}\) verzerrungsfrei dargestellt werden.</p><p><strong>a)</strong> Berechnen Sie die effektiv nutzbare Zeichenbreite \(W_{\text{eff}}\) in \(\text{px}\) nach Abzug des linken und rechten Sicherheitsrands: {1:NUMERICAL:=600:0.5#Exakt! W_eff = W_canvas - 2 <em> margin = 700 - 2 </em> 50 = 600 px.~%50%650:0.5#Teilpunkte: Sie haben margin = 50 px nur einmal statt zweimal (links UND rechts) abgezogen!}</p><p><strong>b)</strong> Berechnen Sie den resultierenden verzerrungsfreien uniformen Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=20:0.1#Richtig! H_eff = 500 - 2*50 = 400 px; s = min(600/30, 400/10) = min(20, 40) = 20 px/m.~%50%40:0.1#Teilpunkte: Sie haben max(sx, sy) = 40 px/m statt min(sx, sy) = 20 px/m gewählt.}</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ul>
   <li><strong>Nutzbare Dimensionen (beidseitiger Randabzug!):</strong> \(W_{\text{eff}} = W_{\text{canvas}} - 2 \cdot \text{margin} = 700 - 100 = 600\,\text{px}\) und \(H_{\text{eff}} = H_{\text{canvas}} - 2 \cdot \text{margin} = 500 - 100 = 400\,\text{px}\).</li>
+</ul><ul>
   <li><strong>Uniform Scaling:</strong> \(s = \min\left(\frac{600}{30}, \frac{400}{10}\right) = \min(20, 40) = 20\,\text{px/m}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -3399,15 +3326,14 @@ foreach (var node in _nodes) {
       <text>Q02_T09_Q2: Statistische Prozesskontrolle (SPC): Untere 3-Sigma-Warngrenze (LCL) bestimmen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Welford-Statistikmodul überwacht den Förderstrom einer Dosierpumpe. Nach \(k = 10\) Messwerten beträgt der laufende Mittelwert \(\mu = 50{,}0\,\text{l/min}\) und die Quadratsumme der Abweichungen \(M_2 = 36{,}0\,(\text{l/min})^2\). Für die Live-Überwachung in ScottPlot 5 wird die untere \(3\sigma\)-Kontrollgrenze \(\text{LCL} = \mu - 3 \cdot s\) (mit der empirischen Stichprobenstandardabweichung \(s\)) berechnet.</p>
-<p>Berechnen Sie den numerischen Wert von \(\text{LCL}\) in \(\text{l/min}\).</p>]]></text>
+      <text><![CDATA[<p>Ein Welford-Statistikmodul überwacht den Förderstrom einer Dosierpumpe. Nach \(k = 10\) Messwerten beträgt der laufende Mittelwert \(\mu = 50{,}0\,\text{l/min}\) und die Quadratsumme der Abweichungen \(M_2 = 36{,}0\,(\text{l/min})^2\). Für die Live-Überwachung in ScottPlot 5 wird die untere \(3\sigma\)-Kontrollgrenze \(\text{LCL} = \mu - 3 \cdot s\) (mit der empirischen Stichprobenstandardabweichung \(s\)) berechnet.</p><p>Berechnen Sie den numerischen Wert von \(\text{LCL}\) in \(\text{l/min}\).</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ul>
   <li><strong>Stichprobenvarianz:</strong> \(s^2 = \frac{M_2}{k - 1} = \frac{36{,}0}{9} = 4{,}0\,(\text{l/min})^2 \implies s = \sqrt{4{,}0} = 2{,}0\,\text{l/min}\).</li>
+</ul><ul>
   <li><strong>Untere \(3\sigma\)-Grenze:</strong> \(\text{LCL} = \mu - 3s = 50{,}0 - 3 \cdot 2{,}0 = 44{,}0\,\text{l/min}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <defaultgrade>1.5000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -3446,12 +3372,10 @@ foreach (var node in _nodes) {
       <text>Q02_T09_Q3: C#-Code-Tracing: Horizontale Pfeilspitzen-Rückverschiebung im Screen Space</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein horizontaler Kraftpfeil zeigt nach rechts von <code>start = (100, 200)</code> zur Spitze <code>tip = (250, 200)</code>. Der folgende C#-Code berechnet die X-Koordinate <code>wingX</code> der Pfeilflügel:</p>
-<pre><code class="language-csharp">double ux = 1.0, uy = 0.0;
+      <text><![CDATA[<p>Ein horizontaler Kraftpfeil zeigt nach rechts von <code>start = (100, 200)</code> zur Spitze <code>tip = (250, 200)</code>. Der folgende C#-Code berechnet die X-Koordinate <code>wingX</code> der Pfeilflügel:</p><pre><code>double ux = 1.0, uy = 0.0;
 double nx = -uy, ny = ux;
 double arrowLength = 15.0, arrowHalfWidth = 6.0;
-double wingX = 250.0 - ux * arrowLength + nx * arrowHalfWidth;</code></pre>
-<p>Welchen numerischen Wert (in \(\text{px}\)) besitzt <code>wingX</code>?</p>]]></text>
+double wingX = 250.0 - ux * arrowLength + nx * arrowHalfWidth;</code></pre><p>Welchen numerischen Wert (in \(\text{px}\)) besitzt <code>wingX</code>?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong> Da der Pfeil horizontal nach rechts zeigt (\(u_x = 1, u_y = 0\)), steht der Normalenvektor vertikal (\(n_x = 0, n_y = 1\)). In X-Richtung gehen die Flügel daher einfach um <code>arrowLength = 15.0</code> hinter die Spitze bei \(250\,\text{px}\) zurück: \(250{,}0 - 15{,}0 = 235{,}0\,\text{px}\).</p>]]></text>
@@ -3463,7 +3387,7 @@ double wingX = 250.0 - ux * arrowLength + nx * arrowHalfWidth;</code></pre>
     <answer fraction="100" format="moodle_auto_format">
       <text>235</text>
       <feedback format="html">
-        <text><![CDATA[<p>Richtig! Da nx = -uy = 0.0 ist, gilt wingX = 250.0 - 1.0 * 15.0 + 0.0 * 6.0 = 235.0 px.</p>]]></text>
+        <text><![CDATA[<p>Richtig! Da nx = -uy = 0.0 ist, gilt wingX = 250.0 - 1.0 <em> 15.0 + 0.0 </em> 6.0 = 235.0 px.</p>]]></text>
       </feedback>
       <tolerance>0.1</tolerance>
     </answer>
@@ -3486,8 +3410,7 @@ double wingX = 250.0 - ux * arrowLength + nx * arrowHalfWidth;</code></pre>
       <text>Q02_T09_Q4: C#-Code-Lückentext: Horizontale Warnlinie und Toleranzband in ScottPlot 5 einzeichnen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie den C#-Code, um in <strong>ScottPlot 5</strong> den Mittelwert <code>mean</code> als horizontale Linie und den \(\pm 3\sigma\)-Bereich von <code>lcl</code> bis <code>ucl</code> als farbiges Toleranzband einzuzeichnen:</p>
-<pre><code class="language-csharp">var meanLine = MainPlot.Plot.Add.[[1]](mean);
+      <text><![CDATA[<p>Vervollständigen Sie den C#-Code, um in <strong>ScottPlot 5</strong> den Mittelwert <code>mean</code> als horizontale Linie und den \(\pm 3\sigma\)-Bereich von <code>lcl</code> bis <code>ucl</code> als farbiges Toleranzband einzuzeichnen:</p><pre><code>var meanLine = MainPlot.Plot.Add.[[1]](mean);
 var band = MainPlot.Plot.Add.[[2]](lcl, ucl);
 MainPlot.[[3]]();</code></pre>]]></text>
     </questiontext>
@@ -3594,7 +3517,7 @@ MainPlot.[[3]]();</code></pre>]]></text>
     <subquestion format="html">
       <text><![CDATA[Obere und untere Eingriffsgrenze (Control Limits) im statistischen Prozessband]]></text>
       <answer>
-        <text><![CDATA[mu + 3*s und mu - 3*s (umfasst bei Normalverteilung ca. 99,73 Prozent der Werte)]]></text>
+        <text><![CDATA[mu + 3<em>s und mu - 3</em>s (umfasst bei Normalverteilung ca. 99,73 Prozent der Werte)]]></text>
       </answer>
     </subquestion>
     <subquestion format="html">
@@ -3730,7 +3653,7 @@ MainPlot.[[3]]();</code></pre>]]></text>
       <text><![CDATA[<p>Welche <strong>zwei</strong> Architektur-Entscheidungen wählen für das jeweilige Simulationsproblem die technisch optimale 2D-Visualisierungstechnologie aus den bisherigen Kapiteln?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Architektur-Kompass:</strong> Dichte 2D-Rasterfelder \(\to\) <code>WriteableBitmap</code> (Kap. 02); interaktive Konstruktions-/CAD-Geometrie \(\to\) <code>WPF Canvas / DrawingVisual</code> (Kap. 03); Zeitreihen, Statistik & Graphentopologie \(\to\) <code>ScottPlot 5 & MSAGL</code> (Kap. 04).</p>]]></text>
+      <text><![CDATA[<p><strong>Architektur-Kompass:</strong> Dichte 2D-Rasterfelder \(\to\) <code>WriteableBitmap</code> (Kap. 02); interaktive Konstruktions-/CAD-Geometrie \(\to\) <code>WPF Canvas / DrawingVisual</code> (Kap. 03); Zeitreihen, Statistik & Graphentopologie \(\to\) <code>ScottPlot 5 &amp; MSAGL</code> (Kap. 04).</p>]]></text>
     </generalfeedback>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -3794,16 +3717,14 @@ MainPlot.[[3]]();</code></pre>]]></text>
       <text>Q02_T10_Q1: Affine 2D-Transformation: Wahre Bauteil-Spannweite aus Bildschirm-Koordinaten bestimmen</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Ein Prüfstandsrahmen mit der physikalischen Breite \(\Delta X = 8{,}0\,\text{m}\) und Höhe \(\Delta Y = 5{,}0\,\text{m}\) ist verzerrungsfrei (Uniform Scaling) in ein nutzbares Canvas-Fenster von \(W_{\text{eff}} = 640\,\text{px}\) Breite und \(H_{\text{eff}} = 500\,\text{px}\) Höhe eingepasst. Auf dem Bildschirm messen Sie zwischen zwei Lagermittelpunkten einen horizontalen Pixelabstand von \(\Delta X_{\text{screen}} = 240\,\text{px}\) und einen vertikalen Pixelabstand von \(\Delta Y_{\text{screen}} = 320\,\text{px}\) (d. h. eine schräge Bildschirmdistanz von \(L_{\text{screen}} = \sqrt{240^2 + 320^2} = 400\,\text{px}\)).</p>
-<p><strong>a)</strong> Berechnen Sie den verwendeten uniformen Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=80:0.1#Exakt! s = min(640 / 8.0, 500 / 5.0) = min(80, 100) = 80 px/m.~%50%100:0.1#Teilpunkte: Sie haben sy = 500 / 5.0 = 100 px/m statt min(80, 100) = 80 px/m gewählt.}</p>
-<p><strong>b)</strong> Berechnen Sie den wahren physikalischen Euklidischen Abstand \(L_{\text{world}}\) (in \(\text{m}\)) zwischen den beiden Lagern im World Space: {1:NUMERICAL:=5.0:0.05#Richtig! L_world = L_screen / s = 400 px / 80 (px/m) = 5.0 m (bzw. sqrt(3.0^2 + 4.0^2) = 5.0 m).~%50%4.0:0.05#Teilpunkte: Folgefehler aus Teil a (400 / 100 = 4.0 m) oder nur die vertikale Komponente 320 / 80 = 4.0 m betrachtet.}</p>]]></text>
+      <text><![CDATA[<p>Ein Prüfstandsrahmen mit der physikalischen Breite \(\Delta X = 8{,}0\,\text{m}\) und Höhe \(\Delta Y = 5{,}0\,\text{m}\) ist verzerrungsfrei (Uniform Scaling) in ein nutzbares Canvas-Fenster von \(W_{\text{eff}} = 640\,\text{px}\) Breite und \(H_{\text{eff}} = 500\,\text{px}\) Höhe eingepasst. Auf dem Bildschirm messen Sie zwischen zwei Lagermittelpunkten einen horizontalen Pixelabstand von \(\Delta X_{\text{screen}} = 240\,\text{px}\) und einen vertikalen Pixelabstand von \(\Delta Y_{\text{screen}} = 320\,\text{px}\) (d. h. eine schräge Bildschirmdistanz von \(L_{\text{screen}} = \sqrt{240^2 + 320^2} = 400\,\text{px}\)).</p><p><strong>a)</strong> Berechnen Sie den verwendeten uniformen Skalierungsfaktor \(s\) in \(\text{px/m}\): {1:NUMERICAL:=80:0.1#Exakt! s = min(640 / 8.0, 500 / 5.0) = min(80, 100) = 80 px/m.~%50%100:0.1#Teilpunkte: Sie haben sy = 500 / 5.0 = 100 px/m statt min(80, 100) = 80 px/m gewählt.}</p><p><strong>b)</strong> Berechnen Sie den wahren physikalischen Euklidischen Abstand \(L_{\text{world}}\) (in \(\text{m}\)) zwischen den beiden Lagern im World Space: {1:NUMERICAL:=5.0:0.05#Richtig! L_world = L_screen / s = 400 px / 80 (px/m) = 5.0 m (bzw. sqrt(3.0^2 + 4.0^2) = 5.0 m).~%50%4.0:0.05#Teilpunkte: Folgefehler aus Teil a (400 / 100 = 4.0 m) oder nur die vertikale Komponente 320 / 80 = 4.0 m betrachtet.}</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text><![CDATA[<p><strong>Musterherleitung:</strong></p>
-<ol>
+      <text><![CDATA[<p><strong>Musterherleitung:</strong></p><ul>
   <li><strong>Uniform Scaling:</strong> \(s = \min\left(\frac{640}{8{,}0}, \frac{500}{5{,}0}\right) = \min(80, 100) = 80\,\text{px/m}\).</li>
+</ul><ul>
   <li><strong>Wahre Distanz im World Space:</strong> \(\Delta X_{\text{world}} = \frac{240}{80} = 3{,}0\,\text{m}\), \(\Delta Y_{\text{world}} = \frac{320}{80} = 4{,}0\,\text{m}\), also \(L_{\text{world}} = \sqrt{3{,}0^2 + 4{,}0^2} = \frac{400\,\text{px}}{80\,\text{px/m}} = 5{,}0\,\text{m}\).</li>
-</ol>]]></text>
+</ul>]]></text>
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -3816,8 +3737,7 @@ MainPlot.[[3]]();</code></pre>]]></text>
       <text>Q02_T10_Q2: Welford-Online-Algorithmus: Erforderliche Quadratsumme M2 für gegebene Standardabweichung</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>In einem automatisierten Unit-Test für Ihre <code>WelfordStatistics</code>-Klasse wurden \(k = 11\) Temperaturmesswerte verarbeitet. Die empirische Stichprobenstandardabweichung wird von der Klasse als \(s = 3{,}0\,\text{K}\) ausgewiesen.</p>
-<p>Welchen numerischen Wert (in \(\text{K}^2\)) muss das interne Akkumulatorfeld \(M_2\) zu diesem Zeitpunkt exakt besitzen?</p>]]></text>
+      <text><![CDATA[<p>In einem automatisierten Unit-Test für Ihre <code>WelfordStatistics</code>-Klasse wurden \(k = 11\) Temperaturmesswerte verarbeitet. Die empirische Stichprobenstandardabweichung wird von der Klasse als \(s = 3{,}0\,\text{K}\) ausgewiesen.</p><p>Welchen numerischen Wert (in \(\text{K}^2\)) muss das interne Akkumulatorfeld \(M_2\) zu diesem Zeitpunkt exakt besitzen?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong> Aus \(s = \sqrt{\frac{M_2}{k - 1}} = 3{,}0\,\text{K}\) folgt durch Quadrieren \(s^2 = \frac{M_2}{k - 1} = 9{,}0\,\text{K}^2\). Multiplikation mit \(k - 1 = 11 - 1 = 10\) ergibt \(M_2 = 9{,}0 \cdot 10 = 90{,}0\,\text{K}^2\).</p>]]></text>
@@ -3829,7 +3749,7 @@ MainPlot.[[3]]();</code></pre>]]></text>
     <answer fraction="100" format="moodle_auto_format">
       <text>90</text>
       <feedback format="html">
-        <text><![CDATA[<p>Exakt! Da s = 3.0 K => Stichprobenvarianz s^2 = 9.0 K^2. Aus s^2 = M2 / (k - 1) folgt M2 = s^2 * (11 - 1) = 9.0 * 10 = 90.0 K^2.</p>]]></text>
+        <text><![CDATA[<p>Exakt! Da s = 3.0 K => Stichprobenvarianz s^2 = 9.0 K^2. Aus s^2 = M2 / (k - 1) folgt M2 = s^2 <em> (11 - 1) = 9.0 </em> 10 = 90.0 K^2.</p>]]></text>
       </feedback>
       <tolerance>0.1</tolerance>
     </answer>
@@ -3843,7 +3763,7 @@ MainPlot.[[3]]();</code></pre>]]></text>
     <answer fraction="50" format="moodle_auto_format">
       <text>30</text>
       <feedback format="html">
-        <text><![CDATA[<p>Teilpunkte: Sie haben s * (k - 1) = 3.0 * 10 = 30.0 gerechnet (Quadrieren der Standardabweichung zu s^2 = 9.0 vergessen!).</p>]]></text>
+        <text><![CDATA[<p>Teilpunkte: Sie haben s <em> (k - 1) = 3.0 </em> 10 = 30.0 gerechnet (Quadrieren der Standardabweichung zu s^2 = 9.0 vergessen!).</p>]]></text>
       </feedback>
       <tolerance>0.1</tolerance>
     </answer>
@@ -3859,14 +3779,12 @@ MainPlot.[[3]]();</code></pre>]]></text>
       <text>Q02_T10_Q3: C#-Code-Tracing: Einheitsnormalenvektor eines schrägen Stabs (3-4-5-Dreieck)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Für einen schrägen Fachwerkstab von <code>(100, 100)</code> nach <code>(160, 180)</code> im Screen Space wird der Einheitsnormalenvektor <code>(nx, ny)</code> berechnet:</p>
-<pre><code class="language-csharp">double dx = 160.0 - 100.0; // 60.0
+      <text><![CDATA[<p>Für einen schrägen Fachwerkstab von <code>(100, 100)</code> nach <code>(160, 180)</code> im Screen Space wird der Einheitsnormalenvektor <code>(nx, ny)</code> berechnet:</p><pre><code>double dx = 160.0 - 100.0; // 60.0
 double dy = 180.0 - 100.0; // 80.0
 double len = Math.Sqrt(dx * dx + dy * dy);
 double ux = dx / len;
 double uy = dy / len;
-double nx = -uy;</code></pre>
-<p>Welchen numerischen Wert (als Dezimalzahl) erhält <code>nx</code>?</p>]]></text>
+double nx = -uy;</code></pre><p>Welchen numerischen Wert (als Dezimalzahl) erhält <code>nx</code>?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p><strong>Musterherleitung:</strong> Mit \(dx = 60\) und \(dy = 80\) beträgt die Länge \(\text{len} = \sqrt{60^2 + 80^2} = 100\). Damit ist \(u_x = 0{,}6\), \(u_y = 0{,}8\) und die X-Komponente des Normalenvektors \(n_x = -u_y = -0{,}8\).</p>]]></text>
@@ -3908,8 +3826,7 @@ double nx = -uy;</code></pre>
       <text>Q02_T10_Q4: C#-Code-Lückentext: Box-Whisker-Plot-Element in ScottPlot 5 konfigurieren</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zum Anlegen einer einzelnen Box (Median <code>50</code>, Quartile <code>40</code> und <code>60</code>, Antennen <code>25</code> bis <code>85</code>) für einen <strong>ScottPlot 5</strong> Box-Whisker-Plot:</p>
-<pre><code class="language-csharp">var box = new ScottPlot.Box {
+      <text><![CDATA[<p>Vervollständigen Sie den C#-Code zum Anlegen einer einzelnen Box (Median <code>50</code>, Quartile <code>40</code> und <code>60</code>, Antennen <code>25</code> bis <code>85</code>) für einen <strong>ScottPlot 5</strong> Box-Whisker-Plot:</p><pre><code>var box = new ScottPlot.Box {
     Position = 1,
     BoxMin = [[1]],
     BoxMax = [[2]],
