@@ -1,7 +1,7 @@
 /**
  * Generator für die didaktischen SVG-Grafiken in Kapitel 05 (3D-Visualisierung mit OpenGL)
  * Erzeugt großflächige Übersichtsgrafiken (1080x450) sowie maßgeschneiderte
- * halbseitige Illustrationen (viewBox="-45 0 570 380") gemäß svg-diagramm-design Skill.
+ * halbseitige Illustrationen (viewBox="-45 0 570 380") gemäß svg-diagramme Skill.
  */
 
 const fs = require('fs');

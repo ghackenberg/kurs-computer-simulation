@@ -1,14 +1,14 @@
 # Didaktisches Gesamtkonzept & Semester-Syllabus
 ## Lehrveranstaltung: Systemsimulation / Digitaler Zwilling
 
-**Dokument-ID:** `Konzept/01_Lehrveranstaltungsstruktur_und_Syllabus.md`  
+**Dokument-ID:** `Konzept/01_Lehrkonzept_und_Syllabus.md`  
 **Studiengang:** Bachelor Automatisierungstechnik (5. Fachsemester)  
 **Institution:** Fachhochschule Oberösterreich, Campus Wels  
 **Verantwortlicher:** Prof. Dr. Georg Hackenberg (*Professor für Informatik und Industriesysteme*)  
 **Format & Umfang:** Integrierte Lehrveranstaltung (ILV), 2 SWS / 3 ECTS (75 h Workload: 25 h Präsenz, 50 h Selbststudium/Hausübung), 10 Präsenztermine à 150 Minuten  
 **Begleitdokumente (Single Source of Truth):**
-- [`Konzept/02_Uebungskatalog_und_Abschlussprojekt.md`](./02_Uebungskatalog_und_Abschlussprojekt.md) – Detailkatalog der 10 zweistufigen Hausübungen (`Stufe 1` + `Stufe 2: Track A | Track B`) & Software-Architektur
-- [`Konzept/03_Benotung_Moodle_Tests_und_Vibe_Coding_Assessment.md`](./03_Benotung_Moodle_Tests_und_Vibe_Coding_Assessment.md) – 5-stufige Lernfortschrittskontrolle, 2-Säulen-Benotung (40–40–20), Rubriken & AI Honor Code
+- [`Konzept/02_Uebungskatalog.md`](./02_Uebungskatalog.md) – Detailkatalog der 10 wöchentlichen zweistufigen Hausübungen (`Stufe 1` + `Stufe 2: Track A | Track B`) & Software-Architektur
+- [`Konzept/03_Beurteilung_und_Lernfortschritt.md`](./03_Beurteilung_und_Lernfortschritt.md) – 5-stufige Lernfortschrittskontrolle, 2-Säulen-Benotung (40–40–20), Rubriken & AI Honor Code
 
 ---
 
@@ -72,18 +72,18 @@ In der Präsenzveranstaltung findet **kein Live-Coding** und **kein In-Class-Pro
 
 ### 3.1 Semester-Übersichtsmatrix (`T01` bis `T10`)
 
-| Termin | Thema & Fokus | Kapitel im Repo | Eingeführte Werkzeuge & Pakete | Track A: Industrie-Zwilling *(Stufe 2: A ODER B)* | Track B: Simulation Game *(Stufe 2: A ODER B)* | Assessments & Meilensteine |
+| Termin | Thema & Fokus | Kapitel im Repo | Eingeführte Werkzeuge & Pakete | Track A: Industrie-Zwilling *(Stufe 2: A ODER B)* | Track B: Simulation Game *(Stufe 2: A ODER B)* | Präsenz-Prüfung & Hausübung |
 | :---: | :--- | :---: | :--- | :--- | :--- | :--- |
-| **T01** | **Einführung & Modellbegriff** | `00_Prolog`<br>`01_Einführung` | .NET 8/10 Console, MSTest, Git, Euler & Heun (RK2) | Hydraulikzylinder-Dämpfung (Not-Stopp mit Blendenreibung) | **Artillery Strike / Retro Tanks:** 2D-Ballistik mit Luftwiderstand & Wind | Setup-Check, Teambildung |
-| **T02** | **2D-Pixelgrafik & FDM-Feld** | `02_Visualisierung_2D_Pixel` | WPF `Image`, `WriteableBitmap`, `unsafe` Pointer, Stride, LUT | CPU-/PCB-Kühlkörper-Hotspot (Mehrzonen-FDM & Robin-Rand) | **Falling Sand & Doom Fire:** Interaktive Lava-/Sand-Pixelwelt | **MS 1 Ausgabe** (T02/T03) |
-| **T03** | **2D-Vektorgrafik & Transformation** *(Rein geometrisch)* | `03_Visualisierung_2D_Vektor` | WPF `Canvas`, `DrawingVisual`, Uniform Scaling, DIN 406 | **2D-CAD Tragwerks-Inspektor:** DIN-406-Bemaßung, Lastpfeil-Dragging & JSON *(keine Statik!)* | **Poly Bridge Blueprint-Baumeister:** $0{,}5\,\text{m}$-Grid, $L_{\max}$-Check, Budget & JSON *(Statik in T07!)* | **Moodle-Test 1** (Kap. 00–02) |
-| **T04** | **Echtzeit-Telemetrie & Graphen** | `04_Visualisierung_2D_Diagramme` | **ScottPlot 5**, `CircularBuffer`, MVVM, Welford, **MSAGL** | Industrie-4.0-Leitstand: 1-kHz-Vibrationsmonitoring & $3\sigma$-Band | **Retro Arcade Racing Telemetry:** Live-G-Kräfte, RPM-Plot & MSAGL-Streckengraph | **MS 1 Abgabe** (T02/T03) |
-| **T05** | **3D-OpenGL & Szenengraphen** | `05_Visualisierung_3D_OpenGL` | **SharpGL.WPF**, `OrbitCamera`, `SceneNode`, Phong-Licht | 4-Achs-SCARA-Roboterarm (Szenengraph, Teach-In & Pick-and-Place) | **3D Arcade Claw Crane:** Jahrmarkt-Greifautomat mit Kollisions-Snap | **Moodle-Test 2** (Kap. 03–04)<br>**MS 2 Ausgabe** |
-| **T06** | **Multithreading & TPL** | `06_Multithreading` | **TPL**, `Parallel.For`, `Interlocked`, `IProgress<T>`, Amdahl | Parallele Monte-Carlo-Toleranzanalyse ($10^7$ Baugruppen & Amdahl-Fit) | **100.000 Boids / Zombie-Horde:** Hochparalleler Schwarm-Benchmark | Halbzeit-Check Portfolio |
-| **T07** | **Statische Systeme & Cholesky** *(Erweckt T03 zum Leben)* | `07_Statische_Modelle` | **Math.NET Numerics**, FEM-Steifigkeitsmatrix $\mathbf{K}$, Cholesky, Newton | Portalkran-Verformung unter Wanderlast (Spannungs-Farbcode & Knickung) | **Bridge Constructor Physics Engine:** LKW-Überfahrt, Stabbruch & Einsturz | **MS 2 Abgabe** (T04/T05)<br>**MS 3 Ausgabe** |
-| **T08** | **Kontinuierliche Dynamik & ODEs** | `08_Dynamische_Modelle_Kontinuierlich` | **S-Functions (`ISFunction`)**, **RK4**, PID Anti-Windup Clamping | DC-Servomotor-Regelung (5-Zustands-Thermomodell & Anti-Windup) | **SpaceX Falcon Hop / Booster Landing:** Raketen-Vertikallandung mit Schubbegrenzung | **Moodle-Test 3** (Kap. 05–07) |
-| **T09** | **Diskrete Systeme & Stochastik** | `09_Dynamische_Modelle_Diskret` | `PriorityQueue`, Inversionsmethode, Box-Muller, **Little's Gesetz** | Automobil-Lackierstraße ($M/M/c/K$-Warteschlange & Pufferoptimierung) | **Theme Park Rush / Rollercoaster Queue:** Freizeitpark mit VIP-Fastpass-Prioritäten | **MS 3 Abgabe** (T06/T07)<br>**MS 4 Ausgabe** |
-| **T10** | **Hybride Dynamik, VIBN & Synthese** | `10_Dynamische_Modelle_Hybrid`<br>`11_Epilog` | **Zero-Crossing Bisektion**, Sticking-Schwelle, FMI/FMU, VIBN | VIBN eines Pneumatikzylinders mit Endanschlägen & SPS-Schrittkette | **Arcade Pinball Wizard:** 2D-Flipper-Physik mit Bumper-Bisektion ohne Tunneling | **Moodle-Test 4** (Kap. 08–09)<br>**MS 4 & Portfolio-Abschluss** |
+| **T01** | **Einführung & Modellbegriff** | `00_Prolog`<br>`01_Einführung` | .NET 8/10 Console, MSTest, Git, Euler & Heun (RK2) | Hydraulikzylinder-Dämpfung (Not-Stopp mit Blendenreibung) | **Artillery Strike / Retro Tanks:** 2D-Ballistik mit Luftwiderstand & Wind | Ausgabe **HÜ 01** (4 %) |
+| **T02** | **2D-Pixelgrafik & FDM-Feld** | `02_Visualisierung_2D_Pixel` | WPF `Image`, `WriteableBitmap`, `unsafe` Pointer, Stride, LUT | CPU-/PCB-Kühlkörper-Hotspot (Mehrzonen-FDM & Robin-Rand) | **Falling Sand & Doom Fire:** Interaktive Lava-/Sand-Pixelwelt | Showcase HÜ 01<br>Ausgabe **HÜ 02** (4 %) |
+| **T03** | **2D-Vektorgrafik & Transformation** *(Rein geometrisch)* | `03_Visualisierung_2D_Vektor` | WPF `Canvas`, `DrawingVisual`, Uniform Scaling, DIN 406 | **2D-CAD Tragwerks-Inspektor:** DIN-406-Bemaßung, Lastpfeil-Dragging & JSON *(keine Statik!)* | **Poly Bridge Blueprint-Baumeister:** $0{,}5\,\text{m}$-Grid, $L_{\max}$-Check, Budget & JSON *(Statik in T07!)* | **Moodle-Test 1** (Kap. 00–02)<br>Showcase HÜ 02, Ausgabe **HÜ 03** |
+| **T04** | **Echtzeit-Telemetrie & Graphen** | `04_Visualisierung_2D_Diagramme` | **ScottPlot 5**, `CircularBuffer`, MVVM, Welford, **MSAGL** | Industrie-4.0-Leitstand: 1-kHz-Vibrationsmonitoring & $3\sigma$-Band | **Retro Arcade Racing Telemetry:** Live-G-Kräfte, RPM-Plot & MSAGL-Streckengraph | Showcase HÜ 03<br>Ausgabe **HÜ 04** (4 %) |
+| **T05** | **3D-OpenGL & Szenengraphen** | `05_Visualisierung_3D_OpenGL` | **SharpGL.WPF**, `OrbitCamera`, `SceneNode`, Phong-Licht | 4-Achs-SCARA-Roboterarm (Szenengraph, Teach-In & Pick-and-Place) | **3D Arcade Claw Crane:** Jahrmarkt-Greifautomat mit Kollisions-Snap | **Moodle-Test 2** (Kap. 03–04)<br>Showcase HÜ 04, Ausgabe **HÜ 05** |
+| **T06** | **Multithreading & TPL** | `06_Multithreading` | **TPL**, `Parallel.For`, `Interlocked`, `IProgress<T>`, Amdahl | Parallele Monte-Carlo-Toleranzanalyse ($10^7$ Baugruppen & Amdahl-Fit) | **100.000 Boids / Zombie-Horde:** Hochparalleler Schwarm-Benchmark | Showcase HÜ 05<br>Ausgabe **HÜ 06** (4 %) |
+| **T07** | **Statische Systeme & Cholesky** *(Erweckt T03 zum Leben)* | `07_Statische_Modelle` | **Math.NET Numerics**, FEM-Steifigkeitsmatrix $\mathbf{K}$, Cholesky, Newton | Portalkran-Verformung unter Wanderlast (Spannungs-Farbcode & Knickung) | **Bridge Constructor Physics Engine:** LKW-Überfahrt, Stabbruch & Einsturz | Showcase HÜ 06<br>Ausgabe **HÜ 07** (4 %) |
+| **T08** | **Kontinuierliche Dynamik & ODEs** | `08_Dynamische_Modelle_Kontinuierlich` | **S-Functions (`ISFunction`)**, **RK4**, PID Anti-Windup Clamping | DC-Servomotor-Regelung (5-Zustands-Thermomodell & Anti-Windup) | **SpaceX Falcon Hop / Booster Landing:** Raketen-Vertikallandung mit Schubbegrenzung | **Moodle-Test 3** (Kap. 05–07)<br>Showcase HÜ 07, Ausgabe **HÜ 08** |
+| **T09** | **Diskrete Systeme & Stochastik** | `09_Dynamische_Modelle_Diskret` | `PriorityQueue`, Inversionsmethode, Box-Muller, **Little's Gesetz** | Automobil-Lackierstraße ($M/M/c/K$-Warteschlange & Pufferoptimierung) | **Theme Park Rush / Rollercoaster Queue:** Freizeitpark mit VIP-Fastpass-Prioritäten | Showcase HÜ 08<br>Ausgabe **HÜ 09** (4 %) |
+| **T10** | **Hybride Dynamik, VIBN & Synthese** | `10_Dynamische_Modelle_Hybrid`<br>`11_Epilog` | **Zero-Crossing Bisektion**, Sticking-Schwelle, FMI/FMU, VIBN | VIBN eines Pneumatikzylinders mit Endanschlägen & SPS-Schrittkette | **Arcade Pinball Wizard:** 2D-Flipper-Physik mit Bumper-Bisektion ohne Tunneling | **Moodle-Test 4** (Kap. 08–09)<br>Showcase HÜ 09, Ausgabe **HÜ 10** (Finale HÜ) |
 
 ### 3.2 Kapitel-Abhängigkeits- & Fern-Schnittstellen-Matrix (Cross-Chapter Dependency Map)
 
@@ -106,7 +106,7 @@ Da die Lehrveranstaltung als vernetztes Baukastensystem konzipiert ist, greifen 
 
 ## 4. Kompakte Vorlesungs-Steckbriefe (`T01` bis `T10`)
 
-*(Detailbeschreibungen der Hausübungen Stufe 1 & Stufe 2, Bewertungsrubriken und Showcase-Leitfragen siehe [`Konzept/02_Uebungskatalog_und_Abschlussprojekt.md`](./02_Uebungskatalog_und_Abschlussprojekt.md))*
+*(Detailbeschreibungen der Hausübungen Stufe 1 & Stufe 2, Bewertungsrubriken und Showcase-Leitfragen siehe [`Konzept/02_Uebungskatalog.md`](./02_Uebungskatalog.md))*
 
 ### T01: Einführung, Modellbegriff & Digitaler Zwilling
 - **Foliensätze:** [00_Prolog](../Folien/00_Prolog/Folien.md) & [01_Einführung](../Folien/01_Einführung/Folien.md) | **Vorlage:** [`KinematikEuler.sln`](../Uebungen/Termin_01_Kinematik_und_Euler/Vorlage/KinematikEuler.sln)
@@ -190,4 +190,4 @@ Da die Lehrveranstaltung als vernetztes Baukastensystem konzipiert ist, greifen 
 - **Lernziele (Bloom):**
   1. *Verstehen:* Warum feste Zeitschritte bei Stößen/Schwellen zu Eindringfehlern (*Tunneling*) und künstlichem Energieverlust führen, wie die Vorzeichenwechsel-Bisektion auf $g(\mathbf{x}) = 0$ den exakten Schaltzeitpunkt $t^* = t_k + \alpha^*\Delta t$ lokalisiert und wie der *Sticking-Threshold* ($|v^+| < v_{\text{stick}}$) den Zeno-Kollaps verhindert.
   2. *Anwenden:* Hybride Zeitschritt-Teilung ($\Delta t_1 = \alpha^*\Delta t \to \text{Event} \to \Delta t_2 = (1-\alpha^*)\Delta t$) und Ruhe-Aufwecklogik (`IsSticking`) implementieren.
-  3. *Synthetisieren:* Co-Simulation nach dem FMI/FMU-Standard, SPS-Kopplung für die Virtuelle Inbetriebnahme (VIBN) und die Goldene Architektur-Regel im abgeschlossenen 10-teiligen C#-Simulations-Portfolio zusammenführen.
+  3. *Synthetisieren:* Co-Simulation nach dem FMI/FMU-Standard, SPS-Kopplung für die Virtuelle Inbetriebnahme (VIBN) und die Goldene Architektur-Regel in der 10. und finalen Hausübung zusammenführen.

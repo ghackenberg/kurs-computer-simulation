@@ -1,11 +1,11 @@
-# Übungskatalog & C#-Simulations-Portfolio (`T01` bis `T10`)
+# Übungskatalog der 10 wöchentlichen Hausübungen (`T01` bis `T10`)
 ## Lehrveranstaltung: Systemsimulation / Digitaler Zwilling
 
-**Dokument-ID:** `Konzept/02_Uebungskatalog_und_Abschlussprojekt.md`  
-**Geltungsbereich:** Wöchentliche zweistufige Hausübungen (`Uebungen/Termin_01_*` bis `Termin_10_*`) und das 10-teilige C#-Simulations-Portfolio  
+**Dokument-ID:** `Konzept/02_Uebungskatalog.md`  
+**Geltungsbereich:** Wöchentliche zweistufige Hausübungen (`Uebungen/Termin_01_*` bis `Termin_10_*`, je 4 % = 40 % der Gesamtnote)  
 **Begleitdokumente (Single Source of Truth):**
-- [`Konzept/01_Lehrveranstaltungsstruktur_und_Syllabus.md`](./01_Lehrveranstaltungsstruktur_und_Syllabus.md) – Lehrkonzept, Syllabus, Kausalitäts- & Kapitel-Abhängigkeitsmatrix
-- [`Konzept/03_Benotung_Moodle_Tests_und_Vibe_Coding_Assessment.md`](./03_Benotung_Moodle_Tests_und_Vibe_Coding_Assessment.md) – Lernfortschrittskontrolle, 2-Säulen-Benotung (40–40–20), Rubriken & AI Honor Code
+- [`Konzept/01_Lehrkonzept_und_Syllabus.md`](./01_Lehrkonzept_und_Syllabus.md) – Lehrkonzept, Syllabus, Kausalitäts- & Kapitel-Abhängigkeitsmatrix
+- [`Konzept/03_Beurteilung_und_Lernfortschritt.md`](./03_Beurteilung_und_Lernfortschritt.md) – Lernfortschrittskontrolle, 2-Säulen-Benotung (40–40–20), Rubriken & AI Honor Code
 
 ---
 

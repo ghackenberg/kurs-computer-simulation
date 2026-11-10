@@ -1,11 +1,11 @@
 # Lernfortschrittskontrolle, 2-Säulen-Benotung & Vibe-Coding-Assessment
 ## Lehrveranstaltung: Systemsimulation / Digitaler Zwilling
 
-**Dokument-ID:** `Konzept/03_Benotung_Moodle_Tests_und_Vibe_Coding_Assessment.md`  
+**Dokument-ID:** `Konzept/03_Beurteilung_und_Lernfortschritt.md`  
 **Studiengang:** Bachelor Automatisierungstechnik (5. Fachsemester), FH Oberösterreich, Campus Wels  
 **Begleitdokumente (Single Source of Truth):**
-- [`Konzept/01_Lehrveranstaltungsstruktur_und_Syllabus.md`](./01_Lehrveranstaltungsstruktur_und_Syllabus.md) – Lehrkonzept, Lernziele, Motivation & Semester-Syllabus
-- [`Konzept/02_Uebungskatalog_und_Abschlussprojekt.md`](./02_Uebungskatalog_und_Abschlussprojekt.md) – Detailkatalog der 10 zweistufigen Hausübungen (`Stufe 1` + `Stufe 2`)
+- [`Konzept/01_Lehrkonzept_und_Syllabus.md`](./01_Lehrkonzept_und_Syllabus.md) – Lehrkonzept, Lernziele, Motivation & Semester-Syllabus
+- [`Konzept/02_Uebungskatalog.md`](./02_Uebungskatalog.md) – Detailkatalog der 10 wöchentlichen zweistufigen Hausübungen (`Stufe 1` + `Stufe 2`)
 
 ---
 
@@ -43,7 +43,7 @@ $$\text{Gesamtprozent } P = 0{,}40 \cdot P_{\text{Quiz}} + 0{,}40 \cdot P_{\text
 | Säule & Anteil | Teilkomponente | Gewicht | Termine / Taktung | Prüfungsformat | Mindestanforderung (Hürde) |
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | **Säule 1 (40 %)**<br>Theorie & Numerik | **4 Moodle-Tests**<br>(je 10 %) | **40 %** | • **Q1:** T03 (Kap. 00–02)<br>• **Q2:** T05 (Kap. 03–04)<br>• **Q3:** T08 (Kap. 05–07)<br>• **Q4:** T10 (Kap. 08–09) | Präsenz-Quiz zu Terminbeginn (15 Min., 8 Fragen = 10 Pkt., 100 % Auto-Grading) | Mind. **50 %** in Säule 1<br>($\ge 20$ von 40 Pkt.) |
-| **Säule 2 (60 %)**<br>Praxis, Portfolio & Diskurs | **Säule 2a: C#-Code-Portfolio** | **40 %** | Wöchentlich T01–T10<br>(10 Module à 4 %; MS1: T04, MS2: T07, MS3: T09, MS4: T10) | Git-Abgabe (`Stufe 1` + `Stufe 2: Track A | Track B`) & `dotnet test` | Mind. **50 %** in Säule 2a<br>($\ge 20$ von 40 Pkt.) |
+| **Säule 2 (60 %)**<br>Praxis, Hausübungen & Diskurs | **Säule 2a: 10 wöchentliche Hausübungen** | **40 %** | Wöchentlich T01–T10<br>(10 Abgaben à 4 %; T10 ist die finale Hausübung, kein separates Abschlussprojekt) | Git-Abgabe (`Stufe 1` + `Stufe 2: Track A | Track B`) & `dotnet test` | Mind. **50 %** in Säule 2a<br>($\ge 20$ von 40 Pkt.) |
 | | **Säule 2b: Live-Showcase & Code-Defense** | **20 %** | Rotierend zu Beginn von T02–T10 (je 1× Track A, 1× Track B) | Live-Demo am Beamer (6 %), Code-Defense (7 %) & Parameter-Stresstest (7 %) | Mind. **50 %** in Säule 2b<br>($\ge 10$ von 20 Pkt.) |
 | **GESAMT** | **Trianguliertes Assessment** | **100 %** | **Semesterbegleitend (keine Endklausur)** | **40 % Quiz + 40 % Portfolio + 20 % Showcase** | **Gesamtnote $\ge 50\,\%$ + alle 3 Teilhürden $\ge 50\,\%$** |
 
@@ -62,7 +62,7 @@ $$\text{Gesamtprozent } P = 0{,}40 \cdot P_{\text{Quiz}} + 0{,}40 \cdot P_{\text
 ## 3. Säule 1 im Detail: Moodle-Quizzes & 10-Varianten-Architektur (`40 %`)
 
 ### 3.1 Strikte Rückwärts-Kausalität & Stoffabgrenzung (`Quiz 01` bis `Quiz 04`)
-Da jedes Quiz in den ersten 15 Minuten **vor** dem Theorie-Impuls stattfindet, gilt strikte Rückwärts-Kausalität (siehe auch Kapitel-Abhängigkeitsmatrix in [`Konzept/01_*.md`](./01_Lehrveranstaltungsstruktur_und_Syllabus.md)):
+Da jedes Quiz in den ersten 15 Minuten **vor** dem Theorie-Impuls stattfindet, gilt strikte Rückwärts-Kausalität (siehe auch Kapitel-Abhängigkeitsmatrix in [`Konzept/01_Lehrkonzept_und_Syllabus.md`](./01_Lehrkonzept_und_Syllabus.md)):
 
 | Quiz | Zeitpunkt | Geprüfte Kapitel | Kernthemen | Strengstens ausgeschlossen (Tabu!) |
 | :---: | :---: | :---: | :--- | :--- |
