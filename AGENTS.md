@@ -17,12 +17,12 @@
   1. [`01_Lehrkonzept_und_Syllabus.md`](Konzept/01_Lehrkonzept_und_Syllabus.md) – Zielgruppenprofil, Lernziele (Bloom-Kaskade), Motivation (*Pick your Track*), Anspruchsniveau (*Low Floor, High Ceiling*), 150-Min.-Taktung, **Semester-Übersichtsmatrix**, **Kapitel-Abhängigkeits- & Fern-Schnittstellen-Matrix** sowie Vorlesungs-Steckbriefe `T01`–`T10`.
   2. [`02_Uebungskatalog.md`](Konzept/02_Uebungskatalog.md) – Detailkatalog der 10 wöchentlichen zweistufigen Hausübungen (`Stufe 1: 1.1–1.4` + `Stufe 2: Track A | Track B`, kein separates Abschlussprojekt), Goldene Architektur-Regel & Showcase-Leitfragen.
   3. [`03_Beurteilung_und_Lernfortschritt.md`](Konzept/03_Beurteilung_und_Lernfortschritt.md) – 5-stufige Lernfortschrittskontrolle, 2-Säulen-Benotungsmodell (40 % Quiz / 40 % wöchentliche Hausübungen / 20 % Showcase), Notenschlüssel, 4-Stufen-Stresstest & AI Honor Code.
-- `./Folien/[XX_Kapitel_Bezeichnung]/` – MARP-Vorlesungsfolien (`Folien.md`, `Folien_Anhang_*.md`), `Titelbild.jpg`, `./Diagramme/*.svg`, `./Illustrationen/`, `./Screenshots/`.
+- `./Folien/[XX_Kapitel_Bezeichnung]/` – MARP-Vorlesungsfolien (`Folien.md`, `Folien_Anhang_*.md`), `Titelbild.jpg`, `./Diagramme/*.svg` (inkl. `.mmd`), `./Illustrationen/`, `./Screenshots/` und `./Tafelbilder/`.
 - `./Uebungen/[Termin_XX_Bezeichnung]/` – Aufgabenblätter (`Aufgabenblatt.md`, `Aufgabenblatt.pdf`) und C#-Projektvorlagen (`./Vorlage/`).
 - `./Moodle/` – Formelfreie Moodle-Termintexte (`Moodle_Kursstruktur_und_Termintexte.md`) und 10-Varianten-Moodle-XML-Quizzes (`Quiz_01_*` bis `Quiz_04_*`).
 - `./Export/` – Druckreife Moodle-PDFs (`./Export/Folien/` und `./Export/Uebungen/`).
 - `./Skripte/` – Plattformunabhängige Node.js-Prüf-, Generierungs- und Exportskripte.
-- `./Quellen/` & `./Werkzeuge/` – C#-Referenzimplementierungen und Grafikgeneratoren.
+- `./Quellen/` & `./Werkzeuge/` – Reiner C#-Referenzcode (`Quellen.sln`, ohne eingebettete Bild-/Diagramm-Assets) und HiDPI-Grafikgeneratoren (`Werkzeuge/GrafikGenerator/`).
 
 ---
 

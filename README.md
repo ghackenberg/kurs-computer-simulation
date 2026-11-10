@@ -17,12 +17,12 @@ Der Kurs vermittelt die mathematische Modellierung, numerische Simulation und Ec
   1. [`01_Lehrkonzept_und_Syllabus.md`](./Konzept/01_Lehrkonzept_und_Syllabus.md) – Zielgruppenprofil, Lernziele (Bloom-Kaskade), Motivation (*Pick your Track*), Semester-Übersichtsmatrix, Kapitel-Abhängigkeitsmatrix und Vorlesungs-Steckbriefe `T01`–`T10`.
   2. [`02_Uebungskatalog.md`](./Konzept/02_Uebungskatalog.md) – Detailkatalog der 10 wöchentlichen zweistufigen Hausübungen (`Stufe 1: 1.1–1.4` + `Stufe 2: Track A | Track B`).
   3. [`03_Beurteilung_und_Lernfortschritt.md`](./Konzept/03_Beurteilung_und_Lernfortschritt.md) – 5-stufige Lernfortschrittskontrolle, Benotungsmodell (40 % Quiz / 40 % Hausübungen / 20 % Showcase) und AI Honor Code.
-- **[`./Folien/`](./Folien/)** – MARP-Vorlesungsfolien (`00_Prolog` bis `11_Epilog`) inkl. lokaler `Diagramme/*.svg`, `Illustrationen/` und `Screenshots/`.
+- **[`./Folien/`](./Folien/)** – MARP-Vorlesungsfolien (`00_Prolog` bis `11_Epilog`) inkl. lokaler `Diagramme/*.svg`, `Illustrationen/`, `Screenshots/` und `Tafelbilder/`.
 - **[`./Uebungen/`](./Uebungen/)** – Die 10 wöchentlichen Übungsmodule (`Termin_01_*` bis `Termin_10_*`) mit `Aufgabenblatt.md` und kompilierbaren C#-Projektvorlagen (`./Vorlage/` inkl. xUnit-Tests).
 - **[`./Moodle/`](./Moodle/)** – Formelfreie Moodle-Termintexte ([`Moodle_Kursstruktur_und_Termintexte.md`](./Moodle/Moodle_Kursstruktur_und_Termintexte.md)) und 10-Varianten-Moodle-XML-Quizzes (`Quiz_01_*` bis `Quiz_04_*`).
 - **[`./Export/`](./Export/)** – Druckreife PDFs der Vorlesungsfolien (`./Export/Folien/`) und Übungsblätter (`./Export/Uebungen/`).
 - **[`./Skripte/`](./Skripte/)** – Automatisierte Node.js-Prüf-, SVG-Generierungs-, Moodle-XML- und PDF-Exportskripte.
-- **[`./Quellen/`](./Quellen/) & [`./Werkzeuge/`](./Werkzeuge/)** – Begleitende C#-Referenzimplementierungen (`Quellen.sln`, deren Code-Strukturen, UML-Diagramme und Screenshots auf den Vorlesungsfolien erklärt werden) sowie der HiDPI-Plotgenerator (`Werkzeuge/GrafikGenerator/`).
+- **[`./Quellen/`](./Quellen/) & [`./Werkzeuge/`](./Werkzeuge/)** – Reiner C#-Referenzcode (`Quellen.sln`, dessen Architektur- und Modellklassen auf den Vorlesungsfolien erklärt werden) sowie der HiDPI-Plotgenerator (`Werkzeuge/GrafikGenerator/`).
 
 ---
 
