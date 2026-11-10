@@ -4,13 +4,13 @@ description: >-
   Vorlesungsübergreifende Methodik für Curriculum-Design, Lernziele (Constructive Alignment),
   Studierenden-Motivation, Anspruchsniveau (Low Floor, High Ceiling), Lernfortschrittskontrolle,
   Kapitel-Abhängigkeitsmatrix und Pflege der Konzept- und Moodle-Kursdokumente
-  (Konzept/*.md, Moodle/Moodle_Kursstruktur_und_Termintexte.md).
+  (Konzept/*.md, Moodle/Termintexte/*.md).
   IMMER aktivieren, wenn Konzeptdokumente, Kursstruktur, Kapitel-Querbezüge oder didaktische Grundsätze geplant oder geändert werden.
 ---
 
 # Skill: Lehrkonzept, Curriculum-Architektur & Fachdidaktik
 
-Dieser vorlesungsübergreifende Grundlagen-Skill regelt die Makro-Konzeption einer Lehrveranstaltung, die Pflege der Single-Source-of-Truth-Konzeptdokumente (`Konzept/01_*.md`, `02_*.md`, `03_*.md`) sowie der Moodle-Kursübersicht (`Moodle/Moodle_Kursstruktur_und_Termintexte.md`).
+Dieser vorlesungsübergreifende Grundlagen-Skill regelt die Makro-Konzeption einer Lehrveranstaltung, die Pflege der Single-Source-of-Truth-Konzeptdokumente (`Konzept/01_*.md` bis `13_*.md`) sowie der modularen Moodle-Termintexte (`Moodle/Termintexte/00_*.md` bis `10_*.md`).
 
 ---
 
@@ -88,5 +88,5 @@ Bei jeder inhaltlichen Änderung an einer Einheit `XX` müssen **alle 6 Orte** s
 3. `Folien/XX_*/Folien.md` (Letzte Folie `### Hausübung Termin XX` + `lint:slides:XX` & `export:pdf:XX`)
 4. `Folien/[XX+1]_*/Folien.md` (Folie 2 `### Live-Showcase & Code-Defense: Termin XX` + `lint:slides:[XX+1]` & `export:pdf:[XX+1]`)
 5. `Konzept/02_Semestermatrix_und_Abhaengigkeiten.md` & der zugehörige Termin-Steckbrief `Konzept/[XX+3]_Termin_XX_*.md`
-6. `Moodle/Moodle_Kursstruktur_und_Termintexte.md`:
-   - **STRIKTES FORMATIERUNGSVERBOT:** In `Moodle/Moodle_Kursstruktur_und_Termintexte.md` dürfen **KEINE LaTeX-Formeln (`$...$`)** und **KEINE Inline-Code-Backticks (`` `...` ``)** verwendet werden (nur reiner Fließtext, da der Text als HTML nach Moodle kopiert wird). Nach dem Editieren mit `git diff` prüfen, dass der richtige Termin getroffen wurde.
+6. `Moodle/Termintexte/XX_Termin_XX_*.md`:
+   - **STRIKTES FORMATIERUNGSVERBOT:** In `Moodle/Termintexte/*.md` dürfen **KEINE LaTeX-Formeln (`$...$`)** und **KEINE Inline-Code-Backticks (`` `...` ``)** verwendet werden (nur reiner Fließtext, da der Text als HTML nach Moodle kopiert wird).

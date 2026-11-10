@@ -7,7 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensatz:** [`07_Statische_Modelle/Folien.md`](../Folien/07_Statische_Modelle/Folien.md)
-- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md) | [`TrussFemSolver.sln`](../Uebungen/Termin_07_Statik_FEM_Cholesky/Vorlage/TrussFemSolver.sln)
+- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.md) | **Moodle-Text:** [$moodleFile](../Moodle/Termintexte/07_Termin_07_Statik_FEM_Cholesky.md) | [`TrussFemSolver.sln`](../Uebungen/Termin_07_Statik_FEM_Cholesky/Vorlage/TrussFemSolver.sln)
 - **Vorgreif-Sperre (Technologie-Stand T07):** `MathNet.Numerics`, Steifigkeitsmatrix $\mathbf{K}$, Cholesky ($\mathbf{L}\mathbf{L}^\top$), Newton-Raphson ($\mathbf{J}$). *Strikte Tabus:* Noch keine dynamischen ODE-Solver höherer Ordnung (RK4 erst T08).
 - **Kapitel-Brücken & Quiz-Zuordnung:**
   - **Rückwärts ($\leftarrow$):** [`T03`](./06_Termin_03_Vektorgrafik_und_Canvas.md) (Das in T03 rein geometrisch gezeichnete 2D-Fachwerk samt JSON-Format erhält nun seine FEM-Physik $\mathbf{K}\mathbf{u}=\mathbf{f}$); [`T05`](./08_Termin_05_3D_OpenGL_Szenengraph.md) (Die SCARA-Vorwärtskinematik $L_1, L_2, \theta_1, \theta_2$ wird via Jacobi-Matrix $\mathbf{J}$ und Newton-Raphson invertiert).

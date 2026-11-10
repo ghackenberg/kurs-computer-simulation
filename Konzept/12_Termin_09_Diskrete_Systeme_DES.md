@@ -7,7 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensatz:** [`09_Dynamische_Modelle_Diskret/Folien.md`](../Folien/09_Dynamische_Modelle_Diskret/Folien.md)
-- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.md) | [`DiscreteEventSimulation.sln`](../Uebungen/Termin_09_Diskrete_Systeme_DES/Vorlage/DiscreteEventSimulation.sln)
+- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.md) | **Moodle-Text:** [$moodleFile](../Moodle/Termintexte/09_Termin_09_Diskrete_Systeme_DES.md) | [`DiscreteEventSimulation.sln`](../Uebungen/Termin_09_Diskrete_Systeme_DES/Vorlage/DiscreteEventSimulation.sln)
 - **Vorgreif-Sperre (Technologie-Stand T09):** `PriorityQueue<TEvent, double>`, Next-Event-Time-Advance, Inversionsmethode, Box-Muller, Little's Gesetz. *Strikte Tabus:* Noch keine hybride Zero-Crossing-Bisektion (erst T10).
 - **Kapitel-Brücken & Quiz-Zuordnung:**
   - **Rückwärts ($\leftarrow$):** [`T04`](./07_Termin_04_Telemetrie_und_ScottPlot.md) (Welford-Online-Varianz für Konfidenzintervalle, `MSAGL` & `ScottPlot 5`) sowie [`T06`](./09_Termin_06_Multithreading_und_TPL.md) (`Parallel.For` für parallele Monte-Carlo-Replikationen).

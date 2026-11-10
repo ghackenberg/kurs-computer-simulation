@@ -62,7 +62,7 @@ Lies vor Beginn jedes Reviews einer Einheit $k$:
 *(Detailregeln siehe [`uebungsaufgaben`](../uebungsaufgaben/SKILL.md) & [`lehrkonzept-und-didaktik`](../lehrkonzept-und-didaktik/SKILL.md))*
 - [ ] **Aufbau & Symmetrie (`Stufe 1` $\to$ `Stufe 2: Track A | Track B`):** Synchrone Nummerierung `1.1`–`1.4` (mit unnummerierter Vorbereitung davor) sowie symmetrische Arbeitspakete `A.1`–`A.4` und `B.1`–`B.4` (gleicher Aufwand, 10 Pkt., keine Redundanz), die direkt auf Stufe 1 aufbauen?
 - [ ] **End-to-End Walkthrough & Lernfortschrittskontrolle in `Vorlage/`:** Sind alle `TODO`-Blöcke vorhanden, alle impliziten Konventionen von Hilfsmethoden und UI-Events (`PreviewKeyDown` etc.) dokumentiert, alle Berechnungen mit **Golden Reference Numbers** (5-Sekunden-Selbsttest) versehen und eigene Unit-Tests in `Aufgabe 1.4` (`dotnet test`) aktiv?
-- [ ] **6-Punkte-Synchronisation:** Stimmen Aufgabenblatt (+ PDF), `Vorlage/`, Hausübungs-Folie ($k$), Showcase-Folie ($k+1$), `Konzept/02_*.md` + Termin-Steckbrief `Konzept/[k+3]_Termin_0k_*.md` und `Moodle/Moodle_Kursstruktur_und_Termintexte.md` (formel- und backtickfrei!) zu 100 % überein?
+- [ ] **6-Punkte-Synchronisation:** Stimmen Aufgabenblatt (+ PDF), `Vorlage/`, Hausübungs-Folie ($k$), Showcase-Folie ($k+1$), `Konzept/02_*.md` + Termin-Steckbrief `Konzept/[k+3]_Termin_0k_*.md` und `Moodle/Termintexte/0k_Termin_0k_*.md` (formel- und backtickfrei!) zu 100 % überein?
 
 ### Dimension 6: Prüfungs- & Quiz-Psychometrie (`Moodle/Quiz_*`)
 *(Detailregeln siehe [`moodle-quizzes`](../moodle-quizzes/SKILL.md))*

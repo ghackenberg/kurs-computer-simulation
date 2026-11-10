@@ -7,7 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensätze:** [`00_Prolog/Folien.md`](../Folien/00_Prolog/Folien.md) & [`01_Einführung/Folien.md`](../Folien/01_Einführung/Folien.md)
-- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md) | [`KinematikEuler.sln`](../Uebungen/Termin_01_Kinematik_und_Euler/Vorlage/KinematikEuler.sln)
+- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.md) | **Moodle-Text:** [$moodleFile](../Moodle/Termintexte/01_Termin_01_Kinematik_und_Euler.md) | [`KinematikEuler.sln`](../Uebungen/Termin_01_Kinematik_und_Euler/Vorlage/KinematikEuler.sln)
 - **Vorgreif-Sperre (Technologie-Stand T01):** Reine C#-Konsolenapplikation + MSTest. *Strikte Tabus:* Kein WPF, kein `ScottPlot`, kein Multithreading, kein RK4.
 - **Kapitel-Brücken & Quiz-Zuordnung:**
   - **Vorwärts ($\to$):** [`T08`](./11_Termin_08_DGL_und_SFunctions.md) (Expliziter Euler und sein Energiedrift motivieren Heun/RK2 & RK4); [`T10`](./13_Termin_10_Hybride_Dynamik_Synthese.md) (Wurfparabel kehrt als *Bouncing Ball* mit Bodenkontakt-Bisektion zurück).

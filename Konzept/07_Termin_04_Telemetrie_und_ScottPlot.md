@@ -7,7 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensatz:** [`04_Visualisierung_2D_Diagramme/Folien.md`](../Folien/04_Visualisierung_2D_Diagramme/Folien.md)
-- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md) | [`ScottPlotTelemetry.sln`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Vorlage/ScottPlotTelemetry.sln)
+- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.md) | **Moodle-Text:** [$moodleFile](../Moodle/Termintexte/04_Termin_04_Telemetrie_und_ScottPlot.md) | [`ScottPlotTelemetry.sln`](../Uebungen/Termin_04_Telemetrie_und_ScottPlot/Vorlage/ScottPlotTelemetry.sln)
 - **Vorgreif-Sperre (Technologie-Stand T04):** `ScottPlot 5`, `CircularBuffer<T>`, Welford-Statistik, `MSAGL`, MVVM. *Strikte Tabus:* Kein SharpGL 3D, kein Multithreading, kein RK4.
 - **Kapitel-Brücken & Quiz-Zuordnung:**
   - **Vorwärts ($\to$):** [`T06`](./09_Termin_06_Multithreading_und_TPL.md), [`T08`](./11_Termin_08_DGL_und_SFunctions.md), [`T09`](./12_Termin_09_Diskrete_Systeme_DES.md) & [`T10`](./13_Termin_10_Hybride_Dynamik_Synthese.md) (`ScottPlot 5` als Standard-Plotter); [`T09`](./12_Termin_09_Diskrete_Systeme_DES.md) (Welford-Online-Varianz $\mu, \sigma$ für Monte-Carlo-Konfidenz); [`T05`](./08_Termin_05_3D_OpenGL_Szenengraph.md), [`T09`](./12_Termin_09_Diskrete_Systeme_DES.md) & [`T10`](./13_Termin_10_Hybride_Dynamik_Synthese.md) (`MSAGL`-Graphen als mentales Modell für Szenengraphen, Warteschlangennetze und hybride Statecharts).
