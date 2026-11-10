@@ -7,7 +7,8 @@
 
 ## 1. Artefakte & Rolle im Curriculum
 - **Foliensatz:** [`Folien/Folien.md`](./Folien/Folien.md)
-- **Zugehörige Abschluss-Hausübung & Moodle-Sektion:** Gemeinsam mit [`Kapitel 10: Hybride Dynamik & Synthese`](../10_Hybride_Dynamik_Synthese/Konzept.md) in Termin 10.
+- **Moodle-Abschnitt (Semesterabschluss & Ausblick):** [`Moodle/Text.md`](./Moodle/Text.md) (inkl. [`Moodle/Banner.jpg`](./Moodle/Banner.jpg))
+- **Präsenztermin:** Gemeinsam mit [`Kapitel 10: Hybride Dynamik & Synthese`](../10_Hybride_Dynamik_Synthese/Konzept.md) am Ende von Termin 10.
 
 ## 2. Lernziele & Synthese-Inhalte
 1. **Vergleichende Modell-Taxonomie:** Wann wählt man statische FEM ([`Kap. 07`](../07_Statik_FEM_Cholesky/Konzept.md)), kontinuierliche ODEs ([`Kap. 08`](../08_DGL_und_SFunctions/Konzept.md)), ereignisdiskrete DES ([`Kap. 09`](../09_Diskrete_Systeme_DES/Konzept.md)) oder hybride Automaten ([`Kap. 10`](../10_Hybride_Dynamik_Synthese/Konzept.md))?

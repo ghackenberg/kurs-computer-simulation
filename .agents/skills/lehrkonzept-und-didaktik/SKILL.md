@@ -10,7 +10,7 @@ description: >-
 
 # Skill: Lehrkonzept, Curriculum-Architektur & Fachdidaktik
 
-Dieser vorlesungsübergreifende Grundlagen-Skill regelt die Makro-Konzeption einer Lehrveranstaltung, die Pflege der Single-Source-of-Truth-Konzeptdokumente (`Konzept/01..03_*.md` sowie `Kapitel/00..11_*/Konzept.md`) und der modularen Moodle-Abschnittstexte (`Kapitel/00..10_*/Moodle/Text.md` samt `Banner.jpg`).
+Dieser vorlesungsübergreifende Grundlagen-Skill regelt die Makro-Konzeption einer Lehrveranstaltung, die Pflege der Single-Source-of-Truth-Konzeptdokumente (`Konzept/01..03_*.md` sowie `Kapitel/00..11_*/Konzept.md`) und der modularen Moodle-Abschnittstexte (`Kapitel/00..11_*/Moodle/Text.md` samt `Banner.jpg`).
 
 ---
 

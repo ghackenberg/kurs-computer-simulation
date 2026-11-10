@@ -2,7 +2,7 @@
 
 ![Kurs-Übersichtsbanner: Systemsimulation & Digitaler Zwilling](./Banner.jpg)
 
-*(Hinweis für Kurs-Einstellungen: Das Kachel-Vorschaubild für das Moodle-Dashboard liegt unter `./Dashboard_Vorschau.jpg`)*
+*(Hinweis für Kurs-Einstellungen: Das Kachel-Vorschaubild für das Moodle-Dashboard liegt im selben Ordner als Dashboard_Vorschau.jpg)*
 
 **Herzlich willkommen zu Systemsimulation / Digitaler Zwilling!**
 

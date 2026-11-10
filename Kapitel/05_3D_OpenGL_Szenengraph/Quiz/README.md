@@ -1,7 +1,7 @@
 # Quiz 02: 2D-Vektorgrafik, WPF Canvas, ScottPlot 5, Welford & MSAGL
 
 **Quiz-ID:** `Quiz_02_Termin_05`  
-**Export-XML:** `Export/Moodle/Quiz_02_Termin_05.xml`  
+**Export-XML:** `./Quiz_02_Termin_05.xml`  
 **Prüfungszeitpunkt:** Zu Beginn von Termin 05 (vor dem Theorie-Impuls zu Kapitel 05)  
 **Stoffabgrenzung (Rückwärts-Kausalität):** Kapitel 03 (2D-Vektorgrafik & WPF Canvas) und Kapitel 04 (2D-Diagramme, ScottPlot 5, Welford & MSAGL)  
 **Kausalitäts-Sperre:** KEIN 3D / OpenGL / SharpGL (Kapitel 05), keine 4x4-Matrizen, kein Gimbal Lock, kein Multithreading (Kapitel 06), keine FEM-Statik / Cholesky (Kapitel 07)!

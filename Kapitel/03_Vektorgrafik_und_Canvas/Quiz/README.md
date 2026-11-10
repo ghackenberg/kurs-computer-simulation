@@ -1,7 +1,7 @@
 # Quiz 01 (Termin 03) – Grundlagen, Digitaler Zwilling & 2D-Pixelgrafik
 
 **Quiz-ID:** `Quiz_01_Termin_03`  
-**Export-XML:** `Export/Moodle/Quiz_01_Termin_03.xml`  
+**Export-XML:** `./Quiz_01_Termin_03.xml`  
 **Prüfungszeitpunkt:** Termin 03  
 **Stoffabgrenzung (Rückwärts-Kausalität):** Kapitel 00 (Prolog), Kapitel 01 (Einführung, Digitaler Zwilling & Expliziter Euler), Kapitel 02 (2D-Pixelgrafik & FDM-Wärmeraster)  
 **Kausalitäts-Sperre:** Kein WPF Canvas / Vektorgrafik (Kap. 03), kein ScottPlot (Kap. 04), kein 3D / SharpGL (Kap. 05), kein TPL (Kap. 06), kein Cholesky (Kap. 07), kein RK4 (Kap. 08)!

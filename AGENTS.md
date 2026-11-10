@@ -20,13 +20,12 @@
 - `./Kapitel/[XX_Kapitel_Bezeichnung]/` – Die 12 selbständigen, kapitelzentrierten Modulordner (`00_Prolog` bis `11_Epilog`) mit allen kapitelbezogenen Artefakten an einem Ort:
   - `README.md` – Kompakte Kapitel-Übersicht für die direkte GitHub-/IDE-Anzeige.
   - `Konzept.md` – Autarker Kapitel-Steckbrief (Artefakte, Vorgreif-Sperre, Rückwärts-/Vorwärts-Brücken, Bloom-Lernziele, Hausübung Stufe 1 + Track A/B & Showcase-Fokus für gezieltes Context-Loading).
-  - `./Folien/` – MARP-Vorlesungsfolien (`Folien.md`, `Folien_Anhang_*.md`), `Titelbild.jpg`, `./Diagramme/*.svg` (inkl. `.mmd`), `./Illustrationen/`, `./Screenshots/` und `./Tafelbilder/`.
+  - `./Folien/` – MARP-Vorlesungsfolien (`Folien.md`, `Folien_Anhang_*.md`, kompilierte `*_Folien.pdf`), `Titelbild.jpg`, `./Diagramme/*.svg` (inkl. `.mmd`), `./Illustrationen/`, `./Screenshots/` und `./Tafelbilder/`.
   - `./Beispiele/` *(für Kap. 02–05, 07–10)* – Lauffähige C#-Vorlesungsbeispiele, Plot-Generatoren und zugehörige Unit-Tests (`Beispiele.sln`).
-  - `./Uebung/` *(für Kap. 01–10)* – Aufgabenblatt (`Aufgabenblatt.md`, `Aufgabenblatt.pdf`) und C#-Projektvorlage (`./Vorlage/`).
-  - `./Moodle/` *(für Kap. 00–10)* – Formelfreier Moodle-Abschnittstext (`Text.md`) und lokales `Banner.jpg`.
-  - `./Quiz/` *(in Kap. 03, 05, 08, 10)* – `README.md` sowie die 10 modularen Test-Markdown-Dateien (`Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`).
-- `./Export/` – Druckreife Moodle-PDFs (`./Export/Folien/` und `./Export/Uebungen/`) sowie die importfertigen Moodle-Master-XML-Quizzes (`./Export/Moodle/Quiz_0X_Termin_YY.xml`).
-- `./Skripte/` – Plattformunabhängige Node.js-Skripte für Build Management (PDF- & Moodle-XML-Export) und Quality Control (Linter für Folien-DOM, Abschnittsschema, SVGs, Variablen-Konsistenz und Quizzes).
+  - `./Uebung/` *(für Kap. 01–10)* – Aufgabenblatt (`Aufgabenblatt.md`, kompilierte `*_Aufgabenblatt.pdf`) und C#-Projektvorlage (`./Vorlage/`).
+  - `./Moodle/` *(für Kap. 00–11)* – Formelfreier Moodle-Abschnittstext (`Text.md`) und lokales `Banner.jpg`.
+  - `./Quiz/` *(in Kap. 03, 05, 08, 10)* – `README.md`, die 10 modularen Test-Markdown-Dateien (`Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`) sowie die daraus kompilierte Moodle-Master-XML (`Quiz_0X_Termin_YY.xml`).
+- `./Skripte/` – Plattformunabhängige Node.js-Skripte für Build Management (PDF- & Moodle-XML-Export direkt in die jeweiligen Kapitelordner) und Quality Control (Linter für Folien-DOM, Abschnittsschema, SVGs, Variablen-Konsistenz und Quizzes).
 
 ---
 
@@ -51,7 +50,7 @@ Alle vorlesungsübergreifenden Regeln sind modular in **6 fokussierten Workspace
    - **Kerninhalte:** Zweistufige Hausübung (`Stufe 1: 1.1–1.4` $\to$ `Stufe 2: Track A | Track B`), Symmetrie ohne Redundanz, forensischer Code-Walkthrough gegen `Vorlage/`, *Golden Reference Numbers* (5-Sekunden-Selbsttest), aktive Unit-Tests in `Aufgabe 1.4` (`dotnet test`).
 5. **[`moodle-quizzes`](.agents/skills/moodle-quizzes/SKILL.md):**
    - **Aktivieren bei:** Erstellen oder Ändern von `Kapitel/*/Quiz/**` und `Skripte/moodle_xml_builder.js`.
-   - **Kerninhalte:** Strikte Rückwärts-Kausalität, redundanzfreie 10-Varianten-Markdown-Architektur (`Quiz/Test_01..03_Vorbereitung.md` + `Test_04..10_Pruefung.md` $\to$ `Export/Moodle/Quiz_0X_Termin_YY.xml` via `npm run export:moodle`), voller Auto-Grading-Fragetypen-Mix (8 Fragen = 10 Pkt.), Inversion der Fragerichtung, Längen-Symmetrie ($\le 25\,\%$), keine Formeln im Fragetext.
+   - **Kerninhalte:** Strikte Rückwärts-Kausalität, redundanzfreie 10-Varianten-Markdown-Architektur (`Quiz/Test_01..03_Vorbereitung.md` + `Test_04..10_Pruefung.md` $\to$ `Kapitel/XX_*/Quiz/Quiz_0X_Termin_YY.xml` via `npm run export:moodle`), voller Auto-Grading-Fragetypen-Mix (8 Fragen = 10 Pkt.), Inversion der Fragerichtung, Längen-Symmetrie ($\le 25\,\%$), keine Formeln im Fragetext.
 
 ### Ebene 3: Unabhängige Qualitätssicherung
 6. **[`qualitaets-review`](.agents/skills/qualitaets-review/SKILL.md):**
@@ -68,8 +67,8 @@ Vor jedem Commit nach Folien-, SVG- oder Übungsänderungen müssen die zugehör
   - `npm run lint:sections:XX` – Kapitel-/Abschnittsschema (3:4-Hintergrundbilder, Standard-Einleitungssätze, `Rückblick & Brücke`-Folie, reine Bildsyntax).
   - `npm run lint:svg:XX` – SVG-Qualitäts- & Clipping-Audit.
   - `npm run lint:variables:XX` – Didaktische Variablen-Konsistenz zwischen Text, Formeln, SVGs und Code.
-- **PDF-Export (`Export/`):** `npm run export:pdf:XX` (Vorlesung `XX`) bzw. `npm run export:pdf:uebung:XX` (Übungsblatt `01`–`10`).
-- **Gesamtlauf:** `npm run lint` bzw. `npm run export:pdf`.
+- **PDF- & Moodle-XML-Export (direkt in `Kapitel/XX_*/`):** `npm run export:pdf:XX` (Vorlesung `XX` $\to$ `Folien/*_Folien.pdf`), `npm run export:pdf:uebung:XX` (Übungsblatt `01`–`10` $\to$ `Uebung/*_Aufgabenblatt.pdf`), `npm run export:moodle` (`Quiz/Quiz_0X_Termin_YY.xml`).
+- **Gesamtlauf:** `npm run lint` bzw. `npm run export:pdf` & `npm run export:moodle`.
 
 ---
 

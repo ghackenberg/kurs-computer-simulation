@@ -68,9 +68,6 @@ function getMarpCommand() {
 const ROOT_DIR = path.resolve(__dirname, '..');
 const KAPITEL_DIR = path.join(ROOT_DIR, 'Kapitel');
 const THEMEN_CSS = path.join(ROOT_DIR, 'Themen', 'fhooe.css');
-const EXPORT_DIR = path.join(ROOT_DIR, 'Export');
-const EXPORT_FOLIEN_DIR = path.join(EXPORT_DIR, 'Folien');
-const EXPORT_UEBUNGEN_DIR = path.join(EXPORT_DIR, 'Uebungen');
 
 // ------------------------------------------------------------------------------
 // 3. Helper Functions
@@ -153,8 +150,8 @@ function showHelp() {
 Usage: node Skripte/export_to_pdf.js [Optionen]
 
 Optionen:
-  --slides, -s          Exportiert alle MARP-Foliensätze (Folien/*/Folien.md)
-  --exercises, -e       Exportiert alle Aufgabenblätter (Uebungen/*/Aufgabenblatt.md)
+  --slides, -s          Exportiert alle MARP-Foliensätze (Kapitel/*/Folien/*_Folien.pdf)
+  --exercises, -e       Exportiert alle Aufgabenblätter (Kapitel/*/Uebung/*_Aufgabenblatt.pdf)
   --all, -a             Exportiert Foliensätze und Aufgabenblätter (Standard)
   --chapter <XX>, -c    Exportiert nur ein bestimmtes Folienkapitel (z.B. '00', '01', '07')
   --termin <XX>, -t     Exportiert nur ein bestimmtes Aufgabenblatt (z.B. '01', '05', '10')
@@ -173,9 +170,10 @@ Beispiele:
 // 5. MARP Slides Export
 // ------------------------------------------------------------------------------
 function exportSingleSlideDeck(dirName, marpCmd) {
-  const inputMd = path.join(KAPITEL_DIR, dirName, 'Folien', 'Folien.md');
+  const folienDir = path.join(KAPITEL_DIR, dirName, 'Folien');
+  const inputMd = path.join(folienDir, 'Folien.md');
   const sanitizedName = sanitizeUmlauts(dirName);
-  const exportPdf = path.join(EXPORT_FOLIEN_DIR, `${sanitizedName}_Folien.pdf`);
+  const exportPdf = path.join(folienDir, `${sanitizedName}_Folien.pdf`);
 
   if (!fs.existsSync(inputMd)) {
     throw new Error(`Datei nicht gefunden: ${inputMd}`);
@@ -187,7 +185,7 @@ function exportSingleSlideDeck(dirName, marpCmd) {
     env.CHROME_PATH = browserExec;
   }
 
-  // CLI-Aufruf marp-cli direkt nach Export/Folien/
+  // CLI-Aufruf marp-cli direkt in den jeweiligen Kapitel/XX_*/Folien/ Ordner
   const cmd = `${marpCmd} --no-stdin --theme-set "${THEMEN_CSS}" --allow-local-files --pdf "${inputMd}" -o "${exportPdf}"`;
   execSync(cmd, { stdio: 'pipe', env });
 
@@ -204,8 +202,6 @@ async function exportAllSlides(filterChapter = null) {
   console.log('\n' + '='.repeat(70));
   console.log(' MARP-FOLIENSÄTZE EXPORTIEREN');
   console.log('='.repeat(70));
-
-  fs.mkdirSync(EXPORT_FOLIEN_DIR, { recursive: true });
 
   const marpCmd = getMarpCommand();
   const allDirs = fs.readdirSync(KAPITEL_DIR)
@@ -575,8 +571,6 @@ async function exportAllExercises(browser, filterTermin = null) {
   console.log(' AUFGABENBLÄTTER EXPORTIEREN');
   console.log('='.repeat(70));
 
-  fs.mkdirSync(EXPORT_UEBUNGEN_DIR, { recursive: true });
-
   const allDirs = fs.readdirSync(KAPITEL_DIR)
     .filter(d => fs.statSync(path.join(KAPITEL_DIR, d)).isDirectory() && /^\d\d_/.test(d) && fs.existsSync(path.join(KAPITEL_DIR, d, 'Uebung', 'Aufgabenblatt.md')))
     .sort();
@@ -606,7 +600,8 @@ async function exportAllExercises(browser, filterTermin = null) {
     const numMatch = dir.match(/^(\d\d)_/);
     const terminNum = numMatch ? numMatch[1] : 'XX';
 
-    const exportPdfNamed = path.join(EXPORT_UEBUNGEN_DIR, `${dir}_Aufgabenblatt.pdf`);
+    const sanitizedDir = sanitizeUmlauts(dir);
+    const exportPdfNamed = path.join(uebungDir, `${sanitizedDir}_Aufgabenblatt.pdf`);
 
     try {
       const mdContent = fs.readFileSync(mdPath, 'utf8');
@@ -675,71 +670,7 @@ async function exportAllExercises(browser, filterTermin = null) {
 }
 
 // ------------------------------------------------------------------------------
-// 7. Generate Export/README.md for Moodle
-// ------------------------------------------------------------------------------
-function generateExportReadme(slideResults, exerciseResults) {
-  const now = new Date().toISOString().replace('T', ' ').substring(0, 19);
-
-  let md = `# Exportierte PDF-Unterlagen für Moodle\n\n`;
-  md += `**Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  \n`;
-  md += `**Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  \n`;
-  md += `**Institution:** Fachhochschule Oberösterreich – Campus Wels  \n`;
-  md += `**Zuletzt generiert:** ${now} UTC  \n\n`;
-  md += `Dieses Verzeichnis enthält alle druckreifen, vollständigen PDF- und Moodle-XML-Unterlagen.\n\n`;
-
-  md += `## 1. MARP-Foliensätze (16:9 Präsentationen)\n\n`;
-  md += `| Kapitel | Thema | Moodle-Export-Datei | Dateigröße | Quelle |\n`;
-  md += `| :--- | :--- | :--- | :---: | :--- |\n`;
-
-  const folienDirs = fs.readdirSync(KAPITEL_DIR)
-    .filter(d => fs.statSync(path.join(KAPITEL_DIR, d)).isDirectory() && /^\d\d_/.test(d) && fs.existsSync(path.join(KAPITEL_DIR, d, 'Folien', 'Folien.md')))
-    .sort();
-
-  for (const dir of folienDirs) {
-    const sanitized = sanitizeUmlauts(dir);
-    const exportFile = `${sanitized}_Folien.pdf`;
-    const exportPath = path.join(EXPORT_FOLIEN_DIR, exportFile);
-    const localPath = `Kapitel/${dir}/Folien/Folien.md`;
-    let sizeStr = '-';
-    if (fs.existsSync(exportPath)) {
-      sizeStr = formatBytes(fs.statSync(exportPath).size);
-    }
-    const cleanTitle = dir.replace(/^\d\d_/, '').replace(/_/g, ' ');
-    const kapNr = dir.substring(0, 2);
-    md += `| **${kapNr}** | ${cleanTitle} | [\`${exportFile}\`](Folien/${exportFile}) | ${sizeStr} | \`${localPath}\` |\n`;
-  }
-
-  md += `\n## 2. Aufgabenblätter (DIN A4 Handouts)\n\n`;
-  md += `| Kapitel | Thema | Moodle-Export-Datei | Dateigröße | Quelle |\n`;
-  md += `| :--- | :--- | :--- | :---: | :--- |\n`;
-
-  const uebungenDirs = fs.readdirSync(KAPITEL_DIR)
-    .filter(d => fs.statSync(path.join(KAPITEL_DIR, d)).isDirectory() && /^\d\d_/.test(d) && fs.existsSync(path.join(KAPITEL_DIR, d, 'Uebung', 'Aufgabenblatt.md')))
-    .sort();
-
-  for (const dir of uebungenDirs) {
-    const numMatch = dir.match(/^(\d\d)_/);
-    const terminNum = numMatch ? numMatch[1] : 'XX';
-    const exportFileNamed = `${dir}_Aufgabenblatt.pdf`;
-    const exportPathNamed = path.join(EXPORT_UEBUNGEN_DIR, exportFileNamed);
-    const localPath = `Kapitel/${dir}/Uebung/Aufgabenblatt.md`;
-    let sizeStr = '-';
-    if (fs.existsSync(exportPathNamed)) {
-      sizeStr = formatBytes(fs.statSync(exportPathNamed).size);
-    }
-    const cleanTitle = dir.replace(/^\d\d_/, '').replace(/_/g, ' ');
-    md += `| **${terminNum}** | ${cleanTitle} | [\`${exportFileNamed}\`](Uebungen/${exportFileNamed}) | ${sizeStr} | \`${localPath}\` |\n`;
-  }
-
-  md += `\n---\n*Automatisch generiert mit \`node Skripte/export_to_pdf.js\`*\n`;
-
-  const readmePath = path.join(EXPORT_DIR, 'README.md');
-  fs.writeFileSync(readmePath, md, 'utf8');
-  console.log(`\n[OK] Moodle-Übersicht aktualisiert: Export/README.md`);
-}
-
-// ------------------------------------------------------------------------------
-// 8. Main Entry Point
+// 7. Main Entry Point
 // ------------------------------------------------------------------------------
 async function main() {
   const options = parseArgs();
@@ -787,10 +718,7 @@ async function main() {
     }
   }
 
-  // 3. Moodle-Übersicht Export/README.md aktualisieren
-  generateExportReadme(slideResults, exerciseResults);
-
-  // 4. Abschluss-Zusammenfassung
+  // 3. Abschluss-Zusammenfassung
   const totalElapsed = ((Date.now() - startTime) / 1000).toFixed(1);
   console.log('\n' + '='.repeat(70));
   console.log(` EXPORT ABGESCHLOSSEN in ${totalElapsed}s`);
