@@ -44,6 +44,20 @@ Jedes Kapitel ab Kapitel `01` (und insbesondere ab Kapitel `02` unmittelbar nach
 - **API-Verankerung:** Abstrakte Begriffe wie „Vektor-Pfad“ oder „Raw-Pixel-Backend“ immer zuerst an den konkreten Klassen der verwendeten Bibliothek festmachen (z. B. `SKPath`, `SKBitmap`, `SKCanvas` bei SkiaSharp unter `ScottPlot 5`).
 - **Frühe Einordnung von Varianten:** Wenn eine Bibliothek mehrere Betriebsmodi hat (z. B. `MSAGL`: hierarchisches `SugiyamaLayoutSettings` vs. organisches `MdsLayoutSettings`), vor den Einzelbeispielen eine klare Gegenüberstellungs-Folie zeigen.
 
+### 1.5 Explizite Konventions- & Schnittstellen-Brücken („Keine stillschweigenden Vorzeichen-, Index- oder Konventionswechsel“)
+In jeder Simulation treffen mathematisch-physikalische Lehrbuchformeln auf konkrete Software- und Hardware-Konventionen. Wann immer sich zwischen zwei Folien, Bibliotheken oder Terminen eine Konvention ändert, darf ein Vorzeichenwechsel, eine Indexverschiebung oder eine umgekehrte Reihenfolge **niemals kommentarlos** dastehen, sondern muss durch eine **anschauliche 1-Satz-Eselsbrücke** erklärt werden:
+- **Geometrie & Koordinatensysteme (T02/T03/T05):** Linkshändiges Pixel-/Canvas-System ($+Y$ nach unten) vs. rechtshändiges 3D-OpenGL-System ($+Y$ nach oben, $+Z$ zum Betrachter $\implies$ *Rechte-Hand-Regel* erklärt das Minuszeichen bei $z = -L\sin\theta$); Spaltenvektoren (OpenGL) vs. Zeilenvektoren (`.NET System.Numerics`); Nullwinkel-Referenzachse ($0^\circ$ auf $+X$ beim Roboter vs. $+Z$ bei der Orbit-Kamera $\implies$ erklärt $\sin\theta \leftrightarrow \cos\theta$); *„Greife-die-Welt“-Prinzip* (wie Google Maps) beim Kamera-Panning.
+- **Speicher & Hardware (T02/T06):** 2D-Gitterkoordinate $(x,y)$ vs. 1D-Byte-Offset `y * stride + x * 4` (`Bgra32` in Little-Endian); logischer Thread-Index vs. physische 64-Byte-CPU-Cache-Line (*False Sharing* in T06).
+- **Matrizen & Solver (T07/T08/T09):** Physikalische Knotennummer vs. globaler Freiheitsgrad-Index $(2i, 2i+1)$ und reduzierte Matrix $\mathbf{K}_{ff}$ nach Streichen gesperrter Lager (T07); kontinuierliches Zeitintegral $\frac{1}{T}\int L(t)\,\mathrm{d}t$ vs. diskretes Ereignis-Rechteckintegral `areaUnderL += L * dt` (T09).
+
+### 1.6 „Was-passiert-wenn-nicht?“-Erklärung (Counterfactual Scaffolding statt Blackbox-Regeln)
+Um Konzepte im Hörsaal einfach und ohne Vorwissen erklärbar zu machen, wird jede Schutzmaßnahme, API-Einstellung oder numerische Erweiterung über den **konkreten Fehlerfall beim Weglassen** motiviert (*„Ohne X passiert Fehler Y $\implies$ deshalb brauchen wir X!“*):
+- *Beispiele über alle Termine:* Ohne CFL-Begrenzung ($s \le 0{,}25$) schaukelt sich das Vorzeichen auf `NaN` auf (T02); ohne vorallokierten Ringpuffer friert der GC die UI ein (T04); ohne `GL_DEPTH_TEST` übermalt der Hintergrund den Vordergrund, ohne `GL_COLOR_MATERIAL` bleibt bei aktivem Licht alles grau, ohne $\phi$-Clamping wird $\vec{f}\times\vec{e}_{\text{up}}=\vec{0}$ (T05); ohne Thread-lokale Reduktion entstehen *Lost Updates*, mit `lock` *in* der Schleife *Lock Contention* (T06); ohne Lager-Streichen ist $\mathbf{K}$ singulär (T07); ohne *Anti-Windup* läuft der I-Regler bei Sättigung voll (T08); ohne *Zero-Crossing-Bisektion* dringt der Ball je nach $\Delta t$ unterschiedlich tief in den Boden ein (T10).
+
+### 1.7 Netto-Zeitbudget (100 / 115 Min.) & Visuelle Mentale Modelle statt Textwüsten
+- **Realistischer Folienkorridor (40–48 Folien):** Nach Abzug von Live-Showcase (20 Min.), Pause (15 Min.) und ggf. Moodle-Quiz (15 Min. an T03, T05, T08, T10) verbleiben **100 bis 115 Minuten Netto-Vorlesungszeit**. Vermeide separate Kleinst-Folien für triviale 1-Zeilen-API-Aufrufe.
+- **Kein räumlicher oder algorithmischer Mechanismus ohne Kontrast-SVG:** Folien, die eine Transformationsreihenfolge ($\mathbf{T}\cdot\mathbf{R} \neq \mathbf{R}\cdot\mathbf{T}$), eine Vektorzerlegung, ein Speicherlayout oder ein Solver-Prinzip erklären, dürfen keine reinen Text-/Formelwüsten sein, sondern nutzen ein maßgeschneidertes SVG (bevorzugt als Direktvergleich *Naiv/Falsch vs. Richtig*).
+
 ---
 
 ## 2. MARP-Aufbau & Layout-Regeln (`Themen/fhooe.css`)

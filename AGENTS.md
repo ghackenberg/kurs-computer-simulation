@@ -65,5 +65,10 @@ Um zu verhindern, dass behobene Fehler in künftigen Kapiteln oder Terminen erne
 1. **Sofort-Erkennung bei Nutzer-Korrekturen:**
    - Wann immer der Nutzer eine didaktische, gestalterische oder strukturelle Korrektur anmerkt (z. B. *„fällt vom Himmel“*, *„SVG noch nicht aussagekräftig genug“*, *„Überschneidung zwischen Tracks“*, *„Formatierungsproblem in Moodle“*), prüfe nach der Behebung sofort: **Ist dies eine allgemeine Regel für künftige Kapitel/Termine?**
    - Wenn ja, schlage aktiv vor (oder aktualisiere direkt beim Sichern des Zwischenstands), diese Erkenntnis im entsprechenden Skill unter `.agents/skills/` zu ergänzen.
-2. **Pflicht-Retrospektive vor jedem Release / Merge:**
-   - Vor jedem Abschluss eines Kapitels oder Merge nach `main` (z. B. auf die Frage *„Sind wir bereit für den Release?“*) führst du neben den technischen Lintern automatisch einen **Learnings-Check** durch: *Sind alle neuen Erkenntnisse aus dieser Sitzung bereits in `.agents/skills/` oder `AGENTS.md` verewigt?*
+2. **Pflicht-Retrospektive & Mehrperspektivische Review-Edit-Schleife vor jedem Release / Merge:**
+   - Vor dem Abschluss eines Kapitels/Termins wird eine **selbständige Review-Edit-Schleife mit frischen Subagenten-Kontexten** durchlaufen, die nacheinander 4 komplementäre Prüf-Brillen abdeckt, bis **0 Befunde** erreicht sind:
+     1. *Makro-/Mikro-Storyline & Curriculare Einbettung* (Anknüpfung an Vor-Termine, Engpass-Motivation, Ausblick auf Folge-Termine),
+     2. *Hörsaal-Erklärbarkeit ohne Vorwissen & Visuelle Mentale Modelle* (Konventions-Brücken, „Was-passiert-wenn-nicht?“-Motivation, Kontrast-SVGs statt Textwüsten, 100/115-Min.-Netto-Taktung),
+     3. *Forensischer Studierenden-Walkthrough durch C#-Vorlage & Mathematik* (Reibungsfreie Lösbarkeit von `1.1`–`1.4` und `A.1`–`A.4`/`B.1`–`B.4` im Starter-Code, Selbsttest-Referenzwerte, Unit-Tests in `Aufgabe 1.4`),
+     4. *Formale Linter (`sections`, `svg`, `variables`, `slides` inkl. Anhang), 6-Punkte-Synchronisation & Quiz-Psychometrie*.
+   - Führe abschließend automatisch einen **Learnings-Check** durch: *Sind alle neuen Erkenntnisse aus dieser Sitzung bereits in `.agents/skills/` oder `AGENTS.md` verewigt?*

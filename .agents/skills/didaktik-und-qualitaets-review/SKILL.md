@@ -56,6 +56,8 @@ Die Studierenden befinden sich im **5. Fachsemester Bachelor Automatisierungstec
   2. **3-Schritt-Rhythmus eingehalten:** Folgt die Sektion dem Dreiklang `1. Anwendungsbeispiel` $\to$ `2. Blick unter die Haube (Mathematik/Algorithmus)` $\to$ `3. Der C#-Code`?
   3. **Konkrete Zahlen statt nackter $\mathcal{O}(\dots)$-Symbole:** Wird jede Komplexitäts- oder Stabilitätsaussage mit einem konkreten Zahlenbeispiel belegt?
   4. **Variablen-Konsistenz:** Stimmen alle Symbole zwischen Fließtext, LaTeX-Formel, SVG-Grafik und C#-Code überein?
+  5. **Explizite Konventions- & „Was-passiert-wenn-nicht?“-Brücken (Keine Vorwissen-Fallen):** Wird jeder Wechsel von Koordinatensystemen, Indizes oder Bibliotheks-Konventionen (z. B. Links- vs. Rechtshändig, Spalten- vs. Zeilenvektoren, 2D-Index vs. 1D-Stride/Cache-Line, Vollmatrix vs. reduzierte Matrix $\mathbf{K}_{ff}$) mit einer anschaulichen Eselsbrücke erklärt, und wird jede Schutzmaßnahme über den konkreten Fehlerfall beim Weglassen (*„Ohne X passiert Fehler Y“*) motiviert?
+  6. **Netto-Zeitbudget (100 / 115 Min. $\implies$ 40–48 Folien) & `*(Deep Dive)*`-Markierung:** Passt die Folienanzahl realistisch in die Netto-Vorlesungszeit (100 Min. an Quiz-Terminen T03/T05/T08/T10, 115 Min. sonst), und sind fertige Vorlagen-Interna klar als `*(Deep Dive – fertig in der Vorlage)*` gekennzeichnet?
 
 ---
 
