@@ -102,7 +102,7 @@ namespace VorlageSzenengraph3D
             double dy = currentPosition.Y - _lastMousePosition.Y;
 
             // Skalierung: dx steuert Azimut, dy steuert Elevation
-            _camera.Rotate(dx * 0.4, -dy * 0.4);
+            _camera.Rotate(-dx * 0.4, dy * 0.4);
             _lastMousePosition = currentPosition;
 
             openGLControl.DoRender();

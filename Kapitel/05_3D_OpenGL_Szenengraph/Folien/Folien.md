@@ -967,7 +967,7 @@ private void OpenGlView_MouseMove(object sender, MouseEventArgs e)
     Point currentPos = e.GetPosition(OpenGlView);
     double dx = currentPos.X - _lastMousePos.X;
     double dy = currentPos.Y - _lastMousePos.Y;
-    if (e.LeftButton == MouseButtonState.Pressed)       _camera.Rotate(dx * 0.4, -dy * 0.4);
+    if (e.LeftButton == MouseButtonState.Pressed)       _camera.Rotate(-dx * 0.4, dy * 0.4);
     else if (e.RightButton == MouseButtonState.Pressed) _camera.Pan(dx * 0.01, dy * 0.01);
     _lastMousePos = currentPos;
 }

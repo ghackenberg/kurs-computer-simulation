@@ -421,7 +421,7 @@ public partial class MainWindow : Window
         // TODO [Stufe 1 - Aufgabe 1.2]:
         // Nur bei e.LeftButton == MouseButtonState.Pressed _camera.Rotate(...) aufrufen,
         // im Zweig else if (e.RightButton == MouseButtonState.Pressed) stattdessen _camera.Pan(dx * 0.01, dy * 0.01)!
-        _camera.Rotate(dx * 0.4, -dy * 0.4);
+        _camera.Rotate(-dx * 0.4, dy * 0.4);
         _lastMousePos = currentPos;
     }
 
