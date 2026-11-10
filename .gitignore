@@ -29,3 +29,5 @@ obj/
 
 # Temporary audit artifacts
 .tmp_raster_svg/
+.tmp_*/
+scratch/
