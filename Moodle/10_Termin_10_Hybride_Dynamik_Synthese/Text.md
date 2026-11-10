@@ -1,7 +1,7 @@
 ### Termin 10: Hybride Dynamik, Zero-Crossing & Finale Hausübung
 *(Vorlesungskapitel: 10 Dynamische Modelle Hybrid & 11 Epilog)*
 
-![Termin 10: Hybride Dynamik & Zero-Crossing](../Bilder/Termin_10.jpg)
+![Termin 10: Hybride Dynamik & Zero-Crossing](./Banner.jpg)
 
 In unserem großen Finale verschmelzen kontinuierliche Dynamik und diskrete Ereignisse zu hybriden Systemen! Wir implementieren eine präzise Zero-Crossing-Detektion mit Bisektions-Einkreisung auf Mikrometer-Genauigkeit, um unelastische Stöße ohne Geisterdurchdringung („Tunneling“) zu berechnen. Mittels Sticking-Threshold beherrschen wir den Zeno-Kollaps und schlagen den Bogen zur Virtuellen Inbetriebnahme (VIBN), FMI-Co-Simulation und zum Digitalen Zwilling.
 

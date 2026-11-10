@@ -7,7 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensatz:** [`06_Multithreading/Folien.md`](../Folien/06_Multithreading/Folien.md)
-- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md) | **Moodle-Text:** [$moodleFile](../Moodle/Termintexte/06_Termin_06_Multithreading_und_TPL.md) | [`MultithreadingBenchmark.sln`](../Uebungen/Termin_06_Multithreading_und_TPL/Vorlage/MultithreadingBenchmark.sln)
+- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](../Moodle/06_Termin_06_Multithreading_und_TPL/Text.md) | [`MultithreadingBenchmark.sln`](../Uebungen/Termin_06_Multithreading_und_TPL/Vorlage/MultithreadingBenchmark.sln)
 - **Vorgreif-Sperre (Technologie-Stand T06):** TPL (`Parallel.For`, `Task.Run`), `Interlocked`, `lock`, `IProgress<T>`, `CancellationToken`, Amdahl. *Strikte Tabus:* Kein Math.NET Cholesky (erst T07).
 - **Kapitel-Brücken & Quiz-Zuordnung:**
   - **Rückwärts ($\leftarrow$):** [`T02`](./05_Termin_02_Pixelgrafik_und_FDM.md) (1D-Speicherlayout im RAM & 64-Byte-Cache-Lines) und [`T04`](./07_Termin_04_Telemetrie_und_ScottPlot.md) (`ScottPlot 5` für Speedup-Plots).

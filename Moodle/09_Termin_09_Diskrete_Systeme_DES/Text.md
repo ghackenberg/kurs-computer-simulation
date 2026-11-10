@@ -1,7 +1,7 @@
 ### Termin 09: Diskrete Systeme & Diskrete Ereignissimulation (DES)
 *(Vorlesungskapitel: 09 Dynamische Modelle Diskret)*
 
-![Termin 09: Diskrete Ereignissimulation](../Bilder/Termin_09.jpg)
+![Termin 09: Diskrete Ereignissimulation](./Banner.jpg)
 
 Nicht alle Systeme ändern sich kontinuierlich – viele industrielle Prozesse werden durch diskrete Ereignisse gesteuert. In dieser Einheit implementieren wir eine Diskrete Ereignissimulation mit einer Future Event List auf Basis der generischen .NET PriorityQueue. Wir nutzen die stochastische Inversionsmethode zur Erzeugung exponentiell verteilter Zwischenankunfts- und Bedienzeiten und verifizieren Littles Gesetz (mittlere Kundenanzahl gleich Ankunftsrate mal Verweilzeit) empirisch an M/M/1- und M/M/c-Warteschlangensystemen.
 

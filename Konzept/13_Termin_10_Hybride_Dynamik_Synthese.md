@@ -7,7 +7,7 @@
 
 ## 1. Artefakte, Technologie-Status & Kapitel-Schnittstellen
 - **Foliensätze:** [`10_Dynamische_Modelle_Hybrid/Folien.md`](../Folien/10_Dynamische_Modelle_Hybrid/Folien.md) & [`11_Epilog/Folien.md`](../Folien/11_Epilog/Folien.md)
-- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.md) | **Moodle-Text:** [$moodleFile](../Moodle/Termintexte/10_Termin_10_Hybride_Dynamik_Synthese.md) | [`HybridZeroCrossing.sln`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Vorlage/HybridZeroCrossing.sln)
+- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](../Moodle/10_Termin_10_Hybride_Dynamik_Synthese/Text.md) | [`HybridZeroCrossing.sln`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Vorlage/HybridZeroCrossing.sln)
 - **Assessment zu Terminbeginn:** **Moodle-Test 4** (15 Min., prüft ausschließlich Kap. 08–09).
 - **Technologie-Status T10:** Vollständiger Kurs-Stack (Kap. 01–11).
 - **Kapitel-Brücken (Synthese des Gesamtkurses):**

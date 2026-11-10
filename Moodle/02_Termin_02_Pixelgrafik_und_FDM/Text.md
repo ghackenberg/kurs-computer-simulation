@@ -1,7 +1,7 @@
 ### Termin 02: 2D-Pixelgrafik, Direct Memory & FDM-Feldsimulation
 *(Vorlesungskapitel: 02 Visualisierung 2D Pixel)*
 
-![Termin 02: Pixelgrafik & FDM-Wärmeleitung](../Bilder/Termin_02.jpg)
+![Termin 02: Pixelgrafik & FDM-Wärmeleitung](./Banner.jpg)
 
 Heute steigen wir in die High-Performance-Pixelgrafik unter WPF ein. Wir analysieren die Performance-Grenzen herkömmlicher UI-Controls bei Feldsimulationen und nutzen Direct-Memory-Zugriffe auf den Bildspeicher einer WriteableBitmap (Stride-Berechnung, Zeigerarithmetik, allokationsfreier Pointer-Swap). Darauf aufbauend diskretisieren wir die 2D-Wärmeleitungsgleichung mittels Finite-Differenzen-Methode (FDM 5-Punkt-Stern) und beweisen die fundamentale CFL-Stabilitätsgrenze (Stabilitätsfaktor s kleiner oder gleich 0,25).
 

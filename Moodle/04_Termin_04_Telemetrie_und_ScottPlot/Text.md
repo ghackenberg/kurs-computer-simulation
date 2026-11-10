@@ -1,7 +1,7 @@
 ### Termin 04: Echtzeit-Telemetrie, Diagramme & ScottPlot 5
 *(Vorlesungskapitel: 04 Visualisierung 2D Diagramme)*
 
-![Termin 04: Telemetrie & ScottPlot](../Bilder/Termin_04.jpg)
+![Termin 04: Telemetrie & ScottPlot](./Banner.jpg)
 
 Simulationen erfordern den kontinuierlichen Einblick in Zustandsverläufe. In dieser Einheit integrieren wir die moderne Bibliothek ScottPlot 5 in WPF. Wir lernen allokationsfreie Ringpuffer kennen, um den Garbage Collector bei 50 bis 100 Hz Streaming-Frequenz zu entlasten, und implementieren den numerisch stabilen Online-Algorithmus nach Welford zur Berechnung von laufendem Mittelwert, Varianz und dynamischen 3-Sigma-Toleranzbändern ohne Auslöschungsfehler.
 

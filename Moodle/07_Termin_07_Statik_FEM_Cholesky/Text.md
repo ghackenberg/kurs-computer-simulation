@@ -1,7 +1,7 @@
 ### Termin 07: Statische Systeme, FEM-Fachwerke & Cholesky-Löser
 *(Vorlesungskapitel: 07 Statische Modelle)*
 
-![Termin 07: Statische FEM-Fachwerke](../Bilder/Termin_07.jpg)
+![Termin 07: Statische FEM-Fachwerke](./Banner.jpg)
 
 Heute erwecken wir die Vektor-Fachwerke aus Termin 03 statisch zum Leben! Wir leiten die finite Elementformulierung für elastische 2D-Fachwerkstäbe her: Aufstellen der Elementsteifigkeitsmatrix, Assemblierung der Gesamtsteifigkeitsmatrix und Blockpartitionierung nach freien und gelagerten Freiheitsgraden. Zur hocheffizienten Lösung des symmetrisch positiv definiten Gleichungssystems binden wir die Cholesky-Zerlegung via Math.NET Numerics ein und visualisieren Verformungen und Stabkräfte mit Farbcodes im Canvas.
 

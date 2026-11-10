@@ -7,7 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensätze:** [`05_Visualisierung_3D_OpenGL/Folien.md`](../Folien/05_Visualisierung_3D_OpenGL/Folien.md) (+ [`Folien_Anhang_3D_Normalen.md`](../Folien/05_Visualisierung_3D_OpenGL/Folien_Anhang_3D_Normalen.md))
-- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md) | **Moodle-Text:** [$moodleFile](../Moodle/Termintexte/05_Termin_05_3D_OpenGL_Szenengraph.md) | [`SceneGraph3D.sln`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Vorlage/SceneGraph3D.sln)
+- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](../Moodle/05_Termin_05_3D_OpenGL_Szenengraph/Text.md) | [`SceneGraph3D.sln`](../Uebungen/Termin_05_3D_OpenGL_Szenengraph/Vorlage/SceneGraph3D.sln)
 - **Assessment zu Terminbeginn:** **Moodle-Test 2** (15 Min., prüft ausschließlich Kap. 03–04).
 - **Vorgreif-Sperre (Technologie-Stand T05):** `SharpGL.WPF`, homogene $4\times 4$-Matrizen, `OrbitCamera`, `SceneNode`, Vorwärtskinematik. *Strikte Tabus:* Kein Multithreading (erst T06), keine inversen Jacobi-LGS (erst T07).
 - **Kapitel-Brücken & Quiz-Zuordnung:**

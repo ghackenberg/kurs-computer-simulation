@@ -1,7 +1,7 @@
 ### Termin 03: 2D-Vektorgrafik, Koordinatentransformation & Canvas
 *(Vorlesungskapitel: 03 Visualisierung 2D Vektor)*
 
-![Termin 03: Vektorgrafik & Canvas](../Bilder/Termin_03.jpg)
+![Termin 03: Vektorgrafik & Canvas](./Banner.jpg)
 
 In dieser Einheit widmen uns der mechatronischen 2D-Vektorgrafik auf dem WPF Canvas. Wir leiten die exakte affine Koordinatentransformation zwischen metrischen Weltkoordinaten in Metern und pixelbasierten Bildschirmkoordinaten her (isotrope Skalierung, Inversion der Y-Achse, Randabstand). Zudem zeichnen wir analytisch rotierte Kraftpfeile und normgerechte DIN-Bemaßungsketten. *(Kausalitätshinweis: In dieser Einheit geht es rein um die geometrische und visuelle Darstellung – die FEM-Statikberechnung folgt in Termin 07!)*
 

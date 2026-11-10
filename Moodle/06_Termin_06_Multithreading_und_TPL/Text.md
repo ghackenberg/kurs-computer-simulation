@@ -1,7 +1,7 @@
 ### Termin 06: Multithreading & Parallele Simulation
 *(Vorlesungskapitel: 06 Multithreading)*
 
-![Termin 06: Multithreading & TPL](../Bilder/Termin_06.jpg)
+![Termin 06: Multithreading & TPL](./Banner.jpg)
 
 Komplexe mechatronische Simulationen erfordern massive Rechenleistung. In dieser Einheit nutzen wir Multithreading und die Task Parallel Library (TPL Parallel.For) in C#. Wir lernen, wie man Schleifen thread-sicher partitioniert, Race Conditions und False Sharing auf Cache-Line-Ebene vermeidet und Benchmarks mit Stopwatch methodisch sauber durchführt. Anhand des Amdahlschen Gesetzes untersuchen wir die theoretischen und realen Skalierungsgrenzen paralleler Algorithmen auf modernen Mehrkernprozessoren.
 

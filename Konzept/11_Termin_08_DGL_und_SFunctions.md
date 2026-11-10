@@ -7,7 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensatz:** [`08_Dynamische_Modelle_Kontinuierlich/Folien.md`](../Folien/08_Dynamische_Modelle_Kontinuierlich/Folien.md)
-- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.md) | **Moodle-Text:** [$moodleFile](../Moodle/Termintexte/08_Termin_08_DGL_und_SFunctions.md) | [`SFunctionSimulation.sln`](../Uebungen/Termin_08_DGL_und_SFunctions/Vorlage/SFunctionSimulation.sln)
+- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](../Moodle/08_Termin_08_DGL_und_SFunctions/Text.md) | [`SFunctionSimulation.sln`](../Uebungen/Termin_08_DGL_und_SFunctions/Vorlage/SFunctionSimulation.sln)
 - **Assessment zu Terminbeginn:** **Moodle-Test 3** (15 Min., prüft ausschließlich Kap. 05–07).
 - **Vorgreif-Sperre (Technologie-Stand T08):** `ISFunction`, Butcher-Tableaus (Euler, Heun, RK4), Steifigkeit, algebraische Schleifen, PID mit Anti-Windup. *Strikte Tabus:* Noch keine DES-Warteschlangen (T09) oder Zero-Crossing-Bisektion (T10).
 - **Kapitel-Brücken & Quiz-Zuordnung:**

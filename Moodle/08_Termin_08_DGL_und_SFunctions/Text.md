@@ -1,7 +1,7 @@
 ### Termin 08: Kontinuierliche Dynamik, S-Functions & RK4
 *(Vorlesungskapitel: 08 Dynamische Modelle Kontinuierlich)*
 
-![Termin 08: Kontinuierliche Regelungsdynamik](../Bilder/Termin_08.jpg)
+![Termin 08: Kontinuierliche Regelungsdynamik](./Banner.jpg)
 
 Wir betrachten die kontinuierliche Dynamik im Zeitbereich. Wir adaptieren das industrielle MATLAB Simulink S-Function-Paradigma in C# (saubere Entkopplung von Ableitungsberechnung ComputeDerivatives und Ausgabe ComputeOutputs) und implementieren den 4-stufigen Runge-Kutta-Integrator (RK4). Am elektromechanischen Ersatzschaltbild eines DC-Servomotors koppeln wir Differentialgleichungen für Ankerstrom und Drehbewegung und rüsten den PID-Lageregler mit einem Anti-Windup Clamping gegen Aktorsättigung aus.
 

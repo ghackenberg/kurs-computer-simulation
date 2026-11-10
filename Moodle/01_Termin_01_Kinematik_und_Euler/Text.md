@@ -1,7 +1,7 @@
 ### Termin 01: Modellbegriff, Kinematik & Expliziter Euler
 *(Vorlesungskapitel: 00 Prolog & 01 Einführung)*
 
-![Termin 01: Kinematik & Euler-Integration](../Bilder/Termin_01.jpg)
+![Termin 01: Kinematik & Euler-Integration](./Banner.jpg)
 
 Zum Auftakt klären wir die Taxonomie technischer Modelle, das Konzept des Digitalen Zwillings nach Michael Grieves sowie die Grundlagen der numerischen Zeitdiskretisierung. Wir überführen kontinuierliche Bewegungsgleichungen zweiter Ordnung unter Erdbeschleunigung in Zustandsraumdarstellungen erster Ordnung und implementieren den expliziten Euler-Integrator in C#.
 

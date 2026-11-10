@@ -1,8 +1,8 @@
 ### Allgemeiner Kurs-Kopfbereich (Willkommen & Organisation)
 
-![Kurs-Übersichtsbanner: Systemsimulation & Digitaler Zwilling](../Bilder/Kurs_Uebersicht.jpg)
+![Kurs-Übersichtsbanner: Systemsimulation & Digitaler Zwilling](./Banner.jpg)
 
-*(Hinweis für Kurs-Einstellungen: Das Kachel-Vorschaubild für das Moodle-Dashboard liegt unter `../Bilder/Kurs_Vorschau_Dashboard.jpg`)*
+*(Hinweis für Kurs-Einstellungen: Das Kachel-Vorschaubild für das Moodle-Dashboard liegt unter `./Dashboard_Vorschau.jpg`)*
 
 **Herzlich willkommen zu Systemsimulation / Digitaler Zwilling!**
 

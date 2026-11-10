@@ -7,7 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensatz:** [`03_Visualisierung_2D_Vektor/Folien.md`](../Folien/03_Visualisierung_2D_Vektor/Folien.md)
-- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md) | **Moodle-Text:** [$moodleFile](../Moodle/Termintexte/03_Termin_03_Vektorgrafik_und_Canvas.md) | [`VectorTrussCanvas.sln`](../Uebungen/Termin_03_Vektorgrafik_Canvas/Vorlage/VectorTrussCanvas.sln)
+- **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](../Moodle/03_Termin_03_Vektorgrafik_und_Canvas/Text.md) | [`VectorTrussCanvas.sln`](../Uebungen/Termin_03_Vektorgrafik_Canvas/Vorlage/VectorTrussCanvas.sln)
 - **Assessment zu Terminbeginn:** **Moodle-Test 1** (15 Min., prüft ausschließlich Kap. 00–02).
 - **Vorgreif-Sperre (Technologie-Stand T03):** Rein geometrisch auf WPF `Canvas` / `DrawingVisual`. *Strikte Tabus:* **Keine Fachwerk-Statik, keine Steifigkeitsmatrix $\mathbf{K}$, kein Math.NET Cholesky (erst in T07!)** – alle Kräfte sind fest vorgegebene Vektoren.
 - **Kapitel-Brücken & Quiz-Zuordnung:**

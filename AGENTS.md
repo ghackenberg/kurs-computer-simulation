@@ -20,7 +20,7 @@
   4. [`04_Termin_01_Kinematik_und_Euler.md`](Konzept/04_Termin_01_Kinematik_und_Euler.md) bis [`13_Termin_10_Hybride_Dynamik_Synthese.md`](Konzept/13_Termin_10_Hybride_Dynamik_Synthese.md) – 10 kompakte, autarke Termin-Steckbriefe (Artefakte, Vorgreif-Sperre, Rückwärts-/Vorwärts-Brücken, Bloom-Lernziele, Hausübung Stufe 1 + Track A/B & Showcase-Fokus pro Termin für gezieltes Context-Loading).
 - `./Folien/[XX_Kapitel_Bezeichnung]/` – MARP-Vorlesungsfolien (`Folien.md`, `Folien_Anhang_*.md`), `Titelbild.jpg`, `./Diagramme/*.svg` (inkl. `.mmd`), `./Illustrationen/`, `./Screenshots/` und `./Tafelbilder/`.
 - `./Uebungen/[Termin_XX_Bezeichnung]/` – Aufgabenblätter (`Aufgabenblatt.md`, `Aufgabenblatt.pdf`) und C#-Projektvorlagen (`./Vorlage/`).
-- `./Moodle/` – Modulare, formelfreie Moodle-Termintexte (`./Moodle/Termintexte/00_*.md` bis `10_*.md`), Bannerbilder (`./Moodle/Bilder/`) und 10-Varianten-Moodle-XML-Quizzes (`Quiz_01_*` bis `Quiz_04_*`).
+- `./Moodle/` – Selbständige Moodle-Abschnittsordner (`./Moodle/00_Kurs_Kopfbereich/` bis `./Moodle/10_Termin_10_Hybride_Dynamik_Synthese/`, jeweils mit formelfreiem `Text.md` und lokalem `Banner.jpg`) sowie 10-Varianten-Moodle-XML-Quizzes (`Quiz_01_*` bis `Quiz_04_*`).
 - `./Export/` – Druckreife Moodle-PDFs (`./Export/Folien/` und `./Export/Uebungen/`).
 - `./Skripte/` – Plattformunabhängige Node.js-Prüf-, Generierungs- und Exportskripte.
 - `./Quellen/` & `./Werkzeuge/` – Reiner C#-Referenzcode (`Quellen.sln`, ohne eingebettete Bild-/Diagramm-Assets) und HiDPI-Grafikgeneratoren (`Werkzeuge/GrafikGenerator/`).
@@ -33,8 +33,8 @@ Alle vorlesungsübergreifenden Regeln sind modular in **6 fokussierten Workspace
 
 ### Ebene 1: Makro-Konzeption, Curriculum & Didaktik
 1. **[`lehrkonzept-und-didaktik`](.agents/skills/lehrkonzept-und-didaktik/SKILL.md):**
-   - **Aktivieren bei:** Arbeit an `Konzept/*.md`, `Moodle/Termintexte/*.md`, Curriculum-Planung, Kapitel-Querbezügen, Lernzielen oder der 6-Punkte-Synchronisation.
-   - **Kerninhalte:** Bloom-Lernziel-Kaskade, 5-stufige Lernfortschrittskontrolle, Studierenden-Motivation (*Pick your Track*, Domänenwechsel), *Low Floor, High Ceiling*, Kapitel-Abhängigkeitsmatrix, 5 Grundregeln verständlicher Erklär-Didaktik, 6-Punkte-Synchronisation (inkl. LaTeX-/Backtick-Verbot in `Moodle/Termintexte/*.md`).
+   - **Aktivieren bei:** Arbeit an `Konzept/*.md`, `Moodle/*/Text.md`, Curriculum-Planung, Kapitel-Querbezügen, Lernzielen oder der 6-Punkte-Synchronisation.
+   - **Kerninhalte:** Bloom-Lernziel-Kaskade, 5-stufige Lernfortschrittskontrolle, Studierenden-Motivation (*Pick your Track*, Domänenwechsel), *Low Floor, High Ceiling*, Kapitel-Abhängigkeitsmatrix, 5 Grundregeln verständlicher Erklär-Didaktik, 6-Punkte-Synchronisation (inkl. LaTeX-/Backtick-Verbot in `Moodle/*/Text.md`).
 
 ### Ebene 2: Die 4 Artefakt-Skills
 2. **[`vorlesungsfolien`](.agents/skills/vorlesungsfolien/SKILL.md):**

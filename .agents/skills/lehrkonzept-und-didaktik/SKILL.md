@@ -4,13 +4,13 @@ description: >-
   Vorlesungsübergreifende Methodik für Curriculum-Design, Lernziele (Constructive Alignment),
   Studierenden-Motivation, Anspruchsniveau (Low Floor, High Ceiling), Lernfortschrittskontrolle,
   Kapitel-Abhängigkeitsmatrix und Pflege der Konzept- und Moodle-Kursdokumente
-  (Konzept/*.md, Moodle/Termintexte/*.md).
+  (Konzept/*.md, Moodle/*/Text.md).
   IMMER aktivieren, wenn Konzeptdokumente, Kursstruktur, Kapitel-Querbezüge oder didaktische Grundsätze geplant oder geändert werden.
 ---
 
 # Skill: Lehrkonzept, Curriculum-Architektur & Fachdidaktik
 
-Dieser vorlesungsübergreifende Grundlagen-Skill regelt die Makro-Konzeption einer Lehrveranstaltung, die Pflege der Single-Source-of-Truth-Konzeptdokumente (`Konzept/01_*.md` bis `13_*.md`) sowie der modularen Moodle-Termintexte (`Moodle/Termintexte/00_*.md` bis `10_*.md`).
+Dieser vorlesungsübergreifende Grundlagen-Skill regelt die Makro-Konzeption einer Lehrveranstaltung, die Pflege der Single-Source-of-Truth-Konzeptdokumente (`Konzept/01_*.md` bis `13_*.md`) sowie der modularen Moodle-Abschnittsordner (`Moodle/00_Kurs_Kopfbereich/` bis `Moodle/10_Termin_10_Hybride_Dynamik_Synthese/`, jeweils mit `Text.md` und `Banner.jpg`).
 
 ---
 
@@ -88,5 +88,5 @@ Bei jeder inhaltlichen Änderung an einer Einheit `XX` müssen **alle 6 Orte** s
 3. `Folien/XX_*/Folien.md` (Letzte Folie `### Hausübung Termin XX` + `lint:slides:XX` & `export:pdf:XX`)
 4. `Folien/[XX+1]_*/Folien.md` (Folie 2 `### Live-Showcase & Code-Defense: Termin XX` + `lint:slides:[XX+1]` & `export:pdf:[XX+1]`)
 5. `Konzept/02_Semestermatrix_und_Abhaengigkeiten.md` & der zugehörige Termin-Steckbrief `Konzept/[XX+3]_Termin_XX_*.md`
-6. `Moodle/Termintexte/XX_Termin_XX_*.md`:
-   - **STRIKTES FORMATIERUNGSVERBOT:** In `Moodle/Termintexte/*.md` dürfen **KEINE LaTeX-Formeln (`$...$`)** und **KEINE Inline-Code-Backticks (`` `...` ``)** verwendet werden (nur reiner Fließtext, da der Text als HTML nach Moodle kopiert wird).
+6. `Moodle/XX_Termin_XX_*/Text.md` (inkl. `./Banner.jpg` im selben Ordner):
+   - **STRIKTES FORMATIERUNGSVERBOT:** In `Moodle/*/Text.md` dürfen **KEINE LaTeX-Formeln (`$...$`)** und **KEINE Inline-Code-Backticks (`` `...` ``)** verwendet werden (nur reiner Fließtext, da der Text als HTML nach Moodle kopiert wird).

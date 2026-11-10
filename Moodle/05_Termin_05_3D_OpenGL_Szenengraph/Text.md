@@ -1,7 +1,7 @@
 ### Termin 05: 3D-Computergrafik, Szenengraph & OpenGL
 *(Vorlesungskapitel: 05 Visualisierung 3D OpenGL)*
 
-![Termin 05: 3D-OpenGL & Szenengraph](../Bilder/Termin_05.jpg)
+![Termin 05: 3D-OpenGL & Szenengraph](./Banner.jpg)
 
 Wir erweitern unseren Visualisierungsraum in die dritte Dimension! Mittels SharpGL binden wir hardwarebeschleunigtes OpenGL in WPF ein. Wir entwickeln eine intuitive Kugelkoordinaten-Orbitkamera mit mathematischem Schutz vor Gimbal Lock und bauen einen hierarchischen Szenengraphen auf Basis homogener 4x4-Transformationsmatrizen auf, um serielle Mehrkörpersysteme und Roboterarme mit korrekter Vorwärtskinematik und Phong-Beleuchtung darzustellen.
 
