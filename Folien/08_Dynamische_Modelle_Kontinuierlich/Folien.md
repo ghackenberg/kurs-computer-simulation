@@ -423,7 +423,7 @@ Diese Formeln beschreiben die exakte Trajektorie des Objekts für jeden beliebig
 </div>
 <div>
 
-![](../../Quellen/WS24/DynamischBallwurf1D/Screenshot.png)
+![](./Screenshots/DynamischBallwurf1D_Screenshot.png)
 
 </div>
 </div>
@@ -719,7 +719,7 @@ Die Architektur basiert auf drei zentralen Klassen, um ein block-basiertes Model
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Model.svg)
+![](./Diagramme/SFunction_Model.svg)
 
 </div>
 </div>
@@ -762,7 +762,7 @@ Jeder Block deklariert seine Zustände, Ein- und Ausgänge im Konstruktor.
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Declaration.svg)
+![](./Diagramme/SFunction_Declaration.svg)
 
 </div>
 </div>
@@ -782,7 +782,7 @@ Jeder Block deklariert seine Zustände, Ein- und Ausgänge im Konstruktor.
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Block.SourceSink.svg)
+![](./Diagramme/SFunction_Block_SourceSink.svg)
 
 </div>
 </div>
@@ -843,7 +843,7 @@ Algebraische Blöcke haben keine Zustände. Ihr Ausgang `y` hängt direkt von de
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Block.DirectFeedThrough.svg)
+![](./Diagramme/SFunction_Block_DirectFeedThrough.svg)
 
 </div>
 </div>
@@ -942,7 +942,7 @@ Der `IntegrateBlock` ist der entscheidende Baustein zur Modellierung dynamischer
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Block.Integrate.svg)
+![](./Diagramme/SFunction_Block_Integrate.svg)
 
 </div>
 </div>
@@ -1091,7 +1091,7 @@ Die `Solver`-Klasse ist für die Durchführung der Simulation verantwortlich.
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Solver.svg)
+![](./Diagramme/SFunction_Solver.svg)
 
 </div>
 </div>
@@ -1113,7 +1113,7 @@ Implementiert den expliziten Euler-Algorithmus.
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Solver.Explicit.svg)
+![](./Diagramme/SFunction_Solver_Explicit.svg)
 
 </div>
 </div>
@@ -1231,7 +1231,7 @@ Dieser Solver erweitert den `EulerExplicitSolver`, um algebraische Schleifen auf
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Solver.Explicit.Loop.svg)
+![](./Diagramme/SFunction_Solver_Explicit_Loop.svg)
 
 </div>
 </div>
@@ -1432,7 +1432,7 @@ Kombiniert den impliziten Solver mit der Auflösung von algebraischen Schleifen.
 </div>
 <div>
 
-![](../../Quellen/WS25/SFunctionContinuous/Solver.Implicit.Loop.svg)
+![](./Diagramme/SFunction_Solver_Implicit_Loop.svg)
 
 </div>
 </div>

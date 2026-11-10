@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WS24\DynamischWarteschlange\DynamischWarteschlange.csproj" />
+    <ProjectReference Include="..\DynamischWarteschlange\DynamischWarteschlange.csproj" />
     <ProjectReference Include="..\SFunctionContinuous\SFunctionContinuous.csproj" />
     <ProjectReference Include="..\SFunctionHybrid\SFunctionHybrid.csproj" />
     <ProjectReference Include="..\VorlageSzenengraph3D\VorlageSzenengraph3D.csproj" />

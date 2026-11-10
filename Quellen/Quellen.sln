@@ -1,51 +1,45 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.0.11222.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VorlageVisualisierung2D", "WS24\VorlageVisualisierung2D\VorlageVisualisierung2D.csproj", "{693022B4-2592-4513-87BE-D935E15F976D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VorlageVisualisierung2D", "VorlageVisualisierung2D\VorlageVisualisierung2D.csproj", "{693022B4-2592-4513-87BE-D935E15F976D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VorlageVisualisierung3D", "WS24\VorlageVisualisierung3D\VorlageVisualisierung3D.csproj", "{B3053622-6828-4D17-9215-2665C9F848AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeispielWavefront3D", "BeispielWavefront3D\BeispielWavefront3D.csproj", "{B3053622-6828-4D17-9215-2665C9F848AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamischBallwurf1D", "WS24\DynamischBallwurf1D\DynamischBallwurf1D.csproj", "{34DDB7F1-294F-48B1-808E-78B47143903F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamischBallwurf1D", "DynamischBallwurf1D\DynamischBallwurf1D.csproj", "{34DDB7F1-294F-48B1-808E-78B47143903F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatischFachwerkIdeal2D", "WS24\StatischFachwerkIdeal2D\StatischFachwerkIdeal2D.csproj", "{36D8020A-316C-4AE3-8703-1500C479A16E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FachwerkElastisch2D", "FachwerkElastisch2D\FachwerkElastisch2D.csproj", "{D0751381-01A5-4C7F-9138-D5DFA73CF084}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatischFachwerkElastisch2D", "WS24\StatischFachwerkElastisch2D\StatischFachwerkElastisch2D.csproj", "{D0751381-01A5-4C7F-9138-D5DFA73CF084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamischFederpendel1D", "DynamischFederpendel1D\DynamischFederpendel1D.csproj", "{A4409242-C687-4F46-B55E-2ED839EFA05C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamischFederpendel1D", "WS24\DynamischFederpendel1D\DynamischFederpendel1D.csproj", "{A4409242-C687-4F46-B55E-2ED839EFA05C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamischWarteschlange", "DynamischWarteschlange\DynamischWarteschlange.csproj", "{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamischWarteschlange", "WS24\DynamischWarteschlange\DynamischWarteschlange.csproj", "{B07AA46E-F8E4-4B8C-8522-81CFAEED014A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FachwerkIdeal2D", "FachwerkIdeal2D\FachwerkIdeal2D.csproj", "{80634D94-A6F2-4BDC-B7EF-59641F64AF73}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WS24", "WS24", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageVisualisierung3D", "VorlageVisualisierung3D\VorlageVisualisierung3D.csproj", "{FFCCD45B-A6CE-4DB2-A0C7-635B62A4278F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WS25", "WS25", "{F7ACCD52-769B-46D8-A98D-3F363F55C7F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FachwerkIdeal3D", "FachwerkIdeal3D\FachwerkIdeal3D.csproj", "{93B2D1CF-7708-494F-8302-73B39061CC42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FachwerkIdeal2D", "WS25\FachwerkIdeal2D\FachwerkIdeal2D.csproj", "{80634D94-A6F2-4BDC-B7EF-59641F64AF73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FachwerkElastisch3D", "FachwerkElastisch3D\FachwerkElastisch3D.csproj", "{7E1D649C-286F-44FE-B4CD-4DBD92465B66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageVisualisierung3D", "WS25\VorlageVisualisierung3D\VorlageVisualisierung3D.csproj", "{FFCCD45B-A6CE-4DB2-A0C7-635B62A4278F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFunctionContinuous", "SFunctionContinuous\SFunctionContinuous.csproj", "{4570C25E-6E81-4A83-B209-3DC40B79DAF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FachwerkIdeal3D", "WS25\FachwerkIdeal3D\FachwerkIdeal3D.csproj", "{93B2D1CF-7708-494F-8302-73B39061CC42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageSzenengraph3D", "VorlageSzenengraph3D\VorlageSzenengraph3D.csproj", "{D0AF0298-6D27-4FFA-ABC6-019CCB2BD906}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FachwerkElastisch3D", "WS25\FachwerkElastisch3D\FachwerkElastisch3D.csproj", "{7E1D649C-286F-44FE-B4CD-4DBD92465B66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeispielKugel3D", "BeispielKugel3D\BeispielKugel3D.csproj", "{2EFB6449-6361-4F2D-B6C7-D37FE809B0E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFunctionContinuous", "WS25\SFunctionContinuous\SFunctionContinuous.csproj", "{4570C25E-6E81-4A83-B209-3DC40B79DAF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeispielZylinder3D", "BeispielZylinder3D\BeispielZylinder3D.csproj", "{315F8C60-5169-0BCF-EB78-5AD1DFA65A4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VorlageSzenengraph3D", "WS25\VorlageSzenengraph3D\VorlageSzenengraph3D.csproj", "{D0AF0298-6D27-4FFA-ABC6-019CCB2BD906}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeispielWuerfel3D", "BeispielWuerfel3D\BeispielWuerfel3D.csproj", "{99666B8B-DF26-8EDD-CA71-4D3411D96E90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeispielKugel3D", "WS25\BeispielKugel3D\BeispielKugel3D.csproj", "{2EFB6449-6361-4F2D-B6C7-D37FE809B0E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFunctionHybrid", "SFunctionHybrid\SFunctionHybrid.csproj", "{FB0A9AF8-D35F-E7DF-C77A-31662829CC95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeispielZylinder3D", "WS25\BeispielZylinder3D\BeispielZylinder3D.csproj", "{315F8C60-5169-0BCF-EB78-5AD1DFA65A4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimscapeSharp", "SimscapeSharp\SimscapeSharp.csproj", "{2358CC30-B799-46E6-885C-ECD25FE33C80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeispielWürfel3D", "WS25\BeispielWürfel3D\BeispielWürfel3D.csproj", "{99666B8B-DF26-8EDD-CA71-4D3411D96E90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationMvvmPattern", "SimulationMvvmPattern\SimulationMvvmPattern.csproj", "{B710B101-97E4-43F8-B7CF-03F84568D268}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFunctionHybrid", "WS25\SFunctionHybrid\SFunctionHybrid.csproj", "{FB0A9AF8-D35F-E7DF-C77A-31662829CC95}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimscapeSharp", "WS25\SimscapeSharp\SimscapeSharp.csproj", "{2358CC30-B799-46E6-885C-ECD25FE33C80}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationMvvmPattern", "WS25\SimulationMvvmPattern\SimulationMvvmPattern.csproj", "{B710B101-97E4-43F8-B7CF-03F84568D268}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationTests", "WS25\SimulationTests\SimulationTests.csproj", "{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationTests", "SimulationTests\SimulationTests.csproj", "{30BA1FD5-E20E-4B5D-9F4F-9026FF808252}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -300,28 +294,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{693022B4-2592-4513-87BE-D935E15F976D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{B3053622-6828-4D17-9215-2665C9F848AC} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{34DDB7F1-294F-48B1-808E-78B47143903F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{36D8020A-316C-4AE3-8703-1500C479A16E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{D0751381-01A5-4C7F-9138-D5DFA73CF084} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{A4409242-C687-4F46-B55E-2ED839EFA05C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{B07AA46E-F8E4-4B8C-8522-81CFAEED014A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{80634D94-A6F2-4BDC-B7EF-59641F64AF73} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{FFCCD45B-A6CE-4DB2-A0C7-635B62A4278F} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{93B2D1CF-7708-494F-8302-73B39061CC42} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{7E1D649C-286F-44FE-B4CD-4DBD92465B66} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{4570C25E-6E81-4A83-B209-3DC40B79DAF1} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{D0AF0298-6D27-4FFA-ABC6-019CCB2BD906} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{2EFB6449-6361-4F2D-B6C7-D37FE809B0E9} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{315F8C60-5169-0BCF-EB78-5AD1DFA65A4D} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{99666B8B-DF26-8EDD-CA71-4D3411D96E90} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{FB0A9AF8-D35F-E7DF-C77A-31662829CC95} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{2358CC30-B799-46E6-885C-ECD25FE33C80} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{B710B101-97E4-43F8-B7CF-03F84568D268} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
-		{30BA1FD5-E20E-4B5D-9F4F-9026FF808252} = {F7ACCD52-769B-46D8-A98D-3F363F55C7F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B78BB052-30AD-4804-A50D-523BA6002BC8}

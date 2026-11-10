@@ -395,7 +395,7 @@ Wir betrachten ein einfaches System mit einer einzigen Bedienstation (Server) un
 </div>
 <div>
 
-![](../../Quellen/WS24/DynamischWarteschlange/Screenshot.png)
+![](./Screenshots/DynamischWarteschlange_Screenshot.png)
 
 </div>
 </div>

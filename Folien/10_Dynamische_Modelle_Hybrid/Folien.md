@@ -739,7 +739,7 @@ Außerdem wurden die Methoden `CalcualteZeroCrossings` und `Update-States`eingef
 </div>
 <div>
 
-![Klassendiagramm Block](../../Quellen/WS25/SFunctionHybrid/Block.svg)
+![Klassendiagramm Block](./Diagramme/SFunctionHybrid_Block.svg)
 
 </div>
 </div>
@@ -820,7 +820,7 @@ namespace SFunctionHybrid.Framework.Declarations
 </div>
 <div class="two">
 
-![Klassendiagramm Deklarationen](../../Quellen/WS25/SFunctionHybrid/Declaration.svg)
+![Klassendiagramm Deklarationen](./Diagramme/SFunctionHybrid_Declaration.svg)
 
 </div>
 </div>
@@ -866,7 +866,7 @@ public class VariableSampleTime : SampleTime
 </div>
 <div>
 
-![Klassendiagramm SampleTime](../../Quellen/WS25/SFunctionHybrid/SampleTime.svg)
+![Klassendiagramm SampleTime](./Diagramme/SFunctionHybrid_SampleTime.svg)
 
 </div>
 </div>
@@ -1016,7 +1016,7 @@ Die ursprüngliche kontinuierliche Solver-Architektur (**siehe Kapitel 8**) wurd
 </div>
 <div class="two">
 
-![Klassendiagramm Solver](../../Quellen/WS25/SFunctionHybrid/Solver.svg)
+![Klassendiagramm Solver](./Diagramme/SFunctionHybrid_Solver.svg)
 
 </div>
 </div>

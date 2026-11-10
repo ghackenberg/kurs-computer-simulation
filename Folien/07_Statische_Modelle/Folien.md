@@ -681,7 +681,7 @@ Die grundlegenden physikalischen Prinzipien (Kräftegleichgewicht, Hooke\'sches 
 </div>
 <div>
 
-![](../../Quellen/WS25/FachwerkIdeal3D/Screenshot.png)
+![](./Screenshots/FachwerkIdeal3D_Screenshot.png)
 
 </div>
 </div>
@@ -766,7 +766,7 @@ Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A
 </div>
 <div>
 
-![](../../Quellen/WS25/FachwerkElastisch3D/Screenshot.png)
+![](./Screenshots/FachwerkElastisch3D_Screenshot.png)
 
 </div>
 </div>
