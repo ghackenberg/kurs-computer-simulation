@@ -91,7 +91,7 @@ $$I = I_{\text{a}} k_{\text{a}} + I_{\text{d}} k_{\text{d}} (\vec{n} \cdot \vec{
    - Berechnen Sie in `UpdateTcpCalculations()` den euklidischen 3D-Abstand $d = \|\vec{p}_{\text{TCP}} - \vec{p}_{\text{Workpiece}}\|$ und geben Sie ihn in der Statusleiste (`TxtStatus`) aus. Färben Sie das Werkstück grün, sobald sich der TCP in Greifdistanz ($d < 0{,}12\,\text{m}$) befindet!
    - *Selbsttest-Tipp:* Stellen Sie die Gelenk-Slider auf $\theta_1 = 62^\circ, \theta_2 = -100^\circ, d_3 = 0{,}44\,\text{m}$ (oder $\theta_1 = -22^\circ, \theta_2 = +100^\circ, d_3 = 0{,}44\,\text{m}$) – der TCP trifft das Werkstück dann bis auf $d \approx 0{,}010\,\text{m} \ll 0{,}12\,\text{m}$ und der Würfel leuchtet sofort grün auf!
 4. **Aufgabe 1.4 – Unit-Tests für Kamera-Panning & Reparenting prüfen (`Tests/SceneGraphTests.cs`):**
-   - Öffnen Sie `Tests/SceneGraphTests.cs`, kommentieren Sie in `Test_SceneNode_Reparenting_And_OrbitCamera_Pan()` den `TODO`-Block für `OrbitCamera.Pan(...)` ein und führen Sie `dotnet test` aus, bis alle **5 Unit-Tests** auf Grün stehen.
+   - Öffnen Sie `Tests/SceneGraphTests.cs`, kommentieren Sie in `Test_SceneNode_Reparenting_And_OrbitCamera_Pan()` den `TODO`-Block für `OrbitCamera.Pan(...)` ein (*Selbsttest-Referenz:* Bei $\theta = 0^\circ$ verschiebt `Pan(2.0, 1.5)` den Zielpunkt exakt auf `LookAt = (-2.0, 1.5, 0.0)`) und führen Sie `dotnet test` aus, bis alle **5 Unit-Tests** auf Grün stehen.
 
 ---
 

@@ -471,7 +471,7 @@ Die Projektionsmatrix bestimmt die Form des Sichtvolumens (*View Volume*) und ob
 
 #### 2. Perspektivische Projektion (`gl.Perspective`)
 - **Sichtvolumen:** Pyramidenstumpf (**Frustum**) mit Öffnungswinkel `fovy` (z. B. $45^\circ$), Seitenverhältnis `aspect` $= w/h$ und Clipping-Ebenen `zNear` bis `zFar`.
-- **Strahlensatz-Division durch $-z$:**
+- **Strahlensatz-Division durch $-z$ (Blick entlang $-Z \implies -z > 0$):**
   $$x_{\text{proj}} = x \cdot \frac{z_{\text{near}}}{-z}, \quad y_{\text{proj}} = y \cdot \frac{z_{\text{near}}}{-z}$$
 - **Zahlenbeispiel:** Ein Würfel in doppelter Entfernung ($z = -4\,\text{m}$ statt $-2\,\text{m}$) erscheint auf dem Bildschirm **exakt halb so groß**!
 
