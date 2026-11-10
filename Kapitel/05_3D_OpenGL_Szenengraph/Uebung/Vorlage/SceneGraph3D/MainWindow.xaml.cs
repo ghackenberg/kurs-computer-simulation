@@ -443,7 +443,7 @@ public partial class MainWindow : Window
 
     private void SliderJoint_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if (SliderTheta1 == null || SliderTheta2 == null || SliderD3 == null) return;
+        if (!IsLoaded || SliderTheta1 == null || SliderTheta2 == null || SliderD3 == null || TxtD3 == null) return;
 
         _theta1Deg = (float)SliderTheta1.Value;
         _theta2Deg = (float)SliderTheta2.Value;

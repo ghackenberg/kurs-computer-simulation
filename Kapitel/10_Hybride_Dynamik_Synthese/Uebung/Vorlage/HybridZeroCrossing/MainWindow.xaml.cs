@@ -204,7 +204,7 @@ namespace HybridZeroCrossing
             {
                 HeightText.Text = $"{HeightSlider.Value:F1} m";
             }
-            if (!_isRunning) ResetSimulation();
+            if (IsLoaded && !_isRunning) ResetSimulation();
         }
 
         private void SimCanvas_SizeChanged(object sender, SizeChangedEventArgs e)

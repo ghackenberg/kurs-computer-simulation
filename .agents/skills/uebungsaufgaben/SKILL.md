@@ -57,6 +57,7 @@ Jede Teilaufgabe (`1.1`–`1.4`, `A.1`–`A.4`, `B.1`–`B.4`) muss Zeile für Z
 2. **Explizite Dokumentation von Vorlagen-Konventionen & UI-Fallstricken:**
    - Versteckte Geometrie-/Einheiten-Konventionen von Hilfsmethoden (z. B. Einheitskörper ohne Größenparameter, Zurücksetzen lokaler Offsets beim Umhängen von Knoten) müssen direkt bei der jeweiligen Teilaufgabe genannt werden.
    - Typische UI-Event-Fallstricke (z. B. Fokus-Diebstahl von Pfeil-/Leertasten durch `Slider`/`Button` $\implies$ Hinweis auf `PreviewKeyDown` mit `e.Handled = true` bzw. sauberes `else if` bei Maustasten) müssen als kurzer Praxis-Tipp im Aufgabenblatt stehen.
+   - **WPF-Initialisierungsreihenfolge (`ValueChanged` / `SelectionChanged`):** Wenn in XAML ein `Slider` oder eine `ComboBox` vor dem zugehörigen `TextBlock` steht, feuert `ValueChanged` bereits während `InitializeComponent()`, noch bevor die nachfolgenden XAML-Elemente existieren (`null`). Jeder solche Event-Handler in der Vorlage MUSS zu Beginn mit `if (!IsLoaded || TxtTarget == null) return;` abgesichert sein.
 3. **Pflicht-Checks nach jeder Änderung:**
    - Kein `€`-Symbol innerhalb von `$ ... $` Mathe-Umgebungen verwenden (immer `\text{EUR}` schreiben).
    - `dotnet test` in `Vorlage/` ausführen, `npm run export:pdf:uebung:XX` generieren und die **6-Punkte-Synchronisation** (siehe Skill [`lehrkonzept-und-didaktik`](../lehrkonzept-und-didaktik/SKILL.md)) abarbeiten.
