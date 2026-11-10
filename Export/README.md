@@ -3,41 +3,41 @@
 **Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
-**Zuletzt generiert:** 2026-11-10 07:04:42 UTC  
+**Zuletzt generiert:** 2026-11-10 17:26:46 UTC  
 
-Dieses Verzeichnis enthält alle druckreifen, vollständigen PDF-Unterlagen für den Upload auf Moodle.
+Dieses Verzeichnis enthält alle druckreifen, vollständigen PDF- und Moodle-XML-Unterlagen.
 
 ## 1. MARP-Foliensätze (16:9 Präsentationen)
 
-| Kapitel | Thema | Moodle-Export-Datei | Dateigröße | Lokale Datei |
+| Kapitel | Thema | Moodle-Export-Datei | Dateigröße | Quelle |
 | :--- | :--- | :--- | :---: | :--- |
-| **00** | Prolog | [`00_Prolog_Folien.pdf`](Folien/00_Prolog_Folien.pdf) | 7.05 MB | `Folien/00_Prolog/Folien.pdf` |
-| **01** | Einführung | [`01_Einfuehrung_Folien.pdf`](Folien/01_Einfuehrung_Folien.pdf) | 3.8 MB | `Folien/01_Einführung/Folien.pdf` |
-| **02** | Visualisierung 2D Pixel | [`02_Visualisierung_2D_Pixel_Folien.pdf`](Folien/02_Visualisierung_2D_Pixel_Folien.pdf) | 8.56 MB | `Folien/02_Visualisierung_2D_Pixel/Folien.pdf` |
-| **03** | Visualisierung 2D Vektor | [`03_Visualisierung_2D_Vektor_Folien.pdf`](Folien/03_Visualisierung_2D_Vektor_Folien.pdf) | 4.41 MB | `Folien/03_Visualisierung_2D_Vektor/Folien.pdf` |
-| **04** | Visualisierung 2D Diagramme | [`04_Visualisierung_2D_Diagramme_Folien.pdf`](Folien/04_Visualisierung_2D_Diagramme_Folien.pdf) | 5.03 MB | `Folien/04_Visualisierung_2D_Diagramme/Folien.pdf` |
-| **05** | Visualisierung 3D OpenGL | [`05_Visualisierung_3D_OpenGL_Folien.pdf`](Folien/05_Visualisierung_3D_OpenGL_Folien.pdf) | 3.33 MB | `Folien/05_Visualisierung_3D_OpenGL/Folien.pdf` |
-| **06** | Multithreading | [`06_Multithreading_Folien.pdf`](Folien/06_Multithreading_Folien.pdf) | 1.32 MB | `Folien/06_Multithreading/Folien.pdf` |
-| **07** | Statische Modelle | [`07_Statische_Modelle_Folien.pdf`](Folien/07_Statische_Modelle_Folien.pdf) | 1.18 MB | `Folien/07_Statische_Modelle/Folien.pdf` |
-| **08** | Dynamische Modelle Kontinuierlich | [`08_Dynamische_Modelle_Kontinuierlich_Folien.pdf`](Folien/08_Dynamische_Modelle_Kontinuierlich_Folien.pdf) | 2.37 MB | `Folien/08_Dynamische_Modelle_Kontinuierlich/Folien.pdf` |
-| **09** | Dynamische Modelle Diskret | [`09_Dynamische_Modelle_Diskret_Folien.pdf`](Folien/09_Dynamische_Modelle_Diskret_Folien.pdf) | 4.22 MB | `Folien/09_Dynamische_Modelle_Diskret/Folien.pdf` |
-| **10** | Dynamische Modelle Hybrid | [`10_Dynamische_Modelle_Hybrid_Folien.pdf`](Folien/10_Dynamische_Modelle_Hybrid_Folien.pdf) | 5.37 MB | `Folien/10_Dynamische_Modelle_Hybrid/Folien.pdf` |
-| **11** | Epilog | [`11_Epilog_Folien.pdf`](Folien/11_Epilog_Folien.pdf) | 1.51 MB | `Folien/11_Epilog/Folien.pdf` |
+| **00** | Prolog | [`00_Prolog_Folien.pdf`](Folien/00_Prolog_Folien.pdf) | 7.05 MB | `Kapitel/00_Prolog/Folien/Folien.md` |
+| **01** | Kinematik und Euler | [`01_Kinematik_und_Euler_Folien.pdf`](Folien/01_Kinematik_und_Euler_Folien.pdf) | 3.8 MB | `Kapitel/01_Kinematik_und_Euler/Folien/Folien.md` |
+| **02** | Pixelgrafik und FDM | [`02_Pixelgrafik_und_FDM_Folien.pdf`](Folien/02_Pixelgrafik_und_FDM_Folien.pdf) | 8.56 MB | `Kapitel/02_Pixelgrafik_und_FDM/Folien/Folien.md` |
+| **03** | Vektorgrafik und Canvas | [`03_Vektorgrafik_und_Canvas_Folien.pdf`](Folien/03_Vektorgrafik_und_Canvas_Folien.pdf) | 4.41 MB | `Kapitel/03_Vektorgrafik_und_Canvas/Folien/Folien.md` |
+| **04** | Telemetrie und ScottPlot | [`04_Telemetrie_und_ScottPlot_Folien.pdf`](Folien/04_Telemetrie_und_ScottPlot_Folien.pdf) | 5.03 MB | `Kapitel/04_Telemetrie_und_ScottPlot/Folien/Folien.md` |
+| **05** | 3D OpenGL Szenengraph | [`05_3D_OpenGL_Szenengraph_Folien.pdf`](Folien/05_3D_OpenGL_Szenengraph_Folien.pdf) | 3.33 MB | `Kapitel/05_3D_OpenGL_Szenengraph/Folien/Folien.md` |
+| **06** | Multithreading und TPL | [`06_Multithreading_und_TPL_Folien.pdf`](Folien/06_Multithreading_und_TPL_Folien.pdf) | 1.32 MB | `Kapitel/06_Multithreading_und_TPL/Folien/Folien.md` |
+| **07** | Statik FEM Cholesky | [`07_Statik_FEM_Cholesky_Folien.pdf`](Folien/07_Statik_FEM_Cholesky_Folien.pdf) | 1.18 MB | `Kapitel/07_Statik_FEM_Cholesky/Folien/Folien.md` |
+| **08** | DGL und SFunctions | [`08_DGL_und_SFunctions_Folien.pdf`](Folien/08_DGL_und_SFunctions_Folien.pdf) | 2.37 MB | `Kapitel/08_DGL_und_SFunctions/Folien/Folien.md` |
+| **09** | Diskrete Systeme DES | [`09_Diskrete_Systeme_DES_Folien.pdf`](Folien/09_Diskrete_Systeme_DES_Folien.pdf) | 4.22 MB | `Kapitel/09_Diskrete_Systeme_DES/Folien/Folien.md` |
+| **10** | Hybride Dynamik Synthese | [`10_Hybride_Dynamik_Synthese_Folien.pdf`](Folien/10_Hybride_Dynamik_Synthese_Folien.pdf) | 5.37 MB | `Kapitel/10_Hybride_Dynamik_Synthese/Folien/Folien.md` |
+| **11** | Epilog | [`11_Epilog_Folien.pdf`](Folien/11_Epilog_Folien.pdf) | 1.51 MB | `Kapitel/11_Epilog/Folien/Folien.md` |
 
 ## 2. Aufgabenblätter (DIN A4 Handouts)
 
-| Termin | Thema | Moodle-Export-Datei | Dateigröße | Lokale Datei |
+| Kapitel | Thema | Moodle-Export-Datei | Dateigröße | Quelle |
 | :--- | :--- | :--- | :---: | :--- |
-| **Termin 01** | Kinematik und Euler | [`Termin_01_Aufgabenblatt.pdf`](Uebungen/Termin_01_Aufgabenblatt.pdf) | 333.95 KB | `Uebungen/Termin_01_Kinematik_und_Euler/Aufgabenblatt.pdf` |
-| **Termin 02** | Pixelgrafik und FDM | [`Termin_02_Aufgabenblatt.pdf`](Uebungen/Termin_02_Aufgabenblatt.pdf) | 361.07 KB | `Uebungen/Termin_02_Pixelgrafik_und_FDM/Aufgabenblatt.pdf` |
-| **Termin 03** | Vektorgrafik Canvas | [`Termin_03_Aufgabenblatt.pdf`](Uebungen/Termin_03_Aufgabenblatt.pdf) | 337.77 KB | `Uebungen/Termin_03_Vektorgrafik_Canvas/Aufgabenblatt.pdf` |
-| **Termin 04** | Telemetrie und ScottPlot | [`Termin_04_Aufgabenblatt.pdf`](Uebungen/Termin_04_Aufgabenblatt.pdf) | 314.65 KB | `Uebungen/Termin_04_Telemetrie_und_ScottPlot/Aufgabenblatt.pdf` |
-| **Termin 05** | 3D OpenGL Szenengraph | [`Termin_05_Aufgabenblatt.pdf`](Uebungen/Termin_05_Aufgabenblatt.pdf) | 397.52 KB | `Uebungen/Termin_05_3D_OpenGL_Szenengraph/Aufgabenblatt.pdf` |
-| **Termin 06** | Multithreading und TPL | [`Termin_06_Aufgabenblatt.pdf`](Uebungen/Termin_06_Aufgabenblatt.pdf) | 421.95 KB | `Uebungen/Termin_06_Multithreading_und_TPL/Aufgabenblatt.pdf` |
-| **Termin 07** | Statik FEM Cholesky | [`Termin_07_Aufgabenblatt.pdf`](Uebungen/Termin_07_Aufgabenblatt.pdf) | 383.08 KB | `Uebungen/Termin_07_Statik_FEM_Cholesky/Aufgabenblatt.pdf` |
-| **Termin 08** | DGL und SFunctions | [`Termin_08_Aufgabenblatt.pdf`](Uebungen/Termin_08_Aufgabenblatt.pdf) | 368.92 KB | `Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.pdf` |
-| **Termin 09** | Diskrete Systeme DES | [`Termin_09_Aufgabenblatt.pdf`](Uebungen/Termin_09_Aufgabenblatt.pdf) | 376.9 KB | `Uebungen/Termin_09_Diskrete_Systeme_DES/Aufgabenblatt.pdf` |
-| **Termin 10** | Hybride Dynamik Synthese | [`Termin_10_Aufgabenblatt.pdf`](Uebungen/Termin_10_Aufgabenblatt.pdf) | 417.05 KB | `Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.pdf` |
+| **01** | Kinematik und Euler | [`01_Kinematik_und_Euler_Aufgabenblatt.pdf`](Uebungen/01_Kinematik_und_Euler_Aufgabenblatt.pdf) | 333.95 KB | `Kapitel/01_Kinematik_und_Euler/Uebung/Aufgabenblatt.md` |
+| **02** | Pixelgrafik und FDM | [`02_Pixelgrafik_und_FDM_Aufgabenblatt.pdf`](Uebungen/02_Pixelgrafik_und_FDM_Aufgabenblatt.pdf) | 361.07 KB | `Kapitel/02_Pixelgrafik_und_FDM/Uebung/Aufgabenblatt.md` |
+| **03** | Vektorgrafik und Canvas | [`03_Vektorgrafik_und_Canvas_Aufgabenblatt.pdf`](Uebungen/03_Vektorgrafik_und_Canvas_Aufgabenblatt.pdf) | 337.77 KB | `Kapitel/03_Vektorgrafik_und_Canvas/Uebung/Aufgabenblatt.md` |
+| **04** | Telemetrie und ScottPlot | [`04_Telemetrie_und_ScottPlot_Aufgabenblatt.pdf`](Uebungen/04_Telemetrie_und_ScottPlot_Aufgabenblatt.pdf) | 314.65 KB | `Kapitel/04_Telemetrie_und_ScottPlot/Uebung/Aufgabenblatt.md` |
+| **05** | 3D OpenGL Szenengraph | [`05_3D_OpenGL_Szenengraph_Aufgabenblatt.pdf`](Uebungen/05_3D_OpenGL_Szenengraph_Aufgabenblatt.pdf) | 397.6 KB | `Kapitel/05_3D_OpenGL_Szenengraph/Uebung/Aufgabenblatt.md` |
+| **06** | Multithreading und TPL | [`06_Multithreading_und_TPL_Aufgabenblatt.pdf`](Uebungen/06_Multithreading_und_TPL_Aufgabenblatt.pdf) | 421.95 KB | `Kapitel/06_Multithreading_und_TPL/Uebung/Aufgabenblatt.md` |
+| **07** | Statik FEM Cholesky | [`07_Statik_FEM_Cholesky_Aufgabenblatt.pdf`](Uebungen/07_Statik_FEM_Cholesky_Aufgabenblatt.pdf) | 383.08 KB | `Kapitel/07_Statik_FEM_Cholesky/Uebung/Aufgabenblatt.md` |
+| **08** | DGL und SFunctions | [`08_DGL_und_SFunctions_Aufgabenblatt.pdf`](Uebungen/08_DGL_und_SFunctions_Aufgabenblatt.pdf) | 368.92 KB | `Kapitel/08_DGL_und_SFunctions/Uebung/Aufgabenblatt.md` |
+| **09** | Diskrete Systeme DES | [`09_Diskrete_Systeme_DES_Aufgabenblatt.pdf`](Uebungen/09_Diskrete_Systeme_DES_Aufgabenblatt.pdf) | 376.9 KB | `Kapitel/09_Diskrete_Systeme_DES/Uebung/Aufgabenblatt.md` |
+| **10** | Hybride Dynamik Synthese | [`10_Hybride_Dynamik_Synthese_Aufgabenblatt.pdf`](Uebungen/10_Hybride_Dynamik_Synthese_Aufgabenblatt.pdf) | 417.05 KB | `Kapitel/10_Hybride_Dynamik_Synthese/Uebung/Aufgabenblatt.md` |
 
 ---
 *Automatisch generiert mit `node Skripte/export_to_pdf.js`*
