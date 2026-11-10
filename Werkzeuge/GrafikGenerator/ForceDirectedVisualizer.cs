@@ -33,7 +33,7 @@ namespace GrafikGenerator
 
         public static void GenerateAll(string root)
         {
-            var diagramDir = Path.Combine(root, "Folien", "04_Visualisierung_2D_Diagramme", "Diagramme");
+            var diagramDir = Path.Combine(root, "Kapitel", "04_Telemetrie_und_ScottPlot", "Folien", "Diagramme");
             Directory.CreateDirectory(diagramDir);
 
             // 5 Nodes: 4 perimeter nodes + 1 center hub (Wheel Graph W4)

@@ -4,27 +4,27 @@ description: >-
   Vorlesungsübergreifende Methodik für Curriculum-Design, Lernziele (Constructive Alignment),
   Studierenden-Motivation, Anspruchsniveau (Low Floor, High Ceiling), Lernfortschrittskontrolle,
   Kapitel-Abhängigkeitsmatrix und Pflege der Konzept- und Moodle-Kursdokumente
-  (Konzept/*.md, Moodle/*/Text.md).
+  (Konzept/*.md, Kapitel/*/Konzept.md, Kapitel/*/Moodle/Text.md).
   IMMER aktivieren, wenn Konzeptdokumente, Kursstruktur, Kapitel-Querbezüge oder didaktische Grundsätze geplant oder geändert werden.
 ---
 
 # Skill: Lehrkonzept, Curriculum-Architektur & Fachdidaktik
 
-Dieser vorlesungsübergreifende Grundlagen-Skill regelt die Makro-Konzeption einer Lehrveranstaltung, die Pflege der Single-Source-of-Truth-Konzeptdokumente (`Konzept/01_*.md` bis `13_*.md`) sowie der modularen Moodle-Abschnittsordner (`Moodle/00_Kurs_Kopfbereich/` bis `Moodle/10_Termin_10_Hybride_Dynamik_Synthese/`, jeweils mit `Text.md` und `Banner.jpg`).
+Dieser vorlesungsübergreifende Grundlagen-Skill regelt die Makro-Konzeption einer Lehrveranstaltung, die Pflege der Single-Source-of-Truth-Konzeptdokumente (`Konzept/01..03_*.md` sowie `Kapitel/00..11_*/Konzept.md`) und der modularen Moodle-Abschnittstexte (`Kapitel/00..10_*/Moodle/Text.md` samt `Banner.jpg`).
 
 ---
 
 ## 1. Rollenverteilung der Konzept-Dokumente (Single Source of Truth & Gezieltes Context-Loading)
 
-Um Redundanz auszuschließen und gezieltes Laden von Kontext zu ermöglichen, sind die Konzeptdokumente unter `Konzept/` fortlaufend nummeriert (`01`–`13`) und in **kursweite Rahmendokumente (`01`–`03`)** sowie **autarke Termin-Steckbriefe (`04`–`13`)** unterteilt:
+Um Redundanz auszuschließen und gezieltes Laden von Kontext zu ermöglichen, sind die Konzeptdokumente in **3 kursweite Rahmendokumente (`Konzept/01..03_*.md`)** und **12 kapitelzentrierte Steckbriefe (`Kapitel/00..11_*/Konzept.md`)** unterteilt:
 1. **`Konzept/01_Didaktik_und_Lernziele.md`:**
    - Zielgruppenprofil (Vorwissen vs. Lücken), übergeordnete Kurs-Lernziele (ILOs), ECTS-Workload, Bloom-Lernziel-Kaskade, Studierenden-Motivation (*Pick your Track*), Anspruchsniveau (*Low Floor, High Ceiling*) und 150-Minuten-Präsenztaktung.
 2. **`Konzept/02_Semestermatrix_und_Abhaengigkeiten.md`:**
    - **Semester-Übersichtsmatrix**, **Kapitel-Abhängigkeits- & Fern-Schnittstellen-Matrix** (`Cross-Chapter Dependency Map`), Struktur des 2-Stufen-Hausübungsmodells (`Stufe 1` + `Stufe 2: Track A | Track B`) und Goldene Architektur-Regel.
 3. **`Konzept/03_Beurteilung_und_Pruefungen.md`:**
    - 5-stufige Lernfortschrittskontrolle, 2-Säulen-Benotungsmodell (40 % Quiz / 40 % wöchentliche Hausübungen / 20 % Showcase), Notenschlüssel, Quiz-Stoffabgrenzung (`Quiz 01`–`04`), 4-Stufen-Stresstest gegen Schein-Simulationen und AI Honor Code.
-4. **`Konzept/04_Termin_01_*.md` bis `13_Termin_10_*.md` (Autarke Termin-Steckbriefe):**
-   - Bündeln für jeden einzelnen Termin $T_k$ an genau einem Ort: Artefakt-Links, Vorgreif-Sperre (Tabus), Rückwärts-/Vorwärts-Brücken, Bloom-Lernziele der Vorlesung, Hausübung (`Stufe 1: 1.1–1.4` + `Stufe 2: Track A | Track B`) und Showcase-Fokus. Bei der Arbeit an Termin $T_k$ genügt damit das gezielte Laden von `02_Semestermatrix_und_Abhaengigkeiten.md` + dem jeweiligen Termin-Steckbrief.
+4. **`Kapitel/00_Prolog/Konzept.md` bis `Kapitel/11_Epilog/Konzept.md` (Autarke Kapitel-Steckbriefe):**
+   - Bündeln direkt im jeweiligen Kapitelordner `Kapitel/XX_*/` an genau einem Ort: Artefakt-Links, Vorgreif-Sperre (Tabus), Rückwärts-/Vorwärts-Brücken, Bloom-Lernziele der Vorlesung, Hausübung (`Stufe 1: 1.1–1.4` + `Stufe 2: Track A | Track B`) und Showcase-Fokus (zuzüglich einer kompakten `README.md` für die direkte GitHub-/VS-Code-Ordneranzeige). Bei der Arbeit an Kapitel $K_k$ genügt damit das gezielte Laden von `Konzept/02_Semestermatrix_und_Abhaengigkeiten.md` + `Kapitel/XX_*/Konzept.md`.
 
 ---
 
@@ -82,11 +82,11 @@ Jede Einheit definiert explizite Lernziele auf drei steigenden Stufen, die direk
 
 ## 5. Verbindliche 6-Punkte-Synchronisation & Moodle-Termintext-Regeln
 
-Bei jeder inhaltlichen Änderung an einer Einheit `XX` müssen **alle 6 Orte** synchron gehalten werden:
-1. `Uebungen/Termin_XX_*/Aufgabenblatt.md` (+ `npm run export:pdf:uebung:XX`)
-2. `Uebungen/Termin_XX_*/Vorlage/` (`TODO`-Blöcke & Unit-Tests `dotnet test`)
-3. `Folien/XX_*/Folien.md` (Letzte Folie `### Hausübung Termin XX` + `lint:slides:XX` & `export:pdf:XX`)
-4. `Folien/[XX+1]_*/Folien.md` (Folie 2 `### Live-Showcase & Code-Defense: Termin XX` + `lint:slides:[XX+1]` & `export:pdf:[XX+1]`)
-5. `Konzept/02_Semestermatrix_und_Abhaengigkeiten.md` & der zugehörige Termin-Steckbrief `Konzept/[XX+3]_Termin_XX_*.md`
-6. `Moodle/XX_Termin_XX_*/Text.md` (inkl. `./Banner.jpg` im selben Ordner):
-   - **STRIKTES FORMATIERUNGSVERBOT:** In `Moodle/*/Text.md` dürfen **KEINE LaTeX-Formeln (`$...$`)** und **KEINE Inline-Code-Backticks (`` `...` ``)** verwendet werden (nur reiner Fließtext, da der Text als HTML nach Moodle kopiert wird).
+Bei jeder inhaltlichen Änderung an einem Kapitel `XX` müssen **alle 6 Orte** synchron gehalten werden:
+1. `Kapitel/XX_*/Uebung/Aufgabenblatt.md` (+ `npm run export:pdf:uebung:XX`)
+2. `Kapitel/XX_*/Uebung/Vorlage/` (`TODO`-Blöcke & Unit-Tests `dotnet test`)
+3. `Kapitel/XX_*/Folien/Folien.md` (Letzte Folie `### Hausübung Termin XX` + `lint:slides:XX` & `export:pdf:XX`)
+4. `Kapitel/[XX+1]_*/Folien/Folien.md` (Folie 2 `### Live-Showcase & Code-Defense: Termin XX` + `lint:slides:[XX+1]` & `export:pdf:[XX+1]`)
+5. `Konzept/02_Semestermatrix_und_Abhaengigkeiten.md` & der zugehörige Kapitel-Steckbrief `Kapitel/XX_*/Konzept.md` (inkl. `Kapitel/XX_*/README.md`)
+6. `Kapitel/XX_*/Moodle/Text.md` (inkl. `./Banner.jpg` im selben Ordner):
+   - **STRIKTES FORMATIERUNGSVERBOT:** In `Kapitel/*/Moodle/Text.md` dürfen **KEINE LaTeX-Formeln (`$...$`)** und **KEINE Inline-Code-Backticks (`` `...` ``)** verwendet werden (nur reiner Fließtext, da der Text als HTML nach Moodle kopiert wird).

@@ -13,7 +13,7 @@ namespace GrafikGenerator
         {
             Console.WriteLine("=== HiDPI-GrafikGenerator (Stream B) gestartet ===");
             var dir = new DirectoryInfo(AppContext.BaseDirectory);
-            while (dir != null && !Directory.Exists(Path.Combine(dir.FullName, "Folien")))
+            while (dir != null && !Directory.Exists(Path.Combine(dir.FullName, "Kapitel")))
             {
                 dir = dir.Parent;
             }
@@ -46,7 +46,7 @@ namespace GrafikGenerator
 
         static void GenerateQueuePlots(string root)
         {
-            var targetDir = Path.Combine(root, "Folien", "09_Dynamische_Modelle_Diskret", "Illustrationen");
+            var targetDir = Path.Combine(root, "Kapitel", "09_Diskrete_Systeme_DES", "Folien", "Illustrationen");
             Directory.CreateDirectory(targetDir);
 
             // 1. Warteschlangenlänge über Zeit (HiDPI: 1600x900)
@@ -107,7 +107,7 @@ namespace GrafikGenerator
 
         static void GenerateHeatmapPlot(string root)
         {
-            var targetDir = Path.Combine(root, "Folien", "02_Visualisierung_2D_Pixel", "Illustrationen");
+            var targetDir = Path.Combine(root, "Kapitel", "02_Pixelgrafik_und_FDM", "Folien", "Illustrationen");
             Directory.CreateDirectory(targetDir);
 
             // Verdopplung auf 800x600 für Retina-Qualität
@@ -147,7 +147,7 @@ namespace GrafikGenerator
 
         static void GenerateSignalPlot(string root)
         {
-            var targetDir = Path.Combine(root, "Folien", "04_Visualisierung_2D_Diagramme", "Illustrationen");
+            var targetDir = Path.Combine(root, "Kapitel", "04_Telemetrie_und_ScottPlot", "Folien", "Illustrationen");
             Directory.CreateDirectory(targetDir);
 
             var plot = new Plot();
@@ -188,7 +188,7 @@ namespace GrafikGenerator
 
         static void GenerateConvergencePlot(string root)
         {
-            var targetDir = Path.Combine(root, "Folien", "08_Dynamische_Modelle_Kontinuierlich", "Illustrationen");
+            var targetDir = Path.Combine(root, "Kapitel", "08_DGL_und_SFunctions", "Folien", "Illustrationen");
             Directory.CreateDirectory(targetDir);
 
             double w0 = 2.0 * Math.PI;
@@ -314,7 +314,7 @@ namespace GrafikGenerator
 
         static void GenerateBoundaryConditionsPlot(string root)
         {
-            var targetDir = Path.Combine(root, "Folien", "02_Visualisierung_2D_Pixel", "Illustrationen");
+            var targetDir = Path.Combine(root, "Kapitel", "02_Pixelgrafik_und_FDM", "Folien", "Illustrationen");
             Directory.CreateDirectory(targetDir);
 
             // Simulationsgitter
@@ -467,8 +467,8 @@ namespace GrafikGenerator
 
         static void GenerateAusblickImages(string root)
         {
-            var hybridSrc = Path.Combine(root, "Folien", "10_Dynamische_Modelle_Hybrid", "Illustrationen", "HybrideModelle.jpg");
-            var hybridDst = Path.Combine(root, "Folien", "09_Dynamische_Modelle_Diskret", "Illustrationen", "Ausblick_Hybrid.png");
+            var hybridSrc = Path.Combine(root, "Kapitel", "10_Hybride_Dynamik_Synthese", "Folien", "Illustrationen", "HybrideModelle.jpg");
+            var hybridDst = Path.Combine(root, "Kapitel", "09_Diskrete_Systeme_DES", "Folien", "Illustrationen", "Ausblick_Hybrid.png");
             if (File.Exists(hybridSrc))
             {
                 using var bmp = SKBitmap.Decode(hybridSrc);
@@ -479,8 +479,8 @@ namespace GrafikGenerator
                 Console.WriteLine($"Erzeugt: {hybridDst}");
             }
 
-            var epilogSrc = Path.Combine(root, "Folien", "11_Epilog", "Titelbild.jpg");
-            var epilogDst = Path.Combine(root, "Folien", "10_Dynamische_Modelle_Hybrid", "Illustrationen", "Ausblick_Epilog.png");
+            var epilogSrc = Path.Combine(root, "Kapitel", "11_Epilog", "Folien", "Titelbild.jpg");
+            var epilogDst = Path.Combine(root, "Kapitel", "10_Hybride_Dynamik_Synthese", "Folien", "Illustrationen", "Ausblick_Epilog.png");
             if (File.Exists(epilogSrc))
             {
                 using var bmp = SKBitmap.Decode(epilogSrc);
@@ -494,8 +494,8 @@ namespace GrafikGenerator
 
         static void GenerateMotorPlots(string root)
         {
-            var illustrDir = Path.Combine(root, "Folien", "08_Dynamische_Modelle_Kontinuierlich", "Illustrationen");
-            var screensDir = Path.Combine(root, "Folien", "08_Dynamische_Modelle_Kontinuierlich", "Screenshots");
+            var illustrDir = Path.Combine(root, "Kapitel", "08_DGL_und_SFunctions", "Folien", "Illustrationen");
+            var screensDir = Path.Combine(root, "Kapitel", "08_DGL_und_SFunctions", "Folien", "Screenshots");
             Directory.CreateDirectory(illustrDir);
             Directory.CreateDirectory(screensDir);
 

@@ -2,14 +2,14 @@
 name: uebungsaufgaben
 description: >-
   Vorlesungsübergreifende Regeln für den Aufbau, die Symmetrie, den forensischen Code-Walkthrough
-  und die Verifikation von zweistufigen Übungsblättern (Uebungen/Termin_XX_*/Aufgabenblatt.md)
+  und die Verifikation von zweistufigen Übungsblättern (Kapitel/*/Uebung/Aufgabenblatt.md)
   sowie Programmier-Vorlagen (Vorlage/**).
   IMMER aktivieren, wenn Übungsaufgaben oder Programmier-Vorlagen geplant, erstellt oder überarbeitet werden.
 ---
 
-# Skill: Zweistufige Übungsaufgaben & Programmier-Vorlagen (`Uebungen/**`)
+# Skill: Zweistufige Übungsaufgaben & Programmier-Vorlagen (`Kapitel/*/Uebung/**`)
 
-Verbindliche Regeln für den Aufbau der Aufgabenblätter (`Uebungen/Termin_XX_*/Aufgabenblatt.md`) und der zugehörigen C#-Projektvorlagen (`Vorlage/`). Übergreifende Kausalitäts-, Motivations- und Synchronisationsregeln sind im Skill [`lehrkonzept-und-didaktik`](../lehrkonzept-und-didaktik/SKILL.md) sowie in `Konzept/02_*.md` definiert.
+Verbindliche Regeln für den Aufbau der Aufgabenblätter (`Kapitel/XX_*/Uebung/Aufgabenblatt.md`) und der zugehörigen C#-Projektvorlagen (`Vorlage/`). Übergreifende Kausalitäts-, Motivations- und Synchronisationsregeln sind im Skill [`lehrkonzept-und-didaktik`](../lehrkonzept-und-didaktik/SKILL.md) sowie in `Konzept/02_*.md` definiert.
 
 ---
 

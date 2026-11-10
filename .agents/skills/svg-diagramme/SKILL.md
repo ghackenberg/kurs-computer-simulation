@@ -2,13 +2,13 @@
 name: svg-diagramme
 description: >-
   Vorlesungsübergreifende Richtlinien für den Entwurf, die Bemaßung, Typografie und Pflege
-  von SVG-Diagrammen (Folien/**/Diagramme/*.svg).
+  von SVG-Diagrammen (Kapitel/*/Folien/Diagramme/*.svg).
   IMMER aktivieren, wenn SVG-Grafiken erstellt, geprüft oder überarbeitet werden.
 ---
 
 # Skill: SVG-Diagramme & Visuelle Mentale Modelle (`Diagramme/*.svg`)
 
-Verbindliche Gestaltungs-, Typografie- und Prüfregeln für SVG-Illustrationen in MARP-Vorlesungsfolien (`1280x720`-Viewport). Die `.svg`-Dateien unter `Folien/**/Diagramme/` sind direkt die *Single Source of Truth* (keine redundanten JS-Generator-Skripte unter `Skripte/` anlegen!).
+Verbindliche Gestaltungs-, Typografie- und Prüfregeln für SVG-Illustrationen in MARP-Vorlesungsfolien (`1280x720`-Viewport). Die `.svg`-Dateien unter `Kapitel/*/Folien/Diagramme/` sind direkt die *Single Source of Truth* (keine redundanten JS-Generator-Skripte unter `Skripte/` anlegen!).
 
 ---
 

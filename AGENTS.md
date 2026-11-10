@@ -13,14 +13,17 @@
 
 ## 2. Repository-Struktur & Single Source of Truth
 
-- `./Konzept/` – Redundanzfreie, modular nummerierte Single-Source-of-Truth-Konzeptdokumente (`01`–`13`):
+- `./Konzept/` – Die 3 vorlesungsübergreifenden Rahmenkonzept-Dokumente:
   1. [`01_Didaktik_und_Lernziele.md`](Konzept/01_Didaktik_und_Lernziele.md) – Zielgruppenprofil, übergeordnete Lernziele (ILOs), ECTS-Workload, Bloom-Kaskade, Motivation (*Pick your Track*), Anspruchsniveau (*Low Floor, High Ceiling*) und 150-Min.-Taktung.
   2. [`02_Semestermatrix_und_Abhaengigkeiten.md`](Konzept/02_Semestermatrix_und_Abhaengigkeiten.md) – **Semester-Übersichtsmatrix**, **Kapitel-Abhängigkeits- & Fern-Schnittstellen-Matrix**, 2-Stufen-Hausübungsmodell und Goldene Architektur-Regel.
   3. [`03_Beurteilung_und_Pruefungen.md`](Konzept/03_Beurteilung_und_Pruefungen.md) – 5-stufige Lernfortschrittskontrolle, 2-Säulen-Benotungsmodell (40 % Quiz / 40 % wöchentliche Hausübungen / 20 % Showcase), Notenschlüssel, Quiz-Stoffabgrenzung, 4-Stufen-Stresstest & AI Honor Code.
-  4. [`04_Termin_01_Kinematik_und_Euler.md`](Konzept/04_Termin_01_Kinematik_und_Euler.md) bis [`13_Termin_10_Hybride_Dynamik_Synthese.md`](Konzept/13_Termin_10_Hybride_Dynamik_Synthese.md) – 10 kompakte, autarke Termin-Steckbriefe (Artefakte, Vorgreif-Sperre, Rückwärts-/Vorwärts-Brücken, Bloom-Lernziele, Hausübung Stufe 1 + Track A/B & Showcase-Fokus pro Termin für gezieltes Context-Loading).
-- `./Folien/[XX_Kapitel_Bezeichnung]/` – MARP-Vorlesungsfolien (`Folien.md`, `Folien_Anhang_*.md`), `Titelbild.jpg`, `./Diagramme/*.svg` (inkl. `.mmd`), `./Illustrationen/`, `./Screenshots/` und `./Tafelbilder/`.
-- `./Uebungen/[Termin_XX_Bezeichnung]/` – Aufgabenblätter (`Aufgabenblatt.md`, `Aufgabenblatt.pdf`) und C#-Projektvorlagen (`./Vorlage/`).
-- `./Moodle/` – Selbständige Moodle-Abschnittsordner (`./Moodle/00_Kurs_Kopfbereich/` bis `./Moodle/10_Termin_10_Hybride_Dynamik_Synthese/`, jeweils mit formelfreiem `Text.md`, lokalem `Banner.jpg` sowie – in T03, T05, T08, T10 – dem Unterordner `Quiz/` mit `README.md` und den 10 modularen Test-Markdown-Dateien `Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`).
+- `./Kapitel/[XX_Kapitel_Bezeichnung]/` – Die 12 selbständigen, kapitelzentrierten Modulordner (`00_Prolog` bis `11_Epilog`) mit allen kapitelbezogenen Artefakten an einem Ort:
+  - `README.md` – Kompakte Kapitel-Übersicht für die direkte GitHub-/IDE-Anzeige.
+  - `Konzept.md` – Autarker Kapitel-Steckbrief (Artefakte, Vorgreif-Sperre, Rückwärts-/Vorwärts-Brücken, Bloom-Lernziele, Hausübung Stufe 1 + Track A/B & Showcase-Fokus für gezieltes Context-Loading).
+  - `./Folien/` – MARP-Vorlesungsfolien (`Folien.md`, `Folien_Anhang_*.md`), `Titelbild.jpg`, `./Diagramme/*.svg` (inkl. `.mmd`), `./Illustrationen/`, `./Screenshots/` und `./Tafelbilder/`.
+  - `./Uebung/` *(für Kap. 01–10)* – Aufgabenblatt (`Aufgabenblatt.md`, `Aufgabenblatt.pdf`) und C#-Projektvorlage (`./Vorlage/`).
+  - `./Moodle/` *(für Kap. 00–10)* – Formelfreier Moodle-Abschnittstext (`Text.md`) und lokales `Banner.jpg`.
+  - `./Quiz/` *(in Kap. 03, 05, 08, 10)* – `README.md` sowie die 10 modularen Test-Markdown-Dateien (`Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`).
 - `./Export/` – Druckreife Moodle-PDFs (`./Export/Folien/` und `./Export/Uebungen/`) sowie die importfertigen Moodle-Master-XML-Quizzes (`./Export/Moodle/Quiz_0X_Termin_YY.xml`).
 - `./Skripte/` – Plattformunabhängige Node.js-Skripte für Build Management (PDF- & Moodle-XML-Export) und Quality Control (Linter für Folien-DOM, Abschnittsschema, SVGs, Variablen-Konsistenz und Quizzes).
 - `./Quellen/` & `./Werkzeuge/` – Reiner C#-Referenzcode (`Quellen.sln`, ohne eingebettete Bild-/Diagramm-Assets) und C#-HiDPI-Grafikgeneratoren (`Werkzeuge/GrafikGenerator/`).
@@ -33,21 +36,21 @@ Alle vorlesungsübergreifenden Regeln sind modular in **6 fokussierten Workspace
 
 ### Ebene 1: Makro-Konzeption, Curriculum & Didaktik
 1. **[`lehrkonzept-und-didaktik`](.agents/skills/lehrkonzept-und-didaktik/SKILL.md):**
-   - **Aktivieren bei:** Arbeit an `Konzept/*.md`, `Moodle/*/Text.md`, Curriculum-Planung, Kapitel-Querbezügen, Lernzielen oder der 6-Punkte-Synchronisation.
-   - **Kerninhalte:** Bloom-Lernziel-Kaskade, 5-stufige Lernfortschrittskontrolle, Studierenden-Motivation (*Pick your Track*, Domänenwechsel), *Low Floor, High Ceiling*, Kapitel-Abhängigkeitsmatrix, 5 Grundregeln verständlicher Erklär-Didaktik, 6-Punkte-Synchronisation (inkl. LaTeX-/Backtick-Verbot in `Moodle/*/Text.md`).
+   - **Aktivieren bei:** Arbeit an `Konzept/*.md`, `Kapitel/*/Konzept.md`, `Kapitel/*/Moodle/Text.md`, Curriculum-Planung, Kapitel-Querbezügen, Lernzielen oder der 6-Punkte-Synchronisation.
+   - **Kerninhalte:** Bloom-Lernziel-Kaskade, 5-stufige Lernfortschrittskontrolle, Studierenden-Motivation (*Pick your Track*, Domänenwechsel), *Low Floor, High Ceiling*, Kapitel-Abhängigkeitsmatrix, 5 Grundregeln verständlicher Erklär-Didaktik, 6-Punkte-Synchronisation (inkl. LaTeX-/Backtick-Verbot in `Kapitel/*/Moodle/Text.md`).
 
 ### Ebene 2: Die 4 Artefakt-Skills
 2. **[`vorlesungsfolien`](.agents/skills/vorlesungsfolien/SKILL.md):**
-   - **Aktivieren bei:** Lesen, Planen, Erstellen oder Überarbeiten von `Folien/**/Folien.md` und `Folien_Anhang_*.md`.
+   - **Aktivieren bei:** Lesen, Planen, Erstellen oder Überarbeiten von `Kapitel/*/Folien/Folien.md` und `Folien_Anhang_*.md`.
    - **Kerninhalte:** Netto-Folienkorridor (40–48 Folien), Pflicht-Einstiegsfolie `### Rückblick & Brücke:`, 3-Schritt-Rhythmus, Konventions-Brücken, MARP-Layout (`fhooe.css` Spaltengewichte `one`–`six`, reine Bildsyntax), Variablen-Konsistenz (`lint:variables` Regeln 1–4).
 3. **[`svg-diagramme`](.agents/skills/svg-diagramme/SKILL.md):**
-   - **Aktivieren bei:** Erstellen oder Ändern von SVG-Grafiken (`Folien/**/Diagramme/*.svg`).
+   - **Aktivieren bei:** Erstellen oder Ändern von SVG-Grafiken (`Kapitel/*/Folien/Diagramme/*.svg`).
    - **Kerninhalte:** Kontrast-SVGs (*Naiv/Falsch vs. Richtig*), echte Zahlenwerte im Diagramm, Standard-Maße (`viewBox="-45 0 570 380"` vs. `1080x450`), Mindestschriftgröße ($\ge 11{,}5\,\text{px}$ nach CTM), Farbsemantik, Vermeidung von `SHIELD_TEXT_OVERFLOW`.
 4. **[`uebungsaufgaben`](.agents/skills/uebungsaufgaben/SKILL.md):**
-   - **Aktivieren bei:** Erstellen oder Ändern von `Uebungen/Termin_XX_*/Aufgabenblatt.md` und `Vorlage/**`.
+   - **Aktivieren bei:** Erstellen oder Ändern von `Kapitel/*/Uebung/Aufgabenblatt.md` und `Vorlage/**`.
    - **Kerninhalte:** Zweistufige Hausübung (`Stufe 1: 1.1–1.4` $\to$ `Stufe 2: Track A | Track B`), Symmetrie ohne Redundanz, forensischer Code-Walkthrough gegen `Vorlage/`, *Golden Reference Numbers* (5-Sekunden-Selbsttest), aktive Unit-Tests in `Aufgabe 1.4` (`dotnet test`).
 5. **[`moodle-quizzes`](.agents/skills/moodle-quizzes/SKILL.md):**
-   - **Aktivieren bei:** Erstellen oder Ändern von `Moodle/*/Quiz/**` und `Skripte/moodle_xml_builder.js`.
+   - **Aktivieren bei:** Erstellen oder Ändern von `Kapitel/*/Quiz/**` und `Skripte/moodle_xml_builder.js`.
    - **Kerninhalte:** Strikte Rückwärts-Kausalität, redundanzfreie 10-Varianten-Markdown-Architektur (`Quiz/Test_01..03_Vorbereitung.md` + `Test_04..10_Pruefung.md` $\to$ `Export/Moodle/Quiz_0X_Termin_YY.xml` via `npm run export:moodle`), voller Auto-Grading-Fragetypen-Mix (8 Fragen = 10 Pkt.), Inversion der Fragerichtung, Längen-Symmetrie ($\le 25\,\%$), keine Formeln im Fragetext.
 
 ### Ebene 3: Unabhängige Qualitätssicherung

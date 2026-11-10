@@ -6,7 +6,7 @@
 **Begleitdokumente (Single Source of Truth):**
 - [`Konzept/01_Didaktik_und_Lernziele.md`](./01_Didaktik_und_Lernziele.md) – Lehrkonzept, Lernziele, Motivation & 150-Min.-Taktung
 - [`Konzept/02_Semestermatrix_und_Abhaengigkeiten.md`](./02_Semestermatrix_und_Abhaengigkeiten.md) – Semester-Übersichtsmatrix, Kapitel-Abhängigkeitsmatrix & Goldene Architektur-Regel
-- [`Konzept/04_Termin_01_*.md`](./04_Termin_01_Kinematik_und_Euler.md) bis [`13_Termin_10_*.md`](./13_Termin_10_Hybride_Dynamik_Synthese.md) – Autarke Termin-Steckbriefe (Vorlesung + Hausübung + Schnittstellen pro Termin)
+- [`Kapitel/00_Prolog/Konzept.md`](../Kapitel/00_Prolog/Konzept.md) bis [`Kapitel/11_Epilog/Konzept.md`](../Kapitel/11_Epilog/Konzept.md) – Autarke Kapitel-Steckbriefe (Vorlesung + Hausübung + Schnittstellen direkt im jeweiligen Kapitelordner)
 
 ---
 
@@ -27,11 +27,11 @@ flowchart LR
 2. **Stufe 2 – Automatisierte Unit-Test-Verifikation zu Hause (Formativ):**
    - Jede Projektvorlage (`Vorlage/Tests/`) enthält deterministische MSTest-Prüfungen (`dotnet test`) gegen analytische Grenzfälle und Erhaltungssätze. In `Aufgabe 1.4` aktivieren bzw. vervollständigen die Studierenden eigene Assertions zur Absicherung ihrer Stufe-1-Lösung.
 3. **Stufe 3 – Formative Moodle-Vorbereitungstests (`Test_01` bis `Test_03`):**
-   - Vor jedem der 4 Quiz-Termine stehen in Moodle **3 vollwertige Vorbereitungstests** (`XML_Tests/Test_01_Vorbereitung.xml`–`Test_03_Vorbereitung.xml`) zum unbegrenzten Üben bereit – inklusive spezifischem Fehler-Feedback für jede Option und vollständiger Musterherleitung.
+   - Vor jedem der 4 Quiz-Termine stehen in Moodle **3 vollwertige Vorbereitungstests** (`Quiz/Test_01_Vorbereitung.md`–`Test_03_Vorbereitung.md`) zum unbegrenzten Üben bereit – inklusive spezifischem Fehler-Feedback für jede Option und vollständiger Musterherleitung.
 4. **Stufe 4 – Live-Showcase, Code-Defense & Ad-hoc-Parameter-Stresstest im Hörsaal (Summativ, 20 %):**
    - Zu Beginn jedes Termins (ab T02) präsentieren im Rotationsprinzip je **1 Team aus Track A** und **1 Team aus Track B** ihre Lösung live am Beamer, erklären ausgewählte Codezeilen (*„Warum genau diese Zeile?“*) und absolvieren einen **Live-Parameter-Stresstest** durch den Dozenten.
 5. **Stufe 5 – Summative Moodle-Prüfungstests (40 %) & C#-Code-Portfolio (40 %):**
-   - **4 Moodle-Prüfungen** (gezogen aus `Test_04_Pruefung.xml`–`Test_10_Pruefung.xml` mit invertierter Fragerichtung) + Bewertung der **10 wöchentlichen C#-Portfolio-Abgaben** nach der 10-Punkte-Rubrik.
+   - **4 Moodle-Prüfungen** (gezogen aus `Quiz/Test_04_Pruefung.md`–`Test_10_Pruefung.md` mit invertierter Fragerichtung) + Bewertung der **10 wöchentlichen C#-Portfolio-Abgaben** nach der 10-Punkte-Rubrik.
 
 ---
 
@@ -73,7 +73,7 @@ Da jedes Quiz in den ersten 15 Minuten **vor** dem Theorie-Impuls stattfindet, g
 | **Quiz 04** | Beginn **T10** | **Kap. 08–09** | S-Functions (`ComputeDerivatives`/`Outputs`), Butcher-Tableaus (Euler, Heun, RK4), Steifigkeit, PID Anti-Windup Clamping; DES (`PriorityQueue`, Kendall, Inversionsmethode, Box-Muller, Little's Gesetz $\bar{L} = \lambda_{\text{eff}}\bar{W}$). | Hybride Zero-Crossing-Bisektion, Zeno-Sticking & FMI/VIBN (Kap. 10–11). |
 
 ### 3.2 Technische Architektur & Psychometrie der 10 Varianten (`Skripte/moodle_xml_builder.js`)
-- **Single Source of Truth:** Jedes Quiz liegt redundanzfrei als 10 modulare Markdown-Dateien (`Test_01_Vorbereitung.md` bis `Test_03_Vorbereitung.md` und `Test_04_Pruefung.md` bis `Test_10_Pruefung.md` samt `README.md`) im jeweiligen Unterordner `Moodle/XX_Termin_XX_*/Quiz/` und wird über `npm run export:moodle` (`Skripte/moodle_xml_builder.js`) zu einer einzigen importfertigen Master-XML unter `Export/Moodle/Quiz_0X_Termin_YY.xml` kompiliert.
+- **Single Source of Truth:** Jedes Quiz liegt redundanzfrei als 10 modulare Markdown-Dateien (`Test_01_Vorbereitung.md` bis `Test_03_Vorbereitung.md` und `Test_04_Pruefung.md` bis `Test_10_Pruefung.md` samt `README.md`) im jeweiligen Kapitel-Unterordner `Kapitel/XX_*/Quiz/` (`03`, `05`, `08`, `10`) und wird über `npm run export:moodle` (`Skripte/moodle_xml_builder.js`) zu einer einzigen importfertigen Master-XML unter `Export/Moodle/Quiz_0X_Termin_YY.xml` kompiliert.
 - **Voller Fragetypen-Mix (8 Fragen = 10,0 Pkt., 100 % Auto-Grading):**
   - 2–3 Rechen-/Code-Tracing-Fragen (`numerical` mit 50-%-Teilpunkte-Antworten für typische Einheiten-/Vorzeichenfallen sowie `cloze` für mehrstufige Rechnungen),
   - 1–2 interaktive Code-/Pipeline-Fragen (`gapselect` & `ddwtos`),

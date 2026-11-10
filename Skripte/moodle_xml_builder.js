@@ -594,10 +594,10 @@ function processQuizFolder(quizDir, options = { writeXml: true }) {
 
 function runCli() {
   const isCheckOnly = process.argv.includes('--check');
-  const moodleRoot = path.resolve(__dirname, '..', 'Moodle');
-  const sectionDirs = fs.readdirSync(moodleRoot, { withFileTypes: true })
+  const kapitelRoot = path.resolve(__dirname, '..', 'Kapitel');
+  const sectionDirs = fs.readdirSync(kapitelRoot, { withFileTypes: true })
     .filter(d => d.isDirectory())
-    .map(d => path.join(moodleRoot, d.name, 'Quiz'))
+    .map(d => path.join(kapitelRoot, d.name, 'Quiz'))
     .filter(qDir => fs.existsSync(path.join(qDir, 'README.md')));
 
   if (sectionDirs.length === 0) {

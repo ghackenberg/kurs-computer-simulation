@@ -549,10 +549,10 @@ if (require.main === module) {
   console.log('  AUTOMATED VARIABLE CONSISTENCY & COVERAGE LINTER');
   console.log('================================================================\n');
 
-  const folienRoot = path.resolve('Folien');
-  const dirs = fs.readdirSync(folienRoot).filter(d => {
-    const full = path.join(folienRoot, d);
-    if (!fs.statSync(full).isDirectory()) return false;
+  const kapitelRoot = path.resolve('Kapitel');
+  const dirs = fs.readdirSync(kapitelRoot).filter(d => {
+    const full = path.join(kapitelRoot, d, 'Folien');
+    if (!fs.existsSync(full) || !fs.statSync(full).isDirectory()) return false;
     if (targetChapter) return d.startsWith(targetChapter);
     return true;
   });
@@ -565,7 +565,7 @@ if (require.main === module) {
   let totalErrors = 0;
 
   dirs.forEach(d => {
-    const chapterPath = path.join(folienRoot, d);
+    const chapterPath = path.join(kapitelRoot, d, 'Folien');
     const result = auditChapterVariables(chapterPath);
     console.log(`Prüfe Kapitel ${d} (${result.totalSlides} Folien) ...`);
 

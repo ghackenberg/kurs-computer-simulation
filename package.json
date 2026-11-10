@@ -59,7 +59,7 @@
     "lint:sections:09": "node Skripte/lint_section_slides.js 09",
     "lint:sections:10": "node Skripte/lint_section_slides.js 10",
     "lint:sections:11": "node Skripte/lint_section_slides.js 11",
-    "lint:svg": "node Skripte/audit_svg_and_charts.js Folien",
+    "lint:svg": "node Skripte/audit_svg_and_charts.js Kapitel",
     "lint:svg:00": "node Skripte/audit_svg_and_charts.js 00",
     "lint:svg:01": "node Skripte/audit_svg_and_charts.js 01",
     "lint:svg:02": "node Skripte/audit_svg_and_charts.js 02",

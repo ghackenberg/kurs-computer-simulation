@@ -3,11 +3,11 @@ name: moodle-quizzes
 description: >-
   Vorlesungsübergreifende Regeln für den Entwurf, die Kausalität, die Psychometrie und die
   10-Varianten-Moodle-XML-Generierung von summativen Moodle-Quizzes
-  (Moodle/*/Quiz/Test_*.md, Skripte/moodle_xml_builder.js, Export/Moodle/*.xml).
+  (Kapitel/*/Quiz/Test_*.md, Skripte/moodle_xml_builder.js, Export/Moodle/*.xml).
   IMMER aktivieren, wenn Moodle-Quizzes erstellt, geprüft oder überarbeitet werden.
 ---
 
-# Skill: Moodle-Quizzes & Prüfungs-Psychometrie (`Moodle/*/Quiz/`)
+# Skill: Moodle-Quizzes & Prüfungs-Psychometrie (`Kapitel/*/Quiz/`)
 
 Verbindliche Regeln für die Erstellung, Validierung und den Moodle-XML-Export summativer Kurztests. Welche Kapitel zu welchem Quiz gehören, ist in `Konzept/02_*.md` und `Konzept/03_*.md` festgelegt.
 
@@ -20,16 +20,16 @@ Verbindliche Regeln für die Erstellung, Validierung und den Moodle-XML-Export s
 
 ---
 
-## 2. Redundanzfreie 10-Varianten-Markdown-Architektur (`Moodle/*/Quiz/` $\to$ `Export/Moodle/`)
+## 2. Redundanzfreie 10-Varianten-Markdown-Architektur (`Kapitel/*/Quiz/` $\to$ `Export/Moodle/`)
 
-1. **Modulare Markdown-Dateien als Single Source of Truth (`Moodle/XX_Termin_XX_*/Quiz/`):**
-   - Jedes finalisierte Quiz liegt ausschließlich als menschenlesbare Markdown-Dateien im Unterordner `Quiz/` des jeweiligen Prüfungstermins (`03`, `05`, `08`, `10`):
+1. **Modulare Markdown-Dateien als Single Source of Truth (`Kapitel/XX_*/Quiz/`):**
+   - Jedes finalisierte Quiz liegt ausschließlich als menschenlesbare Markdown-Dateien im Unterordner `Quiz/` des jeweiligen Prüfungskapitels (`03`, `05`, `08`, `10`):
      - `README.md` – Quiz-Metadaten (`Quiz-ID`, `Export-XML`, `Stoffabgrenzung`, `Kausalitäts-Sperre`) und Übersichtstabelle aller 10 Varianten.
      - `Test_01_Vorbereitung.md` bis `Test_03_Vorbereitung.md` (**3 Vorbereitungstests** zum unbegrenzten Üben).
      - `Test_04_Pruefung.md` bis `Test_10_Pruefung.md` (**7 Prüfungstests** für die Präsenzprüfung).
-   - Keine redundanten Einzel-XMLs (`XML_Tests/`) im `Moodle/`-Ordner und keine quiz-spezifischen Generator-Skripte in `Skripte/`!
+   - Keine redundanten Einzel-XMLs (`XML_Tests/`) im `Quiz/`-Ordner und keine quiz-spezifischen Generator-Skripte in `Skripte/`!
 2. **Validierung & Export einer einzigen Master-XML (`Skripte/moodle_xml_builder.js`):**
-   - `npm run lint:moodle` (`node Skripte/moodle_xml_builder.js --check`) parst alle `Moodle/*/Quiz/Test_*.md` und prüft automatisch: 10 Tests pro Quiz, 8 Fragen = 10,0 Pkt. pro Test, $\le 25\,\%$ Längen-Symmetrie bei allen `multichoice`-Fragen, spezifisches Feedback für jede Option sowie Freiheit von XML-Steuerzeichen.
+   - `npm run lint:moodle` (`node Skripte/moodle_xml_builder.js --check`) parst alle `Kapitel/*/Quiz/Test_*.md` und prüft automatisch: 10 Tests pro Quiz, 8 Fragen = 10,0 Pkt. pro Test, $\le 25\,\%$ Längen-Symmetrie bei allen `multichoice`-Fragen, spezifisches Feedback für jede Option sowie Freiheit von XML-Steuerzeichen.
    - `npm run export:moodle` (`node Skripte/moodle_xml_builder.js`) erzeugt pro Quiz **genau eine einzige importfertige Master-XML** unter `Export/Moodle/Quiz_0X_Termin_YY.xml` (die beim Import in Moodle automatisch alle 10 Unterkategorien `Test_01_Vorbereitung`..`Test_10_Pruefung` anlegt).
 
 ---

@@ -29,7 +29,9 @@ const path = require('path');
 function lintSectionDeck(markdownPath) {
   const content = fs.readFileSync(markdownPath, 'utf8');
   const deckDir = path.dirname(markdownPath);
-  const deckName = path.basename(deckDir);
+  const deckName = path.basename(deckDir) === 'Folien'
+    ? path.basename(path.dirname(deckDir))
+    : path.basename(deckDir);
   const slides = content.split(/^---$/m);
 
   const issues = [];
@@ -221,21 +223,21 @@ function main() {
   const args = process.argv.slice(2);
   const target = args[0] || 'all';
 
-  const folienDir = path.resolve('Folien');
+  const kapitelDir = path.resolve('Kapitel');
   const decks = [];
 
   if (target === 'all') {
-    const entries = fs.readdirSync(folienDir).sort();
+    const entries = fs.readdirSync(kapitelDir).sort();
     entries.forEach(e => {
-      const p = path.join(folienDir, e, 'Folien.md');
+      const p = path.join(kapitelDir, e, 'Folien', 'Folien.md');
       if (fs.existsSync(p)) decks.push(p);
     });
   } else if (fs.existsSync(target)) {
     decks.push(path.resolve(target));
   } else {
-    const match = fs.readdirSync(folienDir).find(d => d.startsWith(target));
+    const match = fs.readdirSync(kapitelDir).find(d => d.startsWith(target));
     if (match) {
-      decks.push(path.join(folienDir, match, 'Folien.md'));
+      decks.push(path.join(kapitelDir, match, 'Folien', 'Folien.md'));
     } else {
       console.error(`Target not found: ${target}`);
       process.exit(1);

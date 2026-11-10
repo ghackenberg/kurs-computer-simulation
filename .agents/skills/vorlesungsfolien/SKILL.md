@@ -2,11 +2,11 @@
 name: vorlesungsfolien
 description: >-
   Vorlesungsübergreifende strukturelle, gestalterische und technische Regeln für das Erstellen,
-  Überarbeiten und Prüfen von MARP-Vorlesungsfolien (Folien/**/Folien.md und Folien_Anhang_*.md).
+  Überarbeiten und Prüfen von MARP-Vorlesungsfolien (Kapitel/*/Folien/Folien.md und Folien_Anhang_*.md).
   IMMER aktivieren, wenn Folien.md gelesen, geplant, erstellt oder editiert wird.
 ---
 
-# Skill: MARP-Vorlesungsfolien (`Folien/**/Folien.md`)
+# Skill: MARP-Vorlesungsfolien (`Kapitel/*/Folien/Folien.md`)
 
 Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorlesungsfolien. Übergreifende didaktische Grundsätze und Kapitel-Querbezüge sind im Skill [`lehrkonzept-und-didaktik`](../lehrkonzept-und-didaktik/SKILL.md) sowie in `Konzept/01_*.md` definiert.
 

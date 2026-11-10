@@ -21,9 +21,9 @@ Dieser Review-Skill definiert das Prüfprotokoll für unabhängige **Review-Suba
 ## Schritt 0: Kontext-Ingestion (Vorab-Pflichtschritt – Gezieltes Context-Loading)
 
 Lies vor Beginn jedes Reviews einer Einheit $k$:
-1. **Gezielter Kurs- & Termin-Kontext (`AGENTS.md` + `Konzept/01..03_*.md` + Termin-Steckbrief `Konzept/[k+3]_Termin_0k_*.md`):**
+1. **Gezielter Kurs- & Kapitel-Kontext (`AGENTS.md` + `Konzept/01..03_*.md` + Kapitel-Steckbrief `Kapitel/0k_*/Konzept.md`):**
    - Übergeordnete Kurs-Lernziele, Studierenden-Vorwissen & Bloom-Lernziel-Kaskade (`Konzept/01_Didaktik_und_Lernziele.md`).
-   - **Kapitel-Abhängigkeits- & Fern-Schnittstellen-Matrix (`Konzept/02_Semestermatrix_und_Abhaengigkeiten.md`) + Termin-Steckbrief (`Konzept/[k+3]_Termin_0k_*.md`):** Welche direkten Nachbarn ($k-1$, $k+1$) und welche **nicht-angrenzenden Einheiten ($m \neq k \pm 1$)** sind fachlich, über Notationen oder über Code-/Datenformate mit Einheit $k$ gekoppelt?
+   - **Kapitel-Abhängigkeits- & Fern-Schnittstellen-Matrix (`Konzept/02_Semestermatrix_und_Abhaengigkeiten.md`) + Kapitel-Steckbrief (`Kapitel/0k_*/Konzept.md`):** Welche direkten Nachbarn ($k-1$, $k+1$) und welche **nicht-angrenzenden Einheiten ($m \neq k \pm 1$)** sind fachlich, über Notationen oder über Code-/Datenformate mit Einheit $k$ gekoppelt?
    - **Quiz-Cluster (`Konzept/03_Beurteilung_und_Pruefungen.md`):** Welche Einheiten werden in welchem summativen Test gemeinsam geprüft?
 2. **Horizontales Querlesen der Schnittstellen-Artefakte:**
    - Lies die Hausübungs-/Brückenfolien und Aufgabenblätter von $k-1$ und $k+1$ sowie die relevanten Abschnitte aller laut Matrix gekoppelten Fern-Einheiten $m$.
@@ -62,8 +62,8 @@ Lies vor Beginn jedes Reviews einer Einheit $k$:
 *(Detailregeln siehe [`uebungsaufgaben`](../uebungsaufgaben/SKILL.md) & [`lehrkonzept-und-didaktik`](../lehrkonzept-und-didaktik/SKILL.md))*
 - [ ] **Aufbau & Symmetrie (`Stufe 1` $\to$ `Stufe 2: Track A | Track B`):** Synchrone Nummerierung `1.1`–`1.4` (mit unnummerierter Vorbereitung davor) sowie symmetrische Arbeitspakete `A.1`–`A.4` und `B.1`–`B.4` (gleicher Aufwand, 10 Pkt., keine Redundanz), die direkt auf Stufe 1 aufbauen?
 - [ ] **End-to-End Walkthrough & Lernfortschrittskontrolle in `Vorlage/`:** Sind alle `TODO`-Blöcke vorhanden, alle impliziten Konventionen von Hilfsmethoden und UI-Events (`PreviewKeyDown` etc.) dokumentiert, alle Berechnungen mit **Golden Reference Numbers** (5-Sekunden-Selbsttest) versehen und eigene Unit-Tests in `Aufgabe 1.4` (`dotnet test`) aktiv?
-- [ ] **6-Punkte-Synchronisation:** Stimmen Aufgabenblatt (+ PDF), `Vorlage/`, Hausübungs-Folie ($k$), Showcase-Folie ($k+1$), `Konzept/02_*.md` + Termin-Steckbrief `Konzept/[k+3]_Termin_0k_*.md` und `Moodle/0k_Termin_0k_*/Text.md` (formel- und backtickfrei!) zu 100 % überein?
+- [ ] **6-Punkte-Synchronisation:** Stimmen Aufgabenblatt (+ PDF), `Vorlage/`, Hausübungs-Folie ($k$), Showcase-Folie ($k+1$), `Konzept/02_*.md` + Kapitel-Steckbrief `Kapitel/0k_*/Konzept.md` (inkl. `README.md`) und `Kapitel/0k_*/Moodle/Text.md` (formel- und backtickfrei!) zu 100 % überein?
 
-### Dimension 6: Prüfungs- & Quiz-Psychometrie (`Moodle/*/Quiz_*`)
+### Dimension 6: Prüfungs- & Quiz-Psychometrie (`Kapitel/*/Quiz/`)
 *(Detailregeln siehe [`moodle-quizzes`](../moodle-quizzes/SKILL.md))*
 - [ ] **Kausalität, 10-Varianten-XML, Fragetypen-Mix & Anti-Bias:** Prüft das Quiz ausschließlich die laut `Konzept/02_*.md` / `03_*.md` zugeordneten Vor-Kapitel, nutzt es die 10-Varianten-Architektur (`Test_01..03` Vorbereitung + `Test_04..10` Prüfung mit invertierter Fragerichtung), den vollen Auto-Grading-Fragetypen-Mix (8 Fragen = 10 Pkt.), spezifisches Feedback, Längen-Symmetrie ($\le 25\,\%$) und keine verratenen Formeln im Fragetext?

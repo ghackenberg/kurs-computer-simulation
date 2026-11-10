@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Automated SVG & Chart Inspection Tool
  * 
  * Performs deep visual and structural analysis of all SVGs and raster charts:
@@ -634,10 +634,10 @@ async function main() {
   const rasterize = args.includes('--rasterize');
   const filteredArgs = args.filter(a => !a.startsWith('--'));
 
-  let targetDir = filteredArgs[0] || 'Folien';
-  if (!fs.existsSync(targetDir) && fs.existsSync('Folien')) {
-    const match = fs.readdirSync('Folien').find(d => d.startsWith(targetDir));
-    if (match) targetDir = path.join('Folien', match);
+  let targetDir = filteredArgs[0] || 'Kapitel';
+  if (!fs.existsSync(targetDir) && fs.existsSync('Kapitel')) {
+    const match = fs.readdirSync('Kapitel').find(d => d.startsWith(targetDir));
+    if (match) targetDir = path.join('Kapitel', match, 'Folien');
   }
 
   const puppeteer = getPuppeteer();

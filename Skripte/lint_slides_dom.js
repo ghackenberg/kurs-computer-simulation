@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Automated MARP DOM Layout & SVG Font Linter
  * 
  * Verifies that no slide in the curriculum suffers from:
@@ -411,20 +411,20 @@ async function main() {
 
   const decks = [];
   if (target === 'all') {
-    const folienDir = path.resolve('Folien');
-    const entries = fs.readdirSync(folienDir).sort();
+    const kapitelDir = path.resolve('Kapitel');
+    const entries = fs.readdirSync(kapitelDir).sort();
     entries.forEach(e => {
-      const p = path.join(folienDir, e, 'Folien.md');
+      const p = path.join(kapitelDir, e, 'Folien', 'Folien.md');
       if (fs.existsSync(p)) decks.push(p);
     });
   } else if (fs.existsSync(target)) {
     decks.push(path.resolve(target));
   } else {
     // Try matching chapter number
-    const folienDir = path.resolve('Folien');
-    const match = fs.readdirSync(folienDir).find(d => d.startsWith(target));
+    const kapitelDir = path.resolve('Kapitel');
+    const match = fs.readdirSync(kapitelDir).find(d => d.startsWith(target));
     if (match) {
-      decks.push(path.join(folienDir, match, 'Folien.md'));
+      decks.push(path.join(kapitelDir, match, 'Folien', 'Folien.md'));
     } else {
       console.error(`Target not found: ${target}`);
       process.exit(1);
@@ -441,7 +441,8 @@ async function main() {
   const allResults = [];
 
   for (const deck of decks) {
-    const deckName = path.basename(path.dirname(deck));
+    const dDir = path.dirname(deck);
+    const deckName = path.basename(dDir) === 'Folien' ? path.basename(path.dirname(dDir)) : path.basename(dDir);
     process.stdout.write(`Inspecting ${deckName} ... `);
     const res = await lintSlideDeck(deck, browser, { minFontSize, minHeaderMargin, minFooterMargin, skipSchema, checkImages, minImageWidthRatio });
     allResults.push(res);

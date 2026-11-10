@@ -9,7 +9,7 @@
 **Begleitdokumente (Single Source of Truth):**
 - [`Konzept/02_Semestermatrix_und_Abhaengigkeiten.md`](./02_Semestermatrix_und_Abhaengigkeiten.md) – Semester-Übersichtsmatrix, Kapitel-Abhängigkeitsmatrix, 2-Stufen-Hausübungsmodell & Goldene Architektur-Regel
 - [`Konzept/03_Beurteilung_und_Pruefungen.md`](./03_Beurteilung_und_Pruefungen.md) – 5-stufige Lernfortschrittskontrolle, 2-Säulen-Benotung (40–40–20), Quiz-Stoffabgrenzung, Rubriken & AI Honor Code
-- [`Konzept/04_Termin_01_*.md`](./04_Termin_01_Kinematik_und_Euler.md) bis [`13_Termin_10_*.md`](./13_Termin_10_Hybride_Dynamik_Synthese.md) – Autarke Termin-Steckbriefe (Vorlesung + Hausübung + Schnittstellen pro Termin)
+- [`Kapitel/00_Prolog/Konzept.md`](../Kapitel/00_Prolog/Konzept.md) bis [`Kapitel/11_Epilog/Konzept.md`](../Kapitel/11_Epilog/Konzept.md) – Autarke Kapitel-Steckbriefe (Vorlesung + Hausübung + Schnittstellen direkt im jeweiligen Kapitelordner)
 
 ---
 

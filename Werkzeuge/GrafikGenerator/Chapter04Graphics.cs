@@ -16,7 +16,7 @@ namespace GrafikGenerator
     {
         public static void Generate(string root)
         {
-            var targetDir = Path.Combine(root, "Folien", "04_Visualisierung_2D_Diagramme", "Illustrationen");
+            var targetDir = Path.Combine(root, "Kapitel", "04_Telemetrie_und_ScottPlot", "Folien", "Illustrationen");
             Directory.CreateDirectory(targetDir);
 
             GenerateScottPlotScatter(targetDir);
