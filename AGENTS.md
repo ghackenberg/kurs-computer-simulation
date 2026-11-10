@@ -21,12 +21,12 @@
   - `README.md` – Kompakte Kapitel-Übersicht für die direkte GitHub-/IDE-Anzeige.
   - `Konzept.md` – Autarker Kapitel-Steckbrief (Artefakte, Vorgreif-Sperre, Rückwärts-/Vorwärts-Brücken, Bloom-Lernziele, Hausübung Stufe 1 + Track A/B & Showcase-Fokus für gezieltes Context-Loading).
   - `./Folien/` – MARP-Vorlesungsfolien (`Folien.md`, `Folien_Anhang_*.md`), `Titelbild.jpg`, `./Diagramme/*.svg` (inkl. `.mmd`), `./Illustrationen/`, `./Screenshots/` und `./Tafelbilder/`.
+  - `./Beispiele/` *(für Kap. 02–05, 07–10)* – Lauffähige C#-Vorlesungsbeispiele, Plot-Generatoren und zugehörige Unit-Tests (`Beispiele.sln`).
   - `./Uebung/` *(für Kap. 01–10)* – Aufgabenblatt (`Aufgabenblatt.md`, `Aufgabenblatt.pdf`) und C#-Projektvorlage (`./Vorlage/`).
   - `./Moodle/` *(für Kap. 00–10)* – Formelfreier Moodle-Abschnittstext (`Text.md`) und lokales `Banner.jpg`.
   - `./Quiz/` *(in Kap. 03, 05, 08, 10)* – `README.md` sowie die 10 modularen Test-Markdown-Dateien (`Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`).
 - `./Export/` – Druckreife Moodle-PDFs (`./Export/Folien/` und `./Export/Uebungen/`) sowie die importfertigen Moodle-Master-XML-Quizzes (`./Export/Moodle/Quiz_0X_Termin_YY.xml`).
 - `./Skripte/` – Plattformunabhängige Node.js-Skripte für Build Management (PDF- & Moodle-XML-Export) und Quality Control (Linter für Folien-DOM, Abschnittsschema, SVGs, Variablen-Konsistenz und Quizzes).
-- `./Quellen/` & `./Werkzeuge/` – Reiner C#-Referenzcode (`Quellen.sln`, ohne eingebettete Bild-/Diagramm-Assets) und C#-HiDPI-Grafikgeneratoren (`Werkzeuge/GrafikGenerator/`).
 
 ---
 

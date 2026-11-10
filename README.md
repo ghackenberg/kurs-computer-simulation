@@ -20,12 +20,12 @@ Der Kurs vermittelt die mathematische Modellierung, numerische Simulation und Ec
 - **[`./Kapitel/`](./Kapitel/)** – Die 12 kapitelzentrierten Modulordner (`00_Prolog` bis `11_Epilog`), in denen jeweils alle Artefakte eines Kapitels gebündelt sind:
   - `README.md` & `Konzept.md` – Kompakte Übersicht und autarker didaktischer Kapitel-Steckbrief.
   - `Folien/` – MARP-Vorlesungsfolien (`Folien.md`), `Diagramme/*.svg`, `Illustrationen/`, `Screenshots/` und `Tafelbilder/`.
+  - `Beispiele/` *(Kap. 02–05, 07–10)* – Lauffähige C#-Vorlesungsbeispiele, HiDPI-Plotgeneratoren und Unit-Tests (`Beispiele.sln`).
   - `Uebung/` *(Kap. 01–10)* – Zweistufiges `Aufgabenblatt.md` und kompilierbare C#-Projektvorlage (`./Vorlage/` inkl. Unit-Tests).
   - `Moodle/` *(Kap. 00–10)* – Formelfreier Moodle-Abschnittstext (`Text.md`) und `Banner.jpg`.
   - `Quiz/` *(Kap. 03, 05, 08, 10)* – Die 10 modularen Test-Markdown-Dateien (`Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`).
 - **[`./Export/`](./Export/)** – Druckreife PDFs der Vorlesungsfolien (`./Export/Folien/`) und Übungsblätter (`./Export/Uebungen/`) sowie die importfertigen Moodle-Master-XML-Quizzes (`./Export/Moodle/`).
 - **[`./Skripte/`](./Skripte/)** – Node.js-Skripte für Build Management (`export_to_pdf.js`, `moodle_xml_builder.js`) und Quality Control (`lint_slides_dom.js`, `lint_section_slides.js`, `lint_variable_consistency.js`, `audit_svg_and_charts.js`).
-- **[`./Quellen/`](./Quellen/) & [`./Werkzeuge/`](./Werkzeuge/)** – Reiner C#-Referenzcode (`Quellen.sln`, dessen Architektur- und Modellklassen auf den Vorlesungsfolien erklärt werden) sowie der HiDPI-Plotgenerator (`Werkzeuge/GrafikGenerator/`).
 
 ---
 
@@ -60,12 +60,7 @@ npm run lint:sections:05
 npm run lint:svg:05
 npm run lint:variables:05
 
-# 3. Druckreife PDFs erzeugen (Vorlesungsfolien & Übungsblätter -> Export/)
+# 3. Druckreife PDFs & Moodle-Master-XMLs erzeugen (-> Export/)
 npm run export:pdf
-
-# 4. HiDPI-Plots für die Vorlesungsfolien neu generieren
-npm run generate:plots
-
-# 5. Referenz-Solution in Quellen/ kompilieren und testen
-dotnet test Quellen/Quellen.sln -c Release
+npm run export:moodle
 ```
