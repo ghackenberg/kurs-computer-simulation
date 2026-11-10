@@ -8,7 +8,7 @@
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensatz:** [`08_Dynamische_Modelle_Kontinuierlich/Folien.md`](../Folien/08_Dynamische_Modelle_Kontinuierlich/Folien.md)
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_08_DGL_und_SFunctions/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](../Moodle/08_Termin_08_DGL_und_SFunctions/Text.md) | [`SFunctionSimulation.sln`](../Uebungen/Termin_08_DGL_und_SFunctions/Vorlage/SFunctionSimulation.sln)
-- **Assessment zu Terminbeginn:** **Moodle-Test 3** (15 Min., prüft ausschließlich Kap. 05–07).
+- **Assessment zu Terminbeginn:** **Moodle-Test 3** ([`Quiz_03_3D_Multithreading_Statik`](../Moodle/08_Termin_08_DGL_und_SFunctions/Quiz_03_3D_Multithreading_Statik/Quiz_03.md), 15 Min., prüft ausschließlich Kap. 05–07).
 - **Vorgreif-Sperre (Technologie-Stand T08):** `ISFunction`, Butcher-Tableaus (Euler, Heun, RK4), Steifigkeit, algebraische Schleifen, PID mit Anti-Windup. *Strikte Tabus:* Noch keine DES-Warteschlangen (T09) oder Zero-Crossing-Bisektion (T10).
 - **Kapitel-Brücken & Quiz-Zuordnung:**
   - **Rückwärts ($\leftarrow$):** [`T01`](./04_Termin_01_Kinematik_und_Euler.md) (Expliziter Euler & Heun), [`T02`](./05_Termin_02_Pixelgrafik_und_FDM.md) (Stabilitätsgrenze expliziter Zeitintegration) und [`T04`](./07_Termin_04_Telemetrie_und_ScottPlot.md) (`ScottPlot 5` für Zeit- und Phasenplots).

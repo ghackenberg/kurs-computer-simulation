@@ -8,7 +8,7 @@
 ## 1. Artefakte, Technologie-Status & Kapitel-Schnittstellen
 - **Foliensätze:** [`10_Dynamische_Modelle_Hybrid/Folien.md`](../Folien/10_Dynamische_Modelle_Hybrid/Folien.md) & [`11_Epilog/Folien.md`](../Folien/11_Epilog/Folien.md)
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](../Moodle/10_Termin_10_Hybride_Dynamik_Synthese/Text.md) | [`HybridZeroCrossing.sln`](../Uebungen/Termin_10_Hybride_Dynamik_Synthese/Vorlage/HybridZeroCrossing.sln)
-- **Assessment zu Terminbeginn:** **Moodle-Test 4** (15 Min., prüft ausschließlich Kap. 08–09).
+- **Assessment zu Terminbeginn:** **Moodle-Test 4** ([`Quiz_04_DGL_und_DES`](../Moodle/10_Termin_10_Hybride_Dynamik_Synthese/Quiz_04_DGL_und_DES/Quiz_04.md), 15 Min., prüft ausschließlich Kap. 08–09).
 - **Technologie-Status T10:** Vollständiger Kurs-Stack (Kap. 01–11).
 - **Kapitel-Brücken (Synthese des Gesamtkurses):**
   - **Rückwärts ($\leftarrow$):** [`T01`](./04_Termin_01_Kinematik_und_Euler.md) & [`T08`](./11_Termin_08_DGL_und_SFunctions.md) (Kontinuierliche ODE-Solver), [`T09`](./12_Termin_09_Diskrete_Systeme_DES.md) (Diskrete Events), [`T04`](./07_Termin_04_Telemetrie_und_ScottPlot.md) (`MSAGL`-Statecharts & `ScottPlot`) und [`T05`](./08_Termin_05_3D_OpenGL_Szenengraph.md) (3D-Anlagenvisualisierung).

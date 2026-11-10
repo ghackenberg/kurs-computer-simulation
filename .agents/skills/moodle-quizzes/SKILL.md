@@ -3,11 +3,11 @@ name: moodle-quizzes
 description: >-
   Vorlesungsübergreifende Regeln für den Entwurf, die Kausalität, die Psychometrie und die
   10-Varianten-Moodle-XML-Generierung von summativen Moodle-Quizzes
-  (Moodle/Quiz_0X_*/**, Skripte/generate_moodle_xml_quiz_0X.js, Skripte/moodle_xml_builder.js).
+  (Moodle/*/Quiz_0X_*/**, Skripte/generate_moodle_xml_quiz_0X.js, Skripte/moodle_xml_builder.js).
   IMMER aktivieren, wenn Moodle-Quizzes oder Quiz-Generatoren erstellt, geprüft oder überarbeitet werden.
 ---
 
-# Skill: Moodle-Quizzes & Prüfungs-Psychometrie (`Moodle/Quiz_*`)
+# Skill: Moodle-Quizzes & Prüfungs-Psychometrie (`Moodle/*/Quiz_*`)
 
 Verbindliche Regeln für die Erstellung, Validierung und Moodle-XML-Generierung summativer Kurztests. Welche Kapitel zu welchem Quiz gehören, ist in `Konzept/01_*.md` und `Konzept/03_*.md` festgelegt.
 

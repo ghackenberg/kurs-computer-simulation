@@ -3,7 +3,7 @@ const { exportMoodleQuiz } = require('./moodle_xml_builder');
 const quizMeta = {
   quizId: 'Quiz_01_Termin_03',
   title: 'Quiz 01 (Termin 03) – Grundlagen, Digitaler Zwilling & 2D-Pixelgrafik',
-  moodleDir: 'Moodle/Quiz_01_Termin_03_Grundlagen_und_Pixel',
+  moodleDir: 'Moodle/03_Termin_03_Vektorgrafik_und_Canvas/Quiz_01_Grundlagen_und_Pixel',
   masterXmlFileName: 'Quiz_01_Termin_03_Alle_10_Tests_Master.xml',
   terminInfo: 'Termin 03',
   coveredChapters: 'Kapitel 00 (Prolog), Kapitel 01 (Einführung, Digitaler Zwilling & Expliziter Euler), Kapitel 02 (2D-Pixelgrafik & FDM-Wärmeraster)',

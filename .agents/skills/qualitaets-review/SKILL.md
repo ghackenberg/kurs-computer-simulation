@@ -64,6 +64,6 @@ Lies vor Beginn jedes Reviews einer Einheit $k$:
 - [ ] **End-to-End Walkthrough & Lernfortschrittskontrolle in `Vorlage/`:** Sind alle `TODO`-Blöcke vorhanden, alle impliziten Konventionen von Hilfsmethoden und UI-Events (`PreviewKeyDown` etc.) dokumentiert, alle Berechnungen mit **Golden Reference Numbers** (5-Sekunden-Selbsttest) versehen und eigene Unit-Tests in `Aufgabe 1.4` (`dotnet test`) aktiv?
 - [ ] **6-Punkte-Synchronisation:** Stimmen Aufgabenblatt (+ PDF), `Vorlage/`, Hausübungs-Folie ($k$), Showcase-Folie ($k+1$), `Konzept/02_*.md` + Termin-Steckbrief `Konzept/[k+3]_Termin_0k_*.md` und `Moodle/0k_Termin_0k_*/Text.md` (formel- und backtickfrei!) zu 100 % überein?
 
-### Dimension 6: Prüfungs- & Quiz-Psychometrie (`Moodle/Quiz_*`)
+### Dimension 6: Prüfungs- & Quiz-Psychometrie (`Moodle/*/Quiz_*`)
 *(Detailregeln siehe [`moodle-quizzes`](../moodle-quizzes/SKILL.md))*
 - [ ] **Kausalität, 10-Varianten-XML, Fragetypen-Mix & Anti-Bias:** Prüft das Quiz ausschließlich die laut `Konzept/02_*.md` / `03_*.md` zugeordneten Vor-Kapitel, nutzt es die 10-Varianten-Architektur (`Test_01..03` Vorbereitung + `Test_04..10` Prüfung mit invertierter Fragerichtung), den vollen Auto-Grading-Fragetypen-Mix (8 Fragen = 10 Pkt.), spezifisches Feedback, Längen-Symmetrie ($\le 25\,\%$) und keine verratenen Formeln im Fragetext?

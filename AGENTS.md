@@ -20,7 +20,7 @@
   4. [`04_Termin_01_Kinematik_und_Euler.md`](Konzept/04_Termin_01_Kinematik_und_Euler.md) bis [`13_Termin_10_Hybride_Dynamik_Synthese.md`](Konzept/13_Termin_10_Hybride_Dynamik_Synthese.md) – 10 kompakte, autarke Termin-Steckbriefe (Artefakte, Vorgreif-Sperre, Rückwärts-/Vorwärts-Brücken, Bloom-Lernziele, Hausübung Stufe 1 + Track A/B & Showcase-Fokus pro Termin für gezieltes Context-Loading).
 - `./Folien/[XX_Kapitel_Bezeichnung]/` – MARP-Vorlesungsfolien (`Folien.md`, `Folien_Anhang_*.md`), `Titelbild.jpg`, `./Diagramme/*.svg` (inkl. `.mmd`), `./Illustrationen/`, `./Screenshots/` und `./Tafelbilder/`.
 - `./Uebungen/[Termin_XX_Bezeichnung]/` – Aufgabenblätter (`Aufgabenblatt.md`, `Aufgabenblatt.pdf`) und C#-Projektvorlagen (`./Vorlage/`).
-- `./Moodle/` – Selbständige Moodle-Abschnittsordner (`./Moodle/00_Kurs_Kopfbereich/` bis `./Moodle/10_Termin_10_Hybride_Dynamik_Synthese/`, jeweils mit formelfreiem `Text.md` und lokalem `Banner.jpg`) sowie 10-Varianten-Moodle-XML-Quizzes (`Quiz_01_*` bis `Quiz_04_*`).
+- `./Moodle/` – Selbständige Moodle-Abschnittsordner (`./Moodle/00_Kurs_Kopfbereich/` bis `./Moodle/10_Termin_10_Hybride_Dynamik_Synthese/`, jeweils mit formelfreiem `Text.md`, lokalem `Banner.jpg` sowie – in T03, T05, T08, T10 – dem zugehörigen 10-Varianten-Moodle-XML-Quiz-Unterordner `Quiz_01_*` bis `Quiz_04_*`).
 - `./Export/` – Druckreife Moodle-PDFs (`./Export/Folien/` und `./Export/Uebungen/`).
 - `./Skripte/` – Plattformunabhängige Node.js-Prüf-, Generierungs- und Exportskripte.
 - `./Quellen/` & `./Werkzeuge/` – Reiner C#-Referenzcode (`Quellen.sln`, ohne eingebettete Bild-/Diagramm-Assets) und HiDPI-Grafikgeneratoren (`Werkzeuge/GrafikGenerator/`).
@@ -47,7 +47,7 @@ Alle vorlesungsübergreifenden Regeln sind modular in **6 fokussierten Workspace
    - **Aktivieren bei:** Erstellen oder Ändern von `Uebungen/Termin_XX_*/Aufgabenblatt.md` und `Vorlage/**`.
    - **Kerninhalte:** Zweistufige Hausübung (`Stufe 1: 1.1–1.4` $\to$ `Stufe 2: Track A | Track B`), Symmetrie ohne Redundanz, forensischer Code-Walkthrough gegen `Vorlage/`, *Golden Reference Numbers* (5-Sekunden-Selbsttest), aktive Unit-Tests in `Aufgabe 1.4` (`dotnet test`).
 5. **[`moodle-quizzes`](.agents/skills/moodle-quizzes/SKILL.md):**
-   - **Aktivieren bei:** Erstellen oder Ändern von `Moodle/Quiz_0X_*/**` und `Skripte/generate_moodle_xml_quiz_0X.js`.
+   - **Aktivieren bei:** Erstellen oder Ändern von `Moodle/*/Quiz_0X_*/**` und `Skripte/generate_moodle_xml_quiz_0X.js`.
    - **Kerninhalte:** Strikte Rückwärts-Kausalität, 10-Varianten-Moodle-XML-Architektur (`Test_01..03` Vorbereitung + `Test_04..10` Prüfung via `moodle_xml_builder.js` in 3 Chunks), voller Auto-Grading-Fragetypen-Mix (8 Fragen = 10 Pkt.), Inversion der Fragerichtung, Längen-Symmetrie ($\le 25\,\%$), keine Formeln im Fragetext.
 
 ### Ebene 3: Unabhängige Qualitätssicherung

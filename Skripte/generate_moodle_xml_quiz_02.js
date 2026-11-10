@@ -6,7 +6,7 @@ const quizMeta = {
   terminInfo: 'Zu Beginn von Termin 05 (vor dem Theorie-Impuls zu Kapitel 05)',
   coveredChapters: 'Kapitel 03 (2D-Vektorgrafik & WPF Canvas) und Kapitel 04 (2D-Diagramme, ScottPlot 5, Welford & MSAGL)',
   tabooTopics: 'KEIN 3D / OpenGL / SharpGL (Kapitel 05), keine 4x4-Matrizen, kein Gimbal Lock, kein Multithreading (Kapitel 06), keine FEM-Statik / Cholesky (Kapitel 07)!',
-  moodleDir: 'Moodle/Quiz_02_Termin_05_Vektor_und_Diagramme',
+  moodleDir: 'Moodle/05_Termin_05_3D_OpenGL_Szenengraph/Quiz_02_Vektor_und_Diagramme',
   masterXmlFileName: 'Quiz_02_Termin_05_Alle_10_Tests_Master.xml'
 };
 
