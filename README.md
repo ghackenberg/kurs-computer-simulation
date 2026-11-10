@@ -19,11 +19,11 @@ Der Kurs vermittelt die mathematische Modellierung, numerische Simulation und Ec
   3. [`03_Beurteilung_und_Pruefungen.md`](./Konzept/03_Beurteilung_und_Pruefungen.md) – 5-stufige Lernfortschrittskontrolle, Benotungsmodell (40 % Quiz / 40 % Hausübungen / 20 % Showcase) und AI Honor Code.
 - **[`./Kapitel/`](./Kapitel/)** – Die 12 kapitelzentrierten Modulordner (`00_Prolog` bis `11_Epilog`), in denen jeweils alle Artefakte eines Kapitels gebündelt sind:
   - `README.md` & `Konzept.md` – Kompakte Übersicht und autarker didaktischer Kapitel-Steckbrief.
-  - `Folien/` – MARP-Vorlesungsfolien (`Folien.md` + exportierte `*_Folien.pdf`), `Diagramme/*.svg`, `Illustrationen/`, `Screenshots/` und `Tafelbilder/`.
+  - `Folien/` – MARP-Vorlesungsfolien (`Folien.md`), `Diagramme/*.svg`, `Illustrationen/`, `Screenshots/` und `Tafelbilder/`.
   - `Beispiele/` *(Kap. 02–05, 07–10)* – Lauffähige C#-Vorlesungsbeispiele, HiDPI-Plotgeneratoren und Unit-Tests (`Beispiele.sln`).
-  - `Uebung/` *(Kap. 01–10)* – Zweistufiges `Aufgabenblatt.md` (+ exportierte `*_Aufgabenblatt.pdf`) und kompilierbare C#-Projektvorlage (`./Vorlage/` inkl. Unit-Tests).
-  - `Moodle/` *(Kap. 00–11)* – Formelfreier Moodle-Abschnittstext (`Text.md`) und `Banner.jpg`.
-  - `Quiz/` *(Kap. 03, 05, 08, 10)* – Die 10 modularen Test-Markdown-Dateien (`Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`) sowie die daraus kompilierte Master-XML (`Quiz_0X_Termin_YY.xml`).
+  - `Uebung/` *(Kap. 01–10)* – Zweistufiges `Aufgabenblatt.md` und kompilierbare C#-Projektvorlage (`./Vorlage/` inkl. Unit-Tests).
+  - `Quiz/` *(Kap. 03, 05, 08, 10)* – Die 10 modularen Test-Markdown-Quelldateien (`Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`).
+  - `Moodle/` *(Kap. 00–11)* – Komplette Moodle-Upload-Mappe pro Kapitel: `Text.md`, `Banner.jpg` sowie alle kompilierten Export-Dateien (`*_Folien.pdf`, `*_Aufgabenblatt.pdf`, `Quiz_0X_Termin_YY.xml`).
 - **[`./Skripte/`](./Skripte/)** – Node.js-Skripte für Build Management (`export_to_pdf.js`, `moodle_xml_builder.js`) und Quality Control (`lint_slides_dom.js`, `lint_section_slides.js`, `lint_variable_consistency.js`, `audit_svg_and_charts.js`).
 
 ---
@@ -59,7 +59,7 @@ npm run lint:sections:05
 npm run lint:svg:05
 npm run lint:variables:05
 
-# 3. Druckreife PDFs & Moodle-Master-XMLs direkt in den Kapitelordnern erzeugen
+# 3. Druckreife PDFs & Moodle-Master-XMLs direkt in Kapitel/*/Moodle/ erzeugen
 npm run export:pdf
 npm run export:moodle
 ```

@@ -345,7 +345,7 @@ function writeQuizMarkdownFolder(quizDir, quizMeta, testsData) {
 
   let readme = `# ${quizMeta.title}\n\n`;
   readme += `**Quiz-ID:** \`${quizMeta.quizId}\`  \n`;
-  readme += `**Export-XML:** \`./${exportXmlName}\`  \n`;
+  readme += `**Export-XML:** \`../Moodle/${exportXmlName}\`  \n`;
   readme += `**Prüfungszeitpunkt:** ${quizMeta.terminInfo}  \n`;
   readme += `**Stoffabgrenzung (Rückwärts-Kausalität):** ${quizMeta.coveredChapters}  \n`;
   readme += `**Kausalitäts-Sperre:** ${quizMeta.tabooTopics}\n\n---\n\n`;
@@ -555,7 +555,7 @@ function parseTestMarkdownFile(filePath) {
 
 /**
  * Liest einen Quiz-Ordner (Kapitel/<XX_Kapitel>/Quiz/) mit README.md + Test_01..10.md ein,
- * validiert alle 10 Tests und kompiliert optional Kapitel/<XX_Kapitel>/Quiz/<quizId>.xml
+ * validiert alle 10 Tests und kompiliert optional Kapitel/<XX_Kapitel>/Moodle/<quizId>.xml
  */
 function processQuizFolder(quizDir, options = { writeXml: true }) {
   const readmePath = path.join(quizDir, 'README.md');
@@ -580,7 +580,9 @@ function processQuizFolder(quizDir, options = { writeXml: true }) {
   validateQuizData(quizMeta, testsData);
 
   if (options.writeXml) {
-    const outPath = path.join(quizDir, `${quizMeta.quizId}.xml`);
+    const moodleDir = path.join(path.dirname(quizDir), 'Moodle');
+    fs.mkdirSync(moodleDir, { recursive: true });
+    const outPath = path.join(moodleDir, `${quizMeta.quizId}.xml`);
     fs.writeFileSync(outPath, buildMasterXml(testsData), 'utf8');
     const relOut = path.relative(path.resolve(__dirname, '..'), outPath).replace(/\\/g, '/');
     console.log(`[OK] ${quizMeta.quizId}: 10 Tests (80 Fragen) validiert -> ${relOut}`);

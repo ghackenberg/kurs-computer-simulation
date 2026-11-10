@@ -26,7 +26,7 @@ obj/
 # MARP/Latex/Tikz & Moodle XML build artifacts
 
 *.pdf
-Kapitel/*/Quiz/*.xml
+Kapitel/*/Moodle/*.xml
 
 # Temporary audit artifacts
 .tmp_raster_svg/

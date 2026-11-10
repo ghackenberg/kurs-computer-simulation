@@ -150,8 +150,8 @@ function showHelp() {
 Usage: node Skripte/export_to_pdf.js [Optionen]
 
 Optionen:
-  --slides, -s          Exportiert alle MARP-Foliensätze (Kapitel/*/Folien/*_Folien.pdf)
-  --exercises, -e       Exportiert alle Aufgabenblätter (Kapitel/*/Uebung/*_Aufgabenblatt.pdf)
+  --slides, -s          Exportiert alle MARP-Foliensätze (Kapitel/*/Moodle/*_Folien.pdf)
+  --exercises, -e       Exportiert alle Aufgabenblätter (Kapitel/*/Moodle/*_Aufgabenblatt.pdf)
   --all, -a             Exportiert Foliensätze und Aufgabenblätter (Standard)
   --chapter <XX>, -c    Exportiert nur ein bestimmtes Folienkapitel (z.B. '00', '01', '07')
   --termin <XX>, -t     Exportiert nur ein bestimmtes Aufgabenblatt (z.B. '01', '05', '10')
@@ -171,9 +171,11 @@ Beispiele:
 // ------------------------------------------------------------------------------
 function exportSingleSlideDeck(dirName, marpCmd) {
   const folienDir = path.join(KAPITEL_DIR, dirName, 'Folien');
+  const moodleDir = path.join(KAPITEL_DIR, dirName, 'Moodle');
+  fs.mkdirSync(moodleDir, { recursive: true });
   const inputMd = path.join(folienDir, 'Folien.md');
   const sanitizedName = sanitizeUmlauts(dirName);
-  const exportPdf = path.join(folienDir, `${sanitizedName}_Folien.pdf`);
+  const exportPdf = path.join(moodleDir, `${sanitizedName}_Folien.pdf`);
 
   if (!fs.existsSync(inputMd)) {
     throw new Error(`Datei nicht gefunden: ${inputMd}`);
@@ -185,7 +187,7 @@ function exportSingleSlideDeck(dirName, marpCmd) {
     env.CHROME_PATH = browserExec;
   }
 
-  // CLI-Aufruf marp-cli direkt in den jeweiligen Kapitel/XX_*/Folien/ Ordner
+  // CLI-Aufruf marp-cli direkt in den jeweiligen Kapitel/XX_*/Moodle/ Ordner
   const cmd = `${marpCmd} --no-stdin --theme-set "${THEMEN_CSS}" --allow-local-files --pdf "${inputMd}" -o "${exportPdf}"`;
   execSync(cmd, { stdio: 'pipe', env });
 
@@ -595,13 +597,15 @@ async function exportAllExercises(browser, filterTermin = null) {
     const start = Date.now();
 
     const uebungDir = path.join(KAPITEL_DIR, dir, 'Uebung');
+    const moodleDir = path.join(KAPITEL_DIR, dir, 'Moodle');
+    fs.mkdirSync(moodleDir, { recursive: true });
     const mdPath = path.join(uebungDir, 'Aufgabenblatt.md');
 
     const numMatch = dir.match(/^(\d\d)_/);
     const terminNum = numMatch ? numMatch[1] : 'XX';
 
     const sanitizedDir = sanitizeUmlauts(dir);
-    const exportPdfNamed = path.join(uebungDir, `${sanitizedDir}_Aufgabenblatt.pdf`);
+    const exportPdfNamed = path.join(moodleDir, `${sanitizedDir}_Aufgabenblatt.pdf`);
 
     try {
       const mdContent = fs.readFileSync(mdPath, 'utf8');
