@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#475569" />
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#d97706" />
+    </marker>
+  </defs>
+
+  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="33" class="hdr" fill="#1e40af">Kinematische Kette: Lokale Versätze (T) &amp; Drehungen (R_y)</text>
+
+  <!-- Bodenplatte am Fußpunkt & Ablageziel unter dem TCP -->
+  <ellipse cx="112" cy="236" rx="32" ry="9" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.8" />
+  <ellipse cx="398" cy="234" rx="24" ry="7" fill="#fef3c7" stroke="#d97706" stroke-width="1.6" stroke-dasharray="4,3" />
+
+  <!-- +Y Drehachse oberhalb der Schulter -->
+  <line x1="112" y1="100" x2="112" y2="60" stroke="#16a34a" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arr-green)" />
+  <text x="112" y="50" class="code" fill="#15803d">+Y</text>
+
+  <!-- 1. Standsäule _baseNode + Versatz T_y(HBase) -->
+  <line x1="112" y1="236" x2="112" y2="138" stroke="#64748b" stroke-width="16" stroke-linecap="round" />
+  <circle cx="112" cy="236" r="8.5" fill="#334155" />
+  <line x1="84" y1="230" x2="84" y2="146" stroke="#475569" stroke-width="2.2" marker-end="url(#arr-slate)" />
+  <text x="24" y="186" class="code" fill="#334155">T_y(HBase)</text>
+  <text x="24" y="205" class="sub" fill="#475569">0.50 m</text>
+  <text x="112" y="268" class="code" fill="#334155">_baseNode</text>
+
+  <!-- 2. Schulter _arm1Node: Drehung R_y(theta_1) + Versatz T_x(L1) -->
+  <line x1="112" y1="138" x2="268" y2="118" stroke="#2563eb" stroke-width="14" stroke-linecap="round" />
+  <circle cx="112" cy="138" r="12.5" fill="#1d4ed8" stroke="#ffffff" stroke-width="2" />
+  <path d="M 88 114 A 24 9 0 1 0 136 114" fill="none" stroke="#1d4ed8" stroke-width="2.3" marker-end="url(#arr-blue)" />
+  <text x="24" y="114" class="code" fill="#1d4ed8">R_y(theta_1)</text>
+  <line x1="142" y1="112" x2="234" y2="100" stroke="#2563eb" stroke-width="2.2" marker-end="url(#arr-blue)" />
+  <text x="188" y="88" class="code" fill="#1d4ed8">T_x(L1)</text>
+  <text x="190" y="158" class="code" fill="#1e40af">_arm1Node</text>
+
+  <!-- 3. Ellenbogen _arm2Node: Drehung R_y(theta_2) + Versatz T_x(L2) -->
+  <line x1="268" y1="118" x2="398" y2="154" stroke="#16a34a" stroke-width="11.5" stroke-linecap="round" />
+  <circle cx="268" cy="118" r="11" fill="#15803d" stroke="#ffffff" stroke-width="2" />
+  <path d="M 246 94 A 22 8 0 1 0 290 94" fill="none" stroke="#16a34a" stroke-width="2.3" marker-end="url(#arr-green)" />
+  <text x="268" y="72" class="code" fill="#15803d">R_y(theta_2)</text>
+  <line x1="300" y1="108" x2="388" y2="132" stroke="#16a34a" stroke-width="2.2" marker-end="url(#arr-green)" />
+  <text x="358" y="98" class="code" fill="#15803d">T_x(L2)</text>
+  <text x="320" y="170" class="code" fill="#166534">_arm2Node</text>
+
+  <!-- 4. Vertikale Pinole _pinoleNode: Hub T_y(-d_3) zum TCP -->
+  <line x1="398" y1="154" x2="398" y2="224" stroke="#dc2626" stroke-width="7" stroke-linecap="round" />
+  <circle cx="398" cy="154" r="8.5" fill="#475569" stroke="#ffffff" stroke-width="1.8" />
+  <line x1="418" y1="158" x2="418" y2="216" stroke="#d97706" stroke-width="2.2" marker-end="url(#arr-amber)" />
+  <text x="465" y="190" class="code" fill="#b45309">T_y(-d_3)</text>
+  <text x="324" y="212" class="code" fill="#991b1b">_pinoleNode</text>
+
+  <!-- Gelbe TCP-Kugel -->
+  <circle cx="398" cy="224" r="10" fill="#facc15" stroke="#b45309" stroke-width="2.2" />
+  <text x="398" y="268" class="code" fill="#92400e">TCP (M_TCP)</text>
+
+  <!-- Unten: Matrix-Verkettung -->
+  <rect x="-25" y="288" width="530" height="70" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.8" />
+  <text x="240" y="314" class="code" fill="#1e40af">M_TCP = T_y(HBase) · R_y(theta_1) · T_x(L1)</text>
+  <text x="240" y="341" class="code" fill="#15803d">        · R_y(theta_2) · T_x(L2) · T_y(-d_3)</text>
+</svg>

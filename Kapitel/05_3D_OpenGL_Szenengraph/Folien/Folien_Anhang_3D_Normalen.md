@@ -144,7 +144,6 @@ for (int i = 0; i < stacks; i++)
         SphereVertexNormal(gl, i, j);
         var p1 = ComputeCoordinate(Radius, i, j);
         gl.Vertex(p1.x, p1.y, p1.z);
-
         SphereVertexNormal(gl, i + 1, j);
         var p2 = ComputeCoordinate(Radius, i + 1, j);
         gl.Vertex(p2.x, p2.y, p2.z);

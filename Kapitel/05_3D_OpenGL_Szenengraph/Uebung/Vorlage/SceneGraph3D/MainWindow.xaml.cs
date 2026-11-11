@@ -101,17 +101,18 @@ public partial class MainWindow : Window
         // Tiefenprüfung aktivieren
         gl.Enable(OpenGL.GL_DEPTH_TEST);
 
-        // Phong-Beleuchtungsmodell
+        // Phong-Beleuchtungsmodell: Globales Raumlicht einmalig für die gesamte Szene setzen
         gl.Enable(OpenGL.GL_LIGHTING);
-        gl.Enable(OpenGL.GL_LIGHT0);
+        float[] globalAmbient = [0.25f, 0.25f, 0.25f, 1.0f];
+        gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
+        // Hauptlichtquelle GL_LIGHT0: Position (Punktlicht w=1), Diffus- und Glanzanteil
+        gl.Enable(OpenGL.GL_LIGHT0);
         float[] lightPos = [10.0f, 20.0f, 15.0f, 1.0f];
-        float[] lightAmbient = [0.25f, 0.25f, 0.25f, 1.0f];
         float[] lightDiffuse = [0.85f, 0.85f, 0.85f, 1.0f];
         float[] lightSpecular = [1.0f, 1.0f, 1.0f, 1.0f];
 
         gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, lightPos);
-        gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_AMBIENT, lightAmbient);
         gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE, lightDiffuse);
         gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_SPECULAR, lightSpecular);
 

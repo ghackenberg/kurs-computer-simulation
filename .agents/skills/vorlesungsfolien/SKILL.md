@@ -33,11 +33,16 @@ Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorles
    - **Folie A (`Anwendungsbeispiel ...`):** Fertiges visuelles Ergebnis (Screenshot/Plot rechts) + Praxis-Nutzen links.
    - **Folie B (`Blick unter die Haube: ...`):** Mathematische/algorithmische Herleitung links + maßgeschneidertes Kontrast-SVG (`./Diagramme/...svg`) rechts.
    - **Folie C (`Der Code zu ...`):** Dedizierte, luftige Code-Folie (max. 1 Befehl pro Zeile, keine `;`-Ketten).
-2. **Explizite Konventions-Brücken & `*(Deep Dive)*`-Kennzeichnung:**
+2. **Explizite, problemmotivierte Konventions-Brücken & `*(Deep Dive)*`-Kennzeichnung:**
+   - **Motivation vor Konvention:** Eröffne einen Anwendungsabschnitt niemals mit einem unmotivierten Text-Hinweisblock zu Koordinatensystemen, Händigkeit oder Vorzeichen. Führe zuerst das technische System visuell ein, motiviere die Fragestellung (z. B. warum wir eine analytische Kontrollformel brauchen) und erkläre Achsenrichtungen/Vorzeichen erst genau dort – begleitet von einem passenden Ansichts-/Kontrast-SVG (z. B. Draufsicht mit Fehler-Phantom).
    - Jeder Wechsel von Koordinatensystemen, Achsenrichtungen, Indizes oder Matrix-Reihenfolgen wird direkt auf der Folie mit einer 1-Satz-Eselsbrücke erklärt.
    - Komplexe Vorlagen-Hilfsmethoden mit abweichender Bibliotheks-Konvention tragen im Folientitel den Zusatz `*(Deep Dive – fertig in der Vorlage)*`.
 3. **„Was-passiert-wenn-nicht?“-Motivation:**
    - Jede Schutzmaßnahme, Initialisierung oder numerische Korrektur nennt den konkreten Fehlerfall beim Weglassen (*„Ohne X passiert Fehler Y $\implies$ deshalb brauchen wir X!“*).
+4. **1:1-Deckung zwischen Theorie-Formel & API-Code:**
+   - Wird eine Größe mathematisch als globale Konstante eingeführt (z. B. globales Raumlicht $I_a$), muss auch der gezeigte C#/API-Code (und die `Vorlage/`) exakt diese globale API nutzen – bzw. abweichende Instanz-Parameter explizit einordnen.
+5. **Visuelle Pflicht-Illustration für Speicherpuffer, Transformationen, Winkel & Singularitäten:**
+   - Zentrale Puffer-Strukturen (z. B. Color vs. Depth Buffer), Koordinatenräume/Matrizen (inkl. Vorher-Nachher-Bildwirkung), räumliche Winkeldefinitionen (z. B. Euler-Winkel) sowie **geometrische Singularitäten / Vektor-Entartungen** (z. B. kollabierendes Kreuzprodukt am Pol: *Normalfall vs. Grenzfall*) dürfen niemals nur im Fließtext oder neben Code stehen, sondern erhalten jeweils ein eigenes Kontrast-SVG.
 
 ---
 
@@ -70,5 +75,5 @@ npm run lint:svg:XX
 npm run lint:slides:XX
 npm run export:pdf:XX
 ```
-- Optionale Anhang-Folien (`Folien_Anhang_*.md`) zusätzlich mit `node Skripte/lint_slides_dom.js <Pfad> --skip-schema` prüfen.
+- Optionale Anhang-Folien (`Folien_Anhang_*.md`) werden durch `npm run export:pdf:XX` automatisch als `Moodle/*_Folien_Anhang_*.pdf` mitexportiert und zusätzlich mit `node Skripte/lint_slides_dom.js <Pfad> --skip-schema` geprüft.
 - Bei kurzzeitiger Windows-Dateisperre (`user-mapped section open` durch Marp Preview) den `edit_file`-Aufruf einmal wiederholen.

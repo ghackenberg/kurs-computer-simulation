@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <style>
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+    </style>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+  </defs>
+
+  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="34" class="hdr" fill="#1e40af">Euler-Winkel (Rx, Ry, Rz) im rechtshändigen 3D-Raum</text>
+
+  <!-- Rechte-Hand-Regel Hinweis-Box oben rechts (Breite 212 px) -->
+  <rect x="290" y="48" width="212" height="54" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.6" />
+  <text x="396" y="70" class="code" fill="#0f172a">Rechte-Hand-Regel</text>
+  <text x="396" y="90" class="sub" fill="#475569">Daumen in +Achse &#8594; +Winkel</text>
+
+  <!-- Zentraler 3D-Körper (Greifer-/Flanschquader im Ursprung (235, 184)) -->
+  <polygon points="235,156 273,174 235,192 197,174" fill="#e2e8f0" stroke="#475569" stroke-width="1.8" />
+  <polygon points="197,174 235,192 235,216 197,198" fill="#cbd5e1" stroke="#475569" stroke-width="1.8" />
+  <polygon points="273,174 235,192 235,216 273,198" fill="#94a3b8" stroke="#475569" stroke-width="1.8" />
+
+  <!-- 1. +Y-Achse (Grün, vertikal nach oben) + Yaw Ry -->
+  <line x1="235" y1="184" x2="235" y2="62" stroke="#16a34a" stroke-width="3.2" marker-end="url(#arr-green)" />
+  <text x="255" y="64" class="code" fill="#15803d">+Y</text>
+  <path d="M 196 98 A 42 15 0 1 0 274 98" fill="none" stroke="#16a34a" stroke-width="2.8" marker-end="url(#arr-green)" />
+  <rect x="-20" y="64" width="194" height="50" rx="7" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8" />
+  <text x="77" y="85" class="code" fill="#15803d">1. Ry (Yaw / Gieren)</text>
+  <text x="77" y="104" class="sub" fill="#166534">Schwenken links / rechts</text>
+
+  <!-- 2. +X-Achse (Rot, schräg rechts-vorn) + Pitch Rx -->
+  <line x1="235" y1="184" x2="395" y2="246" stroke="#dc2626" stroke-width="3.2" marker-end="url(#arr-red)" />
+  <text x="415" y="254" class="code" fill="#dc2626">+X</text>
+  <path d="M 332 246 A 18 36 -20 1 0 356 198" fill="none" stroke="#dc2626" stroke-width="2.8" marker-end="url(#arr-red)" />
+  <rect x="314" y="132" width="188" height="50" rx="7" fill="#fef2f2" stroke="#dc2626" stroke-width="1.8" />
+  <text x="408" y="153" class="code" fill="#991b1b">2. Rx (Pitch / Nicken)</text>
+  <text x="408" y="172" class="sub" fill="#991b1b">Heben / Senken</text>
+
+  <!-- 3. +Z-Achse (Blau, schräg links-vorn zum Betrachter) + Roll Rz -->
+  <line x1="235" y1="184" x2="75" y2="246" stroke="#2563eb" stroke-width="3.2" marker-end="url(#arr-blue)" />
+  <text x="52" y="254" class="code" fill="#1d4ed8">+Z</text>
+  <path d="M 114 198 A 18 36 20 1 0 138 246" fill="none" stroke="#2563eb" stroke-width="2.8" marker-end="url(#arr-blue)" />
+  <rect x="-20" y="132" width="188" height="50" rx="7" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8" />
+  <text x="74" y="153" class="code" fill="#1d4ed8">3. Rz (Roll / Rollen)</text>
+  <text x="74" y="172" class="sub" fill="#1e40af">Seitliches Kippen</text>
+
+  <!-- Unten: Verkettung in SceneNode & Gimbal-Lock-Warnung -->
+  <rect x="-20" y="282" width="520" height="76" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
+  <text x="240" y="308" class="code" fill="#92400e">SceneNode:  R = R_y(Ry) · R_x(Rx) · R_z(Rz)   (Reihenfolge Y &#8594; X &#8594; Z)</text>
+  <text x="240" y="336" class="sub" fill="#b45309">Folgeachsen drehen mit &#8594; bei Rx von &#177;90&#176; fluchten Y &amp; Z (Gimbal Lock!)</text>
+</svg>

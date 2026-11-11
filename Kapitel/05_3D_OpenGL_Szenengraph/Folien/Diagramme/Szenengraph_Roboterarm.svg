@@ -1,13 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 450" width="1080" height="450">
-  
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
-      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
-      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; }
+      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
       .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
-      .code-l { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; }
-      .math { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
     </style>
     <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#2563eb" />
@@ -24,82 +20,55 @@
     <marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#475569" />
     </marker>
-    <radialGradient id="grad-amb" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#3b82f6" />
-      <stop offset="100%" stop-color="#2563eb" />
-    </radialGradient>
-    <radialGradient id="grad-diff" cx="35%" cy="30%" r="65%">
-      <stop offset="0%" stop-color="#60a5fa" />
-      <stop offset="65%" stop-color="#1d4ed8" />
-      <stop offset="100%" stop-color="#0f172a" />
-    </radialGradient>
-    <radialGradient id="grad-spec" cx="35%" cy="30%" r="35%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="30%" stop-color="#93c5fd" />
-      <stop offset="70%" stop-color="#1e293b" />
-      <stop offset="100%" stop-color="#0f172a" />
-    </radialGradient>
-    <radialGradient id="grad-phong" cx="35%" cy="30%" r="65%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="18%" stop-color="#93c5fd" />
-      <stop offset="55%" stop-color="#2563eb" />
-      <stop offset="100%" stop-color="#1e3a8a" />
-    </radialGradient>
   </defs>
 
-  <rect x="10" y="8" width="1060" height="434" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  <text x="240" y="33" class="hdr" fill="#1e40af">Analytische Lösung in der XZ-Draufsicht (+Y zum Auge)</text>
 
-  <!-- LINKS: Geometrie & Draufsicht (XZ-Ebene) -->
-  <rect x="26" y="24" width="510" height="402" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
-  <text x="281" y="52" class="hdr" fill="#1e40af">SCARA-Roboter: Kinematische Kette (L1 = 1.0 m, L2 = 0.8 m)</text>
+  <!-- XZ-Achsenkreuz mit Ursprung S = (65, 246) -->
+  <line x1="20" y1="246" x2="462" y2="246" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-slate)" />
+  <line x1="65" y1="246" x2="65" y2="56" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)" />
+  <line x1="65" y1="246" x2="65" y2="296" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arr-red)" />
 
-  <!-- Koordinatenachsen Draufsicht -->
-  <line x1="80" y1="250" x2="480" y2="250" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-slate)" />
-  <line x1="120" y1="295" x2="120" y2="90" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-slate)" />
-  <text x="498" y="255" class="code" fill="#475569">+X</text>
-  <text x="120" y="78" class="code" fill="#475569">-Z</text>
+  <text x="485" y="251" class="code" fill="#475569">+X</text>
+  <text x="132" y="58" class="code" fill="#1d4ed8">-Z (hinten)</text>
+  <text x="128" y="296" class="code" fill="#dc2626">+Z (vorn)</text>
 
-  <!-- Arm 1 (L1 = 1.0 m, Winkel theta1 = 30°) -->
-  <line x1="120" y1="250" x2="293" y2="150" stroke="#2563eb" stroke-width="14" stroke-linecap="round" />
-  <!-- Arm 2 (L2 = 0.8 m, Winkel theta1 + theta2 = -15°) -->
-  <line x1="293" y1="150" x2="438" y2="188" stroke="#16a34a" stroke-width="11" stroke-linecap="round" />
+  <!-- Hilfslinien am Ellenbogen E = (210, 174): +X-Parallele & L1-Verlängerung -->
+  <line x1="210" y1="174" x2="346" y2="174" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,4" />
+  <line x1="210" y1="174" x2="262" y2="148" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,4" />
 
-  <!-- Gelenke -->
-  <circle cx="120" cy="250" r="14" fill="#1e40af" stroke="#ffffff" stroke-width="2.5" />
-  <circle cx="293" cy="150" r="12" fill="#15803d" stroke="#ffffff" stroke-width="2.5" />
-  <circle cx="438" cy="188" r="11" fill="#f59e0b" stroke="#b45309" stroke-width="2.5" />
+  <!-- Arm 1 (L1) von S=(65, 246) nach E=(210, 174) -->
+  <line x1="65" y1="246" x2="210" y2="174" stroke="#2563eb" stroke-width="11" stroke-linecap="round" />
+  <!-- Arm 2 (L2) von E=(210, 174) nach P=(276, 60) -->
+  <line x1="210" y1="174" x2="276" y2="60" stroke="#16a34a" stroke-width="10" stroke-linecap="round" />
 
-  <!-- Beschriftungen frei von Linien -->
-  <text x="72" y="232" class="code" fill="#1e40af">Base</text>
-  <path d="M 185 250 A 65 65 0 0 0 176 217" fill="none" stroke="#d97706" stroke-width="2.5" />
-  <text x="242" y="236" class="code" fill="#b45309">theta_1 = 30°</text>
-  <text x="190" y="168" class="code" fill="#1d4ed8">L1 = 1.0 m</text>
-  <text x="365" y="148" class="code" fill="#15803d">L2 = 0.8 m</text>
-  <text x="438" y="222" class="code" fill="#b45309">TCP (x, y, z)</text>
+  <!-- Gelenke + +Y Punkt-Symbol im Ursprung -->
+  <circle cx="65" cy="246" r="12" fill="#1e40af" stroke="#ffffff" stroke-width="2.2" />
+  <circle cx="65" cy="246" r="3.5" fill="#ffffff" />
+  <circle cx="210" cy="174" r="10.5" fill="#15803d" stroke="#ffffff" stroke-width="2.2" />
+  <circle cx="276" cy="60" r="10.5" fill="#facc15" stroke="#b45309" stroke-width="2.4" />
 
-  <!-- Unten links: Vertikalhub Y -->
-  <rect x="44" y="325" width="474" height="84" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.8" />
-  <text x="281" y="352" class="code" fill="#1e40af">Vertikale Höhe (Y-Achse):  y = HBase - d_3</text>
-  <text x="281" y="378" class="sub" fill="#334155">Mit HBase = 0.50 m und Hub d_3 = 0.15 m &#8594; y = 0.350 m</text>
+  <!-- 1. Winkelbogen theta_1 an der Schulter (r = 56) -->
+  <path d="M 121 246 A 56 56 0 0 0 115 221" fill="none" stroke="#2563eb" stroke-width="2.4" marker-end="url(#arr-blue)" />
+  <text x="166" y="236" class="code" fill="#1d4ed8">theta_1</text>
 
-  <!-- RECHTS: Matrix-Stack vs. Analytische Vorwärtskinematik -->
-  <rect x="556" y="24" width="498" height="402" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
-  <text x="805" y="52" class="hdr" fill="#15803d">Zahlenbeispiel &amp; Deckungstest (Delta = 0.000 mm)</text>
+  <!-- 2. Relativwinkel theta_2 am Ellenbogen (r = 44, zwischen L1-Verlängerung und L2) -->
+  <path d="M 249 154 A 44 44 0 0 0 232 136" fill="none" stroke="#16a34a" stroke-width="2.4" marker-end="url(#arr-green)" />
+  <text x="274" y="131" class="code" fill="#15803d">theta_2</text>
 
-  <!-- Weg 1: Analytische Trigonometrie -->
-  <rect x="576" y="72" width="458" height="145" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.8" />
-  <text x="805" y="98" class="code" fill="#15803d">Weg 1: Analytische Trigonometrie (CalculateAnalyticTcp)</text>
-  <text x="805" y="126" class="math" fill="#0f172a">x = L1 * cos(theta_1) + L2 * cos(theta_1 + theta_2)</text>
-  <text x="805" y="152" class="math" fill="#0f172a">z = -( L1 * sin(theta_1) + L2 * sin(theta_1 + theta_2) )</text>
-  <text x="805" y="180" class="code" fill="#166534">Für theta_1=30°, theta_2=-45° &#8594; x = 1.639 m, z = -0.293 m</text>
-  <text x="805" y="203" class="sub" fill="#475569">Gelbe Kontrollkugel im 3D-Viewport</text>
+  <!-- 3. Gesamtwinkel theta_1 + theta_2 am Ellenbogen (r = 114, von +X-Parallele bis L2) -->
+  <path d="M 324 174 A 114 114 0 0 0 267 75" fill="none" stroke="#d97706" stroke-width="2.5" marker-end="url(#arr-amber)" />
+  <text x="414" y="128" class="code" fill="#b45309">theta_1 + theta_2</text>
 
-  <!-- Weg 2: Szenengraph Matrix-Kette -->
-  <rect x="576" y="232" width="458" height="176" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.8" />
-  <text x="805" y="258" class="code" fill="#b45309">Weg 2: Szenengraph Matrix-Kette (GetWorldPosition)</text>
-  <text x="805" y="286" class="code" fill="#0f172a">M_TCP = T(HBase) * R_y(theta_1) * T(L1) * R_y(theta_2) * T(L2)</text>
-  <text x="805" y="314" class="code" fill="#92400e">_pinoleNode.GetWorldPosition() &#8594; (1.639, 0.350, -0.293) m</text>
-  <rect x="592" y="332" width="426" height="60" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
-  <text x="805" y="357" class="code" fill="#15803d">Deckungsfehler Delta = 0.000 mm (Exakte Deckung!)</text>
-  <text x="805" y="381" class="sub" fill="#334155">Beweist die Korrektheit des Szenengraphen in Echtzeit!</text>
+  <!-- Arm- und TCP-Beschriftungen -->
+  <text x="30" y="226" class="code" fill="#1e40af">+Y</text>
+  <text x="128" y="192" class="code" fill="#1d4ed8">L1</text>
+  <text x="212" y="110" class="code" fill="#15803d">L2</text>
+  <text x="358" y="64" class="code" fill="#92400e">TCP (x, y, z)</text>
+
+  <!-- Unten: Vorzeichen-Aha & Deckungstest -->
+  <rect x="-25" y="310" width="530" height="52" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8" />
+  <text x="240" y="331" class="code" fill="#15803d">+theta_1, +theta_2 drehen in -Z &#8594; Minus bei z  |  y = HBase - d_3</text>
+  <text x="240" y="352" class="sub" fill="#334155">CalculateAnalyticTcp == GetWorldPosition (M_TCP): 0.000 mm Abweichung!</text>
 </svg>

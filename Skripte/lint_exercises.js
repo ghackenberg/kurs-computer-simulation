@@ -134,31 +134,37 @@ function lintChapter(dirName) {
     issues.push({ type: 'MISSING_MOODLE_BANNER', file: `Kapitel/${dirName}/Moodle/Banner.jpg`, message: 'Moodle/Banner.jpg fehlt.' });
   }
 
-  // Folien Legacy & Freshness Check
-  const folienMdPath = path.join(chapDir, 'Folien', 'Folien.md');
-  const folienPdfPath = path.join(moodleDir, `${sanitizedDir}_Folien.pdf`);
+  // Folien (inkl. Folien_Anhang_*.md) Legacy & Freshness Check
+  const folienDirPath = path.join(chapDir, 'Folien');
+  const folienMdPath = path.join(folienDirPath, 'Folien.md');
   if (fs.existsSync(folienMdPath)) {
-    const folienMd = fs.readFileSync(folienMdPath, 'utf8');
-    checkLegacyTermsInText(folienMd, rel(folienMdPath), issues);
-    checkEuroInMath(folienMd, rel(folienMdPath), issues);
+    const slideDecks = ['Folien.md', ...fs.readdirSync(folienDirPath).filter(f => /^Folien_Anhang_.*\.md$/i.test(f)).sort()];
+    for (const deckFile of slideDecks) {
+      const deckMdPath = path.join(folienDirPath, deckFile);
+      const baseDeck = sanitizeUmlauts(path.basename(deckFile, '.md'));
+      const deckPdfPath = path.join(moodleDir, `${sanitizedDir}_${baseDeck}.pdf`);
+      const deckMd = fs.readFileSync(deckMdPath, 'utf8');
+      checkLegacyTermsInText(deckMd, rel(deckMdPath), issues);
+      checkEuroInMath(deckMd, rel(deckMdPath), issues);
 
-    const svgFiles = walkFiles(path.join(chapDir, 'Folien', 'Diagramme'), (_, name) => name.endsWith('.svg'));
-    for (const svgPath of svgFiles) {
-      checkLegacyTermsInText(fs.readFileSync(svgPath, 'utf8'), rel(svgPath), issues);
+      if (!fs.existsSync(deckPdfPath)) {
+        issues.push({ type: 'MISSING_SLIDES_PDF', file: rel(deckPdfPath), message: `Exportierte Folien-PDF für ${deckFile} fehlt. Bitte 'npm run export:pdf:${kapNum}' ausführen.` });
+      } else {
+        const pdfMtime = fs.statSync(deckPdfPath).mtimeMs;
+        const mdMtime = fs.statSync(deckMdPath).mtimeMs;
+        if (pdfMtime + 1000 < mdMtime) {
+          issues.push({
+            type: 'STALE_SLIDES_PDF',
+            file: rel(deckPdfPath),
+            message: `Folien-PDF (${new Date(pdfMtime).toISOString().slice(0, 16)}) ist älter als ${deckFile} (${new Date(mdMtime).toISOString().slice(0, 16)}). Bitte 'npm run export:pdf:${kapNum}' ausführen.`
+          });
+        }
+      }
     }
 
-    if (!fs.existsSync(folienPdfPath)) {
-      issues.push({ type: 'MISSING_SLIDES_PDF', file: rel(folienPdfPath), message: `Exportierte Folien-PDF fehlt. Bitte 'npm run export:pdf:${kapNum}' ausführen.` });
-    } else {
-      const pdfMtime = fs.statSync(folienPdfPath).mtimeMs;
-      const mdMtime = fs.statSync(folienMdPath).mtimeMs;
-      if (pdfMtime + 1000 < mdMtime) {
-        issues.push({
-          type: 'STALE_SLIDES_PDF',
-          file: rel(folienPdfPath),
-          message: `Folien-PDF (${new Date(pdfMtime).toISOString().slice(0, 16)}) ist älter als Folien.md (${new Date(mdMtime).toISOString().slice(0, 16)}). Bitte 'npm run export:pdf:${kapNum}' ausführen.`
-        });
-      }
+    const svgFiles = walkFiles(path.join(folienDirPath, 'Diagramme'), (_, name) => name.endsWith('.svg'));
+    for (const svgPath of svgFiles) {
+      checkLegacyTermsInText(fs.readFileSync(svgPath, 'utf8'), rel(svgPath), issues);
     }
   }
 

@@ -150,18 +150,18 @@ private void OpenGlView_OpenGLInitialized(object sender, OpenGLRoutedEventArgs a
 
 ---
 
-### Warum reicht der 2D-Painter's-Algorithmus in 3D nicht?
+### Framebuffer im GPU-Speicher: Color Buffer & Depth Buffer
 
 <div class="columns">
 <div class="two">
 
-In 2D übermalt das zuletzt gezeichnete Objekt alles Vorherige (**Maler-Prinzip**). Im 3D-Raum führt das ohne Tiefenprüfung zu Fehlern:
+Für jedes Pixel `(x, y)` verwaltet OpenGL im GPU-Speicher zwei gleich große 2D-Raster:
 
-- **Das Verdeckungsproblem:**
-  - Zeichnet man erst einen nahen Würfel (`z = 2 m`) und danach einen fernen (`z = 5 m`), übermalt der ferne Körper den nahen!
-- **Der Tiefenpuffer (`GL_DEPTH_TEST`):**
-  - Die GPU speichert im **Z-Buffer** den Abstand `z_buf` jedes Pixels zur Kamera.
-  - Ein neues Pixel (`z_neu`) wird nur gezeichnet, wenn `z_neu < z_buf` gilt!
+- **1. Color Buffer (`GL_COLOR_BUFFER_BIT`):**
+  - Sichtbare RGBA-Farbe pro Pixel (wie `WriteableBitmap` in T02; Startwert `ClearColor` = `BG`).
+- **2. Depth Buffer / Z-Buffer (`GL_DEPTH_BUFFER_BIT`):**
+  - Kleinster Kameraabstand `z_buf` pro Pixel (Startwert `zFar`).
+  - **Tiefentest (`GL_DEPTH_TEST`):** Überschreibe Farbe und `z_buf` nur, wenn `z_neu < z_buf` gilt!
 
 </div>
 <div class="two">
@@ -273,13 +273,14 @@ $$I_s = k_s \cdot I_{Ls} \cdot \left(\max(0, \vec{r} \cdot \vec{v})\right)^{\alp
 <div class="columns">
 <div class="two">
 
-Bei $n$ aktiven Lichtquellen (`GL_LIGHT0`, `GL_LIGHT1` bis `GL_LIGHT7`) addiert OpenGL die Beiträge $I_d$ und $I_s$ ($I_{d,i}$ und $I_{s,i}$) automatisch auf:
+Bei $n$ Lichtern (`GL_LIGHT0`, `GL_LIGHT1`..`GL_LIGHT7`) addiert OpenGL $I_d, I_s$ ($I_{d,i}, I_{s,i}$) auf das Raumlicht $I_a = k_a \cdot I_{La}$:
 
 $$I_f = I_a + \sum_{i=1}^{n} \left(I_{d,i} + I_{s,i}\right)$$
 
-- **C#-Setup in unserer Laborvorlage (`MainWindow.xaml.cs`):**
-  - `GL_LIGHT0` sitzt bei `(10, 20, 15)` mit `w = 1` (**Punktlichtquelle** im Raum; `w = 0` wäre Sonnen-/Richtungslicht).
-  - Über `GL_COLOR_MATERIAL` steuert `gl.Color(r, g, b)` direkt $k_a, k_d$ (ohne dies bliebe bei aktivem Licht alles grau!).
+- **Globales vs. lokales Ambient:**
+  - **`GL_LIGHT_MODEL_AMBIENT`** (`gl.LightModel`) setzt $I_{La}$ einmalig für die gesamte Szene.
+  - Pro-Licht `GL_AMBIENT` bleibt auf Standard `0` (sonst verwaschen Schatten bei Spotlights!).
+  - `GL_COLOR_MATERIAL` koppelt `gl.Color` an $k_a, k_d$.
 
 </div>
 <div class="two">
@@ -294,18 +295,18 @@ $$I_f = I_a + \sum_{i=1}^{n} \left(I_{d,i} + I_{s,i}\right)$$
 ### Der C#-Code zur Phong-Beleuchtung (`OpenGLInitialized`)
 
 ```csharp
-// 1. Phong-Beleuchtungsmodell und erste Lichtquelle GL_LIGHT0 aktivieren
+// 1. Phong-Beleuchtung aktivieren & globales Raumlicht I_La einmalig für die Szene setzen
 gl.Enable(OpenGL.GL_LIGHTING);
-gl.Enable(OpenGL.GL_LIGHT0);
+float[] globalAmbient = [0.25f, 0.25f, 0.25f, 1.0f]; // Globales Raumlicht I_La
+gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
-// 2. Position (x=10, y=20, z=15, w=1) und Lichtintensitäten (I_La, I_Ld, I_Ls) definieren
+// 2. Punktlicht GL_LIGHT0 (x=10, y=20, z=15, w=1 -> Punktlicht; w=0 wäre Richtungslicht)
+gl.Enable(OpenGL.GL_LIGHT0);
 float[] lightPos      = [10.0f, 20.0f, 15.0f, 1.0f];
-float[] lightAmbient  = [0.25f, 0.25f, 0.25f, 1.0f]; // Grundhelligkeit I_La
-float[] lightDiffuse  = [0.85f, 0.85f, 0.85f, 1.0f]; // Streulicht I_Ld
-float[] lightSpecular = [1.00f, 1.00f, 1.00f, 1.0f]; // Weißes Glanzlicht I_Ls
+float[] lightDiffuse  = [0.85f, 0.85f, 0.85f, 1.0f]; // Streulicht I_Ld,1
+float[] lightSpecular = [1.00f, 1.00f, 1.00f, 1.0f]; // Weißes Glanzlicht I_Ls,1
 
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, lightPos);
-gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_AMBIENT,  lightAmbient);
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE,  lightDiffuse);
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_SPECULAR, lightSpecular);
 
@@ -314,7 +315,7 @@ gl.Enable(OpenGL.GL_COLOR_MATERIAL);
 gl.ColorMaterial(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT_AND_DIFFUSE);
 ```
 
-- Die Arrays `lightPos`, `lightAmbient`, `lightDiffuse` und `lightSpecular` parametrieren `GL_LIGHT0`.
+- `globalAmbient` parametriert das Szenen-Grundlicht; `lightPos`, `lightDiffuse` und `lightSpecular` steuern `GL_LIGHT0`.
 
 ---
 
@@ -426,17 +427,38 @@ Zwischen `gl.Begin(mode)` und `gl.End()` übergeben wir Vertices (`gl.Vertex`), 
 
 ---
 
-### Die Transformations-Pipeline in OpenGL
+### Die ModelView-Matrix (`GL_MODELVIEW`): Vom Bauteil zur Kamera
 
 <div class="columns">
 <div class="two">
 
-Vom Bauteilpunkt $\vec{v}_{\text{obj}}$ über $\mathbf{M}_{\text{model}}, \mathbf{M}_{\text{view}}, \mathbf{M}_{\text{proj}}$ zum Clip-Raum ($\vec{v}_{\text{world}}, \vec{v}_{\text{eye}}, \vec{v}_{\text{clip}}$):
+OpenGL überführt lokale Bauteilpunkte $\vec{v}_{\text{obj}}$ über $\mathbf{M}_{\text{modelview}} = \mathbf{M}_{\text{view}} \cdot \mathbf{M}_{\text{model}}$ in den **Kamera-Raum** ($\vec{v}_{\text{eye}}$):
 
-1. **Model ($\mathbf{M}_{\text{model}}$, $4\times 4$):** $3\times 3$ bildet $\vec{0}\mapsto\vec{0}$ ab (keine Translation!). **Reihenfolge ($\mathbf{T}\cdot\mathbf{R} \neq \mathbf{R}\cdot\mathbf{T}$):**
-   - `T(L1) · R`: Verschiebt zum Gelenk `L1` und dreht dort vor Ort $\checkmark$
-   - `R · T(L1)`: Bauteil schwenkt auf Kreisbahn um `(0,0)`!
-2. **View ($\mathbf{M}_{\text{view}}$) & Projection ($\mathbf{M}_{\text{proj}}$):** Kombiniert als **`GL_MODELVIEW`** und **`GL_PROJECTION`**.
+1. **Model ($\mathbf{M}_{\text{model}}$):** Platziert das Bauteil aus seinem lokalen Ursprung `(0,0,0)` an seine Weltposition $\vec{v}_{\text{world}}$.
+2. **View ($\mathbf{M}_{\text{view}}$, `gl.LookAt`):** OpenGL bewegt keine Kamera $\vec{p}_{\text{eye}}$, sondern schiebt die **gesamte Welt gegenläufig** so, dass die Kamera fest in `(0,0,0)` sitzt und entlang $-Z_{\text{eye}}$ blickt ($z_{\text{eye}} < 0$)!
+- **Warum verschmolzen?** Kamera zurückziehen $\equiv$ Welt wegschieben!
+
+</div>
+<div class="two">
+
+![](./Diagramme/ModelView_Transformation.svg)
+
+</div>
+</div>
+
+---
+
+### Reihenfolge in $\mathbf{M}_{\text{model}}$: Warum gilt $\mathbf{T} \cdot \mathbf{R} \neq \mathbf{R} \cdot \mathbf{T}$?
+
+<div class="columns">
+<div class="two">
+
+Erst homogene $4\times 4$-Matrizen mit $\vec{v} = (x, y, z, 1)^\top$ vereinen Verschiebung $\mathbf{T}$ und Drehung $\mathbf{R}$ in $\mathbf{M}_{\text{model}}$:
+
+- **Warum reicht $3\times 3$ nicht?** Jede $3\times 3$-Matrix bildet $\vec{0} \mapsto \vec{0}$ ab (keine Translation möglich!).
+- **Reihenfolge entscheidet ($\mathbf{T}\cdot\mathbf{R} \neq \mathbf{R}\cdot\mathbf{T}$):**
+  1. **`T(L1) · R`:** Verschiebt erst zum Gelenkpunkt `(L1, 0)` und dreht den Arm dort vor Ort $\checkmark$
+  2. **`R · T(L1)`:** Dreht erst die Achse $\implies$ das Bauteil schwenkt auf einer Kreisbahn um `(0,0)`!
 
 </div>
 <div class="two">
@@ -448,9 +470,9 @@ Vom Bauteilpunkt $\vec{v}_{\text{obj}}$ über $\mathbf{M}_{\text{model}}, \mathb
 
 ---
 
-### Projektionsarten: Orthogonal (`glOrtho`) vs. Perspektivisch (`gluPerspective`)
+### Projektionsmatrix (`GL_PROJECTION`): Sichtvolumen $\to$ NDC-Würfel
 
-Die Projektionsmatrix bestimmt die Form des Sichtvolumens (*View Volume*) und ob ferne Objekte kleiner erscheinen:
+`GL_PROJECTION` staucht das 3D-Sichtvolumen zwischen `near`/`zNear` und `far`/`zFar` abhängig vom Kameraabstand $z$ in den Einheitswürfel **NDC** $[-1, +1]^3$ (`h1`, `h2`):
 
 ![](./Diagramme/Projektionsarten.svg)
 
@@ -509,7 +531,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Vom flachen Zeichencode zur hierarchischen Baumstruktur (Szenengraph)
 - Der OpenGL-Matrix-Stack (`gl.PushMatrix` & `gl.PopMatrix`) und die Skalierungs-Falle
-- Architektur der Klasse `SceneNode` in unserer Laborvorlage (`SceneGraph3D.sln`)
+- Klasse `SceneNode` und Euler-Winkel (`Rx, Ry, Rz`)
 - Lokale vs. globale Transformationsmatrizen (`GetLocalMatrix` & `GetWorldMatrix`)
 - Grundkörper-Rendering mit korrekten Normalen (`DrawCube`, `DrawCylinder`, `DrawSphere`)
 
@@ -573,6 +595,28 @@ In `Scene/SceneNode.cs` kapselt eine einzige Klasse Baumstruktur, Transformation
 | **`RenderCustomGeometry`** | `Action<OpenGL>?` | **C#-Delegate:** Zeichnet die lokale Bauteil-Geometrie (Aufgabe 1.1). |
 | **`Render(OpenGL gl)`** | `void` | Traversiert den Baum rekursiv mit `PushMatrix` / `PopMatrix`. |
 | **`GetWorldMatrix()`** | `Matrix4x4` | Berechnet die $4\times 4$-Weltmatrix für den TCP-Deckungstest! |
+
+---
+
+### Räumliche Orientierung: Euler-Winkel (`Rx`, `Ry`, `Rz`)
+
+<div class="columns">
+<div class="two">
+
+`SceneNode` zerlegt 3D-Drehungen $\mathbf{R} = \mathbf{R}_y(\text{Ry}) \cdot \mathbf{R}_x(\text{Rx}) \cdot \mathbf{R}_z(\text{Rz})$ nach der **Rechte-Hand-Regel** (Daumen in $+$-Achse):
+
+1. **`Ry` (Yaw / Gieren um $+Y$):** Horizontal links/rechts schwenken.
+2. **`Rx` (Pitch / Nicken um $+X$):** Heben und Senken.
+3. **`Rz` (Roll / Rollen um $+Z$):** Seitlich kippen.
+- **Verkettung (`Y → X → Z`):** Folgeachsen drehen mit – bei `Rx = ±90°` fluchten $Y$ und $Z$ (**Gimbal Lock**)!
+
+</div>
+<div class="two">
+
+![](./Diagramme/Euler_Winkel_3D.svg)
+
+</div>
+</div>
 
 ---
 
@@ -701,22 +745,48 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Serielle Kinematik im Szenengraphen: Der SCARA-Roboter
+### Kinematische Kette des SCARA-Roboters im Szenengraphen
 
-In der Automatisierungstechnik sind **SCARA-Roboter** der Standard für schnelle Pick-and-Place-Aufgaben:
+<div class="columns">
+<div class="two">
 
-- **Rechtshändiges OpenGL-Koordinatensystem & Rechte-Hand-Regel:**
-  - $+X$ zeigt nach rechts, $+Y$ nach oben und $+Z$ **aus dem Bildschirm heraus zum Betrachter** (anders als das linkshändige 2D-Canvas in Termin 03!).
-  - Zeigt der Daumen der rechten Hand nach oben ($+Y$), dreht ein positiver Winkel $\theta_1 > 0$ (`gl.Rotate(theta1, 0, 1, 0)`) den Arm von $+X$ **nach hinten in Richtung $-Z$** $\implies$ daher das Minuszeichen bei $z = -(L_1\sin\theta_1 + L_2\sin(\theta_1+\theta_2))$!
-- **Aufbau der Kette in `SceneGraph3D.sln` (`HBase = 0.50 m`, `L1 = 1.00 m`, `L2 = 0.80 m`):**
-  1. **Basis (`_baseNode`):** Steht im Ursprung $(0, 0, 0)$ $\to$ **Schulter (`_arm1Node`):** Auf `Ty = HBase`, Drehung $\mathbf{R}_y(\theta_1)$ um $\theta_1$.
-  2. **Ellenbogen (`_arm2Node`):** Am Ende von Arm 1 (`Tx = L1`), Drehung $\mathbf{R}_y(\theta_2)$ um $\theta_2$ $\to$ **Pinole (`_pinoleNode`, $\mathbf{M}_{\text{TCP}}$):** Bei `Tx = L2`, Hub $-d_3$.
+Ein **SCARA-Roboter** verkettet ab `_baseNode` `(0,0,0)` lokale Versätze ($\mathbf{T}_x, \mathbf{T}_y$) und Drehungen ($\mathbf{R}_y$ um `+Y`):
+
+1. **`_arm1Node`:** Versatz $\mathbf{T}_y(\text{HBase})$ (`0.50 m`) nach oben + Schulterdrehung $\mathbf{R}_y(\theta_1)$.
+2. **`_arm2Node`:** Versatz $\mathbf{T}_x(\text{L1})$ (`1.00 m`) entlang Arm 1 + Relativdrehung $\mathbf{R}_y(\theta_2)$.
+3. **`_pinoleNode`:** Versatz $\mathbf{T}_x(\text{L2})$ (`0.80 m`) + Hub $\mathbf{T}_y(-d_3)$ zum **TCP**:
+
+$$\mathbf{M}_{\text{TCP}} = \mathbf{T}_y(\text{HBase})\,\mathbf{R}_y(\theta_1)\,\mathbf{T}_x(\text{L1})\,\mathbf{R}_y(\theta_2)\,\mathbf{T}_x(\text{L2})\,\mathbf{T}_y(-d_3)$$
+
+</div>
+<div class="two">
+
+![](./Diagramme/SCARA_Kinematik_3D.svg)
+
+</div>
+</div>
 
 ---
 
-### Blick unter die Haube: Vorwärtskinematik & Deckungstest
+### Blick unter die Haube: Analytische Lösung & Deckungstest
+
+<div class="columns">
+<div class="two">
+
+Zur Validierung von $\mathbf{M}_{\text{TCP}}$ (`GetWorldPosition`) zeichnet `CalculateAnalyticTcp` eine **gelbe Kontrollkugel** ($\Delta = 0{,}000\,\text{mm}$; Startpose `30°`, `-45°`, `0.15 m` $\to (1{,}639;\; 0{,}350;\; -0{,}293)\,\text{m}$):
+
+$$x = \text{L1}\cos\theta_1 + \text{L2}\cos(\theta_1+\theta_2), \quad y = \text{HBase} - d_3$$
+$$z = -\big(\text{L1}\sin\theta_1 + \text{L2}\sin(\theta_1+\theta_2)\big)$$
+
+- **Winkel & Minuszeichen:** `L2` schließt zur $+X$-Parallele den Gesamtwinkel $\theta_1 + \theta_2$ ein; von oben (`+Y` zum Auge) dreht $+\theta_1$ nach hinten in **$-Z$**!
+
+</div>
+<div class="two">
 
 ![](./Diagramme/Szenengraph_Roboterarm.svg)
+
+</div>
+</div>
 
 ---
 
@@ -887,25 +957,35 @@ gl.LookAt(
 
 ---
 
-### Gimbal-Lock-Schutz & Kartesische Umrechnung
+### Warum klemmen wir $\phi$ auf $[-85^\circ, +85^\circ]$? Pol-Singularität
 
 <div class="columns">
 <div class="two">
 
-- **Warum klemmen wir $\phi$ auf $[-85^\circ, +85^\circ]$?**
-  - `gl.LookAt` berechnet den horizontalen Kamera-Rechtsvektor über das **Kreuzprodukt** $\vec{f} \times \vec{e}_{\text{up}}$ aus Blickrichtung $\vec{f}$ und Up-Vektor $(0, 1, 0)^\top$.
-  - Bei $\phi = \pm 90^\circ$ steht $\vec{f}$ exakt parallel zu $\vec{e}_{\text{up}}$, das Kreuzprodukt entartet zum **Nullvektor $\vec{0}$** und das Bild kippt um (**Gimbal Lock**)!
-- **Umrechnung in `OrbitCamera.cs`:**
-  - Aus `_azimuthDeg` (`thetaRad`), `_elevationDeg` (`phiRad`) und `_distance` wird `(eyeX, eyeY, eyeZ)` relativ zu `(LookAtX, LookAtY, LookAtZ)` berechnet.
+Der Sehstrahl $\vec{f}$ von $\vec{p}_{\text{eye}}$ nach $\vec{p}_{\text{look}}$ legt nur die Blickachse fest – um die Kamera **waagerecht** zu halten, berechnet `gl.LookAt` den Bild-Rechtsvektor per Kreuzprodukt $\vec{s} = \vec{f} \times \vec{e}_{\text{up}}$:
+
+- **Schräger Blick ($|\phi| \le 85^\circ$):** $\vec{f}$ und $\vec{e}_{\text{up}}$ spannen eine Ebene auf $\implies \vec{s} \neq \vec{0}$ ist eindeutig.
+- **Nord-/Südpol ($\phi = \pm 90^\circ$, Blick senkrecht nach unten):** $\vec{f}$ und $\vec{e}_{\text{up}}$ liegen auf **einer Linie** $\implies \vec{f} \times \vec{e}_{\text{up}} = \vec{0}$ (*„Wo ist im Bild rechts?“* unbestimmt $\to 180^\circ$-Bildsprung, `Math.Clamp` schützt!).
 
 </div>
 <div class="two">
+
+![](./Diagramme/OrbitCamera_Pol_Singularitaet.svg)
+
+</div>
+</div>
+
+---
+
+### Der C#-Code: Pol-Schutz & Umrechnung (`OrbitCamera.cs`)
+
+In `OrbitCamera.cs` klemmt `ElevationDeg` (`_elevationDeg`) via `Math.Clamp` die Pole ab; `GetEyePosition()` rechnet `_azimuthDeg` (`thetaRad`), `phiRad` und `_distance` relativ zu `(LookAtX, LookAtY, LookAtZ)` in `(eyeX, eyeY, eyeZ)` um:
 
 ```csharp
 public double ElevationDeg
 {
     get => _elevationDeg;
-    set => _elevationDeg = Math.Clamp(value, -85.0, 85.0);
+    set => _elevationDeg = Math.Clamp(value, -85.0, 85.0); // 5°-Polkappe gegen f || e_up
 }
 
 public (double EyeX, double EyeY, double EyeZ) GetEyePosition()
@@ -919,9 +999,6 @@ public (double EyeX, double EyeY, double EyeZ) GetEyePosition()
     return (eyeX, eyeY, eyeZ);
 }
 ```
-
-</div>
-</div>
 
 ---
 

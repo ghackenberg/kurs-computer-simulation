@@ -24,7 +24,7 @@
   - `./Beispiele/` *(für Kap. 02–05, 07–10)* – Lauffähige C#-Vorlesungsbeispiele, Plot-Generatoren und zugehörige Unit-Tests (`Beispiele.sln`).
   - `./Uebung/` *(für Kap. 01–10)* – Aufgabenblatt (`Aufgabenblatt.md`) und C#-Projektvorlage (`./Vorlage/`).
   - `./Quiz/` *(in Kap. 03, 05, 08, 10)* – `README.md` sowie die 10 modularen Test-Markdown-Quelldateien (`Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`).
-  - `./Moodle/` *(für Kap. 00–11)* – Zentrale Moodle-Upload-Mappe des Kapitels: formelfreier Abschnittstext (`Text.md`), `Banner.jpg` sowie alle kompilierten Export-Artefakte (`*_Folien.pdf`, `*_Aufgabenblatt.pdf`, `Quiz_0X_Termin_YY.xml`).
+  - `./Moodle/` *(für Kap. 00–11)* – Zentrale Moodle-Upload-Mappe des Kapitels: formelfreier Abschnittstext (`Text.md`), `Banner.jpg` sowie alle kompilierten Export-Artefakte (`*_Folien.pdf`, `*_Folien_Anhang_*.pdf`, `*_Aufgabenblatt.pdf`, `Quiz_0X_Termin_YY.xml`).
 - `./Skripte/` – Plattformunabhängige Node.js-Skripte für Build Management (PDF- & Moodle-XML-Export direkt nach `Kapitel/*/Moodle/`) und Quality Control (Linter für Folien-DOM, Abschnittsschema, SVGs, Variablen-Konsistenz und Quizzes).
 
 ---

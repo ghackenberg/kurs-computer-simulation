@@ -169,13 +169,14 @@ Beispiele:
 // ------------------------------------------------------------------------------
 // 5. MARP Slides Export
 // ------------------------------------------------------------------------------
-function exportSingleSlideDeck(dirName, marpCmd) {
+function exportSingleSlideDeck(dirName, mdFileName, marpCmd) {
   const folienDir = path.join(KAPITEL_DIR, dirName, 'Folien');
   const moodleDir = path.join(KAPITEL_DIR, dirName, 'Moodle');
   fs.mkdirSync(moodleDir, { recursive: true });
-  const inputMd = path.join(folienDir, 'Folien.md');
-  const sanitizedName = sanitizeUmlauts(dirName);
-  const exportPdf = path.join(moodleDir, `${sanitizedName}_Folien.pdf`);
+  const inputMd = path.join(folienDir, mdFileName);
+  const sanitizedDir = sanitizeUmlauts(dirName);
+  const baseDeckName = sanitizeUmlauts(path.basename(mdFileName, '.md'));
+  const exportPdf = path.join(moodleDir, `${sanitizedDir}_${baseDeckName}.pdf`);
 
   if (!fs.existsSync(inputMd)) {
     throw new Error(`Datei nicht gefunden: ${inputMd}`);
@@ -193,8 +194,8 @@ function exportSingleSlideDeck(dirName, marpCmd) {
 
   const stat = fs.statSync(exportPdf);
   return {
-    dirName,
-    sanitizedName,
+    dirName: mdFileName === 'Folien.md' ? dirName : `${dirName} (${mdFileName})`,
+    sanitizedName: `${sanitizedDir}_${baseDeckName}`,
     exportPdf,
     size: stat.size
   };
@@ -202,7 +203,7 @@ function exportSingleSlideDeck(dirName, marpCmd) {
 
 async function exportAllSlides(filterChapter = null) {
   console.log('\n' + '='.repeat(70));
-  console.log(' MARP-FOLIENSÄTZE EXPORTIEREN');
+  console.log(' MARP-FOLIENSÄTZE (INKL. ANHÄNGE) EXPORTIEREN');
   console.log('='.repeat(70));
 
   const marpCmd = getMarpCommand();
@@ -220,20 +221,33 @@ async function exportAllSlides(filterChapter = null) {
     }
   }
 
+  const deckTasks = [];
+  for (const dir of targetDirs) {
+    const folienDir = path.join(KAPITEL_DIR, dir, 'Folien');
+    deckTasks.push({ dir, mdFileName: 'Folien.md' });
+    const anhaenge = fs.readdirSync(folienDir)
+      .filter(f => /^Folien_Anhang_.*\.md$/i.test(f))
+      .sort();
+    for (const anh of anhaenge) {
+      deckTasks.push({ dir, mdFileName: anh });
+    }
+  }
+
   const results = [];
-  for (let idx = 0; idx < targetDirs.length; idx++) {
-    const dir = targetDirs[idx];
-    const progress = `[${idx + 1}/${targetDirs.length}]`;
-    process.stdout.write(`  ${progress} Konvertiere Folien: ${dir} ... `);
+  for (let idx = 0; idx < deckTasks.length; idx++) {
+    const { dir, mdFileName } = deckTasks[idx];
+    const label = mdFileName === 'Folien.md' ? dir : `${dir}/${mdFileName}`;
+    const progress = `[${idx + 1}/${deckTasks.length}]`;
+    process.stdout.write(`  ${progress} Konvertiere Folien: ${label} ... `);
     const start = Date.now();
     try {
-      const res = exportSingleSlideDeck(dir, marpCmd);
+      const res = exportSingleSlideDeck(dir, mdFileName, marpCmd);
       const elapsed = ((Date.now() - start) / 1000).toFixed(1);
       console.log(`OK (${formatBytes(res.size)}, ${elapsed}s)`);
       results.push({ ...res, success: true, elapsed });
     } catch (err) {
       console.log(`FEHLER: ${err.message}`);
-      results.push({ dirName: dir, success: false, error: err.message });
+      results.push({ dirName: label, success: false, error: err.message });
     }
   }
 

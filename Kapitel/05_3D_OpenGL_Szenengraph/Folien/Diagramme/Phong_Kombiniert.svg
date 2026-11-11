@@ -1,12 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
-  
   <defs>
     <style>
       .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
-      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
-      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; }
-      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
-      .code-l { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 12.8px; font-weight: bold; text-anchor: middle; }
       .math { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
     </style>
     <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -18,27 +15,6 @@
     <marker id="arr-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#d97706" />
     </marker>
-    <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#dc2626" />
-    </marker>
-    <marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#475569" />
-    </marker>
-    <radialGradient id="grad-amb" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#3b82f6" />
-      <stop offset="100%" stop-color="#2563eb" />
-    </radialGradient>
-    <radialGradient id="grad-diff" cx="35%" cy="30%" r="65%">
-      <stop offset="0%" stop-color="#60a5fa" />
-      <stop offset="65%" stop-color="#1d4ed8" />
-      <stop offset="100%" stop-color="#0f172a" />
-    </radialGradient>
-    <radialGradient id="grad-spec" cx="35%" cy="30%" r="35%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="30%" stop-color="#93c5fd" />
-      <stop offset="70%" stop-color="#1e293b" />
-      <stop offset="100%" stop-color="#0f172a" />
-    </radialGradient>
     <radialGradient id="grad-phong" cx="35%" cy="30%" r="65%">
       <stop offset="0%" stop-color="#ffffff" />
       <stop offset="18%" stop-color="#93c5fd" />
@@ -48,26 +24,37 @@
   </defs>
 
   <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
-  <text x="240" y="36" class="hdr" fill="#1e40af">Superposition mehrerer Lichtquellen (GL_LIGHT0 .. GL_LIGHT7)</text>
+  <text x="240" y="34" class="hdr" fill="#1e40af">OpenGL-Superposition: Szenen-Ambient &amp; Lichtquellen</text>
 
-  <rect x="-15" y="58" width="175" height="76" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
-  <text x="72" y="82" class="code" fill="#b45309">Licht i = 1 (GL_LIGHT0)</text>
-  <text x="72" y="104" class="code" fill="#0f172a">I_d,1 + I_s,1</text>
-  <text x="72" y="124" class="sub" fill="#92400e">Hauptlicht links</text>
+  <!-- Box 1: Globales Szenen-Ambient -->
+  <rect x="-25" y="52" width="186" height="82" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
+  <text x="68" y="75" class="code" fill="#15803d">GL_LIGHT_MODEL_AMBIENT</text>
+  <text x="68" y="98" class="code" fill="#0f172a">I_a = k_a · I_La</text>
+  <text x="68" y="120" class="sub" fill="#166534">1x Grundlicht der Szene</text>
 
-  <rect x="320" y="58" width="175" height="76" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
-  <text x="407" y="82" class="code" fill="#1d4ed8">Licht i = 2 (GL_LIGHT1)</text>
-  <text x="407" y="104" class="code" fill="#0f172a">I_d,2 + I_s,2</text>
-  <text x="407" y="124" class="sub" fill="#1e40af">Fülllicht / Spot rechts</text>
+  <!-- Box 2: GL_LIGHT0 -->
+  <rect x="171" y="52" width="160" height="82" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
+  <text x="251" y="75" class="code" fill="#b45309">GL_LIGHT0 (i = 1)</text>
+  <text x="251" y="98" class="code" fill="#0f172a">I_d,1 + I_s,1</text>
+  <text x="251" y="120" class="sub" fill="#92400e">Hauptlicht links</text>
 
-  <line x1="125" y1="134" x2="205" y2="195" stroke="#d97706" stroke-width="3" marker-end="url(#arr-amber)" />
-  <line x1="355" y1="134" x2="275" y2="195" stroke="#2563eb" stroke-width="3" marker-end="url(#arr-blue)" />
+  <!-- Box 3: GL_LIGHT1 -->
+  <rect x="341" y="52" width="164" height="82" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
+  <text x="423" y="75" class="code" fill="#1d4ed8">GL_LIGHT1 (i = 2)</text>
+  <text x="423" y="98" class="code" fill="#0f172a">I_d,2 + I_s,2</text>
+  <text x="423" y="120" class="sub" fill="#1e40af">Spotlight rechts</text>
 
-  <circle cx="240" cy="225" r="48" fill="url(#grad-phong)" stroke="#1e3a8a" stroke-width="2.5" />
-  <circle cx="220" cy="205" r="9" fill="#fef3c7" opacity="0.9" />
-  <circle cx="262" cy="212" r="6" fill="#dbeafe" opacity="0.9" />
+  <!-- Pfeile auf das 3D-Objekt -->
+  <line x1="98" y1="134" x2="198" y2="195" stroke="#16a34a" stroke-width="2.6" stroke-dasharray="5,3" marker-end="url(#arr-green)" />
+  <line x1="248" y1="134" x2="242" y2="173" stroke="#d97706" stroke-width="3" marker-end="url(#arr-amber)" />
+  <line x1="388" y1="134" x2="282" y2="195" stroke="#2563eb" stroke-width="3" marker-end="url(#arr-blue)" />
 
-  <rect x="-20" y="292" width="520" height="66" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
-  <text x="240" y="318" class="math" fill="#0f172a">I_f = I_a + sum( I_d,i + I_s,i )   für i = 1 .. n</text>
-  <text x="240" y="344" class="sub" fill="#15803d">Globales I_a wird einmalig addiert; I_d,i und I_s,i pro aktiver Lichtquelle</text>
+  <circle cx="240" cy="226" r="46" fill="url(#grad-phong)" stroke="#1e3a8a" stroke-width="2.5" />
+  <circle cx="222" cy="206" r="8.5" fill="#fef3c7" opacity="0.9" />
+  <circle cx="261" cy="213" r="6" fill="#dbeafe" opacity="0.9" />
+
+  <!-- Formelbox unten -->
+  <rect x="-20" y="286" width="520" height="72" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
+  <text x="240" y="313" class="math" fill="#0f172a">I_f = I_a + sum( I_d,i + I_s,i )   für i = 1 .. n</text>
+  <text x="240" y="341" class="sub" fill="#15803d">I_a global via LightModel; pro Licht GL_AMBIENT auf Standard 0 belassen!</text>
 </svg>

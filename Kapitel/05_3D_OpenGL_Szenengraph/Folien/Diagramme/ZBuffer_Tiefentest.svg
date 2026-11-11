@@ -1,82 +1,81 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
-  
   <defs>
     <style>
       .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
-      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
-      .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; }
-      .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
-      .code-l { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; }
-      .math { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .code { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; text-anchor: middle; }
+      .cell { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; text-anchor: middle; }
     </style>
-    <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#2563eb" />
-    </marker>
-    <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#16a34a" />
-    </marker>
-    <marker id="arr-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#d97706" />
-    </marker>
-    <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#dc2626" />
-    </marker>
     <marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#475569" />
     </marker>
-    <radialGradient id="grad-amb" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#3b82f6" />
-      <stop offset="100%" stop-color="#2563eb" />
-    </radialGradient>
-    <radialGradient id="grad-diff" cx="35%" cy="30%" r="65%">
-      <stop offset="0%" stop-color="#60a5fa" />
-      <stop offset="65%" stop-color="#1d4ed8" />
-      <stop offset="100%" stop-color="#0f172a" />
-    </radialGradient>
-    <radialGradient id="grad-spec" cx="35%" cy="30%" r="35%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="30%" stop-color="#93c5fd" />
-      <stop offset="70%" stop-color="#1e293b" />
-      <stop offset="100%" stop-color="#0f172a" />
-    </radialGradient>
-    <radialGradient id="grad-phong" cx="35%" cy="30%" r="65%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="18%" stop-color="#93c5fd" />
-      <stop offset="55%" stop-color="#2563eb" />
-      <stop offset="100%" stop-color="#1e3a8a" />
-    </radialGradient>
   </defs>
 
   <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
-  <text x="240" y="36" class="hdr" fill="#1e40af">Tiefenpuffer (Z-Buffer): Verdeckungsprüfung pro Pixel</text>
+  <text x="240" y="34" class="hdr" fill="#1e40af">Framebuffer im GPU-Speicher: Color Buffer &amp; Depth Buffer</text>
 
-  <!-- Links: Ohne Depth-Test -->
-  <rect x="-20" y="54" width="248" height="220" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.8" />
-  <text x="104" y="78" class="code" fill="#991b1b">Ohne GL_DEPTH_TEST</text>
-  <text x="104" y="98" class="sub" fill="#7f1d1d">Zuletzt gezeichnet übermalt!</text>
-  <!-- Zwei separate Boxen nebeneinander mit klarer Überlappung in der Mitte ohne Text-Kollision -->
-  <rect x="0" y="118" width="110" height="80" rx="6" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2" />
-  <text x="45" y="148" class="code" fill="#ffffff">Nah</text>
-  <text x="45" y="170" class="code" fill="#dbeafe">z = 2 m</text>
-  <rect x="85" y="142" width="120" height="80" rx="6" fill="#ef4444" stroke="#b91c1c" stroke-width="2.5" />
-  <text x="145" y="175" class="code" fill="#ffffff">Fern (z = 5 m)</text>
-  <text x="145" y="197" class="sub" fill="#fee2e2">übermalt Nah!</text>
-  <text x="104" y="254" class="sub" fill="#dc2626">Falsch: Ferner Körper vorn!</text>
+  <!-- Oben: 3D-Sehstrahl durch Pixel (x, y) -->
+  <rect x="-20" y="46" width="520" height="86" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.6" />
+  <circle cx="16" cy="89" r="7" fill="#0f172a" />
+  <text x="26" y="118" class="code" fill="#0f172a">Kamera</text>
 
-  <!-- Rechts: Mit Depth-Test -->
-  <rect x="252" y="54" width="248" height="220" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8" />
-  <text x="376" y="78" class="code" fill="#15803d">Mit GL_DEPTH_TEST</text>
-  <text x="376" y="98" class="sub" fill="#166534">Prüft z_neu &lt; z_buf pro Pixel</text>
-  <rect x="355" y="142" width="125" height="80" rx="6" fill="#ef4444" stroke="#b91c1c" stroke-width="2" />
-  <text x="430" y="175" class="code" fill="#ffffff">Fern</text>
-  <text x="430" y="197" class="code" fill="#fee2e2">z = 5 m</text>
-  <rect x="272" y="118" width="115" height="80" rx="6" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2.5" />
-  <text x="329" y="150" class="code" fill="#ffffff">Nah (z = 2 m)</text>
-  <text x="329" y="172" class="sub" fill="#dbeafe">verdeckt Fern!</text>
-  <text x="376" y="254" class="sub" fill="#15803d">Korrekt: 2 m verdeckt 5 m</text>
+  <!-- Sehstrahl -->
+  <line x1="25" y1="89" x2="482" y2="89" stroke="#475569" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arr-slate)" />
+  <text x="86" y="73" class="sub" fill="#334155">Pixel (x, y)</text>
 
-  <!-- Unten: Z-Buffer Regel -->
-  <rect x="-20" y="290" width="520" height="68" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.8" />
-  <text x="240" y="316" class="code" fill="#1e40af">gl.Enable(OpenGL.GL_DEPTH_TEST)  (Z-Buffer aktiv)</text>
-  <text x="240" y="342" class="sub" fill="#334155">Speichert pro Bildschirmpixel den kleinsten Abstand z zur Kamera</text>
+  <!-- Naher Körper (#1 gezeichnet) als vertikaler Balken bei x=148 -->
+  <line x1="148" y1="60" x2="148" y2="118" stroke="#2563eb" stroke-width="10" stroke-linecap="round" />
+  <text x="235" y="73" class="code" fill="#1d4ed8">#1: z_neu = 2 m</text>
+  <text x="235" y="113" class="sub" fill="#1e40af">(zuerst gezeichnet)</text>
+
+  <!-- Ferner Körper (#2 danach gezeichnet) als vertikaler Balken bei x=328 -->
+  <line x1="328" y1="58" x2="328" y2="120" stroke="#dc2626" stroke-width="10" stroke-linecap="round" />
+  <text x="412" y="73" class="code" fill="#dc2626">#2: z_neu = 5 m</text>
+  <text x="412" y="113" class="sub" fill="#991b1b">(danach gezeichnet)</text>
+
+  <!-- Unten Links: 1. Color Buffer -->
+  <rect x="-20" y="144" width="250" height="214" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
+  <text x="105" y="168" class="code" fill="#1d4ed8">1. Color Buffer (RGBA)</text>
+  <text x="105" y="188" class="sub" fill="#1e40af">2D-Farbraster (GL_COLOR_BUFFER_BIT)</text>
+
+  <rect x="13" y="200" width="60" height="40" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="43" y="225" class="cell" fill="#cbd5e1">BG</text>
+  <rect x="75" y="200" width="60" height="40" fill="#2563eb" stroke="#facc15" stroke-width="2.5" />
+  <text x="105" y="225" class="cell" fill="#ffffff">Blau</text>
+  <rect x="137" y="200" width="60" height="40" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="167" y="225" class="cell" fill="#cbd5e1">BG</text>
+
+  <rect x="13" y="242" width="60" height="40" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="43" y="267" class="cell" fill="#cbd5e1">BG</text>
+  <rect x="75" y="242" width="60" height="40" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="105" y="267" class="cell" fill="#cbd5e1">BG</text>
+  <rect x="137" y="242" width="60" height="40" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="167" y="267" class="cell" fill="#cbd5e1">BG</text>
+
+  <text x="105" y="308" class="sub" fill="#1e3a8a">Start: ClearColor (BG = 0.08)</text>
+  <text x="105" y="329" class="sub" fill="#15803d">Pixel (x, y) bleibt Blau (#1),</text>
+  <text x="105" y="348" class="sub" fill="#15803d">Rot (#2) übermalt es NICHT!</text>
+
+  <!-- Unten Rechts: 2. Depth Buffer (Z-Buffer) -->
+  <rect x="250" y="144" width="250" height="214" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
+  <text x="375" y="168" class="code" fill="#15803d">2. Depth Buffer (z_buf)</text>
+  <text x="375" y="188" class="sub" fill="#166534">Tiefenraster (GL_DEPTH_BUFFER_BIT)</text>
+
+  <rect x="283" y="200" width="60" height="40" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+  <text x="313" y="225" class="cell" fill="#64748b">zFar</text>
+  <rect x="345" y="200" width="60" height="40" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" />
+  <text x="375" y="225" class="cell" fill="#15803d">2 m</text>
+  <rect x="407" y="200" width="60" height="40" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+  <text x="437" y="225" class="cell" fill="#64748b">zFar</text>
+
+  <rect x="283" y="242" width="60" height="40" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+  <text x="313" y="267" class="cell" fill="#64748b">zFar</text>
+  <rect x="345" y="242" width="60" height="40" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+  <text x="375" y="267" class="cell" fill="#64748b">zFar</text>
+  <rect x="407" y="242" width="60" height="40" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+  <text x="437" y="267" class="cell" fill="#64748b">zFar</text>
+
+  <text x="375" y="308" class="code" fill="#15803d">#1: 2 m &lt; zFar &#8594; Update z_buf</text>
+  <text x="375" y="329" class="code" fill="#dc2626">#2: 5 m &lt; 2 m  &#8594; Verworfen!</text>
+  <text x="375" y="348" class="sub" fill="#334155">Regel: Zeichne nur bei z_neu &lt; z_buf</text>
 </svg>

@@ -37,8 +37,9 @@ Verbindliche Gestaltungs-, Typografie- und Prüfregeln für SVG-Illustrationen i
    - **Gelb/Amber (`#fffbeb` / `#fef3c7` Füllung, `#d97706` Rahmen, `#b45309` Text):** Aktuell geprüfter Index / Zwischenzustand.
    - **Rot (`#fef2f2` / `#fee2e2` Füllung, `#dc2626` Rahmen, `#991b1b` Text):** Fehlerfall, ausgeschlossener Bereich, Engpass.
    - **Grau (`#e2e8f0` Füllung, `#94a3b8` Text):** Ignorierte oder bereits verarbeitete Elemente.
-4. **Variablen-Synchronität (`npm run lint:variables`):**
+4. **Variablen- & Geometrie-Synchronität (`npm run lint:variables`):**
    - Alle alleinstehenden mathematischen Symbole oder `Consolas`-Bezeichner im SVG müssen exakt mit den Bezeichnern im Folientext übereinstimmen.
+   - **Vollständige kinematische & trigonometrische Konstruktion:** Bei kinematischen Ketten oder geometrischen Herleitungen müssen (a) alle Teil-Transformationen ($\mathbf{T}, \mathbf{R}$) als Pfeile/Drehbögen entlang der Kette und (b) in analytischen Skizzen sowohl Einzel-/Relativwinkel (z. B. $\theta_1, \theta_2$) als auch Summenwinkel (z. B. $\theta_1 + \theta_2$ gegen eine gestrichelte Parallel-Hilfslinie) explizit eingezeichnet sein.
 
 ---
 
