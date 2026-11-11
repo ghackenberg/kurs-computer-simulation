@@ -1,17 +1,16 @@
-# Aufgabenblatt Termin 08: Dynamische Modelle Kontinuierlich, S-Function-Architektur & RK4-Solver
-## Lehrveranstaltung: Systemsimulation / Digitaler Zwilling
-### FH Oberösterreich – Campus Wels | Studiengang Automatisierungstechnik
+# Aufgabenblatt 08: Dynamische Modelle Kontinuierlich, S-Function-Architektur & RK4-Solver
 
----
-
-| Metadaten | Details |
-| :--- | :--- |
-| **Lehrveranstaltungseinheit:** | Termin 08 (begleitend zu Kapitel 08: Dynamische Modelle Kontinuierlich) |
-| **Themenschwerpunkt:** | Kontinuierliche DGL-Systeme, S-Function-Architektur, Runge-Kutta 4 (RK4) & PID Anti-Windup Clamping |
-| **Technologie-Stack:** | C# 12 / .NET 8/10, S-Function-Klassenstruktur, ScottPlot 5 / WPF |
-| **Vorgreif-Sperre:** | **Erlaubt:** RK4-Integrator, S-Functions (`Derivatives`, `Outputs`), PID-Clamping, ScottPlot 5.<br>**Strengstens verboten:** *KEINE* Diskrete Ereignissimulation (DES, `PriorityQueue`), *KEINE* Zero-Crossing Wurzelsuche! |
-| **Bearbeitungsform & Zeitbudget:** | **Zweistufige Hausübung im festen 2er-Team (1 Woche):**<br>• **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)<br>• **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause) |
-| **Abgabeform:** | Git-Repository: Sourcecode, Unit-Tests und Markdown-Bericht (`README.md`) |
+**Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
+**Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
+**Institution:** Fachhochschule Oberösterreich – Campus Wels  
+**Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
+- **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
+- **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
+**Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, S-Function-Klassenstruktur, ScottPlot 5 / WPF.  
+> [!CAUTION]
+> **Vorgreif-Sperre für Termin 08:**  
+> - **Erlaubt:** RK4-Integrator, S-Functions (`Derivatives`, `Outputs`), PID-Clamping, ScottPlot 5.  
+> - **Strengstens verboten:** **KEINE** Diskrete Ereignissimulation (DES, `PriorityQueue`), **KEINE** Zero-Crossing Wurzelsuche!
 
 ---
 
@@ -25,7 +24,7 @@ Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
 
 ---
 
-## 2. Mathematisch-Theoretische Grundlagen
+## 2. Mathematische Grundlagen
 
 ### 2.1 S-Function Block-Architektur
 
@@ -110,7 +109,9 @@ $$\frac{\mathrm{d}x_{\text{i}}}{\mathrm{d}t} = \begin{cases} 0 & \text{wenn ges�
   $$\omega_{\infty} = \frac{k_{\text{m}} \cdot u_{\text{A}}}{R_{\text{A}} \cdot d + k_{\text{m}} \cdot k_{\text{e}}} = \frac{2{,}4}{0{,}012} = 200{,}0\,\text{rad/s}$$
   *(Hinweis: Aufgrund von $T_{\text{m}} \approx 0{,}833\,\text{s}$ beträgt die Drehzahl bei $t = 0{,}5\,\text{s}$ erst $\approx 88{,}3\,\text{rad/s}$; der stationäre Endwert $\omega \approx 199{,}99\,\text{rad/s}$ wird nach ca. $10\,T_{\text{m}}$, also bei **$t = 8{,}0\,\text{s}$**, erreicht – siehe Unit-Test `TestIdleSpeedSteadyStateConvergence` in `SFunctionTests.cs`!)*
 
-#### Aufgabenstellung (Schritt für Schritt auf Basis von `Vorlage/SFunctionSimulation.sln`):
+### Aufgabenstellung (auf Basis von `Vorlage/SFunctionSimulation.sln`):
+**Vorbereitung – Starter-Kit untersuchen (`Vorlage/SFunctionSimulation.sln`):**
+- Öffnen Sie die Solution `Vorlage/SFunctionSimulation.sln` und untersuchen Sie das S-Function-Interface (`Core/ISFunction.cs`), den klassischen RK4-Integrator (`Solvers/RungeKutta4Solver.cs`), das 4-Zustands-Servomotormodell (`Models/DCMotorWithAntiWindup.cs`) sowie die `ScottPlot`-Visualisierung in `MainWindow.xaml.cs`.
 
 1. **Aufgabe 1.1 – Expliziter Euler (`EulerExplicitSolver.Step`) & Stabilitätsgrenze testen:**
    - Erstellen Sie im Ordner `Solvers/` (oder in `RungeKutta4Solver.cs`) eine statische Methode `EulerExplicitSolver.Step(ISFunction system, double t, double[] x, double[] u, double h)`:
@@ -124,7 +125,7 @@ $$\frac{\mathrm{d}x_{\text{i}}}{\mathrm{d}t} = \begin{cases} 0 & \text{wenn ges�
 
 ---
 
-## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell – GENAU EINE Aufgabe!)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – KEINE Doppelbelastung!):**  
@@ -218,16 +219,17 @@ Die spektakulären Landungen der SpaceX Falcon 9 Erststufen erfordern eine hochp
 
 ---
 
-## 5. Akzeptanzkriterien & Definition of Done
+## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
 Für die volle Punktzahl (10 Punkte) müssen folgende Kriterien erfüllt sein:
 
 | Kriterium | Punkte | Beschreibung |
 | :--- | :---: | :--- |
-| **S-Function & Mehrstufen-Solver** | **3 P.** | Mathematisch korrekte Kapselung der DGLn in `ISFunction`; saubere Implementierung von Euler (RK1), Heun (RK2) und RK4 ohne Seiteneffekte. |
-| **PID-Kapselung & Anti-Windup Clamping** | **3 P.** | Vollständige Implementierung von Conditional Integration ($e \cdot u_{\text{raw}} > 0$) in einer eigenständigen `PidController`-Klasse. |
-| **Erweiterte Domänenmodellierung & Plots** | **2 P.** | **Track A:** Elektro-thermisches 5-Zustands-Modell ($T_{\text{Cu}}$) mit Derating & Solver-Vergleich.<br>**Track B:** Nichtlineare 6-DOF-Booster-Landung bei Windböe MIT vs. OHNE Anti-Windup in ScottPlot 5. |
-| **Numerische Validierung & Bericht** | **2 P.** | Abgleich gegen den analytischen Grenzfall ($\omega_{\infty} = 200\,\text{rad/s}$ für $t \to 8\,\text{s}$) sowie Schrittweiten-/Stabilitätsdiskussion in `README.md`. |
+| **S-Function & Mehrstufen-Solver** | 3 P. | Mathematisch korrekte Kapselung der DGLn in `ISFunction`; saubere Implementierung von Euler (RK1), Heun (RK2) und RK4 ohne Seiteneffekte. |
+| **PID-Kapselung & Anti-Windup Clamping** | 3 P. | Vollständige Implementierung von Conditional Integration ($e \cdot u_{\text{raw}} > 0$) in einer eigenständigen `PidController`-Klasse. |
+| **Erweiterte Domänenmodellierung & Plots** | 2 P. | **Track A:** Elektro-thermisches 5-Zustands-Modell ($T_{\text{Cu}}$) mit Derating & Solver-Vergleich.<br>**Track B:** Nichtlineare 6-DOF-Booster-Landung bei Windböe MIT vs. OHNE Anti-Windup in ScottPlot 5. |
+| **Numerische Validierung & Bericht** | 2 P. | Abgleich gegen den analytischen Grenzfall ($\omega_{\infty} = 200\,\text{rad/s}$ für $t \to 8\,\text{s}$) sowie Schrittweiten-/Stabilitätsdiskussion in `README.md`. |
+| **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
 ---
 

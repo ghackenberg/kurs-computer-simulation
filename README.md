@@ -24,7 +24,7 @@ Der Kurs vermittelt die mathematische Modellierung, numerische Simulation und Ec
   - `Uebung/` *(Kap. 01–10)* – Zweistufiges `Aufgabenblatt.md` und kompilierbare C#-Projektvorlage (`./Vorlage/` inkl. Unit-Tests).
   - `Quiz/` *(Kap. 03, 05, 08, 10)* – Die 10 modularen Test-Markdown-Quelldateien (`Test_01_Vorbereitung.md` bis `Test_10_Pruefung.md`).
   - `Moodle/` *(Kap. 00–11)* – Komplette Moodle-Upload-Mappe pro Kapitel: `Text.md`, `Banner.jpg` sowie alle kompilierten Export-Dateien (`*_Folien.pdf`, `*_Aufgabenblatt.pdf`, `Quiz_0X_Termin_YY.xml`).
-- **[`./Skripte/`](./Skripte/)** – Node.js-Skripte für Build Management (`export_to_pdf.js`, `moodle_xml_builder.js`) und Quality Control (`lint_slides_dom.js`, `lint_section_slides.js`, `lint_variable_consistency.js`, `audit_svg_and_charts.js`).
+- **[`./Skripte/`](./Skripte/)** – Node.js-Skripte für Build Management (`export_to_pdf.js`, `moodle_xml_builder.js`) und Quality Control (`lint_slides_dom.js`, `lint_section_slides.js`, `lint_variable_consistency.js`, `lint_exercises.js`, `audit_svg_and_charts.js`).
 
 ---
 
@@ -58,6 +58,7 @@ npm run lint:slides:05
 npm run lint:sections:05
 npm run lint:svg:05
 npm run lint:variables:05
+npm run lint:exercises:05
 
 # 3. Druckreife PDFs & Moodle-Master-XMLs direkt in Kapitel/*/Moodle/ erzeugen
 npm run export:pdf

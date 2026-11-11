@@ -67,6 +67,7 @@ Vor jedem Commit nach Folien-, SVG- oder Übungsänderungen müssen die zugehör
   - `npm run lint:sections:XX` – Kapitel-/Abschnittsschema (3:4-Hintergrundbilder, Standard-Einleitungssätze, `Rückblick & Brücke`-Folie, reine Bildsyntax).
   - `npm run lint:svg:XX` – SVG-Qualitäts- & Clipping-Audit.
   - `npm run lint:variables:XX` – Didaktische Variablen-Konsistenz zwischen Text, Formeln, SVGs und Code.
+  - `npm run lint:exercises:XX` – Striktes Schema-Audit für `Aufgabenblatt.md` (8 Abschnitte, 4+4+4-Symmetrie, 10-Pkt.-Rubrik, Altbegriff-Blacklist), `Vorlage/`-Kopplung & Export-Aktualität (`Moodle/*.pdf`, `Moodle/*.xml`).
 - **PDF- & Moodle-XML-Export (direkt nach `Kapitel/XX_*/Moodle/`):** `npm run export:pdf:XX` (Vorlesung `XX` $\to$ `Moodle/*_Folien.pdf`), `npm run export:pdf:uebung:XX` (Übungsblatt `01`–`10` $\to$ `Moodle/*_Aufgabenblatt.pdf`), `npm run export:moodle` (`Moodle/Quiz_0X_Termin_YY.xml`).
 - **Gesamtlauf:** `npm run lint` bzw. `npm run export:pdf` & `npm run export:moodle`.
 

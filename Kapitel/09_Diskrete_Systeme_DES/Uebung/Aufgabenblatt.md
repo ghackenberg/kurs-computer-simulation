@@ -1,17 +1,16 @@
-# Aufgabenblatt Termin 09: Dynamische Modelle Diskret, Diskrete Ereignissimulation (DES) & Warteschlangen
-## Lehrveranstaltung: Systemsimulation / Digitaler Zwilling
-### FH Oberösterreich – Campus Wels | Studiengang Automatisierungstechnik
+# Aufgabenblatt 09: Dynamische Modelle Diskret, Diskrete Ereignissimulation (DES) & Warteschlangen
 
----
-
-| Metadaten | Details |
-| :--- | :--- |
-| **Lehrveranstaltungseinheit:** | Termin 09 (begleitend zu Kapitel 09: Dynamische Modelle Diskret) |
-| **Themenschwerpunkt:** | Diskrete Ereignissimulation (DES), Future Event List (FEL), Inversionsmethode, $M/M/c/K$-Systeme & Little's Gesetz |
-| **Technologie-Stack:** | C# 12 / .NET 8/10, `System.Collections.Generic.PriorityQueue<TElement, TPriority>`, TPL `Parallel.For`, ScottPlot 5 |
-| **Vorgreif-Sperre:** | **Erlaubt:** `PriorityQueue`, stochastische Zufallsgeneratoren, Inversionsmethode, TPL für Replikationen, ScottPlot 5.<br>**Strengstens verboten:** *KEINE* kontinuierlichen DGL-Schaltfunktionen (Zero-Crossing Wurzelsuche)! |
-| **Bearbeitungsform & Zeitbudget:** | **Zweistufige Hausübung im festen 2er-Team (1 Woche):**<br>• **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)<br>• **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause) |
-| **Abgabeform:** | Git-Repository: Sourcecode, Unit-Tests und Markdown-Bericht (`README.md`) |
+**Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
+**Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
+**Institution:** Fachhochschule Oberösterreich – Campus Wels  
+**Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
+- **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
+- **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
+**Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, `System.Collections.Generic.PriorityQueue<TElement, TPriority>`, TPL `Parallel.For`, ScottPlot 5.  
+> [!CAUTION]
+> **Vorgreif-Sperre für Termin 09:**  
+> - **Erlaubt:** `PriorityQueue`, stochastische Zufallsgeneratoren, Inversionsmethode, TPL für Replikationen, ScottPlot 5.  
+> - **Strengstens verboten:** **KEINE** kontinuierlichen DGL-Schaltfunktionen (Zero-Crossing Wurzelsuche)!
 
 ---
 
@@ -26,7 +25,7 @@ Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
 
 ---
 
-## 2. Mathematisch-Theoretische Grundlagen
+## 2. Mathematische Grundlagen
 
 ### 2.1 Das Paradigma der Diskreten Ereignissimulation (DES)
 
@@ -91,7 +90,9 @@ In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/DiscreteEventSimulation.sl
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### Aufgabenstellung (Schritt für Schritt):
+### Aufgabenstellung (auf Basis von `Vorlage/DiscreteEventSimulation.sln`):
+**Vorbereitung – Starter-Kit untersuchen (`Vorlage/DiscreteEventSimulation.sln`):**
+- Öffnen Sie die Solution `Vorlage/DiscreteEventSimulation.sln` und untersuchen Sie die ereignisdiskrete Future Event List (`EventQueue`), die Exponentialverteilung (`ExponentialDistribution`), das Basis-Warteschlangenmodell (`Models/QueueSystem.cs`) sowie das `ScottPlot.WPF`-Dashboard in `MainWindow.xaml.cs`.
 
 1. **Aufgabe 1.1 – Wartepuffer-Kapazität $K$ vs. Systemkapazität & Little's Gesetz unter Blocking (`QueueSystem.cs`):**
    - Starten Sie die Vorlage zunächst mit den Standardwerten ($\lambda = 4{,}0/\text{min}$, $\mu = 5{,}0/\text{min}$, $c = 1$, $K = 0 \implies \infty$) und vergleichen Sie die gemessene mittlere Warteschlangenlänge $\bar{L}_q$ mit dem analytischen Erlang-Wert $L_q = \frac{\rho^2}{1 - \rho} = 3{,}20$.
@@ -118,7 +119,7 @@ In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/DiscreteEventSimulation.sl
 
 ---
 
-## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell – GENAU EINE Aufgabe!)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – KEINE Doppelbelastung!):**  
@@ -229,16 +230,17 @@ In Freizeitpark-Aufbauspielen (*RollerCoaster Tycoon*, *Planet Coaster*) entsche
 
 ---
 
-## 5. Akzeptanzkriterien & Definition of Done
+## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
 Für die volle Punktzahl (10 Punkte) müssen folgende Kriterien erfüllt sein:
 
 | Kriterium | Punkte | Beschreibung |
 | :--- | :---: | :--- |
-| **DES-Engine & PriorityQueue** | **3 P.** | Korrekte Future Event List mit `PriorityQueue`; reiner ereignisdiskreter Zeitsprung ($t \leftarrow t_{\text{event}}$); saubere Trennung von Arrival und Departure. |
-| **Inversionsmethode & Prioritäten** | **3 P.** | Mathematisch exakte Inversionsmethode für $\text{Exp}(\lambda)$; Prioritätsbehandlung (Express/Fastpass) einwandfrei abgebildet. |
-| **Little's Gesetz & Verifikation** | **2 P.** | Empirischer Nachweis von $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ inklusive korrekter Berücksichtigung abgewiesener Einheiten ($P_{\text{Block}}$) im Bericht. |
-| **Monte-Carlo & ScottPlot** | **2 P.** | Parallele Ausführung von 100 Replikationen (`Parallel.For`); Berechnung des 95%-Konfidenzintervalls; ansprechendes Histogramm in ScottPlot 5. |
+| **DES-Engine & PriorityQueue** | 3 P. | Korrekte Future Event List mit `PriorityQueue`; reiner ereignisdiskreter Zeitsprung ($t \leftarrow t_{\text{event}}$); saubere Trennung von Arrival und Departure. |
+| **Inversionsmethode & Prioritäten** | 3 P. | Mathematisch exakte Inversionsmethode für $\text{Exp}(\lambda)$; Prioritätsbehandlung (Express/Fastpass) einwandfrei abgebildet. |
+| **Little's Gesetz & Verifikation** | 2 P. | Empirischer Nachweis von $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ inklusive korrekter Berücksichtigung abgewiesener Einheiten ($P_{\text{Block}}$) im Bericht. |
+| **Monte-Carlo & ScottPlot** | 2 P. | Parallele Ausführung von 100 Replikationen (`Parallel.For`); Berechnung des 95%-Konfidenzintervalls; ansprechendes Histogramm in ScottPlot 5. |
+| **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
 ---
 

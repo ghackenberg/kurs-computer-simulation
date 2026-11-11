@@ -1,17 +1,15 @@
-# Aufgabenblatt Termin 10: Hybride Dynamik, Zero-Crossing Wurzelsuche & Zeno-Vermeidung
-## Lehrveranstaltung: Systemsimulation / Digitaler Zwilling
-### FH Oberösterreich – Campus Wels | Studiengang Automatisierungstechnik
+# Aufgabenblatt 10: Hybride Dynamik, Zero-Crossing Wurzelsuche & Zeno-Vermeidung
 
----
-
-| Metadaten | Details |
-| :--- | :--- |
-| **Lehrveranstaltungseinheit:** | Termin 10 (begleitend zu Kapitel 10: Dynamische Modelle Hybrid & Kapitel 11: Epilog) |
-| **Themenschwerpunkt:** | Hybride Automaten, Zero-Crossing-Funktionen $z(\mathbf{x})=0$, Bisektions-Nullstellensuche & Zeno-Schutz |
-| **Technologie-Stack:** | C# 12 / .NET 8/10, S-Functions, Bisektion, WPF Canvas / ScottPlot 5 |
-| **Vorgreif-Sperre:** | **Keine Vorgreif-Sperre!** Der gesamte Semester-Stack (DGL, S-Functions, TPL, WPF Canvas, ScottPlot 5) steht uneingeschränkt zur Verfügung! |
-| **Bearbeitungsform & Zeitbudget:** | **Zweistufige Hausübung im festen 2er-Team (1 Woche):**<br>• **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)<br>• **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause) |
-| **Abgabeform:** | Git-Repository: Sourcecode, Unit-Tests und Markdown-Bericht (`README.md`) |
+**Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
+**Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
+**Institution:** Fachhochschule Oberösterreich – Campus Wels  
+**Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
+- **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
+- **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
+**Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, S-Functions, Bisektion, WPF Canvas / ScottPlot 5.  
+> [!CAUTION]
+> **Vorgreif-Sperre für Termin 10:**  
+> - **Keine Vorgreif-Sperre!** Der gesamte Semester-Stack (DGL, S-Functions, TPL, WPF Canvas, ScottPlot 5) steht uneingeschränkt zur Verfügung!
 
 ---
 
@@ -26,7 +24,7 @@ Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
 
 ---
 
-## 2. Mathematisch-Theoretische Grundlagen
+## 2. Mathematische Grundlagen
 
 ### 2.1 Hybrider Automat & Zero-Crossing
 
@@ -100,7 +98,9 @@ In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/HybridZeroCrossing.sln`) s
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### Aufgabenstellung (Schritt für Schritt):
+### Aufgabenstellung (auf Basis von `Vorlage/HybridZeroCrossing.sln`):
+**Vorbereitung – Starter-Kit untersuchen (`Vorlage/HybridZeroCrossing.sln`):**
+- Öffnen Sie die Solution `Vorlage/HybridZeroCrossing.sln` und untersuchen Sie das hybride Kontaktmodell (`Models/BouncingContactModel.cs`), den Bisektions-Wurzelsucher (`BisectionRootFinder`) sowie die gekoppelte `WPF Canvas`- und `ScottPlot.WPF`-Ansicht in `MainWindow.xaml.cs`.
 
 1. **Aufgabe 1.1 – Bodenpenetration & Energieverhältnis beim naiven Festschritt messen (`BouncingContactModel.cs`):**
    - Starten Sie die Vorlage im Modus **„Bisektion (Zero-Crossing exakt)“** und beobachten Sie in der Statusleiste die maximale Bodenpenetration (`Max. Penetr.: 0.00 mm`) sowie das exakte Energieverhältnis $\frac{E_{\text{nach}}}{E_{\text{vor}}} = e^2 = 0{,}6400$.
@@ -124,7 +124,7 @@ In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/HybridZeroCrossing.sln`) s
 
 ---
 
-## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell – GENAU EINE Aufgabe!)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – KEINE Doppelbelastung!):**  
@@ -232,16 +232,17 @@ Ein klassischer Flipperautomat lebt von rasanter Kugelmechanik. Trifft die Metal
 
 ---
 
-## 5. Akzeptanzkriterien & Definition of Done
+## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
 Für die volle Punktzahl (10 Punkte) müssen folgende Kriterien erfüllt sein:
 
 | Kriterium | Punkte | Beschreibung |
 | :--- | :---: | :--- |
-| **Zero-Crossing Bisektion** | **3 P.** | Mathematisch exakte Formulierung von $z(\mathbf{x})$; robuste Bisektion auf $|z| < 10^{-6}\,\text{m}$; absolutes Verhindern von Tunneling. |
-| **Zeno-Schutz & Reibung** | **3 P.** | Sichere Erkennung von Chattering über Schwellwert $\epsilon_v$; stabiler Übergang in den Haft- bzw. Rollzustand ohne Hängenbleiben in der Integrationsschleife. |
-| **Szenario-Funktionalität** | **2 P.** | **Track A:** Vollständige SPS-Schrittkette mit Pneumatik-Kopplung.<br>**Track B:** Aktive Bumper ($e = 1{,}2$) und beweglicher Flipperhebel. |
-| **Visualisierung & Dokumentation** | **2 P.** | Flüssiges Canvas-Rendering; ScottPlot-Telemetrie; sauberer Markdown-Bericht mit Phasenportrait und Energieanalyse. |
+| **Zero-Crossing Bisektion** | 3 P. | Mathematisch exakte Formulierung von $z(\mathbf{x})$; robuste Bisektion auf $|z| < 10^{-6}\,\text{m}$; absolutes Verhindern von Tunneling. |
+| **Zeno-Schutz & Reibung** | 3 P. | Sichere Erkennung von Chattering über Schwellwert $\epsilon_v$; stabiler Übergang in den Haft- bzw. Rollzustand ohne Hängenbleiben in der Integrationsschleife. |
+| **Szenario-Funktionalität** | 2 P. | **Track A:** Vollständige SPS-Schrittkette mit Pneumatik-Kopplung.<br>**Track B:** Aktive Bumper ($e = 1{,}2$) und beweglicher Flipperhebel. |
+| **Visualisierung & Dokumentation** | 2 P. | Flüssiges Canvas-Rendering; ScottPlot-Telemetrie; sauberer Markdown-Bericht mit Phasenportrait und Energieanalyse. |
+| **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
 ---
 

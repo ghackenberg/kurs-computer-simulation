@@ -54,6 +54,9 @@ $$\tau = \frac{0 - y_k}{y_{k+1} - y_k} \in [0, 1] \implies t^* = t_k + \tau \cdo
 **Ziel:** Vervollständigen Sie als ersten Schritt Ihrer Hausübung (**Stufe 1**) den expliziten Euler-Integrator (`StepEuler`), die lineare Schnittpunkt-Interpolation (`InterpolateGroundImpact`) sowie das Prädiktor-Korrektor-Verfahren nach Heun (`StepHeun`), bringen Sie alle Unit-Tests (`dotnet test`) auf Grün und analysieren Sie den systematischen Höhen- und Reichweitenfehler beim schiefen Wurf im Vakuum.
 
 ### Aufgabenstellung (auf Basis von `Vorlage/KinematikEuler.sln`):
+**Vorbereitung – Starter-Kit untersuchen (`Vorlage/KinematikEuler.sln`):**
+- Öffnen Sie die Solution `Vorlage/KinematikEuler.sln` und machen Sie sich mit der Struktur aus Hauptprogramm (`Program.cs`), Zustands-Modell (`Models/KinematicState.cs`), Solver (`Solvers/EulerIntegrator.cs`) und Testprojekt (`KinematikEuler.Tests/KinematikEulerTests.cs`) vertraut.
+
 1. **Aufgabe 1.1 – Zustandsraum-Inspektion (`Models/KinematicState.cs`):**
    - Öffnen Sie `Vorlage/KinematikEuler.sln` und betrachten Sie das unveränderliche Zustands-Struct in `Models/KinematicState.cs`:
    ```csharp

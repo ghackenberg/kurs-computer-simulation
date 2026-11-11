@@ -53,6 +53,9 @@ Die Vorlage enthält bereits die Klassen `CircularBuffer<T>` und `WelfordStatist
 **Ziel der Basisaufgabe (Stufe 1):** Decken Sie einen versteckten Garbage-Collection-Bug im 50-Hz-Timer-Loop auf, werten Sie das gleitende Zeitfenster des Ringpuffers aus und erweitern Sie den Plot um einen entprellten Anomalie-Detektor sowie einen zweiten Signalkanal!
 
 ### Aufgabenstellung (auf Basis von `Vorlage/ScottPlotTelemetry.sln`):
+**Vorbereitung – Starter-Kit untersuchen (`Vorlage/ScottPlotTelemetry.sln`):**
+- Öffnen Sie die Solution `Vorlage/ScottPlotTelemetry.sln` und untersuchen Sie den Aufbau von `CircularBuffer.cs`, `WelfordStatistics.cs` und der 50-Hz-Timer-Schleife in `MainWindow.xaml.cs`.
+
 1. **Aufgabe 1.1 – GC-Leak-Jagd & Fix im 50-Hz-Streaming-Loop (`MainWindow.xaml.cs`):**
    - Starten Sie `ScottPlotTelemetry` und führen Sie die bestehenden Unit-Tests (`dotnet test`) aus (beachten Sie insbesondere `Test_Welford_CatastrophicCancellation_Resistance` mit Offset $10^9$).
    - **Code-Audit in `OnTelemetryTick`:** Obwohl die Statusleiste *„0 Byte GC-Streaming“* verspricht, werden in `OnTelemetryTick` (bei der Farbzuweisung von `StatusBadge.Background` und `TxtStatusBadge.Foreground`) 50 Mal pro Sekunde neue `new SolidColorBrush(Color.FromRgb(...))`-Objekte auf dem Managed Heap allokiert!

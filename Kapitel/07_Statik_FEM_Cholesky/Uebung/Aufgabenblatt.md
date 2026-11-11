@@ -1,17 +1,16 @@
-# Aufgabenblatt Termin 07: Statische Modelle, FEM-Fachwerke & Cholesky-Löser
-## Lehrveranstaltung: Systemsimulation / Digitaler Zwilling
-### FH Oberösterreich – Campus Wels | Studiengang Automatisierungstechnik
+# Aufgabenblatt 07: Statische Modelle, FEM-Fachwerke & Cholesky-Löser
 
----
-
-| Metadaten | Details |
-| :--- | :--- |
-| **Lehrveranstaltungseinheit:** | Termin 07 (begleitend zu Kapitel 07: Statische Modelle) |
-| **Themenschwerpunkt:** | Finite-Elemente-Methode (FEM) für 2D-Fachwerke, `MathNet.Numerics`, Cholesky-Zerlegung & Blockpartitionierung |
-| **Technologie-Stack:** | C# 12 / .NET 8/10, `MathNet.Numerics`, WPF Canvas (Frontend aus Termin 03) |
-| **Vorgreif-Sperre:** | **Erlaubt:** `MathNet.Numerics` (DenseMatrix, Vector, Cholesky), WPF Canvas Vektorgrafik.<br>**Strengstens verboten:** *KEINE* dynamischen DGL-Integratoren (RK4), *KEINE* S-Functions, *KEINE* Event-Queues! |
-| **Bearbeitungsform & Zeitbudget:** | **Zweistufige Hausübung im festen 2er-Team (1 Woche):**<br>• **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)<br>• **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause) |
-| **Abgabeform:** | Git-Repository: Sourcecode, Unit-Tests und Markdown-Bericht (`README.md`) |
+**Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
+**Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
+**Institution:** Fachhochschule Oberösterreich – Campus Wels  
+**Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
+- **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
+- **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
+**Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, `MathNet.Numerics`, WPF Canvas (Frontend aus Termin 03).  
+> [!CAUTION]
+> **Vorgreif-Sperre für Termin 07:**  
+> - **Erlaubt:** `MathNet.Numerics` (`DenseMatrix`, `Vector`, `Cholesky`), WPF Canvas Vektorgrafik.  
+> - **Strengstens verboten:** **KEINE** dynamischen DGL-Integratoren (RK4), **KEINE** S-Functions, **KEINE** Event-Queues!
 
 ---
 
@@ -28,7 +27,7 @@ Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
 
 ---
 
-## 2. Mathematisch-Theoretische Grundlagen
+## 2. Mathematische Grundlagen
 
 ### 2.1 Elementsteifigkeitsmatrix des 2D-Stabes
 
@@ -98,7 +97,9 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
   - Zugband Stab 3 (Zug): $N_3 = +\frac{F}{2} = +5{,}000\,\text{kN}$ (blau)
   - Auflagerkräfte vertikal: $F_{y1} = +5{,}000\,\text{kN}$, $F_{y2} = +5{,}000\,\text{kN}$, Gleichgewichtsfehler $|\sum F_x|, |\sum F_y| < 10^{-11}\,\text{N}$.
 
-#### Aufgabenstellung (Schritt für Schritt auf Basis von `Vorlage/TrussFemSolver.sln`):
+### Aufgabenstellung (auf Basis von `Vorlage/TrussFemSolver.sln`):
+**Vorbereitung – Starter-Kit untersuchen (`Vorlage/TrussFemSolver.sln`):**
+- Öffnen Sie die Solution `Vorlage/TrussFemSolver.sln` und untersuchen Sie die bereitgestellte 2D-FEM-Engine (`Fem/TrussElement.cs`, `Fem/GlobalStiffnessMatrix.cs`, `Fem/CholeskySolver.cs`) sowie die Canvas-Visualisierung in `MainWindow.xaml.cs`.
 
 1. **Aufgabe 1.1 – Auflager-Symbole sowie Last- und Reaktionskraft-Pfeile in `RenderCanvas()` ergänzen:**
    - Starten Sie `TrussFemSolver` und verifizieren Sie, dass die Telemetrie exakt `Max. Verschiebung: 1,823 mm` und `F_y1: 5,00 kN | F_y2: 5,00 kN` anzeigt.
@@ -117,7 +118,7 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
 
 ---
 
-## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell – GENAU EINE Aufgabe!)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – KEINE Doppelbelastung!):**  
@@ -223,16 +224,17 @@ Im Simulationsspiel-Klassiker *Bridge Constructor* entwerfen Spieler Brücken ü
 
 ---
 
-## 5. Akzeptanzkriterien & Definition of Done
+## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
 Für die volle Punktzahl (10 Punkte) müssen folgende Kriterien erfüllt sein:
 
 | Kriterium | Punkte | Beschreibung |
 | :--- | :---: | :--- |
-| **FEM-Modell & Cholesky-Solver** | **3 P.** | Korrekte Elementmatrizen, fehlerfreie Assemblierung und exakte Blockpartitionierung; robuster Cholesky-Solve über `MathNet.Numerics`. |
-| **Verheiratung mit T03-Canvas** | **3 P.** | Nahtlose grafische Darstellung im Canvas; Verformungsüberhöhung, Farbcodierung der Zug-/Druckkräfte und dynamische Lastdarstellung. |
-| **Erweiterte Tragwerksmechanik** | **2 P.** | **Track A:** Euler-Knicknachweis mit Querschnittswerten.<br>**Track B:** Physikalischer Stabbruch bei $N_{\text{zul}}$, sicheres Abfangen nicht-SPD-Matrizen und Einsturzanimation. |
-| **Gleichgewichtsnachweis & Bericht** | **2 P.** | Automatisierter Invarianten-Check ($\sum F_x = 0, \sum F_y = 0$ auf Maschinengenauigkeit); sauberer Markdown-Bericht mit Diagrammen und Verformungsbildern. |
+| **FEM-Modell & Cholesky-Solver** | 3 P. | Korrekte Elementmatrizen, fehlerfreie Assemblierung und exakte Blockpartitionierung; robuster Cholesky-Solve über `MathNet.Numerics`. |
+| **Verheiratung mit T03-Canvas** | 3 P. | Nahtlose grafische Darstellung im Canvas; Verformungsüberhöhung, Farbcodierung der Zug-/Druckkräfte und dynamische Lastdarstellung. |
+| **Erweiterte Tragwerksmechanik** | 2 P. | **Track A:** Euler-Knicknachweis mit Querschnittswerten.<br>**Track B:** Physikalischer Stabbruch bei $N_{\text{zul}}$, sicheres Abfangen nicht-SPD-Matrizen und Einsturzanimation. |
+| **Gleichgewichtsnachweis & Bericht** | 2 P. | Automatisierter Invarianten-Check ($\sum F_x = 0, \sum F_y = 0$ auf Maschinengenauigkeit); sauberer Markdown-Bericht mit Diagrammen und Verformungsbildern. |
+| **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
 ---
 

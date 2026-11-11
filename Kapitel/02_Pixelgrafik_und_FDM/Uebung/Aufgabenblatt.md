@@ -60,6 +60,9 @@ Die Vorlage enthält bereits ein lauffähiges $128 \times 128$ Basis-Gitter (`fl
 **Ziel der Basisaufgabe (Stufe 1):** Analysieren Sie das Stabilitätsverhalten und erweitern Sie die Basis-Vorlage um eine vorberechnete **256-Stufen-Look-Up-Table (LUT)** sowie **interaktives Maus-Zeichnen von Wärmequellen und Isolator-Wänden** (als direktes Fundament für Stufe 2 Track A und Track B!).
 
 ### Aufgabenstellung (auf Basis von `Vorlage/PixelHeatFDM.sln`):
+**Vorbereitung – Starter-Kit untersuchen (`Vorlage/PixelHeatFDM.sln`):**
+- Öffnen Sie die Solution `Vorlage/PixelHeatFDM.sln` und verschaffen Sie sich einen Überblick über das Wärmegitter (`HeatGrid.cs`), den `WriteableBitmap`-Renderer (`BitmapHeatRenderer.cs`) und die UI-Schleife (`MainWindow.xaml.cs`).
+
 1. **Aufgabe 1.1 – Code-Walkthrough & Experimenteller Von-Neumann-Stresstest ($s > 0{,}25$):**
    - Starten Sie `PixelHeatFDM` und führen Sie die bestehenden Unit-Tests (`dotnet test`) aus.
    - Prüfen Sie die Parameter in `HeatGrid.cs`: $\alpha = 1{,}0 \times 10^{-4}\,\text{m}^2/\text{s}$, $\Delta x = 1\,\text{mm} = 0{,}001\,\text{m} \implies \Delta t_{\text{krit}} = \frac{\Delta x^2}{4\alpha} = 0{,}0025\,\text{s}$.

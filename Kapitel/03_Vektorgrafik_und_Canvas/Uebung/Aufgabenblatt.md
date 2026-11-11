@@ -59,13 +59,16 @@ $$\vec{p}_{\text{left}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} 
 
 ---
 
-### 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
+## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
 **Basis-Projekt:** Öffnen Sie die bereitgestellte Projektvorlage `Vorlage/VectorTrussCanvas.sln` (`Transform2D.cs`, `VectorArrow.cs`, `TrussGeometry.cs`, `MainWindow.xaml.cs`).  
 Die Vorlage enthält bereits die Basisklasse `Transform2D`, das Dreieckstragwerk `CreateStage1Triangle()` sowie die Pfeilspitzen-Methode `VectorArrow.AddForceArrow` und die horizontale Gesamtmaßkette `AddHorizontalDimensionLine`.  
 **Ziel der Basisaufgabe (Stufe 1):** Analysieren Sie die Welt-zu-Bildschirm-Transformation, beheben Sie das Koordinaten-Jittering beim Drag-and-Drop und erweitern Sie den Viewer um Live-Stablängen und eine vertikale DIN-406-Höhenbemaßung (als direktes Fundament für Stufe 2 Track A und Track B!).
 
 ### Aufgabenstellung (auf Basis von `Vorlage/VectorTrussCanvas.sln`):
+**Vorbereitung – Starter-Kit untersuchen (`Vorlage/VectorTrussCanvas.sln`):**
+- Öffnen Sie `Vorlage/VectorTrussCanvas.sln` und sichten Sie das Zusammenspiel aus `Transform2D.cs`, `VectorArrow.cs`, `TrussGeometry.cs` und `MainWindow.xaml.cs`.
+
 1. **Aufgabe 1.1 – Code-Walkthrough & Seitenverhältnis-Test (`Transform2D.cs`):**
    - Starten Sie `VectorTrussCanvas` und führen Sie die bestehenden Unit-Tests (`dotnet test`) aus.
    - Ziehen Sie das Anwendungsfenster extrem schmal und extrem breit: Prüfen Sie, wie `s = Math.Min(sx, sy)` und die Zentrierungs-Offsets `OffsetX`, `OffsetY` das Dreieck ($K_1=(0,0)$, $K_2=(4,0)$, $K_3=(2,2)$) verzerrungsfrei zentrieren.

@@ -1,17 +1,16 @@
-# Aufgabenblatt Termin 06: Multithreading, TPL & Reaktive WPF-Entkopplung
-## Lehrveranstaltung: Systemsimulation / Digitaler Zwilling
-### FH Oberösterreich – Campus Wels | Studiengang Automatisierungstechnik
+# Aufgabenblatt 06: Multithreading, TPL & Reaktive WPF-Entkopplung
 
----
-
-| Metadaten | Details |
-| :--- | :--- |
-| **Lehrveranstaltungseinheit:** | Termin 06 (begleitend zu Kapitel 06: Multithreading & Parallele Simulation) |
-| **Themenschwerpunkt:** | Task Parallel Library (`Parallel.For`), Thread-Sicherheit (`Interlocked`, `Random`), Amdahlsches Gesetz & Reaktive WPF-Entkopplung (`async/await`, `Task.Run`, `IProgress<T>`, `CancellationToken`) |
-| **Technologie-Stack:** | C# 12 / .NET 8 (`net8.0-windows`), WPF (`WriteableBitmap`), TPL, `System.Diagnostics.Stopwatch`, `System.Threading` |
-| **Vorgreif-Sperre:** | **Erlaubt:** TPL, `Parallel.For`, `ParallelOptions`, `Interlocked`, `ConcurrentBag<T>`, `Task.Run`, `IProgress<T>`, `CancellationTokenSource`, `Stopwatch`.<br>**Strengstens verboten:** *KEIN* Math.NET Cholesky, *KEINE* kontinuierlichen S-Functions, *KEINE* Event-Queues! |
-| **Bearbeitungsform & Zeitbudget:** | **Zweistufige Hausübung im festen 2er-Team (1 Woche):**<br>• **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)<br>• **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause) |
-| **Abgabeform:** | Git-Repository: Sourcecode, Unit-Tests und Markdown-Bericht (`README.md`) |
+**Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
+**Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
+**Institution:** Fachhochschule Oberösterreich – Campus Wels  
+**Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
+- **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
+- **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
+**Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10 (`net8.0-windows`), WPF (`WriteableBitmap`), TPL, `System.Diagnostics.Stopwatch`, `System.Threading`.  
+> [!CAUTION]
+> **Vorgreif-Sperre für Termin 06:**  
+> - **Erlaubt:** TPL, `Parallel.For`, `ParallelOptions`, `Interlocked`, `ConcurrentBag<T>`, `Task.Run`, `IProgress<T>`, `CancellationTokenSource`, `Stopwatch`.  
+> - **Strengstens verboten:** **KEIN** Math.NET Cholesky, **KEINE** kontinuierlichen S-Functions, **KEINE** Event-Queues!
 
 ---
 
@@ -25,7 +24,7 @@ Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
 
 ---
 
-## 2. Mathematisch-Theoretische Grundlagen
+## 2. Mathematische Grundlagen
 
 ### 2.1 Amdahlsches Gesetz & Parallele Effizienz
 
@@ -66,12 +65,12 @@ Führt der WPF-UI-Thread eine lange Simulationsschleife direkt im Button-Click-H
 
 Öffnen Sie das vorbereitete WPF-Starter-Projekt `Vorlage/MultithreadingBenchmark.sln`. Es enthält bereits das physikalische 2D-Partikelfeld (`ParticleField.cs` mit $N = 100\,000$ Partikeln im Zentralfeld-Attraktor), den Benchmark-Runner (`ParallelRunner.cs`) sowie die WPF-Oberfläche (`MainWindow.xaml` mit `WriteableBitmap`-Partikelansicht, Telemetrie-Panel und Amdahl-Datentabelle).
 
-#### Aufgabenstellung (Schritt für Schritt auf Basis der Vorlage als gemeinsames Fundament für Stufe 2):
+### Aufgabenstellung (auf Basis von `Vorlage/MultithreadingBenchmark.sln`):
+**Vorbereitung – Starter-Kit untersuchen (`Vorlage/MultithreadingBenchmark.sln`):**
+- Starten Sie die Anwendung und klicken Sie im Bild auf verschiedene Positionen, um den Gravitations-Attraktor (rotes Fadenkreuz) zu verschieben.
+- Klicken Sie nun auf **„▶ Simulation starten (200 Schritte)“**: Beobachten Sie, dass das gesamte WPF-Fenster während der Berechnung **komplett einfriert**, die `ProgressBar` erst ganz am Ende auf $100\,\%$ springt und der Button **„⏹ Not-Aus (Cancel)“** während des Laufs gar nicht angeklickt werden kann!
 
-1. **Starter-Kit starten & UI-Freeze beobachten:**
-   - Starten Sie die Anwendung und klicken Sie im Bild auf verschiedene Positionen, um den Gravitations-Attraktor (rotes Fadenkreuz) zu verschieben.
-   - Klicken Sie nun auf **„▶ Simulation starten (200 Schritte)“**: Beobachten Sie, dass das gesamte WPF-Fenster während der Berechnung **komplett einfriert**, die `ProgressBar` erst ganz am Ende auf $100\,\%$ springt und der Button **„⏹ Not-Aus (Cancel)“** während des Laufs gar nicht angeklickt werden kann!
-2. **Aufgabe 1.1 – Asynchrone Auslagerung mit `async/await`, `Task.Run` und `IProgress<SimulationProgress>`:**
+1. **Aufgabe 1.1 – Asynchrone Auslagerung mit `async/await`, `Task.Run` und `IProgress<SimulationProgress>`:**
    - Machen Sie den Event-Handler `BtnStart_Click` in `MainWindow.xaml.cs` asynchron (`private async void BtnStart_Click(...)`).
    - Erstellen Sie vor dem Start des Hintergrund-Tasks ein `IProgress<SimulationProgress>`-Objekt:
      ```csharp
@@ -79,16 +78,16 @@ Führt der WPF-UI-Thread eine lange Simulationsschleife direkt im Button-Click-H
      ```
    - Lagern Sie die `for`-Schleife über die 200 Zeitschritte in `await Task.Run(() => { ... })` aus und rufen Sie alle 5 Zeitschritte `progress.Report(...)` auf.
    - *Wichtig:* Warum darf `UpdateUiProgress` (bzw. `_bitmap.WritePixels`) **niemals direkt** aus dem `Task.Run`-Hintergrundthread aufgerufen werden? Überprüfen Sie, dass die Partikelanimation und die `ProgressBar` nun butterweich in Echtzeit laufen!
-3. **Aufgabe 1.2 – Kooperativer Not-Aus mit `CancellationTokenSource`:**
+2. **Aufgabe 1.2 – Kooperativer Not-Aus mit `CancellationTokenSource`:**
    - Instanziieren Sie zu Beginn von `BtnStart_Click` eine neue `_cts = new CancellationTokenSource()`, setzen Sie `BtnCancel.IsEnabled = true` und übergeben Sie `_cts.Token` sowohl an `Task.Run` als auch an `_field.StepParallel(Dt, threads, _cts.Token)` bzw. `_field.StepSequential(Dt, _cts.Token)`.
    - Fangen Sie die `OperationCanceledException` in einem `try / catch (OperationCanceledException) / finally`-Block sauber ab und geben Sie in `TxtStatus` die Meldung `"Simulation durch Benutzer (Not-Aus) abgebrochen."` aus.
-4. **Aufgabe 1.3 – Asynchrone Amdahl-Skalierungsreihe ($1 \dots P_{\max}$ Kerne) im UI:**
+3. **Aufgabe 1.3 – Asynchrone Amdahl-Skalierungsreihe ($1 \dots P_{\max}$ Kerne) im UI:**
    - Machen Sie auch `BtnRunScaling_Click` in `MainWindow.xaml.cs` asynchron (`async void`) und führen Sie `ParallelRunner.RunScalingSeries(...)` im Hintergrund über `await Task.Run(...)` aus, damit das Fenster während der mehrstufigen Benchmark-Messung nicht einfriert.
    - Vergleichen Sie in der `DataGrid`-Tabelle den Speedup $S(p)$ und die Effizienz $E(p)$ Ihres Prozessors!
 
 ---
 
-## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell – GENAU EINE Aufgabe!)
+## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
 > [!IMPORTANT]
 > **Pick your Track (Wahlmodell – KEINE Doppelbelastung!):**  
@@ -192,10 +191,10 @@ Für die volle Punktzahl (10 Punkte) müssen folgende Kriterien erfüllt sein:
 
 | Kriterium | Punkte | Beschreibung |
 | :--- | :---: | :--- |
-| **Thread-sichere TPL-Parallelisierung** | **3 P.** | Korrekte Nutzung von `Parallel.For` und `ParallelOptions`. Keine Race Conditions (Track A: thread-lokales `Random` + `Interlocked`; Track B: striktes Double-Buffering `Current`/`Next`). |
-| **Reaktive WPF-Entkopplung & Not-Aus** | **3 P.** | Kein Einfrieren des UI-Threads! Saubere Entkopplung mit `async/await` und `Task.Run`, gedrosselte UI-Updates via `IProgress<T>` und jederzeit funktionierender Abbruch via `CancellationTokenSource`. |
-| **Amdahl-Skalierungsreihe & Telemetrie** | **2 P.** | Vollständige Messreihe über $p \in \{1, \dots, P_{\max}\}$ mit JIT-Warmup, korrekter Berechnung von Speedup $S(p)$, Effizienz $E(p)$ und seriellem Anteil $s$ im WPF-Dashboard. |
-| **Codequalität & Dokumentation** | **2 P.** | Sauberes WPF-Projekt, bestandene Unit-Tests (`dotnet test`), strukturierte `README.md` mit Screenshots, Skalierungstabelle und Diskussion des beobachteten Speedups. |
+| **Thread-sichere TPL-Parallelisierung** | 3 P. | Korrekte Nutzung von `Parallel.For` und `ParallelOptions`. Keine Race Conditions (Track A: thread-lokales `Random` + `Interlocked`; Track B: striktes Double-Buffering `Current`/`Next`). |
+| **Reaktive WPF-Entkopplung & Not-Aus** | 3 P. | Kein Einfrieren des UI-Threads! Saubere Entkopplung mit `async/await` und `Task.Run`, gedrosselte UI-Updates via `IProgress<T>` und jederzeit funktionierender Abbruch via `CancellationTokenSource`. |
+| **Amdahl-Skalierungsreihe & Telemetrie** | 2 P. | Vollständige Messreihe über $p \in \{1, \dots, P_{\max}\}$ mit JIT-Warmup, korrekter Berechnung von Speedup $S(p)$, Effizienz $E(p)$ und seriellem Anteil $s$ im WPF-Dashboard. |
+| **Codequalität & Dokumentation** | 2 P. | Sauberes WPF-Projekt, bestandene Unit-Tests (`dotnet test`), strukturierte `README.md` mit Screenshots, Skalierungstabelle und Diskussion des beobachteten Speedups. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
 ---
