@@ -66,7 +66,7 @@ section img[alt~="center"] {
 }
 
 /* FH-Logo: Nur auf Inhaltsfolien anzeigen, Deckblätter (Title & Lead & Folie 1) schützen */
-section:not(.title):not(.lead):not(:first-of-type)::before {
+section:not(.title):not(.lead):not([id="1"])::before {
     content: "";
 
     display: block;
@@ -91,7 +91,6 @@ section:not(.title):not(.lead):not(:first-of-type)::before {
 
 /* Deckblätter und Folien mit Title-/Lead-Klasse strikt vom FH-Logo befreien */
 /* Inklusive Marpit Advanced Background Wrapper für Folie 1 und bg-Splits */
-section:first-of-type::before,
 section[data-marpit-advanced-background]::before,
 section[data-marpit-advanced-background-split]::before,
 section[id="1"]::before,
@@ -348,33 +347,33 @@ section.solution blockquote {
     background-color: #ede9fe;
 }
 
-/* Klassen-Icons oben rechts im 4.5rem-Badge (analog FH-Logo auf weißen Folien) */
-section.showcase::before {
+/* Klassen-Icons oben rechts im 4.5rem-Badge (Spezifität > section:not(...)::before) */
+section:not(.title):not(.lead):not([id="1"]).showcase::before {
     background-color: var(--fhooe-blue);
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><line x1='8' y1='21' x2='16' y2='21'/><line x1='12' y1='17' x2='12' y2='21'/></svg>");
     background-size: 55%;
 }
-section.bridge::before {
+section:not(.title):not(.lead):not([id="1"]).bridge::before {
     background-color: #475569;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 18V10a8 8 0 0 1 16 0v8'/><line x1='2' y1='14' x2='22' y2='14'/><line x1='8' y1='14' x2='8' y2='18'/><line x1='16' y1='14' x2='16' y2='18'/></svg>");
     background-size: 55%;
 }
-section.activity::before {
+section:not(.title):not(.lead):not([id="1"]).activity::before {
     background-color: #0d9488;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><path d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>");
     background-size: 55%;
 }
-section.solution::before {
+section:not(.title):not(.lead):not([id="1"]).solution::before {
     background-color: #7c3aed;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M9 18h6'/><path d='M10 22h4'/><path d='M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14'/></svg>");
     background-size: 55%;
 }
-section.summary::before {
+section:not(.title):not(.lead):not([id="1"]).summary::before {
     background-color: #16a34a;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M9 11l3 3L22 4'/><path d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'/></svg>");
     background-size: 55%;
 }
-section.homework::before {
+section:not(.title):not(.lead):not([id="1"]).homework::before {
     background-color: #d97706;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='16 18 22 12 16 6'/><polyline points='8 6 2 12 8 18'/></svg>");
     background-size: 55%;
