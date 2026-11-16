@@ -7,11 +7,12 @@ paginate: true
 math: mathjax
 ---
 
+<!-- _class: title -->
 <!-- _paginate: false -->
 <!-- _header: "" -->
 <!-- _footer: "" -->
 
-![bg right](./Titelbild.jpg)
+![bg](./Titelbild.jpg)
 
 # Kapitel 1: Systemsimulation und der Digitale Zwilling
 
@@ -35,9 +36,11 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 Nach dem organisatorischen **Prolog (Kapitel 00)** legen wir heute in **Termin 01** das Fundament:
 
-- **Ausgangspunkt:** Reale Anlagen (Roboter, Hydraulik) sind zu teuer oder gefährlich für direkte Regler-Tests.
-- **Heute in T01:** Die **4 Modellarten** & **4 Grafik-Säulen** sowie Ihr erster **Euler-/Heun-Integrator** inkl. Stabilitätsgrenze.
-- **Semester-Bogen:** **T02–T05** Visualisierung $\to$ **T06** Multithreading $\to$ **T07–T10** Solver.
+- **Ausgangspunkt:** Reale Anlagen (Roboter, Hydraulik) sind für direkte Regler-Tests oft zu teuer, langsam oder gefährlich.
+- **Heute in T01:** Die **4 Modellarten**, die **4 Grafik-Säulen** sowie Ihr erster **Euler-/Heun-Integrator** inkl. Stabilitätsgrenze.
+- **Semester-Bogen:** **T02–T05** 2D-/3D-Visualisierung $\to$ **T06** Multithreading $\to$ **T07–T10** Solver.
+
+> **Lernziel heute:** Verstehen, warum gekoppelte DGLs numerisch Schritt für Schritt gelöst werden müssen.
 
 </div>
 <div class="two">
@@ -49,7 +52,7 @@ Nach dem organisatorischen **Prolog (Kapitel 00)** legen wir heute in **Termin 0
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_1.jpg)
+![bg](./Illustrationen/Abschnitt_1.jpg)
 
 ## 1.1: Motivation
 
@@ -89,13 +92,13 @@ Es erfasst die wesentlichen Aspekte, die für eine bestimmte Fragestellung relev
 <div class="columns">
 <div class="two">
 
-Eine **Simulation** ist das Durchführen von Experimenten mit einem Modell.
+Eine **Simulation** ist das systematische Durchführen von Experimenten mit einem mathematischen Modell:
 
-- Das Modell wird mit Eingabedaten (Parametern) versehen.
-- Das Verhalten des Modells über die Zeit oder unter bestimmten Bedingungen wird berechnet.
-- Die Ergebnisse werden analysiert, um Rückschlüsse auf das reale System zu ziehen.
+- Das Modell wird mit konkreten Anfangszuständen und Parametern (z. B. Masse, Dämpfung, Zeitschritt $\Delta t$) initialisiert.
+- Das Verhalten des Modells über die Zeit oder unter bestimmten Randbedingungen wird schrittweise berechnet.
+- Die Ergebnisse werden gegen reale Messdaten oder analytische Referenzwerte validiert.
 
-Simulation ermöglicht es uns, "Was-wäre-wenn"-Szenarien zu untersuchen.
+> **Nutzen & Merksatz:** Simulation ermöglicht gefahrlose „Was-wäre-wenn“-Szenarien vor dem ersten physischen Prototyp – das Modell ist die *Struktur*, die Simulation ist das *Experiment* damit über die Zeit.
 
 </div>
 <div>
@@ -117,9 +120,9 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 ![](./Illustrationen/Branche_Maschinenbau.jpg)
 
 **Maschinenbau**
-- Wie verhält sich eine Brücke unter Last?
-- Wie kann der Energieverbrauch eines Roboters optimiert werden?
-- Wie müssen die Komponenten eines Motors dimensioniert sein?
+- Wie verhält sich eine Brücke unter dynamischer Windlast?
+- Wie lässt sich der Energieverbrauch eines Roboters optimieren?
+- Wie müssen Antriebe dimensioniert sein?
 
 </div>
 <div class="one">
@@ -128,11 +131,13 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 
 **Produktion & Logistik**
 - Was ist der optimale Materialfluss in einer Fabrik?
-- Wie viele fahrerlose Transportfahrzeuge (AGVs) werden benötigt?
-- Wie wirkt sich ein Maschinenausfall auf die Gesamtproduktion aus?
+- Wie viele AGVs werden für den Takt benötigt?
+- Wie wirkt sich ein Ausfall auf den Durchsatz aus?
 
 </div>
 </div>
+
+> **Gemeinsamkeit:** In allen Branchen klären wir Auslegungsfragen vor dem Aufbau.
 
 ---
 
@@ -168,6 +173,8 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 </div>
 </div>
 
+> **Transfer:** Unabhängig von der Disziplin stehen immer Kostenreduktion, Sicherheit und Parameter-Optimierung im Mittelpunkt.
+
 ---
 
 ![bg contain right:40%](./Illustrationen/Modell_Nutzen.jpg)
@@ -183,7 +190,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_2.jpg)
+![bg](./Illustrationen/Abschnitt_2.jpg)
 
 ## 1.2: Arten von Modellen
 
@@ -229,54 +236,29 @@ Die Wahl des Modelltyps hängt von der Problemstellung und dem zu untersuchenden
 
 **Statische Modelle**
 - Beschreiben den Zustand eines Systems in einem einzigen Augenblick (im Gleichgewicht).
-- Sind zeitunabhängig.
+- Sind zeitunabhängig ($\frac{d}{dt} = 0$).
 - Typische Fragestellung: Wie verformt sich ein Bauteil unter einer konstanten Last?
-- Mathematisch: Oft algebraische Gleichungen (z.B. lineares Gleichungssystem).
-- **Beispiel**: Statik eines Fachwerks.
+- Mathematisch: Algebraische Gleichungen (z. B. lineares Gleichungssystem $K \cdot u = F$).
+- **Beispiel**: Statik eines Fachwerks (Kap. 7).
 
 </div>
 <div class="one">
 
 **Dynamische Modelle**
-- Beschreiben das Verhalten eines Systems über die Zeit.
-- Sind zeitabhängig.
+- Beschreiben die zeitliche Entwicklung eines Systems über eine Zeitspanne $[t_0, t_{\text{end}}]$.
+- Sind zeitabhängig (Zustandsänderung über $\Delta t$ oder Ereignisse).
 - Typische Fragestellung: Wie schwingt ein Pendel nach dem Anstoßen?
-- Mathematisch: Oft Differentialgleichungen (kontinuierlich) oder Zustandsautomaten (diskret).
-- **Beispiel**: Flugbahn eines Balls.
+- Mathematisch: Differentialgleichungen (kontinuierlich) oder Zustandsautomaten (diskret).
+- **Beispiel**: Flugbahn eines Balls (Kap. 1 & 8).
 
 </div>
 </div>
+
+> **Kursfokus:** Heute starten wir mit dynamischen Systemen; statische Gleichgewichtssysteme folgen in Kapitel 7.
 
 ---
 
-### Kontinuierliche vs. Diskrete Modelle
-
-Diese Unterscheidung ist vor allem bei **dynamischen Modellen** relevant.
-
-<div class="columns top">
-<div class="one">
-
-**Kontinuierliche Modelle**
-- Die Zustandsgrößen (z.B. Position, Temperatur) können sich zu jedem beliebigen Zeitpunkt ändern.
-- Die Zustandsgrößen nehmen Werte aus einem kontinuierlichen Bereich an.
-- Mathematisch: Differentialgleichungen (DGLs).
-- **Beispiel**: Füllstand eines Wassertanks, Schwingung eines Federpendels.
-
-</div>
-<div class="one">
-
-**Diskrete Modelle**
-- Die Zustandsgrößen ändern sich nur zu bestimmten, einzelnen Zeitpunkten.
-- Die Zustandsgrößen nehmen oft Werte aus einem diskreten Bereich an.
-- Mathematisch: Differenzengleichungen, Ereignislisten.
-- **Beispiel**: Warteschlange an einer Kasse, Produktionsablauf.
-
-</div>
-</div>
-
----
-
-### Kontinuierliche vs. Diskrete Modelle
+### Kontinuierliche vs. Diskrete Modelle (Visualisierung)
 
 <div class="columns top">
 <div class="one">
@@ -297,32 +279,65 @@ Diese Unterscheidung ist vor allem bei **dynamischen Modellen** relevant.
 
 ---
 
-### Zeitdiskrete vs. Ereignisdiskrete Modelle
+### Kontinuierliche vs. Diskrete Modelle
 
-Diskrete Modelle können weiter unterteilt werden:
+Diese Unterscheidung ist vor allem bei **dynamischen Modellen** relevant:
 
-<div class="columns">
+<div class="columns top">
 <div class="one">
 
-**Zeitdiskret (konstanter Zeitschritt)**
-- Zustandsänderungen erfolgen in festen, äquidistanten Zeitintervallen ($\Delta t$).
-- Typisch für digitale Regelungen oder wenn ein kontinuierliches System abgetastet wird.
-- **Beispiel**: Abtastung eines analogen Signals mit einem A/D-Wandler.
+**Kontinuierliche Modelle**
+- Die Zustandsgrößen (z. B. Position, Temperatur) können sich zu jedem beliebigen Zeitpunkt ändern.
+- Die Zustandsgrößen nehmen Werte aus einem kontinuierlichen Bereich ($\mathbb{R}$) an.
+- Mathematisch: Differentialgleichungen (ODEs/PDEs).
+- **Beispiel**: Füllstand eines Wassertanks, Schwingung eines Federpendels.
 
 </div>
 <div class="one">
 
-**Ereignisdiskret**
-- Zustandsänderungen werden durch das Eintreten von **Ereignissen** (Events) ausgelöst.
-- Die Zeit schreitet von einem Ereignis zum nächsten.
-- **Beispiel**: Ankunft eines Kunden in einer Warteschlange, Fertigstellung eines Teils auf einer Maschine.
+**Diskrete Modelle**
+- Die Zustandsgrößen ändern sich nur zu bestimmten, einzelnen Zeitpunkten.
+- Die Zustandsgrößen nehmen oft abzählbare oder stückweise konstante Werte an.
+- Mathematisch: Differenzengleichungen, Ereignislisten.
+- **Beispiel**: Warteschlange an einer Kasse, Produktionsablauf.
 
 </div>
 </div>
+
+> **Praxis-Brücke:** Kontinuierliche Modelle müssen für den Digitalrechner immer zeitlich diskretisiert werden.
 
 ---
 
-### Zeitdiskrete vs. Ereignisdiskrete Modelle
+<!-- _class: activity -->
+
+### Mitmach-Impuls (3 Min.): Welcher Modelltyp passt?
+
+Ordnen Sie diese drei technischen Systeme gemeinsam (oder kurz für sich) den Modellkategorien zu (*statisch/dynamisch*, *kontinuierlich/diskret*, *deterministisch/stochastisch*):
+
+1. **Durchbiegung eines Stahlträgers** unter konstanter Kranlast ($5\,\mathrm{t}$) im Stillstand (*keine Bewegung über die Zeit*).
+2. **Aufheizung eines CPU-Kühlers** über die Zeit bei eingeschaltetem Prozessor (*Wärmeleitung im Festkörper*).
+3. **Materialpuffer einer Fertigungsstraße** mit zufälligen Störungen und schwankenden Taktzeiten (*Warteschlange*).
+4. **Begründung:** Welches der drei Systeme wird im C#-Programm später mit festem Zeitschritt $\Delta t$ angenähert – und welches springt direkt von Event zu Event?
+
+> **Leitfrage:** Diskutieren Sie kurz mit Ihrem Nachbarn, welche Zustandsgrößen ($u$, $T$, Pufferfüllstand) sich jeweils ändern.
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Einordnung der drei Systeme
+
+1. **Stahlträger im Stillstand:** **Statisch** & **deterministisch** – reines Gleichgewichtssystem ($K \cdot u = F$) ohne Zeitabhängigkeit (Kap. 7).
+2. **Aufheizung eines CPU-Kühlers:** **Dynamisch, kontinuierlich** (physikalische Wärmeleitungs-DGL) & **deterministisch** – im C#-Code später *zeitdiskret* mit $\Delta t$ angenähert (Kap. 2).
+3. **Materialpuffer mit Störungen:** **Dynamisch, ereignisdiskret (DES)** & **stochastisch** – die Simulationsuhr springt direkt von Ankunfts-/Störungs-Event zu Event (Kap. 9).
+4. **Diskretisierungs-Unterschied:** Kontinuierliche Physik braucht $\Delta t$ zur Approximation; Warteschlangen besitzen von Natur aus diskrete Ereigniszeitpunkte.
+5. **Übergang zu Hybriden Modellen:** Kombiniert ein System kontinuierliche DGLs *und* diskrete Schaltereignisse (z. B. Thermostate oder Aufprall), spricht man von **hybriden Modellen** (Kap. 10).
+
+> **Merksatz:** Ein physikalisch kontinuierliches Modell wird auf dem Computer durch $\Delta t$ *zeitdiskret* gelöst; echte Warteschlangen bleiben *ereignisdiskret*.
+
+---
+
+### Zeitdiskrete vs. Ereignisdiskrete Modelle (Visualisierung)
 
 <div class="columns">
 <div class="one">
@@ -388,7 +403,7 @@ Diskrete Modelle können weiter unterteilt werden:
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_3.jpg)
+![bg](./Illustrationen/Abschnitt_3.jpg)
 
 ## 1.3: Lösungsmethoden
 
@@ -404,38 +419,75 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Wie lösen wir die Modellgleichungen?
 
-Sobald das mathematische Modell aufgestellt ist (z.B. als Satz von Differentialgleichungen), muss es gelöst werden, um das Systemverhalten zu berechnen.
+Sobald das mathematische Modell aufgestellt ist, muss es gelöst werden, um das Systemverhalten zu berechnen:
 
-Es gibt zwei grundlegende Ansätze:
-1.  **Analytische Lösung**
-2.  **Numerische Lösung**
+- **1. Analytische Lösung:** Exakte, geschlossene Formel für einfache, meist lineare Modelle.
+- **2. Numerische Lösung:** Schrittweise Approximation auf einem diskreten Zeitgitter ($t_k = t_0 + k \cdot \Delta t$) für nichtlineare Systeme.
 
----
-
-### **Analytische** Lösung
-
-- **Was ist das?** Eine exakte, geschlossene mathematische Formel für die Lösung als kontinuierliche Zeitfunktion.
-- **Beispiel (Freier Fall mit Anfangsgeschwindigkeit):**
-  $$y(t) = y_0 + v_0 \cdot t - \frac{1}{2} g \cdot t^2$$
-  - $y(t)$: Momentane Höhe zur Zeit $t$ $[\mathrm{m}]$
-  - $t$: Zeit $[\mathrm{s}]$, $y_0$: Anfangshöhe bei $t=0\,\mathrm{s}$ $[\mathrm{m}]$
-  - $v_0$: Vertikale Anfangsgeschwindigkeit $[\mathrm{m/s}]$
-  - $g \approx 9{,}81\,\mathrm{m/s^2}$: Erdbeschleunigung
-- **Vorteile:** Exakt, unendliche zeitliche Auflösung, geschlossene Parameterstudien möglich.
-- **Nachteile:** Nur für einfache, meist lineare Modelle existieren geschlossene Stammfunktionen.
+> **Grundregel:** Analytische Lösungen sind in der Praxis selten – dienen aber als *5-Sekunden-Selbsttest* für den Code.
 
 ---
 
-### **Numerische** Lösung
+### **Analytische** vs. **Numerische** Lösung: Einordnung
 
-- **Was ist das?** Eine schrittweise, approximative Berechnung des Systemzustands auf einem diskreten Zeitgitter.
-- **Beispiel (Explizites Euler-Verfahren für $y'(t) = f(t, y)$):**
-  $$y_{k+1} = y_k + \Delta t \cdot f(t_k, y_k), \quad t_{k+1} = t_k + \Delta t$$
-  - $k \in \{0, 1, 2, \dots\}$: Diskreter Zeitschrittindex
-  - $t_k = t_0 + k \cdot \Delta t$: Diskrete Zeitpunkte $[\mathrm{s}]$ mit Zeitschrittweite $\Delta t$ $[\mathrm{s}]$
-  - $y_k \approx y(t_k)$: Diskreter Näherungswert des Zustands
-- **Vorteile:** Universell auf hochgradig nichtlineare und gekoppelte Systeme anwendbar.
-- **Nachteile:** Approximationsfehler (Diskretisierungs- und Rundungsfehler); Wahl von $\Delta t$ entscheidet über Stabilität und Konvergenz.
+<div class="columns">
+<div class="two">
+
+#### Analytische Lösung (Beispiel Freier Fall)
+$$y(t) = y_0 + v_0 \cdot t - \frac{1}{2} g \cdot t^2$$
+- $y(t)$: Höhe $[\mathrm{m}]$, $t$: Zeit $[\mathrm{s}]$
+- $y_0$: Anfangshöhe $[\mathrm{m}]$, $v_0$: Startgeschwindigkeit $[\mathrm{m/s}]$
+- $g \approx 9{,}81\,\mathrm{m/s^2}$: Erdbeschleunigung
+- **Vorteil:** Exakt und zeitlich unendlich fein auflösbar.
+
+</div>
+<div class="two">
+
+#### Numerische Lösung (Expliziter Euler)
+$$y_{k+1} = y_k + \Delta t \cdot f(t_k, y_k), \quad t_{k+1} = t_k + \Delta t$$
+- $k \in \{0, 1, 2, \dots\}$: Diskreter Zeitschrittindex
+- $\Delta t$: Zeitschrittweite $[\mathrm{s}]$, $y_k \approx y(t_k)$: Näherungswert
+- **Vorteil:** Universell für nichtlineare & gekoppelte DGLs.
+- **Risiko:** Fehler und Instabilität bei zu großem $\Delta t$.
+
+</div>
+</div>
+
+> **Merksatz:** Sobald Luftwiderstand, Reibung oder Kollisionen hinzukommen, bleibt nur die numerische Integration – analytische Formeln bleiben aber der schnellste Unit-Test.
+
+---
+
+<!-- _class: activity -->
+
+### Mitmach-Impuls (3 Min.): Einen Euler-Schritt von Hand rechnen
+
+Gegeben sei das lineare Abkling-Modell $\dot{y}(t) = -2\,y(t)$ mit Startwert $y_0 = 10$ (analytische Referenz: $y(t) = 10\,e^{-2t}$):
+
+1. **Stabiler Zeitschritt ($\Delta t = 0{,}25\,\mathrm{s}$):** Berechnen Sie die ersten beiden Euler-Schritte $y_1$ und $y_2$ mit $y_{k+1} = y_k + \Delta t \cdot (-2\,y_k)$.
+2. **Zu großer Zeitschritt ($\Delta t = 1{,}2\,\mathrm{s}$):** Berechnen Sie ebenfalls $y_1$ und $y_2$. Welches numerische Problem tritt hier sofort auf?
+3. **Grenze:** Ab welchem $\Delta t$ kippt das Vorzeichen von $y_1$ erstmals ins Negative – und ab wann wächst $|y_k|$ unbeschränkt?
+4. **Vergleich:** Wie groß ist $y(0{,}5)$ analytisch im Vergleich zu $y_2$ bei $\Delta t = 0{,}25\,\mathrm{s}$?
+
+> **Hinweis:** Überlegen Sie kurz für sich oder mit Ihrem Nachbarn – ein schnelles Kopfrechnen über zwei Schritte genügt völlig. Achten Sie besonders darauf, ob das Vorzeichen zwischen $y_0, y_1, y_2$ wechselt und ob der Betrag $|y_k|$ kleiner oder größer wird.
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Euler-Schrittweite & Stabilitätsgrenze
+
+1. **Bei $\Delta t = 0{,}25\,\mathrm{s}$ (stabil & monoton):**
+   - $y_1 = 10 + 0{,}25 \cdot (-20) = \mathbf{5{,}0}$
+   - $y_2 = 5{,}0 + 0{,}25 \cdot (-10) = \mathbf{2{,}5}$ *(physikalisch plausibel, nahe an $y(0{,}5) = 10\,e^{-1} \approx 3{,}68$)*
+2. **Bei $\Delta t = 1{,}2\,\mathrm{s}$ (instabil & oszillierend):**
+   - $y_1 = 10 + 1{,}2 \cdot (-20) = \mathbf{-14{,}0}$ *(Vorzeichenwechsel – physikalisch unmöglich!)*
+   - $y_2 = -14{,}0 + 1{,}2 \cdot 28 = \mathbf{+19{,}6}$ *(aufklingende Oszillation – **numerische Instabilität**!)*
+3. **Kipp-Punkt (Stabilitätsgrenze):**
+   - Ab $\Delta t > 0{,}5\,\mathrm{s}$ gilt $1 - 2\,\Delta t < 0$ (alternierendes Vorzeichen).
+   - Ab $\Delta t > 1{,}0\,\mathrm{s}$ gilt $|1 - 2\,\Delta t| > 1$ und die Lösung explodiert ($|y_k| \to \infty$).
+4. **C#-Konsequenz:** In der Hausübung testen wir genau diesen Effekt mit kleinem vs. großem $\Delta t$.
+
+> **Merksatz:** Ein zu großes $\Delta t$ macht selbst ein stabiles physikalisches System im expliziten Euler instabil. Halbiert man $\Delta t$, halbiert sich der Euler-Fehler ($\mathcal{O}(\Delta t)$).
 
 ---
 
@@ -483,10 +535,14 @@ $$m \ddot{y} = -m g + F_{Ry} = -m g - \frac{1}{2} c_w \rho A \sqrt{v_x^2 + v_y^2
 <div class="one">
 
 **Prädiktor-Korrektor nach Heun (Ordnung $\mathcal{O}(\Delta t^2)$):**
-- Der explizite Euler nutzt nur die Anfangssteigung $\mathbf{f}(t_k, \mathbf{x}_k)$ und überschätzt Wurfparabeln systematisch.
-- **Heun (RK2)** mittelt Anfangs- und Endsteigung:
+- **Heun (RK2)** mittelt Anfangssteigung `k1` ($= \mathbf{f}(t_k, y_k)$) und Endsteigung `k2`:
   1. *Prädiktor:* $\tilde{\mathbf{x}}_{k+1} = \mathbf{x}_k + \Delta t \cdot \mathbf{f}(t_k, \mathbf{x}_k)$
   2. *Korrektor:* $\mathbf{x}_{k+1} = \mathbf{x}_k + \frac{\Delta t}{2}\left[\mathbf{f}(t_k, \mathbf{x}_k) + \mathbf{f}(t_{k+1}, \tilde{\mathbf{x}}_{k+1})\right]$
+```csharp
+var k1 = f(t_k, x_k); // analog für y_k
+var k2 = f(t_k + dt, x_k + dt * k1);
+x_k += 0.5 * dt * (k1 + k2);
+```
 
 </div>
 <div class="one">
@@ -499,9 +555,11 @@ $$m \ddot{y} = -m g + F_{Ry} = -m g - \frac{1}{2} c_w \rho A \sqrt{v_x^2 + v_y^2
 </div>
 </div>
 
+> **Praxis-Gewinn:** Heun + lineare Interpolation reduzieren den Wurfweitenfehler von mehreren Metern auf wenige Millimeter bei gleichem $\Delta t$ und verhüten Tunneling-Effekte durch den Boden. Beide Verfahren teilen sich dieselbe `ComputeDerivative(...)`-Methode.
+
 ---
 
-![bg right](./Illustrationen/Abschnitt_4.jpg)
+![bg](./Illustrationen/Abschnitt_4.jpg)
 
 ## 1.4: Visualisierung von Simulationsdaten
 
@@ -515,15 +573,25 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Warum Visualisierung?
 
-Simulationsläufe produzieren riesige Datenmengen (Zustände, Zeitreihen, ...).
+<div class="columns">
+<div class="three">
 
-> "Ein Bild sagt mehr als tausend Zahlen."
+Simulationsläufe produzieren riesige Datenmengen (Zustände, Zeitreihen, Felder). Reine Zahlenkolonnen verbergen Muster:
 
-Visualisierung ist essenziell, um:
-- **Ergebnisse verständlich zu machen**: Muster und Trends erkennen, die in reinen Zahlenkolonnen verborgen sind.
-- **Modelle zu validieren**: Passt das simulierte Verhalten zu den Erwartungen? Gibt es unerwartete Effekte?
-- **Ergebnisse zu kommunizieren**: Einem breiteren Publikum (z.B. Management, Kunden) die Erkenntnisse präsentieren.
-- **Interaktiv zu explorieren**: Parameter ändern und die Auswirkungen sofort visuell sehen.
+- **Ergebnisse verstehen:** Muster, Schwingungen und Trends auf einen Blick erkennen.
+- **Modelle validieren:** Prüfen, ob Energieerhaltung und Grenzwerte physikalisch stimmen.
+- **Ergebnisse kommunizieren:** Komplexe Zusammenhänge für Teams greifbar darstellen.
+- **Interaktiv explorieren:** Parameter wie $\Delta t$ live variieren und Effekte sofort sehen.
+
+> **Leitlinie:** Eine gute Visualisierung dient in der Technik der **Fehlerdiagnose und Validierung**.
+
+</div>
+<div class="two">
+
+![](./Illustrationen/Visualisierung_Chart.jpg)
+
+</div>
+</div>
 
 ---
 
@@ -571,11 +639,48 @@ In diesem Kurs lernen wir die Visualisierung entlang von vier komplementären Di
 
 ![](./Diagramme/Visualisierungsformen.svg)
 
+---
+
+### Auswahl-Leitfaden: Welche Visualisierung wofür?
+
+<div class="columns">
+<div class="two">
+
+#### 2D-Felder, Vektoren & Plots
+- **2D-Pixel (`WriteableBitmap`, Kap. 2):** Kontinuierliche Felder (Wärmeverteilung, Wellen, Rauch) mit $\ge 60\,\text{FPS}$.
+- **2D-Vektor (`Canvas`, Kap. 3):** Geometrische Objekte, Gelenkarme, Radar und skalierbare Skizzen.
+- **Plots (`ScottPlot 5`, Kap. 4):** Zeitreihen, Phasenportraits und Energie-Checks.
+
+</div>
+<div class="two">
+
+#### 3D-Szenen & Architektur
+- **3D-Szenen (`SharpGL`, Kap. 5):** Räumliche Kinematik, Roboterzellen und Kamerasteuerung.
+- **Trennungs-Prinzip:** Die Grafikschicht liest nur Zustandsdaten – sie berechnet niemals selbst Physik-Gleichungen!
+
+</div>
+</div>
+
+> **Merksatz:** Wählen Sie immer die *einfachste* Darstellung, die den gesuchten physikalischen Fehler sofort sichtbar macht.
 
 ---
 
+![bg right](./Illustrationen/Visualisierung_3D.jpg)
 
-![bg right](./Illustrationen/Abschnitt_5.jpg)
+### Typische Visualisierungsfehler in der Praxis
+
+Vermeiden Sie diese Stolpersteine in Ihren C#-Simulatoren:
+
+- **Seitenverhältnis:** Ungleiche $x/y$-Skalierung verzerrt Kreise zu Ellipsen.
+- **Fehlende Einheiten:** Plots ohne `[m]` oder `[s]` verhindern Fehlerdiagnose.
+- **Schein-Animation:** Timer bewegt Pixel statt echter DGL.
+- **Allokation pro Frame:** `new SolidColorBrush(...)` erzeugt GC-Ruckler.
+
+> **Qualitätsregel:** Visualisierung arbeitet allokationsfrei und mit SI-Einheiten.
+
+---
+
+![bg](./Illustrationen/Abschnitt_5.jpg)
 
 ## 1.5: Der Digitale Zwilling
 
@@ -591,14 +696,41 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Was ist ein Digitaler Zwilling?
 
-Der Begriff wurde maßgeblich von **Dr. Michael Grieves** (University of Michigan) geprägt.
+Der Begriff wurde maßgeblich von **Dr. Michael Grieves** (University of Michigan) geprägt. Ein Digitaler Zwilling ist ein virtuelles Modell, das als digitales Gegenstück zu einem physischen System dient:
 
-Ein Digitaler Zwilling ist ein virtuelles Modell, das als digitales Gegenstück zu einem physischen Objekt, Prozess oder System dient.
+1. Ein **physisches Produkt** in der realen Welt (Anlage, Roboter, Fahrzeug).
+2. Ein **virtuelles Produkt** im digitalen Raum (Geometrie, Physik & Logik).
+3. Eine bidirektionale **Datenverbindung** zwischen realer und virtueller Welt.
 
-Es besteht aus drei Kernkomponenten:
-1.  Ein **physisches Produkt** in der realen Welt.
-2.  Ein **virtuelles Produkt** in der virtuellen Welt.
-3.  Eine **Datenverbindung** zwischen dem physischen und dem virtuellen Produkt.
+> **Abgrenzung:** Ohne kontinuierlichen Datenaustausch bleibt ein Modell ein statischer *Digital Model* – erst die Datenverbindung macht es zum Zwilling.
+
+---
+
+<!-- _class: activity -->
+
+### Mitmach-Impuls (3 Min.): CAD-Modell vs. Digitaler Zwilling
+
+Ein Sondermaschinenbauer besitzt ein detailliertes 3D-CAD-Modell einer Förderanlage auf dem Server, während die echte Anlage in der Halle läuft. Diskutieren Sie kurz zu zweit (oder für sich):
+
+1. **Abgrenzung:** Warum ist dieses 3D-CAD-Modell *noch kein* Digitaler Zwilling? Welche zwei Bestandteile fehlen konkret?
+2. **Mehrwert:** Welchen praktischen Nutzen gewinnt der Betreiber erst dann, wenn beide Lücken geschlossen sind?
+3. **Praxis-Beispiel:** Welche konkrete Sensorgröße der Förderanlage (z. B. Antriebsstrom, Temperatur, Drehzahl) würden Sie zuerst zurückführen – und warum?
+
+> **Hinweis:** Denken Sie an die drei Säulen von Michael Grieves (*physisch, virtuell, Datenverbindung*) und daran, welche Aufgaben erst im laufenden Betrieb möglich werden. Überlegen Sie sich für Ihre Antwort auch ein konkretes Beispiel für ein *What-if*-Szenario und welches Risiko bei veralteten Sensordaten für die Prognose entsteht!
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Was dem CAD-Modell noch fehlt
+
+1. **Zwei fehlende Komponenten:**
+   - **Verhaltensmodell (Physik & Logik):** Das CAD-Modell kennt nur die Geometrie, aber keine Dynamik, Reibung oder SPS-Steuerungslogik.
+   - **Bidirektionale Datenverbindung:** Es fehlt der kontinuierliche Live-Datenfluss (Sensoren $\to$ Modell $\to$ Rückmeldung an die Anlage).
+2. **Entstehender Mehrwert:** Erst durch Simulation + Live-Daten werden **Zustandsüberwachung, Prognose (*What-if*) und vorausschauende Wartung** möglich.
+3. **Erster Sensor-Anker:** Motorstrom und Drehzahl erlauben sofort einen Soll-Ist-Abgleich gegen Reibungs- oder Verschleißmodelle – steigt der Strom bei gleicher Last, meldet der Zwilling frühzeitig Lagerverschleiß.
+
+> **Merksatz:** **3D-Geometrie + Verhaltensmodell + Live-Datenverbindung = Digitaler Zwilling.** Entscheidend ist nicht die 3D-Optik, sondern die Kopplung aus Modell und Live-Daten.
 
 ---
 
@@ -640,7 +772,7 @@ Ein Digitaler Zwilling "lebt" und entwickelt sich mit seinem physischen Gegenst�
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_6.jpg)
+![bg](./Illustrationen/Abschnitt_6.jpg)
 
 ## 1.6: Simulation & Digitaler Zwilling
 
@@ -708,6 +840,8 @@ Der Digitale Zwilling verbindet die Simulation nahtlos über alle drei Lebenszyk
 </div>
 </div>
 
+> **Durchgängigkeit:** Dasselbe Verhaltensmodell wächst von der frühen Auslegung bis in den laufenden Anlagenbetrieb mit.
+
 ---
 
 ### Beispiel: Virtuelle Inbetriebnahme
@@ -739,6 +873,55 @@ Der Digitale Zwilling verbindet die Simulation nahtlos über alle drei Lebenszyk
 
 ---
 
+### Grenzen & Risiken: Wann führt ein Zwilling in die Irre?
+
+Ein Digitaler Zwilling ist kein Selbstläufer – drei typische Fehlerquellen entscheiden über seinen Nutzen:
+
+<div class="columns">
+<div class="two">
+
+#### Modell- & Numerikfehler
+- **Falsche Annahmen:** Vernachlässigte Reibung oder unkalibrierte Parameter verfälschen jede Prognose.
+- **Zu großes $\Delta t$:** Numerische Instabilität täuscht Schwingungen vor, die real gar nicht existieren.
+- **Fehlende Validierung:** Kein Vergleich gegen analytische Grenzwerte oder reale Messdaten.
+
+</div>
+<div class="two">
+
+#### Daten- & Architekturfehler
+- **Veraltete Sensordaten:** Ohne Zeitsynchronisation driftet der Zwilling vom realen Zustand ab.
+- **Schein-Visualisierung:** Schöne 3D-Animation ohne validierte Physik-Gleichungen dahinter.
+- **UI-Kopplung:** Rechenkern direkt im UI-Thread verhindert reproduzierbare Tests.
+
+</div>
+</div>
+
+> **Kurs-Versprechen:** Genau gegen diese sechs Fallen wappnen wir uns in den nächsten neun Terminen mit Unit-Tests und 5-Sekunden-Selbsttests.
+
+---
+
+### Vom Prototyp zum Regelkreis: Ausblick in die Praxis
+
+<div class="columns">
+<div class="three">
+
+Wie sich der Digitale Zwilling von der frühen Konzeptphase bis in den laufenden Betrieb entwickelt:
+
+- **Offline (Engineering):** Antriebe, Federn und Kühler virtuell auslegen; SPS-Logik gefahrlos testen; Grenzlasten durchspielen.
+- **Online (Betrieb):** Nicht messbare Innentemperaturen live schätzen; Restlebensdauer prognostizieren; Parameter zurückführen.
+
+> **Schlüsselprinzip:** Je sauberer Modell, Numerik und Visualisierung getrennt sind, desto leichter wächst der Prototyp zum produktiven Zwilling.
+
+</div>
+<div class="two">
+
+![](./Illustrationen/Digitaler_Zwilling_Simulation.jpg)
+
+</div>
+</div>
+
+---
+
 <!-- _class: summary -->
 
 # Zusammenfassung Kapitel 1
@@ -757,25 +940,21 @@ Der Digitale Zwilling verbindet die Simulation nahtlos über alle drei Lebenszyk
 
 ### Ausblick auf die Kursinhalte
 
-In den folgenden Kapiteln erarbeiten wir zunächst die Werkzeuge und vertiefen anschließend die physikalischen Modellarten:
-
 <div class="columns">
-<div class="one">
+<div class="three">
 
-**Teil 1: Visualisierung & Performance**
-- **2D-Raster & Vektor (Kap. 2–3):** `WriteableBitmap` & `WPF Canvas`
-- **Plots & Netzwerke (Kap. 4):** `ScottPlot` & `MSAGL`
-- **3D-Rendering (Kap. 5):** OpenGL mit `SharpGL` & Szenengraph
-- **Multithreading (Kap. 6):** Task Parallel Library (`Parallel.For`)
+In den folgenden Kapiteln erarbeiten wir zunächst die Werkzeuge und vertiefen anschließend die Modellarten:
+
+- **Teil 1 – Visualisierung & Performance (Kap. 2–6):** `WriteableBitmap`, `WPF Canvas`, `ScottPlot 5`, `SharpGL` 3D & Multithreading (`Parallel.For`).
+- **Teil 2 – Simulationsmodelle (Kap. 7–10):** Statische Fachwerke (FEM), kontinuierliche DGLs, ereignisdiskrete DES & hybride Synthese.
+- **Nächster Termin (T02):** Wir starten mit 2D-Pixelgrafik (`WriteableBitmap`) und lösen Wärmeleitung sowie Wellen allokationsfrei auf dem Gitter.
+
+> **Brücke:** Das Grundgerüst aus Euler-Zeitschritt und sauberer Modell-View-Trennung nehmen wir direkt in Termin 2 mit.
 
 </div>
-<div class="one">
+<div class="two">
 
-**Teil 2: Simulationsmodelle**
-- **Statische Modelle (Kap. 7):** Elastische Fachwerke in 2D/3D & LGS
-- **Kontinuierliche Modelle (Kap. 8):** ODEs, Integratoren & S-Functions
-- **Diskrete Modelle (Kap. 9):** Warteschlangen & Monte-Carlo
-- **Hybride Modelle (Kap. 10):** State Events & Zeno-Effekt
+![](./Diagramme/Semester_Bruecke_T01.svg)
 
 </div>
 </div>
