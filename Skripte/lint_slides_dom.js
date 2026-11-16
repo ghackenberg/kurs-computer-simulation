@@ -214,6 +214,47 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         };
       });
 
+      // Check text color harmony against effective local background color on highlight slides
+      const colorIssues = [];
+      const parseRgba = (str) => {
+        const m = str && str.match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)(?:\s*,\s*([\d.]+))?\s*\)/i);
+        if (!m) return null;
+        return { r: parseFloat(m[1]), g: parseFloat(m[2]), b: parseFloat(m[3]), a: m[4] !== undefined ? parseFloat(m[4]) : 1 };
+      };
+      const getEffectiveBg = (el) => {
+        let cur = el;
+        while (cur && cur.tagName !== 'HTML') {
+          const bg = parseRgba(window.getComputedStyle(cur).backgroundColor);
+          if (bg && bg.a > 0.05) return bg;
+          cur = cur.parentElement;
+        }
+        return { r: 255, g: 255, b: 255, a: 1 };
+      };
+      const isHighlight = ['showcase', 'bridge', 'summary', 'homework'].some(c => sec.classList.contains(c));
+      if (isHighlight) {
+        const textEls = sec.querySelectorAll('header, footer, blockquote, p, li, h1, h2, h3, h4');
+        textEls.forEach(el => {
+          if (!el.textContent || !el.textContent.trim()) return;
+          if (el.getBoundingClientRect().height <= 0) return;
+          const fg = parseRgba(window.getComputedStyle(el).color);
+          const bg = getEffectiveBg(el);
+          if (!fg || !bg) return;
+          const bgChroma = Math.max(bg.r, bg.g, bg.b) - Math.min(bg.r, bg.g, bg.b);
+          const fgChroma = Math.max(fg.r, fg.g, fg.b) - Math.min(fg.r, fg.g, fg.b);
+          const fgLum = (fg.r + fg.g + fg.b) / 3;
+          // If local background is tinted (chroma >= 8, e.g., #f0f6ff, #f0fdf4, #fffbeb, #f1f5f9),
+          // forbid mid/light neutral gray text (fgChroma <= 6 && fgLum > 55)
+          if (bgChroma >= 8 && fgChroma <= 6 && fgLum > 55) {
+            colorIssues.push({
+              tag: el.tagName,
+              fg: `rgb(${Math.round(fg.r)},${Math.round(fg.g)},${Math.round(fg.b)})`,
+              bg: `rgb(${Math.round(bg.r)},${Math.round(bg.g)},${Math.round(bg.b)})`,
+              sample: el.textContent.trim().slice(0, 30)
+            });
+          }
+        });
+      }
+
       const heading = sec.querySelector('h1, h2, h3');
       let title = '';
       if (heading) {
@@ -237,6 +278,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         contentTop,
         contentBottom,
         elementGaps,
+        colorIssues,
         images
       });
     });
@@ -369,6 +411,8 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const gapTolerance = options.gapTolerance !== undefined ? options.gapTolerance : 1;
     const gapIssues = (s.elementGaps || []).filter(g => Math.abs(g.gap - (g.expected || 16)) > gapTolerance);
     const hasGapError = gapIssues.length > 0;
+    const colorIssues = s.colorIssues || [];
+    const hasColorError = colorIssues.length > 0;
 
     slides.push({
       ...s,
@@ -379,14 +423,16 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       fillRatio,
       svgIssues,
       gapIssues,
-      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssues || hasUnderfill || hasGapError,
+      colorIssues,
+      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssues || hasUnderfill || hasGapError || hasColorError,
       hasVOverflow,
       hasHOverflow,
       hasHeaderCollision,
       hasFooterCollision,
       hasSvgIssues,
       hasUnderfill,
-      hasGapError
+      hasGapError,
+      hasColorError
     });
   }
 
@@ -564,6 +610,9 @@ async function main() {
         }
         if (err.hasGapError) {
           err.gapIssues.forEach(g => issues.push(`Vertikaler Gap inkonsistent (${g.scope}: ${g.pair} = ${g.gap}px, erwartet ${g.expected || 16}px)`));
+        }
+        if (err.hasColorError) {
+          err.colorIssues.forEach(c => issues.push(`Ungetönter Grauton auf Highlight-Hintergrund (${c.tag} "${c.sample}..." hat ${c.fg} auf ${c.bg})`));
         }
         console.log(`    - Folie ${err.pagination} [${err.title || 'Ohne Titel'}]: ${issues.join(' | ')}`);
       }

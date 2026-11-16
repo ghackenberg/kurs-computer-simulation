@@ -201,27 +201,88 @@ section.homework div.columns + blockquote {
 section.showcase {
     background-color: #f0f6ff;
     box-shadow: inset 10px 0 0 0 var(--fhooe-blue);
+    color: #0f294a;
+}
+section.showcase h1,
+section.showcase h2,
+section.showcase h3,
+section.showcase h4 {
+    color: #004B96;
+}
+section.showcase header,
+section.showcase footer,
+section.showcase blockquote {
+    color: #1e40af;
+}
+section.showcase blockquote {
+    border-left-color: var(--fhooe-blue);
+    background-color: #e0edff;
 }
 section.showcase div.columns > div {
     background-color: #ffffff;
     border: 1px solid #bfdbfe;
     border-radius: 10px;
     padding: 8px 14px;
+    color: #1e293b;
 }
 
 section.bridge {
-    background-color: #f8fafc;
+    background-color: #f1f5f9;
     box-shadow: inset 8px 0 0 0 #64748b;
+    color: #0f172a;
+}
+section.bridge h1,
+section.bridge h2,
+section.bridge h3,
+section.bridge h4 {
+    color: #1e293b;
+}
+section.bridge header,
+section.bridge footer,
+section.bridge blockquote {
+    color: #334155;
 }
 
 section.summary {
     background-color: #f0fdf4;
     box-shadow: inset 10px 0 0 0 #16a34a;
+    color: #14532d;
+}
+section.summary h1,
+section.summary h2,
+section.summary h3,
+section.summary h4 {
+    color: #15803d;
+}
+section.summary header,
+section.summary footer,
+section.summary blockquote {
+    color: #166534;
+}
+section.summary blockquote {
+    border-left-color: #16a34a;
+    background-color: #dcfce7;
 }
 
 section.homework {
     background-color: #fffbeb;
     box-shadow: inset 10px 0 0 0 #d97706;
+    color: #451a03;
+}
+section.homework h1,
+section.homework h2,
+section.homework h3,
+section.homework h4 {
+    color: #b45309;
+}
+section.homework header,
+section.homework footer,
+section.homework blockquote {
+    color: #92400e;
+}
+section.homework blockquote {
+    border-left-color: #d97706;
+    background-color: #fef3c7;
 }
 section.homework div.columns > div {
     background-color: #ffffff;
@@ -229,6 +290,7 @@ section.homework div.columns > div {
     border-radius: 10px;
     padding: 6px 14px;
     font-size: 0.94em;
+    color: #1e293b;
 }
 
 section.showcase div.columns > div > h4:first-child,
