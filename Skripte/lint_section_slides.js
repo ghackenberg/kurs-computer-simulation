@@ -171,6 +171,8 @@ function lintSectionDeck(markdownPath) {
   let prevContentLayout = null;
   let prevSlideNum = 0;
   let nonVisualStreak = 0;
+  let activityCount = 0;
+  let frontalMinutesStreak = 0;
   const chapNumMatchEarly = deckName.match(/^(\d+)_/);
   const chapNumEarly = chapNumMatchEarly ? parseInt(chapNumMatchEarly[1], 10) : -1;
   const strictRhythm = chapNumEarly >= 6;
@@ -338,25 +340,55 @@ function lintSectionDeck(markdownPath) {
     }
 
     // 4. Gewichtete Vortragszeit pro Folientyp schätzen
+    let slideMins = 3.5;
     if (/###\s+.*(?:Live-Showcase|Hausübung)/i.test(slide)) {
-      estimatedMinutes += 0;
+      slideMins = 0;
     } else if (/<!--\s*_class:\s*solution\s*-->/i.test(slide)) {
-      estimatedMinutes += 1.5;
+      slideMins = 1.5;
       contentSlideCount++;
     } else if (/<!--\s*_class:\s*activity\s*-->/i.test(slide)) {
-      estimatedMinutes += 3.0;
+      slideMins = 3.0;
       contentSlideCount++;
     } else if (chapterMatch || sectionMatch || /^#\s+Zusammenfassung/im.test(slide)) {
-      estimatedMinutes += 0.5;
+      slideMins = 0.5;
     } else if (/###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(slide)) {
-      estimatedMinutes += 2.0;
+      slideMins = 2.0;
       contentSlideCount++;
     } else if (/###\s+.*(?:Blick unter die Haube|Herleitung|Mathematik|Kontrast)/i.test(slide) || (/!\[[^\]]*\]\(\.\/Diagramme\/[^)]+\.svg\)/i.test(slide) && /\$\$[\s\S]+?\$\$/.test(slide))) {
-      estimatedMinutes += 4.5;
+      slideMins = 4.5;
       contentSlideCount++;
     } else {
-      estimatedMinutes += 3.5;
+      slideMins = 3.5;
       contentSlideCount++;
+    }
+    estimatedMinutes += slideMins;
+
+    // 4b. Aktivitäts-Tracking (für Kap. 01-10)
+    if (chapNumEarly >= 1 && chapNumEarly <= 10) {
+      const targetActArr = strictRhythm ? issues : warnings;
+      const isAct = /<!--\s*_class:\s*activity\s*-->/i.test(slide);
+      const isSol = /<!--\s*_class:\s*solution\s*-->/i.test(slide);
+      if (isAct) {
+        activityCount++;
+        frontalMinutesStreak = 0;
+        const nextSlide = slides[idx + 1] || '';
+        if (!/<!--\s*_class:\s*solution\s*-->/i.test(nextSlide)) {
+          targetActArr.push({
+            slideNum,
+            type: 'MISSING_SOLUTION_SLIDE',
+            message: `Auf activity-Folie ${slideNum} folgt keine solution-Folie ('<!-- _class: solution -->').`
+          });
+        }
+      } else if (!isSol && !/###\s+.*(?:Live-Showcase|Hausübung)/i.test(slide)) {
+        frontalMinutesStreak += slideMins;
+        if (frontalMinutesStreak > 35 && frontalMinutesStreak - slideMins <= 35) {
+          targetActArr.push({
+            slideNum,
+            type: 'MAX_FRONTAL_MINUTES_EXCEEDED',
+            message: `Über 35 Min. Frontalvortrag am Stück (~${frontalMinutesStreak.toFixed(0)} Min.) ohne activity-Impuls (bis Folie ${slideNum}).`
+          });
+        }
+      }
     }
 
     // 5. Visueller Rhythmus & Layout-Shift prüfen
@@ -527,9 +559,17 @@ function lintSectionDeck(markdownPath) {
     }
   }
 
-  // 7. Zeitbudget-Check für Kapitel 01 bis 10 (150 Min. - 15 Pause - 15 Showcase [ab T02] - 5 HÜ - 15 Quiz [T03,T05,T08,T10])
+  // 7. Zeitbudget- & Aktivitäts-Check für Kapitel 01 bis 10
   let budgetMinutes = null;
   if (chapNum >= 1 && chapNum <= 10) {
+    if (activityCount < 3) {
+      const targetActArr = strictRhythm ? issues : warnings;
+      targetActArr.push({
+        slideNum: 0,
+        type: 'TOO_FEW_ACTIVITIES',
+        message: `Nur ${activityCount} activity-Folie(n) gefunden (mindestens 3 empfohlen).`
+      });
+    }
     const hasQuiz = [3, 5, 8, 10].includes(chapNum);
     const hasShowcase = chapNum >= 2;
     budgetMinutes = 150 - 15 - (hasShowcase ? 15 : 0) - 5 - (hasQuiz ? 15 : 0);

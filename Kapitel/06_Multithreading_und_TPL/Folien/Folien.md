@@ -172,14 +172,14 @@ $$E(p) = \frac{S(p)}{p} = \frac{T_1}{p \cdot T_p} \le 1 \quad (100\,\%)$$
 
 Angenommen, **$95\,\%$** einer Simulation lassen sich ideal parallelisieren – aber **$5\,\%$** (z. B. Initialisierung und Ergebnis-Zusammenführung) laufen streng seriell auf einem Kern.
 
-**Schätzen Sie mit Ihrem Nachbarn:** Welchen maximalen Speedup $S(1000)$ erreichen wir auf einem Cluster mit **$p = 1\,000$ Kernen**?
+**Schätzen Sie (gerne auch zu zweit):** Welchen maximalen Speedup $S(1000)$ erreichen wir auf einem Cluster mit **$p = 1\,000$ Kernen**?
 
 - **A:** $\approx 950\times$ (fast linear mit den Kernen)
 - **B:** $\approx 500\times$ (etwa halbe Kernskalierung durch Overhead)
 - **C:** $\approx 20\times$ (harte Grenze durch die $5\,\%$ serielle Phase)
 - **D:** $\approx 5\times$ (Overhead frisst fast alles auf)
 
-> **Ablauf:** 30 Sek. still schätzen $\to$ 60 Sek. mit dem Nachbarn abstimmen $\to$ Handzeichen!
+> **Ablauf:** 60 Sek. still überlegen $\to$ gleichzeitiges Fingerzeichen (1=A, 2=B, 3=C, 4=D)!
 >
 > **Denkhilfe:** Wie lange dauert allein der serielle Teil bei $T_1 = 100\,\text{s}$ Gesamtlaufzeit, wenn der parallele Teil beliebig schnell wird?
 
@@ -399,7 +399,7 @@ Console.WriteLine(counter);
 - **C:** Bei jedem Start einen anderen Wert **kleiner** als `10000` (z. B. `7842`)
 - **D:** Einen Laufzeitfehler (`InvalidOperationException`)
 
-> **Think–Pair–Share:** 30 Sek. selbst überlegen $\to$ 60 Sek. mit dem Nachbarn abstimmen!
+> **Ablauf:** 60 Sek. selbst überlegen (gerne auch zu zweit) $\to$ Fingerzeichen (1=A, 2=B, 3=C, 4=D)!
 
 ---
 
@@ -632,6 +632,45 @@ Die Entkopplung von Simulation und Benutzeroberfläche erfordert eine klare Thre
 
 ---
 
+<!-- _class: activity -->
+
+### Bug-Hunt im Plenum (2 Min.): Finde die 2 Fehler!
+
+Ein Team schreibt für seine WPF-Simulation diesen Hintergrund-Worker – **welche 2 kritischen Bugs** stecken in diesen Zeilen?
+
+```csharp
+var rnd = new Random(42);
+await Task.Run(() =>
+{
+    Parallel.For(0, 1000, i =>
+    {
+        double x = rnd.NextDouble();
+        ProgressBar.Value = i / 10.0;
+    });
+});
+```
+
+> **Aufgabe:** 60 Sek. selbst analysieren (gerne auch zu zweit) – benennen Sie beide Fehler, das konkrete Fehlerbild **und** die jeweilige Lösung!
+> **Hinweis:** Achten Sie besonders auf den Lebenszyklus der Objekte *vor* und *innerhalb* der Worker-Schleife!
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Die 2 klassischen Parallel-Fallen
+
+1. **Bug 1 (`var rnd = new Random(42)` außerhalb `Parallel.For`):**
+   - `System.Random` ist **nicht thread-sicher** – der interne Zustand korrumpiert und liefert nach kurzer Zeit nur noch `0.0`.
+   - *Lösung:* `Random.Shared.NextDouble()` oder eine eigene Instanz mit eindeutigem Seed pro Lauf.
+2. **Bug 2 (`ProgressBar.Value = ...` innerhalb `Task.Run`):**
+   - Direkter Zugriff aus einem Hintergrund-Thread auf WPF-Controls wirft sofort eine **`InvalidOperationException`** (Thread-Affinität).
+   - *Lösung:* Gedrosselt über **`IProgress<T>` (`progress.Report(...)`)** an den UI-Thread melden!
+3. **Konsequenz:** Beide Fehler treten erst bei echter Parallelität bzw. im WPF-UI-Kontext auf und bleiben in einfachen 1-Thread-Tests leicht unentdeckt.
+
+> **Merksatz für Stufe 1:** Kein `Random` teilen, kein WPF-Control direkt aus `Task.Run` anfassen – und Fortschrittsmeldungen immer drosseln!
+
+---
+
 ## 6.5: Fortschritt & Abbruch (`IProgress<T>` & `CancellationToken`)
 
 ![bg right](./Illustrationen/Abschnitt_5.jpg)
@@ -781,45 +820,6 @@ public void Simulate(CancellationToken token)
 </div>
 
 > **Aufräumen im `finally`-Block:** `CancelBtn.IsEnabled = false` setzen und `_cts?.Dispose()` aufrufen; in `Parallel.For` per `ParallelOptions` weitergeben.
-
----
-
-<!-- _class: activity -->
-
-### Bug-Hunt im Plenum (2 Min.): Finde die 2 Fehler!
-
-Ein Team schreibt für seine WPF-Simulation diesen Hintergrund-Worker – **welche 2 kritischen Bugs** stecken in diesen Zeilen?
-
-```csharp
-var rnd = new Random(42);
-await Task.Run(() =>
-{
-    Parallel.For(0, 1000, i =>
-    {
-        double x = rnd.NextDouble();
-        ProgressBar.Value = i / 10.0;
-    });
-});
-```
-
-> **Aufgabe:** 60 Sek. zu zweit analysieren – benennen Sie beide Fehler, das konkrete Fehlerbild **und** die jeweilige Lösung!
-> **Hinweis:** Achten Sie besonders auf den Lebenszyklus der Objekte *vor* und *innerhalb* der Worker-Schleife!
-
----
-
-<!-- _class: solution -->
-
-### Auflösung: Die 2 klassischen Parallel-Fallen
-
-1. **Bug 1 (`var rnd = new Random(42)` außerhalb `Parallel.For`):**
-   - `System.Random` ist **nicht thread-sicher** – der interne Zustand korrumpiert und liefert nach kurzer Zeit nur noch `0.0`.
-   - *Lösung:* `Random.Shared.NextDouble()` oder eine eigene Instanz mit eindeutigem Seed pro Lauf.
-2. **Bug 2 (`ProgressBar.Value = ...` innerhalb `Task.Run`):**
-   - Direkter Zugriff aus einem Hintergrund-Thread auf WPF-Controls wirft sofort eine **`InvalidOperationException`** (Thread-Affinität).
-   - *Lösung:* Gedrosselt über **`IProgress<T>` (`progress.Report(...)`)** an den UI-Thread melden!
-3. **Konsequenz:** Beide Fehler treten erst bei echter Parallelität bzw. im WPF-UI-Kontext auf und bleiben in einfachen 1-Thread-Tests leicht unentdeckt.
-
-> **Merksatz für Stufe 1:** Kein `Random` teilen, kein WPF-Control direkt aus `Task.Run` anfassen – und Fortschrittsmeldungen immer drosseln!
 
 ---
 

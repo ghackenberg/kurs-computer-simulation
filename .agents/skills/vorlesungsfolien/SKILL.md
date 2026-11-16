@@ -28,6 +28,7 @@ Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorles
    - Reine Textfolien (ohne Grafik/SVG und ohne Code) dürfen niemals direkt aufeinanderfolgen (`CONSECUTIVE_TEXT_SLIDES`) – spätestens jede zweite Inhaltsfolie bringt eine Grafik oder ein Code-Element.
    - Zwei aufeinanderfolgende Inhaltsfolien müssen einen signifikanten **visuellen Shift** aufweisen (unterschiedliche Spaltenbreiten `one`–`six`, Wechsel zwischen Text-/Bild-/Code-/Mischspalten oder ein-/mehrzeiligen Layouts; ab Kap. `06` als harter Linter-Fehler).
    - **Visuelle Verankerung (`SECTION_MISSING_VISUAL`, `CONSECUTIVE_NON_VISUAL_SLIDES`):** Jeder Abschnitt (`## N.M:`) enthält mindestens **1 Inhalts-Grafik/SVG**, und es folgen maximal **3 Inhaltsfolien in Folge** ohne Grafik/SVG aufeinander (ab Kap. `06` als Fehler, `00`–`05` als Warnung).
+   - **Aktivierung (`TOO_FEW_ACTIVITIES`, `MAX_FRONTAL_MINUTES_EXCEEDED`, `MISSING_SOLUTION_SLIDE`):** Mindestens **3 `activity`-Folien** pro Kapitel (`01`–`10`), maximal **~35 Min.** Frontalzeit am Stück ohne `activity`, und jede `activity` unmittelbar gefolgt von `solution` (ab Kap. `06` als Fehler, `01`–`05` als Warnung).
 6. **Ausgewogene Abschnittsgrößen (`lint:sections`):**
    - Jeder Abschnitt (`## N.M:`) umfasst mindestens **2 Inhaltsfolien** (`SECTION_TOO_SMALL`); ein-Folien-Abschnitte sind durch Zusammenlegen oder Ausbau zu vermeiden.
    - Die Inhaltsfolien sind möglichst gleichmäßig auf die Abschnitte verteilt (Max/Min-Verhältnis $\le 2:1$ bei Differenz $> 2$, `UNBALANCED_SECTIONS`).
