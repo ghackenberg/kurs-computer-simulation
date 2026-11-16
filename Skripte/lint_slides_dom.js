@@ -116,8 +116,11 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
   const fileUrl = 'file:///' + tempHtml.replace(/\\/g, '/');
   await page.goto(fileUrl, { waitUntil: 'networkidle0' });
 
-  // Ensure all images are loaded
+  // Ensure all images and fonts are loaded and layout has settled
   await page.evaluate(async () => {
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
     const imgs = Array.from(document.querySelectorAll('img'));
     await Promise.all(imgs.map(img => {
       if (img.complete) return Promise.resolve();
@@ -126,6 +129,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         img.onerror = resolve;
       });
     }));
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
   });
 
   // Evaluate DOM
@@ -187,10 +191,14 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         title = (heading.textContent || heading.innerText || '').trim().replace(/\s+/g, ' ');
       }
 
+      const h1h2 = sec.querySelector('h1, h2');
+      const isOpener = !!h1h2;
+
       results.push({
         sectionIndex: idx + 1,
         pagination,
         title,
+        isOpener,
         clientHeight,
         scrollHeight,
         clientWidth,
@@ -322,19 +330,27 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const hasHOverflow = hOverflow > maxOverflow;
     const hasSvgIssues = svgIssues.length > 0;
 
+    const availableHeight = Math.max(1, s.footerTop - s.headerBottom);
+    const contentHeight = s.contentBottom > s.contentTop ? (s.contentBottom - s.contentTop) : 0;
+    const fillRatio = contentHeight / availableHeight;
+    const minFillRatio = options.minFillRatio !== undefined ? options.minFillRatio : 0.80;
+    const hasUnderfill = !s.isOpener && minFillRatio > 0 && fillRatio < minFillRatio;
+
     slides.push({
       ...s,
       effectiveVOverflow: Math.round(effectiveVOverflow),
       hOverflow: Math.round(hOverflow),
       headerMargin: Math.round(headerMargin),
       footerMargin: Math.round(footerMargin),
+      fillRatio,
       svgIssues,
-      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssues,
+      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssues || hasUnderfill,
       hasVOverflow,
       hasHOverflow,
       hasHeaderCollision,
       hasFooterCollision,
-      hasSvgIssues
+      hasSvgIssues,
+      hasUnderfill
     });
   }
 
@@ -379,6 +395,8 @@ async function main() {
   let skipSchema = false;
   let checkImages = false;
   let minImageWidthRatio = 0.95;
+  let minFillRatio = 0.80;
+  let reportFill = false;
 
   args.forEach(arg => {
     if (arg.startsWith('--min-font-size=')) {
@@ -394,6 +412,10 @@ async function main() {
     } else if (arg.startsWith('--min-image-width=')) {
       minImageWidthRatio = parseFloat(arg.split('=')[1]);
       checkImages = true;
+    } else if (arg.startsWith('--min-fill=')) {
+      minFillRatio = parseFloat(arg.split('=')[1]);
+    } else if (arg === '--report-fill') {
+      reportFill = true;
     } else if (!arg.startsWith('--')) {
       target = arg;
     }
@@ -444,10 +466,19 @@ async function main() {
     const dDir = path.dirname(deck);
     const deckName = path.basename(dDir) === 'Folien' ? path.basename(path.dirname(dDir)) : path.basename(dDir);
     process.stdout.write(`Inspecting ${deckName} ... `);
-    const res = await lintSlideDeck(deck, browser, { minFontSize, minHeaderMargin, minFooterMargin, skipSchema, checkImages, minImageWidthRatio });
+    const res = await lintSlideDeck(deck, browser, { minFontSize, minHeaderMargin, minFooterMargin, skipSchema, checkImages, minImageWidthRatio, minFillRatio });
     allResults.push(res);
     grandTotalSlides += res.totalSlides;
     grandTotalErrors += res.errorSlides.length;
+
+    if (reportFill) {
+      console.log(`\n  [Fill-Report ${deckName}]`);
+      for (const sl of res.slides) {
+        if (!sl.isOpener) {
+          console.log(`    Folie ${String(sl.sectionIndex).padStart(2, '0')} (${Math.round(sl.fillRatio * 100)}%): ${sl.title}`);
+        }
+      }
+    }
 
     if (res.errorSlides.length === 0) {
       console.log(`âœ“ OK (${res.totalSlides} Folien sauber)`);
@@ -479,6 +510,9 @@ async function main() {
         }
         if (err.schemaIssues && err.schemaIssues.length > 0) {
           err.schemaIssues.forEach(msg => issues.push(`Schema-Fehler: ${msg}`));
+        }
+        if (err.hasUnderfill) {
+          issues.push(`Folie zu leer: vertikale Auslastung nur ${Math.round(err.fillRatio * 100)}% (< ${Math.round(minFillRatio * 100)}%)`);
         }
         console.log(`    - Folie ${err.pagination} [${err.title || 'Ohne Titel'}]: ${issues.join(' | ')}`);
       }

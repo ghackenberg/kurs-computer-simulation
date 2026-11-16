@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 0 1160 390" width="1080" height="390">
+  <defs>
+    <marker id="arrRoad" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#004B96"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
+    </style>
+  </defs>
+
+  <rect x="-40" y="0" width="1160" height="390" fill="#FFFFFF"/>
+
+  <!-- LEFT: Block 1 Werkzeuge T01-T06 -->
+  <rect x="10" y="16" width="490" height="354" rx="12" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <rect x="10" y="16" width="490" height="44" rx="12" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="255" y="44" font-size="16" font-weight="bold" fill="#1E40AF" text-anchor="middle">Block 1: Werkzeuge &amp; Infrastruktur (T01–T06)</text>
+
+  <rect x="34" y="80" width="442" height="54" rx="8" fill="#FFFFFF" stroke="#93C5FD"/>
+  <text x="52" y="103" font-size="14" font-weight="bold" fill="#1E40AF">T01: Kinematik &amp; Expliziter Euler</text>
+  <text x="52" y="123" font-size="13" fill="#475569">Grundbegriffe &amp; Zeitschritt-Schleife</text>
+
+  <rect x="34" y="146" width="442" height="54" rx="8" fill="#FFFFFF" stroke="#93C5FD"/>
+  <text x="52" y="169" font-size="14" font-weight="bold" fill="#1E40AF">T02–T04: 2D-Visualisierung (WPF &amp; ScottPlot)</text>
+  <text x="52" y="189" font-size="13" fill="#475569">WriteableBitmap, Vektorgrafik-Canvas &amp; 1-kHz-Telemetrie</text>
+
+  <rect x="34" y="212" width="442" height="54" rx="8" fill="#FFFFFF" stroke="#93C5FD"/>
+  <text x="52" y="235" font-size="14" font-weight="bold" fill="#1E40AF">T05: 3D-Szenengraph &amp; OpenGL (SharpGL)</text>
+  <text x="52" y="255" font-size="13" fill="#475569">Hierarchische Transformationen, Licht &amp; Orbit-Kamera</text>
+
+  <rect x="34" y="278" width="442" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="2"/>
+  <text x="52" y="305" font-size="14.5" font-weight="bold" fill="#B45309">T06 (Heute): Multithreading &amp; TPL</text>
+  <text x="52" y="330" font-size="13" fill="#78350F">Parallel.For, Task.Run, IProgress &amp; CancellationToken</text>
+
+  <!-- Arrow -->
+  <line x1="506" y1="193" x2="572" y2="193" stroke="#004B96" stroke-width="4" marker-end="url(#arrRoad)"/>
+
+  <!-- RIGHT: Block 2 Physikalische Modelle T07-T11 -->
+  <rect x="580" y="16" width="490" height="354" rx="12" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/>
+  <rect x="580" y="16" width="490" height="44" rx="12" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5"/>
+  <text x="825" y="44" font-size="16" font-weight="bold" fill="#15803D" text-anchor="middle">Block 2: Physikalische Modelle &amp; Solver (T07–T11)</text>
+
+  <rect x="604" y="80" width="442" height="54" rx="8" fill="#FFFFFF" stroke="#86EFAC"/>
+  <text x="622" y="103" font-size="14" font-weight="bold" fill="#15803D">T07: Statische Gleichgewichtsmodelle (FEM)</text>
+  <text x="622" y="123" font-size="13" fill="#475569">Lineare Gleichungssysteme &amp; Cholesky-Zerlegung</text>
+
+  <rect x="604" y="146" width="442" height="54" rx="8" fill="#FFFFFF" stroke="#86EFAC"/>
+  <text x="622" y="169" font-size="14" font-weight="bold" fill="#15803D">T08: Kontinuierliche Dynamik (DGL / ODE)</text>
+  <text x="622" y="189" font-size="13" fill="#475569">Heun, Runge-Kutta 4 &amp; geschlossene Regelkreise</text>
+
+  <rect x="604" y="212" width="442" height="54" rx="8" fill="#FFFFFF" stroke="#86EFAC"/>
+  <text x="622" y="235" font-size="14" font-weight="bold" fill="#15803D">T09: Diskrete Ereignissysteme (DES)</text>
+  <text x="622" y="255" font-size="13" fill="#475569">Ereignis-Warteschlangen &amp; parallele Monte-Carlo-Läufe</text>
+
+  <rect x="604" y="278" width="442" height="70" rx="8" fill="#FFFFFF" stroke="#86EFAC"/>
+  <text x="622" y="305" font-size="14" font-weight="bold" fill="#15803D">T10 &amp; T11: Hybride Dynamik &amp; Synthese</text>
+  <text x="622" y="330" font-size="13" fill="#475569">Zero-Crossing-Bisektion &amp; industrieller Digitaler Zwilling</text>
+</svg>

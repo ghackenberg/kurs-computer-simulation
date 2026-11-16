@@ -21,11 +21,123 @@
  * 3. Kapitel-Brücke & Rückblick vor Abschnitt N.1 (Kapitel 01 bis 10):
  *    - Dedizierte Einstiegsfolie '### Rückblick & Brücke: ...' (oder '### Einordnung & Rückblick: ...')
  *      nach Kapitel-Opener / optionaler Quiz- & Showcase-Folie und vor '## N.1:'
+ *
+ * 4. Visueller Rhythmus & Layout-Shift (ab Kap. 06 als Fehler, Kap. 00-05 als Warnung):
+ *    - Keine zwei reinen Textfolien (ohne Grafik/SVG und ohne Code) direkt hintereinander
+ *    - Signifikanter visueller Shift zwischen Nachbarfolien (Spaltenbreiten, Text-/Bild-/Code-/Mischspalten, mehrzeilige Layouts)
  * ==============================================================================
  */
 
 const fs = require('fs');
 const path = require('path');
+
+function classifyBlockContent(text) {
+  const clean = text.replace(/<!--[\s\S]*?-->/g, '').replace(/^#{1,3}\s+.*$/gm, '').trim();
+  const hasImg = /!\[[^\]]*\]\([^)]+\)/.test(clean);
+  const hasCode = /```[\s\S]*?```/.test(clean);
+  const withoutImgAndCode = clean
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, '')
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/^\s*>\s*/gm, '')
+    .trim();
+  const hasText = withoutImgAndCode.length > 0;
+  const hasTable = /^\s*\|.+\|\s*$/m.test(withoutImgAndCode);
+
+  if (hasImg && !hasCode && !hasText) return 'IMG';
+  if (hasCode && !hasImg && !hasText) return 'CODE';
+  if (!hasImg && !hasCode) return hasTable ? 'TABLE' : 'TEXT';
+  if (hasImg && (hasCode || hasText)) return 'MIX_IMG';
+  return 'MIX_CODE';
+}
+
+function classifySlideLayout(slide) {
+  const isOpener = /^#\s+Kapitel\s+\d+:|^##\s+\d+\.\d+:|^#\s+Zusammenfassung/m.test(slide);
+  if (isOpener) {
+    return { signature: 'OPENER', isOpener: true, isPureText: false };
+  }
+
+  const body = slide.replace(/<!--[\s\S]*?-->/g, '').replace(/^#{1,3}\s+.*$/gm, '');
+  const segments = [];
+  const colRegex = /<div\s+class="columns[^"]*">([\s\S]*?)<\/div>\s*(?=<\/div>|\s*$|\s*\n)/g;
+
+  // Robust tag-depth scanner for top-level <div class="columns..."> blocks
+  let pos = 0;
+  const openColRe = /<div\s+class="columns[^"]*">/g;
+  while (pos < body.length) {
+    openColRe.lastIndex = pos;
+    const m = openColRe.exec(body);
+    if (!m) {
+      const tail = body.slice(pos).trim();
+      if (tail) segments.push(`SINGLE:${classifyBlockContent(tail)}`);
+      break;
+    }
+    const before = body.slice(pos, m.index).trim();
+    if (before) segments.push(`SINGLE:${classifyBlockContent(before)}`);
+
+    // Find matching </div> for this columns container
+    let depth = 1;
+    let scan = m.index + m[0].length;
+    const tagRe = /<\/?div\b[^>]*>/g;
+    tagRe.lastIndex = scan;
+    let endIdx = body.length;
+    let tm;
+    while ((tm = tagRe.exec(body)) !== null) {
+      if (tm[0].startsWith('</div')) {
+        depth--;
+        if (depth === 0) {
+          endIdx = tm.index;
+          pos = tm.index + tm[0].length;
+          break;
+        }
+      } else {
+        depth++;
+      }
+    }
+    if (depth !== 0) pos = body.length;
+
+    const colInner = body.slice(m.index + m[0].length, endIdx);
+    // Extract direct child <div class="..."> columns inside colInner
+    const cols = [];
+    let cPos = 0;
+    const childDivRe = /<div(?:\s+class="([^"]*)")?\s*>/g;
+    while (cPos < colInner.length) {
+      childDivRe.lastIndex = cPos;
+      const cm = childDivRe.exec(colInner);
+      if (!cm) break;
+      let cDepth = 1;
+      const cTagRe = /<\/?div\b[^>]*>/g;
+      cTagRe.lastIndex = cm.index + cm[0].length;
+      let cEnd = colInner.length;
+      let ctm;
+      while ((ctm = cTagRe.exec(colInner)) !== null) {
+        if (ctm[0].startsWith('</div')) {
+          cDepth--;
+          if (cDepth === 0) {
+            cEnd = ctm.index;
+            cPos = ctm.index + ctm[0].length;
+            break;
+          }
+        } else {
+          cDepth++;
+        }
+      }
+      if (cDepth !== 0) cPos = colInner.length;
+      const widthCls = (cm[1] || 'auto').trim().split(/\s+/).find(c => /^(one|two|three|four|five|six)$/.test(c)) || 'auto';
+      const contentCls = classifyBlockContent(colInner.slice(cm.index + cm[0].length, cEnd));
+      cols.push(`${widthCls}:${contentCls}`);
+    }
+    segments.push(`ROW[${cols.join('|')}]`);
+  }
+
+  const hasImg = /!\[[^\]]*\]\([^)]+\)/.test(body);
+  const hasCode = /```/.test(body);
+  const isPureText = !hasImg && !hasCode;
+  return {
+    signature: segments.join(' + ') || 'EMPTY',
+    isOpener: false,
+    isPureText
+  };
+}
 
 function lintSectionDeck(markdownPath) {
   const content = fs.readFileSync(markdownPath, 'utf8');
@@ -43,6 +155,11 @@ function lintSectionDeck(markdownPath) {
   let chapterSlideFound = false;
   let estimatedMinutes = 0;
   let contentSlideCount = 0;
+  let prevContentLayout = null;
+  let prevSlideNum = 0;
+  const chapNumMatchEarly = deckName.match(/^(\d+)_/);
+  const chapNumEarly = chapNumMatchEarly ? parseInt(chapNumMatchEarly[1], 10) : -1;
+  const strictRhythm = chapNumEarly >= 6;
 
   slides.forEach((slide, idx) => {
     const slideNum = idx + 1;
@@ -186,6 +303,32 @@ function lintSectionDeck(markdownPath) {
       estimatedMinutes += 3.5;
       contentSlideCount++;
     }
+
+    // 5. Visueller Rhythmus & Layout-Shift prüfen
+    const layout = classifySlideLayout(slide);
+    if (layout.isOpener) {
+      prevContentLayout = null;
+    } else {
+      const targetArr = strictRhythm ? issues : warnings;
+      if (prevContentLayout) {
+        if (prevContentLayout.isPureText && layout.isPureText) {
+          targetArr.push({
+            slideNum,
+            type: 'CONSECUTIVE_TEXT_SLIDES',
+            message: `Zwei reine Textfolien direkt hintereinander (Folie ${prevSlideNum} → ${slideNum}) ohne Grafik/Code zur visuellen Unterbrechung.`
+          });
+        }
+        if (prevContentLayout.signature === layout.signature) {
+          targetArr.push({
+            slideNum,
+            type: 'NO_VISUAL_SHIFT',
+            message: `Kein signifikanter visueller Shift zwischen Folie ${prevSlideNum} und ${slideNum} (beide: ${layout.signature}).`
+          });
+        }
+      }
+      prevContentLayout = layout;
+      prevSlideNum = slideNum;
+    }
   });
 
   // 4. Consistency checks
@@ -312,7 +455,8 @@ function main() {
     }
     if (res.warnings && res.warnings.length > 0) {
       res.warnings.forEach(w => {
-        console.log(`    ⚠ [Zeitbudget] ${w.message}`);
+        const prefix = w.slideNum ? `  - [Folie ${w.slideNum}] ` : '';
+        console.log(`    ⚠ [${w.type}] ${prefix}${w.message}`);
       });
     }
   }

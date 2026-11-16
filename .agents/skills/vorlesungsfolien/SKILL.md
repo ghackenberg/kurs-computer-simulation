@@ -24,6 +24,9 @@ Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorles
      - `Standard-Inhaltsfolie` *(Beispiel, Code, Überblick)*: **3,5 Min.**
      - `Schwere Erklär-Folie` *(„Blick unter die Haube“, Herleitung, komplexes Kontrast-SVG)*: **4,5 Min.**
    - Richtwert in der Praxis: ca. **28–32 Folien** an Quiz-Terminen bzw. **32–36 Folien** ohne Quiz. Keine separaten Kleinst-Folien für triviale 1-Zeilen-API-Aufrufe.
+5. **Visueller Rhythmus & Layout-Shift (`lint:sections`):**
+   - Reine Textfolien (ohne Grafik/SVG und ohne Code) dürfen niemals direkt aufeinanderfolgen (`CONSECUTIVE_TEXT_SLIDES`) – spätestens jede zweite Inhaltsfolie bringt eine Grafik oder ein Code-Element.
+   - Zwei aufeinanderfolgende Inhaltsfolien müssen einen signifikanten **visuellen Shift** aufweisen (unterschiedliche Spaltenbreiten `one`–`six`, Wechsel zwischen Text-/Bild-/Code-/Mischspalten oder ein-/mehrzeiligen Layouts; ab Kap. `06` als harter Linter-Fehler).
 2. **Folie 2 (ab Kapitel `02`): `### Live-Showcase & Code-Defense: Termin [XX-1]`:**
    - Fasst zweispaltig (`Track A` links, `Track B` rechts) die Vorwochen-Hausübung und den Live-Parameter-Stresstest zusammen.
 3. **Einstiegsfolie vor Abschnitt `N.1`: `### Rückblick & Brücke: ...`:**

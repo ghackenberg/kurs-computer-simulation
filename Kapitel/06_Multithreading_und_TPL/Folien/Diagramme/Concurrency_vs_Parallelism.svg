@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 0 1160 390" width="1080" height="390">
+  <defs>
+    <marker id="arrT" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
+      .code { font-family: 'Consolas', monospace; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect x="-40" y="0" width="1160" height="390" fill="#FFFFFF"/>
+
+  <!-- LEFT: Nebenläufigkeit (Concurrency) auf 1 Kern -->
+  <rect x="10" y="10" width="515" height="366" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <rect x="10" y="10" width="515" height="40" rx="10" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="267" y="36" font-size="16" font-weight="bold" fill="#1E40AF" text-anchor="middle">Nebenläufigkeit (Concurrency): 1 Kern, Zeitscheiben</text>
+
+  <text x="32" y="84" font-size="14" font-weight="bold" fill="#1E3A8A">Core 0:</text>
+  <rect x="105" y="60" width="90" height="38" rx="4" fill="#2563EB"/>
+  <text x="150" y="84" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">UI</text>
+  <rect x="200" y="60" width="90" height="38" rx="4" fill="#D97706"/>
+  <text x="245" y="84" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">I/O</text>
+  <rect x="295" y="60" width="90" height="38" rx="4" fill="#2563EB"/>
+  <text x="340" y="84" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">UI</text>
+  <rect x="390" y="60" width="105" height="38" rx="4" fill="#D97706"/>
+  <text x="442" y="84" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">I/O</text>
+
+  <line x1="105" y1="120" x2="495" y2="120" stroke="#475569" stroke-width="2" marker-end="url(#arrT)"/>
+  <text x="300" y="142" font-size="13" fill="#475569" text-anchor="middle">Zeit t → (Schnelles Umschalten)</text>
+
+  <rect x="30" y="168" width="475" height="186" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.2"/>
+  <text x="48" y="196" font-size="14.5" font-weight="bold" fill="#1E40AF">Ziel: Reaktionsfähigkeit statt Rechentempo</text>
+  <text x="48" y="226" font-size="13.5" fill="#1E3A8A">• Aufgaben schreiten abwechselnd voran (Time-Slicing).</text>
+  <text x="48" y="254" font-size="13.5" fill="#1E3A8A">• UI-Events und Rendering frieren nicht ein.</text>
+  <text x="48" y="282" font-size="13.5" fill="#1E3A8A">• Beispiel in WPF: async / await + Task.Run.</text>
+  <text x="48" y="324" font-size="13.5" font-weight="bold" fill="#1E40AF">Gesamt-Rechenzeit: nicht schneller als 1 Kern!</text>
+
+  <!-- RIGHT: Echte Parallelität auf 4 Kernen -->
+  <rect x="555" y="10" width="515" height="366" rx="10" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/>
+  <rect x="555" y="10" width="515" height="40" rx="10" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5"/>
+  <text x="812" y="36" font-size="16" font-weight="bold" fill="#15803D" text-anchor="middle">Echte Parallelität: 4 Kerne gleichzeitig</text>
+
+  <text x="577" y="84" font-size="13.5" font-weight="bold" fill="#166534">Core 0:</text>
+  <rect x="650" y="64" width="380" height="24" rx="4" fill="#16A34A"/>
+  <text x="840" y="81" font-size="12.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Partikel 0 .. 24 999</text>
+
+  <text x="577" y="114" font-size="13.5" font-weight="bold" fill="#166534">Core 1:</text>
+  <rect x="650" y="94" width="380" height="24" rx="4" fill="#16A34A"/>
+  <text x="840" y="111" font-size="12.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Partikel 25 000 .. 49 999</text>
+
+  <text x="577" y="144" font-size="13.5" font-weight="bold" fill="#166534">Core 2:</text>
+  <rect x="650" y="124" width="380" height="24" rx="4" fill="#16A34A"/>
+  <text x="840" y="141" font-size="12.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Partikel 50 000 .. 74 999</text>
+
+  <text x="577" y="174" font-size="13.5" font-weight="bold" fill="#166534">Core 3:</text>
+  <rect x="650" y="154" width="380" height="24" rx="4" fill="#16A34A"/>
+  <text x="840" y="171" font-size="12.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Partikel 75 000 .. 99 999</text>
+
+  <rect x="575" y="196" width="475" height="158" rx="8" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.2"/>
+  <text x="593" y="224" font-size="14.5" font-weight="bold" fill="#15803D">Ziel: Maximaler Durchsatz (Speedup S(p))</text>
+  <text x="593" y="252" font-size="13.5" fill="#14532D">• Alle Kerne rechnen zur exakt selben Zeit.</text>
+  <text x="593" y="280" font-size="13.5" fill="#14532D">• Beispiel in C#: Parallel.For über 100 000 Partikel.</text>
+  <text x="593" y="322" font-size="13.5" font-weight="bold" fill="#15803D">Ideal in der Praxis: Task.Run + Parallel.For kombinieren!</text>
+</svg>

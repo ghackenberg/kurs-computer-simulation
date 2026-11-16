@@ -31,6 +31,8 @@ Verbindliche Gestaltungs-, Typografie- und Prüfregeln für SVG-Illustrationen i
    - Algorithmen- und Datenstruktur-SVGs müssen **echte, nachrechenbare Zahlenwerte** zeigen (konkrete Array-Einträge, Suchschritte mit Index-Vergleich oder konkrete Koordinatenwerte vor/nach einer Transformation).
 2. **Visueller Direktvergleich (*Naiv/Falsch vs. Richtig*):**
    - Wo eine Reihenfolge, Speicheranordnung oder ein numerischer Fehler erklärt wird, stelle beide Fälle nebeneinander in einem Kontrast-SVG gegenüber.
+3. **Keine eingebauten Text-Sidebars („Poster-SVGs“):**
+   - Erklärender Fließtext, Aufzählungslisten und mehrtermige Formeln gehören als echtes Markdown/MathJax in eine eigene MARP-Spalte (`<div class="columns">`), **nicht** als Textbox-Sidebar neben das Diagramm ins SVG (außer wenn ausdrücklich gewünscht). Im SVG stehen nur Achsen, Kurven, kurze Labels und konkrete Zahlenwerte.
 3. **Einheitliche Farbsemantik:**
    - **Blau (`#eff6ff` Füllung, `#2563eb` Rahmen, `#1e40af` Text):** Aktiver Datenpfad, reguläre Schritte.
    - **Grün (`#f0fdf4` / `#dcfce7` Füllung, `#16a34a` Rahmen, `#15803d` Text):** Zieltreffer, korrekter Pfad, Optimierungserfolg.
