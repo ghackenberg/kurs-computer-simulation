@@ -13,7 +13,7 @@ Eine quadratische Aluminium-Kühlplatte der Kantenlänge $L_x = L_y = 120\,\text
 a) Wie groß muss die räumliche Maschenweite $\Delta x_{\min}$ (in **mm**) mindestens gewählt werden, damit die 2D-Stabilitätsbedingung gerade noch eingehalten wird?  
 Antwort: {1:NUMERICAL:=4.0:0.05#Richtig! Aus s = alpha * dt / dx^2 <= 0,25 folgt dx_min = sqrt(4 * 80 * 0,05) = sqrt(16) = 4,0 mm.~%50%2.828:0.05#Teilpunkte (50 %): Sie haben mit dem 1D-Faktor 2 statt 4 gerechnet (sqrt(8) = 2,83 mm).~%50%16.0:0.1#Teilpunkte (50 %): Sie haben dx^2 = 16 mm^2 berechnet, aber vergessen, am Ende die Quadratwurzel zu ziehen.} mm
 
-b) In wie viele Teilintervalle $N_{\text{seg}} = L_x / \Delta x_{\min}$ wird eine Plattenkante dabei unterteilt?  
+b) In wie viele Teilintervalle $N_{\text{seg}}$ wird eine Plattenkante bei dieser Maschenweite $\Delta x_{\min}$ unterteilt?  
 Antwort: {1:NUMERICAL:=30:0#Richtig! 120 mm / 4,0 mm = 30 Segmente pro Kante (entspricht 31 * 31 = 961 Gitterknoten inkl. Rändern).~%50%900:0#Teilpunkte (50 %): Sie haben die Fläche 30 * 30 = 900 statt der Kanten-Segmente angegeben.} Segmente
 
 

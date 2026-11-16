@@ -585,6 +585,7 @@ for (double x1 = -2.8; x1 <= 2.8; x1 += 0.4) {
         if (len > 1e-6) {
             double scale = 0.22 / len;
             var coord = new Coordinates(x1, x2);
+            // ScottPlot-5-Konvention: Y von Vector2 zeigt im Screen-Space nach unten (-dx2)
             var dir   = new Vector2((float)(dx1 * scale), (float)(-dx2 * scale));
             vectors.Add(new RootedCoordinateVector(coord, dir));
         }
@@ -594,7 +595,7 @@ plot.Add.VectorField(vectors, Colors.SteelBlue);
 var traj = plot.Add.ScatterLine(trX, trY);
 ```
 
-- Für jeden Gitterpunkt `(x1, x2)` wird aus `(dx1, dx2)` über `len` und `scale` ein normierter Vektor `(coord, dir)` in `vectors` abgelegt und mit der Trajektorie `traj` (`trX`, `trY`) kombiniert.
+- Pro Gitterpunkt `(x1, x2)` liefert `(dx1, dx2)` über `len` und `scale` den Vektor `(coord, dir)` in `vectors` (`-dx2`: `Vector2`-Y zeigt im Screen-Space nach unten), kombiniert mit `traj` (`trX`, `trY`).
 
 ---
 

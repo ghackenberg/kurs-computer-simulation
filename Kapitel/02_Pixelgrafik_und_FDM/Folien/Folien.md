@@ -43,7 +43,7 @@ Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 
 #### Stufe 2 – Track B: Game (Artillery Duel)
 - **Modell:** Ballistik mit quadratischem Newton-Drag, stochastischem Wind & Terrain.
 - **Numerik:** Schnittpunkt-Interpolation bei Kollision, KI-Winkelsuche ($\pm 1{,}5\,\text{m}$).
-- **Stresstest:** Gegenwind live auf $+25\,\text{m/s}$ setzen.
+- **Stresstest:** Gegenwind live auf $w_x = -25\,\text{m/s}$ setzen.
 
 </div>
 </div>
@@ -915,7 +915,7 @@ Anhand der Mischungsformel $T_{\text{neu}} = (1 - 4s) \cdot T_{\text{alt}} + 4s 
 2. **Stabilitätsgrenze $s = 0{,}25$ ($\implies 0\,T_{\text{alt}} + 1{,}00\,\bar{T}_{\text{Nachbarn}}$):**
    - Eigengewicht wird exakt Null; das Pixel übernimmt zu $100\,\%$ den Nachbar-Durchschnitt.
 3. **Instabiler Bereich $s > 0{,}25$ ($s = 0{,}35 \implies -0{,}4\,T_{\text{alt}} + 1{,}4\,\bar{T}_{\text{Nachbarn}}$):**
-   - Eigengewicht $(1 - 4s)$ wird **negativ**! $+100\,^\circ\mathrm{C}$ schießt auf $-40\,^\circ\mathrm{C}$, dann $+96\,^\circ\mathrm{C}$ $\implies$ **`NaN`-Explosion!**
+   - Eigengewicht $(1 - 4s)$ wird **negativ**! $+100\,^\circ\mathrm{C}$ schießt auf $-40\,^\circ\mathrm{C}$, dann $+65\,^\circ\mathrm{C}$ $\implies$ **`NaN`-Explosion!**
 
 </div>
 <div class="one">

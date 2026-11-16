@@ -28,25 +28,25 @@
   <rect x="-24" y="48" width="256" height="248" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8" />
   <text x="104" y="70" class="code" fill="#15803d">OK: phi = 40° (schräg)</text>
 
-  <!-- Horizontale Referenz & Ziel p_look bei (38, 228) -->
-  <line x1="18" y1="228" x2="128" y2="228" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="4,3" />
-  <circle cx="38" cy="228" r="6" fill="#dc2626" />
-  <text x="38" y="252" class="code" fill="#991b1b">p_look</text>
+  <!-- Horizontale Referenz & Ziel p_look bei (38, 232) -->
+  <line x1="18" y1="232" x2="124" y2="232" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="4,3" />
+  <circle cx="38" cy="232" r="6" fill="#dc2626" />
+  <text x="38" y="256" class="code" fill="#991b1b">p_look</text>
 
   <!-- Elevationsbogen phi -->
-  <path d="M 78 228 A 40 40 0 0 0 69 203" fill="none" stroke="#16a34a" stroke-width="2.2" />
-  <text x="102" y="216" class="code" fill="#15803d">phi</text>
+  <path d="M 78 232 A 40 40 0 0 0 68 206" fill="none" stroke="#16a34a" stroke-width="2.2" />
+  <text x="98" y="220" class="code" fill="#15803d">phi</text>
 
-  <!-- Kamera p_eye bei (130, 148) -->
-  <line x1="123" y1="154" x2="47" y2="220" stroke="#2563eb" stroke-width="2.8" marker-end="url(#arr-blue)" />
-  <line x1="130" y1="138" x2="130" y2="88" stroke="#16a34a" stroke-width="2.6" marker-end="url(#arr-green)" />
-  <line x1="138" y1="152" x2="194" y2="184" stroke="#d97706" stroke-width="2.8" marker-end="url(#arr-amber)" />
-  <circle cx="130" cy="148" r="8.5" fill="#1d4ed8" stroke="#ffffff" stroke-width="2" />
+  <!-- Kamera p_eye bei (120, 162): f nach links-unten, e_up nach oben -> s = f x e_up nach rechts-oben in die Bildebene (-Z) -->
+  <line x1="113" y1="168" x2="47" y2="224" stroke="#2563eb" stroke-width="2.8" marker-end="url(#arr-blue)" />
+  <line x1="120" y1="152" x2="120" y2="94" stroke="#16a34a" stroke-width="2.6" marker-end="url(#arr-green)" />
+  <line x1="128" y1="157" x2="186" y2="125" stroke="#d97706" stroke-width="2.8" marker-end="url(#arr-amber)" />
+  <circle cx="120" cy="162" r="8.5" fill="#1d4ed8" stroke="#ffffff" stroke-width="2" />
 
-  <text x="80" y="132" class="code" fill="#1e40af">p_eye</text>
-  <text x="66" y="178" class="code" fill="#1d4ed8">f</text>
-  <text x="170" y="106" class="code" fill="#15803d">e_up</text>
-  <text x="174" y="210" class="code" fill="#b45309">s (Rechts)</text>
+  <text x="70" y="152" class="code" fill="#1e40af">p_eye</text>
+  <text x="64" y="190" class="code" fill="#1d4ed8">f</text>
+  <text x="88" y="106" class="code" fill="#15803d">e_up</text>
+  <text x="176" y="110" class="code" fill="#b45309">s (Rechts)</text>
 
   <text x="104" y="281" class="code" fill="#15803d">s = f × e_up != 0 (klar!)</text>
 

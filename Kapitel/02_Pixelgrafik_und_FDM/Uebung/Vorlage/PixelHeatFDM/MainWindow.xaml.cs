@@ -48,7 +48,7 @@ public partial class MainWindow : Window
 
     private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if (_grid == null || TxtDtValue == null) return;
+        if (!IsLoaded || _grid == null || TxtStabilityStatus == null) return;
 
         _grid.Dt = (float)SliderDt.Value;
         _grid.Alpha = (float)SliderAlpha.Value;

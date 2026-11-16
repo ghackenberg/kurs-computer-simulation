@@ -27,5 +27,5 @@
   - `1.4`: Automatisierte Verifikation der 1-Schritt-Referenzwerte, der Farbtabelle und der adiabaten Isolatorwand in `PixelHeatFDM.Tests` via `dotnet test`.
 - **Stufe 2 – Wahlmodell (10 Pkt.):**
   - **Track A (`A.1`–`A.4` – CPU-Kühlkörper-Optimierung):** Mehrzonen-Gitter (Silizium-Chip, Kupfer-Heatspreader, Alu-Finne), konvektive Robin-Randbedingung am oberen Rand (Lüfter Aus vs. Ein) und experimenteller Nachweis der Schachbrett-Explosion bei $s > 0{,}25$.
-  - **Track B (`B.1`–`B.4` – Falling Sand & Doom Fire / Lava):** Zelluläre Partikel-Physik (Sand-Böschung, Wasser-Verdampfung bei $100\,^\circ\text{C}$, Lava-Wärmequellen) gekoppelt mit aufsteigender Konvektionsglut im FDM-Temperaturfeld.
+  - **Track B (`B.1`–`B.4` – Falling Sand & Doom Fire / Lava):** Zelluläre Partikel-Physik (Sand-Böschung, Holz-Abbrand zu Asche & Lava-Erstarrung zu Stein, Lava-Wärmequellen) gekoppelt mit aufsteigender Konvektionsglut im FDM-Temperaturfeld.
 - **Showcase- & Code-Defense-Fokus (zu Beginn von T03):** Live-Stresstest mit $s = 0{,}28 > 0{,}25$ (echte Schachbrett-Oszillation vs. künstliches `Math.Clamp`), Stride-Berechnung (`width * 4`) und Double-Buffering (`_tCurrent` $\leftrightarrow$ `_tNext`).

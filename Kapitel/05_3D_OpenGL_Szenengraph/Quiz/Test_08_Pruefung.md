@@ -121,23 +121,23 @@ Bringen Sie die **vier Schritte einer entkoppelten Echtzeit-Visualisierungspipel
 
 ---
 
-## Frage 6 [Q02_T08_Q6]: Farbsemantik & Vektordarstellung: Kodierung von Stabkräften im 2D-Fachwerk-Viewer *(multichoice, 1.0 Pkt.)*
+## Frage 6 [Q02_T08_Q6]: Vektordarstellung äußerer Lastpfeile: Hybride World- und Screen-Space-Geometrie *(multichoice, 1.0 Pkt.)*
 
-Wie werden innere Stabkräfte (Zug vs. Druck vs. Nullstab) in einem professionellen 2D-Fachwerk-Viewer (Kapitel 03) typischerweise visuell auf dem WPF-Canvas kodiert, damit Ingenieure den Kraftfluss sofort erfassen?
+Warum kombiniert man bei der Darstellung äußerer Kraftpfeile auf einem 2D-Tragwerk (Kapitel 03) eine mit dem Kraftbetrag skalierte Schaftlänge im World Space mit einer konstanten Pfeilspitzengröße in Pixeln im Screen Space?
 
 **Antwortoptionen (Single-Choice):**
-* [x] **(100%)** Durch eine semantische Farbskala (z. B. Rot/Blau für Druck/Zug, Grau für Nullstäbe) kombiniert mit einer vom Kraftbetrag abhängigen Strichstärke im Screen Space.
-  * *Feedback:* Richtig! Die Kombination aus divergierender Farbpalette (Vorzeichen) und moderat skalierter Strichstärke StrokeThickness (Betrag) erlaubt eine sofortige visuelle Diagnose.
-* [ ] (0%) Indem man die geometrische Länge der gezogenen Stäbe auf dem Bildschirm verdoppelt und sämtliche Druckstäbe komplett aus dem Canvas ausblendet.
-  * *Feedback:* Falsch. Das Ändern der Stablängen um 100 % würde die Netztopologie zerreißen, und das Ausblenden von Druckstäben macht die Knickanalyse unmöglich.
-* [ ] (0%) Indem man für jedes Kilonewton Stabkraft eine zusätzliche parallele Linie zeichnet, sodass ein Stab mit 500 kN aus 500 einzelnen UIElementen besteht.
-  * *Feedback:* Falsch. Hunderte überlappende Line-Objekte pro Stab würden den Visual Tree überlasten und visuell nur einen undefinierten Balken ergeben.
-* [ ] (0%) Durch Änderung der Hintergrundfarbe des gesamten Anwendungsfensters im 60-Hz-Wechsel zwischen den Farben aller vorhandenen Stäbe.
-  * *Feedback:* Falsch. Ein blinkender Fensterhintergrund zeigt nicht an, welcher konkrete Stab im Fachwerk wie stark belastet ist.
+* [x] **(100%)** Damit die Schaftlänge das Kräfteverhältnis maßstäblich im Modell zeigt, die Pfeilspitze aber bei jedem Zoomfaktor klar erkennbar und unverzerrt bleibt.
+  * *Feedback:* Richtig! Der Schaft bildet die physikalische Lastgröße im Bauteilmaßstab ab, während die konstante Screen-Space-Spitze auch bei kleinen Kräften oder starkem Zoom sauber lesbar bleibt.
+* [ ] (0%) Weil die Klasse Line in WPF ausschließlich Weltkoordinaten in Metern akzeptiert, während Polygon-Spitzen technisch nur Ganzzahl-Pixel verarbeiten können.
+  * *Feedback:* Falsch. Sowohl Line als auch Polygon arbeiten in WPF ausnahmslos mit denselben geräteunabhängigen double-Bildschirmkoordinaten (DIP).
+* [ ] (0%) Damit sich die physikalische Wirkrichtung einer schrägen Last beim Vergrößern des Anwendungsfensters automatisch in die Bildschirm-Vertikale zurückdreht.
+  * *Feedback:* Falsch. Durch Uniform Scaling bleibt der Richtungswinkel des Lastpfeils bei jeder Fenstergröße exakt erhalten; eine Drehung würde die Physik verfälschen.
+* [ ] (0%) Weil eine Berechnung der Pfeilspitze im World Space das Vorzeichen der Y-Achsen-Inversion aufheben und den Lastpfeil nach oben spiegeln würde.
+  * *Feedback:* Falsch. Die Y-Inversion gilt einheitlich für alle Punkte; das Problem reiner World-Space-Spitzen ist deren unleserliche Größenänderung beim Zoomen.
 
 **Musterherleitung & Gesamt-Feedback:**
 
-**Didaktisches Prinzip:** In technischen Visualisierungen kodiert die **Farbe (Hue)** die Wirkungsrichtung (Zug vs. Druck) und die **Strichstärke / Sättigung** die Intensität $|F|$ relativ zu $F_{\max}$.
+**Didaktisches Prinzip (Kapitel 03):** Äußere Lastpfeile nutzen eine **hybride Konstruktion**: Start- und Endpunkt des Pfeilschafts werden im World Space proportional zu $\vec{F}$ bestimmt und transformiert, während die Pfeilflügel erst im Screen Space mit festen Pixelmaßen ($L_{\text{arrow}}, W_{\text{arrow}}$) an die Spitze gesetzt werden.
 
 ---
 

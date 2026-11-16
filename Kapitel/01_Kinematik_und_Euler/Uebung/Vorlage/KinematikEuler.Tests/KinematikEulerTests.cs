@@ -118,9 +118,14 @@ public class KinematikEulerTests
         double errEuler = Math.Abs(impactEuler.X - xAnalytic);
         double errHeun = Math.Abs(impactHeun.X - xAnalytic);
 
-        // Euler überschießt um ca. +10.60 m (vx0 * dt), Heun liegt bis auf Sekanten-Interpolation (< 0.05 m) exakt auf xAnalytic
+        // Expliziter Euler überschießt bei dt = 0.10 s um ca. +10.60 m (vx0 * dt)
+        Assert.AreEqual(2304.18, impactEuler.X, 0.05, "Expliziter Euler überschießt bei dt = 0.10 s um ca. +10.60 m.");
+
+        /* TODO [Stufe 1 - Aufgabe 1.4]: Nach Implementierung von StepHeun einkommentieren!
+        // Heun liegt bis auf Sekanten-Interpolation (< 0.05 m) exakt auf xAnalytic:
         Assert.AreEqual(2293.58, impactHeun.X, 0.05, "Heun (RK2) muss die analytische Wurfweite präzise treffen.");
         Assert.IsTrue(errHeun < errEuler * 0.01,
             $"Heun-Fehler ({errHeun:F4} m) muss um Größenordnungen kleiner sein als Euler-Drift ({errEuler:F3} m).");
+        */
     }
 }

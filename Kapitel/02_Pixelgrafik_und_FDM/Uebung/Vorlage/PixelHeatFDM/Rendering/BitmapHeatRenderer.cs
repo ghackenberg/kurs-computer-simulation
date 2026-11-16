@@ -76,7 +76,7 @@ public class BitmapHeatRenderer
     /// <summary>
     /// Ermittelt die ARGB/BGRA32-Farbe für einen Temperaturwert über eine 4-Stufen-Heatmap.
     /// 20 °C: Blau (0xFF0000FF)
-    /// 50 °C: Cyan / Grün (0xFF00FF00)
+    /// 40 °C: Cyan (0xFF00FFFF), 60 °C: Grün (0xFF00FF00)
     /// 80 °C: Gelb (0xFFFFFF00)
     /// >= 100 °C: Rot (0xFFFF0000)
     /// </summary>

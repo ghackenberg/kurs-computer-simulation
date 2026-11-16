@@ -197,7 +197,7 @@ Da `p` als `byte*` deklariert ist, bewegt sich der Zeiger in 1-Byte-Schritten. J
 
 ## Frage 8 [T02_Q8]: Numerische Stabilität: Verhalten bei Überschreitung der CFL-Grenze *(multichoice, 1.0 Pkt.)*
 
-Was passiert in einer expliziten 2D-Wärmeleitungssimulation (5-Punkt-Stern), wenn die dimensionslose Stabilitätszahl $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$ durch eine zu große Zeitschrittweite oder eine Gitterverfeinerung den kritischen Grenzwert von $0{,}25$ überschreitet? (Mehrere Antworten möglich)
+Was passiert in einer expliziten 2D-Wärmeleitungssimulation (5-Punkt-Stern), wenn die dimensionslose Fourier-Stabilitätszahl $s$ durch eine zu große Zeitschrittweite oder eine Gitterverfeinerung den kritischen Grenzwert von $0{,}25$ überschreitet? (Mehrere Antworten möglich)
 
 **Antwortoptionen (Multiple-Select):**
 * [x] **(50%)** Das Gewicht des Zentralknotens (1 - 4s) wird negativ und erzeugt unphysikalische Schachbrett-Oszillationen.
@@ -213,6 +213,6 @@ Was passiert in einer expliziten 2D-Wärmeleitungssimulation (5-Punkt-Stern), we
 
 **Zusammenfassung (2D-Stabilitätsgrenze):**
 
-Schreibt man den 5-Punkt-Stern als Konvexkombination $T_{i,j}^{n+1} = (1 - 4s) T_{i,j}^n + s (T_{i-1,j}^n + T_{i+1,j}^n + T_{i,j-1}^n + T_{i,j+1}^n)$, erkennt man sofort: Sobald $s > 0{,}25$ wird, ist $1 - 4s < 0$. Rundungsfehler wachsen dann mit jedem Schritt im Vorzeichen alternierend an, bis `Double.PositiveInfinity` bzw. `NaN` erreicht wird.
+Schreibt man den 5-Punkt-Stern mit $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$ als Konvexkombination $T_{i,j}^{n+1} = (1 - 4s) T_{i,j}^n + s (T_{i-1,j}^n + T_{i+1,j}^n + T_{i,j-1}^n + T_{i,j+1}^n)$, erkennt man sofort: Sobald $s > 0{,}25$ wird, ist $1 - 4s < 0$. Rundungsfehler wachsen dann mit jedem Schritt im Vorzeichen alternierend an, bis `Double.PositiveInfinity` bzw. `NaN` erreicht wird.
 
 ---

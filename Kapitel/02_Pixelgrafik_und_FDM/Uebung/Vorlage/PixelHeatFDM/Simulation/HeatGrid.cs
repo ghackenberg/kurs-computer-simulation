@@ -206,6 +206,8 @@ public class HeatGrid
     // 3. Aufgabe 1.3 (Ortsabhängiges Materialgitter & Maus-Zeichnen):
     //    Ergänzen Sie ein Array float[,] _alphaMap (samt GetAlpha/SetAlpha), sodass Step()
     //    lokal mit s_xy = (_alphaMap[x, y] * Dt) / (Dx * Dx) rechnet.
+    //    Aktualisieren Sie beim Ändern der Property Alpha alle Nicht-Wand-Zellen (_alphaMap[x, y] > 0f)
+    //    auf den neuen Alpha-Wert, damit SliderAlpha auch im Live-Betrieb wirksam bleibt!
     //    WICHTIG: Spiegeln Sie an Isolator-Nachbarn (_alphaMap[nx, ny] == 0f) die eigene
     //    Temperatur tCenter (Neumann-Rand dT/dn = 0), damit keine Wärme in die Wand abfließt!
     // 4. Aufgabe 1.4 (Unit-Tests): Aktivieren Sie den TODO-Testblock in
@@ -216,7 +218,8 @@ public class HeatGrid
     // TODO: [Stufe 2 Track A: Industrie - CPU-Kühlkörper-Optimizer]
     // - Modellieren Sie das 200x200 Materialgitter mit Alpha(x, y):
     //     Silizium-Die, Wärmeleitpaste (TIM), Kupfer-Heatspreader, 10 Aluminium-Finnen.
-    // - Implementieren Sie den Verlustleistungs-Quellterm dot_q_v im CPU-Die.
+    // - Implementieren Sie den Verlustleistungs-Quellterm dot_q_v = P_loss / V_Die im CPU-Die
+    //   (mit Bauteiltiefe L_z = 40 mm => V_Die = 8 mm * 2 mm * 40 mm = 6.4e-7 m^3).
     // - Implementieren Sie Robin-Randbedingungen: -lambda * (dT/dn) = h * (T - T_inf)
     //   für Lüfterbetrieb (h = 250 W/m^2K) vs. Lüfterausfall (h = 20 W/m^2K).
     // =========================================================================

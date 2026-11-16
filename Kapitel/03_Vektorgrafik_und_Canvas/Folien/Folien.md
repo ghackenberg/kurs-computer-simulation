@@ -25,9 +25,9 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-### Live-Showcase & Code-Defense: Termin 02
+### Moodle-Quiz 1 & Live-Showcase: Termin 02
 
-Präsentation der Hausübung aus Termin 02 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 02](../../02_Pixelgrafik_und_FDM/Uebung/Aufgabenblatt.md)):
+Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showcase & Code-Defense** der Hausübung aus Termin 02 (**Stufe 1** + **Stufe 2: Track A oder B**, [Aufgabenblatt 02](../../02_Pixelgrafik_und_FDM/Uebung/Aufgabenblatt.md)):
 
 <div class="columns">
 <div class="two">
@@ -1199,9 +1199,6 @@ DrawTruss();
 
 > **Übungs-Bezug:**  
 > Genau diesen Bugfix setzt ihr in Basisaufgabe 1.4 in [`VectorTrussCanvas`](../Uebung/Vorlage/VectorTrussCanvas/MainWindow.xaml.cs) um!
-
-</div>
-</div>
 
 </div>
 </div>

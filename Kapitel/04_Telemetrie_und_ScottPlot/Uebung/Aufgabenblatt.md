@@ -108,7 +108,7 @@ Auf einem mechatronischen Motorprüfstand für Elektroantriebe werden Drehzahl $
    - Farblicher Warn-Marker, sobald das Signal für mehr als 3 aufeinanderfolgende Ticks außerhalb des Toleranzbandes liegt (Kavitations- oder Schlupf-Erkennung).
 2. **Arbeitspaket A.2 – Panel 2: Phasenraum-Betriebskennfeld ($M$ vs. $n$):**
    - Live-Scatter-Plot des aktuellen Arbeitspunktes im Drehmoment-Drehzahl-Kennfeld.
-   - Einblendung der thermischen Leistungsgrenze ($P = 2\pi n M \le P_{\max}$).
+   - Einblendung der thermischen Leistungsgrenze ($P = 2\pi \frac{n}{60} M \le P_{\max}$ für $n$ in $\text{min}^{-1}$ bzw. $P = 2\pi n M$ für $n$ in $\text{s}^{-1}$).
 3. **Arbeitspaket A.3 – Panel 3: Schwingungs-Histogramm mit Normalverteilungskurve:**
    - Echtzeit-Histogramm der Vibrationsamplituden in 20 Bins.
    - Dynamisch überlagerte theoretische Gaußsche Glockenkurve basierend auf Welford-Mittelwert und Varianz.
@@ -133,7 +133,7 @@ Im Telemetrie-Center eines Sim-Racing-Spiels analysiert die Boxencrew das Fahrve
    - Phasenplot von Querbeschleunigung $a_y$ gegen Längsbeschleunigung $a_x$ (G-G-Diagramm).
    - Einblendung des physikalischen Reifenhaftungslimits (Kamm'scher Kreis mit $a_{\text{res}} = \sqrt{a_x^2 + a_y^2} \le \mu \cdot g$).
    - Farbcodierung der Punkte: Grün = Voller Grip, Orange = Untersteuern/Drift, Rot = Traktionsabriss.
-3. **Arbeitspaket B.3 – Panel 3: Rundenzeit- & Bremsverzögerungs-Histogramm:**
+3. **Arbeitspaket B.3 – Panel 3: Bremsverzögerungs-Histogramm mit Gauß-Überlagerung:**
    - Live-Histogramm der Verzögerungswerte beim Anbremsen mit Gauß-Kurvenüberlagerung.
 4. **Arbeitspaket B.4 – Streckentopologie mit MSAGL:**
    - Topologischer Rundkurs-Graph mit Sektoren (`Sektor 1`, `Sektor 2`, `Sektor 3`), Kurvenknoten (`Hairpin`, `Chicane`) und `Boxengasse`.

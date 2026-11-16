@@ -27,9 +27,9 @@ Auf einem WPF-Canvas der Gesamthöhe $H_{\text{canvas}} = 500\,\text{px}$ wird e
 
 ## Frage 2 [Q02_T03_Q2]: Statistische Prozesskontrolle (SPC): Obere 3-Sigma-Warngrenze aus Welford-Daten *(numerical, 1.5 Pkt.)*
 
-Ein Welford-Online-Tracker hat für die Spindeldrehzahl einer CNC-Fräse nach $k = 26$ Messwerten den Mittelwert $\mu = 100{,}0\,\text{U/s}$ und die Abweichungsquadratsumme $M_2 = 400{,}0\,(\text{U/s})^2$ ermittelt. Im Live-Diagramm soll die obere statistische Prozesskontrollgrenze (Upper Control Limit) bei $\text{UCL} = \mu + 3 \cdot s$ (mit der empirischen Stichprobenstandardabweichung $s$) als horizontale Warnlinie eingezeichnet werden.
+Ein Welford-Online-Tracker hat für die Spindeldrehzahl einer CNC-Fräse nach $k = 26$ Messwerten den Mittelwert $\mu = 100{,}0\,\text{U/s}$ und die Abweichungsquadratsumme $M_2 = 400{,}0\,(\text{U/s})^2$ ermittelt. Im Live-Diagramm soll die obere $3\sigma$-Warngrenze ($\text{UCL}$, Upper Control Limit auf Basis der empirischen Stichprobenstandardabweichung $s$) als horizontale Warnlinie eingezeichnet werden.
 
-Berechnen Sie den numerischen Wert dieser oberen $3\sigma$-Grenze $\text{UCL}$ in $\text{U/s}$.
+Berechnen Sie den numerischen Wert dieser oberen $3\sigma$-Warngrenze $\text{UCL}$ in $\text{U/s}$.
 
 **Automatische Bewertung & Teilpunkte (`numerical`):**
 * **Wert `112` (± `0.1`) → 100%:** Exakt! Stichprobenvarianz s^2 = M2 / (k - 1) = 400 / 25 = 16; Standardabweichung s = 4.0 U/s; UCL = 100 + 3 * 4.0 = 112.0 U/s.

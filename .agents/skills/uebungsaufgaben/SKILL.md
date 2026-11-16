@@ -51,11 +51,12 @@ Die gesamte Programmierarbeit findet als **zweistufige Hausübung zu Hause im 2e
 ## 4. Forensischer Code-Walkthrough gegen `Vorlage/`
 
 Jede Teilaufgabe (`1.1`–`1.4`, `A.1`–`A.4`, `B.1`–`B.4`) muss Zeile für Zeile gegen den echten Starter-Code in `Vorlage/` geprüft werden:
-1. **Saubere `TODO`-Markierungen & Benennung:**
-   - Im Starter-Code existieren klare Kommentarblöcke für `// TODO [Stufe 1 - Aufgabe 1.X]`, `// TODO [Stufe 2 - Track A]` und `// TODO [Stufe 2 - Track B]`.
+1. **Saubere `TODO`-Markierungen, Benennung & echte Eigenleistung:**
+   - Im Starter-Code existieren klare Kommentarblöcke für `// TODO [Stufe 1 - Aufgabe 1.X]`, `// TODO [Stufe 2 - Track A]` und `// TODO [Stufe 2 - Track B]`. Kernmethoden von Stufe 1 und die zugehörige Test-Assertion in `Aufgabe 1.4` dürfen nicht bereits zu 100 % fertig ausprogrammiert sein, sondern nutzen kompilierfähige Platzhalter.
    - UI-Umschalter und Methodennamen verwenden konsequent `Stufe 1` / `Stage1` / `Base` sowie `Stufe 2 (Track A)` / `Stufe 2 (Track B)` (niemals `Sprint`).
-2. **Explizite Dokumentation von Vorlagen-Konventionen & UI-Fallstricken:**
-   - Versteckte Geometrie-/Einheiten-Konventionen von Hilfsmethoden (z. B. Einheitskörper ohne Größenparameter, Zurücksetzen lokaler Offsets beim Umhängen von Knoten) müssen direkt bei der jeweiligen Teilaufgabe genannt werden.
+2. **Explizite Dokumentation von Vorlagen-Konventionen, Physik-Horizont & UI-/OpenGL-Fallstricken:**
+   - **Physikalische Erreichbarkeit & Parameter-Vollständigkeit:** Rechne bei Zeitbereichs-Aufgaben nach, dass alle Modellphasen (z. B. Dämpfungszone, Festanschlag, stationäres Gleichgewicht) innerhalb von $[0, t_{\text{end}}]$ tatsächlich erreicht werden, Startpunkte über dem Terrain liegen und alle Volumendimensionen (z. B. Bauteiltiefe $L_z$) angegeben sind.
+   - Versteckte Geometrie-/Einheiten-Konventionen von Hilfsmethoden (z. B. Einheitskörper ohne Größenparameter, Zurücksetzen lokaler Offsets beim Umhängen von Knoten, `GL_NORMALIZE` bei `gl.Scale(...)` unter Phong-Licht sowie `GL_SPECULAR`/`GL_SHININESS` neben `GL_COLOR_MATERIAL`, Setzen raumfester Lichtquellen nach `_camera.Apply(gl)`) müssen in Vorlage und Aufgabenblatt sauber berücksichtigt sein.
    - Typische UI-Event-Fallstricke (z. B. Fokus-Diebstahl von Pfeil-/Leertasten durch `Slider`/`Button` $\implies$ Hinweis auf `PreviewKeyDown` mit `e.Handled = true` bzw. sauberes `else if` bei Maustasten) müssen als kurzer Praxis-Tipp im Aufgabenblatt stehen.
    - **WPF-Initialisierungsreihenfolge (`ValueChanged` / `SelectionChanged`):** Wenn in XAML ein `Slider` oder eine `ComboBox` vor dem zugehörigen `TextBlock` steht, feuert `ValueChanged` bereits während `InitializeComponent()`, noch bevor die nachfolgenden XAML-Elemente existieren (`null`). Jeder solche Event-Handler in der Vorlage MUSS zu Beginn mit `if (!IsLoaded || TxtTarget == null) return;` abgesichert sein.
 3. **Pflicht-Checks nach jeder Änderung:**

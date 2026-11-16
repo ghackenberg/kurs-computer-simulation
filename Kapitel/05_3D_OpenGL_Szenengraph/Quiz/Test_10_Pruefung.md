@@ -8,7 +8,7 @@
 
 ## Frage 1 [Q02_T10_Q1]: Affine 2D-Transformation: Wahre Bauteil-Spannweite aus Bildschirm-Koordinaten bestimmen *(cloze, 2.0 Pkt.)*
 
-Ein Prüfstandsrahmen mit der physikalischen Breite $\Delta X = 8{,}0\,\text{m}$ und Höhe $\Delta Y = 5{,}0\,\text{m}$ ist verzerrungsfrei (Uniform Scaling) in ein nutzbares Canvas-Fenster von $W_{\text{eff}} = 640\,\text{px}$ Breite und $H_{\text{eff}} = 500\,\text{px}$ Höhe eingepasst. Auf dem Bildschirm messen Sie zwischen zwei Lagermittelpunkten einen horizontalen Pixelabstand von $\Delta X_{\text{screen}} = 240\,\text{px}$ und einen vertikalen Pixelabstand von $\Delta Y_{\text{screen}} = 320\,\text{px}$ (d. h. eine schräge Bildschirmdistanz von $L_{\text{screen}} = \sqrt{240^2 + 320^2} = 400\,\text{px}$).
+Ein Prüfstandsrahmen mit der physikalischen Breite $\Delta X = 8{,}0\,\text{m}$ und Höhe $\Delta Y = 5{,}0\,\text{m}$ ist verzerrungsfrei (Uniform Scaling) in ein nutzbares Canvas-Fenster von $W_{\text{eff}} = 640\,\text{px}$ Breite und $H_{\text{eff}} = 500\,\text{px}$ Höhe eingepasst. Auf dem Bildschirm messen Sie zwischen zwei Lagermittelpunkten einen horizontalen Pixelabstand von $\Delta X_{\text{screen}} = 240\,\text{px}$ und einen vertikalen Pixelabstand von $\Delta Y_{\text{screen}} = 320\,\text{px}$.
 
 **a)** Berechnen Sie den verwendeten uniformen Skalierungsfaktor $s$ in $\text{px/m}$: {1:NUMERICAL:=80:0.1#Exakt! s = min(640 / 8.0, 500 / 5.0) = min(80, 100) = 80 px/m.~%50%100:0.1#Teilpunkte: Sie haben sy = 500 / 5.0 = 100 px/m statt min(80, 100) = 80 px/m gewählt.}
 

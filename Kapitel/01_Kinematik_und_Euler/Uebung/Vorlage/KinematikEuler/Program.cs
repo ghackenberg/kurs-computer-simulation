@@ -119,9 +119,9 @@ internal class Program
     {
         Console.WriteLine("\n--- [Stufe 2 Track A] Hydraulikzylinder-Endlagendämpfung ---");
         Console.WriteLine("// TODO: [Stufe 2 Track A] Implementieren Sie:");
-        Console.WriteLine("   1. HydraulicCylinderModel mit Kraft F_vor = 60 kN und Blendenreibung.");
-        Console.WriteLine("   2. Vergleich Euler vs. Heun (RK2) bei dt in {10µs, 100µs, 500µs, 2ms}.");
-        Console.WriteLine("   3. CSV-Export nach simulation_cylinder.csv.");
+        Console.WriteLine("   1. HydraulicCylinderModel mit Kraft F_vor = 60 kN (durchgehend für x >= 0 m) und Blendenreibung.");
+        Console.WriteLine("   2. Vergleich Euler vs. Heun (RK2) bis t_end = 0.15 s bei dt in {10µs, 100µs, 500µs, 2ms}.");
+        Console.WriteLine("   3. CSV-Export nach simulation_cylinder.csv und ASCII-Übersichtstabelle.");
     }
 
     /// <summary>
@@ -131,8 +131,9 @@ internal class Program
     {
         Console.WriteLine("\n--- [Stufe 2 Track B] Retro Artillery Duel ---");
         Console.WriteLine("// TODO: [Stufe 2 Track B] Implementieren Sie:");
-        Console.WriteLine("   1. Quadratischen Newton-Luftwiderstand F_drag = 0.5 * rho * Cw * A * v_rel^2.");
-        Console.WriteLine("   2. Stochastische Windböen v_wind(t).");
-        Console.WriteLine("   3. Rundenbasiertes 2-Spieler-Konsolenspiel.");
+        Console.WriteLine("   1. BallisticEngine mit quadratischem Newton-Luftwiderstand und Relativwind w_x.");
+        Console.WriteLine("   2. Geländekollision über Höhe über Grund h_k = y_k - y_terrain(x_k) samt Interpolation.");
+        Console.WriteLine("   3. KI-Schusswinkelsucher auf +-1.5 m Treffgenauigkeit am Ziel (x = 1400 m, y = 31.83 m).");
+        Console.WriteLine("   4. 5 Wind-Runden mit w_x in [-15, +15] m/s samt ASCII-Plot (80x25) oder CSV-Export.");
     }
 }

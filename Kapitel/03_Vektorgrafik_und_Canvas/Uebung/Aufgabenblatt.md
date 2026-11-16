@@ -52,10 +52,10 @@ Gegeben sei das BoundingBox-Intervall $[x_{\min}, x_{\max}] \times [y_{\min}, y_
    $$x_{\text{w}} = x_{\min} + \frac{x_{\text{screen}} - x_{\text{off}}}{s}, \quad y_{\text{w}} = y_{\max} - \frac{y_{\text{screen}} - y_{\text{off}}}{s}$$
 
 ### 2.2 Analytische Pfeilspitzenberechnung
-Für einen Kraft- oder Geschwindigkeitsvektor $\vec{F} = [F_x, F_y]^\top$ vom Angriffspunkt $\vec{p}_{\text{start}}$ zum Endpunkt $\vec{p}_{\text{end}}$ lautet der Richtungswinkel:
-$$\phi = \operatorname{atan2}(F_y, F_x)$$
-Die beiden Flügelpunkte $\vec{p}_{\text{left}}$ und $\vec{p}_{\text{right}}$ einer geschlossenen Pfeilspitze mit Länge $L_{\text{tip}}$ und Halbwinkel $\beta$ (typisch $15^\circ \approx 0{,}26\,\text{rad}$) werden über Drehmatrizen relativ zur Spitze $\vec{p}_{\text{tip}} = \vec{p}_{\text{end}}$ berechnet:
-$$\vec{p}_{\text{left}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} \cos(\phi - \beta) \\ \sin(\phi - \beta) \end{bmatrix}, \quad \vec{p}_{\text{right}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} \cos(\phi + \beta) \\ \sin(\phi + \beta) \end{bmatrix}$$
+Für einen Kraft- oder Geschwindigkeitsvektor $\vec{F} = [F_x, F_y]^\top$ in Weltkoordinaten ($Y$ nach oben positiv) ergibt sich wegen der nach unten gerichteten Screen-$Y$-Achse des WPF-Canvas vom Angriffspunkt $\vec{p}_{\text{start}}$ zur Pfeilspitze $\vec{p}_{\text{tip}}$ der normierte Screen-Richtungsvektor $\vec{u} = [u_x, u_y]^\top = \frac{\vec{p}_{\text{tip}} - \vec{p}_{\text{start}}}{\|\vec{p}_{\text{tip}} - \vec{p}_{\text{start}}\|} = \frac{1}{\|\vec{F}\|}[F_x, -F_y]^\top$ (wie in `VectorArrow.cs`). Der Richtungswinkel im Screen Space lautet damit:
+$$\phi_{\text{screen}} = \operatorname{atan2}(-F_y, F_x) = \operatorname{atan2}(u_y, u_x)$$
+Die beiden Flügelpunkte $\vec{p}_{\text{left}}$ und $\vec{p}_{\text{right}}$ einer geschlossenen Pfeilspitze mit fester Pixel-Länge $L_{\text{tip}}$ und Halbwinkel $\beta$ (typisch $15^\circ \approx 0{,}26\,\text{rad}$) werden über Drehmatrizen im Screen Space relativ zur Spitze $\vec{p}_{\text{tip}}$ berechnet:
+$$\vec{p}_{\text{left}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} \cos(\phi_{\text{screen}} - \beta) \\ \sin(\phi_{\text{screen}} - \beta) \end{bmatrix}, \quad \vec{p}_{\text{right}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} \cos(\phi_{\text{screen}} + \beta) \\ \sin(\phi_{\text{screen}} + \beta) \end{bmatrix}$$
 
 ---
 
@@ -162,7 +162,7 @@ Im Konstruktionsmodus von Physik-Brückenbauspielen (*Poly Bridge*, *Bridge Cons
 | **Vektorpfeile, Stablängen & Vertikalbemaßung (Stufe 1)** | 2 P. | Exakt rotierte Pfeilspitzen (`Polygon`) mit fixer Pixelgröße, euklidische Stablängen-Labels und vertikale DIN-406-Höhenmaßkette. |
 | **Track-Spezialisierung Geometrie (Arbeitspaket A.1/A.2 bzw. B.1/B.2)** | 2 P. | **Track A:** Neues Kran-/Dachbindermodell + zweistufige horizontale DIN-406-Bemaßungskette.<br>**Track B:** Schlucht-Polygon-Szene mit $0{,}5\,\text{m}$-Grid-Snapping + $L_{\max}$-Vorschau & Live-Baubudget-Balken. |
 | **Track-Spezialisierung Interaktion (Arbeitspaket A.3 bzw. B.3)** | 2 P. | **Track A:** Interaktives Ziehen/Drehen der Lastpfeilspitzen $(F_x, F_y)$ + Mausrad-Zoom & Kamera-Pan.<br>**Track B:** Interaktives Knoten-Setzen, Stäbe-Spannen ($L \le 4\,\text{m}$) und Löschen (`Entf`/Rechtsklick). |
-| **JSON-Persistenz, Freeze & Code-Qualität (Arbeitspaket A.4 bzw. B.4)** | 2 P. | Funktionierender JSON-Export/Import (`System.Text.Json`), eingefrorene Brushes (`Freeze()`) und kurze `README.md`. |
+| **JSON-Persistenz, Unit-Tests & Code-Qualität (Aufgabe 1.4 & A.4/B.4)** | 2 P. | Grüne Unit-Test-Suite (`VectorTrussCanvas.Tests` / `dotnet test`), funktionierender JSON-Export/Import (`System.Text.Json`), eingefrorene Brushes (`Freeze()`) und kurze `README.md`. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
 ---

@@ -56,13 +56,14 @@ glPopMatrix(); // Zurück zum Elternsystem
 ```
 
 ### 2.3 Phong-Beleuchtungsmodell
-Die Lichtintensität $I$ eines Oberflächenpunktes setzt sich aus drei Komponenten zusammen:
-$$I = I_{\text{a}} k_{\text{a}} + I_{\text{d}} k_{\text{d}} (\vec{n} \cdot \vec{l}) + I_{\text{s}} k_{\text{s}} (\vec{r} \cdot \vec{v})^\alpha$$
-- $\vec{n}$: Normaleneinheitsvektor der Oberfläche ($\|\vec{n}\| = 1$)
+Die Lichtintensität $I_f$ eines Oberflächenpunktes setzt sich aus drei Komponenten zusammen:
+$$I_f = k_a I_{La} + k_d I_{Ld} \max(0, \vec{n} \cdot \vec{l}) + k_s I_{Ls} \left(\max(0, \vec{r} \cdot \vec{v})\right)^{\alpha_{\text{shiny}}}$$
+- $\vec{n}$: Normaleneinheitsvektor der Oberfläche ($\|\vec{n}\| = 1$; bei skalierten Körpern über `gl.Enable(OpenGL.GL_NORMALIZE)` normiert)
 - $\vec{l}$: Einheitsvektor zur Lichtquelle
 - $\vec{r} = 2(\vec{n} \cdot \vec{l})\vec{n} - \vec{l}$: Reflektierter Lichtstrahl
 - $\vec{v}$: Einheitsvektor zum Betrachter (Kamera)
-- $\alpha$: Glanzkoeffizient (Shininess)
+- $k_a, k_d, k_s$ und $I_{La}, I_{Ld}, I_{Ls}$: Materialkoeffizienten und Lichtintensitäten (Ambient, Diffuse, Specular)
+- $\alpha_{\text{shiny}} \in [1, 128]$: Glanzkoeffizient (`GL_SHININESS`)
 
 ---
 
@@ -141,6 +142,7 @@ Da die ersten 3 Achsen ($\theta_1, \theta_2, d_3$) und die TCP-Validierung berei
    - *Wichtiger Praxis-Tipp zum `Reparenting`:* Beim Umhängen von `_workpieceNode` unter `_wristNode` müssen Sie dessen lokale Koordinaten auf `(Tx = 0, Ty = 0, Tz = 0)` relativ zum Greiferzentrum zurücksetzen (sonst bliebe `(1.10, 0.06, -0.40)` als lokaler Offset erhalten!); beim Ablegen unter `_rootNode` setzen Sie `(Tx, Ty, Tz)` auf die aktuelle Weltposition von Station B!
 4. **Arbeitspaket A.4 – Arbeitszellen-Spotlight & Optische Status-Signalisierung (`GL_LIGHT1`):**
    - Aktivieren Sie eine zweite Lichtquelle (`GL_LIGHT1`) als lokales Arbeitszellen-Spotlight oberhalb der Fertigungszelle und signalisieren Sie den aktuellen Greifstatus visuell an der Zelle bzw. am Greifer (z. B. Statusleuchte am Handgelenk oder Stations-Indikator: Orange = Werkstück bereit, Grün = Gegriffen/Transport aktiv, Blau = Auf Station B abgelegt).
+   - *Wichtiger OpenGL-Praxis-Tipp:* Rufen Sie `gl.Light(OpenGL.GL_LIGHT1, ...)` für `GL_POSITION` und `GL_SPOT_DIRECTION` in `OpenGlView_OpenGLDraw` **nach** `_camera.Apply(gl)` auf, damit Position und Strahlrichtung mit der aktuellen Kamera-Sichtmatrix transformiert werden und das Decken-Spotlight raumfest in Weltkoordinaten bleibt!
 
 ---
 
@@ -171,6 +173,7 @@ Vollständige mechatronische 3D-Simulation eines Jahrmarkt-Greifarm-Automaten (*
    - Liegt ein Objekt innerhalb des Greifradius ($d < r_{\text{grab}}$), wird es gegriffen (beim `Reparenting` unter den Klauenknoten lokale Koordinaten `(Tx, Ty, Tz) = (0, 0, 0)` setzen!) und folgt ab diesem Moment der Bewegung der Klaue bis zum Abwurf über dem Schacht.
 4. **Arbeitspaket B.4 – Atmosphärische Beleuchtung:**
    - Aktivieren Sie einen lokalen Spotlight-Scheinwerfer (`GL_LIGHT1`), der von der Decke des Automaten senkrecht auf die Spielfläche strahlt.
+   - *Wichtiger OpenGL-Praxis-Tipp:* Rufen Sie `gl.Light(OpenGL.GL_LIGHT1, ...)` für `GL_POSITION` und `GL_SPOT_DIRECTION` in `OpenGlView_OpenGLDraw` **nach** `_camera.Apply(gl)` auf, damit das Decken-Spotlight beim Drehen der Orbit-Kamera raumfest in Weltkoordinaten über der Spielfläche bleibt!
 
 ---
 
@@ -182,7 +185,7 @@ Vollständige mechatronische 3D-Simulation eines Jahrmarkt-Greifarm-Automaten (*
 | **Orbit-Kamera mit Gimbal-Lock-Schutz & Panning** | 2 P. | Flüssige Maussteuerung (Links: Orbit $\theta, \phi$ mit Clamping auf $[-85^\circ, +85^\circ]$; Rechts: Zielpunkt-Panning; Mausrad: Zoom $r$). |
 | **Phong-Beleuchtung & Normalenvektoren** | 2 P. | Korrekt konfigurierte Lichtquellen, Materialglanzpunkte und fehlerfreie Normalenvektoren an allen Flächen (inkl. Greifer und Werkstücken). |
 | **Animierte Bahnsteuerung & Greif-Interaktion** | 2 P. | **Track A:** Flüssig interpoliertes Teach-In (`DispatcherTimer`) + Pick-and-Place-Werkstücktransport mit TCP-Deckung. **Track B:** Vollständiger animierter Greifzyklus mit 3D-Distanzprüfung. |
-| **Dokumentation & Code-Qualität** | 1 P. | Saubere Gliederung der Szenenknoten, aussagekräftige `README.md` mit Screenshot und Kinematik-Schema. |
+| **Unit-Tests, Dokumentation & Code-Qualität** | 1 P. | Grüne Unit-Test-Suite (`SceneGraph3D.Tests` via `dotnet test`), saubere Gliederung der Szenenknoten sowie aussagekräftige `README.md` mit Screenshot und Kinematik-Schema. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
 ---

@@ -79,13 +79,13 @@ Die Vorlage enthält bereits ein lauffähiges $128 \times 128$ Basis-Gitter (`fl
      ```
    - *Selbsttest-Referenzwerte (`minTemp = 20`, `maxTemp = 100`, `range = 80`):* `_colorLut[0] == 0xFF0000FFu` (Reinblau bei $20\,^\circ\text{C}$), `MapTemperatureToColor(60f, 20f, 80f) == 0xFF00FF00u` (Reingrün bei $60\,^\circ\text{C}$), `_colorLut[255] == 0xFFFF0000u` (Reinrot bei $100\,^\circ\text{C}$) sowie `0xFFFF00FFu` (Magenta) bei `float.NaN`.
 3. **Aufgabe 1.3 – Ortsabhängiges Materialgitter (`AlphaMap`) & Interaktives Maus-Zeichnen:**
-   - Erweitern Sie `HeatGrid` um ein 2D-Array `private readonly float[,] _alphaMap;` (inkl. Zugriffsmethoden `GetAlpha(int x, int y)` und `SetAlpha(int x, int y, float value)` sowie Zurücksetzen auf `Alpha` in `Reset()`), sodass in `Step()` lokal mit $s_{x,y} = \frac{\alpha_{x,y} \cdot \Delta t}{\Delta x^2}$ gerechnet wird (für Isolatorzellen mit $\alpha_{x,y} = 0$ bleibt `_tNext[x, y] = _tCurrent[x, y]`).
+   - Erweitern Sie `HeatGrid` um ein 2D-Array `private readonly float[,] _alphaMap;` (inkl. Zugriffsmethoden `GetAlpha(int x, int y)` und `SetAlpha(int x, int y, float value)` sowie Zurücksetzen auf `Alpha` in `Reset()`), sodass in `Step()` lokal mit $s_{x,y} = \frac{\alpha_{x,y} \cdot \Delta t}{\Delta x^2}$ gerechnet wird (für Isolatorzellen mit $\alpha_{x,y} = 0$ bleibt `_tNext[x, y] = _tCurrent[x, y]`). Aktualisieren Sie außerdem beim Ändern der Property `Alpha` (`set`-Accessor) alle Nicht-Wand-Zellen (`_alphaMap[x, y] > 0f`) auf den neuen `Alpha`-Wert, damit der Schieberegler `SliderAlpha` auch im Live-Betrieb wirksam bleibt!
    - **Wichtige Physik-Regel für echte adiabate Isolator-Wände ($\alpha_{x,y} = 0$):** Wenn eine Nachbarzelle ein Isolator ist (`_alphaMap[nx, ny] == 0f`), darf kein Wärmestrom in diese Wandzelle abfließen (sonst würde eine auf $20\,^\circ\text{C}$ gehaltene Wandzelle als *Kühlrippe / Wärmesenke* wirken!). Spiegeln Sie daher an Isolator-Nachbarn die eigene Temperatur `tCenter` (lokale Neumann-Bedingung $\frac{\partial T}{\partial n} = 0$):
      ```csharp
      float tRight = _alphaMap[x + 1, y] == 0f ? tCenter : _tCurrent[x + 1, y]; // analog für Left, Up, Down
      ```
    - *Selbsttest-Referenzwert (Neumann-Spiegelung):* Sitzt rechts neben einem Einzel-Hotspot $T_{8,8}^0 = 100\,^\circ\text{C}$ (übriges Gitter $0\,^\circ\text{C}$, $s = 0{,}20$) eine Isolator-Zelle (`SetAlpha(9, 8, 0.0f)`), ergibt `Step()` wegen `tRight = 100` exakt $L_{8,8} = 100 + 0 + 0 + 0 - 400 = -300$ und damit $T_{8,8}^1 = 100 + 0{,}20 \cdot (-300) = 40{,}0\,^\circ\text{C}$ (während die Wandzelle $(9,8)$ exakt auf $0{,}0\,^\circ\text{C}$ bleibt!).
-   - Abonnieren Sie auf `HeatImage` (in `MainWindow.xaml` / `MainWindow.xaml.cs`) die Events `MouseDown` und `MouseMove`. Rechnen Sie `Point pos = e.GetPosition(HeatImage)` über `HeatImage.ActualWidth` und `ActualHeight` in Gitterkoordinaten `(int gx, int gy)` um (mit `Math.Clamp` auf `[1, Width - 2]` begrenzen, damit der Pinsel am Bildrand keine `IndexOutOfRangeException` auslöst):
+   - Abonnieren Sie auf `HeatImage` (in `MainWindow.xaml` / `MainWindow.xaml.cs`) die Events `MouseDown` und `MouseMove`. Rechnen Sie `Point pos = e.GetPosition(HeatImage)` über `HeatImage.ActualWidth` und `ActualHeight` in Gitterkoordinaten `(int gx, int gy)` um und begrenzen Sie innerhalb der Pinselschleife (`dx, dy` $\in \{-2 \dots +2\}$) jede Zielzelle `(px, py) = (gx + dx, gy + dy)` per `Math.Clamp` auf `[1, Width - 2]` bzw. `[1, Height - 2]`, damit der Pinsel am Bildrand keine `IndexOutOfRangeException` auslöst:
      - **Linke Maustaste (`e.LeftButton == MouseButtonState.Pressed`):** Zeichnen Sie mit einem Pinselradius von 2 Pixeln heiße Quellen ($T = 100\,^\circ\text{C}$) direkt in das laufende Gitter.
      - **Rechte Maustaste (`e.RightButton == MouseButtonState.Pressed`):** Zeichnen Sie thermische Isolator-Wände (`SetAlpha(..., 0f)`) ins Gitter und stellen Sie diese in `BitmapHeatRenderer.Render(...)` dunkelgrau (`0xFF404040u`) dar.
 4. **Aufgabe 1.4 – Automatisierte Verifikation mit Unit-Tests (`PixelHeatFDM.Tests` / `dotnet test`):**
@@ -125,7 +125,7 @@ In Hochleistungs-Servern oder Gaming-PCs führt die Abwärme moderner Multi-Core
 #### Geometrie- & Materialzonen:
 1. **CPU-Die (Zentrum unten, $40 \times 10$ Pixel):**
    - Silizium: $\lambda_{\text{Si}} = 148\,\text{W/m}\cdot\text{K}$, $\rho = 2330\,\text{kg/m}^3$, $c_{\text{p}} = 712\,\text{J/kg}\cdot\text{K} \implies a_{\text{Si}} \approx 8{,}9 \times 10^{-5}\,\text{m}^2/\text{s}$.
-   - Verlustleistung: $P_{\text{loss}} = 150\,\text{W}$ gleichmäßig im Die verteilt als Quellterm $\dot{q}_{\text{v}}$.
+   - Verlustleistung: $P_{\text{loss}} = 150\,\text{W}$ gleichmäßig im Die verteilt als Quellterm $\dot{q}_{\text{v}} = P_{\text{loss}} / V_{\text{Die}}$ bei einer Bauteiltiefe senkrecht zur Ebene von $L_z = 40\,\text{mm}$ ($V_{\text{Die}} = 8\,\text{mm} \times 2\,\text{mm} \times 40\,\text{mm} = 6{,}4 \times 10^{-7}\,\text{m}^3$).
 2. **Wärmeleitpaste (TIM - Thermal Interface Material, Schichtdicke 2 Pixel direkt über Die):**
    - Dünne Schicht: $\lambda_{\text{TIM}} = 4{,}5\,\text{W/m}\cdot\text{K}$, $a_{\text{TIM}} \approx 2{,}5 \times 10^{-6}\,\text{m}^2/\text{s}$.
 3. **Kupfer-Heatspreader (über Die und TIM, $120 \times 20$ Pixel):**
@@ -143,7 +143,7 @@ In Hochleistungs-Servern oder Gaming-PCs führt die Abwärme moderner Multi-Core
 
 #### Aufgabenstellung Track A:
 1. **Arbeitspaket A.1 – Inhomogenes Gitter:** Implementieren Sie die FDM-Engine mit inhomogenem Gitter ($a_{i,j}$ und $\dot{q}_{i,j}$ matrixbasiert).
-2. **Arbeitspaket A.2 – Robin-Randbedingungen:** Setzen Sie die Robin-Randbedingungen an allen Grenzflächen zwischen Kühlfinne und Luft exakt um.
+2. **Arbeitspaket A.2 – Wärmequelle & Robin-Randbedingungen:** Setzen Sie den volumetrischen Quellterm $\dot{q}_{\text{v}} = P_{\text{loss}} / V_{\text{Die}}$ für $P_{\text{loss}} = 150\,\text{W}$ mit Bauteiltiefe $L_z = 40\,\text{mm}$ ($V_{\text{Die}} = 8\,\text{mm} \times 2\,\text{mm} \times 40\,\text{mm} = 6{,}4 \times 10^{-7}\,\text{m}^3$) sowie die Robin-Randbedingungen an allen Grenzflächen zwischen Kühlfinne und Luft exakt um.
 3. **Arbeitspaket A.3 – Interaktive Lüftersteuerung:** Fügen Sie der GUI Umschaltknöpfe oder Slider hinzu:
    - Umschaltung: Lüfter Normal ($h=250$) vs. Lüfterausfall ($h=20$).
    - Live-Anzeige der CPU-Maximaltemperatur $T_{\max}(t)$ als Text.

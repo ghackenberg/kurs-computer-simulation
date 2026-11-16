@@ -31,9 +31,9 @@ Am Ende jeder Bildzeile liegen somit $416 - 404 = 12$ ungenutzte Padding-Bytes. 
 
 ## Frage 2 [T05_Q2]: Fehleranalyse: Globaler Diskretisierungsfehler des Euler-Verfahrens *(numerical, 1.5 Pkt.)*
 
-Ein Bauteil fällt aus der Ruhe ($y_0 = 50{,}0\,\text{m}$, $v_0 = 0{,}0\,\text{m/s}$) im Schwerefeld mit $g = 10{,}0\,\text{m/s}^2$ nach unten. Die analytisch exakte Höhe lautet $y_{\text{exakt}}(t) = y_0 - \frac{1}{2} g t^2$.
+Ein Bauteil fällt zum Zeitpunkt $t_0 = 0\,\text{s}$ aus der Ruhe ($y_0 = 50{,}0\,\text{m}$, $v_0 = 0{,}0\,\text{m/s}$) im homogenen Schwerefeld mit $g = 10{,}0\,\text{m/s}^2$ reibungsfrei nach unten.
 
-Berechnen Sie den **Betrag des globalen Höhenfehlers** $|y_{\text{Euler}}(t_1) - y_{\text{exakt}}(t_1)|$ (in **Metern**) nach einem einzigen großen expliziten Euler-Zeitschritt der Schrittweite $\Delta t = 0{,}40\,\text{s}$ (also bei $t_1 = 0{,}40\,\text{s}$).
+Berechnen Sie den **Betrag des globalen Höhenfehlers** $|y_{\text{Euler}}(t_1) - y_{\text{exakt}}(t_1)|$ (in **Metern**) gegenüber der analytisch exakten Fallhöhe nach einem einzigen großen expliziten Euler-Zeitschritt der Schrittweite $\Delta t = 0{,}40\,\text{s}$ (also bei $t_1 = 0{,}40\,\text{s}$).
 
 **Automatische Bewertung & Teilpunkte (`numerical`):**
 * **Wert `0.8` (± `0.01`) → 100%:** Exakt! y_Euler(0,4) = 50,0 m; y_exakt(0,4) = 50 - 0,5 * 10 * 0,16 = 49,2 m; Differenz = |50,0 - 49,2| = 0,8 m.

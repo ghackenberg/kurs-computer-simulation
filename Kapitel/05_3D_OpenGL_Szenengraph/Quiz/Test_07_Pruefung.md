@@ -29,7 +29,7 @@ Ein symmetrisches Roboter-Arbeitsfeld erstreckt sich in X-Richtung von $x_{\min}
 
 ## Frage 2 [Q02_T07_Q2]: Pfeilspitzen-Geometrie im Screen Space: Flügelpunkt-Koordinate berechnen *(numerical, 1.5 Pkt.)*
 
-Ein vertikaler Kraftpfeil zeigt auf dem WPF-Canvas exakt senkrecht nach unten (Einheitsrichtungsvektor im Screen Space $u_x = 0{,}0$, $u_y = +1{,}0$; Normalenvektor $n_x = -u_y = -1{,}0$, $n_y = u_x = 0{,}0$). Die Pfeilspitze liegt am Bildschirm-Punkt $\text{tip} = (200\,\text{px}, 300\,\text{px})$. Die Pfeilspitzenlänge beträgt $L_{\text{arrow}} = 14\,\text{px}$ und die halbe Pfeilbreite $W_{\text{arrow}} = 6\,\text{px}$.
+Ein vertikaler Kraftpfeil zeigt auf dem WPF-Canvas exakt senkrecht nach unten (Einheitsrichtungsvektor im Screen Space $u_x = 0{,}0$, $u_y = +1{,}0$). Die Pfeilspitze liegt am Bildschirm-Punkt $\text{tip} = (200\,\text{px}, 300\,\text{px})$. Die Pfeilspitzenlänge beträgt $L_{\text{arrow}} = 14\,\text{px}$ und die halbe Pfeilbreite $W_{\text{arrow}} = 6\,\text{px}$.
 
 Berechnen Sie die vertikale Bildschirmkoordinate $Y_{\text{wing}}$ (in $\text{px}$) der beiden hinteren Pfeilflügel-Eckpunkte.
 

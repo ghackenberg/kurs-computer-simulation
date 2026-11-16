@@ -140,7 +140,7 @@ Ordnen Sie die folgenden Beschreibungen den korrekten Begriffen der Allgemeinen 
 
 ---
 
-## Frage 6 [T01_Q6]: Numerische Analyse:Lokaler und globaler Fehler beim expliziten Euler *(multichoice, 1.0 Pkt.)*
+## Frage 6 [T01_Q6]: Numerische Analyse: Lokaler und globaler Fehler beim expliziten Euler *(multichoice, 1.0 Pkt.)*
 
 Bei der Simulation einer Wurfparabel mit dem expliziten Euler-Verfahren wird die konstante Zeitschrittweite $\Delta t$ für einen zweiten Simulationslauf exakt **halbiert** ($\Delta t_{\text{neu}} = 0{,}5 \cdot \Delta t_{\text{alt}}$). Wie verändern sich dadurch der lokale Abbruchfehler pro Einzelschritt und der globale Gesamtfehler zur festen Endzeit $T$?
 

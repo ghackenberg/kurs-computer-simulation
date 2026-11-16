@@ -29,9 +29,9 @@ Ein horizontaler Träger verläuft auf dem WPF-Canvas exakt entlang der Bildschi
 
 ## Frage 2 [Q02_T06_Q2]: Statistische Prozesskontrolle: Breite des gesamten ±3-Sigma-Toleranzbands *(numerical, 1.5 Pkt.)*
 
-In einem ScottPlot-5-Echtzeitdiagramm wird das symmetrische $\mu \pm 3s$-Prozessband (von der unteren Eingriffsgrenze $\text{LCL} = \mu - 3s$ bis zur oberen Eingriffsgrenze $\text{UCL} = \mu + 3s$) als farbig hinterlegtes HorizontalSpan eingezeichnet. Aus dem Welford-Tracker liegen nach $k = 17$ Messungen der Mittelwert $\mu = 80{,}0\,\text{mm}$ und die Quadratsumme $M_2 = 36{,}0\,\text{mm}^2$ vor.
+In einem ScottPlot-5-Echtzeitdiagramm wird das symmetrische $3\sigma$-Prozessband zwischen der unteren $3\sigma$-Warngrenze ($\text{LCL}$) und der oberen $3\sigma$-Warngrenze ($\text{UCL}$, auf Basis der empirischen Stichprobenstandardabweichung $s$) als farbig hinterlegtes HorizontalSpan eingezeichnet. Aus dem Welford-Tracker liegen nach $k = 17$ Messungen der Mittelwert $\mu = 80{,}0\,\text{mm}$ und die Quadratsumme $M_2 = 36{,}0\,\text{mm}^2$ vor.
 
-Berechnen Sie die gesamte vertikale Breite $\Delta B = \text{UCL} - \text{LCL}$ (in $\text{mm}$) dieses $\pm 3s$-Toleranzbands.
+Berechnen Sie die gesamte vertikale Breite $\Delta B = \text{UCL} - \text{LCL}$ (in $\text{mm}$) dieses $3\sigma$-Toleranzbands.
 
 **Automatische Bewertung & Teilpunkte (`numerical`):**
 * **Wert `9` (± `0.05`) → 100%:** Exakt! s^2 = M2 / (17 - 1) = 36 / 16 = 2.25 mm^2 => s = 1.5 mm. Bandbreite von -3s bis +3s ist 6 * s = 6 * 1.5 = 9.0 mm.

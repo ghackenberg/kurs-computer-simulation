@@ -10,7 +10,7 @@
 
 In einem quadratischen 2D-Wärmeraster ($\Delta x = \Delta y$) hat der innere Knoten $(i,j)$ zum Zeitpunkt $n$ die Temperatur $T_{i,j}^n = 50{,}0\,^\circ\text{C}$. Seine vier direkten Nachbarknoten werden konstant auf den Temperaturen $T_{\text{links}} = 80{,}0\,^\circ\text{C}$, $T_{\text{rechts}} = 40{,}0\,^\circ\text{C}$, $T_{\text{oben}} = 60{,}0\,^\circ\text{C}$ und $T_{\text{unten}} = 20{,}0\,^\circ\text{C}$ gehalten.
 
-a) Welchen Wert hat der diskrete 2D-Laplace-Zähler $L = T_{i-1,j}^n + T_{i+1,j}^n + T_{i,j-1}^n + T_{i,j+1}^n - 4 T_{i,j}^n$ (in **°C** bzw. **K**) für diesen Zustand?  
+a) Welchen Wert hat der diskrete 2D-Laplace-Zähler $L$ des 5-Punkt-Sterns (in **°C** bzw. **K**) für diesen Zustand?  
 Antwort: {1:NUMERICAL:=0.0:0.01#Richtig! Summe der 4 Nachbarn = 80 + 40 + 60 + 20 = 200 °C; abzüglich 4 * 50 = 200 °C ergibt exakt 0,0 K.~%50%200.0:0.1#Teilpunkte (50 %): 200 °C ist nur die Summe der vier Nachbarn, es fehlt noch die Subtraktion von 4 * T_ij (= 200 °C).~%50%100.0:0.1#Teilpunkte (50 %): Sie haben nur 2 * T_ij statt 4 * T_ij abgezogen.} K
 
 b) Welche Temperatur $T_{i,j}^{n+1}$ (in **°C**) besitzt der Zentralknoten im nächsten Zeitschritt bei einer Stabilitätszahl von $s = 0{,}20$?  
@@ -21,8 +21,8 @@ Antwort: {1:NUMERICAL:=50.0:0.05#Richtig! Da der Laplace-Term 0 ist, befindet si
 
 **Musterherleitung (Stationäres Gleichgewicht der Laplace-Gleichung):**
 
-1. Summe der vier Nachbarn: $80 + 40 + 60 + 20 = 200\,^\circ\text{C}$.  
-Abzüglich $4 \cdot T_{i,j}^n = 4 \cdot 50 = 200\,^\circ\text{C}$ ergibt sich $L = 200 - 200 = 0{,}0\,\text{K}$.
+1. Diskreter 2D-Laplace-Zähler $L = T_{i-1,j}^n + T_{i+1,j}^n + T_{i,j-1}^n + T_{i,j+1}^n - 4 \cdot T_{i,j}^n$:  
+Summe der vier Nachbarn $80 + 40 + 60 + 20 = 200\,^\circ\text{C}$ abzüglich $4 \cdot T_{i,j}^n = 4 \cdot 50 = 200\,^\circ\text{C}$ ergibt $L = 200 - 200 = 0{,}0\,\text{K}$.
 
 2. Damit folgt unabhängig von $s$: $T_{i,j}^{n+1} = 50{,}0 + 0{,}20 \cdot 0{,}0 = 50{,}0\,^\circ\text{C}$. Im stationären Zustand ($\partial T / \partial t = 0$) ist die Temperatur jedes Knotens exakt der arithmetische Mittelwert seiner vier Nachbarknoten!
 
@@ -140,7 +140,7 @@ Zuerst werden alle inneren Gitterpunkte aus dem alten Zustand `T` nach `T_next` 
 
 ## Frage 6 [T06_Q6]: Partielle Differentialgleichungen: Bedeutung der Temperaturleitfähigkeit *(multichoice, 1.0 Pkt.)*
 
-In der 2D-Wärmeleitungsgleichung $\frac{\partial T}{\partial t} = \alpha \left(\frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2}\right)$ tritt der Materialparameter $\alpha = \frac{\lambda}{\rho \cdot c_p}$ auf. Welche physikalische Aussage über $\alpha$ ist korrekt?
+In der zweidimensionalen Wärmeleitungsgleichung charakterisiert die Temperaturleitfähigkeit $\alpha$ das thermische Verhalten des Materials. Welche physikalische Aussage über diesen Materialparameter $\alpha$ ist korrekt?
 
 **Antwortoptionen (Single-Choice):**
 * [x] **(100%)** Ein großes alpha bewirkt einen schnellen Temperaturausgleich bei gleichzeitig kleinerer Stabilitätsgrenze dt_max.

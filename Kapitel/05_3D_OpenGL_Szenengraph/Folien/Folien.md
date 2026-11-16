@@ -41,7 +41,7 @@ Zu Beginn (15 Min.): **Moodle-Test 2** (Kapitel 03 & 04) – danach **Live-Showc
 
 #### Stufe 2 – Track B: Game (Racing HUD)
 - **Cockpit-Telemetrie:** Speed/RPM mit Shift-Flash & G-Kräfte (Kamm'scher Kreis).
-- **Statistik:** Rundenzeiten-Histogramm & Streckenabschnitts-Topologie (MSAGL).
+- **Statistik:** Bremsverzögerungs-Histogramm & Streckenabschnitts-Topologie (MSAGL).
 - **Stresstest:** Grenzbereich-Fahrt mit Haftungsabriss ($a_{\text{res}} > \mu \cdot g$) provozieren.
 
 </div>
@@ -69,11 +69,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 In **Termin 02 bis 04** haben wir die 2D-Welt gemeistert (Pixelraster, 2D-Vektor-Canvas, Echtzeit-Diagramme mit `ScottPlot 5`) – wo stoßen 2D-Ansichten an ihre Grenzen?
 
-- **Rückblick auf Termin 03 & 04 (2D-Projektion & Telemetrie):**
-  - Weltkoordinaten $(x_w, y_w)$ auf dem 2D-Bildschirm sowie Zeitreihen und Topologie-Graphen (`MSAGL`).
+- **Konventions-Brücke T03 $\leftrightarrow$ T05 (2D-WPF-Canvas vs. 3D-OpenGL):**
+  - Statt des **linkshändigen 2D-WPF-Canvas** aus T03 (`+X` rechts, **`+Y` unten**) nutzt OpenGL ein **rechtshändiges 3D-Koordinatensystem (`+X` rechts, `+Y` oben, `+Z` zum Betrachter)** – Eselsbrücke *Rechte Hand*: Daumen `+X`, Zeigefinger `+Y`, Mittelfinger `+Z`!
 - **Der Engpass heute (Räumliche Kinematik & Verdeckung):**
-  - Ein mehrachsiger Industrieroboter bewegt sich im **3D-Raum $(x, y, z)$**: Bauteile verdecken sich gegenseitig, Perspektive verkürzt Längen und Gelenke rotieren um Raumachsen.
-  - Ein flaches 2D-Canvas kennt weder Tiefenprüfung (**Z-Buffer**) noch Hardware-Beleuchtung oder $4\times 4$-Matrix-Stacks.
+  - Ein mehrachsiger Industrieroboter bewegt sich im **3D-Raum $(x, y, z)$**: Bauteile verdecken sich gegenseitig, Perspektive verkürzt Längen und Gelenke rotieren um Raumachsen (Z-Buffer, Beleuchtung & $4\times 4$-Matrix-Stacks nötig!).
 - **Halbzeit-Meilenstein (Abschluss des Visualisierungs-Blocks T02–T05):**
   - Mit `SharpGL` komplettieren wir heute unsere 4 Visualisierungs-Säulen, bevor ab Termin 06 (Multithreading) und Termin 07–10 die Systemmodellierung & Gleichungslöser starten.
 
@@ -126,7 +125,7 @@ Die Bibliothek `SharpGL.WPF` stellt das Steuerelement `OpenGLControl` bereit, da
 
 ### Initialisierung der Szene: `OpenGLInitialized`
 
-In `OpenGlView_OpenGLInitialized` konfigurieren wir einmalig die Zustandsmaschine über `gl` (`args.OpenGL` – Farben in OpenGL sind auf $[0{,}0 \dots 1{,}0]$ normiert statt `0..255`):
+In `OpenGlView_OpenGLInitialized` konfigurieren wir einmalig die Zustandsmaschine über `gl` (`args.OpenGL` – RGBA auf $[0{,}0 \dots 1{,}0]$ normiert; `GL_NORMALIZE` schützt vor Überbelichtung nach `gl.Scale`):
 
 ```csharp
 private void OpenGlView_OpenGLInitialized(object sender, OpenGLRoutedEventArgs args)
@@ -136,14 +135,13 @@ private void OpenGlView_OpenGLInitialized(object sender, OpenGLRoutedEventArgs a
     // 1. Hintergrundfarbe festlegen (Clear Color: normiertes RGBA [0..1], dunkles CAD-Anthrazit)
     gl.ClearColor(0.08f, 0.08f, 0.08f, 1.0f);
 
-    // 2. Tiefenpuffer (Z-Buffer) für korrekte 3D-Verdeckung aktivieren
+    // 2. Z-Buffer-Tiefenprüfung & automatische Normalen-Renormierung (für gl.Scale!) aktivieren
     gl.Enable(OpenGL.GL_DEPTH_TEST);
+    gl.Enable(OpenGL.GL_NORMALIZE);
 
-    // 3. Phong-Beleuchtungsmodell und Hauptlichtquelle GL_LIGHT0 einschalten
+    // 3. Phong-Beleuchtungsmodell, Hauptlichtquelle GL_LIGHT0 & Gouraud Shading einschalten
     gl.Enable(OpenGL.GL_LIGHTING);
     gl.Enable(OpenGL.GL_LIGHT0);
-
-    // 4. Weiche Farbinterpolation (Gouraud Shading) aktivieren
     gl.ShadeModel(OpenGL.GL_SMOOTH);
 }
 ```
@@ -279,8 +277,8 @@ $$I_f = I_a + \sum_{i=1}^{n} \left(I_{d,i} + I_{s,i}\right)$$
 
 - **Globales vs. lokales Ambient:**
   - **`GL_LIGHT_MODEL_AMBIENT`** (`gl.LightModel`) setzt $I_{La}$ einmalig für die gesamte Szene.
-  - Pro-Licht `GL_AMBIENT` bleibt auf Standard `0` (sonst verwaschen Schatten bei Spotlights!).
-  - `GL_COLOR_MATERIAL` koppelt `gl.Color` an $k_a, k_d$.
+  - Pro-Licht `GL_AMBIENT` bleibt auf `0` (sonst verwaschen Schatten!).
+  - `GL_COLOR_MATERIAL` koppelt `gl.Color` an $k_a, k_d$ (`gl.Material` für $k_s$).
 
 </div>
 <div class="two">
@@ -294,28 +292,28 @@ $$I_f = I_a + \sum_{i=1}^{n} \left(I_{d,i} + I_{s,i}\right)$$
 
 ### Der C#-Code zur Phong-Beleuchtung (`OpenGLInitialized`)
 
+`globalAmbient` setzt $I_{La}$; `lightPos`, `lightDiffuse`, `lightSpecular` steuern `GL_LIGHT0`; `matSpecular` aktiviert Glanzpunkte ($k_s > 0$):
+
 ```csharp
-// 1. Phong-Beleuchtung aktivieren & globales Raumlicht I_La einmalig für die Szene setzen
-gl.Enable(OpenGL.GL_LIGHTING);
-float[] globalAmbient = [0.25f, 0.25f, 0.25f, 1.0f]; // Globales Raumlicht I_La
+gl.Enable(OpenGL.GL_LIGHTING);  // Phong-Beleuchtung aktivieren
+gl.Enable(OpenGL.GL_NORMALIZE); // Normiert Normalen nach gl.Scale(...) zurück auf Länge 1!
+float[] globalAmbient = [0.25f, 0.25f, 0.25f, 1.0f]; // Raumlicht I_La
 gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
-// 2. Punktlicht GL_LIGHT0 (x=10, y=20, z=15, w=1 -> Punktlicht; w=0 wäre Richtungslicht)
-gl.Enable(OpenGL.GL_LIGHT0);
+gl.Enable(OpenGL.GL_LIGHT0);    // Punktlicht bei (10, 20, 15) mit w = 1.0f
 float[] lightPos      = [10.0f, 20.0f, 15.0f, 1.0f];
-float[] lightDiffuse  = [0.85f, 0.85f, 0.85f, 1.0f]; // Streulicht I_Ld,1
-float[] lightSpecular = [1.00f, 1.00f, 1.00f, 1.0f]; // Weißes Glanzlicht I_Ls,1
-
+float[] lightDiffuse  = [0.85f, 0.85f, 0.85f, 1.0f];
+float[] lightSpecular = [1.00f, 1.00f, 1.00f, 1.0f];
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, lightPos);
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE,  lightDiffuse);
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_SPECULAR, lightSpecular);
 
-// 3. Color-Tracking: gl.Color(r,g,b) steuert direkt die Materialkoeffizienten k_a und k_d!
-gl.Enable(OpenGL.GL_COLOR_MATERIAL);
+gl.Enable(OpenGL.GL_COLOR_MATERIAL); // gl.Color steuert k_a, k_d; gl.Material setzt k_s & Shininess
 gl.ColorMaterial(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT_AND_DIFFUSE);
+float[] matSpecular = [0.60f, 0.60f, 0.60f, 1.0f];
+gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_SPECULAR, matSpecular);
+gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_SHININESS, 64.0f);
 ```
-
-- `globalAmbient` parametriert das Szenen-Grundlicht; `lightPos`, `lightDiffuse` und `lightSpecular` steuern `GL_LIGHT0`.
 
 ---
 
@@ -542,12 +540,13 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 <div class="columns">
 <div class="two">
 
-Stellen wir uns den SCARA-Roboter aus der Hausübung vor:
+Stellen wir uns den SCARA-Roboter vor:
 
 - **Problem bei Einzelberechnung:**
-  - Dreht sich die Schulter (`UpperArm`) um $\theta_1$, schwenken Unterarm (`ForeArm`), `Pinole` und Greifer (`TCP`) auf einer Kreisbahn mit!
+  - Dreht sich `UpperArm` um $\theta_1$, schwenken `ForeArm`, `Pinole` und `TCP` auf einer Kreisbahn mit!
 - **Lösung – Szenengraph (`SceneNode`):**
-  - Jeder Knoten beschreibt seine Lage **nur relativ zum direkten Elternknoten** (Schulter $\theta_1$, Ellenbogen $\theta_2$ bei `L1`, Vertikalhub $d_3$).
+  - Wie beim `MSAGL`-Graphen in **T04** bilden `Root`, `Base`, `Workpiece` und die Armglieder einen **Baum**:
+  - Jeder Knoten transformiert **nur relativ zum Elternknoten** (Schulter $\theta_1$, Ellenbogen $\theta_2$ bei `L1`, Hub $d_3$).
 
 </div>
 <div class="two">
@@ -1058,7 +1057,7 @@ private void OpenGlView_MouseMove(object sender, MouseEventArgs e)
 - **Phong-Beleuchtung & Shading:** Ambient ($I_a$), Diffuse ($I_d \propto \vec{n}\cdot\vec{l}$) und Specular ($I_s \propto (\vec{r}\cdot\vec{v})^{\alpha_{\text{shiny}}}$) erzeugen mit `GL_SMOOTH` und Normalenvektoren plastische 3D-Oberflächen.
 - **Hierarchischer Szenengraph (`SceneNode`):** Kaskadiert Transformationen über `PushMatrix`/`PopMatrix` – verifiziert durch den Deckungstest ($\Delta = 0{,}000\,\text{mm}$) zwischen Analytik und `GetWorldPosition()`.
 - **Interaktive `OrbitCamera`:** Kugelkoordinaten ($r, \theta, \phi$), Gimbal-Lock-Clamping ($[-85^\circ, +85^\circ]$) und Zielpunkt-Panning für natürliche CAD-Navigation.
-- **Ausblick auf Block 2 (T06–T10 – Modellierung & Gleichungslöser):** Nach der *Vorwärtskinematik* $(\theta_1, \theta_2) \mapsto (x, y, z)$ folgen ab T06/T07 Multithreading, Gleichungssysteme ($\mathbf{K}\cdot\mathbf{u}=\mathbf{f}$), *Inverse Kinematik* (Newton-Raphson) und Dynamik (ODEs)!
+- **Ausblick auf Block 2 (T06–T10 – Modellierung & Virtuelle Inbetriebnahme):** Nach der *Vorwärtskinematik* $(\theta_1, \theta_2) \mapsto (x, y, z)$ folgen ab T06/T07 Multithreading, Gleichungssysteme ($\mathbf{K}\cdot\mathbf{u}=\mathbf{f}$), *Inverse Kinematik* (T07) sowie Dynamik & **Virtuelle Inbetriebnahme (T10)**!
 
 ---
 

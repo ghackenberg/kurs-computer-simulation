@@ -144,7 +144,7 @@
     </g>
 
     <!-- Step 2 -->
-    <text x="20" y="286" class="label-bold" style="fill: #b91c1c;">Nach 2 &amp; 3 Schritten: Schachbrett-Aufschaukeln ➔ NaN</text>
+    <text x="20" y="286" class="label-bold" style="fill: #b91c1c;">Nach 2 Schritten: Schachbrett-Aufschaukeln ➔ NaN</text>
     <g transform="translate(45, 296)">
       <rect x="0" y="14" width="60" height="26" fill="#f97316" />
       <rect x="75" y="20" width="60" height="30" fill="#1d4ed8" />

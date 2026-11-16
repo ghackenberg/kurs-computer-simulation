@@ -25,7 +25,7 @@ public static class EulerIntegrator
         // Systemableitungen an der Stelle t_k auswerten
         var (ax, ay) = accelerationFunc(current);
 
-        // TODO [Stufe 1 - Aufgabe 1.1]: Explizites Euler-Update 1. Ordnung:
+        // [Stufe 1 - Aufgabe 1.1] Referenz-Implementierung (Explizites Euler-Update 1. Ordnung):
         // x_{k+1} = x_k + dt * vx_k,   y_{k+1} = y_k + dt * vy_k
         // vx_{k+1} = vx_k + dt * ax,   vy_{k+1} = vy_k + dt * ay
         double nextTime = current.Time + dt;
@@ -50,7 +50,7 @@ public static class EulerIntegrator
         if (Math.Abs(current.Y - previous.Y) < 1e-12)
             return current;
 
-        // TODO [Stufe 1 - Aufgabe 1.2]: Lineare Nullstellen-Interpolation bei y = 0:
+        // [Stufe 1 - Aufgabe 1.2] Referenz-Implementierung (Lineare Nullstellen-Interpolation bei y = 0):
         // tau in [0, 1]: Anteil des Zeitschritts bis y = 0
         double tau = (0.0 - previous.Y) / (current.Y - previous.Y);
         tau = Math.Clamp(tau, 0.0, 1.0);
@@ -73,36 +73,27 @@ public static class EulerIntegrator
         double dt,
         Func<KinematicState, (double ax, double ay)> accelerationFunc)
     {
-        // TODO [Stufe 1 - Aufgabe 1.3 & Stufe 2]:
+        // TODO [Stufe 1 - Aufgabe 1.3]: Prädiktor-Korrektor-Schritt (Heun / RK2) implementieren
         // 1. Steigung k1 am Intervallanfang t_k berechnen: var (ax1, ay1) = accelerationFunc(current);
-        // 2. Prädiktor-Zustand (Euler-Schritt) tildeState = StepEuler(current, dt, accelerationFunc) bilden.
-        // 3. Steigung k2 am Intervallende t_{k+1} berechnen: var (ax2, ay2) = accelerationFunc(tildeState);
-        // 4. Mittelwert aus Anfangs- und Endsteigung für X, Y, Vx, Vy anwenden:
-        var (ax1, ay1) = accelerationFunc(current);
-        KinematicState predictor = StepEuler(current, dt, accelerationFunc);
-        var (ax2, ay2) = accelerationFunc(predictor);
-
-        double nextTime = current.Time + dt;
-        double nextX = current.X + 0.5 * dt * (current.Vx + predictor.Vx);
-        double nextY = current.Y + 0.5 * dt * (current.Vy + predictor.Vy);
-        double nextVx = current.Vx + 0.5 * dt * (ax1 + ax2);
-        double nextVy = current.Vy + 0.5 * dt * (ay1 + ay2);
-
-        return new KinematicState(nextTime, nextX, nextY, nextVx, nextVy);
+        // 2. Prädiktor-Zustand (Euler-Hilfsschritt) predictor = StepEuler(current, dt, accelerationFunc) bilden.
+        // 3. Steigung k2 am Intervallende t_{k+1} berechnen: var (ax2, ay2) = accelerationFunc(predictor);
+        // 4. Mittelwert aus Anfangs- und Endsteigung (0.5 * dt * (...)) für X, Y, Vx, Vy anwenden.
+        return StepEuler(current, dt, accelerationFunc);
     }
 
     // =========================================================================
     // TODO: [Stufe 2 Track A: Industrie - Hydraulikzylinder-Endlagendämpfung]
-    // - Nutzen Sie StepEuler und StepHeun für den Konvergenzvergleich am Zylinder.
-    // - Implementieren Sie die nichtlineare Zylinderkraft mit Blendenreibung:
+    // - Nutzen Sie StepEuler und StepHeun für den Konvergenzvergleich am Zylinder (t_end = 0.15 s).
+    // - Implementieren Sie F_vor = 60 kN (durchgehend für x >= 0 m) und die nichtlineare Blendenreibung:
     //     F_daempf = d_lin * v + c_blend * v * |v|
-    // - Untersuchen Sie die Stabilitätsgrenze am Kontaktanschlag (c_kontakt, d_kontakt).
+    // - Untersuchen Sie die Stabilitätsgrenze am Kontaktanschlag (c_kontakt, d_kontakt, x_eq = 0.8012 m).
     // =========================================================================
 
     // =========================================================================
     // TODO: [Stufe 2 Track B: Simulation Game - Artillery Duel mit Newton-Drag]
     // - Erweitern Sie die Beschleunigungsfunktion um den quadratischen Luftwiderstand:
     //     F_d = 0.5 * rho * Cw * A * |v_rel|^2
-    // - Berücksichtigen Sie relative Windvektoren v_rel = v - v_wind(t).
+    // - Berücksichtigen Sie den Relativwind v_rel = (vx - w_x, vy) sowie die Geländehöhe
+    //     h_k = y_k - y_terrain(x_k) ab Startpunkt (0 m, 20.0 m).
     // =========================================================================
 }

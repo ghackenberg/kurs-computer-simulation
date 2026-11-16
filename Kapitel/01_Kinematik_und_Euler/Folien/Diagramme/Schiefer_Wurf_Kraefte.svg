@@ -55,7 +55,7 @@
   <path d="M 90 310 Q 330 90 570 370" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,5"/>
 
   <!-- Trajectory 2: Gedämpfte Bahn mit Luftwiderstand -->
-  <path d="M 90 310 C 160 230, 230 185, 290 190 C 350 195, 410 260, 460 370" fill="none" stroke="#004B96" stroke-width="3.5"/>
+  <path d="M 90 310 C 160 230, 230 188, 290 195 C 350 203, 410 265, 460 370" fill="none" stroke="#004B96" stroke-width="3.5"/>
 
   <!-- Launch Angle & Components Construction (P0 at 90, 310) -->
   <!-- Horizontal reference line for angle alpha -->

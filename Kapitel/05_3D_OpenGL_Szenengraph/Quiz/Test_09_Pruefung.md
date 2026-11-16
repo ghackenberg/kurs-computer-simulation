@@ -27,9 +27,9 @@ Ein WPF-Canvas besitzt die Gesamtgröße $W_{\text{canvas}} = 700\,\text{px}$ Br
 
 ## Frage 2 [Q02_T09_Q2]: Statistische Prozesskontrolle (SPC): Untere 3-Sigma-Warngrenze (LCL) bestimmen *(numerical, 1.5 Pkt.)*
 
-Ein Welford-Statistikmodul überwacht den Förderstrom einer Dosierpumpe. Nach $k = 10$ Messwerten beträgt der laufende Mittelwert $\mu = 50{,}0\,\text{l/min}$ und die Quadratsumme der Abweichungen $M_2 = 36{,}0\,(\text{l/min})^2$. Für die Live-Überwachung in ScottPlot 5 wird die untere $3\sigma$-Kontrollgrenze $\text{LCL} = \mu - 3 \cdot s$ (mit der empirischen Stichprobenstandardabweichung $s$) berechnet.
+Ein Welford-Statistikmodul überwacht den Förderstrom einer Dosierpumpe. Nach $k = 10$ Messwerten beträgt der laufende Mittelwert $\mu = 50{,}0\,\text{l/min}$ und die Quadratsumme der Abweichungen $M_2 = 36{,}0\,(\text{l/min})^2$. Für die Live-Überwachung in ScottPlot 5 wird die untere $3\sigma$-Warngrenze ($\text{LCL}$, Lower Control Limit auf Basis der empirischen Stichprobenstandardabweichung $s$) berechnet.
 
-Berechnen Sie den numerischen Wert von $\text{LCL}$ in $\text{l/min}$.
+Berechnen Sie den numerischen Wert dieser unteren $3\sigma$-Warngrenze $\text{LCL}$ in $\text{l/min}$.
 
 **Automatische Bewertung & Teilpunkte (`numerical`):**
 * **Wert `44` (± `0.1`) → 100%:** Exakt! s^2 = M2 / (10 - 1) = 36.0 / 9 = 4.0 => s = 2.0 l/min; LCL = 50.0 - 3 * 2.0 = 44.0 l/min.
