@@ -52,6 +52,20 @@ Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showc
 
 ---
 
+### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+
+In **Termin 02** haben wir 2D-Temperaturfelder direkt in den Pixelpuffer (`WriteableBitmap`) geschrieben – warum brauchen wir heute ein zweites 2D-Grafikparadigma?
+
+- **Was `WriteableBitmap` (Termin 02) perfekt gelöst hat:**
+  - Flächenhafte 2D-Gitter (z.B. $500 \times 500$ Temperaturzellen) mit Millionen Farbwerten pro Sekunde.
+- **Wo das Pixelraster heute an seine Grenzen stößt:**
+  - **Keine Objekt-Identität:** Ein gezeichneter Brückenstab verschmilzt sofort zu anonymen Farbpunkten im RAM – man kann ihn später weder anklicken noch verschieben.
+  - **Kein stufenloser Zoom:** Beim Hineinzoomen in Konstruktionszeichnungen entstehen grobe Pixel-Treppenstufen statt gestochen scharfer Kanten.
+- **Einordnung ins große Ganze (2. Visualisierungs-Säule: 2D-Vektorgrafik):**
+  - Für Maschinen-Geometrien, CAD-Tragwerke (direkte Vorarbeit für unsere **FEM-Statik in Termin 07**!) und interaktive Kraftpfeile nutzen wir **analytische 2D-Vektorgrafik** im `WPF Canvas`.
+
+---
+
 <!-- Platzhalter für Abschnittsbildbeschreibung -->
 
 ![bg right](./Illustrationen/Abschnitt_1.jpg)
@@ -66,20 +80,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Das `Canvas`-Element in WPF und Attached Properties
 - Vektorielle Grundformen (`Line`, `Rectangle`, `Ellipse`, `Polygon`, `Path`)
 - Szenengraph und Visual Tree in WPF
-
----
-
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
-
-In **Termin 02** haben wir 2D-Temperaturfelder direkt in den Pixelpuffer (`WriteableBitmap`) geschrieben – warum brauchen wir heute ein zweites 2D-Grafikparadigma?
-
-- **Was `WriteableBitmap` (Termin 02) perfekt gelöst hat:**
-  - Flächenhafte 2D-Gitter (z.B. $500 \times 500$ Temperaturzellen) mit Millionen Farbwerten pro Sekunde.
-- **Wo das Pixelraster heute an seine Grenzen stößt:**
-  - **Keine Objekt-Identität:** Ein gezeichneter Brückenstab verschmilzt sofort zu anonymen Farbpunkten im RAM – man kann ihn später weder anklicken noch verschieben.
-  - **Kein stufenloser Zoom:** Beim Hineinzoomen in Konstruktionszeichnungen entstehen grobe Pixel-Treppenstufen statt gestochen scharfer Kanten.
-- **Einordnung ins große Ganze (2. Visualisierungs-Säule: 2D-Vektorgrafik):**
-  - Für Maschinen-Geometrien, CAD-Tragwerke (direkte Vorarbeit für unsere **FEM-Statik in Termin 07**!) und interaktive Kraftpfeile nutzen wir **analytische 2D-Vektorgrafik** im `WPF Canvas`.
 
 ---
 

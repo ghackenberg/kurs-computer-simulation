@@ -55,17 +55,6 @@ Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 
 > **Code-Defense (Säule 2b, 20 %):** Live-Vorführung am Beamer. Stresstest des kooperativen Not-Aus-Abbruchs (`CancellationToken`) unter Volllast.
 
 ---
-## 7.1: Einführung und historische Entwicklung
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Brücke zu Termin 03 (2D-CAD) & 06 und Auftakt der 4 Modellarten
-- Definition eines statischen Modells
-- Das Fachwerk als Anwendungsbeispiel
-- Historischer Abriss der Fachwerktheorie
-- Typische Fragestellungen für die Modellierung
-
----
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -77,6 +66,17 @@ Mit **Termin 06** haben wir unseren Unterbau aus Visualisierung (T02–T05) und 
   - Heute hauchen wir genau dieser Geometrie aus Termin 03 echte **Elastostatik** ein: Wir stellen aus den Knoten und Stäben die globale Steifigkeitsmatrix $\mathbf{K}$ auf und lösen das lineare Gleichungssystem $\mathbf{K} \cdot \mathbf{u} = \mathbf{f}$ über die **Cholesky-Zerlegung** (`Math.NET`).
 - **Einordnung ins große Ganze (Vom Ruhezustand zur Dynamik):**
   - Statische Modelle beschreiben das **zeitunabhängige Gleichgewicht ($\sum \vec{F} = \mathbf{0}$)** – der logische erste Schritt vor den zeitabhängigen Systemen in Termin 08 bis 10.
+
+---
+## 7.1: Einführung und historische Entwicklung
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Brücke zu Termin 03 (2D-CAD) & 06 und Auftakt der 4 Modellarten
+- Definition eines statischen Modells
+- Das Fachwerk als Anwendungsbeispiel
+- Historischer Abriss der Fachwerktheorie
+- Typische Fragestellungen für die Modellierung
 
 ---
 

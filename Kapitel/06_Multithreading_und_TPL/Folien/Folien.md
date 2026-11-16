@@ -53,18 +53,6 @@ Präsentation der Hausübung aus Termin 05 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ---
 
-## 6.1: Grundlagen: Prozesse, Threads & Parallelität
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Brücke zu Termin 02–05 und Scharnier zum Modellierungs-Block (T07–T10)
-- Motivation: Auslastung moderner Mehrkern-Prozessoren
-- Unterschied: Prozess vs. Thread
-- Nebenläufigkeit (Concurrency) vs. echte Parallelität
-- Theoretische Grenzen: Speedup, Effizienz & Amdahlsches Gesetz
-
----
-
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
 In **Termin 02 bis 05** haben wir leistungsfähige 2D- und 3D-Oberflächen gebaut – warum bildet **Termin 06** heute das architektonische Scharnier zur zweiten Semesterhälfte?
@@ -75,6 +63,19 @@ In **Termin 02 bis 05** haben wir leistungsfähige 2D- und 3D-Oberflächen gebau
   - Sobald wir ab nächster Woche große Gleichungssysteme (T07), hochfrequente Differentialgleichungen (T08) oder Millionen Monte-Carlo-Läufe (T09) berechnen, dauert ein Rechenschritt schnell Sekunden statt Millisekunden $\implies$ **Das WPF-Fenster friert komplett ein ("Keine Rückmeldung")**, und 15 von 16 CPU-Kernen langweilen sich!
 - **Einordnung ins große Ganze (Das Architektur-Scharnier):**
   - Heute trennen wir **Berechnung (Worker-Threads / `Parallel.For`)** und **Visualisierung (UI-Dispatcher)** sauber voneinander – das Fundament für alle kommenden Solver in **Termin 07 bis 10**.
+
+---
+
+## 6.1: Grundlagen: Prozesse, Threads & Parallelität
+
+![bg right](./Illustrationen/Abschnitt_1.jpg)
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Motivation: Auslastung moderner Mehrkern-Prozessoren
+- Unterschied: Prozess vs. Thread
+- Nebenläufigkeit (Concurrency) vs. echte Parallelität
+- Theoretische Grenzen: Speedup, Effizienz & Amdahlsches Gesetz
 
 ---
 
@@ -163,17 +164,23 @@ $$E(p) = \frac{S(p)}{p} = \frac{T_1}{p \cdot T_p} \le 1 \quad (100\,\%)$$
 
 ---
 
+### Amdahlsches Gesetz & Skalierungsgrenzen
+
+Der serielle Anteil $s = 1 - f_{\text{par}}$ (z. B. `lock`/`Interlocked`) begrenzt $S_{\text{Amdahl}}(p)$ auf $S_{\max} = \frac{1}{s}$ (Gegenteil: *Weak Scaling* $S_{\text{Gustafson}}$) – bei $s = 5\,\%$ ist selbst bei $p = 1000$ Kernen bei $20\times$ Schluss!
+
 ![](./Diagramme/Amdahlsches_Gesetz_Speedup.svg)
 
 ---
 
 ## 6.2: Task Parallel Library (`Parallel.For` & `Parallel.ForEach`)
 
+![bg right](./Illustrationen/Abschnitt_2.jpg)
+
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Die Task Parallel Library (TPL) in .NET
 - Parallelisierung von Zählschleifen mit `Parallel.For`
-- Partitionierung und Lastverteilung durch den ThreadPool
+- Granularität, `ParallelOptions` & JIT-Warmup für saubere Benchmarks
 
 ---
 
@@ -211,7 +218,39 @@ Parallel.For(0, 100, i =>
 
 ---
 
+### Granularität, `ParallelOptions` & JIT-Warmup
+
+In realen Simulationen steuern wir die TPL gezielt über `ParallelOptions` – und achten auf zwei typische Performance-Fallen:
+
+<div class="columns top">
+<div class="one">
+
+**Steuerung per `ParallelOptions`:**
+```csharp
+var opts = new ParallelOptions
+{
+    MaxDegreeOfParallelism = p,
+    CancellationToken = token
+};
+Parallel.For(0, n, opts, i => Step(i));
+```
+- Das Objekt `opts` begrenzt die Thread-Anzahl `p` für Skalierungsreihen ($1 \dots P_{\max}$) und leitet den Abbruch (`token`) direkt an die Worker weiter.
+
+</div>
+<div class="one">
+
+**Granularität & JIT-Warmup:**
+- **Zu feine Arbeitspakete:** Dauert `Step(i)` nur wenige Nanosekunden, übersteigt der ThreadPool-Overhead den Rechengewinn ($S(p) < 1$) $\implies$ innere Schleifen *niemals* blind parallelisieren!
+- **JIT-Warmup:** Der erste Aufruf in .NET kompiliert IL-Code in Maschinencode. Vor jeder Zeitmessung (`Stopwatch`) einmal ungezählt warmlaufen lassen!
+
+</div>
+</div>
+
+---
+
 ## 6.3: Threadsichere Datenstrukturen (`ConcurrentBag<T>`)
+
+![bg right](./Illustrationen/Abschnitt_3.jpg)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -225,7 +264,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 Wenn mehrere Threads gleichzeitig auf eine Standard-Collection wie `List<T>` schreibend zugreifen, führt dies unweigerlich zu Ausnahmen oder unbemerktem Datenverlust.
 
-- **`ConcurrentBag<T>`** ist eine threadsichere, ungeordnete Sammlung für Szenarien, bei denen die Reihenfolge der Ergebnisse unwichtig ist.
+- **`ConcurrentBag<T>`** (z. B. Instanz `bag`) ist eine threadsichere, ungeordnete Sammlung für Szenarien, bei denen die Reihenfolge der Ergebnisse unwichtig ist.
 - Erlaubt paralleles Hinzufügen ohne manuelle Sperren.
 
 <div class="columns">
@@ -263,11 +302,13 @@ Parallel.For(0, 1000, i =>
 
 ## 6.4: Synchronisation & Race Conditions (`lock`)
 
+![bg right](./Illustrationen/Abschnitt_4.jpg)
+
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Was ist eine Race Condition?
-- Nicht-atomare Operationen (z.B. `counter++`)
-- Das `lock`-Statement und gegenseitiger Ausschluss (Mutual Exclusion)
+- Was ist eine Race Condition? (`counter++` vs. `lock` / `Interlocked`)
+- Hardware-Falle: *False Sharing* auf 64-Byte-Cache-Lines & thread-lokale Reduktion
+- Sperrfreie Datenparallelität durch Double-Buffering (`StateCurrent` $\to$ `StateNext`)
 
 ---
 
@@ -325,7 +366,49 @@ Console.WriteLine(counter);
 
 ---
 
+### Blick unter die Haube: False Sharing & Thread-lokale Reduktion
+
+Schreiben zwei Kerne in dieselbe **64-Byte-Cache-Line** (`localSum[0]`/`[1]`), bremst Cache-Ping-Pong $\to$ `local` + `Interlocked.Add(ref totalCount, local)`!
+
+![](./Diagramme/False_Sharing_und_Reduktion.svg)
+
+---
+
+### Datenparallelität ohne Sperren: Double-Buffering
+
+Wenn Partikel oder Agenten in einem Zeitschritt die Positionen anderer Agenten **lesen** und gleichzeitig ihre eigene Position **schreiben**, führt ein einzelnes Array zu **Race Conditions (Tearing)**:
+
+<div class="columns top">
+<div class="one">
+
+**Das Prinzip (Read/Write-Trennung):**
+- Zwei getrennte Puffer: `StateCurrent[]` *(nur lesen)* und `StateNext[]` *(nur `StateNext[i]` schreiben)*.
+- Jeder Thread `i` schreibt exklusiv in seinen eigenen Ziel-Slot `i` $\implies$ **0 Locks, 0 False Sharing bei Schreibzugriffen!**
+- Erst *nach* `Parallel.For` werden die Referenzen getauscht (`Swap`).
+
+</div>
+<div class="one">
+
+```csharp
+// Innerhalb Parallel.For: strikt getrennt!
+Parallel.For(0, count, opts, i =>
+{
+    var p = StateCurrent[i]; // nur lesen
+    StateNext[i] = Integrate(p, StateCurrent);
+});
+
+// Nach dem Schritt: O(1)-Referenztausch
+(StateCurrent, StateNext) = (StateNext, StateCurrent);
+```
+
+</div>
+</div>
+
+---
+
 ## 6.5: Parallele Zufallszahlen & thread-lokale Zustände
+
+![bg right](./Illustrationen/Abschnitt_5.jpg)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -356,6 +439,8 @@ Parallel.For(0, numberOfRuns, i =>
 ---
 
 ## 6.6: Multithreading in WPF-Anwendungen
+
+![bg right](./Illustrationen/Abschnitt_6.jpg)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -396,7 +481,7 @@ WPF-Anwendungen basieren auf einem **Single-Threaded Apartment (STA)**:
 
 ### Asynchrone Ausführung: `async`/`await` & `Task.Run`
 
-Mit `async`/`await` und `Task.Run` wird die Simulation im Hintergrund berechnet, ohne das UI zu blockieren:
+Mit `async`/`await` und `Task.Run` wird das Simulationsergebnis (`res`) im Hintergrund berechnet, ohne das UI zu blockieren:
 
 <div class="columns top">
 <div class="one">
@@ -561,6 +646,8 @@ Lange Simulationen müssen vom Benutzer vorzeitig gestoppt werden können:
 
 ### Code-Beispiel: Kooperativer Abbruch mit `CancellationToken`
 
+Übergabe des Absender-Parameters `s` und des `CancellationToken` zwischen UI-Schicht und Hintergrundschleife:
+
 <div class="columns top">
 <div class="one">
 
@@ -610,7 +697,7 @@ public void Simulate(CancellationToken token)
 
 - Multithreading ist der Schlüssel zur vollen Auslastung moderner Mehrkern-CPUs bei rechenintensiven Simulationen.
 - Die **Task Parallel Library (TPL)** mit `Parallel.For` abstrahiert das manuelle Thread-Management.
-- **Race Conditions** entstehen beim gleichzeitigen Schreiben auf geteilte Ressourcen; sie lassen sich durch `lock` (gegenseitigen Ausschluss) verhindern.
+- **Race Conditions** entstehen beim gleichzeitigen Schreiben auf geteilte Ressourcen; sie lassen sich durch `lock`, atomares `Interlocked`, thread-lokale Reduktion (gegen *False Sharing*) oder **Double-Buffering** verhindern.
 - **`ConcurrentBag<T>`** bietet eine threadsichere Lösung zum Sammeln paralleler Simulationsergebnisse.
 - Zufallszahlengeneratoren (`System.Random`) müssen strikt thread-lokal und mit individuellem Seed betrieben werden, um Korruption zu vermeiden und Reproduzierbarkeit zu wahren.
 - In **WPF-Anwendungen** entkoppelt `await Task.Run(...)` die Simulation vom UI-Thread; **`IProgress<T>`** garantiert thread-sichere Zwischenstände und **`CancellationToken`** ermöglicht den kontrollierten Benutzerabbruch.
@@ -649,7 +736,7 @@ public void Simulate(CancellationToken token)
 
 ### Hausübung Termin 06: Multithreading & TPL
 
-**Stufe 1 (Basisaufgabe `1.1`–`1.3` für alle Teams auf `MultithreadingBenchmark.sln`):** `Task.Run`, `IProgress<T>`, `CancellationToken` & Amdahl-Reihe ([Aufgabenblatt 06](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
+**Stufe 1 (Basisaufgabe `1.1`–`1.4` für alle Teams auf `MultithreadingBenchmark.sln`):** `Task.Run`, `IProgress<T>`, `CancellationToken`, Amdahl-Reihe & `dotnet test` ([Aufgabenblatt 06](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">

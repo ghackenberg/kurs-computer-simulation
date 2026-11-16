@@ -18,8 +18,9 @@
  *    - Aufzählungsliste der Inhalte (- ...)
  *    - Konsistenz zwischen Kapitel-Agenda und tatsächlichen Abschnitten
  *
- * 3. Kapitel-Brücke & Rückblick in Abschnitt N.1 (Kapitel 01 bis 10):
+ * 3. Kapitel-Brücke & Rückblick vor Abschnitt N.1 (Kapitel 01 bis 10):
  *    - Dedizierte Einstiegsfolie '### Rückblick & Brücke: ...' (oder '### Einordnung & Rückblick: ...')
+ *      nach Kapitel-Opener / optionaler Quiz- & Showcase-Folie und vor '## N.1:'
  * ==============================================================================
  */
 
@@ -35,13 +36,21 @@ function lintSectionDeck(markdownPath) {
   const slides = content.split(/^---$/m);
 
   const issues = [];
+  const warnings = [];
   const declaredSectionsInAgenda = [];
   const actualSectionSlides = [];
 
   let chapterSlideFound = false;
+  let estimatedMinutes = 0;
+  let contentSlideCount = 0;
 
   slides.forEach((slide, idx) => {
     const slideNum = idx + 1;
+    const trimmed = slide.trim();
+    // Skip empty split before leading '---' or pure YAML frontmatter block on slide 1/2
+    if (idx <= 1 && (!trimmed || /^(?:marp|theme|paginate|title|header|footer|style):/m.test(trimmed))) {
+      return;
+    }
 
     // 1. Kapitel-Titel / Agenda (# Kapitel N: ...)
     const chapterMatch = slide.match(/#\s+Kapitel\s+(\d+):\s*([^\r\n]+)/i);
@@ -161,6 +170,22 @@ function lintSectionDeck(markdownPath) {
         });
       }
     }
+
+    // 4. Gewichtete Vortragszeit pro Folientyp schätzen
+    if (/###\s+.*(?:Live-Showcase|Hausübung)/i.test(slide)) {
+      estimatedMinutes += 0;
+    } else if (chapterMatch || sectionMatch || /^#\s+Zusammenfassung/im.test(slide)) {
+      estimatedMinutes += 0.5;
+    } else if (/###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(slide)) {
+      estimatedMinutes += 2.0;
+      contentSlideCount++;
+    } else if (/###\s+.*(?:Blick unter die Haube|Herleitung|Mathematik|Kontrast)/i.test(slide) || (/!\[[^\]]*\]\(\.\/Diagramme\/[^)]+\.svg\)/i.test(slide) && /\$\$[\s\S]+?\$\$/.test(slide))) {
+      estimatedMinutes += 4.5;
+      contentSlideCount++;
+    } else {
+      estimatedMinutes += 3.5;
+      contentSlideCount++;
+    }
   });
 
   // 4. Consistency checks
@@ -187,25 +212,38 @@ function lintSectionDeck(markdownPath) {
     }
   });
 
-  // 5. Kapitel-Brücke & Rückblick-Folie in Abschnitt N.1 (für Kapitel 01 bis 10)
+  // 5. Kapitel-Brücke & Rückblick-Folie vor Abschnitt N.1 (nach Kapitel-Opener / optionaler Showcase-Folie, für Kapitel 01 bis 10)
   const chapNumMatch = deckName.match(/^(\d+)_/);
   const chapNum = chapNumMatch ? parseInt(chapNumMatch[1], 10) : -1;
   if (chapNum >= 1 && chapNum <= 10) {
     const firstSec = actualSectionSlides.find(s => s.secNum === `${chapNum}.1`);
-    if (firstSec) {
-      const nextSec = actualSectionSlides.find(s => s.slideNum > firstSec.slideNum);
-      const endSlideIdx = nextSec ? nextSec.slideNum - 1 : slides.length;
-      const sec1Slides = slides.slice(firstSec.slideNum, endSlideIdx);
-      const hasBridgeSlide = sec1Slides.some(sl =>
+    const chapSlideIdx = slides.findIndex(sl => /#\s+Kapitel\s+\d+:/i.test(sl));
+    if (firstSec && chapSlideIdx !== -1) {
+      const preSecSlides = slides.slice(chapSlideIdx + 1, firstSec.slideNum - 1);
+      const hasBridgeBeforeFirstSec = preSecSlides.some(sl =>
         /###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(sl)
       );
-      if (!hasBridgeSlide) {
+      if (!hasBridgeBeforeFirstSec) {
         issues.push({
           slideNum: firstSec.slideNum,
           type: 'MISSING_BRIDGE_SLIDE',
-          message: `Abschnitt ${chapNum}.1 fehlt eine dedizierte Einstiegs-/Brückenfolie ('### Rückblick & Brücke: ...'), die an den vorigen Termin und das große Ganze anknüpft.`
+          message: `Vor Abschnitt ${chapNum}.1 (nach Kapitel-Opener/Quiz/Showcase) fehlt die dedizierte Einstiegs-/Brückenfolie ('### Rückblick & Brücke: ...').`
         });
       }
+    }
+  }
+
+  // 6. Zeitbudget-Check für Kapitel 01 bis 10 (150 Min. - 15 Pause - 15 Showcase [ab T02] - 5 HÜ - 15 Quiz [T03,T05,T08,T10])
+  let budgetMinutes = null;
+  if (chapNum >= 1 && chapNum <= 10) {
+    const hasQuiz = [3, 5, 8, 10].includes(chapNum);
+    const hasShowcase = chapNum >= 2;
+    budgetMinutes = 150 - 15 - (hasShowcase ? 15 : 0) - 5 - (hasQuiz ? 15 : 0);
+    if (estimatedMinutes > budgetMinutes) {
+      warnings.push({
+        type: 'TIME_BUDGET_EXCEEDED',
+        message: `Geschätzte Vortragszeit ~${estimatedMinutes.toFixed(1)} Min. überschreitet Netto-Budget von ${budgetMinutes} Min.${hasQuiz ? ' (Quiz-Termin)' : ''}.`
+      });
     }
   }
 
@@ -215,7 +253,11 @@ function lintSectionDeck(markdownPath) {
     chapterSlideFound,
     declaredSectionsCount: declaredSectionsInAgenda.length,
     actualSectionsCount: actualSectionSlides.length,
-    issues
+    estimatedMinutes,
+    budgetMinutes,
+    contentSlideCount,
+    issues,
+    warnings
   };
 }
 
@@ -253,7 +295,10 @@ function main() {
 
   for (const deck of decks) {
     const res = lintSectionDeck(deck);
-    process.stdout.write(`Prüfe ${res.deckName} (${res.actualSectionsCount} Abschnitte) ... `);
+    const timeInfo = res.budgetMinutes !== null
+      ? `~${res.estimatedMinutes.toFixed(0)}/${res.budgetMinutes} Min.`
+      : `~${res.estimatedMinutes.toFixed(0)} Min.`;
+    process.stdout.write(`Prüfe ${res.deckName} (${res.actualSectionsCount} Abschnitte, ${timeInfo}) ... `);
 
     if (res.issues.length === 0) {
       console.log(`✓ OK (vollständig konform mit Illustrationen)`);
@@ -263,6 +308,11 @@ function main() {
       res.issues.forEach(iss => {
         const prefix = iss.slideNum > 0 ? `  - [Folie ${iss.slideNum}]` : `  - [Allgemein]`;
         console.log(`    ${prefix} ${iss.message}`);
+      });
+    }
+    if (res.warnings && res.warnings.length > 0) {
+      res.warnings.forEach(w => {
+        console.log(`    ⚠ [Zeitbudget] ${w.message}`);
       });
     }
   }

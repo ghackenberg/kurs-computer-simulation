@@ -52,6 +52,21 @@ Präsentation der Hausübung aus Termin 03 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ---
 
+### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+
+In den letzten beiden Terminen haben wir die Fundamente der 2D-Grafik selbst programmiert:
+
+- **Termin 02 – Raw-Pixel-Grafik (`WriteableBitmap`):**
+  - Direkte Manipulation von 32-Bit-Farbwerten (`uint[]`) im Arbeitsspeicher.
+  - **Stärke:** Extrem schnell für flächige 2D-Rasterfelder (z.B. Wärmebild der FDM-Simulation).
+  - **Grenze:** Kennt weder physikalische Einheiten noch Linien, Achsen oder Beschriftungen.
+- **Termin 03 – 2D-Vektorgrafik (`WPF Canvas` & `DrawingVisual`):**
+  - Eigene Koordinatentransformation (Welt $\leftrightarrow$ Screen) für Stäbe, Knoten und Kraftpfeile.
+  - **Stärke:** Maßstabsgetreue Geometriedarstellung von Maschinen, Trägern und Anlagen.
+  - **Grenze:** Für ein wissenschaftliches Diagramm müssten wir Achsen, Zahlen-Ticks, Gitterlinien, Legenden und Auto-Scaling komplett von Hand programmieren!
+
+---
+
 <!-- Platzhalter für Abschnittsbildbeschreibung -->
 
 ![bg right](./Illustrationen/Abschnitt_1.jpg)
@@ -65,21 +80,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Warum Diagramme und Graphen in der Simulationstechnik unverzichtbar sind
 - Welche Aufgaben `ScottPlot 5` und `MSAGL` übernehmen
 - Blick unter die Haube: Vektor-Primitive vs. Raw-Pixel-Backends
-
----
-
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
-
-In den letzten beiden Terminen haben wir die Fundamente der 2D-Grafik selbst programmiert:
-
-- **Termin 02 – Raw-Pixel-Grafik (`WriteableBitmap`):**
-  - Direkte Manipulation von 32-Bit-Farbwerten (`uint[]`) im Arbeitsspeicher.
-  - **Stärke:** Extrem schnell für flächige 2D-Rasterfelder (z.B. Wärmebild der FDM-Simulation).
-  - **Grenze:** Kennt weder physikalische Einheiten noch Linien, Achsen oder Beschriftungen.
-- **Termin 03 – 2D-Vektorgrafik (`WPF Canvas` & `DrawingVisual`):**
-  - Eigene Koordinatentransformation (Welt $\leftrightarrow$ Screen) für Stäbe, Knoten und Kraftpfeile.
-  - **Stärke:** Maßstabsgetreue Geometriedarstellung von Maschinen, Trägern und Anlagen.
-  - **Grenze:** Für ein wissenschaftliches Diagramm müssten wir Achsen, Zahlen-Ticks, Gitterlinien, Legenden und Auto-Scaling komplett von Hand programmieren!
 
 ---
 

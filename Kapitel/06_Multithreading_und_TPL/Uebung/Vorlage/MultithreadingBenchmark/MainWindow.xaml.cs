@@ -81,10 +81,8 @@ namespace MultithreadingBenchmark
 
         private void SliderThreads_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (TxtThreads != null)
-            {
-                TxtThreads.Text = ((int)SliderThreads.Value).ToString();
-            }
+            if (!IsLoaded || TxtThreads == null) return;
+            TxtThreads.Text = ((int)SliderThreads.Value).ToString();
         }
 
         private void ParticleImage_MouseDown(object sender, MouseButtonEventArgs e)
@@ -177,7 +175,6 @@ namespace MultithreadingBenchmark
         {
             // TODO [Stufe 1 - Aufgabe 1.2]:
             // Lösen Sie hier den kooperativen Abbruch über _cts?.Cancel() aus!
-            _cts?.Cancel();
         }
 
         private void BtnRunScaling_Click(object sender, RoutedEventArgs e)

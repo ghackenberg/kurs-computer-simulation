@@ -40,9 +40,9 @@ Lies vor Beginn jedes Reviews einer Einheit $k$:
 
 ### Dimension 2: Chronologische, Kausale & Horizontale Integrität (Makro-Dramaturgie)
 *(Detailregeln siehe [`lehrkonzept-und-didaktik`](../lehrkonzept-und-didaktik/SKILL.md) & [`vorlesungsfolien`](../vorlesungsfolien/SKILL.md))*
-- [ ] **Netto-Zeitbudget:** Passt der Folienumfang in die Netto-Vorlesungszeit nach Abzug von Showcase, Pause und ggf. Quiz (z. B. **40–48 Folien** für 100–115 Min. netto)?
+- [ ] **Netto-Zeitbudget:** Passt der Folienumfang gemäß [`vorlesungsfolien`](../vorlesungsfolien/SKILL.md) ins gewichtete Netto-Zeitbudget (115 Min. ohne Quiz / 100 Min. mit Quiz; 15 Min. Showcase)?
 - [ ] **Rückwärts-Kausalität & Vorgreif-Sperre:** Prüfen Showcase und Quiz zu Beginn von Termin $k$ ausschließlich die Vor-Termine $1 \dots k-1$, und werden nirgendwo Konzepte/Bibliotheken aus späteren Kapiteln ($> k$) vorweggenommen?
-- [ ] **Pflicht-Folie `### Rückblick & Brücke: ...`:** Besitzt Abschnitt `N.1` direkt zu Beginn die Brückenfolie mit Rückblick, Engpass-Motivation und Semester-Einordnung?
+- [ ] **Pflicht-Folie `### Rückblick & Brücke: ...`:** Steht in Kapiteln `01`–`10` direkt **vor** dem ersten Abschnitt (`## N.1:`) und **nach** den optionalen Quiz-/Showcase-Folien die Brückenfolie mit Rückblick, Engpass-Motivation und Semester-Einordnung?
 - [ ] **Nachbar- & Fern-Schnittstellen-Konsistenz:** Stimmen mathematische Symbole, Koordinatenkonventionen und Datenformate zu 100 % mit allen laut Matrix (`Konzept/02_*.md` & Termin-Steckbrief) gekoppelten Einheiten ($k \pm 1$ sowie $m \neq k \pm 1$) überein, inkl. expliziter Callbacks/Foreshadowings?
 
 ### Dimension 3: Fachdidaktik & Einfache Erklärbarkeit im Hörsaal (Mikro-Dramaturgie)

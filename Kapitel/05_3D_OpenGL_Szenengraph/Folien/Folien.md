@@ -51,6 +51,19 @@ Zu Beginn (15 Min.): **Moodle-Test 2** (Kapitel 03 & 04) – danach **Live-Showc
 
 ---
 
+### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+
+In **Termin 02 bis 04** haben wir die 2D-Welt gemeistert (Pixelraster, 2D-Vektor-Canvas, Echtzeit-Diagramme mit `ScottPlot 5`) – wo stoßen 2D-Ansichten an ihre Grenzen?
+
+- **Konventions-Brücke T03 $\leftrightarrow$ T05 (2D-WPF-Canvas vs. 3D-OpenGL):**
+  - Statt des **linkshändigen 2D-WPF-Canvas** aus T03 (`+X` rechts, **`+Y` unten**) nutzt OpenGL ein **rechtshändiges 3D-Koordinatensystem (`+X` rechts, `+Y` oben, `+Z` zum Betrachter)** – Eselsbrücke *Rechte Hand*: Daumen `+X`, Zeigefinger `+Y`, Mittelfinger `+Z`!
+- **Der Engpass heute (Räumliche Kinematik & Verdeckung):**
+  - Ein mehrachsiger Industrieroboter bewegt sich im **3D-Raum $(x, y, z)$**: Bauteile verdecken sich gegenseitig, Perspektive verkürzt Längen und Gelenke rotieren um Raumachsen (Z-Buffer, Beleuchtung & $4\times 4$-Matrix-Stacks nötig!).
+- **Halbzeit-Meilenstein (Abschluss des Visualisierungs-Blocks T02–T05):**
+  - Mit `SharpGL` komplettieren wir heute unsere 4 Visualisierungs-Säulen, bevor ab Termin 06 (Multithreading) und Termin 07–10 die Systemmodellierung & Gleichungslöser starten.
+
+---
+
 ![bg right](./Illustrationen/Abschnitt_1.jpg)
 
 ## 5.1: Grundlagen der 3D-Visualisierung mit OpenGL
@@ -62,19 +75,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Verwendung von Buffern (Farbpuffer & Z-Buffer-Tiefenprüfung)
 - Phong-Beleuchtungsmodell und Schattierungsarten (Flat vs. Smooth)
 - Transformations-Pipeline und Projektionsarten (`glOrtho` vs. `gluPerspective`)
-
----
-
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
-
-In **Termin 02 bis 04** haben wir die 2D-Welt gemeistert (Pixelraster, 2D-Vektor-Canvas, Echtzeit-Diagramme mit `ScottPlot 5`) – wo stoßen 2D-Ansichten an ihre Grenzen?
-
-- **Konventions-Brücke T03 $\leftrightarrow$ T05 (2D-WPF-Canvas vs. 3D-OpenGL):**
-  - Statt des **linkshändigen 2D-WPF-Canvas** aus T03 (`+X` rechts, **`+Y` unten**) nutzt OpenGL ein **rechtshändiges 3D-Koordinatensystem (`+X` rechts, `+Y` oben, `+Z` zum Betrachter)** – Eselsbrücke *Rechte Hand*: Daumen `+X`, Zeigefinger `+Y`, Mittelfinger `+Z`!
-- **Der Engpass heute (Räumliche Kinematik & Verdeckung):**
-  - Ein mehrachsiger Industrieroboter bewegt sich im **3D-Raum $(x, y, z)$**: Bauteile verdecken sich gegenseitig, Perspektive verkürzt Längen und Gelenke rotieren um Raumachsen (Z-Buffer, Beleuchtung & $4\times 4$-Matrix-Stacks nötig!).
-- **Halbzeit-Meilenstein (Abschluss des Visualisierungs-Blocks T02–T05):**
-  - Mit `SharpGL` komplettieren wir heute unsere 4 Visualisierungs-Säulen, bevor ab Termin 06 (Multithreading) und Termin 07–10 die Systemmodellierung & Gleichungslöser starten.
 
 ---
 

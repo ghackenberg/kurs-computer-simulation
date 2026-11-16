@@ -58,19 +58,6 @@ Präsentation der Hausübung aus Termin 08 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_1.jpg)
-
-## 9.1: Grundlagen und Konzepte
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- **Brücke zu Termin 08:** Warum Zeitschritt-Solver bei Logistik versagen
-- **Definition** diskreter dynamischer Modelle
-- **Abgrenzung** zu kontinuierlichen Modellen
-- **Typische Anwendungsbeispiele** wie Warteschlangensysteme
-
----
-
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
 In **Termin 08** haben wir kontinuierliche Systeme (Motoren, Regelkreise) mit festen Zeitschritten $\Delta t = 1\,\text{ms}$ integriert – warum scheitert dieser Ansatz bei einer ganzen Fabrik oder Lackierstraße?
@@ -82,6 +69,19 @@ In **Termin 08** haben wir kontinuierliche Systeme (Motoren, Regelkreise) mit fe
   - Ein kontinuierlicher $\Delta t$-Solver würde Millionen nutzloser Leerschritte rechnen und den exakten Ereigniszeitpunkt trotzdem verfehlen!
 - **Einordnung ins große Ganze (3. Modellart: Discrete Event Simulation):**
   - Statt die Zeit in feste Scheiben $\Delta t$ zu schneiden, springen wir heute über eine **Ereignis-Warteschlange (`PriorityQueue`)** direkt von Ereignis zu Ereignis und koppeln dies mit **Monte-Carlo-Simulationsläufen** (Parallelisierung aus Termin 06!).
+
+---
+
+![bg right](./Illustrationen/Abschnitt_1.jpg)
+
+## 9.1: Grundlagen und Konzepte
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- **Brücke zu Termin 08:** Warum Zeitschritt-Solver bei Logistik versagen
+- **Definition** diskreter dynamischer Modelle
+- **Abgrenzung** zu kontinuierlichen Modellen
+- **Typische Anwendungsbeispiele** wie Warteschlangensysteme
 
 ---
 

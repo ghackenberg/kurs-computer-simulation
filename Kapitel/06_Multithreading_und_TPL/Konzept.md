@@ -21,10 +21,10 @@
 
 ## 3. Zweistufige Hausübung (`Einheit 06`) & Showcase-Fokus
 - **Stufe 1 – Basisaufgabe (`1.1`–`1.4`):**
-  - `1.1`: Datenparallelen Partikelschritt (`StepParallel`) mit `Parallel.For` und `MaxDegreeOfParallelism` implementieren.
-  - `1.2`: UI-Freeze durch Auslagerung in `Task.Run` mit gedrosseltem `IProgress<T>` und kooperativem `CancellationTokenSource` beheben.
-  - `1.3`: Automatisierte Kernskalierungsreihe ($p = 1 \dots P_{\max}$) mit JIT-Warmup und Amdahl-Berechnung aufbauen.
-  - `1.4`: Bitweise/numerische Übereinstimmung zwischen `StepSerial` und `StepParallel` via `dotnet test` nachweisen.
+  - `1.1`: UI-Freeze in `BtnStart_Click` beheben – Simulationsschleife asynchron via `async/await` und `Task.Run` auslagern sowie Zwischenstände gedrosselt über `IProgress<SimulationProgress>` melden.
+  - `1.2`: Kooperativen Not-Aus mit `CancellationTokenSource` (`_cts`), `BtnCancel_Click` und sauberer `OperationCanceledException`-Behandlung umsetzen.
+  - `1.3`: Amdahl-Skalierungsreihe ($1 \dots P_{\max}$ Kerne) in `BtnRunScaling_Click` asynchron über `await Task.Run(...)` ausführen und Speedup $S(p)$ / Effizienz $E(p)$ auswerten.
+  - `1.4`: Automatisierte Unit-Test-Verifikation (`dotnet test` auf `ThreadingTests.cs`: `StepSequential` vs. `StepParallel` sowie Amdahl-Referenzwerte).
 - **Stufe 2 – Wahlmodell (10 Pkt.):**
   - **Track A (`A.1`–`A.4` – Parallele Monte-Carlo-Toleranzanalyse):** Maßkettenrechnung für $10^7$ Getriebewellen-Baugruppen (Box-Muller), Thread-lokale Reduktion vs. `Interlocked` vs. `lock` und Amdahl-Parameterfit für den seriellen Anteil $1 - f_{\text{par}}$.
   - **Track B (`B.1`–`B.4` – 100.000 Boids / Zombie-Horde):** Hochparalleler 2D-Schwarm-Benchmark mit strikter Read/Write-Puffertrennung (`stateRead` $\to$ `stateWrite`), Kernskalierung und experimentellem Nachweis von *False Sharing* (`long[p]` vs. `long[p * 16]`).
