@@ -7,11 +7,12 @@ paginate: true
 math: mathjax
 ---
 
+<!-- _class: title -->
 <!-- _paginate: false -->
 <!-- _header: "" -->
 <!-- _footer: "" -->
 
-![bg right](./Titelbild.jpg)
+![bg](./Titelbild.jpg)
 
 # Kapitel 6: Multithreading & Parallele Simulation
 
@@ -79,7 +80,7 @@ In **Termin 02 bis 05** haben wir leistungsfähige 2D- und 3D-Oberflächen gebau
 
 ## 6.1: Grundlagen: Prozesse, Threads & Skalierung
 
-![bg right](./Illustrationen/Abschnitt_1.jpg)
+![bg](./Illustrationen/Abschnitt_1.jpg)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -229,7 +230,7 @@ $$S(p) = \frac{1}{s + \frac{1 - s}{p}}, \qquad S_{\max} = \lim_{p \to \infty} S(
 
 ## 6.2: Task Parallel Library (`Parallel.For` & `ConcurrentBag<T>`)
 
-![bg right](./Illustrationen/Abschnitt_2.jpg)
+![bg](./Illustrationen/Abschnitt_2.jpg)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -355,7 +356,7 @@ Parallel.For(0, 1000, i =>
 
 ## 6.3: Synchronisation, Cache-Effizienz & Zufallszahlen
 
-![bg right](./Illustrationen/Abschnitt_3.jpg)
+![bg](./Illustrationen/Abschnitt_3.jpg)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -529,7 +530,7 @@ Parallel.For(0, numberOfRuns, i =>
 
 ## 6.4: Asynchrone WPF-Entkopplung (`Task.Run` & Architektur)
 
-![bg right](./Illustrationen/Abschnitt_4.jpg)
+![bg](./Illustrationen/Abschnitt_4.jpg)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
@@ -673,7 +674,7 @@ await Task.Run(() =>
 
 ## 6.5: Fortschritt & Abbruch (`IProgress<T>` & `CancellationToken`)
 
-![bg right](./Illustrationen/Abschnitt_5.jpg)
+![bg](./Illustrationen/Abschnitt_5.jpg)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 

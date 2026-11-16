@@ -192,8 +192,8 @@ function lintSectionDeck(markdownPath) {
       const kapNr = chapterMatch[1];
       const kapTitle = chapterMatch[2].trim();
 
-      // Background check
-      const bgMatch = slide.match(/!\[bg\s+right[^\]]*\]\(([^)]+)\)/i);
+      // Background check (erlaubt '![bg right](...)' und Full-Bleed '![bg](...)')
+      const bgMatch = slide.match(/!\[bg(?:\s+right)?[^\]]*\]\(([^)]+)\)/i);
       if (!bgMatch) {
         issues.push({
           slideNum,
@@ -250,8 +250,8 @@ function lintSectionDeck(markdownPath) {
         secTitle
       });
 
-      // Background check
-      const bgMatch = slide.match(/!\[bg\s+right[^\]]*\]\(([^)]+)\)/i);
+      // Background check (erlaubt '![bg right](...)' und Full-Bleed '![bg](...)')
+      const bgMatch = slide.match(/!\[bg(?:\s+right)?[^\]]*\]\(([^)]+)\)/i);
       if (!bgMatch) {
         issues.push({
           slideNum,

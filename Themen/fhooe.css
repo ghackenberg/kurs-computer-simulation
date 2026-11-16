@@ -325,3 +325,35 @@ section.showcase div.columns > div > ul:last-child,
 section.homework div.columns > div > ul:last-child {
     margin-bottom: 0;
 }
+
+/* Full-Bleed Hintergrundbilder (![bg](...) ohne right-Split): Textbreite & Typografie ohne CSS-Scrim */
+section.title[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) {
+    color: #f1f5f9;
+}
+section.title[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) h1,
+section.title[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) h2,
+section.title[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) h3 {
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    max-width: 50%;
+}
+section.title[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) p,
+section.title[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) ul,
+section.title[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) ol {
+    color: #e2e8f0;
+    max-width: 50%;
+}
+section.title[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) li {
+    color: #e2e8f0;
+}
+section.title[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) code {
+    background-color: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+}
+
+section:not(.title)[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) h2,
+section:not(.title)[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) p,
+section:not(.title)[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) ul,
+section:not(.title)[data-marpit-advanced-background="content"]:not([data-marpit-advanced-background-split]) ol {
+    max-width: 50%;
+}
