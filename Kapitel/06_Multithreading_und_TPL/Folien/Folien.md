@@ -266,6 +266,14 @@ Parallel.For(0, n, opts, i => Step(i));
 
 ---
 
+### Blick unter die Haube: Chunk-Partitionierung & Granularität
+
+Ist eine Iteration zu fein, frisst ThreadPool-Overhead (Rot) die Nutzarbeit (Blau) auf – grobe Range-Chunks (z. B. $25\,000$ Partikel, gesteuert über `MaxDegreeOfParallelism`) liefern $S(4) \approx 3{,}8\times$ ($95\,\%$ Effizienz)!
+
+![](./Diagramme/TPL_Chunk_Granularitaet.svg)
+
+---
+
 ### Threadsichere Sammlungen: `ConcurrentBag<T>`
 
 Wenn mehrere Threads gleichzeitig auf eine Standard-Collection wie `List<T>` schreibend zugreifen, führt dies unweigerlich zu Ausnahmen oder unbemerktem Datenverlust.
@@ -559,27 +567,9 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ### Thread-sichere UI-Aktualisierung: `IProgress<T>`
 
-Der Hintergrund-Worker darf **nicht** direkt auf UI-Elemente zugreifen (`InvalidOperationException: Der aufrufende Thread kann nicht auf dieses Objekt zugreifen...`).
+`Dispatcher.Invoke` blockiert den Worker synchron (und koppelt an WPF), während `IProgress<T>` mit `Progress<T>` und gedrosseltem `progress.Report(...)` asynchron über den `SynchronizationContext` in den UI-Thread marshallt:
 
-<div class="columns top">
-<div class="one">
-
-**Warum kein unbedachtes `Dispatcher.Invoke`?**
-- `Dispatcher.Invoke` blockiert den Worker synchron bis das UI zeichnet $\to$ Performanceverlust & Deadlock-Gefahr.
-- Koppelt die Simulationslogik fest an WPF-Klassen (keine Wiederverwendbarkeit in CLI/Tests).
-
-</div>
-<div class="one">
-
-**Best Practice: `IProgress<T>` & `Progress<T>`**
-- `Progress<T>` erfasst bei Instanziierung den `SynchronizationContext` des UI-Threads.
-- `progress.Report(...)` ist nicht-blockierend und ruft den Callback automatisch im UI-Thread auf.
-- Simulationslogik bleibt unabhängig von WPF!
-
-</div>
-</div>
-
-> **Wichtig (Drosselung):** Rufen Sie `progress.Report(...)` nicht in jedem einzelnen Rechenschritt auf, sondern z. B. nur alle 5 Schritte (oder alle $16\,\text{ms}$) – sonst überflutet man die UI-Message-Queue!
+![](./Diagramme/IProgress_vs_Dispatcher_Kontrast.svg)
 
 ---
 

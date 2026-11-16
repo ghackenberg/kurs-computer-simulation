@@ -26,9 +26,11 @@
  *    - Keine zwei reinen Textfolien (ohne Grafik/SVG und ohne Code) direkt hintereinander
  *    - Signifikanter visueller Shift zwischen Nachbarfolien (Spaltenbreiten, Text-/Bild-/Code-/Mischspalten, mehrzeilige Layouts)
  *
- * 5. Abschnitts-Balance (ab Kap. 06 als Fehler, Kap. 00-05 als Warnung):
+ * 5. Abschnitts-Balance & visuelle Verankerung (ab Kap. 06 als Fehler, Kap. 00-05 als Warnung):
  *    - Jeder Abschnitt muss mindestens 2 Inhaltsfolien besitzen (SECTION_TOO_SMALL)
  *    - Ausgewogene Abschnittsgrößen: max. Verhältnis 2:1 bei Differenz > 2 (UNBALANCED_SECTIONS)
+ *    - Jeder Abschnitt braucht mindestens 1 Inhalts-Grafik/SVG (SECTION_MISSING_VISUAL)
+ *    - Maximal 3 Inhaltsfolien in Folge ohne Grafik/SVG (CONSECUTIVE_NON_VISUAL_SLIDES)
  *
  * 6. Didaktische Folienklassen (MISSING_SLIDE_CLASS) & Ausblicksfolie (MISSING_OUTLOOK_SLIDE):
  *    - Showcase -> <!-- _class: showcase -->
@@ -168,6 +170,7 @@ function lintSectionDeck(markdownPath) {
   let contentSlideCount = 0;
   let prevContentLayout = null;
   let prevSlideNum = 0;
+  let nonVisualStreak = 0;
   const chapNumMatchEarly = deckName.match(/^(\d+)_/);
   const chapNumEarly = chapNumMatchEarly ? parseInt(chapNumMatchEarly[1], 10) : -1;
   const strictRhythm = chapNumEarly >= 6;
@@ -354,8 +357,22 @@ function lintSectionDeck(markdownPath) {
     const layout = classifySlideLayout(slide);
     if (layout.isOpener) {
       prevContentLayout = null;
+      nonVisualStreak = 0;
     } else {
       const targetArr = strictRhythm ? issues : warnings;
+      const hasVisual = /!\[[^\]]*\]\([^)]+\)/.test(slide);
+      if (hasVisual) {
+        nonVisualStreak = 0;
+      } else {
+        nonVisualStreak++;
+        if (nonVisualStreak > 3) {
+          targetArr.push({
+            slideNum,
+            type: 'CONSECUTIVE_NON_VISUAL_SLIDES',
+            message: `Mehr als 3 Inhaltsfolien in Folge ohne Grafik/SVG (Folie ${slideNum} ist die ${nonVisualStreak}. Folie ohne Bild).`
+          });
+        }
+      }
       if (prevContentLayout) {
         if (prevContentLayout.isPureText && layout.isPureText) {
           targetArr.push({
@@ -450,7 +467,9 @@ function lintSectionDeck(markdownPath) {
     const secCounts = actualSectionSlides.map((sec, idx) => {
       const nextSlideNum = idx + 1 < actualSectionSlides.length ? actualSectionSlides[idx + 1].slideNum : endBound;
       const contentCount = Math.max(0, nextSlideNum - sec.slideNum - 1);
-      return { ...sec, contentCount };
+      const secSlides = slides.slice(sec.slideNum, nextSlideNum - 1);
+      const hasVisual = secSlides.some(sl => /!\[[^\]]*\]\([^)]+\)/.test(sl));
+      return { ...sec, contentCount, hasVisual };
     });
 
     const targetArr = strictRhythm ? issues : warnings;
@@ -460,6 +479,13 @@ function lintSectionDeck(markdownPath) {
           slideNum: sc.slideNum,
           type: 'SECTION_TOO_SMALL',
           message: `Abschnitt ${sc.secNum} [${sc.secTitle}] hat nur ${sc.contentCount} Inhaltsfolie(n) (mindestens 2 erforderlich).`
+        });
+      }
+      if (!sc.hasVisual) {
+        targetArr.push({
+          slideNum: sc.slideNum,
+          type: 'SECTION_MISSING_VISUAL',
+          message: `Abschnitt ${sc.secNum} [${sc.secTitle}] enthält keine Inhalts-Grafik/SVG.`
         });
       }
     });
