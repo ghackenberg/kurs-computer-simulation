@@ -58,7 +58,7 @@ Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: recap -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1101,7 +1101,7 @@ Vector<double> fp = kpf.Multiply(uf); // Auflagerreaktionskräfte
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: outlook -->
 
 ### Ausblick: Vom Gleichgewicht zur Bewegung (Termin 08)
 

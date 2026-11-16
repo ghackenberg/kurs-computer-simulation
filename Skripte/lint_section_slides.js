@@ -304,7 +304,7 @@ function lintSectionDeck(markdownPath) {
       }
     }
 
-    // 3b. Didaktische Folienklasse prüfen (<!-- _class: showcase|bridge|summary|homework -->)
+    // 3b. Didaktische Folienklasse prüfen (<!-- _class: showcase|recap|outlook|summary|homework -->)
     const classMatch = slide.match(/<!--\s*_class:\s*([a-z0-9_-]+)\s*-->/i);
     const slideClass = classMatch ? classMatch[1].toLowerCase() : null;
     if (/###\s+.*Live-Showcase/i.test(slide) && slideClass !== 'showcase') {
@@ -313,17 +313,17 @@ function lintSectionDeck(markdownPath) {
         type: 'MISSING_SLIDE_CLASS',
         message: `Showcase-Folie fehlt '<!-- _class: showcase -->'.`
       });
-    } else if (/###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(slide) && slideClass !== 'bridge') {
+    } else if (/###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(slide) && slideClass !== 'recap') {
       issues.push({
         slideNum,
         type: 'MISSING_SLIDE_CLASS',
-        message: `Brückenfolie fehlt '<!-- _class: bridge -->'.`
+        message: `Brückenfolie fehlt '<!-- _class: recap -->'.`
       });
-    } else if (/^#{1,3}\s+Ausblick\b/im.test(slide) && slideClass !== 'bridge') {
+    } else if (/^#{1,3}\s+Ausblick\b/im.test(slide) && slideClass !== 'outlook') {
       issues.push({
         slideNum,
         type: 'MISSING_SLIDE_CLASS',
-        message: `Ausblicksfolie fehlt '<!-- _class: bridge -->'.`
+        message: `Ausblicksfolie fehlt '<!-- _class: outlook -->'.`
       });
     } else if (/^#{1,3}\s+Zusammenfassung/im.test(slide) && slideClass !== 'summary') {
       issues.push({
@@ -494,7 +494,7 @@ function lintSectionDeck(markdownPath) {
         issues.push({
           slideNum: hwIdx + 1,
           type: 'MISSING_OUTLOOK_SLIDE',
-          message: `Zwischen Zusammenfassung und Hausübung in Kapitel ${chapNum} fehlt eine Ausblicksfolie ('### Ausblick: ...' mit '<!-- _class: bridge -->').`
+          message: `Zwischen Zusammenfassung und Hausübung in Kapitel ${chapNum} fehlt eine Ausblicksfolie ('### Ausblick: ...' mit '<!-- _class: outlook -->').`
         });
       }
     }
@@ -553,7 +553,7 @@ function lintSectionDeck(markdownPath) {
         issues.push({
           slideNum: hwIdx + 1,
           type: 'MISSING_OUTLOOK_SLIDE',
-          message: `Zwischen Zusammenfassung und Hausübung in Kapitel ${chapNum} fehlt eine Ausblicksfolie ('### Ausblick: ...' mit '<!-- _class: bridge -->').`
+          message: `Zwischen Zusammenfassung und Hausübung in Kapitel ${chapNum} fehlt eine Ausblicksfolie ('### Ausblick: ...' mit '<!-- _class: outlook -->').`
         });
       }
     }

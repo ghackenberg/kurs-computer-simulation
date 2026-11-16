@@ -54,7 +54,7 @@ Präsentation der Hausübung aus Termin 03 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: recap -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1433,7 +1433,7 @@ GraphControl.Graph     = graph;
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: outlook -->
 
 ### Ausblick: Automatisches Layout (`MSAGL`) vs. Node-Editor (`Nodify`)
 

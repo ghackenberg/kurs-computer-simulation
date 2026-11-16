@@ -10,6 +10,56 @@
 
 const fs = require('fs');
 const path = require('path');
+const { loadPalette, syncSvgContent, START_MARKER } = require('./sync_svg_palette');
+
+let SVG_PALETTE = null;
+try { SVG_PALETTE = loadPalette(); } catch (e) {}
+
+function checkSemanticPalette(svgPath) {
+  if (!SVG_PALETTE) return [];
+  const raw = fs.readFileSync(svgPath, 'utf8');
+  const paletteIssues = [];
+  const unknownClasses = new Set();
+  let usesSemantic = raw.includes(START_MARKER);
+
+  const classAttrRegex = /class\s*=\s*["']([^"']+)["']/g;
+  let m;
+  while ((m = classAttrRegex.exec(raw)) !== null) {
+    for (const token of m[1].split(/\s+/)) {
+      if (!token.startsWith('sem-')) continue;
+      usesSemantic = true;
+      const base = token.replace(/-(stroke|text)$/, '');
+      if (!SVG_PALETTE.roles[base]) unknownClasses.add(token);
+    }
+  }
+
+  for (const cls of unknownClasses) {
+    paletteIssues.push({
+      type: 'UNKNOWN_SEMANTIC_CLASS',
+      message: `Unbekannte semantische SVG-Klasse '.${cls}' (nicht in Themen/svg_palette.json definiert).`
+    });
+  }
+
+  if (usesSemantic) {
+    if (syncSvgContent(raw, SVG_PALETTE).changed) {
+      paletteIssues.push({
+        type: 'STALE_SVG_PALETTE',
+        message: `SVG-Farbklassen sind nicht synchron mit Themen/svg_palette.json ('npm run sync:svg-palette' ausführen).`
+      });
+    }
+    const withoutManaged = raw.replace(/\/\*\s*@svg-palette:start\s*\*\/[\s\S]*?\/\*\s*@svg-palette:end\s*\*\//g, '');
+    const colorMatches = withoutManaged.match(/(?:fill|stroke|color)\s*[:=]\s*["']?\s*(#[0-9a-fA-F]{3,8}|(?:rgb|hsl|oklch|oklab)\([^)]+\))/gi) || [];
+    const forbidden = colorMatches.filter(c => !/#(?:fff(?:fff)?|000(?:000)?)\b/i.test(c));
+    if (forbidden.length > 0) {
+      paletteIssues.push({
+        type: 'HARDCODED_SVG_COLOR',
+        message: `Hartcodierte Farbe(n) trotz semantischer Palette gefunden (${forbidden.slice(0, 3).join(', ')}). Bitte sem-* Klassen aus Themen/svg_palette.json nutzen.`
+      });
+    }
+  }
+
+  return paletteIssues;
+}
 
 const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const PUPPETEER_PATH = path.join(process.env.APPDATA || 'C:/Users/P28500/AppData/Roaming', 'npm/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer');
@@ -621,6 +671,11 @@ async function auditSvgFile(browser, svgPath, options = {}) {
   }
 
   await page.close();
+
+  const paletteIssues = checkSemanticPalette(svgPath);
+  if (paletteIssues.length > 0 && Array.isArray(analysis.issues)) {
+    analysis.issues.push(...paletteIssues);
+  }
 
   return {
     path: svgPath,

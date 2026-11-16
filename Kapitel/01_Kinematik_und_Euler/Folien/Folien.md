@@ -26,7 +26,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: recap -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -753,7 +753,7 @@ Der Digitale Zwilling verbindet die Simulation nahtlos über alle drei Lebenszyk
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: outlook -->
 
 ### Ausblick auf die Kursinhalte
 

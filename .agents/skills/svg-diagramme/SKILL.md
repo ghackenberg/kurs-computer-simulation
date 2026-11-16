@@ -33,12 +33,11 @@ Verbindliche Gestaltungs-, Typografie- und Prüfregeln für SVG-Illustrationen i
    - Wo eine Reihenfolge, Speicheranordnung oder ein numerischer Fehler erklärt wird, stelle beide Fälle nebeneinander in einem Kontrast-SVG gegenüber.
 3. **Keine eingebauten Text-Sidebars („Poster-SVGs“):**
    - Erklärender Fließtext, Aufzählungslisten und mehrtermige Formeln gehören als echtes Markdown/MathJax in eine eigene MARP-Spalte (`<div class="columns">`), **nicht** als Textbox-Sidebar neben das Diagramm ins SVG (außer wenn ausdrücklich gewünscht). Im SVG stehen nur Achsen, Kurven, kurze Labels und konkrete Zahlenwerte.
-3. **Einheitliche Farbsemantik:**
-   - **Blau (`#eff6ff` Füllung, `#2563eb` Rahmen, `#1e40af` Text):** Aktiver Datenpfad, reguläre Schritte.
-   - **Grün (`#f0fdf4` / `#dcfce7` Füllung, `#16a34a` Rahmen, `#15803d` Text):** Zieltreffer, korrekter Pfad, Optimierungserfolg.
-   - **Gelb/Amber (`#fffbeb` / `#fef3c7` Füllung, `#d97706` Rahmen, `#b45309` Text):** Aktuell geprüfter Index / Zwischenzustand.
-   - **Rot (`#fef2f2` / `#fee2e2` Füllung, `#dc2626` Rahmen, `#991b1b` Text):** Fehlerfall, ausgeschlossener Bereich, Engpass.
-   - **Grau (`#e2e8f0` Füllung, `#94a3b8` Text):** Ignorierte oder bereits verarbeitete Elemente.
+3. **Einheitliche, zentrale Farbsemantik (`Themen/svg_palette.json`):**
+   - **Keine hartcodierten Hex-/RGB-Farben in neuen oder überarbeiteten SVGs!** Nutze stattdessen ausschließlich die semantischen CSS-Klassen aus [`Themen/svg_palette.json`](../../../Themen/svg_palette.json) (Single Source of Truth für Skill, Linter und Sync-Skript):
+     - Je Rolle `<role>` stehen `.sem-<role>` (`fill` + `stroke`), `.sem-<role>-stroke` und `.sem-<role>-text` zur Verfügung (Standardrollen: `sem-primary`, `sem-success`, `sem-warning`, `sem-danger`, `sem-muted`, `sem-neutral` – exakte Liste & Bedeutung immer direkt in `Themen/svg_palette.json` nachsehen).
+     - **Neue semantische Rollen:** Reichen die vorhandenen Rollen für ein Diagramm nicht aus, darfst du eine neue semantische Rolle (ohne Farbnamen, z. B. `sem-highlight` oder `sem-accent-2`) in `Themen/svg_palette.json` ergänzen.
+     - **Pflicht-Synchronisation:** Nach dem Anlegen/Ändern von SVGs oder `Themen/svg_palette.json` immer `npm run sync:svg-palette` ausführen; `npm run lint:svg` prüft automatisch auf unbekannte Klassen, veraltete Paletten-Blöcke und hartcodierte Farben.
 4. **Variablen- & Geometrie-Synchronität (`npm run lint:variables`):**
    - Alle alleinstehenden mathematischen Symbole oder `Consolas`-Bezeichner im SVG müssen exakt mit den Bezeichnern im Folientext übereinstimmen.
    - **Vollständige kinematische & trigonometrische Konstruktion:** Bei kinematischen Ketten oder geometrischen Herleitungen müssen (a) alle Teil-Transformationen ($\mathbf{T}, \mathbf{R}$) als Pfeile/Drehbögen entlang der Kette und (b) in analytischen Skizzen sowohl Einzel-/Relativwinkel (z. B. $\theta_1, \theta_2$) als auch Summenwinkel (z. B. $\theta_1 + \theta_2$ gegen eine gestrichelte Parallel-Hilfslinie) explizit eingezeichnet sein.

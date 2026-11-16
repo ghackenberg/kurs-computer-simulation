@@ -53,7 +53,7 @@ Zu Beginn (15 Min.): **Moodle-Test 2** (Kapitel 03 & 04) – danach **Live-Showc
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: recap -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1075,7 +1075,7 @@ private void OpenGlView_MouseMove(object sender, MouseEventArgs e)
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: outlook -->
 
 ### Ausblick: Vom UI-Thread auf alle CPU-Kerne (Termin 06)
 

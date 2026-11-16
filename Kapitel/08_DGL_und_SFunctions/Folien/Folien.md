@@ -58,7 +58,7 @@ Präsentation der Hausübung aus Termin 07 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: recap -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1844,7 +1844,7 @@ while (solver.Time <= 0.6) // 600 ms Regelung
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: outlook -->
 
 ### Ausblick: Von stetigen Zeitschritten zu diskreten Ereignissen (Termin 09)
 

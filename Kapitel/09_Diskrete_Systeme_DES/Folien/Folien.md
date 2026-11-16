@@ -60,7 +60,7 @@ Präsentation der Hausübung aus Termin 08 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: recap -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1465,7 +1465,7 @@ Console.WriteLine(
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: outlook -->
 
 ![bg right:35% contain](./Illustrationen/Ausblick_Hybrid.png)
 

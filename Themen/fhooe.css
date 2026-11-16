@@ -2,8 +2,14 @@
 
 @import 'default';
 
-:root {
+:root,
+section {
     --fhooe-blue: #004B96;
+    /* Zentrale OKLCH-Farbwinkel für didaktische Highlight-Rollen */
+    --hue-frame: 252;     /* Struktur & Orientierung: recap, outlook, summary */
+    --hue-activity: 175;  /* Mitmach-Impuls: activity */
+    --hue-solution: 295;  /* Auflösung: solution */
+    --hue-homework: 65;   /* Hausübungs-Klammer: showcase, homework */
 }
 
 section {
@@ -81,11 +87,11 @@ section:not(.title):not(.lead):not([id="1"])::before {
     width: 4.5rem;
     height: 4.5rem;
 
-    background-color: var(--fhooe-blue);    
-    /* Portables SVG-Signet via Data-URI */
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='20,20 80,20 80,80 50,80 50,50 20,50' fill='white'/></svg>");
+    background-color: #64748b;    
+    /* Portables UAP-Logo via Data-URI */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 118 44' fill='white'><path d='M2 4 H10 V24 L2 32 Z'/><path d='M3.5 35.5 L11.5 27.5 C13.5 31 16.5 32.5 20 32.5 C25.5 32.5 29 29 29 22 V4 H37 V22 C37 33.5 30 40 20 40 C12.5 40 6.5 38 3.5 35.5 Z'/><path d='M40 40 L54 4 H66 L77 40 H68 L65 30 H52.5 V23 H63 L60 12 L49 40 Z'/><path d='M81 4 H100 C110.5 4 116 9.5 116 17 C116 24.5 110.5 29.5 100 29.5 H92 V22.5 H99.5 C105 22.5 107.5 20 107.5 17 C107.5 13.5 105 11 99.5 11 H89 V40 H81 Z'/></svg>");
     background-repeat: no-repeat;
-    background-size: 65%;
+    background-size: 78%;
     background-position: center;
 }
 
@@ -197,186 +203,118 @@ section.homework div.columns + blockquote {
 }
 
 section blockquote {
-    background-color: #f8fafc;
-    border-left: 4px solid var(--fhooe-blue);
+    background-color: #f1f5f9;
+    border-left: 4px solid #64748b;
     padding: 2px 12px;
     border-radius: 0 6px 6px 0;
     color: #1e293b;
     font-size: 0.94em;
 }
 
-/* Didaktische Rahmenfolien-Klassen (MARP _class) */
-section.showcase {
-    background-color: #f0f6ff;
-    box-shadow: inset 10px 0 0 0 var(--fhooe-blue);
-    color: #0f294a;
+/* Didaktische Rahmenfolien-Klassen (MARP _class) – zentrale OKLCH-Ableitung */
+section.recap,
+section.outlook,
+section.summary {
+    --slide-hue: var(--hue-frame);
 }
-section.showcase h1,
-section.showcase h2,
-section.showcase h3,
-section.showcase h4 {
-    color: #004B96;
+section.activity {
+    --slide-hue: var(--hue-activity);
 }
-section.showcase header,
-section.showcase footer,
-section.showcase blockquote {
-    color: #1e40af;
+section.solution {
+    --slide-hue: var(--hue-solution);
 }
-section.showcase blockquote {
-    border-left-color: var(--fhooe-blue);
-    background-color: #e0edff;
+section.showcase,
+section.homework {
+    --slide-hue: var(--hue-homework);
 }
-section.showcase div.columns > div {
+
+section.showcase,
+section.recap,
+section.outlook,
+section.summary,
+section.activity,
+section.solution,
+section.homework {
+    background-color: oklch(0.985 0.008 var(--slide-hue));
+    box-shadow: inset 10px 0 0 0 oklch(0.52 0.14 var(--slide-hue));
+    color: oklch(0.24 0.04 var(--slide-hue));
+}
+
+section.showcase h1, section.showcase h2, section.showcase h3, section.showcase h4,
+section.recap h1, section.recap h2, section.recap h3, section.recap h4,
+section.outlook h1, section.outlook h2, section.outlook h3, section.outlook h4,
+section.summary h1, section.summary h2, section.summary h3, section.summary h4,
+section.activity h1, section.activity h2, section.activity h3, section.activity h4,
+section.solution h1, section.solution h2, section.solution h3, section.solution h4,
+section.homework h1, section.homework h2, section.homework h3, section.homework h4 {
+    color: oklch(0.42 0.13 var(--slide-hue));
+}
+
+section.showcase header, section.showcase footer, section.showcase blockquote,
+section.recap header, section.recap footer, section.recap blockquote,
+section.outlook header, section.outlook footer, section.outlook blockquote,
+section.summary header, section.summary footer, section.summary blockquote,
+section.activity header, section.activity footer, section.activity blockquote,
+section.solution header, section.solution footer, section.solution blockquote,
+section.homework header, section.homework footer, section.homework blockquote {
+    color: oklch(0.40 0.10 var(--slide-hue));
+}
+
+section.showcase blockquote,
+section.recap blockquote,
+section.outlook blockquote,
+section.summary blockquote,
+section.activity blockquote,
+section.solution blockquote,
+section.homework blockquote {
+    border-left-color: oklch(0.52 0.14 var(--slide-hue));
+    background-color: oklch(0.955 0.022 var(--slide-hue));
+}
+
+section.showcase div.columns > div,
+section.homework div.columns > div {
     background-color: #ffffff;
-    border: 1px solid #bfdbfe;
+    border: 1px solid oklch(0.86 0.05 var(--slide-hue));
     border-radius: 10px;
     padding: 8px 14px;
     color: #1e293b;
 }
-
-section.bridge {
-    background-color: #f1f5f9;
-    box-shadow: inset 8px 0 0 0 #64748b;
-    color: #0f172a;
-}
-section.bridge h1,
-section.bridge h2,
-section.bridge h3,
-section.bridge h4 {
-    color: #1e293b;
-}
-section.bridge header,
-section.bridge footer,
-section.bridge blockquote {
-    color: #334155;
-}
-section.bridge blockquote {
-    border-left-color: #475569;
-    background-color: #e2e8f0;
-}
-
-section.summary {
-    background-color: #f0fdf4;
-    box-shadow: inset 10px 0 0 0 #16a34a;
-    color: #14532d;
-}
-section.summary h1,
-section.summary h2,
-section.summary h3,
-section.summary h4 {
-    color: #15803d;
-}
-section.summary header,
-section.summary footer,
-section.summary blockquote {
-    color: #166534;
-}
-section.summary blockquote {
-    border-left-color: #16a34a;
-    background-color: #dcfce7;
-}
-
-section.homework {
-    background-color: #fffbeb;
-    box-shadow: inset 10px 0 0 0 #d97706;
-    color: #451a03;
-}
-section.homework h1,
-section.homework h2,
-section.homework h3,
-section.homework h4 {
-    color: #b45309;
-}
-section.homework header,
-section.homework footer,
-section.homework blockquote {
-    color: #92400e;
-}
-section.homework blockquote {
-    border-left-color: #d97706;
-    background-color: #fef3c7;
-}
 section.homework div.columns > div {
-    background-color: #ffffff;
-    border: 1px solid #fde68a;
-    border-radius: 10px;
     padding: 6px 14px;
     font-size: 0.94em;
-    color: #1e293b;
-}
-
-section.activity {
-    background-color: #f0fdfa;
-    box-shadow: inset 10px 0 0 0 #0d9488;
-    color: #134e4a;
-}
-section.activity h1,
-section.activity h2,
-section.activity h3,
-section.activity h4 {
-    color: #0f766e;
-}
-section.activity header,
-section.activity footer,
-section.activity blockquote {
-    color: #115e59;
-}
-section.activity blockquote {
-    border-left-color: #0d9488;
-    background-color: #ccfbf1;
-}
-
-section.solution {
-    background-color: #f5f3ff;
-    box-shadow: inset 10px 0 0 0 #7c3aed;
-    color: #2e1065;
-}
-section.solution h1,
-section.solution h2,
-section.solution h3,
-section.solution h4 {
-    color: #5b21b6;
-}
-section.solution header,
-section.solution footer,
-section.solution blockquote {
-    color: #6d28d9;
-}
-section.solution blockquote {
-    border-left-color: #7c3aed;
-    background-color: #ede9fe;
 }
 
 /* Klassen-Icons oben rechts im 4.5rem-Badge (Spezifität > section:not(...)::before) */
-section:not(.title):not(.lead):not([id="1"]).showcase::before {
-    background-color: var(--fhooe-blue);
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><line x1='8' y1='21' x2='16' y2='21'/><line x1='12' y1='17' x2='12' y2='21'/></svg>");
+section:not(.title):not(.lead):not([id="1"]).showcase::before,
+section:not(.title):not(.lead):not([id="1"]).recap::before,
+section:not(.title):not(.lead):not([id="1"]).outlook::before,
+section:not(.title):not(.lead):not([id="1"]).activity::before,
+section:not(.title):not(.lead):not([id="1"]).solution::before,
+section:not(.title):not(.lead):not([id="1"]).summary::before,
+section:not(.title):not(.lead):not([id="1"]).homework::before {
+    background-color: oklch(0.52 0.14 var(--slide-hue));
     background-size: 55%;
 }
-section:not(.title):not(.lead):not([id="1"]).bridge::before {
-    background-color: #475569;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 18V10a8 8 0 0 1 16 0v8'/><line x1='2' y1='14' x2='22' y2='14'/><line x1='8' y1='14' x2='8' y2='18'/><line x1='16' y1='14' x2='16' y2='18'/></svg>");
-    background-size: 55%;
+section:not(.title):not(.lead):not([id="1"]).showcase::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><line x1='8' y1='21' x2='16' y2='21'/><line x1='12' y1='17' x2='12' y2='21'/></svg>");
+}
+section:not(.title):not(.lead):not([id="1"]).recap::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8'/><path d='M3 3v5h5'/><path d='M12 7v5l3 2'/></svg>");
+}
+section:not(.title):not(.lead):not([id="1"]).outlook::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><polygon points='16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76'/></svg>");
 }
 section:not(.title):not(.lead):not([id="1"]).activity::before {
-    background-color: #0d9488;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><path d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>");
-    background-size: 55%;
 }
 section:not(.title):not(.lead):not([id="1"]).solution::before {
-    background-color: #7c3aed;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M9 18h6'/><path d='M10 22h4'/><path d='M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14'/></svg>");
-    background-size: 55%;
 }
 section:not(.title):not(.lead):not([id="1"]).summary::before {
-    background-color: #16a34a;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M9 11l3 3L22 4'/><path d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'/></svg>");
-    background-size: 55%;
 }
 section:not(.title):not(.lead):not([id="1"]).homework::before {
-    background-color: #d97706;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='16 18 22 12 16 6'/><polyline points='8 6 2 12 8 18'/></svg>");
-    background-size: 55%;
 }
 
 section.showcase div.columns > div > h4:first-child,

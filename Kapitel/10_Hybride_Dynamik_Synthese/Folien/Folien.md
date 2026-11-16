@@ -58,7 +58,7 @@ Präsentation der Hausübung aus Termin 09 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: recap -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1608,7 +1608,7 @@ Der Block steuert seine eigene Ausführungs-frequenz dynamisch basierend auf dem
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: outlook -->
 
 ![bg right:35% contain](./Illustrationen/Ausblick_Epilog.png)
 

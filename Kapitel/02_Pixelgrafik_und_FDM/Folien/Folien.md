@@ -54,7 +54,7 @@ Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: recap -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -416,7 +416,7 @@ private unsafe void UpdatePixelFast(
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: outlook -->
 
 ### Ausblick (Kapitel 6): Paralleles Rendern mit `Parallel.For`
 

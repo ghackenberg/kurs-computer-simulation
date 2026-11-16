@@ -54,7 +54,7 @@ Präsentation der Hausübung aus Termin 05 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: recap -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -836,7 +836,7 @@ public void Simulate(CancellationToken token)
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: outlook -->
 
 ### Ausblick: Übergang zum Modellierungsblock (T07–T10)
 

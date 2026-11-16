@@ -38,7 +38,7 @@ Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorles
    - Pflicht in jedem Kapitel ab `01` **vor** dem ersten Abschnitts-Opener `## N.1:` und **nach** dem Kapitel-Opener bzw. den optionalen Quiz-/Showcase-Folien (geprüft durch `npm run lint:sections`).
    - Zweispaltiges Pflichtlayout (`three` Text links | `two` 3-Stufen-Brücken-SVG `./Diagramme/...svg` rechts): verbindet (a) den Rückblick auf Vor-Termine (Nachbar- & Fern-Brücken laut `Konzept/01_*.md`), (b) den konkreten Engpass des bisherigen Werkzeugs und (c) die Einordnung in die Semester-Architektur (*Foreshadowing*). Fehlt das SVG, meldet `lint:sections` einen Fehler (`MISSING_BRIDGE_VISUAL`).
 4. **Ausblicksfolie vor der Hausübung: `### Ausblick: ...`:**
-   - Pflicht in jedem Kapitel (`01`–`10`) direkt **nach** der Zusammenfassung und **vor** der Hausübung (mit `<!-- _class: bridge -->`, geprüft durch `npm run lint:sections`). Schlägt den Bogen zum nächsten Termin und den gekoppelten Folgekapiteln.
+   - Pflicht in jedem Kapitel (`01`–`10`) direkt **nach** der Zusammenfassung und **vor** der Hausübung (mit `<!-- _class: outlook -->`, geprüft durch `npm run lint:sections`). Schlägt den Bogen zum nächsten Termin und den gekoppelten Folgekapiteln.
 5. **Letzte Folie des Kapitels: `### Hausübung Termin XX: ...`:**
    - Zeigt oben **Stufe 1: Basisaufgabe (`1.1`–`1.4`)** für alle Teams und darunter zweispaltig **Stufe 2: Vertiefungsaufgabe (`Track A` links | `Track B` rechts)**.
 
@@ -73,7 +73,7 @@ Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorles
 | :--- | :--- |
 | **Kapitel-Opener (`# Kapitel N: ...`)** | `![bg right](./Titelbild.jpg)` ($896 \times 1200\,\text{px}$, 3:4) + Satz: `Dieses Kapitel umfasst die folgenden Abschnitte:` |
 | **Abschnitts-Opener (`## N.M: ...`)** | `![bg right](./Illustrationen/Abschnitt_M.jpg)` ($896 \times 1200\,\text{px}$, 3:4, textfrei) + Satz: `Dieser Abschnitt umfasst die folgenden Inhalte:` |
-| **Rahmenfolien-Klassen (`<!-- _class: ... -->`)** | `showcase` (Live-Showcase/Quiz), `bridge` (`Rückblick & Brücke` sowie `Ausblick`), `activity` (Mitmach-Impuls), `solution` (Auflösung, automatisch aus Vorab-Moodle-PDF gefiltert), `summary` (`Zusammenfassung`), `homework` (`Hausübung Termin XX`) – geprüft durch `lint:sections` |
+| **Rahmenfolien-Klassen (`<!-- _class: ... -->`)** | `showcase` (Live-Showcase/Quiz), `recap` (`Rückblick & Brücke`), `outlook` (`Ausblick`), `activity` (Mitmach-Impuls), `solution` (Auflösung, automatisch aus Vorab-Moodle-PDF gefiltert), `summary` (`Zusammenfassung`), `homework` (`Hausübung Termin XX`) – geprüft durch `lint:sections` |
 | **Mehrspaltiges Layout (`<div class="columns">`)** | Klassen `one` bis `six` sind **relative `flex-grow`-Breitengewichte** (keine Spaltennummern!):<br>• 50 % / 50 %: `two` + `two`<br>• 40 % / 60 %: `two` + `three`<br>• 33 % / 67 %: `one` + `two` |
 | **Bildsyntax** | Immer reine Markdown-Syntax `![](./Diagramme/Name_Mit_Unterstrich.svg)` ohne `w:`, `h:`, `center` und ohne `%20`-Leerzeichen. |
 

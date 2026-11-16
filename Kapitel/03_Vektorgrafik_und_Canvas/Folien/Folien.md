@@ -54,7 +54,7 @@ Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showc
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: recap -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1626,7 +1626,7 @@ public class SimpleRenderCanvas : FrameworkElement
 
 ---
 
-<!-- _class: bridge -->
+<!-- _class: outlook -->
 
 ### Ausblick: Echtzeit-Telemetrie & FEM-Kopplung (Termin 04 & 07)
 

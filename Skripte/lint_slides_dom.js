@@ -230,7 +230,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         }
         return { r: 255, g: 255, b: 255, a: 1 };
       };
-      const isHighlight = ['showcase', 'bridge', 'summary', 'homework', 'activity', 'solution'].some(c => sec.classList.contains(c));
+      const isHighlight = ['showcase', 'recap', 'outlook', 'summary', 'homework', 'activity', 'solution'].some(c => sec.classList.contains(c));
       if (isHighlight) {
         const textEls = sec.querySelectorAll('header, footer, blockquote, p, li, h1, h2, h3, h4');
         textEls.forEach(el => {
