@@ -1013,6 +1013,8 @@ Die Benotung erfolgt vollständig semesterbegleitend aus zwei transparenten Säu
 
 ---
 
+<!-- _class: summary -->
+
 ### Zusammenfassung: Ihr Werkzeugkasten als Ingenieur (1/2)
 
 Mit dem Abschluss dieses Kurses besitzen Sie ein fundamentales Methoden- und Softwarewissen:
@@ -1041,6 +1043,8 @@ Mit dem Abschluss dieses Kurses besitzen Sie ein fundamentales Methoden- und Sof
 </div>
 
 ---
+
+<!-- _class: summary -->
 
 ### Zusammenfassung: Ihr Werkzeugkasten als Ingenieur (2/2)
 

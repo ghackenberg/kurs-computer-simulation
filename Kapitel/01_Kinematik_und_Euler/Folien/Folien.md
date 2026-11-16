@@ -753,7 +753,9 @@ Der Digitale Zwilling verbindet die Simulation nahtlos über alle drei Lebenszyk
 
 ---
 
-## Ausblick auf die Kursinhalte
+<!-- _class: bridge -->
+
+### Ausblick auf die Kursinhalte
 
 In den folgenden Kapiteln erarbeiten wir zunächst die Werkzeuge und vertiefen anschließend die physikalischen Modellarten:
 

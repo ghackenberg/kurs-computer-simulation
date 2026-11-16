@@ -1433,6 +1433,8 @@ GraphControl.Graph     = graph;
 
 ---
 
+<!-- _class: bridge -->
+
 ### Ausblick: Automatisches Layout (`MSAGL`) vs. Node-Editor (`Nodify`)
 
 <div class="columns">
@@ -1458,6 +1460,8 @@ GraphControl.Graph     = graph;
 </div>
 
 ---
+
+<!-- _class: summary -->
 
 ### Zusammenfassung: Kapitel 4 auf einen Blick
 

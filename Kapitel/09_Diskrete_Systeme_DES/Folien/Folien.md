@@ -1465,9 +1465,11 @@ Console.WriteLine(
 
 ---
 
+<!-- _class: bridge -->
+
 ![bg right:35% contain](./Illustrationen/Ausblick_Hybrid.png)
 
-## Ausblick: Hybride Systeme
+### Ausblick: Hybride Systeme
 
 In der Praxis existieren kontinuierliche Physik und diskrete Ereignisse selten getrennt:
 

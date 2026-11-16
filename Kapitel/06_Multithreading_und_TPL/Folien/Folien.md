@@ -728,7 +728,9 @@ public void Simulate(CancellationToken token)
 
 ---
 
-### Kursdramaturgie: Übergang zum Modellierungsblock
+<!-- _class: bridge -->
+
+### Ausblick: Übergang zum Modellierungsblock (T07–T10)
 
 Die Software- und Visualisierungs-Infrastruktur (**Block 1: T01–T06**) steht vollständig – ab **Termin 07** hauchen wir den Grafiken physikalisches Leben ein!
 

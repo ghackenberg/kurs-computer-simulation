@@ -8,7 +8,7 @@
     </style>
   </defs>
 
-  <rect x="-40" y="0" width="1160" height="390" fill="#FFFFFF"/>
+  <rect x="-40" y="0" width="1160" height="390" fill="none"/>
 
   <!-- LEFT: Block 1 Werkzeuge T01-T06 -->
   <rect x="10" y="16" width="490" height="354" rx="12" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>

@@ -30,10 +30,11 @@
  *    - Jeder Abschnitt muss mindestens 2 Inhaltsfolien besitzen (SECTION_TOO_SMALL)
  *    - Ausgewogene Abschnittsgrößen: max. Verhältnis 2:1 bei Differenz > 2 (UNBALANCED_SECTIONS)
  *
- * 6. Didaktische Folienklassen (MISSING_SLIDE_CLASS):
+ * 6. Didaktische Folienklassen (MISSING_SLIDE_CLASS) & Ausblicksfolie (MISSING_OUTLOOK_SLIDE):
  *    - Showcase -> <!-- _class: showcase -->
  *    - Rückblick & Brücke -> <!-- _class: bridge -->
  *    - Zusammenfassung -> <!-- _class: summary -->
+ *    - Ausblick (Pflicht nach Zusammenfassung, vor Hausübung in Kap. 01-10) -> <!-- _class: bridge -->
  *    - Hausübung -> <!-- _class: homework -->
  * ==============================================================================
  */
@@ -313,7 +314,13 @@ function lintSectionDeck(markdownPath) {
         type: 'MISSING_SLIDE_CLASS',
         message: `Brückenfolie fehlt '<!-- _class: bridge -->'.`
       });
-    } else if (/^#\s+Zusammenfassung/im.test(slide) && slideClass !== 'summary') {
+    } else if (/^#{1,3}\s+Ausblick\b/im.test(slide) && slideClass !== 'bridge') {
+      issues.push({
+        slideNum,
+        type: 'MISSING_SLIDE_CLASS',
+        message: `Ausblicksfolie fehlt '<!-- _class: bridge -->'.`
+      });
+    } else if (/^#{1,3}\s+Zusammenfassung/im.test(slide) && slideClass !== 'summary') {
       issues.push({
         slideNum,
         type: 'MISSING_SLIDE_CLASS',
@@ -420,6 +427,20 @@ function lintSectionDeck(markdownPath) {
         });
       }
     }
+
+    const sumIdx = slides.findIndex(sl => /^#{1,3}\s+Zusammenfassung/im.test(sl));
+    const hwIdx = slides.findIndex(sl => /###\s+Hausübung/i.test(sl));
+    if (sumIdx !== -1 && hwIdx > sumIdx) {
+      const between = slides.slice(sumIdx + 1, hwIdx);
+      const hasOutlook = between.some(sl => /^###\s+Ausblick\b/im.test(sl));
+      if (!hasOutlook) {
+        issues.push({
+          slideNum: hwIdx + 1,
+          type: 'MISSING_OUTLOOK_SLIDE',
+          message: `Zwischen Zusammenfassung und Hausübung in Kapitel ${chapNum} fehlt eine Ausblicksfolie ('### Ausblick: ...' mit '<!-- _class: bridge -->').`
+        });
+      }
+    }
   }
 
   // 6. Abschnitts-Mindestgröße & Ausgewogenheit prüfen (ab Kap. 06 als Fehler, 00-05 als Warnung)
@@ -453,6 +474,20 @@ function lintSectionDeck(markdownPath) {
           slideNum: 0,
           type: 'UNBALANCED_SECTIONS',
           message: `Unausgewogene Abschnittsgrößen (${dist}; Max/Min = ${maxC}/${minC}).`
+        });
+      }
+    }
+
+    const sumIdx = slides.findIndex(sl => /^#{1,3}\s+Zusammenfassung/im.test(sl));
+    const hwIdx = slides.findIndex(sl => /###\s+Hausübung/i.test(sl));
+    if (sumIdx !== -1 && hwIdx > sumIdx) {
+      const between = slides.slice(sumIdx + 1, hwIdx);
+      const hasOutlook = between.some(sl => /^###\s+Ausblick\b/im.test(sl));
+      if (!hasOutlook) {
+        issues.push({
+          slideNum: hwIdx + 1,
+          type: 'MISSING_OUTLOOK_SLIDE',
+          message: `Zwischen Zusammenfassung und Hausübung in Kapitel ${chapNum} fehlt eine Ausblicksfolie ('### Ausblick: ...' mit '<!-- _class: bridge -->').`
         });
       }
     }

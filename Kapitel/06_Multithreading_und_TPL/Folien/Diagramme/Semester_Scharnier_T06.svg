@@ -11,7 +11,7 @@
     </style>
   </defs>
 
-  <rect x="-45" y="0" width="570" height="380" fill="#FFFFFF"/>
+  <rect x="-45" y="0" width="570" height="380" fill="none"/>
 
   <!-- Block 1: T02-T05 -->
   <rect x="-25" y="16" width="530" height="84" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>

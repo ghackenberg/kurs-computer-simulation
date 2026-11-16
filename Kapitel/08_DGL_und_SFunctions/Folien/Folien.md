@@ -1844,6 +1844,17 @@ while (solver.Time <= 0.6) // 600 ms Regelung
 
 ---
 
+<!-- _class: bridge -->
+
+### Ausblick: Von stetigen Zeitschritten zu diskreten Ereignissen (Termin 09)
+
+Mit S-Functions, RK4 und PID-Regelung simulieren wir nun beliebige **kontinuierliche Systeme** mit festem Zeittakt $\Delta t$ – warum stößt das bei Produktionsanlagen an Grenzen?
+
+- **Leerlauf-Problem:** In Fabriken oder Warteschlangen passiert oft minutenlang nichts, bis zu einem exakten Zeitpunkt $t_e$ ein Werkstück eintrifft oder eine Maschine ausfällt.
+- **Nächster Schritt (Termin 09):** Wir springen mit einer **Ereignis-Warteschlange (`PriorityQueue`)** direkt von Event zu Event (**Discrete Event Simulation**) und parallelisieren Monte-Carlo-Läufe via TPL (T06)!
+
+---
+
 <!-- _class: homework -->
 
 ### Hausübung Termin 08: DGL-Solver, S-Functions & Anti-Windup

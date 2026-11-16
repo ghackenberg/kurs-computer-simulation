@@ -1101,6 +1101,17 @@ Vector<double> fp = kpf.Multiply(uf); // Auflagerreaktionskräfte
 
 ---
 
+<!-- _class: bridge -->
+
+### Ausblick: Vom Gleichgewicht zur Bewegung (Termin 08)
+
+Mit der FEM-Steifigkeitsmatrix $\mathbf{K}\mathbf{u} = \mathbf{f}$ und der Cholesky-Zerlegung beherrschen wir nun das **zeitunabhängige statische Gleichgewicht** ($\sum \vec{F} = \mathbf{0}$):
+
+- **Wo Statik endet:** Sobald Antriebskräfte, Trägheiten und Dämpfungen wirken ($\sum \vec{F} = m \cdot \ddot{\mathbf{x}} \neq \mathbf{0}$), reicht kein einzelnes lineares Gleichungssystem mehr aus.
+- **Nächster Schritt (Termin 08):** Wir steigen ein in **kontinuierliche Differentialgleichungen (ODEs)**, modulare S-Functions, **Runge-Kutta 4 (RK4)** und geschlossene PID-Regelkreise!
+
+---
+
 <!-- _class: homework -->
 
 ### Hausübung Termin 07: Statik, FEM & Cholesky

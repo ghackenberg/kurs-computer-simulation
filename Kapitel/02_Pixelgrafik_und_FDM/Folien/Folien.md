@@ -416,6 +416,8 @@ private unsafe void UpdatePixelFast(
 
 ---
 
+<!-- _class: bridge -->
+
 ### Ausblick (Kapitel 6): Paralleles Rendern mit `Parallel.For`
 
 > **Deep Dive / Ausblick auf Kapitel 6 (Multithreading):** Da die Bildzeilen speichertechnisch unabhängig sind, lässt sich die äußere `y`-Schleife ab Kapitel 6 trivial auf alle CPU-Kerne verteilen (in Termin 02 arbeiten wir noch rein sequentiell mit `for`):
@@ -1172,6 +1174,8 @@ private unsafe void RenderKernel(
 - `RenderToBitmap` sperrt `bmp` und schreibt jedes Feld-Pixel `f[x, y]` über `lut` direkt nach `pBuf + y * stride`.
 
 ---
+
+<!-- _class: summary -->
 
 ### Zusammenfassung Kapitel 2
 

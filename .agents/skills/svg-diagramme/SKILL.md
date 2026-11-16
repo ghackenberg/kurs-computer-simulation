@@ -48,7 +48,7 @@ Verbindliche Gestaltungs-, Typografie- und Prüfregeln für SVG-Illustrationen i
 ## 3. Technische Auditor-Regeln & Prüfworkflow
 
 - **Vermeidung von `SHIELD_TEXT_OVERFLOW`-Fehlalarmen:** Zeichne geneigte Stäbe oder schmale Bauteile dicht neben `<text>`-Labels als dicke `<line stroke-linecap="round">` oder `<polygon>` statt als kleines `<rect>` (der SVG-Auditor stuft kleine `<rect>`-Elemente nahe Text als zu enge Text-Hintergrundboxen ein).
-- **Saubere Dateinamen & UTF-8:** Nur Unterstrich-Dateinamen (`Mein_Diagramm.svg`) ohne verwaiste Alt-Dateien im Ordner `Diagramme/` erzeugen; saubere UTF-8-Umlaute bzw. XML-Entities (`&#8594;`, `&#177;`, `&amp;`, `&lt;`, `&gt;`) nutzen.
+- **Saubere Dateinamen, transparenter Canvas & UTF-8:** Nur Unterstrich-Dateinamen (`Mein_Diagramm.svg`) ohne verwaiste Alt-Dateien im Ordner `Diagramme/` erzeugen; äußeren SVG-Canvas transparent lassen (`fill="none"` statt vollflächigem `#FFFFFF`-Hintergrund-`<rect>`, damit sich SVGs nahtlos in weiße und getönte Highlight-Folien einfügen); saubere UTF-8-Umlaute bzw. XML-Entities (`&#8594;`, `&#177;`, `&amp;`, `&lt;`, `&gt;`) nutzen.
 - **Pflicht-Prüfung nach jeder SVG-Änderung:**
   ```powershell
   npm run lint:svg:XX

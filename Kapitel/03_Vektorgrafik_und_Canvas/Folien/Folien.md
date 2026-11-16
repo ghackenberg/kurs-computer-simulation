@@ -1601,6 +1601,8 @@ public class SimpleRenderCanvas : FrameworkElement
 
 ---
 
+<!-- _class: summary -->
+
 ### Zusammenfassung: Geometrie & Transformation
 
 - **Vektorgrafiken** bieten auflösungsunabhängige, stufenlos skalierbare Darstellungen für technische Simulationsmodelle.
@@ -1612,6 +1614,8 @@ public class SimpleRenderCanvas : FrameworkElement
 
 ---
 
+<!-- _class: summary -->
+
 ### Zusammenfassung: Navigation & Performance
 
 - Eine **`MatrixTransform`** am Canvas ermöglicht flüssiges, hardwarebeschleunigtes **Pan & Zoom** mit Zentrierung auf den Mauszeiger (`ScaleAt`).
@@ -1619,6 +1623,17 @@ public class SimpleRenderCanvas : FrameworkElement
 - Die **`ScreenToWorld`**-Rücktransformation invertiert erst die Matrix und danach die Viewport-Projektion.
 - Bei großen Datenmengen ($> 2.000$ Elemente) bricht der WPF `Shape`-Baum ein. **`DrawingVisual` / `DrawingContext`** bietet professionelle High-Performance-Vektorgrafik für komplexe Netze.
 - **Freeze-Doktrin:** Alle `Pen`- und `Brush`-Objekte in Render-Schleifen müssen zwingend eingefroren werden.
+
+---
+
+<!-- _class: bridge -->
+
+### Ausblick: Echtzeit-Telemetrie & FEM-Kopplung (Termin 04 & 07)
+
+Unsere 2D-Vektorgeometrie und das Welt-Screen-Koordinatensystem stehen – wie nutzen wir diese Bausteine im weiteren Semester?
+
+- **Direkt nächste Woche (Termin 04):** Statt Geometrieobjekten zeichnen wir **hochfrequente Zeitreihen (1 kHz)** mit `ScottPlot 5` und ringgepufferten Telemetriedaten.
+- **Fern-Brücke (Termin 07):** Genau die hier gezeichneten und als JSON exportierten Tragwerksknoten $(x, y)$, Stäbe und Lastpfeile werden in **Termin 07** mit echter Elastostatik ($mathbf{K}mathbf{u} = mathbf{f}$) berechnet!
 
 ---
 

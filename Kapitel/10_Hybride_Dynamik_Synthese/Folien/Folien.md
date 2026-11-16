@@ -1608,9 +1608,11 @@ Der Block steuert seine eigene Ausführungs-frequenz dynamisch basierend auf dem
 
 ---
 
+<!-- _class: bridge -->
+
 ![bg right:35% contain](./Illustrationen/Ausblick_Epilog.png)
 
-## Ausblick: Synthese & Epilog
+### Ausblick: Synthese & Epilog
 
 Das gesamte Methodenspektrum steht nun zur Verfügung:
 

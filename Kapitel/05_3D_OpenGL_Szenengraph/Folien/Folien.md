@@ -1075,6 +1075,17 @@ private void OpenGlView_MouseMove(object sender, MouseEventArgs e)
 
 ---
 
+<!-- _class: bridge -->
+
+### Ausblick: Vom UI-Thread auf alle CPU-Kerne (Termin 06)
+
+Unser 4-teiliger Visualisierungsblock (T02–T05) ist abgeschlossen – bevor wir ab Termin 07 physikalische Gleichungslöser starten, lösen wir einen zentralen Engpass:
+
+- **Das $16{,}6\,\text{ms}$-Problem:** Solange Berechnung und Rendering gemeinsam im WPF-UI-Thread laufen, friert das Fenster bei komplexen Simulationen ein und 15 von 16 CPU-Kernen bleiben ungenutzt.
+- **Nächster Schritt (Termin 06):** Mit **Multithreading (`Parallel.For`, `Task.Run`, `IProgress<T>`)** trennen wir Rechenlast und Oberfläche sauber voneinander.
+
+---
+
 <!-- _class: homework -->
 
 ### Hausübung Termin 05: 3D-OpenGL & Szenengraph
