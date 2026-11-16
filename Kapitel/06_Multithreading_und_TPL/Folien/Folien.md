@@ -64,7 +64,7 @@ Präsentation der Hausübung aus Termin 05 (**Stufe 1: Basisaufgabe** + **Stufe 
 In **Termin 02 bis 05** haben wir leistungsfähige 2D- und 3D-Oberflächen gebaut – warum bildet **Termin 06** heute das architektonische Scharnier zur zweiten Semesterhälfte?
 
 - **Bisheriges Budget (T02–T05):** Solange Physik und Rendering gemeinsam im **WPF UI-Thread** laufen, bleiben bei $60\,\text{FPS}$ nur **$16{,}6\,\text{ms}$ pro Frame**.
-- **Engpass ab T07–T10:** Große Gleichungssysteme (FEM-Statik), Differentialgleichungen (DGL) oder Monte-Carlo-Läufe (DES) dauern Sekunden $\implies$ **UI friert ein**, 15 von 16 Kernen langweilen sich!
+- **Engpass ab T07–T10:** Große Gleichungssysteme (Finite-Elemente-Statik, FEM), Differentialgleichungen (DGL) oder diskrete Ereignis-Läufe (Discrete Event Simulation, DES) dauern Sekunden $\implies$ **UI friert ein**, 15 von 16 Kernen langweilen sich!
 - **Lösung heute:** Saubere Trennung von **UI-Dispatcher** und **Worker-Threads** (`Task.Run`, `IProgress`, `Parallel.For`).
 
 </div>
@@ -107,7 +107,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 <div class="columns top">
 <div class="two">
 
-- **Prozess (.exe):** Isolierte Instanz mit eigenem **RAM / Heap**. Austausch per **IPC** kostet **ms**.
+- **Prozess (.exe):** Isolierte Instanz mit eigenem **RAM / Heap**. Austausch per **Inter-Process Communication (IPC)** kostet **ms**.
 - **Thread:** Ausführungseinheit im Prozess (eigener **Stack**, gemeinsamer **Heap**).
 - **Wechselkosten:** Context-Switch in **$\mu\text{s}$**, Datenaustausch direkt im Speicher (**ns–$\mu\text{s}$**).
 - **Konsequenz für C#:** **1 Prozess** mit vielen **Threads** – maximal schnell, aber ungeschützt beim Schreiben!
@@ -120,7 +120,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 </div>
 
-> **Merksatz:** In C# arbeiten alle TPL-Threads im selben Prozess-Heap – extrem schnell beim Lesen, aber kritisch beim parallelen Schreiben!
+> **Merksatz:** In C# arbeiten alle Hintergrund-Threads im selben Prozess-Heap – extrem schnell beim Lesen, aber kritisch beim parallelen Schreiben!
 
 ---
 
@@ -195,7 +195,7 @@ $$S(p) = \frac{1}{s + \frac{1 - s}{p}}, \qquad S_{\max} = \lim_{p \to \infty} S(
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Die Task Parallel Library (TPL) in .NET (`Parallel.For`)
-- Granularität, `ParallelOptions` & JIT-Warmup für saubere Benchmarks
+- Granularität, `ParallelOptions` & Just-in-Time-Warmup (JIT) für saubere Benchmarks
 - Threadsichere Ergebnissammlung ohne Sperren (`ConcurrentBag<T>`)
 
 ---
@@ -259,7 +259,7 @@ Parallel.For(0, n, opts, i => Step(i));
 
 **Granularität & JIT-Warmup:**
 - **Zu feine Arbeitspakete:** Dauert `Step(i)` nur wenige Nanosekunden, übersteigt der ThreadPool-Overhead den Rechengewinn ($S(p) < 1$) $\implies$ innere Schleifen *niemals* blind parallelisieren!
-- **JIT-Warmup:** Der erste Aufruf in .NET kompiliert IL-Code in Maschinencode. Vor jeder Zeitmessung (`Stopwatch`) einmal ungezählt warmlaufen lassen!
+- **JIT-Warmup:** Der erste Aufruf in .NET kompiliert Zwischencode (Intermediate Language, IL) in Maschinencode. Vor jeder Zeitmessung (`Stopwatch`) einmal ungezählt warmlaufen lassen!
 
 </div>
 </div>

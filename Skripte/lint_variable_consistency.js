@@ -411,9 +411,68 @@ function auditChapterVariables(chapterDir) {
   let currentSection = '';
   const sectionSlideHistory = [];
 
+  const abbrWhitelist = new Set([
+    'CPU', 'RAM', 'UI', 'WPF', 'FPS', 'GUI', 'CLI', 'JSON', 'XML', 'API', 'IDE', 'OS', 'GC',
+    'RGB', 'RGBA', 'BGRA', 'HTML', 'CSS', 'URL', 'PDF', 'USB', 'FH', 'OÖ', 'CAD', 'NET', 'LED',
+    'ODER', 'UND', 'NICHT', 'NUR', 'ALLE', 'KEIN', 'KEINE', 'STRIKT', 'EINEN', 'AUF', 'MIT', 'OHNE',
+    'SCARA', 'TCP', 'PID', 'ODE', 'LGS', 'MSAGL', 'RK2', 'RK4', 'ECTS', 'ILO', 'ILV', 'SWS', 'TODO',
+    'OK', 'VS', 'MAX', 'MIN', 'PPM', 'SI', 'EX', 'ST', 'LT', 'GT'
+  ]);
+  const chapFolder = path.basename(path.dirname(chapterDir));
+  const chapNumMatch = chapFolder.match(/^(\d+)_/);
+  const chapNum = chapNumMatch ? parseInt(chapNumMatch[1], 10) : -1;
+  const definedAbbrs = new Set();
+
+  if (chapNum > 0) {
+    const kapRoot = path.dirname(path.dirname(chapterDir));
+    if (fs.existsSync(kapRoot)) {
+      fs.readdirSync(kapRoot).sort().forEach(d => {
+        const m = d.match(/^(\d+)_/);
+        if (m && parseInt(m[1], 10) < chapNum) {
+          const prevMd = path.join(kapRoot, d, 'Folien', 'Folien.md');
+          if (fs.existsSync(prevMd)) {
+            const pTxt = fs.readFileSync(prevMd, 'utf8');
+            for (const dm of pTxt.matchAll(/\(([A-ZÄÖÜ]{2,6})\)|,\s*([A-ZÄÖÜ]{2,6})\)/g)) {
+              definedAbbrs.add(dm[1] || dm[2]);
+            }
+          }
+        }
+      });
+    }
+  }
+
   slides.forEach((rawSlide, idx) => {
     const slideNum = idx + 1;
     const slide = rawSlide.trim();
+    if (!slide || (idx <= 1 && /^(?:marp|theme|paginate|title|header|footer|style):/m.test(slide))) return;
+
+    const titleMatchEarly = slide.match(/^#{1,3}\s+(.+)$/m);
+    const slideTitleEarly = titleMatchEarly ? titleMatchEarly[1].replace(/\*\*|`/g, '').trim() : `Folie ${slideNum}`;
+    const proseOnly = slide
+      .replace(/```[\s\S]*?```/g, '')
+      .replace(/`[^`]+`/g, '')
+      .replace(/!\[[^\]]*\]\([^)]+\)/g, '')
+      .replace(/\[[^\]]*\]\([^)]+\)/g, '');
+    for (const dm of proseOnly.matchAll(/\(([A-ZÄÖÜ]{2,6})\)|,\s*([A-ZÄÖÜ]{2,6})\)/g)) {
+      definedAbbrs.add(dm[1] || dm[2]);
+    }
+    const usedAbbrs = proseOnly.match(/\b[A-ZÄÖÜ]{2,6}\b/g) || [];
+    const seenOnSlide = new Set();
+    for (const abbr of usedAbbrs) {
+      if (abbrWhitelist.has(abbr) || seenOnSlide.has(abbr)) continue;
+      seenOnSlide.add(abbr);
+      if (!definedAbbrs.has(abbr)) {
+        if (chapNum >= 6) {
+          issues.push({
+            slideNum,
+            title: slideTitleEarly,
+            rule: 5,
+            message: `Abkürzung "${abbr}" wird verwendet, bevor sie als "Langform (${abbr})" eingeführt wurde.`
+          });
+        }
+        definedAbbrs.add(abbr);
+      }
+    }
 
     const sectionMatch = slide.match(/##\s+(\d+\.\d+:[^\n]+)/);
     if (sectionMatch) {

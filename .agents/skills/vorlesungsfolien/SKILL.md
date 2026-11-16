@@ -83,6 +83,7 @@ Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorles
 2. **Regel 2 (Halbseitiger Code $\to$ Text):** Alle Bezeichner in zweispaltigen Code-Blöcken müssen im Text derselben Folie genannt werden.
 3. **Regel 3 (Ganzseitiger Code):** Bezeichner in ganzseitigen Code-Listings müssen auf derselben Folie oder den vorangehenden Folien des Abschnitts eingeführt sein.
 4. **Regel 4 (Textformel $\to$ SVG/Code):** Mathematische Variablen im Text einer Diagramm-/Code-Folie müssen auch im begleitenden SVG oder Code vorkommen.
+5. **Regel 5 (Abkürzungs-Einführung):** Jede fachliche Abkürzung (`[A-ZÄÖÜ]{2,6}`) muss bei ihrer ersten Verwendung im Kapitel (oder in einem früheren Kapitel) explizit als `Langform (ABK)` bzw. `ABK (Langform)` eingeführt werden – niemals *vor* ihrer Definition.
 
 ---
 

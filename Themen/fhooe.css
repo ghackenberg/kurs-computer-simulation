@@ -197,6 +197,15 @@ section.homework div.columns + blockquote {
     margin-top: 22px;
 }
 
+section blockquote {
+    background-color: #f8fafc;
+    border-left: 4px solid var(--fhooe-blue);
+    padding: 2px 12px;
+    border-radius: 0 6px 6px 0;
+    color: #1e293b;
+    font-size: 0.94em;
+}
+
 /* Didaktische Rahmenfolien-Klassen (MARP _class) */
 section.showcase {
     background-color: #f0f6ff;
@@ -241,6 +250,10 @@ section.bridge header,
 section.bridge footer,
 section.bridge blockquote {
     color: #334155;
+}
+section.bridge blockquote {
+    border-left-color: #475569;
+    background-color: #e2e8f0;
 }
 
 section.summary {
