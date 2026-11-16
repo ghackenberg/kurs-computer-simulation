@@ -10,8 +10,9 @@ math: mathjax
 <!-- _paginate: false -->
 <!-- _header: "" -->
 <!-- _footer: "" -->
+<!-- _class: title -->
 
-![bg right](./Titelbild.jpg)
+![bg](./Titelbild.jpg)
 
 # Kapitel 3: 2D-Visualisierung (WPF/Vektor)
 
@@ -36,7 +37,7 @@ Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showc
 
 #### Stufe 2 – Track A: Industrie (CPU-Kühlkörper)
 - **FDM-Modell:** Inhomogene Materialien (Si, Cu, Al) & Robin-Randbedingungen an Finnen.
-- **Numerik:** Stabilitätsgrenze $\Delta t \le \frac{\Delta x^2}{4 a_{\max}}$ für Kupfer nachweisen.
+- **Numerik:** Stabilitätsgrenze $\Delta t \le \frac{\Delta x^2}{4 \alpha_{\max}}$ für Kupfer nachweisen.
 - **Stresstest:** Lüfterausfall live schalten ($h: 250 \to 20\,\text{W/m}^2\text{K}$) oder $\Delta t$ verdoppeln.
 
 </div>
@@ -61,15 +62,13 @@ Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showc
 <div class="columns top">
 <div class="three">
 
-In **Termin 02** haben wir 2D-Temperaturfelder direkt in den Pixelpuffer (`WriteableBitmap`) geschrieben – warum brauchen wir heute ein zweites 2D-Grafikparadigma?
+In **Termin 02** haben wir 2D-Temperaturfelder direkt in den Pixelpuffer (`WriteableBitmap`) geschrieben – warum braucht die Simulation nun 2D-Vektorgrafik?
 
-- **Was `WriteableBitmap` (Termin 02) perfekt gelöst hat:**
-  - Flächenhafte 2D-Gitter (z.B. $500 \times 500$ Temperaturzellen) mit Millionen Farbwerten pro Sekunde.
-- **Wo das Pixelraster heute an seine Grenzen stößt:**
-  - **Keine Objekt-Identität:** Ein gezeichneter Brückenstab verschmilzt sofort zu anonymen Farbpunkten im RAM – man kann ihn später weder anklicken noch verschieben.
-  - **Kein stufenloser Zoom:** Beim Hineinzoomen in Konstruktionszeichnungen entstehen grobe Pixel-Treppenstufen statt gestochen scharfer Kanten.
-- **Einordnung ins große Ganze (2. Visualisierungs-Säule: 2D-Vektorgrafik):**
-  - Für Maschinen-Geometrien, CAD-Tragwerke (direkte Vorarbeit für unsere **FEM-Statik in Termin 07**!) und interaktive Kraftpfeile nutzen wir **analytische 2D-Vektorgrafik** im `WPF Canvas`.
+- **Stärke von `WriteableBitmap` (T02):** Flächenhafte 2D-Gitter ($500 \times 500$ Zellen) mit Millionen Farbwerten pro Sekunde.
+- **Grenzen des Pixelrasters:** Keine Objekt-Identität (Brückenstäbe verschmelzen zu Pixeln) & Pixel-Treppenstufen beim Zoom.
+- **Einordnung (2. Säule):** Für CAD-Tragwerke (Vorarbeit für **FEM-Statik in T07**!) und Kraftpfeile nutzen wir **analytische 2D-Vektorgrafik** im `WPF Canvas`.
+
+> **Ziel heute:** Verzerrungsfreie Koordinatentransformation und Pan/Zoom bei $\ge 60\,\text{FPS}$.
 
 </div>
 <div class="two">
@@ -81,9 +80,7 @@ In **Termin 02** haben wir 2D-Temperaturfelder direkt in den Pixelpuffer (`Write
 
 ---
 
-<!-- Platzhalter für Abschnittsbildbeschreibung -->
-
-![bg right](./Illustrationen/Abschnitt_1.jpg)
+![bg](./Illustrationen/Abschnitt_1.jpg)
 
 ## 3.1: Grundlagen der Vektorgrafik und WPF Canvas
 
@@ -92,9 +89,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Brücke zu Termin 02 (Raw Pixels) und Einordnung in die Kurs-Architektur
 - Prinzip der Vektorgrafik im Vergleich zur Rastergrafik
 - Retained Mode vs. Immediate Mode in Benutzeroberflächen
-- Das `Canvas`-Element in WPF und Attached Properties
-- Vektorielle Grundformen (`Line`, `Rectangle`, `Ellipse`, `Polygon`, `Path`)
-- Szenengraph und Visual Tree in WPF
+- Das `Canvas`-Element in WPF, Attached Properties & Shapes
 
 ---
 
@@ -124,6 +119,11 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ### Retained Mode vs. Immediate Mode
 
 <div class="columns top">
+<div class="one">
+
+![](./Diagramme/Mini_WPF_Szenengraph.svg)
+
+</div>
 <div class="two">
 
 **Immediate Mode (Termin 02 – `WriteableBitmap`):**
@@ -134,100 +134,27 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 **Retained Mode (Termin 03 – WPF `Canvas` & `Shapes`):**
 - Die GUI verwaltet einen Szenengraph (**Visual Tree**) im RAM.
 - Jede Linie und jeder Knoten existiert als C#-Objekt.
-- **Automatisches Neuzeichnen** bei Größenänderungen.
-- **Ereignisbehandlung**: Native Maus-Events auf jedem Shape.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_WPF_Szenengraph.svg)
+- **Automatisches Neuzeichnen** bei Größenänderungen + native Maus-Events.
 
 </div>
 </div>
 
 ---
 
-### Das `Canvas`-Control in WPF
+### Das `Canvas`-Control & Attached Properties
 
 <div class="columns top">
 <div class="two">
 
 In WPF bietet das `Canvas`-Control eine 2D-Zeichenfläche mit **absoluter Positionierung**:
 
-- Kindelemente (`el`) werden über angehängte Eigenschaften (**Attached Properties**) an Position $(x, y)$ platziert:
-  - In C#: `Canvas.SetLeft(el, x);` und `Canvas.SetTop(el, y);`
-  - In XAML: `Canvas.Left="120"` und `Canvas.Top="85"`
-- Im Gegensatz zu `Grid` führt der Canvas **keine automatische Layout-Verschachtelung** durch.
-- Kindelemente können sich frei überlappen (Z-Index).
-- Ideal geeignet für technische 2D-Simulationsmodelle, CAD-Viewer und interaktive Vektorgrafiken.
+- Kindelemente (`el`) werden über **Attached Properties** platziert:
+  - C#: `Canvas.SetLeft(el, x);` und `Canvas.SetTop(el, y);`
+  - XAML: `Canvas.Left="120" Canvas.Top="85"`
+- **Warum kein `myNode.Left`?** Jedes Panel (`Grid`, `StackPanel`, `Canvas`) braucht andere Layout-Daten – der Container definiert die Property, das Kind speichert nur seinen Wert.
+- **Zentrierung von Ellipsen (Radius $r$):** $\text{Left} = x - r,\; \text{Top} = y - r$.
 
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_WPF_Grundformen.svg)
-
-</div>
-</div>
-
----
-
-### WPF Canvas: Instanziierung im Code
-
-Kindelemente (z.B. ein Tragwerksstab `member` als `Line`) lassen sich direkt im Code-Behind erzeugen und zur `Children`-Sammlung des Canvas hinzufügen:
-
-```csharp
-// Linie auf einem WPF Canvas im C#-Code erzeugen
-var member = new Line
-{
-    X1 = 50,  Y1 = 50,   // Startpunkt [px]
-    X2 = 250, Y2 = 150,  // Endpunkt [px]
-    Stroke = Brushes.SteelBlue,
-    StrokeThickness = 3.0,
-    StrokeEndLineCap = PenLineCap.Round
-};
-
-// Zur Zeichenfläche hinzufügen
-myCanvas.Children.Add(member);
-```
-
-- Das Element `member` wird sofort Bestandteil des WPF Visual Tree.
-- Bei Fensteränderungen zeichnet WPF das Element automatisch neu.
-
----
-
-### WPF Layout-Panels: 4 Strategien
-
-<div class="columns top">
-<div class="two">
-
-In WPF positioniert man UI-Elemente nicht pixelgenau per Hand, sondern überlässt dies spezialisierten **Layout-Containern (Panels)**:
-
-- **`Canvas` (Absolut):** Platziert Kindelemente an expliziten Koordinaten $(x, y)$. Ideal für 2D-Simulationen, CAD und Vektorgrafiken.
-- **`StackPanel` (Linear):** Stapelt Elemente sequentiell horizontal oder vertikal. Braucht *keine* Koordinaten (Menüs, Toolbars).
-- **`Grid` (Tabellarisch):** Teilt Fläche in Zeilen und Spalten (`Row`, `Column`). Passt sich responsiv an Fenstergrößen an (Standard für Masken).
-- **`DockPanel` (Andocken):** Heftet Elemente an die Außenkanten (`Top`, `Bottom`, `Left`, `Right`) und füllt das Zentrum.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_WPF_Layout_Panels.svg)
-
-</div>
-</div>
-
----
-
-### Attached Properties: Warum kein `myNode.Left`?
-
-<div class="columns top">
-<div class="two">
-
-Warum deklariert die Klasse `Ellipse` nicht einfach `myNode.Left = 100`?
-
-- **Verschiedene Anforderungen:** Jedes Panel benötigt völlig andere Layout-Informationen (`Canvas.Left/Top`, `Grid.Row/Column`, `DockPanel.Dock` oder gar keine beim `StackPanel`).
-- **Die Speicherfalle:** Müsste `UIElement` jede Eigenschaft aller Container als C#-Feld besitzen, wäre jedes Objekt speicherintensiv überfrachtet.
-- **Open-Closed-Prinzip:** Eigene Custom-Panels könnten keine neuen Eigenschaften definieren, ohne `UIElement` umzuschreiben.
-- **Die WPF-Lösung:** Der übergeordnete **Container** definiert die Eigenschaft (`Canvas.Left`), das **Kindelement** (`child`) speichert nur die Position $(x, y)$.
+> **Anhang:** Details zu 4 WPF-Layout-Panels & `DependencyObject`-Store siehe [Folien_Anhang_Vektorgrafik_Details.md](./Folien_Anhang_Vektorgrafik_Details.md).
 
 </div>
 <div class="one">
@@ -239,127 +166,38 @@ Warum deklariert die Klasse `Ellipse` nicht einfach `myNode.Left = 100`?
 
 ---
 
-### Attached Properties: Hinter den Kulissen (C# & XAML)
+### WPF Canvas: Instanziierung im Code & Shapes
 
 <div class="columns top">
 <div class="one">
 
-**1. Der interne Property-Store:**
-Jedes `DependencyObject` besitzt einen internen Schlüssel-Wert-Speicher:
-- `Canvas.SetLeft(node, 100.0)` ruft intern auf:
-  ```csharp
-  node.SetValue(Canvas.LeftProperty, 100.0);
-  ```
-- Es existiert kein Feld `Left` in `Ellipse` – der Wert ist an `node` assoziiert.
-
-**2. Syntax-Gegenüberstellung:**
-- **XAML:** `<Ellipse Canvas.Left="100" Canvas.Top="50"/>`
-- **C#:** `Canvas.SetLeft(node, 100.0);`
+![](./Diagramme/Mini_WPF_Grundformen.svg)
 
 </div>
-<div class="one">
-
-**3. Wie nutzt der Canvas den Wert?**
-In Phase 2 des Layout-Cycles (`Arrange`) fragt der `Canvas` die Werte $(x, y)$ jedes Kindes (`child`) ab:
-
-```csharp
-foreach (UIElement child in Children)
-{
-    double x = Canvas.GetLeft(child);
-    double y = Canvas.GetTop(child);
-    child.Arrange(new Rect(x, y, 
-        child.DesiredSize.Width, 
-        child.DesiredSize.Height));
-}
-```
-
-> **Performance-Tipp:**  
-> `Canvas.SetLeft()` markiert gezielt nur das Layout des Canvas als verändert (`AffectsArrange`).
-
-</div>
-</div>
-
----
-
-### Positionierungs-Strategien der WPF Shapes
-
-<div class="columns top">
 <div class="two">
 
-| Control | Positionierungsmethode |
-| :--- | :--- |
-| **`Line`** | Eigene Eigenschaften `X1, Y1, X2, Y2` (relativ zu Canvas) |
-| **`Ellipse`** | `Canvas.Left`, `Canvas.Top` (linke obere Hüllbox-Ecke!) |
-| **`Polygon`** | Interne `Points`-Sammlung absoluter Koordinaten |
-| **`Path`** | Koordinaten in der `PathGeometry` (`Figures`) |
-
-<br>
-
-**Zentrierung von Knotenpunkten (Ellipsen):**
-Um ein Element `node` (`Ellipse`) mit Radius $r$ exakt auf Punkt $p = (x_s, y_s)$ zu zentrieren:
-$$\text{Canvas.Left} = x_s - r, \quad \text{Canvas.Top} = y_s - r$$
-
-</div>
-<div class="one">
-
 ```csharp
-// Knoten als zentrierten Kreis zeichnen
-public void AddNode(Canvas canvas, 
-                    Point p, double r)
+// Stab als Line auf einem WPF Canvas erzeugen
+var member = new Line
 {
-    var node = new Ellipse
-    {
-        Width = 2 * r,
-        Height = 2 * r,
-        Fill = Brushes.SteelBlue
-    };
-    Canvas.SetLeft(node, p.X - r);
-    Canvas.SetTop(node, p.Y - r);
-    canvas.Children.Add(node);
-}
+    X1 = 50, Y1 = 50, X2 = 250, Y2 = 150,
+    Stroke = Brushes.SteelBlue,
+    StrokeThickness = 3.0,
+    StrokeEndLineCap = PenLineCap.Round
+};
+myCanvas.Children.Add(member);
 ```
 
-</div>
-</div>
-
----
-
-### WPF Shape-Elemente (Übersicht)
-
-<div class="columns top">
-<div class="one">
-
-**`Line`**
-- Verbindet zwei Punkte $(X_1, Y_1)$ und $(X_2, Y_2)$.
-- Eigenschaften: `Stroke`, `StrokeThickness`, `StrokeDashArray`.
-- Einsatz: Stäbe, Achsen, Maßhilfslinien.
-
-**`Rectangle` / `Ellipse`**
-- Bemaßung über `Width` und `Height`.
-- Flächenfüllung (`Fill`) und Kontur (`Stroke`).
-- Einsatz: Tragwerksknoten, Gelenke, Bauteile.
-
-</div>
-<div class="one">
-
-**`Polygon`**
-- Geschlossene Kette aus $N$ Punkten (`PointCollection`).
-- Automatischer Ringschluss vom letzten zum ersten Punkt.
-- Einsatz: Pfeilspitzen, Lager-Dreiecke, Profile.
-
-**`Path`**
-- Mächtigstes Vektor-Element in WPF.
-- Unterstützt Geraden, Kreisbögen und Bézier-Kurven.
-- Einsatz: Biegelinien, Freiform-CAD-Konturen.
+- **`Line` (`member`):** Verbindet Start/Endpunkt $(x, y)$ (`X1, Y1, X2, Y2`) für Stäbe & Achsen.
+- **`Ellipse` / `Rectangle`:** `Width`, `Height` + `Canvas.Left/Top` für Knoten bei $(x, y)$.
+- **`Polygon` / `Path`:** Punktlisten & Bézier-Kurven (Pfeilspitzen, CAD-Konturen).
 
 </div>
 </div>
 
 ---
 
-<!-- Platzhalter für Abschnittsbildbeschreibung -->
-
-![bg right](./Illustrationen/Abschnitt_2.jpg)
+![bg](./Illustrationen/Abschnitt_2.jpg)
 
 ## 3.2: Transformation: Welt- zu Bildschirmkoordinaten
 
@@ -400,218 +238,43 @@ Beim Zeichnen physikalischer Systeme treffen zwei inkompatible Welten aufeinande
 
 ---
 
-### Gegenüberstellung: Welt- vs. Bildschirmraum
+### Bounding Box & die Anisotropie-Falle
 
 <div class="columns top">
-<div class="one">
-
-### 1. Weltkoordinatensystem (Physik)
-
-- **Modellraum**: Reale physikalische Geometrie
-- **Kontinuierlich**: Reelle Koordinaten $x_w, y_w \in \mathbb{R}$
-- **Einheit**: Physikalische Größen (z.B. Meter $[\mathrm{m}]$)
-- **Orientierung**: Die $+Y$-Achse zeigt nach **oben**!
-- **Ursprung $(0,0)$**: Beliebig im Raum platziert (z.B. linker Auflagerpunkt oder Schwerpunkt).
-
-</div>
-<div class="one">
-
-### 2. Bildschirmkoordinaten (WPF Canvas)
-
-- **Anzeigeraum**: Viewport auf dem Monitor
-- **Diskret**: Pixel bzw. Device Independent Pixels $[\mathrm{px}]$
-- **Einheit**: $1/96$ Zoll pro Pixel
-- **Orientierung**: Die $+Y$-Achse zeigt nach **unten**!
-- **Ursprung $(0,0)$**: Fest in der **linken oberen Ecke** des Steuerelements fixiert.
-
-</div>
-</div>
-
----
-
-![](./Diagramme/Koordinatentransformation.svg)
-
----
-
-### Bounding Box & Bemaßung des Modells
-
-<div class="columns top">
-<div class="two">
-
-Vor der Skalierung wird die minimale Hüllbox (**Bounding Box**) der Knotenkoordinaten ermittelt:
-
-**1. Extremwerte aller Knotenpunkte ermitteln:**
-$$X_{\min} = \min_{i} (x_i), \quad X_{\max} = \max_{i} (x_i) \quad [\mathrm{m}]$$
-$$Y_{\min} = \min_{i} (y_i), \quad Y_{\max} = \max_{i} (y_i) \quad [\mathrm{m}]$$
-
-**2. Physische Ausdehnung des Modells:**
-$$W_{\text{world}} = X_{\max} - X_{\min}, \quad H_{\text{world}} = Y_{\max} - Y_{\min} \quad [\mathrm{m}]$$
-
-**3. Nutzbare Zeichenfläche mit Randabstand:**
-$$W_{\text{draw}} = W_{\text{canvas}} - 2 \cdot \text{margin} \quad [\mathrm{px}]$$
-$$H_{\text{draw}} = H_{\text{canvas}} - 2 \cdot \text{margin} \quad [\mathrm{px}]$$
-
-</div>
 <div class="one">
 
 ![](./Diagramme/Mini_Bounding_Box.svg)
 
 </div>
-</div>
-
----
-
-### Die Anisotropie-Falle (Verzerrung!)
-
-<div class="columns top">
 <div class="two">
 
-Was passiert bei **naiver Skalierung** mit getrennten Faktoren für X und Y?
-
-$$s_x = \frac{W_{\text{draw}}}{W_{\text{world}}}, \quad s_y = \frac{H_{\text{draw}}}{H_{\text{world}}} \quad \left[\frac{\mathrm{px}}{\mathrm{m}}\right]$$
-
-- Wenn $s_x \ne s_y$, wird der Raum gestreckt oder gestaucht:
-  - Kreise werden zu Ellipsen, Fachwerke rechteckig verzerrt.
-  - $45^\circ$-Diagonalen kippen ab, Kraftvektoren zeigen fehl!
-- **Ingenieur-Regel:** Anisotrope Skalierung ist in Physikmodellen unzulässig!
-- **Die Lösung:** Ein isotroper Maßstab $s = \min(s_x, s_y)$ (nächste Folie).
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Anisotropie_Falle.svg)
+1. **Minimale Hüllbox aus Knotenkoordinaten $(x_i, y_i)$:**
+   $$W_{\text{world}} = X_{\max} - X_{\min}, \quad H_{\text{world}} = Y_{\max} - Y_{\min} \quad [\mathrm{m}]$$
+   $$W_{\text{draw}} = W_{\text{canvas}} - 2 \cdot \text{margin}, \quad H_{\text{draw}} = H_{\text{canvas}} - 2 \cdot \text{margin} \quad [\mathrm{px}]$$
+2. **Anisotropie-Falle bei getrennten Maßstäben ($s_x \ne s_y$):**
+   ```csharp
+   double s_x = W_draw / W_world, s_y = H_draw / H_world; // Kreise -> Ellipsen!
+   ```
+   - $45^\circ$-Diagonalen kippen ab! Lösung: Isotropie $s = \min(s_x, s_y)$.
 
 </div>
 </div>
 
 ---
 
-### Isotropes Uniform Scaling
+### Isotropes Scaling, Zentrierung & Y-Achsen-Invertierung
 
 <div class="columns top">
 <div class="two">
 
-Die Lösung: **Isotrope Skalierung** mit einheitlichem Maßstab $s$:
-
-$$s = \min(s_x, s_y) \quad \left[\frac{\mathrm{px}}{\mathrm{m}}\right]$$
-
-- **Bedeutung:** Einheit $[\mathrm{px/m}]$ (Pixel pro Meter).
-- Der **kleinere** Faktor garantiert, dass das Modell in beiden Dimensionen vollständig auf die Zeichenfläche passt.
-- **Eigenschaften:**
-  - Alle geometrischen Proportionen bleiben physikalisch exakt erhalten.
-  - Winkel bleiben winkeltreu ($45^\circ$ bleibt exakt $45^\circ$).
-  - Modell skaliert responsiv bei Fenstergrößenänderung.
-
-</div>
-<div class="one">
-
-| Symbol | Bedeutung | Einheit |
-| :--- | :--- | :---: |
-| $W_{\text{world}}$ | Modellbreite | $[\mathrm{m}]$ |
-| $H_{\text{world}}$ | Modellhöhe | $[\mathrm{m}]$ |
-| $W_{\text{draw}}$ | Nutzbare Breite | $[\mathrm{px}]$ |
-| $H_{\text{draw}}$ | Nutzbare Höhe | $[\mathrm{px}]$ |
-| $s$ | Isotroper Maßstab | $[\mathrm{px/m}]$ |
-| $x_{\text{off}}, y_{\text{off}}$ | Zentrierungs-Offsets | $[\mathrm{px}]$ |
-
-</div>
-</div>
-
----
-
-### Zentrierung im Viewport: Problem & 2 Grenzfälle
-
-<div class="columns top">
-<div class="two">
-
-Beim isotropen Skalieren $s = \min(s_x, s_y)$ stößt das Modell $(W_{\text{world}}, H_{\text{world}})$ an genau einer Achse von $(W_{\text{draw}}, H_{\text{draw}})$ an:
-
-- **Das Problem ohne Zentrierung:**
-  - Bei naivem Platzieren an $(\text{margin}, \text{margin})$ klebt das Modell starr am linken bzw. oberen Rand.
-  - Der gesamte ungenutzte Freiraum verbleibt rechts bzw. unten.
-- **Die 2 resultierenden Grenzfälle:**
-  - **Fall 1: Höhen-limitiert ($s_y \le s_x$):**  
-    Modell füllt $H_{\text{draw}}$ aus $\implies$ horizontaler Freiraum $\Delta W$.
-  - **Fall 2: Breiten-limitiert ($s_x < s_y$):**  
-    Modell füllt $W_{\text{draw}}$ aus $\implies$ vertikaler Freiraum $\Delta H$.
-- **Ziel:** Symmetrische Aufteilung mit $x_{\text{off}}$ und $y_{\text{off}}$.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Zentrierung_Zwei_Faelle.svg)
-
-</div>
-</div>
-
----
-
-### Zentrierung Fall 1: Höhen-limitiert (s_y ≤ s_x)
-
-<div class="columns top">
-<div class="two">
-
-Ist das Fenster relativ breiter als das Modell, limitiert die Höhe ($s = s_y$):
-
-- **Vertikale Achse (voll belegt):**
-  - Modellhöhe füllt $H_{\text{draw}}$ ($H_{\text{world}} \cdot s$). $\Delta H = 0 \implies y_{\text{off}} = \text{margin}$.
-- **Horizontale Achse (Freiraum):**
-  - Freiraum $\Delta W = W_{\text{draw}} - W_{\text{world}} \cdot s > 0$ wird links/rechts halbiert:
-    $$x_{\text{off}} = \text{margin} + \frac{\Delta W}{2} \quad [\mathrm{px}]$$
-- **Ergebnis:** Das Modell steht horizontal perfekt zentriert im Viewport.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Zentrierung_Fall1_Hoehe.svg)
-
-</div>
-</div>
-
----
-
-### Zentrierung Fall 2: Breiten-limitiert (s_x < s_y)
-
-<div class="columns top">
-<div class="two">
-
-Ist das Fenster relativ höher als das Modell, limitiert die Breite ($s = s_x$):
-
-- **Horizontale Achse (voll belegt):**
-  - Modellbreite füllt $W_{\text{draw}}$ ($W_{\text{world}} \cdot s$). $\Delta W = 0 \implies x_{\text{off}} = \text{margin}$.
-- **Vertikale Achse (Freiraum):**
-  - Freiraum $\Delta H = H_{\text{draw}} - H_{\text{world}} \cdot s > 0$ wird oben/unten halbiert:
-    $$y_{\text{off}} = \text{margin} + \frac{\Delta H}{2} \quad [\mathrm{px}]$$
-- **Universelle C#-Formel (ohne `if`/`else`):**
-  - Auf der limitierenden Achse gilt $\Delta = 0$. Die Formeln berechnen beide Fälle einheitlich!
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Zentrierung_Fall2_Breite.svg)
-
-</div>
-</div>
-
----
-
-### Invertierung der Y-Achse (Welt $\to$ Screen)
-
-<div class="columns top">
-<div class="two">
-
-Das Koordinaten-Paradoxon erfordert eine **Spiegelung der vertikalen Achse**:
-
-- **Weltraum:** $Y$ wächst nach **oben** (Boden bei $Y=0\,\mathrm{m}$).
-- **Screenraum:** $Y$ wächst nach **unten** (Kopfzeile bei $Y=0\,\mathrm{px}$).
-- **Die Transformationsgleichung:**
-  $y_s = y_{\text{off}} + (Y_{\max} - y_w) \cdot s \quad [\mathrm{px}]$
-- **Grenzwerte-Kontrolle:**
-  - Höchster Modellpunkt ($y_w = Y_{\max}$):  
-    $y_s = y_{\text{off}} + 0 \implies$ **oberer Rand**.
-  - Tiefster Modellpunkt ($y_w = Y_{\min}$):  
-    $y_s = y_{\text{off}} + H_{\text{world}} \cdot s \implies$ **unterer Rand**.
-- **Einheiten:** $[\mathrm{px}] + [\mathrm{m}] \cdot [\mathrm{px/m}] = [\mathrm{px}]$ (dimensionsrein).
+- **Isotroper Maßstab:** $s = \min(s_x, s_y)\;[\mathrm{px/m}]$ erhält Winkel und Proportionen exakt:
+  ```csharp
+  double s = Math.Min(s_x, s_y);
+  ```
+- **Zentrierungs-Offsets ($x_{\text{off}}, y_{\text{off}}$):** Teilen verbleibenden Freiraum symmetrisch auf ([Anhang: 2 Grenzfälle](./Folien_Anhang_Vektorgrafik_Details.md)).
+- **Y-Achsen-Invertierung ($+Y$ oben $\to$ $+Y$ unten, $Y_{\min}$ bis $Y_{\max}$, Höhe $H_{\text{world}}$):**
+  $$x_s = x_{\text{off}} + (x_w - X_{\min}) \cdot s, \qquad y_s = y_{\text{off}} + (Y_{\max} - y_w) \cdot s \quad [\mathrm{px}]$$
+- **Grenzwerte:** $y_w = Y_{\max} \implies y_s = y_{\text{off}}$; $y_w = Y_{\min} \implies y_s = y_{\text{off}} + H_{\text{world}} \cdot s$.
 
 </div>
 <div class="one">
@@ -623,65 +286,95 @@ Das Koordinaten-Paradoxon erfordert eine **Spiegelung der vertikalen Achse**:
 
 ---
 
-### C#-Implementierung: `Transform2D` (Setup & Skalierung)
+### C#-Implementierung: `Transform2D` (`Update` & `WorldToScreen`)
+
+<div class="columns top">
+<div class="one">
 
 ```csharp
-public class Transform2D
+public void Update(
+    double xMin, double xMax, double yMin, double yMax,
+    double canvasWidth, double canvasHeight,
+    double margin = 50.0)
 {
-    public double Scale { get; private set; } = 1.0;
-    public double OffsetX { get; private set; }
-    public double OffsetY { get; private set; }
-    public double XMin { get; private set; }
-    public double YMax { get; private set; }
+    XMin = xMin;
+    YMax = yMax;
+    double worldW = Math.Max(xMax - xMin, 1e-4);
+    double worldH = Math.Max(yMax - yMin, 1e-4);
+    double drawW = Math.Max(canvasWidth - 2 * margin, 10);
+    double drawH = Math.Max(canvasHeight - 2 * margin, 10);
 
-    public void Update(double xMin, double xMax, double yMin, double yMax,
-                       double canvasWidth, double canvasHeight, double margin = 50.0)
-    {
-        XMin = xMin;
-        YMax = yMax; // Höchster Y-Wert für Invertierung!
-        double worldW = Math.Max(xMax - xMin, 1e-4);
-        double worldH = Math.Max(yMax - yMin, 1e-4);
-
-        double drawW = Math.Max(canvasWidth - 2.0 * margin, 10.0);
-        double drawH = Math.Max(canvasHeight - 2.0 * margin, 10.0);
-
-        Scale = Math.Min(drawW / worldW, drawH / worldH); // Isotrop!
-        OffsetX = margin + (drawW - worldW * Scale) / 2.0;
-        OffsetY = margin + (drawH - worldH * Scale) / 2.0;
-    }
+    Scale = Math.Min(drawW / worldW, drawH / worldH);
+    OffsetX = margin + (drawW - worldW * Scale) / 2.0;
+    OffsetY = margin + (drawH - worldH * Scale) / 2.0;
 }
 ```
 
----
-
-### C#-Implementierung: `Transform2D` (Transformation)
+</div>
+<div class="one">
 
 ```csharp
-public class Transform2D
-{
-    // ... Bounding-Box & Skalierungszustand aus Update() ...
+// Weltpunkt (xW, yW) [m] -> Canvas-Pixel (x_s, y_s) [px]
+public Point WorldToScreen(double xW, double yW) => new(
+    OffsetX + (xW - XMin) * Scale,
+    OffsetY + (YMax - yW) * Scale
+);
 
-    // Wandelt Weltpunkt (X_w, Y_w) [m] in Canvas-Pixel (x_s, y_s) [px] um
-    public Point WorldToScreen(double xW, double yW) => new(
-        OffsetX + (xW - XMin) * Scale,
-        OffsetY + (YMax - yW) * Scale // Y-Achsen-Invertierung!
-    );
-
-    // Wandelt Canvas-Pixel (x_s, y_s) [px] zurück in Weltkoordinaten [m]
-    public (double Xw, double Yw) ScreenToWorld(double xS, double yS) => (
-        XMin + (xS - OffsetX) / Scale,
-        YMax - (yS - OffsetY) / Scale
-    );
-}
+// Rücktransformation [px] -> [m]
+public (double Xw, double Yw) ScreenToWorld(
+    double xS, double yS) => (
+    XMin + (xS - OffsetX) / Scale,
+    YMax - (yS - OffsetY) / Scale
+);
 ```
 
-- Entspricht exakt der Vorlagenklasse in [`VectorTrussCanvas/Geometry/Transform2D.cs`](../Uebung/Vorlage/VectorTrussCanvas/Geometry/Transform2D.cs).
+- **Parameter:** Weltgrenzen `xMin`, `xMax`, `yMin`, `yMax` (`worldW`, `worldH`), Viewport `canvasWidth`/`canvasHeight`, Rand `margin` (`drawW`, `drawH`) sowie Punkt `(xW, yW)` (`Transform2D.cs`).
+
+</div>
+</div>
 
 ---
 
-<!-- Platzhalter für Abschnittsbildbeschreibung -->
+<!-- _class: activity -->
 
-![bg right](./Illustrationen/Abschnitt_3.jpg)
+### Mitmach-Impuls (3 Min.): Isotropes Scaling & `WorldToScreen`
+
+Ein Fachwerk erstreckt sich über $X \in [0, 10]\,\mathrm{m}$ und $Y \in [0, 4]\,\mathrm{m}$ auf einem Canvas mit $W_{\text{canvas}} = 900\,\mathrm{px}$, $H_{\text{canvas}} = 500\,\mathrm{px}$ und $\text{margin} = 50\,\mathrm{px}$:
+
+| $W_{\text{world}} \times H_{\text{world}}$ | $W_{\text{draw}} \times H_{\text{draw}}$ | $s_x$ | $s_y$ |
+| :--- | :--- | :--- | :--- |
+| $10\,\mathrm{m} \times 4\,\mathrm{m}$ | $800\,\mathrm{px} \times 400\,\mathrm{px}$ | $80\,\mathrm{px/m}$ | $100\,\mathrm{px/m}$ |
+
+Bearbeite diese drei Fragen kurz mit deinem Nachbarn:
+
+1. **Maßstab:** Welcher isotrope Maßstab $s = \min(s_x, s_y)$ gilt, und was würde bei $s_x \ne s_y$ passieren?
+2. **Zentrierung:** Berechnen Sie die Offsets $x_{\text{off}}$ und $y_{\text{off}}$!
+3. **Punkt-Mapping:** Auf welche Bildschirmkoordinate $(x_s, y_s)$ fällt der oberste linke Punkt $(x_w = 0, y_w = 4)$?
+
+> **Hinweis:** Prüfen Sie kurz zu zweit: $x_{\text{off}} = \text{margin} + \frac{W_{\text{draw}} - W_{\text{world}} \cdot s}{2}$ und $y_s = y_{\text{off}} + (Y_{\max} - y_w) \cdot s$.
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Isotropes Scaling & `WorldToScreen`
+
+1. **Isotroper Maßstab:**
+   $$s = \min(80, 100) = \mathbf{80\,\mathrm{px/m}}$$
+   *(Ohne $\min$ würde das Fachwerk vertikal um $+25\,\%$ gestreckt und $45^\circ$-Diagonalen verfälscht!)*
+2. **Zentrierungs-Offsets:**
+   - **Horizontal (voll belegt):** $x_{\text{off}} = 50 + \frac{800 - 10 \cdot 80}{2} = \mathbf{50\,\mathrm{px}}$
+   - **Vertikal (Freiraum $400 - 320 = 80\,\mathrm{px}$):** $y_{\text{off}} = 50 + \frac{400 - 4 \cdot 80}{2} = \mathbf{90\,\mathrm{px}}$
+3. **Oberer linker Punkt $(0, 4)$ ($X_{\min} = 0$, $Y_{\max} = 4$):**
+   $$x_s = 50 + (0 - 0) \cdot 80 = \mathbf{50\,\mathrm{px}}, \qquad y_s = 90 + (4 - 4) \cdot 80 = \mathbf{90\,\mathrm{px}}$$
+
+- **Gegenprobe unterer rechter Punkt $(10, 0)$:** $x_s = 50 + 800 = 850\,\mathrm{px}$, $y_s = 90 + 320 = 410\,\mathrm{px}$ (exakt $50\,\text{px}$ bzw. $90\,\text{px}$ Rand).
+
+> **Merksatz:** `YMax` landet immer auf `OffsetY` (oberer Rand des zentrierten Modells)!
+
+---
+
+![bg](./Illustrationen/Abschnitt_3.jpg)
 
 ## 3.3: Vektordarstellung geometrischer Elemente und Kräfte
 
@@ -719,18 +412,25 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Analytische Berechnung der Pfeilspitze
+### Analytische Berechnung der Pfeilspitze & C#-Code
 
 <div class="columns top">
 <div class="two">
 
-Gegeben: Knoten $\vec{P}_{\text{node}}$ $[\mathrm{px}]$, Kraftvektor $\vec{F} = (F_x, F_y)^T$, Spitzenmaße $L$ und $W$ $[\mathrm{px}]$.
+Gegeben: Knoten $\vec{P}_{\text{node}}$ $[\mathrm{px}]$, Kraft $\vec{F}$, Spitzenmaße $L$ und $W$ $[\mathrm{px}]$, Richtung $\vec{e}_u = \vec{F}_{\text{screen}} / \|\vec{F}_{\text{screen}}\|$ (`dir`):
 
-1. **Pfeilspitze:** $\vec{P}_{\text{tip}} = \vec{P}_{\text{node}} + \text{length} \cdot \vec{e}_u$
-2. **Normierter Richtungsvektor:** $\vec{e}_u = \vec{F}_{\text{screen}} / \|\vec{F}_{\text{screen}}\|$ mit Komponenten $(e_x, e_y)$
-3. **Orthogonalvektor ($90^\circ$ links):** $\vec{e}_u^\perp = \vec{e}_{\text{perp}} = (-e_y, e_x)^T$
-4. **Basispunkt & Flügelpunkte:**
-   $\vec{P}_{\text{base}} = \vec{P}_{\text{tip}} - L \cdot \vec{e}_u, \quad \vec{P}_{\text{wing1,2}} = \vec{P}_{\text{base}} \pm \frac{W}{2} \cdot \vec{e}_u^\perp$
+1. **Orthogonalvektor ($90^\circ$ links):** $\vec{e}_u^\perp = \vec{e}_{\text{perp}} = (-e_y, e_x)^T$
+2. **Basispunkt & Flügel:** $\vec{P}_{\text{base}} = \vec{P}_{\text{tip}} - L \cdot \vec{e}_u$, $\vec{P}_{\text{wing1,2}} = \vec{P}_{\text{base}} \pm \frac{W}{2} \cdot \vec{e}_u^\perp$
+
+```csharp
+public static Point[] GetArrowhead(Point tip, Vector dir, double length, double width)
+{
+    dir.Normalize();
+    var perp = new Vector(-dir.Y, dir.X); // 90° Orthogonalvektor
+    Point pBase = tip - (length * dir);
+    return new[] { tip, pBase + (width / 2.0 * perp), pBase - (width / 2.0 * perp) };
+}
+```
 
 </div>
 <div class="one">
@@ -740,29 +440,7 @@ Gegeben: Knoten $\vec{P}_{\text{node}}$ $[\mathrm{px}]$, Kraftvektor $\vec{F} = 
 </div>
 </div>
 
----
-
-### Berechnung der Pfeilspitze in C#
-
-```csharp
-// Berechnet die Eckpunkte für ein Pfeilspitzen-Dreieck ohne Trigonometrie
-public static Point[] GetArrowhead(Point tip, Vector dir, double length, double width)
-{
-    dir.Normalize(); // Richtungs-Einheitsvektor e_u
-    
-    // Orthogonalvektor e_u_perp (90° gegen den Uhrzeigersinn gedreht)
-    var perp = new Vector(-dir.Y, dir.X);
-
-    Point pBase = tip - (length * dir);             // P_base
-    Point pWing1 = pBase + (width / 2.0 * perp);     // P_wing1
-    Point pWing2 = pBase - (width / 2.0 * perp);     // P_wing2
-
-    return new Point[] { tip, pWing1, pWing2 };
-}
-```
-
-- **Vorteil:** Verwendet reine Vektoralgebra ohne teure Aufrufe von `Math.Sin()` oder `Math.Cos()`.
-- Liefert die drei Eckpunkte direkt für die `Points`-Collection eines WPF-`Polygon`.
+> **Vorteil:** Vektoralgebra ohne `Sin`/`Cos` (Vorlage `VectorArrow.cs` nutzt alternativ `Atan2` mit $\beta = 15^\circ$).
 
 ---
 
@@ -773,44 +451,14 @@ public static Point[] GetArrowhead(Point tip, Vector dir, double length, double 
 
 In industriellen CAD-Viewern werden Abmessungen normgerecht nach **DIN 406** dargestellt:
 
-1. **Maßhilfslinien (Extension Lines):**
-   - Verlängern Bauteilkanten nach außen.
-   - Kurzer Sicherheitsabstand zum Knoten ($3–5\,\mathrm{px}$).
-   - Überstand über Maßlinie: ca. $2–3\,\mathrm{mm}$ ($8–12\,\mathrm{px}$).
-2. **Maßlinie (Dimension Line):**
-   - Steht orthogonal zu den Maßhilfslinien.
-   - Begrenzung durch schlanke Maßpfeile (Verhältnis 1:3).
-3. **Maßzahl (Dimension Text):**
-   - Mittig über der Maßlinie platziert (z.B. `"4.00 m"`).
+1. **Maßhilfslinien (Extension Lines):** Verlängern Bauteilkanten mit Gap ($3\text{--}5\,\mathrm{px}$) und Überstand ($8\text{--}12\,\mathrm{px}$).
+2. **Maßlinie (Dimension Line):** Steht orthogonal zu den Maßhilfslinien, begrenzt durch schlanke Maßpfeile (1:3).
+3. **Maßzahl (Dimension Text):** Mittig über der Maßlinie platziert (z. B. `"4.00 m"`).
 
 </div>
 <div class="one">
 
 ![](./Diagramme/Mini_DIN_406_Bemaszung.svg)
-
-</div>
-</div>
-
----
-
-### DIN 406: Geometrische Konstruktion der Maßkette
-
-<div class="columns top">
-<div class="two">
-
-Zerlegung der Maßkette in **5 Konstruktionsschritte**:
-
-1. **Referenzpunkte:** Bauteilknoten $P_1(x_1, y_1)$ und $P_2(x_2, y_2)$ erfassen.
-2. **Maßhilfslinien:** Orthogonal von $P_1, P_2$ zu $y_{\text{dim}}$ (`yScreen`) führen.
-   - Gap ($\Delta y_{\text{gap}} = 4\,\mathrm{px}$) und Überstand ($\Delta y_{\text{over}} = 8\,\mathrm{px}$).
-3. **Maßlinie:** Horizontale Verbindungsstrecke auf Höhe $y_{\text{dim}}$.
-4. **Maßpfeile:** Schlanke Spitzen an den Enden der Maßlinie.
-5. **Maßzahl:** Zentrierter Text bei $x_{\text{mid}} = \frac{x_1 + x_2}{2}$ über Maßlinie.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_DIN_406_Konstruktion.svg)
 
 </div>
 </div>
@@ -823,36 +471,27 @@ Zerlegung der Maßkette in **5 Konstruktionsschritte**:
 public static void AddHorizontalDimensionLine(Canvas canvas, Point p1, Point p2, 
                                               double yScreen, string text, Brush stroke)
 {
-    const double yGap = 4;   // Δy_gap: Abstand zum Bauteil
-    const double yOver = 8;  // Δy_over: Überstand über yScreen (y_dim)
-
-    // 1. Maßhilfslinien von (p.Y + yGap) bis (yScreen + yOver)
+    const double yGap = 4, yOver = 8; // Abstand & Überstand
     canvas.Children.Add(new Line { X1 = p1.X, Y1 = p1.Y + yGap, X2 = p1.X, Y2 = yScreen + yOver, Stroke = stroke });
     canvas.Children.Add(new Line { X1 = p2.X, Y1 = p2.Y + yGap, X2 = p2.X, Y2 = yScreen + yOver, Stroke = stroke });
-
-    // 2. Maßlinie auf yScreen (y_dim)
     canvas.Children.Add(new Line { X1 = p1.X, Y1 = yScreen, X2 = p2.X, Y2 = yScreen, Stroke = stroke });
-
-    // 3. Maßpfeile auf Höhe der Maßlinie
-    Point dim1 = new Point(p1.X, yScreen);
-    Point dim2 = new Point(p2.X, yScreen);
-    canvas.Children.Add(CreateArrowHead(dim1, new Vector(1, 0), stroke));
-    canvas.Children.Add(CreateArrowHead(dim2, new Vector(-1, 0), stroke));
-
-    // 4. Maßzahl zentriert bei x_mid = (p1.X + p2.X) / 2
-    double xMid = (p1.X + p2.X) / 2.0;
+    canvas.Children.Add(new Polygon { Points = new PointCollection(GetArrowhead(new Point(p1.X, yScreen), new Vector(1, 0), 8, 5)), Fill = stroke });
+    canvas.Children.Add(new Polygon { Points = new PointCollection(GetArrowhead(new Point(p2.X, yScreen), new Vector(-1, 0), 8, 5)), Fill = stroke });
     var label = new TextBlock { Text = text, Foreground = stroke, FontSize = 11 };
-    Canvas.SetLeft(label, xMid - 20);
+    Canvas.SetLeft(label, (p1.X + p2.X) / 2.0 - 20);
     Canvas.SetTop(label, yScreen - 16);
     canvas.Children.Add(label);
 }
 ```
 
+- **Maßhilfslinien (`yGap = 4`, `yOver = 8`):** Starten mit Gap zu `p1`/`p2` und ragen über `yScreen` hinaus.
+- **Maßpfeile & Text:** Nutzen `GetArrowhead(...)`; der `TextBlock` sitzt zentriert über der Maßlinie.
+
+> **Übung 1.3:** Sie implementieren die vertikale Variante `AddVerticalDimensionLine(...)` für die Gesamthöhe samt Maßpfeilen.
+
 ---
 
-<!-- Platzhalter für Abschnittsbildbeschreibung -->
-
-![bg right](./Illustrationen/Abschnitt_4.jpg)
+![bg](./Illustrationen/Abschnitt_4.jpg)
 
 ## 3.4: Interaktive Steuerung im Canvas (Pan & Zoom)
 
@@ -861,25 +500,18 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Navigation in Simulationsmodellen
 - Naives Neuzeichnen vs. GPU-`MatrixTransform`
 - Zoom mit Mauszeiger-Fixpunkt (`ScaleAt`)
-- Verschieben per Drag & Drop (`Pan`) und `CaptureMouse`
-- Der Dragging-Jitter Bugfix & `ScreenToWorld`
+- Verschieben per Drag & Drop (`Pan`), Jitter-Fix & `ScreenToWorld`
 
 ---
 
-### Navigationskonzept: Naives CPU-Neuzeichnen
+### Naives CPU-Neuzeichnen vs. GPU-`MatrixTransform`
 
 <div class="columns top">
 <div class="two">
 
-**Ansatz A: Naives CPU-Neuzeichnen**
-- Bei jeder Mausbewegung werden alle Weltkoordinaten neu berechnet.
-- Alle WPF-Shapes werden im Canvas verschoben (`Canvas.SetLeft`).
-- **Gravierende Nachteile**:
-  - $O(N)$ CPU-Rechenaufwand bei jeder Mausbewegung.
-  - Extremes Flackern und UI-Lags ab 1.000 Elementen.
-  - Koppelt den Navigationszustand unnötig an Modelldaten.
-  - Erzeugt unzählige Layout-Passes in WPF.
-- **Die saubere Lösung:** GPU-Transformation mit Affiner Matrix $\mathbf{M}$ (folgt).
+- **Naives CPU-Neuzeichnen (Ansatz A):** Jede Mausbewegung berechnet alle Weltkoordinaten neu ($O(N)$) $\implies$ Lags und Layout-Passes ab 1.000 Elementen.
+- **GPU-`MatrixTransform` (Ansatz B – Standard):** Das Modell wird **einmalig** gezeichnet; Pan & Zoom verändern nur eine einzige affine $3 \times 3$-Matrix ($\mathbf{M}$).
+- **Vorteil:** Hardwarebeschleunigt über DirectX ($O(1)$), 60+ FPS, 0 Bytes GC-Allokation!
 
 </div>
 <div class="one">
@@ -891,232 +523,51 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Navigationskonzept: GPU-`MatrixTransform`
+### Fixpunkt-Zoom (`ScaleAt`) & Mausrad-Code
 
 <div class="columns top">
-<div class="two">
-
-**Ansatz B: GPU-`MatrixTransform` (Industriestandard)**
-- Das Modell wird **einmalig** auf den Canvas gezeichnet.
-- Pan und Zoom verändern ausschließlich eine einzige affine Transformationsmatrix am Canvas.
-- **Vorteile**:
-  - Hardwarebeschleunigt über DirectX / GPU ($O(1)$ Aufwand).
-  - Konstant 60+ FPS selbst bei komplexen Großmodellen.
-  - Vollständige Entkopplung von Geometriedaten und Kameraansicht.
-  - Keine GC-Allokationen im Navigationstakt!
-
-</div>
-<div class="one">
-
-$$\begin{pmatrix} x' \\ y' \\ 1 \end{pmatrix} = \begin{pmatrix} s & 0 & d_x \\ 0 & s & d_y \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} x \\ y \\ 1 \end{pmatrix}$$
-
-> **DirectX Render-Pipeline:**  
-> Die GPU schiebt die gezeichnete Textur im Video-RAM – die CPU bleibt völlig unberührt!
-
-</div>
-</div>
-
----
-
-### XAML-Struktur für hardwarebeschleunigtes Pan & Zoom
-
-Ein übergeordneter Container (`Border` oder `Grid`) fängt alle Mausereignisse ab:
-
-```xml
-<Border ClipToBounds="True" Background="#F8FAFC"
-        MouseWheel="OnMouseWheel" MouseDown="OnMouseDown"
-        MouseMove="OnMouseMove" MouseUp="OnMouseUp">
-    <Canvas x:Name="SimulationCanvas">
-        <Canvas.RenderTransform>
-            <MatrixTransform x:Name="CanvasMatrixTransform" />
-        </Canvas.RenderTransform>
-    </Canvas>
-</Border>
-```
-
-- **`ClipToBounds="True"`**: Schneidet herausgezoomte Elemente am Fensterrand sauber ab.
-- **`CanvasMatrixTransform`**: Steuert Pan (Translation) und Zoom (Skalierung) in einer einzigen affinen $3 \times 3$-Matrix.
-
----
-
-### Das Fixpunkt-Dilemma beim Zoomen
-
-<div class="columns top">
-<div class="two">
-
-Warum versagt naives Skalieren in interaktiven Viewern?
-
-- **Naiver Zoom um den Ursprung $(0,0)$:**
-  - Jeder Bildschirmpunkt transformiert sich gemäß:
-    $\vec{P}' = s_{\text{zoom}} \cdot \vec{P}$
-  - **Beispiel:** Ein Bauteildreieck bei $(800\,\mathrm{px}, 500\,\mathrm{px})$ wandert bei Zoomfaktor $1{,}5$ auf $(1200\,\mathrm{px}, 750\,\mathrm{px})$.
-  - **Effekt:** Das anvisierte Detail springt nach rechts unten aus dem Sichtfeld!
-- **Das CAD-Ziel: Fixpunkt-Invarianz:**
-  - Der Punkt direkt unter dem Cursor $\vec{P}_{\text{cursor}}$ muss vor und nach dem Zoom an **exakt derselben Bildschirmposition** bleiben:
-    $\vec{P}_{\text{cursor}}' = \vec{P}_{\text{cursor}}$
-  - Die visuelle Welt expandiert radial **um den Mauszeiger**.
-
-</div>
 <div class="one">
 
 ![](./Diagramme/Mini_ScaleAt_Cursor.svg)
 
 </div>
-</div>
-
----
-
-### Die 3-Schritt-Matrix-Zerlegung (`ScaleAt`)
-
-<div class="columns top">
 <div class="two">
-
-Skalierung um ein beliebiges Zentrum $\vec{C} = \vec{P}_{\text{cursor}}$ via Matrix-Kaskade:
-
-$$\mathbf{M}_{\text{zoom}} = \mathbf{T}(+\vec{C}) \cdot \mathbf{S}(s, s) \cdot \mathbf{T}(-\vec{C})$$
-
-1. **Translation $-\vec{C}$:** Verschiebt Cursor in den Ursprung $(0,0)$.
-2. **Skalierung $\mathbf{S}(s, s)$:** Streckt Raum isotrop um Ursprung $(0,0)$.
-3. **Rücktranslation $+\vec{C}$:** Schiebt Zentrum an alte Position zurück.
-
-- **WPF-Befehl:** `matrix.ScaleAt(zoom, zoom, cursor.X, cursor.Y);` fasst diese Kaskade in einer GPU-Operation zusammen.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_ScaleAt_Prinzip.svg)
-
-</div>
-</div>
-
----
-
-### Mathematischer Beweis der `ScaleAt`-Transformation
-
-<div class="columns top">
-<div class="one">
-
-**1. Vektorielle Kaskade & Fixpunkt:**
-Ein Punkt $\vec{P}$ durchläuft die drei Einzelschritte:
-- **Schritt 1:** $\vec{P}_1 = \vec{P} - \vec{C}$ (Verschiebung in Ursprung)
-- **Schritt 2:** $\vec{P}_2 = s \cdot \vec{P}_1 = s \cdot (\vec{P} - \vec{C})$ (Skalierung)
-- **Schritt 3:** $\vec{P}' = \vec{P}_2 + \vec{C} = s \cdot (\vec{P} - \vec{C}) + \vec{C}$
-
-Zweipunkt-Form: $\vec{P}' = s \cdot \vec{P} + (1 - s) \cdot \vec{C}$
-
-- **Fixpunkt ($\vec{P} = \vec{C}$):** $\vec{C}' = s \cdot \vec{C} + (1 - s) \cdot \vec{C} = \vec{C} \quad \checkmark$
-- **Ergebnis:** Der Punkt unter dem Cursor bleibt absolut ortsfest!
-
-</div>
-<div class="one">
-
-**2. Homogene $3 \times 3$-Transformationsmatrix:**
-$$\begin{aligned}
-\mathbf{M}_{\text{zoom}} &= \begin{pmatrix} 1 & 0 & C_x \\ 0 & 1 & C_y \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} s & 0 & -s\,C_x \\ 0 & s & -s\,C_y \\ 0 & 0 & 1 \end{pmatrix} \\
-&= \begin{pmatrix} s & 0 & (1 - s)\,C_x \\ 0 & s & (1 - s)\,C_y \\ 0 & 0 & 1 \end{pmatrix}
-\end{aligned}$$
-
-- **Radialer Zoom für $\vec{P} = \vec{C} + \vec{r}$:**
-  $\vec{P}' - \vec{C} = s \cdot (\vec{C} + \vec{r} - \vec{C}) = s \cdot \vec{r}$
-  $\implies$ Abstände zum Cursor skalieren homogen mit $s$.
-
-</div>
-</div>
-
----
-
-### C#-Implementierung: Zoom per Mausrad
 
 ```csharp
 private void OnMouseWheel(object sender, MouseWheelEventArgs e)
 {
-    // Exakte Position des Mauszeigers im Canvas-Koordinatenraum ermitteln
     Point mousePos = e.GetPosition(SimulationCanvas);
-    
-    // Zoomfaktor bestimmen: +15 % hineinzoomen, -13 % herauszoomen
     double zoomFactor = e.Delta > 0 ? 1.15 : 1.0 / 1.15;
 
-    // Aktuelle Transformationsmatrix des Canvas auslesen
     Matrix m = CanvasMatrixTransform.Matrix;
-    
-    // Multipliziert Skalierung mit Fixpunkt-Erhalt unter dem Mauszeiger
     m.ScaleAt(zoomFactor, zoomFactor, mousePos.X, mousePos.Y);
-    
-    // Neue Matrix an die GPU übergeben
     CanvasMatrixTransform.Matrix = m;
 }
 ```
 
-- Flüssiges, intuitives Zoomen wie in professionellen CAD-Programmen.
+- **Fixpunkt-Invarianz:** $\mathbf{M}_{\text{zoom}} = \mathbf{T}(+\vec{C}) \cdot \mathbf{S}(s, s) \cdot \mathbf{T}(-\vec{C})$ hält den Punkt unter dem Cursor $\vec{C}$ ortsfest.
+- `ClipToBounds="True"` am äußeren `Border` schneidet Ränder ab ([Anhang](./Folien_Anhang_Vektorgrafik_Details.md)).
+
+</div>
+</div>
 
 ---
 
-### Verschieben der Arbeitsfläche per Drag & Drop (`Pan`)
-
-Damit die Maus bei schnellen Wisch-Bewegungen nicht abreißt, wird **`CaptureMouse()`** genutzt:
-
-```csharp
-private Point _lastPos;
-private bool _isPanning;
-
-private void OnMouseDown(object sender, MouseButtonEventArgs e)
-{
-    if (e.MiddleButton != MouseButtonState.Pressed && !Keyboard.IsKeyDown(Key.Space)) return;
-    _lastPos = e.GetPosition(this);
-    _isPanning = true;
-    ((IInputElement)sender).CaptureMouse();
-    Cursor = Cursors.SizeAll;
-}
-
-private void OnMouseUp(object sender, MouseButtonEventArgs e)
-{
-    _isPanning = false;
-    ((IInputElement)sender).ReleaseMouseCapture();
-    Cursor = Cursors.Arrow;
-}
-```
-
----
-
-### Verschieben: Die `MouseMove`-Logik
-
-In `MouseMove` wird die Differenz $\vec{\Delta} = \vec{P}_{\text{current}} - \vec{P}_{\text{last}}$ (`delta = currentPos - _lastPos`) direkt auf die Matrix translatiert:
-
-```csharp
-private void OnMouseMove(object sender, MouseEventArgs e)
-{
-    if (!_isPanning) return;
-
-    Point currentPos = e.GetPosition(this);
-    Vector delta = currentPos - _lastPos;
-    _lastPos = currentPos;
-
-    Matrix m = CanvasMatrixTransform.Matrix;
-    m.Translate(delta.X, delta.Y); // Hardwarebeschleunigter Pan
-    CanvasMatrixTransform.Matrix = m;
-}
-```
-
-- Funktioniert nahtlos in jeder beliebigen Zoomstufe ohne Neuberechnung der Geometriedaten.
-
----
-
-### Die Dragging-Jitter-Falle: Das Phänomen
+### Pan (`CaptureMouse`) & die Dragging-Jitter-Falle
 
 <div class="columns top">
 <div class="two">
 
-Beim interaktiven Verschieben von Knotenpunkten tritt in naiven Auto-Fit-Implementierungen ein fataler Abreiß-Effekt auf:
-
-- **1. Maus zieht Knoten nach außen:**
-  - Der Anwender greift Knoten $K_3$ und zieht die Maus nach oben.
-  - In Weltkoordinaten wächst das Tragwerk: $H_{\text{world}}$ steigt.
-- **2. Der Auto-Fit-Fehler:**
-  - Naives `Redraw()` ruft unbedacht `_transform.Update()` auf.
-  - Der Auto-Fit-Maßstab $s$ schrumpft sofort, um das vergrößerte Modell einzupassen!
-- **3. Das Abreißen vom Cursor:**
-  - Durch das kleinere $s$ wird das Tragwerk kleiner dargestellt.
-  - Knoten $K_3$ hüpft unter dem Mauszeiger nach unten weg!
+- **Hardwarebeschleunigtes Panning (`MouseMove`):** Berechnet den Mausversatz `delta` aus `currentPos - _lastPos` und verschiebt per `Translate`:
+  ```csharp
+  Point currentPos = e.GetPosition(this);
+  Vector delta = currentPos - _lastPos;
+  _lastPos = currentPos;
+  Matrix m = CanvasMatrixTransform.Matrix;
+  m.Translate(delta.X, delta.Y);
+  CanvasMatrixTransform.Matrix = m;
+  ```
+- **Die Dragging-Jitter-Falle:** Ruft `Redraw()` beim Ziehen von $K_3$ naiv `_transform.Update()` auf, wächst $H_{\text{world}}$ und $s$ schrumpft $\implies$ **60-Hz-Oszillation**!
 
 </div>
 <div class="one">
@@ -1128,163 +579,56 @@ Beim interaktiven Verschieben von Knotenpunkten tritt in naiven Auto-Fit-Impleme
 
 ---
 
-### Die Dragging-Jitter-Falle: Der Teufelskreis
+### Lösung des Jitterings: Freeze-Doktrin
 
 <div class="columns top">
-<div class="two">
-
-Das Wegspringen führt zu einer **destruktiven Rückkopplung** (Feedback-Loop):
-
-- **Der Teufelskreis beim Ziehen:**
-  1. Maus zieht Knoten $K_3 \implies$ Modellhöhe $H_{\text{world}}$ steigt.
-  2. Bounding-Box wächst $\implies$ Maßstab $s$ schrumpft.
-  3. Knoten hüpft nach unten weg $\implies$ Lücke zum Cursor.
-  4. Nächster `MouseMove`-Event: Maus korrigiert nach oben.
-- **Die 60-Hz-Oszillation:**
-  - Da dieser Zyklus bei jeder Mausbewegung abläuft (60–120 FPS), vibriert das Modell chaotisch.
-  - Der Knoten zappelt hysterisch um den Cursor (**Jittering**).
-- **Architekturfehler:** Unzulässige Kopplung von Objekt-Manipulation und Kamera-Transformation!
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Jitter_Schleife.svg)
-
-</div>
-</div>
-
----
-
-### Die Lösung des Jittering-Problems: Freeze-Doktrin
-
-<div class="columns top">
-<div class="two">
-
-**Kamera-Entkopplung während der Interaktion:**
-
-- **Freeze-Doktrin:** Bounding-Box (`xMin`, `xMax`, `yMin`, `yMax`) und $s$ bleiben bei aktivem Ziehen (`_draggedNode != null`) fixiert $\implies K_3$ folgt dem Cursor $1:1$.
-- **C#-Code in `Redraw()`:**
-
-```csharp
-if (_draggedNode == null)
-{
-    var (xMin, xMax, yMin, yMax) = _truss.GetBounds();
-    _transform.Update(xMin, xMax, yMin, yMax, 
-        TrussCanvas.ActualWidth, TrussCanvas.ActualHeight);
-}
-DrawTruss();
-```
-
-- **Nach Loslassen (`MouseUp`):** Einmaliges ruhiges Einpassen!
-
-</div>
 <div class="one">
 
 ![](./Diagramme/Mini_Jitter_Loesung.svg)
 
 </div>
-</div>
+<div class="two">
 
----
+**Kamera-Entkopplung während der Interaktion:**
+Bounding-Box (`xMin`, `xMax`, `yMin`, `yMax`) und Maßstab $s$ bleiben bei aktivem Ziehen (`_draggedNode != null`) eingefroren $\implies$ Knoten folgt dem Cursor $1:1$:
 
-### Der Dragging-Lebenszyklus im Detail
+```csharp
+if (_draggedNode == null)
+{
+    var (xMin, xMax, yMin, yMax) = _truss.GetBounds();
+    _transform.Update(xMin, xMax, yMin, yMax,
+        TrussCanvas.ActualWidth, TrussCanvas.ActualHeight);
+}
+DrawTruss();
+```
 
-<div class="columns top">
-<div class="one">
-
-#### 1. `MouseDown` auf Knoten
-- Knoten per Hit-Testing erfassen:  
-  `_draggedNode = hitNode;`
-- Auto-Fit Transformation wird **eingefroren**.
-- Maus fangen mit `CaptureMouse()`.
-
-#### 2. `MouseMove` (Dragging)
-- Bildschirmkoordinaten in Welt $[\mathrm{m}]$ umrechnen (`ScreenToWorld`).
-- Knotenkoordinaten in Welt nachführen:  
-  `_draggedNode.X = worldX;`
-- Canvas zeichnet mit eingefrorenem Maßstab $\implies$ **kein Zittern!**
-
-</div>
-<div class="one">
-
-#### 3. `MouseUp` (Abschluss)
-- `_draggedNode = null;`
-- `ReleaseMouseCapture();`
-- Erst jetzt darf `Redraw()` die Bounding Box aktualisieren und das Modell neu einpassen.
-
-> **Übungs-Bezug:**  
-> Genau diesen Bugfix setzt ihr in Basisaufgabe 1.4 in [`VectorTrussCanvas`](../Uebung/Vorlage/VectorTrussCanvas/MainWindow.xaml.cs) um!
+- Erst beim Loslassen (`MouseUp`, `ReleaseMouseCapture()`) passt sich die Bounding Box ruhig neu ein!
 
 </div>
 </div>
 
 ---
 
-### Die drei Koordinatenräume: Screen, Canvas und World
+### Analytische Viewport-Inversion & `ScreenToWorld`
 
 <div class="columns top">
 <div class="two">
 
-Beim interaktiven Arbeiten existieren drei verschiedene Bezugssysteme:
+Für Mausklicks wird $\vec{P}_{\text{screen}} = (x_p, y_p)$ über $\vec{P}_{\text{unzoom}} = (x_u, y_u) = \mathbf{M}^{-1}\vec{P}_{\text{screen}}$ und $X_{\min}, Y_{\max}, x_{\text{off}}, y_{\text{off}}$ zurück in $(x_w, y_w)$ gerechnet:
 
-- **Screen-Raum (Monitor / Viewport $[\mathrm{px}]$):**
-  Diskrete Pixel des Anwendungsfensters; Ursprung $(0,0)$ starr oben links, $+Y$ nach unten. Mausklick liefert $\vec{P}_{\text{screen}} = (x_p, y_p)$.
-- **Canvas-Raum (Ruhende Zeichenebene $[\mathrm{px}]$):**
-  Zeichenfläche für WPF-Shapes $\vec{P}_{\text{canvas}}$, noch vor jeder Kamerabewegung. GPU-Kameramatrix $\mathbf{M}$ verschiebt und skaliert diese Ebene dynamisch.
-- **World-Raum (Physikalisches Modell $[\mathrm{m}]$):**
-  Reales Ingenieur-Koordinatensystem $(+X_w, +Y_w)$ mit Modellknoten $\vec{P}_{\text{world}} = (x_w, y_w)$ und $+Y$ nach oben.
-  Vorwärts-Pipeline: World $\xrightarrow{\text{Viewport: } s, x_{\text{off}}, y_{\text{off}}} \text{Canvas} \xrightarrow{\mathbf{M}} \text{Screen}$.
+```csharp
+public Point ScreenToWorld(
+    Point screenPixel, Matrix canvasMatrix, Transform2D trans)
+{
+    Matrix invMatrix = canvasMatrix;
+    invMatrix.Invert(); // 1. Kamera-Unzoom
+    Point unzoomed = invMatrix.Transform(screenPixel);
 
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Koordinaten_Schichten.svg)
-
-</div>
-</div>
-
----
-
-### Das Interaktions-Problem & Kamera-Unzoom
-
-<div class="columns top">
-<div class="two">
-
-Klickt der Nutzer ins Fenster, entsteht ein geometrischer Versatz:
-
-- **Das Problem:** Der Mausklick liefert Pixelkoordinaten $\vec{P}_{\text{screen}} = (x_p, y_p)$ bezogen auf das Fenster.
-- Die WPF-Shapes liegen jedoch starr auf der ruhenden Zeichenebene (Canvas).
-- Wurde die Szene per Pan und Zoom mit Kameramatrix $\mathbf{M}$ verschoben, trifft der Klick nicht die Shape-Geometrie!
-- **Schicht 1 (Kamera-Unzoom):**
-  Multiplikation mit $\mathbf{M}^{-1}$ hebt Verschiebung und Skalierung auf:
-  $$\vec{P}_{\text{unzoom}} = (x_u, y_u) = \mathbf{M}^{-1} \cdot \vec{P}_{\text{screen}} \quad [\mathrm{px}]$$
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Kamera_Unzoom.svg)
-
-</div>
-</div>
-
----
-
-### Analytische Viewport-Inversion (Canvas → World)
-
-<div class="columns top">
-<div class="two">
-
-Vom entzerrten Canvas-Punkt $\vec{P}_{\text{unzoom}} = (x_u, y_u)$ gelangen wir in physikalische Ingenieur-Koordinaten $\vec{P}_{\text{world}} = (x_w, y_w)$:
-
-- **1. Offset-Verschiebung subtrahieren:**
-  - Zieht die Ränder $x_{\text{off}}$ und $y_{\text{off}}$ ab:
-    $$\Delta x = x_u - x_{\text{off}}, \quad \Delta y = y_u - y_{\text{off}} \quad [\mathrm{px}]$$
-- **2. Maßstabs-Division ($1/s$) & Achsenspiegelung:**
-  - Umrechnung von $[\mathrm{px}]$ in $[\mathrm{m}]$ durch Division mit $s$.
-  - Die physikalische $Y$-Achse $+Y_w$ zeigt nach oben (gespiegelt von $Y_{\max}$):
-    $$x_w = X_{\min} + \frac{x_u - x_{\text{off}}}{s} \quad [\mathrm{m}], \quad y_w = Y_{\max} - \frac{y_u - y_{\text{off}}}{s} \quad [\mathrm{m}]$$
-
-> **Dimensionsreinheit:** $[\mathrm{m}] + ([\mathrm{px}] - [\mathrm{px}]) / [\mathrm{px/m}] = [\mathrm{m}]$.
+    // 2. Viewport-Inversion (Pixel -> Meter)
+    var (worldX, worldY) = trans.ScreenToWorld(unzoomed.X, unzoomed.Y);
+    return new Point(worldX, worldY);
+}
+```
 
 </div>
 <div class="one">
@@ -1296,60 +640,67 @@ Vom entzerrten Canvas-Punkt $\vec{P}_{\text{unzoom}} = (x_u, y_u)$ gelangen wir 
 
 ---
 
-### C#-Implementierung: `ScreenToWorld`
+<!-- _class: activity -->
 
-```csharp
-public Point ScreenToWorld(Point screenPixel, Matrix canvasMatrix, Transform2D trans)
-{
-    // 1. Pan- und Zoom-Matrix invertieren (WPF-Affine Transformation)
-    Matrix invMatrix = canvasMatrix;
-    invMatrix.Invert();
-    Point unzoomed = invMatrix.Transform(screenPixel);
+### Mitmach-Impuls (3 Min.): `ScaleAt`, Jitter & `ScreenToWorld`
 
-    // 2. Viewport-Projektion analytisch invertieren (Pixel -> Meter):
-    var (worldX, worldY) = trans.ScreenToWorld(unzoomed.X, unzoomed.Y);
+| Szenario | Kernfrage | Relevante Methode |
+| :--- | :--- | :--- |
+| 1. Zoom-Reihenfolge | Was passiert ohne `T(+C)`? | `m.ScaleAt(...)` |
+| 2. Knoten-Ziehen | Warum 60-Hz-Jittering? | `_transform.Update(...)` |
+| 3. Picking nach Pan | Inversionsreihenfolge? | `ScreenToWorld(...)` |
 
-    return new Point(worldX, worldY);
-}
-```
+1. **Matrix-Reihenfolge (`ScaleAt`):** Warum liefert `S(s) · T(-C)` ohne anschließendes `T(+C)` beim Mausrad-Zoom einen Sprung der Zeichnung?
+2. **Dragging-Jitter:** Ein Student zieht einen Fachwerkknoten nach oben und der Knoten vibriert mit 60 Hz unter dem Cursor. Welche eine Abfrage fehlt in seinem `Redraw()`?
+3. **Picking nach Pan & Zoom:** In welcher Reihenfolge müssen `canvasMatrix.Invert()` und `trans.ScreenToWorld(...)` aufgerufen werden?
 
-- Liefert präzise physikalische Koordinaten $[\mathrm{m}]$ für Raycasting, Picking und Hit-Testing.
-- Unabhängig vom aktuellen Zoom-Faktor oder der Pan-Verschiebung mathematisch exakt!
+> **Hinweis:** Diskutieren Sie kurz zu zweit (`Screen` $\to$ `Canvas` $\to$ `World`)!
 
 ---
 
-<!-- Platzhalter für Abschnittsbildbeschreibung -->
+<!-- _class: solution -->
 
-![bg right](./Illustrationen/Abschnitt_5.jpg)
+### Auflösung: `ScaleAt`, Jitter & `ScreenToWorld`
+
+1. **Ohne Rücktranslation `T(+C)`:** Der anvisierte Punkt unter dem Cursor $\vec{C}$ wurde in den Ursprung $(0, 0)$ verschoben und bleibt dort kleben, statt an der Mausposition $\vec{C}$ stehen zu bleiben.
+2. **Jitter-Fix (`Freeze-Doktrin`):** Es fehlt die Abfrage `if (_draggedNode == null)` um `_transform.Update(...)`, damit der Maßstab $s$ während `MouseMove` konstant bleibt.
+3. **Inversionsreihenfolge (`Screen -> Canvas -> World`):**
+   - Zuerst **`invMatrix.Transform(screenPixel)`** (hebt GPU-Pan/Zoom $\mathbf{M}$ auf).
+   - Danach **`trans.ScreenToWorld(unzoomed.X, unzoomed.Y)`** (rechnet Pixel in Meter $[\mathrm{m}]$ um).
+
+```csharp
+var unzoomed = invMatrix.Transform(screenPixel); // 1. Kamera-Unzoom
+var world = trans.ScreenToWorld(unzoomed.X, unzoomed.Y); // 2. Pixel -> Meter
+```
+
+> **Merksatz:** Rückwärts wird immer in exakt umgekehrter Reihenfolge zur Vorwärts-Pipeline invertiert – erst Kamera-Matrix $\mathbf{M}^{-1}$, dann Viewport-Skalierung $1/s$!
+
+---
+
+![bg](./Illustrationen/Abschnitt_5.jpg)
 
 ## 3.5: Performance & Architektur: Shapes vs. DrawingVisual
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Der `UIElement`-Overhead von WPF `Shape`-Objekten
-- Der 2-stufige Layout-Pass (`Measure` / `Arrange`)
+- Der `UIElement`-Overhead von WPF `Shape`-Objekten & Layout-Kollaps
 - High-Performance Vektorgrafik mit `DrawingVisual`
-- Die lebenswichtige `Freeze()`-Doktrin
-- Aufbau des `VisualHost`-Controls & Technologievergleich
+- Die lebenswichtige `Freeze()`-Doktrin & Technologievergleich
 
 ---
 
-### WPF Shapes: Der UIElement-Overhead
+### WPF Shapes: UIElement-Overhead & Layout-Kollaps
 
 <div class="columns top">
 <div class="two">
 
-`Line`, `Rectangle`, `Ellipse` und `Path` sind sehr komfortabel, stoßen bei komplexen Simulationen aber schnell an Grenzen:
+`Line`, `Ellipse` und `Path` erben von `Visual -> UIElement -> FrameworkElement -> Shape` (hunderte Dependency Properties, mehrere KB pro Objekt):
 
-- **Der `UIElement`-Overhead:**
-  - Jedes `Shape` erbt von:  
-    `Visual` $\rightarrow$ `UIElement` $\rightarrow$ `FrameworkElement` $\rightarrow$ `Shape`.
-  - Hunderte Dependency Properties, Focus-Handling, Styling, Animations-Slots.
-  - Hoher Speicherverbrauch (mehrere KB pro Shape-Instanz).
-- **Skalierungs-Grenzen**:
-  - Bis 1.000 Shapes: Flüssig (60 FPS).
-  - Ab 2.000 Shapes: Spürbare Verzögerungen.
-  - Ab 5.000 Shapes: Frame-Einbrüche ($< 10\,\mathrm{FPS}$).
+- **2-Phasen-Layout-Cycle (`Measure` / `Arrange`):** Jede Knotenbewegung markiert verbundene Stäbe als *layout-dirty*.
+- **5.000 Shapes $\implies$ 10.000 Methodenaufrufe pro Frame!**
+- **Skalierungsgrenze:** Ab 2.000 Shapes starke Lags, ab 5.000 Shapes Einbruch auf $< 10\,\mathrm{FPS}$.
+
+> **Anhang:** Detailablauf von `Measure` & `Arrange` siehe [Folien_Anhang_Vektorgrafik_Details.md](./Folien_Anhang_Vektorgrafik_Details.md).
 
 </div>
 <div class="one">
@@ -1361,117 +712,42 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Der 2-stufige Layout-Cycle: Warum zwei Phasen?
+### Die Lösung: `DrawingVisual`, `Brush` & `Pen`
 
 <div class="columns top">
-<div class="two">
-
-Ein Container kann Kindern erst Raum zuweisen, wenn er den Gesamtbedarf aller Kinder kennt:
-
-- **Phase 1: `Measure` (Bedarfsermittlung / Wunschgröße):**
-  - Parent ruft `child.Measure(availableSize)` auf.
-  - Kind misst seinen Inhalt und meldet `DesiredSize` zurück.
-  - Noch keine feste Platzierung im Fenster!
-- **Phase 2: `Arrange` (Raumzuweisung / Finaler Platz):**
-  - Parent entscheidet und ruft `child.Arrange(finalRect)` auf.
-  - Kind erhält finale Position und Größe (`ActualWidth`, `ActualHeight`).
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Layout_Cycle_Phasen.svg)
-
-</div>
-</div>
-
----
-
-### Der Layout-Kollaps in Simulationsanwendungen
-
-<div class="columns top">
-<div class="two">
-
-In der Simulationsvisualisierung führt der 2-Phasen-Cycle zum **Performance-Kollaps**:
-
-- **Normale Desktop-App (30 Controls):**
-  - Layout-Pass benötigt $< 0{,}2\,\mathrm{ms}$ (unmerklich).
-- **Simulations-Canvas (5.000 Stäbe & 2.500 Knoten):**
-  - Jede Knotenbewegung markiert verbundene Stäbe als „layout-dirty“ (`InvalidateMeasure`).
-  - WPF durchläuft den Layout-Cycle **rekursiv über alle Shapes**.
-  - **5.000 Shapes $\implies$ 10.000 Methodenaufrufe pro Frame!**
-- **Konsequenz:** Die CPU blockiert im UI-Thread, noch bevor die GPU überhaupt rendern darf.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Shape_vs_DrawingVisual.svg)
-
-</div>
-</div>
-
----
-
-### Die Lösung: `DrawingVisual`
-
-<div class="columns">
-<div class="one">
-
-`DrawingVisual` ist ein extrem leichtgewichtiger Visual-Knoten ohne UI-Ballast:
-
-- Erbt direkt von `Visual` (kein `UIElement`, kein `FrameworkElement`).
-- **Kein** Layout-Pass, kein Data Binding, keine separaten Event-Handler pro Vektorelement.
-- Vektorbefehle werden direkt in einen kompakten **`DrawingContext`** geschrieben.
-- Hardwarebeschleunigte Übergabe der Vektor-Streams an die GPU.
-
-</div>
 <div class="one">
 
 ![](./Diagramme/WPF_Visual_Hierarchie.svg)
 
 </div>
-</div>
-
----
-
-### Zeichenwerkzeuge in WPF: Brush vs. Pen
-
-<div class="columns top">
 <div class="two">
 
-Im `DrawingContext` steuern zwei Klassen aus `System.Windows.Media` das Rendering:
+`DrawingVisual` erbt direkt von `Visual` (kein `UIElement`-Ballast, kein Layout-Cycle):
 
-- **`Brush` (Flächenfüllung – die „Tinte“):**
-  - Füllt geschlossene 2D-Flächen (Kreise, Polygone, Texte).
-  - `SolidColorBrush`, `LinearGradientBrush` oder gecacht via `Brushes.SteelBlue`, `Brushes.Crimson`.
-- **`Pen` (Linien & Kontur – der „Zeichenstift“):**
-  - Zeichnet Umrisse, Achsen und Vektorstäbe.
-  - Basis ist stets ein `Brush` (Farbe) + Strichattribute: `Thickness`, `DashStyle`, `LineCap`.
-- **Merksatz:** *„Der Pen ist der Stift – der Brush liefert die Tinte!“*
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Brush_vs_Pen.svg)
+- **Vektor-Stream:** Zeichenbefehle werden direkt in einen **`DrawingContext`** geschrieben und von der GPU gerendert ($> 100.000$ Elemente flüssig).
+- **`Brush` (Tinte):** Flächenfüllung (`Brushes.SteelBlue`, `SolidColorBrush`).
+- **`Pen` (Stift):** Kontur aus `Brush` + `Thickness` / `DashStyle`.
 
 </div>
 </div>
 
 ---
 
-### Die lebenswichtige `Freeze()`-Doktrin
+### Die `Freeze()`-Doktrin & `DrawingContext`
 
 <div class="columns top">
 <div class="two">
 
-In Render-Schleifen von Simulationsanwendungen gilt die **strikte Regel**:
+> **Goldene Regel:** Jeder `Pen` und jeder `Brush` in einer Render-Schleife muss mit `.Freeze()` eingefroren werden!
 
-> **Jeder `Pen` und jeder `Brush` muss vor dem Zeichnen mit `.Freeze()` eingefroren werden!**
-
-**Warum ist das so entscheidend?**
-1. **Change-Tracking aus:** `Freeze()` schaltet das lauschende Event-Tracking komplett ab.
-2. **Thread-Sicherheit:** Nur unveränderliche Ressourcen dürfen an den DirectX-Render-Thread übergeben werden.
-3. **Statische Wiederverwendung:** Eingefrorene Pinsel können statisch gecacht werden.
-4. **0 Bytes GC-Last:** Verhindert Millionen kurzlebiger Heap-Objekte!
+- **Ohne `Freeze()`:** WPF hält Event-Listener aktiv (Cross-Thread-Fehler & Millionen Heap-Objekte / GC-Ruckler).
+- **Mit `Freeze()`:** Unveränderlich, thread-sicher & **0 Bytes GC-Last**:
+  ```csharp
+  using DrawingContext dc = visual.RenderOpen();
+  var pen = new Pen(Brushes.SteelBlue, 2.0);
+  pen.Freeze();
+  foreach (var rod in rods) dc.DrawLine(pen, rod.P1, rod.P2);
+  ```
 
 </div>
 <div class="one">
@@ -1483,146 +759,53 @@ In Render-Schleifen von Simulationsanwendungen gilt die **strikte Regel**:
 
 ---
 
-### Zeichnen im `DrawingContext`
+<!-- _class: activity -->
 
-<div class="columns top">
-<div class="one">
+### Mitmach-Impuls (3 Min.): Architektur- & `Freeze()`-Diagnose
 
-**1. Setup & Freezing (`visual`, `dc`):**
-- Werkzeuge `Pen pen` und `Brush brush` einfrieren (`Freeze()`):
+Ein Simulations-Viewer zeichnet $10.000$ Fachwerkstäbe pro Frame bei $60\,\text{FPS}$ ($16{,}6\,\text{ms}$ Budget). Vergleichen Sie beide Implementierungen kurz zu zweit:
 
-```csharp
-var visual = new DrawingVisual();
-
-using (DrawingContext dc = visual.RenderOpen())
-{
-    // Golden Rule: Pens & Brushes FREEZEN!
-    var pen = new Pen(Brushes.SteelBlue, 2.0);
-    pen.Freeze();
-    
-    var brush = Brushes.Crimson;
-    brush.Freeze();
-
-    DrawScene(dc, rods, nodes, pen, brush);
-}
-```
-
-</div>
-<div class="one">
-
-**2. Zeichenschleifen (`rods`, `nodes`):**
-- Iteration über Sammlungen `rods` und `nodes`:
-
-```csharp
-private void DrawScene(
-    DrawingContext dc, List<Rod> rods, 
-    List<Node> nodes, Pen pen, Brush brush)
-{
-    // 50.000 Stäbe zeichnen:
-    foreach (var rod in rods)
-        dc.DrawLine(pen, rod.P1, rod.P2);
-
-    // 50.000 Knoten zeichnen:
-    foreach (var node in nodes)
-        dc.DrawEllipse(brush, null, 
-                       node.Pos, 3.0, 3.0);
-}
-```
-
-</div>
-</div>
-
----
-
-### Das `VisualHost`-Control
-
-Um `DrawingVisual`-Objekte im WPF-Fenster anzuzeigen, erstellen wir ein schlankes Control:
-
-```csharp
-public class FastDrawingCanvas : FrameworkElement
-{
-    private readonly VisualCollection _children;
-    private readonly DrawingVisual _drawingVisual = new();
-
-    public FastDrawingCanvas()
-    {
-        _children = new VisualCollection(this) { _drawingVisual };
-    }
-
-    protected override int VisualChildrenCount => _children.Count;
-    protected override Visual GetVisualChild(int index) => _children[index];
-
-    public void Render(Action<DrawingContext> renderAction)
-    {
-        using DrawingContext dc = _drawingVisual.RenderOpen();
-        renderAction(dc);
-    }
-}
-```
-
----
-
-### Alternative: Direktes Überschreiben von `OnRender`
-
-Wenn kein selektives Hit-Testing oder Multi-Layer-Visuals benötigt werden, kann auch direkt `OnRender` überschrieben werden:
-
-```csharp
-public class SimpleRenderCanvas : FrameworkElement
-{
-    public SimulationData? Data { get; set; }
-
-    protected override void OnRender(DrawingContext dc)
-    {
-        base.OnRender(dc);
-        if (Data == null) return;
-
-        var pen = new Pen(Brushes.Black, 1.0);
-        pen.Freeze();
-        foreach (var bar in Data.Bars)
-            dc.DrawLine(pen, bar.P1, bar.P2);
-    }
-}
-```
-
-- Neuzeichnen wird gezielt über `this.InvalidateVisual()` ausgelöst.
-
----
-
-### Technologie- und Performancevergleich
-
-| Kriterium | WPF `Shapes` (`Canvas`) | `DrawingVisual` / `OnRender` | `WriteableBitmap` (Pixel) |
+| Variante | Speicher / Objekt | CPU-Aufwand pro Frame | Problem? |
 | :--- | :--- | :--- | :--- |
-| **Grafiktyp** | Vektor (High-Level) | Vektor (Low-Level) | Rastergrafik (Pixel) |
-| **Max. Elementanzahl** | $\approx 1.000 - 2.000$ | $\mathbf{> 100.000}$ | Unbegrenzt (pixelweise) |
-| **Speicherverbrauch** | Sehr hoch ($\approx$ KB / Shape) | Sehr gering ($\approx$ Bytes) | Fest ($W \times H \times 4$ Bytes) |
-| **Zoom-Verhalten** | Stufenlos scharf | **Stufenlos scharf** | Pixelig beim Hineinzoomen |
-| **Interaktivität** | Direkt (`Click`, `Hover`) | Hit-Testing (`HitTest()`) | Koordinatenberechnung |
-| **Typischer Einsatz** | UI-Icons, kleine Schemata | **Fachwerke, CAD, FE-Netze** | Wärmebilder, Partikelfelder |
+| `new Line()` (`Shapes`) | $\approx 2\text{--}4\,\text{KB}$ (`UIElement`) | $20.000$ Layout-Calls | Frame-Einbruch! |
+| `DrawingVisual` ohne `Freeze()` | Heap-Allokation | Change-Tracking-Listener | GC-Mikroruckler! |
+
+1. **Performance-Einbruch:** Warum blockiert `new Line()` den UI-Thread schon *vor* dem GPU-Rendering?
+2. **`DrawingVisual`-Bug:** Nach Umstellung auf `DrawingVisual` erzeugt ein `new Pen(new SolidColorBrush(Colors.Blue), 2.0)` in der Zeichenschleife alle 2 Sekunden Mikroruckler. Was fehlt?
+3. **Einsatzgrenze:** Wann bleibt `WriteableBitmap` (T02) trotz `DrawingVisual` überlegen?
+
+> **Hinweis:** Prüfen Sie kurz zu zweit: Layout-Pass (`Measure`/`Arrange`) vs. Change-Tracking vs. Rasterfelder!
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Architektur- & `Freeze()`-Diagnose
+
+1. **5 FPS bei `Shapes`:** Jedes `Line`-Objekt erbt von `UIElement` und löst im 2-Phasen-Layout-Cycle (`Measure`/`Arrange`) **20.000 Methodenaufrufe pro Frame** auf der CPU aus – der UI-Thread ist blockiert, bevor die GPU startet.
+2. **Mikroruckler im `DrawingContext`:** Ohne **`pen.Freeze()`** und statisches Cachen bleiben Change-Tracking-Listener aktiv und erzeugen Millionen kurzlebiger Heap-Objekte für den **Garbage Collector (GC)**:
+   ```csharp
+   private static readonly Pen RodPen = CreateFrozenPen(); // 0 Bytes GC pro Frame!
+   ```
+3. **Wann `WriteableBitmap`?** Bei flächenhaften, pixelweisen Feldern (z. B. $500 \times 500$ Temperaturzellen aus Termin 02), die sich in jedem Zeitschritt an jedem Pixel ändern.
+
+> **Merksatz:** `Shapes` für UI-Interaktion ($\le 1.000$), `DrawingVisual` + `Freeze()` für große Netze ($> 100.000$), `WriteableBitmap` für kontinuierliche Rasterfelder – ohne `.Freeze()` drohen GC-Pausen, Speicherlecks und Cross-Thread-Fehler!
 
 ---
 
 <!-- _class: summary -->
 
-### Zusammenfassung: Geometrie & Transformation
+### Zusammenfassung Kapitel 3
 
-- **Vektorgrafiken** bieten auflösungsunabhängige, stufenlos skalierbare Darstellungen für technische Simulationsmodelle.
-- Die **Koordinatentransformation** bildet kontinuierliche Weltkoordinaten ($+Y$ nach oben, Meter) auf diskrete Canvas-Koordinaten ($+Y$ nach unten, Pixel) ab:
-  - **Uniform Scaling** ($s = \min(s_x, s_y)$ in $[\mathrm{px/m}]$) verhindert jede Verzerrung.
-  - Zentrierungs-Offsets und `margin` garantieren eine saubere, vollständige Platzierung.
-- Mittels **Vektoralgebra** (Orthogonalvektor $\vec{e}_u^\perp$) werden Pfeilschäfte und Spitzen analytisch ohne Winkelfunktionen berechnet.
-- Bemaßungsketten nach **DIN 406** verknüpfen Maßhilfslinien, Maßlinien mit Pfeilen und zentrierte Maßzahlen.
-
----
-
-<!-- _class: summary -->
-
-### Zusammenfassung: Navigation & Performance
-
-- Eine **`MatrixTransform`** am Canvas ermöglicht flüssiges, hardwarebeschleunigtes **Pan & Zoom** mit Zentrierung auf den Mauszeiger (`ScaleAt`).
-- Bounding-Box Jittering beim Dragging wird durch **Einfrieren der Transformation** während des aktiven Ziehens vermieden.
-- Die **`ScreenToWorld`**-Rücktransformation invertiert erst die Matrix und danach die Viewport-Projektion.
-- Bei großen Datenmengen ($> 2.000$ Elemente) bricht der WPF `Shape`-Baum ein. **`DrawingVisual` / `DrawingContext`** bietet professionelle High-Performance-Vektorgrafik für komplexe Netze.
-- **Freeze-Doktrin:** Alle `Pen`- und `Brush`-Objekte in Render-Schleifen müssen zwingend eingefroren werden.
+- **WPF `Canvas` & `Transform2D`:** Bildet Weltkoordinaten ($+Y$ oben, $[\mathrm{m}]$) mittels **isotroper Skalierung** ($s = \min(s_x, s_y)$) und Zentrierungs-Offsets verzerrungsfrei auf Canvas-Pixel ($+Y$ unten) ab.
+- **Vektorgeometrie & DIN 406:** Pfeilspitzen über Orthogonalvektoren $\vec{e}_u^\perp$ ohne Trigonometrie; Maßketten aus Hilfslinien, Maßlinie, Pfeilen und Text.
+- **Interaktion (`Pan & Zoom`):** Hardwarebeschleunigte `MatrixTransform` (`ScaleAt` am Cursor, `Translate`), **Freeze-Doktrin** gegen Dragging-Jittering (`_draggedNode == null`) und `ScreenToWorld`-Inversion.
+- **Architektur-Entkopplung:** Saubere Trennung von Geometrie-/Transformationskern (`Transform2D`) und View (`Canvas` / `DrawingVisual`).
+- **Performance:** `DrawingVisual` mit `.Freeze()` umgeht den `Shape`-Layout-Cycle für $> 100.000$ Vektoren ([Anhang](./Folien_Anhang_Vektorgrafik_Details.md)):
+  ```csharp
+  double s = Math.Min(s_x, s_y); // Isotrope Skalierung ohne Verzerrung
+  pen.Freeze();                  // 0 Bytes GC-Last im DrawingContext
+  ```
 
 ---
 
@@ -1630,10 +813,23 @@ public class SimpleRenderCanvas : FrameworkElement
 
 ### Ausblick: Echtzeit-Telemetrie & FEM-Kopplung (Termin 04 & 07)
 
+<div class="columns">
+<div class="three">
+
 Unsere 2D-Vektorgeometrie und das Welt-Screen-Koordinatensystem stehen – wie nutzen wir diese Bausteine im weiteren Semester?
 
 - **Direkt nächste Woche (Termin 04):** Statt Geometrieobjekten zeichnen wir **hochfrequente Zeitreihen (1 kHz)** mit `ScottPlot 5` und ringgepufferten Telemetriedaten.
-- **Fern-Brücke (Termin 07):** Genau die hier gezeichneten und als JSON exportierten Tragwerksknoten $(x, y)$, Stäbe und Lastpfeile werden in **Termin 07** mit echter Elastostatik ($mathbf{K}mathbf{u} = mathbf{f}$) berechnet!
+- **Fern-Brücke (Termin 07):** Genau die hier gezeichneten und als JSON exportierten Tragwerksknoten $(x, y)$, Stäbe und Lastpfeile werden in **Termin 07** mit echter Elastostatik ($\mathbf{K}\mathbf{u} = \mathbf{f}$) berechnet!
+
+> **Showcase-Fokus (T04):** Zwei Teams zeigen Track A/B beim 32:9-Seitenverhältnis-Stresstest!
+
+</div>
+<div class="two">
+
+![](./Diagramme/Semester_Bruecke_T03.svg)
+
+</div>
+</div>
 
 ---
 
@@ -1663,3 +859,5 @@ Unsere 2D-Vektorgeometrie und das Welt-Screen-Koordinatensystem stehen – wie n
 
 </div>
 </div>
+
+> **Abgabe & Showcase (Säule 2a/2b):** Commit im Git-Repo vor Beginn von Termin 04 – zwei Teams präsentieren ihren Track im Live-Showcase + 32:9-Seitenverhältnis-Stresstest!

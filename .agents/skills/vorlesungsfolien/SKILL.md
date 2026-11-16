@@ -71,8 +71,8 @@ Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorles
 
 | Element | Verbindliche Vorgabe |
 | :--- | :--- |
-| **Kapitel-Opener (`# Kapitel N: ...`)** | `![bg right](./Titelbild.jpg)` ($896 \times 1200\,\text{px}$, 3:4) + Satz: `Dieses Kapitel umfasst die folgenden Abschnitte:` |
-| **Abschnitts-Opener (`## N.M: ...`)** | `![bg right](./Illustrationen/Abschnitt_M.jpg)` ($896 \times 1200\,\text{px}$, 3:4, textfrei) + Satz: `Dieser Abschnitt umfasst die folgenden Inhalte:` |
+| **Kapitel-Opener (`# Kapitel N: ...`)** | `<!-- _class: title -->` + `![bg](./Titelbild.jpg)` (**16:9**, z. B. $1376 \times 768\,\text{px}$, Seitenverhältnis $\ge 1{,}5:1$, textfrei). **Zwingend dunkler Hintergrund** auf der linken Texthälfte (`#0F172A` / tiefes Nachtblau, mittlere Luminanz $L \le 0{,}30$) für weiße Titel-Typografie (`#ffffff`); Motiv nur im rechten Drittel. Satz: `Dieses Kapitel umfasst die folgenden Abschnitte:` |
+| **Abschnitts-Opener (`## N.M: ...`)** | `![bg](./Illustrationen/Abschnitt_M.jpg)` (**16:9**, z. B. $1376 \times 768\,\text{px}$, Seitenverhältnis $\ge 1{,}5:1$, textfrei). **Zwingend heller Hintergrund** auf der linken Texthälfte (`#F8FAFC` / helles Studio-Weiß, mittlere Luminanz $L \ge 0{,}65$) für dunkle Abschnitts-Typografie; Motiv nur im rechten Drittel. Satz: `Dieser Abschnitt umfasst die folgenden Inhalte:` |
 | **Rahmenfolien-Klassen (`<!-- _class: ... -->`)** | `showcase` (Live-Showcase/Quiz), `recap` (`Rückblick & Brücke`), `outlook` (`Ausblick`), `activity` (Mitmach-Impuls), `solution` (Auflösung, automatisch aus Vorab-Moodle-PDF gefiltert), `summary` (`Zusammenfassung`), `homework` (`Hausübung Termin XX`) – geprüft durch `lint:sections` |
 | **Mehrspaltiges Layout (`<div class="columns">`)** | Klassen `one` bis `six` sind **relative `flex-grow`-Breitengewichte** (keine Spaltennummern!):<br>• 50 % / 50 %: `two` + `two`<br>• 40 % / 60 %: `two` + `three`<br>• 33 % / 67 %: `one` + `two` |
 | **Bildsyntax** | Immer reine Markdown-Syntax `![](./Diagramme/Name_Mit_Unterstrich.svg)` ohne `w:`, `h:`, `center` und ohne `%20`-Leerzeichen. |

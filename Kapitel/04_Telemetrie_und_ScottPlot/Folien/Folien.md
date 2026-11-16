@@ -37,7 +37,7 @@ Präsentation der Hausübung aus Termin 03 (**Stufe 1: Basisaufgabe** + **Stufe 
 #### Stufe 2 – Track A: Industrie (2D-CAD Tragwerks-Inspektor)
 - **Geometrie:** Zweistufige DIN-406-Bemaßungsketten, Auto-Fit BoundingBox & $1{,}0\,\text{m}$-Gitter.
 - **Interaktion:** Ziehen der Kraftpfeilspitzen $(F_x, F_y)$, Mausrad-Zoom & Kamera-Panning.
-- **Stresstest:** Extremes Fensterformat (21:9), Pfeilspitzen-Invarianz & JSON-Export.
+- **Stresstest:** Extremes Fensterformat (32:9), Pfeilspitzen-Invarianz & JSON-Export.
 
 </div>
 <div class="two">

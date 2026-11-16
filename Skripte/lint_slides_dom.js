@@ -134,10 +134,10 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
   });
 
-  // Check Full-Bleed background images have landscape (~16:9) aspect ratio
-  const fullBleedBgIssues = await page.evaluate(async () => {
+  // Check Full-Bleed background images: landscape (~16:9) aspect ratio & left-side luminance contrast
+  const fullBleedBgMeta = await page.evaluate(async () => {
     const bgSecs = Array.from(document.querySelectorAll('section[data-marpit-advanced-background="background"]:not([data-marpit-advanced-background-split])'));
-    const bad = [];
+    const list = [];
     for (const bgSec of bgSecs) {
       const fig = bgSec.querySelector('figure');
       if (!fig) continue;
@@ -145,18 +145,78 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       const m = bgImg.match(/url\(["']?([^"')]+)["']?\)/);
       if (!m) continue;
       const url = m[1];
+      const pag = bgSec.getAttribute('data-marpit-pagination') || '';
+      const isTitle = bgSec.classList.contains('title');
       const dims = await new Promise(resolve => {
         const im = new Image();
         im.onload = () => resolve({ w: im.naturalWidth, h: im.naturalHeight });
         im.onerror = () => resolve(null);
         im.src = url;
       });
-      if (dims && dims.h > 0 && (dims.w / dims.h) < 1.5) {
-        bad.push({ pagination: bgSec.getAttribute('data-marpit-pagination') || '', url, w: dims.w, h: dims.h });
+      list.push({ pagination: pag, url, isTitle, w: dims ? dims.w : 0, h: dims ? dims.h : 0 });
+    }
+    return list;
+  });
+
+  const fullBleedBgIssues = [];
+  for (const bg of fullBleedBgMeta) {
+    if (bg.h > 0 && (bg.w / bg.h) < 1.5) {
+      fullBleedBgIssues.push({
+        pagination: bg.pagination,
+        url: bg.url,
+        message: `Full-Bleed ![bg] erfordert Querformat (>= 1.5:1), hat aber ${bg.w}x${bg.h} (${(bg.w / bg.h).toFixed(2)}:1).`
+      });
+    }
+    let localPath = null;
+    try {
+      if (bg.url.startsWith('file:///')) {
+        localPath = decodeURIComponent(bg.url.replace(/^file:\/\/\//, ''));
+      } else if (!bg.url.startsWith('data:')) {
+        localPath = path.resolve(deckDir, decodeURIComponent(bg.url));
+      }
+    } catch (e) { localPath = null; }
+    if (localPath && fs.existsSync(localPath)) {
+      const ext = path.extname(localPath).toLowerCase().replace('.', '') || 'jpeg';
+      const mime = ext === 'jpg' ? 'jpeg' : ext;
+      const dataUri = `data:image/${mime};base64,${fs.readFileSync(localPath).toString('base64')}`;
+      const leftLum = await page.evaluate((src) => new Promise(resolve => {
+        const im = new Image();
+        im.onload = () => {
+          try {
+            const c = document.createElement('canvas');
+            c.width = 64;
+            c.height = 36;
+            const ctx = c.getContext('2d');
+            ctx.drawImage(im, 0, 0, 64, 36);
+            const data = ctx.getImageData(0, 5, 32, 26).data;
+            let sum = 0;
+            const count = data.length / 4;
+            for (let i = 0; i < data.length; i += 4) {
+              sum += (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255;
+            }
+            resolve(count > 0 ? sum / count : null);
+          } catch (e) { resolve(null); }
+        };
+        im.onerror = () => resolve(null);
+        im.src = src;
+      }), dataUri);
+      if (leftLum !== null) {
+        if (bg.isTitle && leftLum > 0.30) {
+          fullBleedBgIssues.push({
+            pagination: bg.pagination,
+            url: bg.url,
+            message: `Titelbild (class: title, weiße Schrift) ist links zu hell (Luminanz ${leftLum.toFixed(2)} > 0.30) – dunkler Hintergrund erforderlich.`
+          });
+        } else if (!bg.isTitle && leftLum < 0.65) {
+          fullBleedBgIssues.push({
+            pagination: bg.pagination,
+            url: bg.url,
+            message: `Abschnittsbild (dunkle Schrift) ist links zu dunkel (Luminanz ${leftLum.toFixed(2)} < 0.65) – heller Hintergrund erforderlich.`
+          });
+        }
       }
     }
-    return bad;
-  });
+  }
 
   // Evaluate DOM
   const rawSlides = await page.evaluate(() => {
@@ -457,10 +517,10 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const colorIssues = s.colorIssues || [];
     const hasColorError = colorIssues.length > 0;
     for (const bgErr of fullBleedBgIssues) {
-      if (!bgErr.pagination || bgErr.pagination === String(s.pagination)) {
+      if ((!bgErr.pagination && s.sectionIndex === 1) || bgErr.pagination === String(s.pagination)) {
         svgIssues.push({
           file: decodeURIComponent(bgErr.url.split('/').pop().split('?')[0]),
-          issues: [{ type: 'PORTRAIT_FULLBLEED_BG', message: `Full-Bleed ![bg] erfordert Querformat (>= 1.5:1), hat aber ${bgErr.w}x${bgErr.h} (${(bgErr.w / bgErr.h).toFixed(2)}:1).` }]
+          issues: [{ type: 'FULLBLEED_BG_CHECK', message: bgErr.message }]
         });
       }
     }
@@ -662,8 +722,12 @@ async function main() {
         }
         if (err.hasSvgIssues) {
           err.svgIssues.forEach(s => {
-            const detail = s.sampleSmallText ? ` [z.B. "${s.sampleSmallText.text}": ${s.sampleSmallText.effectivePx}px, deklariert: ${s.sampleSmallText.declFont}px]` : '';
-            issues.push(`SVG Schrift zu klein: ${path.basename(s.src)} (${s.minFont}px < ${minFontSize}px, Box: ${s.renderedBox})${detail}`);
+            if (s.issues && s.issues.length > 0) {
+              s.issues.forEach(iss => issues.push(iss.message));
+            } else {
+              const detail = s.sampleSmallText ? ` [z.B. "${s.sampleSmallText.text}": ${s.sampleSmallText.effectivePx}px, deklariert: ${s.sampleSmallText.declFont}px]` : '';
+              issues.push(`SVG Schrift zu klein: ${path.basename(s.src || s.file || '')} (${s.minFont}px < ${minFontSize}px, Box: ${s.renderedBox})${detail}`);
+            }
           });
         }
         if (err.schemaIssues && err.schemaIssues.length > 0) {
