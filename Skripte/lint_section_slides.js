@@ -25,6 +25,10 @@
  * 4. Visueller Rhythmus & Layout-Shift (ab Kap. 06 als Fehler, Kap. 00-05 als Warnung):
  *    - Keine zwei reinen Textfolien (ohne Grafik/SVG und ohne Code) direkt hintereinander
  *    - Signifikanter visueller Shift zwischen Nachbarfolien (Spaltenbreiten, Text-/Bild-/Code-/Mischspalten, mehrzeilige Layouts)
+ *
+ * 5. Abschnitts-Balance (ab Kap. 06 als Fehler, Kap. 00-05 als Warnung):
+ *    - Jeder Abschnitt muss mindestens 2 Inhaltsfolien besitzen (SECTION_TOO_SMALL)
+ *    - Ausgewogene Abschnittsgrößen: max. Verhältnis 2:1 bei Differenz > 2 (UNBALANCED_SECTIONS)
  * ==============================================================================
  */
 
@@ -376,7 +380,43 @@ function lintSectionDeck(markdownPath) {
     }
   }
 
-  // 6. Zeitbudget-Check für Kapitel 01 bis 10 (150 Min. - 15 Pause - 15 Showcase [ab T02] - 5 HÜ - 15 Quiz [T03,T05,T08,T10])
+  // 6. Abschnitts-Mindestgröße & Ausgewogenheit prüfen (ab Kap. 06 als Fehler, 00-05 als Warnung)
+  if (actualSectionSlides.length > 0) {
+    const summaryIdx = slides.findIndex(sl => /^#\s+Zusammenfassung/im.test(sl));
+    const endBound = summaryIdx !== -1 ? summaryIdx + 1 : slides.length + 1;
+    const secCounts = actualSectionSlides.map((sec, idx) => {
+      const nextSlideNum = idx + 1 < actualSectionSlides.length ? actualSectionSlides[idx + 1].slideNum : endBound;
+      const contentCount = Math.max(0, nextSlideNum - sec.slideNum - 1);
+      return { ...sec, contentCount };
+    });
+
+    const targetArr = strictRhythm ? issues : warnings;
+    secCounts.forEach(sc => {
+      if (sc.contentCount < 2) {
+        targetArr.push({
+          slideNum: sc.slideNum,
+          type: 'SECTION_TOO_SMALL',
+          message: `Abschnitt ${sc.secNum} [${sc.secTitle}] hat nur ${sc.contentCount} Inhaltsfolie(n) (mindestens 2 erforderlich).`
+        });
+      }
+    });
+
+    if (secCounts.length >= 2) {
+      const counts = secCounts.map(s => s.contentCount);
+      const minC = Math.min(...counts);
+      const maxC = Math.max(...counts);
+      if (maxC - minC > 2 && (minC === 0 || maxC / minC > 2)) {
+        const dist = secCounts.map(s => `${s.secNum}:${s.contentCount}`).join(', ');
+        targetArr.push({
+          slideNum: 0,
+          type: 'UNBALANCED_SECTIONS',
+          message: `Unausgewogene Abschnittsgrößen (${dist}; Max/Min = ${maxC}/${minC}).`
+        });
+      }
+    }
+  }
+
+  // 7. Zeitbudget-Check für Kapitel 01 bis 10 (150 Min. - 15 Pause - 15 Showcase [ab T02] - 5 HÜ - 15 Quiz [T03,T05,T08,T10])
   let budgetMinutes = null;
   if (chapNum >= 1 && chapNum <= 10) {
     const hasQuiz = [3, 5, 8, 10].includes(chapNum);

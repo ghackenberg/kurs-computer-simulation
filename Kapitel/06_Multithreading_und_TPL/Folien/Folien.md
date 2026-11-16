@@ -17,12 +17,11 @@ math: mathjax
 
 Dieses Kapitel umfasst die folgenden Abschnitte:
 
-- 6.1: Grundlagen: Prozesse, Threads & Parallelität
-- 6.2: Task Parallel Library (`Parallel.For` & `Parallel.ForEach`)
-- 6.3: Threadsichere Datenstrukturen (`ConcurrentBag<T>`)
-- 6.4: Synchronisation & Race Conditions (`lock`)
-- 6.5: Parallele Zufallszahlen & thread-lokale Zustände
-- 6.6: Multithreading in WPF-Anwendungen
+- 6.1: Grundlagen: Prozesse, Threads & Skalierung
+- 6.2: Task Parallel Library (`Parallel.For` & `ConcurrentBag<T>`)
+- 6.3: Synchronisation, Cache-Effizienz & Zufallszahlen
+- 6.4: Asynchrone WPF-Entkopplung (`Task.Run` & Architektur)
+- 6.5: Fortschritt & Abbruch (`IProgress<T>` & `CancellationToken`)
 
 ---
 
@@ -74,7 +73,7 @@ In **Termin 02 bis 05** haben wir leistungsfähige 2D- und 3D-Oberflächen gebau
 
 ---
 
-## 6.1: Grundlagen: Prozesse, Threads & Parallelität
+## 6.1: Grundlagen: Prozesse, Threads & Skalierung
 
 ![bg right](./Illustrationen/Abschnitt_1.jpg)
 
@@ -185,15 +184,15 @@ $$S(p) = \frac{1}{s + \frac{1 - s}{p}}, \qquad S_{\max} = \lim_{p \to \infty} S(
 
 ---
 
-## 6.2: Task Parallel Library (`Parallel.For` & `Parallel.ForEach`)
+## 6.2: Task Parallel Library (`Parallel.For` & `ConcurrentBag<T>`)
 
 ![bg right](./Illustrationen/Abschnitt_2.jpg)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Die Task Parallel Library (TPL) in .NET
-- Parallelisierung von Zählschleifen mit `Parallel.For`
+- Die Task Parallel Library (TPL) in .NET (`Parallel.For`)
 - Granularität, `ParallelOptions` & JIT-Warmup für saubere Benchmarks
+- Threadsichere Ergebnissammlung ohne Sperren (`ConcurrentBag<T>`)
 
 ---
 
@@ -263,18 +262,6 @@ Parallel.For(0, n, opts, i => Step(i));
 
 ---
 
-## 6.3: Threadsichere Datenstrukturen (`ConcurrentBag<T>`)
-
-![bg right](./Illustrationen/Abschnitt_3.jpg)
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Das Problem ungeschützter Collections (`List<T>`)
-- Datenkorruption bei gleichzeitigem Schreibzugriff
-- Threadsichere Alternativen aus `System.Collections.Concurrent`
-
----
-
 ### Threadsichere Sammlungen: `ConcurrentBag<T>`
 
 Wenn mehrere Threads gleichzeitig auf eine Standard-Collection wie `List<T>` schreibend zugreifen, führt dies unweigerlich zu Ausnahmen oder unbemerktem Datenverlust.
@@ -315,15 +302,16 @@ Parallel.For(0, 1000, i =>
 
 ---
 
-## 6.4: Synchronisation & Race Conditions (`lock`)
+## 6.3: Synchronisation, Cache-Effizienz & Zufallszahlen
 
-![bg right](./Illustrationen/Abschnitt_4.jpg)
+![bg right](./Illustrationen/Abschnitt_3.jpg)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Was ist eine Race Condition? (`counter++` vs. `lock` / `Interlocked`)
-- Hardware-Falle: *False Sharing* auf 64-Byte-Cache-Lines & thread-lokale Reduktion
+- Race Conditions (`counter++` vs. `lock` / `Interlocked`)
+- *False Sharing* auf 64-Byte-Cache-Lines & thread-lokale Reduktion
 - Sperrfreie Datenparallelität durch Double-Buffering (`StateCurrent` $\to$ `StateNext`)
+- Thread-sichere Zufallszahlen (`Random.Shared` & deterministische Seeds)
 
 ---
 
@@ -426,18 +414,6 @@ Parallel.For(0, count, opts, i =>
 
 ---
 
-## 6.5: Parallele Zufallszahlen & thread-lokale Zustände
-
-![bg right](./Illustrationen/Abschnitt_5.jpg)
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Gefahren geteilter Zufallsgeneratoren (`System.Random`)
-- Reproduzierbarkeit und Seed-Management
-- Thread-lokale Instanziierung
-
----
-
 ### Threadsicherheit von `System.Random`
 
 Die Klasse `System.Random` ist **nicht threadsicher**:
@@ -460,17 +436,15 @@ Parallel.For(0, numberOfRuns, i =>
 
 ---
 
-## 6.6: Multithreading in WPF-Anwendungen
+## 6.4: Asynchrone WPF-Entkopplung (`Task.Run` & Architektur)
 
-![bg right](./Illustrationen/Abschnitt_6.jpg)
+![bg right](./Illustrationen/Abschnitt_4.jpg)
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Das Problem des blockierten UI-Threads (UI-Freeze)
 - Asynchrone Ausführung mit `async`/`await` und `Task.Run`
-- Zusammenspiel von UI-Thread und Hintergrund-Worker (Architektur)
-- Thread-sichere UI-Aktualisierung: `IProgress<T>` vs. `Dispatcher.Invoke`
-- Kooperativer Abbruch mit `CancellationTokenSource`
+- Zusammenspiel von UI-Thread und Hintergrund-Worker (Architektur & Datenfluss)
 
 ---
 
@@ -564,6 +538,18 @@ Die Entkopplung von Simulation und Benutzeroberfläche erfordert eine klare Thre
 ![](./Diagramme/Multithreading_WPF_Architektur.svg)
 
 *Ablauf: 1. Start aus UI ➔ 2. Simulation auf ThreadPool ➔ 3. Thread-sicheres Progress-Reporting ➔ 4. UI-Aktualisierung im SynchronizationContext.*
+
+---
+
+## 6.5: Fortschritt & Abbruch (`IProgress<T>` & `CancellationToken`)
+
+![bg right](./Illustrationen/Abschnitt_5.jpg)
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Thread-sichere UI-Aktualisierung: `IProgress<T>` vs. `Dispatcher.Invoke`
+- Code-Beispiel: Gedrosselte Fortschrittsmeldung mit `Progress<T>`
+- Kooperativer Abbruch langer Simulationen mit `CancellationTokenSource`
 
 ---
 
