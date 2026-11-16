@@ -6,7 +6,7 @@
 ---
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
-- **Foliensätze:** [`Folien/Folien.md`](./Folien/Folien.md) (+ [`Folien_Anhang_3D_Normalen.md`](./Folien/Folien_Anhang_3D_Normalen.md))
+- **Foliensätze:** [`Folien/Folien.md`](./Folien/Folien.md) (+ [`Folien_Anhang_OpenGL_Details.md`](./Folien/Folien_Anhang_OpenGL_Details.md), [`Folien_Anhang_3D_Normalen.md`](./Folien/Folien_Anhang_3D_Normalen.md))
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](./Uebung/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](./Moodle/Text.md) | [`SceneGraph3D.sln`](./Uebung/Vorlage/SceneGraph3D.sln)
 - **Assessment zu Terminbeginn:** **Moodle-Test 2** ([`Quiz/README.md`](./Quiz/README.md), 15 Min., prüft ausschließlich Kap. 03–04).
 - **Vorgreif-Sperre (Technologie-Stand T05):** `SharpGL.WPF`, homogene $4\times 4$-Matrizen, `OrbitCamera`, `SceneNode`, Vorwärtskinematik. *Strikte Tabus:* Kein Multithreading (erst T06), keine inversen Jacobi-LGS (erst T07).

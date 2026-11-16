@@ -10,8 +10,9 @@ math: mathjax
 <!-- _paginate: false -->
 <!-- _header: "" -->
 <!-- _footer: "" -->
+<!-- _class: title -->
 
-![bg right](./Titelbild.jpg)
+![bg](./Titelbild.jpg)
 
 # Kapitel 5: 3D-Visualisierung mit OpenGL
 
@@ -66,6 +67,8 @@ In **Termin 02 bis 04** haben wir die 2D-Welt gemeistert – wo stoßen 2D-Ansic
 - **Engpass heute:** Roboter im 3D-Raum $(x, y, z)$ brauchen Verdeckung (Z-Buffer), Licht und $4\times 4$-Matrix-Stacks.
 - **Halbzeit:** Mit `SharpGL` schließen wir Block 1 (T02–T05) vor T06 (TPL) und T07–T10 (Solver) ab.
 
+> **Brücke zu T04:** Die Baum-Topologie von `MSAGL` übertragen wir heute als hierarchischen **3D-Szenengraphen (`SceneNode`)** in den Raum!
+
 </div>
 <div class="two">
 
@@ -76,33 +79,37 @@ In **Termin 02 bis 04** haben wir die 2D-Welt gemeistert – wo stoßen 2D-Ansic
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_1.jpg)
+![bg](./Illustrationen/Abschnitt_1.jpg)
 
 ## 5.1: Grundlagen der 3D-Visualisierung mit OpenGL
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Rückblick & Brücke zu Termin 02–04 und Abschluss des Visualisierungs-Blocks
-- Grundkonzepte von OpenGL (Zustandsmaschine, Grafik-Pipeline)
-- Verwendung von Buffern (Farbpuffer & Z-Buffer-Tiefenprüfung)
-- Phong-Beleuchtungsmodell und Schattierungsarten (Flat vs. Smooth)
-- Transformations-Pipeline und Projektionsarten (`glOrtho` vs. `gluPerspective`)
+- Grundkonzepte von OpenGL (Zustandsmaschine, Color & Depth Buffer)
+- Phong-Beleuchtungsmodell (`GL_LIGHTING`), Render-Loop (`OpenGLDraw`) und Primitive
+- ModelView-Matrix ($\mathbf{T} \cdot \mathbf{R} \neq \mathbf{R} \cdot \mathbf{T}$) & Projektionsmatrix (`OpenGlView_Resized`)
 
 ---
 
-### Was ist OpenGL?
+### Was ist OpenGL & Einbindung in WPF (`SharpGL.WPF`)?
 
 <div class="columns">
 <div class="two">
 
-- **Open Graphics Library:**
-  - Plattform- und sprachübergreifende Standard-API zur hardwarebeschleunigten 2D- und 3D-Computergrafik.
-- **Direkter Draht zur GPU:**
-  - Statt wie in Termin 02 Pixel einzeln auf der CPU zu berechnen, übergeben wir der Grafikkarte 3D-Eckpunkte (*Vertices*), Normalenvektoren und Transformationsmatrizen.
-- **Zustandsmaschine (State Machine):**
-  - Einmal gesetzte Einstellungen (Licht, Farbe, Matrix-Modus) bleiben so lange aktiv, bis sie explizit geändert werden.
-- **Fokus im Kurs (`SharpGL` Fixed-Function):**
-  - Unmittelbar transparenter Matrix-Stack (`glPushMatrix` / `glPopMatrix`) ohne Shader-Boilerplate – ideal für kinematische Ketten!
+- **OpenGL & `SharpGL`:** Hardwarebeschleunigte 3D-API (Vertices, Normalen, Matrizen) als **Zustandsmaschine** ohne Shader-Boilerplate.
+- **`SharpGL.WPF` (`OpenGLControl`):**
+  1. `OpenGLInitialized`: Einmalig beim Start (Tiefentest, Licht).
+  2. `OpenGLDraw`: In jedem Frame für das 3D-Rendering.
+
+```xml
+<sharpGL:OpenGLControl x:Name="OpenGlView"
+    OpenGLInitialized="OpenGlView_OpenGLInitialized"
+    OpenGLDraw="OpenGlView_OpenGLDraw"
+    Resized="OpenGlView_Resized" />
+```
+
+> **Merksatz:** Einmal gesetzte OpenGL-Zustände (z. B. Licht, Farbe) bleiben bis zur Änderung aktiv.
 
 </div>
 <div class="one">
@@ -111,52 +118,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 </div>
 </div>
-
----
-
-### Einbindung in WPF mit `SharpGL.WPF`
-
-Die Bibliothek `SharpGL.WPF` stellt das Steuerelement `OpenGLControl` bereit, das einen Hardware-OpenGL-Kontext nahtlos in unser WPF-Fenster einbettet:
-
-- **Zwei zentrale Lebenszyklus-Ereignisse:**
-  1. `OpenGLInitialized`: Wird **einmalig** beim Start aufgerufen (globale Grundeinstellungen wie Tiefentest, Lichtquellen und Hintergrundfarbe).
-  2. `OpenGLDraw`: Wird **in jedem Frame** (oder bei `DoRender()`) aufgerufen, um die 3D-Szene neu zu zeichnen.
-
-```xml
-<Window xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF">
-    <Grid>
-        <sharpGL:OpenGLControl x:Name="OpenGlView"
-            OpenGLInitialized="OpenGlView_OpenGLInitialized"
-            OpenGLDraw="OpenGlView_OpenGLDraw"
-            Resized="OpenGlView_Resized" />
-    </Grid>
-</Window>
-```
-
----
-
-### Initialisierung der Szene: `OpenGLInitialized`
-
-In `OpenGlView_OpenGLInitialized` konfigurieren wir einmalig die Zustandsmaschine über `gl` (`args.OpenGL` – RGBA auf $[0{,}0 \dots 1{,}0]$ normiert; `GL_NORMALIZE` schützt vor Überbelichtung nach `gl.Scale`):
-
-```csharp
-private void OpenGlView_OpenGLInitialized(object sender, OpenGLRoutedEventArgs args)
-{
-    OpenGL gl = args.OpenGL;
-
-    // 1. Hintergrundfarbe festlegen (Clear Color: normiertes RGBA [0..1], dunkles CAD-Anthrazit)
-    gl.ClearColor(0.08f, 0.08f, 0.08f, 1.0f);
-
-    // 2. Z-Buffer-Tiefenprüfung & automatische Normalen-Renormierung (für gl.Scale!) aktivieren
-    gl.Enable(OpenGL.GL_DEPTH_TEST);
-    gl.Enable(OpenGL.GL_NORMALIZE);
-
-    // 3. Phong-Beleuchtungsmodell, Hauptlichtquelle GL_LIGHT0 & Gouraud Shading einschalten
-    gl.Enable(OpenGL.GL_LIGHTING);
-    gl.Enable(OpenGL.GL_LIGHT0);
-    gl.ShadeModel(OpenGL.GL_SMOOTH);
-}
-```
 
 ---
 
@@ -188,140 +149,46 @@ Für jedes Pixel `(x, y)` verwaltet OpenGL im GPU-Speicher zwei gleich große 2D
 <div class="columns">
 <div class="two">
 
-Ohne Beleuchtung wirkt ein 3D-Körper wie eine flache 2D-Silhouette. Das **Phong-Modell** (`GL_LIGHTING`) berechnet die Helligkeit $I_f$ als Summe von drei Anteilen:
-
-$$I_f = I_a + I_d + I_s$$
-
-1. **Ambient ($I_a$):** Richtungsunabhängige Grundhelligkeit durch indirektes Streulicht im Raum.
-2. **Diffuse ($I_d$):** Matte Streureflexion abhängig vom Lichteinfallswinkel (Lambert-Gesetz).
-3. **Specular ($I_s$):** Blickwinkelabhängiger Glanzpunkt auf glatten oder metallischen Oberflächen.
-
-</div>
-<div class="two">
-
 ![](./Diagramme/Phong_Gesamt.svg)
 
 </div>
-</div>
-
----
-
-### Vektoren für die Beleuchtungsrechnung (Normiert)
-
-<div class="columns">
 <div class="two">
 
-An jedem Oberflächenpunkt $\vec{p}$ nutzt das Phong-Modell vier auf Länge $1$ **normierte Einheitsvektoren** ($\|\vec{n}\| = 1$):
+Das **Phong-Modell** (`GL_LIGHTING`) berechnet die Helligkeit $I_f$ als Summe dreier Anteile:
 
-- **$\vec{n}$ (Normalenvektor):** Steht exakt senkrecht auf der Tangentialebene des Körpers im Punkt $\vec{p}$.
-- **$\vec{l}$ (Lichtvektor):** Zeigt vom Punkt $\vec{p}$ zur Lichtquelle $\vec{p}_{\text{light}}$.
-- **$\vec{v}$ (Betrachtungsvektor):** Zeigt vom Punkt $\vec{p}$ zum Kameraauge $\vec{p}_{\text{cam}}$.
-- **$\vec{r}$ (Reflexionsvektor):** Der an der Normalen $\vec{n}$ unter dem Einfallswinkel $\delta$ gespiegelte Lichtstrahl:
-  $$\vec{r} = 2(\vec{n} \cdot \vec{l})\vec{n} - \vec{l}$$
+$$I_f = I_a + I_d + I_s$$
 
-</div>
-<div class="two">
+1. **Ambient ($I_a$):** Grundhelligkeit gegen schwarze Schatten ($I_{La}$).
+2. **Diffuse ($I_d$):** Matte Streuung nach Lambert ($\vec{n} \cdot \vec{l}$).
+3. **Specular ($I_s$):** Blickwinkelabhängiger Glanzpunkt ($\vec{r} \cdot \vec{v}$).
 
-![](./Diagramme/Phong_Vektoren.svg)
+> **Details & Shading (`GL_FLAT` / `GL_SMOOTH`):** Siehe [Folien_Anhang_OpenGL_Details.md](./Folien_Anhang_OpenGL_Details.md).
 
 </div>
 </div>
 
 ---
 
-### 1. Ambient- & 2. Diffuse-Komponente (Lambert-Gesetz)
+### Initialisierung & Phong-Beleuchtung (`OpenGLInitialized`)
 
-<div class="columns">
-<div class="two">
-
-- **1. Ambient ($I_a = k_a \cdot I_{La}$):**
-  - Grundhelligkeit gegen schwarze Schatten ($k_a =$ Material, $I_{La} =$ Raumlicht).
-- **2. Diffuse ($I_d = k_d \cdot I_{Ld} \cdot \max(0, \vec{n} \cdot \vec{l})$):**
-  - Mit $\|\vec{n}\| = \|\vec{l}\| = 1$ liefert $\vec{n} \cdot \vec{l} = \cos(\delta)$ den Einfallswinkel $\delta$:
-  - **Zahlenbeispiel:**
-    - Senkrecht ($\delta = 0^\circ$): $\cos(0^\circ) = 1{,}00$ ($100\,\%$).
-    - Flach ($\delta = 60^\circ$): $\cos(60^\circ) = 0{,}50$ ($50\,\%$).
-    - Rückseite ($\delta > 90^\circ$): $\max(0, \dots) \implies I_d = 0$.
-
-</div>
-<div class="two">
-
-![](./Diagramme/Phong_Diffuse.svg)
-
-</div>
-</div>
-
----
-
-### 3. Specular-Komponente (Glanzpunkt & Shininess)
-
-<div class="columns">
-<div class="two">
-
-Glatte Oberflächen reflektieren Licht gebündelt um die Ausfallsrichtung $\vec{r}$:
-
-$$I_s = k_s \cdot I_{Ls} \cdot \left(\max(0, \vec{r} \cdot \vec{v})\right)^{\alpha_{\text{shiny}}}$$
-
-- **Blickrichtung $\vec{r} \cdot \vec{v}$:** Maximal ($1{,}0$), wenn die Kamera $\vec{v}$ direkt in $\vec{r}$ blickt.
-- **Exponent $\alpha_{\text{shiny}} \in [1, 128]$ ($k_s, I_{Ls}$):**
-  - **Zahlenbeispiel bei $\vec{r} \cdot \vec{v} = 0{,}90$ ($\approx 25^\circ$):**
-    - Plastik ($\alpha_{\text{shiny}} = 8$): $0{,}90^8 = 0{,}43$ (breit).
-    - Metall ($\alpha_{\text{shiny}} = 64$): $0{,}90^{64} = 0{,}001$ (scharf!).
-
-</div>
-<div class="two">
-
-![](./Diagramme/Phong_Specular.svg)
-
-</div>
-</div>
-
----
-
-### Kombination mehrerer Lichtquellen & C#-Konfiguration
-
-<div class="columns">
-<div class="two">
-
-Bei $n$ Lichtern (`GL_LIGHT0`, `GL_LIGHT1`..`GL_LIGHT7`) addiert OpenGL $I_d, I_s$ ($I_{d,i}, I_{s,i}$) auf das Raumlicht $I_a = k_a \cdot I_{La}$:
-
-$$I_f = I_a + \sum_{i=1}^{n} \left(I_{d,i} + I_{s,i}\right)$$
-
-- **Globales vs. lokales Ambient:**
-  - **`GL_LIGHT_MODEL_AMBIENT`** (`gl.LightModel`) setzt $I_{La}$ einmalig für die gesamte Szene.
-  - Pro-Licht `GL_AMBIENT` bleibt auf `0` (sonst verwaschen Schatten!).
-  - `GL_COLOR_MATERIAL` koppelt `gl.Color` an $k_a, k_d$ (`gl.Material` für $k_s$).
-
-</div>
-<div class="two">
-
-![](./Diagramme/Phong_Kombiniert.svg)
-
-</div>
-</div>
-
----
-
-### Der C#-Code zur Phong-Beleuchtung (`OpenGLInitialized`)
-
-`globalAmbient` setzt $I_{La}$; `lightPos`, `lightDiffuse`, `lightSpecular` steuern `GL_LIGHT0`; `matSpecular` aktiviert Glanzpunkte ($k_s > 0$):
+Einmalige Z-Buffer- & Lichtkonfiguration (`globalAmbient`, `lightPos`, `lightDiffuse`, `lightSpecular`, `matSpecular`):
 
 ```csharp
-gl.Enable(OpenGL.GL_LIGHTING);  // Phong-Beleuchtung aktivieren
-gl.Enable(OpenGL.GL_NORMALIZE); // Normiert Normalen nach gl.Scale(...) zurück auf Länge 1!
-float[] globalAmbient = [0.25f, 0.25f, 0.25f, 1.0f]; // Raumlicht I_La
+gl.ClearColor(0.08f, 0.08f, 0.08f, 1.0f);
+gl.Enable(OpenGL.GL_DEPTH_TEST);
+gl.Enable(OpenGL.GL_NORMALIZE);
+gl.Enable(OpenGL.GL_LIGHTING);
+gl.Enable(OpenGL.GL_LIGHT0);
+gl.ShadeModel(OpenGL.GL_SMOOTH);
+float[] globalAmbient = [0.25f, 0.25f, 0.25f, 1.0f];
 gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, globalAmbient);
-
-gl.Enable(OpenGL.GL_LIGHT0);    // Punktlicht bei (10, 20, 15) mit w = 1.0f
 float[] lightPos      = [10.0f, 20.0f, 15.0f, 1.0f];
 float[] lightDiffuse  = [0.85f, 0.85f, 0.85f, 1.0f];
 float[] lightSpecular = [1.00f, 1.00f, 1.00f, 1.0f];
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, lightPos);
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE,  lightDiffuse);
 gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_SPECULAR, lightSpecular);
-
-gl.Enable(OpenGL.GL_COLOR_MATERIAL); // gl.Color steuert k_a, k_d; gl.Material setzt k_s & Shininess
-gl.ColorMaterial(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT_AND_DIFFUSE);
+gl.Enable(OpenGL.GL_COLOR_MATERIAL);
 float[] matSpecular = [0.60f, 0.60f, 0.60f, 1.0f];
 gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_SPECULAR, matSpecular);
 gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_SHININESS, 64.0f);
@@ -329,55 +196,46 @@ gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_SHININESS, 64.0f);
 
 ---
 
-### Schattierungsmodus: Flat Shading (`GL_FLAT`)
+<!-- _class: activity -->
 
-<div class="columns">
-<div class="two">
+### Mitmach-Impuls (3 Min.): Z-Buffer, $\mathbf{T}\cdot\mathbf{R}$ & Projektion
 
-Wie werden die berechneten Phong-Farben über ein Polygon gefüllt?
+Sie richten eine neue `SharpGL`-Szene für einen 3D-Roboter ein und testen drei Effekte:
 
-- **Modus 1 – `gl.ShadeModel(OpenGL.GL_FLAT)`:**
-  - OpenGL berechnet die Beleuchtung **nur einmal pro Polygon** mit einer Flächennormalen ($\vec{n}_1, \vec{n}_2, \vec{n}_3, \vec{n}_4$).
-  - Jede Facette erhält eine konstante Farbe.
-- **Visueller Effekt:**
-  - Sichtbare Farbsprünge an den Kanten – ideal für scharfkantige Quader (`DrawCube`).
+| Fall | Beobachtung / Code | Zu klärende Frage |
+| :--- | :--- | :--- |
+| **1. Tiefenpuffer** | `gl.Clear(GL_COLOR_BUFFER_BIT)` ohne `DEPTH_BUFFER_BIT` | Warum verschwindet der Roboter ab Frame 2? |
+| **2. Matrizenfolge** | `gl.Rotate(45, ...)` vor `gl.Translate(2, 0, 0)` | Wo landet der Würfel gegenüber `Translate` vor `Rotate`? |
+| **3. Fenster-Resize** | Fenster wird doppelt so breit gezogen | Warum wird eine Kugel ohne `aspect`-Update zum Ei? |
 
-</div>
-<div class="two">
+- **Ziel:** Prüfen Sie, wie Tiefentest, Matrixmultiplikation und NDC-Würfel zusammenwirken.
 
-![](./Diagramme/ShadeModel_Flat.svg)
-
-</div>
-</div>
+> **Hinweis:** Diskutieren Sie kurz zu zweit – achten Sie auf `z_buf`, Gelenkpunkt vs. Orbit und `aspect`!
 
 ---
 
-### Schattierungsmodus: Smooth Shading (`GL_SMOOTH`)
+<!-- _class: solution -->
 
-<div class="columns">
-<div class="two">
+### Auflösung: Z-Buffer, $\mathbf{T}\cdot\mathbf{R}$ & Projektion
 
-Für gekrümmte Körper (`DrawSphere`, `DrawCylinder`) nutzen wir **Gouraud Shading**:
+1. **Ohne `GL_DEPTH_BUFFER_BIT`:** In Frame 1 werden alle Pixel mit den alten Tiefenwerten `z_buf` belegt; ab Frame 2 scheitert `z_neu < z_buf` fast überall $\implies$ das Bild friert ein oder flackert!
+2. **`Rotate` vor `Translate` ($\mathbf{R} \cdot \mathbf{T}$):** Das Bauteil kreist auf dem Radius $2\,\text{m}$ um den Ursprung statt sich an $(2, 0, 0)$ um sich selbst zu drehen.
+3. **Fehlendes `aspect`:** `GL_PROJECTION` projiziert in den quadratischen NDC-Würfel $[-1, +1]^3$; ohne angepasstes `aspect = w / h` dehnt der Viewport die Kugel horizontal:
+   ```csharp
+   gl.MatrixMode(OpenGL.GL_PROJECTION);
+   gl.LoadIdentity();
+   double aspect = OpenGlView.ActualWidth / Math.Max(OpenGlView.ActualHeight, 1.0);
+   gl.Perspective(45.0, aspect, 0.1, 100.0);
+   ```
+   - **Tipp:** In `OpenGLDraw` immer `GL_MODELVIEW` aktiv halten und vor `gl.LookAt(...)` per `gl.LoadIdentity()` zurücksetzen.
 
-- **Modus 2 – `gl.ShadeModel(OpenGL.GL_SMOOTH)`:**
-  - Jeder Eckpunkt (Vertex) erhält seine eigene **Vertex-Normale** ($\vec{n}_{v1}, \vec{n}_{v2}, \vec{n}_{v3}$).
-  - OpenGL berechnet die Farbe an den Ecken und **interpoliert bilinear** über die Fläche.
-- **Visueller Effekt:**
-  - Schon bei `slices = 24` wirken Zylinder und Kugeln perfekt glatt gerundet!
-
-</div>
-<div class="two">
-
-![](./Diagramme/ShadeModel_Smooth.svg)
-
-</div>
-</div>
+> **Merksatz:** Erst `Clear(COLOR | DEPTH)`, lokal immer `Translate` vor `Rotate`, und beim Resize `aspect` nachführen!
 
 ---
 
 ### Der Render-Loop in jedem Frame: `OpenGLDraw`
 
-Während `OpenGLInitialized` einmalig beim Programmstart läuft, wird `OpenGlView_OpenGLDraw` bei jedem Bildaufbau ausgeführt:
+Während `OpenGLInitialized` einmalig beim Start läuft, baut `OpenGlView_OpenGLDraw` jedes Einzelbild neu auf (Primitive wie `GL_LINES`, `GL_QUADS`, `GL_QUAD_STRIP` siehe [Anhang](./Folien_Anhang_OpenGL_Details.md)):
 
 ```csharp
 private void OpenGlView_OpenGLDraw(object sender, OpenGLRoutedEventArgs args)
@@ -391,70 +249,12 @@ private void OpenGlView_OpenGLDraw(object sender, OpenGLRoutedEventArgs args)
     gl.MatrixMode(OpenGL.GL_MODELVIEW);
     gl.LoadIdentity();
 
-    // 3. Kamera-Sichtmatrix setzen (statisch (5,5,5) -> in der Vorlage via _camera.Apply(gl))
+    // 3. Kamera-Sichtmatrix setzen (in der Vorlage via _camera.Apply(gl))
     gl.LookAt(5.0, 5.0, 5.0,  0.0, 0.0, 0.0,  0.0, 1.0, 0.0);
 
-    // 4. Achsen & Gitter (kurz gl.Disable(GL_LIGHTING), da Linien keine Normalen haben!) + 3D-Objekte ...
+    // 4. Achsen/Gitter (kurz GL_LIGHTING aus!) + 3D-Szenengraph zeichnen ...
 }
 ```
-
----
-
-### Zeichnen von Primitiven: `gl.Begin(...)` & `gl.End()`
-
-Zwischen `gl.Begin(mode)` und `gl.End()` übergeben wir Vertices (`gl.Vertex`), Normalen (`gl.Normal`) und Farbe (`gl.Color`):
-
-| OpenGL-Modus | Geometrische Bedeutung | Einsatz in `SceneGraph3D.sln` |
-| :--- | :--- | :--- |
-| **`GL_LINES`** | Je 2 Vertices = 1 Strecke (`1-2`, `3-4`) | **Achsen (`DrawAxes`) & Bodengitter (`DrawFloorGrid`)** |
-| **`GL_LINE_STRIP`** | Durchgehender Linienzug (`1-2-3-4`) | Werkzeugbahnen (TCP-Trajektorie) |
-| **`GL_TRIANGLES`** | Je 3 Vertices = 1 Dreieck (`1-2-3`) | Allgemeine 3D-CAD-Meshes (STL) |
-| **`GL_TRIANGLE_FAN`** | Dreiecksfächer um Zentrum `1` | Stirndeckel von Zylindern (`DrawCylinder`) |
-| **`GL_QUADS`** | Je 4 Vertices = 1 Viereck (`1-2-3-4`) | **Quader-Seitenflächen (`DrawCube`)** |
-| **`GL_QUAD_STRIP`** | Verbundenes Vierecksband | **Zylindermäntel & Kugeln (`DrawSphere`)** |
-
----
-
-### Visuelle Referenz der OpenGL-Primitive *(Deep Dive)*
-
-<div class="columns">
-<div class="two">
-
-- **Linien (`GL_LINES` vs. `GL_LINE_STRIP`):**
-  - `DrawFloorGrid` zeichnet Einzelstrecken (`v1`-`v2`, `v3`-`v4`) im Modus `GL_LINES` (ohne Licht).
-  - `GL_LINE_STRIP` verbindet `v1`-`v2`-`v3`-`v4` durchgehend.
-- **Vierecke (`GL_QUADS` & `GL_QUAD_STRIP`):**
-  - `DrawCube` nutzt $6 \times 4 = 24$ Vertices (`GL_QUADS`) mit je 1 Flächennormalen $\vec{n}$.
-  - `DrawCylinder` verbindet `v1`..`v6` als `GL_QUAD_STRIP` (`slices = 24`).
-
-</div>
-<div class="two">
-
-![](./Diagramme/OpenGL_Primitive_Modi.svg)
-
-</div>
-</div>
-
----
-
-### Die ModelView-Matrix (`GL_MODELVIEW`): Vom Bauteil zur Kamera
-
-<div class="columns">
-<div class="two">
-
-OpenGL überführt lokale Bauteilpunkte $\vec{v}_{\text{obj}}$ über $\mathbf{M}_{\text{modelview}} = \mathbf{M}_{\text{view}} \cdot \mathbf{M}_{\text{model}}$ in den **Kamera-Raum** ($\vec{v}_{\text{eye}}$):
-
-1. **Model ($\mathbf{M}_{\text{model}}$):** Platziert das Bauteil aus seinem lokalen Ursprung `(0,0,0)` an seine Weltposition $\vec{v}_{\text{world}}$.
-2. **View ($\mathbf{M}_{\text{view}}$, `gl.LookAt`):** OpenGL bewegt keine Kamera $\vec{p}_{\text{eye}}$, sondern schiebt die **gesamte Welt gegenläufig** so, dass die Kamera fest in `(0,0,0)` sitzt und entlang $-Z_{\text{eye}}$ blickt ($z_{\text{eye}} < 0$)!
-- **Warum verschmolzen?** Kamera zurückziehen $\equiv$ Welt wegschieben!
-
-</div>
-<div class="two">
-
-![](./Diagramme/ModelView_Transformation.svg)
-
-</div>
-</div>
 
 ---
 
@@ -463,12 +263,13 @@ OpenGL überführt lokale Bauteilpunkte $\vec{v}_{\text{obj}}$ über $\mathbf{M}
 <div class="columns">
 <div class="two">
 
-Erst homogene $4\times 4$-Matrizen mit $\vec{v} = (x, y, z, 1)^\top$ vereinen Verschiebung $\mathbf{T}$ und Drehung $\mathbf{R}$ in $\mathbf{M}_{\text{model}}$:
+Homogene $4\times 4$-Matrizen mit $\vec{v} = (x, y, z, 1)^\top$ vereinen Verschiebung $\mathbf{T}$ und Drehung $\mathbf{R}$ in $\mathbf{M}_{\text{modelview}} = \mathbf{M}_{\text{view}} \cdot \mathbf{M}_{\text{model}}$:
 
-- **Warum reicht $3\times 3$ nicht?** Jede $3\times 3$-Matrix bildet $\vec{0} \mapsto \vec{0}$ ab (keine Translation möglich!).
-- **Reihenfolge entscheidet ($\mathbf{T}\cdot\mathbf{R} \neq \mathbf{R}\cdot\mathbf{T}$):**
-  1. **`T(L1) · R`:** Verschiebt erst zum Gelenkpunkt `(L1, 0)` und dreht den Arm dort vor Ort $\checkmark$
-  2. **`R · T(L1)`:** Dreht erst die Achse $\implies$ das Bauteil schwenkt auf einer Kreisbahn um `(0,0)`!
+- **Warum $4\times 4$?** Eine $3\times 3$-Matrix bildet $\vec{0} \mapsto \vec{0}$ ab (keine Translation!).
+- **Reihenfolge ($\mathbf{T}\cdot\mathbf{R} \neq \mathbf{R}\cdot\mathbf{T}$):**
+  1. **`T(L1) · R`:** Verschiebt zum Gelenkpunkt `(L1, 0)` und dreht dort vor Ort $\checkmark$
+  2. **`R · T(L1)`:** Dreht erst die Achse $\implies$ das Bauteil schwenkt auf einer Kreisbahn!
+- **Merksatz:** In OpenGL wirkt der **letzte** Aufruf vor dem Zeichnen zuerst auf den Punkt!
 
 </div>
 <div class="two">
@@ -480,60 +281,41 @@ Erst homogene $4\times 4$-Matrizen mit $\vec{v} = (x, y, z, 1)^\top$ vereinen Ve
 
 ---
 
-### Projektionsmatrix (`GL_PROJECTION`): Sichtvolumen $\to$ NDC-Würfel
-
-`GL_PROJECTION` staucht das 3D-Sichtvolumen zwischen `near`/`zNear` und `far`/`zFar` abhängig vom Kameraabstand $z$ in den Einheitswürfel **NDC** $[-1, +1]^3$ (`h1`, `h2`):
-
-![](./Diagramme/Projektionsarten.svg)
-
----
-
-### Orthogonale Projektion vs. Perspektive *(Mathematischer Deep Dive)*
+### Projektionsmatrix (`GL_PROJECTION`) & `OpenGlView_Resized`
 
 <div class="columns">
 <div class="two">
 
-#### 1. Orthogonale Projektion (`gl.Ortho`)
-- **Sichtvolumen:** Achsenparalleler Quader $[left, right] \times [bottom, top] \times [near, far]$.
-- **Keine Tiefendivision:** Parallele Kanten bleiben im Bild exakt parallel ($x_{\text{ndc}} \propto x$).
-- **Einsatz:** Maßhaltige 2D/3D-CAD-Ansichten (Aufriss, Grundriss, Seitenansicht).
+`GL_PROJECTION` staucht das Sichtvolumen zwischen `zNear` und `zFar` in den Einheitswürfel **NDC** $[-1, +1]^3$:
+
+- **Orthogonal (`gl.Ortho`):** Parallele Kanten bleiben parallel (CAD-Aufriss).
+- **Perspektive (`gl.Perspective`):** Strahlensatz-Division durch $-z$ liefert Tiefenwirkung (`fovy = 45°`, `aspect = w / h`).
+- **Clipping (`zNear` / `zFar`):** Alles außerhalb `[0.1, 100.0]` wird für den Frame verworfen.
+- **Resize-Handler (`args`):** Aktualisiert `aspect` sofort bei Fensteränderung, damit Kugeln nicht zu Ellipsen verzerrt werden (Details: [Anhang](./Folien_Anhang_OpenGL_Details.md)).
 
 </div>
 <div class="two">
 
-#### 2. Perspektivische Projektion (`gl.Perspective`)
-- **Sichtvolumen:** Pyramidenstumpf (**Frustum**) mit Öffnungswinkel `fovy` (z. B. $45^\circ$), Seitenverhältnis `aspect` $= w/h$ und Clipping-Ebenen `zNear` bis `zFar`.
-- **Strahlensatz-Division durch $-z$ (Blick entlang $-Z \implies -z > 0$):**
-  $$x_{\text{proj}} = x \cdot \frac{z_{\text{near}}}{-z}, \quad y_{\text{proj}} = y \cdot \frac{z_{\text{near}}}{-z}$$
-- **Zahlenbeispiel:** Ein Würfel in doppelter Entfernung ($z = -4\,\text{m}$ statt $-2\,\text{m}$) erscheint auf dem Bildschirm **exakt halb so groß**!
-
-</div>
-</div>
-
----
-
-### Projektion im Resize-Handler (`OpenGlView_Resized`)
-
-Ändert sich die Fenstergröße, muss das Seitenverhältnis `aspect` aktualisiert werden (sonst werden Kugeln zu Ellipsen verzerrt – analog zu Termin 03!):
-
 ```csharp
-private void OpenGlView_Resized(object sender, OpenGLRoutedEventArgs args)
+private void OpenGlView_Resized(
+    object sender, OpenGLRoutedEventArgs args)
 {
     OpenGL gl = args.OpenGL;
     gl.MatrixMode(OpenGL.GL_PROJECTION);
     gl.LoadIdentity();
-
-    // Seitenverhältnis aspect = Breite / Höhe berechnen (Schutz gegen Division durch 0)
-    double aspect = OpenGlView.ActualWidth / Math.Max(OpenGlView.ActualHeight, 1.0);
-    gl.Perspective(45.0, aspect, 0.1, 100.0); // Frustum: fovy=45°, zNear=0.1m, zFar=100m
-
-    gl.MatrixMode(OpenGL.GL_MODELVIEW);       // Zurück in den ModelView-Modus!
+    double aspect = OpenGlView.ActualWidth
+        / Math.Max(OpenGlView.ActualHeight, 1.0);
+    gl.Perspective(45.0, aspect, 0.1, 100.0);
+    gl.MatrixMode(OpenGL.GL_MODELVIEW);
 }
 ```
 
+</div>
+</div>
+
 ---
 
-![bg right](./Illustrationen/Abschnitt_2.jpg)
+![bg](./Illustrationen/Abschnitt_2.jpg)
 
 ## 5.2: Strukturierung mit einem Szenengraphen
 
@@ -575,6 +357,11 @@ Stellen wir uns den SCARA-Roboter vor:
 <div class="columns">
 <div class="two">
 
+![](./Diagramme/MatrixStack_PushPop_Illu.svg)
+
+</div>
+<div class="two">
+
 Wie vererbt OpenGL Transformationen an Kinder, ohne Geschwister (`Workpiece`) zu verschieben?
 
 - **`gl.PushMatrix()`:** Sichert die Eltern-Matrix $\mathbf{M}_0$ oben auf dem GPU-Stack.
@@ -584,18 +371,13 @@ Wie vererbt OpenGL Transformationen an Kinder, ohne Geschwister (`Workpiece`) zu
 - **Skalierungs-Falle (Aufgabe 1.1):** `gl.Scale(L1, ...)` immer lokal in `PushMatrix`/`PopMatrix` kapseln!
 
 </div>
-<div class="two">
-
-![](./Diagramme/MatrixStack_PushPop_Illu.svg)
-
-</div>
 </div>
 
 ---
 
 ### Architektur in unserer Vorlage: Die Klasse `SceneNode`
 
-In `Scene/SceneNode.cs` kapselt eine einzige Klasse Baumstruktur, Transformation und Rendering:
+`Scene/SceneNode.cs` kapselt Baum, Transformation ([Anhang: Euler-Winkel](./Folien_Anhang_OpenGL_Details.md)) & Rendering:
 
 | Eigenschaft / Methode | Typ | Aufgabe im Szenengraphen (`SceneGraph3D.sln`) |
 | :--- | :--- | :--- |
@@ -609,28 +391,6 @@ In `Scene/SceneNode.cs` kapselt eine einzige Klasse Baumstruktur, Transformation
 
 ---
 
-### Räumliche Orientierung: Euler-Winkel (`Rx`, `Ry`, `Rz`)
-
-<div class="columns">
-<div class="two">
-
-`SceneNode` zerlegt 3D-Drehungen $\mathbf{R} = \mathbf{R}_y(\text{Ry}) \cdot \mathbf{R}_x(\text{Rx}) \cdot \mathbf{R}_z(\text{Rz})$ nach der **Rechte-Hand-Regel** (Daumen in $+$-Achse):
-
-1. **`Ry` (Yaw / Gieren um $+Y$):** Horizontal links/rechts schwenken.
-2. **`Rx` (Pitch / Nicken um $+X$):** Heben und Senken.
-3. **`Rz` (Roll / Rollen um $+Z$):** Seitlich kippen.
-- **Verkettung (`Y → X → Z`):** Folgeachsen drehen mit – bei `Rx = ±90°` fluchten $Y$ und $Z$ (**Gimbal Lock**)!
-
-</div>
-<div class="two">
-
-![](./Diagramme/Euler_Winkel_3D.svg)
-
-</div>
-</div>
-
----
-
 ### Rekursive Traversierung: `SceneNode.Render(OpenGL gl)`
 
 So traversiert `Render(OpenGL gl)` in `Scene/SceneNode.cs` den gesamten Baum ab `_rootNode`:
@@ -638,61 +398,35 @@ So traversiert `Render(OpenGL gl)` in `Scene/SceneNode.cs` den gesamten Baum ab 
 ```csharp
 public virtual void Render(OpenGL gl)
 {
-    gl.PushMatrix(); // 1. Eltern-Koordinatensystem auf dem GPU-Stack sichern
-
-    // 2. Lokale Transformation anwenden: Translation (Tx,Ty,Tz) -> Rotation (Ry,Rx,Rz) -> Scale (Sx,Sy,Sz)
+    gl.PushMatrix(); // 1. Eltern-Koordinatensystem sichern
     gl.Translate(Tx, Ty, Tz);
     if (MathF.Abs(Ry) > 1e-4f) gl.Rotate(Ry, 0.0f, 1.0f, 0.0f);
     if (MathF.Abs(Rx) > 1e-4f) gl.Rotate(Rx, 1.0f, 0.0f, 0.0f);
     if (MathF.Abs(Rz) > 1e-4f) gl.Rotate(Rz, 0.0f, 0.0f, 1.0f);
     if (MathF.Abs(Sx - 1.0f) > 1e-4f || MathF.Abs(Sy - 1.0f) > 1e-4f || MathF.Abs(Sz - 1.0f) > 1e-4f)
         gl.Scale(Sx, Sy, Sz);
-
     RenderCustomGeometry?.Invoke(gl);          // 3. Eigene Geometrie zeichnen
     foreach (var child in Children)            // 4. Rekursiver Abstieg für alle Kinder (child)
         child.Render(gl);
-
     gl.PopMatrix();  // 5. Eltern-Koordinatensystem wiederherstellen
 }
 ```
 
----
-
-### `GetLocalMatrix` & `GetWorldMatrix` *(Deep Dive – fertig in der Vorlage)*
-
-Für `GetWorldPosition()` berechnet `SceneNode` seine $4\times 4$-Weltmatrix auf der CPU (bereits fertig in `SceneNode.cs` implementiert):
-
-```csharp
-public Matrix4x4 GetLocalMatrix()
-{
-    var t  = Matrix4x4.CreateTranslation(Tx, Ty, Tz);
-    var rx = Matrix4x4.CreateRotationX(Rx * MathF.PI / 180.0f);
-    var ry = Matrix4x4.CreateRotationY(Ry * MathF.PI / 180.0f);
-    var rz = Matrix4x4.CreateRotationZ(Rz * MathF.PI / 180.0f);
-    var s  = Matrix4x4.CreateScale(Sx, Sy, Sz);
-    return s * (rz * rx * ry) * t; // Zeilenvektor-Konvention: Scale -> Rotate -> Translate
-}
-
-public Matrix4x4 GetWorldMatrix()
-    => Parent == null ? GetLocalMatrix() : GetLocalMatrix() * Parent.GetWorldMatrix();
-```
-
-- **Wichtiger Praxis-Fallstrick (Spalten- vs. Zeilenvektoren):** OpenGL multipliziert Spaltenvektoren von rechts ($\mathbf{M}_{\text{parent}} \cdot \mathbf{M}_{\text{local}} \cdot \vec{v}$); `.NET System.Numerics` (`t`, `rx`, `ry`, `rz`, `s`) nutzt **Zeilenvektoren** ($\vec{v}^\top \cdot \mathbf{M}_{\text{local}} \cdot \mathbf{M}_{\text{parent}}$) $\implies$ umgekehrte Reihenfolge `GetLocalMatrix() * Parent.GetWorldMatrix()`!
+> **CPU-Weltmatrix:** `GetLocalMatrix()` & `GetWorldMatrix()` siehe [Folien_Anhang_OpenGL_Details.md](./Folien_Anhang_OpenGL_Details.md).
 
 ---
 
-### Grundkörper mit Normalen (`DrawCube` & `DrawCylinder`)
+### Grundkörper mit Normalen (`DrawCube`, `DrawCylinder` & `DrawSphere`)
 
 <div class="columns">
 <div class="two">
 
 In `MainWindow.xaml.cs` zeichnen drei Hilfsmethoden Grundkörper mit **exakten Normalen** (`gl.Normal`):
 
-- **`DrawCube(OpenGL gl)`:**
-  - Einheitswürfel ($[-0{,}5, +0{,}5]^3$, Ursprung `(0,0,0)` **im Zentrum** $\implies$ erklärt `Translate(L1/2)` & `Ty = 0.06f`!) via `GL_QUADS`.
-- **`DrawCylinder(gl, radius, height, slices)`:**
-  - Zylindermantel entlang $+Y$ von $y = 0$ (Fußpunkt) bis `height` als `GL_QUAD_STRIP`.
-  - Für jeden Winkel `theta` zeigt die Einheitsnormale radial nach außen: `nx = cos(theta)`, `nz = sin(theta)`!
+- **`DrawCube(OpenGL gl)`:** Einheitswürfel ($[-0{,}5, +0{,}5]^3$, Ursprung **im Zentrum** $\implies$ erklärt `Translate(L1/2)` & `Ty = 0.06f`!) via `GL_QUADS`.
+- **`DrawCylinder(gl, radius, height, slices)`:** Mantel entlang $+Y$ bis `height` (`nx = cos(theta)`, `nz = sin(theta)`).
+- **`DrawSphere`:** Zerlegung in `stacks` & `slices` ([Anhang: Kegelstümpfe & Kugelnormalen](./Folien_Anhang_3D_Normalen.md)).
+- **Normalen-Effekt:** Ohne `gl.Normal` bleiben Körper unter Licht flach.
 
 </div>
 <div class="two">
@@ -721,29 +455,44 @@ private static void DrawCylinder(
 
 ---
 
-### Kugel-Approximation (`DrawSphere`) & Anhang
+<!-- _class: activity -->
 
-<div class="columns">
-<div class="two">
+### Mitmach-Impuls (3 Min.): Matrix-Stack & Skalierungs-Falle
 
-Für Gelenke (`DrawSphere`) wird eine Kugel ($r$) in Breitengrade (`stacks`, Elevation $\phi \in [-90^\circ, +90^\circ]$ ab Äquator) und Längengrade (`slices`, $\theta$) zerlegt:
+Im Roboter-Szenengraph hängt `_arm2Node` als Kind unter `_arm1Node`:
 
-- **Normalenformel der Kugel:**
-  - Auf einer zentrierten Kugel steht der Ortsvektor jedes Punktes senkrecht auf der Oberfläche ($r = 1$):
-    $$\vec{n}_{\phi,\theta} = \begin{pmatrix} \cos(\phi)\cos(\theta) \\ \sin(\phi) \\ \cos(\phi)\sin(\theta) \end{pmatrix}$$
-- *Herleitung für Kegelstümpfe:* siehe [`Folien_Anhang_3D_Normalen.md`](./Folien_Anhang_3D_Normalen.md).
+| Szenario | Problem / Code | Zu klärende Frage |
+| :--- | :--- | :--- |
+| **1. `PopMatrix` fehlt** | `_arm1Node` vergisst `gl.PopMatrix()` | Was passiert mit dem Geschwisterknoten `_workpieceNode`? |
+| **2. Skalierungs-Falle** | `_arm1Node.Sx = L1` direkt auf dem Gelenk statt lokal | Warum wird `_arm2Node` plötzlich mit `L1` mitgestreckt? |
+| **3. Würfel-Ursprung** | `DrawCube` ist in $[-0{,}5, +0{,}5]^3$ zentriert | Warum schieben wir `gl.Translate(L1 / 2, 0, 0)` vor `DrawCube`? |
 
-</div>
-<div class="one">
+- **Ziel:** Verstehen Sie, wie `PushMatrix`/`PopMatrix` Teilbäume und Skalierungen sauber voneinander isoliert.
 
-![](./Illustrationen/Sphere_Slices_Stacks.png)
-
-</div>
-</div>
+> **Hinweis:** Diskutieren Sie kurz zu zweit – denken Sie an Matrix-Vererbung auf dem GPU-Stack!
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_3.jpg)
+<!-- _class: solution -->
+
+### Auflösung: Matrix-Stack & Skalierungs-Falle
+
+1. **Fehlendes `PopMatrix()`:** Die Matrix von `_arm1Node` bleibt oben auf dem GPU-Stack liegen $\implies$ der Geschwisterknoten `_workpieceNode` übernimmt fälschlich die Position und Drehung des Roboterarms!
+2. **Skalierungs-Falle (`Sx`):** `SceneNode.Render` vererbt `gl.Scale(Sx, Sy, Sz)` an alle `Children`. Deshalb kapseln wir Arm-Balken lokal in `RenderCustomGeometry`:
+   ```csharp
+   gl.PushMatrix();
+   gl.Translate(L1 / 2.0f, 0.0f, 0.0f);
+   gl.Scale(L1, 0.14f, 0.18f);
+   DrawCube(gl);
+   gl.PopMatrix();
+   ```
+3. **Zentrierter Würfel:** Durch `Translate(L1 / 2, 0, 0)` beginnt der gestreckte Balken exakt im Gelenkdrehpunkt `(0, 0, 0)` und endet bei `x = L1`.
+
+> **Merksatz:** Skalierungen (`gl.Scale`) gehören immer in ein eigenes `PushMatrix()` / `PopMatrix()`-Paar im Blatt-Rendering!
+
+---
+
+![bg](./Illustrationen/Abschnitt_3.jpg)
 
 ## 5.3: Mechatronische Anwendung: Kinematische Ketten & Robotik
 
@@ -769,6 +518,8 @@ Ein **SCARA-Roboter** verkettet ab `_baseNode` `(0,0,0)` lokale Versätze ($\mat
 
 $$\mathbf{M}_{\text{TCP}} = \mathbf{T}_y(\text{HBase})\,\mathbf{R}_y(\theta_1)\,\mathbf{T}_x(\text{L1})\,\mathbf{R}_y(\theta_2)\,\mathbf{T}_x(\text{L2})\,\mathbf{T}_y(-d_3)$$
 
+> **Hinweis:** Jeder Knoten speichert nur lokale Gelenkparameter; die Gesamtmatrix entsteht automatisch beim Traversieren.
+
 </div>
 <div class="two">
 
@@ -784,17 +535,18 @@ $$\mathbf{M}_{\text{TCP}} = \mathbf{T}_y(\text{HBase})\,\mathbf{R}_y(\theta_1)\,
 <div class="columns">
 <div class="two">
 
+![](./Diagramme/Szenengraph_Roboterarm.svg)
+
+</div>
+<div class="two">
+
 Zur Validierung von $\mathbf{M}_{\text{TCP}}$ (`GetWorldPosition`) zeichnet `CalculateAnalyticTcp` eine **gelbe Kontrollkugel** ($\Delta = 0{,}000\,\text{mm}$; Startpose `30°`, `-45°`, `0.15 m` $\to (1{,}639;\; 0{,}350;\; -0{,}293)\,\text{m}$):
 
 $$x = \text{L1}\cos\theta_1 + \text{L2}\cos(\theta_1+\theta_2), \quad y = \text{HBase} - d_3$$
 $$z = -\big(\text{L1}\sin\theta_1 + \text{L2}\sin(\theta_1+\theta_2)\big)$$
 
 - **Winkel & Minuszeichen:** `L2` schließt zur $+X$-Parallele den Gesamtwinkel $\theta_1 + \theta_2$ ein; von oben (`+Y` zum Auge) dreht $+\theta_1$ nach hinten in **$-Z$**!
-
-</div>
-<div class="two">
-
-![](./Diagramme/Szenengraph_Roboterarm.svg)
+- **Ausblick T07:** Genau diese Vorwärtskinematik invertieren wir in **Termin 07** per Jacobi-Matrix!
 
 </div>
 </div>
@@ -803,7 +555,7 @@ $$z = -\big(\text{L1}\sin\theta_1 + \text{L2}\sin(\theta_1+\theta_2)\big)$$
 
 ### Der C#-Code: Aufbau des Roboter-Szenengraphen (Aufgabe 1.1)
 
-In **Stufe 1 (Aufgabe 1.1)** weisen wir jedem Knoten (`_baseNode`, `_arm1Node`, `_arm2Node`, `_pinoleNode`) unter `_rootNode` seine lokale Geometrie via `RenderCustomGeometry` zu:
+In **Stufe 1 (Aufgabe 1.1)** weisen wir jedem Knoten (`_baseNode`, `_arm1Node`, `_arm2Node`, `_pinoleNode`) unter `_rootNode` seine Geometrie zu (Update & Analytik: [Anhang](./Folien_Anhang_OpenGL_Details.md)):
 
 ```csharp
 private void BuildSceneGraph()
@@ -827,51 +579,38 @@ private void BuildSceneGraph()
 
 ---
 
-### Der C#-Code: Gelenk-Update & TCP-Deckungsprüfung
-
-Bewegt man einen Slider (`_theta1Deg`, `_theta2Deg`, `_d3`), aktualisiert `UpdateJointTransforms()` den Baum und vergleicht `CalculateAnalyticTcp()` (`t1`, `t12`) mit `_pinoleNode.GetWorldPosition()`:
-
-```csharp
-private void UpdateJointTransforms()
-{
-    _arm1Node.Ty = HBase;
-    _arm1Node.Ry = _theta1Deg; // Schulter auf Höhe HBase, Drehung theta1
-    _arm2Node.Tx = L1;
-    _arm2Node.Ry = _theta2Deg; // Ellenbogen bei L1, Relativwinkel theta2
-    _pinoleNode.Tx = L2;
-    _pinoleNode.Ty = -_d3;     // Pinole bei L2, Vertikalhub -d3
-}
-
-private (float X, float Y, float Z) CalculateAnalyticTcp()
-{
-    float t1  = _theta1Deg * MathF.PI / 180.0f;
-    float t12 = (_theta1Deg + _theta2Deg) * MathF.PI / 180.0f;
-    return (L1 * MathF.Cos(t1) + L2 * MathF.Cos(t12), HBase - _d3, -(L1 * MathF.Sin(t1) + L2 * MathF.Sin(t12)));
-}
-```
-
----
-
 ### Werkstück-Knoten & 3D-Greifabstand (Aufgabe 1.3)
 
-Warum hängt das 3D-Werkstück (`_workpieceNode`) in **Aufgabe 1.3** als **Geschwisterknoten** direkt unter `_rootNode` (statt unter `_baseNode`)?
+<div class="columns">
+<div class="two">
+
+Warum hängt `_workpieceNode` als **Geschwisterknoten** direkt unter `_rootNode` (statt unter `_baseNode`)?
 
 - **Statische Weltlage:** Am Boden bei $(1{,}10;\; 0{,}06;\; -0{,}40)\,\text{m}$ darf es sich vor dem Greifen **nicht** mit dem Roboter mitdrehen!
-- **3D-Abstand (`UpdateTcpCalculations`):** `Vector3.Distance(tcpPos, boxPos)` prüft `dist < 0.12f` (`canGrab` – *Tipp:* `62°`, `-100°`, `0.44 m`):
+- **3D-Abstand (`UpdateTcpCalculations`):** `Vector3.Distance(tcpPos, boxPos)` prüft `dist < 0.12f` (`canGrab` – *Tipp:* `62°`, `-100°`, `0.44 m`).
+- **Farbsignal:** Sobald `canGrab` wahr ist, wechselt die Würfelfarbe von Orange auf Grün.
+
+</div>
+<div class="two">
 
 ```csharp
-// 1. In BuildSceneGraph(): Werkstück (0.12m via gl.Scale(0.12f,...)) direkt unter _rootNode
+// 1. Werkstück (0.12m) unter _rootNode
 _workpieceNode.Tx = 1.10f;
-_workpieceNode.Ty = 0.06f; // Halbe Kantenlänge 0.06m -> steht exakt auf dem Boden y = 0!
+_workpieceNode.Ty = 0.06f; // Boden y=0
 _workpieceNode.Tz = -0.40f;
 _rootNode.AddChild(_workpieceNode);
 
-// 2. In UpdateTcpCalculations(): Euklidischer 3D-Abstand dist = ||tcpPos - boxPos||_2 prüfen
+// 2. Euklidischer Greifabstand dist
 Vector3 tcpPos = _pinoleNode.GetWorldPosition();
 Vector3 boxPos = _workpieceNode.GetWorldPosition();
 float dist = Vector3.Distance(tcpPos, boxPos);
-bool canGrab = dist < 0.12f; // Bei dist < 0.12 m färbt sich der Würfel von Orange auf Grün!
+bool canGrab = dist < 0.12f; // Orange -> Grün
 ```
+
+</div>
+</div>
+
+> **Merksatz:** Freie Werkstücke hängen unter `_rootNode` – erst beim Greifen erfolgt das Re-Parenting an den Greifer!
 
 ---
 
@@ -898,7 +637,7 @@ In **Stufe 2 (Track A & B)** wird aus der Kette ein **verzweigter Szenengraph**:
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_4.jpg)
+![bg](./Illustrationen/Abschnitt_4.jpg)
 
 ## 5.4: Interaktive Kameraführung
 
@@ -912,51 +651,18 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Bedarf an interaktiver Kamerasteuerung & `gl.LookAt`
+### Orbit-Kamera in Kugelkoordinaten ($r, \theta, \phi$) & `gl.LookAt`
 
 <div class="columns">
 <div class="two">
 
-In einem 3D-Leitstand muss man die Anlage frei aus jedem Blickwinkel inspizieren können:
+`OrbitCamera` führt $\vec{p}_{\text{eye}}$ auf einer Kugelschale um das Ziel $\vec{p}_{\text{look}}$ (`gl.LookAt(eye, look, (0,1,0))`):
 
-- **Die Sichtmatrix `gl.LookAt`:**
-  1. **Augpunkt $\vec{p}_{\text{eye}} = (\text{eyeX}, \text{eyeY}, \text{eyeZ})$:** Kameraposition im Raum.
-  2. **Zielpunkt $\vec{p}_{\text{look}} = (\text{LookAtX}, \text{LookAtY}, \text{LookAtZ})$:** Fokuspunkt der Kamera.
-  3. **Up-Vektor $\vec{e}_{\text{up}} = (0, 1, 0)$:** $+Y$-Achse zeigt nach oben.
-- **Lösung:** Statt `eyeX, eyeY, eyeZ` einzutippen, führen wir die Kamera auf einer Kugelschale!
+1. **Azimut $\theta$ (`AzimuthDeg` $\in [0^\circ, 360^\circ)$):** Horizontaler Winkel ab $+Z$ ($x \propto \sin\theta, z \propto \cos\theta$).
+2. **Elevation $\phi$ (`ElevationDeg` $\in [-85^\circ, +85^\circ]$):** Vertikaler Neigungswinkel zur XZ-Ebene.
+3. **Distanz $r$ (`Distance` $> 0$):** Horizontalradius $r_{xz} = r\cos\phi$, Höhe $y_{\text{eye}} = y_{\text{look}} + r\sin\phi$ (Zoom per Mausrad).
 
-</div>
-<div class="two">
-
-```csharp
-// Aufruf in OpenGlView_OpenGLDraw
-// direkt nach gl.LoadIdentity():
-
-gl.LookAt(
-    eyeX, eyeY, eyeZ,          // Kameraposition
-    LookAtX, LookAtY, LookAtZ, // Fokuspunkt
-    0.0, 1.0, 0.0              // Up-Vektor (+Y)
-);
-```
-
-</div>
-</div>
-
----
-
-### Orbit-Kamera in Kugelkoordinaten ($r, \theta, \phi$)
-
-<div class="columns">
-<div class="two">
-
-`OrbitCamera` beschreibt $\vec{p}_{\text{eye}}$ relativ zum Ziel $\vec{p}_{\text{look}} = (x_{\text{look}}, y_{\text{look}}, z_{\text{look}})$:
-
-1. **Azimut $\theta$ (`AzimuthDeg` $\in [0^\circ, 360^\circ)$):**
-   - Horizontaler Winkel ab $+Z$ (Blick von vorne bei $\theta = 0^\circ \implies x_{\text{eye}} \propto \sin\theta, z_{\text{eye}} \propto \cos\theta$).
-2. **Elevation $\phi$ (`ElevationDeg` $\in [-85^\circ, +85^\circ]$):**
-   - Vertikaler Neigungswinkel zur XZ-Ebene.
-3. **Distanz $r$ (`Distance` $> 0$):**
-   - Mit Horizontalradius $r_{xz} = r \cdot \cos(\phi)$ folgt die Höhe zu $y_{\text{eye}} = y_{\text{look}} + r \cdot \sin(\phi)$.
+> **Merksatz:** Statt drei kartesischer Kamerakoordinaten direkt zu tippen, steuert der Nutzer intuitiv $(r, \theta, \phi)$ um den Fokus $\vec{p}_{\text{look}}$!
 
 </div>
 <div class="two">
@@ -973,18 +679,78 @@ gl.LookAt(
 <div class="columns">
 <div class="two">
 
-Der Sehstrahl $\vec{f}$ von $\vec{p}_{\text{eye}}$ nach $\vec{p}_{\text{look}}$ legt nur die Blickachse fest – um die Kamera **waagerecht** zu halten, berechnet `gl.LookAt` den Bild-Rechtsvektor per Kreuzprodukt $\vec{s} = \vec{f} \times \vec{e}_{\text{up}}$:
-
-- **Schräger Blick ($|\phi| \le 85^\circ$):** $\vec{f}$ und $\vec{e}_{\text{up}}$ spannen eine Ebene auf $\implies \vec{s} \neq \vec{0}$ ist eindeutig.
-- **Nord-/Südpol ($\phi = \pm 90^\circ$, Blick senkrecht nach unten):** $\vec{f}$ und $\vec{e}_{\text{up}}$ liegen auf **einer Linie** $\implies \vec{f} \times \vec{e}_{\text{up}} = \vec{0}$ (*„Wo ist im Bild rechts?“* unbestimmt $\to 180^\circ$-Bildsprung, `Math.Clamp` schützt!).
+![](./Diagramme/OrbitCamera_Pol_Singularitaet.svg)
 
 </div>
 <div class="two">
 
-![](./Diagramme/OrbitCamera_Pol_Singularitaet.svg)
+Der Sehstrahl $\vec{f}$ von $\vec{p}_{\text{eye}}$ nach $\vec{p}_{\text{look}}$ legt nur die Blickachse fest – um die Kamera **waagerecht** zu halten, berechnet `gl.LookAt` den Bild-Rechtsvektor per Kreuzprodukt $\vec{s} = \vec{f} \times \vec{e}_{\text{up}}$:
+
+- **Schräger Blick ($|\phi| \le 85^\circ$):** $\vec{f}$ und $\vec{e}_{\text{up}}$ spannen eine Ebene auf $\implies \vec{s} \neq \vec{0}$ ist eindeutig.
+- **Nord-/Südpol ($\phi = \pm 90^\circ$, Blick senkrecht nach unten):** $\vec{f}$ und $\vec{e}_{\text{up}}$ liegen auf **einer Linie** $\implies \vec{f} \times \vec{e}_{\text{up}} = \vec{0}$ (*„Wo ist im Bild rechts?“* unbestimmt $\to 180^\circ$-Bildsprung, `Math.Clamp` schützt!).
+- **5°-Polkappe:** In der Praxis bleibt die Szene bis $85^\circ$ bequem von oben einsehbar.
 
 </div>
 </div>
+
+---
+
+### Maussteuerung & Kamera-Panning (Aufgabe 1.2)
+
+<div class="columns">
+<div class="two">
+
+- **Links ziehen:** `_camera.Rotate` ($\theta, \phi$).
+- **Mausrad:** `_camera.Zoom` (Radius $r$).
+- **Rechts ziehen (Aufg. 1.2 – `Pan(dRight, dUp)`):**
+  - Auf dem Strahl von $\vec{p}_{\text{look}}$ zu $\vec{p}_{\text{eye}}$ steht der Kamera-Rechtsvektor $\vec{e}_{\text{right}} = (\cos\theta, 0, -\sin\theta)^\top$ senkrecht.
+  - **„Greife-die-Welt“-Prinzip:** Rechtsziehen (`dRight` $> 0$) schiebt $\vec{p}_{\text{look}}$ um $-\text{dRight}\cdot\vec{e}_{\text{right}}$ (`dX_look`, `dZ_look`, `dUp`):
+    $$\text{dX\_look} = -\text{dRight} \cdot \cos\theta, \quad \text{dZ\_look} = +\text{dRight} \cdot \sin\theta$$
+  - `LookAtY += dUp` verschiebt die Blickhöhe entlang Welt-$Y$.
+
+</div>
+<div class="two">
+
+![](./Diagramme/OrbitCamera_Panning_XZ.svg)
+
+</div>
+</div>
+
+---
+
+<!-- _class: activity -->
+
+### Mitmach-Impuls (3 Min.): Orbit-Kamera, Pol-Schutz & Panning
+
+Sie steuern die 3D-Szene über `OrbitCamera` (`r`, `theta`, `phi`, `LookAtX/Y/Z`):
+
+| Frage | Gegeben | Gesucht |
+| :--- | :--- | :--- |
+| **1. Pol-Singularität** | Warum schlägt `gl.LookAt(..., 0, 1, 0)` bei $\phi = +90^\circ$ fehl? | Richtung von $\vec{f} \times \vec{e}_{\text{up}}$ |
+| **2. Panning-Vektor** | Kamera schaut bei $\theta = 90^\circ$ von $+X$ auf `(0,0,0)` | Wohin zeigt $\vec{e}_{\text{right}} = (\cos\theta, 0, -\sin\theta)^\top$? |
+| **3. Werkstück-Knoten** | Warum hängt `_workpieceNode` vor dem Greifen unter `_rootNode`? | Statische Weltlage vs. Mitdrehen |
+
+- **Ziel:** Prüfen Sie Kreuzprodukt am Pol und lokales Kamera-Panning bei $\theta = 90^\circ$.
+
+> **Hinweis:** Diskutieren Sie kurz zu zweit – achten Sie auf Vorzeichen und Achsen!
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Orbit-Kamera, Pol-Schutz & Panning
+
+1. **Pol-Singularität ($\phi = \pm 90^\circ$):** Sehstrahl $\vec{f}$ und Up-Vektor $\vec{e}_{\text{up}} = (0, 1, 0)$ sind kollinear $\implies \vec{f} \times \vec{e}_{\text{up}} = \vec{0}$. `Math.Clamp(phi, -85, 85)` hält die Orientierung stabil.
+2. **Panning bei $\theta = 90^\circ$:** $\vec{e}_{\text{right}} = (\cos 90^\circ, 0, -\sin 90^\circ)^\top = (0, 0, -1)^\top$ zeigt exakt nach **$-Z$** (im Kamerabild nach rechts!):
+   ```csharp
+   LookAtX -= dRight * Math.Cos(thetaRad);
+   LookAtY += dUp;
+   LookAtZ += dRight * Math.Sin(thetaRad);
+   ```
+   - **Maus-Events (`MainWindow.xaml.cs`):** Bindung von `MouseDown` / `MouseMove` siehe [Folien_Anhang_OpenGL_Details.md](./Folien_Anhang_OpenGL_Details.md).
+3. **`_workpieceNode` unter `_rootNode`:** Als Geschwisterknoten von `_baseNode` bleibt das Werkstück auf dem Boden liegen, bis es in Stufe 2 per Re-Parenting gegriffen wird.
+
+> **Merksatz:** `ElevationDeg` immer auf $[-85^\circ, +85^\circ]$ klemmen und Panning entlang $\vec{e}_{\text{right}}$ ausführen!
 
 ---
 
@@ -1013,65 +779,23 @@ public (double EyeX, double EyeY, double EyeZ) GetEyePosition()
 
 ---
 
-### Maussteuerung & Kamera-Panning (Aufgabe 1.2)
-
-<div class="columns">
-<div class="two">
-
-- **Links ziehen:** `_camera.Rotate` ($\theta, \phi$).
-- **Mausrad:** `_camera.Zoom` (Radius $r$).
-- **Rechts ziehen (Aufg. 1.2 – `Pan(dRight, dUp)`):**
-  - Auf dem Strahl von $\vec{p}_{\text{look}}$ zu $\vec{p}_{\text{eye}}$ steht der Kamera-Rechtsvektor $\vec{e}_{\text{right}} = (\cos\theta, 0, -\sin\theta)^\top$ senkrecht.
-  - **„Greife-die-Welt“-Prinzip:** Rechtsziehen (`dRight` $> 0$) schiebt $\vec{p}_{\text{look}}$ um $-\text{dRight}\cdot\vec{e}_{\text{right}}$ (`dX_look`, `dZ_look`, `dUp`):
-    $$\text{dX\_look} = -\text{dRight} \cdot \cos\theta, \quad \text{dZ\_look} = +\text{dRight} \cdot \sin\theta$$
-
-</div>
-<div class="two">
-
-![](./Diagramme/OrbitCamera_Panning_XZ.svg)
-
-</div>
-</div>
-
----
-
-### Der C#-Code zur Maus-Interaktion (`MainWindow.xaml.cs`)
-
-Über `_isDragging`, `_lastMousePos`, `currentPos`, `dx` und `dy` werden Orbit und Panning gesteuert:
-
-```csharp
-private void OpenGlView_MouseDown(object sender, MouseButtonEventArgs e)
-{
-    if (e.LeftButton == MouseButtonState.Pressed || e.RightButton == MouseButtonState.Pressed)
-    {
-        _isDragging = true;
-        _lastMousePos = e.GetPosition(OpenGlView);
-        OpenGlView.CaptureMouse(); // Mausfang auch über den Fensterrand hinaus!
-    }
-}
-private void OpenGlView_MouseMove(object sender, MouseEventArgs e)
-{
-    if (!_isDragging) return;
-    Point currentPos = e.GetPosition(OpenGlView);
-    double dx = currentPos.X - _lastMousePos.X;
-    double dy = currentPos.Y - _lastMousePos.Y;
-    if (e.LeftButton == MouseButtonState.Pressed)       _camera.Rotate(-dx * 0.4, dy * 0.4);
-    else if (e.RightButton == MouseButtonState.Pressed) _camera.Pan(dx * 0.01, dy * 0.01);
-    _lastMousePos = currentPos;
-}
-```
-
----
-
 <!-- _class: summary -->
 
 # Zusammenfassung Kapitel 5
 
-- **3D-Pipeline & Z-Buffer:** OpenGL projiziert 3D-Körper über `GL_MODELVIEW` und `GL_PROJECTION`; `GL_DEPTH_TEST` löst Verdeckungen pixelgenau über den Tiefenpuffer auf.
-- **Phong-Beleuchtung & Shading:** Ambient ($I_a$), Diffuse ($I_d \propto \vec{n}\cdot\vec{l}$) und Specular ($I_s \propto (\vec{r}\cdot\vec{v})^{\alpha_{\text{shiny}}}$) erzeugen mit `GL_SMOOTH` und Normalenvektoren plastische 3D-Oberflächen.
-- **Hierarchischer Szenengraph (`SceneNode`):** Kaskadiert Transformationen über `PushMatrix`/`PopMatrix` – verifiziert durch den Deckungstest ($\Delta = 0{,}000\,\text{mm}$) zwischen Analytik und `GetWorldPosition()`.
-- **Interaktive `OrbitCamera`:** Kugelkoordinaten ($r, \theta, \phi$), Gimbal-Lock-Clamping ($[-85^\circ, +85^\circ]$) und Zielpunkt-Panning für natürliche CAD-Navigation.
-- **Ausblick auf Block 2 (T06–T10 – Modellierung & Virtuelle Inbetriebnahme):** Nach der *Vorwärtskinematik* $(\theta_1, \theta_2) \mapsto (x, y, z)$ folgen ab T06/T07 Multithreading, Gleichungssysteme ($\mathbf{K}\cdot\mathbf{u}=\mathbf{f}$), *Inverse Kinematik* (T07) sowie Dynamik & **Virtuelle Inbetriebnahme (T10)**!
+- **3D-Pipeline & Z-Buffer:** OpenGL projiziert 3D-Körper über `GL_MODELVIEW` / `GL_PROJECTION`; `GL_DEPTH_TEST` löst Verdeckungen pixelgenau auf.
+- **Phong-Beleuchtung & Shading:** Ambient-, Diffuse- und Specular-Anteil erzeugen mit `GL_SMOOTH` und Normalen plastische 3D-Oberflächen.
+- **Szenengraph (`SceneNode`):** Kaskadiert Transformationen per `PushMatrix`/`PopMatrix` – Deckungstest ($\Delta = 0{,}000\,\text{mm}$) gegen `GetWorldPosition()`.
+- **Interaktive `OrbitCamera`:** Kugelkoordinaten ($r, \theta, \phi$), Gimbal-Lock-Clamping ($[-85^\circ, +85^\circ]$) und Zielpunkt-Panning.
+
+```csharp
+gl.PushMatrix();
+gl.Translate(Tx, Ty, Tz);
+gl.Rotate(Ry, 0, 1, 0);
+gl.PopMatrix();
+```
+
+> **Kernregel:** Immer `PushMatrix` vor lokaler Transformation (`Tx, Ty, Tz`, `Ry`) und `PopMatrix` danach!
 
 ---
 
@@ -1079,10 +803,31 @@ private void OpenGlView_MouseMove(object sender, MouseEventArgs e)
 
 ### Ausblick: Vom UI-Thread auf alle CPU-Kerne (Termin 06)
 
-Unser 4-teiliger Visualisierungsblock (T02–T05) ist abgeschlossen – bevor wir ab Termin 07 physikalische Gleichungslöser starten, lösen wir einen zentralen Engpass:
+<div class="columns">
+<div class="three">
+
+Unser 4-teiliger Visualisierungsblock (**T02–T05**: Pixel, Vektor, Telemetrie, 3D-OpenGL) ist abgeschlossen – bevor wir ab Termin 07 Gleichungslöser starten, lösen wir einen Engpass:
 
 - **Das $16{,}6\,\text{ms}$-Problem:** Solange Berechnung und Rendering gemeinsam im WPF-UI-Thread laufen, friert das Fenster bei komplexen Simulationen ein und 15 von 16 CPU-Kernen bleiben ungenutzt.
 - **Nächster Schritt (Termin 06):** Mit **Multithreading (`Parallel.For`, `Task.Run`, `IProgress<T>`)** trennen wir Rechenlast und Oberfläche sauber voneinander.
+
+> **Showcase-Fokus (T06):** SCARA / Claw Crane (`PushMatrix`/`PopMatrix`, `T·R != R·T`, `OrbitCamera.Pan` & Pol-Schutz).
+
+</div>
+<div class="two">
+
+```csharp
+// Ausblick T06: Parallelisierung
+Parallel.For(0, nParticles, i =>
+{
+    StepPhysics(i, dt);
+});
+```
+
+- **Block 2 (T06–T10):** Parallel Computing, Cholesky/Jacobi-IK (T07), DGLs (T08), Optimierung (T09) & Virtuelle Inbetriebnahme (T10).
+
+</div>
+</div>
 
 ---
 
