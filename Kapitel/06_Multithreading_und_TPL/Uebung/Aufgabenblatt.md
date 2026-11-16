@@ -85,8 +85,8 @@ Führt der WPF-UI-Thread eine lange Simulationsschleife direkt im Button-Click-H
    - Machen Sie auch `BtnRunScaling_Click` in `MainWindow.xaml.cs` asynchron (`async void`) und führen Sie `ParallelRunner.RunScalingSeries(...)` im Hintergrund über `await Task.Run(...)` aus, damit das Fenster während der mehrstufigen Benchmark-Messung nicht einfriert.
    - Vergleichen Sie in der `DataGrid`-Tabelle den Speedup $S(p)$ und die Effizienz $E(p)$ Ihres Prozessors!
 4. **Aufgabe 1.4 – Automatisierte Unit-Test-Verifikation & 5-Sekunden-Selbsttest (`dotnet test`):**
-   - Führen Sie im Projektverzeichnis `Vorlage/` den Befehl `dotnet test` aus und stellen Sie sicher, dass alle 4 Tests in `ThreadingTests.cs` (insbesondere `TestSequentialVsParallelEquivalence`, `TestAmdahlSpeedupCalculation` und `TestSerialFractionEstimation`) grün durchlaufen.
-   - **Selbsttest-Tipp (Golden Reference Numbers):** Prüfen Sie Ihre Amdahl- und Äquivalenzberechnung gegen folgende Referenzwerte:
+   - Führen Sie im Projektverzeichnis `Vorlage/` den Befehl `dotnet test` aus, stellen Sie sicher, dass die vorbereiteten Basis-Tests in `ThreadingTests.cs` grün durchlaufen, und ergänzen Sie dort einen eigenen Testfall `TestCustomAmdahlReference`, der die untenstehenden Kontrollwerte prüft.
+   - **Selbsttest-Tipp (Golden Reference Numbers):** Prüfen Sie Ihre Amdahl-Auswertung und die Partikel-Äquivalenz gegen folgende Referenzwerte:
      - Bei $p = 4$ Kernen und einem seriellen Anteil von $s = 0{,}10$ ($10\,\%$) ergibt sich exakt $S(4) = \frac{1}{0{,}10 + 0{,}90 / 4} = 3{,}076923$ und eine Effizienz $E(4) = 0{,}7692$ ($76{,}9\,\%$).
      - Umgekehrt liefert ein gemessener Speedup von $S(8) = 5{,}128205$ bei $p = 8$ Kernen einen rekonstruierten seriellen Anteil von exakt $s = 0{,}080$ ($8{,}0\,\%$).
      - Im Partikel-Äquivalenztest (`count = 2000`, `seed = 12345`, `dt = 0.001`, 10 Schritte) dürfen `StepSequential` und `StepParallel` maximal um $10^{-12}$ abweichen.

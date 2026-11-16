@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <defs>
+    <marker id="arrB" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#16A34A"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
+    </style>
+  </defs>
+
+  <rect x="-45" y="0" width="570" height="380" fill="#FFFFFF"/>
+
+  <rect x="-25" y="16" width="530" height="84" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <text x="240" y="42" font-size="18" font-weight="bold" fill="#1E40AF" text-anchor="middle">T02: Raw-Pixel (WriteableBitmap)</text>
+  <text x="240" y="67" font-size="16" fill="#1E3A8A" text-anchor="middle">Ideal für 2D-Wärmefelder (500 × 500)</text>
+  <text x="240" y="89" font-size="15.5" fill="#475569" text-anchor="middle">Grenze: keine Objekt-Identität, Pixel-Zoom</text>
+
+  <line x1="240" y1="100" x2="240" y2="132" stroke="#2563EB" stroke-width="2.5" marker-end="url(#arrB)"/>
+
+  <rect x="-25" y="138" width="530" height="100" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="2.5"/>
+  <text x="240" y="165" font-size="18" font-weight="bold" fill="#B45309" text-anchor="middle">T03: 2D-Vektorgrafik (Heute)</text>
+  <text x="240" y="192" font-size="16" font-weight="bold" fill="#92400E" text-anchor="middle">WPF Canvas · Welt ↔ Screen Transformation</text>
+  <text x="240" y="220" font-size="15.5" fill="#78350F" text-anchor="middle">Stäbe, Knoten &amp; Kraftpfeile interaktiv</text>
+
+  <line x1="240" y1="238" x2="240" y2="270" stroke="#16A34A" stroke-width="2.5" marker-end="url(#arrG)"/>
+
+  <rect x="-25" y="276" width="530" height="88" rx="10" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/>
+  <text x="240" y="303" font-size="18" font-weight="bold" fill="#15803D" text-anchor="middle">T04–T07: Direkte Weiterverwendung</text>
+  <text x="240" y="328" font-size="15.5" fill="#166534" text-anchor="middle">T04 Telemetrie · T05 3D-OpenGL</text>
+  <text x="240" y="352" font-size="15.5" fill="#14532D" text-anchor="middle">JSON-Tragwerk speist T07 FEM-Statik!</text>
+</svg>

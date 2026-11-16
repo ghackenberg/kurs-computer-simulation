@@ -28,15 +28,22 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
-Nach dem organisatorischen **Prolog (Kapitel 00)** legen wir heute in **Termin 01** das fachliche und mathematische Fundament für das gesamte Semester:
+<div class="columns top">
+<div class="three">
 
-- **Ausgangspunkt (Ingenieur-Herausforderung):**
-  - Reale mechatronische Anlagen (Hydraulikzylinder, Roboter, Fertigungsstraßen) sind zu teuer, zu träge oder zu gefährlich, um neue Regler und Algorithmen direkt an der echten Maschine durch Ausprobieren zu testen.
-- **Was wir heute in Termin 01 aufbauen:**
-  - Wir klären die Systematik der **4 Simulationsmodellarten** (statisch, kontinuierlich, diskret, hybrid) sowie der **4 Visualisierungssäulen** (Pixel, Vektor, Diagramme, 3D).
-  - In der Hausübung programmieren Sie direkt Ihren ersten **expliziten Euler- und Heun-Integrator** für nichtlineare Kinematik und prüfen dessen Stabilitätsgrenzen.
-- **Der rote Faden für das Semester:**
-  - **Block 1 (T02–T05):** Echtzeit-Visualisierung in 2D & 3D $\to$ **Scharnier (T06):** Multithreading $\to$ **Block 2 (T07–T10):** Mathematisch-numerische Solver für alle 4 Modellarten.
+Nach dem organisatorischen **Prolog (Kapitel 00)** legen wir heute in **Termin 01** das Fundament:
+
+- **Ausgangspunkt:** Reale Anlagen (Roboter, Hydraulik) sind zu teuer oder gefährlich für direkte Regler-Tests.
+- **Heute in T01:** Die **4 Modellarten** & **4 Grafik-Säulen** sowie Ihr erster **Euler-/Heun-Integrator** inkl. Stabilitätsgrenze.
+- **Semester-Bogen:** **T02–T05** Visualisierung $\to$ **T06** Multithreading $\to$ **T07–T10** Solver.
+
+</div>
+<div class="two">
+
+![](./Diagramme/Semester_Bruecke_T01.svg)
+
+</div>
+</div>
 
 ---
 

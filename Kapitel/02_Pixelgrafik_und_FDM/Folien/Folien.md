@@ -54,15 +54,22 @@ Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
-In **Termin 01** haben wir punktförmige Massen (Zylinderkolben, Projektil) mit wenigen skalaren Zustandsgrößen ($x(t), v(t)$) berechnet – warum reicht das für reale Bauteile oft nicht aus?
+<div class="columns top">
+<div class="three">
 
-- **Rückblick auf Termin 01 (Konzentrierte Parameter):**
-  - Ein einzelner Zahlenwert für Position $x$ oder Temperatur $T$ genügt, solange sich das Bauteil überall gleich verhält.
-- **Der Engpass heute (Ortsaufgelöste 2D-Felder):**
-  - In einem CPU-Kühlkörper oder Reaktor hat **jeder Punkt $(x, y)$ im Raum** eine andere Temperatur $T(x, y, t)$! Bei einem $500 \times 500$-Gitter entstehen **$250.000$ gekoppelte Zustände pro Zeitschritt**.
-  - Klassische Textausgaben oder Standard-UI-Controls brechen bei $250.000$ Werten mit 60 FPS sofort zusammen.
-- **Einordnung ins große Ganze (1. Visualisierungs-Säule: Raw Pixels):**
-  - Wir starten heute den Block **2D/3D-Visualisierung (T02–T05)** auf der hardwarenächsten Ebene: Direkter Speicherzugriff auf 32-Bit-Pixelraster (`WriteableBitmap`) für flächige 2D-Feldsimulationen (Finite Differenzen).
+In **Termin 01** genügten skalare Zustände ($x(t), T(t)$) – warum reicht das für reale Bauteile oft nicht?
+
+- **Rückblick T01:** Konzentrierte Parameter genügen nur, solange ein Bauteil überall denselben Zustand hat.
+- **Engpass heute:** Ein $500 \times 500$-Kühlkörper hat **$250\,000$ gekoppelte Temperaturen** $T(x, y, t)$ pro Schritt.
+- **Lösung (1. Grafik-Säule):** Hardwarenaher Zugriff auf 32-Bit-Pixelraster (`WriteableBitmap`) mit 60 FPS für 2D-FDM-Felder.
+
+</div>
+<div class="two">
+
+![](./Diagramme/Semester_Bruecke_T02.svg)
+
+</div>
+</div>
 
 ---
 

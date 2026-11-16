@@ -58,14 +58,22 @@ Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
-Mit **Termin 06** haben wir unseren Unterbau aus Visualisierung (T02–T05) und Multithreading (T06) abgeschlossen – heute starten wir in die **4 mathematischen Simulationsmodellarten (T07–T10)**!
+<div class="columns top">
+<div class="three">
 
-- **Direkte Brücke zurück zu Termin 03 (2D-Vektorgrafik im Canvas):**
-  - Erinnern Sie sich an Ihren **2D-CAD-Tragwerks-Inspektor bzw. Poly-Bridge-Editor aus Termin 03**: Dort konnten wir Knoten $(x, y)$, Stäbe und Lastpfeile $\vec{F}$ bereits maßstabsgetreu zeichnen und als JSON speichern – aber die Brücke war noch „tot“ (reine Geometrie ohne Kräfteberechnung!).
-- **Was wir heute in Termin 07 ergänzen (1. Modellart: Statik):**
-  - Heute hauchen wir genau dieser Geometrie aus Termin 03 echte **Elastostatik** ein: Wir stellen aus den Knoten und Stäben die globale Steifigkeitsmatrix $\mathbf{K}$ auf und lösen das lineare Gleichungssystem $\mathbf{K} \cdot \mathbf{u} = \mathbf{f}$ über die **Cholesky-Zerlegung** (`Math.NET`).
-- **Einordnung ins große Ganze (Vom Ruhezustand zur Dynamik):**
-  - Statische Modelle beschreiben das **zeitunabhängige Gleichgewicht ($\sum \vec{F} = \mathbf{0}$)** – der logische erste Schritt vor den zeitabhängigen Systemen in Termin 08 bis 10.
+Mit **Termin 06** steht unser Unterbau – heute starten wir in die **4 Simulationsmodellarten (T07–T10)**:
+
+- **Brücke zu T03 (2D-Canvas):** Unser Tragwerks-Editor exportierte bereits Knoten $(x, y)$, Stäbe und Lasten $\vec{F}$ als JSON – noch ohne Kräfte!
+- **Heute (1. Modellart: Statik):** Wir stellen die Steifigkeitsmatrix $\mathbf{K}$ auf und lösen $\mathbf{K} \cdot \mathbf{u} = \mathbf{f}$ via **Cholesky** (`Math.NET`).
+- **Ausblick:** Statik beschreibt das Gleichgewicht ($\sum \vec{F} = \mathbf{0}$) vor der Dynamik in T08–T10.
+
+</div>
+<div class="two">
+
+![](./Diagramme/Semester_Bruecke_T07.svg)
+
+</div>
+</div>
 
 ---
 ## 7.1: Einführung und historische Entwicklung

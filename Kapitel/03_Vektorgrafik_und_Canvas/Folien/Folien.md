@@ -54,6 +54,9 @@ Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showc
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
+<div class="columns top">
+<div class="three">
+
 In **Termin 02** haben wir 2D-Temperaturfelder direkt in den Pixelpuffer (`WriteableBitmap`) geschrieben – warum brauchen wir heute ein zweites 2D-Grafikparadigma?
 
 - **Was `WriteableBitmap` (Termin 02) perfekt gelöst hat:**
@@ -63,6 +66,14 @@ In **Termin 02** haben wir 2D-Temperaturfelder direkt in den Pixelpuffer (`Write
   - **Kein stufenloser Zoom:** Beim Hineinzoomen in Konstruktionszeichnungen entstehen grobe Pixel-Treppenstufen statt gestochen scharfer Kanten.
 - **Einordnung ins große Ganze (2. Visualisierungs-Säule: 2D-Vektorgrafik):**
   - Für Maschinen-Geometrien, CAD-Tragwerke (direkte Vorarbeit für unsere **FEM-Statik in Termin 07**!) und interaktive Kraftpfeile nutzen wir **analytische 2D-Vektorgrafik** im `WPF Canvas`.
+
+</div>
+<div class="two">
+
+![](./Diagramme/Semester_Bruecke_T03.svg)
+
+</div>
+</div>
 
 ---
 

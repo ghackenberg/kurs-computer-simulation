@@ -367,14 +367,21 @@ function lintSectionDeck(markdownPath) {
     const chapSlideIdx = slides.findIndex(sl => /#\s+Kapitel\s+\d+:/i.test(sl));
     if (firstSec && chapSlideIdx !== -1) {
       const preSecSlides = slides.slice(chapSlideIdx + 1, firstSec.slideNum - 1);
-      const hasBridgeBeforeFirstSec = preSecSlides.some(sl =>
+      const bridgeSlide = preSecSlides.find(sl =>
         /###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(sl)
       );
-      if (!hasBridgeBeforeFirstSec) {
+      if (!bridgeSlide) {
         issues.push({
           slideNum: firstSec.slideNum,
           type: 'MISSING_BRIDGE_SLIDE',
           message: `Vor Abschnitt ${chapNum}.1 (nach Kapitel-Opener/Quiz/Showcase) fehlt die dedizierte Einstiegs-/Brückenfolie ('### Rückblick & Brücke: ...').`
+        });
+      } else if (!/!\[[^\]]*\]\(\.\/Diagramme\/[^)]+\.svg\)/i.test(bridgeSlide)) {
+        const bIdx = slides.indexOf(bridgeSlide);
+        issues.push({
+          slideNum: bIdx >= 0 ? bIdx + 1 : firstSec.slideNum,
+          type: 'MISSING_BRIDGE_VISUAL',
+          message: `Brückenfolie in Kapitel ${chapNum} fehlt ein eingebettetes 3-Stufen-Brücken-SVG ('./Diagramme/...svg').`
         });
       }
     }

@@ -53,14 +53,22 @@ Zu Beginn (15 Min.): **Moodle-Test 2** (Kapitel 03 & 04) – danach **Live-Showc
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
-In **Termin 02 bis 04** haben wir die 2D-Welt gemeistert (Pixelraster, 2D-Vektor-Canvas, Echtzeit-Diagramme mit `ScottPlot 5`) – wo stoßen 2D-Ansichten an ihre Grenzen?
+<div class="columns top">
+<div class="three">
 
-- **Konventions-Brücke T03 $\leftrightarrow$ T05 (2D-WPF-Canvas vs. 3D-OpenGL):**
-  - Statt des **linkshändigen 2D-WPF-Canvas** aus T03 (`+X` rechts, **`+Y` unten**) nutzt OpenGL ein **rechtshändiges 3D-Koordinatensystem (`+X` rechts, `+Y` oben, `+Z` zum Betrachter)** – Eselsbrücke *Rechte Hand*: Daumen `+X`, Zeigefinger `+Y`, Mittelfinger `+Z`!
-- **Der Engpass heute (Räumliche Kinematik & Verdeckung):**
-  - Ein mehrachsiger Industrieroboter bewegt sich im **3D-Raum $(x, y, z)$**: Bauteile verdecken sich gegenseitig, Perspektive verkürzt Längen und Gelenke rotieren um Raumachsen (Z-Buffer, Beleuchtung & $4\times 4$-Matrix-Stacks nötig!).
-- **Halbzeit-Meilenstein (Abschluss des Visualisierungs-Blocks T02–T05):**
-  - Mit `SharpGL` komplettieren wir heute unsere 4 Visualisierungs-Säulen, bevor ab Termin 06 (Multithreading) und Termin 07–10 die Systemmodellierung & Gleichungslöser starten.
+In **Termin 02 bis 04** haben wir die 2D-Welt gemeistert – wo stoßen 2D-Ansichten an ihre Grenzen?
+
+- **Konventions-Brücke T03 $\leftrightarrow$ T05:** Statt 2D-Canvas (`+Y` unten) nutzt OpenGL ein **rechtshändiges 3D-System (`+X` rechts, `+Y` oben, `+Z` vor)** (*Rechte-Hand-Regel*).
+- **Engpass heute:** Roboter im 3D-Raum $(x, y, z)$ brauchen Verdeckung (Z-Buffer), Licht und $4\times 4$-Matrix-Stacks.
+- **Halbzeit:** Mit `SharpGL` schließen wir Block 1 (T02–T05) vor T06 (TPL) und T07–T10 (Solver) ab.
+
+</div>
+<div class="two">
+
+![](./Diagramme/Semester_Bruecke_T05.svg)
+
+</div>
+</div>
 
 ---
 

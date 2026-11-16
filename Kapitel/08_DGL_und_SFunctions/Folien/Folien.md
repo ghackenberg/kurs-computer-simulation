@@ -58,14 +58,22 @@ Präsentation der Hausübung aus Termin 07 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
-In **Termin 07** haben wir Systeme im statischen Ruhezustand ($\sum \vec{F} = \mathbf{0} \implies \mathbf{K}\mathbf{u} = \mathbf{f}$) gelöst – was passiert jedoch, wenn Kräfte **nicht** im Gleichgewicht stehen?
+<div class="columns top">
+<div class="three">
 
-- **Vom Gleichgewicht (Termin 07) zur Bewegung (Termin 08):**
-  - Sobald eine resultierende Kraft wirkt (z.B. Lastsprung am Servomotor, Zünden eines Raketentriebwerks), beschleunigt die Masse gemäß Newton ($\sum \vec{F} = m \cdot \ddot{\mathbf{x}} \neq \mathbf{0}$).
-  - Aus dem algebraischen Gleichungssystem wird ein **System gekoppelter Differentialgleichungen (ODEs)** im Zustandsraum: $\dot{\mathbf{x}}(t) = \mathbf{f}(t, \mathbf{x}(t), \mathbf{u}(t))$.
-- **Brücke zurück zu Termin 01, 04 und 06:**
-  - In **Termin 01** sahen wir bereits, wie schnell der naive Euler-Integrator bei Schwingungen explodiert.
-  - Heute entwickeln wir eine modulare **S-Function-Solver-Architektur** mit **Runge-Kutta 4 (RK4)** und geschlossenem **PID-Regelkreis** (inkl. Anti-Windup) und plotten die Trajektorien live mit `ScottPlot 5` (T04).
+In **Termin 07** lösten wir das Gleichgewicht ($\sum \vec{F} = \mathbf{0} \implies \mathbf{K}\mathbf{u} = \mathbf{f}$) – was passiert bei Kräften im Ungleichgewicht?
+
+- **Von Statik zu Bewegung:** Wirkt $\sum \vec{F} = m \cdot \ddot{\mathbf{x}} \neq \mathbf{0}$, entsteht ein **DGL-System (ODE)** im Zustandsraum: $\dot{\mathbf{x}}(t) = \mathbf{f}(t, \mathbf{x}(t), \mathbf{u}(t))$.
+- **Brücke zu T01 & T04:** Nach Eulers Schwingungs-Instabilität (T01) bauen wir eine **S-Function-Architektur** mit **RK4** & **PID** (Anti-Windup).
+- **Visualisierung:** Live-Trajektorien plotten wir direkt mit `ScottPlot 5` (T04).
+
+</div>
+<div class="two">
+
+![](./Diagramme/Semester_Bruecke_T08.svg)
+
+</div>
+</div>
 
 ---
 

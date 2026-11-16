@@ -27,5 +27,5 @@
   - `1.4`: Automatisierte Unit-Test-Verifikation (`dotnet test` auf `ThreadingTests.cs`: `StepSequential` vs. `StepParallel` sowie Amdahl-Referenzwerte).
 - **Stufe 2 – Wahlmodell (10 Pkt.):**
   - **Track A (`A.1`–`A.4` – Parallele Monte-Carlo-Toleranzanalyse):** Maßkettenrechnung für $10^7$ Getriebewellen-Baugruppen (Box-Muller), Thread-lokale Reduktion vs. `Interlocked` vs. `lock` und Amdahl-Parameterfit für den seriellen Anteil $1 - f_{\text{par}}$.
-  - **Track B (`B.1`–`B.4` – 100.000 Boids / Zombie-Horde):** Hochparalleler 2D-Schwarm-Benchmark mit strikter Read/Write-Puffertrennung (`stateRead` $\to$ `stateWrite`), Kernskalierung und experimentellem Nachweis von *False Sharing* (`long[p]` vs. `long[p * 16]`).
+  - **Track B (`B.1`–`B.4` – 100.000 Boids / Zombie-Horde):** Hochparalleler 2D-Schwarm-Benchmark mit strikter Read/Write-Puffertrennung (`StateCurrent[]` $\to$ `StateNext[]`), asynchronem WPF-Echtzeit-Dashboard und Amdahl-Kernskalierungsreihe.
 - **Showcase- & Code-Defense-Fokus (zu Beginn von T07):** Warum ist `new Random()` in parallelen Schleifen nicht thread-sicher? Warum bremst `lock` in der inneren Schleife auf $S < 1$ aus? Wie entsteht 64-Byte Cache-Line Ping-Pong (*False Sharing*)?

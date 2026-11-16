@@ -7,6 +7,6 @@ Komplexe mechatronische Simulationen erfordern massive Rechenleistung. In dieser
 
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T05:** Zwei ausgewählte Teams präsentieren ihre 3D-Roboter und Greifarme am Beamer.
-* **Stufe 1 (Basisaufgabe):** Paralleler Partikelfeld-Schritt mit Parallel.For, Messung der Rechenzeit und Nachweis der Ergebnisidentität zur seriellen Schleife.
+* **Stufe 1 (Basisaufgabe):** UI-Freeze im WPF-Partikel-Dashboard mit Task.Run, gedrosseltem Progress-Reporting und CancellationToken beheben, Amdahl-Skalierungsreihe ausführen und über dotnet test verifizieren.
 * 🏭 **Stufe 2 – Track A (Industrie):** *Parallele Monte-Carlo-Toleranzanalyse* – Statistische Maßkettenrechnung für Bauteilpassungen mit automatischem Amdahl-Fit.
 * 🎮 **Stufe 2 – Track B (Game):** *„100.000 Boids / Zombie-Horde“* – Hochparalleler Schwarm-Benchmark mit Flocking-Verhalten und Kernskalierungs-Analyse.

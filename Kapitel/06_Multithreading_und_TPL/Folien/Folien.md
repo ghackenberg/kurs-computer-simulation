@@ -106,7 +106,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Prozess (.exe):** Isolierte Instanz mit eigenem **RAM / Heap**. Austausch per **IPC** kostet **ms**.
 - **Thread:** Ausführungseinheit im Prozess (eigener **Stack**, gemeinsamer **Heap**).
 - **Wechselkosten:** Context-Switch in **$\mu\text{s}$**, Datenaustausch direkt im Speicher (**ns–$\mu\text{s}$**).
-- **Konsequenz für C#:** **1 Prozess** mit vielen **Threads** – maximal schnell, aber schreibgeschützt!
+- **Konsequenz für C#:** **1 Prozess** mit vielen **Threads** – maximal schnell, aber ungeschützt beim Schreiben!
 
 </div>
 <div class="two">
@@ -171,7 +171,7 @@ Bei konstanter Problemgröße begrenzt der serielle Anteil $s = 1 - f_{\text{par
 
 $$S(p) = \frac{1}{s + \frac{1 - s}{p}}, \qquad S_{\max} = \lim_{p \to \infty} S(p) = \frac{1}{s}$$
 
-- **Zahlenbeispiel ($s = 5\,\%$):** Bei $p = 64$ Kernen erreicht man nur $15{,}5\times$ statt $64\times$, und selbst für $p \to \infty$ bleibt die Grenze bei **$S_{\max} = 20$**!
+- **Zahlenbeispiel ($s = 5\,\%$):** Bei $p = 64$ Kernen erreicht man nur $15{,}4\times$ statt $64\times$, und selbst für $p \to \infty$ bleibt die Grenze bei **$S_{\max} = 20$**!
 - **Gegenstück (*Weak Scaling*):** Wächst die Problemgröße mit $p$ (*Gustafson*), skaliert die Simulation nahezu linear.
 
 </div>

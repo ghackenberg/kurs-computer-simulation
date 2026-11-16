@@ -12,7 +12,7 @@
     </style>
   </defs>
 
-  <rect x="0" y="0" width="1080" height="450" fill="#FFFFFF"/>
+  <rect x="-70" y="0" width="1220" height="450" fill="#FFFFFF"/>
 
   <!-- LEFT PANEL: NAIV / FALSCH (False Sharing) -->
   <rect x="16" y="14" width="516" height="422" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="2"/>

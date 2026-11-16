@@ -34,7 +34,7 @@ Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorles
    - Fasst zweispaltig (`Track A` links, `Track B` rechts) die Vorwochen-Hausübung und den Live-Parameter-Stresstest zusammen.
 3. **Einstiegsfolie vor Abschnitt `N.1`: `### Rückblick & Brücke: ...`:**
    - Pflicht in jedem Kapitel ab `01` **vor** dem ersten Abschnitts-Opener `## N.1:` und **nach** dem Kapitel-Opener bzw. den optionalen Quiz-/Showcase-Folien (geprüft durch `npm run lint:sections`).
-   - Verbindet (a) den Rückblick auf Vor-Termine (Nachbar- & Fern-Brücken laut `Konzept/01_*.md`), (b) den konkreten Engpass des bisherigen Werkzeugs und (c) die Einordnung in die Semester-Architektur (*Foreshadowing*).
+   - Zweispaltiges Pflichtlayout (`three` Text links | `two` 3-Stufen-Brücken-SVG `./Diagramme/...svg` rechts): verbindet (a) den Rückblick auf Vor-Termine (Nachbar- & Fern-Brücken laut `Konzept/01_*.md`), (b) den konkreten Engpass des bisherigen Werkzeugs und (c) die Einordnung in die Semester-Architektur (*Foreshadowing*). Fehlt das SVG, meldet `lint:sections` einen Fehler (`MISSING_BRIDGE_VISUAL`).
 4. **Letzte Folie des Kapitels: `### Hausübung Termin XX: ...`:**
    - Zeigt oben **Stufe 1: Basisaufgabe (`1.1`–`1.4`)** für alle Teams und darunter zweispaltig **Stufe 2: Vertiefungsaufgabe (`Track A` links | `Track B` rechts)**.
 

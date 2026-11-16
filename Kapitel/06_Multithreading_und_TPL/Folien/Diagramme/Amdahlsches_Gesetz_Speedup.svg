@@ -31,8 +31,8 @@
   <line x1="400" y1="24" x2="400" y2="324" stroke="#F1F5F9" stroke-width="1"/>
   <line x1="475" y1="24" x2="475" y2="324" stroke="#F1F5F9" stroke-width="1"/>
 
-  <!-- Ideal Linear Speedup S(p) = p -->
-  <line x1="25" y1="311" x2="345" y2="32" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,4"/>
+  <!-- Ideal Linear Speedup S(p) = p (exponential curve on log2 X-axis: p=1->1, 2->2, 4->4, 8->8, 16->16, ~22.7->22.7) -->
+  <path d="M 25 310.8 C 75 304, 130 292, 175 271.2 C 215 252, 238 236, 250 218.4 C 280 175, 308 138, 325 112.8 C 342 82, 354 50, 362 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,4"/>
 
   <!-- Speedup Curves (exact points computed for p = 1,2,4,8,16,32,64) -->
   <!-- s = 50% (S_max = 2) -->
@@ -80,7 +80,7 @@
   <text x="418" y="49" font-size="12.5" font-weight="bold" fill="#004B96" text-anchor="middle">S_max = 20 (s = 5 %)</text>
 
   <rect x="296" y="108" width="170" height="24" rx="4" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.2"/>
-  <text x="381" y="125" font-size="12.5" font-weight="bold" fill="#B91C1C" text-anchor="middle">p = 64: nur 15,5× !</text>
+  <text x="381" y="125" font-size="12.5" font-weight="bold" fill="#B91C1C" text-anchor="middle">p = 64: nur 15,4× !</text>
 
   <rect x="285" y="164" width="166" height="22" rx="4" fill="#E0F2FE" stroke="#38BDF8" stroke-width="0.9"/>
   <text x="368" y="180" font-size="12.5" font-weight="bold" fill="#0284C7" text-anchor="middle">s = 10 % (S_max = 10)</text>

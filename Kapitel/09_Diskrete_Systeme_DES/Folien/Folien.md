@@ -60,15 +60,22 @@ Präsentation der Hausübung aus Termin 08 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
-In **Termin 08** haben wir kontinuierliche Systeme (Motoren, Regelkreise) mit festen Zeitschritten $\Delta t = 1\,\text{ms}$ integriert – warum scheitert dieser Ansatz bei einer ganzen Fabrik oder Lackierstraße?
+<div class="columns top">
+<div class="three">
 
-- **Rückblick auf Termin 08 (Zeitgesteuerte ODE-Integration):**
-  - Bei einem Elektromotor ändern sich Strom $i(t)$ und Drehzahl $\omega(t)$ in jeder Mikrosekunde stetig – ein festes Zeitraster $\Delta t$ ist hier ideal.
-- **Der Engpass heute (Leerlauf-Explosion bei seltenen Ereignissen):**
-  - In einer Produktionslinie oder Warteschlange passiert oft minutenlang nichts, bis plötzlich zu einem krummen Zeitpunkt $t = 14{,}382\,\text{s}$ ein Werkstück eintrifft oder eine Maschine ausfällt.
-  - Ein kontinuierlicher $\Delta t$-Solver würde Millionen nutzloser Leerschritte rechnen und den exakten Ereigniszeitpunkt trotzdem verfehlen!
-- **Einordnung ins große Ganze (3. Modellart: Discrete Event Simulation):**
-  - Statt die Zeit in feste Scheiben $\Delta t$ zu schneiden, springen wir heute über eine **Ereignis-Warteschlange (`PriorityQueue`)** direkt von Ereignis zu Ereignis und koppeln dies mit **Monte-Carlo-Simulationsläufen** (Parallelisierung aus Termin 06!).
+In **Termin 08** integrierten wir stetige Signale mit festem Schritt $\Delta t = 1\,\text{ms}$ – warum scheitert das bei einer Fabrik?
+
+- **Rückblick T08:** Bei Motoren ändern sich Strom $i(t)$ und Drehzahl $\omega(t)$ stetig – ein festes $\Delta t$ passt ideal.
+- **Engpass heute:** In Produktionslinien passiert minutenlang nichts, bis bei $t = 14{,}382\,\text{s}$ ein Ereignis eintrifft ($\Delta t$ rechnet Millionen Leerschritte).
+- **Lösung (3. Modellart: DES):** Eine `PriorityQueue` springt von Ereignis zu Ereignis – gekoppelt mit **Monte-Carlo** via TPL (T06).
+
+</div>
+<div class="two">
+
+![](./Diagramme/Semester_Bruecke_T09.svg)
+
+</div>
+</div>
 
 ---
 

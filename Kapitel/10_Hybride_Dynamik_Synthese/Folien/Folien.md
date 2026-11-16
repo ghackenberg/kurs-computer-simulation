@@ -58,13 +58,22 @@ Präsentation der Hausübung aus Termin 09 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
-In **Termin 08** haben wir rein kontinuierliche Flüsse (ODEs) und in **Termin 09** rein diskrete Ereignissprünge (DES) getrennt voneinander betrachtet – doch wie verhält sich ein realer **Digitaler Zwilling** in der Automatisierungstechnik?
+<div class="columns top">
+<div class="three">
 
-- **Warum weder Termin 08 noch Termin 09 allein ausreichen:**
-  - Eine reale Hydraulikpresse, ein Roboter mit Greifkontakt oder ein geschalteter Stromrichter bewegt sich zwar **kontinuierlich nach Differentialgleichungen (Termin 08)**, trifft aber plötzlich auf **harte mechanische Anschläge, Sicherheits-Lichtschranken, Ventil-Umschaltungen oder digitale SPS-Abtasttakte (Termin 09)**!
-  - Ein reiner RK4-Solver aus Termin 08 überspringt im festen Zeitschritt $\Delta t$ den exakten Aufprallmoment (**Tunneling-Fehler** / Energie-Explosion).
-- **Einordnung ins große Ganze (4. Modellart & Krönung des Kurses):**
-  - Heute verschmelzen wir **kontinuierliche Integration (T08)** und **diskrete Ereignisbehandlung (T09)** zur **Hybriden Simulation** mit **Zero-Crossing-Bisektion** und variablen Abtastzeiten.
+In **T08** (ODEs) und **T09** (DES) trennten wir Kontinuum und Ereignisse – wie verhält sich ein realer **Digitaler Zwilling**?
+
+- **Warum T08 oder T09 allein nicht reichen:** Eine Presse oder ein Stromrichter folgt **DGLn (T08)**, trifft aber auf **harte Anschläge, Ventile oder SPS-Takte (T09)**.
+- **Engpass:** Ein fester RK4-Schritt $\Delta t$ überspringt den Aufprallmoment (**Tunneling-Fehler**).
+- **Heute (4. Modellart: Hybrid):** Verschmelzung von ODE + Ereignissen über **Zero-Crossing-Bisektion** & variable Abtastzeiten.
+
+</div>
+<div class="two">
+
+![](./Diagramme/Semester_Bruecke_T10.svg)
+
+</div>
+</div>
 
 ---
 

@@ -54,16 +54,22 @@ Präsentation der Hausübung aus Termin 03 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
-In den letzten beiden Terminen haben wir die Fundamente der 2D-Grafik selbst programmiert:
+<div class="columns top">
+<div class="three">
 
-- **Termin 02 – Raw-Pixel-Grafik (`WriteableBitmap`):**
-  - Direkte Manipulation von 32-Bit-Farbwerten (`uint[]`) im Arbeitsspeicher.
-  - **Stärke:** Extrem schnell für flächige 2D-Rasterfelder (z.B. Wärmebild der FDM-Simulation).
-  - **Grenze:** Kennt weder physikalische Einheiten noch Linien, Achsen oder Beschriftungen.
-- **Termin 03 – 2D-Vektorgrafik (`WPF Canvas` & `DrawingVisual`):**
-  - Eigene Koordinatentransformation (Welt $\leftrightarrow$ Screen) für Stäbe, Knoten und Kraftpfeile.
-  - **Stärke:** Maßstabsgetreue Geometriedarstellung von Maschinen, Trägern und Anlagen.
-  - **Grenze:** Für ein wissenschaftliches Diagramm müssten wir Achsen, Zahlen-Ticks, Gitterlinien, Legenden und Auto-Scaling komplett von Hand programmieren!
+In **T02 und T03** haben wir die 2D-Grundlagen selbst programmiert – wo fehlt noch das dritte Werkzeug?
+
+- **T02 (`WriteableBitmap`):** Schnelle 2D-Rasterfelder (`uint[]`), aber ohne Achsen oder Einheiten.
+- **T03 (`WPF Canvas`):** Maßstabsgetreue CAD-Geometrie, aber ohne Ticks, Gitter oder Auto-Scaling.
+- **Heute (3. Säule):** Echtzeit-Telemetrie mit `ScottPlot 5` & Ringpuffern für 1-kHz-Signale bei 60 FPS.
+
+</div>
+<div class="two">
+
+![](./Diagramme/Semester_Bruecke_T04.svg)
+
+</div>
+</div>
 
 ---
 
