@@ -25,6 +25,8 @@ Dieses Kapitel beinhaltet Folgendes:
 
 ---
 
+<!-- _class: showcase -->
+
 ### Live-Showcase & Code-Defense: Termin 09
 
 Präsentation der Hausübung aus Termin 09 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 09](../../09_Diskrete_Systeme_DES/Uebung/Aufgabenblatt.md)):
@@ -55,6 +57,8 @@ Präsentation der Hausübung aus Termin 09 (**Stufe 1: Basisaufgabe** + **Stufe 
 > **Code-Defense (Säule 2b, 20 %):** Live-Demonstration am Beamer. Fokus: Little's Gesetz ($\bar{L} = \lambda_{\text{eff}}\bar{W}$), Pufferüberlauf und Monte-Carlo-Konfidenzintervalle.
 
 ---
+
+<!-- _class: bridge -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1591,6 +1595,8 @@ Der Block steuert seine eigene Ausführungs-frequenz dynamisch basierend auf dem
 
 ---
 
+<!-- _class: summary -->
+
 # Zusammenfassung Kapitel 10
 
 - **Hybrides Paradigma:** Kombiniert kontinuierliche Dynamik ($\dot{\mathbf{x}}_c = \mathbf{f}(\mathbf{x}_c, \mathbf{x}_d, \mathbf{u}, t)$) mit diskreten Zustandsübergängen ($\mathbf{x}_d^+ = \mathbf{g}(\mathbf{x}_c, \mathbf{x}_d, \mathbf{u}, t)$).
@@ -1619,6 +1625,8 @@ Das gesamte Methodenspektrum steht nun zur Verfügung:
 - **Synthese:** Leitfaden zur erfolgreichen Projektarbeit
 
 ---
+
+<!-- _class: homework -->
 
 ### Hausübung Termin 10: Hybride Dynamik, Bisektion & Zeno
 

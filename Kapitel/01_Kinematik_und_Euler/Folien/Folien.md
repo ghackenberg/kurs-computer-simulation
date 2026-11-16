@@ -26,6 +26,8 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+<!-- _class: bridge -->
+
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
 <div class="columns top">
@@ -737,6 +739,8 @@ Der Digitale Zwilling verbindet die Simulation nahtlos über alle drei Lebenszyk
 
 ---
 
+<!-- _class: summary -->
+
 # Zusammenfassung Kapitel 1
 
 - **Modelle** sind vereinfachte Abbilder der Realität für einen bestimmten Zweck.
@@ -775,6 +779,8 @@ In den folgenden Kapiteln erarbeiten wir zunächst die Werkzeuge und vertiefen a
 </div>
 
 ---
+
+<!-- _class: homework -->
 
 ### Hausübung Termin 01: Kinematik & Expliziter Euler
 

@@ -27,6 +27,8 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+<!-- _class: showcase -->
+
 ### Live-Showcase & Code-Defense: Termin 08
 
 Präsentation der Hausübung aus Termin 08 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 08](../../08_DGL_und_SFunctions/Uebung/Aufgabenblatt.md)):
@@ -57,6 +59,8 @@ Präsentation der Hausübung aus Termin 08 (**Stufe 1: Basisaufgabe** + **Stufe 
 > **Code-Defense (Säule 2b, 20 %):** Live-Demonstration am Beamer. Fokus: Anti-Windup Clamping unter Lastsprung und RK4- vs. Euler-Stabilitätsgrenze.
 
 ---
+
+<!-- _class: bridge -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1438,6 +1442,8 @@ Console.WriteLine(
 
 ---
 
+<!-- _class: summary -->
+
 # Zusammenfassung Kapitel 9
 
 <div class="columns">
@@ -1475,6 +1481,8 @@ In der Praxis existieren kontinuierliche Physik und diskrete Ereignisse selten g
 ➔ **Kapitel 10:** S-Functions, Bisektion & Zeno-Beherrschung!
 
 ---
+
+<!-- _class: homework -->
 
 ### Hausübung Termin 09: Diskrete Ereignissimulation (DES)
 

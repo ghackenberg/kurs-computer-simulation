@@ -24,6 +24,8 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+<!-- _class: showcase -->
+
 ### Moodle-Quiz 2 & Live-Showcase: Termin 04
 
 Zu Beginn (15 Min.): **Moodle-Test 2** (Kapitel 03 & 04) – danach **Live-Showcase & Code-Defense** der Hausübung aus Termin 04 (**Stufe 1** + **Stufe 2: Track A oder B**, [Aufgabenblatt 04](../../04_Telemetrie_und_ScottPlot/Uebung/Aufgabenblatt.md)):
@@ -50,6 +52,8 @@ Zu Beginn (15 Min.): **Moodle-Test 2** (Kapitel 03 & 04) – danach **Live-Showc
 > **Code-Defense (Säule 2b, 20 %):** Prüfung auf allokationsfreies Streaming (keine GC-Spikes im Diagnostic Tool), Single-Pass-Welford und UI-Entkopplung.
 
 ---
+
+<!-- _class: bridge -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1059,6 +1063,8 @@ private void OpenGlView_MouseMove(object sender, MouseEventArgs e)
 
 ---
 
+<!-- _class: summary -->
+
 # Zusammenfassung Kapitel 5
 
 - **3D-Pipeline & Z-Buffer:** OpenGL projiziert 3D-Körper über `GL_MODELVIEW` und `GL_PROJECTION`; `GL_DEPTH_TEST` löst Verdeckungen pixelgenau über den Tiefenpuffer auf.
@@ -1068,6 +1074,8 @@ private void OpenGlView_MouseMove(object sender, MouseEventArgs e)
 - **Ausblick auf Block 2 (T06–T10 – Modellierung & Virtuelle Inbetriebnahme):** Nach der *Vorwärtskinematik* $(\theta_1, \theta_2) \mapsto (x, y, z)$ folgen ab T06/T07 Multithreading, Gleichungssysteme ($\mathbf{K}\cdot\mathbf{u}=\mathbf{f}$), *Inverse Kinematik* (T07) sowie Dynamik & **Virtuelle Inbetriebnahme (T10)**!
 
 ---
+
+<!-- _class: homework -->
 
 ### Hausübung Termin 05: 3D-OpenGL & Szenengraph
 

@@ -25,6 +25,8 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+<!-- _class: showcase -->
+
 ### Live-Showcase & Code-Defense: Termin 01
 
 Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 01](../../01_Kinematik_und_Euler/Uebung/Aufgabenblatt.md)):
@@ -51,6 +53,8 @@ Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 
 > **Code-Defense (Säule 2b, 20 %):** Prüfung auf Stabilitätsgrenzen, Energieerhaltung und lineare Schnittpunkt-Interpolation.
 
 ---
+
+<!-- _class: bridge -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1178,6 +1182,8 @@ private unsafe void RenderKernel(
 - **Randbedingungen:** Dirichlet (fester Randwert), Neumann (Spiegelung am Isolator, $\dot{q}=0$) und Robin (gewichtetes Mittel bei Luftkonvektion) bilden reale Bauteilgrenzen exakt ab.
 
 ---
+
+<!-- _class: homework -->
 
 ### Hausübung Termin 02: Pixelgrafik & FDM
 

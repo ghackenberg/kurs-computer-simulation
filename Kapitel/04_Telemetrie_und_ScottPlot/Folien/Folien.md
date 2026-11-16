@@ -25,6 +25,8 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+<!-- _class: showcase -->
+
 ### Live-Showcase & Code-Defense: Termin 03
 
 Präsentation der Hausübung aus Termin 03 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 03](../../03_Vektorgrafik_und_Canvas/Uebung/Aufgabenblatt.md)):
@@ -51,6 +53,8 @@ Präsentation der Hausübung aus Termin 03 (**Stufe 1: Basisaufgabe** + **Stufe 
 > **Code-Defense (Säule 2b, 20 %):** Prüfung auf exakte Koordinatentransformation (Welt $\leftrightarrow$ Screen), Isotropie und Kausalität (reine Geometrie, keine Statik!).
 
 ---
+
+<!-- _class: bridge -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1480,6 +1484,8 @@ GraphControl.Graph     = graph;
 </div>
 
 ---
+
+<!-- _class: homework -->
 
 ### Hausübung Termin 04: Echtzeit-Telemetrie & ScottPlot 5
 

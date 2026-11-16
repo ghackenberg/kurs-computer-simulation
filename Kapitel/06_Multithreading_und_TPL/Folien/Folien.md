@@ -25,6 +25,8 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+<!-- _class: showcase -->
+
 ### Live-Showcase & Code-Defense: Termin 05
 
 Präsentation der Hausübung aus Termin 05 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 05](../../05_3D_OpenGL_Szenengraph/Uebung/Aufgabenblatt.md)):
@@ -51,6 +53,8 @@ Präsentation der Hausübung aus Termin 05 (**Stufe 1: Basisaufgabe** + **Stufe 
 > **Code-Defense (Säule 2b, 20 %):** Live-Demonstration am Beamer mit Prüfung von Gelenkhierarchien, lokalem Matrix-Stack und Kardanfehler-Schutz.
 
 ---
+
+<!-- _class: bridge -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -711,6 +715,8 @@ public void Simulate(CancellationToken token)
 
 ---
 
+<!-- _class: summary -->
+
 # Zusammenfassung Kapitel 6
 
 - Multithreading ist der Schlüssel zur vollen Auslastung moderner Mehrkern-CPUs bei rechenintensiven Simulationen.
@@ -729,6 +735,8 @@ Die Software- und Visualisierungs-Infrastruktur (**Block 1: T01–T06**) steht v
 ![](./Diagramme/Kursdramaturgie_Uebergang.svg)
 
 ---
+
+<!-- _class: homework -->
 
 ### Hausübung Termin 06: Multithreading & TPL
 

@@ -69,6 +69,7 @@ Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorles
 | :--- | :--- |
 | **Kapitel-Opener (`# Kapitel N: ...`)** | `![bg right](./Titelbild.jpg)` ($896 \times 1200\,\text{px}$, 3:4) + Satz: `Dieses Kapitel umfasst die folgenden Abschnitte:` |
 | **Abschnitts-Opener (`## N.M: ...`)** | `![bg right](./Illustrationen/Abschnitt_M.jpg)` ($896 \times 1200\,\text{px}$, 3:4, textfrei) + Satz: `Dieser Abschnitt umfasst die folgenden Inhalte:` |
+| **Rahmenfolien-Klassen (`<!-- _class: ... -->`)** | `showcase` (Live-Showcase/Quiz), `bridge` (`Rückblick & Brücke`), `summary` (`Zusammenfassung`), `homework` (`Hausübung Termin XX`) – geprüft durch `lint:sections` |
 | **Mehrspaltiges Layout (`<div class="columns">`)** | Klassen `one` bis `six` sind **relative `flex-grow`-Breitengewichte** (keine Spaltennummern!):<br>• 50 % / 50 %: `two` + `two`<br>• 40 % / 60 %: `two` + `three`<br>• 33 % / 67 %: `one` + `two` |
 | **Bildsyntax** | Immer reine Markdown-Syntax `![](./Diagramme/Name_Mit_Unterstrich.svg)` ohne `w:`, `h:`, `center` und ohne `%20`-Leerzeichen. |
 

@@ -25,6 +25,8 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+<!-- _class: showcase -->
+
 ### Moodle-Quiz 1 & Live-Showcase: Termin 02
 
 Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showcase & Code-Defense** der Hausübung aus Termin 02 (**Stufe 1** + **Stufe 2: Track A oder B**, [Aufgabenblatt 02](../../02_Pixelgrafik_und_FDM/Uebung/Aufgabenblatt.md)):
@@ -51,6 +53,8 @@ Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showc
 > **Code-Defense (Säule 2b, 20 %):** Prüfung auf physikalisches Double-Buffering (kein In-Place-Überschreiben) und 0 B GC-Allokationen im Render-Tick.
 
 ---
+
+<!-- _class: bridge -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1617,6 +1621,8 @@ public class SimpleRenderCanvas : FrameworkElement
 - **Freeze-Doktrin:** Alle `Pen`- und `Brush`-Objekte in Render-Schleifen müssen zwingend eingefroren werden.
 
 ---
+
+<!-- _class: homework -->
 
 ### Hausübung Termin 03: Vektorgrafik auf Canvas
 

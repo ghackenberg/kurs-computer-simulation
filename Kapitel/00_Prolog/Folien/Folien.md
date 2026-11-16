@@ -227,6 +227,8 @@ Transparente Beurteilung von Theorie, praktischer Implementierung und Live-Verte
 
 ---
 
+<!-- _class: showcase -->
+
 ### Live-Showcase & Code-Defense (Säule 2b)
 
 Zu Beginn jedes Folgetermins demonstrieren zwei zufällig ausgewählte Teams ihre Lösung live am Beamer:

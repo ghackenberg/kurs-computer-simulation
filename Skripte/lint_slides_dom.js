@@ -129,6 +129,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         img.onerror = resolve;
       });
     }));
+    await new Promise(r => setTimeout(r, 120));
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
   });
 
@@ -166,6 +167,34 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         const bottomRel = rect.bottom - sec.getBoundingClientRect().top;
         if (topRel < contentTop) contentTop = topRel;
         if (bottomRel > contentBottom) contentBottom = bottomRel;
+      });
+
+      const elementGaps = [];
+      const isVisibleBox = (el) => {
+        if (el.tagName === 'PRE' || el.tagName === 'MARP-PRE' || el.tagName === 'BLOCKQUOTE') return true;
+        if (el.tagName === 'DIV' && el.classList.contains('columns')) {
+          return sec.classList.contains('showcase') || sec.classList.contains('homework');
+        }
+        return false;
+      };
+      const collectGaps = (parent, scope) => {
+        const visible = Array.from(parent.children).filter(c => c.tagName !== 'HEADER' && c.tagName !== 'FOOTER' && c.getBoundingClientRect().height > 0);
+        for (let i = 0; i < visible.length - 1; i++) {
+          const a = visible[i];
+          const b = visible[i + 1];
+          const gap = Math.round(b.getBoundingClientRect().top - a.getBoundingClientRect().bottom);
+          const expected = (isVisibleBox(a) && isVisibleBox(b)) ? 22 : 16;
+          elementGaps.push({
+            scope,
+            pair: `${a.tagName}${a.className ? '.' + String(a.className).split(/\s+/)[0] : ''} -> ${b.tagName}${b.className ? '.' + String(b.className).split(/\s+/)[0] : ''}`,
+            gap,
+            expected
+          });
+        }
+      };
+      collectGaps(sec, 'slide');
+      sec.querySelectorAll('div.columns > div').forEach((col, cIdx) => {
+        collectGaps(col, `col${cIdx + 1}`);
       });
 
       if (contentChildren.length === 0) {
@@ -207,6 +236,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         footerTop,
         contentTop,
         contentBottom,
+        elementGaps,
         images
       });
     });
@@ -336,6 +366,10 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const minFillRatio = options.minFillRatio !== undefined ? options.minFillRatio : 0.80;
     const hasUnderfill = !s.isOpener && minFillRatio > 0 && fillRatio < minFillRatio;
 
+    const gapTolerance = options.gapTolerance !== undefined ? options.gapTolerance : 1;
+    const gapIssues = (s.elementGaps || []).filter(g => Math.abs(g.gap - (g.expected || 16)) > gapTolerance);
+    const hasGapError = gapIssues.length > 0;
+
     slides.push({
       ...s,
       effectiveVOverflow: Math.round(effectiveVOverflow),
@@ -344,13 +378,15 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       footerMargin: Math.round(footerMargin),
       fillRatio,
       svgIssues,
-      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssues || hasUnderfill,
+      gapIssues,
+      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssues || hasUnderfill || hasGapError,
       hasVOverflow,
       hasHOverflow,
       hasHeaderCollision,
       hasFooterCollision,
       hasSvgIssues,
-      hasUnderfill
+      hasUnderfill,
+      hasGapError
     });
   }
 
@@ -397,6 +433,7 @@ async function main() {
   let minImageWidthRatio = 0.95;
   let minFillRatio = 0.80;
   let reportFill = false;
+  let reportGaps = false;
 
   args.forEach(arg => {
     if (arg.startsWith('--min-font-size=')) {
@@ -416,6 +453,8 @@ async function main() {
       minFillRatio = parseFloat(arg.split('=')[1]);
     } else if (arg === '--report-fill') {
       reportFill = true;
+    } else if (arg === '--report-gaps') {
+      reportGaps = true;
     } else if (!arg.startsWith('--')) {
       target = arg;
     }
@@ -479,6 +518,15 @@ async function main() {
         }
       }
     }
+    if (reportGaps) {
+      console.log(`\n  [Gap-Report ${deckName}]`);
+      for (const sl of res.slides) {
+        if (sl.elementGaps && sl.elementGaps.length > 0) {
+          const gapStr = sl.elementGaps.map(g => `${g.pair}: ${g.gap}px`).join(' | ');
+          console.log(`    Folie ${sl.pagination} [${sl.title || 'Ohne'}]: ${gapStr}`);
+        }
+      }
+    }
 
     if (res.errorSlides.length === 0) {
       console.log(`âœ“ OK (${res.totalSlides} Folien sauber)`);
@@ -513,6 +561,9 @@ async function main() {
         }
         if (err.hasUnderfill) {
           issues.push(`Folie zu leer: vertikale Auslastung nur ${Math.round(err.fillRatio * 100)}% (< ${Math.round(minFillRatio * 100)}%)`);
+        }
+        if (err.hasGapError) {
+          err.gapIssues.forEach(g => issues.push(`Vertikaler Gap inkonsistent (${g.scope}: ${g.pair} = ${g.gap}px, erwartet ${g.expected || 16}px)`));
         }
         console.log(`    - Folie ${err.pagination} [${err.title || 'Ohne Titel'}]: ${issues.join(' | ')}`);
       }

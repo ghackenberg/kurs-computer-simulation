@@ -25,6 +25,8 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ---
 
+<!-- _class: showcase -->
+
 ### Live-Showcase & Code-Defense: Termin 06
 
 Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 06](../../06_Multithreading_und_TPL/Uebung/Aufgabenblatt.md)):
@@ -55,6 +57,8 @@ Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 
 > **Code-Defense (Säule 2b, 20 %):** Live-Vorführung am Beamer. Stresstest des kooperativen Not-Aus-Abbruchs (`CancellationToken`) unter Volllast.
 
 ---
+
+<!-- _class: bridge -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1084,6 +1088,8 @@ Vector<double> fp = kpf.Multiply(uf); // Auflagerreaktionskräfte
 
 ---
 
+<!-- _class: summary -->
+
 # Zusammenfassung Kapitel 7
 
 - **Statische Modelle** beschreiben Systeme im Kräfte- und Momentengleichgewicht.
@@ -1094,6 +1100,8 @@ Vector<double> fp = kpf.Multiply(uf); // Auflagerreaktionskräfte
 - Die Visualisierung der berechneten Verformungen und Kräfte erfolgt über 2D-Vektorgrafiken (Kapitel 3) bzw. 3D-OpenGL (Kapitel 5).
 
 ---
+
+<!-- _class: homework -->
 
 ### Hausübung Termin 07: Statik, FEM & Cholesky
 

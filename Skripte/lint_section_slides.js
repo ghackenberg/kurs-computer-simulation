@@ -29,6 +29,12 @@
  * 5. Abschnitts-Balance (ab Kap. 06 als Fehler, Kap. 00-05 als Warnung):
  *    - Jeder Abschnitt muss mindestens 2 Inhaltsfolien besitzen (SECTION_TOO_SMALL)
  *    - Ausgewogene Abschnittsgrößen: max. Verhältnis 2:1 bei Differenz > 2 (UNBALANCED_SECTIONS)
+ *
+ * 6. Didaktische Folienklassen (MISSING_SLIDE_CLASS):
+ *    - Showcase -> <!-- _class: showcase -->
+ *    - Rückblick & Brücke -> <!-- _class: bridge -->
+ *    - Zusammenfassung -> <!-- _class: summary -->
+ *    - Hausübung -> <!-- _class: homework -->
  * ==============================================================================
  */
 
@@ -290,6 +296,35 @@ function lintSectionDeck(markdownPath) {
           message: `Verbotene Bilddimension '${dimMatch[0]}' in Referenz zu '${path.basename(src)}'. Bildgrößen müssen rein über CSS/Theme geregelt werden.`
         });
       }
+    }
+
+    // 3b. Didaktische Folienklasse prüfen (<!-- _class: showcase|bridge|summary|homework -->)
+    const classMatch = slide.match(/<!--\s*_class:\s*([a-z0-9_-]+)\s*-->/i);
+    const slideClass = classMatch ? classMatch[1].toLowerCase() : null;
+    if (/###\s+.*Live-Showcase/i.test(slide) && slideClass !== 'showcase') {
+      issues.push({
+        slideNum,
+        type: 'MISSING_SLIDE_CLASS',
+        message: `Showcase-Folie fehlt '<!-- _class: showcase -->'.`
+      });
+    } else if (/###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(slide) && slideClass !== 'bridge') {
+      issues.push({
+        slideNum,
+        type: 'MISSING_SLIDE_CLASS',
+        message: `Brückenfolie fehlt '<!-- _class: bridge -->'.`
+      });
+    } else if (/^#\s+Zusammenfassung/im.test(slide) && slideClass !== 'summary') {
+      issues.push({
+        slideNum,
+        type: 'MISSING_SLIDE_CLASS',
+        message: `Zusammenfassungsfolie fehlt '<!-- _class: summary -->'.`
+      });
+    } else if (/###\s+Hausübung/i.test(slide) && slideClass !== 'homework') {
+      issues.push({
+        slideNum,
+        type: 'MISSING_SLIDE_CLASS',
+        message: `Hausübungsfolie fehlt '<!-- _class: homework -->'.`
+      });
     }
 
     // 4. Gewichtete Vortragszeit pro Folientyp schätzen

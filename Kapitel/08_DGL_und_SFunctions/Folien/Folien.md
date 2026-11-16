@@ -25,6 +25,8 @@ math: mathjax
 
 ---
 
+<!-- _class: showcase -->
+
 ### Live-Showcase & Code-Defense: Termin 07
 
 Präsentation der Hausübung aus Termin 07 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 07](../../07_Statik_FEM_Cholesky/Uebung/Aufgabenblatt.md)):
@@ -55,6 +57,8 @@ Präsentation der Hausübung aus Termin 07 (**Stufe 1: Basisaufgabe** + **Stufe 
 > **Code-Defense (Säule 2b, 20 %):** Live-Demonstration am Beamer. Fokus: Numerische Stabilität, Konditionszahl $\kappa(\mathbf{K}_{ff})$ und Singularität bei Unterbestimmtheit.
 
 ---
+
+<!-- _class: bridge -->
 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
@@ -1826,6 +1830,8 @@ while (solver.Time <= 0.6) // 600 ms Regelung
 
 ---
 
+<!-- _class: summary -->
+
 # Zusammenfassung Kapitel 8
 
 - **Kontinuierliche dynamische Modelle** beschreiben Systeme mit kontinuierlicher Zeitentwicklung mittels **Differentialgleichungen**.
@@ -1837,6 +1843,8 @@ while (solver.Time <= 0.6) // 600 ms Regelung
 - **Mechatronischer Regelkreis & Anti-Windup:** Reale Aktorbegrenzung erfordert Clamping-Logik zur Verhinderung von Integrator-Windup; RK4 löst gekoppelte Zustände mit hoher Robustheit.
 
 ---
+
+<!-- _class: homework -->
 
 ### Hausübung Termin 08: DGL-Solver, S-Functions & Anti-Windup
 
