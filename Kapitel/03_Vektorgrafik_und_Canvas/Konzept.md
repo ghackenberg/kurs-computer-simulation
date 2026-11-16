@@ -21,10 +21,10 @@
 
 ## 3. Zweistufige Hausübung (`Einheit 03`) & Showcase-Fokus
 - **Stufe 1 – Basisaufgabe (`1.1`–`1.4`):**
-  - `1.1`: Euklidische Stablängenberechnung $L = \sqrt{\Delta x^2 + \Delta y^2}$ in Weltkoordinaten ergänzen.
-  - `1.2`: Vertikale DIN-406-Gesamthöhenbemaßung mit im Screen Space gedrehten Maßpfeilen implementieren.
-  - `1.3`: Bounding-Box-Jittering beim interaktiven Knoten-Dragging durch Einfrieren der Referenz-BoundingBox während `MouseMove` beheben.
-  - `1.4`: Hin- und Rücktransformation (`WorldToScreen` $\leftrightarrow$ `ScreenToWorld`) und Pfeilgeometrie mit `dotnet test` verifizieren.
+  - `1.1`: Code-Walkthrough & Seitenverhältnis-Test der isotropen Viewport-Transformation (`Transform2D`: `WorldToScreen` $\leftrightarrow$ `ScreenToWorld`) anhand der Golden Reference Numbers.
+  - `1.2`: Euklidische Stablängenberechnung $L = \sqrt{\Delta x^2 + \Delta y^2}$ (`TrussGeometry.GetBarLength`) in Weltkoordinaten und Mittelpunkts-Beschriftung auf dem Canvas ergänzen.
+  - `1.3`: Vertikale DIN-406-Gesamthöhenbemaßung (`VectorArrow.AddVerticalDimensionLine`) mit im Screen Space orientierten Maßpfeilen implementieren.
+  - `1.4`: Bounding-Box-Jittering beim interaktiven Knoten-Dragging durch Einfrieren von `_transform.Update(...)` während `MouseMove` beheben, Millimeter-Auflösung (`:F3`) aktivieren und alle Unit-Tests in `VectorTrussCanvas.Tests` mit `dotnet test` verifizieren.
 - **Stufe 2 – Wahlmodell (10 Pkt. – *Vorgreif-Sperre: Keine FEM-Statik vor T07!*):**
   - **Track A (`A.1`–`A.4` – 2D-CAD Tragwerks-Inspektor):** Zweistufige DIN-406-Bemaßungsketten (Einzelfelder + Gesamtspannweite), interaktives Ziehen/Drehen von Kraftpfeilspitzen $(F_x, F_y)$, Mausrad-Zoom/Pan und JSON-Import/Export.
   - **Track B (`B.1`–`B.4` – Poly Bridge Blueprint-Baumeister):** Interaktives Brückenbau-Zeichenbrett über einer Schlucht mit $0{,}5\,\text{m}$-Grid-Snapping, gestrichelter Stab-Vorschau ($L_{\max} = 4{,}0\,\text{m}$), Knoten-/Stab-Löschung (`Entf`), Live-Baubudget ($1\,000\,\text{EUR/m}$) und JSON-Level-Export.

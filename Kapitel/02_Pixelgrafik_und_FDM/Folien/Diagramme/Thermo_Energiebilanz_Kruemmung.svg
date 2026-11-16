@@ -79,12 +79,12 @@
     <text x="150" y="23" class="card-hdr" style="text-anchor: middle; fill: #166534;">Fall B: Tal / Delle (∂²T/∂x² &gt; 0)</text>
 
     <!-- Curve (Valley) -->
-    <path d="M 55 68 Q 150 185 245 88" fill="none" stroke="#16a34a" stroke-width="3" />
+    <path d="M 55 68 Q 150 180 245 88" fill="none" stroke="#16a34a" stroke-width="3" />
     <circle cx="55" cy="68" r="5" fill="#dc2626" />
-    <circle cx="150" cy="132" r="6" fill="#2563eb" stroke="#0f172a" stroke-width="1.5" />
+    <circle cx="150" cy="128" r="6" fill="#2563eb" stroke="#0f172a" stroke-width="1.5" />
     <circle cx="245" cy="88" r="5" fill="#ea580c" />
     <text x="55" y="56" class="label-bold" style="fill: #dc2626; text-anchor: middle;">100 °C</text>
-    <text x="150" y="154" class="label-bold" style="fill: #1d4ed8; text-anchor: middle;">40 °C (Tal)</text>
+    <text x="150" y="156" class="label-bold" style="fill: #1d4ed8; text-anchor: middle;">40 °C (Tal)</text>
     <text x="245" y="76" class="label-bold" style="fill: #ea580c; text-anchor: middle;">80 °C</text>
 
     <!-- 3 Cells -->
@@ -121,12 +121,12 @@
     <text x="150" y="23" class="card-hdr" style="text-anchor: middle; fill: #991b1b;">Fall C: Berg / Hotspot (∂²T/∂x² &lt; 0)</text>
 
     <!-- Curve (Peak) -->
-    <path d="M 55 138 Q 150 20 245 138" fill="none" stroke="#dc2626" stroke-width="3" />
-    <circle cx="55" cy="138" r="5" fill="#2563eb" />
-    <circle cx="150" cy="78" r="6" fill="#dc2626" stroke="#0f172a" stroke-width="1.5" />
-    <circle cx="245" cy="138" r="5" fill="#2563eb" />
+    <path d="M 55 130 Q 150 20 245 130" fill="none" stroke="#dc2626" stroke-width="3" />
+    <circle cx="55" cy="130" r="5" fill="#2563eb" />
+    <circle cx="150" cy="75" r="6" fill="#dc2626" stroke="#0f172a" stroke-width="1.5" />
+    <circle cx="245" cy="130" r="5" fill="#2563eb" />
     <text x="55" y="156" class="label-bold" style="fill: #2563eb; text-anchor: middle;">40 °C</text>
-    <text x="150" y="62" class="label-bold" style="fill: #dc2626; text-anchor: middle;">100 °C (Peak)</text>
+    <text x="150" y="59" class="label-bold" style="fill: #dc2626; text-anchor: middle;">100 °C (Peak)</text>
     <text x="245" y="156" class="label-bold" style="fill: #2563eb; text-anchor: middle;">40 °C</text>
 
     <!-- 3 Cells -->

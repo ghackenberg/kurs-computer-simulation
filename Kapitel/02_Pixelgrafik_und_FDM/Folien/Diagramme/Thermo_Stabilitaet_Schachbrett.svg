@@ -33,7 +33,7 @@
     <!-- Weights Box -->
     <rect x="20" y="50" width="410" height="56" rx="6" fill="#f0fdf4" stroke="#86efac" />
     <text x="225" y="72" class="math" style="fill: #15803d; text-anchor: middle;">
-      T_neu = 0,20 · T_Mitte + 0,80 · T̄_Nachbarn
+      T_neu = 0,20 · T_alt + 0,80 · T̄_Nachbarn
     </text>
     <text x="225" y="94" class="label" style="fill: #166534; text-anchor: middle;">
       Beide Gewichte positiv (20 % Eigenwert + 80 % Nachbarn = 100 %)
@@ -107,7 +107,7 @@
     <!-- Weights Box -->
     <rect x="20" y="50" width="410" height="56" rx="6" fill="#fef2f2" stroke="#fca5a5" />
     <text x="225" y="72" class="math" style="fill: #dc2626; text-anchor: middle;">
-      T_neu = −0,40 · T_Mitte + 1,40 · T̄_Nachbarn
+      T_neu = −0,40 · T_alt + 1,40 · T̄_Nachbarn
     </text>
     <text x="225" y="94" class="label-bold" style="fill: #991b1b; text-anchor: middle; font-size: 12px;">
       Eigengewicht (1 − 4s = −0,40) ist NEGATIV ➔ Vorzeichenwechsel!

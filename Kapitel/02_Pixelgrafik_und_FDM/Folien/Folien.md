@@ -142,7 +142,7 @@ In modernen Grafiktreibern ist das **32-Bit BGRA-Format** der Standard für maxi
 
 Ein 2D-Rasterbild existiert im Arbeitsspeicher als **kontinuierlicher 1D-Byte-Block**:
 
-- Die Pixelzeilen werden sequentiell hintereinander abgelegt (**Row-Major Order**).
+- Die Pixelzeilen ($y = 0 \dots H - 1$) werden sequentiell hintereinander abgelegt (**Row-Major Order**).
 - **`Stride` (Zeilenschrittweite):** Die tatsächliche Anzahl an Bytes von einer Zeile zur nächsten:
   $$\text{Stride} = \text{Breite} \times \text{BytesJePixel} + \text{Padding}$$
 - Da Speichercontroller am schnellsten auf Adressen zugreifen, die Vielfache von 4 oder 8 Bytes sind, wird die Zeilenlänge ggf. mit Füll-Bytes (*Padding*) aufgerundet.
@@ -553,9 +553,9 @@ Wärmeleitung funktioniert nach **demselben Prinzip** wie ein elektrisches RC-Ne
 
 | Größe | Symbol & Einheit | Anschauliche Bedeutung | Elektro- / Hydraulik-Analogie |
 | :--- | :---: | :--- | :--- |
-| **Temperatur** | $T$ $[\mathrm{K} \text{ / } {}^\circ\mathrm{C}]$ | Lokaler „Wärmedruck“ im Pixel | **Spannung $U$ $[\mathrm{V}]$** / Füllstand $h$ |
-| **Wärmeenergie** | $E_{\text{th}}$ $[\mathrm{J} = \mathrm{W\cdot s}]$ | Gespeicherte Energie ($m \cdot c_p \cdot \Delta T$) | **Ladung $Q$ $[\mathrm{C}]$** / Wassermenge |
-| **Wärmestrom** | $\dot{Q}$ $[\mathrm{W}]$ / $\dot{q}$ $[\mathrm{W/m^2}]$ | Energiefluss pro Sekunde (und Fläche) | **Stromstärke $I$ $[\mathrm{A}]$** / Stromdichte $J$ |
+| **Temperatur** | $T$ $[\mathrm{K} \text{ / } {}^\circ\mathrm{C}]$ | Lokaler „Wärmedruck“ ($T_1, T_2$, Gefälle $ΔT = T_1 - T_2$) | **Spannung $U$** ($U_1, U_2, ΔU$) / Füllstand $h_1, h_2$ |
+| **Wärmeenergie** | $E_{\text{th}}$ $[\mathrm{J} = \mathrm{W\cdot s}]$ | Gespeicherte Energie ($ΔE_{\text{th}} = m \cdot c_p \cdot ΔT$) | **Ladung $Q$ $[\mathrm{C}]$** / Wassermenge |
+| **Wärmestrom** | $\dot{Q}$ $[\mathrm{W}]$ / $\dot{q}$ $[\mathrm{W/m^2}]$ | Energiefluss über Abstand $Δx$ ($\dot{Q} \propto \lambda \cdot A / Δx$) | **Stromstärke $I$ $[\mathrm{A}]$** / Stromdichte $J$ |
 
 ---
 
@@ -620,7 +620,7 @@ Für die Ausbreitungsgeschwindigkeit einer Temperaturfront entscheidet das **Ver
 $$\alpha = \frac{\lambda}{\rho \cdot c_p} = \frac{\text{Leitvermögen (Transport)}}{\text{Speichervermögen (Trägheit)}} \quad \left[\frac{\mathrm{W/(m\cdot K)}}{\mathrm{J/(m^3\cdot K)}} = \frac{\mathrm{m^2}}{\mathrm{s}}\right]$$
 
 - **Merksatz für die Simulation:**
-  - **Großes $\alpha$ (Kupfer $\approx 115$, Alu $\approx 97\,\mathrm{mm^2/s}$):** Hoher Durchfluss bei moderatem Speicher $\implies$ Temperatur gleicht sich **rasend schnell** aus!
+  - **Großes $\alpha$ (Kupfer $\approx 115$, Alu $\approx 97\,\mathrm{mm^2/s}$):** Hoher Durchfluss bei moderatem Speicher $\implies$ Wärmewelle breitet sich in $Δt = 1\,\mathrm{s}$ **rasend schnell** aus!
   - **Kleines $\alpha$ (Wärmeleitpaste $\approx 2{,}5\,\mathrm{mm^2/s}$):** Geringer Durchfluss $\implies$ Wärme staut sich vor der Schicht!
 
 </div>
@@ -642,12 +642,12 @@ $$\alpha = \frac{\lambda}{\rho \cdot c_p} = \frac{\text{Leitvermögen (Transport
 <div class="columns">
 <div class="three">
 
-Betrachten wir zwei benachbarte Gitterpunkte $i$ (links, Position $x$) und $i+1$ (rechts, Position $x + \Delta x$):
+Betrachten wir zwei benachbarte Gitterpunkte $i$ (links, Position $x$) und $i+1$ (rechts, Position $x + Δx$):
 
 - **Alltagsbeobachtung:** Wann fließt besonders viel Wärmeleistung pro Fläche ($\dot{q}_x$ in $\mathrm{W/m^2}$) von Zelle $i$ nach Zelle $i+1$?
   1. Je besser das Material Wärme leitet (großes **$\lambda$**),
-  2. je größer der Temperaturunterschied **$\Delta T = T_{i+1} - T_i$** ist,
-  3. je kürzer der räumliche Abstand **$\Delta x$** zwischen den Punkten ist!
+  2. je größer der Temperaturunterschied **$ΔT = T_{i+1} - T_i$** ist,
+  3. je kürzer der räumliche Abstand **$Δx$** zwischen den Punkten ist!
 - **Fouriersches Wärmeleitungsgesetz:**
   $$\dot{q}_x = -\lambda \cdot \frac{\partial T}{\partial x} \approx -\lambda \cdot \frac{T_{i+1} - T_i}{\Delta x} \quad \left[\frac{\mathrm{W}}{\mathrm{m^2}}\right]$$
 
@@ -670,7 +670,7 @@ $$\dot{q}_x = -\lambda \cdot \frac{\partial T}{\partial x} \approx -\lambda \cdo
 
 - **Gedankenexperiment mit konkreten Zahlen:**
   - Links in Zelle $i$ sei es heiß ($T_i = 80\,^\circ\mathrm{C}$), rechts in Zelle $i+1$ kalt ($T_{i+1} = 30\,^\circ\mathrm{C}$).
-  - Gehen wir auf der $x$-Achse nach rechts, **fällt** die Temperatur ab ($\Delta T = 30 - 80 = -50\,\mathrm{K} < 0$), die Steigung $\frac{\partial T}{\partial x}$ ist also **negativ**.
+  - Gehen wir auf der $x$-Achse nach rechts, **fällt** die Temperatur ab ($ΔT = 30 - 80 = -50\,\mathrm{K} < 0$), die Steigung $\frac{\partial T}{\partial x}$ ist also **negativ**.
   - Physikalisch fließt die Wärme aber von **Warm nach Kalt**, also in **positive $x$-Richtung** ($\dot{q}_x > 0$)!
   - **Lösung:** Das Minuszeichen vor $-\lambda$ kehrt das negative Vorzeichen der Steigung um, sodass $\frac{\partial T}{\partial x} < 0$ einen positiven Fluss $\dot{q}_x > 0$ liefert.
 
@@ -714,7 +714,7 @@ $$\dot{q}_{\text{links}\to i} = \lambda \cdot \frac{T_{i-1} - T_i}{\Delta x}, \q
 
 Addieren wir beide Zuflüsse in Zelle $i$ und teilen durch die Speicherträgheit ($\rho \cdot c_p \cdot \Delta x$), entsteht automatisch die **zweite räumliche Ableitung $\frac{\partial^2 T}{\partial x^2}$**:
 
-$$\frac{\partial T_i}{\partial t} = \frac{\dot{q}_{\text{links}\to i} + \dot{q}_{\text{rechts}\to i}}{\rho \cdot c_p \cdot \Delta x} = \underbrace{\frac{\lambda}{\rho \cdot c_p}}_{\alpha} \cdot \frac{(T_{i-1} - T_i) + (T_{i+1} - T_i)}{\Delta x^2} = \alpha \cdot \frac{T_{i+1} - 2 T_i + T_{i-1}}{\Delta x^2} \approx \alpha \cdot \frac{\partial^2 T}{\partial x^2}$$
+$$\frac{\partial T_i}{\partial t} = \frac{\dot{q}_{\text{links}\to i} + \dot{q}_{\text{rechts}\to i}}{\rho \cdot c_p \cdot \Delta x} = \underbrace{\frac{\lambda}{\rho \cdot c_p}}_{\alpha} \cdot \frac{(T_{i-1} - T_i) + (T_{i+1} - T_i)}{\Delta x^2} = \alpha \cdot \frac{\overbrace{T_{i+1} - 2 T_i + T_{i-1}}^{L_i}}{\Delta x^2} \approx \alpha \cdot \frac{\partial^2 T}{\partial x^2}$$
 
 - **Wichtige Erkenntnis:**
   - Nicht die Temperatur $T$ selbst und auch nicht das einfache Gefälle $\frac{\partial T}{\partial x}$ bestimmen die Erwärmung einer Zelle, sondern die **Krümmung** $\frac{\partial^2 T}{\partial x^2}$ (der Unterschied zwischen Zufluss und Abfluss)!
@@ -778,7 +778,7 @@ $$\underbrace{\frac{\partial T}{\partial t}}_{\substack{\text{Zeitliche Änderun
 | :--- | :--- | :---: |
 | $c_p$ | Spezifische Wärmekapazität | $\mathrm{J/(kg\cdot K)}$ |
 | $\rho \cdot c_p$ | Volumetrische Wärmekapazität | $\mathrm{J/(m^3\cdot K)}$ |
-| $\dot{q}_V$ | Volumetrische Heizleistung | $\mathrm{W/m^3}$ |
+| $\dot{q}_V$ | Volumetrische Heizleistung ($P / V$) | $\mathrm{W/m^3}$ |
 | $Q$ | Temperatur-Quellrate $\frac{\dot{q}_V}{\rho c_p}$ | $\mathrm{K/s}$ |
 
 </div>
@@ -837,7 +837,7 @@ $$L_{i,j}^n = 4 \cdot \left( \underbrace{\frac{T_{i+1,j}^n + T_{i-1,j}^n + T_{i,
 <div class="columns">
 <div class="three">
 
-Wie wird aus der 2D-DGL die Update-Formel für den nächsten Zeitschritt $t_{n+1} = t_n + \Delta t$?
+Wie wird aus der 2D-DGL die Update-Formel für den nächsten Zeitschritt $t_{n+1} = t_n + Δt$ (auf Gitterweite $Δx$)?
 
 1. **Zeit-Ableitung durch Vorwärts-Differenz ersetzen (Expliziter Euler):**
    $$\frac{\partial T}{\partial t} \approx \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t} \implies \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t} = \alpha \cdot \frac{L_{i,j}^n}{\Delta x^2} + Q_{i,j}^n$$
@@ -865,9 +865,9 @@ Der Parameter $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$ heißt **dimensions
 1. **Einheiten-Check (Dimensionskontrolle):**
    $$[s] = \frac{[\alpha] \cdot [\Delta t]}{[\Delta x^2]} = \frac{(\mathrm{m^2/s}) \cdot \mathrm{s}}{\mathrm{m^2}} = \frac{\mathrm{m^2}}{\mathrm{m^2}} = 1 \quad \text{(dimensionslos!)}$$
 2. **Anschauliche Bedeutung (Verhältnis zweier Flächen):**
-   - **Zähler ($\alpha \cdot \Delta t$ in $[\mathrm{m^2}]$):** Fläche, über die sich Wärme im Schritt $\Delta t$ ausbreitet.
-   - **Nenner ($\Delta x^2$ in $[\mathrm{m^2}]$):** Geometrische **Fläche eines einzelnen Gitterpixels**.
-   - **Verhältnis $s$:** Welcher Bruchteil einer Pixelfläche pro Schritt thermisch überbrückt wird!
+   - **Zähler ($A_{\text{Diff}} = \alpha \cdot Δt$ in $[\mathrm{m^2}]$):** Fläche, über die sich Wärme im Schritt $Δt$ ausbreitet.
+   - **Nenner ($A_{\text{Pixel}} = Δx^2$ in $[\mathrm{m^2}]$):** Geometrische **Fläche eines einzelnen Gitterpixels** (Kantenlänge $Δx$).
+   - **Verhältnis $s = A_{\text{Diff}} / A_{\text{Pixel}}$:** Welcher Bruchteil einer Pixelfläche pro Schritt überbrückt wird!
 3. **Im Code:** Vorab als `float s = alpha * dt / (dx * dx);` berechnet.
 
 </div>
@@ -934,7 +934,7 @@ Anhand der Mischungsformel $T_{\text{neu}} = (1 - 4s) \cdot T_{\text{alt}} + 4s 
 
 Damit das Eigengewicht $(1 - 4s)$ niemals negativ wird, muss für jedes 2D-Diffusionsgitter die **Von-Neumann-Stabilitätsbedingung** gelten:
 
-$$\boxed{1 - 4s \ge 0 \quad \Longleftrightarrow \quad s = \frac{\alpha \cdot \Delta t}{\Delta x^2} \le 0{,}25 \quad \Longleftrightarrow \quad \Delta t_{\max} = \frac{\Delta x^2}{4 \cdot \alpha_{\max}}}$$
+$$\boxed{1 - 4s \ge 0 \quad \Longleftrightarrow \quad s = \frac{\alpha \cdot Δt}{Δx^2} \le 0{,}25 \quad \Longleftrightarrow \quad Δt_{\max} = \frac{Δx^2}{4 \cdot \alpha_{\max}}}$$
 
 - **Rechenbeispiel für unser Starter-Projekt (`HeatGrid.cs`):**
   - Gegeben: $\alpha = 1{,}0 \times 10^{-4}\,\mathrm{m^2/s}$ und $\Delta x = 1\,\mathrm{mm} = 10^{-3}\,\mathrm{m}$.
@@ -998,7 +998,7 @@ In der Basisaufgabe zeichnen wir per rechter Maustaste **Isolator-Wände** ($\al
 
 - **Was passiert, wenn wir nur `_alphaMap[x, y] = 0` setzen?**
   - Die Wandzelle ändert ihre Temperatur zwar nicht mehr und bleibt dauerhaft auf ihrer Starttemperatur ($20\,^\circ\mathrm{C}$).
-  - **Aber:** Das heiße Nachbarpixel *neben* der Wand ($80\,^\circ\mathrm{C}$) liest im 5-Punkt-Stern die $20\,^\circ\mathrm{C}$ kalte Wandzelle als normalen Nachbarn!
+  - **Aber:** Das heiße Nachbarpixel *neben* der Wand ($80\,^\circ\mathrm{C}$) liest im 5-Punkt-Stern zur $20\,^\circ\mathrm{C}$ kalten Wandzelle ein Gefälle $ΔT = -60\,\mathrm{K}$!
   - Dadurch fließt in jedem Schritt Wärme in die $20\,^\circ\mathrm{C}$-Wandzelle ab – die Wand wirkt wie ein **Kühlakku (Dirichlet-Senke)** statt wie eine Dämmung!
 
 </div>
@@ -1034,7 +1034,7 @@ Damit exakt **null Wärmestrom** in ein benachbartes Isolatorpixel ($\alpha = 0$
 Wie kühlt ein Aluminium-Kühlkörper in der Praxis (Aufgabe Track A)? An seiner Oberfläche (Randknoten $0$) strömt kühle Luft mit $T_\infty = 25\,^\circ\mathrm{C}$ vorbei:
 
 - **1. Wärmeleitung aus dem Metallinneren (Knoten $1$) zur Oberfläche ($0$):**
-  $$\dot{q}_{\text{Leitung}} = \lambda \cdot \frac{T_{1,y} - T_{0,y}}{\Delta x} \quad \left[\frac{\mathrm{W}}{\mathrm{m^2}}\right]$$
+  $$\dot{q}_{\text{Leitung}} = \lambda \cdot \frac{T_{1,y} - T_{0,y}}{Δx} \quad \left[\frac{\mathrm{W}}{\mathrm{m^2}}\right]$$
 - **2. Konvektiver Wärmeübergang von der Oberfläche ($0$) an die Luft ($T_\infty$):**
   Mit dem **Wärmeübergangskoeffizienten $h$** $[\mathrm{W/(m^2 \cdot K)}]$ ($h = 250$ bei aktivem Lüfter, $h = 20$ bei Lüfterausfall):
   $$\dot{q}_{\text{Konvektion}} = h \cdot \left(T_{0,y} - T_\infty\right) \quad \left[\frac{\mathrm{W}}{\mathrm{m^2}}\right]$$
@@ -1056,7 +1056,7 @@ Wie kühlt ein Aluminium-Kühlkörper in der Praxis (Aufgabe Track A)? An seiner
 
 An der Oberfläche muss der aus dem Metall ankommende Wärmestrom gleich dem an die Luft abgegebenen Wärmestrom sein ($\dot{q}_{\text{Leitung}} = \dot{q}_{\text{Konvektion}}$):
 
-$$\lambda \cdot \frac{T_{1,y} - T_{0,y}}{\Delta x} = h \cdot \left(T_{0,y} - T_\infty\right) \implies \boxed{T_{0,y} = \frac{\lambda \cdot T_{1,y} + (h \cdot \Delta x) \cdot T_\infty}{\lambda + h \cdot \Delta x}}$$
+$$\lambda \cdot \frac{T_{1,y} - T_{0,y}}{Δx} = h \cdot \left(T_{0,y} - T_\infty\right) \implies \boxed{T_{0,y} = \frac{\lambda \cdot T_{1,y} + (h \cdot Δx) \cdot T_\infty}{\lambda + h \cdot Δx}}$$
 
 - **Anschauliche Bedeutung & Grenzfall-Kontrolle:**
   - $T_{0,y}$ ist das **gewichtete Mittel** aus Innentemperatur $T_{1,y}$ (Gewicht $\lambda$) und Lufttemperatur $T_\infty$ (Gewicht $h \cdot \Delta x$).
@@ -1118,7 +1118,7 @@ _tempCurr[100, 100] = 100.0f;
 <div class="columns">
 <div class="one">
 
-**Puffer-Verwaltung:**
+**1. Puffer-Verwaltung (`bmp`, `pBuf`, `stride`):**
 ```csharp
 public unsafe void RenderToBitmap(
     WriteableBitmap bmp, float[,] f, uint[] lut)
@@ -1128,10 +1128,8 @@ public unsafe void RenderToBitmap(
     {
         uint* pBuf = (uint*)bmp.BackBuffer.ToPointer();
         int stride = bmp.BackBufferStride / 4;
-
         RenderKernel(pBuf, stride, f, lut);
-        bmp.AddDirtyRect(
-            new Int32Rect(0, 0, Width, Height));
+        bmp.AddDirtyRect(new Int32Rect(0, 0, Width, Height));
     }
     finally { bmp.Unlock(); }
 }
@@ -1140,7 +1138,7 @@ public unsafe void RenderToBitmap(
 </div>
 <div class="one">
 
-**Sequentieller 32-Bit-Kernel:**
+**2. 32-Bit-Kernel (`f` $\to$ `lut`):**
 ```csharp
 private unsafe void RenderKernel(
     uint* pBuf, int stride, float[,] f, uint[] lut)
@@ -1150,8 +1148,7 @@ private unsafe void RenderKernel(
         uint* row = pBuf + (y * stride);
         for (int x = 0; x < Width; x++)
         {
-            int idx = (int)Math.Clamp(
-                f[x, y] * 2.55f, 0f, 255f);
+            int idx = (int)Math.Clamp(f[x, y] * 2.55f, 0f, 255f);
             row[x] = lut[idx];
         }
     }
@@ -1160,6 +1157,8 @@ private unsafe void RenderKernel(
 
 </div>
 </div>
+
+- `RenderToBitmap` sperrt `bmp` und schreibt jedes Feld-Pixel `f[x, y]` über `lut` direkt nach `pBuf + y * stride`.
 
 ---
 
@@ -1175,7 +1174,7 @@ private unsafe void RenderKernel(
 
 ### Hausübung Termin 02: Pixelgrafik & FDM
 
-**Stufe 1 (Basisaufgabe `1.1`–`1.3` für alle Teams auf `PixelHeatFDM.sln`):** Von-Neumann-Test, 256-Farben-LUT & Maus-Zeichnen ([Aufgabenblatt 02](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
+**Stufe 1 (Basisaufgabe `1.1`–`1.4` für alle Teams auf `PixelHeatFDM.sln`):** Von-Neumann-Test, 256-Farben-LUT, Maus-Zeichnen & Unit-Tests ([Aufgabenblatt 02](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">

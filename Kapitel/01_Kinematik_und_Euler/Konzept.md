@@ -20,11 +20,11 @@
 
 ## 3. Zweistufige Hausübung (`Einheit 01`) & Showcase-Fokus
 - **Stufe 1 – Basisaufgabe (`1.1`–`1.4`):**
-  - `1.1`: Expliziten Euler-Schritt (`EulerIntegrator.Step`) für `KinematicState` vervollständigen.
-  - `1.2`: Zweistufiges Prädiktor-Korrektor-Verfahren nach Heun (`EulerIntegrator.StepHeun`, RK2) implementieren.
-  - `1.3`: Lineare Auftreff-Interpolation $\alpha = \frac{y_k}{y_k - y_{k+1}}$ am Nulldurchgang $y = 0$ umsetzen.
-  - `1.4`: Konvergenz- und Vakuum-Referenztests (`1019,368 m` analytisch vs. $+5{,}310\,\text{m}$ Euler-Drift bei $\Delta t = 0{,}01\,\text{s}$) via `dotnet test` verifizieren.
+  - `1.1`: Expliziten Euler-Schritt (`EulerIntegrator.StepEuler`) für `KinematicState` prüfen und vervollständigen.
+  - `1.2`: Lineare Bodenkontakt-Interpolation $\tau = \frac{0 - y_k}{y_{k+1} - y_k}$ (`EulerIntegrator.InterpolateGroundImpact`) am Nulldurchgang $y = 0$ umsetzen.
+  - `1.3`: Zweistufiges Prädiktor-Korrektor-Verfahren nach Heun (`EulerIntegrator.StepHeun`, RK2) und Konvergenzvergleich im Vakuum ($v_0 = 150\,\text{m/s}, \alpha = 45^\circ$) durchführen.
+  - `1.4`: Konvergenz- und Vakuum-Referenztests (`2293,58 m` analytisch vs. `+10,598 m` Euler-Drift bei $\Delta t = 0{,}10\,\text{s}$ bzw. `+1,061 m` bei $\Delta t = 0{,}01\,\text{s}$) im Testprojekt `KinematikEuler.Tests` via `dotnet test` verifizieren.
 - **Stufe 2 – Wahlmodell (10 Pkt.):**
-  - **Track A (`A.1`–`A.4` – Hydraulikzylinder-Dämpfung):** Not-Stopp einer Schwerlastachse ($m = 250\,\text{kg}, v_0 = 4{,}0\,\text{m/s}$) mit linearer Feder, viskoser Dämpfung und quadratischer Blendenreibung ($-d_{\text{quad}}v|v|$), Umkehrpunkt-Interpolation ($v = 0$) und Auslegung für $x_{\max} \le 0{,}18\,\text{m}$.
-  - **Track B (`B.1`–`B.4` – Artillery Strike / Retro Tanks):** 2D-Ballistik mit quadratischem Newton-Luftwiderstand, Relativwind $\mathbf{v}_{\text{rel}} = \mathbf{v} - \mathbf{w}$, Heun-Integration, Bodenkollisions-Interpolation und ASCII-Trajektorienplot ($80 \times 25$).
-- **Showcase- & Code-Defense-Fokus (zu Beginn von T02):** Warum überschätzt der explizite Euler die Wurfhöhe und landet um $\Delta t / 2$ zu spät? Wirkt $-d_{\text{quad}}v|v|$ in beide Richtungen bremsend?
+  - **Track A (`A.1`–`A.4` – Hydraulikzylinder-Endlagendämpfung):** Hydraulisch angetriebener Kolben ($m = 80\,\text{kg}, F_{\text{vor}} = 60\,\text{kN}$) mit viskosem Schmierfilm, quadratischer Blendenreibung ab $x_{\text{d}} = 0{,}65\,\text{m}$ ($c_{\text{blend}} v|v|$), hartem Kontaktanschlag bei $x_{\text{anschlag}} = 0{,}80\,\text{m}$ und Stabilitätsstudie ($\Delta t \in \{10\,\mu\text{s} \dots 2\,\text{ms}\}$).
+  - **Track B (`B.1`–`B.4` – Retro Artillery Duel):** 2D-Ballistik mit quadratischem Newton-Luftwiderstand, Relativwind $\vec{v}_{\text{rel}} = \vec{v} - \vec{w}$, Geländeschnittpunkt-Interpolation an $y_{\text{terrain}}(x)$, automatischem Schusswinkel-Finder ($\pm 1{,}5\,\text{m}$) und ASCII-Plot ($80 \times 25$).
+- **Showcase- & Code-Defense-Fokus (zu Beginn von T02):** Warum überschätzt der explizite Euler die Scheitelhöhe um $\frac{1}{2}v_{y0}\Delta t$ und landet um $\Delta t$ zu spät? Wirkt $c_{\text{blend}} v|v|$ in beide Richtungen bremsend?

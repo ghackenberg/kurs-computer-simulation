@@ -44,12 +44,12 @@ Gegeben sei das BoundingBox-Intervall $[x_{\min}, x_{\max}] \times [y_{\min}, y_
 1. **Isotroper Skalierungsfaktor $s$ (Wahrung des Seitenverhältnisses):**
    $$s_x = \frac{w_{\text{canvas}} - 2 \cdot \text{margin}_x}{x_{\max} - x_{\min}}, \quad s_y = \frac{h_{\text{canvas}} - 2 \cdot \text{margin}_y}{y_{\max} - y_{\min}}$$
    $$s = \min(s_x, s_y) \quad \left[\frac{\text{Pixel}}{\text{m}}\right]$$
-2. **Zentrierungs-Offsets (Centering Offsets):**
-   $$x_{\text{offset}} = \frac{(w_{\text{canvas}} - 2 \cdot \text{margin}_x) - (x_{\max} - x_{\min}) \cdot s}{2}$$
-   $$y_{\text{offset}} = \frac{(h_{\text{canvas}} - 2 \cdot \text{margin}_y) - (y_{\max} - y_{\min}) \cdot s}{2}$$
-3. **Transformationsgleichungen:**
-   $$x_{\text{screen}} = \text{margin}_x + x_{\text{offset}} + (x_{\text{w}} - x_{\min}) \cdot s$$
-   $$y_{\text{screen}} = h_{\text{canvas}} - \left[ \text{margin}_y + y_{\text{offset}} + (y_{\text{w}} - y_{\min}) \cdot s \right]$$
+2. **Gesamte Zentrierungs-Offsets vom Fensterrand (`OffsetX`, `OffsetY` in `Transform2D.cs`):**
+   $$x_{\text{off}} = \text{margin}_x + \frac{(w_{\text{canvas}} - 2 \cdot \text{margin}_x) - (x_{\max} - x_{\min}) \cdot s}{2} = \frac{w_{\text{canvas}} - (x_{\max} - x_{\min}) \cdot s}{2}$$
+   $$y_{\text{off}} = \text{margin}_y + \frac{(h_{\text{canvas}} - 2 \cdot \text{margin}_y) - (y_{\max} - y_{\min}) \cdot s}{2} = \frac{h_{\text{canvas}} - (y_{\max} - y_{\min}) \cdot s}{2}$$
+3. **Vorwärts- & Rücktransformation (`WorldToScreen` $\leftrightarrow$ `ScreenToWorld`):**
+   $$x_{\text{screen}} = x_{\text{off}} + (x_{\text{w}} - x_{\min}) \cdot s, \quad y_{\text{screen}} = y_{\text{off}} + (y_{\max} - y_{\text{w}}) \cdot s$$
+   $$x_{\text{w}} = x_{\min} + \frac{x_{\text{screen}} - x_{\text{off}}}{s}, \quad y_{\text{w}} = y_{\max} - \frac{y_{\text{screen}} - y_{\text{off}}}{s}$$
 
 ### 2.2 Analytische Pfeilspitzenberechnung
 Für einen Kraft- oder Geschwindigkeitsvektor $\vec{F} = [F_x, F_y]^\top$ vom Angriffspunkt $\vec{p}_{\text{start}}$ zum Endpunkt $\vec{p}_{\text{end}}$ lautet der Richtungswinkel:
@@ -71,19 +71,21 @@ Die Vorlage enthält bereits die Basisklasse `Transform2D`, das Dreieckstragwerk
 
 1. **Aufgabe 1.1 – Code-Walkthrough & Seitenverhältnis-Test (`Transform2D.cs`):**
    - Starten Sie `VectorTrussCanvas` und führen Sie die bestehenden Unit-Tests (`dotnet test`) aus.
-   - Ziehen Sie das Anwendungsfenster extrem schmal und extrem breit: Prüfen Sie, wie `s = Math.Min(sx, sy)` und die Zentrierungs-Offsets `OffsetX`, `OffsetY` das Dreieck ($K_1=(0,0)$, $K_2=(4,0)$, $K_3=(2,2)$) verzerrungsfrei zentrieren.
+   - Ziehen Sie das Anwendungsfenster extrem schmal und extrem breit: Prüfen Sie, wie `Scale = Math.Min(sx, sy)` und die Zentrierungs-Offsets `OffsetX`, `OffsetY` das Dreieck ($K_1=(0,0)$, $K_2=(4,0)$, $K_3=(2,2)$) verzerrungsfrei zentrieren.
+   - *Selbsttest-Referenzwerte (Golden Reference Numbers):* Für das Start-Dreieck ($[x_{\min}, x_{\max}] = [0, 4]\,\text{m}$, $[y_{\min}, y_{\max}] = [0, 2]\,\text{m}$) auf einem $800 \times 500\,\text{px}$ großen Canvas mit `MarginX = MarginY = 70.0` (wie in `MainWindow.Redraw()`) ergeben sich exakt $s_x = \frac{660}{4} = 165{,}0\,\text{px/m}$, $s_y = \frac{360}{2} = 180{,}0\,\text{px/m} \implies s = 165{,}0\,\text{px/m}$, `OffsetX` $= 70{,}0\,\text{px}$, `OffsetY` $= 85{,}0\,\text{px}$ sowie die Bildschirmpunkte $K_1 \mapsto (70{,}0;\; 415{,}0)\,\text{px}$, $K_2 \mapsto (730{,}0;\; 415{,}0)\,\text{px}$ und $K_3 \mapsto (400{,}0;\; 85{,}0)\,\text{px}$.
 2. **Aufgabe 1.2 – Euklidische Stablängen & Mittelpunkts-Beschriftung (`TrussGeometry.cs` / `MainWindow.xaml.cs`):**
-   - Berechnen Sie für jeden Stab `bar` die exakte euklidische Länge in Weltkoordinaten (Metern):
+   - Ergänzen Sie in `TrussGeometry.cs` die Methode `public double GetBarLength(TrussBar bar)`, welche für jeden Stab `bar` die exakte euklidische Länge in Weltkoordinaten (Metern) berechnet:
      $$L = \sqrt{(X_B - X_A)^2 + (Y_B - Y_A)^2}$$
-   - Platzieren Sie in `Redraw()` am Bildschirm-Mittelpunkt $\vec{p}_{\text{mid}} = \frac{1}{2}(\vec{p}_A + \vec{p}_B)$ jedes Stabes ein gut lesbares `TextBlock`-Label mit der aktuellen Stablänge (z. B. `"2.83 m"` in Gelb/Cyan).
+   - Platzieren Sie in `Redraw()` am Bildschirm-Mittelpunkt $\vec{p}_{\text{mid}} = \frac{1}{2}(\vec{p}_A + \vec{p}_B)$ jedes Stabes ein gut lesbares `TextBlock`-Label mit der aktuellen Stablänge (`$"{length:F2} m"` in Gelb/Cyan).
+   - *5-Sekunden-Selbsttest:* Beim Start-Dreieck zeigt der Untergurt exakt `"4.00 m"` und beide schrägen Streben $\sqrt{2^2 + 2^2} = \sqrt{8} \approx 2{,}8284\,\text{m}$ (`"2.83 m"`). Schalten Sie in der ComboBox auf den Pratt-Träger um: Dort müssen Gurte `"4.00 m"`, Vertikalpfosten `"2.50 m"` und Diagonalen $\sqrt{4{,}0^2 + 2{,}5^2} = \sqrt{22{,}25} \approx 4{,}7170\,\text{m}$ (`"4.72 m"`) anzeigen!
 3. **Aufgabe 1.3 – Vertikale DIN-406-Bemaßungskette (`VectorArrow.cs`):**
    - In `VectorArrow.cs` ist bereits `AddHorizontalDimensionLine(...)` für die horizontale Gesamtlänge implementiert.
-   - Implementieren Sie analog dazu die Methode `public static void AddVerticalDimensionLine(Canvas canvas, Point pBottom, Point pTop, double xScreen, string dimensionText, Brush? strokeColor = null)` mit waagerechten gestrichelten Maßhilfslinien, senkrechter Maßlinie, oberen/unteren Maßpfeilen (`Polygon`) und mittig platziertem Maßtext.
-   - Rufen Sie diese Methode in `Redraw()` auf, um die Gesamthöhe $(y_{\max} - y_{\min})$ links neben dem Tragwerk (`xScreen = pLeft.X - 35.0`) normgerecht zu bemaßen.
-4. **Aufgabe 1.4 – Fix des Bounding-Box-Jitterings beim Maus-Dragging & Millimeter-Auflösung (`MainWindow.xaml.cs`):**
-   - **Beobachten Sie den Bug:** Wenn Sie aktuell den oberen Knoten $K_3$ oder einen Randknoten mit der Maus nach außen ziehen (`TrussCanvas_MouseMove`), ruft `Redraw()` in jedem Frame `_truss.GetBounds()` und `_transform.Update(...)` neu auf. Dadurch skaliert und verschiebt sich das Koordinatensystem *während des Ziehens* unter dem Mauszeiger weg!
-   - **Ihre Lösung:** Aktualisieren Sie `_transform.Update(...)` in `Redraw()` **nur dann**, wenn gerade **kein** Knoten gezogen wird (`if (_draggedNode == null)`). Erst beim Loslassen der Maustaste (`TrussCanvas_MouseUp`) darf das Auto-Fit auf die neue Bounding Box nachgeführt werden!
-   - Erhöhen Sie zudem die Koordinaten-Rundung in `TrussCanvas_MouseMove` von Zentimetern auf **Millimeter-Auflösung (`Math.Round(worldX, 3)` und `:F3`)**.
+   - Implementieren Sie analog dazu die Methode `public static void AddVerticalDimensionLine(Canvas canvas, Point pBottom, Point pTop, double xScreen, string dimensionText, Brush? strokeColor = null)` mit waagerechten gestrichelten Maßhilfslinien, senkrechter Maßlinie, oberen/unteren Maßpfeilen (`Polygon`) und mittig platziertem Maßtext. *(Konventions-Hinweis: Wegen der nach unten wachsenden Canvas-$Y$-Achse gilt `pTop.Y < pBottom.Y` – die obere Pfeilspitze bei `pTop.Y` zeigt nach `-Y`, ihre Flügelbasis liegt also bei `pTop.Y + arrowLen`; die untere Spitze bei `pBottom.Y` zeigt nach `+Y` mit Flügelbasis bei `pBottom.Y - arrowLen`!)*
+   - Rufen Sie diese Methode in `Redraw()` auf, um die Gesamthöhe $(y_{\max} - y_{\min})$ links neben dem Tragwerk (`xScreen = pLeft.X - 35.0`) normgerecht zu bemaßen (*Selbsttest-Kontrollwert:* `"2.00 m"` beim Start-Dreieck bzw. `"2.50 m"` beim Pratt-Träger; bei $800 \times 500\,\text{px}$ verläuft die Maßlinie bei `xScreen = 35.0 px` von $y_s = 85{,}0\,\text{px}$ bis $415{,}0\,\text{px}$).
+4. **Aufgabe 1.4 – Fix des Bounding-Box-Jitterings, Millimeter-Auflösung & Unit-Tests (`MainWindow.xaml.cs` & `VectorTrussCanvas.Tests`):**
+   - **Beobachten Sie den Bug:** Wenn Sie aktuell den oberen Knoten $K_3$ oder einen Randknoten mit der Maus nach außen ziehen (`TrussCanvas_MouseMove`), ruft `Redraw()` in jedem Frame `_transform.Update(...)` neu auf. Dadurch skaliert und verschiebt sich das Koordinatensystem *während des Ziehens* unter dem Mauszeiger weg!
+   - **Ihre Lösung:** Berechnen Sie `var (xMin, xMax, yMin, yMax) = _truss.GetBounds();` weiterhin für die Live-Maßketten, rufen Sie `_transform.Update(...)` in `Redraw()` aber **nur dann** auf, wenn gerade **kein** Knoten gezogen wird (`if (_draggedNode == null)`). Erst beim Loslassen der Maustaste (`TrussCanvas_MouseUp`) darf das Auto-Fit auf die neue Bounding Box nachgeführt werden! Erhöhen Sie zudem die Koordinaten-Rundung in `TrussCanvas_MouseMove` von Zentimetern auf **Millimeter-Auflösung (`Math.Round(worldX, 3)` und `:F3`)**.
+   - **Automatisierte Unit-Test-Verifikation:** Öffnen Sie im Testprojekt `VectorTrussCanvas.Tests/GeometryTests.cs` die Methode `Test_Stage1_GoldenReference_And_BarLengths()`, kommentieren Sie dort den vorbereiteten `TODO [Stufe 1 - Aufgabe 1.4]`-Testblock für `GetBarLength(...)` ein und führen Sie im Vorlagenordner `dotnet test` aus, bis alle **5 Unit-Tests** in `VectorTrussCanvas.Tests` grün durchlaufen!
 
 ---
 
@@ -124,7 +126,7 @@ In der Tragwerksplanung werden Brücken- und Hallenträger als normgerechte 2D-V
    - **Ebene 2 (Äußere horizontale Maßkette bei `dimY = +60 px`):** Gesamtlängenbemaßung über die gesamte Spannweite (z. B. `12.00 m`).
 3. **Arbeitspaket A.3 – Interaktiver Lastvektor-Editor (Pfeilspitzen-Dragging) & Kamera-Steuerung (Zoom & Pan):**
    - Machen Sie die Pfeilspitzen der angreifenden Kräfte (`TrussLoad`) per Maus greifbar: Zieht man die Spitze eines Kraftpfeils mit der Maus, werden $(F_x, F_y)$ in $\text{kN}$ live aus dem Differenzvektor zum Angriffsknoten aktualisiert; die Pfeilrichtung ($\operatorname{atan2}$) und Pfeillänge passen sich sofort an, während die Pfeilspitze exakt ihre feste Pixelgröße ($14\,\text{px}$) behält!
-   - Implementieren Sie stufenlosen **Mausrad-Zoom (`MouseWheel`)** und **Kamera-Panning (Rechte/Mittlere Maustaste ziehen)** über einen Zoomfaktor und Kamera-Offset in `Transform2D`.
+   - Implementieren Sie stufenlosen **Mausrad-Zoom (`MouseWheel`)** und **Kamera-Panning (Rechte/Mittlere Maustaste ziehen)** wahlweise über eine `MatrixTransform` am Canvas (`ScaleAt` / `Translate` samt Matrix-Inversion beim Picking wie in der Vorlesung) oder über Zoom- und Kamera-Offset-Parameter in `Transform2D`.
 4. **Arbeitspaket A.4 – JSON-Import/Export & Freeze-Optimierung (`System.Text.Json`):**
    - Frieren Sie statisch verwendete `SolidColorBrush`-Instanzen ein (`Freeze()`), um GC-Allokationen beim Dragging zu minimieren.
    - Fügen Sie zwei Buttons **„JSON Speichern“** und **„JSON Laden“** hinzu, mit denen das aktuelle Tragwerk (Knoten, Stäbe, Lager, Lasten) als `.json`-Datei exportiert und wieder eingeladen werden kann.
@@ -145,7 +147,7 @@ Im Konstruktionsmodus von Physik-Brückenbauspielen (*Poly Bridge*, *Bridge Cons
    - Berechnen Sie in `Redraw()` laufend die Gesamtbaukosten der Brücke ($\text{Kosten} = \sum L_i \cdot 1\,000\,\text{EUR/m}$ bei einem Maximalbudget von z. B. $35\,000\,\text{EUR}$) und stellen Sie die Auslastung als farbigen Budget-Fortschrittsbalken mit Prozent- und Euro-Anzeige im HUD dar.
 3. **Arbeitspaket B.3 – Interaktives Konstruieren (Knoten setzen, Stäbe spannen & Elemente löschen):**
    - **Knoten setzen & verschieben:** Ein Klick ins freie $0{,}5\,\text{m}$-Raster legt einen neuen Knoten an; bestehende Knoten lassen sich (wie in Stufe 1) per Drag-and-Drop verschieben.
-   - **Stäbe spannen & löschen:** Ziehen von Knoten A zu Knoten B (oder Klick-Klick im Baumodus) erzeugt bei $L \le 4{,}00\,\text{m}$ und ausreichendem Budget einen neuen `TrussBar` (keine doppelten Stäbe!). Ein Rechtsklick oder die Taste `Entf` auf einen Knoten/Stab löscht das Element samt angrenzender Stäbe (die beiden Felswand-Auflagerknoten sind unlöschbar).
+   - **Stäbe spannen & löschen:** Ziehen von Knoten A zu Knoten B (oder Klick-Klick im Baumodus) erzeugt bei $L \le 4{,}00\,\text{m}$ und ausreichendem Budget einen neuen `TrussBar` (keine doppelten Stäbe!). Ein Rechtsklick oder die Taste `Entf` auf einen Knoten/Stab löscht das Element samt angrenzender Stäbe (die beiden Felswand-Auflagerknoten sind unlöschbar). *(UI-Praxis-Tipp: Da ein WPF-`Canvas` standardmäßig keinen Tastaturfokus hält und `ComboBox`/`Button` Tasten abfangen können, registrieren Sie `PreviewKeyDown` direkt am `Window` für `Key.Delete` mit `e.Handled = true` und trennen Sie Linksklick/Rechtsklick in `TrussCanvas_MouseDown` sauber per `if / else if`.)*
 4. **Arbeitspaket B.4 – JSON-Level-Import/Export & Freeze-Optimierung (`System.Text.Json`):**
    - Frieren Sie statisch verwendete `SolidColorBrush`-Instanzen ein (`Freeze()`), um GC-Allokationen beim Zeichnen zu minimieren.
    - Fügen Sie zwei Buttons **„JSON Speichern“** und **„JSON Laden“** hinzu, mit denen der konstruierte Brücken-Entwurf (Knoten, Stäbe, Lager, Lasten) als `.json`-Datei für den LKW-Überfahrt-Test in Einheit 07 gespeichert und geladen werden kann.

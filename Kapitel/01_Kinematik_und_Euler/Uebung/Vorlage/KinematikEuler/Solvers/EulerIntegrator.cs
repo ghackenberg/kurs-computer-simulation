@@ -25,11 +25,9 @@ public static class EulerIntegrator
         // Systemableitungen an der Stelle t_k auswerten
         var (ax, ay) = accelerationFunc(current);
 
-        // Explizites Euler-Update:
-        // x_{k+1} = x_k + dt * v_k
-        // y_{k+1} = y_k + dt * v_k
-        // vx_{k+1} = vx_k + dt * ax
-        // vy_{k+1} = vy_k + dt * ay
+        // TODO [Stufe 1 - Aufgabe 1.1]: Explizites Euler-Update 1. Ordnung:
+        // x_{k+1} = x_k + dt * vx_k,   y_{k+1} = y_k + dt * vy_k
+        // vx_{k+1} = vx_k + dt * ax,   vy_{k+1} = vy_k + dt * ay
         double nextTime = current.Time + dt;
         double nextX = current.X + dt * current.Vx;
         double nextY = current.Y + dt * current.Vy;
@@ -52,6 +50,7 @@ public static class EulerIntegrator
         if (Math.Abs(current.Y - previous.Y) < 1e-12)
             return current;
 
+        // TODO [Stufe 1 - Aufgabe 1.2]: Lineare Nullstellen-Interpolation bei y = 0:
         // tau in [0, 1]: Anteil des Zeitschritts bis y = 0
         double tau = (0.0 - previous.Y) / (current.Y - previous.Y);
         tau = Math.Clamp(tau, 0.0, 1.0);

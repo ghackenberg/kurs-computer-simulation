@@ -65,27 +65,32 @@ Die Vorlage enthält bereits ein lauffähiges $128 \times 128$ Basis-Gitter (`fl
 
 1. **Aufgabe 1.1 – Code-Walkthrough & Experimenteller Von-Neumann-Stresstest ($s > 0{,}25$):**
    - Starten Sie `PixelHeatFDM` und führen Sie die bestehenden Unit-Tests (`dotnet test`) aus.
-   - Prüfen Sie die Parameter in `HeatGrid.cs`: $\alpha = 1{,}0 \times 10^{-4}\,\text{m}^2/\text{s}$, $\Delta x = 1\,\text{mm} = 0{,}001\,\text{m} \implies \Delta t_{\text{krit}} = \frac{\Delta x^2}{4\alpha} = 0{,}0025\,\text{s}$.
+   - Prüfen Sie die Parameter in `HeatGrid.cs`: $\alpha = 1{,}0 \times 10^{-4}\,\text{m}^2/\text{s}$, $\Delta x = 1\,\text{mm} = 0{,}001\,\text{m} \implies \Delta t_{\text{krit}} = \frac{\Delta x^2}{4\alpha} = 0{,}00250\,\text{s}$ (bei $\Delta t = 0{,}0020\,\text{s}$ gilt $s = 0{,}2000 \le 0{,}25$).
+   - *Selbsttest-Referenzwert (5-Sekunden-Selbstkontrolle):* Setzt man auf einem $0\,^\circ\text{C}$-Gitter einen einzelnen Hotspot $T_{8,8}^0 = 100\,^\circ\text{C}$, liefert exakt **ein** Zeitschritt (`Step()`) bei $s = 0{,}20$ im Zentrum $T_{8,8}^1 = 100 + 0{,}20 \cdot (0 + 0 + 0 + 0 - 400) = 20{,}0\,^\circ\text{C}$ sowie auf jedem der 4 direkten Nachbarn exakt $20{,}0\,^\circ\text{C}$ (Energiesumme bleibt exakt $5 \times 20{,}0 = 100{,}0\,^\circ\text{C}$). Bei instabilem $\Delta t = 0{,}0035\,\text{s}$ ($s = 0{,}35 > 0{,}25$) kippt das Zentrum schon nach dem 1. Schritt auf $T_{8,8}^1 = 100 + 0{,}35 \cdot (-400) = -40{,}0\,^\circ\text{C}$!
    - Erhöhen Sie $\Delta t$ über den Slider schrittweise von $0{,}0020\,\text{s}$ ($s = 0{,}20$) auf $> 0{,}0026\,\text{s}$ ($s > 0{,}26$). Beobachten und erklären Sie das entstehende Schachbrett-Oszillationsmuster bis zum Magenta-Überlauf (`float.IsNaN` / `float.IsInfinity`).
    - Schalten Sie zwischen **Dirichlet-Rand** (feste $20\,^\circ\text{C}$) und **Neumann-Rand** (adiabat isoliert) um und beobachten Sie den Wärmestau am Rand.
 2. **Aufgabe 1.2 – Performance-Upgrade: $O(1)$ Look-Up-Table (`uint[256]`) in `BitmapHeatRenderer.cs`:**
    - Aktuell berechnet `BitmapHeatRenderer.MapTemperatureToColor(...)` für jedes der $16\,384$ Pixel pro Frame mehrfach `if/else`-Verzweigungen und Gleitkomma-Divisionen.
-   - Legen Sie in `BitmapHeatRenderer` ein Array `private readonly uint[] _colorLut = new uint[256];` an und befüllen Sie dieses **einmalig im Konstruktor** für die 256 normierten Temperaturstufen ($0 \dots 255$).
+   - Legen Sie in `BitmapHeatRenderer` ein Array `private readonly uint[] _colorLut = new uint[256];` an und befüllen Sie dieses **einmalig im Konstruktor** für die 256 normierten Temperaturstufen ($0 \dots 255$, z. B. via `MapTemperatureToColor(i / 255.0f, 0.0f, 1.0f)`).
    - Ersetzen Sie den Aufruf in der `Render`-Schleife durch einen direkten $O(1)$-Tabellenzugriff:
      ```csharp
      int lutIndex = (int)Math.Clamp((t - minTemp) / range * 255.0f, 0.0f, 255.0f);
      _pixelBuffer[index++] = float.IsNaN(t) || float.IsInfinity(t) ? 0xFFFF00FFu : _colorLut[lutIndex];
      ```
+   - *Selbsttest-Referenzwerte (`minTemp = 20`, `maxTemp = 100`, `range = 80`):* `_colorLut[0] == 0xFF0000FFu` (Reinblau bei $20\,^\circ\text{C}$), `MapTemperatureToColor(60f, 20f, 80f) == 0xFF00FF00u` (Reingrün bei $60\,^\circ\text{C}$), `_colorLut[255] == 0xFFFF0000u` (Reinrot bei $100\,^\circ\text{C}$) sowie `0xFFFF00FFu` (Magenta) bei `float.NaN`.
 3. **Aufgabe 1.3 – Ortsabhängiges Materialgitter (`AlphaMap`) & Interaktives Maus-Zeichnen:**
-   - Erweitern Sie `HeatGrid` um ein 2D-Array `private readonly float[,] _alphaMap;` (initialisiert mit `Alpha`, wobei in der Literatur oft $a \equiv \alpha = \frac{\lambda}{\rho c_p}$ geschrieben wird), sodass in `Step()` lokal mit $s_{x,y} = \frac{\alpha_{x,y} \cdot \Delta t}{\Delta x^2}$ gerechnet wird.
+   - Erweitern Sie `HeatGrid` um ein 2D-Array `private readonly float[,] _alphaMap;` (inkl. Zugriffsmethoden `GetAlpha(int x, int y)` und `SetAlpha(int x, int y, float value)` sowie Zurücksetzen auf `Alpha` in `Reset()`), sodass in `Step()` lokal mit $s_{x,y} = \frac{\alpha_{x,y} \cdot \Delta t}{\Delta x^2}$ gerechnet wird (für Isolatorzellen mit $\alpha_{x,y} = 0$ bleibt `_tNext[x, y] = _tCurrent[x, y]`).
    - **Wichtige Physik-Regel für echte adiabate Isolator-Wände ($\alpha_{x,y} = 0$):** Wenn eine Nachbarzelle ein Isolator ist (`_alphaMap[nx, ny] == 0f`), darf kein Wärmestrom in diese Wandzelle abfließen (sonst würde eine auf $20\,^\circ\text{C}$ gehaltene Wandzelle als *Kühlrippe / Wärmesenke* wirken!). Spiegeln Sie daher an Isolator-Nachbarn die eigene Temperatur `tCenter` (lokale Neumann-Bedingung $\frac{\partial T}{\partial n} = 0$):
      ```csharp
      float tRight = _alphaMap[x + 1, y] == 0f ? tCenter : _tCurrent[x + 1, y]; // analog für Left, Up, Down
      ```
-   - Abonnieren Sie auf `HeatImage` (in `MainWindow.xaml` / `MainWindow.xaml.cs`) die Events `MouseDown` und `MouseMove`. Rechnen Sie die Mausposition `Point pos = e.GetPosition(HeatImage)` über die Bildabmessungen (`HeatImage.ActualWidth`, `ActualHeight`) in Gitterkoordinaten `(int gx, int gy)` $\in [0, 127]^2$ um:
-     - **Linke Maustaste gedrückt:** Zeichnen Sie mit einem Pinselradius von 2 Pixeln heiße Quellen ($T = 100\,^\circ\text{C}$) direkt in das laufende Gitter.
-     - **Rechte Maustaste gedrückt:** Zeichnen Sie thermische Isolator-Wände ($\alpha_{x,y} = 0$) ins Gitter und stellen Sie diese im Renderer dunkelgrau (`0xFF404040`) dar.
-- **Erwartetes Ergebnis:** Die Wärmewolke strömt in Echtzeit adiabat (ohne Wärmeverlust an den Wänden) um Ihre per Maus gezeichneten Isolator-Labyrinthe herum!
+   - *Selbsttest-Referenzwert (Neumann-Spiegelung):* Sitzt rechts neben einem Einzel-Hotspot $T_{8,8}^0 = 100\,^\circ\text{C}$ (übriges Gitter $0\,^\circ\text{C}$, $s = 0{,}20$) eine Isolator-Zelle (`SetAlpha(9, 8, 0.0f)`), ergibt `Step()` wegen `tRight = 100` exakt $L_{8,8} = 100 + 0 + 0 + 0 - 400 = -300$ und damit $T_{8,8}^1 = 100 + 0{,}20 \cdot (-300) = 40{,}0\,^\circ\text{C}$ (während die Wandzelle $(9,8)$ exakt auf $0{,}0\,^\circ\text{C}$ bleibt!).
+   - Abonnieren Sie auf `HeatImage` (in `MainWindow.xaml` / `MainWindow.xaml.cs`) die Events `MouseDown` und `MouseMove`. Rechnen Sie `Point pos = e.GetPosition(HeatImage)` über `HeatImage.ActualWidth` und `ActualHeight` in Gitterkoordinaten `(int gx, int gy)` um (mit `Math.Clamp` auf `[1, Width - 2]` begrenzen, damit der Pinsel am Bildrand keine `IndexOutOfRangeException` auslöst):
+     - **Linke Maustaste (`e.LeftButton == MouseButtonState.Pressed`):** Zeichnen Sie mit einem Pinselradius von 2 Pixeln heiße Quellen ($T = 100\,^\circ\text{C}$) direkt in das laufende Gitter.
+     - **Rechte Maustaste (`e.RightButton == MouseButtonState.Pressed`):** Zeichnen Sie thermische Isolator-Wände (`SetAlpha(..., 0f)`) ins Gitter und stellen Sie diese in `BitmapHeatRenderer.Render(...)` dunkelgrau (`0xFF404040u`) dar.
+4. **Aufgabe 1.4 – Automatisierte Verifikation mit Unit-Tests (`PixelHeatFDM.Tests` / `dotnet test`):**
+   - Öffnen Sie `PixelHeatFDM.Tests/HeatGridTests.cs`, kommentieren Sie in der Testmethode `Test_GoldenReference_SingleStepAndColorMapping_Stage1()` den vorbereiteten `TODO [Stufe 1 - Aufgabe 1.4]`-Prüfblock für die adiabate Isolator-Wand ($T_{8,8}^1 = 40{,}0\,^\circ\text{C}$ vor `SetAlpha(9, 8, 0.0f)`) ein und führen Sie `dotnet test` aus, bis alle **4 Unit-Tests** in `PixelHeatFDM.Tests` fehlerfrei auf Grün stehen.
+- **Erwartetes Ergebnis nach Stufe 1:** Die Wärmewolke strömt in Echtzeit adiabat (ohne Wärmeverlust an den Wänden) um Ihre per Maus gezeichneten Isolator-Labyrinthe herum und alle Unit-Tests bestehen!
 
 ---
 
@@ -184,10 +189,10 @@ Klassische zelluläre Physik-Spiele (*Powder Toy*, *Noita*, *Doom Fire*) faszini
 
 | Kriterium | Punkte | Beschreibung |
 | :--- | :---: | :--- |
-| **Korrektheit der 2D-FDM-Gleichung** | 3 P. | Mathematisch einwandfreier 5-Punkt-Differenzenstern mit Double-Buffering (kein In-Place-Überschreiben). |
-| **Effiziente WriteableBitmap-Pipeline** | 3 P. | Null Speicherallokationen im Render-Loop (0 B GC Alloc). Schneller Puffer-Transfer (`Lock`, `BackBuffer`, `AddDirtyRect`). |
-| **Randbedingungen & Interaktivität** | 2 P. | **Track A:** Exakte Robin-Konvektion und Lüfterumschaltung. **Track B:** Flüssiges Partikelgießen und Materialumwandlung via Maus. |
-| **Experimenteller Stabilitätsnachweis** | 1 P. | Präzise Dokumentation des Übergangs in numerische Instabilität bei $\Delta t > \Delta t_{\text{krit}}$ mit Screenshot. |
+| **2D-FDM-Gleichung & Unit-Tests (`1.1`, `1.3`, `1.4`, `A.1`/`B.1`)** | 3 P. | Mathematisch einwandfreier 5-Punkt-Differenzenstern mit Double-Buffering, adiabater Neumann-Spiegelung und grünen Unit-Tests (`dotnet test`). |
+| **WriteableBitmap-Pipeline & LUT (`1.2`, `B.2`–`B.3`)** | 3 P. | Null Speicherallokationen im Render-Loop (0 B GC Alloc), vorberechnete $O(1)$-Farbtabelle (`uint[256]`) und schneller Puffer-Transfer (`Lock`, `BackBuffer`, `AddDirtyRect`). |
+| **Randbedingungen & Interaktivität (`1.3`, `A.2`–`A.3` / `B.1`–`B.3`)** | 2 P. | Interaktives Maus-Zeichnen in Stufe 1 sowie **Track A:** exakte Robin-Konvektion & Lüfterumschaltung bzw. **Track B:** flüssiges Partikelgießen & Phasenwechsel. |
+| **Experimenteller Stabilitätsnachweis (`1.1`, `A.4` / `B.4`)** | 1 P. | Präzise Dokumentation des Übergangs in numerische Instabilität bei $\Delta t > \Delta t_{\text{krit}}$ ($s > 0{,}25$) mit Screenshot. |
 | **Dokumentation & Code-Qualität** | 1 P. | Saubere Struktur, übersichtliche `README.md` mit Erklärung der Materialkennwerte bzw. Automatenregeln. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 

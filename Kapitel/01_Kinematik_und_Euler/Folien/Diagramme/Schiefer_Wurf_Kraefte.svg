@@ -100,65 +100,65 @@
 
   <!-- ==================== SHIELD BADGES & LABELS ==================== -->
   <!-- Axis Labels -->
-  <rect x="608" y="358" width="36" height="24" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
-  <text x="626" y="374" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">x [m]</text>
+  <rect x="604" y="358" width="40" height="24" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="624" y="374" font-size="12.5" font-weight="bold" fill="#334155" text-anchor="middle">x [m]</text>
 
-  <rect x="72" y="48" width="36" height="24" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
-  <text x="90" y="64" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">y [m]</text>
+  <rect x="70" y="48" width="40" height="24" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="90" y="64" font-size="12.5" font-weight="bold" fill="#334155" text-anchor="middle">y [m]</text>
 
-  <rect x="64" y="374" width="22" height="18" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8"/>
-  <text x="75" y="387" font-size="12" fill="#64748B" text-anchor="middle">0</text>
+  <rect x="62" y="374" width="24" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8"/>
+  <text x="74" y="388" font-size="12.5" fill="#64748B" text-anchor="middle">0</text>
 
   <!-- P0 & y0 Labels -->
-  <rect x="22" y="300" width="62" height="22" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
-  <text x="53" y="315" font-size="12" font-weight="bold" fill="#004B96" text-anchor="middle">P₀ (0, y₀)</text>
+  <rect x="16" y="300" width="68" height="22" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="50" y="315" font-size="12.5" font-weight="bold" fill="#004B96" text-anchor="middle">P₀ (0, y₀)</text>
 
   <!-- Angle alpha label -->
-  <rect x="126" y="286" width="20" height="20" rx="3" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
-  <text x="136" y="300" font-size="12" font-weight="bold" fill="#B45309" text-anchor="middle">α</text>
+  <rect x="125" y="285" width="22" height="22" rx="3" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+  <text x="136" y="300" font-size="12.5" font-weight="bold" fill="#B45309" text-anchor="middle">α</text>
 
   <!-- Velocity Components Labels -->
-  <rect x="170" y="222" width="28" height="20" rx="3" fill="#E0F2FE" stroke="#38BDF8" stroke-width="1"/>
-  <text x="184" y="236" font-size="12" font-weight="bold" fill="#0284C7" text-anchor="middle">v₀</text>
+  <rect x="168" y="221" width="32" height="22" rx="3" fill="#E0F2FE" stroke="#38BDF8" stroke-width="1"/>
+  <text x="184" y="236" font-size="12.5" font-weight="bold" fill="#0284C7" text-anchor="middle">v₀</text>
 
-  <rect x="96" y="324" width="94" height="20" rx="3" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1"/>
-  <text x="143" y="338" font-size="12" fill="#0369A1" text-anchor="middle">v₀ₓ = v₀ · cos(α)</text>
+  <rect x="96" y="324" width="112" height="22" rx="3" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1"/>
+  <text x="152" y="339" font-size="12.5" fill="#0369A1" text-anchor="middle">v₀ₓ = v₀ · cos(α)</text>
 
-  <rect x="14" y="244" width="72" height="20" rx="3" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1"/>
-  <text x="50" y="258" font-size="12" fill="#0369A1" text-anchor="middle">v₀ᵧ = v₀ · sin(α)</text>
+  <rect x="34" y="206" width="112" height="22" rx="3" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1"/>
+  <text x="90" y="221" font-size="12.5" fill="#0369A1" text-anchor="middle">v₀ᵧ = v₀ · sin(α)</text>
 
   <!-- Ungedämpft Curve Label -->
-  <rect x="250" y="105" width="220" height="22" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
-  <text x="360" y="120" font-size="12" fill="#64748B" text-anchor="middle">Ungedämpft (Vakuum): Parabelbahn</text>
+  <rect x="240" y="104" width="240" height="24" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="360" y="120" font-size="12.5" fill="#64748B" text-anchor="middle">Ungedämpft (Vakuum): Parabelbahn</text>
 
   <!-- Gedämpft Curve Label -->
-  <rect x="360" y="145" width="210" height="22" rx="4" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1"/>
-  <text x="465" y="160" font-size="12" font-weight="bold" fill="#004B96" text-anchor="middle">Gedämpft: Mit Luftwiderstand F_R</text>
+  <rect x="350" y="144" width="230" height="24" rx="4" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1"/>
+  <text x="465" y="160" font-size="12.5" font-weight="bold" fill="#004B96" text-anchor="middle">Gedämpft: Mit Luftwiderstand F_R</text>
 
   <!-- Point P(x, y) Label -->
-  <rect x="315" y="185" width="56" height="20" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
-  <text x="343" y="199" font-size="12" font-weight="bold" fill="#0F172A" text-anchor="middle">P(x, y)</text>
+  <rect x="311" y="184" width="64" height="22" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="343" y="199" font-size="12.5" font-weight="bold" fill="#0F172A" text-anchor="middle">P(x, y)</text>
 
   <!-- Force Labels on Flight Point P -->
   <!-- Drag F_R -->
-  <rect x="160" y="160" width="120" height="22" rx="4" fill="#FEF2F2" stroke="#F87171" stroke-width="1"/>
-  <text x="220" y="175" font-size="12" font-weight="bold" fill="#DC2626" text-anchor="middle">F_R (Luftwiderstand)</text>
+  <rect x="150" y="159" width="140" height="24" rx="4" fill="#FEF2F2" stroke="#F87171" stroke-width="1"/>
+  <text x="220" y="175" font-size="12.5" font-weight="bold" fill="#DC2626" text-anchor="middle">F_R (Luftwiderstand)</text>
 
   <!-- Gravity F_G -->
-  <rect x="348" y="295" width="86" height="22" rx="4" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1"/>
-  <text x="391" y="310" font-size="12" font-weight="bold" fill="#004B96" text-anchor="middle">F_G = m · g</text>
+  <rect x="348" y="294" width="96" height="24" rx="4" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1"/>
+  <text x="396" y="310" font-size="12.5" font-weight="bold" fill="#004B96" text-anchor="middle">F_G = m · g</text>
 
   <!-- Resultant F_ges -->
-  <rect x="175" y="258" width="105" height="22" rx="4" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1"/>
-  <text x="227" y="273" font-size="12" font-weight="bold" fill="#7C3AED" text-anchor="middle">F_ges = F_G + F_R</text>
+  <rect x="164" y="257" width="122" height="24" rx="4" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1"/>
+  <text x="225" y="273" font-size="12.5" font-weight="bold" fill="#7C3AED" text-anchor="middle">F_ges = F_G + F_R</text>
 
   <!-- Velocity v -->
-  <rect x="420" y="248" width="116" height="22" rx="4" fill="#E0F2FE" stroke="#38BDF8" stroke-width="1"/>
-  <text x="478" y="263" font-size="12" font-weight="bold" fill="#0284C7" text-anchor="middle">v (Tangential)</text>
+  <rect x="420" y="247" width="120" height="24" rx="4" fill="#E0F2FE" stroke="#38BDF8" stroke-width="1"/>
+  <text x="480" y="263" font-size="12.5" font-weight="bold" fill="#0284C7" text-anchor="middle">v (Tangential)</text>
 
   <!-- Landing Point Label -->
-  <rect x="424" y="380" width="82" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
-  <text x="465" y="394" font-size="12" fill="#004B96" text-anchor="middle">x_Landung</text>
+  <rect x="420" y="380" width="90" height="22" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="465" y="395" font-size="12.5" fill="#004B96" text-anchor="middle">x_Landung</text>
 
   <!-- ==================== RIGHT FORMULA & PHYSICS PANEL ==================== -->
   <rect x="648" y="52" width="298" height="372" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>

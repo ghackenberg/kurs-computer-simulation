@@ -95,4 +95,43 @@ public class TelemetryTests
         // Ein extremer Ausreißer
         Assert.IsTrue(welford.IsAnomaly(75.0));
     }
+
+    [TestMethod]
+    public void Test_TwoMemoryArchitecture_WelfordVsCircularBufferWindow()
+    {
+        // Zwei-Gedächtnis-Architektur: Langzeit-Welford (k = 6) vs. Kurzzeit-Ringpuffer (Kapazität 4)
+        // Messreihe: [10, 20, 30, 40, 50, 90]
+        // 1. Langzeit-Welford über alle 6 Werte:
+        //    Summe = 240 => Mean = 40.0, M2 = 900 + 400 + 100 + 0 + 100 + 2500 = 4000.0, Variance = 4000 / 5 = 800.0
+        // 2. Ringpuffer der Kapazität 4 überschreibt 10 und 20 => Fenster enthält [30, 40, 50, 90]:
+        //    Summe = 210 => Fenster-Mean = 52.5, Min = 30.0, Max = 90.0
+        double[] samples = [10.0, 20.0, 30.0, 40.0, 50.0, 90.0];
+        var welford = new WelfordStatistics();
+        var buffer = new CircularBuffer<double>(4);
+
+        foreach (double x in samples)
+        {
+            welford.Add(x);
+            buffer.Add(x);
+        }
+
+        Assert.AreEqual(6, welford.Count);
+        Assert.AreEqual(40.0, welford.Mean, 1e-9, "Langzeit-Welford-Mittelwert über alle 6 Werte muss 40.0 sein.");
+        Assert.AreEqual(4000.0, welford.M2, 1e-9, "Quadratsumme M2 muss exakt 4000.0 sein.");
+        Assert.AreEqual(800.0, welford.Variance, 1e-9, "Stichprobenvarianz s^2 muss exakt 800.0 sein.");
+
+        double[] scratch = new double[4];
+        buffer.CopyTo(scratch);
+        CollectionAssert.AreEqual(new double[] { 30.0, 40.0, 50.0, 90.0 }, scratch);
+
+        // TODO [Stufe 1 - Aufgabe 1.4]:
+        // Kommentieren Sie nach Implementierung von WelfordStatistics.ComputeWindowStats(...) (Aufgabe 1.2)
+        // die folgenden Assertions ein, um Ihre gleitende Fenster-Statistik mit dotnet test zu prüfen:
+        /*
+        var (winMean, winMin, winMax) = WelfordStatistics.ComputeWindowStats(buffer, scratch);
+        Assert.AreEqual(52.5, winMean, 1e-9, "Gleitender Fenster-Mittelwert über [30, 40, 50, 90] muss exakt 52.5 sein.");
+        Assert.AreEqual(30.0, winMin, 1e-9, "Fenster-Minimum muss exakt 30.0 sein.");
+        Assert.AreEqual(90.0, winMax, 1e-9, "Fenster-Maximum muss exakt 90.0 sein.");
+        */
+    }
 }

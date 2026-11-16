@@ -199,16 +199,17 @@ public class HeatGrid
     public float[,] GetCurrentGrid() => _tCurrent;
 
     // =========================================================================
-    // TODO: [Stufe 1 - Basisaufgabe (Aufgabe 1.1 bis 1.3)]
-    // 1. Stabilitäts-Stresstest: Erhöhen Sie Dt über CriticalDt (s > 0.25) und
-    //    beobachten Sie das Schachbrett-Oszillationsmuster bis zum Magenta-Überlauf.
-    // 2. Ortsabhängiges Materialgitter: Ergänzen Sie ein Array float[,] _alphaMap,
-    //    sodass Step() lokal mit s_xy = (_alphaMap[x, y] * Dt) / (Dx * Dx) rechnet.
-    //    WICHTIG: Spiegeln Sie an Isolator-Nachbarn (_alphaMap[nx, ny] == 0) die
+    // TODO [Stufe 1 - Basisaufgabe (Aufgabe 1.1 bis 1.4)]
+    // 1. Aufgabe 1.1 (Stabilitäts-Stresstest): Erhöhen Sie Dt über CriticalDt (s > 0.25)
+    //    und beobachten Sie das Schachbrett-Oszillationsmuster bis zum Magenta-Überlauf.
+    // 2. Aufgabe 1.2 (256-Stufen-LUT): Siehe Rendering/BitmapHeatRenderer.cs (_colorLut).
+    // 3. Aufgabe 1.3 (Ortsabhängiges Materialgitter & Maus-Zeichnen):
+    //    Ergänzen Sie ein Array float[,] _alphaMap (samt GetAlpha/SetAlpha), sodass Step()
+    //    lokal mit s_xy = (_alphaMap[x, y] * Dt) / (Dx * Dx) rechnet.
+    //    WICHTIG: Spiegeln Sie an Isolator-Nachbarn (_alphaMap[nx, ny] == 0f) die eigene
     //    Temperatur tCenter (Neumann-Rand dT/dn = 0), damit keine Wärme in die Wand abfließt!
-    // 3. Maus-Interaktion (mit MainWindow.xaml.cs): Erlauben Sie per Linksklick
-    //    das Einzeichnen von 100 °C Hotspots und per Rechtsklick das Setzen von
-    //    Isolator-Wänden (_alphaMap[x, y] = 0).
+    // 4. Aufgabe 1.4 (Unit-Tests): Aktivieren Sie den TODO-Testblock in
+    //    PixelHeatFDM.Tests/HeatGridTests.cs und prüfen Sie alle 4 Tests mit 'dotnet test'.
     // =========================================================================
 
     // =========================================================================

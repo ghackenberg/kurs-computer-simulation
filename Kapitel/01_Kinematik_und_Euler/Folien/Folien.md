@@ -15,7 +15,7 @@ math: mathjax
 
 # Kapitel 1: Systemsimulation und der Digitale Zwilling
 
-Dieses Kapitel umfasst das Folgende:
+Dieses Kapitel umfasst die folgenden Abschnitte:
 
 - 1.1: Motivation
 - 1.2: Arten von Modellen
@@ -30,12 +30,12 @@ Dieses Kapitel umfasst das Folgende:
 
 ## 1.1: Motivation
 
-Dieser Abschnitt beinhaltet das Folgende:
+Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Brücke zum Prolog und Einordnung in die Semester-Architektur
 - Definition von Modell und Simulation
 - Praktische Anwendungsbeispiele aus verschiedenen Ingenieursdisziplinen
-- Den Nutzen der Simulation zur Kostenreduktion, Risikominimierung und Optimierung
+- Nutzen der Simulation zur Kostenreduktion, Risikominimierung und Optimierung
 
 ---
 
@@ -178,7 +178,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 
 ## 1.2: Arten von Modellen
 
-Dieser Abschnitt beinhaltet das Folgende:
+Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Klassifikation nach Zeitabhängigkeit (statisch vs. dynamisch)
 - Klassifikation nach Zustandsänderung (kontinuierlich vs. diskret)
@@ -318,14 +318,14 @@ Diskrete Modelle können weiter unterteilt werden:
 <div class="columns">
 <div class="one">
 
-**Zeitdiskret (konstanter Zeitschritt)**
+**Zeitdiskret (konstanter Zeitschritt $\Delta t$)**
 
 ![Zeitdiskrete Modelle](./Diagramme/Modellarten_Diskret_Konstant_Delta.svg)
 
 </div>
 <div class="one">
 
-**Ereignisdiskret**
+**Ereignisdiskret (asynchrone Events)**
 
 ![Ereignisdiskrete Modelle](./Diagramme/Modellarten_Diskret_Ereignis.svg)
 
@@ -383,11 +383,11 @@ Diskrete Modelle können weiter unterteilt werden:
 
 ## 1.3: Lösungsmethoden
 
-Dieser Abschnitt beinhaltet das Folgende:
+Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Den Unterschied zwischen analytischen (exakten) und numerischen (approximativen) Lösungen
-- Vor- und Nachteile der jeweiligen Methode
-- Die Relevanz numerischer Methoden für die Praxis
+- Unterschied zwischen analytischen (exakten) und numerischen (approximativen) Lösungen
+- Schiefer Wurf mit Luftwiderstand als gekoppeltes nichtlineares DGL-System
+- Präzisionssteigerung durch Heun (RK2) und lineare Schnittpunkt-Interpolation
 
 ---
 
@@ -430,6 +430,8 @@ Es gibt zwei grundlegende Ansätze:
 
 ---
 
+### Kräftebilanz: Schiefer Wurf mit Luftwiderstand
+
 ![](./Diagramme/Schiefer_Wurf_Kraefte.svg)
 
 ---
@@ -453,13 +455,13 @@ $$\vec{F}_R = -\frac{1}{2} c_w \rho A \|\vec{v}\| \vec{v}$$
 </div>
 <div class="one">
 
-**Gekoppeltes DGL-System 2. Ordnung:**
+**Kräftebilanz ($\vec{F}_{\text{ges}} = \vec{F}_G + \vec{F}_R$) & DGL-System:**
+Mit der Gewichtskraft $\vec{F}_G = (0, -mg)^T$ folgt nach Newton II:
 $$m \ddot{x} = F_{Rx} = -\frac{1}{2} c_w \rho A \sqrt{v_x^2 + v_y^2} \cdot v_x$$
 $$m \ddot{y} = -m g + F_{Ry} = -m g - \frac{1}{2} c_w \rho A \sqrt{v_x^2 + v_y^2} \cdot v_y$$
 
-- **Nichtlineare Geschwindigkeitskopplung:** $v_x$ und $v_y$ koppeln im Term $\sqrt{v_x^2+v_y^2}$ miteinander.
-- **Folge:** Keine elementare geschlossene Stammfunktion möglich!
-- **Lösung:** Numerische Zeitschrittintegration (z.B. Runge-Kutta oder Euler).
+- **Nichtlineare Kopplung:** $v_x$ und $v_y$ koppeln im Term $\sqrt{v_x^2+v_y^2}$ untrennbar miteinander.
+- **Folge:** Keine geschlossene Stammfunktion für Bahnkurve und Landeweite $x_{\text{Landung}}$ $\implies$ **Numerik (Euler / Heun)**!
 
 </div>
 </div>
@@ -494,11 +496,11 @@ $$m \ddot{y} = -m g + F_{Ry} = -m g - \frac{1}{2} c_w \rho A \sqrt{v_x^2 + v_y^2
 
 ## 1.4: Visualisierung von Simulationsdaten
 
-Dieser Abschnitt beinhaltet das Folgende:
+Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Die Notwendigkeit der Visualisierung zum Verstehen und Kommunizieren von Ergebnissen
-- Verschiedene Arten der Darstellung: 2D-Plots, 2D- und 3D-Szenen
-- Einen kurzen Einblick in die Funktionsweise der Grafik-Pipeline und OpenGL
+- Rolle der Visualisierung zum Verstehen, Validieren und Kommunizieren von Ergebnissen
+- Darstellungsstufen von einfachen 2D-Plots bis zu interaktiven 2D- und 3D-Szenen
+- Die vier komplementären Dimensionen der Visualisierung im Überblick
 
 ---
 
@@ -568,7 +570,7 @@ In diesem Kurs lernen wir die Visualisierung entlang von vier komplementären Di
 
 ## 1.5: Der Digitale Zwilling
 
-Dieser Abschnitt beinhaltet das Folgende:
+Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Das Konzept des Digitalen Zwillings nach Michael Grieves
 - Die drei Kernkomponenten: physisches Produkt, virtuelles Produkt und Datenverbindung
@@ -633,7 +635,7 @@ Ein Digitaler Zwilling "lebt" und entwickelt sich mit seinem physischen Gegenst�
 
 ## 1.6: Simulation & Digitaler Zwilling
 
-Dieser Abschnitt beinhaltet das Folgende:
+Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - Die Rolle der Simulation als Kerntechnologie des Digitalen Zwillings
 - Die Anwendung über den gesamten Produktlebenszyklus
@@ -667,7 +669,7 @@ Dieser Abschnitt beinhaltet das Folgende:
 
 ### Der Lebenszyklus
 
-Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch den Digitalen Zwilling verbunden werden.
+Der Digitale Zwilling verbindet die Simulation nahtlos über alle drei Lebenszyklusphasen:
 
 <div class="columns top">
 <div class="one">
@@ -675,8 +677,8 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 ![](./Illustrationen/Phase_Design_Entwicklung.jpg)
 
 **1. Design & Entwicklung**
-- Simulation zur Auslegung und Validierung des Produkts.
-- Das Ergebnis ist der "digitale Prototyp" oder "Digital Twin Prototype".
+- Auslegung und Validierung des Produkts.
+- Ergebnis: *Digital Twin Prototype*.
 
 </div>
 <div class="one">
@@ -684,8 +686,7 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 ![](./Illustrationen/Phase_Produktion_Inbetriebnahme.jpg)
 
 **2. Produktion & Inbetriebnahme**
-- Simulation zur Planung der Fertigung.
-- **Virtuelle Inbetriebnahme**: Test der Steuerungssoftware am digitalen Modell, bevor die reale Anlage existiert.
+- Fertigungsplanung und **Virtuelle Inbetriebnahme** vor Aufbau der realen Anlage.
 
 </div>
 <div class="one">
@@ -693,9 +694,7 @@ Simulation spielt in jeder Phase des Produktlebenszyklus eine Rolle, die durch d
 ![](./Illustrationen/Phase_Betrieb_Wartung.jpg)
 
 **3. Betrieb & Wartung**
-- Der "Digital Twin Instance" läuft parallel zum realen Produkt.
-- Live-Sensordaten kalibrieren das Simulationsmodell.
-- Simulationen sagen Verhalten voraus und optimieren den Betrieb.
+- *Digital Twin Instance* mit Live-Sensordaten für Prognose und Optimierung.
 
 </div>
 </div>
@@ -772,7 +771,7 @@ In den folgenden Kapiteln erarbeiten wir zunächst die Werkzeuge und vertiefen a
 
 ### Hausübung Termin 01: Kinematik & Expliziter Euler
 
-**Stufe 1 (Basisaufgabe `1.1`–`1.2` für alle Teams auf `KinematikEuler.sln`):** `StepEuler`, Boden-Interpolation & `StepHeun` ([Aufgabenblatt 01](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
+**Stufe 1 (Basisaufgabe `1.1`–`1.4` für alle Teams auf `KinematikEuler.sln`):** `StepEuler`, Boden-Interpolation, `StepHeun` & `dotnet test` ([Aufgabenblatt 01](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">

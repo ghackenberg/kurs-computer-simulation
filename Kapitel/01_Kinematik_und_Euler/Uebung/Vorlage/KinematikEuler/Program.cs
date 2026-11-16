@@ -104,11 +104,12 @@ internal class Program
             var impactHeun = EulerIntegrator.InterpolateGroundImpact(previous, state);
             Console.WriteLine($"Heun RK2 (dt = {dt:F2}s):");
             Console.WriteLine($"  t_Impact = {impactHeun.Time:F3} s (Fehler: {impactHeun.Time - tAna:+0.0000;-0.0000} s)");
-            Console.WriteLine($"  x_Impact = {impactHeun.X:F2} m (Fehler: {impactHeun.X - xAna:+0.000;-0.000} m)\n");
+            Console.WriteLine($"  x_Impact = {impactHeun.X:F2} m (Fehler: {impactHeun.X - xAna:+0.000;-0.000} m)");
+            Console.WriteLine($"  y_Max    = {yMaxHeun:F2} m (Fehler: {yMaxHeun - yMaxAna:+0.000;-0.000} m)\n");
         }
 
-        Console.WriteLine("Erkenntnis: Expliziter Euler überschätzt y(t), landet dadurch um dt/2 zu spät");
-        Console.WriteLine("und schießt in x_Impact um vx0 * (dt/2) über das Ziel hinaus! Heun (RK2) integriert Parabeln exakt.");
+        Console.WriteLine("Erkenntnis: Expliziter Euler überschätzt y(t), landet dadurch um dt zu spät");
+        Console.WriteLine("und schießt in x_Impact um vx0 * dt über das Ziel hinaus! Heun (RK2) integriert Parabeln auf dem Zeitgitter exakt.");
     }
 
     /// <summary>

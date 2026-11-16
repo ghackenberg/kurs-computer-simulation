@@ -1476,25 +1476,25 @@ GraphControl.Graph     = graph;
 
 ### Hausübung Termin 04: Echtzeit-Telemetrie & ScottPlot 5
 
-**Stufe 1 (Basisaufgabe `1.1`–`1.3` für alle Teams auf `ScottPlotTelemetry.sln`):** GC-Leak-Fix (`Freeze`), Ringpuffer-Fenster & Welford-Toleranzbänder ([Aufgabenblatt 04](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
+**Stufe 1 (Basisaufgabe `1.1`–`1.4` auf `ScottPlotTelemetry.sln`):** GC-Leak-Fix (`Freeze`), 10-s-Ringpuffer-Fenster, 2. Referenzkanal & Unit-Tests ([Aufgabenblatt 04](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">
 
-#### Stufe 2 – Track A: Industrie-4.0 Schwingungs-Leitstand
-- 1-kHz-Vibrationsmonitoring mit `DataStreamer` & Zwei-Y-Achsen ($n, M$)
-- Welford $\pm 3\sigma$-Toleranzbänder & Kavitations-/Schlupf-Alarmlogik
-- Phasenraum-Kennfeld ($M$ vs. $n$) & Live-Vibrations-Histogramm (20 Bins)
-- MSAGL-Antriebsstrang-Topologie mit dynamischer Knoten-Alarmfärbung
+#### Stufe 2 – Track A: Industrieller Antriebsprüfstand
+- **A.1:** Zweikanal-Telemetrie ($n, M$) mit Welford-$\pm 3\sigma$-Band & Alarm
+- **A.2:** Phasenraum-Betriebskennfeld ($M$ vs. $n$) mit Leistungsgrenze
+- **A.3:** Echtzeit-Schwingungs-Histogramm (20 Bins + Gauß-Kurve)
+- **A.4:** MSAGL-Antriebsstrang-Topologie mit Knoten-Alarmfärbung
 
 </div>
 <div class="two">
 
-#### Stufe 2 – Track B: Retro Arcade Racing Telemetry
-- Live Speed- & RPM-Streamer mit Welford-Schaltpunkt & Shift-Flash
-- G-Kräfte-Phasenplot (Kamm'scher Kreis $a_{\text{res}} \le \mu g$) mit Grip-Farben
-- Bremsverzögerungs-Histogramm mit überlagerter Gauß-Glockenkurve
-- MSAGL-Streckentopologie mit Live-Sektor-Tracking des Boliden
+#### Stufe 2 – Track B: Retro Arcade Racing HUD
+- **B.1:** Speed- & RPM-Streamer mit Welford-Schaltpunkt & Shift-Flash
+- **B.2:** G-Kräfte-Phasenplot (Kamm'scher Kreis $a_{\text{res}} \le \mu g$) mit Grip-Farben
+- **B.3:** Bremsverzögerungs-Histogramm mit Gauß-Glockenkurve
+- **B.4:** MSAGL-Streckentopologie mit aktivem Sektor-Tracking
 
 </div>
 </div>

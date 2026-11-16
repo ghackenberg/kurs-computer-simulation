@@ -52,6 +52,6 @@
 
   <!-- Summary Footer -->
   <rect x="15" y="342" width="240" height="64" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="135" y="364" class="lbl" style="fill: #004B96;">Labor-Sprint A &amp; B</text>
+  <text x="135" y="364" class="lbl" style="fill: #004B96;">Basisaufgabe (Stufe 1)</text>
   <text x="135" y="388" class="desc" style="font-weight: bold; fill: #334155;">HorizontalLine in ScottPlot</text>
 </svg>

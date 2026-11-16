@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PixelHeatFDM.Rendering;
 using PixelHeatFDM.Simulation;
 
 namespace HeatGridTests;
@@ -100,5 +101,63 @@ public class HeatGridTests
         float neighborTemp = grid.GetTemperature(midX + 1, midY);
         Assert.IsTrue(neighborTemp > 0.0f, "Nachbarzelle muss nach Diffusion erwärmt worden sein.");
         Assert.IsTrue(grid.GetTemperature(midX, midY) < 100.0f, "Zentrum muss Wärme abgegeben haben.");
+    }
+
+    [TestMethod]
+    public void Test_GoldenReference_SingleStepAndColorMapping_Stage1()
+    {
+        // 1. Golden Reference Check (Aufgabe 1.1): 1 FDM-Schritt bei s = 0.20
+        var grid = new HeatGrid(16, 16)
+        {
+            Dx = 0.001f,
+            Alpha = 1.0e-4f,
+            Dt = 0.0020f, // s = 0.2000
+            Boundary = BoundaryMode.DirichletFixed,
+            MaintainHotspot = false
+        };
+
+        for (int y = 0; y < 16; y++)
+            for (int x = 0; x < 16; x++)
+                grid.SetTemperature(x, y, 0.0f);
+
+        grid.SetTemperature(8, 8, 100.0f);
+        grid.Step();
+
+        // T_neu(8,8) = 100 + 0.20 * (0 + 0 + 0 + 0 - 400) = 20.0 °C
+        // T_neu(Nachbar) = 0 + 0.20 * 100 = 20.0 °C
+        Assert.AreEqual(20.0f, grid.GetTemperature(8, 8), 1e-4f, "Zentrum muss bei s = 0.20 nach 1 Schritt exakt 20.0 °C betragen.");
+        Assert.AreEqual(20.0f, grid.GetTemperature(9, 8), 1e-4f, "Rechter Nachbar muss nach 1 Schritt exakt 20.0 °C betragen.");
+        Assert.AreEqual(20.0f, grid.GetTemperature(7, 8), 1e-4f, "Linker Nachbar muss nach 1 Schritt exakt 20.0 °C betragen.");
+
+        // 2. Farb-Referenzwerte (Aufgabe 1.2): Blau (20 °C), Grün (60 °C), Rot (100 °C), Magenta (NaN)
+        Assert.AreEqual(0xFF0000FFu, BitmapHeatRenderer.MapTemperatureToColor(20.0f, 20.0f, 80.0f));
+        Assert.AreEqual(0xFF00FF00u, BitmapHeatRenderer.MapTemperatureToColor(60.0f, 20.0f, 80.0f));
+        Assert.AreEqual(0xFFFF0000u, BitmapHeatRenderer.MapTemperatureToColor(100.0f, 20.0f, 80.0f));
+        Assert.AreEqual(0xFFFF00FFu, BitmapHeatRenderer.MapTemperatureToColor(float.NaN, 20.0f, 80.0f));
+
+        // TODO [Stufe 1 - Aufgabe 1.4]: Nach Implementierung von _alphaMap (SetAlpha / GetAlpha)
+        // und der lokalen Neumann-Spiegelung in Aufgabe 1.3 diesen Prüfblock einkommentieren:
+        /*
+        var wallGrid = new HeatGrid(16, 16)
+        {
+            Dx = 0.001f,
+            Alpha = 1.0e-4f,
+            Dt = 0.0020f, // s = 0.20
+            Boundary = BoundaryMode.NeumannAdiabatic,
+            MaintainHotspot = false
+        };
+        for (int y = 0; y < 16; y++)
+            for (int x = 0; x < 16; x++)
+                wallGrid.SetTemperature(x, y, 0.0f);
+
+        wallGrid.SetAlpha(9, 8, 0.0f); // Rechts neben (8,8) steht eine adiabate Isolator-Wand
+        wallGrid.SetTemperature(8, 8, 100.0f);
+        wallGrid.Step();
+
+        // Durch Neumann-Spiegelung (tRight = tCenter = 100) gilt L = 100 + 0 + 0 + 0 - 400 = -300
+        // => T_neu(8,8) = 100 + 0.20 * (-300) = 40.0 °C; Wandzelle (9,8) bleibt exakt auf 0.0 °C!
+        Assert.AreEqual(40.0f, wallGrid.GetTemperature(8, 8), 1e-4f, "Vor einer Isolatorwand muss T(8,8) nach 1 Schritt 40.0 °C betragen.");
+        Assert.AreEqual(0.0f, wallGrid.GetTemperature(9, 8), 1e-4f, "In die Isolatorwand (alpha = 0) darf keine Wärme einströmen.");
+        */
     }
 }

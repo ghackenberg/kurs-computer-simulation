@@ -81,4 +81,57 @@ public class GeometryTests
         Assert.AreEqual(0.0, yMin, 1e-6);
         Assert.AreEqual(2.0, yMax, 1e-6);
     }
+
+    [TestMethod]
+    public void Test_Stage1_GoldenReference_And_BarLengths()
+    {
+        // 1. Golden-Reference-Prüfung der Viewport-Transformation (Aufgabe 1.1 & 1.4):
+        // Dreieck [0, 4] m x [0, 2] m auf 800 x 500 px Canvas mit Margin = 70 px
+        var stage1 = TrussGeometry.CreateStage1Triangle();
+        var (xMin, xMax, yMin, yMax) = stage1.GetBounds();
+
+        var transform = new Transform2D { MarginX = 70.0, MarginY = 70.0 };
+        transform.Update(xMin, xMax, yMin, yMax, 800.0, 500.0);
+
+        Assert.AreEqual(165.0, transform.Scale, 1e-6, "Isotroper Maßstab s muss exakt 165.0 px/m betragen.");
+        Assert.AreEqual(70.0, transform.OffsetX, 1e-6, "OffsetX muss exakt 70.0 px betragen.");
+        Assert.AreEqual(85.0, transform.OffsetY, 1e-6, "OffsetY muss exakt 85.0 px betragen.");
+
+        Point k1Screen = transform.WorldToScreen(0.0, 0.0);
+        Point k2Screen = transform.WorldToScreen(4.0, 0.0);
+        Point k3Screen = transform.WorldToScreen(2.0, 2.0);
+
+        Assert.AreEqual(70.0, k1Screen.X, 1e-6);
+        Assert.AreEqual(415.0, k1Screen.Y, 1e-6);
+        Assert.AreEqual(730.0, k2Screen.X, 1e-6);
+        Assert.AreEqual(415.0, k2Screen.Y, 1e-6);
+        Assert.AreEqual(400.0, k3Screen.X, 1e-6);
+        Assert.AreEqual(85.0, k3Screen.Y, 1e-6);
+
+        // Jittering-Schutz (Freeze-Doktrin): Während _draggedNode != null wird transform.Update()
+        // NICHT neu aufgerufen -> K1 bleibt trotz verschobenem Knoten K3 exakt bei (70, 415) px!
+        stage1.Nodes[2].Y = 3.254;
+        Point k1WhileDragging = transform.WorldToScreen(stage1.Nodes[0].X, stage1.Nodes[0].Y);
+        Assert.AreEqual(70.0, k1WhileDragging.X, 1e-6);
+        Assert.AreEqual(415.0, k1WhileDragging.Y, 1e-6);
+
+        // 2. TODO [Stufe 1 - Aufgabe 1.4]:
+        // Kommentieren Sie nach Implementierung von TrussGeometry.GetBarLength(TrussBar bar)
+        // (Aufgabe 1.2) den folgenden Testblock ein und prüfen Sie Ihre Lösung mit 'dotnet test':
+        /*
+        var refTriangle = TrussGeometry.CreateStage1Triangle();
+        Assert.AreEqual(4.0, refTriangle.GetBarLength(refTriangle.Bars[0]), 1e-6,
+            "Untergurt K1-K2 muss exakt 4.00 m lang sein.");
+        Assert.AreEqual(Math.Sqrt(8.0), refTriangle.GetBarLength(refTriangle.Bars[1]), 1e-6,
+            "Strebe K2-K3 muss exakt sqrt(8) ≈ 2.8284 m lang sein.");
+        Assert.AreEqual(Math.Sqrt(8.0), refTriangle.GetBarLength(refTriangle.Bars[2]), 1e-6,
+            "Strebe K3-K1 muss exakt sqrt(8) ≈ 2.8284 m lang sein.");
+
+        var pratt = TrussGeometry.CreateIndustrialPrattTruss();
+        Assert.AreEqual(2.5, pratt.GetBarLength(pratt.Bars[6]), 1e-6,
+            "Vertikalpfosten U1-O1 im Pratt-Träger muss exakt 2.50 m lang sein.");
+        Assert.AreEqual(Math.Sqrt(22.25), pratt.GetBarLength(pratt.Bars[10]), 1e-6,
+            "Diagonale U1-O2 im Pratt-Träger muss exakt sqrt(4^2 + 2.5^2) ≈ 4.7170 m lang sein.");
+        */
+    }
 }

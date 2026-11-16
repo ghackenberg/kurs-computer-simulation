@@ -17,7 +17,7 @@
     <text x="115" y="20" class="lbl" style="fill: #334155;">1. Gerade (∂²T/∂x² = 0)</text>
     <line x1="45" y1="36" x2="185" y2="74" stroke="#64748b" stroke-width="3" />
     <circle cx="115" cy="55" r="5" fill="#f59e0b" stroke="#0f172a" />
-    <text x="115" y="94" class="lbl" style="fill: #475569;">➔ Zufluss = Abfluss (T bleibt!)</text>
+    <text x="115" y="94" class="lbl" style="fill: #475569;">➔ Bilanz 0 W (T_i bleibt!)</text>
   </g>
 
   <!-- Case 2: Valley / Delle -->
@@ -26,7 +26,7 @@
     <text x="115" y="20" class="lbl" style="fill: #166534;">2. Tal / Delle (∂²T/∂x² &gt; 0)</text>
     <path d="M 45 36 Q 115 96 185 42" fill="none" stroke="#16a34a" stroke-width="3" />
     <circle cx="115" cy="68" r="5" fill="#2563eb" stroke="#0f172a" />
-    <text x="115" y="96" class="lbl" style="fill: #15803d;">➔ Wärme strömt herein (T steigt ↑)</text>
+    <text x="115" y="96" class="lbl" style="fill: #15803d;">➔ Wärme strömt ein (T_i steigt ↑)</text>
   </g>
 
   <!-- Case 3: Peak / Berg -->
@@ -35,6 +35,6 @@
     <text x="115" y="20" class="lbl" style="fill: #991b1b;">3. Berg / Peak (∂²T/∂x² &lt; 0)</text>
     <path d="M 45 78 Q 115 16 185 78" fill="none" stroke="#dc2626" stroke-width="3" />
     <circle cx="115" cy="47" r="5" fill="#dc2626" stroke="#0f172a" />
-    <text x="115" y="98" class="lbl" style="fill: #dc2626;">➔ Wärme strömt weg (T fällt ↓)</text>
+    <text x="115" y="98" class="lbl" style="fill: #dc2626;">➔ Wärme strömt weg (T_i fällt ↓)</text>
   </g>
 </svg>

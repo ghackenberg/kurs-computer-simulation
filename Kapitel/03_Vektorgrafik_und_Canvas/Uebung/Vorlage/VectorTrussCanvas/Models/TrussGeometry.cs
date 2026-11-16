@@ -151,4 +151,14 @@ public class TrussGeometry
 
         return truss;
     }
+
+    // =========================================================================
+    // TODO: [Stufe 1 - Aufgabe 1.2]
+    // Ergänzen Sie hier die Methode zur euklidischen Stablängenberechnung [m]:
+    //   public double GetBarLength(TrussBar bar)
+    // Formel: L = Math.Sqrt((xB - xA)^2 + (yB - yA)^2)
+    // Selbsttest-Referenzwerte:
+    //   - Dreieck (Stufe 1): Stab 1 = 4.00 m, Stab 2 & 3 = sqrt(8) ≈ 2.8284 m
+    //   - Pratt-Träger: Gurte = 4.00 m, Pfosten = 2.50 m, Diagonalen ≈ 4.7170 m
+    // =========================================================================
 }

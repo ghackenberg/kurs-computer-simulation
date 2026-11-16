@@ -46,7 +46,7 @@
 
   <!-- Summary Footer -->
   <rect x="15" y="342" width="240" height="64" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
-  <text x="135" y="364" class="lbl" style="fill: #1d4ed8;">Labor-Sprint A Fix</text>
+  <text x="135" y="364" class="lbl" style="fill: #1d4ed8;">Basisaufgabe (Stufe 1)</text>
   <text x="135" y="383" class="desc" style="font-weight: bold; fill: #1e3a8a;">Kein 'new' im 50 Hz Loop!</text>
   <text x="135" y="398" class="desc" style="fill: #1e40af;">Statische Ressourcen cachen</text>
 </svg>

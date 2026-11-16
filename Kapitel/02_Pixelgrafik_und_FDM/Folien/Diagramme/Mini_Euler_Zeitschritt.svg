@@ -26,7 +26,7 @@
     <text x="115" y="93" class="math" style="fill: #1d4ed8;">Teiler  1 / Δx²  [1/m²]</text>
 
     <rect x="0" y="112" width="230" height="46" rx="5" fill="#fef3c7" stroke="#f59e0b" />
-    <text x="115" y="131" class="lbl" style="fill: #92400e;">3. Aus Euler-Schritt (Zeit):</text>
+    <text x="115" y="131" class="lbl" style="fill: #92400e;">3. Euler-Schritt (t_n ➔ t_n + Δt):</text>
     <text x="115" y="149" class="math" style="fill: #b45309;">Multiplikation  · Δt  [s]</text>
   </g>
 
@@ -44,6 +44,6 @@
   <g transform="translate(15, 336)">
     <rect width="230" height="68" rx="6" fill="#1e293b" />
     <text x="115" y="22" class="lbl" style="fill: #38bdf8;">Fertiges Euler-Update:</text>
-    <text x="115" y="48" class="math" style="fill: #f8fafc; font-size: 14px;">T_neu = T_alt + s · L + Δt · Q</text>
+    <text x="115" y="48" class="math" style="fill: #f8fafc; font-size: 13.5px;">T_{i,j}^{n+1} = T_{i,j}^n + s·L + Δt·Q</text>
   </g>
 </svg>

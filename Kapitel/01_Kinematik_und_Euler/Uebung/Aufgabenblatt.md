@@ -55,31 +55,30 @@ $$\tau = \frac{0 - y_k}{y_{k+1} - y_k} \in [0, 1] \implies t^* = t_k + \tau \cdo
 
 ### Aufgabenstellung (auf Basis von `Vorlage/KinematikEuler.sln`):
 **Vorbereitung – Starter-Kit untersuchen (`Vorlage/KinematikEuler.sln`):**
-- Öffnen Sie die Solution `Vorlage/KinematikEuler.sln` und machen Sie sich mit der Struktur aus Hauptprogramm (`Program.cs`), Zustands-Modell (`Models/KinematicState.cs`), Solver (`Solvers/EulerIntegrator.cs`) und Testprojekt (`KinematikEuler.Tests/KinematikEulerTests.cs`) vertraut.
+- Öffnen Sie die Solution `Vorlage/KinematikEuler.sln` und machen Sie sich mit der Struktur aus Hauptprogramm (`Program.cs`), unveränderlichem Zustands-Modell (`Models/KinematicState.cs` als `readonly record struct`), Solver (`Solvers/EulerIntegrator.cs`) und Testprojekt (`KinematikEuler.Tests/KinematikEulerTests.cs`) vertraut.
 
-1. **Aufgabe 1.1 – Zustandsraum-Inspektion (`Models/KinematicState.cs`):**
-   - Öffnen Sie `Vorlage/KinematikEuler.sln` und betrachten Sie das unveränderliche Zustands-Struct in `Models/KinematicState.cs`:
-   ```csharp
-   public readonly record struct KinematicState(double Time, double X, double Y, double Vx, double Vy);
-   ```
-2. **Aufgabe 1.2 – Expliziter Euler (`StepEuler`) & Boden-Interpolation (`InterpolateGroundImpact`):**
-   - Vervollständigen Sie in `Solvers/EulerIntegrator.cs` die Methode `StepEuler(...)` für die DGL 2. Ordnung ($\dot{x} = v_x, \; \dot{y} = v_y, \; \dot{v}_x = a_x, \; \dot{v}_y = a_y$) sowie `InterpolateGroundImpact(previous, current)` mittels linearer Nullstellen-Interpolation $\tau = \frac{0 - y_k}{y_{k+1} - y_k}$.
-   - Führen Sie `dotnet test` aus und verifizieren Sie, dass die Unit-Tests für `StepEuler` und `InterpolateGroundImpact` grün durchlaufen!
+1. **Aufgabe 1.1 – Expliziter Euler-Schritt (`Solvers/EulerIntegrator.cs`):**
+   - Prüfen und vervollständigen Sie in `Solvers/EulerIntegrator.cs` die Methode `StepEuler(...)` für das DGL-System 1. Ordnung ($\dot{x} = v_x, \; \dot{y} = v_y, \; \dot{v}_x = a_x, \; \dot{v}_y = a_y$).
+   - **Selbsttest-Tipp (Golden Reference Numbers):** Startet ein Körper bei $t_0 = 0\,\text{s}, \; x_0 = 0\,\text{m}, \; y_0 = 100\,\text{m}$ mit $v_{x,0} = 20\,\text{m/s}, \; v_{y,0} = 0\,\text{m/s}$ unter reiner Schwerkraft $(a_x = 0, \; a_y = -9{,}81\,\text{m/s}^2)$, liefert genau ein Schritt `StepEuler` mit $\Delta t = 0{,}1\,\text{s}$ exakt: $t_1 = 0{,}1\,\text{s}$, $x_1 = 2{,}00\,\text{m}$, $y_1 = 100{,}00\,\text{m}$ (da $v_{y,0} = 0$), $v_{x,1} = 20{,}00\,\text{m/s}$ und $v_{y,1} = -0{,}981\,\text{m/s}$.
+2. **Aufgabe 1.2 – Lineare Bodenkontakt-Interpolation (`InterpolateGroundImpact`):**
+   - Vervollständigen Sie in `Solvers/EulerIntegrator.cs` die Methode `InterpolateGroundImpact(previous, current)` mittels linearer Nullstellen-Interpolation $\tau = \frac{0 - y_k}{y_{k+1} - y_k} \in [0, 1]$, sodass am Boden exakt $y^* = 0\,\text{m}$ ohne „Tunneling“ erreicht wird.
+   - **Selbsttest-Tipp (Golden Reference Numbers):** Für `previous` $(t_k = 1{,}0\,\text{s}, \; x_k = 10{,}0\,\text{m}, \; y_k = +2{,}0\,\text{m})$ und `current` $(t_{k+1} = 1{,}1\,\text{s}, \; x_{k+1} = 11{,}0\,\text{m}, \; y_{k+1} = -1{,}0\,\text{m})$ ergibt sich exakt $\tau = \frac{2}{3} \approx 0{,}6667$, Auftreffzeit $t^* = 1{,}0667\,\text{s}$, Auftreffort $x^* = 10{,}6667\,\text{m}$ und $y^* = 0{,}0\,\text{m}$.
 3. **Aufgabe 1.3 – Prädiktor-Korrektor nach Heun (`StepHeun`) & Konvergenzvergleich im Vakuum:**
-   - Implementieren Sie in `Solvers/EulerIntegrator.cs` zusätzlich die Methode `StepHeun(...)` (Abschnitt 2.3) und vergleichen Sie in `Program.RunStage1_BallisticTrajectory()` beide Verfahren für:
+   - Implementieren bzw. prüfen Sie in `Solvers/EulerIntegrator.cs` die Methode `StepHeun(...)` (Abschnitt 2.3) und vergleichen Sie in `Program.RunStage1_BallisticTrajectory()` beide Verfahren für:
      - Startposition: $x_0 = 0\,\text{m}, \; y_0 = 0\,\text{m}$, Abgangsgeschwindigkeit: $v_0 = 150\,\text{m/s}$, Winkel: $\alpha = 45^\circ$ ($g = 9{,}81\,\text{m/s}^2$)
-     - Schrittweiten: $\Delta t = 0{,}1\,\text{s}$ und $\Delta t = 0{,}01\,\text{s}$
-   - Vergleichen Sie Wurfweite $x_{\text{impact}}$, Flugzeit $t_{\text{impact}}$ und Scheitelhöhe $y_{\max}$ mit den analytischen Vakuumlösungen:
-     $$t_{\text{ana}} = \frac{2 v_0 \sin \alpha}{g} \approx 21{,}623\,\text{s}, \quad x_{\text{ana}} = \frac{v_0^2 \sin(2\alpha)}{g} \approx 2293{,}58\,\text{m}, \quad y_{\max,\text{ana}} = \frac{(v_0 \sin\alpha)^2}{2g} \approx 573{,}39\,\text{m}$$
-4. **Aufgabe 1.4 – Erwartete Konsolenausgabe & Physikalische Erkenntnis:**
+     - Schrittweiten: $\Delta t = 0{,}10\,\text{s}$ und $\Delta t = 0{,}01\,\text{s}$
+   - Vergleichen Sie Wurfweite $x_{\text{impact}}$, Flugzeit $t_{\text{impact}}$ und Scheitelhöhe $y_{\max}$ mit den analytischen Referenzwerten:
+     $$t_{\text{ana}} = \frac{2 v_0 \sin \alpha}{g} \approx 21{,}624\,\text{s}, \quad x_{\text{ana}} = \frac{v_0^2 \sin(2\alpha)}{g} \approx 2293{,}58\,\text{m}, \quad y_{\max,\text{ana}} = \frac{(v_0 \sin\alpha)^2}{2g} \approx 573{,}39\,\text{m}$$
+4. **Aufgabe 1.4 – Automatisierte Unit-Test-Verifikation (`KinematikEuler.Tests`) & Fehleranalyse:**
+   - Führen Sie im Terminal `dotnet test` für das Testprojekt `KinematikEuler.Tests` (`KinematikEulerTests.cs`) aus und stellen Sie sicher, dass alle 4 Unit-Tests (Freifall-Abgleich, Boden-Interpolation, $\mathcal{O}(\Delta t)$-Konvergenz und Heun-Vakuumwurf) grün durchlaufen.
+   - Starten Sie anschließend Modus `1` des Konsolenprogramms und prüfen Sie Ihre Ausgabe gegen die Referenzwerte:
    ```text
-   === STUFE-1-ERGEBNISSE: SCHIEFER WURF IM VAKUUM ===
-   Analytisch:  t = 21.623 s | x_impact = 2293.58 m | y_max = 573.39 m
-   Euler dt=0.10s: t = 21.673 s (+0.0500 s) | x_impact = 2298.89 m (+5.310 m) | y_max = 578.69 m (+5.297 m)
-   Euler dt=0.01s: t = 21.628 s (+0.0050 s) | x_impact = 2294.11 m (+0.530 m) | y_max = 573.92 m (+0.530 m)
-   Heun  dt=0.10s: t = 21.623 s (+0.0000 s) | x_impact = 2293.58 m (+0.000 m) | y_max = 573.39 m (+0.000 m)
+   Analytisch: t_Flug = 21.624 s | x_Impact = 2293.58 m | y_Max = 573.39 m
+   Euler (dt = 0.10s): t_Impact = 21.724 s (+0.0999 s) | x_Impact = 2304.18 m (+10.598 m) | y_Max = 578.70 m (+5.308 m)
+   Euler (dt = 0.01s): t_Impact = 21.634 s (+0.0100 s) | x_Impact = 2294.64 m (+1.061 m)  | y_Max = 573.92 m (+0.530 m)
+   Heun  (dt = 0.10s): t_Impact = 21.624 s (-0.0001 s) | x_Impact = 2293.57 m (-0.009 m)  | y_Max = 573.38 m (-0.011 m)
    ```
-   *(Erkenntnisfrage für das Plenum: Obwohl $\dot{x} = v_{x0} = \text{const}$ in $x$-Richtung fehlerfrei integriert wird, überschätzt der explizite Euler in jedem Schritt die Höhe $y$, weil er die Anfangsgeschwindigkeit $v_{y,k}$ statt des Intervallmittels nutzt! Dadurch landet das Projektil exakt um $\Delta t / 2$ zu spät und fliegt um $\Delta x = v_{x0} \cdot \frac{\Delta t}{2} \approx +5{,}31\,\text{m}$ zu weit. Warum liefert Heun (RK2) im Vakuum selbst bei $\Delta t = 0{,}1\,\text{s}$ exakt $0{,}000\,\text{m}$ Fehler?)*
+   *(Erkenntnisfrage für das Plenum: Obwohl $\dot{x} = v_{x0} = \text{const}$ in $x$-Richtung fehlerfrei integriert wird, überschätzt der explizite Euler die Scheitelhöhe um $\frac{1}{2} v_{y0} \Delta t \approx +5{,}31\,\text{m}$, weil er die Anfangsgeschwindigkeit $v_{y,k}$ statt des Intervallmittels nutzt! Dadurch landet das Projektil um $\Delta t$ zu spät und fliegt um $\Delta x \approx v_{x0} \cdot \Delta t \approx +10{,}60\,\text{m}$ zu weit. Warum integriert Heun (RK2) Parabeln auf den Gitterpunkten exakt?)*
 
 ---
 

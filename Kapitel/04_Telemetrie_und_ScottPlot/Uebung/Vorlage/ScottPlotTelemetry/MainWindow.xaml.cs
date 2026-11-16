@@ -89,10 +89,12 @@ public partial class MainWindow : Window
         _buffer.Add(signal);
         _welford.Add(signal);
 
-        // TODO: [Stufe 1 - Aufgabe 1.2 & 1.3]
-        // - Nutzen Sie _buffer.CopyTo(_windowCopy) auf einem vorallokierten Array,
-        //   um Min/Max/Mittelwert des gleitenden 10s-Fensters in TxtFooter anzuzeigen.
-        // - Fügen Sie einen zweiten DataStreamer für das ungestörte Referenzsignal hinzu.
+        // TODO [Stufe 1 - Aufgabe 1.2 & 1.3]:
+        // - Aufgabe 1.2: Rufen Sie WelfordStatistics.ComputeWindowStats(_buffer, _windowCopy)
+        //   mit einem einmalig vorallokierten Feld double[] _windowCopy = new double[BufferCapacity]
+        //   auf und zeigen Sie Fenster-Mean, Min und Max der letzten 10 s in TxtFooter an.
+        // - Aufgabe 1.3: Fügen Sie einen zweiten DataStreamer (_referenceStreamer) für das
+        //   ungestörte Referenzsignal y_ref(t) = 100 + 15 * sin(2 * pi * 0.5 * t) hinzu.
         // ScottPlot Streamer befüllen
         _streamer.Add(signal);
 
@@ -104,10 +106,11 @@ public partial class MainWindow : Window
             _upperLine.Y = upper;
             _lowerLine.Y = lower;
 
-            // TODO: [Stufe 1 - Aufgabe 1.1 (GC-Leak-Fix)]
-            // Vermeiden Sie 'new SolidColorBrush(...)' in jedem 50-Hz-Tick!
-            // Verwenden Sie stattdessen statisch vorallokierte, eingefrorene (Freeze()) Brushes
-            // und ergänzen Sie einen Anomalie-Zähler + Haltezeit (Entprellung).
+            // TODO [Stufe 1 - Aufgabe 1.1 & 1.3]:
+            // - Aufgabe 1.1 (GC-Leak-Fix): Vermeiden Sie 'new SolidColorBrush(...)' in jedem 50-Hz-Tick
+            //   (und in BtnReset_Click)! Nutzen Sie statisch vorallokierte, eingefrorene (Freeze()) Brushes.
+            // - Aufgabe 1.3 (Entprellung): Ergänzen Sie einen Gesamtzähler _anomalyCount sowie eine
+            //   Haltezeit von 25 Ticks (0.5 s), damit kurze Ausreißer im Badge sichtbar bleiben.
             // Anomalie-Prüfung
             bool isAnomaly = _welford.IsAnomaly(signal, 3.0);
             if (isAnomaly)

@@ -7,6 +7,6 @@ Heute steigen wir in die High-Performance-Pixelgrafik unter WPF ein. Wir analysi
 
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T01:** Zwei ausgewählte Teams (1x Track A, 1x Track B) führen ihre Ballistiklösungen der Vorwoche live am Beamer vor (inkl. Code-Defense und Parameter-Stresstest).
-* **Stufe 1 (Basisaufgabe):** Interaktive WPF-Heatmap mit Direct-Pointer-Transfer und stabiler 2D-Diffusionsschleife.
+* **Stufe 1 (Basisaufgabe 1.1 bis 1.4):** Von-Neumann-Stabilitätstest, vorberechnete 256-Stufen-Farbtabelle, interaktives Maus-Zeichnen von Wärmequellen und adiabaten Isolatorwänden sowie automatisierte Unit-Test-Prüfung.
 * 🏭 **Stufe 2 – Track A (Industrie):** *CPU-Kühlkörper-Optimierung* – Mehrzonengitter aus Silizium und Kupfer mit Konvektionsrand und Hotspot-Thermometrie.
 * 🎮 **Stufe 2 – Track B (Game):** *„Falling Sand & Doom Fire / Lava“* – Interaktive zelluläre Pixel-Physik mit aufsteigender Glut und Maus-Zeichenfunktion.

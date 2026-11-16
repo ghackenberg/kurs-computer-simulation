@@ -10,7 +10,7 @@
 
   <rect width="260" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
   <text x="130" y="24" class="hdr">Stabilitäts-Ampel für s</text>
-  <text x="130" y="41" class="sub">Eigengewicht w_0 = 1 − 4s</text>
+  <text x="130" y="41" class="sub">Eigengewicht (1 − 4s)</text>
 
   <!-- Green: Stable -->
   <g transform="translate(15, 56)">

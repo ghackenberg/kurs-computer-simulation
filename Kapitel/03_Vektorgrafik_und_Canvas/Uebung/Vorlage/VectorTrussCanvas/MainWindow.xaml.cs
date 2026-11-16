@@ -126,13 +126,14 @@ public partial class MainWindow : Window
 
         // =====================================================================
         // TODO: [Stufe 1 - Basisaufgabe (Aufgabe 1.2 bis 1.4)]
-        // 1. Euklidische Stablänge berechnen (L = sqrt(dx^2 + dy^2)) und als
+        // 1. Euklidische Stablänge über _truss.GetBarLength(bar) berechnen und als
         //    TextBlock-Label mittig an jedem Stab anzeigen (Aufgabe 1.2).
         // 2. Vertikale DIN-406-Bemaßungskette (VectorArrow.AddVerticalDimensionLine)
         //    für die Gesamthöhe (yMax - yMin) links vom Tragwerk einzeichnen (Aufgabe 1.3).
         // 3. Bounding-Box-Jittering beim Ziehen beheben: _transform.Update(...)
-        //    oben in Redraw() nur aufrufen, wenn _draggedNode == null ist, und
-        //    Koordinaten in TrussCanvas_MouseMove auf Millimeter (:F3) runden (Aufgabe 1.4).
+        //    oben in Redraw() nur aufrufen, wenn _draggedNode == null ist,
+        //    Koordinaten in TrussCanvas_MouseMove auf Millimeter (:F3) runden und
+        //    alle Tests in VectorTrussCanvas.Tests per 'dotnet test' prüfen (Aufgabe 1.4).
         // =====================================================================
 
         // =====================================================================
@@ -243,7 +244,7 @@ public partial class MainWindow : Window
 
     private void CmbModelSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (CmbModelSelection == null) return;
+        if (!IsLoaded || CmbModelSelection == null || TxtInfo == null) return;
 
         _truss = CmbModelSelection.SelectedIndex == 1 
             ? TrussGeometry.CreateIndustrialPrattTruss() 

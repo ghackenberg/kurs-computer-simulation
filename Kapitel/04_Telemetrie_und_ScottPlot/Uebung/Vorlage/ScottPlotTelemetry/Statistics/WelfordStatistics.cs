@@ -1,3 +1,5 @@
+using ScottPlotTelemetry.Data;
+
 namespace ScottPlotTelemetry.Statistics;
 
 /// <summary>
@@ -77,24 +79,25 @@ public class WelfordStatistics
     }
 
     // =========================================================================
-    // TODO: [Stufe 1 - Basisaufgabe (Aufgabe 1.1 bis 1.3 in MainWindow.xaml.cs)]
-    // 1. GC-Leak-Fix: Ersetzen Sie die 'new SolidColorBrush(...)' Allokationen
-    //    in OnTelemetryTick durch statische, eingefrorene (Freeze()) Brushes.
-    // 2. Gleitende Fenster-Statistik: Lesen Sie _buffer via CopyTo in ein
-    //    vorallokiertes Array double[] _windowCopy aus (Min/Max/Mean der letzten 500 Samples).
-    // 3. Entprellter Anomalie-Zähler + 2. DataStreamer für das ungestörte Referenzsignal.
+    // TODO [Stufe 1 - Aufgabe 1.2]: Allokationsfreie gleitende Fenster-Statistik
+    // Ergänzen Sie hier die statische Hilfsmethode:
+    //   public static (double Mean, double Min, double Max) ComputeWindowStats(
+    //       CircularBuffer<double> buffer, double[] scratch)
+    // Kopieren Sie den Ringpuffer via buffer.CopyTo(scratch) in das vorallokierte
+    // Array scratch und bestimmen Sie in einer for-Schleife (bis buffer.Count)
+    // Mittelwert, Minimum und Maximum des Zeitfensters (bei Count == 0: (0, 0, 0)).
     // =========================================================================
 
     // =========================================================================
-    // TODO: [Stufe 2 Track A: Industrie - Antriebsprüfstand]
-    // - Mehrkanal-Tracking: Instanziieren Sie Tracker für Drehzahl n(t), Moment M(t), Schwingung a(t).
+    // TODO [Stufe 2 - Track A]: Industrie - Antriebsprüfstand (A.1 bis A.4)
+    // - Mehrkanal-Tracking: Instanziieren Sie Tracker für Drehzahl n(t), Moment M(t), Schwingung a_vib(t).
     // - Alarmierung: Detektieren Sie Kavitation/Schlupf bei > 3 konsekutiven Grenzwertverletzungen.
     // - ScottPlot 5 Phasenraum-Betriebskennfeld (M vs n), Schwingungs-Histogramm & MSAGL-Graph.
     // =========================================================================
 
     // =========================================================================
-    // TODO: [Stufe 2 Track B: Simulation Game - Retro Racing HUD]
-    // - Telemetrie für Geschwindigkeit v(t), Querbeschleunigung a_y(t) und Motordrehzahl RPM.
+    // TODO [Stufe 2 - Track B]: Simulation Game - Retro Racing HUD (B.1 bis B.4)
+    // - Telemetrie für Geschwindigkeit v(t), Querbeschleunigung a_y(t) und Motordrehzahl RPM(t).
     // - Kamm'scher Kreis (a_y vs a_x Scatter), Brems-Histogramm & MSAGL-Streckentopologie.
     // =========================================================================
 }

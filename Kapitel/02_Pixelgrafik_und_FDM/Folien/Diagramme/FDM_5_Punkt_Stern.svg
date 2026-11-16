@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 500" width="520" height="500">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 440" width="460" height="440">
   <defs>
     <style>
-      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 17px; font-weight: bold; fill: #004B96; text-anchor: middle; }
-      .cell-idx { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; fill: #334155; text-anchor: middle; }
-      .cell-lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #64748b; text-anchor: middle; }
-      .cell-val { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; text-anchor: middle; }
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #004B96; text-anchor: middle; }
+      .cell-idx { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; fill: #334155; text-anchor: middle; }
+      .cell-lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; fill: #64748b; text-anchor: middle; }
+      .cell-val { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
       .formula { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 13px; font-weight: bold; fill: #0f172a; text-anchor: middle; }
     </style>
 
@@ -13,73 +13,73 @@
     </filter>
   </defs>
 
-  <rect width="520" height="500" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="260" y="30" class="title">2D-Kontrollvolumen: Der 5-Punkt-Differenzenstern</text>
+  <rect width="460" height="440" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="230" y="27" class="title">2D-Kontrollvolumen: Der 5-Punkt-Stern</text>
 
-  <!-- Background 3x3 subtle pixel grid -->
-  <g transform="translate(85, 48)">
+  <!-- 3x3 pixel grid (total width 390, height 274) -->
+  <g transform="translate(35, 38)">
     <!-- Corner diagonal cells (inactive in 5-point stencil) -->
-    <rect x="0" y="0" width="110" height="95" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
-    <text x="55" y="52" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
+    <rect x="0" y="0" width="124" height="84" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
+    <text x="62" y="46" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
 
-    <rect x="240" y="0" width="110" height="95" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
-    <text x="295" y="52" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
+    <rect x="266" y="0" width="124" height="84" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
+    <text x="328" y="46" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
 
-    <rect x="0" y="215" width="110" height="95" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
-    <text x="55" y="267" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
+    <rect x="0" y="190" width="124" height="84" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
+    <text x="62" y="236" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
 
-    <rect x="240" y="215" width="110" height="95" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
-    <text x="295" y="267" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
+    <rect x="266" y="190" width="124" height="84" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
+    <text x="328" y="236" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
 
     <!-- TOP CELL: (i, j-1) -->
-    <rect x="120" y="0" width="110" height="95" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
-    <text x="175" y="24" class="cell-idx">T[i, j−1]</text>
-    <text x="175" y="44" class="cell-lbl">Oben (Norden)</text>
-    <text x="175" y="72" class="cell-val" style="fill: #1d4ed8;">z.B. 80 °C</text>
+    <rect x="133" y="0" width="124" height="84" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
+    <text x="195" y="22" class="cell-idx">T[i, j−1]</text>
+    <text x="195" y="44" class="cell-lbl">Oben (Norden)</text>
+    <text x="195" y="68" class="cell-val" style="fill: #1d4ed8;">z.B. 80 °C</text>
 
     <!-- LEFT CELL: (i-1, j) -->
-    <rect x="0" y="107" width="110" height="95" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
-    <text x="55" y="131" class="cell-idx">T[i−1, j]</text>
-    <text x="55" y="151" class="cell-lbl">Links (Westen)</text>
-    <text x="55" y="179" class="cell-val" style="fill: #1d4ed8;">z.B. 100 °C</text>
+    <rect x="0" y="95" width="124" height="84" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
+    <text x="62" y="117" class="cell-idx">T[i−1, j]</text>
+    <text x="62" y="139" class="cell-lbl">Links (Westen)</text>
+    <text x="62" y="163" class="cell-val" style="fill: #1d4ed8;">z.B. 100 °C</text>
 
     <!-- CENTER CELL: (i, j) -->
-    <rect x="120" y="107" width="110" height="95" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="3" filter="url(#sh)" />
-    <text x="175" y="131" class="cell-idx" style="fill: #92400e; font-size: 14px;">T[i, j]</text>
-    <text x="175" y="151" class="cell-lbl" style="fill: #b45309; font-weight: bold;">Zentrum (−4×)</text>
-    <text x="175" y="179" class="cell-val" style="fill: #b45309;">aktuell 50 °C</text>
+    <rect x="133" y="95" width="124" height="84" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="3" filter="url(#sh)" />
+    <text x="195" y="117" class="cell-idx" style="fill: #92400e; font-size: 14px;">T[i, j]</text>
+    <text x="195" y="139" class="cell-lbl" style="fill: #b45309; font-weight: bold;">Zentrum (−4×)</text>
+    <text x="195" y="163" class="cell-val" style="fill: #b45309;">aktuell 50 °C</text>
 
     <!-- RIGHT CELL: (i+1, j) -->
-    <rect x="240" y="107" width="110" height="95" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
-    <text x="295" y="131" class="cell-idx">T[i+1, j]</text>
-    <text x="295" y="151" class="cell-lbl">Rechts (Osten)</text>
-    <text x="295" y="179" class="cell-val" style="fill: #1d4ed8;">z.B. 60 °C</text>
+    <rect x="266" y="95" width="124" height="84" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
+    <text x="328" y="117" class="cell-idx">T[i+1, j]</text>
+    <text x="328" y="139" class="cell-lbl">Rechts (Osten)</text>
+    <text x="328" y="163" class="cell-val" style="fill: #1d4ed8;">z.B. 60 °C</text>
 
     <!-- BOTTOM CELL: (i, j+1) -->
-    <rect x="120" y="215" width="110" height="95" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
-    <text x="175" y="239" class="cell-idx">T[i, j+1]</text>
-    <text x="175" y="259" class="cell-lbl">Unten (Süden)</text>
-    <text x="175" y="287" class="cell-val" style="fill: #1d4ed8;">z.B. 40 °C</text>
+    <rect x="133" y="190" width="124" height="84" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
+    <text x="195" y="212" class="cell-idx">T[i, j+1]</text>
+    <text x="195" y="234" class="cell-lbl">Unten (Süden)</text>
+    <text x="195" y="258" class="cell-val" style="fill: #1d4ed8;">z.B. 40 °C</text>
 
     <!-- 4 Coupling Arrows across the 4 cell edges -->
-    <line x1="175" y1="95" x2="175" y2="107" stroke="#0284c7" stroke-width="3" />
-    <line x1="175" y1="202" x2="175" y2="215" stroke="#0284c7" stroke-width="3" />
-    <line x1="110" y1="154" x2="120" y2="154" stroke="#0284c7" stroke-width="3" />
-    <line x1="230" y1="154" x2="240" y2="154" stroke="#0284c7" stroke-width="3" />
+    <line x1="195" y1="84" x2="195" y2="95" stroke="#0284c7" stroke-width="3" />
+    <line x1="195" y1="179" x2="195" y2="190" stroke="#0284c7" stroke-width="3" />
+    <line x1="124" y1="137" x2="133" y2="137" stroke="#0284c7" stroke-width="3" />
+    <line x1="257" y1="137" x2="266" y2="137" stroke="#0284c7" stroke-width="3" />
   </g>
 
   <!-- Bottom Explanation Card -->
-  <g transform="translate(20, 372)" filter="url(#sh)">
-    <rect width="480" height="110" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-    <text x="240" y="25" class="formula" style="fill: #004B96; font-size: 12.5px;">
-      L_{i,j} = T_{Oben} + T_{Unten} + T_{Links} + T_{Rechts} − 4 · T_{Mitte}
+  <g transform="translate(15, 324)" filter="url(#sh)">
+    <rect width="430" height="102" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="215" y="23" class="formula" style="fill: #004B96; font-size: 13px;">
+      L_{i,j} = T[i+1,j] + T[i−1,j] + T[i,j+1] + T[i,j−1] − 4·T[i,j]
     </text>
-    <text x="240" y="49" class="cell-lbl" style="fill: #1e293b; font-size: 11.5px; font-weight: bold;">
-      Nachbar-Mittelwert T̄ = (80 + 40 + 100 + 60) / 4 = 70 °C
+    <text x="215" y="46" class="cell-lbl" style="fill: #1e293b; font-weight: bold;">
+      Nachbar-Mittelwert: (80 + 40 + 100 + 60) / 4 → 70 °C
     </text>
-    <rect x="14" y="62" width="452" height="36" rx="5" fill="#f0fdf4" stroke="#86efac" />
-    <text x="240" y="84" class="cell-lbl" style="fill: #166534; font-size: 11px; font-weight: bold;">
-      L_{i,j} = 4 · (T̄ − T_{Mitte}) = 4 · (70 − 50) = +80 K  ➔  Erwärmung Richtung 70 °C!
+    <rect x="14" y="58" width="402" height="34" rx="5" fill="#f0fdf4" stroke="#86efac" />
+    <text x="215" y="80" class="cell-lbl" style="fill: #166534; font-weight: bold;">
+      L_{i,j} = 4 · (70 − 50) = +80 K  ➔  Erwärmung Richtung 70 °C!
     </text>
   </g>
 </svg>

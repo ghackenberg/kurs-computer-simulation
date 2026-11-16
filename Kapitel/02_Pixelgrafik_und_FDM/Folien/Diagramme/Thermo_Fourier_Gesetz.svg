@@ -42,8 +42,8 @@
     <text x="52" y="52" class="label-bold" style="text-anchor: end;">T(x)</text>
 
     <!-- Dashed vertical grid lines for x_i (130) and x_{i+1} (380) -->
-    <line x1="130" y1="85" x2="130" y2="282" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4" />
-    <line x1="380" y1="185" x2="380" y2="282" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4" />
+    <line x1="130" y1="85" x2="130" y2="244" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4" />
+    <line x1="380" y1="185" x2="380" y2="244" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4" />
 
     <!-- Temperature slope line -->
     <line x1="95" y1="71" x2="415" y2="199" stroke="#dc2626" stroke-width="3.5" />
@@ -55,14 +55,14 @@
     <!-- Labels on Slope Triangle -->
     <rect x="66" y="122" width="144" height="26" rx="4" fill="#e0f2fe" stroke="#38bdf8" />
     <text x="138" y="139" class="label-bold" style="fill: #0369a1; text-anchor: middle;">ΔT = T_{i+1} − T_i &lt; 0</text>
-    <text x="255" y="204" class="label-bold" style="fill: #0369a1; text-anchor: middle;">Abstand Δx = h</text>
+    <text x="255" y="204" class="label-bold" style="fill: #0369a1; text-anchor: middle;">Abstand Δx</text>
 
     <!-- Points T_i and T_{i+1} -->
     <circle cx="130" cy="85" r="6" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
     <text x="144" y="82" class="label-bold" style="fill: #dc2626;">T_i = 80 °C (heiß)</text>
 
     <circle cx="380" cy="185" r="6" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
-    <text x="386" y="172" class="label-bold" style="fill: #2563eb; font-size: 12px;">T_{i+1} = 30 °C (kalt)</text>
+    <text x="420" y="162" class="label-bold" style="fill: #2563eb; font-size: 12px; text-anchor: middle;">T_{i+1} = 30 °C (kalt)</text>
 
     <!-- 1D Rod / Two Neighboring Pixels below the chart (NON-OVERLAPPING) -->
     <text x="20" y="268" class="label-bold" style="fill: #475569;">Zugehörige Gitterzellen (Pixel i und Pixel i+1):</text>

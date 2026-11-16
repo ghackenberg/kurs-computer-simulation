@@ -4,7 +4,7 @@ Dieses Verzeichnis bündelt alle Unterlagen für **Kapitel 04 (`04_Telemetrie_un
 
 - **Didaktisches Konzept & Lernziele:** [`Konzept.md`](./Konzept.md)
 - **Vorlesungsfolien (MARP):** [`Folien/Folien.md`](./Folien/Folien.md)
-- **Übungsblatt & Programmieraufgabe:** [`Uebung/Aufgabenblatt.md`](./Uebung/Aufgabenblatt.md) (C#-Vorlage: [`Uebung/Vorlage/ScottPlotTelemetry.sln`](./Uebung/Vorlage/ScottPlotTelemetry.sln))
+- **Übungsblatt & Programmieraufgabe:** [`Uebung/Aufgabenblatt.md`](./Uebung/Aufgabenblatt.md) (Stufe 1 `1.1`–`1.4` + Stufe 2 Track A/B, C#-Vorlage: [`Uebung/Vorlage/ScottPlotTelemetry.sln`](./Uebung/Vorlage/ScottPlotTelemetry.sln))
 - **Moodle-Abschnitt (Text & Banner):** [`Moodle/Text.md`](./Moodle/Text.md)
 
 ---
