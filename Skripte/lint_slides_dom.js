@@ -100,6 +100,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
 
   const deckDir = path.dirname(markdownPath);
   const deckName = path.basename(deckDir);
+  const isAppendix = /^Folien_Anhang_.*\.md$/i.test(path.basename(markdownPath));
   // Compile HTML directly in deck directory so that relative paths (./Diagramme/, etc.) resolve properly
   const tempHtml = path.join(deckDir, '.tmp_lint.html');
 
@@ -448,11 +449,11 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const minFillRatio = options.minFillRatio !== undefined ? options.minFillRatio : 0.80;
     const textColRatio = (s.minTextColHeight !== null && s.minTextColHeight !== undefined) ? (s.minTextColHeight / availableHeight) : 1;
     const hasSparseTextCol = !s.isOpener && textColRatio < 0.45;
-    const hasUnderfill = !s.isOpener && minFillRatio > 0 && (fillRatio < minFillRatio || hasSparseTextCol);
+    const hasUnderfill = !isAppendix && !s.isOpener && minFillRatio > 0 && (fillRatio < minFillRatio || hasSparseTextCol);
 
     const gapTolerance = options.gapTolerance !== undefined ? options.gapTolerance : 1;
     const gapIssues = (s.elementGaps || []).filter(g => Math.abs(g.gap - (g.expected || 16)) > gapTolerance);
-    const hasGapError = gapIssues.length > 0;
+    const hasGapError = !isAppendix && gapIssues.length > 0;
     const colorIssues = s.colorIssues || [];
     const hasColorError = colorIssues.length > 0;
     for (const bgErr of fullBleedBgIssues) {
@@ -487,8 +488,8 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     });
   }
 
-  // 3. Schema- und BildprÃ¼fung fÃ¼r Kapitel- und AbschnittsÃ¼bersichten
-  if (!options.skipSchema) {
+  // 3. Schema- und Bildprüfung für Kapitel- und Abschnittsübersichten (nur Hauptfoliensatz, nicht für Anhänge)
+  if (!options.skipSchema && !isAppendix) {
     const sectionLint = lintSectionDeck(markdownPath);
     if (sectionLint && sectionLint.issues && sectionLint.issues.length > 0) {
       for (const iss of sectionLint.issues) {
@@ -567,14 +568,24 @@ async function main() {
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
 
+  const collectChapterDecks = (chapterDir) => {
+    const folienDir = path.join(chapterDir, 'Folien');
+    if (!fs.existsSync(folienDir)) return;
+    const mainDeck = path.join(folienDir, 'Folien.md');
+    if (fs.existsSync(mainDeck)) decks.push(mainDeck);
+    const appendices = fs.readdirSync(folienDir)
+      .filter(f => /^Folien_Anhang_.*\.md$/i.test(f))
+      .sort();
+    for (const app of appendices) {
+      decks.push(path.join(folienDir, app));
+    }
+  };
+
   const decks = [];
   if (target === 'all') {
     const kapitelDir = path.resolve('Kapitel');
     const entries = fs.readdirSync(kapitelDir).sort();
-    entries.forEach(e => {
-      const p = path.join(kapitelDir, e, 'Folien', 'Folien.md');
-      if (fs.existsSync(p)) decks.push(p);
-    });
+    entries.forEach(e => collectChapterDecks(path.join(kapitelDir, e)));
   } else if (fs.existsSync(target)) {
     decks.push(path.resolve(target));
   } else {
@@ -582,7 +593,7 @@ async function main() {
     const kapitelDir = path.resolve('Kapitel');
     const match = fs.readdirSync(kapitelDir).find(d => d.startsWith(target));
     if (match) {
-      decks.push(path.join(kapitelDir, match, 'Folien', 'Folien.md'));
+      collectChapterDecks(path.join(kapitelDir, match));
     } else {
       console.error(`Target not found: ${target}`);
       process.exit(1);
@@ -600,7 +611,9 @@ async function main() {
 
   for (const deck of decks) {
     const dDir = path.dirname(deck);
-    const deckName = path.basename(dDir) === 'Folien' ? path.basename(path.dirname(dDir)) : path.basename(dDir);
+    const baseChapter = path.basename(dDir) === 'Folien' ? path.basename(path.dirname(dDir)) : path.basename(dDir);
+    const deckBase = path.basename(deck);
+    const deckName = /^Folien_Anhang_.*\.md$/i.test(deckBase) ? `${baseChapter} (${deckBase})` : baseChapter;
     process.stdout.write(`Inspecting ${deckName} ... `);
     const res = await lintSlideDeck(deck, browser, { minFontSize, minHeaderMargin, minFooterMargin, skipSchema, checkImages, minImageWidthRatio, minFillRatio });
     allResults.push(res);

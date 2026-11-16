@@ -178,7 +178,7 @@ Dieser Abschnitt umfasst die vier übergeordneten Kompetenzen des Kurses:
 
 Umsetzung von Modell und Numerik in wartbare Echtzeitanwendungen:
 
-- **Entkoppelte Architektur:** Trennung von testbarem Rechenkern (`ISimulator`) und WPF-UI (`MainWindow`)
+- **Entkoppelte Architektur:** Trennung von testbarem Rechenkern (`Simulationsmodell`) und WPF-UI (`MainWindow`)
 - **Allokationsfreie Grafik:** `WriteableBitmap`, `Canvas`, `ScottPlot 5` und `SharpGL` (3D)
 - **Multi-Core-Skalierung:** Parallelisierung mit `Parallel.For`, `IProgress<T>` & `CancellationToken`
 
@@ -193,7 +193,7 @@ Umsetzung von Modell und Numerik in wartbare Echtzeitanwendungen:
 Überlegen Sie kurz für sich (oder im kurzen Austausch mit Ihrem Nachbarn), welche Schwerpunkte Sie setzen möchten:
 
 1. **Stärke:** Welcher der vier Lernbereiche (*Modellierung*, *Numerik*, *C#-Architektur*, *Visualisierung*) liegt Ihnen heute schon am meisten?
-2. **Wachstumsfeld:** In welchem Bereich möchten Sie bis Termin 11 den größten Sprung machen?
+2. **Wachstumsfeld:** In welchem Bereich möchten Sie bis Termin 10 den größten Sprung machen?
 3. **Anwendung:** Welches System aus Ihrer Praxis oder aus dem Alltag würden Sie gern als interaktives Modell umsetzen?
 4. **Qualitätsmaßstab:** Woran erkennen Sie selbst, ob eine Simulation *physikalisch stimmt* und nicht nur „gut aussieht“?
 
@@ -208,7 +208,7 @@ Umsetzung von Modell und Numerik in wartbare Echtzeitanwendungen:
 Dieser Abschnitt gibt den Überblick über die 10 Termine des Semesters:
 
 - **Teil 1 (T01–T06):** Kinematik, 2D-/3D-Visualisierung & Multithreading
-- **Teil 2 (T07–T11):** Statische, kontinuierliche, diskrete & hybride Modelle
+- **Teil 2 (T07–T10):** Statische, kontinuierliche, diskrete & hybride Modelle (inkl. Epilog)
 
 ---
 
@@ -220,7 +220,7 @@ Die ersten sechs Termine bauen Ihren C#- und Visualisierungs-Werkzeugkasten Schr
 <div class="two">
 
 #### Einführung & 2D-Grafik
-- **T01:** [Kinematik & Euler-Integration](../../01_Kinematik_und_Euler/Folien/) – *Grundgerüst, Zeitschritte & erstes WPF-Fenster.*
+- **T01:** [Kinematik & Euler-Integration](../../01_Kinematik_und_Euler/Folien/) – *Grundgerüst, Zeitschritte, Euler/Heun-Integration & Unit-Tests (Konsole).*
 - **T02:** [2D-Pixelgrafik & FDM](../../02_Pixelgrafik_und_FDM/Folien/) – *Wärmeleitung & Felder allokationsfrei im `WriteableBitmap`.*
 - **T03:** [2D-Vektorgrafik & Canvas](../../03_Vektorgrafik_und_Canvas/Folien/) – *Geometrie, Kamera-Mapping & Quiz 1.*
 
@@ -241,15 +241,16 @@ Die ersten sechs Termine bauen Ihren C#- und Visualisierungs-Werkzeugkasten Schr
 
 ![bg right](./Illustrationen/Kursinhalte.png)
 
-### Kursinhalte (2/2): Simulationsmodelle & Synthese (T07–T11)
+### Kursinhalte (2/2): Simulationsmodelle & Synthese (T07–T10)
 
 Aufbauend auf den Werkzeugen aus T01–T06 modellieren wir vier Systemklassen:
 
 - **T07 – Statische Modelle:** [FEM & Cholesky-Zerlegung](../../07_Statik_FEM_Cholesky/Folien/) *(Gleichgewichtsprobleme)*
 - **T08 – Kontinuierliche Dynamik:** [DGL-Systeme & S-Functions](../../08_DGL_und_SFunctions/Folien/) *(+ Quiz 3)*
 - **T09 – Diskrete Dynamik:** [Discrete-Event Simulation (DES)](../../09_Diskrete_Systeme_DES/Folien/) *(Ereigniswarteschlangen)*
-- **T10 – Hybride Dynamik:** [Zero-Crossing & Synthese](../../10_Hybride_Dynamik_Synthese/Folien/) *(+ Quiz 4)*
-- **T11 – Epilog:** [Synthese, Modellwahl & Rückblick](../../11_Epilog/Folien/)
+- **T10 – Hybride Dynamik & Epilog:** [Zero-Crossing](../../10_Hybride_Dynamik_Synthese/Folien/) & [Modellwahl-Leitfaden](../../11_Epilog/Folien/) *(+ Quiz 4)*
+
+> **Roter Faden:** Vom Gleichgewicht (T07) über Dynamik (T08–T09) zum hybriden Zwilling (T10).
 
 ---
 
@@ -269,7 +270,7 @@ Wie die beiden Semesterhälften nahtlos ineinandergreifen:
 </div>
 <div class="two">
 
-#### Phase 2: Modellierung (T07–T11)
+#### Phase 2: Modellierung (T07–T10)
 - Statik, ODEs, ereignisdiskrete & hybride Systeme
 - Kombination aller Verfahren im Digitalen Zwilling
 - Bewusste Wahl von Modellart und Löser
@@ -301,10 +302,10 @@ Dieser Block umfasst die Organisation und Beurteilung der Lehrveranstaltung:
 
 Die Lehrveranstaltung ist eine **Integrierte Lehrveranstaltung (ILV)** mit 3 ECTS (75 h Workload):
 
-- **Interaktive Vorlesung (110–125 min):** Grundlagen, Algorithmen, C#-Code & kurze Mitmach-Impulse.
+- **Interaktive Vorlesung (100–115 Min.):** Grundlagen, C#-Code & Impulse *(T01: 130 Min.; Quiz-Termine: 100 Min.)*.
 - **Hausübung Stufe 1 (~60 min):** Gemeinsames Fundament mit automatisierten Unit-Tests (`1.1`–`1.4`).
 - **Hausübung Stufe 2 (1 Woche):** Autonome Erweiterung im 2er-Team (`Track A` vs. `Track B`).
-- **Live-Showcase (20 min):** Beamer-Vorführung, Code-Inspection und Stresstest.
+- **Live-Showcase (15 Min.):** Beamer-Vorführung, Code-Inspection und Stresstest.
 
 </div>
 <div class="two">
@@ -334,7 +335,7 @@ Für die vertiefenden Laboraufgaben (Stufe 2) wählen Sie im 2er-Team frei zwisc
 #### Track B: Simulation Game
 - Interaktive Physik-Spiele, Arcade-Klassiker und prozedurale Echtzeit-Effekte.
 - Fokus auf Spielmechanik, Kollisionen und flüssige 60-FPS-Rückmeldung.
-- *Beispiele:* Retro Artillery Duel, Doom Fire & Lava, Space Radar, Claw Crane.
+- *Beispiele:* Retro Artillery Duel, Doom Fire & Lava, Poly Bridge, Claw Crane.
 
 </div>
 </div>
@@ -369,7 +370,7 @@ Transparente Beurteilung von Theorie, Code-Praxis und Live-Verteidigung:
 - **Säule 2a (40 %):** 10 wöchentliche Hausübungen à 4 % (Stufe 1 + gewählter Track A oder B).
 - **Säule 2b (20 %):** Rotierende Live-Vorführung, Code-Erklärung & Parameter-Stresstest am Beamer.
 
-> **Bestehenskriterium:** Gesamtnote $\ge 50\,\%$ **und** mind. $50\,\%$ in Säule 1 sowie mind. $50\,\%$ in Säule 2.
+> **Bestehenskriterium:** Gesamtnote $\ge 50\,\%$ **und** mind. $50\,\%$ in allen 3 Teilbereichen (1, 2a, 2b).
 
 </div>
 <div class="two">

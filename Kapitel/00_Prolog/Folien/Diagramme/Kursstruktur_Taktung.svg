@@ -25,13 +25,13 @@
   <text x="240" y="28" text-anchor="middle" class="hdr sem-neutral-text">Semester-Taktung (150 Min. ILV + 1 Woche Labor)</text>
 
   <rect x="0" y="54" width="480" height="66" rx="10" stroke-width="2" class="sem-warning"/>
-  <text x="20" y="80" class="lbl sem-warning-text">1. Live-Showcase &amp; Code-Defense (~20 Min.)</text>
+  <text x="20" y="80" class="lbl sem-warning-text">1. Live-Showcase &amp; Code-Defense (~15 Min.)</text>
   <text x="20" y="102" class="sub sem-neutral-text">2 Teams zeigen Hausübung der Vorwoche + Stresstest am Beamer</text>
 
   <line x1="240" y1="120" x2="240" y2="140" stroke-width="2.5" class="sem-muted-stroke"/>
 
   <rect x="0" y="140" width="480" height="66" rx="10" stroke-width="2" class="sem-primary"/>
-  <text x="20" y="166" class="lbl sem-primary-text">2. Interaktive Vorlesung (~110–125 Min.)</text>
+  <text x="20" y="166" class="lbl sem-primary-text">2. Interaktive Vorlesung (~100–115 Min. netto)</text>
   <text x="20" y="188" class="sub sem-neutral-text">Theorie, Kontrast-SVGs, C#-Code &amp; kurze Mitmach-Impulse (activity)</text>
 
   <line x1="240" y1="206" x2="240" y2="226" stroke-width="2.5" class="sem-muted-stroke"/>

@@ -7,11 +7,12 @@ paginate: true
 math: mathjax
 ---
 
+<!-- _class: title -->
 <!-- _paginate: false -->
 <!-- _header: "" -->
 <!-- _footer: "" -->
 
-![bg right](./Titelbild.jpg)
+![bg](./Titelbild.jpg)
 
 # Kapitel 2: 2D-Visualisierung (WPF/Pixel)
 
@@ -64,8 +65,10 @@ Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 
 In **Termin 01** genügten skalare Zustände ($x(t), T(t)$) – warum reicht das für reale Bauteile oft nicht?
 
 - **Rückblick T01:** Konzentrierte Parameter genügen nur, solange ein Bauteil überall denselben Zustand hat.
-- **Engpass heute:** Ein $500 \times 500$-Kühlkörper hat **$250\,000$ gekoppelte Temperaturen** $T(x, y, t)$ pro Schritt.
-- **Lösung (1. Grafik-Säule):** Hardwarenaher Zugriff auf 32-Bit-Pixelraster (`WriteableBitmap`) mit 60 FPS für 2D-FDM-Felder.
+- **Engpass heute:** Ein $500 \times 500$-Kühlkörper hat **$250\,000$ gekoppelte Temperaturen** $T(x, y, t)$ pro Zeitschritt.
+- **Lösung (1. Grafik-Säule):** Hardwarenaher Zugriff auf 32-Bit-Pixelraster (`WriteableBitmap`) mit $\ge 60\,\text{FPS}$ für 2D-FDM-Felder.
+
+> **Lernziel heute:** Verstehen, wie 2D-Felder im RAM liegen, über `uint*` allokationsfrei gezeichnet werden und warum $s \le 0{,}25$ gilt.
 
 </div>
 <div class="two">
@@ -77,7 +80,7 @@ In **Termin 01** genügten skalare Zustände ($x(t), T(t)$) – warum reicht das
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_1.jpg)
+![bg](./Illustrationen/Abschnitt_1.jpg)
 
 ## 2.1: Speicherlayout digitaler Rasterbilder
 
@@ -149,6 +152,11 @@ In modernen Grafiktreibern ist das **32-Bit BGRA-Format** der Standard für maxi
 ### Das Konzept des Strides
 
 <div class="columns">
+<div class="one">
+
+![](./Diagramme/Mini_Stride_Padding.svg)
+
+</div>
 <div class="three">
 
 Ein 2D-Rasterbild existiert im Arbeitsspeicher als **kontinuierlicher 1D-Byte-Block**:
@@ -158,11 +166,6 @@ Ein 2D-Rasterbild existiert im Arbeitsspeicher als **kontinuierlicher 1D-Byte-Bl
   $$\text{Stride} = \text{Breite} \times \text{BytesJePixel} + \text{Padding}$$
 - Da Speichercontroller am schnellsten auf Adressen zugreifen, die Vielfache von 4 oder 8 Bytes sind, wird die Zeilenlänge ggf. mit Füll-Bytes (*Padding*) aufgerundet.
 - Bei 32-Bit-Pixeln (`Bgra32`) ist $\text{Breite} \times 4$ stets ein Vielfaches von 4.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Stride_Padding.svg)
 
 </div>
 </div>
@@ -176,29 +179,29 @@ Ein 2D-Rasterbild existiert im Arbeitsspeicher als **kontinuierlicher 1D-Byte-Bl
 ### Mathematische Adressberechnung
 
 <div class="columns">
-<div class="three">
+<div class="two">
+
+![](./Diagramme/Mini_Cache_Lokalitaet.svg)
+
+</div>
+<div class="two">
 
 Für ein Pixel an Koordinate $(x, y)$ errechnet sich die absolute Position im Puffer:
 
 - **Relativer Byte-Offset:**
   $$\text{Offset}(x, y) = y \cdot \text{Stride} + x \cdot 4$$
-- **Absolute Speicheradresse (Pointer):**
+- **Absolute Speicheradresse:**
   $$p(x, y) = p_{\text{BackBuffer}} + y \cdot \text{Stride} + x \cdot 4$$
-- **Bedeutung für die Cache-Lokalität:**
-  - **Zeilenweise ($y$ außen, $x$ innen):** Sequentieller Zugriff ➔ Optimale Nutzung von CPU-L1/L2-Caches.
-  - **Spaltenweise ($x$ außen, $y$ innen):** Stride-Sprünge ➔ Massenhafte Cache-Misses!
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Cache_Lokalitaet.svg)
+- **Cache-Lokalität:**
+  - **Zeilenweise (`y` außen):** Sequentiell ➔ L1/L2-Cache-Hits.
+  - **Spaltenweise (`x` außen):** Stride-Sprünge ➔ Cache-Misses!
 
 </div>
 </div>
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_2.jpg)
+![bg](./Illustrationen/Abschnitt_2.jpg)
 
 ## 2.2: Pixel-Rendering in WPF mit WriteableBitmap
 
@@ -266,71 +269,81 @@ Kombiniert mit einer einzigen
 
 ---
 
-### Einbindung in XAML und Skalierungsmodus
+### Einbindung in XAML & Initialisierung im Code-Behind
 
-```xml
-<Window x:Class="SimulationsApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="2D-Simulation" Width="800" Height="650">
-    <Grid Background="#1e1e1e">
-        <!-- Image Control für die direkte Bitmap-Anzeige -->
-        <Image x:Name="SimulationImage"
-               Stretch="Uniform"
-               RenderOptions.BitmapScalingMode="NearestNeighbor" />
-    </Grid>
-</Window>
-```
-
-- **Wichtig:** `BitmapScalingMode="NearestNeighbor"` sorgt dafür, dass Pixel scharf abgegrenzt bleiben (keine bilineare Weichzeichnung / Anti-Aliasing). Dies ist ideal für diskrete Gitterdaten!
-
----
-
-### Initialisierung im C#-Code-Behind
+Die `WriteableBitmap` wird **einmalig beim Start** angelegt und an ein einziges `<Image>`-Element gebunden; im Render-Loop wird nur noch ihr Speicherpuffer aktualisiert:
 
 <div class="columns">
 <div class="one">
 
-**Felder und Konstruktor:**
-```csharp
-public partial class MainWindow : Window
-{
-    private WriteableBitmap _bitmap;
-    private const int Width = 512;
-    private const int Height = 512;
-
-    public MainWindow()
-    {
-        InitializeComponent();
-        InitBitmap();
-    }
-}
+**1. XAML (`NearestNeighbor`):**
+```xml
+<Image x:Name="SimulationImage"
+       Stretch="Uniform"
+       RenderOptions.BitmapScalingMode="NearestNeighbor" />
 ```
+- `NearestNeighbor` verhindert weichgezeichnete Pixelgrenzen bei diskreten Gittern.
+- `Stretch="Uniform"` skaliert das Gitter verzerrungsfrei in das Fenster.
 
 </div>
 <div class="one">
 
-**Bitmap-Setup (`InitBitmap`):**
+**2. C#-Setup (`InitBitmap`):**
 ```csharp
-private void InitBitmap()
-{
-    // WriteableBitmap (32-Bit BGRA, 96 DPI)
-    _bitmap = new WriteableBitmap(
-        Width, Height, 96.0, 96.0, 
-        PixelFormats.Bgra32, null
-    );
-
-    // XAML-Image-Control zuweisen
-    SimulationImage.Source = _bitmap;
-}
+_bitmap = new WriteableBitmap(
+    Width, Height, 96.0, 96.0,
+    PixelFormats.Bgra32, null);
+SimulationImage.Source = _bitmap;
 ```
+- `96.0, 96.0` setzt die Standard-WPF-DPI; `null` bedeutet keine Farbpalette nötig (`Bgra32`).
+- Einmalig beim Start allokieren – danach nur noch den `BackBuffer` überschreiben!
 
 </div>
 </div>
+
+> **Praxis-Tipp:** Für das periodische Neuzeichnen koppeln wir den Simulations- und Render-Loop per `CompositionTarget.Rendering` oder `DispatcherTimer` an den UI-Thread.
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_3.jpg)
+<!-- _class: activity -->
+
+### Mitmach-Impuls (3 Min.): Byte-Offset & Cache-Lokalität
+
+Gegeben sei eine `WriteableBitmap` im Format `Bgra32` mit folgenden Speicher-Parametern:
+
+| Breite $W$ | Höhe $H$ | Bytes pro Pixel | $\text{Stride}$ |
+| :--- | :--- | :--- | :--- |
+| $500\,\text{px}$ | $500\,\text{px}$ | $4\,\text{Bytes}$ (`B, G, R, A`) | $2000\,\text{Bytes}$ |
+
+Bearbeite die folgenden drei Aufgaben kurz zu zweit:
+
+1. **Adressrechnung:** An welchem relativen Byte-Offset liegt das Pixel $(x = 10, y = 2)$?
+2. **Schleifenreihenfolge:** Warum ist `for (y) for (x)` auf diesem Puffer um Größenordnungen schneller als `for (x) for (y)`?
+3. **Bitpacking:** Welcher `uint`-Hexwert (`0xAARRGGBB`) erzeugt voll deckendes Reinblau?
+
+> **Hinweis:** Nutzen Sie $\text{Offset}(x, y) = y \cdot \text{Stride} + x \cdot 4$ und denken Sie an die Little-Endian-Byte-Reihenfolge `[B, G, R, A]` im Arbeitsspeicher.
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Byte-Offset, Cache & Reinblau
+
+1. **Byte-Offset für $(10, 2)$:**
+   $$\text{Offset}(10, 2) = 2 \cdot 2000 + 10 \cdot 4 = 4000 + 40 = \mathbf{4040\,\text{Bytes}}$$
+2. **Schleifenreihenfolge (`for (y)` außen, `for (x)` innen):**
+   - **Zeilenweise:** Greift sequentiell auf benachbarte Bytes zu (**L1-Cache-Hit**, eine 64-Byte-Cacheline lädt 16 Pixel auf einmal voraus).
+   - **Spaltenweise:** Springt pro Schritt um $2000\,\text{Bytes}$ (**Cache-Miss** bei fast jedem Pixel).
+3. **Reinblau (`Bgra32`):**
+   - Im Speicher liegen die Bytes `[0xFF, 0x00, 0x00, 0xFF]` (`B=255, G=0, R=0, A=255`).
+   - Als 32-Bit-Little-Endian-`uint` (`0xAARRGGBB`) entspricht dies **`0xFF0000FF`**:
+     `row[x] = 0xFF0000FF;`
+
+> **Merksatz:** Zeilenweise Iteration (`y` außen, `x` innen) und `uint*`-Zugriff sind der Schlüssel zu $\ge 60\,\text{FPS}$.
+
+---
+
+![bg](./Illustrationen/Abschnitt_3.jpg)
 
 ## 2.3: High-Performance Puffer-Zugriff
 
@@ -364,9 +377,14 @@ finally
 }
 ```
 
+> **Wichtig:** `try / finally` stellt sicher, dass `Unlock()` auch bei Fehlern immer ausgeführt wird.
+
 ---
 
 ### Direkter Zeigerzugriff: Byte- für Byte-Schreiben
+
+<div class="columns">
+<div class="three">
 
 ```csharp
 private unsafe void UpdatePixelData(IntPtr pBuf, int stride, int w, int h)
@@ -386,6 +404,16 @@ private unsafe void UpdatePixelData(IntPtr pBuf, int stride, int w, int h)
     }
 }
 ```
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Stride_Padding.svg)
+
+</div>
+</div>
+
+> **Parameter:** `pBuf` = BackBuffer-Adresse, `stride` = Zeilenbreite in Bytes, `w`/`h` = Bildgröße in Pixeln.
 
 ---
 
@@ -416,11 +444,10 @@ private unsafe void UpdatePixelFast(
 
 ---
 
-<!-- _class: outlook -->
+### Paralleles Rendern mit `Parallel.For` (Vorschau Kapitel 6)
 
-### Ausblick (Kapitel 6): Paralleles Rendern mit `Parallel.For`
-
-> **Deep Dive / Ausblick auf Kapitel 6 (Multithreading):** Da die Bildzeilen speichertechnisch unabhängig sind, lässt sich die äußere `y`-Schleife ab Kapitel 6 trivial auf alle CPU-Kerne verteilen (in Termin 02 arbeiten wir noch rein sequentiell mit `for`):
+<div class="columns">
+<div class="two">
 
 ```csharp
 private unsafe void RenderParallel(IntPtr pBackBuffer, int stride, int w, int h)
@@ -439,11 +466,34 @@ private unsafe void RenderParallel(IntPtr pBackBuffer, int stride, int w, int h)
 }
 ```
 
-- Kein Thread-Locking nötig (jede CPU-Core-Instanz schreibt in getrennte Zeilen)!
+</div>
+<div class="one">
+
+- **Vorschau Kapitel 6 (Multithreading):** Jede der `h` Bildzeilen besitzt ihren eigenen Bereich `row` ab `pBackBuffer + y * stride`; `x` läuft von `0` bis `w - 1`.
+- **Kein Thread-Locking nötig:** Alle CPU-Kerne schreiben parallel in getrennte Zeilen (in T02 arbeiten wir noch rein sequentiell mit `for`).
+
+</div>
+</div>
+
+> **Merksatz:** Zeilenweise Unabhängigkeit macht Pixel-Rendering *embarrassingly parallel* (ab Kapitel 6).
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_4.jpg)
+### Vergleich: Managed Array vs. `unsafe uint*`
+
+| Methode | Speicher-Overhead | Typische Renderzeit ($1000 \times 1000$) | Bewertung |
+| :--- | :--- | :--- | :--- |
+| `WritePixels(byte[])` | Kopie + GC-Druck bei Neuallokation | ca. $4\text{--}8\,\text{ms}$ | Sicher, aber kopierintensiv |
+| `unsafe byte*` (4 Writes) | $0\,\text{Bytes}$ (Zero-Allocation) | ca. $1{,}5\text{--}2{,}5\,\text{ms}$ | Schnell, 4 Schreibbefehle/Pixel |
+| `unsafe uint*` (1 Write) | $0\,\text{Bytes}$ (Zero-Allocation) | ca. $0{,}4\text{--}0{,}8\,\text{ms}$ | **Optimal für 60+ FPS** |
+
+- **Garbage Collector (GC):** Ohne Zwischenarray entstehen **0 Bytes Allokation pro Frame** – keine Mikroruckler durch GC-Pausen.
+
+> **Faustregel:** In C# erfordert `unsafe` das Flag `<AllowUnsafeBlocks>true</AllowUnsafeBlocks>` in der `.csproj`-Datei – ab Termin 02 unser Standard für Pixel-Kernels.
+
+---
+
+![bg](./Illustrationen/Abschnitt_4.jpg)
 
 ## 2.4: Farbskalen & Look-Up-Tables (LUT)
 
@@ -500,53 +550,90 @@ In der physikalischen Simulation repräsentiert ein Pixel eine Messgröße $v$ (
 
 ---
 
-### C#-Implementierung einer Farbskalen-LUT: Tabellenaufbau
+### C#-Implementierung einer Farbskalen-LUT (`ColorMaps`)
 
+<div class="columns">
+<div class="one">
+
+**1. Tabellenaufbau (`uint[256]`):**
 ```csharp
-public static class ColorMaps
-{
-    public static readonly uint[] ViridisLut = GenerateViridis(256);
+public static readonly uint[] ViridisLut
+    = GenerateViridis(256);
 
-    private static uint[] GenerateViridis(int steps)
+private static uint[] GenerateViridis(int steps)
+{
+    var lut = new uint[steps];
+    for (int i = 0; i < steps; i++)
     {
-        var lut = new uint[steps];
-        for (int i = 0; i < steps; i++)
-        {
-            double t = (double)i / (steps - 1);
-            lut[i] = SampleViridis(t);
-        }
-        return lut;
+        double t = (double)i / (steps - 1);
+        lut[i] = SampleViridis(t);
     }
+    return lut;
 }
 ```
 
-- Vorberechnetes Array für direkten Tabellenzugriff in konstanter Zeit $O(1)$.
-- Parameter $t \in [0, 1]$ wird in 256 diskrete Stufen zerlegt.
+</div>
+<div class="one">
 
----
-
-### C#-Implementierung einer Farbskalen-LUT: Farbkanäle
-
+**2. Farbkanäle packen (`Bgra32`):**
 ```csharp
 private static uint SampleViridis(double t)
 {
-    // Polynomielle Annäherung an die Viridis-Farbpalette
-    byte r = (byte)(255 * Math.Clamp(1.89 * t - 0.70, 0.0, 1.0));
-    byte g = (byte)(255 * Math.Clamp(1.39 * t - 0.10, 0.0, 1.0));
+    byte r = (byte)(255 * Math.Clamp(1.89 * t - 0.70, 0, 1));
+    byte g = (byte)(255 * Math.Clamp(1.39 * t - 0.10, 0, 1));
     byte b = (byte)(255 * Math.Clamp(
-        0.55 + 0.8 * Math.Sin(Math.PI * t), 0.0, 1.0));
-    byte a = 255;
-
-    // Als Bgra32 packen: (A << 24) | (R << 16) | (G << 8) | B
-    return ((uint)a << 24) | ((uint)r << 16) | ((uint)g << 8) | (uint)b;
+        0.55 + 0.8 * Math.Sin(Math.PI * t), 0, 1));
+    return ((uint)255 << 24) | ((uint)r << 16)
+         | ((uint)g << 8) | b;
 }
 ```
 
-- Farbkanäle werden zu einem 32-Bit-Pixel (`0xAARRGGBB`) bitweise kombiniert.
+</div>
+</div>
+
+> **Effekt:** Einmalige Vorberechnung beim Start $\implies$ konstanter $O(1)$-Tabellenzugriff im Render-Loop.
 
 ---
 
-![bg right](./Illustrationen/Abschnitt_5.jpg)
+<!-- _class: activity -->
+
+### Mitmach-Impuls (3 Min.): Normierung & LUT-Index berechnen
+
+Ein Temperaturfeld nutzt unsere 256-stufige Look-Up-Table `lut[0..255]` mit linearer Normierung:
+
+| Minimalwert $T_{\min}$ | Maximalwert $T_{\max}$ | Tabellen-Größe | Normierung $u$ & Index |
+| :--- | :--- | :--- | :--- |
+| $20\,^\circ\mathrm{C}$ | $100\,^\circ\mathrm{C}$ | $256$ (`0..255`) | $u = \frac{T - T_{\min}}{T_{\max} - T_{\min}}, \quad \text{Index} = \lfloor u \cdot 255 \rfloor$ |
+
+Bearbeite die folgenden drei Aufgaben kurz zu zweit:
+
+1. **Normierung:** Welcher normierte Wert $u \in [0, 1]$ und welcher Tabellen-Index ergeben sich für $T = 60\,^\circ\mathrm{C}$?
+2. **Schutz vor Ausreißern:** Was passiert ohne `Math.Clamp`, wenn durch ein zu großes $\Delta t$ kurzzeitig $T = 120\,^\circ\mathrm{C}$ oder $T = -5\,^\circ\mathrm{C}$ auftritt?
+3. **Farbwahl:** Warum eignet sich *Viridis* für wissenschaftliche Heatmaps besser als *Rainbow / Jet*?
+
+> **Hinweis:** Diskutieren Sie kurz zu zweit – achten Sie besonders auf die `IndexOutOfRangeException` bei Über- oder Unterschreitungen im Render-Loop!
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Normierung, Clamping & Viridis
+
+1. **Bei $T = 60\,^\circ\mathrm{C}$:**
+   $$u = \frac{60 - 20}{100 - 20} = \mathbf{0{,}5} \quad \Longrightarrow \quad \text{Index} = \lfloor 0{,}5 \cdot 255 \rfloor = \mathbf{127}$$
+2. **Ohne Clamping (Über- und Unterschreitungen):**
+   - Bei $T = 120\,^\circ\mathrm{C}$ wird $u = 1{,}25$ ($\text{Index} = 318 > 255$), bei $T = -5\,^\circ\mathrm{C}$ wird $u = -0{,}3125$ ($\text{Index} = -79 < 0$) $\implies$ sofortige **`IndexOutOfRangeException`**!
+   ```csharp
+   int idx = Math.Clamp((int)(u * 255.0f), 0, 255);
+   row[x] = _viridisLut[idx];
+   ```
+3. **Viridis vs. Jet:** Viridis steigt **monoton in der Helligkeit** (keine künstlichen Farbsprünge / *Mach Bands*) und bleibt auch in Graustufen sowie bei Rot-Grün-Schwäche eindeutig ablesbar.
+
+> **Merksatz:** `Math.Clamp(idx, 0, 255)` im Render-Loop verhindert jeden Absturz bei Grenzwert-Überschreitungen.
+
+---
+
+![bg](./Illustrationen/Abschnitt_5.jpg)
 
 ## 2.5: Anwendungsbeispiel: 2D-Wärmeleitung
 
@@ -560,81 +647,19 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Thermodynamik ohne Vorwissen: Die 3 Grundgrößen
-
-Wärmeleitung funktioniert nach **demselben Prinzip** wie ein elektrisches RC-Netzwerk oder verbundene Wassertanks, wenn man drei Größen sauber trennt:
-
-| Größe | Symbol & Einheit | Anschauliche Bedeutung | Elektro- / Hydraulik-Analogie |
-| :--- | :---: | :--- | :--- |
-| **Temperatur** | $T$ $[\mathrm{K} \text{ / } {}^\circ\mathrm{C}]$ | Lokaler „Wärmedruck“ ($T_1, T_2$, Gefälle $ΔT = T_1 - T_2$) | **Spannung $U$** ($U_1, U_2, ΔU$) / Füllstand $h_1, h_2$ |
-| **Wärmeenergie** | $E_{\text{th}}$ $[\mathrm{J} = \mathrm{W\cdot s}]$ | Gespeicherte Energie ($ΔE_{\text{th}} = m \cdot c_p \cdot ΔT$) | **Ladung $Q$ $[\mathrm{C}]$** / Wassermenge |
-| **Wärmestrom** | $\dot{Q}$ $[\mathrm{W}]$ / $\dot{q}$ $[\mathrm{W/m^2}]$ | Energiefluss über Abstand $Δx$ ($\dot{Q} \propto \lambda \cdot A / Δx$) | **Stromstärke $I$ $[\mathrm{A}]$** / Stromdichte $J$ |
-
----
-
-![](./Diagramme/Thermo_Grundbegriffe_Analogie.svg)
-
----
-
-### Materialparameter 1: Wärmeleitfähigkeit $\lambda$ (Der Transport)
+### Materialparameter & Temperaturleitfähigkeit $\alpha$
 
 <div class="columns">
 <div class="three">
 
-Warum fühlt sich Kupfer sofort heiß an, während sich Paste langsam erwärmt? Der erste Faktor ist das **Transportvermögen**:
+Wie schnell wandert eine Wärmewelle in der Zeitspanne Δt? Entscheidend ist das Verhältnis aus **Transport** ($\lambda$) und **Speicherträgheit** ($\rho \cdot c_p$):
 
-- **Wärmeleitfähigkeit $\lambda$ $\left[\frac{\mathrm{W}}{\mathrm{m \cdot K}}\right]$:**
-  - Beschreibt, wie gut ein Material Wärmeströme weiterleitet (*„Breite der Wärme-Autobahn“* zwischen zwei Pixeln, analog zum Leitwert $G = 1/R$).
-  - Gibt an, wie viel Watt durch einen $1\,\mathrm{m}$-Würfel bei $1\,\mathrm{K}$ Gefälle fließt.
-- **Typische Größenordnungen $\left[\mathrm{W/(m\cdot K)}\right]$:**
-  - **Gute Leiter:** Kupfer $\lambda \approx 398$, Alu $\lambda \approx 237$, Silizium $\lambda \approx 148$
-  - **Isolatoren:** Wärmeleitpaste $\lambda \approx 4{,}5$, Glas $\lambda \approx 1{,}0$, Luft $\lambda \approx 0{,}026$
+$$\alpha = \frac{\lambda}{\rho \cdot c_p} \quad \left[\frac{\mathrm{m^2}}{\mathrm{s}}\right]$$
 
-</div>
-<div class="one">
+- **Großes $\alpha$ (Kupfer $\approx 115$, Alu $\approx 97\,\mathrm{mm^2/s}$):** Wärmewelle breitet sich nach einem Zeitschritt Δt rasend schnell aus.
+- **Kleines $\alpha$ (Wärmeleitpaste $\approx 2{,}5\,\mathrm{mm^2/s}$):** Wärme staut sich vor der Isolationsschicht.
 
-![](./Diagramme/Mini_Lambda_Autobahn.svg)
-
-</div>
-</div>
-
----
-
-### Materialparameter 2: Wärmekapazität $\rho \cdot c_p$ (Der Speicher)
-
-<div class="columns">
-<div class="three">
-
-Der zweite Faktor ist die **thermische Trägheit** des Materials (*„Wie groß ist der Wärmetank eines Pixels?“*):
-
-- **Spezifische Wärmekapazität $c_p$ $\left[\frac{\mathrm{J}}{\mathrm{kg \cdot K}}\right]$ (bezogen auf die Masse):**
-  - Gibt an, wie viele Joule Energie man benötigt, um **$1\,\mathrm{kg}$** des Stoffes um $+1\,\mathrm{K}$ ($+1\,^\circ\mathrm{C}$) zu erwärmen.
-- **Volumetrische Wärmekapazität $\rho \cdot c_p$ $\left[\frac{\mathrm{J}}{\mathrm{m^3 \cdot K}}\right]$ (pro Gittervolumen):**
-  - Da unsere Gitterpixel feste **Volumina** abbilden, multiplizieren wir $c_p$ mit der **Materialdichte $\rho$** $[\mathrm{kg/m^3}]$.
-  - Großes $\rho \cdot c_p$ bedeutet: Das Pixel schluckt viel Wärmeenergie, bevor seine Temperatur $T$ merklich ansteigt (analog zum Kondensator $C$)!
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Kapazitaet_Waermetank.svg)
-
-</div>
-</div>
-
----
-
-### Materialparameter 3: Temperaturleitfähigkeit $\alpha$
-
-<div class="columns">
-<div class="three">
-
-Für die Ausbreitungsgeschwindigkeit einer Temperaturfront entscheidet das **Verhältnis** aus Transport ($\lambda$) und Speicherträgheit ($\rho \cdot c_p$) – die **Temperaturleitfähigkeit $\alpha$** (oft auch $a$ genannt):
-
-$$\alpha = \frac{\lambda}{\rho \cdot c_p} = \frac{\text{Leitvermögen (Transport)}}{\text{Speichervermögen (Trägheit)}} \quad \left[\frac{\mathrm{W/(m\cdot K)}}{\mathrm{J/(m^3\cdot K)}} = \frac{\mathrm{m^2}}{\mathrm{s}}\right]$$
-
-- **Merksatz für die Simulation:**
-  - **Großes $\alpha$ (Kupfer $\approx 115$, Alu $\approx 97\,\mathrm{mm^2/s}$):** Hoher Durchfluss bei moderatem Speicher $\implies$ Wärmewelle breitet sich in $Δt = 1\,\mathrm{s}$ **rasend schnell** aus!
-  - **Kleines $\alpha$ (Wärmeleitpaste $\approx 2{,}5\,\mathrm{mm^2/s}$):** Geringer Durchfluss $\implies$ Wärme staut sich vor der Schicht!
+> **Anhang:** Detaillierte Analogien ($T, E_{\text{th}}, \dot{Q}$) & Materialwerte siehe [Folien_Anhang_Waermeleitung_FDM.md](./Folien_Anhang_Waermeleitung_FDM.md).
 
 </div>
 <div class="one">
@@ -646,171 +671,18 @@ $$\alpha = \frac{\lambda}{\rho \cdot c_p} = \frac{\text{Leitvermögen (Transport
 
 ---
 
-![](./Diagramme/Thermo_Materialparameter_Alpha.svg)
-
----
-
-### Schritt 1 zur DGL: Das Fouriersche Gesetz (1. Ableitung)
+### 2D-Wärmeleitungsgleichung & 5-Punkt-Stern
 
 <div class="columns">
 <div class="three">
 
-Betrachten wir zwei benachbarte Gitterpunkte $i$ (links, Position $x$) und $i+1$ (rechts, Position $x + Δx$):
+Aus dem Fourierschen Gesetz ($\dot{q} = -\lambda \nabla T$) und der Zellbilanz folgt die **2D-Wärmeleitungsgleichung** mit Heizrate $Q$:
 
-- **Alltagsbeobachtung:** Wann fließt besonders viel Wärmeleistung pro Fläche ($\dot{q}_x$ in $\mathrm{W/m^2}$) von Zelle $i$ nach Zelle $i+1$?
-  1. Je besser das Material Wärme leitet (großes **$\lambda$**),
-  2. je größer der Temperaturunterschied **$ΔT = T_{i+1} - T_i$** ist,
-  3. je kürzer der räumliche Abstand **$Δx$** zwischen den Punkten ist!
-- **Fouriersches Wärmeleitungsgesetz:**
-  $$\dot{q}_x = -\lambda \cdot \frac{\partial T}{\partial x} \approx -\lambda \cdot \frac{T_{i+1} - T_i}{\Delta x} \quad \left[\frac{\mathrm{W}}{\mathrm{m^2}}\right]$$
+$$\frac{\partial T}{\partial t} = \alpha \left( \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} \right) + Q \approx \alpha \cdot \frac{L_{i,j}^n}{\Delta x^2} + Q_{i,j}^n$$
 
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Fourier_3Faktoren.svg)
-
-</div>
-</div>
-
----
-
-### Schritt 1 zur DGL: Warum steht im Fourierschen Gesetz ein Minuszeichen?
-
-<div class="columns">
-<div class="three">
-
-$$\dot{q}_x = -\lambda \cdot \frac{\partial T}{\partial x} \approx -\lambda \cdot \frac{T_{i+1} - T_i}{\Delta x}$$
-
-- **Gedankenexperiment mit konkreten Zahlen:**
-  - Links in Zelle $i$ sei es heiß ($T_i = 80\,^\circ\mathrm{C}$), rechts in Zelle $i+1$ kalt ($T_{i+1} = 30\,^\circ\mathrm{C}$).
-  - Gehen wir auf der $x$-Achse nach rechts, **fällt** die Temperatur ab ($ΔT = 30 - 80 = -50\,\mathrm{K} < 0$), die Steigung $\frac{\partial T}{\partial x}$ ist also **negativ**.
-  - Physikalisch fließt die Wärme aber von **Warm nach Kalt**, also in **positive $x$-Richtung** ($\dot{q}_x > 0$)!
-  - **Lösung:** Das Minuszeichen vor $-\lambda$ kehrt das negative Vorzeichen der Steigung um, sodass $\frac{\partial T}{\partial x} < 0$ einen positiven Fluss $\dot{q}_x > 0$ liefert.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Fourier_Vorzeichen.svg)
-
-</div>
-</div>
-
----
-
-![](./Diagramme/Thermo_Fourier_Gesetz.svg)
-
----
-
-### Schritt 2 zur DGL: Wärmestrom-Bilanz an einer Gitterzelle
-
-<div class="columns">
-<div class="three">
-
-**Schlüsselfrage:** Wann ändert sich eigentlich die Temperatur $T_i$ einer einzelnen Gitterzelle mit der Zeit ($\frac{\partial T_i}{\partial t} \ne 0$)?
-
-- Fließt von links genauso viel Wärme in die Zelle hinein wie nach rechts wieder herausfließt, bleibt die gespeicherte Energie konstant $\implies$ **Temperatur $T_i$ bleibt unverändert!**
-- Die Temperatur $T_i$ ändert sich nur, wenn die **Summe der Zuflüsse** aus der linken Nachbarzelle ($i-1$) und der rechten Nachbarzelle ($i+1$) ungleich Null ist:
-
-$$\dot{q}_{\text{links}\to i} = \lambda \cdot \frac{T_{i-1} - T_i}{\Delta x}, \qquad \dot{q}_{\text{rechts}\to i} = \lambda \cdot \frac{T_{i+1} - T_i}{\Delta x}$$
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Zellbilanz_Zufluss.svg)
-
-</div>
-</div>
-
----
-
-### Schritt 2 zur DGL: Herleitung der 2. Ableitung (Krümmung)
-
-Addieren wir beide Zuflüsse in Zelle $i$ und teilen durch die Speicherträgheit ($\rho \cdot c_p \cdot \Delta x$), entsteht automatisch die **zweite räumliche Ableitung $\frac{\partial^2 T}{\partial x^2}$**:
-
-$$\frac{\partial T_i}{\partial t} = \frac{\dot{q}_{\text{links}\to i} + \dot{q}_{\text{rechts}\to i}}{\rho \cdot c_p \cdot \Delta x} = \underbrace{\frac{\lambda}{\rho \cdot c_p}}_{\alpha} \cdot \frac{(T_{i-1} - T_i) + (T_{i+1} - T_i)}{\Delta x^2} = \alpha \cdot \frac{\overbrace{T_{i+1} - 2 T_i + T_{i-1}}^{L_i}}{\Delta x^2} \approx \alpha \cdot \frac{\partial^2 T}{\partial x^2}$$
-
-- **Wichtige Erkenntnis:**
-  - Nicht die Temperatur $T$ selbst und auch nicht das einfache Gefälle $\frac{\partial T}{\partial x}$ bestimmen die Erwärmung einer Zelle, sondern die **Krümmung** $\frac{\partial^2 T}{\partial x^2}$ (der Unterschied zwischen Zufluss und Abfluss)!
-
----
-
-### Schritt 2 zur DGL: Geometrische Bedeutung der Krümmung
-
-<div class="columns">
-<div class="three">
-
-Was bedeutet das Vorzeichen der Krümmung $\frac{\partial^2 T}{\partial x^2} \approx \frac{T_{i+1} - 2T_i + T_{i-1}}{\Delta x^2}$ für Zelle $i$?
-
-1. **Lineares Gefälle / Gerade ($\frac{\partial^2 T}{\partial x^2} = 0$, z. B. $100^\circ \to 60^\circ \to 20^\circ\mathrm{C}$):**
-   - Zufluss links ($+40$) und Abfluss rechts ($-40$) heben sich auf $\implies$ **$T_i$ bleibt konstant** ($\frac{\partial T_i}{\partial t} = 0$).
-2. **Thermisches Tal / Delle ($\frac{\partial^2 T}{\partial x^2} > 0$, z. B. $100^\circ \to 40^\circ \to 80^\circ\mathrm{C}$):**
-   - Zelle $i$ ist kälter als Nachbarn; Wärme strömt beidseitig herein $\implies$ **$T_i$ erwärmt sich** ($\frac{\partial T_i}{\partial t} > 0$).
-3. **Thermischer Berg / Hotspot ($\frac{\partial^2 T}{\partial x^2} < 0$, z. B. $40^\circ \to 100^\circ \to 40^\circ\mathrm{C}$):**
-   - Zelle $i$ ist heißer als Nachbarn; Wärme strömt beidseitig weg $\implies$ **$T_i$ kühlt ab** ($\frac{\partial T_i}{\partial t} < 0$).
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Kruemmung_3Faelle.svg)
-
-</div>
-</div>
-
----
-
-![](./Diagramme/Thermo_Energiebilanz_Kruemmung.svg)
-
----
-
-### Von 1D zu 2D: Die vollständige 2D-Wärmeleitungsgleichung
-
-Auf unserem 2D-Pixelgitter findet dieser Wärmeaustausch gleichzeitig **horizontal ($x$)** und **vertikal ($y$)** statt – ergänzt um eine optionale **Heizquelle $Q$** (z. B. ein stromdurchflossener Chip):
-
-$$\underbrace{\frac{\partial T}{\partial t}}_{\substack{\text{Zeitliche Änderung} \\ [\mathrm{K/s}]}} = \underbrace{\alpha}_{\substack{\text{Temperatur-} \\ \text{leitfähigkeit } [\mathrm{m^2/s}]}} \cdot \underbrace{\left( \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} \right)}_{\substack{\text{2D-Krümmung: Laplace-Operator } \Delta T = \nabla^2 T \\ [\mathrm{K/m^2}]}} + \underbrace{Q(x, y, t)}_{\substack{\text{Externe Heizrate} \\ Q = \dot{q}_V / (\rho c_p) \text{ } [\mathrm{K/s}]}}$$
-
-- **Der Laplace-Operator $\Delta T = \nabla^2 T = \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2}$** misst in 2D, ob das Pixel $(x,y)$ relativ zu seinen Nachbarn in einem „Temperatur-Tal“ ($\Delta T > 0$) oder auf einem „Temperatur-Berg“ ($\Delta T < 0$) liegt!
-
----
-
-### Überblick aller Größen & SI-Einheiten der Wärmeleitungs-DGL
-
-<div class="columns top">
-<div class="one">
-
-| Symbol | Physikalische Größe | Einheit |
-| :--- | :--- | :---: |
-| $T(x,y,t)$ | Lokale Pixeltemperatur | $\mathrm{K}$ / ${}^\circ\mathrm{C}$ |
-| $\alpha$ (bzw. $a$) | Temperaturleitfähigkeit $\frac{\lambda}{\rho c_p}$ | $\mathrm{m^2/s}$ |
-| $\lambda$ | Wärmeleitfähigkeit (Fourier) | $\mathrm{W/(m\cdot K)}$ |
-| $\rho$ | Materialdichte | $\mathrm{kg/m^3}$ |
-
-</div>
-<div class="one">
-
-| Symbol | Physikalische Größe | Einheit |
-| :--- | :--- | :---: |
-| $c_p$ | Spezifische Wärmekapazität | $\mathrm{J/(kg\cdot K)}$ |
-| $\rho \cdot c_p$ | Volumetrische Wärmekapazität | $\mathrm{J/(m^3\cdot K)}$ |
-| $\dot{q}_V$ | Volumetrische Heizleistung ($P / V$) | $\mathrm{W/m^3}$ |
-| $Q$ | Temperatur-Quellrate $\frac{\dot{q}_V}{\rho c_p}$ | $\mathrm{K/s}$ |
-
-</div>
-</div>
-
----
-
-### Räumliche Diskretisierung in 2D: Der 5-Punkt-Stern
-
-<div class="columns">
-<div class="three">
-
-Auf einem quadratischen Pixelgitter ($\Delta x = \Delta y$) addieren wir die 1D-Krümmungen in $x$- und $y$-Richtung auf einem gemeinsamen Nenner $\Delta x^2$:
-
-1. **Summe aus horizontaler und vertikaler Krümmung:**
-   $$\frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} \approx \frac{T_{i+1,j}^n - 2T_{i,j}^n + T_{i-1,j}^n}{\Delta x^2} + \frac{T_{i,j+1}^n - 2T_{i,j}^n + T_{i,j-1}^n}{\Delta x^2}$$
-2. **Zusammenfassung im Zähler als 5-Punkt-Stern $L_{i,j}^n$ $[\mathrm{K}]$:**
-   $$L_{i,j}^n = T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 \cdot T_{i,j}^n$$
-   $$\implies \quad \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} \approx \frac{L_{i,j}^n}{\Delta x^2} \quad \left[\frac{\mathrm{K}}{\mathrm{m^2}}\right]$$
+- **5-Punkt-Stern $L_{i,j}^n$ (auf quadratischem Gitter $\Delta x = \Delta y$):**
+  $$L_{i,j}^n = T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 \cdot T_{i,j}^n$$
+- **Bedeutung:** Pixel erwärmt sich, wenn der Mittelwert der 4 Nachbarn wärmer ist als $T_{i,j}^n$!
 
 </div>
 <div class="two">
@@ -822,113 +694,18 @@ Auf einem quadratischen Pixelgitter ($\Delta x = \Delta y$) addieren wir die 1D-
 
 ---
 
-### Anschauliche Interpretation: Der Nachbarschafts-Mittelwert
+### Expliziter Euler, Diffusionszahl $s$ & Stabilität
 
 <div class="columns">
 <div class="three">
 
-Was berechnet der Zähler $L_{i,j}^n = T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 \cdot T_{i,j}^n$ geometrisch? Klammern wir den Faktor $4$ aus, erscheint der **Durchschnittswert $\bar{T}_{\text{Nachbarn}}^n$ der 4 Nachbarpixel**:
+Mit dem expliziten Euler-Verfahren folgt die neue Temperatur $T_{\text{neu}} = T_{i,j}^{n+1}$ über die dimensionslose **Diffusionszahl $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$**:
 
-$$L_{i,j}^n = 4 \cdot \left( \underbrace{\frac{T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n}{4}}_{\bar{T}_{\text{Nachbarn}}^n \text{ (Mittelwert der 4 Nachbarn)}} - T_{i,j}^n \right)$$
+$$T_{\text{neu}} = T_{i,j}^{n+1} = T_{i,j}^n + s \cdot L_{i,j}^n + \Delta t \cdot Q_{i,j}^n = (1 - 4s) T_{i,j}^n + 4s\,\bar{T}_{\text{Nachbarn}}^n$$
 
-- **Intuitive Bedeutung:**
-  - Ist der Durchschnitt der 4 Nachbarn **wärmer** als das Pixel selbst ($\bar{T}_{\text{Nachbarn}}^n > T_{i,j}^n$), ist $L_{i,j}^n > 0 \implies$ **Pixel erwärmt sich!**
-  - Ist der Durchschnitt der 4 Nachbarn **kälter** als das Pixel selbst ($\bar{T}_{\text{Nachbarn}}^n < T_{i,j}^n$), ist $L_{i,j}^n < 0 \implies$ **Pixel kühlt ab!**
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Nachbar_Waage.svg)
-
-</div>
-</div>
-
----
-
-### Zeitliche Diskretisierung: Expliziter Euler & Herkunft von $s$
-
-<div class="columns">
-<div class="three">
-
-Wie wird aus der 2D-DGL die Update-Formel für den nächsten Zeitschritt $t_{n+1} = t_n + Δt$ (auf Gitterweite $Δx$)?
-
-1. **Zeit-Ableitung durch Vorwärts-Differenz ersetzen (Expliziter Euler):**
-   $$\frac{\partial T}{\partial t} \approx \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t} \implies \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t} = \alpha \cdot \frac{L_{i,j}^n}{\Delta x^2} + Q_{i,j}^n$$
-2. **Beide Seiten mit $\Delta t$ multiplizieren und nach $T_{i,j}^{n+1}$ auflösen:**
-   $$T_{i,j}^{n+1} = T_{i,j}^n + \underbrace{\left(\frac{\alpha \cdot \Delta t}{\Delta x^2}\right)}_{=\, s} \cdot L_{i,j}^n + \Delta t \cdot Q_{i,j}^n$$
-- Die drei Konstanten vor $L_{i,j}^n$ bündeln wir zum Parameter **$s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$**!
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Euler_Zeitschritt.svg)
-
-</div>
-</div>
-
----
-
-### Physikalische Bedeutung des Parameters $s$ (Diffusionszahl)
-
-<div class="columns">
-<div class="three">
-
-Der Parameter $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$ heißt **dimensionslose Diffusionszahl** (**Gitter-Fourier-Zahl**):
-
-1. **Einheiten-Check (Dimensionskontrolle):**
-   $$[s] = \frac{[\alpha] \cdot [\Delta t]}{[\Delta x^2]} = \frac{(\mathrm{m^2/s}) \cdot \mathrm{s}}{\mathrm{m^2}} = \frac{\mathrm{m^2}}{\mathrm{m^2}} = 1 \quad \text{(dimensionslos!)}$$
-2. **Anschauliche Bedeutung (Verhältnis zweier Flächen):**
-   - **Zähler ($A_{\text{Diff}} = \alpha \cdot Δt$ in $[\mathrm{m^2}]$):** Fläche, über die sich Wärme im Schritt $Δt$ ausbreitet.
-   - **Nenner ($A_{\text{Pixel}} = Δx^2$ in $[\mathrm{m^2}]$):** Geometrische **Fläche eines einzelnen Gitterpixels** (Kantenlänge $Δx$).
-   - **Verhältnis $s = A_{\text{Diff}} / A_{\text{Pixel}}$:** Welcher Bruchteil einer Pixelfläche pro Schritt überbrückt wird!
-3. **Im Code:** Vorab als `float s = alpha * dt / (dx * dx);` berechnet.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Diffusionszahl_Flaeche.svg)
-
-</div>
-</div>
-
----
-
-### Der Zeitschritt als gewichtete Mischung
-
-<div class="columns">
-<div class="three">
-
-Setzen wir $L_{i,j}^n = 4 \cdot (\bar{T}_{\text{Nachbarn}}^n - T_{i,j}^n)$ in $T_{i,j}^{n+1} = T_{i,j}^n + s \cdot L_{i,j}^n$ (ohne Heizquelle) ein und klammern $T_{i,j}^n$ aus:
-
-$$\boxed{T_{i,j}^{n+1} = \underbrace{(1 - 4s)}_{\text{Eigengewicht}} \cdot T_{i,j}^n + \underbrace{4s}_{\text{Nachbargewicht}} \cdot \bar{T}_{\text{Nachbarn}}^n}$$
-
-- **Erkenntnis:**
-  - In jedem Zeitschritt bildet die neue Pixeltemperatur eine **gewichtete Mischung** aus dem eigenen alten Wert $T_{i,j}^n$ (Gewicht $1 - 4s$) und dem Durchschnitt $\bar{T}_{\text{Nachbarn}}^n$ seiner 4 Nachbarn (Gewicht $4s$)!
-  - Die Summe beider Gewichte ist immer $(1 - 4s) + 4s = 1 = 100\,\%$.
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Gewichtete_Mischung.svg)
-
-</div>
-</div>
-
----
-
-### Numerische Stabilität (Von-Neumann): Die 3 Fälle für $s$
-
-<div class="columns">
-<div class="three">
-
-Anhand der Mischungsformel $T_{\text{neu}} = (1 - 4s) \cdot T_{\text{alt}} + 4s \cdot \bar{T}_{\text{Nachbarn}}$ verstehen wir sofort die drei Bereiche für $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$:
-
-1. **Stabiler Bereich $s < 0{,}25$ ($s = 0{,}20 \implies 0{,}20\,T_{\text{alt}} + 0{,}80\,\bar{T}_{\text{Nachbarn}}$):**
-   - Beide Gewichte sind positiv; $T_{\text{neu}}$ liegt garantiert zwischen $T_{\text{alt}}$ und $\bar{T}_{\text{Nachbarn}}$ (*Maximumprinzip*).
-2. **Stabilitätsgrenze $s = 0{,}25$ ($\implies 0\,T_{\text{alt}} + 1{,}00\,\bar{T}_{\text{Nachbarn}}$):**
-   - Eigengewicht wird exakt Null; das Pixel übernimmt zu $100\,\%$ den Nachbar-Durchschnitt.
-3. **Instabiler Bereich $s > 0{,}25$ ($s = 0{,}35 \implies -0{,}4\,T_{\text{alt}} + 1{,}4\,\bar{T}_{\text{Nachbarn}}$):**
-   - Eigengewicht $(1 - 4s)$ wird **negativ**! $+100\,^\circ\mathrm{C}$ schießt auf $-40\,^\circ\mathrm{C}$, dann $+65\,^\circ\mathrm{C}$ $\implies$ **`NaN`-Explosion!**
+- **Von-Neumann-Stabilitätsgrenze:** Eigengewicht $(1 - 4s)$ darf niemals negativ werden:
+  $$\boxed{s = \frac{\alpha \cdot \Delta t}{\Delta x^2} \le 0{,}25 \quad \Longleftrightarrow \quad \Delta t_{\max} = \frac{\Delta x^2}{4 \cdot \alpha_{\max}}}$$
+- **Bei $s > 0{,}25$:** Vorzeichenwechsel & aufklingendes Schachbrett-Muster bis **`NaN`-Explosion**!
 
 </div>
 <div class="one">
@@ -940,79 +717,58 @@ Anhand der Mischungsformel $T_{\text{neu}} = (1 - 4s) \cdot T_{\text{alt}} + 4s 
 
 ---
 
-### Berechnung der maximalen Zeitschrittweite $\Delta t_{\max}$
+<!-- _class: activity -->
+
+### Mitmach-Impuls (3 Min.): Zeitschritt $\Delta t_{\max}$ & Gitterverfeinerung
+
+Gegeben sei ein inhomogenes 2D-Kupfergitter mit diesen Kennwerten ($s = \frac{\alpha \cdot \Delta t}{\Delta x^2} \le 0{,}25$):
+
+| $\alpha_{\max}$ (Kupfer) | $\alpha_{\text{Paste}}$ | Basisauflösung $\Delta x$ | Stabilitätsgrenze $s_{\max}$ |
+| :--- | :--- | :--- | :--- |
+| $1{,}0 \times 10^{-4}\,\mathrm{m^2/s}$ | $2{,}5 \times 10^{-6}\,\mathrm{m^2/s}$ | $1\,\mathrm{mm} = 10^{-3}\,\mathrm{m}$ | $0{,}25$ |
+
+Bearbeite die folgenden drei Fragen kurz mit deinem Nachbarn:
+
+1. **Stabilitätsgrenze:** Berechnen Sie die maximal erlaubte Zeitschrittweite $\Delta t_{\max} = \frac{\Delta x^2}{4 \cdot \alpha_{\max}}$!
+2. **Gitterverfeinerung:** Sie verdoppeln die Auflösung in $x$ und $y$ ($\Delta x_{\text{neu}} = 0{,}5\,\mathrm{mm}$). Um welchen Faktor sinkt $\Delta t_{\max}$?
+3. **Inhomogenes Material:** Welches $\alpha$ bestimmt den globalen Zeitschritt $\Delta t_{\max}$ für das gesamte Gitter?
+
+> **Hinweis:** Achten Sie auf das Quadrat $\Delta x^2$ im Zähler – und überlegen Sie, was mit dem gesamten Rechenaufwand passiert, wenn gleichzeitig 4-mal mehr Pixel berechnet werden müssen!
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: $\Delta t_{\max}$, Verfeinerung & $\alpha_{\max}$
+
+1. **Maximale Zeitschrittweite ($\Delta x = 10^{-3}\,\mathrm{m}$):**
+   $$\Delta t_{\max} = \frac{(10^{-3}\,\mathrm{m})^2}{4 \cdot 1{,}0 \times 10^{-4}\,\mathrm{m^2/s}} = \mathbf{0{,}0025\,\mathrm{s} = 2{,}5\,\mathrm{ms}}$$
+2. **Gitterverfeinerung & Gesamtaufwand ($\Delta x_{\text{neu}} = 0{,}5\,\mathrm{mm}$):**
+
+| Gitter | Pixelzahl | $\Delta t_{\max}$ | Schritte pro Sekunde | Gesamtaufwand |
+| :--- | :--- | :--- | :--- | :--- |
+| $\Delta x = 1{,}0\,\mathrm{mm}$ | $1\times$ | $2{,}5\,\mathrm{ms}$ | $400$ | $1\times$ |
+| $\Delta x = 0{,}5\,\mathrm{mm}$ | $4\times$ | **$0{,}625\,\mathrm{ms}$** ($1/4$) | $1600$ ($4\times$) | **$16\times$** |
+
+3. **Inhomogenes Gitter:** Immer das **schnellste Material ($\alpha_{\max}$)** gibt den globalen Zeitschritt vor – sonst explodiert die Kupfer-Zone.
+
+> **Merksatz:** Halbiert man $\Delta x$, viertelt sich $\Delta t_{\max}$!
+
+---
+
+### Randbedingungen & die „Kühlakku“-Stolperfalle
 
 <div class="columns">
 <div class="three">
 
-Damit das Eigengewicht $(1 - 4s)$ niemals negativ wird, muss für jedes 2D-Diffusionsgitter die **Von-Neumann-Stabilitätsbedingung** gelten:
-
-$$\boxed{1 - 4s \ge 0 \quad \Longleftrightarrow \quad s = \frac{\alpha \cdot Δt}{Δx^2} \le 0{,}25 \quad \Longleftrightarrow \quad Δt_{\max} = \frac{Δx^2}{4 \cdot \alpha_{\max}}}$$
-
-- **Rechenbeispiel für unser Starter-Projekt (`HeatGrid.cs`):**
-  - Gegeben: $\alpha = 1{,}0 \times 10^{-4}\,\mathrm{m^2/s}$ und $\Delta x = 1\,\mathrm{mm} = 10^{-3}\,\mathrm{m}$.
-  - Kritische Zeitschrittgrenze:
-    $$\Delta t_{\max} = \frac{(10^{-3}\,\mathrm{m})^2}{4 \cdot 10^{-4}\,\mathrm{m^2/s}} = 0{,}0025\,\mathrm{s} = 2{,}5\,\mathrm{ms}$$
-  - **Vorsicht:** Halbiert man $\Delta x$, viertelt sich $\Delta t_{\max}$!
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Gitterfeinheit_DtMax.svg)
-
-</div>
-</div>
-
----
-
-![](./Diagramme/Thermo_Stabilitaet_Schachbrett.svg)
-
----
-
-![](./Diagramme/Thermo_PingPong_Buffering.svg)
-
----
-
-![](./Diagramme/Thermo_Randbedingungen_Gitter.svg)
-
----
-
-### 1. Dirichlet-Rand vs. 2. Neumann-Rand am Außenrand
-
-<div class="columns">
-<div class="two">
-
-**1. Dirichlet-Rand (Feste Wandtemperatur):**
-- Randtemperatur ist fest vorgegeben ($T_{\text{Rand}} = \text{const.}$).
-- **Im Code:** Äußerste Zeilen und Spalten werden in der Schleife ausgelassen (`for (int x = 1; x < Width - 1; x++)`).
-
-**2. Neumann-Rand (Adiabater Isolator, $\dot{q} = 0$):**
-- Gedämmte Wand lässt keinen Wärmestrom durch ($\frac{\partial T}{\partial n} = 0$).
-- **Im Code:** Randpixel kopiert den inneren Nachbarn (`_t[0, y] = _t[1, y]`), sodass $\Delta T = 0$ und $\dot{q} = 0\,\mathrm{W}$ gilt.
-
-</div>
-<div class="one">
-
-![](./Illustrationen/Randbedingungen_Vergleich.png)
-
-*Oben: Dirichlet. Unten: Neumann.*
-
-</div>
-</div>
-
----
-
-### Innere Isolator-Wände: Die „Kühlakku“-Stolperfalle (Basisaufgabe 1.3)
-
-<div class="columns">
-<div class="three">
-
-In der Basisaufgabe zeichnen wir per rechter Maustaste **Isolator-Wände** ($\alpha_{x,y} = 0$) mitten in das Gitter:
-
-- **Was passiert, wenn wir nur `_alphaMap[x, y] = 0` setzen?**
-  - Die Wandzelle ändert ihre Temperatur zwar nicht mehr und bleibt dauerhaft auf ihrer Starttemperatur ($20\,^\circ\mathrm{C}$).
-  - **Aber:** Das heiße Nachbarpixel *neben* der Wand ($80\,^\circ\mathrm{C}$) liest im 5-Punkt-Stern zur $20\,^\circ\mathrm{C}$ kalten Wandzelle ein Gefälle $ΔT = -60\,\mathrm{K}$!
-  - Dadurch fließt in jedem Schritt Wärme in die $20\,^\circ\mathrm{C}$-Wandzelle ab – die Wand wirkt wie ein **Kühlakku (Dirichlet-Senke)** statt wie eine Dämmung!
+- **1. Dirichlet (Feste Wand):** $T_{\text{Rand}} = \text{const.}$ (äußere Pixel in Schleife auslassen).
+- **2. Neumann (Isolator, $\dot{q}=0$):** Rand kopiert Nachbar (`tNeighbor = tCenter`).
+- **3. Robin (Konvektion):** Gewichtetes Mittel aus Metall ($\lambda$) & Luft ($h \cdot \Delta x$, Details im Anhang).
+- **Innere Isolator-Wände (`_alphaMap == 0f`):** Ohne Spiegelung fließt eine falsche Temperaturdifferenz ΔT in die kalte Wandzelle (**Kühlakku-Falle**)!
+  ```csharp
+  float tRight = _alphaMap[x + 1, y] == 0f ? tCenter : _tCurrent[x + 1, y];
+  float tLeft  = _alphaMap[x - 1, y] == 0f ? tCenter : _tCurrent[x - 1, y];
+  ```
 
 </div>
 <div class="one">
@@ -1024,154 +780,39 @@ In der Basisaufgabe zeichnen wir per rechter Maustaste **Isolator-Wände** ($\al
 
 ---
 
-### Innere Isolator-Wände: Lokale Neumann-Spiegelung im Code
-
-Damit exakt **null Wärmestrom** in ein benachbartes Isolatorpixel ($\alpha = 0$) fließt, muss die Temperaturdifferenz über diese Zellkante **Null** sein (lokale Neumann-Bedingung $\frac{\partial T}{\partial n} = 0$):
-
-- **Lösung in `HeatGrid.Step()`:** Ist ein Nachbarpixel ein Isolator (`_alphaMap[...] == 0f`), spiegeln wir dort unsere eigene Temperatur `tCenter`:
-  ```csharp
-  float tRight = _alphaMap[x + 1, y] == 0f ? tCenter : _tCurrent[x + 1, y];
-  float tLeft  = _alphaMap[x - 1, y] == 0f ? tCenter : _tCurrent[x - 1, y];
-  float tDown  = _alphaMap[x, y + 1] == 0f ? tCenter : _tCurrent[x, y + 1];
-  float tUp    = _alphaMap[x, y - 1] == 0f ? tCenter : _tCurrent[x, y - 1];
-  ```
-- **Physikalischer Effekt:** Für die Wandkante wird `tNeighbor - tCenter == 0` $\implies$ **100 % adiabate Reflexion an der Wand!**
-
----
-
-### 3. Konvektive Randbedingung (Robin): Physikalische Bilanz
-
-<div class="columns">
-<div class="three">
-
-Wie kühlt ein Aluminium-Kühlkörper in der Praxis (Aufgabe Track A)? An seiner Oberfläche (Randknoten $0$) strömt kühle Luft mit $T_\infty = 25\,^\circ\mathrm{C}$ vorbei:
-
-- **1. Wärmeleitung aus dem Metallinneren (Knoten $1$) zur Oberfläche ($0$):**
-  $$\dot{q}_{\text{Leitung}} = \lambda \cdot \frac{T_{1,y} - T_{0,y}}{Δx} \quad \left[\frac{\mathrm{W}}{\mathrm{m^2}}\right]$$
-- **2. Konvektiver Wärmeübergang von der Oberfläche ($0$) an die Luft ($T_\infty$):**
-  Mit dem **Wärmeübergangskoeffizienten $h$** $[\mathrm{W/(m^2 \cdot K)}]$ ($h = 250$ bei aktivem Lüfter, $h = 20$ bei Lüfterausfall):
-  $$\dot{q}_{\text{Konvektion}} = h \cdot \left(T_{0,y} - T_\infty\right) \quad \left[\frac{\mathrm{W}}{\mathrm{m^2}}\right]$$
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Robin_Bilanz.svg)
-
-</div>
-</div>
-
----
-
-### 3. Konvektive Randbedingung (Robin): Aufgelöste Gitterformel
-
-<div class="columns">
-<div class="three">
-
-An der Oberfläche muss der aus dem Metall ankommende Wärmestrom gleich dem an die Luft abgegebenen Wärmestrom sein ($\dot{q}_{\text{Leitung}} = \dot{q}_{\text{Konvektion}}$):
-
-$$\lambda \cdot \frac{T_{1,y} - T_{0,y}}{Δx} = h \cdot \left(T_{0,y} - T_\infty\right) \implies \boxed{T_{0,y} = \frac{\lambda \cdot T_{1,y} + (h \cdot Δx) \cdot T_\infty}{\lambda + h \cdot Δx}}$$
-
-- **Anschauliche Bedeutung & Grenzfall-Kontrolle:**
-  - $T_{0,y}$ ist das **gewichtete Mittel** aus Innentemperatur $T_{1,y}$ (Gewicht $\lambda$) und Lufttemperatur $T_\infty$ (Gewicht $h \cdot \Delta x$).
-  - **Perfekte Isolierung ($h \to 0$):** $T_{0,y} = T_{1,y}$ (**Neumann-Fall**).
-  - **Unendlich starke Kühlung ($h \to \infty$):** $T_{0,y} = T_\infty$ (**Dirichlet-Fall**).
-
-</div>
-<div class="one">
-
-![](./Diagramme/Mini_Robin_Grenzfaelle.svg)
-
-</div>
-</div>
-
----
-
-![](./Diagramme/Thermo_CPU_Kuehlkoerper_Aufbau.svg)
-
----
-
-### Simulation und Visualisierung im Code
+### Simulation (`Ping-Pong`) und `WriteableBitmap`-Rendering
 
 <div class="columns">
 <div class="two">
 
 ```csharp
-// Simulationsschritt (Ping-Pong Double-Buffering)
+// 1. FDM-Schritt (Ping-Pong Double-Buffering)
 for (int y = 1; y < Height - 1; y++)
-{
-    for (int x = 1; x < Width - 1; x++)
-    {
-        float laplace = _tempPrev[x + 1, y] + _tempPrev[x - 1, y]
-                      + _tempPrev[x, y + 1] + _tempPrev[x, y - 1]
-                      - 4.0f * _tempPrev[x, y];
-
-        _tempCurr[x, y] = _tempPrev[x, y] + DiffCoeff * laplace;
-    }
-}
-
-// Wärmequellen fixieren & Puffer-Referenzen tauschen
-_tempCurr[100, 100] = 100.0f;
-(_tempPrev, _tempCurr) = (_tempCurr, _tempPrev);
+  for (int x = 1; x < Width - 1; x++)
+  {
+    float laplace = _tCurrent[x+1,y] + _tCurrent[x-1,y]
+                  + _tCurrent[x,y+1] + _tCurrent[x,y-1]
+                  - 4.0f * _tCurrent[x, y];
+    _tNext[x, y] = _tCurrent[x, y] + s * laplace;
+  }
+(_tCurrent, _tNext) = (_tNext, _tCurrent);
+// 2. RenderKernel (Lock -> uint* -> AddDirtyRect -> Unlock)
+float u = (_tCurrent[x, y] - minTemp) / range;
+int idx = Math.Clamp((int)(u * 255.0f), 0, 255);
+row[x] = lut[idx];
 ```
+
+- **Ping-Pong:** Lesen aus `_tCurrent`, Schreiben in `_tNext`, danach Referenzen tauschen!
 
 </div>
 <div class="one">
 
 ![](./Illustrationen/Heatmap_Temperaturfeld.png)
 
-*Simuliertes Temperaturfeld auf WriteableBitmap.*
+*Simuliertes Temperaturfeld auf `WriteableBitmap` (`Lock` $\to$ `AddDirtyRect` $\to$ `Unlock`).*
 
 </div>
 </div>
-
----
-
-### Pufferübertragung in die WriteableBitmap
-
-<div class="columns">
-<div class="one">
-
-**1. Puffer-Verwaltung (`bmp`, `pBuf`, `stride`):**
-```csharp
-public unsafe void RenderToBitmap(
-    WriteableBitmap bmp, float[,] f, uint[] lut)
-{
-    bmp.Lock();
-    try
-    {
-        uint* pBuf = (uint*)bmp.BackBuffer.ToPointer();
-        int stride = bmp.BackBufferStride / 4;
-        RenderKernel(pBuf, stride, f, lut);
-        bmp.AddDirtyRect(new Int32Rect(0, 0, Width, Height));
-    }
-    finally { bmp.Unlock(); }
-}
-```
-
-</div>
-<div class="one">
-
-**2. 32-Bit-Kernel (`f` $\to$ `lut`):**
-```csharp
-private unsafe void RenderKernel(
-    uint* pBuf, int stride, float[,] f, uint[] lut)
-{
-    for (int y = 0; y < Height; y++)
-    {
-        uint* row = pBuf + (y * stride);
-        for (int x = 0; x < Width; x++)
-        {
-            int idx = (int)Math.Clamp(f[x, y] * 2.55f, 0f, 255f);
-            row[x] = lut[idx];
-        }
-    }
-}
-```
-
-</div>
-</div>
-
-- `RenderToBitmap` sperrt `bmp` und schreibt jedes Feld-Pixel `f[x, y]` über `lut` direkt nach `pBuf + y * stride`.
 
 ---
 
@@ -1180,10 +821,37 @@ private unsafe void RenderKernel(
 ### Zusammenfassung Kapitel 2
 
 - **Speicherlayout:** Rasterbilder liegen als 1D-Arrays im RAM ($\text{Offset} = y \cdot \text{Stride} + x \cdot 4$); zeilenweises Iterieren maximiert die CPU-Cache-Trefferquote.
-- **WriteableBitmap:** Umgeht den WPF Visual Tree und rendert Hunderttausende Pixel flüssig bei 60 FPS über ein einziges `Image`-Control.
+- **WriteableBitmap:** Umgeht den WPF Visual Tree und rendert Hunderttausende Pixel flüssig bei $\ge 60\,\text{FPS}$ über ein einziges `Image`-Control.
 - **High-Performance & LUT:** Mit `unsafe uint*` Zeigerarithmetik und vorberechneten Look-Up-Tables (`uint[256]`) erfolgt die Farbkodierung in $O(1)$-Zeit ohne Garbage Collection.
 - **2D-Wärmeleitung (FDM):** Der 5-Punkt-Stern vergleicht jedes Pixel mit dem Mittelwert seiner 4 Nachbarn; für Stabilität im expliziten Ping-Pong-Verfahren muss $s = \frac{\alpha \Delta t}{\Delta x^2} \le 0{,}25$ gelten.
 - **Randbedingungen:** Dirichlet (fester Randwert), Neumann (Spiegelung am Isolator, $\dot{q}=0$) und Robin (gewichtetes Mittel bei Luftkonvektion) bilden reale Bauteilgrenzen exakt ab.
+
+> **Anhang:** Alle ausführlichen physikalischen Herleitungen & Robin-Formeln stehen im [Anhang Wärmeleitung & FDM](./Folien_Anhang_Waermeleitung_FDM.md).
+
+---
+
+<!-- _class: outlook -->
+
+### Ausblick: Von Pixelrastern zu skalierbaren Vektoren (T03)
+
+<div class="columns">
+<div class="three">
+
+In **Termin 02** haben wir kontinuierliche 2D-Felder auf einem festen Pixelgitter mit `WriteableBitmap` gelöst:
+
+- **Grenze von Pixelrastern:** Bei mechanischen Gelenkarmen, Fahrzeugen oder Partikeln verpixelt das Gitter beim Hineinzoomen und erfordert unnötig viel Speicher.
+- **Nächster Termin (T03):** Wir wechseln zur **2. Grafik-Säule** – **2D-Vektorgrafik** (`WPF Canvas`, `DrawingVisual` & Welt-zu-Bildschirm-Kameramatrizen).
+- **Lernfortschritt:** Zu Beginn von Termin 03 findet das **Moodle-Quiz 1** (Stoff: Termin 01 & Termin 02) statt.
+
+> **Vorausblick:** Wie bildet man eine Weltkoordinate $(x_{\text{Welt}}, y_{\text{Welt}})$ in Metern auf Bildschirm-Pixel ab? Das lösen wir in T03 mit affinen Transformationsmatrizen!
+
+</div>
+<div class="two">
+
+![](./Diagramme/Semester_Bruecke_T02.svg)
+
+</div>
+</div>
 
 ---
 
@@ -1191,16 +859,16 @@ private unsafe void RenderKernel(
 
 ### Hausübung Termin 02: Pixelgrafik & FDM
 
-**Stufe 1 (Basisaufgabe `1.1`–`1.4` für alle Teams auf `PixelHeatFDM.sln`):** Von-Neumann-Test, 256-Farben-LUT, Maus-Zeichnen & Unit-Tests ([Aufgabenblatt 02](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
+**Stufe 1 (Basisaufgabe `1.1`–`1.4` für alle Teams auf `PixelHeatFDM.sln`):** Von-Neumann-Stabilitätstest ($s \le 0{,}25$), 256-Farben-LUT (`uint[]`), interaktives Maus-Zeichnen mit lokaler Neumann-Spiegelung & Unit-Tests ([Aufgabenblatt 02](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">
 
 #### Stufe 2 – Track A: CPU-Kühlkörper-Optimizer
-- Inhomogenes Gitter ($a_{\text{Si}}, a_{\text{TIM}}, a_{\text{Cu}}, a_{\text{Al}}$)
-- 10 Kühlrippen mit Robin-Randbedingung
+- Inhomogenes Gitter ($\alpha_{\text{Si}}, \alpha_{\text{TIM}}, \alpha_{\text{Cu}}, \alpha_{\text{Al}}$)
+- 10 Kühlrippen mit Robin-Konvektionsrand
 - Lüfterbetrieb vs. Ausfall ($h = 250 \to 20\,\text{W/m}^2\text{K}$)
-- Stabilitätsgrenze $\Delta t \le \frac{\Delta x^2}{4 a_{\max}}$ nachweisen
+- Stabilitätsgrenze $\Delta t \le \frac{\Delta x^2}{4 \alpha_{\max}}$ nachweisen
 
 </div>
 <div class="two">
@@ -1213,4 +881,6 @@ private unsafe void RenderKernel(
 
 </div>
 </div>
+
+> **Abgabe & Showcase:** Commit im Git-Repo vor Beginn von Termin 03 – zwei Teams präsentieren ihren Track im Live-Showcase + Parameter-Stresstest!
 

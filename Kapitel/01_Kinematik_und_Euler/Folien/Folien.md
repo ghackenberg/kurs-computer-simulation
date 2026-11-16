@@ -364,30 +364,6 @@ Ordnen Sie diese drei technischen Systeme gemeinsam (oder kurz für sich) den Mo
 <div class="one">
 
 **Deterministische Modelle**
-- Der Ablauf der Simulation ist bei gleichen Anfangsbedingungen und Parametern immer identisch.
-- Es gibt keine Zufallseinflüsse.
-- **Beispiel**: Berechnung der Planetenbahnen, ideales Federpendel ohne Reibung.
-
-</div>
-<div class="one">
-
-**Stochastische Modelle**
-- Enthalten zufällige Elemente. Jede Simulation liefert ein anderes (aber statistisch ähnliches) Ergebnis.
-- Werden verwendet, wenn Prozesse nicht exakt vorhersagbar sind.
-- Erfordern oft mehrere Simulationsläufe (Monte-Carlo-Simulation), um statistische Aussagen treffen zu können.
-- **Beispiel**: Simulation einer Warteschlange mit zufälligen Ankunftszeiten, Simulation von Aktienkursen.
-
-</div>
-</div>
-
----
-
-### Deterministische vs. Stochastische Modelle
-
-<div class="columns top">
-<div class="one">
-
-**Deterministische Modelle**
 
 ![](./Diagramme/Modellarten_Deterministisch.svg)
 
@@ -400,6 +376,8 @@ Ordnen Sie diese drei technischen Systeme gemeinsam (oder kurz für sich) den Mo
 
 </div>
 </div>
+
+> **Abgrenzung:** **Deterministisch** = identischer Ablauf ohne Zufall (Planetenbahn, Federpendel); **Stochastisch** = Zufallseinflüsse mit Monte-Carlo-Läufen (Warteschlangen, ab T09).
 
 ---
 
@@ -529,33 +507,71 @@ $$m \ddot{y} = -m g + F_{Ry} = -m g - \frac{1}{2} c_w \rho A \sqrt{v_x^2 + v_y^2
 
 ---
 
-### Präzisionssteigerung: Heun-Verfahren (RK2) & Ereignis-Interpolation
+### Zustandsraum & Prädiktor-Korrektor nach Heun (RK2)
+
+Um DGLs 2. Ordnung im Code einheitlich zu lösen, überführen wir sie in ein System 1. Ordnung:
 
 <div class="columns top">
 <div class="one">
 
-**Prädiktor-Korrektor nach Heun (Ordnung $\mathcal{O}(\Delta t^2)$):**
-- **Heun (RK2)** mittelt Anfangssteigung `k1` ($= \mathbf{f}(t_k, y_k)$) und Endsteigung `k2`:
-  1. *Prädiktor:* $\tilde{\mathbf{x}}_{k+1} = \mathbf{x}_k + \Delta t \cdot \mathbf{f}(t_k, \mathbf{x}_k)$
-  2. *Korrektor:* $\mathbf{x}_{k+1} = \mathbf{x}_k + \frac{\Delta t}{2}\left[\mathbf{f}(t_k, \mathbf{x}_k) + \mathbf{f}(t_{k+1}, \tilde{\mathbf{x}}_{k+1})\right]$
+**1. Zustandsraum-Transformation:**
+Ort und Geschwindigkeit bilden zusammen den **Zustandsvektor $\mathbf{x}$** und seine Ableitung `dx`:
+$$\mathbf{x} = \begin{pmatrix} x \\ y \\ v_x \\ v_y \end{pmatrix} \implies \dot{\mathbf{x}} = \mathbf{f}(t, \mathbf{x}) = \begin{pmatrix} v_x \\ v_y \\ F_{Rx}/m \\ -g + F_{Ry}/m \end{pmatrix}$$
 ```csharp
-var k1 = f(t_k, x_k); // analog für y_k
-var k2 = f(t_k + dt, x_k + dt * k1);
-x_k += 0.5 * dt * (k1 + k2);
+var dx = new KinematicState(v_x, v_y, F_Rx / m, -g + F_Ry / m);
 ```
 
 </div>
 <div class="one">
 
+**2. Heun-Verfahren (RK2, Ordnung $\mathcal{O}(\Delta t^2)$):**
+Mittelt Anfangssteigung $\mathbf{k}_1 = \mathbf{f}(t_k, \mathbf{x}_k)$ und Endsteigung $\mathbf{k}_2$:
+1. *Prädiktor:* $\tilde{\mathbf{x}}_{k+1} = \mathbf{x}_k + \Delta t \cdot \mathbf{k}_1$
+2. *Steigung am Ziel:* $\mathbf{k}_2 = \mathbf{f}(t_k + \Delta t, \tilde{\mathbf{x}}_{k+1})$
+3. *Korrektor:* $\mathbf{x}_{k+1} = \mathbf{x}_k + \frac{\Delta t}{2}\left(\mathbf{k}_1 + \mathbf{k}_2\right)$
+
+</div>
+</div>
+
+> **Konkreter Genauigkeitsgewinn (Vakuumwurf, $\Delta t = 0{,}10\,\mathrm{s}$):** Expliziter Euler weicht um **`+10,60 m`** ab – Heun (RK2) reduziert den Wurfweitenfehler auf **`-0,009 m`** bei gleichem $\Delta t$!
+
+---
+
+### Ereignis-Interpolation ($y = 0$) & C#-Umsetzung
+
+<div class="columns top">
+<div class="one">
+
 **Lineare Schnittpunkt-Interpolation ($y = 0$):**
-- Fällt $y_{k+1} < 0$ unter den Boden, liefert der Bruchteil $\tau \in [0, 1]$ den exakten Auftreffpunkt ohne „Tunneling“:
-  $$\tau = \frac{0 - y_k}{y_{k+1} - y_k}$$
-  $$t_{\text{impact}} = t_k + \tau \Delta t, \quad x_{\text{impact}} = x_k + \tau (x_{k+1} - x_k)$$
+Fällt $y_{k+1} < 0$ unter den Boden, liefert $\tau \in [0, 1]$ den exakten Auftreffpunkt ohne „Tunneling“:
+$$\tau = \frac{0 - y_k}{y_{k+1} - y_k}, \qquad t_{\text{impact}} = t_k + \tau \Delta t$$
+$$x_{\text{impact}} = x_k + \tau (x_{k+1} - x_k)$$
+
+- **`StepHeun`:** Berechnet Anfangssteigung `k1`, Prädiktor `pred` sowie Endsteigung `k2` und mittelt beide.
+
+</div>
+<div class="one">
+
+```csharp
+public static KinematicState StepHeun(
+    KinematicState state, double dt)
+{
+    var k1 = ComputeDerivative(state);
+    var pred = state + dt * k1;
+    var k2 = ComputeDerivative(pred);
+    return state + 0.5 * dt * (k1 + k2);
+}
+
+// Aufprall bei y_next < 0 (Boden y = 0):
+double tau = -y_k / (y_next - y_k);
+double tImpact = t_k + tau * dt;
+double xImpact = x_k + tau * (x_next - x_k);
+```
 
 </div>
 </div>
 
-> **Praxis-Gewinn:** Heun + lineare Interpolation reduzieren den Wurfweitenfehler von mehreren Metern auf wenige Millimeter bei gleichem $\Delta t$ und verhüten Tunneling-Effekte durch den Boden. Beide Verfahren teilen sich dieselbe `ComputeDerivative(...)`-Methode.
+> **Architektur-Vorteil:** Euler und Heun teilen sich exakt dieselbe Physik-Funktion `ComputeDerivative(state)` – sauber entkoppelt vom Zeitschritt-Löser!
 
 ---
 
@@ -571,30 +587,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Warum Visualisierung?
-
-<div class="columns">
-<div class="three">
-
-Simulationsläufe produzieren riesige Datenmengen (Zustände, Zeitreihen, Felder). Reine Zahlenkolonnen verbergen Muster:
-
-- **Ergebnisse verstehen:** Muster, Schwingungen und Trends auf einen Blick erkennen.
-- **Modelle validieren:** Prüfen, ob Energieerhaltung und Grenzwerte physikalisch stimmen.
-- **Ergebnisse kommunizieren:** Komplexe Zusammenhänge für Teams greifbar darstellen.
-- **Interaktiv explorieren:** Parameter wie $\Delta t$ live variieren und Effekte sofort sehen.
-
-> **Leitlinie:** Eine gute Visualisierung dient in der Technik der **Fehlerdiagnose und Validierung**.
-
-</div>
-<div class="two">
-
-![](./Illustrationen/Visualisierung_Chart.jpg)
-
-</div>
-</div>
-
----
-
 ### Von einfachen Diagrammen zu komplexen Szenen
 
 <div class="columns top">
@@ -603,9 +595,9 @@ Simulationsläufe produzieren riesige Datenmengen (Zustände, Zeitreihen, Felder
 ![](./Illustrationen/Visualisierung_Chart.jpg)
 
 **1. Einfache Diagramme (Plots)**
-- Darstellung von einer Größe über einer anderen (oft über die Zeit).
-- z.B. Temperaturverlauf, Position vs. Zeit.
-- Bibliotheken: `ScottPlot`, `OxyPlot`.
+- Größe über Zeit (`ScottPlot 5`).
+- z.B. Temperaturverlauf, Phasenportrait.
+- Ideal für Konvergenz- & Energie-Checks.
 
 </div>
 <div class="one">
@@ -613,10 +605,9 @@ Simulationsläufe produzieren riesige Datenmengen (Zustände, Zeitreihen, Felder
 ![](./Illustrationen/Visualisierung_2D.jpg)
 
 **2. 2D-Visualisierungen**
-- Darstellung von räumlichen Daten in einer Ebene.
-- Oft Vektorgrafiken.
-- z.B. Plan einer Fabrikhalle, Verformung eines 2D-Fachwerks, Strömungsfeld.
-- Technologie: `WPF Canvas`.
+- `WriteableBitmap` (Pixel, Kap. 2) & `WPF Canvas` (Vektoren, Kap. 3).
+- z.B. Wärmefeld, 2D-Fachwerk.
+- Echtzeit-Feedback bei $\ge 60\,\text{FPS}$.
 
 </div>
 <div class="one">
@@ -624,12 +615,14 @@ Simulationsläufe produzieren riesige Datenmengen (Zustände, Zeitreihen, Felder
 ![](./Illustrationen/Visualisierung_3D.jpg)
 
 **3. 3D-Visualisierungen**
-- Darstellung von räumlichen Daten in einer dreidimensionalen Szene.
-- z.B. 3D-Modell eines Roboters, Visualisierung eines Gebäudes, Molekülstrukturen.
-- Technologie: `SharpGL`, `Helix Toolkit`.
+- Räumliche Szenen (`SharpGL`, Kap. 5).
+- z.B. Roboterzelle, Gebäudemodell.
+- Hierarchische Gelenk-Kinematik.
 
 </div>
 </div>
+
+> **Leitlinie:** Eine gute Visualisierung dient in der Technik der **Fehlerdiagnose und Validierung** – vom 1D-Plot bis zur 3D-Szene.
 
 ---
 
@@ -674,7 +667,7 @@ Vermeiden Sie diese Stolpersteine in Ihren C#-Simulatoren:
 - **Seitenverhältnis:** Ungleiche $x/y$-Skalierung verzerrt Kreise zu Ellipsen.
 - **Fehlende Einheiten:** Plots ohne `[m]` oder `[s]` verhindern Fehlerdiagnose.
 - **Schein-Animation:** Timer bewegt Pixel statt echter DGL.
-- **Allokation pro Frame:** `new SolidColorBrush(...)` erzeugt GC-Ruckler.
+- **Allokation pro Frame:** `new SolidColorBrush(...)` erzeugt Garbage-Collector-(GC)-Ruckler.
 
 > **Qualitätsregel:** Visualisierung arbeitet allokationsfrei und mit SI-Einheiten.
 
@@ -702,7 +695,7 @@ Der Begriff wurde maßgeblich von **Dr. Michael Grieves** (University of Michiga
 2. Ein **virtuelles Produkt** im digitalen Raum (Geometrie, Physik & Logik).
 3. Eine bidirektionale **Datenverbindung** zwischen realer und virtueller Welt.
 
-> **Abgrenzung:** Ohne kontinuierlichen Datenaustausch bleibt ein Modell ein statischer *Digital Model* – erst die Datenverbindung macht es zum Zwilling.
+> **Abgrenzung:** Ohne Datenaustausch bleibt es ein statisches *Digital Model*; bei rein unidirektionalem Live-Datenfluss (Physisch $\to$ Virtuell) spricht man vom *Digital Shadow* – erst der bidirektionale Rückkanal macht es zum **Digitalen Zwilling**.
 
 ---
 
