@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <style>
+    /* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+    .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; }
+    .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; }
+    .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; }
+  </style>
+
+  <text x="240" y="30" text-anchor="middle" class="hdr sem-neutral-text">Notengewichtung: 40 % – 40 % – 20 %</text>
+
+  <!-- Stacked bar -->
+  <rect x="0" y="54" width="192" height="44" rx="6" stroke-width="2" class="sem-primary"/>
+  <text x="96" y="81" text-anchor="middle" class="lbl sem-primary-text">40 % Quiz</text>
+
+  <rect x="196" y="54" width="192" height="44" rx="6" stroke-width="2" class="sem-success"/>
+  <text x="292" y="81" text-anchor="middle" class="lbl sem-success-text">40 % Portfolio</text>
+
+  <rect x="392" y="54" width="88" height="44" rx="6" stroke-width="2" class="sem-warning"/>
+  <text x="436" y="81" text-anchor="middle" class="lbl sem-warning-text">20 %</text>
+
+  <!-- Pillar 1 -->
+  <rect x="0" y="122" width="480" height="72" rx="10" stroke-width="2" class="sem-primary"/>
+  <text x="18" y="149" class="lbl sem-primary-text">Säule 1: Moodle-Präsenzquizzes (40 %)</text>
+  <text x="18" y="174" class="sub sem-neutral-text">4 Tests à 10 % (T03, T05, T08, T10) – Theorie &amp; Diagnose</text>
+
+  <!-- Pillar 2a -->
+  <rect x="0" y="210" width="480" height="72" rx="10" stroke-width="2" class="sem-success"/>
+  <text x="18" y="237" class="lbl sem-success-text">Säule 2a: C#-Code-Portfolio (40 %)</text>
+  <text x="18" y="262" class="sub sem-neutral-text">10 wöchentliche Hausübungen à 4 % (Stufe 1 + Track A/B)</text>
+
+  <!-- Pillar 2b -->
+  <rect x="0" y="298" width="480" height="68" rx="10" stroke-width="2" class="sem-warning"/>
+  <text x="18" y="325" class="lbl sem-warning-text">Säule 2b: Live-Showcase &amp; Code-Defense (20 %)</text>
+  <text x="18" y="348" class="sub sem-neutral-text">Beamer-Vorführung, Code-Erklärung &amp; Parameter-Stresstest</text>
+</svg>

@@ -133,6 +133,30 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
   });
 
+  // Check Full-Bleed background images have landscape (~16:9) aspect ratio
+  const fullBleedBgIssues = await page.evaluate(async () => {
+    const bgSecs = Array.from(document.querySelectorAll('section[data-marpit-advanced-background="background"]:not([data-marpit-advanced-background-split])'));
+    const bad = [];
+    for (const bgSec of bgSecs) {
+      const fig = bgSec.querySelector('figure');
+      if (!fig) continue;
+      const bgImg = getComputedStyle(fig).backgroundImage || fig.style.backgroundImage || '';
+      const m = bgImg.match(/url\(["']?([^"')]+)["']?\)/);
+      if (!m) continue;
+      const url = m[1];
+      const dims = await new Promise(resolve => {
+        const im = new Image();
+        im.onload = () => resolve({ w: im.naturalWidth, h: im.naturalHeight });
+        im.onerror = () => resolve(null);
+        im.src = url;
+      });
+      if (dims && dims.h > 0 && (dims.w / dims.h) < 1.5) {
+        bad.push({ pagination: bgSec.getAttribute('data-marpit-pagination') || '', url, w: dims.w, h: dims.h });
+      }
+    }
+    return bad;
+  });
+
   // Evaluate DOM
   const rawSlides = await page.evaluate(() => {
     const results = [];
@@ -193,6 +217,21 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         }
       };
       collectGaps(sec, 'slide');
+      let minTextColHeight = null;
+      sec.querySelectorAll('div.columns').forEach(cols => {
+        const children = Array.from(cols.children);
+        const hasImgCol = children.some(c => c.querySelector('img') && !c.querySelector('p, ul, ol, pre'));
+        if (!hasImgCol) return;
+        children.forEach(c => {
+          if (c.querySelector('img') || c.querySelector('pre, marp-pre')) return;
+          const items = Array.from(c.children).filter(el => el.getBoundingClientRect().height > 0);
+          if (items.length === 0) return;
+          const top = Math.min(...items.map(el => el.getBoundingClientRect().top));
+          const bot = Math.max(...items.map(el => el.getBoundingClientRect().bottom));
+          const h = bot - top;
+          if (minTextColHeight === null || h < minTextColHeight) minTextColHeight = h;
+        });
+      });
       sec.querySelectorAll('div.columns > div').forEach((col, cIdx) => {
         collectGaps(col, `col${cIdx + 1}`);
       });
@@ -277,6 +316,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         footerTop,
         contentTop,
         contentBottom,
+        minTextColHeight,
         elementGaps,
         colorIssues,
         images
@@ -406,13 +446,24 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const contentHeight = s.contentBottom > s.contentTop ? (s.contentBottom - s.contentTop) : 0;
     const fillRatio = contentHeight / availableHeight;
     const minFillRatio = options.minFillRatio !== undefined ? options.minFillRatio : 0.80;
-    const hasUnderfill = !s.isOpener && minFillRatio > 0 && fillRatio < minFillRatio;
+    const textColRatio = (s.minTextColHeight !== null && s.minTextColHeight !== undefined) ? (s.minTextColHeight / availableHeight) : 1;
+    const hasSparseTextCol = !s.isOpener && textColRatio < 0.45;
+    const hasUnderfill = !s.isOpener && minFillRatio > 0 && (fillRatio < minFillRatio || hasSparseTextCol);
 
     const gapTolerance = options.gapTolerance !== undefined ? options.gapTolerance : 1;
     const gapIssues = (s.elementGaps || []).filter(g => Math.abs(g.gap - (g.expected || 16)) > gapTolerance);
     const hasGapError = gapIssues.length > 0;
     const colorIssues = s.colorIssues || [];
     const hasColorError = colorIssues.length > 0;
+    for (const bgErr of fullBleedBgIssues) {
+      if (!bgErr.pagination || bgErr.pagination === String(s.pagination)) {
+        svgIssues.push({
+          file: decodeURIComponent(bgErr.url.split('/').pop().split('?')[0]),
+          issues: [{ type: 'PORTRAIT_FULLBLEED_BG', message: `Full-Bleed ![bg] erfordert Querformat (>= 1.5:1), hat aber ${bgErr.w}x${bgErr.h} (${(bgErr.w / bgErr.h).toFixed(2)}:1).` }]
+        });
+      }
+    }
+    const hasSvgIssuesAfterBg = svgIssues.length > 0;
 
     slides.push({
       ...s,
@@ -424,12 +475,12 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       svgIssues,
       gapIssues,
       colorIssues,
-      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssues || hasUnderfill || hasGapError || hasColorError,
+      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssuesAfterBg || hasUnderfill || hasGapError || hasColorError,
       hasVOverflow,
       hasHOverflow,
       hasHeaderCollision,
       hasFooterCollision,
-      hasSvgIssues,
+      hasSvgIssues: hasSvgIssuesAfterBg,
       hasUnderfill,
       hasGapError,
       hasColorError

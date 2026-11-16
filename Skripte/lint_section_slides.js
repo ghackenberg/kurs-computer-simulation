@@ -64,7 +64,7 @@ function classifyBlockContent(text) {
 }
 
 function classifySlideLayout(slide) {
-  const isOpener = /^#\s+Kapitel\s+\d+:|^##\s+\d+\.\d+:|^#\s+Zusammenfassung/m.test(slide);
+  const isOpener = /^#{1,2}\s+/m.test(slide);
   if (isOpener) {
     return { signature: 'OPENER', isOpener: true, isPureText: false };
   }
@@ -175,7 +175,9 @@ function lintSectionDeck(markdownPath) {
   let frontalMinutesStreak = 0;
   const chapNumMatchEarly = deckName.match(/^(\d+)_/);
   const chapNumEarly = chapNumMatchEarly ? parseInt(chapNumMatchEarly[1], 10) : -1;
-  const strictRhythm = chapNumEarly >= 6;
+  const strictRhythm = chapNumEarly === 0 || chapNumEarly >= 6;
+  const STRICT_FULLBLEED_CHAPTERS = new Set([0, 6]);
+  const strictFullBleed = STRICT_FULLBLEED_CHAPTERS.has(chapNumEarly);
 
   slides.forEach((slide, idx) => {
     const slideNum = idx + 1;
@@ -185,20 +187,42 @@ function lintSectionDeck(markdownPath) {
       return;
     }
 
-    // 1. Kapitel-Titel / Agenda (# Kapitel N: ...)
+    // 1. Kapitel-Titel / Agenda (# Kapitel N: ... oder # Prolog)
     const chapterMatch = slide.match(/#\s+Kapitel\s+(\d+):\s*([^\r\n]+)/i);
-    if (chapterMatch) {
+    const prologMatch = !chapterMatch && chapNumEarly === 0 ? slide.match(/^#\s+(Prolog)\b/im) : null;
+    if (chapterMatch || prologMatch) {
       chapterSlideFound = true;
-      const kapNr = chapterMatch[1];
-      const kapTitle = chapterMatch[2].trim();
+      const kapNr = chapterMatch ? chapterMatch[1] : '0';
+
+      if (strictFullBleed && !/<!--\s*_class:\s*title\s*-->/i.test(slide)) {
+        issues.push({
+          slideNum,
+          type: 'MISSING_TITLE_CLASS',
+          message: `Kapitel-Titelfolie #${kapNr} fehlt '<!-- _class: title -->' für das Full-Bleed-Design.`
+        });
+      }
+      if (strictFullBleed && /!\[bg\s+right/i.test(slide)) {
+        issues.push({
+          slideNum,
+          type: 'LEGACY_BG_SPLIT',
+          message: `Kapitel-Titelfolie #${kapNr} nutzt noch '![bg right]' statt Full-Bleed '![bg](...)'.`
+        });
+      }
 
       // Background check (erlaubt '![bg right](...)' und Full-Bleed '![bg](...)')
+      if (strictFullBleed && /!\[bg\s+right/i.test(slide)) {
+        issues.push({
+          slideNum,
+          type: 'LEGACY_BG_SPLIT',
+          message: `Abschnitt ${secNum} [${secTitle}] nutzt noch '![bg right]' statt Full-Bleed '![bg](...)'.`
+        });
+      }
       const bgMatch = slide.match(/!\[bg(?:\s+right)?[^\]]*\]\(([^)]+)\)/i);
       if (!bgMatch) {
         issues.push({
           slideNum,
           type: 'MISSING_BG',
-          message: `Kapitelübersicht #${kapNr} fehlt Hintergrundbild: '![bg right](./Titelbild.jpg)' erwartet.`
+          message: `Kapitelübersicht #${kapNr} fehlt Hintergrundbild: '![bg](./Titelbild.jpg)' erwartet.`
         });
       } else {
         const imgPath = path.resolve(deckDir, bgMatch[1].trim());
@@ -212,7 +236,7 @@ function lintSectionDeck(markdownPath) {
       }
 
       // Standard intro
-      if (!/Dieses\s+Kapitel\s+umfasst\s+die\s+folgenden\s+Abschnitte:/i.test(slide)) {
+      if (chapterMatch && !/Dieses\s+Kapitel\s+umfasst\s+die\s+folgenden\s+Abschnitte:/i.test(slide)) {
         issues.push({
           slideNum,
           type: 'MISSING_INTRO',
@@ -229,7 +253,7 @@ function lintSectionDeck(markdownPath) {
         });
       }
 
-      if (declaredSectionsInAgenda.length === 0) {
+      if (chapterMatch && declaredSectionsInAgenda.length === 0) {
         issues.push({
           slideNum,
           type: 'EMPTY_AGENDA',
@@ -238,8 +262,32 @@ function lintSectionDeck(markdownPath) {
       }
     }
 
-    // 2. Abschnittsübersicht (## N.M: ...)
+    // 2. Abschnittsübersicht (## N.M: ... oder ## Überschrift in Prolog/Epilog)
     const sectionMatch = slide.match(/##\s+(\d+\.\d+):\s*([^\r\n]+)/);
+    const h2Match = !sectionMatch && strictFullBleed ? slide.match(/^##\s+([^\r\n]+)/m) : null;
+    if (h2Match) {
+      const h2Title = h2Match[1].trim();
+      if (chapNumEarly === 0 || chapNumEarly === 11) {
+        actualSectionSlides.push({
+          slideNum,
+          secNum: h2Title,
+          secTitle: h2Title
+        });
+      }
+      if (/!\[bg\s+right/i.test(slide)) {
+        issues.push({
+          slideNum,
+          type: 'LEGACY_BG_SPLIT',
+          message: `Abschnittsfolie [${h2Title}] nutzt noch '![bg right]' statt Full-Bleed '![bg](...)'.`
+        });
+      } else if (!/!\[bg[^\]]*\]\(([^)]+)\)/i.test(slide)) {
+        issues.push({
+          slideNum,
+          type: 'MISSING_BG',
+          message: `Abschnittsfolie [${h2Title}] fehlt Full-Bleed-Hintergrundbild '![bg](...)'.`
+        });
+      }
+    }
     if (sectionMatch) {
       const secNum = sectionMatch[1];
       const secTitle = sectionMatch[2].trim();
@@ -251,6 +299,13 @@ function lintSectionDeck(markdownPath) {
       });
 
       // Background check (erlaubt '![bg right](...)' und Full-Bleed '![bg](...)')
+      if (strictFullBleed && /!\[bg\s+right/i.test(slide)) {
+        issues.push({
+          slideNum,
+          type: 'LEGACY_BG_SPLIT',
+          message: `Abschnitt ${secNum} [${secTitle}] nutzt noch '![bg right]' statt Full-Bleed '![bg](...)'.`
+        });
+      }
       const bgMatch = slide.match(/!\[bg(?:\s+right)?[^\]]*\]\(([^)]+)\)/i);
       if (!bgMatch) {
         issues.push({

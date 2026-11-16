@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+  <style>
+    /* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+    .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; }
+    .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; }
+    .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; }
+  </style>
+
+  <text x="240" y="28" text-anchor="middle" class="hdr sem-neutral-text">Semester-Taktung (150 Min. ILV + 1 Woche Labor)</text>
+
+  <rect x="0" y="54" width="480" height="66" rx="10" stroke-width="2" class="sem-warning"/>
+  <text x="20" y="80" class="lbl sem-warning-text">1. Live-Showcase &amp; Code-Defense (~20 Min.)</text>
+  <text x="20" y="102" class="sub sem-neutral-text">2 Teams zeigen Hausübung der Vorwoche + Stresstest am Beamer</text>
+
+  <line x1="240" y1="120" x2="240" y2="140" stroke-width="2.5" class="sem-muted-stroke"/>
+
+  <rect x="0" y="140" width="480" height="66" rx="10" stroke-width="2" class="sem-primary"/>
+  <text x="20" y="166" class="lbl sem-primary-text">2. Interaktive Vorlesung (~110–125 Min.)</text>
+  <text x="20" y="188" class="sub sem-neutral-text">Theorie, Kontrast-SVGs, C#-Code &amp; kurze Mitmach-Impulse (activity)</text>
+
+  <line x1="240" y1="206" x2="240" y2="226" stroke-width="2.5" class="sem-muted-stroke"/>
+
+  <rect x="0" y="226" width="480" height="66" rx="10" stroke-width="2" class="sem-success"/>
+  <text x="20" y="252" class="lbl sem-success-text">3. Hausübung Stufe 1: Basisaufgabe (~60 Min.)</text>
+  <text x="20" y="274" class="sub sem-neutral-text">Gemeinsame Vorlage mit Selbsttest-Zahlen &amp; Unit-Tests (1.1–1.4)</text>
+
+  <line x1="240" y1="292" x2="240" y2="312" stroke-width="2.5" class="sem-muted-stroke"/>
+
+  <rect x="0" y="312" width="480" height="58" rx="10" stroke-width="2" class="sem-neutral"/>
+  <text x="20" y="336" class="lbl sem-neutral-text">4. Hausübung Stufe 2: Track A oder B (1 Woche)</text>
+  <text x="20" y="356" class="sub sem-muted-text">Autonome Erweiterung im 2er-Team (Industrie vs. Simulation Game)</text>
+</svg>

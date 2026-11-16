@@ -75,7 +75,7 @@ section img[alt~="center"] {
 section:not(.title):not(.lead):not([id="1"])::before {
     content: "";
 
-    display: block;
+    display: block !important;
 
     position: absolute;
 
@@ -95,10 +95,12 @@ section:not(.title):not(.lead):not([id="1"])::before {
     background-position: center;
 }
 
-/* Deckblätter und Folien mit Title-/Lead-Klasse strikt vom FH-Logo befreien */
-/* Inklusive Marpit Advanced Background Wrapper für Folie 1 und bg-Splits */
-section[data-marpit-advanced-background]::before,
-section[data-marpit-advanced-background-split]::before,
+/* Deckblätter und Folien mit Title-/Lead-Klasse strikt vom UAP-Badge befreien */
+/* Bei Full-Bleed (![bg]) zeigt content das Badge; bei bg-Split (![bg right]) zeigt pseudo das Badge ganz rechts */
+section:not(.title):not(.lead):not([id="1"])[data-marpit-advanced-background="background"]::before,
+section:not(.title):not(.lead):not([id="1"])[data-marpit-advanced-background="pseudo"]:not([data-marpit-advanced-background-split])::before,
+section:not(.title):not(.lead):not([id="1"])[data-marpit-advanced-background="content"][data-marpit-advanced-background-split]::before,
+section:not(.title):not(.lead):not([id="1"]):has(h2)::before,
 section[id="1"]::before,
 section#\31::before,
 section.title::before,
