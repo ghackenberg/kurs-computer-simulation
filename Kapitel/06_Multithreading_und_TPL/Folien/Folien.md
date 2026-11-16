@@ -166,6 +166,45 @@ $$E(p) = \frac{S(p)}{p} = \frac{T_1}{p \cdot T_p} \le 1 \quad (100\,\%)$$
 
 ---
 
+<!-- _class: activity -->
+
+### Mitmach-Frage (2 Min.): Wie weit skaliert ein Supercomputer?
+
+Angenommen, **$95\,\%$** einer Simulation lassen sich ideal parallelisieren – aber **$5\,\%$** (z. B. Initialisierung und Ergebnis-Zusammenführung) laufen streng seriell auf einem Kern.
+
+**Schätzen Sie mit Ihrem Nachbarn:** Welchen maximalen Speedup $S(1000)$ erreichen wir auf einem Cluster mit **$p = 1\,000$ Kernen**?
+
+- **A:** $\approx 950\times$ (fast linear mit den Kernen)
+- **B:** $\approx 500\times$ (etwa halbe Kernskalierung durch Overhead)
+- **C:** $\approx 20\times$ (harte Grenze durch die $5\,\%$ serielle Phase)
+- **D:** $\approx 5\times$ (Overhead frisst fast alles auf)
+
+> **Ablauf:** 30 Sek. still schätzen $\to$ 60 Sek. mit dem Nachbarn abstimmen $\to$ Handzeichen!
+>
+> **Denkhilfe:** Wie lange dauert allein der serielle Teil bei $T_1 = 100\,\text{s}$ Gesamtlaufzeit, wenn der parallele Teil beliebig schnell wird?
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Warum bei $20\times$ Schluss ist
+
+Die richtige Antwort ist **C ($\approx 20\times$)** – selbst bei unendlich vielen Kernen!
+
+- **Intuition am Zeitstrahl ($T_1 = 100\,\text{s}$):**
+  - Auf $1\,000$ Kernen schrumpft der parallele Teil ($95\,\text{s}$) auf $\frac{95}{1000} \approx 0{,}095\,\text{s}$.
+  - Der serielle Flaschenhals bleibt aber stur bei **$5\,\text{s}$**!
+  - Gesamtlaufzeit: $T_{1000} \approx 5{,}095\,\text{s} \implies S(1000) = \frac{100}{5{,}095} \approx \mathbf{19{,}6\times}$.
+- **Warum A/B falsch sind:** Selbst für $p \to \infty$ verschwinden die $5\,\text{s}$ nie ($S_{\max} = \frac{1}{s} = \frac{1}{0{,}05} = 20$).
+- **Warum D falsch ist:** Bei groben Chunks dominiert der serielle Teil, nicht der ThreadPool-Overhead.
+- **Konsequenz:** Ab einer gewissen Kernzahl bringt zusätzliche Hardware praktisch keinen Zeitgewinn mehr.
+
+> **Lehre für die Praxis:** Bevor man blind neue CPU-Kerne kauft, muss immer zuerst der serielle Anteil (z. B. I/O, `lock`-Wartezeiten) minimiert werden – sonst verpufft die Parallelisierung wirkungslos!
+>
+> **Merksatz:** Erst den seriellen Flaschenhals messen, dann parallelisieren!
+
+---
+
 ### Amdahlsches Gesetz & Skalierungsgrenzen
 
 <div class="columns top">
@@ -337,6 +376,46 @@ Eine **Race Condition** (Wettlaufsituation) tritt auf, wenn mehrere Threads glei
   2. **Modify:** Beide Threads addieren lokal $+1$ und erhalten jeweils `43`.
   3. **Write:** Beide schreiben `43` zurück in den RAM $\implies$ **1 Inkrement geht dauerhaft verloren (*Lost Update*, `43` statt `44`)!**
 - **Folge in der Praxis:** Bei $10\,000$ parallelen Inkrementen fehlen am Ende zufällig $1\,000$ bis $3\,000$ Zählwerte.
+
+---
+
+<!-- _class: activity -->
+
+### Predict the Output (2 Min.): Was gibt `counter` aus?
+
+Betrachten Sie diese kurze parallele Schleife auf einem 8-Kern-Rechner:
+
+```csharp
+int counter = 0;
+Parallel.For(0, 10000, _ =>
+{
+    counter++;
+});
+Console.WriteLine(counter);
+```
+
+- **A:** Exakt `10000` (der Compiler schützt `int` automatisch)
+- **B:** Einen Wert **größer** als `10000`
+- **C:** Bei jedem Start einen anderen Wert **kleiner** als `10000` (z. B. `7842`)
+- **D:** Einen Laufzeitfehler (`InvalidOperationException`)
+
+> **Think–Pair–Share:** 30 Sek. selbst überlegen $\to$ 60 Sek. mit dem Nachbarn abstimmen!
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: *Lost Updates* liefern zufällige Werte $< 10\,000$
+
+Die richtige Antwort ist **C** (z. B. `7842`, bei jedem Start ein anderes Ergebnis)!
+
+- **Warum?** `counter++` ist nicht atomar, sondern besteht aus *Read (`42`) $\to$ Modify (`43`) $\to$ Write (`43`)*.
+- Wenn mehrere Threads denselben alten Wert lesen, überschreiben sie sich gegenseitig (*Lost Update*) – es geht Zählwert verloren, **ohne** dass C# eine Exception wirft!
+- **Warum A/D falsch sind:** Der Compiler schützt `int` nicht automatisch; nur Exceptions (z. B. bei `List<T>`) würden crashen – ein einzelnes `int` überschreibt sich still.
+- **Besonders tückisch:** Auf einem einzelnen Kern (oder mit Breakpoints) tritt der Fehler gar nicht auf.
+- **Saubere Korrektur:** `Interlocked.Increment(ref counter);` statt `counter++;` nutzen (oder thread-lokal summieren).
+
+> **Merksatz:** Ein stiller, nicht-reproduzierbarer Zahlenfehler ist im Ingenieurwesen gefährlicher als ein sofortiger Absturz!
 
 ---
 
@@ -702,6 +781,45 @@ public void Simulate(CancellationToken token)
 </div>
 
 > **Aufräumen im `finally`-Block:** `CancelBtn.IsEnabled = false` setzen und `_cts?.Dispose()` aufrufen; in `Parallel.For` per `ParallelOptions` weitergeben.
+
+---
+
+<!-- _class: activity -->
+
+### Bug-Hunt im Plenum (2 Min.): Finde die 2 Fehler!
+
+Ein Team schreibt für seine WPF-Simulation diesen Hintergrund-Worker – **welche 2 kritischen Bugs** stecken in diesen Zeilen?
+
+```csharp
+var rnd = new Random(42);
+await Task.Run(() =>
+{
+    Parallel.For(0, 1000, i =>
+    {
+        double x = rnd.NextDouble();
+        ProgressBar.Value = i / 10.0;
+    });
+});
+```
+
+> **Aufgabe:** 60 Sek. zu zweit analysieren – benennen Sie beide Fehler, das konkrete Fehlerbild **und** die jeweilige Lösung!
+> **Hinweis:** Achten Sie besonders auf den Lebenszyklus der Objekte *vor* und *innerhalb* der Worker-Schleife!
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Die 2 klassischen Parallel-Fallen
+
+1. **Bug 1 (`var rnd = new Random(42)` außerhalb `Parallel.For`):**
+   - `System.Random` ist **nicht thread-sicher** – der interne Zustand korrumpiert und liefert nach kurzer Zeit nur noch `0.0`.
+   - *Lösung:* `Random.Shared.NextDouble()` oder eine eigene Instanz mit eindeutigem Seed pro Lauf.
+2. **Bug 2 (`ProgressBar.Value = ...` innerhalb `Task.Run`):**
+   - Direkter Zugriff aus einem Hintergrund-Thread auf WPF-Controls wirft sofort eine **`InvalidOperationException`** (Thread-Affinität).
+   - *Lösung:* Gedrosselt über **`IProgress<T>` (`progress.Report(...)`)** an den UI-Thread melden!
+3. **Konsequenz:** Beide Fehler treten erst bei echter Parallelität bzw. im WPF-UI-Kontext auf und bleiben in einfachen 1-Thread-Tests leicht unentdeckt.
+
+> **Merksatz für Stufe 1:** Kein `Random` teilen, kein WPF-Control direkt aus `Task.Run` anfassen – und Fortschrittsmeldungen immer drosseln!
 
 ---
 

@@ -306,6 +306,48 @@ section.homework div.columns > div {
     color: #1e293b;
 }
 
+section.activity {
+    background-color: #f0fdfa;
+    box-shadow: inset 10px 0 0 0 #0d9488;
+    color: #134e4a;
+}
+section.activity h1,
+section.activity h2,
+section.activity h3,
+section.activity h4 {
+    color: #0f766e;
+}
+section.activity header,
+section.activity footer,
+section.activity blockquote {
+    color: #115e59;
+}
+section.activity blockquote {
+    border-left-color: #0d9488;
+    background-color: #ccfbf1;
+}
+
+section.solution {
+    background-color: #f5f3ff;
+    box-shadow: inset 10px 0 0 0 #7c3aed;
+    color: #2e1065;
+}
+section.solution h1,
+section.solution h2,
+section.solution h3,
+section.solution h4 {
+    color: #5b21b6;
+}
+section.solution header,
+section.solution footer,
+section.solution blockquote {
+    color: #6d28d9;
+}
+section.solution blockquote {
+    border-left-color: #7c3aed;
+    background-color: #ede9fe;
+}
+
 section.showcase div.columns > div > h4:first-child,
 section.homework div.columns > div > h4:first-child {
     margin-top: 0;

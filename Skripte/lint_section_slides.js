@@ -340,6 +340,12 @@ function lintSectionDeck(markdownPath) {
     // 4. Gewichtete Vortragszeit pro Folientyp schätzen
     if (/###\s+.*(?:Live-Showcase|Hausübung)/i.test(slide)) {
       estimatedMinutes += 0;
+    } else if (/<!--\s*_class:\s*solution\s*-->/i.test(slide)) {
+      estimatedMinutes += 1.5;
+      contentSlideCount++;
+    } else if (/<!--\s*_class:\s*activity\s*-->/i.test(slide)) {
+      estimatedMinutes += 3.0;
+      contentSlideCount++;
     } else if (chapterMatch || sectionMatch || /^#\s+Zusammenfassung/im.test(slide)) {
       estimatedMinutes += 0.5;
     } else if (/###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(slide)) {
@@ -355,13 +361,15 @@ function lintSectionDeck(markdownPath) {
 
     // 5. Visueller Rhythmus & Layout-Shift prüfen
     const layout = classifySlideLayout(slide);
+    const isSolutionSlide = /<!--\s*_class:\s*solution\s*-->/i.test(slide);
+    const isActivitySlide = /<!--\s*_class:\s*activity\s*-->/i.test(slide);
     if (layout.isOpener) {
       prevContentLayout = null;
       nonVisualStreak = 0;
-    } else {
+    } else if (!isSolutionSlide) {
       const targetArr = strictRhythm ? issues : warnings;
       const hasVisual = /!\[[^\]]*\]\([^)]+\)/.test(slide);
-      if (hasVisual) {
+      if (hasVisual || isActivitySlide) {
         nonVisualStreak = 0;
       } else {
         nonVisualStreak++;
@@ -374,7 +382,7 @@ function lintSectionDeck(markdownPath) {
         }
       }
       if (prevContentLayout) {
-        if (prevContentLayout.isPureText && layout.isPureText) {
+        if (prevContentLayout.isPureText && layout.isPureText && !isActivitySlide) {
           targetArr.push({
             slideNum,
             type: 'CONSECUTIVE_TEXT_SLIDES',

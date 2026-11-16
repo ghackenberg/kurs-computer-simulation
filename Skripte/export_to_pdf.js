@@ -188,13 +188,40 @@ function exportSingleSlideDeck(dirName, mdFileName, marpCmd) {
     env.CHROME_PATH = browserExec;
   }
 
-  // CLI-Aufruf marp-cli direkt in den jeweiligen Kapitel/XX_*/Moodle/ Ordner
-  const cmd = `${marpCmd} --no-stdin --theme-set "${THEMEN_CSS}" --allow-local-files --pdf "${inputMd}" -o "${exportPdf}"`;
-  execSync(cmd, { stdio: 'pipe', env });
+  const hasSolutions = /<!--\s*_class:\s*solution\s*-->/i.test(fs.readFileSync(inputMd, 'utf8'));
+
+  if (!hasSolutions) {
+    const cmd = `${marpCmd} --no-stdin --theme-set "${THEMEN_CSS}" --allow-local-files --pdf "${inputMd}" -o "${exportPdf}"`;
+    execSync(cmd, { stdio: 'pipe', env });
+    const stat = fs.statSync(exportPdf);
+    return {
+      dirName: mdFileName === 'Folien.md' ? dirName : `${dirName} (${mdFileName})`,
+      sanitizedName: `${sanitizedDir}_${baseDeckName}`,
+      exportPdf,
+      size: stat.size
+    };
+  }
+
+  // 1. Vorab-Moodle-PDF ohne Lösungsfolien
+  const rawMd = fs.readFileSync(inputMd, 'utf8');
+  const studentSlides = rawMd.split(/^---$/m).filter(s => !/<!--\s*_class:\s*solution\s*-->/i.test(s));
+  const tmpStudentMd = path.join(folienDir, `.tmp_student_${mdFileName}`);
+  fs.writeFileSync(tmpStudentMd, studentSlides.join('---'), 'utf8');
+  try {
+    const cmdStudent = `${marpCmd} --no-stdin --theme-set "${THEMEN_CSS}" --allow-local-files --pdf "${tmpStudentMd}" -o "${exportPdf}"`;
+    execSync(cmdStudent, { stdio: 'pipe', env });
+  } finally {
+    if (fs.existsSync(tmpStudentMd)) fs.unlinkSync(tmpStudentMd);
+  }
+
+  // 2. Vollständiges Lösungs-PDF (*_Folien_Loesungen.pdf)
+  const solutionPdf = exportPdf.replace(/\.pdf$/i, '_Loesungen.pdf');
+  const cmdSol = `${marpCmd} --no-stdin --theme-set "${THEMEN_CSS}" --allow-local-files --pdf "${inputMd}" -o "${solutionPdf}"`;
+  execSync(cmdSol, { stdio: 'pipe', env });
 
   const stat = fs.statSync(exportPdf);
   return {
-    dirName: mdFileName === 'Folien.md' ? dirName : `${dirName} (${mdFileName})`,
+    dirName: mdFileName === 'Folien.md' ? `${dirName} (+ Loesungen)` : `${dirName} (${mdFileName})`,
     sanitizedName: `${sanitizedDir}_${baseDeckName}`,
     exportPdf,
     size: stat.size
