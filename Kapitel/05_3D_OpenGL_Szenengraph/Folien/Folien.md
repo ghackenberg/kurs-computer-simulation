@@ -45,7 +45,7 @@ Zu Beginn (15 Min.): **Moodle-Test 2** (Kapitel 03 & 04) – danach **Live-Showc
 #### Stufe 2 – Track B: Game (Racing HUD)
 - **Cockpit-Telemetrie:** Speed/RPM mit Shift-Flash & G-Kräfte (Kamm'scher Kreis).
 - **Statistik:** Bremsverzögerungs-Histogramm & Streckenabschnitts-Topologie (MSAGL).
-- **Stresstest:** Grenzbereich-Fahrt mit Haftungsabriss ($a_{\text{res}} > \mu \cdot g$) provozieren.
+- **Stresstest:** Grenzbereich-Fahrt mit Haftungsabriss ($a_{\text{res}} > \mu \cdot g$) live provozieren & im Plot prüfen.
 
 </div>
 </div>
@@ -123,7 +123,6 @@ Für jedes Pixel `(x, y)` verwaltet OpenGL im GPU-Speicher zwei gleich große 2D
   - Sichtbare RGBA-Farbe pro Pixel (wie `WriteableBitmap` in T02; Startwert `ClearColor` = `BG`).
 - **2. Depth Buffer / Z-Buffer (`GL_DEPTH_BUFFER_BIT`):**
   - Kleinster Kameraabstand `z_buf` pro Pixel (Startwert `zFar`).
-  - **Tiefentest (`GL_DEPTH_TEST`):** Überschreibe Farbe & `z_buf` nur bei `z_neu < z_buf`!
 
 </div>
 <div class="two">
@@ -132,6 +131,8 @@ Für jedes Pixel `(x, y)` verwaltet OpenGL im GPU-Speicher zwei gleich große 2D
 
 </div>
 </div>
+
+> **Tiefentest (`GL_DEPTH_TEST`):** Überschreibe Farbe & `z_buf` nur bei `z_neu < z_buf`!
 
 ---
 
@@ -153,10 +154,10 @@ $$I_f = I_a + I_d + I_s$$
 2. **Diffuse ($I_d$):** Matte Streuung nach Lambert ($\vec{n} \cdot \vec{l}$).
 3. **Specular ($I_s$):** Blickwinkelabhängiger Glanzpunkt ($\vec{r} \cdot \vec{v}$).
 
-> **Details & Shading (`GL_FLAT` / `GL_SMOOTH`):** Siehe [Anhang A: OpenGL-Details](./Folien_Anhang_A_OpenGL_Details.md).
+</div>
+</div>
 
-</div>
-</div>
+> **Details & Shading (`GL_FLAT` / `GL_SMOOTH`):** Siehe [Anhang A: OpenGL-Details](./Folien_Anhang_A_OpenGL_Details.md).
 
 ---
 
@@ -260,7 +261,6 @@ Homogene $4\times 4$-Matrizen mit $\vec{v} = (x, y, z, 1)^\top$ vereinen Verschi
 - **Reihenfolge ($\mathbf{T}\cdot\mathbf{R} \neq \mathbf{R}\cdot\mathbf{T}$):**
   1. **`T(L1) · R`:** Verschiebt zum Gelenkpunkt `(L1, 0)` und dreht dort vor Ort $\checkmark$
   2. **`R · T(L1)`:** Dreht erst die Achse $\implies$ das Bauteil schwenkt auf einer Kreisbahn!
-- **Merksatz:** In OpenGL wirkt der **letzte** Aufruf vor dem Zeichnen zuerst auf den Punkt!
 
 </div>
 <div class="two">
@@ -269,6 +269,8 @@ Homogene $4\times 4$-Matrizen mit $\vec{v} = (x, y, z, 1)^\top$ vereinen Verschi
 
 </div>
 </div>
+
+> **Merksatz:** In OpenGL wirkt der **letzte** Aufruf vor dem Zeichnen zuerst auf den Punkt!
 
 ---
 
@@ -280,9 +282,9 @@ Homogene $4\times 4$-Matrizen mit $\vec{v} = (x, y, z, 1)^\top$ vereinen Verschi
 `GL_PROJECTION` staucht das Sichtvolumen zwischen `zNear` und `zFar` in den Einheitswürfel **NDC** $[-1, +1]^3$:
 
 - **Orthogonal (`gl.Ortho`):** Parallele Kanten bleiben parallel (CAD-Aufriss).
-- **Perspektive (`gl.Perspective`):** Strahlensatz-Division durch $-z$ liefert Tiefenwirkung (`fovy = 45°`, `aspect = w / h`).
-- **Clipping (`zNear` / `zFar`):** Alles außerhalb `[0.1, 100.0]` wird für den Frame verworfen.
-- **Resize-Handler (`args`):** Aktualisiert `aspect` sofort bei Fensteränderung, damit Kugeln nicht zu Ellipsen verzerrt werden (Details: [Anhang A](./Folien_Anhang_A_OpenGL_Details.md)).
+- **Perspektive (`gl.Perspective`):** Division durch $-z$ für Tiefenwirkung (`fovy = 45°`, `aspect = w / h`).
+- **Clipping (`zNear` / `zFar`):** Alles außerhalb `[0.1, 100.0]` wird abgeschnitten.
+- **Resize-Handler (`args`):** Aktualisiert `aspect` beim Resize ([Anhang A](./Folien_Anhang_A_OpenGL_Details.md)).
 
 </div>
 <div class="two">
@@ -294,6 +296,7 @@ private void OpenGlView_Resized(
     OpenGL gl = args.OpenGL;
     gl.MatrixMode(OpenGL.GL_PROJECTION);
     gl.LoadIdentity();
+    // Aktuelles Seitenverhältnis w / h
     double aspect = OpenGlView.ActualWidth
         / Math.Max(OpenGlView.ActualHeight, 1.0);
     gl.Perspective(45.0, aspect, 0.1, 100.0);
@@ -361,10 +364,11 @@ Wie vererbt OpenGL Transformationen an Kinder, ohne Geschwister (`Workpiece`) zu
 - **Lokale Transformation (`T_1, R_1` & `T_2, R_2`):**
   - Kind: $\mathbf{M}_1 = \mathbf{M}_0 \cdot \mathbf{T}_1 \cdot \mathbf{R}_1$; Enkel: $\mathbf{M}_2 = \mathbf{M}_1 \cdot \mathbf{T}_2 \cdot \mathbf{R}_2$.
 - **`gl.PopMatrix()`:** Stellt nach dem Teilbaum exakt $\mathbf{M}_0$ wieder her!
-- **Skalierungs-Falle (Aufgabe 1.1):** `gl.Scale(L1, ...)` immer lokal in `PushMatrix`/`PopMatrix` kapseln!
 
 </div>
 </div>
+
+> **Skalierungs-Falle (Aufgabe 1.1):** `gl.Scale(L1, ...)` immer lokal in `PushMatrix`/`PopMatrix` kapseln!
 
 ---
 
@@ -513,8 +517,6 @@ Der **SCARA** verkettet ab `_baseNode` lokale Versätze ($\mathbf{T}_x, \mathbf{
 
 $$\mathbf{M}_{\text{TCP}} = \mathbf{T}_y(\text{HBase})\,\mathbf{R}_y(\theta_1)\,\mathbf{T}_x(\text{L1})\,\mathbf{R}_y(\theta_2)\,\mathbf{T}_x(\text{L2})\,\mathbf{T}_y(-d_3)$$
 
-> **Hinweis:** Jeder Knoten speichert lokale Gelenkwerte; die Gesamtmatrix folgt beim Traversieren.
-
 </div>
 <div class="two">
 
@@ -522,6 +524,8 @@ $$\mathbf{M}_{\text{TCP}} = \mathbf{T}_y(\text{HBase})\,\mathbf{R}_y(\theta_1)\,
 
 </div>
 </div>
+
+> **Hinweis:** Jeder Knoten speichert lokale Gelenkwerte; die Gesamtmatrix folgt beim Traversieren.
 
 ---
 
@@ -541,10 +545,11 @@ $$x = \text{L1}\cos\theta_1 + \text{L2}\cos(\theta_1+\theta_2), \quad y = \text{
 $$z = -\big(\text{L1}\sin\theta_1 + \text{L2}\sin(\theta_1+\theta_2)\big)$$
 
 - **Winkel & Minuszeichen:** `L2` schließt zur $+X$-Parallele den Gesamtwinkel $\theta_1 + \theta_2$ ein; von oben (`+Y` zum Auge) dreht $+\theta_1$ nach hinten in **$-Z$**!
-- **Ausblick T07:** Genau diese Vorwärtskinematik invertieren wir in **Termin 07** per Jacobi-Matrix!
 
 </div>
 </div>
+
+> **Ausblick T07:** Genau diese Vorwärtskinematik invertieren wir in **Termin 07** per Jacobi-Matrix!
 
 ---
 
@@ -579,7 +584,7 @@ private void BuildSceneGraph()
 <div class="columns">
 <div class="two">
 
-Warum hängt `_workpieceNode` als **Geschwisterknoten** direkt unter `_rootNode` (statt unter `_baseNode`)?
+Warum hängt `_workpieceNode` als **Geschwisterknoten** direkt unter `_rootNode`?
 
 - **Statische Weltlage:** Am Boden bei $(1{,}10;\; 0{,}06;\; -0{,}40)\,\text{m}$ darf es sich vor dem Greifen **nicht** mit dem Roboter mitdrehen!
 - **3D-Abstand (`UpdateTcpCalculations`):** `Vector3.Distance(tcpPos, boxPos)` prüft `dist < 0.12f` (`canGrab` – *Tipp:* `62°`, `-100°`, `0.44 m`).
@@ -621,8 +626,7 @@ In **Stufe 2 (Track A & B)** wird aus der Kette ein **verzweigter Szenengraph**:
 - **1. Baum-Verzweigung am Greifer:**
   - Unter der Pinole hängt `_wristNode` (`Ry = _theta4Deg`).
   - Daran hängen `_leftFingerNode` (`Tz = -_gripWidth / 2`) und `_rightFingerNode` (`Tz = +_gripWidth / 2`).
-- **2. Greifen (`Reparenting`):**
-  - Schließt der Greifer (`0.12 m`), wird `_workpieceNode` lokal `(0,0,0)` an `_wristNode` gekoppelt.
+- **Symmetrie:** Beide Finger fahren gegenläufig zur Greifermitte auf und zu.
 
 </div>
 <div class="two">
@@ -631,6 +635,8 @@ In **Stufe 2 (Track A & B)** wird aus der Kette ein **verzweigter Szenengraph**:
 
 </div>
 </div>
+
+> **2. Greifen (`Reparenting`):** Schließt der Greifer (`0.12 m`), wird `_workpieceNode` lokal `(0,0,0)` an `_wristNode` gekoppelt.
 
 ---
 
@@ -659,8 +665,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 2. **Elevation $\phi$ (`ElevationDeg` $\in [-85^\circ, +85^\circ]$):** Vertikale Neigung zur XZ-Ebene.
 3. **Distanz $r$ (`Distance` $> 0$):** $r_{xz} = r\cos\phi$, $y_{\text{eye}} = y_{\text{look}} + r\sin\phi$ (Mausrad-Zoom).
 
-> **Merksatz:** Der Nutzer steuert intuitiv $(r, \theta, \phi)$ um den Fokus $\vec{p}_{\text{look}}$ statt 3D-Koordinaten!
-
 </div>
 <div class="two">
 
@@ -668,6 +672,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 </div>
 </div>
+
+> **Merksatz:** Der Nutzer steuert intuitiv $(r, \theta, \phi)$ um den Fokus $\vec{p}_{\text{look}}$ statt 3D-Koordinaten!
 
 ---
 
@@ -685,10 +691,11 @@ Der Sehstrahl $\vec{f}$ von $\vec{p}_{\text{eye}}$ nach $\vec{p}_{\text{look}}$ 
 
 - **Schräger Blick ($|\phi| \le 85^\circ$):** $\vec{f}$ und $\vec{e}_{\text{up}}$ spannen eine Ebene auf $\implies \vec{s} \neq \vec{0}$ eindeutig.
 - **Nord-/Südpol ($\phi = \pm 90^\circ$):** $\vec{f} \parallel \vec{e}_{\text{up}} \implies \vec{f} \times \vec{e}_{\text{up}} = \vec{0}$ (*„Wo ist rechts?“* unbestimmt $\to 180^\circ$-Bildsprung, `Math.Clamp` schützt!).
-- **5°-Polkappe:** In der Praxis bleibt die Szene bis $85^\circ$ bequem von oben einsehbar.
 
 </div>
 </div>
+
+> **5°-Polkappe:** In der Praxis bleibt die Szene bis $85^\circ$ bequem von oben einsehbar.
 
 ---
 
@@ -703,7 +710,6 @@ Der Sehstrahl $\vec{f}$ von $\vec{p}_{\text{eye}}$ nach $\vec{p}_{\text{look}}$ 
   - Auf dem Strahl von $\vec{p}_{\text{look}}$ zu $\vec{p}_{\text{eye}}$ steht der Kamera-Rechtsvektor $\vec{e}_{\text{right}} = (\cos\theta, 0, -\sin\theta)^\top$ senkrecht.
   - **„Greife-die-Welt“-Prinzip:** Rechtsziehen (`dRight` $> 0$) schiebt $\vec{p}_{\text{look}}$ um $-\text{dRight}\cdot\vec{e}_{\text{right}}$ (`dX_look`, `dZ_look`, `dUp`):
     $$\text{dX\_look} = -\text{dRight} \cdot \cos\theta, \quad \text{dZ\_look} = +\text{dRight} \cdot \sin\theta$$
-  - `LookAtY += dUp` verschiebt die Blickhöhe entlang Welt-$Y$.
 
 </div>
 <div class="two">
@@ -712,6 +718,8 @@ Der Sehstrahl $\vec{f}$ von $\vec{p}_{\text{eye}}$ nach $\vec{p}_{\text{look}}$ 
 
 </div>
 </div>
+
+> **Höhe:** `LookAtY += dUp` verschiebt die Blickhöhe entlang Welt-$Y$.
 
 ---
 
@@ -805,10 +813,10 @@ gl.PopMatrix();
 
 Unser 4-teiliger Visualisierungsblock (**T02–T05**: Pixel, Vektor, Telemetrie, 3D-OpenGL) ist abgeschlossen – bevor wir ab Termin 07 Gleichungslöser starten, lösen wir einen Engpass:
 
-- **Das $16{,}6\,\text{ms}$-Problem:** Solange Berechnung und Rendering gemeinsam im WPF-UI-Thread laufen, friert das Fenster bei komplexen Simulationen ein und 15 von 16 CPU-Kernen bleiben ungenutzt.
-- **Nächster Schritt (Termin 06):** Mit **Multithreading (`Parallel.For`, `Task.Run`, `IProgress<T>`)** trennen wir Rechenlast und Oberfläche sauber voneinander.
+- **Das $16{,}6\,\text{ms}$-Problem:** Laufen Berechnung und Rendering gemeinsam im UI-Thread, friert das Fenster ein und 15 Kerne bleiben ungenutzt.
+- **Nächster Schritt (Termin 06):** **Multithreading (`Parallel.For`, `Task.Run`, `IProgress<T>`)** trennt Rechenlast und UI sauber.
 
-> **Showcase-Fokus (T06):** SCARA / Claw Crane (`PushMatrix`/`PopMatrix`, `T·R != R·T`, `OrbitCamera.Pan` & Pol-Schutz).
+> **Showcase-Fokus (T06):** SCARA / Claw Crane (`PushMatrix`/`PopMatrix`, `OrbitCamera.Pan` & Pol-Schutz).
 
 </div>
 <div class="two">

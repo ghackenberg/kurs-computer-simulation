@@ -46,7 +46,7 @@ Präsentation der Hausübung aus Termin 03 (**Stufe 1: Basisaufgabe** + **Stufe 
 #### Stufe 2 – Track B: Game (Poly Bridge Blueprint-Baumeister)
 - **Vektorgrafik:** Schlucht-Szenerie mit $0{,}5\,\text{m}$-Grid-Snapping, $L_{\max}$-Vorschau & Baubudget.
 - **Interaktion:** Knoten setzen, Stäbe spannen ($L \le 4{,}0\,\text{m}$) und Elemente löschen (`Entf`).
-- **Stresstest:** Maximallängen-Sperre (rot ab $4{,}0\,\text{m}$), Budget-Limit & JSON-Level-Export.
+- **Stresstest:** Maximallängen-Sperre (rot ab $4{,}0\,\text{m}$), Budget-Limit überschreiten & JSON-Level-Export.
 
 </div>
 </div>
@@ -223,6 +223,7 @@ WpfPlot1.Refresh();
 - **Zustandsraum $(n, M)$ (Track A):** Drehmoment $M$ über Drehzahl $n$ + rote Leistungsgrenze $P_{\max} = 1{,}2\,\text{kW}$.
 - **G-G-Diagramm (Track B):** Quer-/Längsbeschleunigung $(a_y, a_x)$ im $1{,}0\,g$-Kreis.
 - **Warum `Scatter` ($\mathcal{O}(N)$)?** Trajektorien laufen vorwärts und rückwärts (nicht-monoton in $x$); `plot.Axes.SquareUnits()` sichert **1:1-Isotropie**.
+- **Praxis-Tipp:** `MarkerSize` hält auch dichte Wolken lesbar.
 
 </div>
 <div class="three">
@@ -558,10 +559,10 @@ private void OnUiTimerTick(object? s, EventArgs e)
 - **Das Problem:** Für stabile `Mean ± 3·StdDev`-Grenzen (`HorizontalLine`) brauchen wir den globalen Mittelwert über Millionen Punkte – der `DataStreamer`-Ringpuffer behält aber nur die letzten 500 Werte ($0{,}5\,\text{s}$)!
 - **Zwei-Gedächtnis-Architektur:** Jeder Messwert `x` geht an den **Ringpuffer** (Kurzzeit-Kurve) UND an die **Welford-Rekursion** (`Count`, `Mean`, `M2` = 24 Byte RAM, ohne numerische Auslöschung!).
 
-> **Vorteil:** Auch bei $10^9$ Messwerten benötigt `WelfordStatistics` exakt **24 Bytes**!
+</div>
+</div>
 
-</div>
-</div>
+> **Vorteil:** Auch bei $10^9$ Messwerten benötigt `WelfordStatistics` exakt **24 Bytes**!
 
 ---
 
@@ -688,6 +689,8 @@ GraphControl.Graph = graph;
   </Grid>
 </Window>
 ```
+
+- **T08-Brücke:** Ab Termin 08 rendert dieses Control direkt Ihre S-Function-Blockdiagramme!
 
 - Das Objekt `graph` definiert nur die logische Verschaltung – `GraphControl` berechnet alle Positionen vollautomatisch.
 

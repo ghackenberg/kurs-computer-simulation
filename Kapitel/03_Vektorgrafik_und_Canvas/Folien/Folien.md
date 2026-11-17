@@ -38,7 +38,7 @@ Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showc
 #### Stufe 2 – Track A: Industrie (CPU-Kühlkörper)
 - **FDM-Modell:** Inhomogene Materialien (Si, Cu, Al) & Robin-Randbedingungen an Finnen.
 - **Numerik:** Stabilitätsgrenze $\Delta t \le \frac{\Delta x^2}{4 \alpha_{\max}}$ für Kupfer nachweisen.
-- **Stresstest:** Lüfterausfall live schalten ($h: 250 \to 20\,\text{W/m}^2\text{K}$) oder $\Delta t$ verdoppeln.
+- **Stresstest:** Lüfterausfall live schalten ($h: 250 \to 20\,\text{W/m}^2\text{K}$) oder $\Delta t$ verdoppeln und Instabilität prüfen.
 
 </div>
 <div class="two">
@@ -257,7 +257,7 @@ Beim Zeichnen physikalischer Systeme treffen zwei inkompatible Welten aufeinande
    ```csharp
    double s_x = W_draw / W_world, s_y = H_draw / H_world; // Kreise -> Ellipsen!
    ```
-   - $45^\circ$-Diagonalen kippen ab! Lösung: Isotropie $s = \min(s_x, s_y)$.
+   - $45^\circ$-Diagonalen kippen ab! Lösung: Isotropie $s = \min(s_x, s_y)$ als einheitlicher Maßstab für beide Achsen ohne Verzerrung.
 
 > **Merksatz:** Ein gemeinsamer Maßstab $s$ erhält Winkel, Kreise und Seitenverhältnisse exakt.
 
@@ -405,8 +405,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Zwei professionelle Lösungsansätze:**
   1. **Konfigurierbarer Kraftmaßstab $s_F$ $[\mathrm{px/N}]$:**
      $L = s_F \cdot |\vec{F}| \quad [\mathrm{px}]$ (proportional zur Last).
-  2. **Feste Pfeillänge mit Beschriftung (Industriestandard):**
-     Pfeilschaft ($P_{\text{node}} \to P_{\text{tip}}$) mit Basis $P_{\text{base}}$, Flügeln $P_{\text{wing1,2}}$ und Richtungsvektor $u = e_u$; Betrag als Text (`"25.0 kN"`).
+  2. **Feste Pfeillänge (Industriestandard):**
+     Schaft $P_{\text{node}} \to P_{\text{tip}}$ mit $P_{\text{base}}, P_{\text{wing1,2}}$, Richtung $u = e_u$ und Text (`"25.0 kN"`).
 
 </div>
 <div class="two">
@@ -438,6 +438,8 @@ public static Point[] GetArrowhead(Point tip, Vector dir, double length, double 
 }
 ```
 
+- **Ergebnis:** Liefert 3 Eckpunkte direkt für das `Polygon`.
+
 </div>
 <div class="one">
 
@@ -459,7 +461,8 @@ In industriellen CAD-Viewern werden Abmessungen normgerecht nach **DIN 406** dar
 
 1. **Maßhilfslinien (Extension Lines):** Verlängern Bauteilkanten mit Gap ($3\text{--}5\,\mathrm{px}$) und Überstand ($8\text{--}12\,\mathrm{px}$).
 2. **Maßlinie (Dimension Line):** Steht orthogonal zu den Maßhilfslinien, begrenzt durch schlanke Maßpfeile (1:3).
-3. **Maßzahl (Dimension Text):** Mittig über der Maßlinie platziert (z. B. `"4.00 m"`).
+3. **Maßzahl (Dimension Text):** Mittig über der Maßlinie platziert (z. B. `"4.00 m"` in konstanter Pixel-Schriftgröße bei jedem Zoom).
+4. **Einheitenkonsistenz:** Maße direkt aus den Weltkoordinaten in $[\mathrm{m}]$ berechnen.
 
 > **Praxis:** Konstante Pixelgrößen für Pfeile und Text halten Maßketten in jeder Zoomstufe lesbar.
 
@@ -520,6 +523,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Naives CPU-Neuzeichnen (Ansatz A):** Jede Mausbewegung berechnet alle Weltkoordinaten neu ($O(N)$) $\implies$ Lags und Layout-Passes ab 1.000 Elementen.
 - **GPU-`MatrixTransform` (Ansatz B – Standard):** Das Modell wird **einmalig** gezeichnet; Pan & Zoom verändern nur eine einzige affine $3 \times 3$-Matrix ($\mathbf{M}$).
 - **Vorteil:** Hardwarebeschleunigt über DirectX ($O(1)$), 60+ FPS, 0 Bytes GC-Allokation!
+- **Skalierung:** Bleibt auch bei $> 10.000$ Elementen im Viewport interaktiv bedienbar.
 
 > **Merksatz:** Geometrie nur bei Modelländerung neu aufbauen – Kamera bewegt nur `MatrixTransform` ohne Layout-Pass!
 
@@ -557,6 +561,7 @@ private void OnMouseWheel(object sender, MouseWheelEventArgs e)
 
 - **Fixpunkt-Invarianz:** $\mathbf{M}_{\text{zoom}} = \mathbf{T}(+\vec{C}) \cdot \mathbf{S}(s, s) \cdot \mathbf{T}(-\vec{C})$ hält den Punkt unter dem Cursor $\vec{C}$ ortsfest.
 - `ClipToBounds="True"` am äußeren `Border` schneidet Ränder ab ([Anhang A](./Folien_Anhang_A_Vektorgrafik_Details.md)).
+- **Zoom-Faktor:** $1{,}15\times$ pro Mausrad-Rastung sorgt für gleichmäßige, feinfühlige Navigation.
 
 </div>
 </div>
@@ -578,6 +583,7 @@ private void OnMouseWheel(object sender, MouseWheelEventArgs e)
   CanvasMatrixTransform.Matrix = m;
   ```
 - **Die Dragging-Jitter-Falle:** Ruft `Redraw()` beim Ziehen von $K_3$ naiv `_transform.Update()` auf, wächst $H_{\text{world}}$ und $s$ schrumpft $\implies$ **60-Hz-Oszillation**!
+- **`CaptureMouse()`:** Hält das Ziehen auch beim schnellen Überfahren von Elementgrenzen stabil.
 
 </div>
 <div class="one">
@@ -639,6 +645,8 @@ public Point ScreenToWorld(
     return new Point(worldX, worldY);
 }
 ```
+
+- **Anwendung:** Exaktes Knoten-Picking trotz aktivem Pan & Zoom.
 
 </div>
 <div class="one">
@@ -707,7 +715,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 `Line`, `Ellipse` und `Path` erben von `Visual -> UIElement -> FrameworkElement -> Shape` (hunderte Dependency Properties, mehrere KB pro Objekt):
 
 - **2-Phasen-Layout-Cycle (`Measure` / `Arrange`):** Jede Knotenbewegung markiert verbundene Stäbe als *layout-dirty*.
-- **5.000 Shapes $\implies$ 10.000 Methodenaufrufe pro Frame!**
+- **5.000 Shapes $\implies$ 10.000 Layout-Methodenaufrufe in jedem einzelnen Frame!**
 - **Skalierungsgrenze:** Ab 2.000 Shapes starke Lags, ab 5.000 Shapes Einbruch auf $< 10\,\mathrm{FPS}$.
 
 > **Anhang:** Detailablauf von `Measure` & `Arrange` siehe [Anhang A: Vektorgrafik-Details](./Folien_Anhang_A_Vektorgrafik_Details.md).
@@ -736,7 +744,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 - **Vektor-Stream:** Zeichenbefehle werden direkt in einen **`DrawingContext`** geschrieben und von der GPU gerendert ($> 100.000$ Elemente flüssig).
 - **`Brush` (Tinte):** Flächenfüllung (`Brushes.SteelBlue`, `SolidColorBrush`).
-- **`Pen` (Stift):** Kontur aus `Brush` + `Thickness` / `DashStyle`.
+- **`Pen` (Stift):** Kontur aus `Brush` + `Thickness` / `DashStyle` für gestochen scharfe Vektorlinien.
 
 > **Praxis:** Ein einziges `DrawingVisual` ersetzt tausende `Shape`-Controls auf dem `Canvas`.
 

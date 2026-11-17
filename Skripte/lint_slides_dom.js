@@ -551,8 +551,8 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const availableHeight = Math.max(1, s.footerTop - s.headerBottom);
     const contentHeight = s.contentBottom > s.contentTop ? (s.contentBottom - s.contentTop) : 0;
     const fillRatio = contentHeight / availableHeight;
-    const minSlideFillRatio = options.minSlideFillRatio !== undefined ? options.minSlideFillRatio : 0.80;
-    const minColHeightRatio = options.minFillRatio !== undefined ? options.minFillRatio : 0.80;
+    const minSlideFillRatio = options.minFillRatio !== undefined ? options.minFillRatio : 0.80;
+    const minColHeightRatio = options.minColHeightRatio !== undefined ? options.minColHeightRatio : 0.90;
     const minColWidthRatio = options.minColWidthRatio !== undefined ? options.minColWidthRatio : 0.90;
     const sparseCols = (s.colRatios || []).filter(c => c.ratio < minColHeightRatio);
     const narrowCols = (s.colWidthRatios || []).filter(c => c.ratio < minColWidthRatio);
@@ -797,7 +797,7 @@ async function main() {
           issues.push(`Folie zu leer: vertikale Auslastung nur ${Math.round(err.fillRatio * 100)}% (< ${Math.round(minFillRatio * 100)}%)`);
         }
         if (err.hasSparseCol) {
-          err.sparseCols.forEach(c => issues.push(`Spalte ${c.colIndex} zu leer: ${Math.round(c.ratio * 100)}% der Spaltenhöhe (${c.height}/${c.maxHeight}px, < ${Math.round(minFillRatio * 100)}%)`));
+          err.sparseCols.forEach(c => issues.push(`Spalte ${c.colIndex} zu leer: ${Math.round(c.ratio * 100)}% der Spaltenhöhe (${c.height}/${c.maxHeight}px, < 90%)`));
         }
         if (err.hasNarrowCol) {
           err.narrowCols.forEach(c => issues.push(`Spalte ${c.colIndex} zu schmal: ${Math.round(c.ratio * 100)}% der Spaltenbreite (${c.width}/${c.colWidth}px, < 90%)`));

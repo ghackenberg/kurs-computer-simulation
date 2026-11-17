@@ -132,7 +132,7 @@ Ein **Rasterbild** ist eine zweidimensionale Matrix aus diskreten Bildpunkten (*
 <div class="columns">
 <div class="three">
 
-In modernen Grafiktreibern ist das **32-Bit BGRA-Format** der Standard für maximale Geschwindigkeit:
+Das **32-Bit BGRA-Format** ist der Standard moderner Grafiktreiber:
 
 - **B (Blau), G (Grün), R (Rot):** Je 1 Byte ($0 \dots 255$) für die Farbintensität.
 - **A (Alpha):** 1 Byte ($0 = \text{transparent}, 255 = \text{deckend}$).
@@ -259,16 +259,16 @@ Kombiniert mit einer einzigen
 <div class="columns">
 <div class="three">
 
-`WriteableBitmap` (aus `System.Windows.Media.Imaging`) kapselt zwei Pufferbereiche:
+`WriteableBitmap` kapselt zwei getrennte Pufferbereiche:
 
-1. **BackBuffer (im RAM):**
-   - Ein nativer Speicherbereich, auf den unser Simulationscode direkt über einen Speicherzeiger (`IntPtr` / `byte*`) zugreifen kann.
-2. **FrontBuffer (DirectX / GPU):**
-   - Der Puffer, der von der MilCore-Render-Engine von WPF zur Darstellung über die Grafikkarte genutzt wird.
+1. **BackBuffer (RAM):**
+   - Nativer Speicherbereich für direkten Zeigerzugriff (`IntPtr` / `byte*`) aus unserem C#-Code.
+2. **FrontBuffer (GPU):**
+   - Der Darstellungs-Puffer der WPF-MilCore-Engine über die Grafikkarte.
 3. **Synchronisation:**
-   - Der Transfer vom BackBuffer zum FrontBuffer erfolgt nur, wenn Änderungen explizit über `AddDirtyRect()` gemeldet werden.
+   - Der Transfer vom Back- zum FrontBuffer erfolgt erst, wenn Änderungen explizit über `AddDirtyRect()` gemeldet werden.
 
-> **Wichtig:** Ohne `AddDirtyRect()` zwischen `Lock()` und `Unlock()` bleibt die Anzeige in WPF unverändert!
+> **Wichtig:** Ohne `AddDirtyRect()` zwischen `Lock()` und `Unlock()` bleibt die Anzeige unverändert!
 
 </div>
 <div class="one">
@@ -480,8 +480,9 @@ private unsafe void RenderParallel(IntPtr pBackBuffer, int stride, int w, int h)
 </div>
 <div class="one">
 
-- **Vorschau Kapitel 6 (Multithreading):** Jede der `h` Bildzeilen besitzt ihren eigenen Bereich `row` ab `pBackBuffer + y * stride`; `x` läuft von `0` bis `w - 1`.
-- **Kein Thread-Locking nötig:** Alle CPU-Kerne schreiben parallel in getrennte Zeilen (in T02 arbeiten wir noch rein sequentiell mit `for`).
+- **Vorschau Kap. 6:** Jede der `h` Zeilen besitzt `row` ab `pBackBuffer + y * stride` (`0 <= x < w`).
+- **Kein Lock nötig:** Alle Kerne schreiben in getrennte Zeilen (in T02 noch sequentiell per `for`).
+- **Linearer Speedup:** Skaliert direkt mit freien CPU-Kernen.
 
 </div>
 </div>
@@ -522,14 +523,14 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 <div class="columns">
 <div class="three">
 
-In der physikalischen Simulation repräsentiert ein Pixel eine Messgröße $v$ (z.B. Temperatur $T \in [T_{\min}, T_{\max}]$):
+Ein Pixel repräsentiert eine physikalische Größe $v$ (z. B. Temperatur $T \in [T_{\min}, T_{\max}]$):
 
 1. **Normierung auf das Einheitsintervall $[0, 1]$:**
    $$u = \text{clamp}\left(\frac{v - v_{\min}}{v_{\max} - v_{\min}}, \, 0.0, \, 1.0\right)$$
 2. **Farbpalette:**
-   - **Cool-to-Warm (Divergierend):** Blau ($u=0$) $\to$ Weiß ($u=0.5$) $\to$ Rot ($u=1$).
-   - **Jet / Rainbow:** Weit verbreitet, jedoch problematisch bezüglich Farbwahrnehmung.
-   - **Viridis:** Perzeptiv gleichförmig (*perceptually uniform*), monoton in Helligkeit und für Farbfehlsichtigkeiten geeignet.
+   - **Cool-to-Warm:** Blau ($u=0$) $\to$ Weiß ($u=0.5$) $\to$ Rot ($u=1$).
+   - **Jet / Rainbow:** Verbreitet, aber problematisch bei der Farbwahrnehmung.
+   - **Viridis:** Perzeptiv gleichförmig (*perceptually uniform*) & barrierefrei.
 
 </div>
 <div class="one">
@@ -538,6 +539,8 @@ In der physikalischen Simulation repräsentiert ein Pixel eine Messgröße $v$ (
 
 </div>
 </div>
+
+> **Praxis-Wahl:** *Viridis* für kontinuierliche Skalarfelder, *Cool-to-Warm* für Abweichungen um einen Nullpunkt.
 
 ---
 
@@ -722,7 +725,7 @@ $$\frac{\partial T}{\partial t} = \alpha \left( \frac{\partial^2 T}{\partial x^2
 <div class="columns">
 <div class="three">
 
-Mit dem expliziten Euler-Verfahren folgt die neue Temperatur $T_{\text{neu}} = T_{i,j}^{n+1}$ über die dimensionslose **Diffusionszahl $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$**:
+Expliziter Euler mit dimensionsloser **Diffusionszahl $s = \frac{\alpha \cdot \Delta t}{\Delta x^2}$**:
 
 $$T_{\text{neu}} = T_{i,j}^{n+1} = T_{i,j}^n + s \cdot L_{i,j}^n + \Delta t \cdot Q_{i,j}^n = (1 - 4s) T_{i,j}^n + 4s\,\bar{T}_{\text{Nachbarn}}^n$$
 
@@ -786,10 +789,10 @@ Bearbeite die folgenden drei Fragen kurz mit deinem Nachbarn:
 <div class="columns">
 <div class="three">
 
-- **1. Dirichlet (Feste Wand):** $T_{\text{Rand}} = \text{const.}$ (äußere Pixel in Schleife auslassen).
-- **2. Neumann (Isolator, $\dot{q}=0$):** Rand kopiert Nachbar (`tNeighbor = tCenter`).
-- **3. Robin (Konvektion):** Gewichtetes Mittel aus Metall ($\lambda$) & Luft ($h \cdot \Delta x$, Details im Anhang).
-- **Innere Isolator-Wände (`_alphaMap == 0f`):** Ohne Spiegelung fließt eine falsche Temperaturdifferenz ΔT in die kalte Wandzelle (**Kühlakku-Falle**)!
+- **1. Dirichlet (Feste Wand):** $T_{\text{Rand}} = \text{const.}$ (äußere Pixel auslassen).
+- **2. Neumann (Isolator, $\dot{q}=0$):** Rand spiegelt Nachbar (`tNeighbor = tCenter`).
+- **3. Robin (Konvektion):** Gewichtetes Mittel aus Metall ($\lambda$) & Luft ($h \cdot \Delta x$, siehe Anhang).
+- **Innere Isolator-Wände (`_alphaMap == 0f`):** Ohne Spiegelung fließt ΔT fälschlich in die kalte Wand (**Kühlakku-Falle**)!
   ```csharp
   float tRight = _alphaMap[x + 1, y] == 0f ? tCenter : _tCurrent[x + 1, y];
   float tLeft  = _alphaMap[x - 1, y] == 0f ? tCenter : _tCurrent[x - 1, y];
@@ -830,7 +833,6 @@ row[x] = lut[idx];
 ```
 
 - **Ping-Pong:** Lesen aus `_tCurrent`, Schreiben in `_tNext`, danach Referenzen tauschen!
-- **Visualisierung:** `Lock()` $\to$ `uint*`-Schleife $\to$ `AddDirtyRect()` $\to$ `Unlock()`.
 
 </div>
 <div class="two">
@@ -839,6 +841,8 @@ row[x] = lut[idx];
 
 </div>
 </div>
+
+> **Rendering:** `Lock()` $\to$ `uint*`-Schleife $\to$ `AddDirtyRect()` $\to$ `Unlock()`.
 
 ---
 

@@ -75,7 +75,7 @@ Ein **Modell** ist eine vereinfachte, abstrakte Darstellung eines realen Systems
 > "All models are wrong, but some are useful."
 > -- George E. P. Box
 
-Es erfasst die wesentlichen Aspekte, die für eine bestimmte Fragestellung relevant sind, und vernachlässigt unwesentliche Details:
+Es erfasst nur die für eine bestimmte Fragestellung relevanten Aspekte:
 
 - **Abstraktion:** Reduktion auf die steuernden physikalischen Größen.
 - **Zweckbindung:** Jedes Modell gilt nur für seinen definierten Gültigkeitsbereich.
@@ -98,11 +98,10 @@ Es erfasst die wesentlichen Aspekte, die für eine bestimmte Fragestellung relev
 
 Eine **Simulation** ist das systematische Durchführen von Experimenten mit einem mathematischen Modell:
 
-- Das Modell wird mit konkreten Anfangszuständen und Parametern (z. B. Masse, Dämpfung, Zeitschritt $\Delta t$) initialisiert.
-- Das Verhalten des Modells über die Zeit oder unter bestimmten Randbedingungen wird schrittweise berechnet.
+- Das Modell wird mit konkreten Anfangszuständen und Parametern ($\Delta t$, Masse, Dämpfung) initialisiert.
+- Das Verhalten des Modells über die Zeit wird unter definierten Randbedingungen schrittweise berechnet.
 - Die Ergebnisse werden gegen reale Messdaten oder analytische Referenzwerte validiert.
-
-> **Nutzen & Merksatz:** Simulation ermöglicht gefahrlose „Was-wäre-wenn“-Szenarien vor dem ersten physischen Prototyp – das Modell ist die *Struktur*, die Simulation ist das *Experiment* damit über die Zeit.
+- Abweichungen führen direkt zur gezielten Nachkalibrierung von Modellparametern.
 
 </div>
 <div>
@@ -111,6 +110,8 @@ Eine **Simulation** ist das systematische Durchführen von Experimenten mit eine
 
 </div>
 </div>
+
+> **Nutzen & Merksatz:** Simulation ermöglicht gefahrlose „Was-wäre-wenn“-Tests vor dem ersten Prototyp – das Modell ist die *Struktur*, die Simulation das *Experiment*.
 
 ---
 
@@ -136,7 +137,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 **Produktion & Logistik**
 - Was ist der optimale Materialfluss in einer Fabrik?
 - Wie viele AGVs werden für den Takt benötigt?
-- Wie wirkt sich ein Ausfall auf den Durchsatz aus?
+- Wie wirkt sich ein Maschinenausfall auf den gesamten Durchsatz der Linie aus?
 
 </div>
 </div>
@@ -172,7 +173,7 @@ Mithilfe von Modellen und Simulationen können wir komplexe Fragen beantworten, 
 
 **Informatik**
 - Wie ist die Antwortzeit eines Servers unter Last?
-- Wie trainiert man ein autonomes Fahrzeug sicher?
+- Wie trainiert man ein autonomes Fahrzeug sicher und reproduzierbar im Simulator?
 
 </div>
 </div>
@@ -240,10 +241,10 @@ Die Wahl des Modelltyps hängt von der Problemstellung und dem zu untersuchenden
 
 **Statische Modelle**
 - Beschreiben den Zustand eines Systems in einem einzigen Augenblick (im Gleichgewicht).
-- Sind zeitunabhängig ($\frac{d}{dt} = 0$).
+- Sind zeitunabhängig ($\frac{d}{dt} = 0$, also ohne Zeitschritt $\Delta t$).
 - Typische Fragestellung: Wie verformt sich ein Bauteil unter einer konstanten Last?
 - Mathematisch: Algebraische Gleichungen (z. B. lineares Gleichungssystem $K \cdot u = F$).
-- **Beispiel**: Statik eines Fachwerks (Kap. 7).
+- **Beispiel**: Statik eines Fachwerks unter konstanter Last (Kap. 7).
 
 </div>
 <div class="one">
@@ -743,13 +744,13 @@ Ein Sondermaschinenbauer besitzt ein detailliertes 3D-CAD-Modell einer Förderan
 <div class="columns">
 <div class="two">
 
-- **Physischer Raum**: Hier existiert das reale Objekt (z.B. eine Windkraftanlage, ein Auto, eine Fertigungsstraße). Sensoren erfassen kontinuierlich Daten über seinen Zustand (z.B. Temperatur, Drehzahl, Position).
+- **Physischer Raum**: Reales Objekt (z. B. Anlage, Fahrzeug). Sensoren erfassen laufend Daten (Temperatur, Drehzahl, Position).
 
-- **Virtueller Raum**: Hier existiert das digitale Modell. Es ist eine hochgenaue, multidisziplinäre Repräsentation des physischen Objekts.
+- **Virtueller Raum**: Digitales Modell als präzise, multidisziplinäre Repräsentation des physischen Objekts.
 
-- **Datenverbindung**: Der entscheidende Link.
-    - Daten fließen vom physischen zum virtuellen Objekt ("Digital Twin Instance").
-    - Erkenntnisse, Befehle oder Updates fließen vom virtuellen zum physischen Objekt.
+- **Datenverbindung**: Der entscheidende Link:
+    - Messdaten fließen vom physischen zum virtuellen Objekt (*Digital Twin Instance*).
+    - Erkenntnisse und Befehle fließen vom virtuellen zum physischen Objekt.
 
 </div>
 <div class="one">
@@ -758,6 +759,8 @@ Ein Sondermaschinenbauer besitzt ein detailliertes 3D-CAD-Modell einer Förderan
 
 </div>
 </div>
+
+> **Kernidee:** Ein Digitaler Zwilling bleibt über seinen gesamten Lebenszyklus bidirektional mit dem physischen System gekoppelt.
 
 ---
 
@@ -831,7 +834,8 @@ Der Digitale Zwilling verbindet die Simulation nahtlos über alle drei Lebenszyk
 ![](./Illustrationen/Phase_Produktion_Inbetriebnahme.jpg)
 
 **2. Produktion & Inbetriebnahme**
-- Fertigungsplanung und **Virtuelle Inbetriebnahme** vor Aufbau der realen Anlage.
+- **Virtuelle Inbetriebnahme** vor dem realen Aufbau.
+- Ergebnis: *Virtual Commissioning*.
 
 </div>
 <div class="one">
@@ -839,7 +843,8 @@ Der Digitale Zwilling verbindet die Simulation nahtlos über alle drei Lebenszyk
 ![](./Illustrationen/Phase_Betrieb_Wartung.jpg)
 
 **3. Betrieb & Wartung**
-- *Digital Twin Instance* mit Live-Sensordaten für Prognose und Optimierung.
+- Live-Sensordaten für Prognose und Optimierung.
+- Ergebnis: *Digital Twin Instance*.
 
 </div>
 </div>
@@ -867,10 +872,10 @@ Der Digitale Zwilling verbindet die Simulation nahtlos über alle drei Lebenszyk
 ![](./Illustrationen/Inbetriebnahme_Modern.jpg)
 
 **Ansatz mit Digitalem Zwilling**
-1. Parallel zum Aufbau der Mechanik wird ein kinematisches Simulationsmodell (Digitaler Zwilling) erstellt.
-2. Software-Entwickler testen die SPS- oder Roboter-Software im Büro gegen das Modell.
-3. 90% der Logikfehler werden gefunden, bevor die reale Anlage überhaupt existiert.
-4. Deutlich kürzere und sicherere Inbetriebnahmezeit vor Ort.
+1. Parallel zur Mechanik entsteht ein kinematisches Simulationsmodell.
+2. Entwickler testen SPS- oder Roboter-Code im Büro gegen das Modell.
+3. 90 % der Logikfehler werden vor dem realen Aufbau gefunden.
+4. Deutlich kürzere und sicherere Inbetriebnahme vor Ort.
 
 </div>
 </div>
@@ -992,7 +997,7 @@ Nach dem Fundament erarbeiten wir zuerst die Werkzeuge und dann die Modellarten:
 - Stochastischer Wind $\vec{w} = [w_x, 0]^\top$
 - Nichtlineares Terrain $y_{\text{terrain}}(x)$
 - **Bodenkollision:** Schnittpunkt-Interpolation
-- **KI-Zielrechner:** Schusswinkel-Finder & ASCII-Plot
+- **KI-Zielrechner:** Schusswinkel-Finder, Streuung & ASCII-Plot im Terminal
 
 </div>
 </div>

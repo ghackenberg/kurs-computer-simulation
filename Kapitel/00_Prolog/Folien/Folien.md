@@ -228,7 +228,7 @@ Die ersten sechs Termine bauen Ihren C#- und Visualisierungs-Werkzeugkasten Schr
 <div class="two">
 
 #### Telemetrie, 3D & Parallelität
-- **T04:** [Telemetrie & ScottPlot 5](../../04_Telemetrie_und_ScottPlot/Folien/) – *Live-Kurven, Phasenportraits & Signal-Analyse.*
+- **T04:** [Telemetrie & ScottPlot 5](../../04_Telemetrie_und_ScottPlot/Folien/) – *Live-Kurven, Phasenportraits, Online-Statistik & Signal-Analyse.*
 - **T05:** [3D-OpenGL & Szenengraph](../../05_3D_OpenGL_Szenengraph/Folien/) – *Hierarchische Transformationen (`SharpGL`) & Quiz 2.*
 - **T06:** [Multithreading & TPL](../../06_Multithreading_und_TPL/Folien/) – *`Parallel.For`, `Task.Run` & UI-Entkopplung.*
 
@@ -262,7 +262,7 @@ Wie die beiden Semesterhälften nahtlos ineinandergreifen:
 <div class="two">
 
 #### Phase 1: Werkzeugkasten (T01–T06)
-- Schnelle 2D-/3D-Ausgabe ohne GC-Ruckler (`WriteableBitmap` & OpenGL)
+- Schnelle 2D-/3D-Ausgabe ohne GC-Ruckler (`WriteableBitmap`, `WPF Canvas` & OpenGL `SharpGL`)
 - Live-Telemetrie & sichere UI-Entkopplung
 - Saubere Trennung zwischen Modell und View
 - Unit-Tests & analytische Kontrollrechnungen
@@ -394,7 +394,7 @@ Zu Beginn jedes Folgetermins demonstrieren zwei zufällig ausgewählte Teams ihr
 <div class="two">
 
 #### Live-Demonstration & Stresstest
-- **Live-Demonstration:** Flüssig laufende Simulation ($\ge 30\,\text{FPS}$) im Hörsaal.
+- **Live-Demonstration:** Flüssig laufende Simulation ($\ge 30\,\text{FPS}$) mit Echtzeit-Parameteränderung im Hörsaal.
 - **Code-Inspection:** Exakte Begründung jeder Codezeile (kein blindes „Vibe Coding“!).
 - **Live-Parameter-Stresstest:** Ad-hoc-Modifikation (z. B. Schrittweite verzehnfachen).
 

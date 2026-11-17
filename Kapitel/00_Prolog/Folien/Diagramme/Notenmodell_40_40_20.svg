@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 442" width="570" height="442">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -76,17 +76,17 @@
   <text x="436" y="81" text-anchor="middle" class="lbl sem-warning-text">20 %</text>
 
   <!-- Pillar 1 -->
-  <rect x="0" y="122" width="480" height="72" rx="10" stroke-width="2" class="sem-primary"/>
-  <text x="18" y="149" class="lbl sem-primary-text">Säule 1: Moodle-Präsenzquizzes (40 %)</text>
-  <text x="18" y="174" class="sub sem-neutral-text">4 Tests à 10 % (T03, T05, T08, T10) – Theorie &amp; Diagnose</text>
+  <rect x="0" y="128" width="480" height="86" rx="10" stroke-width="2" class="sem-primary"/>
+  <text x="18" y="161" class="lbl sem-primary-text">Säule 1: Moodle-Präsenzquizzes (40 %)</text>
+  <text x="18" y="189" class="sub sem-neutral-text">4 Tests à 10 % (T03, T05, T08, T10) – Theorie &amp; Diagnose</text>
 
   <!-- Pillar 2a -->
-  <rect x="0" y="210" width="480" height="72" rx="10" stroke-width="2" class="sem-success"/>
-  <text x="18" y="237" class="lbl sem-success-text">Säule 2a: C#-Code-Portfolio (40 %)</text>
-  <text x="18" y="262" class="sub sem-neutral-text">10 wöchentliche Hausübungen à 4 % (Stufe 1 + Track A/B)</text>
+  <rect x="0" y="232" width="480" height="86" rx="10" stroke-width="2" class="sem-success"/>
+  <text x="18" y="265" class="lbl sem-success-text">Säule 2a: C#-Code-Portfolio (40 %)</text>
+  <text x="18" y="293" class="sub sem-neutral-text">10 wöchentliche Hausübungen à 4 % (Stufe 1 + Track A/B)</text>
 
   <!-- Pillar 2b -->
-  <rect x="0" y="298" width="480" height="68" rx="10" stroke-width="2" class="sem-warning"/>
-  <text x="18" y="325" class="lbl sem-warning-text">Säule 2b: Live-Showcase &amp; Code-Defense (20 %)</text>
-  <text x="18" y="348" class="sub sem-neutral-text">Beamer-Vorführung, Code-Erklärung &amp; Parameter-Stresstest</text>
+  <rect x="0" y="336" width="480" height="86" rx="10" stroke-width="2" class="sem-warning"/>
+  <text x="18" y="369" class="lbl sem-warning-text">Säule 2b: Live-Showcase &amp; Code-Defense (20 %)</text>
+  <text x="18" y="397" class="sub sem-neutral-text">Beamer-Vorführung, Code-Erklärung &amp; Parameter-Stresstest</text>
 </svg>
