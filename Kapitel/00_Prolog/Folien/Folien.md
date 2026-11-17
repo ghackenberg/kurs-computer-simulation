@@ -188,7 +188,7 @@ Umsetzung von Modell und Numerik in wartbare Echtzeitanwendungen:
 
 <!-- _class: activity -->
 
-### Kurze Reflexion: Ihr eigenes Lernziel (2 Min.)
+### Frage: Ihr persönliches Lernziel für das Semester
 
 Überlegen Sie kurz für sich (oder im kurzen Austausch mit Ihrem Nachbarn), welche Schwerpunkte Sie setzen möchten:
 
@@ -348,7 +348,7 @@ Für die vertiefenden Laboraufgaben (Stufe 2) wählen Sie im 2er-Team frei zwisc
 
 <!-- _class: activity -->
 
-### Kurzer Check-In: Ihr Wunsch-Track (2 Min.)
+### Frage: Welcher Track passt zu Ihren Interessen?
 
 Bevor wir auf das Notenmodell blicken, eine kurze Einschätzung für Sie selbst (gern im kurzen Austausch mit dem Nachbarn):
 

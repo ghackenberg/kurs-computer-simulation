@@ -406,7 +406,7 @@ function lintSectionDeck(markdownPath) {
       contentSlideCount++;
     } else if (chapterMatch || sectionMatch || /^#\s+Zusammenfassung/im.test(slide) || /<!--\s*_class:\s*appendix\s*-->/i.test(slide)) {
       slideMins = 0.5;
-    } else if (/###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(slide)) {
+    } else if (/###\s+Kontext\s*&\s*Einordnung:/i.test(slide)) {
       slideMins = 2.0;
       contentSlideCount++;
     } else if (/###\s+.*(?:Blick unter die Haube|Herleitung|Mathematik|Kontrast)/i.test(slide) || (/!\[[^\]]*\]\(\.\/Diagramme\/[^)]+\.svg\)/i.test(slide) && /\$\$[\s\S]+?\$\$/.test(slide))) {
@@ -426,6 +426,13 @@ function lintSectionDeck(markdownPath) {
       if (isAct) {
         activityCount++;
         frontalMinutesStreak = 0;
+        if (!/^###\s+(?:Frage|Aufgabe):\s+/m.test(slide)) {
+          issues.push({
+            slideNum,
+            type: 'ACTIVITY_TITLE_SCHEMA',
+            message: `activity-Folie ${slideNum} muss mit '### Frage: ...' oder '### Aufgabe: ...' beginnen.`
+          });
+        }
         const nextSlide = slides[idx + 1] || '';
         if (!/<!--\s*_class:\s*solution\s*-->/i.test(nextSlide)) {
           targetActArr.push({
@@ -522,13 +529,13 @@ function lintSectionDeck(markdownPath) {
     if (firstSec && chapSlideIdx !== -1) {
       const preSecSlides = slides.slice(chapSlideIdx + 1, firstSec.slideNum - 1);
       const bridgeSlide = preSecSlides.find(sl =>
-        /###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(sl)
+        /###\s+Kontext\s*&\s*Einordnung:/i.test(sl)
       );
       if (!bridgeSlide) {
         issues.push({
           slideNum: firstSec.slideNum,
           type: 'MISSING_BRIDGE_SLIDE',
-          message: `Vor Abschnitt ${chapNum}.1 (nach Kapitel-Opener/Quiz/Showcase) fehlt die dedizierte Einstiegs-/Brückenfolie ('### Rückblick & Brücke: ...').`
+          message: `Vor Abschnitt ${chapNum}.1 (nach Kapitel-Opener/Quiz/Showcase) fehlt die dedizierte Brückenfolie ('### Kontext & Einordnung: ...').`
         });
       } else if (!/!\[[^\]]*\]\(\.\/Diagramme\/[^)]+\.svg\)/i.test(bridgeSlide)) {
         const bIdx = slides.indexOf(bridgeSlide);

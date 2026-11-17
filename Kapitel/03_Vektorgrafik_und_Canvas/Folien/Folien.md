@@ -57,7 +57,7 @@ Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showc
 
 <!-- _class: recap -->
 
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+### Kontext & Einordnung: Vom Pixelpuffer zur skalierbaren CAD-Vektorgrafik
 
 <div class="columns top">
 <div class="two">
@@ -343,7 +343,7 @@ public (double Xw, double Yw) ScreenToWorld(
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): Isotropes Scaling & `WorldToScreen`
+### Aufgabe: Isotropes Scaling & `WorldToScreen` berechnen
 
 Ein Fachwerk erstreckt sich über $X \in [0, 10]\,\mathrm{m}$ und $Y \in [0, 4]\,\mathrm{m}$ auf einem Canvas mit $W_{\text{canvas}} = 900\,\mathrm{px}$, $H_{\text{canvas}} = 500\,\mathrm{px}$ und $\text{margin} = 50\,\mathrm{px}$:
 
@@ -660,7 +660,7 @@ public Point ScreenToWorld(
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): `ScaleAt`, Jitter & `ScreenToWorld`
+### Aufgabe: `ScaleAt`, Jitter & `ScreenToWorld` berechnen
 
 | Szenario | Kernfrage | Relevante Methode |
 | :--- | :--- | :--- |
@@ -783,7 +783,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): Architektur- & `Freeze()`-Diagnose
+### Aufgabe: Architektur- & `Freeze()`-Diagnose
 
 Ein Simulations-Viewer zeichnet $10.000$ Fachwerkstäbe pro Frame bei $60\,\text{FPS}$ ($16{,}6\,\text{ms}$ Budget). Vergleichen Sie beide Implementierungen kurz zu zweit:
 

@@ -60,7 +60,7 @@ Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 <!-- _class: recap -->
 
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+### Kontext & Einordnung: Von paralleler Infrastruktur zur gekoppelten Strukturmechanik
 
 <div class="columns top">
 <div class="three">

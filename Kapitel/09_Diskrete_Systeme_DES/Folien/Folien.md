@@ -62,7 +62,7 @@ Präsentation der Hausübung aus Termin 08 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 <!-- _class: recap -->
 
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+### Kontext & Einordnung: Von kontinuierlichen Zuständen zu diskreten Materialflüssen
 
 <div class="columns top">
 <div class="three">

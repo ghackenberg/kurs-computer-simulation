@@ -57,7 +57,7 @@ Präsentation der Hausübung aus Termin 05 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 <!-- _class: recap -->
 
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+### Kontext & Einordnung: Von der Visualisierung zur parallelen Rechenpipeline
 
 <div class="columns top">
 <div class="two">
@@ -169,7 +169,7 @@ $$E(p) = \frac{S(p)}{p} = \frac{T_1}{p \cdot T_p} \le 1 \quad (100\,\%)$$
 
 <!-- _class: activity -->
 
-### Mitmach-Frage (2 Min.): Wie weit skaliert ein Supercomputer?
+### Frage: Wie weit skaliert ein Supercomputer (Amdahl)?
 
 Angenommen, **$95\,\%$** einer Simulation lassen sich ideal parallelisieren – aber **$5\,\%$** (z. B. Initialisierung und Ergebnis-Zusammenführung) laufen streng seriell auf einem Kern.
 
@@ -382,7 +382,7 @@ Eine **Race Condition** (Wettlaufsituation) tritt auf, wenn mehrere Threads glei
 
 <!-- _class: activity -->
 
-### Predict the Output (2 Min.): Was gibt `counter` aus?
+### Frage: Was gibt `counter` nach paralleler Ausführung aus?
 
 Betrachten Sie diese kurze parallele Schleife auf einem 8-Kern-Rechner:
 
@@ -638,7 +638,7 @@ Die Entkopplung von Simulation und Benutzeroberfläche erfordert eine klare Thre
 
 <!-- _class: activity -->
 
-### Bug-Hunt im Plenum (2 Min.): Finde die 2 Fehler!
+### Aufgabe: Zwei Synchronisationsfehler im WPF-Worker finden
 
 Ein Team schreibt für seine WPF-Simulation diesen Hintergrund-Worker – **welche 2 kritischen Bugs** stecken in diesen Zeilen?
 

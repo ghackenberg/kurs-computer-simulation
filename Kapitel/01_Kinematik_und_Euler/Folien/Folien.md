@@ -29,7 +29,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 <!-- _class: recap -->
 
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+### Kontext & Einordnung: Von der Problemstellung zum numerischen Integrator
 
 <div class="columns top">
 <div class="two">
@@ -317,7 +317,7 @@ Diese Unterscheidung ist vor allem bei **dynamischen Modellen** relevant:
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): Welcher Modelltyp passt?
+### Frage: Welcher Modelltyp passt zur Systemklasse?
 
 Ordnen Sie diese drei technischen Systeme gemeinsam (oder kurz für sich) den Modellkategorien zu (*statisch/dynamisch*, *kontinuierlich/diskret*, *deterministisch/stochastisch*):
 
@@ -444,7 +444,7 @@ $$y_{k+1} = y_k + \Delta t \cdot f(t_k, y_k), \quad t_{k+1} = t_k + \Delta t$$
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): Einen Euler-Schritt von Hand rechnen
+### Aufgabe: Expliziten Euler-Schritt von Hand berechnen
 
 Gegeben sei das lineare Abkling-Modell $\dot{y}(t) = -2\,y(t)$ mit Startwert $y_0 = 10$ (analytische Referenz: $y(t) = 10\,e^{-2t}$):
 
@@ -718,7 +718,7 @@ Der Begriff wurde maßgeblich von **Dr. Michael Grieves** (University of Michiga
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): CAD-Modell vs. Digitaler Zwilling
+### Frage: CAD-Modell vs. Digitaler Zwilling
 
 Ein Sondermaschinenbauer besitzt ein detailliertes 3D-CAD-Modell einer Förderanlage auf dem Server, während die echte Anlage in der Halle läuft. Diskutieren Sie kurz zu zweit (oder für sich):
 

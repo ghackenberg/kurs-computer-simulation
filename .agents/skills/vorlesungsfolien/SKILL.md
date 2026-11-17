@@ -28,13 +28,17 @@ Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorles
    - Reine Textfolien (ohne Grafik/SVG und ohne Code) dürfen niemals direkt aufeinanderfolgen (`CONSECUTIVE_TEXT_SLIDES`) – spätestens jede zweite Inhaltsfolie bringt eine Grafik oder ein Code-Element.
    - Zwei aufeinanderfolgende Inhaltsfolien müssen einen signifikanten **visuellen Shift** aufweisen (unterschiedliche Spaltenbreiten `one`–`six`, Wechsel zwischen Text-/Bild-/Code-/Mischspalten oder ein-/mehrzeiligen Layouts; ab Kap. `06` als harter Linter-Fehler).
    - **Visuelle Verankerung (`SECTION_MISSING_VISUAL`, `CONSECUTIVE_NON_VISUAL_SLIDES`):** Jeder Abschnitt (`## N.M:`) enthält mindestens **1 Inhalts-Grafik/SVG**, und es folgen maximal **3 Inhaltsfolien in Folge** ohne Grafik/SVG aufeinander (ab Kap. `06` als Fehler, `00`–`05` als Warnung).
-   - **Aktivierung (`TOO_FEW_ACTIVITIES`, `MAX_FRONTAL_MINUTES_EXCEEDED`, `MISSING_SOLUTION_SLIDE`):** Mindestens **3 `activity`-Folien** pro Kapitel (`01`–`10`), maximal **~35 Min.** Frontalzeit am Stück ohne `activity`, und jede `activity` unmittelbar gefolgt von `solution` (ab Kap. `06` als Fehler, `01`–`05` als Warnung).
+   - **Aktivierung (`TOO_FEW_ACTIVITIES`, `MAX_FRONTAL_MINUTES_EXCEEDED`, `MISSING_SOLUTION_SLIDE`, `ACTIVITY_TITLE_SCHEMA`):** Mindestens **3 `activity`-Folien** pro Kapitel (`01`–`10`), maximal **~35 Min.** Frontalzeit am Stück ohne `activity`, jede `activity` unmittelbar gefolgt von `solution` (`### Auflösung: ...`), und einheitliches 4-Typen-Schema mit Titelpräfix **`### Frage: ...`** (Reflexion/Konzept-Check, Code-Tracing) oder **`### Aufgabe: ...`** (Szenario-/Rechen-Tabelle, Fehlerdiagnose):
+     - *Typ 1 (Reflexion / Konzept-Check, `Frage:`):* 1 Satz Kontext + 2–3 nummerierte Fragen (`1.`–`3.`) $\to$ `Auflösung:` mit 1:1 nummerierten Antworten + `> **Merksatz:**`.
+     - *Typ 2 (Szenario- & Rechen-Tabelle, `Aufgabe:`):* 1 Satz Szenario + Parameter-Tabelle + 3 nummerierte Teilfragen (`1.`–`3.`) $\to$ `Auflösung:` mit 1:1 nummerierten Ergebnissen + `> **Merksatz:**`.
+     - *Typ 3 (Code-Tracing / Predict the Output, `Frage:`):* 1 Satz Kontext + kompakter C#-Codeblock + 2–3 Fragen $\to$ `Auflösung:` mit Output, Ursache, Fix + `> **Merksatz:**`.
+     - *Typ 4 (Fehlerdiagnose / Bug-Hunt, `Aufgabe:`):* Fehlerhafter Code/Setup + klare Suchvorgabe $\to$ `Auflösung:` mit nummerierter Fehleranalyse, Fix + `> **Merksatz:**`.
 6. **Ausgewogene Abschnittsgrößen (`lint:sections`):**
    - Jeder Abschnitt (`## N.M:`) umfasst mindestens **2 Inhaltsfolien** (`SECTION_TOO_SMALL`); ein-Folien-Abschnitte sind durch Zusammenlegen oder Ausbau zu vermeiden.
    - Die Inhaltsfolien sind möglichst gleichmäßig auf die Abschnitte verteilt (Max/Min-Verhältnis $\le 2:1$ bei Differenz $> 2$, `UNBALANCED_SECTIONS`).
 2. **Folie 2 (ab Kapitel `02`): `### Live-Showcase & Code-Defense: Termin [XX-1]`:**
    - Fasst zweispaltig (`Track A` links, `Track B` rechts) die Vorwochen-Hausübung und den Live-Parameter-Stresstest zusammen.
-3. **Einstiegsfolie vor Abschnitt `N.1`: `### Rückblick & Brücke: ...`:**
+3. **Einstiegsfolie vor Abschnitt `N.1`: `### Kontext & Einordnung: ...`:**
    - Pflicht in jedem Kapitel ab `01` **vor** dem ersten Abschnitts-Opener `## N.1:` und **nach** dem Kapitel-Opener bzw. den optionalen Quiz-/Showcase-Folien (geprüft durch `npm run lint:sections`).
    - Zweispaltiges Pflichtlayout (`three` Text links | `two` 3-Stufen-Brücken-SVG `./Diagramme/...svg` rechts): verbindet (a) den Rückblick auf Vor-Termine (Nachbar- & Fern-Brücken laut `Konzept/01_*.md`), (b) den konkreten Engpass des bisherigen Werkzeugs und (c) die Einordnung in die Semester-Architektur (*Foreshadowing*). Fehlt das SVG, meldet `lint:sections` einen Fehler (`MISSING_BRIDGE_VISUAL`).
 4. **Ausblicksfolie vor der Hausübung: `### Ausblick: ...`:**

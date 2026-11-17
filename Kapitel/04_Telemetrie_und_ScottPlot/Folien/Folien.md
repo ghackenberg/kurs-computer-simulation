@@ -57,7 +57,7 @@ Präsentation der Hausübung aus Termin 03 ([Aufgabenblatt 03](../../03_Vektorgr
 
 <!-- _class: recap -->
 
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+### Kontext & Einordnung: Vom Einzelbild zur kontinuierlichen Echtzeit-Telemetrie
 
 <div class="columns top">
 <div class="two">
@@ -291,7 +291,7 @@ Bei $N = 10^7$ äquidistanten Punkten ($t_i = t_0 + i \cdot \Delta t$, $\Delta t
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): `Scatter`, `Signal` & `SignalXY`
+### Frage: `Scatter`, `Signal` oder `SignalXY` wählen?
 
 Eine 1-kHz-Simulation läuft $10.000\,\text{s}$ lang ($N = 10^7$ `double`-Werte à $8\,\text{Bytes}$):
 
@@ -610,7 +610,7 @@ _upperLine.Y = _welford.Mean + 3.0 * _welford.StdDev;
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): Ringpuffer, Taktentkopplung & Welford
+### Aufgabe: Ringpuffer, Taktentkopplung & Welford berechnen
 
 Ein 1-kHz-Prüfstand streamt Messwerte an ein WPF-Dashboard mit `DataStreamer(cap = 500)`:
 
@@ -747,7 +747,7 @@ Nach welchem Kriterium ordnet `MSAGL` die Knoten im 2D-Raum an?
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): `MSAGL`-Topologie & Layout-Wahl
+### Frage: `MSAGL`-Topologie & Layout-Strategie wählen
 
 Sie modellieren zwei unterschiedliche Systeme in `MSAGL` als gerichteten Graphen $G = (V, E)$ ohne manuelle Pixelkoordinaten:
 

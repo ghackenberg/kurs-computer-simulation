@@ -56,7 +56,7 @@ Zu Beginn (15 Min.): **Moodle-Test 2** (Kapitel 03 & 04) – danach **Live-Showc
 
 <!-- _class: recap -->
 
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+### Kontext & Einordnung: Von 2D-Plots zur interaktiven 3D-Anlagenszene
 
 <div class="columns top">
 <div class="two">
@@ -190,7 +190,7 @@ gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_SHININESS, 64.0f);
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): Z-Buffer, $\mathbf{T}\cdot\mathbf{R}$ & Projektion
+### Frage: Z-Buffer, $\mathbf{T}\cdot\mathbf{R}$ & Projektion vorhersagen
 
 Sie richten eine neue `SharpGL`-Szene für einen 3D-Roboter ein und testen drei Effekte:
 
@@ -456,7 +456,7 @@ private static void DrawCylinder(
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): Matrix-Stack & Skalierungs-Falle
+### Frage: Matrix-Stack & Skalierungs-Falle vorhersagen
 
 Im Roboter-Szenengraph hängt `_arm2Node` als Kind unter `_arm1Node`:
 
@@ -725,7 +725,7 @@ Der Sehstrahl $\vec{f}$ von $\vec{p}_{\text{eye}}$ nach $\vec{p}_{\text{look}}$ 
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): Orbit-Kamera, Pol-Schutz & Panning
+### Aufgabe: Orbit-Kamera, Pol-Schutz & Panning bestimmen
 
 Sie steuern die 3D-Szene über `OrbitCamera` (`r`, `theta`, `phi`, `LookAtX/Y/Z`):
 

@@ -57,7 +57,7 @@ Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 <!-- _class: recap -->
 
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+### Kontext & Einordnung: Vom Zahlenvektor zum interaktiven 2D-Zustandsfeld
 
 <div class="columns top">
 <div class="two">
@@ -318,7 +318,7 @@ SimulationImage.Source = _bitmap;
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): Byte-Offset & Cache-Lokalität
+### Aufgabe: Byte-Offset & Cache-Lokalität bestimmen
 
 Gegeben sei eine `WriteableBitmap` im Format `Bgra32` mit folgenden Speicher-Parametern:
 
@@ -629,7 +629,7 @@ private static uint SampleViridis(double t)
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): Normierung & LUT-Index berechnen
+### Aufgabe: Normierung & LUT-Index berechnen
 
 Ein Temperaturfeld nutzt unsere 256-stufige Look-Up-Table `lut[0..255]` mit linearer Normierung:
 
@@ -756,7 +756,7 @@ $$T_{\text{neu}} = T_{i,j}^{n+1} = T_{i,j}^n + s \cdot L_{i,j}^n + \Delta t \cdo
 
 <!-- _class: activity -->
 
-### Mitmach-Impuls (3 Min.): Zeitschritt $\Delta t_{\max}$ & Gitterverfeinerung
+### Aufgabe: Zeitschritt $\Delta t_{\max}$ & Gitterverfeinerung berechnen
 
 Gegeben sei ein inhomogenes 2D-Kupfergitter mit diesen Kennwerten ($s = \frac{\alpha \cdot \Delta t}{\Delta x^2} \le 0{,}25$):
 

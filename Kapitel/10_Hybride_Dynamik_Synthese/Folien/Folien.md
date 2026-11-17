@@ -60,7 +60,7 @@ Präsentation der Hausübung aus Termin 09 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 <!-- _class: recap -->
 
-### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
+### Kontext & Einordnung: Synthese zu gekoppelten cyber-physischen Systemen
 
 <div class="columns top">
 <div class="three">
