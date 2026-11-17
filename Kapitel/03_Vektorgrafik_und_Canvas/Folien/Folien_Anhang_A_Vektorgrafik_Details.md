@@ -119,7 +119,7 @@ public void AddNode(Canvas canvas,
 
 ---
 
-### Zentrierung Fall 1: Höhen-limitiert ($s_y \le s_x$)
+### Zentrierung Fall 1: Höhen-limitiert
 
 <div class="columns top">
 <div class="two">
@@ -143,7 +143,7 @@ Ist das Fenster relativ breiter als das Modell, limitiert die Höhe ($s = s_y$):
 
 ---
 
-### Zentrierung Fall 2: Breiten-limitiert ($s_x < s_y$)
+### Zentrierung Fall 2: Breiten-limitiert
 
 <div class="columns top">
 <div class="two">
@@ -284,7 +284,7 @@ public class SimpleRenderCanvas : FrameworkElement
     }
 }
 ```
-- Neuzeichnen über `this.InvalidateVisual()`.
+- Neuzeichnen per `InvalidateVisual()`; Variante A nutzt `draw(dc)`, Variante B überschreibt `OnRender(dc)`.
 
 </div>
 </div>

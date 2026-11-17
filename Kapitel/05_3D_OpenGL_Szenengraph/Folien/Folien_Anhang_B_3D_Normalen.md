@@ -92,7 +92,7 @@ private (float x, float y, float z) ComputeCoordinate(
 
 ### Berechnung der Kugel-Normalenvektoren
 
-Für die Phong-Beleuchtung benötigt OpenGL an jedem Vertex einen normierten Normalenvektor $\vec{n}$ mit $\|\vec{n}\| = 1$.
+Für Phong-Beleuchtung braucht jeder Vertex eine normierte Normale $\vec{n}$ ($\|\vec{n}\| = 1$).
 
 <div class="columns top">
 <div class="two">
@@ -103,7 +103,7 @@ Da eine Kugel punktsymmetrisch zum Ursprung ist, steht der Ortsvektor $\vec{p} =
 
 $$\vec{n}_{\phi,\theta} = \frac{\vec{p}}{\|\vec{p}\|} = \frac{1}{r} \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} \sin(\phi) \cos(\theta) \\ \cos(\phi) \\ \sin(\phi) \sin(\theta) \end{pmatrix}$$
 
-Der Normalenvektor entspricht identisch den Koordinaten des Punktes auf einer **Einheitskugel** ($r = 1$).
+Der Normalenvektor entspricht identisch den Koordinaten des Punktes auf einer **Einheitskugel** ($r = 1$) und wird für Indizes `i`, `j` direkt an `gl.Normal` übergeben.
 
 </div>
 <div class="two">
@@ -186,15 +186,13 @@ Rotationskörper um $+Y$ mit Höhe $h$ und Radien $r_1, r_2$:
 <div class="columns top">
 <div class="two">
 
-**Formeln:**
+**Formeln (mit `i`, `j`, `Radius1`, `Radius2`):**
 
-$$\phi_i = \frac{i}{\text{stacks}}, \quad \theta_j = \frac{j}{\text{slices}} \cdot 2\pi$$
+$$\phi = \frac{i}{\text{Stacks}}, \quad \theta = \frac{j}{\text{Slices}} \cdot 2\pi$$
 
-$$r(\phi_i) = r_1 + \phi_i \cdot (r_2 - r_1)$$
+$$r = \text{Radius1} + \phi \cdot (\text{Radius2} - \text{Radius1})$$
 
-$$x = r(\phi_i) \cdot \cos(\theta_j)$$
-$$y = h \cdot \phi_i$$
-$$z = r(\phi_i) \cdot \sin(\theta_j)$$
+$$x = r \cdot \cos(\theta), \quad y = \text{Length} \cdot \phi, \quad z = r \cdot \sin(\theta)$$
 
 </div>
 <div class="two">
@@ -251,10 +249,10 @@ Die Herleitung erfolgt über einen Schnitt in der XY-Ebene ($\theta = 0$):
 <div class="columns">
 <div class="two">
 
-Um den 3D-Normalenvektor $\vec{P}_\theta$ für jeden Winkel $\theta$ zu erhalten, wird der 2D-Vektor $\vec{n}_{2D}$ um die Y-Achse rotiert:
+Um den 3D-Normalenvektor `P_theta` ($\vec{P}_\theta$) für jeden Winkel $\theta$ zu erhalten, wird der 2D-Vektor $\vec{n}_{2D}$ um die Y-Achse rotiert:
 
-- Die vertikale Komponente $n_y = r_1 - r_2$ bleibt unverändert.
-- Die radiale Komponente $n_x = h$ projiziert sich auf X und Z:
+- Die vertikale Komponente $P_y = r_1 - r_2$ bleibt unverändert.
+- Die radiale Komponente der Länge $h$ projiziert sich auf X und Z:
   $$P_x = h \cdot \cos(\theta), \quad P_y = r_1 - r_2, \quad P_z = h \cdot \sin(\theta)$$
 
 $$\vec{P}_\theta = \begin{pmatrix} h \cdot \cos(\theta) \\ r_1 - r_2 \\ h \cdot \sin(\theta) \end{pmatrix}$$
@@ -290,7 +288,7 @@ private (float nx, float ny, float nz) ComputeNormal(int j)
 }
 ```
 
-> **Hinweis:** Für den Spezialfall eines geraden Zylinders ($r_1 = r_2$) ist $n_y = 0$. Die Normale vereinfacht sich zu $(\cos\theta, 0, \sin\theta)^\top$, was exakt dem horizontalen Einheitskreis entspricht.
+> **Hinweis:** Für den Spezialfall eines geraden Zylinders (`Radius1 == Radius2`) ist `ny = 0`. Die Normale vereinfacht sich zu $(\cos\theta, 0, \sin\theta)^\top$, was exakt dem horizontalen Einheitskreis entspricht.
 
 ---
 
@@ -317,4 +315,4 @@ for (int i = 0; i < Stacks; i++)
 }
 ```
 
-Deck- und Bodenflächen (falls $r_1 > 0$ bzw. $r_2 > 0$) werden mit `GL_TRIANGLE_FAN` und den konstanten Normalen $(0, -1, 0)$ bzw. $(0, +1, 0)$ versiegelt.
+Deck- und Bodenflächen (falls `Radius1 > 0` bzw. `Radius2 > 0`) werden mit `GL_TRIANGLE_FAN` und den konstanten Normalen $(0, -1, 0)$ bzw. $(0, +1, 0)$ versiegelt.

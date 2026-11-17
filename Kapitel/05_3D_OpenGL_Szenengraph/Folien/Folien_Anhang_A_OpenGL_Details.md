@@ -175,7 +175,7 @@ Für gekrümmte Körper (`DrawSphere`, `DrawCylinder`) nutzen wir **Gouraud Shad
 Zwischen `gl.Begin(mode)` und `gl.End()` übergeben wir Vertices (`gl.Vertex`), Normalen (`gl.Normal`) und Farbe (`gl.Color`):
 
 - **`GL_LINES` / `GL_LINE_STRIP`:** `DrawFloorGrid` & `DrawAxes` nutzen `GL_LINES`; Werkzeugbahnen nutzen `GL_LINE_STRIP`.
-- **`GL_QUADS` / `GL_QUAD_STRIP`:** `DrawCube` nutzt `GL_QUADS` ($6 \times 4 = 24$ Vertices); `DrawCylinder` nutzt `GL_QUAD_STRIP` + `GL_TRIANGLE_FAN`.
+- **`GL_QUADS` / `GL_QUAD_STRIP`:** `DrawCube` nutzt `GL_QUADS` ($6 \times 4 = 24$ Vertices); `DrawCylinder` nutzt `GL_QUAD_STRIP` (`slices = 24`) + `GL_TRIANGLE_FAN`.
 
 </div>
 <div class="two">

@@ -170,6 +170,8 @@ function extractSlideTokens(text) {
       .replace(/\\mathrm\{(\w+)\}/g, '$1')
       .replace(/\\min/g, 'min')
       .replace(/\\max/g, 'max')
+      .replace(/\\Delta\s*([A-Za-z])/g, 'delta_$1')
+      .replace(/Δ\s*([A-Za-z])/g, 'delta_$1')
       .replace(/\\Delta/g, 'delta')
       .replace(/\\delta/g, 'delta')
       .replace(/\\sigma/g, 'sigma')
@@ -385,12 +387,13 @@ function extractSlideGeometricVariables(slideText) {
   return Array.from(vars);
 }
 
-function auditChapterVariables(chapterDir) {
-  const folienPath = path.join(chapterDir, 'Folien.md');
+function auditChapterVariables(chapterDir, mdFileName = 'Folien.md') {
+  const folienPath = path.join(chapterDir, mdFileName);
   if (!fs.existsSync(folienPath)) {
-    return { error: 'Folien.md not found in ' + chapterDir, issues: [] };
+    return { error: `${mdFileName} not found in ${chapterDir}`, issues: [] };
   }
 
+  const isAppendix = mdFileName !== 'Folien.md';
   const content = fs.readFileSync(folienPath, 'utf8');
   const slides = content.split(/^---$/m);
   const issues = [];
@@ -438,6 +441,15 @@ function auditChapterVariables(chapterDir) {
           }
         }
       });
+    }
+  }
+  if (isAppendix) {
+    const mainMd = path.join(chapterDir, 'Folien.md');
+    if (fs.existsSync(mainMd)) {
+      const mTxt = fs.readFileSync(mainMd, 'utf8');
+      for (const dm of mTxt.matchAll(/\(([A-ZÄÖÜ]{2,6})\)|,\s*([A-ZÄÖÜ]{2,6})\)/g)) {
+        definedAbbrs.add(dm[1] || dm[2]);
+      }
     }
   }
 
@@ -497,7 +509,9 @@ function auditChapterVariables(chapterDir) {
 
       const checkTokens = isStandaloneDiagram && currentSection && sectionTokensMap.has(currentSection)
         ? sectionTokensMap.get(currentSection)
-        : slideTokens;
+        : (isStandaloneDiagram && isAppendix && sectionSlideHistory.length > 1
+          ? new Set([...slideTokens, ...sectionSlideHistory[sectionSlideHistory.length - 2].tokens])
+          : slideTokens);
 
       svgVars.forEach(v => {
         if (!matchesAnyAlias(v, checkTokens)) {
@@ -625,20 +639,25 @@ if (require.main === module) {
 
   dirs.forEach(d => {
     const chapterPath = path.join(kapitelRoot, d, 'Folien');
-    const result = auditChapterVariables(chapterPath);
-    console.log(`Prüfe Kapitel ${d} (${result.totalSlides} Folien) ...`);
+    const decks = ['Folien.md', ...fs.readdirSync(chapterPath).filter(f => /^Folien_Anhang_.*\.md$/i.test(f)).sort()];
 
-    totalErrors += result.issues.length;
+    decks.forEach(deckFile => {
+      const result = auditChapterVariables(chapterPath, deckFile);
+      const label = deckFile === 'Folien.md' ? d : `${d} (${deckFile})`;
+      console.log(`Prüfe Kapitel ${label} (${result.totalSlides} Folien) ...`);
 
-    if (result.issues.length === 0) {
-      console.log('  ✓ OK: Alle Variablen sind didaktisch vollständig abgedeckt!\n');
-    } else {
-      console.log(`  ✗ ${result.issues.length} Fehler (Didaktische Variablen-Inkonsistenz):`);
-      result.issues.forEach(iss => {
-        console.log(`    - Folie ${iss.slideNum} [${iss.title}] (Regel ${iss.rule}): ${iss.message}`);
-      });
-      console.log('');
-    }
+      totalErrors += result.issues.length;
+
+      if (result.issues.length === 0) {
+        console.log('  ✓ OK: Alle Variablen sind didaktisch vollständig abgedeckt!\n');
+      } else {
+        console.log(`  ✗ ${result.issues.length} Fehler (Didaktische Variablen-Inkonsistenz):`);
+        result.issues.forEach(iss => {
+          console.log(`    - Folie ${iss.slideNum} [${iss.title}] (Regel ${iss.rule}): ${iss.message}`);
+        });
+        console.log('');
+      }
+    });
   });
 
   console.log('================================================================');

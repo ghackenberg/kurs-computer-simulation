@@ -33,7 +33,7 @@ Vertiefende Plot-Typen, Komplexitätsanalysen & C#-Rezepte zum Selbststudium:
 Adaptive DGL-Solver (RK45) erzeugen variable Schrittweiten $\Delta t$ (`xs` streng monoton):
 
 - **Binärsuche:** Findet Zoom-Grenze $t_{\min} = 0{,}20\,\text{s}$ in $\mathcal{O}(\log N)$ (bei $10^6$ Punkten max. 20 Vergleiche).
-- **Adaptives Bucketing:** Dichte Schritte werden wie `Signal` zu 4-Punkt-Spalten zusammengefasst, weite Schritte direkt verbunden.
+- **Adaptives Bucketing (`sig`):** Dichte Schritte wie `Signal` (4-Punkt-Spalten), weite direkt verbunden.
 
 ```csharp
 var sig = plot.Add.SignalXY(xs, ys);
@@ -55,7 +55,7 @@ sig.LineWidth = 3.0f;
 <div class="columns">
 <div class="two">
 
-Zustandsraum-Analyse mit quadratischer Zeichenlast $\mathcal{O}(G_x \cdot G_y)$ (3 Vektorlinien pro Pfeil):
+Zustandsraum-Analyse (`x1`, `x2`, `dx1`, normiert über `len` & `scale` in `vectors`) mit quadratischer Zeichenlast $\mathcal{O}(G_x \cdot G_y)$:
 
 ```csharp
 var vectors = new List<RootedCoordinateVector>();
@@ -89,7 +89,7 @@ plot.Add.VectorField(vectors, Colors.SteelBlue);
 <div class="columns">
 <div class="two">
 
-- **5 Kennwerte repräsentieren Millionen Punkte:** `BoxMin` ($Q_1$), `BoxMiddle` (Median $Q_2$), `BoxMax` ($Q_3$), `WhiskerMin`, `WhiskerMax`.
+- **5 Kennwerte pro Box (`b1`):** `BoxMin` ($Q_1$), `BoxMiddle` (Median $Q_2$), `BoxMax` ($Q_3$), `WhiskerMin`, `WhiskerMax`.
 - **Komplexität:** Sortieren $\mathcal{O}(N \log N)$, Zeichnen pro Box $\mathcal{O}(1)$ (1 Rechteck + 5 Linien).
 
 ```csharp
@@ -114,7 +114,7 @@ plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(
 <div class="columns">
 <div class="two">
 
-Für $G$ Gruppen und $M$ Modellreihen zeichnet die GPU $G \cdot M$ Vektor-Rechtecke ($\mathcal{O}(G \cdot M)$):
+Für $G$ Gruppen und $M$ Modellreihen (`barsA`, `barsB` mit Breite `width`) zeichnet die GPU $G \cdot M$ Rechtecke ($\mathcal{O}(G \cdot M)$):
 
 ```csharp
 double[] positions = { 1.0, 2.0, 3.0, 4.0 };
@@ -144,7 +144,7 @@ plot.Add.Bars(barsB);
 <div class="columns">
 <div class="two">
 
-Wie `WriteableBitmap` (T02) übersetzt `Heatmap` ein 2D-Array `intensities[i, j]` direkt in **1 Bitmap-Textur** ($\mathcal{O}(N_x \cdot N_y)$):
+Wie `WriteableBitmap` (T02) übersetzt `Heatmap` (`hm` + Farbskala `cb`) `intensities[i, j]` direkt in **1 Bitmap-Textur** ($\mathcal{O}(N_x \cdot N_y)$):
 
 ```csharp
 double[,] intensities = new double[size, size];
@@ -173,7 +173,7 @@ cb.Label = "Temperatur T [°C]";
 <div class="columns">
 <div class="two">
 
-Ein geschlossener Polygonpfad (`SKPath`, $\mathcal{O}(N)$) läuft vorwärts über `yUpper` und rückwärts über `yLower`:
+Ein geschlossener Polygonpfad (`fill` via `SKPath`, $\mathcal{O}(N)$) läuft über `yUpper`/`yLower`, ergänzt um `meanLine` und `sensLine`:
 
 ```csharp
 var fill = plot.Add.FillY(xs, yLower, yUpper);

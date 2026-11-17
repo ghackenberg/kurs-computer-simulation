@@ -32,7 +32,7 @@ Wärmeleitung funktioniert nach **demselben Prinzip** wie ein elektrisches RC-Ne
 | :--- | :---: | :--- | :--- |
 | **Temperatur** | $T$ $[\mathrm{K} \text{ / } {}^\circ\mathrm{C}]$ | Lokaler „Wärmedruck“ ($T_1, T_2$, Gefälle $ΔT = T_1 - T_2$) | **Spannung $U$** ($U_1, U_2, ΔU$) / Füllstand $h_1, h_2$ |
 | **Wärmeenergie** | $E_{\text{th}}$ $[\mathrm{J} = \mathrm{W\cdot s}]$ | Gespeicherte Energie ($ΔE_{\text{th}} = m \cdot c_p \cdot ΔT$) | **Ladung $Q$ $[\mathrm{C}]$** / Wassermenge |
-| **Wärmestrom** | $\dot{Q}$ $[\mathrm{W}]$ / $\dot{q}$ $[\mathrm{W/m^2}]$ | Energiefluss über Abstand $Δx$ ($\dot{Q} \propto \lambda \cdot A / Δx$) | **Stromstärke $I$ $[\mathrm{A}]$** / Stromdichte $J$ |
+| **Wärmestrom** | $\dot{Q}$ $[\mathrm{W}]$ / $\dot{q}$ $[\mathrm{W/m^2}]$ | Energiefluss über Abstand $Δx$ ($\dot{Q} \propto \lambda \cdot A / Δx$, Leitwert $G$) | **Stromstärke $I$ $[\mathrm{A}]$** / Stromdichte $J$ |
 
 ---
 
@@ -113,7 +113,7 @@ $$\dot{q}_x = -\lambda \cdot \frac{\partial T}{\partial x} \approx -\lambda \cdo
 <div class="columns">
 <div class="three">
 
-$$\frac{\partial T_i}{\partial t} = \underbrace{\frac{\lambda}{\rho \cdot c_p}}_{\alpha} \cdot \frac{(T_{i-1} - T_i) + (T_{i+1} - T_i)}{\Delta x^2} = \alpha \cdot \frac{T_{i+1} - 2 T_i + T_{i-1}}{\Delta x^2} \approx \alpha \cdot \frac{\partial^2 T}{\partial x^2}$$
+$$\frac{\partial T_i}{\partial t} = \alpha \cdot \frac{(T_{i-1} - T_i) + (T_{i+1} - T_i)}{\Delta x^2} = \alpha \cdot \frac{T_{i+1} - 2 T_i + T_{i-1}}{\Delta x^2} \approx \alpha \cdot \frac{\partial^2 T}{\partial x^2}$$
 
 1. **Lineares Gefälle ($\frac{\partial^2 T}{\partial x^2} = 0$):** Zufluss und Abfluss heben sich auf $\implies T_i$ bleibt konstant.
 2. **Thermisches Tal ($\frac{\partial^2 T}{\partial x^2} > 0$):** Zelle $i$ ist kälter als Nachbarn $\implies T_i$ erwärmt sich.
@@ -183,7 +183,7 @@ $$\boxed{T_{i,j}^{n+1} = \underbrace{(1 - 4s)}_{\text{Eigengewicht}} \cdot T_{i,
 <div class="columns">
 <div class="three">
 
-An der Kühlkörper-Oberfläche (Knoten $0$, Lufttemperatur $T_\infty$, Wärmeübergang $h$) gilt $\dot{q}_{\text{Leitung}} = \dot{q}_{\text{Konvektion}}$:
+An der Kühlkörper-Oberfläche (Knoten $0$, Lufttemperatur $T_\infty$, Wärmeübergang $h$, Schrittweite $\Delta x$) gilt $\dot{q}_{\text{Leitung}} = \dot{q}_{\text{Konvektion}}$:
 
 $$\lambda \cdot \frac{T_{1,y} - T_{0,y}}{\Delta x} = h \cdot \left(T_{0,y} - T_\infty\right) \implies \boxed{T_{0,y} = \frac{\lambda \cdot T_{1,y} + (h \cdot \Delta x) \cdot T_\infty}{\lambda + h \cdot \Delta x}}$$
 
@@ -202,6 +202,6 @@ $$\lambda \cdot \frac{T_{1,y} - T_{0,y}}{\Delta x} = h \cdot \left(T_{0,y} - T_\
 
 ### Übersicht: Thermische Randbedingungen am 2D-Gitter
 
-Bei Gitterweite $\Delta x$ bestimmen die drei Randtypen den Geister-Nachbarn `tN` (Neumann-Isolator: `tN = tCenter`, kein Wärmestrom), feste Wandwerte (Dirichlet) bzw. konvektiven Übergang (Robin):
+Bei $\Delta x$ bestimmen `Leitung`, Konvektion $h$ und $T_{\text{Rand}}$ die Randzelle $T_0$ neben $T_1$ (`tN` = Geister-Nachbar):
 
 ![](./Diagramme/Thermo_Randbedingungen_Gitter.svg)

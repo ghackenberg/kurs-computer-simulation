@@ -31,4 +31,5 @@ Kapitel/*/Moodle/*.xml
 # Temporary audit artifacts
 .tmp_raster_svg/
 .tmp_*/
+.tmp_lint.html
 scratch/
