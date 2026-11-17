@@ -304,7 +304,7 @@ Dieser Block umfasst die Organisation und Beurteilung der Lehrveranstaltung:
 
 Die Lehrveranstaltung ist eine **Integrierte Lehrveranstaltung (ILV)** mit 3 ECTS (75 h Workload):
 
-- **Interaktive Vorlesung (100–115 Min.):** Grundlagen, C#-Code & Impulse *(T01: 130 Min.; Quiz-Termine: 100 Min.)*.
+- **Interaktive Vorlesung (100–115 Min.):** Grundlagen, C#-Code & kurze Impulse.
 - **Hausübung Stufe 1 (~60 min):** Gemeinsames Fundament mit automatisierten Unit-Tests (`1.1`–`1.4`).
 - **Hausübung Stufe 2 (1 Woche):** Autonome Erweiterung im 2er-Team (`Track A` vs. `Track B`).
 - **Live-Showcase (15 Min.):** Beamer-Vorführung, Code-Inspection und Stresstest.
@@ -368,7 +368,7 @@ Bevor wir auf das Notenmodell blicken, eine kurze Einschätzung für Sie selbst 
 
 Transparente Beurteilung von Theorie, Code-Praxis und Live-Verteidigung:
 
-- **Säule 1 (40 %):** 4 Moodle-Präsenzquizzes à 10 % in den Terminen T03, T05, T08 und T10 (Fehlerdiagnose, CFL-Stabilität, Code-Mutationen).
+- **Säule 1 (40 %):** 4 Präsenzquizzes à 10 % in den Terminen T03, T05, T08, T10 (Diagnose, Stabilität, Code).
 - **Säule 2a (40 %):** 10 wöchentliche Hausübungen à 4 % (Stufe 1 + gewählter Track A oder B).
 - **Säule 2b (20 %):** Rotierende Live-Vorführung, Code-Erklärung & Parameter-Stresstest am Beamer.
 

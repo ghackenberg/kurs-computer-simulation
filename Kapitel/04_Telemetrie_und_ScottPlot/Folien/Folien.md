@@ -60,15 +60,15 @@ Präsentation der Hausübung aus Termin 03 (**Stufe 1: Basisaufgabe** + **Stufe 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
 <div class="columns top">
-<div class="three">
+<div class="two">
 
-In **T02 und T03** haben wir die 2D-Grundlagen selbst programmiert – wo fehlt noch das dritte Werkzeug?
+In **T02 & T03** entstanden unsere 2D-Grundlagen – was fehlt noch?
 
-- **T02 (`WriteableBitmap`):** Schnelle 2D-Rasterfelder (`uint[]`), aber ohne Achsen, Skalen oder Einheiten.
-- **T03 (`WPF Canvas`):** Maßstabsgetreue CAD-Geometrie, aber ohne automatische Ticks, Gitter oder Auto-Scaling.
-- **Heute (3. Visualisierungs-Säule):** Echtzeit-Telemetrie & Statistik mit `ScottPlot 5`, `CircularBuffer<T>` (Ringpuffer), Online-Welford-Statistik und Topologiegraphen (`MSAGL`).
+- **T02 (`WriteableBitmap`):** Schnelle 2D-Rasterfelder (`uint[]`), ohne Achsen oder Einheiten.
+- **T03 (`WPF Canvas`):** Maßstabsgetreue CAD-Geometrie, ohne Ticks oder Auto-Scaling.
+- **Heute (3. Säule):** Telemetrie (`ScottPlot 5`), `CircularBuffer<T>`, Welford & `MSAGL`.
 
-> **Ziel heute:** 1-kHz-Signale bei 60 FPS mit **0 Byte Garbage-Collector-Allokation** pro UI-Tick visualisieren!
+> **Ziel heute:** 1-kHz-Signale bei 60 FPS mit **0 Byte GC-Allokation** pro Tick!
 
 </div>
 <div class="two">
@@ -813,15 +813,15 @@ var streamer = plot.Add.DataStreamer(capacity: 2000); // O(1) Ringpuffer, 0 Heap
 ### Ausblick: Von 2D-Telemetrie zu 3D-Szenengraphen & Quiz 2 (T05)
 
 <div class="columns">
-<div class="three">
+<div class="two">
 
-Unsere 2D-Visualisierungssäulen (**Pixel**, **Vektor**, **Telemetrie/Graphen**) sind komplett:
+Unsere 2D-Säulen (**Pixel**, **Vektor**, **Telemetrie/Graphen**) sind komplett:
 
-- **Nächster Termin (T05):** Wir steigen in die **3D-Visualisierung mit OpenGL (`SharpGL`)** ein – Verallgemeinerung unserer 2D-Transformationsmatrizen auf $4 \times 4$-Matrizen und hierarchische 3D-Szenengraphen.
-- **Lernfortschritt:** Zu Beginn von Termin 05 findet das **Moodle-Quiz 2** (Stoff: **Kapitel 03 & Kapitel 04**) statt!
-- **Vorbereitung:** Nutzen Sie die Checklisten und Selbsttests aus Kapitel 03 und 04 zur gezielten Wiederholung.
+- **Nächster Termin (T05):** Einstieg in **3D mit OpenGL (`SharpGL`)** – $4 \times 4$-Matrizen und 3D-Szenengraphen.
+- **Lernfortschritt:** Zu Beginn von T05 findet das **Moodle-Quiz 2** (Stoff: **Kapitel 03 & 04**) statt!
+- **Vorbereitung:** Nutzen Sie die Checklisten und Selbsttests aus Kapitel 03 und 04 zur Wiederholung.
 
-> **Showcase-Fokus (T05):** Der 2D-Szenengraph (`Canvas`) und `MSAGL` werden im nächsten Schritt in echte 3D-Hierarchien überführt.
+> **Showcase-Fokus (T05):** Der 2D-Szenengraph wird im nächsten Schritt in echte 3D-Hierarchien überführt.
 
 </div>
 <div class="two">

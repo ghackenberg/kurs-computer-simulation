@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="15 10 450 350" width="450" height="350">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -107,7 +107,7 @@
     </marker>
   </defs>
 
-  <rect class="sem-card" x="15" y="15" width="450" height="350" rx="10" stroke-width="2" />
+  <!-- Hintergrundkarte entfernt (OUTER_FRAME_RECT) -->
   <text x="240" y="42" class="hdr sem-primary-text">Heatmap: 2D-Array &#8594; Raw-Pixel-Bitmap (Termin 02)</text>
 
   <!-- Schritt 1: double[,] Array -->

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="3 0 474 380" width="474" height="380">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -16,10 +16,6 @@
     <linearGradient id="grad-sem-danger-fill" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#dc2626" />
       <stop offset="100%" stop-color="#b91c1c" />
-    </linearGradient>
-    <linearGradient id="grad-sem-card" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="100%" stop-color="#f1f5f9" />
     </linearGradient>
     <linearGradient id="grad-sem-muted" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#f8fafc" />
@@ -51,11 +47,6 @@
       .sem-danger-stroke { stroke: #dc2626; }
       .sem-danger-fill { fill: url(#grad-sem-danger-fill); }
       .sem-danger-text { fill: #991b1b; }
-      .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
-      .sem-card-bg { fill: url(#grad-sem-card); stroke: none; }
-      .sem-card-stroke { stroke: #cbd5e1; }
-      .sem-card-fill { fill: #cbd5e1; }
-      .sem-card-text { fill: #1e293b; }
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
@@ -75,7 +66,7 @@
     </marker>
   </defs>
 
-  <rect class="sem-card" x="15" y="15" width="450" height="350" rx="10" stroke-width="2" />
+  <!-- Hintergrundkarte entfernt (OUTER_FRAME_RECT) -->
   <text x="240" y="42" class="hdr sem-primary-text">Skalierung der Gauß-Dichte f(x) auf Balkenhöhe</text>
 
   <!-- Achsen -->

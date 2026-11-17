@@ -60,15 +60,15 @@ Präsentation der Hausübung aus Termin 01 (**Stufe 1: Basisaufgabe** + **Stufe 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
 <div class="columns top">
-<div class="three">
+<div class="two">
 
-In **Termin 01** genügten skalare Zustände ($x(t), T(t)$) – warum reicht das für reale Bauteile oft nicht?
+In **Termin 01** genügten skalare Zustände ($x(t), T(t)$) – warum reicht das für Bauteile oft nicht?
 
-- **Rückblick T01:** Konzentrierte Parameter genügen nur, solange ein Bauteil überall denselben Zustand hat.
-- **Engpass heute:** Ein $500 \times 500$-Kühlkörper hat **$250\,000$ gekoppelte Temperaturen** $T(x, y, t)$ pro Zeitschritt.
-- **Lösung (1. Grafik-Säule):** Hardwarenaher Zugriff auf 32-Bit-Pixelraster (`WriteableBitmap`) mit $\ge 60\,\text{FPS}$ für 2D-FDM-Felder.
+- **Rückblick T01:** Konzentrierte Parameter gelten nur bei homogenem Zustand im gesamten Bauteil.
+- **Engpass heute:** Ein $500 \times 500$-Kühlkörper hat **$250\,000$ Temperaturen** $T(x, y, t)$ pro Schritt.
+- **Lösung (1. Säule):** Direkter 32-Bit-Pixelzugriff (`WriteableBitmap`) bei $\ge 60\,\text{FPS}$ für 2D-FDM.
 
-> **Lernziel heute:** Verstehen, wie 2D-Felder im RAM liegen, über `uint*` allokationsfrei gezeichnet werden und warum $s \le 0{,}25$ gilt.
+> **Lernziel heute:** RAM-Layout, allokationsfreie `uint*`-Zeichnung und Stabilitätsgrenze $s \le 0{,}25$ verstehen.
 
 </div>
 <div class="two">
@@ -861,15 +861,15 @@ row[x] = lut[idx];
 ### Ausblick: Von Pixelrastern zu skalierbaren Vektoren (T03)
 
 <div class="columns">
-<div class="three">
+<div class="two">
 
-In **Termin 02** haben wir kontinuierliche 2D-Felder auf einem festen Pixelgitter mit `WriteableBitmap` gelöst:
+In **Termin 02** lösten wir 2D-Felder auf Pixelgittern mit `WriteableBitmap`:
 
-- **Grenze von Pixelrastern:** Bei mechanischen Gelenkarmen, Fahrzeugen oder Partikeln verpixelt das Gitter beim Hineinzoomen und erfordert unnötig viel Speicher.
-- **Nächster Termin (T03):** Wir wechseln zur **2. Grafik-Säule** – **2D-Vektorgrafik** (`WPF Canvas`, `DrawingVisual` & Welt-zu-Bildschirm-Kameramatrizen).
-- **Lernfortschritt:** Zu Beginn von Termin 03 findet das **Moodle-Quiz 1** (Stoff: Termin 01 & Termin 02) statt.
+- **Grenze von Pixelrastern:** Gelenkarme oder Partikel verpixeln beim Zoom und brauchen viel RAM.
+- **Nächster Termin (T03):** **2D-Vektorgrafik** (`WPF Canvas`, `DrawingVisual` & Kameramatrizen).
+- **Lernfortschritt:** Zu Beginn von T03 folgt das **Moodle-Quiz 1** (Stoff: T01 & T02).
 
-> **Vorausblick:** Wie bildet man eine Weltkoordinate $(x_{\text{Welt}}, y_{\text{Welt}})$ in Metern auf Bildschirm-Pixel ab? Das lösen wir in T03 mit affinen Transformationsmatrizen!
+> **Vorausblick:** Wie bildet man Weltkoordinaten $(x_{\text{Welt}}, y_{\text{Welt}})$ per affiner Matrix auf Pixel ab?
 
 </div>
 <div class="two">

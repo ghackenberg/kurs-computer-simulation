@@ -59,15 +59,15 @@ Zu Beginn (15 Min.): **Moodle-Test 2** (Kapitel 03 & 04) – danach **Live-Showc
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
 <div class="columns top">
-<div class="three">
+<div class="two">
 
-In **Termin 02 bis 04** haben wir die 2D-Welt gemeistert – wo stoßen 2D-Ansichten an ihre Grenzen?
+In **T02 bis T04** haben wir die 2D-Welt gemeistert – wo stoßen 2D-Ansichten an Grenzen?
 
-- **Konventions-Brücke T03 $\leftrightarrow$ T05:** Statt 2D-Canvas (`+Y` unten) nutzt OpenGL ein **rechtshändiges 3D-System (`+X` rechts, `+Y` oben, `+Z` vor)** (*Rechte-Hand-Regel*).
-- **Engpass heute:** Roboter im 3D-Raum $(x, y, z)$ brauchen Verdeckung (Z-Buffer), Licht und $4\times 4$-Matrix-Stacks.
-- **Halbzeit:** Mit `SharpGL` schließen wir Block 1 (T02–T05) vor T06 (TPL) und T07–T10 (Solver) ab.
+- **Brücke T03 $\leftrightarrow$ T05:** Statt 2D (`+Y` unten) gilt OpenGL-3D (`+X` rechts, `+Y` oben, `+Z` vor).
+- **Engpass heute:** Roboter in 3D brauchen Verdeckung (Z-Buffer), Licht und $4\times 4$-Matrix-Stacks.
+- **Halbzeit:** `SharpGL` schließt Block 1 (T02–T05) vor T06 (TPL) und T07–T10 (Solver) ab.
 
-> **Brücke zu T04:** Die Baum-Topologie von `MSAGL` übertragen wir heute als hierarchischen **3D-Szenengraphen (`SceneNode`)** in den Raum!
+> **Brücke zu T04:** Die `MSAGL`-Baumtopologie wird zum **3D-Szenengraphen (`SceneNode`)**!
 
 </div>
 <div class="two">
@@ -123,7 +123,7 @@ Für jedes Pixel `(x, y)` verwaltet OpenGL im GPU-Speicher zwei gleich große 2D
   - Sichtbare RGBA-Farbe pro Pixel (wie `WriteableBitmap` in T02; Startwert `ClearColor` = `BG`).
 - **2. Depth Buffer / Z-Buffer (`GL_DEPTH_BUFFER_BIT`):**
   - Kleinster Kameraabstand `z_buf` pro Pixel (Startwert `zFar`).
-  - **Tiefentest (`GL_DEPTH_TEST`):** Überschreibe Farbe und `z_buf` nur, wenn `z_neu < z_buf` gilt!
+  - **Tiefentest (`GL_DEPTH_TEST`):** Überschreibe Farbe & `z_buf` nur bei `z_neu < z_buf`!
 
 </div>
 <div class="two">
@@ -505,7 +505,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 <div class="columns">
 <div class="two">
 
-Ein **SCARA-Roboter** verkettet ab `_baseNode` `(0,0,0)` lokale Versätze ($\mathbf{T}_x, \mathbf{T}_y$) und Drehungen ($\mathbf{R}_y$ um `+Y`):
+Der **SCARA** verkettet ab `_baseNode` lokale Versätze ($\mathbf{T}_x, \mathbf{T}_y$) und Drehungen ($\mathbf{R}_y$):
 
 1. **`_arm1Node`:** Versatz $\mathbf{T}_y(\text{HBase})$ (`0.50 m`) nach oben + Schulterdrehung $\mathbf{R}_y(\theta_1)$.
 2. **`_arm2Node`:** Versatz $\mathbf{T}_x(\text{L1})$ (`1.00 m`) entlang Arm 1 + Relativdrehung $\mathbf{R}_y(\theta_2)$.
@@ -513,7 +513,7 @@ Ein **SCARA-Roboter** verkettet ab `_baseNode` `(0,0,0)` lokale Versätze ($\mat
 
 $$\mathbf{M}_{\text{TCP}} = \mathbf{T}_y(\text{HBase})\,\mathbf{R}_y(\theta_1)\,\mathbf{T}_x(\text{L1})\,\mathbf{R}_y(\theta_2)\,\mathbf{T}_x(\text{L2})\,\mathbf{T}_y(-d_3)$$
 
-> **Hinweis:** Jeder Knoten speichert nur lokale Gelenkparameter; die Gesamtmatrix entsteht automatisch beim Traversieren.
+> **Hinweis:** Jeder Knoten speichert lokale Gelenkwerte; die Gesamtmatrix folgt beim Traversieren.
 
 </div>
 <div class="two">
@@ -620,9 +620,9 @@ In **Stufe 2 (Track A & B)** wird aus der Kette ein **verzweigter Szenengraph**:
 
 - **1. Baum-Verzweigung am Greifer:**
   - Unter der Pinole hängt `_wristNode` (`Ry = _theta4Deg`).
-  - Daran hängen zwei symmetrische Geschwisterknoten `_leftFingerNode` (`Tz = -_gripWidth / 2`) und `_rightFingerNode` (`Tz = +_gripWidth / 2`).
+  - Daran hängen `_leftFingerNode` (`Tz = -_gripWidth / 2`) und `_rightFingerNode` (`Tz = +_gripWidth / 2`).
 - **2. Greifen (`Reparenting`):**
-  - Schließt der Greifer am Werkstück (`0.12 m`), wird `_workpieceNode` lokal `(0,0,0)` an `_wristNode` gekoppelt (`DispatcherTimer`).
+  - Schließt der Greifer (`0.12 m`), wird `_workpieceNode` lokal `(0,0,0)` an `_wristNode` gekoppelt.
 
 </div>
 <div class="two">
@@ -656,10 +656,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 `OrbitCamera` führt $\vec{p}_{\text{eye}}$ auf einer Kugelschale um das Ziel $\vec{p}_{\text{look}}$ (`gl.LookAt(eye, look, (0,1,0))`):
 
 1. **Azimut $\theta$ (`AzimuthDeg` $\in [0^\circ, 360^\circ)$):** Horizontaler Winkel ab $+Z$ ($x \propto \sin\theta, z \propto \cos\theta$).
-2. **Elevation $\phi$ (`ElevationDeg` $\in [-85^\circ, +85^\circ]$):** Vertikaler Neigungswinkel zur XZ-Ebene.
-3. **Distanz $r$ (`Distance` $> 0$):** Horizontalradius $r_{xz} = r\cos\phi$, Höhe $y_{\text{eye}} = y_{\text{look}} + r\sin\phi$ (Zoom per Mausrad).
+2. **Elevation $\phi$ (`ElevationDeg` $\in [-85^\circ, +85^\circ]$):** Vertikale Neigung zur XZ-Ebene.
+3. **Distanz $r$ (`Distance` $> 0$):** $r_{xz} = r\cos\phi$, $y_{\text{eye}} = y_{\text{look}} + r\sin\phi$ (Mausrad-Zoom).
 
-> **Merksatz:** Statt drei kartesischer Kamerakoordinaten direkt zu tippen, steuert der Nutzer intuitiv $(r, \theta, \phi)$ um den Fokus $\vec{p}_{\text{look}}$!
+> **Merksatz:** Der Nutzer steuert intuitiv $(r, \theta, \phi)$ um den Fokus $\vec{p}_{\text{look}}$ statt 3D-Koordinaten!
 
 </div>
 <div class="two">
@@ -681,10 +681,10 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 </div>
 <div class="two">
 
-Der Sehstrahl $\vec{f}$ von $\vec{p}_{\text{eye}}$ nach $\vec{p}_{\text{look}}$ legt nur die Blickachse fest – um die Kamera **waagerecht** zu halten, berechnet `gl.LookAt` den Bild-Rechtsvektor per Kreuzprodukt $\vec{s} = \vec{f} \times \vec{e}_{\text{up}}$:
+Der Sehstrahl $\vec{f}$ von $\vec{p}_{\text{eye}}$ nach $\vec{p}_{\text{look}}$ legt die Blickachse fest – `gl.LookAt` berechnet für eine waagerechte Kamera $\vec{s} = \vec{f} \times \vec{e}_{\text{up}}$:
 
-- **Schräger Blick ($|\phi| \le 85^\circ$):** $\vec{f}$ und $\vec{e}_{\text{up}}$ spannen eine Ebene auf $\implies \vec{s} \neq \vec{0}$ ist eindeutig.
-- **Nord-/Südpol ($\phi = \pm 90^\circ$, Blick senkrecht nach unten):** $\vec{f}$ und $\vec{e}_{\text{up}}$ liegen auf **einer Linie** $\implies \vec{f} \times \vec{e}_{\text{up}} = \vec{0}$ (*„Wo ist im Bild rechts?“* unbestimmt $\to 180^\circ$-Bildsprung, `Math.Clamp` schützt!).
+- **Schräger Blick ($|\phi| \le 85^\circ$):** $\vec{f}$ und $\vec{e}_{\text{up}}$ spannen eine Ebene auf $\implies \vec{s} \neq \vec{0}$ eindeutig.
+- **Nord-/Südpol ($\phi = \pm 90^\circ$):** $\vec{f} \parallel \vec{e}_{\text{up}} \implies \vec{f} \times \vec{e}_{\text{up}} = \vec{0}$ (*„Wo ist rechts?“* unbestimmt $\to 180^\circ$-Bildsprung, `Math.Clamp` schützt!).
 - **5°-Polkappe:** In der Praxis bleibt die Szene bis $85^\circ$ bequem von oben einsehbar.
 
 </div>

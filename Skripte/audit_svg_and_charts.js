@@ -260,6 +260,46 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       });
     }
 
+    // 2b. Excessive Transparent Margin Check in SVG viewBox user units (ohne Browser-Letterboxing)
+    const vb = svg.viewBox && svg.viewBox.baseVal;
+    const rootCtm = svg.getScreenCTM();
+    if (vb && vb.width > 0 && vb.height > 0 && rootCtm) {
+      const inv = rootCtm.inverse();
+      let uMinX = Infinity, uMinY = Infinity, uMaxX = -Infinity, uMaxY = -Infinity;
+      Array.from(svg.querySelectorAll('rect, circle, ellipse, polygon, polyline, path, line, text')).forEach(el => {
+        if (el.closest('defs, clipPath, marker')) return;
+        const st = window.getComputedStyle(el);
+        if (st.display === 'none' || st.visibility === 'hidden' || parseFloat(st.opacity || '1') === 0) return;
+        const hasFill = st.fill && st.fill !== 'none' && st.fill !== 'transparent' && parseFloat(st.fillOpacity || '1') > 0;
+        const hasStroke = st.stroke && st.stroke !== 'none' && st.stroke !== 'transparent' && parseFloat(st.strokeWidth || '0') > 0;
+        if (!hasFill && !hasStroke) return;
+        const b = el.getBoundingClientRect();
+        if (b.width <= 0 && b.height <= 0) return;
+        const corners = [
+          new DOMPoint(b.left, b.top).matrixTransform(inv),
+          new DOMPoint(b.right, b.bottom).matrixTransform(inv)
+        ];
+        uMinX = Math.min(uMinX, corners[0].x, corners[1].x);
+        uMinY = Math.min(uMinY, corners[0].y, corners[1].y);
+        uMaxX = Math.max(uMaxX, corners[0].x, corners[1].x);
+        uMaxY = Math.max(uMaxY, corners[0].y, corners[1].y);
+      });
+      if (uMinX < Infinity) {
+        const padT = Math.max(0, uMinY - vb.y);
+        const padB = Math.max(0, (vb.y + vb.height) - uMaxY);
+        const padL = Math.max(0, uMinX - vb.x);
+        const padR = Math.max(0, (vb.x + vb.width) - uMaxX);
+        const maxVPad = Math.max(28, vb.height * 0.09);
+        const maxHPad = Math.max(28, vb.width * 0.09);
+        if (padT > maxVPad || padB > maxVPad || padL > maxHPad || padR > maxHPad) {
+          issues.push({
+            type: 'EXCESSIVE_SVG_MARGIN',
+            message: `Zu große transparente Ränder (T:${Math.round(padT)} B:${Math.round(padB)} L:${Math.round(padL)} R:${Math.round(padR)}). viewBox enger zuschneiden.`
+          });
+        }
+      }
+    }
+
     // 3. Pairwise Text-Text Collisions (AABB Intersection)
     const texts = Array.from(document.querySelectorAll('text')).map(el => {
       const rect = el.getBoundingClientRect();

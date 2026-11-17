@@ -32,12 +32,12 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
 <div class="columns top">
-<div class="three">
+<div class="two">
 
-Nach dem organisatorischen **Prolog (Kapitel 00)** legen wir heute in **Termin 01** das Fundament:
+Nach dem **Prolog (Kap. 00)** legen wir heute in **Termin 01** das Fundament:
 
-- **Ausgangspunkt:** Reale Anlagen (Roboter, Hydraulik) sind für direkte Regler-Tests oft zu teuer, langsam oder gefährlich.
-- **Heute in T01:** Die **4 Modellarten**, die **4 Grafik-Säulen** sowie Ihr erster **Euler-/Heun-Integrator** inkl. Stabilitätsgrenze.
+- **Ausgangspunkt:** Reale Anlagen (Roboter, Hydraulik) sind für direkte Regler-Tests oft zu teuer oder gefährlich.
+- **Heute in T01:** Die **4 Modellarten**, die **4 Grafik-Säulen** und Ihr erster **Euler-/Heun-Integrator**.
 - **Semester-Bogen:** **T02–T05** 2D-/3D-Visualisierung $\to$ **T06** Multithreading $\to$ **T07–T10** Solver.
 
 > **Lernziel heute:** Verstehen, warum gekoppelte DGLs numerisch Schritt für Schritt gelöst werden müssen.
@@ -280,6 +280,8 @@ Die Wahl des Modelltyps hängt von der Problemstellung und dem zu untersuchenden
 
 </div>
 </div>
+
+> **Kernunterschied:** Kontinuierliche Größen ändern sich glatt für jedes $t \in \mathbb{R}$; diskrete Zustände springen nur an diskreten Zeitpunkten.
 
 ---
 
@@ -943,15 +945,15 @@ Wie sich der Digitale Zwilling von der frühen Konzeptphase bis in den laufenden
 ### Ausblick auf die Kursinhalte
 
 <div class="columns">
-<div class="three">
+<div class="two">
 
-In den folgenden Kapiteln erarbeiten wir zunächst die Werkzeuge und vertiefen anschließend die Modellarten:
+Nach dem Fundament erarbeiten wir zuerst die Werkzeuge und dann die Modellarten:
 
-- **Teil 1 – Visualisierung & Performance (Kap. 2–6):** `WriteableBitmap`, `WPF Canvas`, `ScottPlot 5`, `SharpGL` 3D & Multithreading (`Parallel.For`).
-- **Teil 2 – Simulationsmodelle (Kap. 7–10):** Statische Fachwerke (FEM), kontinuierliche DGLs, ereignisdiskrete DES & hybride Synthese.
-- **Nächster Termin (T02):** Wir starten mit 2D-Pixelgrafik (`WriteableBitmap`) und lösen Wärmeleitung sowie Wellen allokationsfrei auf dem Gitter.
+- **Teil 1 (Kap. 2–6):** `WriteableBitmap`, `WPF Canvas`, `ScottPlot 5`, `SharpGL` 3D & `Parallel.For`.
+- **Teil 2 (Kap. 7–10):** Statische Fachwerke (FEM), kontinuierliche DGLs, DES & hybride Synthese.
+- **Nächster Termin (T02):** 2D-Pixelgrafik (`WriteableBitmap`) mit Wärmeleitung und Wellen auf dem Gitter.
 
-> **Brücke:** Das Grundgerüst aus Euler-Zeitschritt und sauberer Modell-View-Trennung nehmen wir direkt in Termin 2 mit.
+> **Brücke:** Euler-Zeitschritt und Modell-View-Trennung nehmen wir direkt in Termin 2 mit.
 
 </div>
 <div class="two">

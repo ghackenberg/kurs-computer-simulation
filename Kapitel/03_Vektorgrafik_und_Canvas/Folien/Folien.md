@@ -60,13 +60,13 @@ Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showc
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
 <div class="columns top">
-<div class="three">
+<div class="two">
 
-In **Termin 02** haben wir 2D-Temperaturfelder direkt in den Pixelpuffer (`WriteableBitmap`) geschrieben – warum braucht die Simulation nun 2D-Vektorgrafik?
+In **Termin 02** schrieben wir 2D-Felder in `WriteableBitmap` – warum nun **2D-Vektorgrafik**?
 
-- **Stärke von `WriteableBitmap` (T02):** Flächenhafte 2D-Gitter ($500 \times 500$ Zellen) mit Millionen Farbwerten pro Sekunde.
-- **Grenzen des Pixelrasters:** Keine Objekt-Identität (Brückenstäbe verschmelzen zu Pixeln) & Pixel-Treppenstufen beim Zoom.
-- **Einordnung (2. Säule):** Für CAD-Tragwerke (Vorarbeit für **FEM-Statik in T07**!) und Kraftpfeile nutzen wir **analytische 2D-Vektorgrafik** im `WPF Canvas`.
+- **Stärke T02:** Flächenhafte 2D-Gitter ($500 \times 500$ Zellen) mit Millionen Farbwerten pro Sekunde.
+- **Grenze des Rasters:** Keine Objekt-Identität (Stäbe verschmelzen) & Pixel-Treppen beim Zoom.
+- **Heute (2. Säule):** CAD-Tragwerke (**FEM-Vorarbeit T07**) und Kraftpfeile im `WPF Canvas`.
 
 > **Ziel heute:** Verzerrungsfreie Koordinatentransformation und Pan/Zoom bei $\ge 60\,\text{FPS}$.
 
@@ -828,12 +828,13 @@ Ein Simulations-Viewer zeichnet $10.000$ Fachwerkstäbe pro Frame bei $60\,\text
 ### Ausblick: Echtzeit-Telemetrie & FEM-Kopplung (Termin 04 & 07)
 
 <div class="columns">
-<div class="three">
+<div class="two">
 
-Unsere 2D-Vektorgeometrie und das Welt-Screen-Koordinatensystem stehen – wie nutzen wir diese Bausteine im weiteren Semester?
+Unsere 2D-Vektorgeometrie steht – wie nutzen wir diese Bausteine im weiteren Semester?
 
-- **Direkt nächste Woche (Termin 04):** Statt Geometrieobjekten zeichnen wir **hochfrequente Zeitreihen (1 kHz)** mit `ScottPlot 5` und ringgepufferten Telemetriedaten.
-- **Fern-Brücke (Termin 07):** Genau die hier gezeichneten und als JSON exportierten Tragwerksknoten $(x, y)$, Stäbe und Lastpfeile werden in **Termin 07** mit echter Elastostatik ($\mathbf{K}\mathbf{u} = \mathbf{f}$) berechnet!
+- **Direkt nächste Woche (T04):** Hochfrequente Zeitreihen (1 kHz) mit `ScottPlot 5` und Ringpuffern.
+- **Fern-Brücke (T07):** Unsere per JSON exportierten Knoten, Stäbe und Lastpfeile werden in **T07** mit Elastostatik ($\mathbf{K}\mathbf{u} = \mathbf{f}$) gelöst!
+- **Lernfortschritt:** In **T05** folgt das **Moodle-Quiz 2** (Stoff: Kap. 03 & 04).
 
 > **Showcase-Fokus (T04):** Zwei Teams zeigen Track A/B beim 32:9-Seitenverhältnis-Stresstest!
 
