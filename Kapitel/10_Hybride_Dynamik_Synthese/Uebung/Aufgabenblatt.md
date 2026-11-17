@@ -6,13 +6,11 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, S-Functions, Bisektion, WPF Canvas / ScottPlot 5.
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen:**  
+> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, S-Functions, Bisektion, WPF Canvas / ScottPlot 5):**  
 > Nutzen Sie die bereitgestellte Projektmappe — der gesamte Semester-Stack (DGL, S-Functions, Event-Queues, TPL, WPF Canvas, ScottPlot 5) steht uneingeschränkt zur Verfügung.
 
----
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
 
@@ -23,7 +21,6 @@ Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
 4. **Zeno-Effekt & Chattering beherrschen:** Die unendliche Verdichtung von Schaltzeitpunkten bei abklingenden Hüpf- und Prellbewegungen durch Geschwindigkeits-Schwellwerte ($\epsilon_v$) abzufangen und stabil in kontinuierliche Haft- oder Gleitzustände überzugehen.
 5. **Synthese des Digitalen Zwillings:** Mechatronische Aktoren, Schaltkontakte, Regler und interaktive Visualisierungen nach der *Goldenen Regel der Simulationsarchitektur* zu einem Gesamtsystem zusammenzuführen.
 
----
 
 ## 2. Mathematische Grundlagen
 
@@ -76,7 +73,6 @@ $$\Delta t_n = \Delta t_0 \cdot e^n \implies \sum_{n=0}^{\infty} \Delta t_n = \D
 In endlicher physikalischer Zeit treten unendlich viele Stöße auf (**Zeno-Verhalten**). Ohne Schutz bricht die Bisektion in einer Endlosschleife zusammen.  
 **Lösung (Zeno-Schutz):** Unterschreitet die Aufprallgeschwindigkeit den Schwellwert $|v^-| < \epsilon_v$ (z. B. $0{,}01\,\text{m/s}$), wird die Stoßzahl auf $e = 0$ gesetzt und der diskrete Modus auf „Rollen/Liegen“ (Haftreibung mit $\dot{y} = 0, \ddot{y} = 0$) umgeschaltet.
 
----
 
 ## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
@@ -123,7 +119,6 @@ In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/HybridZeroCrossing.sln`) s
 - Im naiven Modus wird eine Bodenpenetration von $> 30\,\text{mm}$ und ein verfälschtes Energieverhältnis sichtbar, während die Bisektion $< 1\,\mu\text{m}$ Fehler und $\frac{E^+}{E^-} = 0{,}6400$ garantiert.  
 - Der Kick-Button holt den Ball jederzeit zuverlässig aus dem Zeno-Ruhezustand `RestingOnGround` zurück in den Freiflug.
 
----
 
 ## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
@@ -135,7 +130,6 @@ In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/HybridZeroCrossing.sln`) s
 > 
 > Beide Aufgaben basieren auf der hybriden Simulation mit Zero-Crossing Wurzelsuche und Zeno-Vermeidung. Bearbeiten Sie **NUR EINEN** Track!
 
----
 
 ### Track A (Industrie): Virtuelle Inbetriebnahme (VIBN) eines pneumatischen Taktvorschubs
 
@@ -182,7 +176,6 @@ In automatisierten Fertigungslinien schieben pneumatische Zylinder Werkstücke g
      - Kolben fährt zurück zu $S_0$ ($x \le 0{,}001\,\text{m}$), verweilt $200\,\text{ms}$ und startet neuen Zyklus.
    - Visualisieren Sie Kolbenposition, Kammerdrücke und Schaltzustände im WPF Canvas und ScottPlot 5.
 
----
 
 ### Track B (Simulation Game): Arcade Pinball Wizard mit Bumper-Bisektion
 
@@ -231,7 +224,6 @@ Ein klassischer Flipperautomat lebt von rasanter Kugelmechanik. Trifft die Metal
    - Bei Kollision der Kugel mit dem rotierenden Hebel wird die Umfangsgeschwindigkeit $\mathbf{v}_{\text{hebel}} = \vec{\omega} \times \vec{r}$ auf den Stoß aufaddiert.
    - Grafische Anzeige der Kugelbewegung im WPF Canvas und Punktestand-Overlay.
 
----
 
 ## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
@@ -245,7 +237,6 @@ Für die volle Punktzahl (10 Punkte) müssen folgende Kriterien erfüllt sein:
 | **Visualisierung & Dokumentation** | 2 P. | Flüssiges Canvas-Rendering; ScottPlot-Telemetrie; sauberer Markdown-Bericht mit Phasenportrait und Energieanalyse. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
----
 
 ## 6. Online-Recherche-Box
 
@@ -261,7 +252,6 @@ Nutzen Sie zur Vorbereitung und Vertiefung folgende Quellen:
   - `elastic collision vector reflection normal impulse formula`
   - `pneumatic cylinder state space differential equation model`
 
----
 
 ## 7. Vibe-Coding Prompting-Tipps
 
@@ -275,7 +265,6 @@ Falls Sie KI-Assistenten verwenden, beachten Sie folgende Vorgaben zur Vermeidun
 > **Prompt-Vorlage 2: Zeno-Schutz zur Chattering-Vermeidung**  
 > *„Implementiere eine Umschaltbedingung für einen Stoßkörper gegen eine Wand. Wenn die Normalkomponente der Stoßgeschwindigkeit $|v_n| < 0{,}02\,\text{m/s}$ ist, darf KEIN weiterer Stoß ($v_n^+ = -e \cdot v_n^-$) mehr ausgeführt werden, um den Zeno-Effekt zu verhindern. Schalte stattdessen in den Modus `Haftreibung` mit $v_n = 0$ und berechne die Stützkraft.“*
 
----
 
 ## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 

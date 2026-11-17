@@ -6,13 +6,11 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10 (`net8.0-windows`), WPF (`WriteableBitmap`), TPL, `System.Diagnostics.Stopwatch`, `System.Threading`.
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen:**  
+> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10 (`net8.0-windows`), WPF (`WriteableBitmap`), TPL, `System.Diagnostics.Stopwatch`, `System.Threading`):**  
 > Nutzen Sie ausschließlich die bereitgestellte WPF-Projektmappe mit .NET **Task Parallel Library (TPL)** (`Parallel.For`, `ParallelOptions`, `Interlocked`, `ConcurrentBag<T>`, `Task.Run`, `IProgress<T>`, `CancellationTokenSource`, `Stopwatch`) — ohne zusätzliche NuGet-Pakete.
 
----
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
 
@@ -22,7 +20,6 @@ Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
 3. **Reaktive WPF-Entkopplung implementieren:** Das Einfrieren des UI-Threads (*UI-Freeze*) durch Auslagerung der Simulationsschleife in `await Task.Run(...)`, gedrosselte Rückmeldung über `IProgress<T>` und kooperativen Not-Aus über `CancellationTokenSource` zu lösen.
 4. **Skalierung quantitativ analysieren:** Den parallelen Speedup $S(p)$ und die Effizienz $E(p)$ über variierende Thread-Zahlen $p$ experimentell mit `Stopwatch` im WPF-Dashboard zu messen und den seriellen Codeanteil $s = 1 - f_{\text{par}}$ nach dem Amdahlschen Gesetz zu bestimmen.
 
----
 
 ## 2. Mathematische Grundlagen
 
@@ -57,7 +54,6 @@ Führt der WPF-UI-Thread eine lange Simulationsschleife direkt im Button-Click-H
 └──────────────────────────────┘   (gedrosselt, z.B. alle 5)  └──────────────────────────────┘
 ```
 
----
 
 ## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
@@ -91,7 +87,6 @@ Führt der WPF-UI-Thread eine lange Simulationsschleife direkt im Button-Click-H
      - Umgekehrt liefert ein gemessener Speedup von $S(8) = 5{,}128205$ bei $p = 8$ Kernen einen rekonstruierten seriellen Anteil von exakt $s = 0{,}080$ ($8{,}0\,\%$).
      - Im Partikel-Äquivalenztest (`count = 2000`, `seed = 12345`, `dt = 0.001`, 10 Schritte) dürfen `StepSequential` und `StepParallel` maximal um $10^{-12}$ abweichen.
 
----
 
 ## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
@@ -103,7 +98,6 @@ Führt der WPF-UI-Thread eine lange Simulationsschleife direkt im Button-Click-H
 > 
 > Beide Aufgaben basieren auf derselben TPL-Multithreading- und WPF-Entkopplungs-Methodik (`Parallel.For`, `Task.Run`, `IProgress<T>`, `CancellationToken`), erfordern denselben Arbeitsaufwand und führen zur maximalen Punktzahl (10 Punkte). Bearbeiten Sie **NUR EINEN** Track!
 
----
 
 ### Track A (Industrie): Parallele Monte-Carlo-Toleranzanalyse für Baugruppen-Passungen
 
@@ -150,7 +144,6 @@ In der automatisierten Serienfertigung (z. B. Getriebe- oder Spindellagerung) ad
 4. **Arbeitspaket A.4 – Systematische Skalierungsreihe & Amdahl-Auswertung:**
    - Messen Sie die Laufzeit der $10\,000\,000$ Montagen für $p \in \{1, 2, 4, \dots, P_{\max}\}$ Threads (inkl. JIT-Warmup) und stellen Sie Speedup $S(p)$, Effizienz $E(p)$ und den geschätzten seriellen Anteil $s$ in der `DataGrid`-Tabelle sowie im `README.md`-Bericht dar.
 
----
 
 ### Track B (Simulation Game): Interaktive 2D-Schwarm- & Zombie-Horden-Simulation in WPF
 
@@ -189,7 +182,6 @@ In modernen Crowd-Simulationen und Survival-Games müssen zehntausende autonome 
 4. **Arbeitspaket B.4 – Systematische Skalierungsreihe & Amdahl-Auswertung:**
    - Führen Sie über die `DataGrid`-Tabelle im UI eine reproduzierbare Benchmark-Skalierungsreihe über $p \in \{1, 2, 4, \dots, P_{\max}\}$ Threads durch und dokumentieren Sie Speedup $S(p)$, Effizienz $E(p)$ und den seriellen Anteil $s$ nach Amdahl in Ihrer `README.md`.
 
----
 
 ## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
@@ -203,7 +195,6 @@ Für die volle Punktzahl (10 Punkte) müssen folgende Kriterien erfüllt sein:
 | **Codequalität & Dokumentation** | 2 P. | Sauberes WPF-Projekt, bestandene Unit-Tests (`dotnet test`), strukturierte `README.md` mit Screenshots, Skalierungstabelle und Diskussion des beobachteten Speedups. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
----
 
 ## 6. Online-Recherche-Box
 
@@ -220,7 +211,6 @@ Nutzen Sie zur Vorbereitung und Vertiefung folgende Quellen:
   - `"TPL Parallel.For thread local state Interlocked.Add Monte Carlo"`
   - `"Amdahl's law serial fraction estimation parallel efficiency"`
 
----
 
 ## 7. Vibe-Coding Prompting-Tipps
 
@@ -233,7 +223,6 @@ Nutzen Sie zur Vorbereitung und Vertiefung folgende Quellen:
 **Empfohlener Prompt-Rahmen für Ihren KI-Assistenten:**
 > *„Erstelle in C# (.NET 8 WPF) eine asynchrone Hintergrundschleife mit `await Task.Run(...)`, `CancellationTokenSource` und `IProgress<SimulationProgress>`. Innerhalb des Hintergrund-Tasks soll `Parallel.For` mit `ParallelOptions { MaxDegreeOfParallelism = p, CancellationToken = token }` ausgeführt werden. Melde nur alle 5 Zeitschritte über `progress.Report(...)` den Fortschritt an den UI-Thread zurück, wo `WriteableBitmap.WritePixels` und die `ProgressBar` aktualisiert werden.“*
 
----
 
 ## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 

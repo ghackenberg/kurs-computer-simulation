@@ -6,13 +6,11 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `SharpGL.WPF.OpenGLControl`.
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen:**  
+> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, WPF mit `SharpGL.WPF.OpenGLControl`):**  
 > Nutzen Sie ausschließlich die bereitgestellte Projektmappe mit **SharpGL (OpenGL)** und `System.Numerics.Matrix4x4` (single-threaded, ohne zusätzliche NuGet-Pakete). Die Kinematik wird rein über geometrische Transformationsmatrizen berechnet.
 
----
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
 
@@ -23,7 +21,6 @@ Nach erfolgreicher Bearbeitung dieses Aufgabenblattes können Sie:
 4. **Vorwärtskinematik:** Die Endeffektor-Position (Tool Center Point - TCP) aus Gelenkvariablen (Drehwinkel, Verfahrwege) analytisch bestimmen und mit der 3D-Grafikdarstellung zur Deckung bringen.
 5. **Geometrische Interaktion & Kollisions-Snap:** Einfache Distanz- oder BoundingBox-Prüfungen in 3D implementieren, um Werkstücke oder Spielobjekte physikalisch plausibel aufzunehmen.
 
----
 
 ## 2. Mathematische Grundlagen
 
@@ -65,7 +62,6 @@ $$I_f = k_a I_{La} + k_d I_{Ld} \max(0, \vec{n} \cdot \vec{l}) + k_s I_{Ls} \lef
 - $k_a, k_d, k_s$ und $I_{La}, I_{Ld}, I_{Ls}$: Materialkoeffizienten und Lichtintensitäten (Ambient, Diffuse, Specular)
 - $\alpha_{\text{shiny}} \in [1, 128]$: Glanzkoeffizient (`GL_SHININESS`)
 
----
 
 ## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
@@ -94,7 +90,6 @@ $$I_f = k_a I_{La} + k_d I_{Ld} \max(0, \vec{n} \cdot \vec{l}) + k_s I_{Ls} \lef
 4. **Aufgabe 1.4 – Unit-Tests für Kamera-Panning & Reparenting prüfen (`SceneGraph3D.Tests/SceneGraphTests.cs`):**
    - Öffnen Sie `SceneGraph3D.Tests/SceneGraphTests.cs`, kommentieren Sie in `Test_SceneNode_Reparenting_And_OrbitCamera_Pan()` den `TODO`-Block für `OrbitCamera.Pan(...)` ein (*Selbsttest-Referenz:* Bei $\theta = 0^\circ$ verschiebt `Pan(2.0, 1.5)` den Zielpunkt exakt auf `LookAt = (-2.0, 1.5, 0.0)`) und führen Sie `dotnet test` aus, bis alle **5 Unit-Tests** auf Grün stehen.
 
----
 
 ## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
@@ -117,7 +112,6 @@ $$I_f = k_a I_{La} + k_d I_{Ld} \max(0, \vec{n} \cdot \vec{l}) + k_s I_{Ls} \lef
 └─────────────────────────────────┘                 └─────────────────────────────────┘
 ```
 
----
 
 ### Track A (Industrie): Ausbau zum 4-Achs-SCARA mit Parallelgreifer, Teach-In & Pick-and-Place
 
@@ -144,7 +138,6 @@ Da die ersten 3 Achsen ($\theta_1, \theta_2, d_3$) und die TCP-Validierung berei
    - Aktivieren Sie eine zweite Lichtquelle (`GL_LIGHT1`) als lokales Arbeitszellen-Spotlight oberhalb der Fertigungszelle und signalisieren Sie den aktuellen Greifstatus visuell an der Zelle bzw. am Greifer (z. B. Statusleuchte am Handgelenk oder Stations-Indikator: Orange = Werkstück bereit, Grün = Gegriffen/Transport aktiv, Blau = Auf Station B abgelegt).
    - *Wichtiger OpenGL-Praxis-Tipp:* Rufen Sie `gl.Light(OpenGL.GL_LIGHT1, ...)` für `GL_POSITION` und `GL_SPOT_DIRECTION` in `OpenGlView_OpenGLDraw` **nach** `_camera.Apply(gl)` auf, damit Position und Strahlrichtung mit der aktuellen Kamera-Sichtmatrix transformiert werden und das Decken-Spotlight raumfest in Weltkoordinaten bleibt!
 
----
 
 ### Track B (Simulation Game): 3D Arcade Claw Crane (Jahrmarkt-Greifarm)
 
@@ -175,7 +168,6 @@ Vollständige mechatronische 3D-Simulation eines Jahrmarkt-Greifarm-Automaten (*
    - Aktivieren Sie einen lokalen Spotlight-Scheinwerfer (`GL_LIGHT1`), der von der Decke des Automaten senkrecht auf die Spielfläche strahlt.
    - *Wichtiger OpenGL-Praxis-Tipp:* Rufen Sie `gl.Light(OpenGL.GL_LIGHT1, ...)` für `GL_POSITION` und `GL_SPOT_DIRECTION` in `OpenGlView_OpenGLDraw` **nach** `_camera.Apply(gl)` auf, damit das Decken-Spotlight beim Drehen der Orbit-Kamera raumfest in Weltkoordinaten über der Spielfläche bleibt!
 
----
 
 ## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
@@ -188,7 +180,6 @@ Vollständige mechatronische 3D-Simulation eines Jahrmarkt-Greifarm-Automaten (*
 | **Unit-Tests, Dokumentation & Code-Qualität** | 1 P. | Grüne Unit-Test-Suite (`SceneGraph3D.Tests` via `dotnet test`), saubere Gliederung der Szenenknoten sowie aussagekräftige `README.md` mit Screenshot und Kinematik-Schema. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
----
 
 ## 6. Online-Recherche-Box
 
@@ -202,7 +193,6 @@ Vollständige mechatronische 3D-Simulation eines Jahrmarkt-Greifarm-Automaten (*
   - `OpenGL spherical camera orbit clamped pitch gimbal lock`
   - `OpenGL hierarchical modeling glPushMatrix robotic arm`
 
----
 
 ## 7. Vibe-Coding Prompting-Tipps
 
@@ -220,7 +210,6 @@ Berechne für alle Flächen (Würfel, Zylinder) saubere Normalenvektoren mit gl.
 Implementiere eine Orbit-Kamera in Kugelkoordinaten, deren Elevation phi auf maximal +-85 Grad geklemmt ist.
 ```
 
----
 
 ## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 

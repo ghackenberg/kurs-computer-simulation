@@ -6,13 +6,11 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `System.Windows.Media.Imaging.WriteableBitmap` und `Image`-Control.
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen:**  
+> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, WPF mit `System.Windows.Media.Imaging.WriteableBitmap` und `Image`-Control):**  
 > Nutzen Sie ausschließlich die bereitgestellte WPF-Projektmappe mit `WriteableBitmap` (`byte[]`/`uint[]`-BackBuffer, single-threaded im Timer-Takt) — ohne zusätzliche NuGet-Pakete, Vektor-Shapes oder Parallelisierung.
 
----
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
 
@@ -23,7 +21,6 @@ Nach erfolgreicher Bearbeitung dieses Aufgabenblattes können Sie:
 4. **Physikalische Randbedingungen:** Dirichlet- (feste Temperatur), Neumann- (adiabater Rand / Wärmestrom) und Robin-Randbedingungen (konvektiver Wärmeübergang an Luft) auf einem diskreten Gitter korrekt abbilden.
 5. **Materialübergänge modellieren:** Lokale Inhomogenitäten von Wärmeleitfähigkeit und Wärmekapazität über gemittelte Gitterkoeffizienten sauber formulieren.
 
----
 
 ## 2. Mathematische Grundlagen
 
@@ -52,7 +49,6 @@ Wird diese Zeitschrittgrenze auch nur minimal überschritten, kommt es zu einem 
 3. **Robin-Rand (konvektiver Wärmeübergang an Kühlfluid mit Wärmeübergangskoeffizient $h$ und Umgebungstemperatur $T_\infty$):**
    $$-\lambda \frac{\partial T}{\partial n} = h (T_{\text{Oberfläche}} - T_\infty) \implies T_{0,j} = \frac{\lambda \cdot T_{1,j} + h \Delta x \cdot T_\infty}{\lambda + h \Delta x}$$
 
----
 
 ## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
@@ -93,7 +89,6 @@ Die Vorlage enthält bereits ein lauffähiges $128 \times 128$ Basis-Gitter (`fl
    - Öffnen Sie `PixelHeatFDM.Tests/HeatGridTests.cs`, kommentieren Sie in der Testmethode `Test_GoldenReference_SingleStepAndColorMapping_Stage1()` den vorbereiteten `TODO [Stufe 1 - Aufgabe 1.4]`-Prüfblock für die adiabate Isolator-Wand ($T_{8,8}^1 = 40{,}0\,^\circ\text{C}$ vor `SetAlpha(9, 8, 0.0f)`) ein und führen Sie `dotnet test` aus, bis alle **4 Unit-Tests** in `PixelHeatFDM.Tests` fehlerfrei auf Grün stehen.
 - **Erwartetes Ergebnis nach Stufe 1:** Die Wärmewolke strömt in Echtzeit adiabat (ohne Wärmeverlust an den Wänden) um Ihre per Maus gezeichneten Isolator-Labyrinthe herum und alle Unit-Tests bestehen!
 
----
 
 ## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
@@ -116,7 +111,6 @@ Die Vorlage enthält bereits ein lauffähiges $128 \times 128$ Basis-Gitter (`fl
 └─────────────────────────────────┘                 └─────────────────────────────────┘
 ```
 
----
 
 ### Track A (Industrie): Gamer-PC & Server-Blade Kühlkörper-Optimizer
 
@@ -152,7 +146,6 @@ In Hochleistungs-Servern oder Gaming-PCs führt die Abwärme moderner Multi-Core
    - Ermitteln Sie analytisch $\Delta t_{\text{krit}} = \frac{\Delta x^2}{4 a_{\max}}$ für Kupfer ($a_{\max} \approx 1{,}15 \times 10^{-4}\,\text{m}^2/\text{s}$).
    - Verdoppeln Sie im Test $\Delta t$ schrittweise und dokumentieren Sie den exakten Punkt, an dem das Gitter numerisch explodiert.
 
----
 
 ### Track B (Simulation Game): Falling Sand & Doom Fire / Lava-Simulator
 
@@ -184,7 +177,6 @@ Klassische zelluläre Physik-Spiele (*Powder Toy*, *Noita*, *Doom Fire*) faszini
 3. **Arbeitspaket B.3 – Pointer-Performance & Maus-Werkzeuge:** Gewährleisten Sie eine butterweiche Bildrate ($\ge 45\,\text{FPS}$) bei voll interagierendem Gitter über direkten Pointer-Zugriff auf `WriteableBitmap.BackBuffer`.
 4. **Arbeitspaket B.4 – Stabilitätsanalyse:** Zeigen Sie, was geschieht, wenn der Diffusionskoeffizient der Hitze über das Stabilitätslimit getrieben wird (Artefakte, Streifenbildung).
 
----
 
 ## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
@@ -197,7 +189,6 @@ Klassische zelluläre Physik-Spiele (*Powder Toy*, *Noita*, *Doom Fire*) faszini
 | **Dokumentation & Code-Qualität** | 1 P. | Saubere Struktur, übersichtliche `README.md` mit Erklärung der Materialkennwerte bzw. Automatenregeln. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
----
 
 ## 6. Online-Recherche-Box
 
@@ -210,7 +201,6 @@ Klassische zelluläre Physik-Spiele (*Powder Toy*, *Noita*, *Doom Fire*) faszini
   - `2D heat equation finite difference Robin boundary condition`
   - `cellular automata falling sand algorithm grid implementation`
 
----
 
 ## 7. Vibe-Coding Prompting-Tipps
 
@@ -227,7 +217,6 @@ Verwende KEIN SetPixel, KEIN Canvas und KEIN Multithreading (Single-Threaded Dis
 Implementiere ein ortsabhängiges Materialgitter float[,] _alphaMap sowie für Track A die konvektive Robin-Randbedingung mit Wärmeübergangskoeffizient h bzw. für Track B den zellulären Partikelautomaten.
 ```
 
----
 
 ## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 

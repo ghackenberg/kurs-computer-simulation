@@ -6,13 +6,11 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `ScottPlot.WPF` (Version 5.x) und `Microsoft.Msagl.WpfGraphControl`.
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen:**  
+> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, WPF mit `ScottPlot.WPF` (Version 5.x) und `Microsoft.Msagl.WpfGraphControl`):**  
 > Verwenden Sie ausschließlich die bereitgestellte Projektmappe mit **ScottPlot 5** (veraltete ScottPlot-4-Syntax wie `AddSignal` ist nicht zulässig) sowie single-threaded Timer-Steuerung auf vorallokierten Puffern.
 
----
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
 
@@ -23,7 +21,6 @@ Nach erfolgreicher Bearbeitung dieses Aufgabenblattes können Sie:
 4. **Mehrkanal-Dashboard & Phasenplots:** Zeitreihen, Streudiagramme (Phasenraum) und dynamische Histogramme synchron in einem übersichtlichen Leitstand anordnen.
 5. **Topologische Systemgraphen mit MSAGL:** Anlagenstrukturen und Messketten als gerichtete Graphen visualisieren und interaktiv mit Messwerten annotieren.
 
----
 
 ## 2. Mathematische Grundlagen
 
@@ -44,7 +41,6 @@ B. P. Welford formulierte eine numerisch exzellent konditionierte Rekursionsform
    $$y_{\text{upper}} = \bar{x}_k + 3 \sigma_k, \qquad y_{\text{lower}} = \bar{x}_k - 3 \sigma_k$$
    Nach der Drei-Sigma-Regel liegen bei Normalverteilung 99,73 % aller Messpunkte innerhalb dieses Bandes. Ausreißer jenseits dieser Grenze indizieren Anlagen-Anomalien.
 
----
 
 ## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
@@ -71,7 +67,6 @@ Die Vorlage enthält bereits die Klassen `CircularBuffer<T>` und `WelfordStatist
 4. **Aufgabe 1.4 – Automatisierte Verifikation mit Unit-Tests (`dotnet test`):**
    - Öffnen Sie `ScottPlotTelemetry.Tests/TelemetryTests.cs`, kommentieren Sie in `Test_TwoMemoryArchitecture_WelfordVsCircularBufferWindow()` den vorbereiteten `TODO [Stufe 1 - Aufgabe 1.4]`-Block für `WelfordStatistics.ComputeWindowStats(...)` ein (*Selbsttest-Referenz:* `winMean = 52.5`, `winMin = 30.0`, `winMax = 90.0` auf dem Ringpuffer-Fenster `[30, 40, 50, 90]`; prüfen Sie optional auch den leeren Puffer `Count == 0`) und führen Sie `dotnet test` aus, bis alle **5 Unit-Tests** im Projekt `ScottPlotTelemetry.Tests` fehlerfrei auf Grün stehen.
 
----
 
 ## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
@@ -94,7 +89,6 @@ Die Vorlage enthält bereits die Klassen `CircularBuffer<T>` und `WelfordStatist
 └─────────────────────────────────┘                 └─────────────────────────────────┘
 ```
 
----
 
 ### Track A (Industrie): Industrieller Antriebsprüfstand & Schwingungs-Leitstand
 
@@ -117,7 +111,6 @@ Auf einem mechatronischen Motorprüfstand für Elektroantriebe werden Drehzahl $
    - Sensor-Knoten färben sich bei Toleranzüberschreitung von Grün auf Rot.
    - *(Hinweis: Das NuGet-Paket `AutomaticGraphLayout.WpfGraphControl` ist in `ScottPlotTelemetry.csproj` bereits vorinstalliert; der Namespace lautet `Microsoft.Msagl.WpfGraphControl`).*
 
----
 
 ### Track B (Simulation Game): Retro Arcade Racing HUD & G-Force Telemetrie
 
@@ -139,7 +132,6 @@ Im Telemetrie-Center eines Sim-Racing-Spiels analysiert die Boxencrew das Fahrve
    - Topologischer Rundkurs-Graph mit Sektoren (`Sektor 1`, `Sektor 2`, `Sektor 3`), Kurvenknoten (`Hairpin`, `Chicane`) und `Boxengasse`.
    - Der aktuelle Aufenthaltsort des Boliden wird durch Hervorhebung des aktiven Knotens visualisiert.
 
----
 
 ## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
@@ -152,7 +144,6 @@ Im Telemetrie-Center eines Sim-Racing-Spiels analysiert die Boxencrew das Fahrve
 | **Dokumentation & Code-Qualität** | 1 P. | Nachvollziehbarer Bericht in `README.md` mit Screenshot des Dashboards und kurzem GC-/Performance-Nachweis. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
----
 
 ## 6. Online-Recherche-Box
 
@@ -166,7 +157,6 @@ Im Telemetrie-Center eines Sim-Racing-Spiels analysiert die Boxencrew das Fahrve
   - `Welford algorithm online running variance C# zero allocation`
   - `MSAGL WPF GraphControl custom nodes tutorial`
 
----
 
 ## 7. Vibe-Coding Prompting-Tipps
 
@@ -183,7 +173,6 @@ Implementiere den Welford-Algorithmus zur Berechnung des gleitenden Mittelwerts 
 Das Streaming muss 50 Mal pro Sekunde ohne Garbage-Collection-Allokationen (kein 'new double[]' im Timer-Loop) laufen.
 ```
 
----
 
 ## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 

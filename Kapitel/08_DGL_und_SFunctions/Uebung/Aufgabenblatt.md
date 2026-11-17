@@ -6,13 +6,11 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, S-Function-Klassenstruktur, ScottPlot 5 / WPF.
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen:**  
+> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, S-Function-Klassenstruktur, ScottPlot 5 / WPF):**  
 > Nutzen Sie ausschließlich die bereitgestellte Projektmappe mit RK4-Integrator, S-Functions (`Derivatives`, `Outputs`), PID-Clamping und **ScottPlot 5** — ohne zusätzliche NuGet-Pakete.
 
----
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
 
@@ -22,7 +20,6 @@ Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
 3. **Aktorsättigung & Anti-Windup Clamping beherrschen:** Das gefürchtete Integral-Windup bei physikalisch begrenzten Stellgrößen durch Conditional Integration (Clamping-Kriterium $e \cdot u_{\text{raw}} > 0$) mathematisch sauber zu eliminieren.
 4. **Regelkreisdynamik analysieren:** Das Einschwingverhalten geregelter mechatronischer Systeme unter massiven Laststörungen quantitativ zu vermessen und die numerische Stabilität gegenüber Euler-Verfahren nachzuweisen.
 
----
 
 ## 2. Mathematische Grundlagen
 
@@ -80,7 +77,6 @@ Läuft das Stellglied in die Sättigung ($u_{\text{raw}} \neq u$), wächst der I
 
 $$\frac{\mathrm{d}x_{\text{i}}}{\mathrm{d}t} = \begin{cases} 0 & \text{wenn gesättigt UND } e \cdot u_{\text{raw}} > 0 \\ e(t) & \text{sonst} \end{cases}$$
 
----
 
 ## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
@@ -123,7 +119,6 @@ $$\frac{\mathrm{d}x_{\text{i}}}{\mathrm{d}t} = \begin{cases} 0 & \text{wenn ges�
 3. **Aufgabe 1.3 – Direktvergleich MIT vs. OHNE Anti-Windup im selben Diagramm:**
    - Erweitern Sie `RunSimulation()` in `MainWindow.xaml.cs` so, dass bei jedem Klick auf „Simulation starten“ **beide** Konfigurationen (`AntiWindupEnabled = true` und `AntiWindupEnabled = false`) berechnet und im oberen Plot (`PlotPosition`) direkt übereinander gezeichnet werden (Blau durchgezogen = mit Clamping, Rot gestrichelt = ohne Anti-Windup).
 
----
 
 ## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
@@ -135,7 +130,6 @@ $$\frac{\mathrm{d}x_{\text{i}}}{\mathrm{d}t} = \begin{cases} 0 & \text{wenn ges�
 > 
 > Beide Aufgaben basieren auf der S-Function-Architektur, Mehrstufen-Integratoren und Anti-Windup Clamping. Bearbeiten Sie **NUR EINEN** Track!
 
----
 
 ### Track A (Industrie): Verfahrensvergleich (Euler/Heun/RK4) & Elektro-Thermisches Servomotormodell
 
@@ -171,7 +165,6 @@ Da der 4-Zustands-Basisregelkreis bereits im Starter-Kit enthalten ist, erweiter
    - Überschreitet die Wicklungstemperatur den Schwellenwert $T_{\text{warn}} = 80\,^\circ\text{C}$, reduziert das Steuergerät automatisch die maximal zulässige Stellspannung linear ($u_{\max}(T_{\text{Cu}})$ sinkt von $24\,\text{V}$ auf $12\,\text{V}$ bei $T_{\text{crit}} = 120\,^\circ\text{C}$), wobei das Anti-Windup Clamping sofort auf die reduzierte Sättigungsgrenze reagiert!
    - Visualisieren Sie im ScottPlot-Dashboard Drehwinkel $\theta(t)$, Stellspannung $u_{\text{A}}(t)$, Ankerstrom $i_{\text{A}}(t)$ und Wicklungstemperatur $T_{\text{Cu}}(t)$ und diskutieren Sie die Ergebnisse im `README.md`-Bericht.
 
----
 
 ### Track B (Simulation Game): SpaceX Falcon Hop & Booster Landing
 
@@ -217,7 +210,6 @@ Die spektakulären Landungen der SpaceX Falcon 9 Erststufen erfordern eine hochp
    - Bei $t = 3{,}0\,\text{s}$ trifft eine seitliche Windböe ($F_{\text{wind}} = 12\,\text{kN}$) für $0{,}5\,\text{s}$ auf den Booster.
    - Simulieren Sie MIT vs. OHNE Anti-Windup und zeigen Sie im ScottPlot-Diagramm, dass der Booster mit Anti-Windup stabil aufsetzt ($|v_y| \le 1\,\text{m/s}, |\theta| \le 2^\circ$), während er ohne Anti-Windup durch übersteuernden Gimbal umkippt.
 
----
 
 ## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
@@ -231,7 +223,6 @@ Für die volle Punktzahl (10 Punkte) müssen folgende Kriterien erfüllt sein:
 | **Numerische Validierung & Bericht** | 2 P. | Abgleich gegen den analytischen Grenzfall ($\omega_{\infty} = 200\,\text{rad/s}$ für $t \to 8\,\text{s}$) sowie Schrittweiten-/Stabilitätsdiskussion in `README.md`. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
----
 
 ## 6. Online-Recherche-Box
 
@@ -247,7 +238,6 @@ Nutzen Sie zur Vorbereitung und Vertiefung folgende Quellen:
   - `DC servo motor transfer function state space differential equations`
   - `thrust vector control booster rocket dynamics simulation`
 
----
 
 ## 7. Vibe-Coding Prompting-Tipps
 
@@ -261,7 +251,6 @@ Falls Sie KI-Assistenten verwenden, beachten Sie folgende Vorgaben zur Vermeidun
 > **Prompt-Vorlage 2: Exakte Anti-Windup Clamping-Bedingung**  
 > *„Implementiere die Update-Methode eines diskretisierten PID-Reglers mit Clamping in C#. Achtung: Der I-Zustand darf NUR DANN eingefroren werden, wenn die Stellgröße saturiert ist UND der Regelfehler $e$ das gleiche Vorzeichen wie die Rohstellgröße $u_{\text{raw}}$ hat ($e \cdot u_{\text{raw}} > 0$). Wenn der Fehler das System aus der Sättigung herausführen möchte, MUSS der I-Anteil normal integriert werden!“*
 
----
 
 ## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 

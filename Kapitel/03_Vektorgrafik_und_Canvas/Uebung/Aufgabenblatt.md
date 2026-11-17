@@ -6,14 +6,12 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `System.Windows.Controls.Canvas` und 2D-Vektorprimitiven (`Line`, `Path`, `Polygon`, `Ellipse`).
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen:**  
+> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, WPF mit `System.Windows.Controls.Canvas` und 2D-Vektorprimitiven (`Line`, `Path`, `Polygon`, `Ellipse`)):**  
 > Nutzen Sie ausschließlich die bereitgestellte WPF-Projektmappe (`WPF Canvas` / `DrawingVisual`, ohne zusätzliche NuGet-Pakete). Der Fokus liegt rein auf **2D-Vektorgeometrie, Koordinatentransformation und Interaktion** — ohne mechanische Statik- oder Gleichungslöser.  
 > Zudem gilt: **KEIN** ScottPlot, **KEIN** SharpGL 3D, **KEIN** Multithreading!
 
----
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
 
@@ -24,7 +22,6 @@ Nach erfolgreicher Bearbeitung dieses Aufgabenblattes können Sie:
 4. **Normgerechte Bemaßungsketten (DIN 406):** Technische Maßhilfslinien, Maßlinien mit Pfeilen und zentrierte Maßbeschriftungen vektorbasiert generieren.
 5. **Flüssige Canvas-Interaktivität:** Geometrieknoten per Mouse-Drag-and-Drop in Echtzeit verschieben, ohne Render-Artefakte oder Speicherlecks zu erzeugen.
 
----
 
 ## 2. Mathematische Grundlagen
 
@@ -57,7 +54,6 @@ $$\phi_{\text{screen}} = \operatorname{atan2}(-F_y, F_x) = \operatorname{atan2}(
 Die beiden Flügelpunkte $\vec{p}_{\text{left}}$ und $\vec{p}_{\text{right}}$ einer geschlossenen Pfeilspitze mit fester Pixel-Länge $L_{\text{tip}}$ und Halbwinkel $\beta$ (typisch $15^\circ \approx 0{,}26\,\text{rad}$) werden über Drehmatrizen im Screen Space relativ zur Spitze $\vec{p}_{\text{tip}}$ berechnet:
 $$\vec{p}_{\text{left}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} \cos(\phi_{\text{screen}} - \beta) \\ \sin(\phi_{\text{screen}} - \beta) \end{bmatrix}, \quad \vec{p}_{\text{right}} = \vec{p}_{\text{tip}} - L_{\text{tip}} \begin{bmatrix} \cos(\phi_{\text{screen}} + \beta) \\ \sin(\phi_{\text{screen}} + \beta) \end{bmatrix}$$
 
----
 
 ## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
@@ -87,7 +83,6 @@ Die Vorlage enthält bereits die Basisklasse `Transform2D`, das Dreieckstragwerk
    - **Ihre Lösung:** Berechnen Sie `var (xMin, xMax, yMin, yMax) = _truss.GetBounds();` weiterhin für die Live-Maßketten, rufen Sie `_transform.Update(...)` in `Redraw()` aber **nur dann** auf, wenn gerade **kein** Knoten gezogen wird (`if (_draggedNode == null)`). Erst beim Loslassen der Maustaste (`TrussCanvas_MouseUp`) darf das Auto-Fit auf die neue Bounding Box nachgeführt werden! Erhöhen Sie zudem die Koordinaten-Rundung in `TrussCanvas_MouseMove` von Zentimetern auf **Millimeter-Auflösung (`Math.Round(worldX, 3)` und `:F3`)**.
    - **Automatisierte Unit-Test-Verifikation:** Öffnen Sie im Testprojekt `VectorTrussCanvas.Tests/GeometryTests.cs` die Methode `Test_Stage1_GoldenReference_And_BarLengths()`, kommentieren Sie dort den vorbereiteten `TODO [Stufe 1 - Aufgabe 1.4]`-Testblock für `GetBarLength(...)` ein und führen Sie im Vorlagenordner `dotnet test` aus, bis alle **5 Unit-Tests** in `VectorTrussCanvas.Tests` grün durchlaufen!
 
----
 
 ## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
@@ -110,7 +105,6 @@ Die Vorlage enthält bereits die Basisklasse `Transform2D`, das Dreieckstragwerk
 └─────────────────────────────────┘                 └─────────────────────────────────┘
 ```
 
----
 
 ### Track A (Industrie): Interaktiver 2D-CAD Tragwerks-Inspektor & Last-Editor
 
@@ -131,7 +125,6 @@ In der Tragwerksplanung werden Brücken- und Hallenträger als normgerechte 2D-V
    - Frieren Sie statisch verwendete `SolidColorBrush`-Instanzen ein (`Freeze()`), um GC-Allokationen beim Dragging zu minimieren.
    - Fügen Sie zwei Buttons **„JSON Speichern“** und **„JSON Laden“** hinzu, mit denen das aktuelle Tragwerk (Knoten, Stäbe, Lager, Lasten) als `.json`-Datei exportiert und wieder eingeladen werden kann.
 
----
 
 ### Track B (Simulation Game): „Poly Bridge“ Blueprint-Baumeister
 
@@ -152,7 +145,6 @@ Im Konstruktionsmodus von Physik-Brückenbauspielen (*Poly Bridge*, *Bridge Cons
    - Frieren Sie statisch verwendete `SolidColorBrush`-Instanzen ein (`Freeze()`), um GC-Allokationen beim Zeichnen zu minimieren.
    - Fügen Sie zwei Buttons **„JSON Speichern“** und **„JSON Laden“** hinzu, mit denen der konstruierte Brücken-Entwurf (Knoten, Stäbe, Lager, Lasten) als `.json`-Datei für den LKW-Überfahrt-Test in Einheit 07 gespeichert und geladen werden kann.
 
----
 
 ## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
@@ -165,7 +157,6 @@ Im Konstruktionsmodus von Physik-Brückenbauspielen (*Poly Bridge*, *Bridge Cons
 | **JSON-Persistenz, Unit-Tests & Code-Qualität (Aufgabe 1.4 & A.4/B.4)** | 2 P. | Grüne Unit-Test-Suite (`VectorTrussCanvas.Tests` / `dotnet test`), funktionierender JSON-Export/Import (`System.Text.Json`), eingefrorene Brushes (`Freeze()`) und kurze `README.md`. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
----
 
 ## 6. Online-Recherche-Box
 
@@ -178,7 +169,6 @@ Im Konstruktionsmodus von Physik-Brückenbauspielen (*Poly Bridge*, *Bridge Cons
   - `calculate polygon arrowhead rotation vector geometry C#`
   - `WPF Canvas interactive drag and drop line node update`
 
----
 
 ## 7. Vibe-Coding Prompting-Tipps
 
@@ -195,7 +185,6 @@ Implementiere für Track A die zweistufige DIN-406-Untergurtbemaßung, das Ziehe
 Ergänze zudem den JSON-Import/Export mit System.Text.Json und binde KEINE FEM- oder Statikbibliotheken ein.
 ```
 
----
 
 ## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 

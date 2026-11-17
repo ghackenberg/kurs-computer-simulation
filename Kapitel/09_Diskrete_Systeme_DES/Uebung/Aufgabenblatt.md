@@ -6,13 +6,11 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, `System.Collections.Generic.PriorityQueue<TElement, TPriority>`, TPL `Parallel.For`, ScottPlot 5.
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen:**  
+> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, `System.Collections.Generic.PriorityQueue<TElement, TPriority>`, TPL `Parallel.For`, ScottPlot 5):**  
 > Nutzen Sie ausschließlich die bereitgestellte Projektmappe mit `PriorityQueue`, stochastischen Zufallsgeneratoren (Inversionsmethode), TPL für Replikationen und **ScottPlot 5** — ohne zusätzliche NuGet-Pakete.
 
----
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
 
@@ -23,7 +21,6 @@ Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
 4. **Little's Gesetz empirisch nachweisen:** Den fundamentalen stationären Erhaltungssatz der Warteschlangentheorie $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ über statistische Datenakkumulation zu verifizieren.
 5. **Monte-Carlo-Konfidenzintervalle berechnen:** Simulationsläufe über TPL `Parallel.For` zu replizieren und 95%-Konfidenzintervalle für Durchlauf- und Wartezeiten auszuweisen.
 
----
 
 ## 2. Mathematische Grundlagen
 
@@ -70,7 +67,6 @@ $$\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}, \quad \bar{L}_{\text{q}} = \lamb
 - $\lambda_{\text{eff}}$: Effektive Ankunftsrate. Bei begrenzter Kapazität $K$ gehen blockierte Einheiten verloren:
   $$\lambda_{\text{eff}} = \lambda \cdot (1 - P_{\text{Block}})$$
 
----
 
 ## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
@@ -117,7 +113,6 @@ In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/DiscreteEventSimulation.sl
 - Bei $K = 10$ gilt $\bar{L} = \lambda_{\text{eff}} \cdot \bar{W}$ exakt ($< 0{,}5\,\%$ Fehler), während $\lambda \cdot \bar{W}$ um die Blockierwahrscheinlichkeit $P_{\text{Block}}$ abweicht.  
 - Bei $R = 100$ parallelen Läufen schrumpft das 95%-Konfidenzintervall für $\mathbb{E}[W]$ auf ca. $\pm 0{,}015\,\text{min}$ um den theoretischen Wert $W = 1{,}00\,\text{min}$.
 
----
 
 ## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
@@ -129,7 +124,6 @@ In der bereitgestellten WPF-Starter-Vorlage (`Vorlage/DiscreteEventSimulation.sl
 > 
 > Beide Aufgaben basieren auf der diskreten Ereignissimulation mit Mehrkanal-Servern ($M/M/c/K$), Prioritätswarteschlangen und statistischer Validierung über Little's Gesetz. Bearbeiten Sie **NUR EINEN** Track!
 
----
 
 ### Track A (Industrie): Automobil-Lackierstraße mit M/M/c-Puffern & Little's Gesetz
 
@@ -182,7 +176,6 @@ In der Automobilendmontage werden Rohkarosserien durch eine Lackierstraße gesch
      $$\text{CI}_{95\%} = \bar{W} \pm 1{,}96 \cdot \frac{s_W}{\sqrt{N_{\text{runs}}}}$$
    - Plotten Sie das Verteilungs-Histogramm der Verweilzeiten in ScottPlot 5.
 
----
 
 ### Track B (Simulation Game): Theme Park Rush & Achterbahn-Warteschlangen
 
@@ -228,7 +221,6 @@ In Freizeitpark-Aufbauspielen (*RollerCoaster Tycoon*, *Planet Coaster*) entsche
    - Ermitteln Sie das 95%-Konfidenzintervall der maximalen Wartezeit eines regulären Gastes.
    - Visualisieren Sie die Wartezeitverteilung in ScottPlot 5.
 
----
 
 ## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
@@ -242,7 +234,6 @@ Für die volle Punktzahl (10 Punkte) müssen folgende Kriterien erfüllt sein:
 | **Monte-Carlo & ScottPlot** | 2 P. | Parallele Ausführung von 100 Replikationen (`Parallel.For`); Berechnung des 95%-Konfidenzintervalls; ansprechendes Histogramm in ScottPlot 5. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
----
 
 ## 6. Online-Recherche-Box
 
@@ -259,7 +250,6 @@ Nutzen Sie zur Vorbereitung und Vertiefung folgende Quellen:
   - `Little's law verification simulation effective arrival rate`
   - `M/M/c/K queue blocking probability simulation C#`
 
----
 
 ## 7. Vibe-Coding Prompting-Tipps
 
@@ -273,7 +263,6 @@ Falls Sie KI-Assistenten verwenden, beachten Sie folgende Vorgaben zur Vermeidun
 > **Prompt-Vorlage 2: Inversionsmethode ohne mathematische Singularität**  
 > *„Zeige mir die C#-Formel zur Erzeugung einer exponentialverteilten Zufallsvariablen aus `Random.Shared`. Beachte: `1.0 - NextDouble()` verhindert die Auswertung von $\ln(0)$, was zu `-Infinity` führen würde: `double tau = -Math.Log(1.0 - rnd.NextDouble()) / lambda;`. Stelle sicher, dass der Random-Generator in parallelen Replikationen thread-sicher ist.“*
 
----
 
 ## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 

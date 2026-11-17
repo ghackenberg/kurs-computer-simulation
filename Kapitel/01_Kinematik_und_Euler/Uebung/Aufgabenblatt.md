@@ -6,13 +6,11 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10 Konsolenapplikation (`System.Numerics.Vector2`).
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen:**  
+> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10 Konsolenapplikation (`System.Numerics.Vector2`)):**  
 > Verwenden Sie ausschließlich eine **reine .NET-Konsolenanwendung** ohne zusätzliche NuGet-Pakete oder GUI-Frameworks; die Ausgabe erfolgt über formatierte Konsolentabellen, ASCII-Darstellungen oder CSV-Export.
 
----
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
 
@@ -23,7 +21,6 @@ Nach erfolgreicher Bearbeitung dieses Aufgabenblattes können Sie:
 4. **Physikalische Ereignis-Interpolation:** Das Auftreffen auf eine Begrenzungsfläche (Bodenkontakt, Anschlag) durch lineare Schnittpunkt-Interpolation ermitteln, ohne dass es zu unrealistischer Durchdringung (Tunneling) kommt.
 5. **Ingenieurmäßige Entkopplung:** Die Simulationsrechnung (Zustand, Ableitung, Integrationsschritt) strikt von der Textausgabe trennen.
 
----
 
 ## 2. Mathematische Grundlagen
 
@@ -47,7 +44,6 @@ $$\text{Korrektor (Mittelwert-Update):} \quad \mathbf{x}_{k+1} = \mathbf{x}_k + 
 Erreicht der Zustand im Zeitschritt $k+1$ eine unzulässige Penetration (z. B. $y_{k+1} < 0$ bei Bodenkontakt oder $x_{k+1} > s_{\max}$ beim Zylinderanschlag), darf nicht einfach der Zustand $k+1$ verworfen oder beibehalten werden. Die reale Auftreffzeit $t^* \in [t_k, t_{k+1}]$ wird über lineare Interpolation ermittelt:
 $$\tau = \frac{0 - y_k}{y_{k+1} - y_k} \in [0, 1] \implies t^* = t_k + \tau \cdot \Delta t, \quad x^* = x_k + \tau \cdot (x_{k+1} - x_k)$$
 
----
 
 ## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
@@ -81,7 +77,6 @@ $$\tau = \frac{0 - y_k}{y_{k+1} - y_k} \in [0, 1] \implies t^* = t_k + \tau \cdo
    ```
    *(Erkenntnisfrage für das Plenum: Obwohl $\dot{x} = v_{x0} = \text{const}$ in $x$-Richtung fehlerfrei integriert wird, überschätzt der explizite Euler die Scheitelhöhe um $\frac{1}{2} v_{y0} \Delta t \approx +5{,}31\,\text{m}$, weil er die Anfangsgeschwindigkeit $v_{y,k}$ statt des Intervallmittels nutzt! Dadurch landet das Projektil um $\Delta t$ zu spät und fliegt um $\Delta x \approx v_{x0} \cdot \Delta t \approx +10{,}60\,\text{m}$ zu weit. Warum integriert Heun (RK2) Parabeln auf den Gitterpunkten exakt?)*
 
----
 
 ## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
@@ -104,7 +99,6 @@ $$\tau = \frac{0 - y_k}{y_{k+1} - y_k} \in [0, 1] \implies t^* = t_k + \tau \cdo
 └─────────────────────────────────┘                 └─────────────────────────────────┘
 ```
 
----
 
 ### Track A (Industrie): Hydraulikzylinder-Endlagendämpfung & Parameterstudie
 
@@ -141,7 +135,6 @@ $$m \ddot{x} = F_{\text{vor}} - F_{\text{dämpf}}(x, v) - F_{\text{anschlag}}(x)
    - Schreiben Sie die Trajektoriedaten ($t, x, v, a, F_{\text{dämpf}}$) in eine `.csv`-Datei (`simulation_cylinder.csv`).
    - Geben Sie eine ASCII-Übersichtstabelle der Spitzenverzögerung $a_{\min}$ und des maximalen Anschlagwegs $x_{\max}$ auf der Konsole aus.
 
----
 
 ### Track B (Simulation Game): Retro Artillery Duel mit Newton-Luftwiderstand & Windböen
 
@@ -177,7 +170,6 @@ Physikalische Parameter:
    - Simulieren Sie 5 Schussfolgen mit stochastischem Wind $w_x \sim \mathcal{U}(-15, +15)\,\text{m/s}$.
    - Geben Sie pro Schuss den berechneten Zielwinkel $\alpha$, die Flugdauer und eine einfache ASCII-Plot-Darstellung der Flugbahn (Matrix $80 \times 25$ Zeichen) oder einen CSV-Export aus.
 
----
 
 ## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
@@ -192,7 +184,6 @@ Die Abnahme erfolgt anhand des lauffähigen Codes und eines kurzen technischen B
 | **Dokumentation & Code-Qualität** | 1 P. | Übersichtliche Konsolenausgabe/CSV, nachvollziehbare Dokumentation mit Vergleichstabelle (Euler vs. Heun). |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
----
 
 ## 6. Online-Recherche-Box
 
@@ -206,7 +197,6 @@ Nutzen Sie für Ihre Recherche folgende offizielle Quellen und präzise Fachbegr
   - `explicit Euler numerical instability step size stiffness`
   - `projectile trajectory linear interpolation impact ground detection`
 
----
 
 ## 7. Vibe-Coding Prompting-Tipps
 
@@ -226,7 +216,6 @@ Achte bei der Luftreibung penibel darauf, die Relativgeschwindigkeit v_rel = sqr
 Verwende KEIN WPF, KEIN ScottPlot und KEIN Multithreading.
 ```
 
----
 
 ## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 

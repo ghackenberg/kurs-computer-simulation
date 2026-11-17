@@ -6,13 +6,11 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, `MathNet.Numerics`, WPF Canvas (Frontend aus Termin 03).
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen:**  
+> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, `MathNet.Numerics`, WPF Canvas (Frontend aus Termin 03)):**  
 > Nutzen Sie ausschließlich die bereitgestellte Projektmappe mit `MathNet.Numerics` (`DenseMatrix`, `Vector`, `Cholesky`) und `WPF Canvas` — ohne zusätzliche NuGet-Pakete oder eigene Zeitintegration.
 
----
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
 
@@ -25,7 +23,6 @@ Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
 5. **Kräfte, Spannungen & Invarianten prüfen:** Stabnormalkräfte $N_i$, Normalspannungen $\sigma_i$ und Euler-Knicklasten $N_{\text{knick}}$ zu berechnen sowie das globale Vektorgleichgewicht ($\sum \vec{F} = \vec{0}$) als Invariante auf Maschinengenauigkeit nachzuweisen.
 6. **Verheiratung mit Termin 03:** Den in Termin 03 entwickelten interaktiven WPF Canvas mit der FEM-Rechenengine zu verbinden, sodass Zug- und Druckstäbe farbkodiert und Lagerkräfte als dynamische Vektorpfeile dargestellt werden.
 
----
 
 ## 2. Mathematische Grundlagen
 
@@ -61,7 +58,6 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
    - $N > 0$: Zugstab (im Canvas blau)
    - $N < 0$: Druckstab (im Canvas rot)
 
----
 
 ## 3. Stufe 1: Basisaufgabe (Gemeinsames Fundament auf der C#-Vorlage, Richtwert ca. 60 Min.)
 
@@ -116,7 +112,6 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
    - Kommentieren Sie testweise in `CreateStage1Model` die Zeile `model.FixDof(n1.DofX);` aus (sodass beide Lager in X-Richtung verschieblich sind $\to$ horizontale Starrkörper-Bewegung möglich).
    - Beobachten Sie, warum `kff.Cholesky()` in `CholeskySolver.Solve()` eine Exception wirft (Symmetrisch Positiv Definite Matrix $\mathbf{K}_{ff}$ erfordert $\det(\mathbf{K}_{ff}) > 0$ ohne Eigenwert $0$!) und machen Sie die Änderung anschließend wieder rückgängig.
 
----
 
 ## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
 
@@ -128,7 +123,6 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
 > 
 > Beide Aufgaben basieren auf der FEM-Cholesky-Berechnung und verheiraten die Statik-Engine nahtlos mit der WPF-Vektorvisualisierung aus Termin 03. Bearbeiten Sie **NUR EINEN** Track!
 
----
 
 ### Track A (Industrie): Portalkran-FEM-Verformung unter Wanderlast
 
@@ -173,7 +167,6 @@ In Industriehallen fahren Portalkräne mit schweren Lasten über Fachwerkträger
    - Überschreitet die Druckkraft die Knicklast ($|N| \ge N_{\text{knick}}$), blinkt der entsprechende Stab im Canvas gelb/orange als Warnanzeige.
    - Überprüfen Sie in jedem Simulationsschritt automatisiert $\sum \vec{F}_{\text{Lager}} + \sum \vec{F}_{\text{Last}} = \vec{0}$ und dokumentieren Sie die Ergebnisse im Markdown-Bericht.
 
----
 
 ### Track B (Simulation Game): Bridge Constructor Physics Engine
 
@@ -222,7 +215,6 @@ Im Simulationsspiel-Klassiker *Bridge Constructor* entwerfen Spieler Brücken ü
      - Bei Kollaps: Animieren Sie den Einsturz (Knoten fallen unter Gravitation nach unten).
    - Bis zum Bruch muss das Vektorgleichgewicht in jedem Zeitschritt exakt $\sum \vec{F} = \vec{0}$ erfüllen.
 
----
 
 ## 5. Akzeptanzkriterien & Bewertungsrubrik (10 Punkte)
 
@@ -236,7 +228,6 @@ Für die volle Punktzahl (10 Punkte) müssen folgende Kriterien erfüllt sein:
 | **Gleichgewichtsnachweis & Bericht** | 2 P. | Automatisierter Invarianten-Check ($\sum F_x = 0, \sum F_y = 0$ auf Maschinengenauigkeit); sauberer Markdown-Bericht mit Diagrammen und Verformungsbildern. |
 | **Gesamt** | **10 P.** | **100 % der Übungseinheit** |
 
----
 
 ## 6. Online-Recherche-Box
 
@@ -252,7 +243,6 @@ Nutzen Sie zur Vorbereitung und Vertiefung folgende Quellen:
   - `Euler critical buckling load pin-ended column formula`
   - `truss reaction forces global equilibrium verification`
 
----
 
 ## 7. Vibe-Coding Prompting-Tipps
 
@@ -266,7 +256,6 @@ Falls Sie KI-Assistenten verwenden, beachten Sie folgende Vorgaben zur Vermeidun
 > **Prompt-Vorlage 2: Stabkräfteberechnung mit Vorzeichenkonsistenz**  
 > *„Zeige mir die C#-Formel zur Berechnung der Stabnormalkraft $N$ aus den Knotenverschiebungen $\mathbf{u}_i$ und $\mathbf{u}_j$. Achte strikt auf das Vorzeichen: Verlängerung $\Delta L > 0$ muss Zugkraft ($N > 0$) ergeben, Verkürzung $\Delta L < 0$ Druckkraft ($N < 0$). Berechne auch die Euler-Knicklast $N_{\text{crit}} = \pi^2 E I / L^2$ und prüfe auf Versagen.“*
 
----
 
 ## 8. 🔍 Leitfragen für den Live-Showcase & Code-Defense (Säule 2b)
 
