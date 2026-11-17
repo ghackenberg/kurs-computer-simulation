@@ -6,7 +6,8 @@
 ---
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
-- **Foliensatz:** [`Folien/Folien.md`](./Folien/Folien.md)
+- **Foliensätze:** [`Folien/Folien.md`](./Folien/Folien.md) | Optional (Selbststudium): [`Folien_Anhang_A_TPL_und_Hardware_Details.md`](./Folien/Folien_Anhang_A_TPL_und_Hardware_Details.md)
+- **Abgrenzung Hauptdeck vs. Anhang (optional fürs Selbststudium):** Das Hauptdeck (`Folien.md`) vermittelt den vollständigen T06-Kernstoff (Prozess vs. Thread, TPL `Parallel.For`, Amdahlsches Gesetz, `ConcurrentBag<T>`, `lock`/`Interlocked`, thread-lokale Reduktion & `Random`, Double-Buffering, `Task.Run` + `IProgress<T>` + `CancellationToken`) eigenständig für Vorlesung, Übung und Quiz. Der optionale **Anhang A** vertieft Hardware- und Runtime-Interna für Interessierte: 64-Byte-Cache-Lines & MESI-Protokoll (`[StructLayout(Size = 64)]`, `localInit`/`localFinally`), `.NET ThreadPool` (*Work-Stealing*, *Hill-Climbing*, `Partitioner.Create`), lock-freie CAS-Schleifen (`Interlocked.CompareExchange`) sowie `Channel<T>` (`DropOldest`) als Producer-Consumer-Brücke zu T04.
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](./Uebung/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](./Moodle/Text.md) | [`MultithreadingBenchmark.sln`](./Uebung/Vorlage/MultithreadingBenchmark.sln)
 - **Vorgreif-Sperre (Technologie-Stand T06):** TPL (`Parallel.For`, `Task.Run`), `Interlocked`, `lock`, `IProgress<T>`, `CancellationToken`, Amdahl. *Strikte Tabus:* Kein Math.NET Cholesky (erst T07).
 - **Kapitel-Brücken & Quiz-Zuordnung:**

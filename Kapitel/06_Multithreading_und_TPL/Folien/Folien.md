@@ -468,7 +468,7 @@ Console.WriteLine(counter);
 
 ### Blick unter die Haube: False Sharing & Thread-lokale Reduktion
 
-Schreiben zwei Kerne in dieselbe **64-Byte-Cache-Line** (`localSum[0]`/`[1]`), bremst Cache-Ping-Pong $\to$ `local` + `Interlocked.Add(ref totalCount, local)`!
+Schreiben zwei Kerne in dieselbe **64-Byte-Cache-Line** (`localSum[0]`/`[1]`), bremst Cache-Ping-Pong $\to$ `local` + `Interlocked.Add(ref totalCount, local)` ([Anhang A](./Folien_Anhang_A_TPL_und_Hardware_Details.md))!
 
 ![](./Diagramme/False_Sharing_und_Reduktion.svg)
 
@@ -836,6 +836,29 @@ public void Simulate(CancellationToken token)
 - **`ConcurrentBag<T>`** bietet eine threadsichere Lösung zum Sammeln paralleler Simulationsergebnisse.
 - Zufallszahlengeneratoren (`System.Random`) müssen strikt thread-lokal und mit individuellem Seed betrieben werden, um Korruption zu vermeiden und Reproduzierbarkeit zu wahren.
 - In **WPF-Anwendungen** entkoppelt `await Task.Run(...)` die Simulation vom UI-Thread; **`IProgress<T>`** garantiert thread-sichere Zwischenstände und **`CancellationToken`** ermöglicht den kontrollierten Benutzerabbruch.
+
+---
+
+<!-- _class: appendix -->
+
+### Vertiefung im Selbststudium: Anhang A (TPL-Interna & Hardware)
+
+Für alle, die unter die Haube von **`.NET`-ThreadPool und CPU-Hardware** schauen wollen ([Anhang A](./Folien_Anhang_A_TPL_und_Hardware_Details.md)):
+
+<div class="columns">
+<div class="two">
+
+- **Cache-Kohärenz (MESI):** Warum 64-Byte-Cache-Lines zu Ping-Pong führen – und wie `[StructLayout(Size = 64)]` sowie `localInit`/`localFinally` das verhindern.
+- **TPL-Interna:** Lokale **Last-In-First-Out-Queues (LIFO)**, *Work-Stealing*, adaptives *Hill-Climbing* und `Partitioner.Create` für ungleichmäßige Lasten.
+- **Lock-freie Atomics & Backpressure:** `Interlocked.CompareExchange` (CAS) für Gleitkommawerte und `Channel<T>` mit `DropOldest` als Telemetrie-Brücke.
+
+</div>
+<div class="two">
+
+![](./Diagramme/TPL_Work_Stealing_und_Channel.svg)
+
+</div>
+</div>
 
 ---
 
