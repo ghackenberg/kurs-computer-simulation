@@ -1,71 +1,99 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
-      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-danger { fill: #fef2f2; stroke: #dc2626; }
+      .sem-danger-bg { fill: #fef2f2; stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: #dc2626; }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+.hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold;  text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;  text-anchor: middle; }
       .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; }
-      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #334155; text-anchor: middle; }
-      .warn { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; fill: #b91c1c; text-anchor: middle; }
-      .step { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; fill: #991b1b; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px;  text-anchor: middle; }
+      .warn { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold;  text-anchor: middle; }
+      .step { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold;  text-anchor: middle; }
     </style>
   </defs>
 
   <!-- Outer Frame -->
-  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="135" y="24" class="hdr">Die Dragging-Jitter-Falle</text>
-  <text x="135" y="42" class="sub">Der fatale Feedback-Loop (60 Hz)</text>
+  <rect class="sem-card" width="270" height="420" rx="10" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr sem-primary-text">Die Dragging-Jitter-Falle</text>
+  <text x="135" y="42" class="sub sem-muted-text">Der fatale Feedback-Loop (60 Hz)</text>
 
   <!-- Cycle Box -->
   <g transform="translate(15, 52)">
-    <rect width="240" height="232" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.2" />
+    <rect class="sem-muted-stroke" width="240" height="232" rx="8" fill="#ffffff" stroke-width="1.2" />
 
     <!-- Center Warning Pill -->
-    <rect x="65" y="98" width="110" height="36" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" />
-    <text x="120" y="112" class="warn" style="font-size: 11.5px;">60 Hz Oszillation</text>
-    <text x="120" y="128" class="warn" style="font-size: 11.5px;">Heftiges Zittern!</text>
+    <rect class="sem-danger" x="65" y="98" width="110" height="36" rx="4" stroke-width="1.5" />
+    <text x="120" y="112" class="warn sem-danger-text" style="font-size: 11.5px;">60 Hz Oszillation</text>
+    <text x="120" y="128" class="warn sem-danger-text" style="font-size: 11.5px;">Heftiges Zittern!</text>
 
     <!-- Step 1: Oben (Maus zieht K3) -->
-    <rect x="42" y="12" width="156" height="26" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2" />
-    <text x="120" y="29" class="step">1. Maus zieht K3 nach oben</text>
+    <rect class="sem-danger" x="42" y="12" width="156" height="26" rx="4" stroke-width="1.2" />
+    <text x="120" y="29" class="step sem-danger-text">1. Maus zieht K3 nach oben</text>
 
     <!-- Pfeil 1 -> 2 (nach rechts unten) -->
-    <path d="M 180,38 L 182,56" fill="none" stroke="#dc2626" stroke-width="1.5" />
-    <polygon points="179,54 182,60 185,54" fill="#dc2626" />
+    <path class="sem-danger-stroke" d="M 180,38 L 182,56" fill="none" stroke-width="1.5" />
+    <polygon class="sem-danger-fill" points="179,54 182,60 185,54" />
 
     <!-- Step 2: Rechts (BoundingBox wächst) -->
-    <rect x="126" y="62" width="108" height="36" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2" />
-    <text x="180" y="78" class="step">2. Bounds steigen</text>
-    <text x="181" y="92" class="desc" style="font-size: 11.5px; fill: #7f1d1d;">H_world steigt</text>
+    <rect class="sem-danger" x="126" y="62" width="108" height="36" rx="4" stroke-width="1.2" />
+    <text x="180" y="78" class="step sem-danger-text">2. Bounds steigen</text>
+    <text x="181" y="92" class="desc sem-neutral-text sem-danger-text" style="font-size: 11.5px;">H_world steigt</text>
 
     <!-- Pfeil 2 -> 3 (nach links unten) -->
-    <path d="M 170,102 C 180,140 180,165 160,190" fill="none" stroke="#dc2626" stroke-width="1.5" />
-    <polygon points="163,185 158,192 167,189" fill="#dc2626" />
+    <path class="sem-danger-stroke" d="M 170,102 C 180,140 180,165 160,190" fill="none" stroke-width="1.5" />
+    <polygon class="sem-danger-fill" points="163,185 158,192 167,189" />
 
     <!-- Step 3: Unten (Auto-Fit s sinkt) -->
-    <rect x="42" y="194" width="156" height="26" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2" />
-    <text x="120" y="211" class="step">3. Auto-Fit Maßstab s sinkt</text>
+    <rect class="sem-danger" x="42" y="194" width="156" height="26" rx="4" stroke-width="1.2" />
+    <text x="120" y="211" class="step sem-danger-text">3. Auto-Fit Maßstab s sinkt</text>
 
     <!-- Pfeil 3 -> 4 (nach links oben) -->
-    <path d="M 80,190 C 60,165 60,140 70,102" fill="none" stroke="#dc2626" stroke-width="1.5" />
-    <polygon points="68,107 72,100 74,108" fill="#dc2626" />
+    <path class="sem-danger-stroke" d="M 80,190 C 60,165 60,140 70,102" fill="none" stroke-width="1.5" />
+    <polygon class="sem-danger-fill" points="68,107 72,100 74,108" />
 
     <!-- Step 4: Links (K3 springt weg) -->
-    <rect x="6" y="62" width="106" height="36" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2" />
-    <text x="59" y="78" class="step">4. K3 springt weg!</text>
-    <text x="59" y="92" class="desc" style="font-size: 11.5px; fill: #7f1d1d;">Lücke zum Cursor</text>
+    <rect class="sem-danger" x="6" y="62" width="106" height="36" rx="4" stroke-width="1.2" />
+    <text x="59" y="78" class="step sem-danger-text">4. K3 springt weg!</text>
+    <text x="59" y="92" class="desc sem-neutral-text sem-danger-text" style="font-size: 11.5px;">Lücke zum Cursor</text>
 
     <!-- Pfeil 4 -> 1 (nach rechts oben) -->
-    <path d="M 58,60 L 60,42" fill="none" stroke="#dc2626" stroke-width="1.5" />
-    <polygon points="57,44 60,38 63,44" fill="#dc2626" />
+    <path class="sem-danger-stroke" d="M 58,60 L 60,42" fill="none" stroke-width="1.5" />
+    <polygon class="sem-danger-fill" points="57,44 60,38 63,44" />
   </g>
 
   <!-- Problem Summary Box -->
   <g transform="translate(15, 298)">
-    <rect width="240" height="108" rx="6" fill="#fff1f2" stroke="#fca5a5" stroke-width="1.5" />
-    <text x="120" y="20" class="lbl" style="fill: #991b1b;">Ursache: Teufelskreis-Kopplung</text>
-    <text x="120" y="41" class="desc" style="fill: #7f1d1d;">Auto-Fit verändert die Kamera,</text>
-    <text x="120" y="59" class="desc" style="fill: #7f1d1d;">während die Maus das Modell bewegt.</text>
-    <text x="120" y="79" class="lbl" style="fill: #004B96;">Lösung: Transformation einfrieren</text>
-    <text x="120" y="96" class="desc" style="fill: #475569;">solange Ziehen aktiv ist!</text>
+    <rect class="sem-danger-stroke sem-danger" width="240" height="108" rx="6" stroke-width="1.5"  stroke="none"/>
+    <text x="120" y="20" class="lbl sem-danger-text" >Ursache: Teufelskreis-Kopplung</text>
+    <text x="120" y="41" class="desc sem-neutral-text sem-danger-text" >Auto-Fit verändert die Kamera,</text>
+    <text x="120" y="59" class="desc sem-neutral-text sem-danger-text" >während die Maus das Modell bewegt.</text>
+    <text x="120" y="79" class="lbl sem-primary-text" >Lösung: Transformation einfrieren</text>
+    <text x="120" y="96" class="desc sem-neutral-text sem-muted-text" >solange Ziehen aktiv ist!</text>
   </g>
 </svg>

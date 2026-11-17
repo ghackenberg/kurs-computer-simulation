@@ -23,7 +23,9 @@ function buildPaletteCss(palette, usedRoles) {
   for (const [role, cfg] of Object.entries(palette.roles)) {
     if (usedRoles && !usedRoles.has(role)) continue;
     lines.push(`      .${role} { fill: ${cfg.fill}; stroke: ${cfg.stroke}; }`);
+    lines.push(`      .${role}-bg { fill: ${cfg.fill}; stroke: none; }`);
     lines.push(`      .${role}-stroke { stroke: ${cfg.stroke}; }`);
+    lines.push(`      .${role}-fill { fill: ${cfg.stroke}; }`);
     lines.push(`      .${role}-text { fill: ${cfg.text}; }`);
   }
   lines.push(`      ${END_MARKER}`);
@@ -36,7 +38,7 @@ function extractUsedRoles(svgText, palette) {
   let m;
   while ((m = classAttrRegex.exec(svgText)) !== null) {
     for (const token of m[1].split(/\s+/)) {
-      const base = token.replace(/-(stroke|text)$/, '');
+      const base = token.replace(/-(stroke|fill|bg|text)$/, '');
       if (palette.roles[base]) roles.add(base);
     }
   }

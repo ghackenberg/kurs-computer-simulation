@@ -2,16 +2,24 @@
   <style>
     /* @svg-palette:start */
       .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
       .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
       .sem-primary-text { fill: #1e40af; }
       .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
       .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
       .sem-success-text { fill: #15803d; }
       .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
       .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
       .sem-warning-text { fill: #b45309; }
       .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
       .sem-neutral-text { fill: #0f172a; }
       /* @svg-palette:end */
     .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; }

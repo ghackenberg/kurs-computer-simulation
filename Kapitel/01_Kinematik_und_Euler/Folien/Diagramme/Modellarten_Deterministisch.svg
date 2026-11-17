@@ -1,70 +1,98 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   <defs>
     <marker id="arrowAxis" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#334155"/>
+      <path class="sem-neutral-fill" d="M 0 1.5 L 8.5 5 L 0 8.5 z"/>
     </marker>
     <style>
-      text { font-family: 'Segoe UI', Arial, sans-serif; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+text { font-family: 'Segoe UI', Arial, sans-serif; }
       .code { font-family: 'Consolas', monospace; font-weight: bold; }
     </style>
   </defs>
 
   <!-- Card Background -->
-  <rect x="-38" y="8" width="556" height="364" rx="10" fill="#FAFAFA" stroke="#CBD5E1" stroke-width="1.5"/>
+  <rect class="sem-card" x="-38" y="8" width="556" height="364" rx="10" stroke-width="1.5"/>
 
   <!-- Subtle Grid Lines -->
-  <line x1="36" y1="230" x2="480" y2="230" stroke="#E2E8F0" stroke-width="1"/>
-  <line x1="36" y1="170" x2="480" y2="170" stroke="#E2E8F0" stroke-width="1"/>
-  <line x1="36" y1="110" x2="480" y2="110" stroke="#E2E8F0" stroke-width="1"/>
-  <line x1="36" y1="50" x2="480" y2="50" stroke="#E2E8F0" stroke-width="1"/>
+  <line class="sem-muted-stroke" x1="36" y1="230" x2="480" y2="230" stroke-width="1"/>
+  <line class="sem-muted-stroke" x1="36" y1="170" x2="480" y2="170" stroke-width="1"/>
+  <line class="sem-muted-stroke" x1="36" y1="110" x2="480" y2="110" stroke-width="1"/>
+  <line class="sem-muted-stroke" x1="36" y1="50" x2="480" y2="50" stroke-width="1"/>
 
-  <line x1="126" y1="40" x2="126" y2="290" stroke="#E2E8F0" stroke-width="1"/>
-  <line x1="216" y1="40" x2="216" y2="290" stroke="#E2E8F0" stroke-width="1"/>
-  <line x1="306" y1="40" x2="306" y2="290" stroke="#E2E8F0" stroke-width="1"/>
-  <line x1="396" y1="40" x2="396" y2="290" stroke="#E2E8F0" stroke-width="1"/>
+  <line class="sem-muted-stroke" x1="126" y1="40" x2="126" y2="290" stroke-width="1"/>
+  <line class="sem-muted-stroke" x1="216" y1="40" x2="216" y2="290" stroke-width="1"/>
+  <line class="sem-muted-stroke" x1="306" y1="40" x2="306" y2="290" stroke-width="1"/>
+  <line class="sem-muted-stroke" x1="396" y1="40" x2="396" y2="290" stroke-width="1"/>
 
   <!-- Coordinate Axes -->
-  <line x1="36" y1="298" x2="36" y2="30" stroke="#334155" stroke-width="2" marker-end="url(#arrowAxis)"/>
-  <line x1="28" y1="290" x2="500" y2="290" stroke="#334155" stroke-width="2" marker-end="url(#arrowAxis)"/>
+  <line class="sem-neutral-stroke" x1="36" y1="298" x2="36" y2="30" stroke-width="2" marker-end="url(#arrowAxis)"/>
+  <line class="sem-neutral-stroke" x1="28" y1="290" x2="500" y2="290" stroke-width="2" marker-end="url(#arrowAxis)"/>
 
   <!-- Axis Ticks -->
-  <line x1="30" y1="230" x2="36" y2="230" stroke="#334155" stroke-width="1.5"/>
-  <line x1="30" y1="170" x2="36" y2="170" stroke="#334155" stroke-width="1.5"/>
-  <line x1="30" y1="110" x2="36" y2="110" stroke="#334155" stroke-width="1.5"/>
-  <line x1="30" y1="50" x2="36" y2="50" stroke="#334155" stroke-width="1.5"/>
+  <line class="sem-neutral-stroke" x1="30" y1="230" x2="36" y2="230" stroke-width="1.5"/>
+  <line class="sem-neutral-stroke" x1="30" y1="170" x2="36" y2="170" stroke-width="1.5"/>
+  <line class="sem-neutral-stroke" x1="30" y1="110" x2="36" y2="110" stroke-width="1.5"/>
+  <line class="sem-neutral-stroke" x1="30" y1="50" x2="36" y2="50" stroke-width="1.5"/>
 
-  <line x1="126" y1="290" x2="126" y2="296" stroke="#334155" stroke-width="1.5"/>
-  <line x1="216" y1="290" x2="216" y2="296" stroke="#334155" stroke-width="1.5"/>
-  <line x1="306" y1="290" x2="306" y2="296" stroke="#334155" stroke-width="1.5"/>
-  <line x1="396" y1="290" x2="396" y2="296" stroke="#334155" stroke-width="1.5"/>
+  <line class="sem-neutral-stroke" x1="126" y1="290" x2="126" y2="296" stroke-width="1.5"/>
+  <line class="sem-neutral-stroke" x1="216" y1="290" x2="216" y2="296" stroke-width="1.5"/>
+  <line class="sem-neutral-stroke" x1="306" y1="290" x2="306" y2="296" stroke-width="1.5"/>
+  <line class="sem-neutral-stroke" x1="396" y1="290" x2="396" y2="296" stroke-width="1.5"/>
 
   <!-- Single Deterministic Trajectory -->
-  <line x1="36" y1="245" x2="396" y2="140" stroke="#2563EB" stroke-width="3.5"/>
-  <circle cx="36" cy="245" r="5" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
-  <circle cx="396" cy="140" r="5.5" fill="#16A34A" stroke="#FFFFFF" stroke-width="2"/>
+  <line class="sem-primary-stroke" x1="36" y1="245" x2="396" y2="140" stroke-width="3.5"/>
+  <circle class="sem-primary" cx="36" cy="245" r="5" stroke-width="2"/>
+  <circle class="sem-success-fill" cx="396" cy="140" r="5.5" stroke="#FFFFFF" stroke-width="2"/>
 
   <!-- Callout Badges -->
-  <rect x="56" y="46" width="240" height="28" rx="5" fill="#DCFCE7" stroke="#86EFAC" stroke-width="1.2"/>
-  <text x="176" y="65" font-size="13.5" font-weight="bold" fill="#15803D" text-anchor="middle">100 % reproduzierbarer Pfad</text>
+  <rect class="sem-success" x="56" y="46" width="240" height="28" rx="5" stroke-width="1.2"/>
+  <text class="sem-success-text" x="176" y="65" font-size="13.5" font-weight="bold" text-anchor="middle">100 % reproduzierbarer Pfad</text>
 
-  <rect x="406" y="126" width="96" height="26" rx="5" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-  <text x="454" y="144" font-size="13.5" font-weight="bold" fill="#1E40AF" text-anchor="middle">eindeutig</text>
+  <rect class="sem-primary" x="406" y="126" width="96" height="26" rx="5" stroke-width="1.2"/>
+  <text class="sem-primary-text" x="454" y="144" font-size="13.5" font-weight="bold" text-anchor="middle">eindeutig</text>
 
   <!-- Axis Labels & Numeric Ticks -->
-  <text x="-14" y="165" font-size="14.5" font-weight="bold" fill="#1E293B" text-anchor="middle" transform="rotate(-90 -14 165)">Zustand s(t)</text>
+  <text class="sem-card-text" x="-14" y="165" font-size="14.5" font-weight="bold" text-anchor="middle" transform="rotate(-90 -14 165)">Zustand s(t)</text>
 
-  <text x="24" y="294" class="code" font-size="13.5" fill="#475569" text-anchor="end">0</text>
-  <text x="24" y="235" class="code" font-size="13.5" fill="#475569" text-anchor="end">2</text>
-  <text x="24" y="175" class="code" font-size="13.5" fill="#475569" text-anchor="end">4</text>
-  <text x="24" y="115" class="code" font-size="13.5" fill="#475569" text-anchor="end">6</text>
-  <text x="24" y="55" class="code" font-size="13.5" fill="#475569" text-anchor="end">8</text>
+  <text x="24" y="294" class="code sem-muted-text" font-size="13.5" text-anchor="end">0</text>
+  <text x="24" y="235" class="code sem-muted-text" font-size="13.5" text-anchor="end">2</text>
+  <text x="24" y="175" class="code sem-muted-text" font-size="13.5" text-anchor="end">4</text>
+  <text x="24" y="115" class="code sem-muted-text" font-size="13.5" text-anchor="end">6</text>
+  <text x="24" y="55" class="code sem-muted-text" font-size="13.5" text-anchor="end">8</text>
 
-  <text x="36" y="315" class="code" font-size="13.5" fill="#475569" text-anchor="middle">0</text>
-  <text x="126" y="315" class="code" font-size="13.5" fill="#475569" text-anchor="middle">1</text>
-  <text x="216" y="315" class="code" font-size="13.5" fill="#475569" text-anchor="middle">2</text>
-  <text x="306" y="315" class="code" font-size="13.5" fill="#475569" text-anchor="middle">3</text>
-  <text x="396" y="315" class="code" font-size="13.5" fill="#475569" text-anchor="middle">4</text>
+  <text x="36" y="315" class="code sem-muted-text" font-size="13.5" text-anchor="middle">0</text>
+  <text x="126" y="315" class="code sem-muted-text" font-size="13.5" text-anchor="middle">1</text>
+  <text x="216" y="315" class="code sem-muted-text" font-size="13.5" text-anchor="middle">2</text>
+  <text x="306" y="315" class="code sem-muted-text" font-size="13.5" text-anchor="middle">3</text>
+  <text x="396" y="315" class="code sem-muted-text" font-size="13.5" text-anchor="middle">4</text>
 
-  <rect x="428" y="300" width="80" height="24" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
-  <text x="468" y="317" font-size="13.5" font-weight="bold" fill="#1E293B" text-anchor="middle">Zeit t [s]</text>
+  <rect class="sem-card-stroke" x="428" y="300" width="80" height="24" rx="4" fill="#FFFFFF" stroke-width="1"/>
+  <text class="sem-card-text" x="468" y="317" font-size="13.5" font-weight="bold" text-anchor="middle">Zeit t [s]</text>
 </svg>

@@ -1,19 +1,47 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+.hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
       .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
       .code { font-family: 'Consolas', monospace; font-size: 12.8px; font-weight: bold; text-anchor: middle; }
       .math { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
     </style>
     <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#2563eb" />
+      <path class="sem-primary-fill" d="M 0 1.5 L 8.5 5 L 0 8.5 z" />
     </marker>
     <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#16a34a" />
+      <path class="sem-success-fill" d="M 0 1.5 L 8.5 5 L 0 8.5 z" />
     </marker>
     <marker id="arr-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#d97706" />
+      <path class="sem-warning-fill" d="M 0 1.5 L 8.5 5 L 0 8.5 z" />
     </marker>
     <radialGradient id="grad-phong" cx="35%" cy="30%" r="65%">
       <stop offset="0%" stop-color="#ffffff" />
@@ -23,38 +51,38 @@
     </radialGradient>
   </defs>
 
-  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
-  <text x="240" y="34" class="hdr" fill="#1e40af">OpenGL-Superposition: Szenen-Ambient &amp; Lichtquellen</text>
+  <rect class="sem-card" x="-35" y="8" width="550" height="364" rx="12" stroke-width="2" />
+  <text x="240" y="34" class="hdr sem-primary-text">OpenGL-Superposition: Szenen-Ambient &amp; Lichtquellen</text>
 
   <!-- Box 1: Globales Szenen-Ambient -->
-  <rect x="-25" y="52" width="186" height="82" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
-  <text x="68" y="75" class="code" fill="#15803d">GL_LIGHT_MODEL_AMBIENT</text>
-  <text x="68" y="98" class="code" fill="#0f172a">I_a = k_a · I_La</text>
-  <text x="68" y="120" class="sub" fill="#166534">1x Grundlicht der Szene</text>
+  <rect class="sem-success" x="-25" y="52" width="186" height="82" rx="8" stroke-width="2" />
+  <text x="68" y="75" class="code sem-success-text">GL_LIGHT_MODEL_AMBIENT</text>
+  <text x="68" y="98" class="code sem-neutral-text">I_a = k_a · I_La</text>
+  <text x="68" y="120" class="sub sem-success-text">1x Grundlicht der Szene</text>
 
   <!-- Box 2: GL_LIGHT0 -->
-  <rect x="171" y="52" width="160" height="82" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
-  <text x="251" y="75" class="code" fill="#b45309">GL_LIGHT0 (i = 1)</text>
-  <text x="251" y="98" class="code" fill="#0f172a">I_d,1 + I_s,1</text>
-  <text x="251" y="120" class="sub" fill="#92400e">Hauptlicht links</text>
+  <rect class="sem-warning" x="171" y="52" width="160" height="82" rx="8" stroke-width="2" />
+  <text x="251" y="75" class="code sem-warning-text">GL_LIGHT0 (i = 1)</text>
+  <text x="251" y="98" class="code sem-neutral-text">I_d,1 + I_s,1</text>
+  <text x="251" y="120" class="sub sem-warning-text">Hauptlicht links</text>
 
   <!-- Box 3: GL_LIGHT1 -->
-  <rect x="341" y="52" width="164" height="82" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
-  <text x="423" y="75" class="code" fill="#1d4ed8">GL_LIGHT1 (i = 2)</text>
-  <text x="423" y="98" class="code" fill="#0f172a">I_d,2 + I_s,2</text>
-  <text x="423" y="120" class="sub" fill="#1e40af">Spotlight rechts</text>
+  <rect class="sem-primary" x="341" y="52" width="164" height="82" rx="8" stroke-width="2" />
+  <text x="423" y="75" class="code sem-primary-text">GL_LIGHT1 (i = 2)</text>
+  <text x="423" y="98" class="code sem-neutral-text">I_d,2 + I_s,2</text>
+  <text x="423" y="120" class="sub sem-primary-text">Spotlight rechts</text>
 
   <!-- Pfeile auf das 3D-Objekt -->
-  <line x1="98" y1="134" x2="198" y2="195" stroke="#16a34a" stroke-width="2.6" stroke-dasharray="5,3" marker-end="url(#arr-green)" />
-  <line x1="248" y1="134" x2="242" y2="173" stroke="#d97706" stroke-width="3" marker-end="url(#arr-amber)" />
-  <line x1="388" y1="134" x2="282" y2="195" stroke="#2563eb" stroke-width="3" marker-end="url(#arr-blue)" />
+  <line class="sem-success-stroke" x1="98" y1="134" x2="198" y2="195" stroke-width="2.6" stroke-dasharray="5,3" marker-end="url(#arr-green)" />
+  <line class="sem-warning-stroke" x1="248" y1="134" x2="242" y2="173" stroke-width="3" marker-end="url(#arr-amber)" />
+  <line class="sem-primary-stroke" x1="388" y1="134" x2="282" y2="195" stroke-width="3" marker-end="url(#arr-blue)" />
 
-  <circle cx="240" cy="226" r="46" fill="url(#grad-phong)" stroke="#1e3a8a" stroke-width="2.5" />
-  <circle cx="222" cy="206" r="8.5" fill="#fef3c7" opacity="0.9" />
-  <circle cx="261" cy="213" r="6" fill="#dbeafe" opacity="0.9" />
+  <circle class="sem-primary-stroke" cx="240" cy="226" r="46" fill="url(#grad-phong)" stroke-width="2.5" />
+  <circle class="sem-warning" cx="222" cy="206" r="8.5" opacity="0.9"  stroke="none"/>
+  <circle class="sem-primary" cx="261" cy="213" r="6" opacity="0.9"  stroke="none"/>
 
   <!-- Formelbox unten -->
-  <rect x="-20" y="286" width="520" height="72" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
-  <text x="240" y="313" class="math" fill="#0f172a">I_f = I_a + sum( I_d,i + I_s,i )   für i = 1 .. n</text>
-  <text x="240" y="341" class="sub" fill="#15803d">I_a global via LightModel; pro Licht GL_AMBIENT auf Standard 0 belassen!</text>
+  <rect class="sem-success-stroke" x="-20" y="286" width="520" height="72" rx="8" fill="#ffffff" stroke-width="2" />
+  <text x="240" y="313" class="math sem-neutral-text">I_f = I_a + sum( I_d,i + I_s,i )   für i = 1 .. n</text>
+  <text x="240" y="341" class="sub sem-success-text">I_a global via LightModel; pro Licht GL_AMBIENT auf Standard 0 belassen!</text>
 </svg>

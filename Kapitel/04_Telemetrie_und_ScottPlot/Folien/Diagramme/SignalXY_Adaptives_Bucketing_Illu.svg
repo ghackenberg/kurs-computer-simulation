@@ -1,55 +1,78 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-danger { fill: #fef2f2; stroke: #dc2626; }
+      .sem-danger-bg { fill: #fef2f2; stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: #dc2626; }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      /* @svg-palette:end */
+.hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
       .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
       .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
     </style>
   </defs>
 
   <!-- Links: Zone A (Steile Flanke -> Viele Punkte in 1 Pixelspalte / Bucket) -->
-  <rect x="15" y="15" width="218" height="350" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="2" />
-  <text x="124" y="42" class="hdr" fill="#1d4ed8">Zone A: Dichte Schritte</text>
-  <text x="124" y="64" class="sub" fill="#475569">(Einschwingen: dt klein)</text>
+  <rect class="sem-primary" x="15" y="15" width="218" height="350" rx="10" stroke-width="2" />
+  <text x="124" y="42" class="hdr sem-primary-text">Zone A: Dichte Schritte</text>
+  <text x="124" y="64" class="sub sem-muted-text">(Einschwingen: dt klein)</text>
 
-  <rect x="30" y="80" width="188" height="200" rx="6" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" />
+  <rect class="sem-primary-stroke" x="30" y="80" width="188" height="200" rx="6" fill="#ffffff" stroke-width="1.5" />
   <!-- Hervorgehobene Pixelspalte (Bucket) -->
-  <rect x="92" y="80" width="64" height="200" fill="#dbeafe" opacity="0.7" />
-  <line x1="92" y1="80" x2="92" y2="280" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,4" />
-  <line x1="156" y1="80" x2="156" y2="280" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,4" />
-  <text x="124" y="100" class="code" fill="#1e40af">1 Bucket</text>
+  <rect class="sem-primary" x="92" y="80" width="64" height="200" opacity="0.7"  stroke="none"/>
+  <line class="sem-primary-stroke" x1="92" y1="80" x2="92" y2="280" stroke-width="1.5" stroke-dasharray="4,4" />
+  <line class="sem-primary-stroke" x1="156" y1="80" x2="156" y2="280" stroke-width="1.5" stroke-dasharray="4,4" />
+  <text x="124" y="100" class="code sem-primary-text">1 Bucket</text>
 
   <!-- Vertikaler Min/Max-Strich im Bucket -->
-  <line x1="124" y1="120" x2="124" y2="250" stroke="#2563eb" stroke-width="7" stroke-linecap="round" />
-  <circle cx="124" cy="120" r="5.5" fill="#dc2626" />
-  <circle cx="124" cy="250" r="5.5" fill="#dc2626" />
-  <circle cx="105" cy="210" r="4" fill="#1d4ed8" />
-  <circle cx="115" cy="160" r="4" fill="#1d4ed8" />
-  <circle cx="135" cy="195" r="4" fill="#1d4ed8" />
-  <circle cx="145" cy="145" r="4" fill="#1d4ed8" />
+  <line class="sem-primary-stroke" x1="124" y1="120" x2="124" y2="250" stroke-width="7" stroke-linecap="round" />
+  <circle class="sem-danger-fill" cx="124" cy="120" r="5.5" />
+  <circle class="sem-danger-fill" cx="124" cy="250" r="5.5" />
+  <circle class="sem-primary-fill" cx="105" cy="210" r="4" />
+  <circle class="sem-primary-fill" cx="115" cy="160" r="4" />
+  <circle class="sem-primary-fill" cx="135" cy="195" r="4" />
+  <circle class="sem-primary-fill" cx="145" cy="145" r="4" />
 
-  <text x="124" y="308" class="code" fill="#1e3a8a">&gt; 1 Punkt in Spalte p:</text>
-  <text x="124" y="330" class="sub" fill="#1d4ed8">4-Punkt Min/Max-Strich</text>
-  <text x="124" y="352" class="code" fill="#475569">(wie bei Signal)</text>
+  <text x="124" y="308" class="code sem-primary-text">&gt; 1 Punkt in Spalte p:</text>
+  <text x="124" y="330" class="sub sem-primary-text">4-Punkt Min/Max-Strich</text>
+  <text x="124" y="352" class="code sem-muted-text">(wie bei Signal)</text>
 
   <!-- Rechts: Zone B (Ruhelage -> Wenige Punkte, leere Spalten dazwischen) -->
-  <rect x="247" y="15" width="218" height="350" rx="10" fill="#fff7ed" stroke="#fdba74" stroke-width="2" />
-  <text x="356" y="42" class="hdr" fill="#c2410c">Zone B: Weite Schritte</text>
-  <text x="356" y="64" class="sub" fill="#475569">(Ruhelage: dt groß)</text>
+  <rect class="sem-warning" x="247" y="15" width="218" height="350" rx="10" stroke-width="2" />
+  <text x="356" y="42" class="hdr sem-warning-text">Zone B: Weite Schritte</text>
+  <text x="356" y="64" class="sub sem-muted-text">(Ruhelage: dt groß)</text>
 
-  <rect x="262" y="80" width="188" height="200" rx="6" fill="#ffffff" stroke="#fdba74" stroke-width="1.5" />
+  <rect class="sem-warning-stroke" x="262" y="80" width="188" height="200" rx="6" fill="#ffffff" stroke-width="1.5" />
   <!-- Leere Pixelspalten im Hintergrund -->
-  <line x1="305" y1="112" x2="305" y2="280" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4,4" />
-  <line x1="356" y1="112" x2="356" y2="280" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4,4" />
-  <line x1="407" y1="112" x2="407" y2="280" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4,4" />
-  <text x="356" y="100" class="code" fill="#64748b">Leere Spalten</text>
+  <line class="sem-muted-stroke" x1="305" y1="112" x2="305" y2="280" stroke-width="1.5" stroke-dasharray="4,4" />
+  <line class="sem-muted-stroke" x1="356" y1="112" x2="356" y2="280" stroke-width="1.5" stroke-dasharray="4,4" />
+  <line class="sem-muted-stroke" x1="407" y1="112" x2="407" y2="280" stroke-width="1.5" stroke-dasharray="4,4" />
+  <text x="356" y="100" class="code sem-muted-text">Leere Spalten</text>
 
   <!-- Direkte Verbindungslinie zwischen zwei weit entfernten Punkten -->
-  <line x1="282" y1="195" x2="430" y2="165" stroke="#ea580c" stroke-width="4" />
-  <circle cx="282" cy="195" r="6.5" fill="#ea580c" stroke="#ffffff" stroke-width="1.5" />
-  <circle cx="430" cy="165" r="6.5" fill="#ea580c" stroke="#ffffff" stroke-width="1.5" />
+  <line class="sem-warning-stroke" x1="282" y1="195" x2="430" y2="165" stroke-width="4" />
+  <circle class="sem-warning-fill" cx="282" cy="195" r="6.5" stroke="#ffffff" stroke-width="1.5" />
+  <circle class="sem-warning-fill" cx="430" cy="165" r="6.5" stroke="#ffffff" stroke-width="1.5" />
 
-  <text x="356" y="308" class="code" fill="#9a3412">Abstand &gt; 1 Pixelspalte:</text>
-  <text x="356" y="330" class="sub" fill="#c2410c">Direkte Verbindungslinie</text>
-  <text x="356" y="352" class="code" fill="#475569">(wie bei ScatterLine)</text>
+  <text x="356" y="308" class="code sem-warning-text">Abstand &gt; 1 Pixelspalte:</text>
+  <text x="356" y="330" class="sub sem-warning-text">Direkte Verbindungslinie</text>
+  <text x="356" y="352" class="code sem-muted-text">(wie bei ScatterLine)</text>
 </svg>

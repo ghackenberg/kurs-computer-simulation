@@ -1,49 +1,92 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-danger { fill: #fef2f2; stroke: #dc2626; }
+      .sem-danger-bg { fill: #fef2f2; stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: #dc2626; }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-accent { fill: #f5f3ff; stroke: #7c3aed; }
+      .sem-accent-bg { fill: #f5f3ff; stroke: none; }
+      .sem-accent-stroke { stroke: #7c3aed; }
+      .sem-accent-fill { fill: #7c3aed; }
+      .sem-accent-text { fill: #6d28d9; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+.hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
       .sub { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
     </style>
   </defs>
 
   <!-- Q1: Zeitreihe x(t) -->
-  <rect x="15" y="15" width="215" height="165" rx="10" fill="#f8fafc" stroke="#93c5fd" stroke-width="2" />
-  <text x="122" y="40" class="hdr" fill="#1d4ed8">1. Zeitreihen x(t)</text>
-  <line x1="35" y1="145" x2="205" y2="145" stroke="#64748b" stroke-width="2" />
-  <line x1="35" y1="55" x2="35" y2="145" stroke="#64748b" stroke-width="2" />
-  <line x1="35" y1="85" x2="205" y2="85" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4" />
-  <path d="M 35 140 C 55 50, 75 125, 95 75 C 115 95, 135 80, 200 85" fill="none" stroke="#2563eb" stroke-width="3" />
-  <text x="122" y="168" class="sub" fill="#334155">Signal / SignalXY</text>
+  <rect class="sem-card sem-primary-stroke" x="15" y="15" width="215" height="165" rx="10" stroke-width="2" />
+  <text x="122" y="40" class="hdr sem-primary-text">1. Zeitreihen x(t)</text>
+  <line class="sem-muted-stroke" x1="35" y1="145" x2="205" y2="145" stroke-width="2" />
+  <line class="sem-muted-stroke" x1="35" y1="55" x2="35" y2="145" stroke-width="2" />
+  <line class="sem-muted-stroke" x1="35" y1="85" x2="205" y2="85" stroke-width="1.5" stroke-dasharray="4,4" />
+  <path class="sem-primary-stroke" d="M 35 140 C 55 50, 75 125, 95 75 C 115 95, 135 80, 200 85" fill="none" stroke-width="3" />
+  <text x="122" y="168" class="sub sem-neutral-text">Signal / SignalXY</text>
 
   <!-- Q2: Phasenraum (x1, x2) -->
-  <rect x="250" y="15" width="215" height="165" rx="10" fill="#f8fafc" stroke="#fdba74" stroke-width="2" />
-  <text x="357" y="40" class="hdr" fill="#c2410c">2. Zustandsraum</text>
-  <line x1="275" y1="102" x2="440" y2="102" stroke="#cbd5e1" stroke-width="1.5" />
-  <line x1="357" y1="55" x2="357" y2="148" stroke="#cbd5e1" stroke-width="1.5" />
-  <path d="M 425 102 C 425 145, 295 145, 305 102 C 312 68, 395 68, 388 102 C 383 122, 335 122, 342 102 C 346 92, 365 92, 357 102" fill="none" stroke="#ea580c" stroke-width="3" />
-  <circle cx="357" cy="102" r="4.5" fill="#dc2626" />
-  <text x="357" y="168" class="sub" fill="#334155">Scatter / VectorField</text>
+  <rect class="sem-card sem-warning-stroke" x="250" y="15" width="215" height="165" rx="10" stroke-width="2" />
+  <text x="357" y="40" class="hdr sem-warning-text">2. Zustandsraum</text>
+  <line class="sem-card-stroke" x1="275" y1="102" x2="440" y2="102" stroke-width="1.5" />
+  <line class="sem-card-stroke" x1="357" y1="55" x2="357" y2="148" stroke-width="1.5" />
+  <path class="sem-warning-stroke" d="M 425 102 C 425 145, 295 145, 305 102 C 312 68, 395 68, 388 102 C 383 122, 335 122, 342 102 C 346 92, 365 92, 357 102" fill="none" stroke-width="3" />
+  <circle class="sem-danger-fill" cx="357" cy="102" r="4.5" />
+  <text x="357" y="168" class="sub sem-neutral-text">Scatter / VectorField</text>
 
   <!-- Q3: Statistik & Felder -->
-  <rect x="15" y="200" width="215" height="165" rx="10" fill="#f8fafc" stroke="#86efac" stroke-width="2" />
-  <text x="122" y="225" class="hdr" fill="#15803d">3. Statistik &amp; Felder</text>
-  <line x1="35" y1="330" x2="205" y2="330" stroke="#64748b" stroke-width="2" />
-  <rect x="50" y="305" width="22" height="25" fill="#60a5fa" />
-  <rect x="78" y="275" width="22" height="55" fill="#3b82f6" />
-  <rect x="106" y="250" width="22" height="80" fill="#2563eb" />
-  <rect x="134" y="280" width="22" height="50" fill="#3b82f6" />
-  <rect x="162" y="310" width="22" height="20" fill="#60a5fa" />
-  <path d="M 42 328 Q 117 215 192 328" fill="none" stroke="#dc2626" stroke-width="2.5" />
-  <text x="122" y="353" class="sub" fill="#334155">Bars / Box / Heatmap</text>
+  <rect class="sem-card sem-success-stroke" x="15" y="200" width="215" height="165" rx="10" stroke-width="2" />
+  <text x="122" y="225" class="hdr sem-success-text">3. Statistik &amp; Felder</text>
+  <line class="sem-muted-stroke" x1="35" y1="330" x2="205" y2="330" stroke-width="2" />
+  <rect class="sem-primary-fill" x="50" y="305" width="22" height="25" />
+  <rect class="sem-primary-fill" x="78" y="275" width="22" height="55" />
+  <rect class="sem-primary-fill" x="106" y="250" width="22" height="80" />
+  <rect class="sem-primary-fill" x="134" y="280" width="22" height="50" />
+  <rect class="sem-primary-fill" x="162" y="310" width="22" height="20" />
+  <path class="sem-danger-stroke" d="M 42 328 Q 117 215 192 328" fill="none" stroke-width="2.5" />
+  <text x="122" y="353" class="sub sem-neutral-text">Bars / Box / Heatmap</text>
 
   <!-- Q4: Topologie G=(V,E) -->
-  <rect x="250" y="200" width="215" height="165" rx="10" fill="#f8fafc" stroke="#c4b5fd" stroke-width="2" />
-  <text x="357" y="225" class="hdr" fill="#6d28d9">4. Systemtopologie</text>
-  <line x1="305" y1="270" x2="365" y2="270" stroke="#475569" stroke-width="2.5" />
-  <line x1="385" y1="270" x2="425" y2="270" stroke="#475569" stroke-width="2.5" />
-  <path d="M 410 285 L 410 318 L 290 318 L 290 285" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3" />
-  <rect x="270" y="254" width="44" height="32" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="2" />
-  <rect x="335" y="254" width="44" height="32" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="2" />
-  <rect x="400" y="254" width="44" height="32" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
-  <text x="357" y="353" class="sub" fill="#334155">MSAGL Graph</text>
+  <rect class="sem-card sem-accent-stroke" x="250" y="200" width="215" height="165" rx="10" stroke-width="2" />
+  <text x="357" y="225" class="hdr sem-accent-text">4. Systemtopologie</text>
+  <line class="sem-muted-stroke" x1="305" y1="270" x2="365" y2="270" stroke-width="2.5" />
+  <line class="sem-muted-stroke" x1="385" y1="270" x2="425" y2="270" stroke-width="2.5" />
+  <path class="sem-danger-stroke" d="M 410 285 L 410 318 L 290 318 L 290 285" fill="none" stroke-width="2" stroke-dasharray="4,3" />
+  <rect class="sem-accent" x="270" y="254" width="44" height="32" rx="5" stroke-width="2" />
+  <rect class="sem-accent" x="335" y="254" width="44" height="32" rx="5" stroke-width="2" />
+  <rect class="sem-warning" x="400" y="254" width="44" height="32" rx="5" stroke-width="2" />
+  <text x="357" y="353" class="sub sem-neutral-text">MSAGL Graph</text>
 </svg>

@@ -1,56 +1,89 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #004B96; text-anchor: middle; }
-      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #475569; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-info { fill: #e0f2fe; stroke: #0284c7; }
+      .sem-info-bg { fill: #e0f2fe; stroke: none; }
+      .sem-info-stroke { stroke: #0284c7; }
+      .sem-info-fill { fill: #0284c7; }
+      .sem-info-text { fill: #0369a1; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-danger { fill: #fef2f2; stroke: #dc2626; }
+      .sem-danger-bg { fill: #fef2f2; stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: #dc2626; }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      /* @svg-palette:end */
+.hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold;  text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px;  text-anchor: middle; }
       .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; text-anchor: middle; }
       .math { font-family: 'Cambria Math', serif; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
     </style>
     <marker id="ao" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#ea580c" />
+      <path class="sem-warning-fill" d="M 0 1 L 8 5 L 0 9 z" />
     </marker>
     <marker id="ab" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#0284c7" />
+      <path class="sem-info-fill" d="M 0 1 L 8 5 L 0 9 z" />
     </marker>
   </defs>
 
-  <rect width="260" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="130" y="24" class="hdr">Robin-Rand an Kühlrippe</text>
-  <text x="130" y="41" class="sub">Übergang Metall ➔ Luftstrom</text>
+  <rect class="sem-card" width="260" height="420" rx="10" stroke-width="1.5" />
+  <text x="130" y="24" class="hdr sem-primary-text">Robin-Rand an Kühlrippe</text>
+  <text x="130" y="41" class="sub sem-muted-text">Übergang Metall ➔ Luftstrom</text>
 
   <!-- Inner Metal Node 1 -->
   <g transform="translate(20, 54)">
-    <rect width="220" height="70" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
-    <text x="110" y="22" class="lbl" style="fill: #92400e;">1. Metall-Inneres (Knoten 1)</text>
-    <text x="110" y="44" class="math" style="fill: #b45309;">Temperatur T_{1,y}</text>
-    <text x="110" y="62" class="sub" style="fill: #78350f;">Wärmeleitung λ im Aluminium</text>
+    <rect class="sem-warning" width="220" height="70" rx="6" stroke-width="2" />
+    <text x="110" y="22" class="lbl sem-warning-text" >1. Metall-Inneres (Knoten 1)</text>
+    <text x="110" y="44" class="math sem-warning-text" >Temperatur T_{1,y}</text>
+    <text x="110" y="62" class="sub sem-muted-text sem-warning-text" >Wärmeleitung λ im Aluminium</text>
   </g>
 
   <!-- Conduction Arrow -->
-  <line x1="130" y1="124" x2="130" y2="168" stroke="#ea580c" stroke-width="2.5" marker-end="url(#ao)" />
-  <rect x="14" y="132" width="232" height="24" rx="4" fill="#fff7ed" stroke="#fdba74" stroke-width="1" />
-  <text x="130" y="148" class="lbl" style="fill: #c2410c; font-size: 11.5px;">q̇_Leitung = λ·(T_{1,y} − T_{0,y})/Δx</text>
+  <line class="sem-warning-stroke" x1="130" y1="124" x2="130" y2="168" stroke-width="2.5" marker-end="url(#ao)" />
+  <rect class="sem-warning" x="14" y="132" width="232" height="24" rx="4" stroke-width="1" />
+  <text x="130" y="148" class="lbl sem-warning-text" style="font-size: 11.5px;">q̇_Leitung = λ·(T_{1,y} − T_{0,y})/Δx</text>
 
   <!-- Surface Node 0 -->
   <g transform="translate(20, 170)">
-    <rect width="220" height="70" rx="6" fill="#ffedd5" stroke="#ea580c" stroke-width="2.5" />
-    <text x="110" y="22" class="lbl" style="fill: #9a3412;">2. Rippen-Oberfläche (Knoten 0)</text>
-    <text x="110" y="44" class="math" style="fill: #c2410c;">Randtemperatur T_{0,y}</text>
-    <text x="110" y="62" class="sub" style="fill: #7c2d12; font-weight: bold;">Bilanz: q̇_Leitung = q̇_Konvektion!</text>
+    <rect class="sem-warning" width="220" height="70" rx="6" stroke-width="2.5" />
+    <text x="110" y="22" class="lbl sem-warning-text" >2. Rippen-Oberfläche (Knoten 0)</text>
+    <text x="110" y="44" class="math sem-warning-text" >Randtemperatur T_{0,y}</text>
+    <text x="110" y="62" class="sub sem-muted-text sem-warning-text" style="font-weight: bold;">Bilanz: q̇_Leitung = q̇_Konvektion!</text>
   </g>
 
   <!-- Convection Arrow -->
-  <line x1="130" y1="240" x2="130" y2="282" stroke="#0284c7" stroke-width="2.5" marker-end="url(#ab)" />
-  <rect x="18" y="247" width="224" height="24" rx="4" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1" />
-  <text x="130" y="263" class="lbl" style="fill: #0369a1; font-size: 11.5px;">q̇_Konvektion = h · (T_{0,y} − T_∞)</text>
+  <line class="sem-info-stroke" x1="130" y1="240" x2="130" y2="282" stroke-width="2.5" marker-end="url(#ab)" />
+  <rect class="sem-info" x="18" y="247" width="224" height="24" rx="4" stroke-width="1" />
+  <text x="130" y="263" class="lbl sem-info-text" style="font-size: 11.5px;">q̇_Konvektion = h · (T_{0,y} − T_∞)</text>
 
   <!-- Ambient Air -->
   <g transform="translate(20, 284)">
-    <rect width="220" height="120" rx="6" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2" />
-    <text x="110" y="22" class="lbl" style="fill: #0369a1;">3. Vorbeiströmende Kühlluft</text>
-    <text x="110" y="44" class="math" style="fill: #0284c7;">Umgebung T_∞ = 25 °C</text>
-    <text x="110" y="68" class="sub" style="fill: #0c4a6e;">• <tspan font-weight="bold">Lüfter AN:</tspan> h = 250 W/(m²K)</text>
-    <text x="110" y="86" class="sub" style="fill: #dc2626;">• <tspan font-weight="bold">Lüfter AUS:</tspan> h = 20 W/(m²K)</text>
-    <text x="110" y="106" class="sub" style="fill: #0369a1; font-weight: bold;">(12,5× schwächere Kühlung!)</text>
+    <rect class="sem-info" width="220" height="120" rx="6" stroke-width="2" />
+    <text x="110" y="22" class="lbl sem-info-text" >3. Vorbeiströmende Kühlluft</text>
+    <text x="110" y="44" class="math sem-info-text" >Umgebung T_∞ = 25 °C</text>
+    <text x="110" y="68" class="sub sem-muted-text sem-info-text" >• <tspan font-weight="bold">Lüfter AN:</tspan> h = 250 W/(m²K)</text>
+    <text x="110" y="86" class="sub sem-muted-text sem-danger-text" >• <tspan font-weight="bold">Lüfter AUS:</tspan> h = 20 W/(m²K)</text>
+    <text x="110" y="106" class="sub sem-muted-text sem-info-text" style="font-weight: bold;">(12,5× schwächere Kühlung!)</text>
   </g>
 </svg>

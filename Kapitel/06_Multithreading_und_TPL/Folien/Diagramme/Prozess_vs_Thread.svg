@@ -1,47 +1,85 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   <defs>
     <marker id="arrAmber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#D97706"/>
+      <path class="sem-warning-fill" d="M 0 1.5 L 8 5 L 0 8.5 z"/>
     </marker>
     <style>
-      text { font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-danger { fill: #fef2f2; stroke: #dc2626; }
+      .sem-danger-bg { fill: #fef2f2; stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: #dc2626; }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+text { font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
       .code { font-family: 'Consolas', monospace; font-weight: bold; }
     </style>
   </defs>
 
 
   <!-- Top: Isolierte Prozesse -->
-  <rect x="-25" y="10" width="530" height="156" rx="10" fill="#F8FAFC" stroke="#64748B" stroke-width="2"/>
-  <text x="240" y="34" font-size="15.5" font-weight="bold" fill="#334155" text-anchor="middle">Prozesse: Isolierter Speicher (IPC nötig)</text>
+  <rect class="sem-card sem-muted-stroke" x="-25" y="10" width="530" height="156" rx="10" stroke-width="2"/>
+  <text class="sem-neutral-text" x="240" y="34" font-size="15.5" font-weight="bold" text-anchor="middle">Prozesse: Isolierter Speicher (IPC nötig)</text>
 
-  <rect x="-5" y="48" width="180" height="102" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
-  <text x="85" y="70" font-size="14" font-weight="bold" fill="#1E40AF" text-anchor="middle">Prozess A (.exe)</text>
-  <rect x="10" y="82" width="150" height="28" rx="4" fill="#FFFFFF" stroke="#93C5FD"/>
-  <text x="85" y="101" font-size="13" fill="#1E3A8A" text-anchor="middle">Eigener RAM / Heap</text>
-  <rect x="10" y="116" width="150" height="24" rx="4" fill="#DBEAFE"/>
-  <text x="85" y="133" font-size="12.5" class="code" fill="#1E40AF" text-anchor="middle">Thread 1</text>
+  <rect class="sem-primary" x="-5" y="48" width="180" height="102" rx="8" stroke-width="1.5"/>
+  <text class="sem-primary-text" x="85" y="70" font-size="14" font-weight="bold" text-anchor="middle">Prozess A (.exe)</text>
+  <rect class="sem-primary-stroke" x="10" y="82" width="150" height="28" rx="4" fill="#FFFFFF"/>
+  <text class="sem-primary-text" x="85" y="101" font-size="13" text-anchor="middle">Eigener RAM / Heap</text>
+  <rect class="sem-primary" x="10" y="116" width="150" height="24" rx="4" stroke="none"/>
+  <text x="85" y="133" font-size="12.5" class="code sem-primary-text" text-anchor="middle">Thread 1</text>
 
-  <rect x="305" y="48" width="180" height="102" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
-  <text x="395" y="70" font-size="14" font-weight="bold" fill="#1E40AF" text-anchor="middle">Prozess B (.exe)</text>
-  <rect x="320" y="82" width="150" height="28" rx="4" fill="#FFFFFF" stroke="#93C5FD"/>
-  <text x="395" y="101" font-size="13" fill="#1E3A8A" text-anchor="middle">Eigener RAM / Heap</text>
-  <rect x="320" y="116" width="150" height="24" rx="4" fill="#DBEAFE"/>
-  <text x="395" y="133" font-size="12.5" class="code" fill="#1E40AF" text-anchor="middle">Thread 1</text>
+  <rect class="sem-primary" x="305" y="48" width="180" height="102" rx="8" stroke-width="1.5"/>
+  <text class="sem-primary-text" x="395" y="70" font-size="14" font-weight="bold" text-anchor="middle">Prozess B (.exe)</text>
+  <rect class="sem-primary-stroke" x="320" y="82" width="150" height="28" rx="4" fill="#FFFFFF"/>
+  <text class="sem-primary-text" x="395" y="101" font-size="13" text-anchor="middle">Eigener RAM / Heap</text>
+  <rect class="sem-primary" x="320" y="116" width="150" height="24" rx="4" stroke="none"/>
+  <text x="395" y="133" font-size="12.5" class="code sem-primary-text" text-anchor="middle">Thread 1</text>
 
-  <line x1="178" y1="98" x2="300" y2="98" stroke="#D97706" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrAmber)"/>
-  <text x="240" y="88" font-size="12.5" font-weight="bold" fill="#B45309" text-anchor="middle">IPC (ms)</text>
+  <line class="sem-warning-stroke" x1="178" y1="98" x2="300" y2="98" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrAmber)"/>
+  <text class="sem-warning-text" x="240" y="88" font-size="12.5" font-weight="bold" text-anchor="middle">IPC (ms)</text>
 
   <!-- Bottom: Threads in einem Prozess -->
-  <rect x="-25" y="182" width="530" height="186" rx="10" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/>
-  <text x="240" y="206" font-size="15.5" font-weight="bold" fill="#15803D" text-anchor="middle">Threads in 1 Prozess: Geteilter Heap (μs)</text>
+  <rect class="sem-success" x="-25" y="182" width="530" height="186" rx="10" stroke-width="2"/>
+  <text class="sem-success-text" x="240" y="206" font-size="15.5" font-weight="bold" text-anchor="middle">Threads in 1 Prozess: Geteilter Heap (μs)</text>
 
-  <rect x="0" y="220" width="220" height="44" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5"/>
-  <text x="110" y="247" font-size="13.5" font-weight="bold" fill="#166534" text-anchor="middle">Thread 0 (UI) · Stack 0</text>
+  <rect class="sem-success" x="0" y="220" width="220" height="44" rx="6" stroke-width="1.5"/>
+  <text class="sem-success-text" x="110" y="247" font-size="13.5" font-weight="bold" text-anchor="middle">Thread 0 (UI) · Stack 0</text>
 
-  <rect x="260" y="220" width="220" height="44" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5"/>
-  <text x="370" y="247" font-size="13.5" font-weight="bold" fill="#166534" text-anchor="middle">Thread 1..p · Stack 1..p</text>
+  <rect class="sem-success" x="260" y="220" width="220" height="44" rx="6" stroke-width="1.5"/>
+  <text class="sem-success-text" x="370" y="247" font-size="13.5" font-weight="bold" text-anchor="middle">Thread 1..p · Stack 1..p</text>
 
-  <rect x="0" y="282" width="480" height="72" rx="8" fill="#FFFFFF" stroke="#16A34A" stroke-width="1.5"/>
-  <text x="240" y="308" font-size="14" font-weight="bold" fill="#15803D" text-anchor="middle">Gemeinsamer Heap (Arrays, Partikel, Zähler)</text>
-  <text x="240" y="334" font-size="13" fill="#991B1B" text-anchor="middle">Schnell (ns–μs), aber Gefahr von Datenkonflikten!</text>
+  <rect class="sem-success-stroke" x="0" y="282" width="480" height="72" rx="8" fill="#FFFFFF" stroke-width="1.5"/>
+  <text class="sem-success-text" x="240" y="308" font-size="14" font-weight="bold" text-anchor="middle">Gemeinsamer Heap (Arrays, Partikel, Zähler)</text>
+  <text class="sem-danger-text" x="240" y="334" font-size="13" text-anchor="middle">Schnell (ns–μs), aber Gefahr von Datenkonflikten!</text>
 </svg>

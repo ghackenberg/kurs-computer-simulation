@@ -1,73 +1,106 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-danger { fill: #fef2f2; stroke: #dc2626; }
+      .sem-danger-bg { fill: #fef2f2; stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: #dc2626; }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+.hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15.5px; font-weight: bold; text-anchor: middle; }
       .code { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; text-anchor: middle; }
       .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
     </style>
     <marker id="lv-b" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
-      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb" />
+      <path class="sem-primary-fill" d="M 0 1.5 L 9 5 L 0 8.5 z" />
     </marker>
     <marker id="lv-r" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
-      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#dc2626" />
+      <path class="sem-danger-fill" d="M 0 1.5 L 9 5 L 0 8.5 z" />
     </marker>
   </defs>
 
   <!-- Oben: Variante 1 - Hierarchisches Schicht-Layout (Sugiyama) -->
-  <rect x="10" y="12" width="460" height="170" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="2" />
-  <text x="240" y="38" class="hdr" fill="#1d4ed8">1. Hierarchisches Schicht-Layout (Sugiyama)</text>
-  <text x="240" y="58" class="sub" fill="#475569">Kausaler Signalfluss (Links &#8594; Rechts) + Rückführung</text>
+  <rect class="sem-primary" x="10" y="12" width="460" height="170" rx="10" stroke-width="2" />
+  <text x="240" y="38" class="hdr sem-primary-text">1. Hierarchisches Schicht-Layout (Sugiyama)</text>
+  <text x="240" y="58" class="sub sem-muted-text">Kausaler Signalfluss (Links &#8594; Rechts) + Rückführung</text>
 
   <!-- Schicht-Linien -->
-  <line x1="90" y1="70" x2="90" y2="145" stroke="#bfdbfe" stroke-width="2" stroke-dasharray="4,4" />
-  <line x1="240" y1="70" x2="240" y2="145" stroke="#bfdbfe" stroke-width="2" stroke-dasharray="4,4" />
-  <line x1="390" y1="70" x2="390" y2="145" stroke="#bfdbfe" stroke-width="2" stroke-dasharray="4,4" />
+  <line class="sem-primary-stroke" x1="90" y1="70" x2="90" y2="145" stroke-width="2" stroke-dasharray="4,4" />
+  <line class="sem-primary-stroke" x1="240" y1="70" x2="240" y2="145" stroke-width="2" stroke-dasharray="4,4" />
+  <line class="sem-primary-stroke" x1="390" y1="70" x2="390" y2="145" stroke-width="2" stroke-dasharray="4,4" />
 
   <!-- Vorwärts-Pfeile -->
-  <line x1="132" y1="102" x2="190" y2="102" stroke="#2563eb" stroke-width="2.5" marker-end="url(#lv-b)" />
-  <line x1="282" y1="102" x2="340" y2="102" stroke="#2563eb" stroke-width="2.5" marker-end="url(#lv-b)" />
+  <line class="sem-primary-stroke" x1="132" y1="102" x2="190" y2="102" stroke-width="2.5" marker-end="url(#lv-b)" />
+  <line class="sem-primary-stroke" x1="282" y1="102" x2="340" y2="102" stroke-width="2.5" marker-end="url(#lv-b)" />
 
   <!-- Blöcke -->
-  <rect x="48" y="84" width="84" height="36" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
-  <text x="90" y="107" class="code" fill="#1e3a8a">Sum</text>
+  <rect class="sem-primary-stroke" x="48" y="84" width="84" height="36" rx="6" fill="#ffffff" stroke-width="2" />
+  <text x="90" y="107" class="code sem-primary-text">Sum</text>
 
-  <rect x="198" y="84" width="84" height="36" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2" />
-  <text x="240" y="107" class="code" fill="#1e3a8a">Regler</text>
+  <rect class="sem-primary" x="198" y="84" width="84" height="36" rx="6" stroke-width="2" />
+  <text x="240" y="107" class="code sem-primary-text">Regler</text>
 
-  <rect x="348" y="84" width="84" height="36" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
-  <text x="390" y="107" class="code" fill="#1e3a8a">Strecke</text>
+  <rect class="sem-primary-stroke" x="348" y="84" width="84" height="36" rx="6" fill="#ffffff" stroke-width="2" />
+  <text x="390" y="107" class="code sem-primary-text">Strecke</text>
 
   <!-- Feedback-Schleife unten -->
-  <path d="M 390 120 C 390 162, 90 162, 90 125" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#lv-r)" />
-  <text x="240" y="172" class="code" fill="#1e40af">SugiyamaLayoutSettings (Standard)</text>
+  <path class="sem-danger-stroke" d="M 390 120 C 390 162, 90 162, 90 125" fill="none" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#lv-r)" />
+  <text x="240" y="172" class="code sem-primary-text">SugiyamaLayoutSettings (Standard)</text>
 
   <!-- Unten: Variante 2 - Organisches Kräfte-Layout (Force-Directed / MDS) -->
-  <rect x="10" y="196" width="460" height="172" rx="10" fill="#f0fdf4" stroke="#4ade80" stroke-width="2" />
-  <text x="240" y="222" class="hdr" fill="#15803d">2. Organisches Kräfte-Layout (Force-Directed)</text>
-  <text x="240" y="242" class="sub" fill="#475569">Vermaschte Topologie &#8594; Automatische Nachbarschafts-Cluster</text>
+  <rect class="sem-success" x="10" y="196" width="460" height="172" rx="10" stroke-width="2" />
+  <text x="240" y="222" class="hdr sem-success-text">2. Organisches Kräfte-Layout (Force-Directed)</text>
+  <text x="240" y="242" class="sub sem-muted-text">Vermaschte Topologie &#8594; Automatische Nachbarschafts-Cluster</text>
 
   <!-- Kanten (ungerichtet) -->
-  <line x1="145" y1="295" x2="75" y2="268" stroke="#16a34a" stroke-width="2.5" />
-  <line x1="145" y1="295" x2="75" y2="325" stroke="#16a34a" stroke-width="2.5" />
-  <line x1="145" y1="295" x2="335" y2="295" stroke="#0f172a" stroke-width="3" />
-  <line x1="335" y1="295" x2="405" y2="268" stroke="#d97706" stroke-width="2.5" />
-  <line x1="335" y1="295" x2="405" y2="325" stroke="#d97706" stroke-width="2.5" />
+  <line class="sem-success-stroke" x1="145" y1="295" x2="75" y2="268" stroke-width="2.5" />
+  <line class="sem-success-stroke" x1="145" y1="295" x2="75" y2="325" stroke-width="2.5" />
+  <line class="sem-neutral-stroke" x1="145" y1="295" x2="335" y2="295" stroke-width="3" />
+  <line class="sem-warning-stroke" x1="335" y1="295" x2="405" y2="268" stroke-width="2.5" />
+  <line class="sem-warning-stroke" x1="335" y1="295" x2="405" y2="325" stroke-width="2.5" />
 
   <!-- Knoten Cluster A -->
-  <circle cx="75" cy="268" r="16" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
-  <text x="75" y="273" class="code" fill="#166534">S1</text>
-  <circle cx="75" cy="325" r="16" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
-  <text x="75" y="330" class="code" fill="#166534">S2</text>
-  <rect x="112" y="277" width="66" height="34" rx="6" fill="#ffffff" stroke="#15803d" stroke-width="2.5" />
-  <text x="145" y="299" class="code" fill="#166534">GW-A</text>
+  <circle class="sem-success" cx="75" cy="268" r="16" stroke-width="2" />
+  <text x="75" y="273" class="code sem-success-text">S1</text>
+  <circle class="sem-success" cx="75" cy="325" r="16" stroke-width="2" />
+  <text x="75" y="330" class="code sem-success-text">S2</text>
+  <rect class="sem-success-stroke" x="112" y="277" width="66" height="34" rx="6" fill="#ffffff" stroke-width="2.5" />
+  <text x="145" y="299" class="code sem-success-text">GW-A</text>
 
   <!-- Knoten Cluster B -->
-  <rect x="302" y="277" width="66" height="34" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="2.5" />
-  <text x="335" y="299" class="code" fill="#b45309">GW-B</text>
-  <circle cx="405" cy="268" r="16" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
-  <text x="405" y="273" class="code" fill="#92400e">R1</text>
-  <circle cx="405" cy="325" r="16" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
-  <text x="405" y="330" class="code" fill="#92400e">R2</text>
+  <rect class="sem-warning-stroke" x="302" y="277" width="66" height="34" rx="6" fill="#ffffff" stroke-width="2.5" />
+  <text x="335" y="299" class="code sem-warning-text">GW-B</text>
+  <circle class="sem-warning" cx="405" cy="268" r="16" stroke-width="2" />
+  <text x="405" y="273" class="code sem-warning-text">R1</text>
+  <circle class="sem-warning" cx="405" cy="325" r="16" stroke-width="2" />
+  <text x="405" y="330" class="code sem-warning-text">R2</text>
 
-  <text x="240" y="356" class="code" fill="#166534">MdsLayoutSettings (Feder- &amp; Abstoßungskräfte)</text>
+  <text x="240" y="356" class="code sem-success-text">MdsLayoutSettings (Feder- &amp; Abstoßungskräfte)</text>
 </svg>

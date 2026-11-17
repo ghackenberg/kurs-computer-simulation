@@ -1,7 +1,45 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-danger { fill: #fef2f2; stroke: #dc2626; }
+      .sem-danger-bg { fill: #fef2f2; stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: #dc2626; }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+.hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
       .code { font-family: 'Consolas', monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
     </style>
     <linearGradient id="turbo-grad" x1="0" y1="1" x2="0" y2="0">
@@ -11,57 +49,57 @@
       <stop offset="100%" stop-color="#dc2626" />
     </linearGradient>
     <marker id="arr-hm" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb" />
+      <path class="sem-primary-fill" d="M 0 1.5 L 9 5 L 0 8.5 z" />
     </marker>
   </defs>
 
-  <rect x="15" y="15" width="450" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
-  <text x="240" y="42" class="hdr" fill="#004B96">Heatmap: 2D-Array &#8594; Raw-Pixel-Bitmap (Termin 02)</text>
+  <rect class="sem-card" x="15" y="15" width="450" height="350" rx="10" stroke-width="2" />
+  <text x="240" y="42" class="hdr sem-primary-text">Heatmap: 2D-Array &#8594; Raw-Pixel-Bitmap (Termin 02)</text>
 
   <!-- Schritt 1: double[,] Array -->
-  <rect x="30" y="70" width="135" height="195" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
-  <text x="97" y="95" class="code" fill="#334155">double[,]</text>
+  <rect class="sem-muted-stroke" x="30" y="70" width="135" height="195" rx="8" fill="#ffffff" stroke-width="2" />
+  <text x="97" y="95" class="code sem-neutral-text">double[,]</text>
   <g transform="translate(45, 110)" font-family="Consolas, monospace" font-size="13" font-weight="bold" text-anchor="middle">
-    <rect x="0" y="0" width="50" height="36" fill="#eff6ff" stroke="#cbd5e1" />
-    <text x="25" y="23" fill="#1e40af">22.4</text>
-    <rect x="52" y="0" width="50" height="36" fill="#fef3c7" stroke="#cbd5e1" />
-    <text x="77" y="23" fill="#b45309">64.1</text>
-    <rect x="0" y="38" width="50" height="36" fill="#fef3c7" stroke="#cbd5e1" />
-    <text x="25" y="61" fill="#b45309">58.9</text>
-    <rect x="52" y="38" width="50" height="36" fill="#fee2e2" stroke="#cbd5e1" />
-    <text x="77" y="61" fill="#dc2626">98.5</text>
-    <rect x="0" y="76" width="50" height="36" fill="#eff6ff" stroke="#cbd5e1" />
-    <text x="25" y="99" fill="#1e40af">25.0</text>
-    <rect x="52" y="76" width="50" height="36" fill="#fef3c7" stroke="#cbd5e1" />
-    <text x="77" y="99" fill="#b45309">61.2</text>
+    <rect class="sem-primary sem-card-stroke" x="0" y="0" width="50" height="36" />
+    <text class="sem-primary-text" x="25" y="23">22.4</text>
+    <rect class="sem-warning sem-card-stroke" x="52" y="0" width="50" height="36" />
+    <text class="sem-warning-text" x="77" y="23">64.1</text>
+    <rect class="sem-warning sem-card-stroke" x="0" y="38" width="50" height="36" />
+    <text class="sem-warning-text" x="25" y="61">58.9</text>
+    <rect class="sem-danger sem-card-stroke" x="52" y="38" width="50" height="36" />
+    <text class="sem-danger-text" x="77" y="61">98.5</text>
+    <rect class="sem-primary sem-card-stroke" x="0" y="76" width="50" height="36" />
+    <text class="sem-primary-text" x="25" y="99">25.0</text>
+    <rect class="sem-warning sem-card-stroke" x="52" y="76" width="50" height="36" />
+    <text class="sem-warning-text" x="77" y="99">61.2</text>
   </g>
-  <text x="97" y="248" class="code" fill="#64748b">intensities</text>
+  <text x="97" y="248" class="code sem-muted-text">intensities</text>
 
-  <line x1="168" y1="168" x2="198" y2="168" stroke="#2563eb" stroke-width="3" marker-end="url(#arr-hm)" />
+  <line class="sem-primary-stroke" x1="168" y1="168" x2="198" y2="168" stroke-width="3" marker-end="url(#arr-hm)" />
 
   <!-- Schritt 2: Colormap Lookup -->
-  <rect x="204" y="70" width="76" height="195" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
-  <text x="242" y="95" class="code" fill="#334155">LUT</text>
-  <rect x="228" y="110" width="28" height="115" rx="4" fill="url(#turbo-grad)" stroke="#475569" stroke-width="1.5" />
-  <text x="242" y="248" class="code" fill="#64748b">Turbo</text>
+  <rect class="sem-muted-stroke" x="204" y="70" width="76" height="195" rx="8" fill="#ffffff" stroke-width="2" />
+  <text x="242" y="95" class="code sem-neutral-text">LUT</text>
+  <rect class="sem-muted-stroke" x="228" y="110" width="28" height="115" rx="4" fill="url(#turbo-grad)" stroke-width="1.5" />
+  <text x="242" y="248" class="code sem-muted-text">Turbo</text>
 
-  <line x1="283" y1="168" x2="313" y2="168" stroke="#2563eb" stroke-width="3" marker-end="url(#arr-hm)" />
+  <line class="sem-primary-stroke" x1="283" y1="168" x2="313" y2="168" stroke-width="3" marker-end="url(#arr-hm)" />
 
   <!-- Schritt 3: 1 SKBitmap Textur -->
-  <rect x="318" y="70" width="132" height="195" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
-  <text x="384" y="95" class="code" fill="#15803d">1 Bitmap</text>
+  <rect class="sem-success-stroke" x="318" y="70" width="132" height="195" rx="8" fill="#ffffff" stroke-width="2" />
+  <text x="384" y="95" class="code sem-success-text">1 Bitmap</text>
   <g transform="translate(333, 110)">
-    <rect x="0" y="0" width="50" height="36" fill="#2563eb" />
-    <rect x="50" y="0" width="50" height="36" fill="#eab308" />
-    <rect x="0" y="36" width="50" height="36" fill="#f59e0b" />
-    <rect x="50" y="36" width="50" height="36" fill="#dc2626" />
-    <rect x="0" y="72" width="50" height="36" fill="#3b82f6" />
-    <rect x="50" y="72" width="50" height="36" fill="#eab308" />
+    <rect class="sem-primary-fill" x="0" y="0" width="50" height="36" />
+    <rect class="sem-warning-fill" x="50" y="0" width="50" height="36" />
+    <rect class="sem-warning-fill" x="0" y="36" width="50" height="36" />
+    <rect class="sem-danger-fill" x="50" y="36" width="50" height="36" />
+    <rect class="sem-primary-fill" x="0" y="72" width="50" height="36" />
+    <rect class="sem-warning-fill" x="50" y="72" width="50" height="36" />
   </g>
-  <text x="384" y="248" class="code" fill="#15803d">SKBitmap</text>
+  <text x="384" y="248" class="code sem-success-text">SKBitmap</text>
 
   <!-- Komplexitäts-Badge unten (mit N_x und N_y) -->
-  <rect x="30" y="285" width="420" height="60" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.8" />
-  <text x="240" y="310" class="code" fill="#1e40af">Pixel-Update: O(N_x·N_y) im Array (0 UI-Shapes!)</text>
-  <text x="240" y="333" class="code" fill="#15803d">GPU zeichnet 1 Textur + ColorBar in O(1)</text>
+  <rect class="sem-primary" x="30" y="285" width="420" height="60" rx="8" stroke-width="1.8" />
+  <text x="240" y="310" class="code sem-primary-text">Pixel-Update: O(N_x·N_y) im Array (0 UI-Shapes!)</text>
+  <text x="240" y="333" class="code sem-success-text">GPU zeichnet 1 Textur + ColorBar in O(1)</text>
 </svg>

@@ -2,28 +2,28 @@
   <defs>
     <!-- Pfeilspitzen -->
     <marker id="arrow-axis" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1E293B" />
+      <path class="sem-card-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
     </marker>
     <marker id="arrow-axis-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#004B96" />
+      <path class="sem-primary-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
     </marker>
     <marker id="arrow-dim" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-      <path d="M 0 2 L 6 5 L 0 8 z" fill="#D97706" />
+      <path class="sem-warning-fill" d="M 0 2 L 6 5 L 0 8 z" />
     </marker>
     <marker id="arrow-dim-rev" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-      <path d="M 6 2 L 0 5 L 6 8 z" fill="#D97706" />
+      <path class="sem-warning-fill" d="M 6 2 L 0 5 L 6 8 z" />
     </marker>
     <marker id="arrow-dim-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-      <path d="M 0 2 L 6 5 L 0 8 z" fill="#0284C7" />
+      <path class="sem-info-fill" d="M 0 2 L 6 5 L 0 8 z" />
     </marker>
     <marker id="arrow-dim-blue-rev" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-      <path d="M 6 2 L 0 5 L 6 8 z" fill="#0284C7" />
+      <path class="sem-info-fill" d="M 6 2 L 0 5 L 6 8 z" />
     </marker>
     <marker id="arrow-margin" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
-      <path d="M 0 2 L 6 5 L 0 8 z" fill="#64748B" />
+      <path class="sem-muted-fill" d="M 0 2 L 6 5 L 0 8 z" />
     </marker>
     <marker id="arrow-force" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#DC2626" />
+      <path class="sem-danger-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
     </marker>
     <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
       <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08" />
@@ -31,143 +31,181 @@
   </defs>
 
   <style>
-    text {
+    
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-info { fill: #e0f2fe; stroke: #0284c7; }
+      .sem-info-bg { fill: #e0f2fe; stroke: none; }
+      .sem-info-stroke { stroke: #0284c7; }
+      .sem-info-fill { fill: #0284c7; }
+      .sem-info-text { fill: #0369a1; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-danger { fill: #fef2f2; stroke: #dc2626; }
+      .sem-danger-bg { fill: #fef2f2; stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: #dc2626; }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+text {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-    .panel-bg { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 10px; }
-    .title { font-size: 17px; font-weight: 700; fill: #004B96; }
-    .subtitle { font-size: 12.5px; fill: #64748B; font-weight: 500; }
-    .axis { stroke: #1E293B; stroke-width: 2; }
-    .axis-label { font-size: 13.5px; font-weight: 700; fill: #1E293B; }
-    .grid-line { stroke: #E2E8F0; stroke-width: 1; stroke-dasharray: 4,4; }
-    .bbox { stroke: #D97706; stroke-width: 1.8; stroke-dasharray: 6,4; fill: rgba(245, 158, 11, 0.05); rx: 4px; }
-    .canvas-bg { fill: #F8FAFC; stroke: #94A3B8; stroke-width: 1.5; }
-    .margin-zone { fill: rgba(226, 232, 240, 0.4); stroke: #94A3B8; stroke-width: 1; stroke-dasharray: 3,3; }
-    .truss-bar { stroke: #004B96; stroke-width: 3.5; stroke-linecap: round; }
-    .truss-node { fill: #FFFFFF; stroke: #004B96; stroke-width: 2.5; }
-    .point-highlight { fill: #EF4444; stroke: #FFFFFF; stroke-width: 2; }
-    .dim-line { stroke: #D97706; stroke-width: 1.2; }
-    .dim-text { font-size: 13px; fill: #B45309; font-weight: 600; text-anchor: middle; }
-    .code-box { fill: #F8FAFC; stroke: #CBD5E1; stroke-width: 1; rx: 6px; }
-    .code-text { font-family: "Consolas", "Fira Code", monospace; font-size: 13px; fill: #0F172A; }
-    .formula-tag { fill: #EFF6FF; stroke: #BFDBFE; stroke-width: 1; rx: 4px; }
+    .panel-bg { fill: #FFFFFF;  stroke-width: 1.5; rx: 10px; }
+    .title { font-size: 17px; font-weight: 700;  }
+    .subtitle { font-size: 12.5px;  font-weight: 500; }
+    .axis {  stroke-width: 2; }
+    .axis-label { font-size: 13.5px; font-weight: 700;  }
+    .grid-line {  stroke-width: 1; stroke-dasharray: 4,4; }
+    .bbox {  stroke-width: 1.8; stroke-dasharray: 6,4; fill: rgba(245, 158, 11, 0.05); rx: 4px; }
+    .canvas-bg {   stroke-width: 1.5; }
+    .margin-zone { fill: rgba(226, 232, 240, 0.4);  stroke-width: 1; stroke-dasharray: 3,3; }
+    .truss-bar {  stroke-width: 3.5; stroke-linecap: round; }
+    .truss-node { fill: #FFFFFF;  stroke-width: 2.5; }
+    .point-highlight {  stroke: #FFFFFF; stroke-width: 2; }
+    .dim-line {  stroke-width: 1.2; }
+    .dim-text { font-size: 13px;  font-weight: 600; text-anchor: middle; }
+    .code-box {   stroke-width: 1; rx: 6px; }
+    .code-text { font-family: "Consolas", "Fira Code", monospace; font-size: 13px;  }
+    .formula-tag {   stroke-width: 1; rx: 4px; }
   </style>
 
   <!-- Hintergrund gesamt -->
-  <rect x="0" y="0" width="1080" height="570" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5" rx="12" />
+  <rect class="sem-card" x="0" y="0" width="1080" height="570" stroke-width="1.5" rx="12" />
 
   <!-- ========================================== -->
   <!-- LINKE SPALTE: WELTKOORDINATENSYSTEM        -->
   <!-- ========================================== -->
   <g transform="translate(25, 20)">
-    <rect class="panel-bg" x="0" y="0" width="465" height="530" filter="url(#shadow)" />
+    <rect class="panel-bg sem-card-stroke" x="0" y="0" width="465" height="530" filter="url(#shadow)" />
     
     <!-- Header -->
-    <path d="M 0 10 Q 0 0 10 0 L 455 0 Q 465 0 465 10 L 465 48 L 0 48 Z" fill="#E2E8F0" />
-    <circle cx="24" cy="24" r="12" fill="#004B96" />
+    <path class="sem-muted-bg" d="M 0 10 Q 0 0 10 0 L 455 0 Q 465 0 465 10 L 465 48 L 0 48 Z" />
+    <circle class="sem-primary-fill" cx="24" cy="24" r="12" />
     <text x="24" y="29" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
-    <text class="title" x="48" y="22">Weltkoordinatensystem (Physik)</text>
-    <text class="subtitle" x="48" y="42">Kartesisch [m] • Y zeigt NACH OBEN</text>
+    <text class="title sem-primary-text" x="48" y="22">Weltkoordinatensystem (Physik)</text>
+    <text class="subtitle sem-muted-text" x="48" y="42">Kartesisch [m] • Y zeigt NACH OBEN</text>
 
     <!-- Grid -->
-    <line class="grid-line" x1="65" y1="350" x2="370" y2="350" />
-    <line class="grid-line" x1="65" y1="275" x2="370" y2="275" />
-    <line class="grid-line" x1="65" y1="200" x2="370" y2="200" />
-    <line class="grid-line" x1="65" y1="125" x2="370" y2="125" />
+    <line class="grid-line sem-muted-stroke" x1="65" y1="350" x2="370" y2="350" />
+    <line class="grid-line sem-muted-stroke" x1="65" y1="275" x2="370" y2="275" />
+    <line class="grid-line sem-muted-stroke" x1="65" y1="200" x2="370" y2="200" />
+    <line class="grid-line sem-muted-stroke" x1="65" y1="125" x2="370" y2="125" />
     
-    <line class="grid-line" x1="65" y1="350" x2="65" y2="90" />
-    <line class="grid-line" x1="145" y1="350" x2="145" y2="90" />
-    <line class="grid-line" x1="240" y1="350" x2="240" y2="90" />
-    <line class="grid-line" x1="335" y1="350" x2="335" y2="90" />
+    <line class="grid-line sem-muted-stroke" x1="65" y1="350" x2="65" y2="90" />
+    <line class="grid-line sem-muted-stroke" x1="145" y1="350" x2="145" y2="90" />
+    <line class="grid-line sem-muted-stroke" x1="240" y1="350" x2="240" y2="90" />
+    <line class="grid-line sem-muted-stroke" x1="335" y1="350" x2="335" y2="90" />
 
     <!-- Achsen -->
     <!-- X-Achse -->
-    <line class="axis" x1="50" y1="350" x2="385" y2="350" marker-end="url(#arrow-axis)" />
+    <line class="axis sem-card-stroke" x1="50" y1="350" x2="385" y2="350" marker-end="url(#arrow-axis)" />
     <g transform="translate(388, 340)">
-      <rect x="0" y="0" width="70" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-      <text class="axis-label" x="35" y="14" text-anchor="middle">+X [m]</text>
+      <rect class="sem-card-stroke" x="0" y="0" width="70" height="20" rx="3" fill="#FFFFFF" stroke-width="1" />
+      <text class="axis-label sem-card-text" x="35" y="14" text-anchor="middle">+X [m]</text>
     </g>
     
     <!-- Y-Achse nach oben -->
-    <line class="axis" x1="65" y1="365" x2="65" y2="80" marker-end="url(#arrow-axis)" />
+    <line class="axis sem-card-stroke" x1="65" y1="365" x2="65" y2="80" marker-end="url(#arrow-axis)" />
     <g transform="translate(30, 56)">
-      <rect x="0" y="0" width="70" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-      <text class="axis-label" x="35" y="14" text-anchor="middle">+Y [m]</text>
+      <rect class="sem-card-stroke" x="0" y="0" width="70" height="20" rx="3" fill="#FFFFFF" stroke-width="1" />
+      <text class="axis-label sem-card-text" x="35" y="14" text-anchor="middle">+Y [m]</text>
     </g>
     
     <!-- Ursprung Label (mit Shield) -->
     <g transform="translate(36, 355)">
-      <rect x="0" y="0" width="46" height="18" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-      <text x="23" y="13" font-size="12.5" font-weight="600" fill="#64748B" text-anchor="middle">(0, 0)</text>
+      <rect class="sem-card-stroke" x="0" y="0" width="46" height="18" rx="3" fill="#FFFFFF" stroke-width="1" />
+      <text class="sem-muted-text" x="23" y="13" font-size="12.5" font-weight="600" text-anchor="middle">(0, 0)</text>
     </g>
 
     <!-- Bounding Box (worldRect) -->
-    <rect class="bbox" x="120" y="150" width="220" height="160" />
+    <rect class="bbox sem-warning-stroke" x="120" y="150" width="220" height="160" />
 
     <!-- Width Bemaßung unten (mit Shield) -->
-    <line class="dim-line" x1="120" y1="380" x2="340" y2="380" marker-start="url(#arrow-dim-rev)" marker-end="url(#arrow-dim)" />
+    <line class="dim-line sem-warning-stroke" x1="120" y1="380" x2="340" y2="380" marker-start="url(#arrow-dim-rev)" marker-end="url(#arrow-dim)" />
     <g transform="translate(140, 370)">
-      <rect x="0" y="0" width="180" height="20" rx="3" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1" />
-      <text class="dim-text" x="90" y="14">W_world = X_max - X_min</text>
+      <rect class="sem-warning" x="0" y="0" width="180" height="20" rx="3" stroke-width="1" />
+      <text class="dim-text sem-warning-text" x="90" y="14">W_world = X_max - X_min</text>
     </g>
 
     <!-- Modell (2D Fachwerk) -->
-    <line class="truss-bar" x1="120" y1="310" x2="340" y2="310" />
-    <line class="truss-bar" x1="120" y1="310" x2="230" y2="150" />
-    <line class="truss-bar" x1="340" y1="310" x2="230" y2="150" />
-    <line class="truss-bar" x1="230" y1="310" x2="230" y2="150" stroke-dasharray="2,2" stroke-width="2" />
+    <line class="truss-bar sem-primary-stroke" x1="120" y1="310" x2="340" y2="310" />
+    <line class="truss-bar sem-primary-stroke" x1="120" y1="310" x2="230" y2="150" />
+    <line class="truss-bar sem-primary-stroke" x1="340" y1="310" x2="230" y2="150" />
+    <line class="truss-bar sem-primary-stroke" x1="230" y1="310" x2="230" y2="150" stroke-dasharray="2,2" stroke-width="2" />
 
     <!-- Last / Kraftpfeil -->
-    <line x1="230" y1="95" x2="230" y2="145" stroke="#DC2626" stroke-width="3" marker-end="url(#arrow-force)" />
+    <line class="sem-danger-stroke" x1="230" y1="95" x2="230" y2="145" stroke-width="3" marker-end="url(#arrow-force)" />
     <g transform="translate(238, 102)">
-      <rect x="0" y="0" width="82" height="18" rx="3" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
-      <text x="41" y="13" font-size="12.5" font-weight="700" fill="#DC2626" text-anchor="middle">F = 10 kN</text>
+      <rect class="sem-danger" x="0" y="0" width="82" height="18" rx="3" stroke-width="1" />
+      <text class="sem-danger-text" x="41" y="13" font-size="12.5" font-weight="700" text-anchor="middle">F = 10 kN</text>
     </g>
 
     <!-- Knoten -->
-    <circle class="truss-node" cx="120" cy="310" r="6" />
-    <circle class="truss-node" cx="340" cy="310" r="6" />
-    <circle class="truss-node" cx="230" cy="310" r="4" fill="#94A3B8" />
+    <circle class="truss-node sem-primary-stroke" cx="120" cy="310" r="6" />
+    <circle class="truss-node sem-primary-stroke" cx="340" cy="310" r="6" />
+    <circle class="truss-node sem-primary-stroke sem-muted-fill" cx="230" cy="310" r="4" />
 
     <!-- Markierter Punkt P (Spitze oben) -->
-    <circle class="point-highlight" cx="230" cy="150" r="7" />
+    <circle class="point-highlight sem-danger-fill" cx="230" cy="150" r="7" />
     
     <!-- Label für P -->
     <g transform="translate(250, 155)">
-      <rect x="0" y="0" width="155" height="40" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
-      <text x="77.5" y="15" font-size="13" font-weight="700" fill="#DC2626" text-anchor="middle">Punkt P (x_w, y_w)</text>
-      <text x="77.5" y="32" font-size="12.5" fill="#7F1D1D" text-anchor="middle">z.B. (3.0 m, 4.0 m)</text>
+      <rect class="sem-danger" x="0" y="0" width="155" height="40" rx="4" stroke-width="1" />
+      <text class="sem-danger-text" x="77.5" y="15" font-size="13" font-weight="700" text-anchor="middle">Punkt P (x_w, y_w)</text>
+      <text class="sem-danger-text" x="77.5" y="32" font-size="12.5" text-anchor="middle">z.B. (3.0 m, 4.0 m)</text>
     </g>
 
     <!-- BBox Referenzpunkte (mit Shield) -->
     <g transform="translate(95, 316)">
-      <rect x="0" y="0" width="100" height="18" rx="3" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1" />
-      <text x="50" y="13" font-size="12" font-weight="700" fill="#B45309" text-anchor="middle">(X_min, Y_min)</text>
+      <rect class="sem-warning" x="0" y="0" width="100" height="18" rx="3" stroke-width="1" />
+      <text class="sem-warning-text" x="50" y="13" font-size="12" font-weight="700" text-anchor="middle">(X_min, Y_min)</text>
     </g>
 
     <!-- Info-Box Unten Welt -->
-    <rect class="code-box" x="15" y="420" width="435" height="92" />
-    <text class="code-text" x="25" y="440" font-weight="700" fill="#004B96">// 1. Skalierung &amp; Zentrierung (C#)</text>
-    <text class="code-text" x="25" y="460">double drawW = canvasWidth - 2 * margin;</text>
-    <text class="code-text" x="25" y="478">double drawH = canvasHeight - 2 * margin;</text>
-    <text class="code-text" x="25" y="498" font-weight="700" fill="#D97706">double scale = Math.Min(drawW / worldW, drawH / worldH);</text>
+    <rect class="code-box sem-card-fill sem-card-stroke" x="15" y="420" width="435" height="92" />
+    <text class="code-text sem-neutral-text sem-primary-text" x="25" y="440" font-weight="700">// 1. Skalierung &amp; Zentrierung (C#)</text>
+    <text class="code-text sem-neutral-text" x="25" y="460">double drawW = canvasWidth - 2 * margin;</text>
+    <text class="code-text sem-neutral-text" x="25" y="478">double drawH = canvasHeight - 2 * margin;</text>
+    <text class="code-text sem-neutral-text sem-warning-text" x="25" y="498" font-weight="700">double scale = Math.Min(drawW / worldW, drawH / worldH);</text>
   </g>
 
   <!-- ========================================== -->
   <!-- MITTE: TRANSFORMATIONSPFEIL & STEPS       -->
   <!-- ========================================== -->
   <g transform="translate(500, 130)">
-    <path d="M 0 65 Q 40 30 75 65" fill="none" stroke="#0284C7" stroke-width="3.5" stroke-dasharray="5,4" />
-    <path d="M 5 105 L 70 105" stroke="#004B96" stroke-width="3" marker-end="url(#arrow-axis-blue)" />
-    <text x="38" y="95" font-size="12" font-weight="700" fill="#004B96" text-anchor="middle">TRANSFORM</text>
+    <path class="sem-info-stroke" d="M 0 65 Q 40 30 75 65" fill="none" stroke-width="3.5" stroke-dasharray="5,4" />
+    <path class="sem-primary-stroke" d="M 5 105 L 70 105" stroke-width="3" marker-end="url(#arrow-axis-blue)" />
+    <text class="sem-primary-text" x="38" y="95" font-size="12" font-weight="700" text-anchor="middle">TRANSFORM</text>
     
     <!-- 3 Schritte Badge -->
     <g transform="translate(-15, 130)">
-      <rect class="formula-tag" x="0" y="0" width="115" height="85" />
-      <text x="57.5" y="18" font-size="12.5" font-weight="700" fill="#004B96" text-anchor="middle">3 Schritte:</text>
-      <text x="10" y="38" font-size="12" fill="#1E293B">1. Shift (-X_min)</text>
-      <text x="10" y="56" font-size="12" fill="#1E293B">2. Scale (· s)</text>
-      <text x="10" y="74" font-size="12" font-weight="700" fill="#DC2626">3. Y-Invert!</text>
+      <rect class="formula-tag sem-primary-fill sem-primary-stroke" x="0" y="0" width="115" height="85" />
+      <text class="sem-primary-text" x="57.5" y="18" font-size="12.5" font-weight="700" text-anchor="middle">3 Schritte:</text>
+      <text class="sem-card-text" x="10" y="38" font-size="12">1. Shift (-X_min)</text>
+      <text class="sem-card-text" x="10" y="56" font-size="12">2. Scale (· s)</text>
+      <text class="sem-danger-text" x="10" y="74" font-size="12" font-weight="700">3. Y-Invert!</text>
     </g>
   </g>
 
@@ -175,98 +213,98 @@
   <!-- RECHTE SPALTE: BILDSCHIRM (WPF CANVAS)    -->
   <!-- ========================================== -->
   <g transform="translate(590, 20)">
-    <rect class="panel-bg" x="0" y="0" width="465" height="530" filter="url(#shadow)" />
+    <rect class="panel-bg sem-card-stroke" x="0" y="0" width="465" height="530" filter="url(#shadow)" />
     
     <!-- Header -->
-    <path d="M 0 10 Q 0 0 10 0 L 455 0 Q 465 0 465 10 L 465 48 L 0 48 Z" fill="#E2E8F0" />
-    <circle cx="24" cy="24" r="12" fill="#004B96" />
+    <path class="sem-muted-bg" d="M 0 10 Q 0 0 10 0 L 455 0 Q 465 0 465 10 L 465 48 L 0 48 Z" />
+    <circle class="sem-primary-fill" cx="24" cy="24" r="12" />
     <text x="24" y="29" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
-    <text class="title" x="48" y="22">Bildschirm (WPF Canvas)</text>
-    <text class="subtitle" x="48" y="42">Pixel [px] • Y zeigt NACH UNTEN</text>
+    <text class="title sem-primary-text" x="48" y="22">Bildschirm (WPF Canvas)</text>
+    <text class="subtitle sem-muted-text" x="48" y="42">Pixel [px] • Y zeigt NACH UNTEN</text>
 
     <!-- Canvas Fläche -->
-    <rect class="canvas-bg" x="40" y="75" width="385" height="315" rx="4" />
+    <rect class="canvas-bg sem-card-fill sem-muted-stroke" x="40" y="75" width="385" height="315" rx="4" />
     
     <!-- Ursprung (0, 0) oben links -->
-    <circle cx="40" cy="75" r="4.5" fill="#1E293B" />
+    <circle class="sem-card-fill" cx="40" cy="75" r="4.5" />
     <g transform="translate(48, 55)">
-      <rect x="0" y="0" width="100" height="18" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-      <text x="50" y="13" font-size="12" font-weight="700" fill="#1E293B" text-anchor="middle">(0, 0) Ursprung</text>
+      <rect class="sem-card-stroke" x="0" y="0" width="100" height="18" rx="3" fill="#FFFFFF" stroke-width="1" />
+      <text class="sem-card-text" x="50" y="13" font-size="12" font-weight="700" text-anchor="middle">(0, 0) Ursprung</text>
     </g>
 
     <!-- Margin Zone -->
-    <rect class="margin-zone" x="75" y="110" width="315" height="245" rx="2" />
+    <rect class="margin-zone sem-muted-stroke" x="75" y="110" width="315" height="245" rx="2" />
     
     <!-- Margin Bemaßung -->
-    <line x1="90" y1="75" x2="90" y2="110" stroke="#64748B" stroke-width="1.2" marker-start="url(#arrow-margin)" marker-end="url(#arrow-margin)" />
-    <text x="96" y="96" font-size="12" fill="#475569" font-weight="600">margin</text>
+    <line class="sem-muted-stroke" x1="90" y1="75" x2="90" y2="110" stroke-width="1.2" marker-start="url(#arrow-margin)" marker-end="url(#arrow-margin)" />
+    <text class="sem-muted-text" x="96" y="96" font-size="12" font-weight="600">margin</text>
 
     <!-- Canvas Achsen -->
     <!-- X-Achse nach rechts -->
-    <line class="axis" x1="40" y1="75" x2="200" y2="75" marker-end="url(#arrow-axis)" />
+    <line class="axis sem-card-stroke" x1="40" y1="75" x2="200" y2="75" marker-end="url(#arrow-axis)" />
     <g transform="translate(210, 50)">
-      <rect x="0" y="0" width="90" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-      <text class="axis-label" x="45" y="14" text-anchor="middle">+X_scr [px]</text>
+      <rect class="sem-card-stroke" x="0" y="0" width="90" height="20" rx="3" fill="#FFFFFF" stroke-width="1" />
+      <text class="axis-label sem-card-text" x="45" y="14" text-anchor="middle">+X_scr [px]</text>
     </g>
     
     <!-- Y-Achse nach UNTEN (Beschriftung rechts der Achse!) -->
-    <line class="axis" x1="40" y1="75" x2="40" y2="200" marker-end="url(#arrow-axis)" />
+    <line class="axis sem-card-stroke" x1="40" y1="75" x2="40" y2="200" marker-end="url(#arrow-axis)" />
     <g transform="translate(48, 190)">
-      <rect x="0" y="0" width="100" height="20" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-      <text class="axis-label" x="50" y="14" text-anchor="middle">+Y_scr [px]</text>
+      <rect class="sem-card-stroke" x="0" y="0" width="100" height="20" rx="3" fill="#FFFFFF" stroke-width="1" />
+      <text class="axis-label sem-card-text" x="50" y="14" text-anchor="middle">+Y_scr [px]</text>
     </g>
 
     <!-- Zeichenbereich Bemaßung unten (mit Shield) -->
-    <line x1="75" y1="380" x2="390" y2="380" stroke="#0284C7" stroke-width="1.2" marker-start="url(#arrow-dim-blue-rev)" marker-end="url(#arrow-dim-blue)" />
+    <line class="sem-info-stroke" x1="75" y1="380" x2="390" y2="380" stroke-width="1.2" marker-start="url(#arrow-dim-blue-rev)" marker-end="url(#arrow-dim-blue)" />
     <g transform="translate(115, 370)">
-      <rect x="0" y="0" width="235" height="20" rx="3" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1" />
-      <text class="dim-text" style="fill: #0284C7;" x="117.5" y="14">W_draw = canvasWidth - 2·margin</text>
+      <rect class="sem-info" x="0" y="0" width="235" height="20" rx="3" stroke-width="1" />
+      <text class="dim-text sem-warning-text sem-info-text"  x="117.5" y="14">W_draw = canvasWidth - 2·margin</text>
     </g>
 
     <!-- Transformiertes Modell im Canvas -->
-    <line class="truss-bar" x1="105" y1="310" x2="345" y2="310" />
-    <line class="truss-bar" x1="105" y1="310" x2="225" y2="150" />
-    <line class="truss-bar" x1="345" y1="310" x2="225" y2="150" />
-    <line class="truss-bar" x1="225" y1="310" x2="225" y2="150" stroke-dasharray="2,2" stroke-width="2" />
+    <line class="truss-bar sem-primary-stroke" x1="105" y1="310" x2="345" y2="310" />
+    <line class="truss-bar sem-primary-stroke" x1="105" y1="310" x2="225" y2="150" />
+    <line class="truss-bar sem-primary-stroke" x1="345" y1="310" x2="225" y2="150" />
+    <line class="truss-bar sem-primary-stroke" x1="225" y1="310" x2="225" y2="150" stroke-dasharray="2,2" stroke-width="2" />
 
     <!-- Transformierte Kraft -->
-    <line x1="225" y1="95" x2="225" y2="145" stroke="#DC2626" stroke-width="3" marker-end="url(#arrow-force)" />
+    <line class="sem-danger-stroke" x1="225" y1="95" x2="225" y2="145" stroke-width="3" marker-end="url(#arrow-force)" />
     <g transform="translate(235, 102)">
-      <rect x="0" y="0" width="75" height="18" rx="3" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
-      <text x="37.5" y="13" font-size="12" font-weight="700" fill="#DC2626" text-anchor="middle">F (Vektor)</text>
+      <rect class="sem-danger" x="0" y="0" width="75" height="18" rx="3" stroke-width="1" />
+      <text class="sem-danger-text" x="37.5" y="13" font-size="12" font-weight="700" text-anchor="middle">F (Vektor)</text>
     </g>
 
     <!-- Knoten -->
-    <circle class="truss-node" cx="105" cy="310" r="6" />
-    <circle class="truss-node" cx="345" cy="310" r="6" />
-    <circle class="truss-node" cx="225" cy="310" r="4" fill="#94A3B8" />
+    <circle class="truss-node sem-primary-stroke" cx="105" cy="310" r="6" />
+    <circle class="truss-node sem-primary-stroke" cx="345" cy="310" r="6" />
+    <circle class="truss-node sem-primary-stroke sem-muted-fill" cx="225" cy="310" r="4" />
 
     <!-- Transformierter Punkt P' (Spitze) -->
-    <circle class="point-highlight" cx="225" cy="150" r="7" />
+    <circle class="point-highlight sem-danger-fill" cx="225" cy="150" r="7" />
     
     <!-- Koordinaten-Hilfslinien -->
-    <line x1="40" y1="150" x2="225" y2="150" stroke="#EF4444" stroke-width="1.2" stroke-dasharray="3,3" />
-    <line x1="225" y1="75" x2="225" y2="150" stroke="#EF4444" stroke-width="1.2" stroke-dasharray="3,3" />
+    <line class="sem-danger-stroke" x1="40" y1="150" x2="225" y2="150" stroke-width="1.2" stroke-dasharray="3,3" />
+    <line class="sem-danger-stroke" x1="225" y1="75" x2="225" y2="150" stroke-width="1.2" stroke-dasharray="3,3" />
 
     <!-- Label für P' (Shielded) -->
     <g transform="translate(235, 155)">
-      <rect x="0" y="0" width="190" height="42" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
-      <text x="95" y="16" font-size="12.5" font-weight="700" fill="#DC2626" text-anchor="middle">Transformiert P' (x_s, y_s)</text>
-      <text x="95" y="32" font-size="12" fill="#7F1D1D" text-anchor="middle">x_s = x_off + (x_w - X_min) · s</text>
+      <rect class="sem-danger" x="0" y="0" width="190" height="42" rx="4" stroke-width="1" />
+      <text class="sem-danger-text" x="95" y="16" font-size="12.5" font-weight="700" text-anchor="middle">Transformiert P' (x_s, y_s)</text>
+      <text class="sem-danger-text" x="95" y="32" font-size="12" text-anchor="middle">x_s = x_off + (x_w - X_min) · s</text>
     </g>
     
     <!-- Y-Invertierung Hinweis Box (Shielded) -->
     <g transform="translate(235, 205)">
-      <rect x="0" y="0" width="190" height="42" rx="4" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1" />
-      <text x="95" y="16" font-size="12.5" font-weight="700" fill="#B45309" text-anchor="middle">Y-Invertierung:</text>
-      <text x="95" y="32" font-size="12" font-weight="700" fill="#B45309" text-anchor="middle">y_s = y_off + (Y_max - y_w) · s</text>
+      <rect class="sem-warning" x="0" y="0" width="190" height="42" rx="4" stroke-width="1" />
+      <text class="sem-warning-text" x="95" y="16" font-size="12.5" font-weight="700" text-anchor="middle">Y-Invertierung:</text>
+      <text class="sem-warning-text" x="95" y="32" font-size="12" font-weight="700" text-anchor="middle">y_s = y_off + (Y_max - y_w) · s</text>
     </g>
 
     <!-- Info-Box Unten Bildschirm -->
-    <rect class="code-box" x="15" y="420" width="435" height="92" />
-    <text class="code-text" x="25" y="440" font-weight="700" fill="#004B96">// 2. Punkt-Transformation (C# Transform2D)</text>
-    <text class="code-text" x="25" y="460">double scrX = OffsetX + (x - XMin) * Scale;</text>
-    <text class="code-text" x="25" y="478" font-weight="700" fill="#DC2626">double scrY = OffsetY + (YMax - y) * Scale;</text>
-    <text class="code-text" x="25" y="498" fill="#64748B">// (YMax - y) invertiert die Y-Achse ins Screen-System</text>
+    <rect class="code-box sem-card-fill sem-card-stroke" x="15" y="420" width="435" height="92" />
+    <text class="code-text sem-neutral-text sem-primary-text" x="25" y="440" font-weight="700">// 2. Punkt-Transformation (C# Transform2D)</text>
+    <text class="code-text sem-neutral-text" x="25" y="460">double scrX = OffsetX + (x - XMin) * Scale;</text>
+    <text class="code-text sem-neutral-text sem-danger-text" x="25" y="478" font-weight="700">double scrY = OffsetY + (YMax - y) * Scale;</text>
+    <text class="code-text sem-neutral-text sem-muted-text" x="25" y="498">// (YMax - y) invertiert die Y-Achse ins Screen-System</text>
   </g>
 </svg>

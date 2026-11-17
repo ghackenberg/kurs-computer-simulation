@@ -1,81 +1,119 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 0 570 380" width="570" height="380">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-danger { fill: #fef2f2; stroke: #dc2626; }
+      .sem-danger-bg { fill: #fef2f2; stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: #dc2626; }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+.hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
       .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
       .code { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; text-anchor: middle; }
       .cell { font-family: 'Consolas', monospace; font-size: 13px; font-weight: bold; text-anchor: middle; }
     </style>
     <marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#475569" />
+      <path class="sem-muted-fill" d="M 0 1.5 L 8.5 5 L 0 8.5 z" />
     </marker>
   </defs>
 
-  <rect x="-35" y="8" width="550" height="364" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
-  <text x="240" y="34" class="hdr" fill="#1e40af">Framebuffer im GPU-Speicher: Color Buffer &amp; Depth Buffer</text>
+  <rect class="sem-card" x="-35" y="8" width="550" height="364" rx="12" stroke-width="2" />
+  <text x="240" y="34" class="hdr sem-primary-text">Framebuffer im GPU-Speicher: Color Buffer &amp; Depth Buffer</text>
 
   <!-- Oben: 3D-Sehstrahl durch Pixel (x, y) -->
-  <rect x="-20" y="46" width="520" height="86" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.6" />
-  <circle cx="16" cy="89" r="7" fill="#0f172a" />
-  <text x="26" y="118" class="code" fill="#0f172a">Kamera</text>
+  <rect class="sem-muted-stroke" x="-20" y="46" width="520" height="86" rx="8" fill="#ffffff" stroke-width="1.6" />
+  <circle class="sem-neutral-fill" cx="16" cy="89" r="7" />
+  <text x="26" y="118" class="code sem-neutral-text">Kamera</text>
 
   <!-- Sehstrahl -->
-  <line x1="25" y1="89" x2="482" y2="89" stroke="#475569" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arr-slate)" />
-  <text x="86" y="73" class="sub" fill="#334155">Pixel (x, y)</text>
+  <line class="sem-muted-stroke" x1="25" y1="89" x2="482" y2="89" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arr-slate)" />
+  <text x="86" y="73" class="sub sem-neutral-text">Pixel (x, y)</text>
 
   <!-- Naher Körper (#1 gezeichnet) als vertikaler Balken bei x=148 -->
-  <line x1="148" y1="60" x2="148" y2="118" stroke="#2563eb" stroke-width="10" stroke-linecap="round" />
-  <text x="235" y="73" class="code" fill="#1d4ed8">#1: z_neu = 2 m</text>
-  <text x="235" y="113" class="sub" fill="#1e40af">(zuerst gezeichnet)</text>
+  <line class="sem-primary-stroke" x1="148" y1="60" x2="148" y2="118" stroke-width="10" stroke-linecap="round" />
+  <text x="235" y="73" class="code sem-primary-text">#1: z_neu = 2 m</text>
+  <text x="235" y="113" class="sub sem-primary-text">(zuerst gezeichnet)</text>
 
   <!-- Ferner Körper (#2 danach gezeichnet) als vertikaler Balken bei x=328 -->
-  <line x1="328" y1="58" x2="328" y2="120" stroke="#dc2626" stroke-width="10" stroke-linecap="round" />
-  <text x="412" y="73" class="code" fill="#dc2626">#2: z_neu = 5 m</text>
-  <text x="412" y="113" class="sub" fill="#991b1b">(danach gezeichnet)</text>
+  <line class="sem-danger-stroke" x1="328" y1="58" x2="328" y2="120" stroke-width="10" stroke-linecap="round" />
+  <text x="412" y="73" class="code sem-danger-text">#2: z_neu = 5 m</text>
+  <text x="412" y="113" class="sub sem-danger-text">(danach gezeichnet)</text>
 
   <!-- Unten Links: 1. Color Buffer -->
-  <rect x="-20" y="144" width="250" height="214" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
-  <text x="105" y="168" class="code" fill="#1d4ed8">1. Color Buffer (RGBA)</text>
-  <text x="105" y="188" class="sub" fill="#1e40af">2D-Farbraster (GL_COLOR_BUFFER_BIT)</text>
+  <rect class="sem-primary" x="-20" y="144" width="250" height="214" rx="8" stroke-width="2" />
+  <text x="105" y="168" class="code sem-primary-text">1. Color Buffer (RGBA)</text>
+  <text x="105" y="188" class="sub sem-primary-text">2D-Farbraster (GL_COLOR_BUFFER_BIT)</text>
 
-  <rect x="13" y="200" width="60" height="40" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="43" y="225" class="cell" fill="#cbd5e1">BG</text>
-  <rect x="75" y="200" width="60" height="40" fill="#2563eb" stroke="#facc15" stroke-width="2.5" />
+  <rect class="sem-card-fill sem-card-stroke" x="13" y="200" width="60" height="40" stroke-width="1.5" />
+  <text x="43" y="225" class="cell sem-card-text">BG</text>
+  <rect class="sem-primary-fill sem-warning-stroke" x="75" y="200" width="60" height="40" stroke-width="2.5" />
   <text x="105" y="225" class="cell" fill="#ffffff">Blau</text>
-  <rect x="137" y="200" width="60" height="40" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="167" y="225" class="cell" fill="#cbd5e1">BG</text>
+  <rect class="sem-card-fill sem-card-stroke" x="137" y="200" width="60" height="40" stroke-width="1.5" />
+  <text x="167" y="225" class="cell sem-card-text">BG</text>
 
-  <rect x="13" y="242" width="60" height="40" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="43" y="267" class="cell" fill="#cbd5e1">BG</text>
-  <rect x="75" y="242" width="60" height="40" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="105" y="267" class="cell" fill="#cbd5e1">BG</text>
-  <rect x="137" y="242" width="60" height="40" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="167" y="267" class="cell" fill="#cbd5e1">BG</text>
+  <rect class="sem-card-fill sem-card-stroke" x="13" y="242" width="60" height="40" stroke-width="1.5" />
+  <text x="43" y="267" class="cell sem-card-text">BG</text>
+  <rect class="sem-card-fill sem-card-stroke" x="75" y="242" width="60" height="40" stroke-width="1.5" />
+  <text x="105" y="267" class="cell sem-card-text">BG</text>
+  <rect class="sem-card-fill sem-card-stroke" x="137" y="242" width="60" height="40" stroke-width="1.5" />
+  <text x="167" y="267" class="cell sem-card-text">BG</text>
 
-  <text x="105" y="308" class="sub" fill="#1e3a8a">Start: ClearColor (BG = 0.08)</text>
-  <text x="105" y="329" class="sub" fill="#15803d">Pixel (x, y) bleibt Blau (#1),</text>
-  <text x="105" y="348" class="sub" fill="#15803d">Rot (#2) übermalt es NICHT!</text>
+  <text x="105" y="308" class="sub sem-primary-text">Start: ClearColor (BG = 0.08)</text>
+  <text x="105" y="329" class="sub sem-success-text">Pixel (x, y) bleibt Blau (#1),</text>
+  <text x="105" y="348" class="sub sem-success-text">Rot (#2) übermalt es NICHT!</text>
 
   <!-- Unten Rechts: 2. Depth Buffer (Z-Buffer) -->
-  <rect x="250" y="144" width="250" height="214" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
-  <text x="375" y="168" class="code" fill="#15803d">2. Depth Buffer (z_buf)</text>
-  <text x="375" y="188" class="sub" fill="#166534">Tiefenraster (GL_DEPTH_BUFFER_BIT)</text>
+  <rect class="sem-success" x="250" y="144" width="250" height="214" rx="8" stroke-width="2" />
+  <text x="375" y="168" class="code sem-success-text">2. Depth Buffer (z_buf)</text>
+  <text x="375" y="188" class="sub sem-success-text">Tiefenraster (GL_DEPTH_BUFFER_BIT)</text>
 
-  <rect x="283" y="200" width="60" height="40" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
-  <text x="313" y="225" class="cell" fill="#64748b">zFar</text>
-  <rect x="345" y="200" width="60" height="40" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" />
-  <text x="375" y="225" class="cell" fill="#15803d">2 m</text>
-  <rect x="407" y="200" width="60" height="40" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
-  <text x="437" y="225" class="cell" fill="#64748b">zFar</text>
+  <rect class="sem-muted-stroke" x="283" y="200" width="60" height="40" fill="#ffffff" stroke-width="1.5" />
+  <text x="313" y="225" class="cell sem-muted-text">zFar</text>
+  <rect class="sem-success" x="345" y="200" width="60" height="40" stroke-width="2.5" />
+  <text x="375" y="225" class="cell sem-success-text">2 m</text>
+  <rect class="sem-muted-stroke" x="407" y="200" width="60" height="40" fill="#ffffff" stroke-width="1.5" />
+  <text x="437" y="225" class="cell sem-muted-text">zFar</text>
 
-  <rect x="283" y="242" width="60" height="40" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
-  <text x="313" y="267" class="cell" fill="#64748b">zFar</text>
-  <rect x="345" y="242" width="60" height="40" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
-  <text x="375" y="267" class="cell" fill="#64748b">zFar</text>
-  <rect x="407" y="242" width="60" height="40" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
-  <text x="437" y="267" class="cell" fill="#64748b">zFar</text>
+  <rect class="sem-muted-stroke" x="283" y="242" width="60" height="40" fill="#ffffff" stroke-width="1.5" />
+  <text x="313" y="267" class="cell sem-muted-text">zFar</text>
+  <rect class="sem-muted-stroke" x="345" y="242" width="60" height="40" fill="#ffffff" stroke-width="1.5" />
+  <text x="375" y="267" class="cell sem-muted-text">zFar</text>
+  <rect class="sem-muted-stroke" x="407" y="242" width="60" height="40" fill="#ffffff" stroke-width="1.5" />
+  <text x="437" y="267" class="cell sem-muted-text">zFar</text>
 
-  <text x="375" y="308" class="code" fill="#15803d">#1: 2 m &lt; zFar &#8594; Update z_buf</text>
-  <text x="375" y="329" class="code" fill="#dc2626">#2: 5 m &lt; 2 m  &#8594; Verworfen!</text>
-  <text x="375" y="348" class="sub" fill="#334155">Regel: Zeichne nur bei z_neu &lt; z_buf</text>
+  <text x="375" y="308" class="code sem-success-text">#1: 2 m &lt; zFar &#8594; Update z_buf</text>
+  <text x="375" y="329" class="code sem-danger-text">#2: 5 m &lt; 2 m  &#8594; Verworfen!</text>
+  <text x="375" y="348" class="sub sem-neutral-text">Regel: Zeichne nur bei z_neu &lt; z_buf</text>
 </svg>

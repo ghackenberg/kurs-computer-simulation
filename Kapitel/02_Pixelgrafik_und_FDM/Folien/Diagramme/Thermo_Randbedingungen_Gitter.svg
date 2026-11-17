@@ -1,171 +1,204 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520">
   <defs>
     <style>
-      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #004B96; }
-      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #475569; }
-      .card-hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #0f172a; }
-      .label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #334155; }
-      .label-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #0f172a; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-info { fill: #e0f2fe; stroke: #0284c7; }
+      .sem-info-bg { fill: #e0f2fe; stroke: none; }
+      .sem-info-stroke { stroke: #0284c7; }
+      .sem-info-fill { fill: #0284c7; }
+      .sem-info-text { fill: #0369a1; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+.title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold;  }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;  }
+      .card-hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold;  }
+      .label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;  }
+      .label-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold;  }
       .math { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 14.5px; font-weight: bold; }
       .code { font-family: 'Consolas', monospace; font-size: 13.8px; font-weight: bold; }
     </style>
 
     <marker id="arrOrange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#ea580c" />
+      <path class="sem-warning-fill" d="M 0 1 L 8 5 L 0 9 z" />
     </marker>
     <marker id="arrBlue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#0284c7" />
+      <path class="sem-info-fill" d="M 0 1 L 8 5 L 0 9 z" />
     </marker>
 
     <filter id="shadow" x="-3%" y="-3%" width="106%" height="106%">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08" />
+      <feDropShadow class="sem-neutral-text" dx="0" dy="2" stdDeviation="3" flood- flood-opacity="0.08" />
     </filter>
   </defs>
 
-  <rect width="1000" height="520" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect class="sem-card" width="1000" height="520" rx="12" stroke-width="1.5" />
 
-  <text x="35" y="36" class="title">Die 3 physikalischen Randbedingungen am Pixelgitter im Vergleich</text>
-  <text x="35" y="56" class="subtitle">Was passiert, wenn die Wärmewelle an den Rand des Simulationsgebietes oder an eine Wand stößt?</text>
+  <text x="35" y="36" class="title sem-primary-text">Die 3 physikalischen Randbedingungen am Pixelgitter im Vergleich</text>
+  <text x="35" y="56" class="subtitle sem-muted-text">Was passiert, wenn die Wärmewelle an den Rand des Simulationsgebietes oder an eine Wand stößt?</text>
 
   <!-- ========================================================= -->
   <!-- COLUMN 1: DIRICHLET (FESTE TEMPERATUR)                    -->
   <!-- ========================================================= -->
   <g transform="translate(30, 74)" filter="url(#shadow)">
-    <rect width="300" height="420" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="2" />
-    <rect x="0" y="0" width="300" height="38" rx="8" fill="#dbeafe" />
-    <text x="150" y="25" class="card-hdr" style="fill: #1e40af; text-anchor: middle;">1. Dirichlet-Rand (Feste Temp.)</text>
+    <rect class="sem-primary-stroke" width="300" height="420" rx="8" fill="#ffffff" stroke-width="2" />
+    <rect class="sem-primary" x="0" y="0" width="300" height="38" rx="8"  stroke="none"/>
+    <text x="150" y="25" class="card-hdr sem-neutral-text sem-primary-text" style="text-anchor: middle;">1. Dirichlet-Rand (Feste Temp.)</text>
 
-    <text x="18" y="60" class="label-bold" style="fill: #1d4ed8;">Technisches Beispiel:</text>
-    <text x="18" y="78" class="label">Eiswasserbad (0 °C) oder geregelte</text>
-    <text x="18" y="99" class="label">Heizplatte hält Rand auf T_Rand.</text>
+    <text x="18" y="60" class="label-bold sem-neutral-text sem-primary-text" >Technisches Beispiel:</text>
+    <text x="18" y="78" class="label sem-neutral-text">Eiswasserbad (0 °C) oder geregelte</text>
+    <text x="18" y="99" class="label sem-neutral-text">Heizplatte hält Rand auf T_Rand.</text>
 
     <!-- Grid Sketch (x=14, total width 272) -->
     <g transform="translate(14, 115)">
       <!-- Cold Bath left: 0..56 -->
-      <rect x="0" y="0" width="56" height="90" rx="4" fill="#3b82f6" />
-      <text x="28" y="38" class="label-bold" style="fill: #ffffff; text-anchor: middle;">Kühl-</text>
-      <text x="28" y="62" class="label-bold" style="fill: #ffffff; text-anchor: middle;">bad</text>
+      <rect class="sem-primary-fill" x="0" y="0" width="56" height="90" rx="4" />
+      <text x="28" y="38" class="label-bold sem-neutral-text" style="fill: #ffffff; text-anchor: middle;">Kühl-</text>
+      <text x="28" y="62" class="label-bold sem-neutral-text" style="fill: #ffffff; text-anchor: middle;">bad</text>
 
       <!-- Boundary Node 0: 68..166 (width 98) -->
-      <rect x="68" y="10" width="98" height="70" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5" />
-      <text x="117" y="34" class="code" style="fill: #1e40af; text-anchor: middle;">Rand T[0]</text>
-      <text x="117" y="58" class="label-bold" style="fill: #1d4ed8; text-anchor: middle;">FIX: 20 °C</text>
+      <rect class="sem-primary" x="68" y="10" width="98" height="70" rx="5" stroke-width="2.5" />
+      <text x="117" y="34" class="code sem-primary-text" style="text-anchor: middle;">Rand T[0]</text>
+      <text x="117" y="58" class="label-bold sem-neutral-text sem-primary-text" style="text-anchor: middle;">FIX: 20 °C</text>
 
       <!-- Inner Node 1: 178..274 (width 96) -->
-      <rect x="178" y="10" width="96" height="70" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
-      <text x="226" y="34" class="code" style="fill: #92400e; text-anchor: middle;">Innen T[1]</text>
-      <text x="226" y="58" class="label-bold" style="fill: #b45309; text-anchor: middle;">z.B. 65 °C</text>
+      <rect class="sem-warning" x="178" y="10" width="96" height="70" rx="5" stroke-width="2" />
+      <text x="226" y="34" class="code sem-warning-text" style="text-anchor: middle;">Innen T[1]</text>
+      <text x="226" y="58" class="label-bold sem-neutral-text sem-warning-text" style="text-anchor: middle;">z.B. 65 °C</text>
 
       <!-- Heat Arrow Out in gap 178 -> 168 -->
-      <line x1="178" y1="45" x2="168" y2="45" stroke="#ea580c" stroke-width="2.5" marker-end="url(#arrOrange)" />
+      <line class="sem-warning-stroke" x1="178" y1="45" x2="168" y2="45" stroke-width="2.5" marker-end="url(#arrOrange)" />
     </g>
 
     <!-- Formula & Code Box -->
-    <rect x="12" y="222" width="276" height="75" rx="6" fill="#eff6ff" stroke="#93c5fd" />
-    <text x="150" y="245" class="label-bold" style="fill: #1e40af; text-anchor: middle;">Diskrete Gittervorschrift:</text>
-    <text x="150" y="274" class="math" style="fill: #1d4ed8; text-anchor: middle; font-size: 15.5px;">
+    <rect class="sem-primary" x="12" y="222" width="276" height="75" rx="6" />
+    <text x="150" y="245" class="label-bold sem-neutral-text sem-primary-text" style="text-anchor: middle;">Diskrete Gittervorschrift:</text>
+    <text x="150" y="274" class="math sem-primary-text" style="text-anchor: middle; font-size: 15.5px;">
       T_{0, y}  =  T_{Rand}  =  const.
     </text>
 
-    <rect x="12" y="310" width="276" height="94" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
-    <text x="22" y="332" class="label-bold">Physikalische Wirkung:</text>
-    <text x="22" y="354" class="label">• Wärme fließt ungehindert über den</text>
-    <text x="32" y="374" class="label">Rand ab (Rand als Wärmesenke).</text>
-    <text x="22" y="394" class="code" style="fill: #0f172a;">for (x=1; x&lt;W-1; x++) // Rand fix</text>
+    <rect class="sem-card" x="12" y="310" width="276" height="94" rx="6" />
+    <text x="22" y="332" class="label-bold sem-neutral-text">Physikalische Wirkung:</text>
+    <text x="22" y="354" class="label sem-neutral-text">• Wärme fließt ungehindert über den</text>
+    <text x="32" y="374" class="label sem-neutral-text">Rand ab (Rand als Wärmesenke).</text>
+    <text x="22" y="394" class="code sem-neutral-text" >for (x=1; x&lt;W-1; x++) // Rand fix</text>
   </g>
 
   <!-- ========================================================= -->
   <!-- COLUMN 2: NEUMANN (ADIABATE ISOLIERUNG)                   -->
   <!-- ========================================================= -->
   <g transform="translate(350, 74)" filter="url(#shadow)">
-    <rect width="300" height="420" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
-    <rect x="0" y="0" width="300" height="38" rx="8" fill="#e2e8f0" />
-    <text x="150" y="25" class="card-hdr" style="fill: #1e293b; text-anchor: middle;">2. Neumann-Rand (Isolator)</text>
+    <rect class="sem-card-stroke" width="300" height="420" rx="8" fill="#ffffff" stroke-width="2" />
+    <rect class="sem-muted" x="0" y="0" width="300" height="38" rx="8"  stroke="none"/>
+    <text x="150" y="25" class="card-hdr sem-neutral-text sem-card-text" style="text-anchor: middle;">2. Neumann-Rand (Isolator)</text>
 
-    <text x="18" y="60" class="label-bold" style="fill: #334155;">Technisches Beispiel:</text>
-    <text x="18" y="78" class="label">Wärmedämmung (Styropor, PCB-</text>
-    <text x="18" y="99" class="label">Unterseite oder Isolatorwand).</text>
+    <text x="18" y="60" class="label-bold sem-neutral-text" >Technisches Beispiel:</text>
+    <text x="18" y="78" class="label sem-neutral-text">Wärmedämmung (Styropor, PCB-</text>
+    <text x="18" y="99" class="label sem-neutral-text">Unterseite oder Isolatorwand).</text>
 
     <!-- Grid Sketch -->
     <g transform="translate(14, 115)">
       <!-- Insulation Wall left: 0..56 -->
-      <rect x="0" y="0" width="56" height="90" rx="4" fill="#475569" />
-      <text x="28" y="34" class="label-bold" style="fill: #ffffff; text-anchor: middle; font-size: 14px;">Dämm-</text>
-      <text x="28" y="55" class="label-bold" style="fill: #ffffff; text-anchor: middle; font-size: 14px;">wand</text>
-      <text x="28" y="76" class="label" style="fill: #cbd5e1; text-anchor: middle; font-size: 14px;">q̇ = 0</text>
+      <rect class="sem-muted-fill" x="0" y="0" width="56" height="90" rx="4" />
+      <text x="28" y="34" class="label-bold sem-neutral-text" style="fill: #ffffff; text-anchor: middle; font-size: 14px;">Dämm-</text>
+      <text x="28" y="55" class="label-bold sem-neutral-text" style="fill: #ffffff; text-anchor: middle; font-size: 14px;">wand</text>
+      <text x="28" y="76" class="label sem-neutral-text sem-card-text" style="text-anchor: middle; font-size: 14px;">q̇ = 0</text>
 
       <!-- Boundary Node 0: 68..166 -->
-      <rect x="68" y="10" width="98" height="70" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2.5" stroke-dasharray="4,3" />
-      <text x="117" y="34" class="code" style="fill: #92400e; text-anchor: middle;">Rand T[0]</text>
-      <text x="117" y="58" class="label-bold" style="fill: #b45309; text-anchor: middle; font-size: 14px;">Kopie: 65 °C</text>
+      <rect class="sem-warning" x="68" y="10" width="98" height="70" rx="5" stroke-width="2.5" stroke-dasharray="4,3" />
+      <text x="117" y="34" class="code sem-warning-text" style="text-anchor: middle;">Rand T[0]</text>
+      <text x="117" y="58" class="label-bold sem-neutral-text sem-warning-text" style="text-anchor: middle; font-size: 14px;">Kopie: 65 °C</text>
 
       <!-- Inner Node 1: 178..274 -->
-      <rect x="178" y="10" width="96" height="70" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
-      <text x="226" y="34" class="code" style="fill: #92400e; text-anchor: middle;">Innen T[1]</text>
-      <text x="226" y="58" class="label-bold" style="fill: #b45309; text-anchor: middle;">z.B. 65 °C</text>
+      <rect class="sem-warning" x="178" y="10" width="96" height="70" rx="5" stroke-width="2" />
+      <text x="226" y="34" class="code sem-warning-text" style="text-anchor: middle;">Innen T[1]</text>
+      <text x="226" y="58" class="label-bold sem-neutral-text sem-warning-text" style="text-anchor: middle;">z.B. 65 °C</text>
     </g>
 
     <!-- Formula & Code Box -->
-    <rect x="12" y="222" width="276" height="75" rx="6" fill="#f1f5f9" stroke="#94a3b8" />
-    <text x="150" y="244" class="label-bold" style="fill: #334155; text-anchor: middle; font-size: 14px;">Kein Gefälle ➔ Kein Fluss (q̇ = 0):</text>
-    <text x="150" y="274" class="math" style="fill: #0f172a; text-anchor: middle; font-size: 15.5px;">
+    <rect class="sem-muted" x="12" y="222" width="276" height="75" rx="6" />
+    <text x="150" y="244" class="label-bold sem-neutral-text" style="text-anchor: middle; font-size: 14px;">Kein Gefälle ➔ Kein Fluss (q̇ = 0):</text>
+    <text x="150" y="274" class="math sem-neutral-text" style="text-anchor: middle; font-size: 15.5px;">
       T_{0, y}  =  T_{1, y}   (Spiegelung!)
     </text>
 
-    <rect x="12" y="310" width="276" height="94" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
-    <text x="22" y="332" class="label-bold">Physikalische Wirkung:</text>
-    <text x="22" y="354" class="label">• Da T_{0,y} − T_{1,y} = 0, fließt nach</text>
-    <text x="32" y="374" class="label">Fourier <tspan font-weight="bold">0 Watt</tspan> ab (Wärmestau!).</text>
-    <text x="22" y="394" class="code" style="fill: #0f172a;">tN = alpha==0 ? tCenter : tNachb;</text>
+    <rect class="sem-card" x="12" y="310" width="276" height="94" rx="6" />
+    <text x="22" y="332" class="label-bold sem-neutral-text">Physikalische Wirkung:</text>
+    <text x="22" y="354" class="label sem-neutral-text">• Da T_{0,y} − T_{1,y} = 0, fließt nach</text>
+    <text x="32" y="374" class="label sem-neutral-text">Fourier <tspan font-weight="bold">0 Watt</tspan> ab (Wärmestau!).</text>
+    <text x="22" y="394" class="code sem-neutral-text" >tN = alpha==0 ? tCenter : tNachb;</text>
   </g>
 
   <!-- ========================================================= -->
   <!-- COLUMN 3: ROBIN (KONVEKTION / KÜHLRIPPE)                  -->
   <!-- ========================================================= -->
   <g transform="translate(670, 74)" filter="url(#shadow)">
-    <rect width="300" height="420" rx="8" fill="#ffffff" stroke="#fdba74" stroke-width="2" />
-    <rect x="0" y="0" width="300" height="38" rx="8" fill="#ffedd5" />
-    <text x="150" y="25" class="card-hdr" style="fill: #9a3412; text-anchor: middle;">3. Robin-Rand (Luftkühlung)</text>
+    <rect class="sem-warning-stroke" width="300" height="420" rx="8" fill="#ffffff" stroke-width="2" />
+    <rect class="sem-warning" x="0" y="0" width="300" height="38" rx="8"  stroke="none"/>
+    <text x="150" y="25" class="card-hdr sem-neutral-text sem-warning-text" style="text-anchor: middle;">3. Robin-Rand (Luftkühlung)</text>
 
-    <text x="18" y="60" class="label-bold" style="fill: #c2410c;">Technisches Beispiel (Track A):</text>
-    <text x="18" y="78" class="label">Alu-Kühlrippe im Luftstrom (25 °C)</text>
-    <text x="18" y="99" class="label">mit Koeffizient h [W/m²K].</text>
+    <text x="18" y="60" class="label-bold sem-neutral-text sem-warning-text" >Technisches Beispiel (Track A):</text>
+    <text x="18" y="78" class="label sem-neutral-text">Alu-Kühlrippe im Luftstrom (25 °C)</text>
+    <text x="18" y="99" class="label sem-neutral-text">mit Koeffizient h [W/m²K].</text>
 
     <!-- Grid Sketch (x=14, total width 272) -->
     <g transform="translate(14, 115)">
       <!-- Air Flow left: 0..58 -->
-      <rect x="0" y="0" width="58" height="90" rx="4" fill="#e0f2fe" stroke="#38bdf8" />
-      <text x="29" y="26" class="label-bold" style="fill: #0369a1; text-anchor: middle; font-size: 14px;">Luft</text>
-      <text x="29" y="49" class="label-bold" style="fill: #0284c7; text-anchor: middle; font-size: 14px;">25 °C</text>
-      <text x="29" y="72" class="label" style="fill: #0369a1; text-anchor: middle; font-size: 14px;">Lüfter h</text>
+      <rect class="sem-info" x="0" y="0" width="58" height="90" rx="4" />
+      <text x="29" y="26" class="label-bold sem-neutral-text sem-info-text" style="text-anchor: middle; font-size: 14px;">Luft</text>
+      <text x="29" y="49" class="label-bold sem-neutral-text sem-info-text" style="text-anchor: middle; font-size: 14px;">25 °C</text>
+      <text x="29" y="72" class="label sem-neutral-text sem-info-text" style="text-anchor: middle; font-size: 14px;">Lüfter h</text>
 
       <!-- Surface Node 0: 70..166 (width 96) -->
-      <rect x="70" y="10" width="96" height="70" rx="5" fill="#ffedd5" stroke="#ea580c" stroke-width="2.5" />
-      <text x="118" y="34" class="code" style="fill: #9a3412; text-anchor: middle;">Rand T[0]</text>
-      <text x="118" y="58" class="label-bold" style="fill: #c2410c; text-anchor: middle; font-size: 14px;">Mittelwert</text>
+      <rect class="sem-warning" x="70" y="10" width="96" height="70" rx="5" stroke-width="2.5" />
+      <text x="118" y="34" class="code sem-warning-text" style="text-anchor: middle;">Rand T[0]</text>
+      <text x="118" y="58" class="label-bold sem-neutral-text sem-warning-text" style="text-anchor: middle; font-size: 14px;">Mittelwert</text>
 
       <!-- Inner Fin Node 1: 178..274 (width 96) -->
-      <rect x="178" y="10" width="96" height="70" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
-      <text x="226" y="34" class="code" style="fill: #92400e; text-anchor: middle;">Alu T[1]</text>
-      <text x="226" y="58" class="label-bold" style="fill: #b45309; text-anchor: middle;">z.B. 65 °C</text>
+      <rect class="sem-warning" x="178" y="10" width="96" height="70" rx="5" stroke-width="2" />
+      <text x="226" y="34" class="code sem-warning-text" style="text-anchor: middle;">Alu T[1]</text>
+      <text x="226" y="58" class="label-bold sem-neutral-text sem-warning-text" style="text-anchor: middle;">z.B. 65 °C</text>
 
       <!-- Arrows cleanly inside gaps -->
-      <line x1="178" y1="45" x2="168" y2="45" stroke="#ea580c" stroke-width="2" marker-end="url(#arrOrange)" />
-      <line x1="70" y1="45" x2="58" y2="45" stroke="#0284c7" stroke-width="2" marker-end="url(#arrBlue)" />
+      <line class="sem-warning-stroke" x1="178" y1="45" x2="168" y2="45" stroke-width="2" marker-end="url(#arrOrange)" />
+      <line class="sem-info-stroke" x1="70" y1="45" x2="58" y2="45" stroke-width="2" marker-end="url(#arrBlue)" />
     </g>
 
     <!-- Formula & Code Box -->
-    <rect x="12" y="222" width="276" height="75" rx="6" fill="#fff7ed" stroke="#fdba74" />
-    <text x="150" y="240" class="label-bold" style="fill: #9a3412; text-anchor: middle; font-size: 14px;">Leitung = Konvektion an Luft:</text>
-    <text x="58" y="274" class="math" style="fill: #c2410c; text-anchor: middle; font-size: 14px;">T_{0,y} =</text>
-    <text x="172" y="262" class="math" style="fill: #c2410c; text-anchor: middle; font-size: 14px;">λ · T_{1,y} + h · Δx · T_∞</text>
-    <line x1="95" y1="269" x2="250" y2="269" stroke="#c2410c" stroke-width="1.5" />
-    <text x="172" y="286" class="math" style="fill: #c2410c; text-anchor: middle; font-size: 14px;">λ + h · Δx</text>
+    <rect class="sem-warning" x="12" y="222" width="276" height="75" rx="6" />
+    <text x="150" y="240" class="label-bold sem-neutral-text sem-warning-text" style="text-anchor: middle; font-size: 14px;">Leitung = Konvektion an Luft:</text>
+    <text x="58" y="274" class="math sem-warning-text" style="text-anchor: middle; font-size: 14px;">T_{0,y} =</text>
+    <text x="172" y="262" class="math sem-warning-text" style="text-anchor: middle; font-size: 14px;">λ · T_{1,y} + h · Δx · T_∞</text>
+    <line class="sem-warning-stroke" x1="95" y1="269" x2="250" y2="269" stroke-width="1.5" />
+    <text x="172" y="286" class="math sem-warning-text" style="text-anchor: middle; font-size: 14px;">λ + h · Δx</text>
 
-    <rect x="12" y="310" width="276" height="94" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
-    <text x="22" y="332" class="label-bold">Grenzfall-Check (Plausibilität):</text>
-    <text x="22" y="354" class="label">• <tspan font-weight="bold">h=0</tspan> (Vakuum): T_0 = T_1 (Neumann)</text>
-    <text x="22" y="374" class="label">• <tspan font-weight="bold">h➔∞</tspan> (Eisbad): T_0 = T_∞ (Dirichlet)</text>
-    <text x="22" y="394" class="label">• <tspan font-weight="bold">Lüfter:</tspan> h = 250 vs. 20 W/m²K</text>
+    <rect class="sem-card" x="12" y="310" width="276" height="94" rx="6" />
+    <text x="22" y="332" class="label-bold sem-neutral-text">Grenzfall-Check (Plausibilität):</text>
+    <text x="22" y="354" class="label sem-neutral-text">• <tspan font-weight="bold">h=0</tspan> (Vakuum): T_0 = T_1 (Neumann)</text>
+    <text x="22" y="374" class="label sem-neutral-text">• <tspan font-weight="bold">h➔∞</tspan> (Eisbad): T_0 = T_∞ (Dirichlet)</text>
+    <text x="22" y="394" class="label sem-neutral-text">• <tspan font-weight="bold">Lüfter:</tspan> h = 250 vs. 20 W/m²K</text>
   </g>
 </svg>

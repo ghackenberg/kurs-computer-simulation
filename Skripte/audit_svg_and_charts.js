@@ -28,7 +28,7 @@ function checkSemanticPalette(svgPath) {
     for (const token of m[1].split(/\s+/)) {
       if (!token.startsWith('sem-')) continue;
       usesSemantic = true;
-      const base = token.replace(/-(stroke|text)$/, '');
+      const base = token.replace(/-(stroke|fill|bg|text)$/, '');
       if (!SVG_PALETTE.roles[base]) unknownClasses.add(token);
     }
   }
@@ -40,6 +40,10 @@ function checkSemanticPalette(svgPath) {
     });
   }
 
+  const isMermaid = /#my-svg|aria-roledescription=/i.test(raw);
+  const isTikz = /\.tikz\.svg$/i.test(svgPath);
+  const isDiagramSvg = /[\\/]Diagramme[\\/]/i.test(svgPath);
+
   if (usesSemantic) {
     if (syncSvgContent(raw, SVG_PALETTE).changed) {
       paletteIssues.push({
@@ -47,13 +51,18 @@ function checkSemanticPalette(svgPath) {
         message: `SVG-Farbklassen sind nicht synchron mit Themen/svg_palette.json ('npm run sync:svg-palette' ausführen).`
       });
     }
-    const withoutManaged = raw.replace(/\/\*\s*@svg-palette:start\s*\*\/[\s\S]*?\/\*\s*@svg-palette:end\s*\*\//g, '');
+  }
+
+  if (usesSemantic || (isDiagramSvg && !isMermaid && !isTikz)) {
+    const withoutManaged = raw
+      .replace(/\/\*\s*@svg-palette:start\s*\*\/[\s\S]*?\/\*\s*@svg-palette:end\s*\*\//g, '')
+      .replace(/<(?:linearGradient|radialGradient)\b[\s\S]*?<\/(?:linearGradient|radialGradient)>/gi, '');
     const colorMatches = withoutManaged.match(/(?:fill|stroke|color)\s*[:=]\s*["']?\s*(#[0-9a-fA-F]{3,8}|(?:rgb|hsl|oklch|oklab)\([^)]+\))/gi) || [];
     const forbidden = colorMatches.filter(c => !/#(?:fff(?:fff)?|000(?:000)?)\b/i.test(c));
     if (forbidden.length > 0) {
       paletteIssues.push({
         type: 'HARDCODED_SVG_COLOR',
-        message: `Hartcodierte Farbe(n) trotz semantischer Palette gefunden (${forbidden.slice(0, 3).join(', ')}). Bitte sem-* Klassen aus Themen/svg_palette.json nutzen.`
+        message: `Hartcodierte Farbe(n) gefunden (${forbidden.slice(0, 3).join(', ')}). Bitte sem-* Klassen aus Themen/svg_palette.json nutzen.`
       });
     }
   }
@@ -64,7 +73,7 @@ function checkSemanticPalette(svgPath) {
   if (firstRectMatch) {
     const r = firstRectMatch[0];
     const hasLightFill = /fill\s*=\s*["']\s*(?:#fff(?:fff)?|white|#f8fafc|#f1f5f9|#fafafa)\s*["']/i.test(r);
-    const hasStroke = /\bstroke\s*=\s*["'](?!none|transparent)/i.test(r);
+    const hasStroke = /\bstroke\s*=\s*["'](?!none|transparent)/i.test(r) || /\bclass\s*=\s*["'][^"']*\bsem-(?:primary|info|success|warning|danger|accent|card|muted|neutral)\b/i.test(r);
     if (hasLightFill && !hasStroke) {
       const wMatch = r.match(/\bwidth\s*=\s*["']\s*([\d.]+%?)\s*["']/i);
       const hMatch = r.match(/\bheight\s*=\s*["']\s*([\d.]+%?)\s*["']/i);

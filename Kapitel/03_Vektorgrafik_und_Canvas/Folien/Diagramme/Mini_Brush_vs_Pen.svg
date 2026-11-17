@@ -1,58 +1,96 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
-      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-info { fill: #e0f2fe; stroke: #0284c7; }
+      .sem-info-bg { fill: #e0f2fe; stroke: none; }
+      .sem-info-stroke { stroke: #0284c7; }
+      .sem-info-fill { fill: #0284c7; }
+      .sem-info-text { fill: #0369a1; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+.hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold;  text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;  text-anchor: middle; }
       .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
-      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; fill: #334155; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px;  }
     </style>
   </defs>
 
-  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="135" y="24" class="hdr">WPF Media: Brush vs. Pen</text>
-  <text x="135" y="42" class="sub">Tinte (Fläche) vs. Stift (Kontur)</text>
+  <rect class="sem-card" width="270" height="420" rx="10" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr sem-primary-text">WPF Media: Brush vs. Pen</text>
+  <text x="135" y="42" class="sub sem-muted-text">Tinte (Fläche) vs. Stift (Kontur)</text>
 
   <!-- Box 1: Brush -->
   <g transform="translate(15, 54)">
-    <rect width="240" height="150" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
-    <text x="120" y="22" class="lbl" style="fill: #15803d; text-anchor: middle;">1. Brush (Flächenfüllung)</text>
+    <rect class="sem-success" width="240" height="150" rx="6" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl sem-success-text" style="text-anchor: middle;">1. Brush (Flächenfüllung)</text>
     
     <!-- Visuelles Beispiel: Gefüllte Formen -->
     <g transform="translate(20, 36)">
-      <circle cx="28" cy="28" r="24" fill="#22c55e" />
+      <circle class="sem-success-fill" cx="28" cy="28" r="24" />
       <rect x="70" y="6" width="44" height="44" rx="4" fill="url(#grad)" />
       <!-- Farb-Eimer / Tinte Metapher -->
-      <path d="M 140 10 L 160 30 L 150 40 L 130 20 Z" fill="#15803d" />
-      <circle cx="165" cy="42" r="5" fill="#22c55e" />
+      <path class="sem-success-fill" d="M 140 10 L 160 30 L 150 40 L 130 20 Z" />
+      <circle class="sem-success-fill" cx="165" cy="42" r="5" />
     </g>
 
-    <text x="25" y="105" class="desc"><b>• Zweck:</b> Füllt Innenbereiche</text>
-    <text x="25" y="125" class="desc"><b>• Typen:</b> Solid, Gradient, Tile</text>
-    <text x="25" y="142" class="desc"><b>• Analogie:</b> Die Farbtinte</text>
+    <text x="25" y="105" class="desc sem-neutral-text"><b>• Zweck:</b> Füllt Innenbereiche</text>
+    <text x="25" y="125" class="desc sem-neutral-text"><b>• Typen:</b> Solid, Gradient, Tile</text>
+    <text x="25" y="142" class="desc sem-neutral-text"><b>• Analogie:</b> Die Farbtinte</text>
   </g>
 
   <!-- Box 2: Pen -->
   <g transform="translate(15, 218)">
-    <rect width="240" height="150" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
-    <text x="120" y="22" class="lbl" style="fill: #1e40af; text-anchor: middle;">2. Pen (Strich / Kontur)</text>
+    <rect class="sem-primary" width="240" height="150" rx="6" stroke-width="1.5" />
+    <text x="120" y="22" class="lbl sem-primary-text" style="text-anchor: middle;">2. Pen (Strich / Kontur)</text>
 
     <!-- Visuelles Beispiel: Konturierte Linien -->
     <g transform="translate(20, 34)">
-      <line x1="10" y1="12" x2="80" y2="12" stroke="#2563eb" stroke-width="5" stroke-linecap="round" />
-      <line x1="10" y1="28" x2="80" y2="28" stroke="#0284c7" stroke-width="3" stroke-dasharray="6,3" />
-      <rect x="110" y="8" width="80" height="34" rx="4" fill="none" stroke="#1d4ed8" stroke-width="3" />
+      <line class="sem-primary-stroke" x1="10" y1="12" x2="80" y2="12" stroke-width="5" stroke-linecap="round" />
+      <line class="sem-info-stroke" x1="10" y1="28" x2="80" y2="28" stroke-width="3" stroke-dasharray="6,3" />
+      <rect class="sem-primary-stroke" x="110" y="8" width="80" height="34" rx="4" fill="none" stroke-width="3" />
     </g>
 
-    <text x="25" y="95" class="desc"><b>• Zweck:</b> Zeichnet Außenlinien</text>
-    <text x="25" y="115" class="desc"><b>• Attribute:</b> Brush, Thickness,</text>
-    <text x="25" y="132" class="desc">  DashStyle, LineCap, LineJoin</text>
-    <text x="25" y="147" class="desc"><b>• Analogie:</b> Der Zeichenstift</text>
+    <text x="25" y="95" class="desc sem-neutral-text"><b>• Zweck:</b> Zeichnet Außenlinien</text>
+    <text x="25" y="115" class="desc sem-neutral-text"><b>• Attribute:</b> Brush, Thickness,</text>
+    <text x="25" y="132" class="desc sem-neutral-text">  DashStyle, LineCap, LineJoin</text>
+    <text x="25" y="147" class="desc sem-neutral-text"><b>• Analogie:</b> Der Zeichenstift</text>
   </g>
 
   <!-- Golden Rule Freeze -->
   <g transform="translate(15, 376)">
-    <rect width="240" height="32" rx="4" fill="#fef3c7" stroke="#fcd34d" />
-    <text x="120" y="20" class="lbl" style="font-size: 12px; fill: #b45309; text-anchor: middle;">Golden Rule: Immer .Freeze()!</text>
+    <rect class="sem-warning" width="240" height="32" rx="4" />
+    <text x="120" y="20" class="lbl sem-warning-text" style="font-size: 12px;  text-anchor: middle;">Golden Rule: Immer .Freeze()!</text>
   </g>
 
   <defs>

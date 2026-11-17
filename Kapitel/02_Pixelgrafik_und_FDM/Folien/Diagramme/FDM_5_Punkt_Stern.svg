@@ -1,84 +1,122 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 440" width="460" height="440">
   <defs>
     <style>
-      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #004B96; text-anchor: middle; }
-      .cell-idx { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold; fill: #334155; text-anchor: middle; }
-      .cell-lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px; fill: #64748b; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-info { fill: #e0f2fe; stroke: #0284c7; }
+      .sem-info-bg { fill: #e0f2fe; stroke: none; }
+      .sem-info-stroke { stroke: #0284c7; }
+      .sem-info-fill { fill: #0284c7; }
+      .sem-info-text { fill: #0369a1; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+.title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold;  text-anchor: middle; }
+      .cell-idx { font-family: 'Consolas', monospace; font-size: 13.5px; font-weight: bold;  text-anchor: middle; }
+      .cell-lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12.5px;  text-anchor: middle; }
       .cell-val { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
-      .formula { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 13px; font-weight: bold; fill: #0f172a; text-anchor: middle; }
+      .formula { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 13px; font-weight: bold;  text-anchor: middle; }
     </style>
 
     <filter id="sh" x="-4%" y="-4%" width="108%" height="108%">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08" />
+      <feDropShadow class="sem-neutral-text" dx="0" dy="2" stdDeviation="3" flood- flood-opacity="0.08" />
     </filter>
   </defs>
 
-  <rect width="460" height="440" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="230" y="27" class="title">2D-Kontrollvolumen: Der 5-Punkt-Stern</text>
+  <rect class="sem-card" width="460" height="440" rx="10" stroke-width="1.5" />
+  <text x="230" y="27" class="title sem-primary-text">2D-Kontrollvolumen: Der 5-Punkt-Stern</text>
 
   <!-- 3x3 pixel grid (total width 390, height 274) -->
   <g transform="translate(35, 38)">
     <!-- Corner diagonal cells (inactive in 5-point stencil) -->
-    <rect x="0" y="0" width="124" height="84" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
-    <text x="62" y="46" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
+    <rect class="sem-muted" x="0" y="0" width="124" height="84" rx="6" stroke-dasharray="4,4" />
+    <text x="62" y="46" class="cell-lbl sem-muted-text" >Diagonal (0)</text>
 
-    <rect x="266" y="0" width="124" height="84" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
-    <text x="328" y="46" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
+    <rect class="sem-muted" x="266" y="0" width="124" height="84" rx="6" stroke-dasharray="4,4" />
+    <text x="328" y="46" class="cell-lbl sem-muted-text" >Diagonal (0)</text>
 
-    <rect x="0" y="190" width="124" height="84" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
-    <text x="62" y="236" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
+    <rect class="sem-muted" x="0" y="190" width="124" height="84" rx="6" stroke-dasharray="4,4" />
+    <text x="62" y="236" class="cell-lbl sem-muted-text" >Diagonal (0)</text>
 
-    <rect x="266" y="190" width="124" height="84" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-dasharray="4,4" />
-    <text x="328" y="236" class="cell-lbl" style="fill: #94a3b8;">Diagonal (0)</text>
+    <rect class="sem-muted" x="266" y="190" width="124" height="84" rx="6" stroke-dasharray="4,4" />
+    <text x="328" y="236" class="cell-lbl sem-muted-text" >Diagonal (0)</text>
 
     <!-- TOP CELL: (i, j-1) -->
-    <rect x="133" y="0" width="124" height="84" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
-    <text x="195" y="22" class="cell-idx">T[i, j−1]</text>
-    <text x="195" y="44" class="cell-lbl">Oben (Norden)</text>
-    <text x="195" y="68" class="cell-val" style="fill: #1d4ed8;">z.B. 80 °C</text>
+    <rect class="sem-primary" x="133" y="0" width="124" height="84" rx="6" stroke-width="2" filter="url(#sh)" />
+    <text x="195" y="22" class="cell-idx sem-neutral-text">T[i, j−1]</text>
+    <text x="195" y="44" class="cell-lbl sem-muted-text">Oben (Norden)</text>
+    <text x="195" y="68" class="cell-val sem-primary-text" >z.B. 80 °C</text>
 
     <!-- LEFT CELL: (i-1, j) -->
-    <rect x="0" y="95" width="124" height="84" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
-    <text x="62" y="117" class="cell-idx">T[i−1, j]</text>
-    <text x="62" y="139" class="cell-lbl">Links (Westen)</text>
-    <text x="62" y="163" class="cell-val" style="fill: #1d4ed8;">z.B. 100 °C</text>
+    <rect class="sem-primary" x="0" y="95" width="124" height="84" rx="6" stroke-width="2" filter="url(#sh)" />
+    <text x="62" y="117" class="cell-idx sem-neutral-text">T[i−1, j]</text>
+    <text x="62" y="139" class="cell-lbl sem-muted-text">Links (Westen)</text>
+    <text x="62" y="163" class="cell-val sem-primary-text" >z.B. 100 °C</text>
 
     <!-- CENTER CELL: (i, j) -->
-    <rect x="133" y="95" width="124" height="84" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="3" filter="url(#sh)" />
-    <text x="195" y="117" class="cell-idx" style="fill: #92400e; font-size: 14px;">T[i, j]</text>
-    <text x="195" y="139" class="cell-lbl" style="fill: #b45309; font-weight: bold;">Zentrum (−4×)</text>
-    <text x="195" y="163" class="cell-val" style="fill: #b45309;">aktuell 50 °C</text>
+    <rect class="sem-warning" x="133" y="95" width="124" height="84" rx="6" stroke-width="3" filter="url(#sh)" />
+    <text x="195" y="117" class="cell-idx sem-neutral-text sem-warning-text" style="font-size: 14px;">T[i, j]</text>
+    <text x="195" y="139" class="cell-lbl sem-muted-text sem-warning-text" style="font-weight: bold;">Zentrum (−4×)</text>
+    <text x="195" y="163" class="cell-val sem-warning-text" >aktuell 50 °C</text>
 
     <!-- RIGHT CELL: (i+1, j) -->
-    <rect x="266" y="95" width="124" height="84" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
-    <text x="328" y="117" class="cell-idx">T[i+1, j]</text>
-    <text x="328" y="139" class="cell-lbl">Rechts (Osten)</text>
-    <text x="328" y="163" class="cell-val" style="fill: #1d4ed8;">z.B. 60 °C</text>
+    <rect class="sem-primary" x="266" y="95" width="124" height="84" rx="6" stroke-width="2" filter="url(#sh)" />
+    <text x="328" y="117" class="cell-idx sem-neutral-text">T[i+1, j]</text>
+    <text x="328" y="139" class="cell-lbl sem-muted-text">Rechts (Osten)</text>
+    <text x="328" y="163" class="cell-val sem-primary-text" >z.B. 60 °C</text>
 
     <!-- BOTTOM CELL: (i, j+1) -->
-    <rect x="133" y="190" width="124" height="84" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)" />
-    <text x="195" y="212" class="cell-idx">T[i, j+1]</text>
-    <text x="195" y="234" class="cell-lbl">Unten (Süden)</text>
-    <text x="195" y="258" class="cell-val" style="fill: #1d4ed8;">z.B. 40 °C</text>
+    <rect class="sem-primary" x="133" y="190" width="124" height="84" rx="6" stroke-width="2" filter="url(#sh)" />
+    <text x="195" y="212" class="cell-idx sem-neutral-text">T[i, j+1]</text>
+    <text x="195" y="234" class="cell-lbl sem-muted-text">Unten (Süden)</text>
+    <text x="195" y="258" class="cell-val sem-primary-text" >z.B. 40 °C</text>
 
     <!-- 4 Coupling Arrows across the 4 cell edges -->
-    <line x1="195" y1="84" x2="195" y2="95" stroke="#0284c7" stroke-width="3" />
-    <line x1="195" y1="179" x2="195" y2="190" stroke="#0284c7" stroke-width="3" />
-    <line x1="124" y1="137" x2="133" y2="137" stroke="#0284c7" stroke-width="3" />
-    <line x1="257" y1="137" x2="266" y2="137" stroke="#0284c7" stroke-width="3" />
+    <line class="sem-info-stroke" x1="195" y1="84" x2="195" y2="95" stroke-width="3" />
+    <line class="sem-info-stroke" x1="195" y1="179" x2="195" y2="190" stroke-width="3" />
+    <line class="sem-info-stroke" x1="124" y1="137" x2="133" y2="137" stroke-width="3" />
+    <line class="sem-info-stroke" x1="257" y1="137" x2="266" y2="137" stroke-width="3" />
   </g>
 
   <!-- Bottom Explanation Card -->
   <g transform="translate(15, 324)" filter="url(#sh)">
-    <rect width="430" height="102" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-    <text x="215" y="23" class="formula" style="fill: #004B96; font-size: 13px;">
+    <rect class="sem-card-stroke" width="430" height="102" rx="8" fill="#ffffff" stroke-width="1.5" />
+    <text x="215" y="23" class="formula sem-neutral-text sem-primary-text" style="font-size: 13px;">
       L_{i,j} = T[i+1,j] + T[i−1,j] + T[i,j+1] + T[i,j−1] − 4·T[i,j]
     </text>
-    <text x="215" y="46" class="cell-lbl" style="fill: #1e293b; font-weight: bold;">
+    <text x="215" y="46" class="cell-lbl sem-muted-text sem-card-text" style="font-weight: bold;">
       Nachbar-Mittelwert: (80 + 40 + 100 + 60) / 4 → 70 °C
     </text>
-    <rect x="14" y="58" width="402" height="34" rx="5" fill="#f0fdf4" stroke="#86efac" />
-    <text x="215" y="80" class="cell-lbl" style="fill: #166534; font-weight: bold;">
+    <rect class="sem-success" x="14" y="58" width="402" height="34" rx="5" />
+    <text x="215" y="80" class="cell-lbl sem-muted-text sem-success-text" style="font-weight: bold;">
       L_{i,j} = 4 · (70 − 50) = +80 K  ➔  Erwärmung Richtung 70 °C!
     </text>
   </g>

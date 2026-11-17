@@ -8,6 +8,12 @@
       "stroke": "#2563eb",
       "text": "#1e40af"
     },
+    "sem-info": {
+      "description": "Sekundäre Datenreihe, Kamera-/Weltachsen, Geschwindigkeitsvektoren",
+      "fill": "#e0f2fe",
+      "stroke": "#0284c7",
+      "text": "#0369a1"
+    },
     "sem-success": {
       "description": "Zieltreffer, korrekter Pfad, Optimierungserfolg, validierte Lösung",
       "fill": "#f0fdf4",
@@ -25,6 +31,18 @@
       "fill": "#fef2f2",
       "stroke": "#dc2626",
       "text": "#991b1b"
+    },
+    "sem-accent": {
+      "description": "Sonderkräfte, Transformationen, Hervorhebung außerhalb der Hauptachse",
+      "fill": "#f5f3ff",
+      "stroke": "#7c3aed",
+      "text": "#6d28d9"
+    },
+    "sem-card": {
+      "description": "Äußere Diagramm-Karten und dezente Panel-Hintergründe",
+      "fill": "#f8fafc",
+      "stroke": "#cbd5e1",
+      "text": "#1e293b"
     },
     "sem-muted": {
       "description": "Ignorierte, inaktive, abgeschlossene oder Hintergrund-Elemente",

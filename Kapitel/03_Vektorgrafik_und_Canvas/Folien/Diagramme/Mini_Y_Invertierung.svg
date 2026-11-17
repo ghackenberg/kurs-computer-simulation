@@ -1,70 +1,103 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
-      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-danger { fill: #fef2f2; stroke: #dc2626; }
+      .sem-danger-bg { fill: #fef2f2; stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: #dc2626; }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+.hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold;  text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;  text-anchor: middle; }
       .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
-      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
-      .fml { font-family: 'Consolas', monospace; font-size: 12.5px; fill: #991b1b; text-anchor: middle; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;  text-anchor: middle; }
+      .fml { font-family: 'Consolas', monospace; font-size: 12.5px;  text-anchor: middle; }
     </style>
   </defs>
 
-  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="135" y="24" class="hdr">Y-Achsen Invertierung</text>
-  <text x="135" y="42" class="sub">Welt (unten) vs. Screen (oben)</text>
+  <rect class="sem-card" width="270" height="420" rx="10" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr sem-primary-text">Y-Achsen Invertierung</text>
+  <text x="135" y="42" class="sub sem-muted-text">Welt (unten) vs. Screen (oben)</text>
 
   <!-- Welt System -->
   <g transform="translate(15, 54)">
-    <rect width="112" height="145" rx="6" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5" />
-    <text x="56" y="20" class="lbl" style="fill: #065f46;">1. Welt-System</text>
+    <rect class="sem-success" width="112" height="145" rx="6" stroke-width="1.5" />
+    <text x="56" y="20" class="lbl sem-success-text" >1. Welt-System</text>
     
     <!-- Y-Achse nach oben -->
-    <line x1="25" y1="125" x2="25" y2="35" stroke="#059669" stroke-width="2.5" />
-    <polygon points="25,30 20,40 30,40" fill="#059669" />
-    <text x="42" y="38" class="lbl" style="fill: #047857;">+Y</text>
+    <line class="sem-success-stroke" x1="25" y1="125" x2="25" y2="35" stroke-width="2.5" />
+    <polygon class="sem-success-fill" points="25,30 20,40 30,40" />
+    <text x="42" y="38" class="lbl sem-success-text" >+Y</text>
 
-    <line x1="25" y1="125" x2="95" y2="125" stroke="#059669" stroke-width="2" />
-    <text x="90" y="140" class="desc" style="fill: #065f46;">+X</text>
-    <circle cx="25" cy="125" r="4" fill="#047857" />
-    <text x="45" y="120" class="desc" style="font-size: 12.5px;">(0,0)</text>
-    <text x="60" y="75" class="lbl" style="fill: #059669;">Oben</text>
+    <line class="sem-success-stroke" x1="25" y1="125" x2="95" y2="125" stroke-width="2" />
+    <text x="90" y="140" class="desc sem-neutral-text sem-success-text" >+X</text>
+    <circle class="sem-success-fill" cx="25" cy="125" r="4" />
+    <text x="45" y="120" class="desc sem-neutral-text" style="font-size: 12.5px;">(0,0)</text>
+    <text x="60" y="75" class="lbl sem-success-text" >Oben</text>
   </g>
 
   <!-- Screen System -->
   <g transform="translate(143, 54)">
-    <rect width="112" height="145" rx="6" fill="#fef2f2" stroke="#fecaca" stroke-width="1.5" />
-    <text x="56" y="20" class="lbl" style="fill: #991b1b;">2. WPF Screen</text>
+    <rect class="sem-danger" width="112" height="145" rx="6" stroke-width="1.5" />
+    <text x="56" y="20" class="lbl sem-danger-text" >2. WPF Screen</text>
 
     <!-- Y-Achse nach unten -->
-    <circle cx="25" cy="35" r="4" fill="#b91c1c" />
-    <text x="45" y="52" class="desc" style="font-size: 12.5px;">(0,0)</text>
-    <line x1="25" y1="35" x2="95" y2="35" stroke="#dc2626" stroke-width="2" />
-    <text x="90" y="50" class="desc" style="fill: #991b1b;">+X</text>
+    <circle class="sem-danger-fill" cx="25" cy="35" r="4" />
+    <text x="45" y="52" class="desc sem-neutral-text" style="font-size: 12.5px;">(0,0)</text>
+    <line class="sem-danger-stroke" x1="25" y1="35" x2="95" y2="35" stroke-width="2" />
+    <text x="90" y="50" class="desc sem-neutral-text sem-danger-text" >+X</text>
 
-    <line x1="25" y1="35" x2="25" y2="125" stroke="#dc2626" stroke-width="2.5" />
-    <polygon points="25,130 20,120 30,120" fill="#dc2626" />
-    <text x="42" y="128" class="lbl" style="fill: #b91c1c;">+Y</text>
-    <text x="60" y="90" class="lbl" style="fill: #dc2626;">Unten</text>
+    <line class="sem-danger-stroke" x1="25" y1="35" x2="25" y2="125" stroke-width="2.5" />
+    <polygon class="sem-danger-fill" points="25,130 20,120 30,120" />
+    <text x="42" y="128" class="lbl sem-danger-text" >+Y</text>
+    <text x="60" y="90" class="lbl sem-danger-text" >Unten</text>
   </g>
 
   <!-- Transformations-Mathematik -->
   <g transform="translate(15, 212)">
-    <rect width="240" height="194" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
-    <text x="120" y="24" class="lbl" style="fill: #0f172a;">Spiegelung an Y_max</text>
-    <line x1="15" y1="36" x2="225" y2="36" stroke="#cbd5e1" stroke-width="1" />
+    <rect class="sem-card sem-muted-stroke" width="240" height="194" rx="6" stroke-width="1.5" />
+    <text x="120" y="24" class="lbl sem-neutral-text" >Spiegelung an Y_max</text>
+    <line class="sem-card-stroke" x1="15" y1="36" x2="225" y2="36" stroke-width="1" />
 
-    <text x="120" y="60" class="fml" style="font-size: 13px; font-weight: bold;">y_s = y_off + (Y_max - y_w) · s</text>
+    <text x="120" y="60" class="fml sem-danger-text" style="font-size: 13px; font-weight: bold;">y_s = y_off + (Y_max - y_w) · s</text>
 
     <g transform="translate(10, 78)">
-      <rect width="220" height="46" rx="4" fill="#eff6ff" stroke="#bfdbfe" />
-      <text x="110" y="18" class="desc" style="font-weight: bold; fill: #1e40af;">Fall 1: Höchster Punkt (Y_max)</text>
-      <text x="110" y="36" class="fml" style="font-size: 11.5px; fill: #1d4ed8;">y_s = y_off + 0 (oben)</text>
+      <rect class="sem-primary" width="220" height="46" rx="4" />
+      <text x="110" y="18" class="desc sem-neutral-text sem-primary-text" style="font-weight: bold;">Fall 1: Höchster Punkt (Y_max)</text>
+      <text x="110" y="36" class="fml sem-danger-text sem-primary-text" style="font-size: 11.5px;">y_s = y_off + 0 (oben)</text>
     </g>
 
     <g transform="translate(10, 134)">
-      <rect width="220" height="46" rx="4" fill="#eff6ff" stroke="#bfdbfe" />
-      <text x="110" y="18" class="desc" style="font-weight: bold; fill: #1e40af;">Fall 2: Tiefster Punkt (Y_min)</text>
-      <text x="110" y="36" class="fml" style="font-size: 11px; fill: #1d4ed8;">y_s = y_off + H_world · s (unten)</text>
+      <rect class="sem-primary" width="220" height="46" rx="4" />
+      <text x="110" y="18" class="desc sem-neutral-text sem-primary-text" style="font-weight: bold;">Fall 2: Tiefster Punkt (Y_min)</text>
+      <text x="110" y="36" class="fml sem-danger-text sem-primary-text" style="font-size: 11px;">y_s = y_off + H_world · s (unten)</text>
     </g>
   </g>
 </svg>

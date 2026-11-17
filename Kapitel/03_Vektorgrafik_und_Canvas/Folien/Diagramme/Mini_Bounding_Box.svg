@@ -1,55 +1,93 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
   <defs>
     <style>
-      .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold; fill: #004B96; text-anchor: middle; }
-      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #475569; text-anchor: middle; }
+      
+/* @svg-palette:start */
+      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
+      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-info { fill: #e0f2fe; stroke: #0284c7; }
+      .sem-info-bg { fill: #e0f2fe; stroke: none; }
+      .sem-info-stroke { stroke: #0284c7; }
+      .sem-info-fill { fill: #0284c7; }
+      .sem-info-text { fill: #0369a1; }
+      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
+      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-fill { fill: #16a34a; }
+      .sem-success-text { fill: #15803d; }
+      .sem-warning { fill: #fffbeb; stroke: #d97706; }
+      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-fill { fill: #d97706; }
+      .sem-warning-text { fill: #b45309; }
+      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
+      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
+      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: #94a3b8; }
+      .sem-muted-text { fill: #475569; }
+      .sem-neutral { fill: #ffffff; stroke: #334155; }
+      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: #334155; }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+.hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14.5px; font-weight: bold;  text-anchor: middle; }
+      .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;  text-anchor: middle; }
       .lbl { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; text-anchor: middle; }
-      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #334155; text-anchor: middle; }
-      .dim { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #0369a1; font-weight: bold; }
+      .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;  text-anchor: middle; }
+      .dim { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;  font-weight: bold; }
     </style>
   </defs>
 
-  <rect width="270" height="420" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="135" y="24" class="hdr">Bounding Box &amp; Offsets</text>
-  <text x="135" y="42" class="sub">Vom Extremwert zur Zeichenfläche</text>
+  <rect class="sem-card" width="270" height="420" rx="10" stroke-width="1.5" />
+  <text x="135" y="24" class="hdr sem-primary-text">Bounding Box &amp; Offsets</text>
+  <text x="135" y="42" class="sub sem-muted-text">Vom Extremwert zur Zeichenfläche</text>
 
   <!-- Outer Canvas Box -->
   <g transform="translate(15, 54)">
-    <rect width="240" height="220" rx="6" fill="#ffffff" stroke="#0284c7" stroke-width="2" />
-    <text x="120" y="18" class="dim" style="text-anchor: middle;">Canvas Viewport</text>
+    <rect class="sem-info-stroke" width="240" height="220" rx="6" fill="#ffffff" stroke-width="2" />
+    <text x="120" y="18" class="dim sem-info-text" style="text-anchor: middle;">Canvas Viewport</text>
 
     <!-- Margin Inset -->
-    <rect x="20" y="26" width="200" height="176" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3" />
-    <text x="120" y="40" class="dim" style="font-size: 11.5px; text-anchor: middle; fill: #64748b;">Nutzfläche (W_draw × H_draw)</text>
+    <rect class="sem-card sem-muted-stroke" x="20" y="26" width="200" height="176" stroke-width="1.2" stroke-dasharray="4,3" />
+    <text x="120" y="40" class="dim sem-info-text sem-muted-text" style="font-size: 11.5px; text-anchor: middle;">Nutzfläche (W_draw × H_draw)</text>
 
     <!-- Centered Truss Bounding Box -->
     <g transform="translate(58, 65)">
-      <rect width="124" height="105" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="2,2" />
-      <polygon points="12,90 112,90 62,18" fill="none" stroke="#1d4ed8" stroke-width="2.5" />
-      <circle cx="12" cy="90" r="4" fill="#1e40af" />
-      <circle cx="112" cy="90" r="4" fill="#1e40af" />
-      <circle cx="62" cy="18" r="4" fill="#1e40af" />
-      <rect x="36" y="-6" width="52" height="16" rx="3" fill="#ffffff" stroke="#93c5fd" stroke-width="1" />
-      <text x="62" y="6" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#1e40af" text-anchor="middle">(x_i, y_i)</text>
+      <rect class="sem-primary" width="124" height="105" stroke-width="1.5" stroke-dasharray="2,2" />
+      <polygon class="sem-primary-stroke" points="12,90 112,90 62,18" fill="none" stroke-width="2.5" />
+      <circle class="sem-primary-fill" cx="12" cy="90" r="4" />
+      <circle class="sem-primary-fill" cx="112" cy="90" r="4" />
+      <circle class="sem-primary-fill" cx="62" cy="18" r="4" />
+      <rect class="sem-primary-stroke" x="36" y="-6" width="52" height="16" rx="3" fill="#ffffff" stroke-width="1" />
+      <text class="sem-primary-text" x="62" y="6" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle">(x_i, y_i)</text>
     </g>
 
     <!-- Randabstand (mit Schutz-Pill) -->
     <g transform="translate(18, 107)">
-      <rect width="40" height="18" rx="3" fill="#ffffff" stroke="#fde68a" stroke-width="1" />
-      <text x="20" y="13" class="dim" style="font-size: 11.5px; fill: #b45309; text-anchor: middle;">margin</text>
+      <rect class="sem-warning-stroke" width="40" height="18" rx="3" fill="#ffffff" stroke-width="1" />
+      <text x="20" y="13" class="dim sem-info-text sem-warning-text" style="font-size: 11.5px;  text-anchor: middle;">margin</text>
     </g>
     <g transform="translate(182, 107)">
-      <rect width="40" height="18" rx="3" fill="#ffffff" stroke="#fde68a" stroke-width="1" />
-      <text x="20" y="13" class="dim" style="font-size: 11.5px; fill: #b45309; text-anchor: middle;">margin</text>
+      <rect class="sem-warning-stroke" width="40" height="18" rx="3" fill="#ffffff" stroke-width="1" />
+      <text x="20" y="13" class="dim sem-info-text sem-warning-text" style="font-size: 11.5px;  text-anchor: middle;">margin</text>
     </g>
   </g>
 
   <!-- Formula Summary Card -->
   <g transform="translate(15, 286)">
-    <rect width="240" height="120" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
-    <text x="120" y="24" class="lbl" style="fill: #15803d;">Modell- &amp; Zeichenmaße</text>
-    <text x="120" y="48" class="desc" style="font-weight: bold; fill: #166534;">W_world = X_max - X_min</text>
-    <text x="120" y="70" class="desc" style="font-weight: bold; fill: #166534;">H_world = Y_max - Y_min</text>
-    <text x="120" y="94" class="desc" style="font-weight: bold; fill: #047857;">W_draw = W_canvas - 2·margin</text>
+    <rect class="sem-success" width="240" height="120" rx="6" stroke-width="1.5" />
+    <text x="120" y="24" class="lbl sem-success-text" >Modell- &amp; Zeichenmaße</text>
+    <text x="120" y="48" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">W_world = X_max - X_min</text>
+    <text x="120" y="70" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">H_world = Y_max - Y_min</text>
+    <text x="120" y="94" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">W_draw = W_canvas - 2·margin</text>
   </g>
 </svg>
