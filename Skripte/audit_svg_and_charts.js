@@ -113,6 +113,18 @@ function checkSemanticPalette(svgPath) {
     }
   }
 
+  // 4. Kein eingebetteter Folientitel/-untertitel im SVG (gehört ins Markdown)
+  if (isDiagramSvg && !isMermaid && !isTikz) {
+    const hasEmbeddedTitle = /<text\b[^>]*\by\s*=\s*["'](?:[1-5]?\d|6[0-5])["'][^>]*\bclass\s*=\s*["'][^"']*\btitle\b[^"']*["'][^>]*>/i.test(raw)
+      || (path.basename(svgPath).startsWith('Mini_') && /<text\b[^>]*\by\s*=\s*["'](?:[1-2]?\d|3[0-5])["'][^>]*\bclass\s*=\s*["'][^"']*\bhdr\b[^"']*["'][^>]*>/i.test(raw));
+    if (hasEmbeddedTitle) {
+      paletteIssues.push({
+        type: 'EMBEDDED_SLIDE_TITLE',
+        message: 'Eingebetteter Folientitel/-untertitel im SVG gefunden. Titel und Untertitel gehören ins Markdown, nicht ins SVG.'
+      });
+    }
+  }
+
   return paletteIssues;
 }
 

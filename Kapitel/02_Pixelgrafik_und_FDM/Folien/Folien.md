@@ -139,6 +139,8 @@ In modernen Grafiktreibern ist das **32-Bit BGRA-Format** der Standard für maxi
     $$\text{Pixel}_{\text{uint}} = (\text{A} \ll 24) \mid (\text{R} \ll 16) \mid (\text{G} \ll 8) \mid \text{B}$$
   - Wert `0xFFFF0000` entspricht voll deckendem Reinrot.
 
+> **Praxis:** Bit-Shifting vermeidet Objekt-Allokationen und schreibt Millionen Pixel pro Sekunde direkt als `uint`.
+
 </div>
 <div class="one">
 
@@ -260,6 +262,8 @@ Kombiniert mit einer einzigen
    - Der Puffer, der von der MilCore-Render-Engine von WPF zur Darstellung über die Grafikkarte genutzt wird.
 3. **Synchronisation:**
    - Der Transfer vom BackBuffer zum FrontBuffer erfolgt nur, wenn Änderungen explizit über `AddDirtyRect()` gemeldet werden.
+
+> **Wichtig:** Ohne `AddDirtyRect()` zwischen `Lock()` und `Unlock()` bleibt die Anzeige in WPF unverändert!
 
 </div>
 <div class="one">
@@ -662,6 +666,7 @@ $$\alpha = \frac{\lambda}{\rho \cdot c_p} \quad \left[\frac{\mathrm{m^2}}{\mathr
 - **Kleines $\alpha$ (Wärmeleitpaste $\approx 2{,}5\,\mathrm{mm^2/s}$):** Wärme staut sich vor der Isolationsschicht.
 
 > **Anhang A:** Detaillierte Analogien ($T, E_{\text{th}}, \dot{Q}$) & Materialwerte siehe [Anhang A: Wärmeleitung & FDM](./Folien_Anhang_A_Waermeleitung_FDM.md).
+> **Merksatz:** Großes $\lambda$ leitet schnell; großes $\rho \cdot c_p$ bremst den Temperaturanstieg.
 
 </div>
 <div class="one">
@@ -686,6 +691,8 @@ $$\frac{\partial T}{\partial t} = \alpha \left( \frac{\partial^2 T}{\partial x^2
   $$L_{i,j}^n = T_{i+1,j}^n + T_{i-1,j}^n + T_{i,j+1}^n + T_{i,j-1}^n - 4 \cdot T_{i,j}^n$$
 - **Bedeutung:** Pixel erwärmt sich, wenn der Mittelwert der 4 Nachbarn wärmer ist als $T_{i,j}^n$!
 
+> **Merksatz:** Diagonal-Nachbarn tragen im 5-Punkt-Stern nicht bei; der Faktor $4$ steht für die vier orthogonalen Nachbarn.
+
 </div>
 <div class="two">
 
@@ -708,6 +715,8 @@ $$T_{\text{neu}} = T_{i,j}^{n+1} = T_{i,j}^n + s \cdot L_{i,j}^n + \Delta t \cdo
 - **Von-Neumann-Stabilitätsgrenze:** Eigengewicht $(1 - 4s)$ darf niemals negativ werden:
   $$\boxed{s = \frac{\alpha \cdot \Delta t}{\Delta x^2} \le 0{,}25 \quad \Longleftrightarrow \quad \Delta t_{\max} = \frac{\Delta x^2}{4 \cdot \alpha_{\max}}}$$
 - **Bei $s > 0{,}25$:** Vorzeichenwechsel & aufklingendes Schachbrett-Muster bis **`NaN`-Explosion**!
+
+> **Faustregel:** In 2D begrenzt das schnellste Material ($\alpha_{\max}$) die Zeitschrittweite $\Delta t_{\max}$ für das gesamte Gitter.
 
 </div>
 <div class="one">
@@ -771,6 +780,8 @@ Bearbeite die folgenden drei Fragen kurz mit deinem Nachbarn:
   float tRight = _alphaMap[x + 1, y] == 0f ? tCenter : _tCurrent[x + 1, y];
   float tLeft  = _alphaMap[x - 1, y] == 0f ? tCenter : _tCurrent[x - 1, y];
   ```
+
+> **Merksatz:** Adiabatische Isolator-Wände spiegeln immer die eigene Zelltemperatur (`tNeighbor = tCenter`).
 
 </div>
 <div class="one">

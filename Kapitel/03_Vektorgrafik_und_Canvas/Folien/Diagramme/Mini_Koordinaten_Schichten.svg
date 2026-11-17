@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 270 380" width="270" height="380">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -70,8 +70,6 @@
   </defs>
 
   <!-- Background Card -->
-  <text x="135" y="19" class="hdr sem-primary-text">Die 3 Koordinatenräume</text>
-  <text x="135" y="38" class="sub sem-muted-text">Screen vs. Canvas vs. World</text>
 
   <!-- 1. Screen Space (Monitor / Viewport) -->
   <g transform="translate(15, 48)">

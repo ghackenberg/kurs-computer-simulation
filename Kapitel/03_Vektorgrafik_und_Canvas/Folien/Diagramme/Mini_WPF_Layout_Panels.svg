@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 420" width="270" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 46 270 374" width="270" height="374">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -86,8 +86,6 @@
     </style>
   </defs>
 
-  <text x="135" y="24" class="hdr sem-primary-text">WPF Layout-Panels</text>
-  <text x="135" y="42" class="sub sem-muted-text">4 grundlegende Layout-Strategien</text>
 
   <!-- 1. Canvas (Oben Links) -->
   <g transform="translate(12, 54)">

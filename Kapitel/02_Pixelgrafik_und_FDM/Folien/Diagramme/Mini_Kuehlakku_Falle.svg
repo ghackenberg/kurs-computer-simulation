@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 48 260 372" width="260" height="372">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -61,8 +61,6 @@
     </marker>
   </defs>
 
-  <text x="130" y="24" class="hdr sem-primary-text">Die „Kühlakku“-Falle</text>
-  <text x="130" y="41" class="sub sem-muted-text">Innere Isolatorwand (α = 0)</text>
 
   <!-- WRONG: Only alpha = 0 -->
   <g transform="translate(15, 56)">

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 48 260 372" width="260" height="372">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -60,14 +60,11 @@
     </marker>
   </defs>
 
-  <text x="130" y="24" class="hdr sem-primary-text">Wärmeleitfähigkeit λ</text>
-  <text x="130" y="41" class="sub sem-muted-text">„Wie breit ist die Wärme-Autobahn?“</text>
 
   <!-- Top: High Lambda (Copper) -->
   <g transform="translate(15, 56)">
     <rect class="sem-warning" width="230" height="165" rx="6" stroke-width="1.5" />
     <text x="115" y="20" class="lbl sem-warning-text" >1. Großes λ (Kupfer: 398)</text>
-    <text x="115" y="37" class="sub sem-muted-text sem-warning-text" >Breite Autobahn (Geringer Widerstand)</text>
 
     <!-- Wide Highway Pipe -->
     <rect class="sem-danger-fill" x="18" y="48" width="44" height="72" rx="4" />
@@ -88,7 +85,6 @@
   <g transform="translate(15, 236)">
     <rect class="sem-muted" width="230" height="168" rx="6" stroke-width="1.5" />
     <text x="115" y="20" class="lbl sem-neutral-text" >2. Kleines λ (Paste: 4,5 / Luft)</text>
-    <text x="115" y="37" class="sub sem-muted-text" >Engpass / Nadelöhr (Hoher Widerstand)</text>
 
     <!-- Narrow Bottleneck Pipe -->
     <rect class="sem-danger-fill" x="18" y="48" width="44" height="72" rx="4" />

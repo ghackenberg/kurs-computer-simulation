@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 48 260 372" width="260" height="372">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -49,14 +49,11 @@
     </style>
   </defs>
 
-  <text x="130" y="24" class="hdr sem-primary-text">Fouriersches Gesetz</text>
-  <text x="130" y="41" class="sub sem-muted-text">Die 3 Einflussgrößen auf q̇_x</text>
 
   <!-- Factor 1: Lambda -->
   <g transform="translate(15, 56)">
     <rect class="sem-warning" width="230" height="92" rx="6" stroke-width="1.5" />
     <text x="115" y="22" class="lbl sem-warning-text" >1. Material: Leitfähigkeit λ ↑</text>
-    <text x="115" y="44" class="sub sem-muted-text">Kupfer leitet 100× besser als</text>
     <text x="115" y="60" class="sub sem-muted-text">Glas bei gleichem Gefälle:</text>
     <text x="115" y="80" class="math sem-warning-text" >q̇_x  ∝  λ</text>
   </g>
@@ -65,7 +62,6 @@
   <g transform="translate(15, 160)">
     <rect class="sem-danger" width="230" height="92" rx="6" stroke-width="1.5" />
     <text x="115" y="22" class="lbl sem-danger-text" >2. Triebkraft: Differenz ΔT ↑</text>
-    <text x="115" y="44" class="sub sem-muted-text">Doppelter Temperaturunterschied</text>
     <text x="115" y="60" class="sub sem-muted-text">treibt doppelten Wärmestrom:</text>
     <text x="115" y="80" class="math sem-danger-text" >q̇_x  ∝  (T_{i+1} − T_i)</text>
   </g>
@@ -74,7 +70,6 @@
   <g transform="translate(15, 264)">
     <rect class="sem-primary" width="230" height="92" rx="6" stroke-width="1.5" />
     <text x="115" y="22" class="lbl sem-primary-text" >3. Wanddicke: Abstand Δx ↓</text>
-    <text x="115" y="44" class="sub sem-muted-text">Je dünner die Schicht (kleines Δx),</text>
     <text x="115" y="60" class="sub sem-muted-text">desto steiler das Gefälle:</text>
     <text x="115" y="80" class="math sem-primary-text" >q̇_x  ∝  1 / Δx</text>
   </g>

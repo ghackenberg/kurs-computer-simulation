@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 48 260 372" width="260" height="372">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -70,8 +70,6 @@
     </marker>
   </defs>
 
-  <text x="130" y="24" class="hdr sem-primary-text">WriteableBitmap-Pipeline</text>
-  <text x="130" y="41" class="sub sem-muted-text">Vom C#-Array zur Grafikkarte</text>
 
   <!-- Stage 1: C# Simulation -->
   <g transform="translate(20, 56)">
@@ -100,7 +98,6 @@
   <g transform="translate(20, 268)">
     <rect class="sem-success" width="220" height="72" rx="6" stroke-width="2" />
     <text x="110" y="22" class="lbl sem-success-text" >3. FrontBuffer (DirectX / GPU)</text>
-    <text x="110" y="42" class="sub sem-muted-text sem-success-text" style="font-weight: bold;">WPF MilCore Render-Thread</text>
     <text x="110" y="59" class="sub sem-muted-text sem-success-text" >Zeigt Bild mit 60 FPS am Monitor</text>
   </g>
 

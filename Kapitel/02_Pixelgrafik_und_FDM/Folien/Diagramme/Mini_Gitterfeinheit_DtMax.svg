@@ -1,10 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 48 260 372" width="260" height="372">
   <defs>
     <!-- @svg-palette-defs:start -->
-    <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#eff6ff" />
-      <stop offset="100%" stop-color="#dbeafe" />
-    </linearGradient>
     <linearGradient id="grad-sem-success" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#f0fdf4" />
       <stop offset="100%" stop-color="#dcfce7" />
@@ -21,11 +17,6 @@
     <style>
       
 /* @svg-palette:start */
-      .sem-primary { fill: url(#grad-sem-primary); stroke: #2563eb; }
-      .sem-primary-bg { fill: url(#grad-sem-primary); stroke: none; }
-      .sem-primary-stroke { stroke: #2563eb; }
-      .sem-primary-fill { fill: #2563eb; }
-      .sem-primary-text { fill: #1e40af; }
       .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
       .sem-success-stroke { stroke: #16a34a; }
@@ -49,8 +40,6 @@
     </style>
   </defs>
 
-  <text x="130" y="24" class="hdr sem-primary-text">Quadratisches Δx²-Gesetz</text>
-  <text x="130" y="41" class="sub sem-muted-text">Warum feine Gitter kleines Δt fordern</text>
 
   <!-- Coarse Grid dx = 1 mm -->
   <g transform="translate(15, 56)">

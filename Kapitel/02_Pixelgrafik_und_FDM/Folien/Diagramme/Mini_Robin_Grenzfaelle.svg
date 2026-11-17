@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 48 260 372" width="260" height="372">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -49,14 +49,11 @@
     </style>
   </defs>
 
-  <text x="130" y="24" class="hdr sem-primary-text">Robin vereint alle Ränder</text>
-  <text x="130" y="41" class="sub sem-muted-text">Je nach Wärmeübergang h</text>
 
   <!-- Limit 1: h -> 0 -->
   <g transform="translate(15, 56)">
     <rect class="sem-muted" width="230" height="106" rx="6" stroke-width="1.5" />
     <text x="115" y="22" class="lbl sem-neutral-text" >1. Grenzfall: h ➔ 0 (Vakuum)</text>
-    <text x="115" y="46" class="sub sem-muted-text" >Gewicht der Luft (h·Δx) wird Null:</text>
     <text x="115" y="70" class="math sem-neutral-text" >T_{0,y} = T_{1,y}</text>
     <text x="115" y="92" class="lbl sem-neutral-text" >➔ Identisch zum Neumann-Rand!</text>
   </g>
@@ -65,7 +62,6 @@
   <g transform="translate(15, 174)">
     <rect class="sem-warning" width="230" height="106" rx="6" stroke-width="2" />
     <text x="115" y="22" class="lbl sem-warning-text" >2. Praxis: 0 &lt; h &lt; ∞ (Lüfter)</text>
-    <text x="115" y="46" class="sub sem-muted-text sem-warning-text" >Gewichtetes Mittel (λ vs. h·Δx):</text>
     <text x="115" y="70" class="math sem-warning-text" >T_∞  &lt;  T_{0,y}  &lt;  T_{1,y}</text>
     <text x="115" y="92" class="lbl sem-warning-text" >➔ Realistische Rippenkühlung!</text>
   </g>
@@ -74,7 +70,6 @@
   <g transform="translate(15, 292)">
     <rect class="sem-primary" width="230" height="112" rx="6" stroke-width="1.5" />
     <text x="115" y="22" class="lbl sem-primary-text" >3. Grenzfall: h ➔ ∞ (Eisbad)</text>
-    <text x="115" y="46" class="sub sem-muted-text sem-primary-text" >Luft-Gewicht dominiert komplett:</text>
     <text x="115" y="70" class="math sem-primary-text" >T_{0,y} = T_∞ = konst.</text>
     <text x="115" y="94" class="lbl sem-primary-text" >➔ Identisch zum Dirichlet-Rand!</text>
   </g>

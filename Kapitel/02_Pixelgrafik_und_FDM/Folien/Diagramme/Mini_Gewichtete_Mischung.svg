@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 50 260 370" width="260" height="370">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -49,8 +49,6 @@
     </style>
   </defs>
 
-  <text x="130" y="24" class="hdr sem-primary-text">Mischungs-Balken (100 %)</text>
-  <text x="130" y="41" class="sub sem-muted-text">Beispiel für s = 0,15 (4s = 0,60)</text>
 
   <!-- Stacked Mixing Cylinder -->
   <g transform="translate(45, 58)">

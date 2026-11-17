@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 440" width="460" height="440">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 30 460 410" width="460" height="410">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -81,7 +81,7 @@
     </filter>
   </defs>
 
-  <text x="230" y="27" class="title sem-primary-text">2D-Kontrollvolumen: Der 5-Punkt-Stern</text>
+
 
   <!-- 3x3 pixel grid (total width 390, height 274) -->
   <g transform="translate(35, 38)">

@@ -1,10 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 46 260 374" width="260" height="374">
   <defs>
     <!-- @svg-palette-defs:start -->
-    <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#eff6ff" />
-      <stop offset="100%" stop-color="#dbeafe" />
-    </linearGradient>
     <linearGradient id="grad-sem-info" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#f0f9ff" />
       <stop offset="100%" stop-color="#bae6fd" />
@@ -25,11 +21,6 @@
     <style>
       
 /* @svg-palette:start */
-      .sem-primary { fill: url(#grad-sem-primary); stroke: #2563eb; }
-      .sem-primary-bg { fill: url(#grad-sem-primary); stroke: none; }
-      .sem-primary-stroke { stroke: #2563eb; }
-      .sem-primary-fill { fill: #2563eb; }
-      .sem-primary-text { fill: #1e40af; }
       .sem-info { fill: url(#grad-sem-info); stroke: #0284c7; }
       .sem-info-bg { fill: url(#grad-sem-info); stroke: none; }
       .sem-info-stroke { stroke: #0284c7; }
@@ -64,8 +55,6 @@
     </marker>
   </defs>
 
-  <text x="130" y="24" class="hdr sem-primary-text">Robin-Rand an Kühlrippe</text>
-  <text x="130" y="41" class="sub sem-muted-text">Übergang Metall ➔ Luftstrom</text>
 
   <!-- Inner Metal Node 1 -->
   <g transform="translate(20, 54)">
