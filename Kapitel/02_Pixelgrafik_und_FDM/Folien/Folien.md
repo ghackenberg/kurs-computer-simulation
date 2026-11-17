@@ -75,6 +75,8 @@ In **Termin 01** genügten skalare Zustände ($x(t), T(t)$) – warum reicht das
 
 ![](./Diagramme/Semester_Bruecke_T02.svg)
 
+> **Fokus:** Vom skalaren Zeitschritt (T01) zum 2D-Temperaturfeld im direkten RAM-Zugriff.
+
 </div>
 </div>
 
@@ -118,6 +120,9 @@ Ein **Rasterbild** ist eine zweidimensionale Matrix aus diskreten Bildpunkten (*
 | Farbtiefe | 32 Bit (4 Bytes) |
 | Format | `Bgra32` |
 | Kanäle | Blue, Green, Red, Alpha |
+| Stride | $W \cdot 4\,\text{Bytes}$ (+ Padding) |
+
+> **Praxis:** Ein $500 \times 500$-Feld belegt genau $1\,\mathrm{MB}$ RAM.
 
 </div>
 </div>
@@ -243,6 +248,8 @@ Ein einziges XAML-Element:
 
 Kombiniert mit einer einzigen
 **`WriteableBitmap`**, in die Millionen Bildpunkte direkt in den Back-Buffer gerendert werden!
+
+> **Ergebnis:** Konstante $O(1)$-UI-Last im Visual Tree unabhängig von der Pixelanzahl ($\ge 60\,\text{FPS}$).
 
 </div>
 </div>
@@ -546,6 +553,13 @@ In der physikalischen Simulation repräsentiert ein Pixel eine Messgröße $v$ (
 - **Im inneren Render-Loop ($O(1)$ aus dem L1-Cache):**
   $$\text{Index} = \lfloor u \cdot 255 \rfloor \quad \Longrightarrow \quad \text{PixelFarbe} = \text{LUT}[\text{Index}]$$
 
+```csharp
+int idx = Math.Clamp((int)(u * 255f), 0, 255);
+pBackBuffer[i] = ViridisLut[idx];
+```
+
+> **Cache-Vorteil:** $256 \times 4\,\text{Bytes} = 1\,\mathrm{KB}$ passt vollständig in den L1-Cache.
+
 </div>
 <div class="one">
 
@@ -593,6 +607,8 @@ private static uint SampleViridis(double t)
          | ((uint)g << 8) | b;
 }
 ```
+
+> **Praxis:** Einmalige Berechnung beim Start, danach allokationsfreies $O(1)$-Nachschlagen pro Pixel.
 
 </div>
 </div>
@@ -862,6 +878,8 @@ In **Termin 02** haben wir kontinuierliche 2D-Felder auf einem festen Pixelgitte
 <div class="two">
 
 ![](./Diagramme/Semester_Bruecke_T02.svg)
+
+> **Quiz 1 (T03):** Wiederholen Sie Euler-Stabilität, BGRA-Bitshifts und FDM-Randbedingungen!
 
 </div>
 </div>

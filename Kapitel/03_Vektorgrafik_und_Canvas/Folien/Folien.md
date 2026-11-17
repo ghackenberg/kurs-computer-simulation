@@ -75,6 +75,8 @@ In **Termin 02** haben wir 2D-Temperaturfelder direkt in den Pixelpuffer (`Write
 
 ![](./Diagramme/Semester_Bruecke_T03.svg)
 
+> **Fokus:** Vom festen Pixelraster (T02) zur skalierbaren, objektbasierten 2D-Vektorgeometrie.
+
 </div>
 </div>
 
@@ -135,6 +137,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - Die GUI verwaltet einen Szenengraph (**Visual Tree**) im RAM.
 - Jede Linie und jeder Knoten existiert als C#-Objekt.
 - **Automatisches Neuzeichnen** bei Größenänderungen + native Maus-Events.
+
+> **Faustregel:** Pixelgitter $\to$ Immediate Mode; interaktive Vektor-Objekte $\to$ Retained Mode.
 
 </div>
 </div>
@@ -257,6 +261,8 @@ Beim Zeichnen physikalischer Systeme treffen zwei inkompatible Welten aufeinande
    ```
    - $45^\circ$-Diagonalen kippen ab! Lösung: Isotropie $s = \min(s_x, s_y)$.
 
+> **Merksatz:** Ein gemeinsamer Maßstab $s$ erhält Winkel, Kreise und Seitenverhältnisse exakt.
+
 </div>
 </div>
 
@@ -309,6 +315,8 @@ public void Update(
     OffsetY = margin + (drawH - worldH * Scale) / 2.0;
 }
 ```
+
+> **Schutz:** `Math.Max(..., 1e-4)` verhindert Division durch Null bei entarteten Modellen.
 
 </div>
 <div class="one">
@@ -455,6 +463,8 @@ In industriellen CAD-Viewern werden Abmessungen normgerecht nach **DIN 406** dar
 2. **Maßlinie (Dimension Line):** Steht orthogonal zu den Maßhilfslinien, begrenzt durch schlanke Maßpfeile (1:3).
 3. **Maßzahl (Dimension Text):** Mittig über der Maßlinie platziert (z. B. `"4.00 m"`).
 
+> **Praxis:** Konstante Pixelgrößen für Pfeile und Text halten Maßketten in jeder Zoomstufe lesbar.
+
 </div>
 <div class="one">
 
@@ -512,6 +522,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Naives CPU-Neuzeichnen (Ansatz A):** Jede Mausbewegung berechnet alle Weltkoordinaten neu ($O(N)$) $\implies$ Lags und Layout-Passes ab 1.000 Elementen.
 - **GPU-`MatrixTransform` (Ansatz B – Standard):** Das Modell wird **einmalig** gezeichnet; Pan & Zoom verändern nur eine einzige affine $3 \times 3$-Matrix ($\mathbf{M}$).
 - **Vorteil:** Hardwarebeschleunigt über DirectX ($O(1)$), 60+ FPS, 0 Bytes GC-Allokation!
+
+> **Merksatz:** Geometrie nur bei Modelländerung neu aufbauen – Kamera bewegt nur `MatrixTransform` ohne Layout-Pass!
 
 </div>
 <div class="one">
@@ -728,6 +740,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **`Brush` (Tinte):** Flächenfüllung (`Brushes.SteelBlue`, `SolidColorBrush`).
 - **`Pen` (Stift):** Kontur aus `Brush` + `Thickness` / `DashStyle`.
 
+> **Praxis:** Ein einziges `DrawingVisual` ersetzt tausende `Shape`-Controls auf dem `Canvas`.
+
 </div>
 </div>
 
@@ -748,6 +762,8 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
   pen.Freeze();
   foreach (var rod in rods) dc.DrawLine(pen, rod.P1, rod.P2);
   ```
+
+> **Hinweis:** Eingefrorene `Pen`-/`Brush`-Instanzen sind thread-sicher und werden direkt von der GPU gecacht.
 
 </div>
 <div class="one">
@@ -827,6 +843,8 @@ Unsere 2D-Vektorgeometrie und das Welt-Screen-Koordinatensystem stehen – wie n
 <div class="two">
 
 ![](./Diagramme/Semester_Bruecke_T03.svg)
+
+> **Vorbereitung:** Die hier gezeichneten Tragwerksknoten dienen in Termin 07 direkt als FEM-Eingabe!
 
 </div>
 </div>

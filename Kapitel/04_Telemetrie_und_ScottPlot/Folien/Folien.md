@@ -75,6 +75,8 @@ In **T02 und T03** haben wir die 2D-Grundlagen selbst programmiert – wo fehlt 
 
 ![](./Diagramme/Semester_Bruecke_T04.svg)
 
+> **Fokus:** Hochfrequente Live-Signale, Ringpuffer & Online-Statistik ohne GC-Last.
+
 </div>
 </div>
 
@@ -143,6 +145,8 @@ Ein numerischer Simulator berechnet rohe Zahlenkolonnen. Erst **Diagramme** bean
 
 ![](./Diagramme/SkiaSharp_Grundbausteine_Illu.svg)
 
+> **Vorteil:** GPU-beschleunigtes 2D-Rendering ohne WPF-Visual-Tree-Overhead.
+
 </div>
 </div>
 
@@ -200,6 +204,14 @@ Die zentrale Klasse in `ScottPlot 5` ist `ScottPlot.Plot`. Das WPF-Control `WpfP
       x:Name="WpfPlot1" />
   </Grid>
 </Window>
+```
+
+**Code-Behind (C#):**
+```csharp
+// C#-Aufruf (Code-Behind)
+WpfPlot1.Plot.Add.Signal(ys);
+WpfPlot1.Plot.Axes.AutoScale();
+WpfPlot1.Refresh();
 ```
 
 </div>
@@ -264,6 +276,8 @@ plot.Axes.SquareUnits(); // Verzerrungsfreies 1:1-Seitenverhältnis (Isotropie)
 
 ![](./Diagramme/Scatter_vs_Signal_Speicher.svg)
 
+> **Speicher:** $50\,\%$ weniger RAM durch Wegfall des `xs`-Arrays.
+
 </div>
 <div class="two">
 
@@ -327,7 +341,7 @@ Eine 1-kHz-Simulation läuft $10.000\,\text{s}$ lang ($N = 10^7$ `double`-Werte 
 double[] ys = Simulation.RunFixedStepEuler(
     steps: 10_000_000, dt: 0.001);
 
-var sig = WpfPlot1.Plot.Add.Signal(ys);
+WpfPlot1.Plot.Add.Signal(ys);
 sig.Data.Period  = 0.001; // dt = 1 ms (1 kHz)
 sig.Data.XOffset = 0.0;   // Startzeitpunkt t0 = 0 s
 WpfPlot1.Refresh();
@@ -592,6 +606,8 @@ _meanLine.Y  = _welford.Mean;
 _upperLine.Y = _welford.Mean + 3.0 * _welford.StdDev;
 ```
 
+> **Numerik-Vorteil:** Kein Auslöschungsfehler wie bei der naiven Varianzformel $\sum x^2 - (\sum x)^2/N$!
+
 </div>
 </div>
 
@@ -704,6 +720,8 @@ Nach welchem Kriterium ordnet `MSAGL` die Knoten im 2D-Raum an?
 
 ![](./Diagramme/MSAGL_Layout_Varianten_Illu.svg)
 
+> **Wahl:** Signalfluss $\to$ `Sugiyama`; vermaschtes Netz $\to$ `MdsLayoutSettings`.
+
 </div>
 </div>
 
@@ -715,6 +733,8 @@ Nach welchem Kriterium ordnet `MSAGL` die Knoten im 2D-Raum an?
 <div class="two">
 
 ![](./Diagramme/Sugiyama_Phasen_Illu.svg)
+
+> **Praxis:** Knotenpositionen und Spline-Routing berechnet `MSAGL` vollautomatisch.
 
 </div>
 <div class="two">
@@ -817,6 +837,8 @@ Unsere 2D-Visualisierungssäulen (**Pixel**, **Vektor**, **Telemetrie/Graphen**)
 <div class="two">
 
 ![](./Diagramme/Semester_Bruecke_T04.svg)
+
+> **Quiz 2 (T05):** Wiederholen Sie `Transform2D`, `MatrixTransform`, Ringpuffer & Welford!
 
 </div>
 </div>

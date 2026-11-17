@@ -172,7 +172,7 @@ section div.columns > div.six {
 section pre {
     font-size: 0.72em;
     line-height: 1.35;
-    max-height: 500px;
+    max-height: 460px;
     overflow-x: auto;
     border-radius: 8px;
     border: 1px solid rgba(148, 163, 184, 0.28);

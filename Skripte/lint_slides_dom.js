@@ -278,19 +278,21 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         }
       };
       collectGaps(sec, 'slide');
-      let minTextColHeight = null;
+      const colRatios = [];
       sec.querySelectorAll('div.columns').forEach(cols => {
         const children = Array.from(cols.children);
-        const hasImgCol = children.some(c => c.querySelector('img') && !c.querySelector('p, ul, ol, pre'));
-        if (!hasImgCol) return;
-        children.forEach(c => {
-          if (c.querySelector('img') || c.querySelector('pre, marp-pre')) return;
+        if (children.length < 2) return;
+        const heights = children.map(c => {
           const items = Array.from(c.children).filter(el => el.getBoundingClientRect().height > 0);
-          if (items.length === 0) return;
+          if (items.length === 0) return 0;
           const top = Math.min(...items.map(el => el.getBoundingClientRect().top));
           const bot = Math.max(...items.map(el => el.getBoundingClientRect().bottom));
-          const h = bot - top;
-          if (minTextColHeight === null || h < minTextColHeight) minTextColHeight = h;
+          return bot - top;
+        });
+        const maxColH = Math.max(...heights, 0);
+        if (maxColH <= 0) return;
+        heights.forEach((h, cIdx) => {
+          colRatios.push({ colIndex: cIdx + 1, height: Math.round(h), maxHeight: Math.round(maxColH), ratio: h / maxColH });
         });
       });
       sec.querySelectorAll('div.columns > div').forEach((col, cIdx) => {
@@ -377,7 +379,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         footerTop,
         contentTop,
         contentBottom,
-        minTextColHeight,
+        colRatios,
         elementGaps,
         colorIssues,
         images
@@ -507,9 +509,9 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const contentHeight = s.contentBottom > s.contentTop ? (s.contentBottom - s.contentTop) : 0;
     const fillRatio = contentHeight / availableHeight;
     const minFillRatio = options.minFillRatio !== undefined ? options.minFillRatio : 0.80;
-    const textColRatio = (s.minTextColHeight !== null && s.minTextColHeight !== undefined) ? (s.minTextColHeight / availableHeight) : 1;
-    const hasSparseTextCol = !s.isOpener && textColRatio < 0.45;
-    const hasUnderfill = !isAppendix && !s.isOpener && minFillRatio > 0 && (fillRatio < minFillRatio || hasSparseTextCol);
+    const sparseCols = (s.colRatios || []).filter(c => c.ratio < minFillRatio);
+    const hasUnderfill = !isAppendix && !s.isOpener && minFillRatio > 0 && fillRatio < minFillRatio;
+    const hasSparseCol = !isAppendix && !s.isOpener && minFillRatio > 0 && sparseCols.length > 0;
 
     const gapTolerance = options.gapTolerance !== undefined ? options.gapTolerance : 1;
     const gapIssues = (s.elementGaps || []).filter(g => Math.abs(g.gap - (g.expected || 16)) > gapTolerance);
@@ -537,13 +539,15 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       svgIssues,
       gapIssues,
       colorIssues,
-      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssuesAfterBg || hasUnderfill || hasGapError || hasColorError || hasMissingTitle,
+      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssuesAfterBg || hasUnderfill || hasSparseCol || hasGapError || hasColorError || hasMissingTitle,
       hasVOverflow,
       hasHOverflow,
       hasHeaderCollision,
       hasFooterCollision,
       hasSvgIssues: hasSvgIssuesAfterBg,
       hasUnderfill,
+      hasSparseCol,
+      sparseCols,
       hasGapError,
       hasColorError,
       hasMissingTitle
@@ -737,6 +741,9 @@ async function main() {
         }
         if (err.hasUnderfill) {
           issues.push(`Folie zu leer: vertikale Auslastung nur ${Math.round(err.fillRatio * 100)}% (< ${Math.round(minFillRatio * 100)}%)`);
+        }
+        if (err.hasSparseCol) {
+          err.sparseCols.forEach(c => issues.push(`Spalte ${c.colIndex} zu leer: ${Math.round(c.ratio * 100)}% der Spaltenhöhe (${c.height}/${c.maxHeight}px, < ${Math.round(minFillRatio * 100)}%)`));
         }
         if (err.hasGapError) {
           err.gapIssues.forEach(g => issues.push(`Vertikaler Gap inkonsistent (${g.scope}: ${g.pair} = ${g.gap}px, erwartet ${g.expected || 16}px)`));

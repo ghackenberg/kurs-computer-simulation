@@ -47,6 +47,8 @@ Nach dem organisatorischen **Prolog (Kapitel 00)** legen wir heute in **Termin 0
 
 ![](./Diagramme/Semester_Bruecke_T01.svg)
 
+> **Fokus:** Erst Werkzeuge beherrschen, dann reale Systeme abbilden.
+
 </div>
 </div>
 
@@ -75,7 +77,11 @@ Ein **Modell** ist eine vereinfachte, abstrakte Darstellung eines realen Systems
 > "All models are wrong, but some are useful."
 > -- George E. P. Box
 
-Es erfasst die wesentlichen Aspekte, die für eine bestimmte Fragestellung relevant sind, und vernachlässigt unwesentliche Details.
+Es erfasst die wesentlichen Aspekte, die für eine bestimmte Fragestellung relevant sind, und vernachlässigt unwesentliche Details:
+
+- **Abstraktion:** Reduktion auf die steuernden physikalischen Größen.
+- **Zweckbindung:** Jedes Modell gilt nur für seinen definierten Gültigkeitsbereich.
+- **Überprüfbarkeit:** Vorhersagen müssen sich an Messdaten testen lassen.
 
 </div>
 <div>
@@ -530,6 +536,10 @@ Mittelt Anfangssteigung $\mathbf{k}_1 = \mathbf{f}(t_k, \mathbf{x}_k)$ und Endst
 2. *Steigung am Ziel:* $\mathbf{k}_2 = \mathbf{f}(t_k + \Delta t, \tilde{\mathbf{x}}_{k+1})$
 3. *Korrektor:* $\mathbf{x}_{k+1} = \mathbf{x}_k + \frac{\Delta t}{2}\left(\mathbf{k}_1 + \mathbf{k}_2\right)$
 
+```csharp
+var x = x + 0.5 * dt * (k1 + k2);
+```
+
 </div>
 </div>
 
@@ -650,6 +660,7 @@ In diesem Kurs lernen wir die Visualisierung entlang von vier komplementären Di
 #### 3D-Szenen & Architektur
 - **3D-Szenen (`SharpGL`, Kap. 5):** Räumliche Kinematik, Roboterzellen und Kamerasteuerung.
 - **Trennungs-Prinzip:** Die Grafikschicht liest nur Zustandsdaten – sie berechnet niemals selbst Physik-Gleichungen!
+- **Performance-Regel:** Bei $> 10\,000$ Elementen pro Frame immer Pixel-Puffer oder GPU-Meshes statt Einzel-Controls wählen.
 
 </div>
 </div>
@@ -845,7 +856,7 @@ Der Digitale Zwilling verbindet die Simulation nahtlos über alle drei Lebenszyk
 ![](./Illustrationen/Inbetriebnahme_Klassisch.jpg)
 
 **Traditioneller Ansatz**
-1. Mechanik und Elektrik aufbauen.
+1. Mechanik und Elektrik komplett in der Werkshalle aufbauen.
 2. Software-Entwickler kommen zur Baustelle.
 3. Software wird an der realen, teuren und potenziell gefährlichen Anlage getestet und in Betrieb genommen.
 4. Fehlerbehebung ist zeitaufwändig und teuer.
@@ -948,6 +959,8 @@ In den folgenden Kapiteln erarbeiten wir zunächst die Werkzeuge und vertiefen a
 <div class="two">
 
 ![](./Diagramme/Semester_Bruecke_T01.svg)
+
+> **Ausblick:** Alle Solver und Modelle in Teil 2 nutzen direkt die performanten Visualisierungen aus Teil 1.
 
 </div>
 </div>

@@ -262,10 +262,11 @@ Wie die beiden Semesterhälften nahtlos ineinandergreifen:
 <div class="two">
 
 #### Phase 1: Werkzeugkasten (T01–T06)
-- Schnelle 2D-/3D-Ausgabe ohne GC-Ruckler
+- Schnelle 2D-/3D-Ausgabe ohne GC-Ruckler (`WriteableBitmap` & OpenGL)
 - Live-Telemetrie & sichere UI-Entkopplung
 - Saubere Trennung zwischen Modell und View
 - Unit-Tests & analytische Kontrollrechnungen
+- Multi-Core-Parallelisierung mit `Parallel.For`
 
 </div>
 <div class="two">
@@ -274,6 +275,7 @@ Wie die beiden Semesterhälften nahtlos ineinandergreifen:
 - Statik, ODEs, ereignisdiskrete & hybride Systeme
 - Kombination aller Verfahren im Digitalen Zwilling
 - Bewusste Wahl von Modellart und Löser
+- Kalibrierung mit realen Mess- und Sensordaten
 - Reflexion im abschließenden Modellwahl-Leitfaden
 
 </div>
@@ -311,6 +313,8 @@ Die Lehrveranstaltung ist eine **Integrierte Lehrveranstaltung (ILV)** mit 3 ECT
 <div class="two">
 
 ![](./Diagramme/Kursstruktur_Taktung.svg)
+
+> **Rhythmus:** Jede Woche verzahnt Vorlesung, Übung und Live-Showcase direkt miteinander.
 
 </div>
 </div>
@@ -376,6 +380,8 @@ Transparente Beurteilung von Theorie, Code-Praxis und Live-Verteidigung:
 <div class="two">
 
 ![](./Diagramme/Notenmodell_40_40_20.svg)
+
+> **Transparenz:** Alle Teilpunkte werden laufend nach jedem Termin in Moodle veröffentlicht.
 
 </div>
 </div>
