@@ -38,10 +38,9 @@ const puppeteer = requireLocalOrGlobal('puppeteer');
 const marked = requireLocalOrGlobal('marked');
 const katex = requireLocalOrGlobal('katex');
 const hljs = requireLocalOrGlobal('highlight.js');
-let MERMAID_JS_PATH = null;
-try {
-  MERMAID_JS_PATH = require.resolve('mermaid/dist/mermaid.min.js', { paths: [ROOT_DIR, GLOBAL_NODE_MODULES, GLOBAL_MERMAID_MODULES] });
-} catch (e) {}
+const MERMAID_JS_PATH = require.resolve('mermaid/dist/mermaid.min.js', {
+  paths: [__dirname, path.resolve(__dirname, '..'), ROAMING_NPM]
+});
 
 const CHROME_PATHS = [
   'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
