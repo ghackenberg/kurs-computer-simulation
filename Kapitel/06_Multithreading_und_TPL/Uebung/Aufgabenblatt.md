@@ -7,10 +7,9 @@
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10 (`net8.0-windows`), WPF (`WriteableBitmap`), TPL, `System.Diagnostics.Stopwatch`, `System.Threading`.  
-> [!CAUTION]
-> **Vorgreif-Sperre für Termin 06:**  
-> - **Erlaubt:** TPL, `Parallel.For`, `ParallelOptions`, `Interlocked`, `ConcurrentBag<T>`, `Task.Run`, `IProgress<T>`, `CancellationTokenSource`, `Stopwatch`.  
-> - **Strengstens verboten:** **KEIN** Math.NET Cholesky, **KEINE** kontinuierlichen S-Functions, **KEINE** Event-Queues!
+> [!IMPORTANT]
+> **Technische Rahmenbedingungen:**  
+> Nutzen Sie ausschließlich die bereitgestellte WPF-Projektmappe mit .NET **Task Parallel Library (TPL)** (`Parallel.For`, `ParallelOptions`, `Interlocked`, `ConcurrentBag<T>`, `Task.Run`, `IProgress<T>`, `CancellationTokenSource`, `Stopwatch`) — ohne zusätzliche NuGet-Pakete.
 
 ---
 

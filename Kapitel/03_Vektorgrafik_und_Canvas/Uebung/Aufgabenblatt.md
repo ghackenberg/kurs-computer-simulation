@@ -7,10 +7,9 @@
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `System.Windows.Controls.Canvas` und 2D-Vektorprimitiven (`Line`, `Path`, `Polygon`, `Ellipse`).  
-> [!CAUTION]
-> **Vorgreif-Sperre & Didaktische Kausalitäts-Sperre für Termin 03:**  
-> In dieser Einheit steht ausschließlich die **reine geometrische 2D-Vektorgrafik und Interaktion** im Fokus!  
-> Es dürfen **KEINE Steifigkeitsmatrizen**, **KEINE Cholesky-Zerlegungen** und **KEINE Stabkräfteberechnungen** implementiert werden! (Die mechanisch-statische FEM-Berechnung erfolgt erst in Einheit 07).  
+> [!IMPORTANT]
+> **Technische Rahmenbedingungen:**  
+> Nutzen Sie ausschließlich die bereitgestellte WPF-Projektmappe (`WPF Canvas` / `DrawingVisual`, ohne zusätzliche NuGet-Pakete). Der Fokus liegt rein auf **2D-Vektorgeometrie, Koordinatentransformation und Interaktion** — ohne mechanische Statik- oder Gleichungslöser.  
 > Zudem gilt: **KEIN** ScottPlot, **KEIN** SharpGL 3D, **KEIN** Multithreading!
 
 ---
@@ -203,7 +202,7 @@ Ergänze zudem den JSON-Import/Export mit System.Text.Json und binde KEINE FEM- 
    *„Ziehen Sie das Anwendungsfenster am Rand ganz schmal und breit: Behalten die Träger-Dreiecke, Bemaßungen und das Konstruktionsraster ihre exakten Winkel und Proportionen, ohne zu verzerren?“*
 2. **Pfeilspitzen-Invarianz & Längengrenzen:**  
    *„Behält in Track A die Pfeilspitze beim Ziehen der Kraft konstant ihre 14 Pixel Kantenlänge? Färbt sich in Track B die Vorschau-Linie ab exakt $L > 4{,}00\,\text{m}$ rot und blockiert den Bau?“*
-3. **Kausalitäts- und Vorgreif-Check:**  
-   *„Wurde die Vorgreif-Sperre strikt eingehalten (kein vorzeitiges Lösen von Gleichungssystemen oder FEM-Rechnungen vor T07)? Konzentriert sich die Architektur rein auf saubere Vektordarstellung, Transformation und Interaktion?“*
+3. **Architektur- und Fokus-Check:**  
+   *„Konzentriert sich die Architektur rein auf saubere 2D-Vektordarstellung, Transformation und Interaktion (ohne eigene Statik- oder Gleichungslöser)?“*
 4. **Performance beim Drag-and-Drop:**  
    *„Werden Brushes/Pens vorab eingefroren (`Freeze()`) und bleibt das Koordinatensystem während des Ziehens eines Knotens ruhig, ohne unter dem Mauszeiger wegzuspringen?“*

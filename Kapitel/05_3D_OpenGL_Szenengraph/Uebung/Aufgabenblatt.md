@@ -7,10 +7,9 @@
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `SharpGL.WPF.OpenGLControl`.  
-> [!CAUTION]
-> **Vorgreif-Sperre für Termin 05:**  
-> In dieser Einheit liegt der Fokus rein auf der **3D-Computergrafik, Kinematik und Szenengraph-Hierarchie via OpenGL**.  
-> **KEIN** Multithreading (`Parallel.For`), **KEINE** numerischen Gleichungslöser (Math.NET Cholesky), **KEINE** kontinuierlichen S-Functions! Die Kinematik wird rein über geometrische Transformationsmatrizen auf dem OpenGL-Stack berechnet.
+> [!IMPORTANT]
+> **Technische Rahmenbedingungen:**  
+> Nutzen Sie ausschließlich die bereitgestellte Projektmappe mit **SharpGL (OpenGL)** und `System.Numerics.Matrix4x4` (single-threaded, ohne zusätzliche NuGet-Pakete). Die Kinematik wird rein über geometrische Transformationsmatrizen berechnet.
 
 ---
 

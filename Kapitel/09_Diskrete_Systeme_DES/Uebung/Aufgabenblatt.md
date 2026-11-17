@@ -7,10 +7,9 @@
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, `System.Collections.Generic.PriorityQueue<TElement, TPriority>`, TPL `Parallel.For`, ScottPlot 5.  
-> [!CAUTION]
-> **Vorgreif-Sperre für Termin 09:**  
-> - **Erlaubt:** `PriorityQueue`, stochastische Zufallsgeneratoren, Inversionsmethode, TPL für Replikationen, ScottPlot 5.  
-> - **Strengstens verboten:** **KEINE** kontinuierlichen DGL-Schaltfunktionen (Zero-Crossing Wurzelsuche)!
+> [!IMPORTANT]
+> **Technische Rahmenbedingungen:**  
+> Nutzen Sie ausschließlich die bereitgestellte Projektmappe mit `PriorityQueue`, stochastischen Zufallsgeneratoren (Inversionsmethode), TPL für Replikationen und **ScottPlot 5** — ohne zusätzliche NuGet-Pakete.
 
 ---
 

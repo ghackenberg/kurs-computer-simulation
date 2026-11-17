@@ -7,9 +7,9 @@
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, S-Functions, Bisektion, WPF Canvas / ScottPlot 5.  
-> [!CAUTION]
-> **Vorgreif-Sperre für Termin 10:**  
-> - **Keine Vorgreif-Sperre!** Der gesamte Semester-Stack (DGL, S-Functions, TPL, WPF Canvas, ScottPlot 5) steht uneingeschränkt zur Verfügung!
+> [!IMPORTANT]
+> **Technische Rahmenbedingungen:**  
+> Nutzen Sie die bereitgestellte Projektmappe — der gesamte Semester-Stack (DGL, S-Functions, Event-Queues, TPL, WPF Canvas, ScottPlot 5) steht uneingeschränkt zur Verfügung.
 
 ---
 

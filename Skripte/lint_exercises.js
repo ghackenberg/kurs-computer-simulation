@@ -11,7 +11,7 @@
  *    'Sprint', 'Stufe A/B', 'Aufgabe A.1', kein '€' in LaTeX, keine '$' oder
  *    Backticks in Kapitel/XX_.../Moodle/Text.md).
  * 2. Kanonisches 8-Abschnitts-Schema in Kapitel/XX_.../Uebung/Aufgabenblatt.md
- *    (H1, Metadaten-Kopf mit Vorgreif-Sperre, exakte H2 1..8, 10-Punkte-Rubrik).
+ *    (H1, Metadaten-Kopf mit Technischen Rahmenbedingungen, exakte H2 1..8, 10-Punkte-Rubrik).
  * 3. 4+4+4-Symmetrie & Didaktik (Vorbereitungsblock, Aufgabe 1.1..1.4 mit
  *    Selbsttest & dotnet test in 1.4, Arbeitspaket A.1..A.4 & B.1..B.4).
  * 4. Kopplung gegen Uebung/Vorlage/ (.sln Startup-Projekt-Reihenfolge, .Tests,
@@ -244,8 +244,11 @@ function lintChapter(dirName) {
   if (!/\*\*Bearbeitungsform:\*\*/.test(headerBlock) || !/\*\*Stufe 1 \(Basisaufgabe\):\*\*/.test(headerBlock) || !/\*\*Stufe 2 \(Vertiefungsaufgabe/.test(headerBlock)) {
     issues.push({ type: 'MISSING_HEADER_META', file: relMd, message: 'Metadaten-Kopfblock muss **Bearbeitungsform:**, **Stufe 1 (Basisaufgabe):** und **Stufe 2 (Vertiefungsaufgabe...):** enthalten.' });
   }
-  if (!/>\s*\[!CAUTION\]/.test(headerBlock)) {
-    issues.push({ type: 'MISSING_VORGREIF_SPERRE', file: relMd, message: 'Im Kopfblock fehlt die > [!CAUTION] Vorgreif-Sperre.' });
+  if (!/>\s*\[!IMPORTANT\]/.test(headerBlock) || !/\*\*Technische Rahmenbedingungen:\*\*/.test(headerBlock)) {
+    issues.push({ type: 'MISSING_TECH_CONSTRAINTS', file: relMd, message: 'Im Kopfblock fehlt der studentengerechte Block > [!IMPORTANT] mit **Technische Rahmenbedingungen:**.' });
+  }
+  if (/Vorgreif-?Sperre/i.test(mdNoCode)) {
+    issues.push({ type: 'INTERNAL_VORGREIF_TERM', file: relMd, message: 'Der interne Autorenbegriff "Vorgreif-Sperre" darf nicht im studentischen Aufgabenblatt stehen (stattdessen Technische Rahmenbedingungen).' });
   }
 
   // Extract all H2 headings

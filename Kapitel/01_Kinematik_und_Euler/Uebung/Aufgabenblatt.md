@@ -7,9 +7,9 @@
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10 Konsolenapplikation (`System.Numerics.Vector2`).  
-> [!CAUTION]
-> **Vorgreif-Sperre für Termin 01:**  
-> In diesem Übungsblatt sind **ausschließlich reine Konsolenprogramme** zulässig. **KEIN** WPF, **KEIN** ScottPlot, **KEIN** Multithreading (`Parallel.For`), **KEIN** SharpGL! Visualisierung erfolgt über formatierte Konsolentabellen, ASCII-Art oder CSV-Export.
+> [!IMPORTANT]
+> **Technische Rahmenbedingungen:**  
+> Verwenden Sie ausschließlich eine **reine .NET-Konsolenanwendung** ohne zusätzliche NuGet-Pakete oder GUI-Frameworks; die Ausgabe erfolgt über formatierte Konsolentabellen, ASCII-Darstellungen oder CSV-Export.
 
 ---
 

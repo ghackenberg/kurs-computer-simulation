@@ -7,10 +7,9 @@
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, `MathNet.Numerics`, WPF Canvas (Frontend aus Termin 03).  
-> [!CAUTION]
-> **Vorgreif-Sperre für Termin 07:**  
-> - **Erlaubt:** `MathNet.Numerics` (`DenseMatrix`, `Vector`, `Cholesky`), WPF Canvas Vektorgrafik.  
-> - **Strengstens verboten:** **KEINE** dynamischen DGL-Integratoren (RK4), **KEINE** S-Functions, **KEINE** Event-Queues!
+> [!IMPORTANT]
+> **Technische Rahmenbedingungen:**  
+> Nutzen Sie ausschließlich die bereitgestellte Projektmappe mit `MathNet.Numerics` (`DenseMatrix`, `Vector`, `Cholesky`) und `WPF Canvas` — ohne zusätzliche NuGet-Pakete oder eigene Zeitintegration.
 
 ---
 
