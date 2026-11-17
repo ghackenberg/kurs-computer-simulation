@@ -470,6 +470,93 @@ async function auditSvgFile(browser, svgPath, options = {}) {
         }
       });
 
+      // 5b. Allgemeine Marker-/Pfeilspitzen-Kollision (<line>, <path>, <polyline> mit marker-end / marker-start)
+      const markerElements = Array.from(document.querySelectorAll('line, path, polyline')).filter(el => {
+        if (el.closest('defs, clipPath, marker')) return false;
+        const st = window.getComputedStyle(el);
+        if (st.display === 'none' || st.visibility === 'hidden' || parseFloat(st.opacity || '1') === 0) return false;
+        const sw = parseFloat(st.strokeWidth || '0');
+        if (!st.stroke || st.stroke === 'none' || st.stroke === 'transparent' || sw <= 0) return false;
+        const me = el.getAttribute('marker-end') || st.markerEnd;
+        const ms = el.getAttribute('marker-start') || st.markerStart;
+        return (me && me !== 'none') || (ms && ms !== 'none');
+      });
+
+      const markerBoxes = [];
+      markerElements.forEach(el => {
+        const ctm = el.getScreenCTM();
+        if (!ctm) return;
+        const st = window.getComputedStyle(el);
+        const sw = parseFloat(st.strokeWidth || '1.5');
+        const ctmScale = Math.hypot(ctm.a, ctm.b) || 1;
+        const getMarkerRadius = (markerVal) => {
+          const m = String(markerVal || '').match(/url\(#([^)]+)\)/);
+          const mEl = m ? document.getElementById(m[1]) : null;
+          const mw = mEl ? parseFloat(mEl.getAttribute('markerWidth') || '6') : 6;
+          const mh = mEl ? parseFloat(mEl.getAttribute('markerHeight') || '6') : 6;
+          return Math.max(4, Math.min(7, Math.max(mw, mh) * 0.8)) * ctmScale;
+        };
+        const toScreen = (pt) => ({
+          x: ctm.a * pt.x + ctm.c * pt.y + ctm.e,
+          y: ctm.b * pt.x + ctm.d * pt.y + ctm.f
+        });
+        let startPt = null, endPt = null;
+        if (el.tagName.toLowerCase() === 'line') {
+          startPt = { x: parseFloat(el.getAttribute('x1') || '0'), y: parseFloat(el.getAttribute('y1') || '0') };
+          endPt = { x: parseFloat(el.getAttribute('x2') || '0'), y: parseFloat(el.getAttribute('y2') || '0') };
+        } else if (typeof el.getTotalLength === 'function') {
+          try {
+            const len = el.getTotalLength();
+            if (len > 0) {
+              startPt = el.getPointAtLength(0);
+              endPt = el.getPointAtLength(len);
+            }
+          } catch (_) {}
+        }
+        const me = el.getAttribute('marker-end') || st.markerEnd;
+        const ms = el.getAttribute('marker-start') || st.markerStart;
+        if (endPt && me && me !== 'none') {
+          const p = toScreen(endPt);
+          const r = getMarkerRadius(me);
+          markerBoxes.push({ el, left: p.x - r, right: p.x + r, top: p.y - r, bottom: p.y + r, cx: p.x, cy: p.y });
+        }
+        if (startPt && ms && ms !== 'none') {
+          const p = toScreen(startPt);
+          const r = getMarkerRadius(ms);
+          markerBoxes.push({ el, left: p.x - r, right: p.x + r, top: p.y - r, bottom: p.y + r, cx: p.x, cy: p.y });
+        }
+      });
+
+      const markerSeen = new Set();
+      markerBoxes.forEach(mb => {
+        const xOv = Math.max(0, Math.min(t.rect.right, mb.right) - Math.max(t.rect.left, mb.left));
+        const yOv = Math.max(0, Math.min(t.rect.bottom, mb.bottom) - Math.max(t.rect.top, mb.top));
+        if (xOv >= 2 && yOv >= 2) {
+          const testX = Math.max(t.rect.left, Math.min(t.rect.right, mb.cx));
+          const testY = Math.max(t.rect.top, Math.min(t.rect.bottom, mb.cy));
+          const els = document.elementsFromPoint(testX, testY);
+          const tIdx = els.indexOf(t.el);
+          const lIdx = els.indexOf(mb.el);
+          let shielded = false;
+          if (tIdx !== -1 && lIdx !== -1) {
+            for (let k = Math.min(tIdx, lIdx) + 1; k < Math.max(tIdx, lIdx); k++) {
+              const st = window.getComputedStyle(els[k]);
+              if (st.fill && st.fill !== 'none' && st.fill !== 'transparent' && st.opacity !== '0' && st.fillOpacity !== '0') {
+                shielded = true;
+                break;
+              }
+            }
+          }
+          if (!shielded && !markerSeen.has(t.text)) {
+            markerSeen.add(t.text);
+            issues.push({
+              type: 'TEXT_MARKER_COLLISION',
+              message: `Arrow/marker collides with text "${t.text.slice(0, 25)}"`
+            });
+          }
+        }
+      });
+
       // Pfad-Abtastung fÃ¼r Freiformkurven (<path>) mit feinem Raster (11x5 Punkte)
       if (!lineCollisionSeen.has(t.text + '_line')) {
         const fractionsX = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];

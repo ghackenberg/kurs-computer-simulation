@@ -149,7 +149,7 @@
 
   <!-- Kamera-Rechtsvektor e_right = (cos(theta), 0, -sin(theta)) senkrecht zum Strahl -->
   <line class="sem-warning-stroke" x1="210" y1="165" x2="305" y2="75" stroke-width="2.5" marker-end="url(#arr-amber)" />
-  <text x="385" y="72" class="code sem-warning-text">e_right = (cos, -sin)</text>
+  <text x="398" y="72" class="code sem-warning-text">e_right = (cos, -sin)</text>
 
   <!-- Panning-Verschiebung Delta p_look = -dRight * e_right -->
   <line class="sem-success-stroke" x1="210" y1="165" x2="115" y2="255" stroke-width="3.5" marker-end="url(#arr-green)" />
