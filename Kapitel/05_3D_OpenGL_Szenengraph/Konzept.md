@@ -7,6 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensätze:** [`Folien/Folien.md`](./Folien/Folien.md) (+ [`Folien_Anhang_A_OpenGL_Details.md`](./Folien/Folien_Anhang_A_OpenGL_Details.md), [`Folien_Anhang_B_3D_Normalen.md`](./Folien/Folien_Anhang_B_3D_Normalen.md))
+- **Abgrenzung Hauptdeck vs. Anhang (optional fürs Selbststudium):** *Hauptdeck (`Folien.md`):* `SharpGL.WPF`, Z-Buffer, Phong-Überblick, MVP-Pipeline ($\mathbf{T}\cdot\mathbf{R} \neq \mathbf{R}\cdot\mathbf{T}$), `gl.PushMatrix`/`PopMatrix`, `SceneNode`, SCARA-Vorwärtskinematik, `OrbitCamera` (inkl. Pol-Clamping & `Pan`) und Re-Parenting (vollständig für Übung & Quiz 3). *Anhang A (`Folien_Anhang_A_OpenGL_Details.md`):* Phong-Einzelformeln ($I_a, I_d, I_s$), `GL_FLAT`/`GL_SMOOTH`, OpenGL-Primitive, `gl.Ortho`/`gl.Perspective`-Matrizen, `GetLocalMatrix`/`GetWorldMatrix` & Euler-Winkel. *Anhang B (`Folien_Anhang_B_3D_Normalen.md`):* Analytische Herleitung von Kugel- und Zylinder-Normalen samt Quad-Strip-/Triangle-Fan-Triangulation.
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](./Uebung/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](./Moodle/Text.md) | [`SceneGraph3D.sln`](./Uebung/Vorlage/SceneGraph3D.sln)
 - **Assessment zu Terminbeginn:** **Moodle-Test 2** ([`Quiz/README.md`](./Quiz/README.md), 15 Min., prüft ausschließlich Kap. 03–04).
 - **Vorgreif-Sperre (Technologie-Stand T05):** `SharpGL.WPF`, homogene $4\times 4$-Matrizen, `OrbitCamera`, `SceneNode`, Vorwärtskinematik. *Strikte Tabus:* Kein Multithreading (erst T06), keine inversen Jacobi-LGS (erst T07).

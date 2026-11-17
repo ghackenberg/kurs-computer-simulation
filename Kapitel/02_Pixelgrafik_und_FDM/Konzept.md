@@ -7,6 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensätze:** [`Folien/Folien.md`](./Folien/Folien.md) (+ [`Folien_Anhang_A_Waermeleitung_FDM.md`](./Folien/Folien_Anhang_A_Waermeleitung_FDM.md))
+- **Abgrenzung Hauptdeck vs. Anhang (optional fürs Selbststudium):** *Hauptdeck (`Folien.md`):* Speicherlayout (`Stride`, `Bgra32`), `WriteableBitmap` (`uint*`, 256-LUT), 5-Punkt-FDM, $s \le 0{,}25$ und die für Übung/Quiz nötigen Randbedingungen (Dirichlet, Neumann, Robin-Regel). *Anhang A (`Folien_Anhang_A_Waermeleitung_FDM.md`):* Thermodynamische Grundgrößen ($\lambda, \rho c_p$), Elektro-/Hydraulik-Analogie, vollständige Herleitung des Fourierschen Gesetzes und detaillierte Bilanzherleitung der Robin-Gitterformel.
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](./Uebung/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](./Moodle/Text.md) | [`PixelHeatFDM.sln`](./Uebung/Vorlage/PixelHeatFDM.sln)
 - **Vorgreif-Sperre (Technologie-Stand T02):** WPF `WriteableBitmap`, `unsafe`-Pointer, 2D-FDM. *Strikte Tabus:* Kein WPF Canvas, kein `ScottPlot`, kein `Parallel.For` (erst T06).
 - **Kapitel-Brücken & Quiz-Zuordnung:**

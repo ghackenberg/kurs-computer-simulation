@@ -7,6 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensätze:** [`Folien/Folien.md`](./Folien/Folien.md) (+ [`Folien_Anhang_A_ScottPlot_Details.md`](./Folien/Folien_Anhang_A_ScottPlot_Details.md))
+- **Abgrenzung Hauptdeck vs. Anhang (optional fürs Selbststudium):** *Hauptdeck (`Folien.md`):* `ScottPlot 5` (`Scatter`, `Signal`, `DataStreamer`, `SquareUnits`), `CircularBuffer<T>`, Welford-Online-Statistik ($\mu \pm 3\sigma$), Histogramme & `MSAGL`-Topologiegraphen (vollständig für Übung & Quiz 2). *Anhang A (`Folien_Anhang_A_ScottPlot_Details.md`):* `SignalXY`-Binärsuche & Bucketing, `VectorField`, `Boxes`, `Bars`, `Heatmap`/`ColorBar`, `FillY`-Korridore, Force-Directed-Konvergenz sowie `MSAGL` vs. `Nodify`.
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](./Uebung/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](./Moodle/Text.md) | [`ScottPlotTelemetry.sln`](./Uebung/Vorlage/ScottPlotTelemetry.sln)
 - **Vorgreif-Sperre (Technologie-Stand T04):** `ScottPlot 5`, `CircularBuffer<T>`, Welford-Statistik, `MSAGL`, MVVM. *Strikte Tabus:* Kein SharpGL 3D, kein Multithreading, kein RK4.
 - **Kapitel-Brücken & Quiz-Zuordnung:**

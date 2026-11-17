@@ -7,6 +7,7 @@
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
 - **Foliensätze:** [`Folien/Folien.md`](./Folien/Folien.md) (+ [`Folien_Anhang_A_Vektorgrafik_Details.md`](./Folien/Folien_Anhang_A_Vektorgrafik_Details.md))
+- **Abgrenzung Hauptdeck vs. Anhang (optional fürs Selbststudium):** *Hauptdeck (`Folien.md`):* WPF `Canvas`, Welt-Screen-Mapping (isotropes $s = \min(s_x, s_y)$, $Y$-Invertierung), Pfeilspitzen-Vektorgeometrie, DIN 406, `MatrixTransform` (`ScaleAt`, `Translate`, Freeze-Doktrin), `ScreenToWorld` und `DrawingVisual` + `.Freeze()`. *Anhang A (`Folien_Anhang_A_Vektorgrafik_Details.md`):* WPF-Layout-Panels (`Grid`/`StackPanel`), `Attached Properties`-Interna, Shape-Positionierung, Beweis zu `ScaleAt` & Zentrierungsfällen sowie 2-Phasen-Layout-Cycle (`Measure`/`Arrange`) und `VisualHost`.
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](./Uebung/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](./Moodle/Text.md) | [`VectorTrussCanvas.sln`](./Uebung/Vorlage/VectorTrussCanvas.sln)
 - **Assessment zu Terminbeginn:** **Moodle-Test 1** ([`Quiz/README.md`](./Quiz/README.md), 15 Min., prüft ausschließlich Kap. 00–02).
 - **Vorgreif-Sperre (Technologie-Stand T03):** Rein geometrisch auf WPF `Canvas` / `DrawingVisual`. *Strikte Tabus:* **Keine Fachwerk-Statik, keine Steifigkeitsmatrix $\mathbf{K}$, kein Math.NET Cholesky (erst in T07!)** – alle Kräfte sind fest vorgegebene Vektoren.
