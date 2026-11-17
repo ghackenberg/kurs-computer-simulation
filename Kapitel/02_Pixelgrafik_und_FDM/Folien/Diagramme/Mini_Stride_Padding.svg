@@ -1,40 +1,70 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" width="260" height="420">
   <defs>
+    <!-- @svg-palette-defs:start -->
+    <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff" />
+      <stop offset="100%" stop-color="#dbeafe" />
+    </linearGradient>
+    <linearGradient id="grad-sem-info" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0f9ff" />
+      <stop offset="100%" stop-color="#bae6fd" />
+    </linearGradient>
+    <linearGradient id="grad-sem-success" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0fdf4" />
+      <stop offset="100%" stop-color="#dcfce7" />
+    </linearGradient>
+    <linearGradient id="grad-sem-warning" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb" />
+      <stop offset="100%" stop-color="#fef3c7" />
+    </linearGradient>
+    <linearGradient id="grad-sem-card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+    <linearGradient id="grad-sem-muted" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+    <linearGradient id="grad-sem-neutral" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+    <!-- @svg-palette-defs:end -->
     <style>
       
 /* @svg-palette:start */
-      .sem-primary { fill: #eff6ff; stroke: #2563eb; }
-      .sem-primary-bg { fill: #eff6ff; stroke: none; }
+      .sem-primary { fill: url(#grad-sem-primary); stroke: #2563eb; }
+      .sem-primary-bg { fill: url(#grad-sem-primary); stroke: none; }
       .sem-primary-stroke { stroke: #2563eb; }
       .sem-primary-fill { fill: #2563eb; }
       .sem-primary-text { fill: #1e40af; }
-      .sem-info { fill: #e0f2fe; stroke: #0284c7; }
-      .sem-info-bg { fill: #e0f2fe; stroke: none; }
+      .sem-info { fill: url(#grad-sem-info); stroke: #0284c7; }
+      .sem-info-bg { fill: url(#grad-sem-info); stroke: none; }
       .sem-info-stroke { stroke: #0284c7; }
       .sem-info-fill { fill: #0284c7; }
       .sem-info-text { fill: #0369a1; }
-      .sem-success { fill: #f0fdf4; stroke: #16a34a; }
-      .sem-success-bg { fill: #f0fdf4; stroke: none; }
+      .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
+      .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
       .sem-success-stroke { stroke: #16a34a; }
       .sem-success-fill { fill: #16a34a; }
       .sem-success-text { fill: #15803d; }
-      .sem-warning { fill: #fffbeb; stroke: #d97706; }
-      .sem-warning-bg { fill: #fffbeb; stroke: none; }
+      .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
+      .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
       .sem-warning-stroke { stroke: #d97706; }
       .sem-warning-fill { fill: #d97706; }
       .sem-warning-text { fill: #b45309; }
-      .sem-card { fill: #f8fafc; stroke: #cbd5e1; }
-      .sem-card-bg { fill: #f8fafc; stroke: none; }
+      .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
+      .sem-card-bg { fill: url(#grad-sem-card); stroke: none; }
       .sem-card-stroke { stroke: #cbd5e1; }
       .sem-card-fill { fill: #cbd5e1; }
       .sem-card-text { fill: #1e293b; }
-      .sem-muted { fill: #f1f5f9; stroke: #94a3b8; }
-      .sem-muted-bg { fill: #f1f5f9; stroke: none; }
+      .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
+      .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
       .sem-muted-fill { fill: #94a3b8; }
       .sem-muted-text { fill: #475569; }
-      .sem-neutral { fill: #ffffff; stroke: #334155; }
-      .sem-neutral-bg { fill: #ffffff; stroke: none; }
+      .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
+      .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }
       .sem-neutral-fill { fill: #334155; }
       .sem-neutral-text { fill: #0f172a; }

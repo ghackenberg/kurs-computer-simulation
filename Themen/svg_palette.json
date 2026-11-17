@@ -1,58 +1,67 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "Single Source of Truth für semantische SVG-Farbklassen. Neue Rollen hier ergänzen und anschließend 'npm run sync:svg-palette' ausführen.",
+  "description": "Single Source of Truth für semantische SVG-Farbklassen & Gradienten. Neue Rollen hier ergänzen und anschließend 'npm run sync:svg-palette' ausführen.",
   "roles": {
     "sem-primary": {
       "description": "Aktiver Datenpfad, reguläre Prozessschritte, primäre Hervorhebung",
       "fill": "#eff6ff",
+      "fillEnd": "#dbeafe",
       "stroke": "#2563eb",
       "text": "#1e40af"
     },
     "sem-info": {
       "description": "Sekundäre Datenreihe, Kamera-/Weltachsen, Geschwindigkeitsvektoren",
-      "fill": "#e0f2fe",
+      "fill": "#f0f9ff",
+      "fillEnd": "#bae6fd",
       "stroke": "#0284c7",
       "text": "#0369a1"
     },
     "sem-success": {
       "description": "Zieltreffer, korrekter Pfad, Optimierungserfolg, validierte Lösung",
       "fill": "#f0fdf4",
+      "fillEnd": "#dcfce7",
       "stroke": "#16a34a",
       "text": "#15803d"
     },
     "sem-warning": {
       "description": "Zwischenzustand, aktuell geprüfter Index, Hinweis, Grenzfall",
       "fill": "#fffbeb",
+      "fillEnd": "#fef3c7",
       "stroke": "#d97706",
       "text": "#b45309"
     },
     "sem-danger": {
       "description": "Fehlerfall, ausgeschlossener Bereich, Engpass, Divergenz",
       "fill": "#fef2f2",
+      "fillEnd": "#fee2e2",
       "stroke": "#dc2626",
       "text": "#991b1b"
     },
     "sem-accent": {
       "description": "Sonderkräfte, Transformationen, Hervorhebung außerhalb der Hauptachse",
       "fill": "#f5f3ff",
+      "fillEnd": "#ede9fe",
       "stroke": "#7c3aed",
       "text": "#6d28d9"
     },
     "sem-card": {
       "description": "Äußere Diagramm-Karten und dezente Panel-Hintergründe",
-      "fill": "#f8fafc",
+      "fill": "#ffffff",
+      "fillEnd": "#f1f5f9",
       "stroke": "#cbd5e1",
       "text": "#1e293b"
     },
     "sem-muted": {
       "description": "Ignorierte, inaktive, abgeschlossene oder Hintergrund-Elemente",
-      "fill": "#f1f5f9",
+      "fill": "#f8fafc",
+      "fillEnd": "#e2e8f0",
       "stroke": "#94a3b8",
       "text": "#475569"
     },
     "sem-neutral": {
       "description": "Neutrale Container, Achsen, Rahmen und Standard-Beschriftungen",
       "fill": "#ffffff",
+      "fillEnd": "#f8fafc",
       "stroke": "#334155",
       "text": "#0f172a"
     }
