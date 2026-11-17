@@ -811,6 +811,32 @@ var streamer = plot.Add.DataStreamer(capacity: 2000); // O(1) Ringpuffer, 0 Heap
 
 ---
 
+<!-- _class: appendix -->
+
+### Vertiefung im Selbststudium: Anhang A (`ScottPlot 5` & `MSAGL`)
+
+<div class="columns">
+<div class="two">
+
+Für weitere **Plot-Typen und Graph-Layouts** in eigenen Dashboards:
+
+- **Weitere Plot-Typen:** `SignalXY` ($\mathcal{O}(\log N)$), `VectorField`, `Boxes`, `Bars`, `Heatmap` & `FillY`.
+- **Interna & Architektur:** Vom Skalarfeld über die Farbtabelle zur `SKBitmap`-Pipeline.
+- **Graph-Layouts:** `MSAGL` Force-Directed-Konvergenz und Vergleich mit `Nodify`.
+- **Praxis-Nutzen:** Direkt nutzbar für eigene Analyse- und Monitoring-Dashboards.
+
+</div>
+<div class="two">
+
+![](./Diagramme/SignalXY_Binaersuche_Illu.svg)
+
+</div>
+</div>
+
+> **Hinweis:** Optional fürs Selbststudium – Pflichtaufgaben und Quiz 2 deckt das Hauptdeck ab ([Anhang A](./Folien_Anhang_A_ScottPlot_Details.md)).
+
+---
+
 <!-- _class: outlook -->
 
 ### Ausblick: Von 2D-Telemetrie zu 3D-Szenengraphen & Quiz 2 (T05)

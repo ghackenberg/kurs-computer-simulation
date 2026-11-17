@@ -404,7 +404,7 @@ function lintSectionDeck(markdownPath) {
     } else if (/<!--\s*_class:\s*activity\s*-->/i.test(slide)) {
       slideMins = 3.0;
       contentSlideCount++;
-    } else if (chapterMatch || sectionMatch || /^#\s+Zusammenfassung/im.test(slide)) {
+    } else if (chapterMatch || sectionMatch || /^#\s+Zusammenfassung/im.test(slide) || /<!--\s*_class:\s*appendix\s*-->/i.test(slide)) {
       slideMins = 0.5;
     } else if (/###\s+(?:Rückblick\s*&\s*Brücke|Einordnung\s*&\s*Rückblick|Brücke\s*&\s*Rückblick)/i.test(slide)) {
       slideMins = 2.0;
@@ -557,7 +557,7 @@ function lintSectionDeck(markdownPath) {
 
   // 6. Abschnitts-Mindestgröße & Ausgewogenheit prüfen (ab Kap. 06 als Fehler, 00-05 als Warnung)
   if (actualSectionSlides.length > 0) {
-    const summaryIdx = slides.findIndex(sl => /^#\s+Zusammenfassung/im.test(sl));
+    const summaryIdx = slides.findIndex(sl => /^#{1,3}\s+Zusammenfassung/im.test(sl));
     const endBound = summaryIdx !== -1 ? summaryIdx + 1 : slides.length + 1;
     const secCounts = actualSectionSlides.map((sec, idx) => {
       const nextSlideNum = idx + 1 < actualSectionSlides.length ? actualSectionSlides[idx + 1].slideNum : endBound;
@@ -684,6 +684,19 @@ function lintSectionDeck(markdownPath) {
         type: 'ORPHAN_APPENDIX',
         message: `Anhang '${anhFile}' wird in 'Folien.md' nirgends referenziert.`
       });
+    } else {
+      const hasContentSlideRef = slides.some(sl => {
+        const isFrame = /<!--\s*_class:\s*(?:title|showcase|recap|summary|appendix|outlook|homework)\s*-->/i.test(sl);
+        const isOpener = /^#{1,2}\s+/m.test(sl.replace(/```[\s\S]*?```/g, ''));
+        return !isFrame && !isOpener && sl.includes(anhFile);
+      });
+      if (!hasContentSlideRef) {
+        issues.push({
+          slideNum: 0,
+          type: 'APPENDIX_MISSING_CONTENT_LINK',
+          message: `Anhang '${anhFile}' muss auf mindestens einer normalen Inhaltsfolie in 'Folien.md' verlinkt sein.`
+        });
+      }
     }
     if (konzeptContent && !konzeptContent.includes(anhFile)) {
       issues.push({
@@ -693,6 +706,17 @@ function lintSectionDeck(markdownPath) {
       });
     }
   });
+
+  if (appendixFiles.length > 0) {
+    const hasAppendixSlide = slides.some(sl => /<!--\s*_class:\s*appendix\s*-->/i.test(sl));
+    if (!hasAppendixSlide) {
+      issues.push({
+        slideNum: 0,
+        type: 'MISSING_APPENDIX_SLIDE',
+        message: `Kapitel hat ${appendixFiles.length} Anhang/Anhänge, es fehlt jedoch eine '<!-- _class: appendix -->'-Highlight-Folie nach der Zusammenfassung.`
+      });
+    }
+  }
 
   // Prüfe alle relativen .md-Links in Folien.md und allen Anhängen auf Existenz
   const filesToCheckLinks = ['Folien.md', ...appendixFiles];

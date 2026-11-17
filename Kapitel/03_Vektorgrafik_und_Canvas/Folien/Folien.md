@@ -831,6 +831,32 @@ Ein Simulations-Viewer zeichnet $10.000$ Fachwerkstäbe pro Frame bei $60\,\text
 
 ---
 
+<!-- _class: appendix -->
+
+### Vertiefung im Selbststudium: Anhang A (WPF-Interna & Beweise)
+
+<div class="columns">
+<div class="three">
+
+Für alle, die **WPF-Layout-Interna** und die mathematischen Beweise im Detail nachlesen möchten:
+
+- **WPF-Layout & Panels:** Wie `Grid`, `StackPanel` und `Canvas` messen, positionieren und `Attached Properties` verwalten.
+- **Koordinatenräume & `ScaleAt`-Beweis:** Vollständige Matrix-Herleitung zwischen Screen, Canvas und World inkl. höhen- und breitenlimitierter Zentrierung.
+- **2-Phasen-Layout-Cycle:** Warum `Measure` & `Arrange` bei tausenden Shapes bremsen und wie `VisualHost` / `OnRender` arbeitet.
+- **Architektur-Einordnung:** Wann sich eigene `FrameworkElement`-Controls gegenüber `DrawingVisual` lohnen.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Koordinaten_Schichten.svg)
+
+</div>
+</div>
+
+> **Hinweis:** Optional fürs Selbststudium – für Übung 03 und Quiz 2 genügt der Stoff dieses Hauptdecks ([Anhang A](./Folien_Anhang_A_Vektorgrafik_Details.md)).
+
+---
+
 <!-- _class: outlook -->
 
 ### Ausblick: Echtzeit-Telemetrie & FEM-Kopplung (Termin 04 & 07)

@@ -486,6 +486,8 @@ function auditChapterVariables(chapterDir, mdFileName = 'Folien.md') {
       }
     }
 
+    if (/<!--\s*_class:\s*appendix\s*-->/i.test(slide)) return;
+
     const sectionMatch = slide.match(/##\s+(\d+\.\d+:[^\n]+)/);
     if (sectionMatch) {
       currentSection = sectionMatch[1];

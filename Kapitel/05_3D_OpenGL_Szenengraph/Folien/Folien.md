@@ -804,6 +804,30 @@ gl.PopMatrix();
 
 ---
 
+<!-- _class: appendix -->
+
+### Vertiefung im Selbststudium: Anhänge A & B (OpenGL & 3D-Normalen)
+
+<div class="columns">
+<div class="two">
+
+Für alle, die tiefer in **3D-Beleuchtung, Projektion und Netzgeometrie** einsteigen möchten:
+
+- **[Anhang A (OpenGL & Phong)](./Folien_Anhang_A_OpenGL_Details.md):** Formeln zu $I_a, I_d, I_s$, `GL_FLAT`/`GL_SMOOTH`, OpenGL-Primitive, `gl.Ortho`/`gl.Perspective`-Matrizen & Euler-Winkel.
+- **[Anhang B (3D-Normalen)](./Folien_Anhang_B_3D_Normalen.md):** Analytische Herleitung von Kugel- und Zylinder-Normalen samt Quad-Strip- und Triangle-Fan-Triangulation.
+
+</div>
+<div class="two">
+
+![](./Diagramme/Phong_Kombiniert.svg)
+
+</div>
+</div>
+
+> **Hinweis:** Optional fürs Selbststudium – Hauptdeck, Übung 05 & Quiz 3 sind in sich geschlossen.
+
+---
+
 <!-- _class: outlook -->
 
 ### Ausblick: Vom UI-Thread auf alle CPU-Kerne (Termin 06)

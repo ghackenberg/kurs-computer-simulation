@@ -131,7 +131,7 @@ private void SphereVertexNormal(OpenGL gl, int i, int j)
 
 Um die Kugeloberfläche mit OpenGL effizient zu zeichnen, wird die Kugel in Streifen zerlegt:
 
-- **Polkappen**: Nord- und Südpol werden durch `GL_TRIANGLE_FAN` geschlossen. Der Mittelpunkt ist der jeweilige Pol, die Fächerknoten liegen auf dem ersten bzw. letzten Breitenkreis.
+- **Polkappen**: Nord- und Südpol werden über `GL_TRIANGLE_FAN` (Mittelpunkt am Pol, Fächerknoten auf dem äußersten Breitenkreis) geschlossen.
 - **Bauchbinden**: Die Zonen zwischen zwei aufeinanderfolgenden Breitengraden ($i$ und $i+1$) werden als geschlossener `GL_QUAD_STRIP` erzeugt.
 
 ```csharp

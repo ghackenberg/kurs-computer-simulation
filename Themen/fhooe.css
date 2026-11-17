@@ -224,7 +224,8 @@ section blockquote {
 /* Didaktische Rahmenfolien-Klassen (MARP _class) – zentrale OKLCH-Ableitung */
 section.recap,
 section.outlook,
-section.summary {
+section.summary,
+section.appendix {
     --slide-hue: var(--hue-frame);
 }
 section.activity {
@@ -242,6 +243,7 @@ section.showcase,
 section.recap,
 section.outlook,
 section.summary,
+section.appendix,
 section.activity,
 section.solution,
 section.homework {
@@ -258,6 +260,7 @@ section.showcase h1, section.showcase h2, section.showcase h3, section.showcase 
 section.recap h1, section.recap h2, section.recap h3, section.recap h4,
 section.outlook h1, section.outlook h2, section.outlook h3, section.outlook h4,
 section.summary h1, section.summary h2, section.summary h3, section.summary h4,
+section.appendix h1, section.appendix h2, section.appendix h3, section.appendix h4,
 section.activity h1, section.activity h2, section.activity h3, section.activity h4,
 section.solution h1, section.solution h2, section.solution h3, section.solution h4,
 section.homework h1, section.homework h2, section.homework h3, section.homework h4 {
@@ -268,6 +271,7 @@ section.showcase header, section.showcase footer, section.showcase blockquote,
 section.recap header, section.recap footer, section.recap blockquote,
 section.outlook header, section.outlook footer, section.outlook blockquote,
 section.summary header, section.summary footer, section.summary blockquote,
+section.appendix header, section.appendix footer, section.appendix blockquote,
 section.activity header, section.activity footer, section.activity blockquote,
 section.solution header, section.solution footer, section.solution blockquote,
 section.homework header, section.homework footer, section.homework blockquote {
@@ -278,6 +282,7 @@ section.showcase blockquote,
 section.recap blockquote,
 section.outlook blockquote,
 section.summary blockquote,
+section.appendix blockquote,
 section.activity blockquote,
 section.solution blockquote,
 section.homework blockquote {

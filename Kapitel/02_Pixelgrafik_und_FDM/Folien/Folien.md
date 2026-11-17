@@ -860,6 +860,32 @@ row[x] = lut[idx];
 
 ---
 
+<!-- _class: appendix -->
+
+### Vertiefung im Selbststudium: Anhang A (Wärmeleitung & FDM)
+
+<div class="columns">
+<div class="three">
+
+Für alle, die die **physikalische Herleitung** hinter der 5-Punkt-FDM-Formel sauber nachvollziehen möchten:
+
+- **Thermodynamik-Analogie:** Wärmeleitfähigkeit $\lambda$, Wärmekapazität $\rho \cdot c_p$ und $\alpha$ im Vergleich zu Elektro & Hydraulik.
+- **Herleitung der DGL:** Vom Fourierschen Gesetz $\dot{q}$ über die Zellbilanz bis zur 2. Ableitung (Krümmung).
+- **Robin-Randbedingung:** Vollständige Bilanzherleitung der konvektiven Gitterformel am Bauteilrand.
+- **SI-Überblick:** Alle Materialgrößen und Randbedingungen im direkten Vergleich auf dem 2D-Gitter.
+
+</div>
+<div class="one">
+
+![](./Diagramme/Mini_Robin_Grenzfaelle.svg)
+
+</div>
+</div>
+
+> **Hinweis:** Optional fürs Selbststudium – alle Pflichtformeln stehen im Hauptdeck ([Anhang A](./Folien_Anhang_A_Waermeleitung_FDM.md)).
+
+---
+
 <!-- _class: outlook -->
 
 ### Ausblick: Von Pixelrastern zu skalierbaren Vektoren (T03)
