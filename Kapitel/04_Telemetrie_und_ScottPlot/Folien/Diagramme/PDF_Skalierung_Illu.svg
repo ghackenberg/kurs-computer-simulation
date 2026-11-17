@@ -70,7 +70,7 @@
   <text x="65" y="300" class="code sem-neutral-text" text-anchor="end">0</text>
 
   <!-- Histogramm-Balken (Absolute Häufigkeit) -->
-  <g class="sem-primary-fill sem-primary-stroke" fill-opacity="0.65" stroke-width="1.5">
+  <g class="sem-primary-fill sem-primary-stroke" fill-opacity="0.22" stroke-width="1.5">
     <rect x="105" y="270" width="36" height="30" />
     <rect x="145" y="215" width="36" height="85" />
     <rect x="185" y="135" width="36" height="165" />

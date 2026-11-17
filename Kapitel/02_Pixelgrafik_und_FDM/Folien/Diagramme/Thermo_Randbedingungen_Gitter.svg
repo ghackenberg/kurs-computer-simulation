@@ -34,14 +34,14 @@
       .sem-primary-stroke { stroke: #2563eb; }
       .sem-primary-fill { fill: #2563eb; }
       .sem-primary-text { fill: #1e40af; }
-      .sem-info { fill: url(#grad-sem-info); stroke: #0284c7; }
+      .sem-info { fill: url(#grad-sem-info); stroke: #0369a1; }
       .sem-info-bg { fill: url(#grad-sem-info); stroke: none; }
-      .sem-info-stroke { stroke: #0284c7; }
+      .sem-info-stroke { stroke: #0369a1; }
       .sem-info-fill { fill: #0369a1; }
       .sem-info-text { fill: #075985; }
-      .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
+      .sem-warning { fill: url(#grad-sem-warning); stroke: #b45309; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
-      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-stroke { stroke: #b45309; }
       .sem-warning-fill { fill: #b45309; }
       .sem-warning-text { fill: #92400e; }
       .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }

@@ -34,14 +34,14 @@
       .sem-primary-stroke { stroke: #2563eb; }
       .sem-primary-fill { fill: #2563eb; }
       .sem-primary-text { fill: #1e40af; }
-      .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
+      .sem-success { fill: url(#grad-sem-success); stroke: #15803d; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
-      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-stroke { stroke: #15803d; }
       .sem-success-fill { fill: #15803d; }
       .sem-success-text { fill: #166534; }
-      .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
+      .sem-warning { fill: url(#grad-sem-warning); stroke: #b45309; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
-      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-stroke { stroke: #b45309; }
       .sem-warning-fill { fill: #b45309; }
       .sem-warning-text { fill: #92400e; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
@@ -77,14 +77,14 @@
   <text x="240" y="305" class="code sem-danger-text">positions[i]</text>
 
   <!-- Linker Balken (Modell A): pos - width/2 -->
-  <rect class="sem-primary-fill sem-primary-stroke" x="105" y="105" width="122" height="160" rx="4" fill-opacity="0.88" stroke-width="2" />
+  <rect class="sem-primary-fill sem-primary-stroke" x="105" y="105" width="122" height="160" rx="4" stroke-width="2" />
   <circle class="sem-primary-fill" cx="166" cy="265" r="4.5" />
   <text x="166" y="90" class="code sem-primary-text">barsA</text>
   <text x="166" y="155" class="code" fill="#ffffff">pos - width/2</text>
   <text x="166" y="215" class="code" fill="#ffffff">Breite: width</text>
 
   <!-- Rechter Balken (Modell B): pos + width/2 -->
-  <rect class="sem-warning-fill sem-warning-stroke" x="253" y="140" width="122" height="125" rx="4" fill-opacity="0.88" stroke-width="2" />
+  <rect class="sem-warning-fill sem-warning-stroke" x="253" y="140" width="122" height="125" rx="4" stroke-width="2" />
   <circle class="sem-warning-fill" cx="314" cy="265" r="4.5" />
   <text x="314" y="125" class="code sem-warning-text">barsB</text>
   <text x="314" y="195" class="code" fill="#ffffff">pos + width/2</text>

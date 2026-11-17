@@ -13,7 +13,7 @@
       "description": "Sekundäre Datenreihe, Kamera-/Weltachsen, Geschwindigkeitsvektoren",
       "fill": "#f0f9ff",
       "fillEnd": "#bae6fd",
-      "stroke": "#0284c7",
+      "stroke": "#0369a1",
       "solidFill": "#0369a1",
       "text": "#075985"
     },
@@ -21,7 +21,7 @@
       "description": "Zieltreffer, korrekter Pfad, Optimierungserfolg, validierte Lösung",
       "fill": "#f0fdf4",
       "fillEnd": "#dcfce7",
-      "stroke": "#16a34a",
+      "stroke": "#15803d",
       "solidFill": "#15803d",
       "text": "#166534"
     },
@@ -29,7 +29,7 @@
       "description": "Zwischenzustand, aktuell geprüfter Index, Hinweis, Grenzfall",
       "fill": "#fffbeb",
       "fillEnd": "#fef3c7",
-      "stroke": "#d97706",
+      "stroke": "#b45309",
       "solidFill": "#b45309",
       "text": "#92400e"
     },

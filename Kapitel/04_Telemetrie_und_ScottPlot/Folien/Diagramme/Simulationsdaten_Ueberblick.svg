@@ -42,14 +42,14 @@
       .sem-primary-stroke { stroke: #2563eb; }
       .sem-primary-fill { fill: #2563eb; }
       .sem-primary-text { fill: #1e40af; }
-      .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
+      .sem-success { fill: url(#grad-sem-success); stroke: #15803d; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
-      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-stroke { stroke: #15803d; }
       .sem-success-fill { fill: #15803d; }
       .sem-success-text { fill: #166534; }
-      .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
+      .sem-warning { fill: url(#grad-sem-warning); stroke: #b45309; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
-      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-stroke { stroke: #b45309; }
       .sem-warning-fill { fill: #b45309; }
       .sem-warning-text { fill: #92400e; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
@@ -107,7 +107,7 @@
   <line class="sem-muted-stroke" x1="35" y1="330" x2="205" y2="330" stroke-width="2" />
   <rect class="sem-primary-fill" x="50" y="305" width="22" height="25" />
   <rect class="sem-primary-fill" x="78" y="275" width="22" height="55" />
-  <rect class="sem-primary-fill" x="106" y="250" width="22" height="80" />
+  <rect class="sem-primary" x="106" y="250" width="22" height="80" />
   <rect class="sem-primary-fill" x="134" y="280" width="22" height="50" />
   <rect class="sem-primary-fill" x="162" y="310" width="22" height="20" />
   <path class="sem-danger-stroke" d="M 42 328 Q 117 215 192 328" fill="none" stroke-width="2.5" />

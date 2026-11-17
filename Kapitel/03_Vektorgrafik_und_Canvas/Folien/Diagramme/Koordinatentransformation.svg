@@ -32,7 +32,7 @@
     <!-- @svg-palette-defs:end -->
     <!-- Pfeilspitzen -->
     <marker id="arrow-axis" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path class="sem-card-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
+      <path class="sem-neutral-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
     </marker>
     <marker id="arrow-axis-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path class="sem-primary-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
@@ -68,14 +68,14 @@
       .sem-primary-stroke { stroke: #2563eb; }
       .sem-primary-fill { fill: #2563eb; }
       .sem-primary-text { fill: #1e40af; }
-      .sem-info { fill: url(#grad-sem-info); stroke: #0284c7; }
+      .sem-info { fill: url(#grad-sem-info); stroke: #0369a1; }
       .sem-info-bg { fill: url(#grad-sem-info); stroke: none; }
-      .sem-info-stroke { stroke: #0284c7; }
+      .sem-info-stroke { stroke: #0369a1; }
       .sem-info-fill { fill: #0369a1; }
       .sem-info-text { fill: #075985; }
-      .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
+      .sem-warning { fill: url(#grad-sem-warning); stroke: #b45309; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
-      .sem-warning-stroke { stroke: #d97706; }
+      .sem-warning-stroke { stroke: #b45309; }
       .sem-warning-fill { fill: #b45309; }
       .sem-warning-text { fill: #92400e; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
@@ -149,14 +149,14 @@ text {
 
     <!-- Achsen -->
     <!-- X-Achse -->
-    <line class="axis sem-card-stroke" x1="50" y1="350" x2="385" y2="350" marker-end="url(#arrow-axis)" />
+    <line class="axis sem-neutral-stroke" x1="50" y1="350" x2="385" y2="350" marker-end="url(#arrow-axis)" />
     <g transform="translate(388, 340)">
       <rect class="sem-card-stroke" x="0" y="0" width="70" height="20" rx="3" fill="#FFFFFF" stroke-width="1" />
       <text class="axis-label sem-card-text" x="35" y="14" text-anchor="middle">+X [m]</text>
     </g>
     
     <!-- Y-Achse nach oben -->
-    <line class="axis sem-card-stroke" x1="65" y1="365" x2="65" y2="80" marker-end="url(#arrow-axis)" />
+    <line class="axis sem-neutral-stroke" x1="65" y1="365" x2="65" y2="80" marker-end="url(#arrow-axis)" />
     <g transform="translate(30, 56)">
       <rect class="sem-card-stroke" x="0" y="0" width="70" height="20" rx="3" fill="#FFFFFF" stroke-width="1" />
       <text class="axis-label sem-card-text" x="35" y="14" text-anchor="middle">+Y [m]</text>
@@ -270,7 +270,7 @@ text {
 
     <!-- Canvas Achsen -->
     <!-- X-Achse nach rechts -->
-    <line class="axis sem-card-stroke" x1="40" y1="75" x2="200" y2="75" marker-end="url(#arrow-axis)" />
+    <line class="axis sem-neutral-stroke" x1="40" y1="75" x2="200" y2="75" marker-end="url(#arrow-axis)" />
     <g transform="translate(210, 50)">
       <rect class="sem-card-stroke" x="0" y="0" width="90" height="20" rx="3" fill="#FFFFFF" stroke-width="1" />
       <text class="axis-label sem-card-text" x="45" y="14" text-anchor="middle">+X_scr [px]</text>

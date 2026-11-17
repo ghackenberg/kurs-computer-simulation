@@ -113,17 +113,8 @@ function checkSemanticPalette(svgPath) {
     }
   }
 
-  // 4. Kein eingebetteter Folientitel/-untertitel im SVG (gehört ins Markdown)
-  if (isDiagramSvg && !isMermaid && !isTikz) {
-    const hasEmbeddedTitle = /<text\b[^>]*\by\s*=\s*["'](?:[1-5]?\d|6[0-5])["'][^>]*\bclass\s*=\s*["'][^"']*\btitle\b[^"']*["'][^>]*>/i.test(raw)
-      || (path.basename(svgPath).startsWith('Mini_') && /<text\b[^>]*\by\s*=\s*["'](?:[1-2]?\d|3[0-5])["'][^>]*\bclass\s*=\s*["'][^"']*\bhdr\b[^"']*["'][^>]*>/i.test(raw));
-    if (hasEmbeddedTitle) {
-      paletteIssues.push({
-        type: 'EMBEDDED_SLIDE_TITLE',
-        message: 'Eingebetteter Folientitel/-untertitel im SVG gefunden. Titel und Untertitel gehören ins Markdown, nicht ins SVG.'
-      });
-    }
-  }
+  // 4. Kein eingebetteter Folientitel/-untertitel im SVG (wird unten im DOM als direktes <svg>-Kind geprüft)
+  const checkEmbeddedTitleInDom = isDiagramSvg && !isMermaid && !isTikz;
 
   return paletteIssues;
 }
@@ -152,7 +143,7 @@ async function auditSvgFile(browser, svgPath, options = {}) {
     return { path: svgPath, error: 'Failed to load SVG: ' + e.message, issues: [] };
   }
 
-  const analysis = await page.evaluate(() => {
+  const analysis = await page.evaluate(({ checkEmbeddedTitleInDom, isMini }) => {
     const issues = [];
     const parserError = document.querySelector('parsererror');
     if (parserError) {
@@ -757,7 +748,7 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       const l1 = relLum(c1), l2 = relLum(c2);
       return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
     };
-    const resolveBgCandidates = (fillStr) => {
+    const resolveBgCandidates = (fillStr, fillOp = 1) => {
       if (!fillStr || fillStr === 'none' || fillStr === 'transparent') return null;
       const urlM = fillStr.match(/url\(\s*["']?#([^"')]+)["']?\s*\)/i);
       if (urlM) {
@@ -766,15 +757,36 @@ async function auditSvgFile(browser, svgPath, options = {}) {
           const stops = Array.from(grad.querySelectorAll('stop'));
           const cols = stops.map(st => {
             const sc = window.getComputedStyle(st).stopColor || st.getAttribute('stop-color');
-            return parseColorStr(sc);
+            const p = parseColorStr(sc);
+            if (p) p.a *= fillOp;
+            return p;
           }).filter(Boolean).map(blendOnWhite);
           if (cols.length > 0) return cols;
         }
         return null;
       }
       const parsed = parseColorStr(fillStr);
-      if (!parsed || parsed.a === 0) return null;
+      if (!parsed || parsed.a * fillOp === 0) return null;
+      parsed.a *= fillOp;
       return [blendOnWhite(parsed)];
+    };
+
+    const getBgCandidatesAtPoint = (x, y, selfEl) => {
+      const stack = document.elementsFromPoint(x, y);
+      const tIdx = selfEl ? stack.indexOf(selfEl) : -1;
+      const startIdx = tIdx !== -1 ? tIdx + 1 : 0;
+      for (let i = startIdx; i < stack.length; i++) {
+        const bgEl = stack[i];
+        const bTag = bgEl.tagName ? bgEl.tagName.toLowerCase() : '';
+        if (!['rect', 'circle', 'ellipse', 'polygon', 'path'].includes(bTag)) continue;
+        const bStyle = window.getComputedStyle(bgEl);
+        const op = parseFloat(bStyle.opacity || '1');
+        const fop = parseFloat(bStyle.fillOpacity || '1');
+        if (bStyle.display === 'none' || bStyle.visibility === 'hidden' || op === 0 || fop === 0) continue;
+        const cands = resolveBgCandidates(bStyle.fill, op * fop);
+        if (cands) return cands;
+      }
+      return [{ r: 255, g: 255, b: 255 }];
     };
 
     const contrastSeen = new Set();
@@ -788,23 +800,7 @@ async function auditSvgFile(browser, svgPath, options = {}) {
 
       const cx = (t.rect.left + t.rect.right) / 2;
       const cy = (t.rect.top + t.rect.bottom) / 2;
-      const stack = document.elementsFromPoint(cx, cy);
-      const tIdx = stack.indexOf(t.el);
-      let bgCandidates = [{ r: 255, g: 255, b: 255 }];
-      if (tIdx !== -1) {
-        for (let i = tIdx + 1; i < stack.length; i++) {
-          const bgEl = stack[i];
-          const bTag = bgEl.tagName ? bgEl.tagName.toLowerCase() : '';
-          if (!['rect', 'circle', 'ellipse', 'polygon', 'path'].includes(bTag)) continue;
-          const bStyle = window.getComputedStyle(bgEl);
-          if (bStyle.display === 'none' || bStyle.visibility === 'hidden' || parseFloat(bStyle.opacity || '1') === 0 || parseFloat(bStyle.fillOpacity || '1') === 0) continue;
-          const cands = resolveBgCandidates(bStyle.fill);
-          if (cands) {
-            bgCandidates = cands;
-            break;
-          }
-        }
-      }
+      const bgCandidates = getBgCandidatesAtPoint(cx, cy, t.el);
 
       const fs = parseFloat(style.fontSize || '12');
       const fw = parseInt(style.fontWeight || '400', 10) || (style.fontWeight === 'bold' ? 700 : 400);
@@ -823,6 +819,121 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       }
     });
 
+    // 8. WCAG 2.1 Non-Text Graphic Contrast Check (>= 3.0:1 für Pfeilspitzen, Linien & kleine Signalformen)
+    const graphicSeen = new Set();
+    const toScreenPt = (el, x, y) => {
+      const ctm = el.getScreenCTM();
+      if (!ctm) return { x, y };
+      return { x: ctm.a * x + ctm.c * y + ctm.e, y: ctm.b * x + ctm.d * y + ctm.f };
+    };
+    const reportGraphicContrast = (label, ratio) => {
+      if (ratio >= 3.0) return;
+      const key = `${label}_${ratio.toFixed(1)}`;
+      if (!graphicSeen.has(key)) {
+        graphicSeen.add(key);
+        issues.push({
+          type: 'LOW_GRAPHIC_CONTRAST',
+          message: `Low graphic contrast (${ratio.toFixed(2)}:1 < 3.0:1) for ${label}`
+        });
+      }
+    };
+
+    svg.querySelectorAll('line, path, polyline').forEach(el => {
+      if (el.closest('defs, marker')) return;
+      const st = window.getComputedStyle(el);
+      if (st.display === 'none' || st.visibility === 'hidden' || parseFloat(st.opacity || '1') === 0) return;
+
+      // A. Pfeilspitzen (<marker>) an Linienenden prüfen
+      const markerEnd = st.markerEnd || el.getAttribute('marker-end');
+      if (markerEnd && markerEnd !== 'none') {
+        const mm = markerEnd.match(/url\(\s*["']?#([^"')]+)["']?\s*\)/i);
+        const markerEl = mm ? document.getElementById(mm[1]) : null;
+        const shape = markerEl ? markerEl.querySelector('path, polygon, circle, rect') : null;
+        if (shape) {
+          const mSt = window.getComputedStyle(shape);
+          const mFg = parseColorStr(mSt.fill);
+          if (mFg && mFg.a > 0) {
+            let pt = null;
+            const tag = el.tagName.toLowerCase();
+            if (tag === 'line') {
+              const x1 = parseFloat(el.getAttribute('x1') || '0'), y1 = parseFloat(el.getAttribute('y1') || '0');
+              const x2 = parseFloat(el.getAttribute('x2') || '0'), y2 = parseFloat(el.getAttribute('y2') || '0');
+              const len = Math.hypot(x2 - x1, y2 - y1);
+              const back = len > 6 ? 6 / len : 0;
+              pt = toScreenPt(el, x2 - (x2 - x1) * back, y2 - (y2 - y1) * back);
+            } else if (typeof el.getTotalLength === 'function' && el.getTotalLength() > 0) {
+              const p = el.getPointAtLength(Math.max(0, el.getTotalLength() - 6));
+              pt = toScreenPt(el, p.x, p.y);
+            }
+            if (pt) {
+              const bgCands = getBgCandidatesAtPoint(pt.x, pt.y, el);
+              const worst = Math.min(...bgCands.map(bg => contrastRatio(blendOnWhite(mFg), bg)));
+              reportGraphicContrast(`arrowhead (#${mm[1]})`, worst);
+            }
+          }
+        }
+      }
+
+      // B. Wichtige nicht-gestrichelte Vordergrund-Linien (>= 1.8px) ohne sem-card/sem-muted Rahmenklassen
+      const cls = el.getAttribute('class') || '';
+      const isSubtle = /\bsem-(?:card|muted)-stroke\b/.test(cls) || (st.strokeDasharray && st.strokeDasharray !== 'none') || (st.fill && st.fill !== 'none' && st.fill !== 'transparent');
+      const sw = parseFloat(st.strokeWidth || '1');
+      if (!isSubtle && sw >= 1.8) {
+        const sFg = parseColorStr(st.stroke);
+        if (sFg && sFg.a > 0) {
+          let midPt = null;
+          const tag = el.tagName.toLowerCase();
+          if (tag === 'line') {
+            const x1 = parseFloat(el.getAttribute('x1') || '0'), y1 = parseFloat(el.getAttribute('y1') || '0');
+            const x2 = parseFloat(el.getAttribute('x2') || '0'), y2 = parseFloat(el.getAttribute('y2') || '0');
+            midPt = toScreenPt(el, (x1 + x2) / 2, (y1 + y2) / 2);
+          } else if (typeof el.getTotalLength === 'function' && el.getTotalLength() > 0) {
+            const p = el.getPointAtLength(el.getTotalLength() / 2);
+            midPt = toScreenPt(el, p.x, p.y);
+          }
+          if (midPt) {
+            const bgCands = getBgCandidatesAtPoint(midPt.x, midPt.y, el);
+            const worst = Math.min(...bgCands.map(bg => contrastRatio(blendOnWhite(sFg), bg)));
+            reportGraphicContrast(`${tag} stroke`, worst);
+          }
+        }
+      }
+    });
+
+    // C. Kleine kompakte Signal-Formen (z. B. Punkte, kleine Marker) mit Solid-Fill (ohne gestrichelte Boxen / Linien-Endpunkte)
+    svg.querySelectorAll('circle, rect, polygon').forEach(el => {
+      if (el.closest('defs, marker')) return;
+      const cls = el.getAttribute('class') || '';
+      if (/\bsem-(?:card|muted)\b/.test(cls) && !/\bsem-\w+-fill\b/.test(cls)) return;
+      const st = window.getComputedStyle(el);
+      if (st.display === 'none' || st.visibility === 'hidden' || parseFloat(st.opacity || '1') < 0.95 || parseFloat(st.fillOpacity || '1') < 0.7) return;
+      if (st.strokeDasharray && st.strokeDasharray !== 'none') return;
+      const r = el.getBoundingClientRect();
+      if (r.width <= 14 || r.height <= 14 || r.width > 40 || r.height > 40) return;
+      const fg = parseColorStr(st.fill);
+      const stCol = (parseFloat(st.strokeWidth || '0') >= 0.8) ? parseColorStr(st.stroke) : null;
+      if ((!fg || fg.a === 0) && (!stCol || stCol.a === 0)) return;
+      const bgCands = getBgCandidatesAtPoint((r.left + r.right) / 2, (r.top + r.bottom) / 2, el);
+      const fillWorst = (fg && fg.a > 0) ? Math.min(...bgCands.map(bg => contrastRatio(blendOnWhite(fg), bg))) : 0;
+      const strokeWorst = (stCol && stCol.a > 0) ? Math.min(...bgCands.map(bg => contrastRatio(blendOnWhite(stCol), bg))) : 0;
+      reportGraphicContrast(`${el.tagName.toLowerCase()} marker`, Math.max(fillWorst, strokeWorst));
+    });
+
+    if (checkEmbeddedTitleInDom) {
+      const directTitles = Array.from(svg.children).filter(el => {
+        if (!el.tagName || el.tagName.toLowerCase() !== 'text') return false;
+        const cls = el.getAttribute('class') || '';
+        const y = parseFloat(el.getAttribute('y') || '999');
+        return (/(?:^|\s)title(?:\s|$)/.test(cls) && y <= 65) || (isMini && /(?:^|\s)hdr(?:\s|$)/.test(cls) && y <= 35);
+      });
+      if (directTitles.length === 1) {
+        issues.push({
+          type: 'EMBEDDED_SLIDE_TITLE',
+          message: 'Eingebetteter Folientitel/-untertitel im SVG gefunden. Titel und Untertitel gehören ins Markdown, nicht ins SVG.'
+        });
+      }
+    }
+
     return {
       hasSvg: true,
       svgWidth: Math.round(svgWidth),
@@ -831,6 +942,9 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       textNodeCount: textNodes.length,
       issues
     };
+  }, {
+    checkEmbeddedTitleInDom: /[\\/]Diagramme[\\/]/i.test(svgPath) && !svgPath.endsWith('.tikz.svg'),
+    isMini: path.basename(svgPath).startsWith('Mini_')
   });
 
   let rasterPath = null;

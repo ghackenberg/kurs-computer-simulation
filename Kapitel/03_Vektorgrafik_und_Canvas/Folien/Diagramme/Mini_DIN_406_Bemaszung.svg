@@ -25,14 +25,14 @@
     <style>
       
 /* @svg-palette:start */
-      .sem-info { fill: url(#grad-sem-info); stroke: #0284c7; }
+      .sem-info { fill: url(#grad-sem-info); stroke: #0369a1; }
       .sem-info-bg { fill: url(#grad-sem-info); stroke: none; }
-      .sem-info-stroke { stroke: #0284c7; }
+      .sem-info-stroke { stroke: #0369a1; }
       .sem-info-fill { fill: #0369a1; }
       .sem-info-text { fill: #075985; }
-      .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
+      .sem-success { fill: url(#grad-sem-success); stroke: #15803d; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
-      .sem-success-stroke { stroke: #16a34a; }
+      .sem-success-stroke { stroke: #15803d; }
       .sem-success-fill { fill: #15803d; }
       .sem-success-text { fill: #166534; }
       .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
