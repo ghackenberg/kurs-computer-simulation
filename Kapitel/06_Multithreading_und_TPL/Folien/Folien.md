@@ -60,13 +60,13 @@ Präsentation der Hausübung aus Termin 05 (**Stufe 1: Basisaufgabe** + **Stufe 
 ### Rückblick & Brücke: Wo stehen wir in der Vorlesung?
 
 <div class="columns top">
-<div class="three">
+<div class="two">
 
-In **Termin 02 bis 05** haben wir leistungsfähige 2D- und 3D-Oberflächen gebaut – warum bildet **Termin 06** heute das architektonische Scharnier zur zweiten Semesterhälfte?
+In **T02 bis T05** bauten wir 2D-/3D-Oberflächen – warum ist **T06** heute das Scharnier zur 2. Hälfte?
 
-- **Bisheriges Budget (T02–T05):** Solange Physik und Rendering gemeinsam im **WPF UI-Thread** laufen, bleiben bei $60\,\text{FPS}$ nur **$16{,}6\,\text{ms}$ pro Frame**.
-- **Engpass ab T07–T10:** Große Gleichungssysteme (Finite-Elemente-Statik, FEM), Differentialgleichungen (DGL) oder diskrete Ereignis-Läufe (Discrete Event Simulation, DES) dauern Sekunden $\implies$ **UI friert ein**, 15 von 16 Kernen langweilen sich!
-- **Lösung heute:** Saubere Trennung von **UI-Dispatcher** und **Worker-Threads** (`Task.Run`, `IProgress`, `Parallel.For`).
+- **Bisheriges Budget (T02–T05):** Laufen Physik & Rendering im **WPF UI-Thread**, bleiben bei $60\,\text{FPS}$ nur **$16{,}6\,\text{ms}$**.
+- **Engpass ab T07–T10:** FEM, Differentialgleichungen (DGL) und DES dauern Sekunden $\implies$ **UI friert ein**!
+- **Lösung heute:** **UI-Dispatcher** und **Worker-Threads** trennen (`Task.Run`, `IProgress`, `Parallel.For`).
 
 </div>
 <div class="two">
@@ -145,7 +145,7 @@ $$S(p) = \frac{T_1}{T_p}$$
 
 - $T_1$: Ausführungszeit auf $1$ CPU-Kern $[\mathrm{s}]$
 - $T_p$: Ausführungszeit auf $p$ CPU-Kernen $[\mathrm{s}]$ ($p \in \mathbb{N}^+$)
-- **Idealer Speedup (linear):** $S(p) = p$
+- **Idealer Speedup (linear):** $S(p) = p$ (ohne Synchronisations- oder Thread-Overhead)
 
 </div>
 <div class="one">
@@ -482,27 +482,30 @@ Wenn Partikel oder Agenten in einem Zeitschritt die Positionen anderer Agenten *
 <div class="one">
 
 **Das Prinzip (Read/Write-Trennung):**
-- Zwei getrennte Puffer: `StateCurrent[]` *(nur lesen)* und `StateNext[]` *(nur `StateNext[i]` schreiben)*.
-- Jeder Thread `i` schreibt exklusiv in seinen eigenen Ziel-Slot `i` $\implies$ **0 Locks, 0 False Sharing bei Schreibzugriffen!**
-- Erst *nach* `Parallel.For` werden die Referenzen getauscht (`Swap`).
+- Zwei getrennte Puffer: `StateCurrent[]` *(nur lesen)* und `StateNext[]` *(nur schreiben)*.
+- Jeder Thread `i` schreibt exklusiv mit `opts` in `StateNext[i]` $\implies$ **0 Locks, 0 False Sharing!**
+- Nach `Parallel.For` werden die Referenzen in $\mathcal{O}(1)$ getauscht (`Swap`).
 
 </div>
 <div class="one">
 
 ```csharp
-// Innerhalb Parallel.For: strikt getrennt!
+var opts = new ParallelOptions();
+// 1. Parallele Berechnung (strikt getrennt)
 Parallel.For(0, count, opts, i =>
 {
     var p = StateCurrent[i]; // nur lesen
     StateNext[i] = Integrate(p, StateCurrent);
 });
 
-// Nach dem Schritt: O(1)-Referenztausch
+// 2. Nach dem Schritt: O(1)-Referenztausch
 (StateCurrent, StateNext) = (StateNext, StateCurrent);
 ```
 
 </div>
 </div>
+
+> **Tausch-Prinzip:** Lesen aus `StateCurrent[]` und Schreiben in `StateNext[]` bleiben innerhalb jedes Zeitschritts strikt getrennt.
 
 ---
 
@@ -552,7 +555,7 @@ WPF-Anwendungen basieren auf einem **Single-Threaded Apartment (STA)**:
 **Symptome des UI-Freeze:**
 - Fenster reagiert nicht mehr ("Keine Rückmeldung")
 - Animationen und Fortschrittsbalken frieren ein
-- Abbruch über die GUI unmöglich
+- Abbruch über die GUI unmöglich (auch kein Tooltip/Scrollen)
 
 </div>
 <div class="one">
@@ -576,10 +579,12 @@ Mit `async`/`await` und `Task.Run` wird das Simulationsergebnis (`res`) im Hinte
 
 **Blockierend (UI friert ein):**
 ```csharp
-private void Start_Click(
-    object sender, RoutedEventArgs e)
+private void Start_Click(object sender, RoutedEventArgs e)
 {
-    // Blockiert UI-Thread!
+    // Blockiert UI-Thread komplett!
+    // Keine Maus-/Tastatur-Events mehr
+    // Fortschrittsbalken steht still
+    // Abbruch-Button bleibt tot
     var res = RunSimulation();
     ResultText.Text = $"Wert: {res}";
 }
@@ -590,16 +595,14 @@ private void Start_Click(
 
 **Asynchron (UI bleibt reaktiv):**
 ```csharp
-private async void Start_Click(
-    object sender, RoutedEventArgs e)
+private async void Start_Click(object sender, RoutedEventArgs e)
 {
     StartBtn.IsEnabled = false;
 
     // Auf ThreadPool auslagern
-    var res = await Task.Run(
-        () => RunSimulation());
+    var res = await Task.Run(() => RunSimulation());
 
-    // Rückkehr auf UI-Thread!
+    // Automatisch zurück auf UI-Thread
     ResultText.Text = $"Wert: {res}";
     StartBtn.IsEnabled = true;
 }
@@ -754,9 +757,10 @@ Lange Simulationen müssen vom Benutzer vorzeitig gestoppt werden können:
 <div class="one">
 
 **Rolle der `CancellationTokenSource`**
-- Wird im UI-Thread erzeugt und verwaltet.
-- `cts.Cancel()` signalisiert allen assoziierten Tokens den Abbruchwunsch.
-- Kann bei Bedarf auch ein Zeitlimit definieren (`CancelAfter(timeout)`).
+- Wird im UI-Thread erzeugt & verwaltet.
+- `cts.Cancel()` signalisiert allen Tokens den Abbruchwunsch.
+- Optionales Zeitlimit (`CancelAfter(timeout)`).
+- Verbindet den Stop-Button der GUI direkt mit dem Worker.
 
 </div>
 <div class="one">
@@ -783,15 +787,13 @@ Lange Simulationen müssen vom Benutzer vorzeitig gestoppt werden können:
 **UI-Ereignisbehandlung & Abbruch:**
 ```csharp
 private CancellationTokenSource _cts;
-
 private async void Start_Click(object s, RoutedEventArgs e)
 {
     _cts = new CancellationTokenSource();
     CancelBtn.IsEnabled = true;
-    try
-    {
+    try {
         await Task.Run(() => Simulate(_cts.Token), _cts.Token);
-        Status.Text = "Fertiggestellt.";
+        Status.Text = "Fertig.";
     }
     catch (OperationCanceledException) { Status.Text = "Abbruch."; }
     finally { CancelBtn.IsEnabled = false; }
@@ -820,7 +822,7 @@ public void Simulate(CancellationToken token)
 </div>
 </div>
 
-> **Aufräumen im `finally`-Block:** `CancelBtn.IsEnabled = false` setzen und `_cts?.Dispose()` aufrufen; in `Parallel.For` per `ParallelOptions` weitergeben.
+> **Aufräumen im `finally`-Block:** `CancelBtn.IsEnabled = false` & `_cts?.Dispose()`; in `Parallel.For` via `ParallelOptions` durchreichen.
 
 ---
 
