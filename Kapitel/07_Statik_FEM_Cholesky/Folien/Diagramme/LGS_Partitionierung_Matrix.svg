@@ -19,7 +19,6 @@
   </defs>
 
   <!-- Outer Canvas Background -->
-  <rect x="0" y="0" width="960" height="440" fill="#FFFFFF"/>
   <rect x="5" y="5" width="950" height="430" rx="10" fill="#FAFAFA" stroke="#CBD5E1" stroke-width="1.5"/>
 
   <!-- Top Title Banner -->

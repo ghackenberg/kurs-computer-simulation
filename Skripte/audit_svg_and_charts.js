@@ -58,6 +58,27 @@ function checkSemanticPalette(svgPath) {
     }
   }
 
+  // 2. Kein rahmenloses, vollflächiges weißes/helles Hintergrund-<rect> (stört CSS drop-shadow & Highlight-Folien)
+  const vbMatch = raw.match(/viewBox\s*=\s*["']\s*[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)\s*["']/i);
+  const firstRectMatch = raw.match(/<rect\b[^>]*>/i);
+  if (firstRectMatch) {
+    const r = firstRectMatch[0];
+    const hasLightFill = /fill\s*=\s*["']\s*(?:#fff(?:fff)?|white|#f8fafc|#f1f5f9|#fafafa)\s*["']/i.test(r);
+    const hasStroke = /\bstroke\s*=\s*["'](?!none|transparent)/i.test(r);
+    if (hasLightFill && !hasStroke) {
+      const wMatch = r.match(/\bwidth\s*=\s*["']\s*([\d.]+%?)\s*["']/i);
+      const hMatch = r.match(/\bheight\s*=\s*["']\s*([\d.]+%?)\s*["']/i);
+      const isFullW = wMatch && (wMatch[1] === '100%' || (vbMatch && parseFloat(wMatch[1]) >= parseFloat(vbMatch[1]) * 0.9));
+      const isFullH = hMatch && (hMatch[1] === '100%' || (vbMatch && parseFloat(hMatch[1]) >= parseFloat(vbMatch[2]) * 0.9));
+      if (isFullW && isFullH) {
+        paletteIssues.push({
+          type: 'OPAQUE_BG_RECT',
+          message: 'Rahmenloses, vollflächiges weißes/helles Hintergrund-<rect> gefunden. SVG-Canvas muss transparent bleiben (oder abgerundete Karte mit stroke).'
+        });
+      }
+    }
+  }
+
   return paletteIssues;
 }
 

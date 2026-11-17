@@ -24,7 +24,7 @@
   </defs>
 
   <!-- Hintergrund -->
-  <rect width="1000" height="560" fill="#f8fafc" rx="12" />
+  <rect width="1000" height="560" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" rx="12" />
   <rect x="1" y="1" width="998" height="558" fill="none" stroke="#e2e8f0" stroke-width="2" rx="11" />
 
   <!-- Kopfbereich -->

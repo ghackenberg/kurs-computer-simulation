@@ -54,7 +54,7 @@
   </style>
 
   <!-- Hintergrund gesamt -->
-  <rect x="0" y="0" width="1080" height="570" fill="#F8FAFC" rx="12" />
+  <rect x="0" y="0" width="1080" height="570" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5" rx="12" />
 
   <!-- ========================================== -->
   <!-- LINKE SPALTE: WELTKOORDINATENSYSTEM        -->

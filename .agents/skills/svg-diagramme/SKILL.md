@@ -22,6 +22,7 @@ Verbindliche Gestaltungs-, Typografie- und Prüfregeln für SVG-Illustrationen i
 | **Code- & Zahlenwerte (`.code`, `.val`)** | `13.5px`–`15px`, `'Consolas', monospace`, `bold` | Hohe Lesbarkeit für Indizes, Formeln und Array-Werte. |
 | **Untertitel / Indizes (`.sub`, `.idx`)** | $\ge 12.5\text{px}$ (niemals $< 12\text{px}$) | Hält die effektive Schriftgröße nach Browser-CTM sicher über dem Linter-Limit von `11.5 px`. |
 | **Box-Innenabstand (`panel_clipping`)** | $\ge 8\text{px}$ horizontaler Abstand zum `<rect>`-Rand | Verhindert seitliches Überlaufen von `<text>`-Elementen. |
+| **Hintergrund-Transparenz** | Kein rahmenloses Vollflächen-`<rect fill="#FFFFFF">` | SVG-Canvas bleibt transparent, damit CSS-`drop-shadow` und getönte Highlight-Folien sauber wirken (Container-Karten immer mit `rx` + `stroke`). |
 
 ---
 

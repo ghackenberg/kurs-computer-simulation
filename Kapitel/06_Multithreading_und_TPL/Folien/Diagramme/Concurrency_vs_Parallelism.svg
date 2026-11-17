@@ -9,7 +9,6 @@
     </style>
   </defs>
 
-  <rect x="-40" y="0" width="1160" height="390" fill="#FFFFFF"/>
 
   <!-- LEFT: Nebenläufigkeit (Concurrency) auf 1 Kern -->
   <rect x="10" y="10" width="515" height="366" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>

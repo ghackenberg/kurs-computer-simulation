@@ -8,7 +8,6 @@
     </style>
   </defs>
 
-  <rect x="-45" y="0" width="570" height="380" fill="#FFFFFF"/>
 
   <!-- Plot Area -->
   <rect x="25" y="24" width="480" height="300" fill="#FAFAFA" stroke="#E2E8F0" stroke-width="1"/>

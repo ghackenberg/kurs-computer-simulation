@@ -9,7 +9,6 @@
     </style>
   </defs>
 
-  <rect x="-45" y="0" width="570" height="380" fill="#FFFFFF"/>
 
   <!-- Top: Isolierte Prozesse -->
   <rect x="-25" y="10" width="530" height="156" rx="10" fill="#F8FAFC" stroke="#64748B" stroke-width="2"/>
