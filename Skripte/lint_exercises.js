@@ -241,8 +241,42 @@ function lintChapter(dirName) {
   // Check Header Block before first H2
   const firstH2Idx = mdNoCode.search(/^##\s+/m);
   const headerBlock = firstH2Idx > 0 ? mdNoCode.slice(0, firstH2Idx) : mdNoCode;
-  if (!/\*\*Bearbeitungsform:\*\*/.test(headerBlock) || !/\*\*Stufe 1 \(Basisaufgabe\):\*\*/.test(headerBlock) || !/\*\*Stufe 2 \(Vertiefungsaufgabe/.test(headerBlock)) {
-    issues.push({ type: 'MISSING_HEADER_META', file: relMd, message: 'Metadaten-Kopfblock muss **Bearbeitungsform:**, **Stufe 1 (Basisaufgabe):** und **Stufe 2 (Vertiefungsaufgabe...):** enthalten.' });
+  if (!/\*\*Bearbeitungsform:\*\*/.test(headerBlock) || !/\*\*Stufe 1 \(Basisaufgabe/.test(headerBlock) || !/\*\*Stufe 2 \(Vertiefungsaufgabe/.test(headerBlock) || !/\*\*Track A \(Industrie\):\*\*/.test(headerBlock) || !/\*\*Track B \(Simulation Game\):\*\*/.test(headerBlock)) {
+    issues.push({ type: 'MISSING_HEADER_META', file: relMd, message: 'Metadaten-Kopfblock muss **Bearbeitungsform:**, **Stufe 1 (Basisaufgabe...):**, **Stufe 2 (Vertiefungsaufgabe...):** sowie **Track A (Industrie):** und **Track B (Simulation Game):** enthalten.' });
+  }
+  const hdrTrackA = (headerBlock.match(/\*\*Track A \(Industrie\):\*\*\s*(.+)/) || [])[1]?.trim();
+  const hdrTrackB = (headerBlock.match(/\*\*Track B \(Simulation Game\):\*\*\s*(.+)/) || [])[1]?.trim();
+  const secTrackA = (mdNoCode.match(/^### Track A \(Industrie\):\s*(.+)$/m) || [])[1]?.trim();
+  const secTrackB = (mdNoCode.match(/^### Track B \(Simulation Game\):\s*(.+)$/m) || [])[1]?.trim();
+  if (hdrTrackA && secTrackA && hdrTrackA !== secTrackA) {
+    issues.push({ type: 'TRACK_HEADER_MISMATCH', file: relMd, message: `Track A im Kopfblock ('${hdrTrackA}') weicht von Abschnitt 4 ('${secTrackA}') ab.` });
+  }
+  if (hdrTrackB && secTrackB && hdrTrackB !== secTrackB) {
+    issues.push({ type: 'TRACK_HEADER_MISMATCH', file: relMd, message: `Track B im Kopfblock ('${hdrTrackB}') weicht von Abschnitt 4 ('${secTrackB}') ab.` });
+  }
+  const chapNumMatch = relMd.match(/Kapitel[\\/](\d{2})_/);
+  const chapNum = chapNumMatch ? parseInt(chapNumMatch[1], 10) : 0;
+  if (chapNum >= 1 && chapNum <= 6 && secTrackA && secTrackB) {
+    const tokens = (s) => s.toLowerCase().replace(/[„“"()–—:]/g, ' ').split(/[\s,/&-]+/).filter(w => w.length >= 5);
+    const hasMatch = (slide, title) => tokens(title).some(t => slide.toLowerCase().includes(t));
+    const folPath = path.join(path.dirname(path.dirname(aufgabenMdPath)), 'Folien', 'Folien.md');
+    if (fs.existsSync(folPath)) {
+      const hwSlide = (fs.readFileSync(folPath, 'utf8').split(/\r?\n---\s*\r?\n/).find(sl => /_class:\s*homework/i.test(sl)) || '');
+      if (!hasMatch(hwSlide, secTrackA) || !hasMatch(hwSlide, secTrackB)) {
+        issues.push({ type: 'SLIDE_TRACK_SYNC', file: relMd, message: `Hausübungsfolie in ${rel(folPath)} stimmt nicht mit Track A/B im Aufgabenblatt überein.` });
+      }
+    }
+    const nextPrefix = String(chapNum + 1).padStart(2, '0') + '_';
+    const nextDir = fs.readdirSync(KAPITEL_DIR).find(d => d.startsWith(nextPrefix));
+    if (nextDir) {
+      const nextFolPath = path.join(KAPITEL_DIR, nextDir, 'Folien', 'Folien.md');
+      if (fs.existsSync(nextFolPath)) {
+        const scSlide = (fs.readFileSync(nextFolPath, 'utf8').split(/\r?\n---\s*\r?\n/).find(sl => /_class:\s*showcase/i.test(sl)) || '');
+        if (!hasMatch(scSlide, secTrackA) || !hasMatch(scSlide, secTrackB)) {
+          issues.push({ type: 'SLIDE_TRACK_SYNC', file: relMd, message: `Live-Showcase-Folie in ${rel(nextFolPath)} stimmt nicht mit Track A/B im Aufgabenblatt überein.` });
+        }
+      }
+    }
   }
   if (!/>\s*\[!IMPORTANT\]/.test(headerBlock) || !/\*\*Technische Rahmenbedingungen\*\*/.test(headerBlock) || !/\*\*Plattform & Projekt:\*\*/.test(headerBlock) || !/\*\*Zugelassene APIs:\*\*/.test(headerBlock) || !/\*\*Abgrenzung:\*\*/.test(headerBlock)) {
     issues.push({ type: 'MISSING_TECH_CONSTRAINTS', file: relMd, message: 'Im Kopfblock fehlt der strukturierte Block > [!IMPORTANT] **Technische Rahmenbedingungen** mit **Plattform & Projekt:**, **Zugelassene APIs:** und **Abgrenzung:**.' });

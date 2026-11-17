@@ -985,7 +985,7 @@ Nach dem Fundament erarbeiten wir zuerst die Werkzeuge und dann die Modellarten:
 <div class="columns">
 <div class="two">
 
-#### Stufe 2 – Track A: Industrie & Mechatronik
+#### Stufe 2 – Track A: Hydraulikzylinder-Endlagendämpfung
 **Hydraulikzylinder-Endlagendämpfung (`A.1`–`A.4`)**
 - $m \ddot{x} = F_{\text{vor}} - F_{\text{dämpf}}(x,v) - F_{\text{anschlag}}(x)$
 - Nichtlineare viskose & Blendenreibung
@@ -996,7 +996,7 @@ Nach dem Fundament erarbeiten wir zuerst die Werkzeuge und dann die Modellarten:
 </div>
 <div class="two">
 
-#### Stufe 2 – Track B: Simulation Game
+#### Stufe 2 – Track B: Retro Artillery Duel
 **Retro Artillery Duel mit Newton-Drag (`B.1`–`B.4`)**
 - $\ddot{\mathbf{r}} = \mathbf{g} - \frac{\rho c_{\text{w}} A}{2m} \|\mathbf{v}_{\text{rel}}\| \mathbf{v}_{\text{rel}}$
 - Stochastischer Wind $\vec{w} = [w_x, 0]^\top$

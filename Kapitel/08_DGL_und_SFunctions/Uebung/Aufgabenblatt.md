@@ -4,8 +4,10 @@
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
-- **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
-- **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
+- **Stufe 1 (Basisaufgabe, ca. 60 Min.):** Euler-Stabilitätsgrenze, `PidController`-Extraktion & Anti-Windup auf `SFunctionSimulation.sln`
+- **Stufe 2 (Vertiefungsaufgabe, ca. 3–4 h – Wahl: Track A ODER Track B):**
+  - **Track A (Industrie):** Verfahrensvergleich (Euler/Heun/RK4) & Elektro-Thermisches Servomotormodell
+  - **Track B (Simulation Game):** SpaceX Falcon Hop & Booster Landing
 
 > [!IMPORTANT]
 > **Technische Rahmenbedingungen**

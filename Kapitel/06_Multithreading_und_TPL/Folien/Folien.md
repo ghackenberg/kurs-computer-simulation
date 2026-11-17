@@ -43,7 +43,7 @@ Präsentation der Hausübung aus Termin 05 (**Stufe 1: Basisaufgabe** + **Stufe 
 </div>
 <div class="two">
 
-#### Stufe 2 – Track B: Arcade Claw Machine (Game)
+#### Stufe 2 – Track B: 3D Arcade Claw Crane (Game)
 - **Szenengraph:** Jahrmarkt-Greifautomat mit Portalbrücke, Seilwinde & 3-Finger-Greifer.
 - **Interaktion:** Tastatursteuerung, Orbit-Kamera inkl. Panning & 3D-Kollisionsprüfung.
 - **Stresstest:** Physikalischer Kollisions-Snap & Achs-Hierarchie beim Ablegen prüfen.

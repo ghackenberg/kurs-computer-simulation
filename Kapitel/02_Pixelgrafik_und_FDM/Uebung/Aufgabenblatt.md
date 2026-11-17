@@ -4,8 +4,10 @@
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
-- **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
-- **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
+- **Stufe 1 (Basisaufgabe, ca. 60 Min.):** Von-Neumann-Stresstest, `uint[256]`-LUT & `AlphaMap` auf `PixelHeatFDM.sln` (`1.1`–`1.4`)
+- **Stufe 2 (Vertiefungsaufgabe, ca. 3–4 h – Wahl: Track A ODER Track B):**
+  - **Track A (Industrie):** Gamer-PC & Server-Blade Kühlkörper-Optimizer
+  - **Track B (Simulation Game):** Falling Sand & Doom Fire / Lava-Simulator
 
 > [!IMPORTANT]
 > **Technische Rahmenbedingungen**
