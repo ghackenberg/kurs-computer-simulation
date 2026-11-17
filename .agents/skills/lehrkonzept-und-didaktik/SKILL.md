@@ -24,7 +24,7 @@ Um Redundanz auszuschließen und gezieltes Laden von Kontext zu ermöglichen, si
 3. **`Konzept/03_Beurteilung_und_Pruefungen.md`:**
    - 5-stufige Lernfortschrittskontrolle, 2-Säulen-Benotungsmodell (40 % Quiz / 40 % wöchentliche Hausübungen / 20 % Showcase), Notenschlüssel, Quiz-Stoffabgrenzung (`Quiz 01`–`04`), 4-Stufen-Stresstest gegen Schein-Simulationen und AI Honor Code.
 4. **`Kapitel/00_Prolog/Konzept.md` bis `Kapitel/11_Epilog/Konzept.md` (Autarke Kapitel-Steckbriefe):**
-   - Bündeln direkt im jeweiligen Kapitelordner `Kapitel/XX_*/` an genau einem Ort: Artefakt-Links, Vorgreif-Sperre (Tabus), Rückwärts-/Vorwärts-Brücken, Bloom-Lernziele der Vorlesung, Hausübung (`Stufe 1: 1.1–1.4` + `Stufe 2: Track A | Track B`) und Showcase-Fokus (zuzüglich einer kompakten `README.md` für die direkte GitHub-/VS-Code-Ordneranzeige). Bei der Arbeit an Kapitel $K_k$ genügt damit das gezielte Laden von `Konzept/02_Semestermatrix_und_Abhaengigkeiten.md` + `Kapitel/XX_*/Konzept.md`.
+   - Bündeln direkt im jeweiligen Kapitelordner `Kapitel/XX_*/` an genau einem Ort: Artefakt-Links, **Abgrenzung Hauptdeck vs. optionale Anhänge (`Folien_Anhang_*.md`)** (Pflichtstoff für Vorlesung/Übung/Quiz vs. freiwillige Vertiefung im Selbststudium), Vorgreif-Sperre (Tabus), Rückwärts-/Vorwärts-Brücken, Bloom-Lernziele der Vorlesung, Hausübung (`Stufe 1: 1.1–1.4` + `Stufe 2: Track A | Track B`) und Showcase-Fokus (zuzüglich einer kompakten `README.md` für die direkte GitHub-/VS-Code-Ordneranzeige). Bei der Arbeit an Kapitel $K_k$ genügt damit das gezielte Laden von `Konzept/02_Semestermatrix_und_Abhaengigkeiten.md` + `Kapitel/XX_*/Konzept.md`.
 
 ---
 

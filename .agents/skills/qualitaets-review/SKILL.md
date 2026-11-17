@@ -44,6 +44,7 @@ Lies vor Beginn jedes Reviews einer Einheit $k$:
 - [ ] **Rückwärts-Kausalität & Vorgreif-Sperre:** Prüfen Showcase und Quiz zu Beginn von Termin $k$ ausschließlich die Vor-Termine $1 \dots k-1$, und werden nirgendwo Konzepte/Bibliotheken aus späteren Kapiteln ($> k$) vorweggenommen?
 - [ ] **Pflicht-Folie `### Rückblick & Brücke: ...`:** Steht in Kapiteln `01`–`10` direkt **vor** dem ersten Abschnitt (`## N.1:`) und **nach** den optionalen Quiz-/Showcase-Folien die Brückenfolie mit Rückblick, Engpass-Motivation und Semester-Einordnung?
 - [ ] **Nachbar- & Fern-Schnittstellen-Konsistenz:** Stimmen mathematische Symbole, Koordinatenkonventionen und Datenformate zu 100 % mit allen laut Matrix (`Konzept/02_*.md` & Termin-Steckbrief) gekoppelten Einheiten ($k \pm 1$ sowie $m \neq k \pm 1$) überein, inkl. expliziter Callbacks/Foreshadowings?
+- [ ] **Hauptdeck vs. optionale Anhänge (`Folien_Anhang_*.md`):** Funktioniert der Hauptfoliensatz (`Folien.md`) vollständig in sich geschlossen (ohne dass Vorlesung, Hausübungen oder Quizzes einen Anhang voraussetzen), bilden vorhandene Anhänge lohnende, eigenständige Vertiefungen für das Selbststudium, und ist diese Abgrenzung in `Kapitel/0k_*/Konzept.md` dokumentiert?
 
 ### Dimension 3: Fachdidaktik & Einfache Erklärbarkeit im Hörsaal (Mikro-Dramaturgie)
 *(Detailregeln siehe [`vorlesungsfolien`](../vorlesungsfolien/SKILL.md))*
