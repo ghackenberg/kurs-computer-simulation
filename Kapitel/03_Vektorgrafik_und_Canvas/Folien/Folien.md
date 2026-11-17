@@ -43,7 +43,7 @@ Zu Beginn (15 Min.): **Moodle-Quiz 1** (Kapitel 00–02) – danach **Live-Showc
 </div>
 <div class="two">
 
-#### Stufe 2 – Track B: Game (Doom Fire & Lava)
+#### Stufe 2 – Track B: Game (Falling Sand & Lava-Simulator)
 - **Hybrid-Gitter:** 5-Punkt-FDM Wärmefeld gekoppelt mit zellulärem Sand-/Lava-Automat.
 - **Performance:** Allokationsfreier Render-Loop auf `WriteableBitmap.BackBuffer` ($\ge 45\,\text{FPS}$).
 - **Stresstest:** Diffusionsfaktor überkriechen lassen oder Großbrand live auslösen.
