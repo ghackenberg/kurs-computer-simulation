@@ -56,7 +56,7 @@ function checkSemanticPalette(svgPath) {
   if (usesSemantic || (isDiagramSvg && !isMermaid && !isTikz)) {
     const withoutManaged = raw
       .replace(/\/\*\s*@svg-palette:start\s*\*\/[\s\S]*?\/\*\s*@svg-palette:end\s*\*\//g, '')
-      .replace(/<(?:linearGradient|radialGradient)\b[\s\S]*?<\/(?:linearGradient|radialGradient)>/gi, '');
+      .replace(/<(?:linearGradient|radialGradient|filter)\b[\s\S]*?<\/(?:linearGradient|radialGradient|filter)>/gi, '');
     const colorMatches = withoutManaged.match(/(?:fill|stroke|color)\s*[:=]\s*["']?\s*(#[0-9a-fA-F]{3,8}|(?:rgb|hsl|oklch|oklab)\([^)]+\))/gi) || [];
     const forbidden = colorMatches.filter(c => !/#(?:fff(?:fff)?|000(?:000)?)\b/i.test(c));
     if (forbidden.length > 0) {
@@ -117,11 +117,14 @@ async function auditSvgFile(browser, svgPath, options = {}) {
 
   const analysis = await page.evaluate(() => {
     const issues = [];
+    const parserError = document.querySelector('parsererror');
+    if (parserError) {
+      const errText = parserError.innerText.trim().replace(/\s+/g, ' ');
+      return { hasSvg: false, issues: [{ type: 'XML_PARSE_ERROR', message: errText }] };
+    }
     const svg = document.querySelector('svg');
     if (!svg) {
-      const parserError = document.querySelector('parsererror');
-      const errText = parserError ? parserError.innerText.trim().replace(/\s+/g, ' ') : 'No <svg> root element found (XML parsing failed)';
-      return { hasSvg: false, issues: [{ type: 'XML_PARSE_ERROR', message: errText }] };
+      return { hasSvg: false, issues: [{ type: 'XML_PARSE_ERROR', message: 'No <svg> root element found (XML parsing failed)' }] };
     }
 
     const svgRect = svg.getBoundingClientRect();

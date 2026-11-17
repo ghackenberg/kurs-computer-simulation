@@ -96,7 +96,7 @@
     </marker>
 
     <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="110%" filterUnits="userSpaceOnUse">
-      <feDropShadow class="sem-neutral-text" dx="0" dy="3" stdDeviation="4" flood- flood-opacity="0.08" />
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.08" />
     </filter>
   </defs>
 

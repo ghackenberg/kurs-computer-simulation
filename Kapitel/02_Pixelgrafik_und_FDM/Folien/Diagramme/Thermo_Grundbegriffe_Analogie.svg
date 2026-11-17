@@ -101,7 +101,7 @@
     </marker>
 
     <filter id="shadow" x="-3%" y="-3%" width="106%" height="106%">
-      <feDropShadow class="sem-neutral-text" dx="0" dy="2" stdDeviation="3" flood- flood-opacity="0.08" />
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.08" />
     </filter>
   </defs>
 
