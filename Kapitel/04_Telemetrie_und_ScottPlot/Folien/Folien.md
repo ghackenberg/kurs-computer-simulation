@@ -75,8 +75,6 @@ In **T02 und T03** haben wir die 2D-Grundlagen selbst programmiert – wo fehlt 
 
 ![](./Diagramme/Semester_Bruecke_T04.svg)
 
-> **Fokus:** Hochfrequente Live-Signale, Ringpuffer & Online-Statistik ohne GC-Last.
-
 </div>
 </div>
 
@@ -144,8 +142,6 @@ Ein numerischer Simulator berechnet rohe Zahlenkolonnen. Erst **Diagramme** bean
 <div class="two">
 
 ![](./Diagramme/SkiaSharp_Grundbausteine_Illu.svg)
-
-> **Vorteil:** GPU-beschleunigtes 2D-Rendering ohne WPF-Visual-Tree-Overhead.
 
 </div>
 </div>
@@ -275,8 +271,6 @@ plot.Axes.SquareUnits(); // Verzerrungsfreies 1:1-Seitenverhältnis (Isotropie)
 <div class="two">
 
 ![](./Diagramme/Scatter_vs_Signal_Speicher.svg)
-
-> **Speicher:** $50\,\%$ weniger RAM durch Wegfall des `xs`-Arrays.
 
 </div>
 <div class="two">
@@ -606,7 +600,7 @@ _meanLine.Y  = _welford.Mean;
 _upperLine.Y = _welford.Mean + 3.0 * _welford.StdDev;
 ```
 
-> **Numerik-Vorteil:** Kein Auslöschungsfehler wie bei der naiven Varianzformel $\sum x^2 - (\sum x)^2/N$!
+- **Numerik-Vorteil:** Kein Auslöschungsfehler wie bei der naiven Varianzformel $\sum x^2 - (\sum x)^2/N$!
 
 </div>
 </div>
@@ -720,8 +714,6 @@ Nach welchem Kriterium ordnet `MSAGL` die Knoten im 2D-Raum an?
 
 ![](./Diagramme/MSAGL_Layout_Varianten_Illu.svg)
 
-> **Wahl:** Signalfluss $\to$ `Sugiyama`; vermaschtes Netz $\to$ `MdsLayoutSettings`.
-
 </div>
 </div>
 
@@ -733,8 +725,6 @@ Nach welchem Kriterium ordnet `MSAGL` die Knoten im 2D-Raum an?
 <div class="two">
 
 ![](./Diagramme/Sugiyama_Phasen_Illu.svg)
-
-> **Praxis:** Knotenpositionen und Spline-Routing berechnet `MSAGL` vollautomatisch.
 
 </div>
 <div class="two">
@@ -837,8 +827,6 @@ Unsere 2D-Visualisierungssäulen (**Pixel**, **Vektor**, **Telemetrie/Graphen**)
 <div class="two">
 
 ![](./Diagramme/Semester_Bruecke_T04.svg)
-
-> **Quiz 2 (T05):** Wiederholen Sie `Transform2D`, `MatrixTransform`, Ringpuffer & Welford!
 
 </div>
 </div>

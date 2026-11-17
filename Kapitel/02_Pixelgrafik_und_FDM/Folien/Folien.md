@@ -75,8 +75,6 @@ In **Termin 01** genügten skalare Zustände ($x(t), T(t)$) – warum reicht das
 
 ![](./Diagramme/Semester_Bruecke_T02.svg)
 
-> **Fokus:** Vom skalaren Zeitschritt (T01) zum 2D-Temperaturfeld im direkten RAM-Zugriff.
-
 </div>
 </div>
 
@@ -608,7 +606,7 @@ private static uint SampleViridis(double t)
 }
 ```
 
-> **Praxis:** Einmalige Berechnung beim Start, danach allokationsfreies $O(1)$-Nachschlagen pro Pixel.
+- **Praxis:** Einmalige Berechnung beim Start, danach allokationsfreies $O(1)$-Nachschlagen pro Pixel.
 
 </div>
 </div>
@@ -832,13 +830,12 @@ row[x] = lut[idx];
 ```
 
 - **Ping-Pong:** Lesen aus `_tCurrent`, Schreiben in `_tNext`, danach Referenzen tauschen!
+- **Visualisierung:** `Lock()` $\to$ `uint*`-Schleife $\to$ `AddDirtyRect()` $\to$ `Unlock()`.
 
 </div>
-<div class="one">
+<div class="two">
 
 ![](./Illustrationen/Heatmap_Temperaturfeld.png)
-
-*Simuliertes Temperaturfeld auf `WriteableBitmap` (`Lock` $\to$ `AddDirtyRect` $\to$ `Unlock`).*
 
 </div>
 </div>
@@ -878,8 +875,6 @@ In **Termin 02** haben wir kontinuierliche 2D-Felder auf einem festen Pixelgitte
 <div class="two">
 
 ![](./Diagramme/Semester_Bruecke_T02.svg)
-
-> **Quiz 1 (T03):** Wiederholen Sie Euler-Stabilität, BGRA-Bitshifts und FDM-Randbedingungen!
 
 </div>
 </div>

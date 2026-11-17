@@ -74,8 +74,6 @@ In **Termin 02 bis 04** haben wir die 2D-Welt gemeistert – wo stoßen 2D-Ansic
 
 ![](./Diagramme/Semester_Bruecke_T05.svg)
 
-> **Fokus:** Vom 2D-Canvas in das rechtshändige 3D-OpenGL-Koordinatensystem.
-
 </div>
 </div>
 
@@ -94,14 +92,13 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ---
 
-### Was ist OpenGL & Einbindung in WPF (`SharpGL.WPF`)?
+![bg contain right:32%](./Illustrationen/OpenGL_Logo.svg)
 
-<div class="columns">
-<div class="two">
+### Was ist OpenGL & Einbindung in WPF (`SharpGL.WPF`)?
 
 - **OpenGL & `SharpGL`:** Hardwarebeschleunigte 3D-API (Vertices, Normalen, Matrizen) als **Zustandsmaschine** ohne Shader-Boilerplate.
 - **`SharpGL.WPF` (`OpenGLControl`):**
-  1. `OpenGLInitialized`: Einmalig beim Start (Tiefentest, Licht).
+  1. `OpenGLInitialized`: Einmalig beim Start (`GL_DEPTH_TEST`, Licht & Material).
   2. `OpenGLDraw`: In jedem Frame für das 3D-Rendering.
 
 ```xml
@@ -112,19 +109,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ```
 
 > **Merksatz:** Einmal gesetzte OpenGL-Zustände (z. B. Licht, Farbe) bleiben bis zur Änderung aktiv.
-
-</div>
-<div class="one">
-
-![](./Illustrationen/OpenGL_Logo.svg)
-
-- **Start-Setup (`OpenGLInitialized`):** Tiefentest (`GL_DEPTH_TEST`), Licht & Material.
-- **Frame-Loop (`OpenGLDraw`):** Puffer löschen, Kamera setzen, Szene zeichnen.
-
-> **Architektur:** `SharpGL` rendert direkt in den Hardware-Kontext ohne WPF-Visuals.
-
-</div>
-</div>
 
 ---
 
@@ -145,8 +129,6 @@ Für jedes Pixel `(x, y)` verwaltet OpenGL im GPU-Speicher zwei gleich große 2D
 <div class="two">
 
 ![](./Diagramme/ZBuffer_Tiefentest.svg)
-
-> **Pflicht-Reset:** Beide Puffer am Frame-Beginn mit `gl.Clear(...)` leeren!
 
 </div>
 </div>
@@ -538,8 +520,6 @@ $$\mathbf{M}_{\text{TCP}} = \mathbf{T}_y(\text{HBase})\,\mathbf{R}_y(\theta_1)\,
 
 ![](./Diagramme/SCARA_Kinematik_3D.svg)
 
-> **Praxis:** Jeder `SceneNode` kapselt `PushMatrix()` $\to$ Transformation $\to$ Kinder $\to$ `PopMatrix()`.
-
 </div>
 </div>
 
@@ -622,7 +602,7 @@ float dist = Vector3.Distance(tcpPos, boxPos);
 bool canGrab = dist < 0.12f; // Orange -> Grün
 ```
 
-> **Tipp:** `GetWorldPosition()` liest die 4. Spalte der aktuellen `ModelMatrix` im Weltkoordinatensystem aus.
+- **Tipp:** `GetWorldPosition()` liest die 4. Spalte der aktuellen `ModelMatrix` im Weltkoordinatensystem aus.
 
 </div>
 </div>
@@ -648,8 +628,6 @@ In **Stufe 2 (Track A & B)** wird aus der Kette ein **verzweigter Szenengraph**:
 <div class="two">
 
 ![](./Diagramme/Szenengraph_Greifer_Verzweigung.svg)
-
-> **Prinzip:** Beim Schließen wird `_workpieceNode` lokal an `_wristNode` umgehängt.
 
 </div>
 </div>
@@ -688,8 +666,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 
 ![](./Diagramme/OrbitCamera_Kugelkoordinaten.svg)
 
-> **Steuerung:** Linke Maustaste ändert $\theta, \phi$; Mausrad skaliert Distanz $r$.
-
 </div>
 </div>
 
@@ -701,8 +677,6 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 <div class="two">
 
 ![](./Diagramme/OrbitCamera_Pol_Singularitaet.svg)
-
-> **Schutz:** `Math.Clamp(ElevationDeg, -85f, +85f)` verhindert den Pol-Kollaps.
 
 </div>
 <div class="two">
@@ -849,7 +823,7 @@ Parallel.For(0, nParticles, i =>
 
 - **Block 2 (T06–T10):** Parallel Computing, Cholesky/Jacobi-IK (T07), DGLs (T08), Optimierung (T09) & Virtuelle Inbetriebnahme (T10).
 
-> **Ziel (T06):** Die UI bleibt bei $\ge 60\,\text{FPS}$ flüssig, während alle CPU-Kerne parallel die Physik berechnen.
+- **Ziel (T06):** Die UI bleibt bei $\ge 60\,\text{FPS}$ flüssig, während alle CPU-Kerne parallel die Physik berechnen.
 
 </div>
 </div>

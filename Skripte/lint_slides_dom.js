@@ -295,6 +295,21 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
           colRatios.push({ colIndex: cIdx + 1, height: Math.round(h), maxHeight: Math.round(maxColH), ratio: h / maxColH });
         });
       });
+      const blockquoteCount = sec.querySelectorAll('blockquote').length;
+      const mixedImageCols = [];
+      sec.querySelectorAll('div.columns').forEach(cols => {
+        const hasPureTextCol = Array.from(cols.children).some(c => !c.querySelector('img'));
+        if (!hasPureTextCol) return;
+        Array.from(cols.children).forEach((col, cIdx) => {
+          const bigImg = Array.from(col.querySelectorAll('img')).some(img => img.getBoundingClientRect().height > 120);
+          if (!bigImg) return;
+          const hasExtraBlock = col.querySelector('blockquote, ul, ol, pre, marp-pre, table, h4, h5') !== null;
+          const hasExtraText = Array.from(col.querySelectorAll('p')).some(p => (p.textContent || '').trim().length > 0);
+          if (hasExtraBlock || hasExtraText) {
+            mixedImageCols.push(cIdx + 1);
+          }
+        });
+      });
       sec.querySelectorAll('div.columns > div').forEach((col, cIdx) => {
         collectGaps(col, `col${cIdx + 1}`);
       });
@@ -380,6 +395,8 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         contentTop,
         contentBottom,
         colRatios,
+        blockquoteCount,
+        mixedImageCols,
         elementGaps,
         colorIssues,
         images
@@ -519,6 +536,8 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const colorIssues = s.colorIssues || [];
     const hasColorError = colorIssues.length > 0;
     const hasMissingTitle = !s.isOpener && s.sectionIndex > 1 && (!s.title || !s.title.trim());
+    const hasTooManyBlockquotes = !isAppendix && (s.blockquoteCount || 0) > 1;
+    const hasMixedImageCol = !isAppendix && (s.mixedImageCols || []).length > 0;
     for (const bgErr of fullBleedBgIssues) {
       if ((!bgErr.pagination && s.sectionIndex === 1) || bgErr.pagination === String(s.pagination)) {
         svgIssues.push({
@@ -539,7 +558,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       svgIssues,
       gapIssues,
       colorIssues,
-      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssuesAfterBg || hasUnderfill || hasSparseCol || hasGapError || hasColorError || hasMissingTitle,
+      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssuesAfterBg || hasUnderfill || hasSparseCol || hasGapError || hasColorError || hasMissingTitle || hasTooManyBlockquotes || hasMixedImageCol,
       hasVOverflow,
       hasHOverflow,
       hasHeaderCollision,
@@ -550,7 +569,10 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       sparseCols,
       hasGapError,
       hasColorError,
-      hasMissingTitle
+      hasMissingTitle,
+      hasTooManyBlockquotes,
+      hasMixedImageCol,
+      mixedImageCols: s.mixedImageCols || []
     });
   }
 
@@ -753,6 +775,12 @@ async function main() {
         }
         if (err.hasMissingTitle) {
           issues.push(`Fehlender Folientitel (# / ## / ### im Markdown)`);
+        }
+        if (err.hasTooManyBlockquotes) {
+          issues.push(`Zu viele Zitatblöcke (max. 1 <blockquote> pro Folie erlaubt)`);
+        }
+        if (err.hasMixedImageCol) {
+          issues.push(`Gemischte Bild-/Text-Spalte (Spalte ${err.mixedImageCols.join(', ')}): Große Grafiken (>120px) gehören in eine reine Bild-Spalte`);
         }
         console.log(`    - Folie ${err.pagination} [${err.title || 'Ohne Titel'}]: ${issues.join(' | ')}`);
       }

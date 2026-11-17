@@ -314,8 +314,6 @@ Die Lehrveranstaltung ist eine **Integrierte Lehrveranstaltung (ILV)** mit 3 ECT
 
 ![](./Diagramme/Kursstruktur_Taktung.svg)
 
-> **Rhythmus:** Jede Woche verzahnt Vorlesung, Übung und Live-Showcase direkt miteinander.
-
 </div>
 </div>
 
@@ -380,8 +378,6 @@ Transparente Beurteilung von Theorie, Code-Praxis und Live-Verteidigung:
 <div class="two">
 
 ![](./Diagramme/Notenmodell_40_40_20.svg)
-
-> **Transparenz:** Alle Teilpunkte werden laufend nach jedem Termin in Moodle veröffentlicht.
 
 </div>
 </div>

@@ -47,8 +47,6 @@ Nach dem organisatorischen **Prolog (Kapitel 00)** legen wir heute in **Termin 0
 
 ![](./Diagramme/Semester_Bruecke_T01.svg)
 
-> **Fokus:** Erst Werkzeuge beherrschen, dann reale Systeme abbilden.
-
 </div>
 </div>
 
@@ -959,8 +957,6 @@ In den folgenden Kapiteln erarbeiten wir zunächst die Werkzeuge und vertiefen a
 <div class="two">
 
 ![](./Diagramme/Semester_Bruecke_T01.svg)
-
-> **Ausblick:** Alle Solver und Modelle in Teil 2 nutzen direkt die performanten Visualisierungen aus Teil 1.
 
 </div>
 </div>

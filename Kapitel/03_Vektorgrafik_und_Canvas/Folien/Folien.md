@@ -75,8 +75,6 @@ In **Termin 02** haben wir 2D-Temperaturfelder direkt in den Pixelpuffer (`Write
 
 ![](./Diagramme/Semester_Bruecke_T03.svg)
 
-> **Fokus:** Vom festen Pixelraster (T02) zur skalierbaren, objektbasierten 2D-Vektorgeometrie.
-
 </div>
 </div>
 
@@ -763,7 +761,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
   foreach (var rod in rods) dc.DrawLine(pen, rod.P1, rod.P2);
   ```
 
-> **Hinweis:** Eingefrorene `Pen`-/`Brush`-Instanzen sind thread-sicher und werden direkt von der GPU gecacht.
+- **Thread-Sicherheit:** Eingefrorene `Pen`-/`Brush`-Instanzen werden direkt von der GPU gecacht.
 
 </div>
 <div class="one">
@@ -843,8 +841,6 @@ Unsere 2D-Vektorgeometrie und das Welt-Screen-Koordinatensystem stehen – wie n
 <div class="two">
 
 ![](./Diagramme/Semester_Bruecke_T03.svg)
-
-> **Vorbereitung:** Die hier gezeichneten Tragwerksknoten dienen in Termin 07 direkt als FEM-Eingabe!
 
 </div>
 </div>
