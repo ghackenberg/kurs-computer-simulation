@@ -636,6 +636,84 @@ function lintSectionDeck(markdownPath) {
     }
   }
 
+  // 8. Anhänge (Anhang A, B, ...) & Markdown-Referenz-Integrität
+  const folienDir = path.dirname(markdownPath);
+  const chapterDir = path.dirname(folienDir);
+  const konzeptPath = path.join(chapterDir, 'Konzept.md');
+  const konzeptContent = fs.existsSync(konzeptPath) ? fs.readFileSync(konzeptPath, 'utf8') : '';
+  const mainDeckText = fs.readFileSync(markdownPath, 'utf8');
+
+  const appendixFiles = fs.readdirSync(folienDir)
+    .filter(f => /^Folien_Anhang_.*\.md$/i.test(f))
+    .sort();
+
+  const seenLetters = [];
+  appendixFiles.forEach((anhFile, idx) => {
+    const m = anhFile.match(/^Folien_Anhang_([A-Z])_[A-Za-z0-9_]+\.md$/);
+    if (!m) {
+      issues.push({
+        slideNum: 0,
+        type: 'APPENDIX_NAMING',
+        message: `Anhang '${anhFile}' entspricht nicht dem Schema 'Folien_Anhang_<Buchstabe>_<Thema>.md' (z.B. Folien_Anhang_A_...).`
+      });
+      return;
+    }
+    const letter = m[1];
+    const expectedLetter = String.fromCharCode(65 + idx);
+    if (letter !== expectedLetter) {
+      issues.push({
+        slideNum: 0,
+        type: 'APPENDIX_SEQUENCE',
+        message: `Anhang '${anhFile}' hat Buchstabe '${letter}', erwartet wird lückenlos '${expectedLetter}'.`
+      });
+    }
+    seenLetters.push(letter);
+
+    const anhPath = path.join(folienDir, anhFile);
+    const anhText = fs.readFileSync(anhPath, 'utf8');
+    if (!new RegExp(`Anhang\\s+${letter}\\b`, 'i').test(anhText)) {
+      issues.push({
+        slideNum: 0,
+        type: 'APPENDIX_HEADER_MISSING_LETTER',
+        message: `Anhang '${anhFile}' muss im Header/Titel explizit 'Anhang ${letter}' enthalten.`
+      });
+    }
+    if (!mainDeckText.includes(anhFile)) {
+      issues.push({
+        slideNum: 0,
+        type: 'ORPHAN_APPENDIX',
+        message: `Anhang '${anhFile}' wird in 'Folien.md' nirgends referenziert.`
+      });
+    }
+    if (konzeptContent && !konzeptContent.includes(anhFile)) {
+      issues.push({
+        slideNum: 0,
+        type: 'APPENDIX_NOT_IN_KONZEPT',
+        message: `Anhang '${anhFile}' fehlt im Steckbrief 'Konzept.md' unter Foliensätze.`
+      });
+    }
+  });
+
+  // Prüfe alle relativen .md-Links in Folien.md und allen Anhängen auf Existenz
+  const filesToCheckLinks = ['Folien.md', ...appendixFiles];
+  for (const relFile of filesToCheckLinks) {
+    const absFile = path.join(folienDir, relFile);
+    const textNoCode = fs.readFileSync(absFile, 'utf8').replace(/```[\s\S]*?```/g, '');
+    const linkRe = /(?<!!)\[([^\]]+)\]\(((?!https?:\/\/)[^)\s]+\.md)(?:#[^)\s]*)?\)/gi;
+    let lm;
+    while ((lm = linkRe.exec(textNoCode)) !== null) {
+      const targetRel = lm[2];
+      const targetAbs = path.resolve(folienDir, targetRel);
+      if (!fs.existsSync(targetAbs)) {
+        issues.push({
+          slideNum: 0,
+          type: 'BROKEN_MD_LINK',
+          message: `Toter Link in '${relFile}': '[${lm[1]}](${targetRel})' (Ziel nicht gefunden).`
+        });
+      }
+    }
+  }
+
   return {
     markdownPath,
     deckName,

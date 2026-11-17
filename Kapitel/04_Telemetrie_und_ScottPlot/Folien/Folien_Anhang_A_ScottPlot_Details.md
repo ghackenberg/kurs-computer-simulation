@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Anhang Kapitel 4: ScottPlot 5 Plot-Typen & MSAGL-Details'
+header: 'Kapitel 4 (Anhang A): ScottPlot 5 Plot-Typen & MSAGL-Details'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -14,7 +14,7 @@ math: mathjax
 
 ![bg](./Titelbild.jpg)
 
-# Anhang Kapitel 4: ScottPlot 5 & MSAGL-Details
+# Kapitel 4 (Anhang A): ScottPlot 5 & MSAGL-Details
 
 Vertiefende Plot-Typen, Komplexitätsanalysen & C#-Rezepte zum Selbststudium:
 

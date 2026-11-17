@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Kapitel 5: 3D-Visualisierung – Anhang: Normalen & Geometrieherleitung'
+header: 'Kapitel 5 (Anhang B): 3D-Normalen & Geometrieherleitung'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -10,14 +10,13 @@ math: mathjax
 <!-- _paginate: false -->
 <!-- _header: "" -->
 <!-- _footer: "" -->
+<!-- _class: title -->
 
-![bg right](./Titelbild.jpg)
+![bg](./Titelbild.jpg)
 
-# Anhang: 3D-Normalen
+# Kapitel 5 (Anhang B): 3D-Normalen & Geometrieherleitung
 
-## Kapitel 5: 3D-Visualisierung mit OpenGL
-
-Analytische Herleitung parametrischer 3D-Körper:
+Analytische Herleitung parametrischer 3D-Körper (Ergänzung zu [Kapitel 5](./Folien.md)):
 
 - Kugelkoordinaten & Einheitskugel-Normalen
 - Parametrisierung von Zylindern & Kegelstümpfen

@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Anhang Kapitel 3: 2D-Vektorgrafik, Transformationen & DrawingVisual'
+header: 'Kapitel 3 (Anhang A): 2D-Vektorgrafik, Transformationen & DrawingVisual'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -14,7 +14,7 @@ math: mathjax
 
 ![bg](./Titelbild.jpg)
 
-# Anhang Kapitel 3: 2D-Vektorgrafik & WPF-Interna
+# Kapitel 3 (Anhang A): 2D-Vektorgrafik & WPF-Interna
 
 Vertiefende Herleitungen & Architektur-Details zum Selbststudium:
 

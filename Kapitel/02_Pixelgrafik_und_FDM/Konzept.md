@@ -6,7 +6,7 @@
 ---
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
-- **Foliensatz:** [`Folien/Folien.md`](./Folien/Folien.md)
+- **Foliensätze:** [`Folien/Folien.md`](./Folien/Folien.md) (+ [`Folien_Anhang_A_Waermeleitung_FDM.md`](./Folien/Folien_Anhang_A_Waermeleitung_FDM.md))
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](./Uebung/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](./Moodle/Text.md) | [`PixelHeatFDM.sln`](./Uebung/Vorlage/PixelHeatFDM.sln)
 - **Vorgreif-Sperre (Technologie-Stand T02):** WPF `WriteableBitmap`, `unsafe`-Pointer, 2D-FDM. *Strikte Tabus:* Kein WPF Canvas, kein `ScottPlot`, kein `Parallel.For` (erst T06).
 - **Kapitel-Brücken & Quiz-Zuordnung:**

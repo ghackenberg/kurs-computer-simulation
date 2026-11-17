@@ -154,7 +154,7 @@ In WPF bietet das `Canvas`-Control eine 2D-Zeichenfläche mit **absoluter Positi
 - **Warum kein `myNode.Left`?** Jedes Panel (`Grid`, `StackPanel`, `Canvas`) braucht andere Layout-Daten – der Container definiert die Property, das Kind speichert nur seinen Wert.
 - **Zentrierung von Ellipsen (Radius $r$):** $\text{Left} = x - r,\; \text{Top} = y - r$.
 
-> **Anhang:** Details zu 4 WPF-Layout-Panels & `DependencyObject`-Store siehe [Folien_Anhang_Vektorgrafik_Details.md](./Folien_Anhang_Vektorgrafik_Details.md).
+> **Anhang:** Details zu 4 WPF-Layout-Panels & `DependencyObject`-Store siehe [Anhang A: Vektorgrafik-Details](./Folien_Anhang_A_Vektorgrafik_Details.md).
 
 </div>
 <div class="one">
@@ -271,7 +271,7 @@ Beim Zeichnen physikalischer Systeme treffen zwei inkompatible Welten aufeinande
   ```csharp
   double s = Math.Min(s_x, s_y);
   ```
-- **Zentrierungs-Offsets ($x_{\text{off}}, y_{\text{off}}$):** Teilen verbleibenden Freiraum symmetrisch auf ([Anhang: 2 Grenzfälle](./Folien_Anhang_Vektorgrafik_Details.md)).
+- **Zentrierungs-Offsets ($x_{\text{off}}, y_{\text{off}}$):** Teilen verbleibenden Freiraum symmetrisch auf ([Anhang A: 2 Grenzfälle](./Folien_Anhang_A_Vektorgrafik_Details.md)).
 - **Y-Achsen-Invertierung ($+Y$ oben $\to$ $+Y$ unten, $Y_{\min}$ bis $Y_{\max}$, Höhe $H_{\text{world}}$):**
   $$x_s = x_{\text{off}} + (x_w - X_{\min}) \cdot s, \qquad y_s = y_{\text{off}} + (Y_{\max} - y_w) \cdot s \quad [\mathrm{px}]$$
 - **Grenzwerte:** $y_w = Y_{\max} \implies y_s = y_{\text{off}}$; $y_w = Y_{\min} \implies y_s = y_{\text{off}} + H_{\text{world}} \cdot s$.
@@ -546,7 +546,7 @@ private void OnMouseWheel(object sender, MouseWheelEventArgs e)
 ```
 
 - **Fixpunkt-Invarianz:** $\mathbf{M}_{\text{zoom}} = \mathbf{T}(+\vec{C}) \cdot \mathbf{S}(s, s) \cdot \mathbf{T}(-\vec{C})$ hält den Punkt unter dem Cursor $\vec{C}$ ortsfest.
-- `ClipToBounds="True"` am äußeren `Border` schneidet Ränder ab ([Anhang](./Folien_Anhang_Vektorgrafik_Details.md)).
+- `ClipToBounds="True"` am äußeren `Border` schneidet Ränder ab ([Anhang A](./Folien_Anhang_A_Vektorgrafik_Details.md)).
 
 </div>
 </div>
@@ -700,7 +700,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **5.000 Shapes $\implies$ 10.000 Methodenaufrufe pro Frame!**
 - **Skalierungsgrenze:** Ab 2.000 Shapes starke Lags, ab 5.000 Shapes Einbruch auf $< 10\,\mathrm{FPS}$.
 
-> **Anhang:** Detailablauf von `Measure` & `Arrange` siehe [Folien_Anhang_Vektorgrafik_Details.md](./Folien_Anhang_Vektorgrafik_Details.md).
+> **Anhang:** Detailablauf von `Measure` & `Arrange` siehe [Anhang A: Vektorgrafik-Details](./Folien_Anhang_A_Vektorgrafik_Details.md).
 
 </div>
 <div class="one">
@@ -801,7 +801,7 @@ Ein Simulations-Viewer zeichnet $10.000$ Fachwerkstäbe pro Frame bei $60\,\text
 - **Vektorgeometrie & DIN 406:** Pfeilspitzen über Orthogonalvektoren $\vec{e}_u^\perp$ ohne Trigonometrie; Maßketten aus Hilfslinien, Maßlinie, Pfeilen und Text.
 - **Interaktion (`Pan & Zoom`):** Hardwarebeschleunigte `MatrixTransform` (`ScaleAt` am Cursor, `Translate`), **Freeze-Doktrin** gegen Dragging-Jittering (`_draggedNode == null`) und `ScreenToWorld`-Inversion.
 - **Architektur-Entkopplung:** Saubere Trennung von Geometrie-/Transformationskern (`Transform2D`) und View (`Canvas` / `DrawingVisual`).
-- **Performance:** `DrawingVisual` mit `.Freeze()` umgeht den `Shape`-Layout-Cycle für $> 100.000$ Vektoren ([Anhang](./Folien_Anhang_Vektorgrafik_Details.md)):
+- **Performance:** `DrawingVisual` mit `.Freeze()` umgeht den `Shape`-Layout-Cycle für $> 100.000$ Vektoren ([Anhang A](./Folien_Anhang_A_Vektorgrafik_Details.md)):
   ```csharp
   double s = Math.Min(s_x, s_y); // Isotrope Skalierung ohne Verzerrung
   pen.Freeze();                  // 0 Bytes GC-Last im DrawingContext

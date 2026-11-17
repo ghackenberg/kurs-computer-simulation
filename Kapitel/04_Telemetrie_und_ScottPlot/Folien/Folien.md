@@ -333,7 +333,7 @@ sig.Data.XOffset = 0.0;   // Startzeitpunkt t0 = 0 s
 WpfPlot1.Refresh();
 ```
 
-- `ys` wird an `sig` übergeben (`Period`, `XOffset`); `SignalXY` & `VectorField` siehe [Anhang](./Folien_Anhang_ScottPlot_Details.md).
+- `ys` wird an `sig` übergeben (`Period`, `XOffset`); `SignalXY` & `VectorField` siehe [Anhang A](./Folien_Anhang_A_ScottPlot_Details.md).
 
 </div>
 <div class="two">
@@ -446,7 +446,7 @@ Für Variantenvergleiche und 2D-Felder bietet ScottPlot spezialisierte Plot-Type
 - **Vorteil:** `Boxes` & `Bars` zeichnen wenige Vektoren, `Heatmap` nutzt **1 Bitmap-Textur**.
 - **Praxis:** Ideal für Parameter-Sweeps, Regler-Benchmarks und 2D-Wärmefelder (Termin 02).
 
-> **Anhang:** C#-Codebeispiele zu `Boxes`, `Bars` & `Heatmap` siehe [Folien_Anhang_ScottPlot_Details.md](./Folien_Anhang_ScottPlot_Details.md).
+> **Anhang:** C#-Codebeispiele zu `Boxes`, `Bars` & `Heatmap` siehe [Anhang A: ScottPlot-Details](./Folien_Anhang_A_ScottPlot_Details.md).
 
 ---
 
@@ -565,7 +565,7 @@ private void OnUiTimerTick(object? s, EventArgs e)
 - **1. Laufende Statistik (`WelfordStatistics`):** Bei jedem neuen Wert `x` werden `Count`, `delta = x - Mean`, `Mean`, `deltaStar = x - Mean` und `M2` für `Variance` / `StdDev` aktualisiert ($\mathcal{O}(1)$).
 - **2. Leitplanken nachführen:** Im 50-Hz-Timer setzen wir `.Y` von `_meanLine` und `_upperLine` (`_welford.Mean + 3.0 * _welford.StdDev`).
 - **3. Kein Array-Speicher:** Nur 24 Bytes (`Count`, `Mean`, `M2`) statt Millionen Rohwerten.
-- **Toleranzschlauch `FillY`:** Siehe [Anhang](./Folien_Anhang_ScottPlot_Details.md).
+- **Toleranzschlauch `FillY`:** Siehe [Anhang A](./Folien_Anhang_A_ScottPlot_Details.md).
 
 > **Übung 1.1–1.3:** Genau diese Zwei-Gedächtnis-Architektur (plus `.Freeze()`-Fix & entprellter $3\sigma$-Alarm) setzen Sie in Stufe 1 um!
 
@@ -725,7 +725,7 @@ Nach welchem Kriterium ordnet `MSAGL` die Knoten im 2D-Raum an?
   3. *Crossing Minimization* (Kreuzungszahl minimieren),
   4. *Spline Routing* (kollisionsfreie Bezier-Kurven).
 - **Force-Directed (`MdsLayoutSettings`):** Kanten wirken als **Zugfedern (Hooke, $\mathcal{O}(|E|)$)**, Knoten als **abstoßende Ladungen (Coulomb, $\mathcal{O}(|V|^2)$)**.
-- **Vertiefung:** [Anhang: Konvergenz & `Nodify`-Vergleich](./Folien_Anhang_ScottPlot_Details.md).
+- **Vertiefung:** [Anhang A: Konvergenz & `Nodify`-Vergleich](./Folien_Anhang_A_ScottPlot_Details.md).
 
 </div>
 </div>

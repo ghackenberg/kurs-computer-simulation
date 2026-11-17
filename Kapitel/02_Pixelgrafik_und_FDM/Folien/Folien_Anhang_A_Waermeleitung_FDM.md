@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Kapitel 2 (Anhang): Herleitungen zur 2D-Wärmeleitung (FDM)'
+header: 'Kapitel 2 (Anhang A): Herleitungen zur 2D-Wärmeleitung (FDM)'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -14,7 +14,7 @@ math: mathjax
 
 ![bg](./Titelbild.jpg)
 
-# Kapitel 2 (Anhang): Herleitungen zur 2D-Wärmeleitung
+# Kapitel 2 (Anhang A): Herleitungen zur 2D-Wärmeleitung
 
 Vertiefende physikalische Herleitungen, Dimensionskontrollen und Randbedingungs-Algebra zum Selbststudium:
 

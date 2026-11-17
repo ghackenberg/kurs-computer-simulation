@@ -659,7 +659,7 @@ $$\alpha = \frac{\lambda}{\rho \cdot c_p} \quad \left[\frac{\mathrm{m^2}}{\mathr
 - **Großes $\alpha$ (Kupfer $\approx 115$, Alu $\approx 97\,\mathrm{mm^2/s}$):** Wärmewelle breitet sich nach einem Zeitschritt Δt rasend schnell aus.
 - **Kleines $\alpha$ (Wärmeleitpaste $\approx 2{,}5\,\mathrm{mm^2/s}$):** Wärme staut sich vor der Isolationsschicht.
 
-> **Anhang:** Detaillierte Analogien ($T, E_{\text{th}}, \dot{Q}$) & Materialwerte siehe [Folien_Anhang_Waermeleitung_FDM.md](./Folien_Anhang_Waermeleitung_FDM.md).
+> **Anhang A:** Detaillierte Analogien ($T, E_{\text{th}}, \dot{Q}$) & Materialwerte siehe [Anhang A: Wärmeleitung & FDM](./Folien_Anhang_A_Waermeleitung_FDM.md).
 
 </div>
 <div class="one">
@@ -826,7 +826,7 @@ row[x] = lut[idx];
 - **2D-Wärmeleitung (FDM):** Der 5-Punkt-Stern vergleicht jedes Pixel mit dem Mittelwert seiner 4 Nachbarn; für Stabilität im expliziten Ping-Pong-Verfahren muss $s = \frac{\alpha \Delta t}{\Delta x^2} \le 0{,}25$ gelten.
 - **Randbedingungen:** Dirichlet (fester Randwert), Neumann (Spiegelung am Isolator, $\dot{q}=0$) und Robin (gewichtetes Mittel bei Luftkonvektion) bilden reale Bauteilgrenzen exakt ab.
 
-> **Anhang:** Alle ausführlichen physikalischen Herleitungen & Robin-Formeln stehen im [Anhang Wärmeleitung & FDM](./Folien_Anhang_Waermeleitung_FDM.md).
+> **Anhang A:** Alle ausführlichen physikalischen Herleitungen & Robin-Formeln stehen im [Anhang A: Wärmeleitung & FDM](./Folien_Anhang_A_Waermeleitung_FDM.md).
 
 ---
 

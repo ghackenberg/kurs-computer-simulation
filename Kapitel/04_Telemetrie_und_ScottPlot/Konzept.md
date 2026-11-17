@@ -6,7 +6,7 @@
 ---
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
-- **Foliensatz:** [`Folien/Folien.md`](./Folien/Folien.md)
+- **Foliensätze:** [`Folien/Folien.md`](./Folien/Folien.md) (+ [`Folien_Anhang_A_ScottPlot_Details.md`](./Folien/Folien_Anhang_A_ScottPlot_Details.md))
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](./Uebung/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](./Moodle/Text.md) | [`ScottPlotTelemetry.sln`](./Uebung/Vorlage/ScottPlotTelemetry.sln)
 - **Vorgreif-Sperre (Technologie-Stand T04):** `ScottPlot 5`, `CircularBuffer<T>`, Welford-Statistik, `MSAGL`, MVVM. *Strikte Tabus:* Kein SharpGL 3D, kein Multithreading, kein RK4.
 - **Kapitel-Brücken & Quiz-Zuordnung:**

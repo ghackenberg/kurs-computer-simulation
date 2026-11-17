@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: fhooe
-header: 'Kapitel 5 (Anhang): OpenGL-Details, Phong-Mathematik & Projektion'
+header: 'Kapitel 5 (Anhang A): OpenGL-Details, Phong-Mathematik & Projektion'
 footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 paginate: true
 math: mathjax
@@ -15,7 +15,7 @@ math: mathjax
 
 <!-- _class: title -->
 
-# Kapitel 5 (Anhang): OpenGL-Details & Phong-Mathematik
+# Kapitel 5 (Anhang A): OpenGL-Details & Phong-Mathematik
 
 Ergänzende Herleitungen und Referenzen zu [Kapitel 5: 3D-Visualisierung mit OpenGL](./Folien.md):
 

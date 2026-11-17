@@ -169,6 +169,12 @@ Beispiele:
 // ------------------------------------------------------------------------------
 // 5. MARP Slides Export
 // ------------------------------------------------------------------------------
+function stripLocalMdLinksForPdf(mdContent) {
+  // Ersetzt relative .md-Hyperlinks [Label](./Pfad.md#...) durch reinen Text Label,
+  // damit im PDF keine toten lokalen Dateipfade stehen (externe http(s)-Links & Bilder ![...] bleiben unberührt).
+  return mdContent.replace(/(?<!!)\[([^\]]+)\]\(((?!https?:\/\/)[^)\s]+\.md(?:#[^)\s]*)?)\)/gi, '$1');
+}
+
 function exportSingleSlideDeck(dirName, mdFileName, marpCmd) {
   const folienDir = path.join(KAPITEL_DIR, dirName, 'Folien');
   const moodleDir = path.join(KAPITEL_DIR, dirName, 'Moodle');
@@ -188,11 +194,19 @@ function exportSingleSlideDeck(dirName, mdFileName, marpCmd) {
     env.CHROME_PATH = browserExec;
   }
 
-  const hasSolutions = /<!--\s*_class:\s*solution\s*-->/i.test(fs.readFileSync(inputMd, 'utf8'));
+  const rawMd = fs.readFileSync(inputMd, 'utf8');
+  const cleanMdForPdf = stripLocalMdLinksForPdf(rawMd);
+  const hasSolutions = /<!--\s*_class:\s*solution\s*-->/i.test(cleanMdForPdf);
 
   if (!hasSolutions) {
-    const cmd = `${marpCmd} --no-stdin --theme-set "${THEMEN_CSS}" --allow-local-files --pdf "${inputMd}" -o "${exportPdf}"`;
-    execSync(cmd, { stdio: 'pipe', env });
+    const tmpExportMd = path.join(folienDir, `.tmp_pdf_${mdFileName}`);
+    fs.writeFileSync(tmpExportMd, cleanMdForPdf, 'utf8');
+    try {
+      const cmd = `${marpCmd} --no-stdin --theme-set "${THEMEN_CSS}" --allow-local-files --pdf "${tmpExportMd}" -o "${exportPdf}"`;
+      execSync(cmd, { stdio: 'pipe', env });
+    } finally {
+      if (fs.existsSync(tmpExportMd)) fs.unlinkSync(tmpExportMd);
+    }
     const stat = fs.statSync(exportPdf);
     return {
       dirName: mdFileName === 'Folien.md' ? dirName : `${dirName} (${mdFileName})`,
@@ -203,21 +217,23 @@ function exportSingleSlideDeck(dirName, mdFileName, marpCmd) {
   }
 
   // 1. Vorab-Moodle-PDF ohne Lösungsfolien
-  const rawMd = fs.readFileSync(inputMd, 'utf8');
-  const studentSlides = rawMd.split(/^---$/m).filter(s => !/<!--\s*_class:\s*solution\s*-->/i.test(s));
+  const studentSlides = cleanMdForPdf.split(/^---$/m).filter(s => !/<!--\s*_class:\s*solution\s*-->/i.test(s));
   const tmpStudentMd = path.join(folienDir, `.tmp_student_${mdFileName}`);
+  const tmpSolMd = path.join(folienDir, `.tmp_sol_${mdFileName}`);
   fs.writeFileSync(tmpStudentMd, studentSlides.join('---'), 'utf8');
+  fs.writeFileSync(tmpSolMd, cleanMdForPdf, 'utf8');
   try {
     const cmdStudent = `${marpCmd} --no-stdin --theme-set "${THEMEN_CSS}" --allow-local-files --pdf "${tmpStudentMd}" -o "${exportPdf}"`;
     execSync(cmdStudent, { stdio: 'pipe', env });
+
+    // 2. Vollständiges Lösungs-PDF (*_Folien_Loesungen.pdf)
+    const solutionPdf = exportPdf.replace(/\.pdf$/i, '_Loesungen.pdf');
+    const cmdSol = `${marpCmd} --no-stdin --theme-set "${THEMEN_CSS}" --allow-local-files --pdf "${tmpSolMd}" -o "${solutionPdf}"`;
+    execSync(cmdSol, { stdio: 'pipe', env });
   } finally {
     if (fs.existsSync(tmpStudentMd)) fs.unlinkSync(tmpStudentMd);
+    if (fs.existsSync(tmpSolMd)) fs.unlinkSync(tmpSolMd);
   }
-
-  // 2. Vollständiges Lösungs-PDF (*_Folien_Loesungen.pdf)
-  const solutionPdf = exportPdf.replace(/\.pdf$/i, '_Loesungen.pdf');
-  const cmdSol = `${marpCmd} --no-stdin --theme-set "${THEMEN_CSS}" --allow-local-files --pdf "${inputMd}" -o "${solutionPdf}"`;
-  execSync(cmdSol, { stdio: 'pipe', env });
 
   const stat = fs.statSync(exportPdf);
   return {

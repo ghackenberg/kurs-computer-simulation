@@ -162,7 +162,7 @@ $$I_f = I_a + I_d + I_s$$
 2. **Diffuse ($I_d$):** Matte Streuung nach Lambert ($\vec{n} \cdot \vec{l}$).
 3. **Specular ($I_s$):** Blickwinkelabhängiger Glanzpunkt ($\vec{r} \cdot \vec{v}$).
 
-> **Details & Shading (`GL_FLAT` / `GL_SMOOTH`):** Siehe [Folien_Anhang_OpenGL_Details.md](./Folien_Anhang_OpenGL_Details.md).
+> **Details & Shading (`GL_FLAT` / `GL_SMOOTH`):** Siehe [Anhang A: OpenGL-Details](./Folien_Anhang_A_OpenGL_Details.md).
 
 </div>
 </div>
@@ -235,7 +235,7 @@ Sie richten eine neue `SharpGL`-Szene für einen 3D-Roboter ein und testen drei 
 
 ### Der Render-Loop in jedem Frame: `OpenGLDraw`
 
-Während `OpenGLInitialized` einmalig beim Start läuft, baut `OpenGlView_OpenGLDraw` jedes Einzelbild neu auf (Primitive wie `GL_LINES`, `GL_QUADS`, `GL_QUAD_STRIP` siehe [Anhang](./Folien_Anhang_OpenGL_Details.md)):
+Während `OpenGLInitialized` einmalig beim Start läuft, baut `OpenGlView_OpenGLDraw` jedes Einzelbild neu auf (Primitive wie `GL_LINES`, `GL_QUADS`, `GL_QUAD_STRIP` siehe [Anhang A](./Folien_Anhang_A_OpenGL_Details.md)):
 
 ```csharp
 private void OpenGlView_OpenGLDraw(object sender, OpenGLRoutedEventArgs args)
@@ -291,7 +291,7 @@ Homogene $4\times 4$-Matrizen mit $\vec{v} = (x, y, z, 1)^\top$ vereinen Verschi
 - **Orthogonal (`gl.Ortho`):** Parallele Kanten bleiben parallel (CAD-Aufriss).
 - **Perspektive (`gl.Perspective`):** Strahlensatz-Division durch $-z$ liefert Tiefenwirkung (`fovy = 45°`, `aspect = w / h`).
 - **Clipping (`zNear` / `zFar`):** Alles außerhalb `[0.1, 100.0]` wird für den Frame verworfen.
-- **Resize-Handler (`args`):** Aktualisiert `aspect` sofort bei Fensteränderung, damit Kugeln nicht zu Ellipsen verzerrt werden (Details: [Anhang](./Folien_Anhang_OpenGL_Details.md)).
+- **Resize-Handler (`args`):** Aktualisiert `aspect` sofort bei Fensteränderung, damit Kugeln nicht zu Ellipsen verzerrt werden (Details: [Anhang A](./Folien_Anhang_A_OpenGL_Details.md)).
 
 </div>
 <div class="two">
@@ -377,7 +377,7 @@ Wie vererbt OpenGL Transformationen an Kinder, ohne Geschwister (`Workpiece`) zu
 
 ### Architektur in unserer Vorlage: Die Klasse `SceneNode`
 
-`Scene/SceneNode.cs` kapselt Baum, Transformation ([Anhang: Euler-Winkel](./Folien_Anhang_OpenGL_Details.md)) & Rendering:
+`Scene/SceneNode.cs` kapselt Baum, Transformation ([Anhang A: Euler-Winkel](./Folien_Anhang_A_OpenGL_Details.md)) & Rendering:
 
 | Eigenschaft / Methode | Typ | Aufgabe im Szenengraphen (`SceneGraph3D.sln`) |
 | :--- | :--- | :--- |
@@ -412,7 +412,7 @@ public virtual void Render(OpenGL gl)
 }
 ```
 
-> **CPU-Weltmatrix:** `GetLocalMatrix()` & `GetWorldMatrix()` siehe [Folien_Anhang_OpenGL_Details.md](./Folien_Anhang_OpenGL_Details.md).
+> **CPU-Weltmatrix:** `GetLocalMatrix()` & `GetWorldMatrix()` siehe [Anhang A: OpenGL-Details](./Folien_Anhang_A_OpenGL_Details.md).
 
 ---
 
@@ -425,7 +425,7 @@ In `MainWindow.xaml.cs` zeichnen drei Hilfsmethoden Grundkörper mit **exakten N
 
 - **`DrawCube(OpenGL gl)`:** Einheitswürfel ($[-0{,}5, +0{,}5]^3$, Ursprung **im Zentrum** $\implies$ erklärt `Translate(L1/2)` & `Ty = 0.06f`!) via `GL_QUADS`.
 - **`DrawCylinder(gl, radius, height, slices)`:** Mantel entlang $+Y$ bis `height` (`nx = cos(theta)`, `nz = sin(theta)`).
-- **`DrawSphere`:** Zerlegung in `stacks` & `slices` ([Anhang: Kegelstümpfe & Kugelnormalen](./Folien_Anhang_3D_Normalen.md)).
+- **`DrawSphere`:** Zerlegung in `stacks` & `slices` ([Anhang B: Kegelstümpfe & Kugelnormalen](./Folien_Anhang_B_3D_Normalen.md)).
 - **Normalen-Effekt:** Ohne `gl.Normal` bleiben Körper unter Licht flach.
 
 </div>
@@ -555,7 +555,7 @@ $$z = -\big(\text{L1}\sin\theta_1 + \text{L2}\sin(\theta_1+\theta_2)\big)$$
 
 ### Der C#-Code: Aufbau des Roboter-Szenengraphen (Aufgabe 1.1)
 
-In **Stufe 1 (Aufgabe 1.1)** weisen wir jedem Knoten (`_baseNode`, `_arm1Node`, `_arm2Node`, `_pinoleNode`) unter `_rootNode` seine Geometrie zu (Update & Analytik: [Anhang](./Folien_Anhang_OpenGL_Details.md)):
+In **Stufe 1 (Aufgabe 1.1)** weisen wir jedem Knoten (`_baseNode`, `_arm1Node`, `_arm2Node`, `_pinoleNode`) unter `_rootNode` seine Geometrie zu (Update & Analytik: [Anhang A](./Folien_Anhang_A_OpenGL_Details.md)):
 
 ```csharp
 private void BuildSceneGraph()
@@ -747,7 +747,7 @@ Sie steuern die 3D-Szene über `OrbitCamera` (`r`, `theta`, `phi`, `LookAtX/Y/Z`
    LookAtY += dUp;
    LookAtZ += dRight * Math.Sin(thetaRad);
    ```
-   - **Maus-Events (`MainWindow.xaml.cs`):** Bindung von `MouseDown` / `MouseMove` siehe [Folien_Anhang_OpenGL_Details.md](./Folien_Anhang_OpenGL_Details.md).
+   - **Maus-Events (`MainWindow.xaml.cs`):** Bindung von `MouseDown` / `MouseMove` siehe [Anhang A: OpenGL-Details](./Folien_Anhang_A_OpenGL_Details.md).
 3. **`_workpieceNode` unter `_rootNode`:** Als Geschwisterknoten von `_baseNode` bleibt das Werkstück auf dem Boden liegen, bis es in Stufe 2 per Re-Parenting gegriffen wird.
 
 > **Merksatz:** `ElevationDeg` immer auf $[-85^\circ, +85^\circ]$ klemmen und Panning entlang $\vec{e}_{\text{right}}$ ausführen!
