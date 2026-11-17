@@ -625,6 +625,11 @@ function buildExerciseDocument(renderedBody, terminTitle) {
       break-inside: avoid;
     }
 
+    .mermaid svg {
+      max-width: 100%;
+      height: auto;
+    }
+
     a {
       color: #0969da;
       text-decoration: none;
@@ -699,12 +704,19 @@ async function exportAllExercises(browser, filterTermin = null) {
           mermaid.initialize({
             startOnLoad: false,
             theme: 'base',
+            flowchart: {
+              useMaxWidth: false,
+              padding: 12,
+              nodeSpacing: 36,
+              rankSpacing: 36
+            },
             themeVariables: {
               primaryColor: '#eff6ff',
               primaryBorderColor: '#2563eb',
               primaryTextColor: '#0f172a',
               lineColor: '#475569',
-              fontFamily: 'Segoe UI, Arial, sans-serif'
+              fontFamily: 'Segoe UI, Arial, sans-serif',
+              fontSize: '12.5px'
             }
           });
           await mermaid.run();
