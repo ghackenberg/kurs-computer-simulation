@@ -25,6 +25,17 @@ Vertiefende Plot-Typen, Komplexitätsanalysen & C#-Rezepte zum Selbststudium:
 
 ---
 
+![bg](./Illustrationen/Abschnitt_2.jpg)
+
+## A.1: Spezial-Plottables (`SignalXY`, `VectorField`, `Boxes`, `Bars`)
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Adaptive Schrittweiten (`SignalXY`) und Zustandsraum-Vektorfelder (`VectorField`)
+- Statistische Verteilungen und Gruppenvergleiche (`Boxes`, `Bars`)
+
+---
+
 ### `SignalXY`: Halbierungssuche ($\mathcal{O}(\log N)$) & Bucketing
 
 <div class="columns">
@@ -139,6 +150,17 @@ plot.Add.Bars(barsB);
 
 ---
 
+![bg](./Illustrationen/Abschnitt_3.jpg)
+
+## A.2: Raster- & Korridor-Plots (`Heatmap`, `FillY`)
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- 2D-Skalarfelder über das `SKBitmap`-Pixelbackend und `ColorBar`
+- Mitwandernde Toleranzkorridore ($\mu(t) \pm 3\sigma$) mit `FillY`
+
+---
+
 ### `Heatmap` & `ColorBar`: Raw-Pixel-Backend (`SKBitmap`)
 
 <div class="columns">
@@ -191,6 +213,17 @@ sensLine.Color = Colors.Crimson;
 
 </div>
 </div>
+
+---
+
+![bg](./Illustrationen/Abschnitt_5.jpg)
+
+## A.3: Graph-Layouts mit `MSAGL` & `Nodify`
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Force-Directed-Konvergenz in `MSAGL`
+- Automatisches Graph-Layout vs. interaktiver Node-Editor (`Nodify`)
 
 ---
 

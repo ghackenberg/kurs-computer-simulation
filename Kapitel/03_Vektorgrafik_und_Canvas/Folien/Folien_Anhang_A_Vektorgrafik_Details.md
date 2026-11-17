@@ -25,6 +25,17 @@ Vertiefende Herleitungen & Architektur-Details zum Selbststudium:
 
 ---
 
+![bg](./Illustrationen/Abschnitt_1.jpg)
+
+## A.1: WPF Layout-Panels, Attached Properties & Shapes
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Die vier WPF-Layout-Panels (`Grid`, `StackPanel`, `DockPanel`, `Canvas`)
+- Attached Properties (`Canvas.Left/Top`) und Positionierungsstrategien für Shapes
+
+---
+
 ### WPF Layout-Panels: 4 Strategien
 
 <div class="columns top">
@@ -116,6 +127,17 @@ public void AddNode(Canvas canvas,
 
 </div>
 </div>
+
+---
+
+![bg](./Illustrationen/Abschnitt_2.jpg)
+
+## A.2: Zentrierung, `ScaleAt`-Beweis & Koordinatenräume
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Höhen- und breitenlimitierte Zentrierung im Viewport
+- Analytischer Beweis von `ScaleAt` und Trennung von Screen, Canvas und World
 
 ---
 
@@ -214,6 +236,17 @@ Beim interaktiven Arbeiten existieren drei Bezugssysteme (Vorwärts-Pipeline: $\
 
 </div>
 </div>
+
+---
+
+![bg](./Illustrationen/Abschnitt_5.jpg)
+
+## A.3: 2-stufiger Layout-Cycle & `VisualHost`
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Warum WPF Measure- und Arrange-Pass in zwei Phasen trennt
+- Leichtgewichtiger `VisualHost` und `OnRender`-Alternative für `DrawingVisual`
 
 ---
 

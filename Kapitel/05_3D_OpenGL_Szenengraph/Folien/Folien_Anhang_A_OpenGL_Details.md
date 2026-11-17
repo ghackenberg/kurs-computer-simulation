@@ -25,6 +25,17 @@ Ergänzende Herleitungen und Referenzen zu [Kapitel 5: 3D-Visualisierung mit Ope
 
 ---
 
+![bg](./Illustrationen/Abschnitt_2.jpg)
+
+## A.1: Phong-Beleuchtung, Schattierung & Primitive
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Normierte Beleuchtungsvektoren, Ambient-/Diffuse-/Specular-Terme & Mehrlichtquellen
+- `GL_FLAT` vs. `GL_SMOOTH` und visuelle Referenz der OpenGL-Primitive
+
+---
+
 ### Vektoren für die Beleuchtungsrechnung (Normiert)
 
 <div class="columns">
@@ -184,6 +195,17 @@ Zwischen `gl.Begin(mode)` und `gl.End()` übergeben wir Vertices (`gl.Vertex`), 
 
 </div>
 </div>
+
+---
+
+![bg](./Illustrationen/Abschnitt_3.jpg)
+
+## A.2: Projektionsmatrizen, Szenegraph & Interaktion
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Projektionsmatrix (`gl.Ortho` vs. `gl.Perspective`) in den NDC-Würfel
+- `GetLocalMatrix` / `GetWorldMatrix`, Euler-Winkel und Maus-Interaktion
 
 ---
 

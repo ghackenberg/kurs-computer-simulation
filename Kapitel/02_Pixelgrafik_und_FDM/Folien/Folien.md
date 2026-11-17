@@ -282,7 +282,7 @@ Kombiniert mit einer einzigen
 
 ### Einbindung in XAML & Initialisierung im Code-Behind
 
-Die `WriteableBitmap` wird **einmalig beim Start** angelegt und an ein einziges `<Image>`-Element gebunden; im Render-Loop wird nur noch ihr Speicherpuffer aktualisiert:
+Die `WriteableBitmap` wird beim Start einmalig angelegt und an ein `<Image>`-Element gebunden:
 
 <div class="columns">
 <div class="one">
@@ -306,13 +306,13 @@ _bitmap = new WriteableBitmap(
     PixelFormats.Bgra32, null);
 SimulationImage.Source = _bitmap;
 ```
-- `96.0, 96.0` setzt die Standard-WPF-DPI; `null` bedeutet keine Farbpalette nötig (`Bgra32`).
-- Einmalig beim Start allokieren – danach nur noch den `BackBuffer` überschreiben!
+- `96.0, 96.0` setzt Standard-DPI; `null` bedeutet keine Farbpalette (`Bgra32`).
+- Einmalig allokieren – danach nur noch den `BackBuffer` überschreiben!
 
 </div>
 </div>
 
-> **Praxis-Tipp:** Für das periodische Neuzeichnen koppeln wir den Simulations- und Render-Loop per `CompositionTarget.Rendering` oder `DispatcherTimer` an den UI-Thread.
+> **Praxis-Tipp:** Für das periodische Neuzeichnen koppeln wir den Loop per `CompositionTarget.Rendering` oder `DispatcherTimer` an den UI-Thread.
 
 ---
 
@@ -388,6 +388,8 @@ finally
 }
 ```
 
+- **`Lock()` / `Unlock()`:** Exklusiver Zugriff auf `BackBuffer` (`BackBufferStride`) & `AddDirtyRect(...)`.
+
 > **Wichtig:** `try / finally` stellt sicher, dass `Unlock()` auch bei Fehlern immer ausgeführt wird.
 
 ---
@@ -415,6 +417,8 @@ private unsafe void UpdatePixelData(IntPtr pBuf, int stride, int w, int h)
     }
 }
 ```
+
+- **Adressierung:** `y * stride` (Padding) + `x * 4` (`B, G, R, A`).
 
 </div>
 <div class="one">
@@ -451,14 +455,14 @@ private unsafe void UpdatePixelFast(
 }
 ```
 
-- **Vorteil:** Verdoppelt bis vervierfacht die Speicherbandbreite durch 32-Bit-Wort-Befehle!
+- **Vorteil:** `stride / 4` & `0xAARRGGBB` verdoppeln–vervierfachen die Speicherbandbreite per 32-Bit-Write!
 
 ---
 
 ### Paralleles Rendern mit `Parallel.For` (Vorschau Kapitel 6)
 
 <div class="columns">
-<div class="two">
+<div class="three">
 
 ```csharp
 private unsafe void RenderParallel(IntPtr pBackBuffer, int stride, int w, int h)
@@ -477,12 +481,15 @@ private unsafe void RenderParallel(IntPtr pBackBuffer, int stride, int w, int h)
 }
 ```
 
+- **Cache-Lokalität:** `strideWords` hält benachbarte Pixel einer Zeile zusammenhängend im L1-Cache.
+
 </div>
-<div class="one">
+<div class="two">
 
 - **Vorschau Kap. 6:** Jede der `h` Zeilen besitzt `row` ab `pBackBuffer + y * stride` (`0 <= x < w`).
 - **Kein Lock nötig:** Alle Kerne schreiben in getrennte Zeilen (in T02 noch sequentiell per `for`).
-- **Linearer Speedup:** Skaliert direkt mit freien CPU-Kernen.
+- **Linearer Speedup:** Skaliert direkt mit freien CPU-Kernen ohne Synchronisations-Overhead.
+- **Praxis-Nutzen:** Ideal für 2D-Wärmefelder ab Termin 06.
 
 </div>
 </div>
@@ -549,17 +556,19 @@ Ein Pixel repräsentiert eine physikalische Größe $v$ (z. B. Temperatur $T \in
 <div class="columns">
 <div class="two">
 
-- **Das Problem:** Farbinterpolationen mit `if/else` oder `Math.Sin()` für jeden einzelnen Pixel pro Frame kosten enorm viel Rechenzeit.
-- **Die Lösung:** Einmalige Vorberechnung der Farbpalette in ein Array `uint[256]`.
-- **Im inneren Render-Loop ($O(1)$ aus dem L1-Cache):**
-  $$\text{Index} = \lfloor u \cdot 255 \rfloor \quad \Longrightarrow \quad \text{PixelFarbe} = \text{LUT}[\text{Index}]$$
+- **Das Problem:** Farbinterpolationen mit `if/else` oder `Math.Sin()` pro Pixel kosten im Render-Loop zu viel Rechenzeit.
+- **Die Lösung:** Einmalige Vorberechnung in `uint[256]`; Nachschlagen im inneren Loop ($O(1)$):
+  $$\text{Index} = \lfloor u \cdot 255 \rfloor \implies \text{PixelFarbe} = \text{LUT}[\text{Index}]$$
 
 ```csharp
 int idx = Math.Clamp((int)(u * 255f), 0, 255);
 pBackBuffer[i] = ViridisLut[idx];
 ```
 
-> **Cache-Vorteil:** $256 \times 4\,\text{Bytes} = 1\,\mathrm{KB}$ passt vollständig in den L1-Cache.
+- **Speicherbedarf:** $256 \times 4\,\text{Bytes} = 1\,\mathrm{KB}$ im L1-Cache.
+- **Konstante Laufzeit:** $O(1)$-Nachschlagen pro Pixel ohne Verzweigungen.
+
+> **Cache-Vorteil:** Ein Array-Zugriff ersetzt teure Trigonometrie.
 
 </div>
 <div class="one">
@@ -644,8 +653,8 @@ Bearbeite die folgenden drei Aufgaben kurz zu zweit:
 
 1. **Bei $T = 60\,^\circ\mathrm{C}$:**
    $$u = \frac{60 - 20}{100 - 20} = \mathbf{0{,}5} \quad \Longrightarrow \quad \text{Index} = \lfloor 0{,}5 \cdot 255 \rfloor = \mathbf{127}$$
-2. **Ohne Clamping (Über- und Unterschreitungen):**
-   - Bei $T = 120\,^\circ\mathrm{C}$ wird $u = 1{,}25$ ($\text{Index} = 318 > 255$), bei $T = -5\,^\circ\mathrm{C}$ wird $u = -0{,}3125$ ($\text{Index} = -79 < 0$) $\implies$ sofortige **`IndexOutOfRangeException`**!
+2. **Ohne Clamping (Über-/Unterschreitungen):**
+   - Bei $T = 120\,^\circ\mathrm{C}$ ($u = 1{,}25 \to 318$) oder $-5\,^\circ\mathrm{C}$ ($u = -0{,}31 \to -79$) droht eine **`IndexOutOfRangeException`**!
    ```csharp
    int idx = Math.Clamp((int)(u * 255.0f), 0, 255);
    row[x] = _viridisLut[idx];
@@ -791,7 +800,7 @@ Bearbeite die folgenden drei Fragen kurz mit deinem Nachbarn:
 
 - **1. Dirichlet (Feste Wand):** $T_{\text{Rand}} = \text{const.}$ (äußere Pixel auslassen).
 - **2. Neumann (Isolator, $\dot{q}=0$):** Rand spiegelt Nachbar (`tNeighbor = tCenter`).
-- **3. Robin (Konvektion):** $T_{0,y} = \frac{\lambda \cdot T_{1,y} + (h \cdot \Delta x) \cdot T_\infty}{\lambda + h \cdot \Delta x}$ (Metall $\lambda$, Luft $h \cdot \Delta x$; Herleitung siehe [Anhang A](./Folien_Anhang_A_Waermeleitung_FDM.md)).
+- **3. Robin (Konvektion):** $T_{0,y} = (\lambda\,T_{1,y} + h\,\Delta x\,T_\infty)/(\lambda + h\,\Delta x)$ (Metall $\lambda$, Luft $h\Delta x$; Herleitung siehe [Anhang A](./Folien_Anhang_A_Waermeleitung_FDM.md)).
 - **Innere Isolator-Wände (`_alphaMap == 0f`):** Ohne Spiegelung fließt ΔT fälschlich in die kalte Wand (**Kühlakku-Falle**)!
   ```csharp
   float tRight = _alphaMap[x + 1, y] == 0f ? tCenter : _tCurrent[x + 1, y];
@@ -832,7 +841,7 @@ int idx = Math.Clamp((int)(u * 255.0f), 0, 255);
 row[x] = lut[idx];
 ```
 
-- **Ping-Pong:** Lesen aus `_tCurrent`, Schreiben in `_tNext`, danach Referenzen tauschen!
+- **Ping-Pong & Kernel:** Tausche `_tCurrent`/`_tNext`, normiere `u` (`minTemp`/`range`) und schreibe `lut[idx]`.
 
 </div>
 <div class="two">

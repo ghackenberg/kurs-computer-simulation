@@ -30,7 +30,7 @@ Dieses Kapitel umfasst die folgenden Abschnitte:
 
 ### Live-Showcase & Code-Defense: Termin 03
 
-Präsentation der Hausübung aus Termin 03 (**Stufe 1: Basisaufgabe** + **Stufe 2: Track A oder B**, [Aufgabenblatt 03](../../03_Vektorgrafik_und_Canvas/Uebung/Aufgabenblatt.md)):
+Präsentation der Hausübung aus Termin 03 ([Aufgabenblatt 03](../../03_Vektorgrafik_und_Canvas/Uebung/Aufgabenblatt.md)):
 
 <div class="columns">
 <div class="two">

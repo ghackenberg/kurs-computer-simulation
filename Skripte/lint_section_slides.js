@@ -678,6 +678,80 @@ function lintSectionDeck(markdownPath) {
         message: `Anhang '${anhFile}' muss im Header/Titel explizit 'Anhang ${letter}' enthalten.`
       });
     }
+
+    // Prüfe einheitliche Anhang-Struktur: Titelfolie (h1 + Bullets) -> Abschnitts-Opener (h2: X.k + bg + Standard-Satz) -> Inhaltsfolien (h3)
+    const anhBody = anhText.replace(/^---[\s\S]*?---\s*\r?\n/, '');
+    const anhSlides = anhBody.split(/\r?\n---\s*\r?\n/);
+    const anhTitleSlide = anhSlides[0] || '';
+    if (!/^#\s+.*Anhang\s+/im.test(anhTitleSlide) || /^##\s+/m.test(anhTitleSlide) || !/^-\s+/m.test(anhTitleSlide)) {
+      issues.push({
+        slideNum: 0,
+        type: 'APPENDIX_TITLE_SCHEMA',
+        message: `Anhang '${anhFile}' Titelfolie muss '# ... Anhang ${letter}: ...' + Einleitung + Überblicks-Bullets (ohne '##'-Untertitel) verwenden.`
+      });
+    }
+    let seenAnhSection = false;
+    let expectedAnhSec = 1;
+    for (let sIdx = 1; sIdx < anhSlides.length; sIdx++) {
+      const slNoCode = anhSlides[sIdx].replace(/```[\s\S]*?```/g, '');
+      const h2Match = slNoCode.match(/^##\s+(.+)$/m);
+      const h3Match = slNoCode.match(/^###\s+(.+)$/m);
+      if (h2Match) {
+        const secMatchAnh = h2Match[1].trim().match(new RegExp(`^${letter}\\.(\\d+):\\s+`));
+        if (!secMatchAnh) {
+          issues.push({
+            slideNum: 0,
+            type: 'APPENDIX_SECTION_NUMBERING',
+            message: `Anhang '${anhFile}' Folie ${sIdx + 1}: '## ${h2Match[1].trim()}' muss mit '## ${letter}.${expectedAnhSec}: ' beginnen.`
+          });
+        } else if (parseInt(secMatchAnh[1], 10) !== expectedAnhSec) {
+          issues.push({
+            slideNum: 0,
+            type: 'APPENDIX_SECTION_SEQUENCE',
+            message: `Anhang '${anhFile}' Folie ${sIdx + 1}: Abschnitt '${letter}.${secMatchAnh[1]}' erwartet lückenlos '${letter}.${expectedAnhSec}'.`
+          });
+        }
+        expectedAnhSec++;
+        seenAnhSection = true;
+        const bgMatchAnh = anhSlides[sIdx].match(/!\[bg[^\]]*\]\(([^)]+)\)/i);
+        if (!bgMatchAnh) {
+          issues.push({
+            slideNum: 0,
+            type: 'APPENDIX_SECTION_MISSING_BG',
+            message: `Anhang '${anhFile}' Folie ${sIdx + 1}: Abschnitts-Opener benötigt '![bg](./Illustrationen/...)'.`
+          });
+        } else {
+          const bgAbs = path.resolve(folienDir, bgMatchAnh[1]);
+          if (!fs.existsSync(bgAbs)) {
+            issues.push({
+              slideNum: 0,
+              type: 'APPENDIX_SECTION_MISSING_BG_FILE',
+              message: `Anhang '${anhFile}' Folie ${sIdx + 1}: Hintergrundbild '${bgMatchAnh[1]}' nicht gefunden.`
+            });
+          }
+        }
+        if (!/Dieser Abschnitt umfasst die folgenden Inhalte:/i.test(slNoCode)) {
+          issues.push({
+            slideNum: 0,
+            type: 'APPENDIX_SECTION_MISSING_INTRO',
+            message: `Anhang '${anhFile}' Folie ${sIdx + 1}: Abschnitts-Opener benötigt den Standardsatz 'Dieser Abschnitt umfasst die folgenden Inhalte:'.`
+          });
+        }
+      } else if (h3Match && !seenAnhSection) {
+        issues.push({
+          slideNum: 0,
+          type: 'APPENDIX_H3_BEFORE_H2',
+          message: `Anhang '${anhFile}' Folie ${sIdx + 1}: '###'-Folie direkt nach Titelfolie ohne vorherigen '## ${letter}.1:'-Abschnitt.`
+        });
+      }
+    }
+    if (expectedAnhSec === 1) {
+      issues.push({
+        slideNum: 0,
+        type: 'APPENDIX_MISSING_SECTIONS',
+        message: `Anhang '${anhFile}' benötigt mindestens einen '## ${letter}.1: ...'-Abschnitt (Hierarchie h1 -> h2 -> h3).`
+      });
+    }
     if (!mainDeckText.includes(anhFile)) {
       issues.push({
         slideNum: 0,

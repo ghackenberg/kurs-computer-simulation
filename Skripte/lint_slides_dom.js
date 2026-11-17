@@ -93,8 +93,8 @@ function parseSvgMetrics(svgPath) {
 async function lintSlideDeck(markdownPath, browser, options = {}) {
   const minFontSize = options.minFontSize || 11.5;
   const maxOverflow = options.maxOverflow || 2; // Tolerance 2px for subpixel layout
-  const minHeaderMargin = options.minHeaderMargin !== undefined ? options.minHeaderMargin : 12;
-  const minFooterMargin = options.minFooterMargin !== undefined ? options.minFooterMargin : 12;
+  const minHeaderMargin = options.minHeaderMargin !== undefined ? options.minHeaderMargin : 14;
+  const minFooterMargin = options.minFooterMargin !== undefined ? options.minFooterMargin : 14;
   const checkImages = options.checkImages || false;
   const minImageWidthRatio = options.minImageWidthRatio || 0.95;
 
@@ -241,17 +241,29 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       const footer = sec.querySelector('footer');
       const footerTop = footer ? (footer.getBoundingClientRect().top - sec.getBoundingClientRect().top) : clientHeight;
 
-      // Find highest and lowest content edge
-      const contentChildren = Array.from(sec.children).filter(child => child.tagName !== 'HEADER' && child.tagName !== 'FOOTER');
+      // Find highest and lowest content edge (including visible descendants like mjx-container, pre, table, img)
+      const secRect = sec.getBoundingClientRect();
+      const contentChildren = Array.from(sec.children).filter(child =>
+        child.tagName !== 'HEADER' && child.tagName !== 'FOOTER'
+      );
       let contentTop = clientHeight;
       let contentBottom = 0;
 
-      contentChildren.forEach(child => {
-        const rect = child.getBoundingClientRect();
-        const topRel = rect.top - sec.getBoundingClientRect().top;
-        const bottomRel = rect.bottom - sec.getBoundingClientRect().top;
+      const updateBounds = (el) => {
+        if (el.closest('header, footer')) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.height <= 0 || rect.width <= 0) return;
+        const topRel = rect.top - secRect.top;
+        const bottomRel = rect.bottom - secRect.top;
         if (topRel < contentTop) contentTop = topRel;
         if (bottomRel > contentBottom) contentBottom = bottomRel;
+      };
+
+      contentChildren.forEach(updateBounds);
+      sec.querySelectorAll('h1, h2, h3, h4, p, li, pre, marp-pre, blockquote, table, mjx-container, img, svg').forEach(el => {
+        if (el.tagName === 'IMG' && (el.getAttribute('alt') || '').startsWith('bg')) return;
+        if (el.closest('svg') && el.tagName !== 'SVG') return;
+        updateBounds(el);
       });
 
       const elementGaps = [];
@@ -644,8 +656,8 @@ async function main() {
   let target = 'all';
   let minFontSize = 11.5;
 
-  let minHeaderMargin = 12;
-  let minFooterMargin = 12;
+  let minHeaderMargin = 14;
+  let minFooterMargin = 14;
   let skipSchema = false;
   let checkImages = false;
   let minImageWidthRatio = 0.95;

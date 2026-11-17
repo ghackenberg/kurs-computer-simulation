@@ -15,13 +15,26 @@ footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 
 # Kapitel 6 (Anhang A): TPL-Interna & Hardware-Effizienz
 
-## Cache-Kohärenz (MESI), Work-Stealing, Partitioner & Lock-freie Channels
+Vertiefende Hardware-, Laufzeit- und Synchronisations-Details zum Selbststudium:
 
-Prof. Dr. Georg Hackenberg — FH Oberösterreich (Campus Wels)
+- CPU-Cache-Kohärenz (MESI), 64-Byte-Cache-Lines & Thread-lokale Reduktion
+- `.NET ThreadPool`-Interna (*Work-Stealing*, *Hill-Climbing*) & `Partitioner.Create`
+- Lock-freie Atomics (`Interlocked.CompareExchange`) & `Channel<T>`-Backpressure
 
 ---
 
-### 1. Hardware-Realität: Cache-Lines & MESI-Kohärenz
+![bg](./Illustrationen/Abschnitt_3.jpg)
+
+## A.1: CPU-Cache-Kohärenz (MESI) & Thread-lokale Reduktion
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- 64-Byte-Cache-Lines, MESI-Invalidierung und Cache-Line-Padding (`Size = 64`)
+- Thread-lokale Map-Reduce-Schleifen über `Parallel.For` (`localInit` / `localFinally`)
+
+---
+
+### Hardware-Realität: Cache-Lines & MESI-Kohärenz
 
 Moderne Prozessoren (**Central Processing Unit, CPU**) tauschen Daten in **64-Byte-Cache-Lines** aus:
 
@@ -52,7 +65,7 @@ struct PaddedCounter { [FieldOffset(0)] public long Value; }
 
 ---
 
-### 1b. Thread-lokale Reduktion mit `Parallel.For`
+### Thread-lokale Reduktion mit `Parallel.For`
 
 Die **Task Parallel Library (TPL)** bietet eine **Thread-lokale Überladung** von `Parallel.For` für Map-Reduce-Schleifen:
 
@@ -88,7 +101,18 @@ Parallel.For(
 
 ---
 
-### 2. TPL-Interna: `ThreadPool`, Work-Stealing & Hill-Climbing
+![bg](./Illustrationen/Abschnitt_2.jpg)
+
+## A.2: TPL-Interna: `ThreadPool`, Work-Stealing & `Partitioner`
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Globale und lokale Worker-Queues sowie sperrfreies Work-Stealing
+- Adaptives *Hill-Climbing* und dynamische Blöcke über `Partitioner.Create`
+
+---
+
+### TPL-Interna: `ThreadPool`, Work-Stealing & Hill-Climbing
 
 Warum skaliert `Parallel.For` besser als manuelles `new Thread(...)`?
 
@@ -115,7 +139,7 @@ Warum skaliert `Parallel.For` besser als manuelles `new Thread(...)`?
 
 ---
 
-### 2b. Ungleichmäßige Lasten: `Partitioner.Create`
+### Ungleichmäßige Lasten: `Partitioner.Create`
 
 Bei **ungleichmäßigen Schleifenkosten** (z. B. Dreiecksmatrizen) bremst statisches Splitting durch langsame Chunks (*Straggler*):
 
@@ -151,7 +175,18 @@ Parallel.ForEach(rangePartitioner, range => {
 
 ---
 
-### 3. Lock-freie Atomics: `CompareExchange` (CAS)
+![bg](./Illustrationen/Abschnitt_4.jpg)
+
+## A.3: Lock-freie Atomics & `Channel<T>`-Backpressure
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Optimistische Compare-And-Swap-Schleifen (`Interlocked.CompareExchange`) für `double`
+- Entkoppelte Producer–Consumer-Telemetrie über `Channel.CreateBounded<T>`
+
+---
+
+### Lock-freie Atomics: `CompareExchange` (CAS)
 
 Für `double`-Werte (z. B. globales Maximum) gibt es kein `Interlocked.Add` — hier hilft **Compare-And-Swap (CAS)**:
 
@@ -185,7 +220,7 @@ static void AtomicMax(ref double target, double candidate) {
 
 ---
 
-### 3b. Entkopplung mit `Channel<T>` (Producer–Consumer)
+### Entkopplung mit `Channel<T>` (Producer–Consumer)
 
 Für **hochfrequente Telemetrie-Pakete** zwischen Rechenthread und Auswertung bietet `.NET` den lock-freien `Channel<T>`:
 

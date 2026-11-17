@@ -25,7 +25,18 @@ Analytische Herleitung parametrischer 3D-Körper (Ergänzung zu [Kapitel 5](./Fo
 
 ---
 
+![bg](./Illustrationen/Abschnitt_2.jpg)
+
 ## B.1: Analytische Herleitung der Kugelkoordinaten
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Polar- und Azimutwinkel, kartesische Koordinaten und Einheitskugel-Normalen
+- Triangulation der Kugel via `GL_QUAD_STRIP` und `GL_TRIANGLE_FAN`
+
+---
+
+### Kugelkoordinaten & Einheitskugel-Abtastung
 
 <div class="columns">
 <div class="two">
@@ -153,7 +164,18 @@ for (int i = 0; i < stacks; i++)
 
 ---
 
+![bg](./Illustrationen/Abschnitt_2.jpg)
+
 ## B.2: Parametrisierung von Zylinder, Kegel & Kegelstumpf
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Parametrisierung von Rotationskörpern für $r_1 = r_2$ und $r_1 \ne r_2$
+- 2D-Querschnitts-Normalen, 3D-Rotation und Zylindermantel-Triangulation
+
+---
+
+### Geometrie & Parametrisierung von Rotationskörpern
 
 <div class="columns">
 <div class="two">

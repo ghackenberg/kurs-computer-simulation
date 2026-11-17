@@ -24,6 +24,17 @@ Vertiefende physikalische Herleitungen, Dimensionskontrollen und Randbedingungs-
 
 ---
 
+![bg](./Illustrationen/Abschnitt_4.jpg)
+
+## A.1: Thermodynamische Grundlagen & Materialkennwerte
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Die drei thermischen Grundgrößen ($T, E_{\text{th}}, \dot{Q}$) und ihre Elektro-/Hydraulik-Analogie
+- Wärmeleitfähigkeit $\lambda$ (Transport) und volumetrische Wärmekapazität $\rho c_p$ (Speicher)
+
+---
+
 ### Thermodynamik ohne Vorwissen: Die 3 Grundgrößen
 
 Wärmeleitung funktioniert nach **demselben Prinzip** wie ein elektrisches RC-Netzwerk oder verbundene Wassertanks, wenn man drei Größen sauber trennt:
@@ -86,6 +97,17 @@ Der zweite Faktor ist die **thermische Trägheit** des Materials (*„Wie groß 
 
 </div>
 </div>
+
+---
+
+![bg](./Illustrationen/Abschnitt_5.jpg)
+
+## A.2: Herleitung der Wärmeleitungs-DGL & Stabilitätszahl
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Fouriersches Gesetz, Zellbilanz und 2. räumliche Ableitung
+- Konsistente SI-Einheiten und Bedeutung der Diffusionszahl $s$
 
 ---
 
@@ -155,6 +177,17 @@ $$\frac{\partial T_i}{\partial t} = \alpha \cdot \frac{(T_{i-1} - T_i) + (T_{i+1
 
 </div>
 </div>
+
+---
+
+![bg](./Illustrationen/Abschnitt_5.jpg)
+
+## A.3: Diskrete Randbedingungen am 2D-Gitter
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Der Zeitschritt als gewichtete Mischung der Nachbarzellen
+- Herleitung der konvektiven Robin-Randbedingung & Vergleich mit Dirichlet/Neumann
 
 ---
 
