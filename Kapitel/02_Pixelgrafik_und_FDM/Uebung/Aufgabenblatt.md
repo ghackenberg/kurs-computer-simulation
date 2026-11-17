@@ -6,7 +6,8 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-**Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `System.Windows.Media.Imaging.WriteableBitmap` und `Image`-Control.  
+- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `System.Windows.Media.Imaging.WriteableBitmap` und `Image`-Control.
+
 > [!IMPORTANT]
 > **Technische Rahmenbedingungen:**  
 > Nutzen Sie ausschließlich die bereitgestellte WPF-Projektmappe mit `WriteableBitmap` (`byte[]`/`uint[]`-BackBuffer, single-threaded im Timer-Takt) — ohne zusätzliche NuGet-Pakete, Vektor-Shapes oder Parallelisierung.

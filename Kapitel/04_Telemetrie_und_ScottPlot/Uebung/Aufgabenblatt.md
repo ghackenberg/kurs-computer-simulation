@@ -6,7 +6,8 @@
 **Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
 - **Stufe 1 (Basisaufgabe):** Gemeinsames Fundament auf der C#-Vorlage (Richtwert ca. 60 Min. zu Hause)
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
-**Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `ScottPlot.WPF` (Version 5.x) und `Microsoft.Msagl.WpfGraphControl`.  
+- **Technologie-Vorgabe:** C# 12 / .NET 8 oder .NET 10, WPF mit `ScottPlot.WPF` (Version 5.x) und `Microsoft.Msagl.WpfGraphControl`.
+
 > [!IMPORTANT]
 > **Technische Rahmenbedingungen:**  
 > Verwenden Sie ausschließlich die bereitgestellte Projektmappe mit **ScottPlot 5** (veraltete ScottPlot-4-Syntax wie `AddSignal` ist nicht zulässig) sowie single-threaded Timer-Steuerung auf vorallokierten Puffern.
