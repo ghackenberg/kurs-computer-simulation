@@ -295,6 +295,31 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
           colRatios.push({ colIndex: cIdx + 1, height: Math.round(h), maxHeight: Math.round(maxColH), ratio: h / maxColH });
         });
       });
+      const colWidthRatios = [];
+      sec.querySelectorAll('div.columns').forEach(cols => {
+        const children = Array.from(cols.children);
+        if (children.length < 2) return;
+        children.forEach((c, cIdx) => {
+          const colW = c.getBoundingClientRect().width;
+          if (colW <= 0) return;
+          const imgs = Array.from(c.querySelectorAll('img')).filter(img => img.getBoundingClientRect().height > 120);
+          if (imgs.length === 0) return;
+          const hasRichText = c.querySelector('ul, ol, pre, marp-pre, table, blockquote') !== null ||
+            Array.from(c.querySelectorAll('p')).some(p => (p.textContent || '').trim().length > 0);
+          if (hasRichText) return;
+          const maxImgW = Math.max(...imgs.map(img => {
+            const r = img.getBoundingClientRect();
+            const natRatio = (img.naturalWidth > 0 && img.naturalHeight > 0) ? (img.naturalWidth / img.naturalHeight) : (r.width / Math.max(1, r.height));
+            return Math.min(r.width, r.height * natRatio);
+          }));
+          colWidthRatios.push({
+            colIndex: cIdx + 1,
+            width: Math.round(maxImgW),
+            colWidth: Math.round(colW),
+            ratio: maxImgW / colW
+          });
+        });
+      });
       const blockquoteCount = sec.querySelectorAll('blockquote').length;
       const mixedImageCols = [];
       sec.querySelectorAll('div.columns').forEach(cols => {
@@ -395,6 +420,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
         contentTop,
         contentBottom,
         colRatios,
+        colWidthRatios,
         blockquoteCount,
         mixedImageCols,
         elementGaps,
@@ -527,8 +553,10 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const fillRatio = contentHeight / availableHeight;
     const minFillRatio = options.minFillRatio !== undefined ? options.minFillRatio : 0.80;
     const sparseCols = (s.colRatios || []).filter(c => c.ratio < minFillRatio);
+    const narrowCols = (s.colWidthRatios || []).filter(c => c.ratio < minFillRatio);
     const hasUnderfill = !isAppendix && !s.isOpener && minFillRatio > 0 && fillRatio < minFillRatio;
     const hasSparseCol = !isAppendix && !s.isOpener && minFillRatio > 0 && sparseCols.length > 0;
+    const hasNarrowCol = !isAppendix && !s.isOpener && minFillRatio > 0 && narrowCols.length > 0;
 
     const gapTolerance = options.gapTolerance !== undefined ? options.gapTolerance : 1;
     const gapIssues = (s.elementGaps || []).filter(g => Math.abs(g.gap - (g.expected || 16)) > gapTolerance);
@@ -558,7 +586,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       svgIssues,
       gapIssues,
       colorIssues,
-      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssuesAfterBg || hasUnderfill || hasSparseCol || hasGapError || hasColorError || hasMissingTitle || hasTooManyBlockquotes || hasMixedImageCol,
+      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssuesAfterBg || hasUnderfill || hasSparseCol || hasNarrowCol || hasGapError || hasColorError || hasMissingTitle || hasTooManyBlockquotes || hasMixedImageCol,
       hasVOverflow,
       hasHOverflow,
       hasHeaderCollision,
@@ -567,6 +595,8 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       hasUnderfill,
       hasSparseCol,
       sparseCols,
+      hasNarrowCol,
+      narrowCols,
       hasGapError,
       hasColorError,
       hasMissingTitle,
@@ -766,6 +796,9 @@ async function main() {
         }
         if (err.hasSparseCol) {
           err.sparseCols.forEach(c => issues.push(`Spalte ${c.colIndex} zu leer: ${Math.round(c.ratio * 100)}% der Spaltenhöhe (${c.height}/${c.maxHeight}px, < ${Math.round(minFillRatio * 100)}%)`));
+        }
+        if (err.hasNarrowCol) {
+          err.narrowCols.forEach(c => issues.push(`Spalte ${c.colIndex} zu schmal: ${Math.round(c.ratio * 100)}% der Spaltenbreite (${c.width}/${c.colWidth}px, < ${Math.round(minFillRatio * 100)}%)`));
         }
         if (err.hasGapError) {
           err.gapIssues.forEach(g => issues.push(`Vertikaler Gap inkonsistent (${g.scope}: ${g.pair} = ${g.gap}px, erwartet ${g.expected || 16}px)`));

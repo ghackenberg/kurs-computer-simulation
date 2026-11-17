@@ -907,7 +907,7 @@ Ein Digitaler Zwilling ist kein Selbstläufer – drei typische Fehlerquellen en
 ### Vom Prototyp zum Regelkreis: Ausblick in die Praxis
 
 <div class="columns">
-<div class="three">
+<div class="two">
 
 Wie sich der Digitale Zwilling von der frühen Konzeptphase bis in den laufenden Betrieb entwickelt:
 
@@ -917,7 +917,7 @@ Wie sich der Digitale Zwilling von der frühen Konzeptphase bis in den laufenden
 > **Schlüsselprinzip:** Je sauberer Modell, Numerik und Visualisierung getrennt sind, desto leichter wächst der Prototyp zum produktiven Zwilling.
 
 </div>
-<div class="two">
+<div class="one">
 
 ![](./Illustrationen/Digitaler_Zwilling_Simulation.jpg)
 
