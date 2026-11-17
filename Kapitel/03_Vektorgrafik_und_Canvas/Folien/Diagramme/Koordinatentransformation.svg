@@ -258,7 +258,7 @@ text {
       <text class="sem-primary-text" x="57.5" y="18" font-size="12.5" font-weight="700" text-anchor="middle">3 Schritte:</text>
       <text class="sem-card-text" x="10" y="38" font-size="12">1. Shift (-X_min)</text>
       <text class="sem-card-text" x="10" y="56" font-size="12">2. Scale (· s)</text>
-      <text class="sem-danger-text" x="10" y="74" font-size="12" font-weight="700">3. Y-Invert!</text>
+      <text class="sem-primary-text" x="10" y="74" font-size="12" font-weight="700">3. Y-Invert!</text>
     </g>
   </g>
 
@@ -311,7 +311,7 @@ text {
     <line class="sem-info-stroke" x1="75" y1="380" x2="390" y2="380" stroke-width="1.2" marker-start="url(#arrow-dim-blue-rev)" marker-end="url(#arrow-dim-blue)" />
     <g transform="translate(115, 370)">
       <rect class="sem-info" x="0" y="0" width="235" height="20" rx="3" stroke-width="1" />
-      <text class="dim-text sem-warning-text sem-info-text"  x="117.5" y="14">W_draw = canvasWidth - 2·margin</text>
+      <text class="dim-text sem-info-text"  x="117.5" y="14">W_draw = canvasWidth - 2·margin</text>
     </g>
 
     <!-- Transformiertes Modell im Canvas -->

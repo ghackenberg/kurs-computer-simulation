@@ -155,5 +155,5 @@
   <!-- Komplexitäts-Badge unten (mit N_x und N_y) -->
   <rect class="sem-primary" x="30" y="285" width="420" height="60" rx="8" stroke-width="1.8" />
   <text x="240" y="310" class="code sem-primary-text">Pixel-Update: O(N_x·N_y) im Array (0 UI-Shapes!)</text>
-  <text x="240" y="333" class="code sem-success-text">GPU zeichnet 1 Textur + ColorBar in O(1)</text>
+  <text x="240" y="333" class="code sem-primary-text">GPU zeichnet 1 Textur + ColorBar in O(1)</text>
 </svg>

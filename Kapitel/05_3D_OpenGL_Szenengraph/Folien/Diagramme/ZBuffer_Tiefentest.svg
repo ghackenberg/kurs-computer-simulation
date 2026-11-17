@@ -144,8 +144,8 @@
   <text x="167" y="267" class="cell sem-card-text">BG</text>
 
   <text x="105" y="308" class="sub sem-primary-text">Start: ClearColor (BG = 0.08)</text>
-  <text x="105" y="329" class="sub sem-success-text">Pixel (x, y) bleibt Blau (#1),</text>
-  <text x="105" y="348" class="sub sem-success-text">Rot (#2) übermalt es NICHT!</text>
+  <text x="105" y="329" class="sub sem-primary-text">Pixel (x, y) bleibt Blau (#1),</text>
+  <text x="105" y="348" class="sub sem-primary-text">Rot (#2) übermalt es NICHT!</text>
 
   <!-- Unten Rechts: 2. Depth Buffer (Z-Buffer) -->
   <rect class="sem-success" x="250" y="144" width="250" height="214" rx="8" stroke-width="2" />
@@ -167,6 +167,6 @@
   <text x="437" y="267" class="cell sem-muted-text">zFar</text>
 
   <text x="375" y="308" class="code sem-success-text">#1: 2 m &lt; zFar &#8594; Update z_buf</text>
-  <text x="375" y="329" class="code sem-danger-text">#2: 5 m &lt; 2 m  &#8594; Verworfen!</text>
+  <text x="375" y="329" class="code sem-success-text">#2: 5 m &lt; 2 m  &#8594; Verworfen!</text>
   <text x="375" y="348" class="sub sem-neutral-text">Regel: Zeichne nur bei z_neu &lt; z_buf</text>
 </svg>

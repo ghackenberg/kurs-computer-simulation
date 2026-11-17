@@ -147,8 +147,8 @@
     <rect class="sem-success" width="240" height="102" rx="6" stroke-width="1.5" />
     <text x="120" y="20" class="lbl sem-success-text" >3. Canvas.Arrange() platziert</text>
     
-    <text x="14" y="44" class="code sem-info-text sem-success-text" >double x = Canvas.GetLeft(child);</text>
-    <text x="14" y="62" class="code sem-info-text sem-success-text" >double y = Canvas.GetTop(child);</text>
-    <text x="14" y="82" class="code sem-info-text sem-success-text" style="font-size: 11px; font-weight: bold;">child.Arrange(new Rect(x, y, w, h));</text>
+    <text x="14" y="44" class="code sem-success-text" >double x = Canvas.GetLeft(child);</text>
+    <text x="14" y="62" class="code sem-success-text" >double y = Canvas.GetTop(child);</text>
+    <text x="14" y="82" class="code sem-success-text" style="font-size: 11px; font-weight: bold;">child.Arrange(new Rect(x, y, w, h));</text>
   </g>
 </svg>

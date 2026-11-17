@@ -104,7 +104,7 @@
 
   <!-- Winkel theta = 40° ab +X in Richtung +Z: Quadrant (+X, +Z) rechts unten -->
   <path class="sem-warning-stroke" d="M 248 168 A 38 38 0 0 1 239 192" fill="none" stroke-width="2.5" marker-end="url(#arr-amber)" />
-  <text x="255" y="187" class="code sem-warning-text" style="text-anchor: start;">theta</text>
+  <text x="255" y="187" class="code sem-primary-text" style="text-anchor: start;">theta</text>
 
   <line class="sem-muted-stroke" x1="210" y1="168" x2="274" y2="222" stroke-width="2" stroke-dasharray="4,3" />
   <line class="sem-success-stroke" x1="274" y1="222" x2="331" y2="270" stroke-width="3.5" marker-end="url(#arr-green)" />

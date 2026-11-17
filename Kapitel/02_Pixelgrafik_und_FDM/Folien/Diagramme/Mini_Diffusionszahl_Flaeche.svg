@@ -41,6 +41,14 @@
       <stop offset="0%" stop-color="#475569" />
       <stop offset="100%" stop-color="#334155" />
     </linearGradient>
+    <linearGradient id="grad-sem-neutral" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+    <linearGradient id="grad-sem-neutral-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
     <!-- @svg-palette-defs:end -->
     <style>
       
@@ -70,6 +78,11 @@
       .sem-muted-stroke { stroke: #94a3b8; }
       .sem-muted-fill { fill: url(#grad-sem-muted-fill); }
       .sem-muted-text { fill: #334155; }
+      .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
+      .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: url(#grad-sem-neutral-fill); }
+      .sem-neutral-text { fill: #0f172a; }
       /* @svg-palette:end */
 .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold;  text-anchor: middle; }
       .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px;  text-anchor: middle; }
@@ -103,6 +116,6 @@
     <text x="115" y="46" class="math sem-success-text" style="font-size: 11.5px;">s = A_Diff / A_Pixel = (α·Δt) / Δx²</text>
     <text x="115" y="70" class="sub sem-muted-text sem-success-text" >• <tspan font-weight="bold">s ≤ 0,25:</tspan> Wärmewelle bleibt im</text>
     <text x="115" y="86" class="sub sem-muted-text sem-success-text" >Zeitschritt Δt innerhalb des Pixels.</text>
-    <text x="115" y="106" class="sub sem-muted-text sem-danger-text" style="font-weight: bold;">• s &gt; 0,25: Überspringt Zellmitte!</text>
+    <text x="115" y="106" class="sub sem-neutral-text" style="font-weight: bold;">• s &gt; 0,25: Überspringt Zellmitte!</text>
   </g>
 </svg>

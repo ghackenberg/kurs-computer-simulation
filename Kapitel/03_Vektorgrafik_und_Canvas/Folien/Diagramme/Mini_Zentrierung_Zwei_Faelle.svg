@@ -152,7 +152,7 @@
     <text x="120" y="20" class="lbl sem-danger-text" >Problem: Asymmetrischer Rand!</text>
     <text x="120" y="41" class="desc sem-neutral-text sem-danger-text" >Modell klebt am linken bzw. oberen Rand</text>
     <text x="120" y="59" class="desc sem-neutral-text sem-danger-text" >Freiraum (ΔW bzw. ΔH) klafft einseitig</text>
-    <text x="120" y="79" class="lbl sem-primary-text" >Ziel: Symmetrische Offsets x_off, y_off</text>
+    <text x="120" y="79" class="lbl sem-danger-text" >Ziel: Symmetrische Offsets x_off, y_off</text>
     <text x="120" y="96" class="desc sem-neutral-text sem-muted-text" >zur mittigen Ausrichtung im Viewport</text>
   </g>
 </svg>

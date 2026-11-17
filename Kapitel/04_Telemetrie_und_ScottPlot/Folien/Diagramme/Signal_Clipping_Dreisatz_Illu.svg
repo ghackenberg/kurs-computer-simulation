@@ -88,8 +88,8 @@
   <!-- Hervorgehobener Zoom-Ausschnitt in der Mitte -->
   <rect class="sem-success" x="175" y="62" width="130" height="62" rx="6" stroke-width="2.5" />
   <polyline class="sem-success-stroke" points="182,105 202,75 225,98 248,72 272,92 298,80" fill="none" stroke-width="3" />
-  <text x="175" y="145" class="code sem-success-text">t_min = 5.000 s</text>
-  <text x="325" y="145" class="code sem-success-text">t_max = 5.010 s</text>
+  <text x="175" y="145" class="code sem-primary-text">t_min = 5.000 s</text>
+  <text x="325" y="145" class="code sem-primary-text">t_max = 5.010 s</text>
 
   <!-- Dreisatz-Pfeile nach unten -->
   <line class="sem-success-stroke" x1="195" y1="160" x2="195" y2="205" stroke-width="3" marker-end="url(#cl-arr)" />

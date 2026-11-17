@@ -78,7 +78,7 @@ text { font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
 
   <rect class="sem-primary" x="34" y="72" width="190" height="72" rx="8" stroke-width="1.5"/>
   <text class="sem-primary-text" x="129" y="100" font-size="14" font-weight="bold" text-anchor="middle">Worker-Thread</text>
-  <text class="sem-danger-text" x="129" y="124" font-size="13" text-anchor="middle">wartet &amp; blockiert!</text>
+  <text class="sem-primary-text" x="129" y="124" font-size="13" text-anchor="middle">wartet &amp; blockiert!</text>
 
   <rect class="sem-warning" x="310" y="72" width="190" height="72" rx="8" stroke-width="1.5"/>
   <text class="sem-warning-text" x="405" y="100" font-size="14" font-weight="bold" text-anchor="middle">UI-Dispatcher</text>
@@ -103,7 +103,7 @@ text { font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
 
   <rect class="sem-primary" x="579" y="72" width="190" height="72" rx="8" stroke-width="1.5"/>
   <text class="sem-primary-text" x="674" y="100" font-size="14" font-weight="bold" text-anchor="middle">Worker-Thread</text>
-  <text class="sem-success-text" x="674" y="124" font-size="13" text-anchor="middle">rechnet sofort weiter!</text>
+  <text class="sem-primary-text" x="674" y="124" font-size="13" text-anchor="middle">rechnet sofort weiter!</text>
 
   <rect class="sem-success" x="855" y="72" width="190" height="72" rx="8" stroke-width="1.5"/>
   <text class="sem-success-text" x="950" y="100" font-size="14" font-weight="bold" text-anchor="middle">UI-Dispatcher</text>

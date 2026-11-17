@@ -125,5 +125,5 @@
   <polygon class="sem-primary" points="120,310 360,310 310,120 170,120" stroke-width="2.5" />
   <text x="300" y="335" class="code sem-primary-text">r_1</text>
   <text x="275" y="108" class="code sem-primary-text">r_2</text>
-  <text x="218" y="215" class="code sem-success-text">h</text>
+  <text x="218" y="215" class="code sem-primary-text">h</text>
 </svg>

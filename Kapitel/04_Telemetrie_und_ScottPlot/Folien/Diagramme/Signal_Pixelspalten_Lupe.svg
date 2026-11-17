@@ -109,10 +109,10 @@
   <text x="462" y="235" class="code sem-success-text" text-anchor="end">yEnter</text>
 
   <circle class="sem-danger-fill" cx="545" cy="120" r="6.5" stroke="#ffffff" stroke-width="2" />
-  <text x="562" y="125" class="code sem-danger-text" text-anchor="start">yMax</text>
+  <text x="562" y="125" class="code sem-primary-text" text-anchor="start">yMax</text>
 
   <circle class="sem-danger-fill" cx="545" cy="345" r="6.5" stroke="#ffffff" stroke-width="2" />
-  <text x="562" y="350" class="code sem-danger-text" text-anchor="start">yMin</text>
+  <text x="562" y="350" class="code sem-primary-text" text-anchor="start">yMin</text>
 
   <circle class="sem-warning-fill" cx="605" cy="215" r="6.5" stroke="#ffffff" stroke-width="2" />
   <text x="628" y="242" class="code sem-warning-text" text-anchor="start">yExit</text>

@@ -85,7 +85,7 @@
     <!-- Pfeil Antwort -->
     <line class="sem-success-stroke" x1="185" y1="108" x2="55" y2="108" stroke-width="2" />
     <polygon class="sem-success-fill" points="55,108 63,104 63,112" />
-    <text x="120" y="101" class="desc sem-neutral-text sem-success-text" style="font-size: 11.5px;">DesiredSize</text>
+    <text x="120" y="101" class="desc sem-primary-text" style="font-size: 11.5px;">DesiredSize</text>
 
     <text x="120" y="134" class="desc sem-neutral-text sem-primary-text" style="font-weight: bold;">„Wie viel Platz willst du?“</text>
   </g>

@@ -17,14 +17,6 @@
       <stop offset="0%" stop-color="#15803d" />
       <stop offset="100%" stop-color="#166534" />
     </linearGradient>
-    <linearGradient id="grad-sem-warning" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fffbeb" />
-      <stop offset="100%" stop-color="#fef3c7" />
-    </linearGradient>
-    <linearGradient id="grad-sem-warning-fill" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#b45309" />
-      <stop offset="100%" stop-color="#92400e" />
-    </linearGradient>
     <linearGradient id="grad-sem-danger" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#fef2f2" />
       <stop offset="100%" stop-color="#fee2e2" />
@@ -63,11 +55,6 @@
       .sem-success-stroke { stroke: #15803d; }
       .sem-success-fill { fill: url(#grad-sem-success-fill); }
       .sem-success-text { fill: #166534; }
-      .sem-warning { fill: url(#grad-sem-warning); stroke: #b45309; }
-      .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
-      .sem-warning-stroke { stroke: #b45309; }
-      .sem-warning-fill { fill: url(#grad-sem-warning-fill); }
-      .sem-warning-text { fill: #92400e; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
       .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
       .sem-danger-stroke { stroke: #dc2626; }
@@ -119,7 +106,7 @@
     <!-- Text description right -->
     <g transform="translate(104, 28)">
       <text x="0" y="16" class="fml sem-primary-text" >P_unzoom (x_u, y_u)</text>
-      <text x="0" y="38" class="desc sem-neutral-text sem-warning-text" >Offset abziehen:</text>
+      <text x="0" y="38" class="desc sem-primary-text" >Offset abziehen:</text>
       <text x="0" y="56" class="fml sem-primary-text" >x_u - x_off</text>
       <text x="0" y="74" class="fml sem-primary-text" >y_u - y_off</text>
       <text x="0" y="94" class="desc sem-neutral-text sem-muted-text" style="font-size: 11.5px;">+Y nach unten</text>
@@ -157,7 +144,7 @@
       <circle class="sem-success-fill" cx="8" cy="0" r="2.5" />
       <circle class="sem-success-fill" cx="48" cy="0" r="2.5" />
       <circle class="sem-danger-fill" cx="28" cy="-42" r="3" />
-      <text x="28" y="-50" class="fml sem-danger-text" style="font-size: 11.5px;  text-anchor: middle;">P_world</text>
+      <text x="28" y="-50" class="fml sem-success-text" style="font-size: 11.5px;  text-anchor: middle;">P_world</text>
       <text x="28" y="14" class="desc sem-neutral-text sem-success-text" style="font-size: 11.5px;  text-anchor: middle;">Physik</text>
     </g>
 

@@ -771,7 +771,16 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       return [blendOnWhite(parsed)];
     };
 
-    const getBgCandidatesAtPoint = (x, y, selfEl) => {
+    const CHROMATIC_ROLES = new Set(['primary', 'info', 'success', 'warning', 'danger', 'accent']);
+    const getSemRole = (el, regex) => {
+      if (!el || !el.getAttribute) return null;
+      for (const c of (el.getAttribute('class') || '').split(/\s+/)) {
+        const m = c.match(regex);
+        if (m && CHROMATIC_ROLES.has(m[1])) return m[1];
+      }
+      return null;
+    };
+    const getBgInfoAtPoint = (x, y, selfEl) => {
       const stack = document.elementsFromPoint(x, y);
       const tIdx = selfEl ? stack.indexOf(selfEl) : -1;
       const startIdx = tIdx !== -1 ? tIdx + 1 : 0;
@@ -784,10 +793,11 @@ async function auditSvgFile(browser, svgPath, options = {}) {
         const fop = parseFloat(bStyle.fillOpacity || '1');
         if (bStyle.display === 'none' || bStyle.visibility === 'hidden' || op === 0 || fop === 0) continue;
         const cands = resolveBgCandidates(bStyle.fill, op * fop);
-        if (cands) return cands;
+        if (cands) return { cands, bgEl };
       }
-      return [{ r: 255, g: 255, b: 255 }];
+      return { cands: [{ r: 255, g: 255, b: 255 }], bgEl: null };
     };
+    const getBgCandidatesAtPoint = (x, y, selfEl) => getBgInfoAtPoint(x, y, selfEl).cands;
 
     const contrastSeen = new Set();
     texts.forEach(t => {
@@ -800,7 +810,20 @@ async function auditSvgFile(browser, svgPath, options = {}) {
 
       const cx = (t.rect.left + t.rect.right) / 2;
       const cy = (t.rect.top + t.rect.bottom) / 2;
-      const bgCandidates = getBgCandidatesAtPoint(cx, cy, t.el);
+      const { cands: bgCandidates, bgEl } = getBgInfoAtPoint(cx, cy, t.el);
+
+      const textRole = getSemRole(t.el, /^sem-(\w+)-text$/);
+      const bgRole = bgEl ? getSemRole(bgEl, /^sem-(\w+)(?:-(?:bg|fill))?$/) : null;
+      if (textRole && bgRole && textRole !== bgRole) {
+        const key = `mismatch_${t.text.slice(0, 20)}_${textRole}_${bgRole}`;
+        if (!contrastSeen.has(key)) {
+          contrastSeen.add(key);
+          issues.push({
+            type: 'CHROMATIC_TEXT_BG_MISMATCH',
+            message: `Chromatic mismatch: sem-${textRole}-text on sem-${bgRole} background for text "${t.text.slice(0, 25)}"`
+          });
+        }
+      }
 
       const fs = parseFloat(style.fontSize || '12');
       const fw = parseInt(style.fontWeight || '400', 10) || (style.fontWeight === 'bold' ? 700 : 400);

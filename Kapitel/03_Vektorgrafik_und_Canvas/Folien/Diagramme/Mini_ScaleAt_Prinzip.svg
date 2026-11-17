@@ -99,7 +99,7 @@
     <circle class="sem-warning-fill" cx="180" cy="65" r="5" />
     <text x="180" y="85" class="lbl sem-warning-text" >Cursor C</text>
     <circle class="sem-success-fill" cx="70" cy="65" r="5" />
-    <text x="70" y="85" class="lbl sem-success-text" >(0,0)</text>
+    <text x="70" y="85" class="lbl sem-warning-text" >(0,0)</text>
   </g>
 
   <!-- Schritt 2 -->
@@ -111,7 +111,7 @@
     <rect class="sem-primary-stroke" x="28" y="48" width="25" height="20" fill="none" stroke-width="1.5" stroke-dasharray="3,2" />
     <rect class="sem-primary-stroke" x="28" y="48" width="50" height="36" fill="none" stroke-width="2" />
     <circle class="sem-success-fill" cx="28" cy="48" r="4" />
-    <text x="160" y="70" class="fml sem-warning-text sem-primary-text" >P' = s · (P - C)</text>
+    <text x="160" y="70" class="fml sem-primary-text" >P' = s · (P - C)</text>
   </g>
 
   <!-- Schritt 3 -->

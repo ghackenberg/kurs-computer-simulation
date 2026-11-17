@@ -164,7 +164,7 @@
     <text x="277" y="68" class="idx sem-muted-text">[4]</text>
   </g>
   <path class="sem-success-stroke" d="M 676 112 C 676 75, 428 75, 428 110" fill="none" stroke-width="3" marker-end="url(#arr-wrap)" />
-  <text x="554" y="218" class="code sem-success-text">Modulo (%) springt auf Index [0]</text>
+  <text x="554" y="218" class="code sem-warning-text">Modulo (%) springt auf Index [0]</text>
   <text x="554" y="265" class="lbl sem-muted-text">Kein Resize, kein neues Array!</text>
 
   <!-- Phase 3: Ältester Wert wird überschrieben -->

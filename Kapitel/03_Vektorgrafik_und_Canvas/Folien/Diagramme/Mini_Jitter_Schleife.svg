@@ -1,14 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 44 270 376" width="270" height="376">
   <defs>
     <!-- @svg-palette-defs:start -->
-    <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#eff6ff" />
-      <stop offset="100%" stop-color="#dbeafe" />
-    </linearGradient>
-    <linearGradient id="grad-sem-primary-fill" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2563eb" />
-      <stop offset="100%" stop-color="#1d4ed8" />
-    </linearGradient>
     <linearGradient id="grad-sem-danger" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#fef2f2" />
       <stop offset="100%" stop-color="#fee2e2" />
@@ -37,11 +29,6 @@
     <style>
       
 /* @svg-palette:start */
-      .sem-primary { fill: url(#grad-sem-primary); stroke: #2563eb; }
-      .sem-primary-bg { fill: url(#grad-sem-primary); stroke: none; }
-      .sem-primary-stroke { stroke: #2563eb; }
-      .sem-primary-fill { fill: url(#grad-sem-primary-fill); }
-      .sem-primary-text { fill: #1e40af; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
       .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
       .sem-danger-stroke { stroke: #dc2626; }
@@ -119,7 +106,7 @@
     <text x="120" y="20" class="lbl sem-danger-text" >Ursache: Teufelskreis-Kopplung</text>
     <text x="120" y="41" class="desc sem-neutral-text sem-danger-text" >Auto-Fit verändert die Kamera,</text>
     <text x="120" y="59" class="desc sem-neutral-text sem-danger-text" >während die Maus das Modell bewegt.</text>
-    <text x="120" y="79" class="lbl sem-primary-text" >Lösung: Transformation einfrieren</text>
+    <text x="120" y="79" class="lbl sem-danger-text" >Lösung: Transformation einfrieren</text>
     <text x="120" y="96" class="desc sem-neutral-text sem-muted-text" >solange Ziehen aktiv ist!</text>
   </g>
 </svg>
