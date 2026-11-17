@@ -244,8 +244,8 @@ function lintChapter(dirName) {
   if (!/\*\*Bearbeitungsform:\*\*/.test(headerBlock) || !/\*\*Stufe 1 \(Basisaufgabe\):\*\*/.test(headerBlock) || !/\*\*Stufe 2 \(Vertiefungsaufgabe/.test(headerBlock)) {
     issues.push({ type: 'MISSING_HEADER_META', file: relMd, message: 'Metadaten-Kopfblock muss **Bearbeitungsform:**, **Stufe 1 (Basisaufgabe):** und **Stufe 2 (Vertiefungsaufgabe...):** enthalten.' });
   }
-  if (!/>\s*\[!IMPORTANT\]/.test(headerBlock) || !/\*\*Technische Rahmenbedingungen\b/i.test(headerBlock)) {
-    issues.push({ type: 'MISSING_TECH_CONSTRAINTS', file: relMd, message: 'Im Kopfblock fehlt der studentengerechte Block > [!IMPORTANT] mit **Technische Rahmenbedingungen:**.' });
+  if (!/>\s*\[!IMPORTANT\]/.test(headerBlock) || !/\*\*Technische Rahmenbedingungen\*\*/.test(headerBlock) || !/\*\*Plattform & Projekt:\*\*/.test(headerBlock) || !/\*\*Zugelassene APIs:\*\*/.test(headerBlock) || !/\*\*Abgrenzung:\*\*/.test(headerBlock)) {
+    issues.push({ type: 'MISSING_TECH_CONSTRAINTS', file: relMd, message: 'Im Kopfblock fehlt der strukturierte Block > [!IMPORTANT] **Technische Rahmenbedingungen** mit **Plattform & Projekt:**, **Zugelassene APIs:** und **Abgrenzung:**.' });
   }
   if (/Vorgreif-?Sperre/i.test(mdNoCode)) {
     issues.push({ type: 'INTERNAL_VORGREIF_TERM', file: relMd, message: 'Der interne Autorenbegriff "Vorgreif-Sperre" darf nicht im studentischen Aufgabenblatt stehen (stattdessen Technische Rahmenbedingungen).' });

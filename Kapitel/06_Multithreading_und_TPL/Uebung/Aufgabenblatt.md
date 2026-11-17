@@ -8,8 +8,10 @@
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10 (`net8.0-windows`), WPF (`WriteableBitmap`), TPL, `System.Diagnostics.Stopwatch`, `System.Threading`):**  
-> Nutzen Sie ausschließlich die bereitgestellte WPF-Projektmappe mit .NET **Task Parallel Library (TPL)** (`Parallel.For`, `ParallelOptions`, `Interlocked`, `ConcurrentBag<T>`, `Task.Run`, `IProgress<T>`, `CancellationTokenSource`, `Stopwatch`) — ohne zusätzliche NuGet-Pakete.
+> **Technische Rahmenbedingungen**
+> - **Plattform & Projekt:** C# 12 / .NET 8 oder .NET 10 (`net8.0-windows`), bereitgestellte WPF-Projektmappe (ohne zusätzliche NuGet-Pakete)
+> - **Zugelassene APIs:** `WriteableBitmap`, TPL (`Parallel.For`, `ParallelOptions`, `Task.Run`), `Interlocked`, `ConcurrentBag<T>`, `IProgress<T>`, `CancellationTokenSource`, `Stopwatch`
+> - **Abgrenzung:** Keine zusätzlichen NuGet-Pakete; Synchronisation und UI-Entkopplung erfolgen ausschließlich über die TPL- und `IProgress<T>`-Mechanismen der Vorlage
 
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)

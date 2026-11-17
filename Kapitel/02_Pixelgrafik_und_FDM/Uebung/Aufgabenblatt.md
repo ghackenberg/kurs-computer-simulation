@@ -8,8 +8,10 @@
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, WPF mit `System.Windows.Media.Imaging.WriteableBitmap` und `Image`-Control):**  
-> Nutzen Sie ausschließlich die bereitgestellte WPF-Projektmappe mit `WriteableBitmap` (`byte[]`/`uint[]`-BackBuffer, single-threaded im Timer-Takt) — ohne zusätzliche NuGet-Pakete, Vektor-Shapes oder Parallelisierung.
+> **Technische Rahmenbedingungen**
+> - **Plattform & Projekt:** C# 12 / .NET 8 oder .NET 10, bereitgestellte WPF-Projektmappe (ohne zusätzliche NuGet-Pakete)
+> - **Zugelassene APIs:** `System.Windows.Media.Imaging.WriteableBitmap` (`byte[]`/`uint[]`-BackBuffer), `Image`-Control
+> - **Abgrenzung:** Single-threaded im Timer-Takt; keine Vektor-Shapes (`Canvas`/`Line`/`Path`) und keine Parallelisierung
 
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)

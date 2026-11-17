@@ -8,8 +8,10 @@
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10 Konsolenapplikation (`System.Numerics.Vector2`)):**  
-> Verwenden Sie ausschließlich eine **reine .NET-Konsolenanwendung** ohne zusätzliche NuGet-Pakete oder GUI-Frameworks; die Ausgabe erfolgt über formatierte Konsolentabellen, ASCII-Darstellungen oder CSV-Export.
+> **Technische Rahmenbedingungen**
+> - **Plattform & Projekt:** C# 12 / .NET 8 oder .NET 10, reine Konsolenapplikation (ohne zusätzliche NuGet-Pakete)
+> - **Zugelassene APIs:** `System.Numerics.Vector2`, Standard-.NET-Konsolenausgabe und CSV-Export
+> - **Abgrenzung:** Keine GUI-Frameworks, kein Multithreading; Ausgabe über formatierte Konsolentabellen oder ASCII-Darstellungen
 
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)

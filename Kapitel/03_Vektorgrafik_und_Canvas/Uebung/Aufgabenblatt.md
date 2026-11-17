@@ -8,8 +8,10 @@
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, WPF mit `System.Windows.Controls.Canvas` und 2D-Vektorprimitiven (`Line`, `Path`, `Polygon`, `Ellipse`)):**  
-> Nutzen Sie ausschließlich die bereitgestellte WPF-Projektmappe (`WPF Canvas` / `DrawingVisual`, ohne zusätzliche NuGet-Pakete). Der Fokus liegt rein auf **2D-Vektorgeometrie, Koordinatentransformation und Interaktion** — ohne mechanische Statik- oder Gleichungslöser.  
+> **Technische Rahmenbedingungen**
+> - **Plattform & Projekt:** C# 12 / .NET 8 oder .NET 10, bereitgestellte WPF-Projektmappe (ohne zusätzliche NuGet-Pakete)
+> - **Zugelassene APIs:** `System.Windows.Controls.Canvas`, 2D-Vektorprimitive (`Line`, `Path`, `Polygon`, `Ellipse`), `DrawingVisual`
+> - **Abgrenzung:** Reiner Fokus auf 2D-Vektorgeometrie, Transformation und Interaktion — ohne mechanische Statik- oder Gleichungslöser  
 > Zudem gilt: **KEIN** ScottPlot, **KEIN** SharpGL 3D, **KEIN** Multithreading!
 
 

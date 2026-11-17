@@ -8,8 +8,10 @@
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, WPF mit `SharpGL.WPF.OpenGLControl`):**  
-> Nutzen Sie ausschließlich die bereitgestellte Projektmappe mit **SharpGL (OpenGL)** und `System.Numerics.Matrix4x4` (single-threaded, ohne zusätzliche NuGet-Pakete). Die Kinematik wird rein über geometrische Transformationsmatrizen berechnet.
+> **Technische Rahmenbedingungen**
+> - **Plattform & Projekt:** C# 12 / .NET 8 oder .NET 10, bereitgestellte WPF-Projektmappe (ohne zusätzliche NuGet-Pakete)
+> - **Zugelassene APIs:** `SharpGL.WPF.OpenGLControl`, `System.Numerics.Matrix4x4`
+> - **Abgrenzung:** Single-threaded; Kinematik wird rein über geometrische Transformationsmatrizen und den OpenGL-Stack berechnet
 
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)

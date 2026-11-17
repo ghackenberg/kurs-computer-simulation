@@ -8,8 +8,10 @@
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, S-Function-Klassenstruktur, ScottPlot 5 / WPF):**  
-> Nutzen Sie ausschließlich die bereitgestellte Projektmappe mit RK4-Integrator, S-Functions (`Derivatives`, `Outputs`), PID-Clamping und **ScottPlot 5** — ohne zusätzliche NuGet-Pakete.
+> **Technische Rahmenbedingungen**
+> - **Plattform & Projekt:** C# 12 / .NET 8 oder .NET 10, bereitgestellte WPF-Projektmappe (ohne zusätzliche NuGet-Pakete)
+> - **Zugelassene APIs:** RK4-Integrator, S-Functions (`Derivatives`, `Outputs`), PID-Clamping, `ScottPlot 5`
+> - **Abgrenzung:** Kontinuierliche Zeitintegration ohne zusätzliche NuGet-Pakete
 
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)

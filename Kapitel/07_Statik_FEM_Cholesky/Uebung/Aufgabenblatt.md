@@ -8,8 +8,10 @@
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, `MathNet.Numerics`, WPF Canvas (Frontend aus Termin 03)):**  
-> Nutzen Sie ausschließlich die bereitgestellte Projektmappe mit `MathNet.Numerics` (`DenseMatrix`, `Vector`, `Cholesky`) und `WPF Canvas` — ohne zusätzliche NuGet-Pakete oder eigene Zeitintegration.
+> **Technische Rahmenbedingungen**
+> - **Plattform & Projekt:** C# 12 / .NET 8 oder .NET 10, bereitgestellte WPF-Projektmappe (ohne zusätzliche NuGet-Pakete)
+> - **Zugelassene APIs:** `MathNet.Numerics` (`DenseMatrix`, `Vector`, `Cholesky`), `WPF Canvas`
+> - **Abgrenzung:** Rein statische Gleichungslösung; keine Zeitintegration und keine zusätzlichen NuGet-Pakete
 
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)

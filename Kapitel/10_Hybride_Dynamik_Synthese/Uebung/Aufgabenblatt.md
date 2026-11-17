@@ -8,8 +8,10 @@
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, S-Functions, Bisektion, WPF Canvas / ScottPlot 5):**  
-> Nutzen Sie die bereitgestellte Projektmappe — der gesamte Semester-Stack (DGL, S-Functions, Event-Queues, TPL, WPF Canvas, ScottPlot 5) steht uneingeschränkt zur Verfügung.
+> **Technische Rahmenbedingungen**
+> - **Plattform & Projekt:** C# 12 / .NET 8 oder .NET 10, bereitgestellte WPF-Projektmappe (ohne zusätzliche NuGet-Pakete)
+> - **Zugelassene APIs:** Gesamter Semester-Stack (`S-Functions`, Bisektion, `PriorityQueue`, TPL, `WPF Canvas`, `ScottPlot 5`)
+> - **Abgrenzung:** Keine zusätzlichen NuGet-Pakete außerhalb der Projektmappe
 
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)

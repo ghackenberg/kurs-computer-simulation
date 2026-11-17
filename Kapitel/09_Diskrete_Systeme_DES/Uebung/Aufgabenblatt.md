@@ -8,8 +8,10 @@
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, `System.Collections.Generic.PriorityQueue<TElement, TPriority>`, TPL `Parallel.For`, ScottPlot 5):**  
-> Nutzen Sie ausschließlich die bereitgestellte Projektmappe mit `PriorityQueue`, stochastischen Zufallsgeneratoren (Inversionsmethode), TPL für Replikationen und **ScottPlot 5** — ohne zusätzliche NuGet-Pakete.
+> **Technische Rahmenbedingungen**
+> - **Plattform & Projekt:** C# 12 / .NET 8 oder .NET 10, bereitgestellte WPF-Projektmappe (ohne zusätzliche NuGet-Pakete)
+> - **Zugelassene APIs:** `System.Collections.Generic.PriorityQueue<TElement, TPriority>`, stochastische Zufallsgeneratoren (Inversionsmethode), TPL `Parallel.For`, `ScottPlot 5`
+> - **Abgrenzung:** Diskrete Ereignissimulation ohne zusätzliche NuGet-Pakete
 
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)

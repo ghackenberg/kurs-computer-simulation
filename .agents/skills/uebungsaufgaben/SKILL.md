@@ -20,7 +20,7 @@ Die gesamte Programmierarbeit findet als **zweistufige Hausübung zu Hause im 2e
 > **Eiserne Bezeichnungs-Regel:**
 > - **Ziffern (`Stufe 1` $\to$ `Stufe 2`) = Nacheinander (beide Stufen sind Pflicht!)**
 > - **Buchstaben (`Track A` | `Track B`) = Auswahl innerhalb von Stufe 2 (Track A ODER Track B!)**
-> - **Kopfblock (`> [!IMPORTANT]` + `**Technische Rahmenbedingungen:**`):** Studentengerechte, positiv formulierte Angabe des Technologie-Stacks (.NET/C#-Version + erlaubte Bibliotheken/APIs der Projektmappe, ohne redundante `Technologie-Vorgabe:`-Zeile, ohne den internen Begriff *„Vorgreif-Sperre“*, und ohne manuelle `---`-Trennlinien im Dokument; geprüft durch `lint:exercises`).
+> - **Kopfblock (`> [!IMPORTANT]` + `**Technische Rahmenbedingungen**`):** Strukturierte 3-Felder-Liste (`Plattform & Projekt`, `Zugelassene APIs`, `Abgrenzung`) — studentengerechte, positiv formulierte Angabe des Technologie-Stacks ohne redundante `Technologie-Vorgabe:`-Zeile, ohne den internen Begriff *„Vorgreif-Sperre“* und ohne manuelle `---`-Trennlinien im Dokument (geprüft durch `lint:exercises`).
 
 ---
 

@@ -8,8 +8,10 @@
 - **Stufe 2 (Vertiefungsaufgabe / Track-Ausbau):** Wahlmodell Track A (Industrie) **ODER** Track B (Simulation Game) (Richtwert ca. 3–4 h zu Hause)
 
 > [!IMPORTANT]
-> **Technische Rahmenbedingungen (C# 12 / .NET 8 oder .NET 10, WPF mit `ScottPlot.WPF` (Version 5.x) und `Microsoft.Msagl.WpfGraphControl`):**  
-> Verwenden Sie ausschließlich die bereitgestellte Projektmappe mit **ScottPlot 5** (veraltete ScottPlot-4-Syntax wie `AddSignal` ist nicht zulässig) sowie single-threaded Timer-Steuerung auf vorallokierten Puffern.
+> **Technische Rahmenbedingungen**
+> - **Plattform & Projekt:** C# 12 / .NET 8 oder .NET 10, bereitgestellte WPF-Projektmappe (ohne zusätzliche NuGet-Pakete)
+> - **Zugelassene APIs:** `ScottPlot.WPF` (Version 5.x), `Microsoft.Msagl.WpfGraphControl`
+> - **Abgrenzung:** Single-threaded mit Timer-Steuerung auf vorallokierten Puffern; keine veraltete ScottPlot-4-Syntax (`AddSignal`)
 
 
 ## 1. Lernziele (Intended Learning Outcomes - ILOs)
