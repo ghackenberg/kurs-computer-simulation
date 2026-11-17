@@ -5,17 +5,33 @@
       <stop offset="0%" stop-color="#eff6ff" />
       <stop offset="100%" stop-color="#dbeafe" />
     </linearGradient>
+    <linearGradient id="grad-sem-primary-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
     <linearGradient id="grad-sem-success" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#f0fdf4" />
       <stop offset="100%" stop-color="#dcfce7" />
+    </linearGradient>
+    <linearGradient id="grad-sem-success-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#15803d" />
+      <stop offset="100%" stop-color="#166534" />
     </linearGradient>
     <linearGradient id="grad-sem-warning" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#fffbeb" />
       <stop offset="100%" stop-color="#fef3c7" />
     </linearGradient>
+    <linearGradient id="grad-sem-warning-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b45309" />
+      <stop offset="100%" stop-color="#92400e" />
+    </linearGradient>
     <linearGradient id="grad-sem-muted" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#f8fafc" />
       <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+    <linearGradient id="grad-sem-muted-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#334155" />
     </linearGradient>
     <!-- @svg-palette-defs:end -->
     <marker id="arrB" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -30,22 +46,22 @@
       .sem-primary { fill: url(#grad-sem-primary); stroke: #2563eb; }
       .sem-primary-bg { fill: url(#grad-sem-primary); stroke: none; }
       .sem-primary-stroke { stroke: #2563eb; }
-      .sem-primary-fill { fill: #2563eb; }
+      .sem-primary-fill { fill: url(#grad-sem-primary-fill); }
       .sem-primary-text { fill: #1e40af; }
       .sem-success { fill: url(#grad-sem-success); stroke: #15803d; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
       .sem-success-stroke { stroke: #15803d; }
-      .sem-success-fill { fill: #15803d; }
+      .sem-success-fill { fill: url(#grad-sem-success-fill); }
       .sem-success-text { fill: #166534; }
       .sem-warning { fill: url(#grad-sem-warning); stroke: #b45309; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
       .sem-warning-stroke { stroke: #b45309; }
-      .sem-warning-fill { fill: #b45309; }
+      .sem-warning-fill { fill: url(#grad-sem-warning-fill); }
       .sem-warning-text { fill: #92400e; }
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #475569; }
+      .sem-muted-fill { fill: url(#grad-sem-muted-fill); }
       .sem-muted-text { fill: #334155; }
       /* @svg-palette:end */
 text { font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }

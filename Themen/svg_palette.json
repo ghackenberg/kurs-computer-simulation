@@ -7,6 +7,8 @@
       "fill": "#eff6ff",
       "fillEnd": "#dbeafe",
       "stroke": "#2563eb",
+      "solidFill": "#2563eb",
+      "solidFillEnd": "#1d4ed8",
       "text": "#1e40af"
     },
     "sem-info": {
@@ -15,6 +17,7 @@
       "fillEnd": "#bae6fd",
       "stroke": "#0369a1",
       "solidFill": "#0369a1",
+      "solidFillEnd": "#075985",
       "text": "#075985"
     },
     "sem-success": {
@@ -23,6 +26,7 @@
       "fillEnd": "#dcfce7",
       "stroke": "#15803d",
       "solidFill": "#15803d",
+      "solidFillEnd": "#166534",
       "text": "#166534"
     },
     "sem-warning": {
@@ -31,6 +35,7 @@
       "fillEnd": "#fef3c7",
       "stroke": "#b45309",
       "solidFill": "#b45309",
+      "solidFillEnd": "#92400e",
       "text": "#92400e"
     },
     "sem-danger": {
@@ -38,6 +43,8 @@
       "fill": "#fef2f2",
       "fillEnd": "#fee2e2",
       "stroke": "#dc2626",
+      "solidFill": "#dc2626",
+      "solidFillEnd": "#b91c1c",
       "text": "#991b1b"
     },
     "sem-accent": {
@@ -45,6 +52,8 @@
       "fill": "#f5f3ff",
       "fillEnd": "#ede9fe",
       "stroke": "#7c3aed",
+      "solidFill": "#7c3aed",
+      "solidFillEnd": "#6d28d9",
       "text": "#6d28d9"
     },
     "sem-card": {
@@ -60,6 +69,7 @@
       "fillEnd": "#e2e8f0",
       "stroke": "#94a3b8",
       "solidFill": "#475569",
+      "solidFillEnd": "#334155",
       "text": "#334155"
     },
     "sem-neutral": {
@@ -67,6 +77,8 @@
       "fill": "#ffffff",
       "fillEnd": "#f8fafc",
       "stroke": "#334155",
+      "solidFill": "#334155",
+      "solidFillEnd": "#1e293b",
       "text": "#0f172a"
     }
   }

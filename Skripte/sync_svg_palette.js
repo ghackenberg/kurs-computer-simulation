@@ -28,7 +28,8 @@ function buildPaletteCss(palette, usedRoles) {
     lines.push(`      .${role} { fill: ${fillVal}; stroke: ${cfg.stroke}; }`);
     lines.push(`      .${role}-bg { fill: ${fillVal}; stroke: none; }`);
     lines.push(`      .${role}-stroke { stroke: ${cfg.stroke}; }`);
-    lines.push(`      .${role}-fill { fill: ${cfg.solidFill || cfg.stroke}; }`);
+    const solidFillVal = cfg.solidFillEnd ? `url(#grad-${role}-fill)` : (cfg.solidFill || cfg.stroke);
+    lines.push(`      .${role}-fill { fill: ${solidFillVal}; }`);
     lines.push(`      .${role}-text { fill: ${cfg.text}; }`);
   }
   lines.push(`      ${END_MARKER}`);
@@ -39,11 +40,18 @@ function buildPaletteDefs(palette, usedRoles) {
   const lines = [`    ${DEFS_START_MARKER}`];
   for (const [role, cfg] of Object.entries(palette.roles)) {
     if (usedRoles && !usedRoles.has(role)) continue;
-    if (!cfg.fillEnd) continue;
-    lines.push(`    <linearGradient id="grad-${role}" x1="0%" y1="0%" x2="100%" y2="100%">`);
-    lines.push(`      <stop offset="0%" stop-color="${cfg.fill}" />`);
-    lines.push(`      <stop offset="100%" stop-color="${cfg.fillEnd}" />`);
-    lines.push(`    </linearGradient>`);
+    if (cfg.fillEnd) {
+      lines.push(`    <linearGradient id="grad-${role}" x1="0%" y1="0%" x2="100%" y2="100%">`);
+      lines.push(`      <stop offset="0%" stop-color="${cfg.fill}" />`);
+      lines.push(`      <stop offset="100%" stop-color="${cfg.fillEnd}" />`);
+      lines.push(`    </linearGradient>`);
+    }
+    if (cfg.solidFillEnd) {
+      lines.push(`    <linearGradient id="grad-${role}-fill" x1="0%" y1="0%" x2="100%" y2="100%">`);
+      lines.push(`      <stop offset="0%" stop-color="${cfg.solidFill || cfg.stroke}" />`);
+      lines.push(`      <stop offset="100%" stop-color="${cfg.solidFillEnd}" />`);
+      lines.push(`    </linearGradient>`);
+    }
   }
   lines.push(`    ${DEFS_END_MARKER}`);
   return lines.join('\n');

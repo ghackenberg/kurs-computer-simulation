@@ -851,8 +851,8 @@ async function auditSvgFile(browser, svgPath, options = {}) {
         const shape = markerEl ? markerEl.querySelector('path, polygon, circle, rect') : null;
         if (shape) {
           const mSt = window.getComputedStyle(shape);
-          const mFg = parseColorStr(mSt.fill);
-          if (mFg && mFg.a > 0) {
+          const mFgCands = resolveBgCandidates(mSt.fill);
+          if (mFgCands) {
             let pt = null;
             const tag = el.tagName.toLowerCase();
             if (tag === 'line') {
@@ -867,7 +867,7 @@ async function auditSvgFile(browser, svgPath, options = {}) {
             }
             if (pt) {
               const bgCands = getBgCandidatesAtPoint(pt.x, pt.y, el);
-              const worst = Math.min(...bgCands.map(bg => contrastRatio(blendOnWhite(mFg), bg)));
+              const worst = Math.min(...mFgCands.flatMap(fg => bgCands.map(bg => contrastRatio(fg, bg))));
               reportGraphicContrast(`arrowhead (#${mm[1]})`, worst);
             }
           }
@@ -910,11 +910,11 @@ async function auditSvgFile(browser, svgPath, options = {}) {
       if (st.strokeDasharray && st.strokeDasharray !== 'none') return;
       const r = el.getBoundingClientRect();
       if (r.width <= 14 || r.height <= 14 || r.width > 40 || r.height > 40) return;
-      const fg = parseColorStr(st.fill);
+      const fgCands = resolveBgCandidates(st.fill);
       const stCol = (parseFloat(st.strokeWidth || '0') >= 0.8) ? parseColorStr(st.stroke) : null;
-      if ((!fg || fg.a === 0) && (!stCol || stCol.a === 0)) return;
+      if (!fgCands && (!stCol || stCol.a === 0)) return;
       const bgCands = getBgCandidatesAtPoint((r.left + r.right) / 2, (r.top + r.bottom) / 2, el);
-      const fillWorst = (fg && fg.a > 0) ? Math.min(...bgCands.map(bg => contrastRatio(blendOnWhite(fg), bg))) : 0;
+      const fillWorst = fgCands ? Math.min(...fgCands.flatMap(fg => bgCands.map(bg => contrastRatio(fg, bg)))) : 0;
       const strokeWorst = (stCol && stCol.a > 0) ? Math.min(...bgCands.map(bg => contrastRatio(blendOnWhite(stCol), bg))) : 0;
       reportGraphicContrast(`${el.tagName.toLowerCase()} marker`, Math.max(fillWorst, strokeWorst));
     });
