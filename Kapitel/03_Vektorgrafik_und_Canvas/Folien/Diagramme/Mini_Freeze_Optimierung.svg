@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 46 270 374" width="270" height="374">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 46 295 374" width="295" height="374">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -69,36 +69,36 @@
 
   <!-- Box 1 -->
   <g transform="translate(15, 54)">
-    <rect class="sem-danger" width="240" height="135" rx="6" stroke-width="1.5" />
-    <text x="120" y="22" class="lbl sem-danger-text" >1. Ohne Freeze()</text>
+    <rect class="sem-danger" width="265" height="135" rx="6" stroke-width="1.5" />
+    <text x="132.5" y="22" class="lbl sem-danger-text" >1. Ohne Freeze()</text>
 
     <g transform="translate(15, 30)">
       <rect class="sem-danger" width="210" height="24" rx="3" stroke-width="1" />
       <text x="105" y="17" class="code sem-danger-text" style="text-anchor: middle;">var pen = new Pen(...);</text>
     </g>
 
-    <text x="120" y="75" class="desc sem-neutral-text sem-danger-text" >• Lauscht auf Modifikationen</text>
-    <text x="120" y="95" class="desc sem-neutral-text sem-danger-text" style="font-weight: bold;">• NICHT thread-sicher!</text>
-    <text x="120" y="120" class="desc sem-neutral-text sem-danger-text" style="font-weight: bold;">Hohe GC-Last bei 60 FPS!</text>
+    <text x="132.5" y="75" class="desc sem-neutral-text sem-danger-text" >• Lauscht auf Modifikationen</text>
+    <text x="132.5" y="95" class="desc sem-neutral-text sem-danger-text" style="font-weight: bold;">• NICHT thread-sicher!</text>
+    <text x="132.5" y="120" class="desc sem-neutral-text sem-danger-text" style="font-weight: bold;">Hohe GC-Last bei 60 FPS!</text>
   </g>
 
   <!-- Box 2 -->
   <g transform="translate(15, 202)">
-    <rect class="sem-success" width="240" height="135" rx="6" stroke-width="1.5" />
-    <text x="120" y="22" class="lbl sem-success-text" >2. Mit pen.Freeze()</text>
+    <rect class="sem-success" width="265" height="135" rx="6" stroke-width="1.5" />
+    <text x="132.5" y="22" class="lbl sem-success-text" >2. Mit pen.Freeze()</text>
 
     <g transform="translate(15, 30)">
       <rect class="sem-success" width="210" height="24" rx="3" stroke-width="1" />
       <text x="105" y="17" class="code sem-success-text" style="text-anchor: middle;">pen.Freeze(); // Immutable</text>
     </g>
 
-    <text x="120" y="75" class="desc sem-neutral-text sem-success-text" >• Kein Change-Tracking mehr</text>
-    <text x="120" y="95" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">• Thread-sicher für Render-Thread</text>
-    <text x="120" y="120" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">0 Bytes neue GC-Allokationen!</text>
+    <text x="132.5" y="75" class="desc sem-neutral-text sem-success-text" >• Kein Change-Tracking mehr</text>
+    <text x="132.5" y="95" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">• Thread-sicher für Render-Thread</text>
+    <text x="132.5" y="120" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">0 Bytes neue GC-Allokationen!</text>
   </g>
 
   <!-- Footer -->
-  <rect class="sem-primary" x="15" y="348" width="240" height="58" rx="6" stroke-width="1.5" />
-  <text x="135" y="370" class="lbl sem-primary-text" >Die Goldene Regel</text>
-  <text x="135" y="392" class="desc sem-neutral-text sem-primary-text" style="font-weight: bold;">Stets alle Pens &amp; Brushes freezen!</text>
+  <rect class="sem-primary" x="15" y="348" width="265" height="58" rx="6" stroke-width="1.5" />
+  <text x="147.5" y="370" class="lbl sem-primary-text" >Die Goldene Regel</text>
+  <text x="147.5" y="392" class="desc sem-neutral-text sem-primary-text" style="font-weight: bold;">Stets alle Pens &amp; Brushes freezen!</text>
 </svg>

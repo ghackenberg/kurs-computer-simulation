@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 44 270 376" width="270" height="376">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 44 295 376" width="295" height="376">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -94,9 +94,9 @@
 
   <!-- Schritt 1: Während Ziehen (Eingefroren) -->
   <g transform="translate(15, 52)">
-    <rect class="sem-muted-stroke" width="240" height="116" rx="6" fill="#ffffff" stroke-width="1.2" />
-    <rect class="sem-primary" x="0" y="0" width="240" height="22" rx="6"  stroke="none"/>
-    <text x="120" y="16" class="lbl sem-primary-text" >1. Während Dragging: Freeze!</text>
+    <rect class="sem-muted-stroke" width="265" height="116" rx="6" fill="#ffffff" stroke-width="1.2" />
+    <rect class="sem-primary" x="0" y="0" width="265" height="22" rx="6"  stroke="none"/>
+    <text x="132.5" y="16" class="lbl sem-primary-text" >1. Während Dragging: Freeze!</text>
 
     <!-- Canvas Simulation Area -->
     <rect class="sem-card" x="15" y="28" width="210" height="80" rx="4" stroke-dasharray="3,2" />
@@ -123,9 +123,9 @@
 
   <!-- Schritt 2: Nach Loslassen (Auto-Fit) -->
   <g transform="translate(15, 176)">
-    <rect class="sem-muted-stroke" width="240" height="116" rx="6" fill="#ffffff" stroke-width="1.2" />
-    <rect class="sem-success" x="0" y="0" width="240" height="22" rx="6"  stroke="none"/>
-    <text x="120" y="16" class="lbl sem-success-text" >2. Nach MouseUp: Einmaliger Fit</text>
+    <rect class="sem-muted-stroke" width="265" height="116" rx="6" fill="#ffffff" stroke-width="1.2" />
+    <rect class="sem-success" x="0" y="0" width="265" height="22" rx="6"  stroke="none"/>
+    <text x="132.5" y="16" class="lbl sem-success-text" >2. Nach MouseUp: Einmaliger Fit</text>
 
     <!-- Canvas Simulation Area -->
     <rect class="sem-card" x="15" y="28" width="210" height="80" rx="4" stroke-dasharray="3,2" />
@@ -137,17 +137,17 @@
     <circle class="sem-success-fill" cx="120" cy="46" r="4.5" />
 
     <!-- Badge: Ruhiger Fit -->
-    <rect class="sem-success-stroke" x="55" y="60" width="130" height="20" rx="4" fill="#ffffff" stroke-width="1" />
+    <rect class="sem-success-stroke" x="48" y="60" width="144" height="20" rx="4" fill="#ffffff" stroke-width="1" />
     <text x="120" y="74" class="good sem-success-text">Ruhige Neuberechnung</text>
   </g>
 
   <!-- Solution Code Box -->
   <g transform="translate(15, 300)">
-    <rect class="sem-success" width="240" height="106" rx="6" stroke-width="1.5" />
-    <text x="120" y="20" class="lbl sem-success-text" >Die Entkopplungs-Regel</text>
-    <text x="120" y="42" class="fml sem-success-text" style="font-weight: bold;">if (_draggedNode == null)</text>
-    <text x="120" y="62" class="fml sem-success-text">_transform.Update(...);</text>
-    <text x="120" y="81" class="desc sem-neutral-text sem-success-text" style="font-size: 11.5px;">Bounds-Update beim Ziehen blockiert</text>
-    <text x="120" y="97" class="good sem-success-text">100% flüssig &amp; jitter-frei!</text>
+    <rect class="sem-success" width="265" height="106" rx="6" stroke-width="1.5" />
+    <text x="132.5" y="20" class="lbl sem-success-text" >Die Entkopplungs-Regel</text>
+    <text x="132.5" y="42" class="fml sem-success-text" style="font-weight: bold;">if (_draggedNode == null)</text>
+    <text x="132.5" y="62" class="fml sem-success-text">_transform.Update(...);</text>
+    <text x="132.5" y="81" class="desc sem-neutral-text sem-success-text" style="font-size: 11.5px;">Bounds-Update beim Ziehen blockiert</text>
+    <text x="132.5" y="97" class="good sem-success-text">100% flüssig &amp; jitter-frei!</text>
   </g>
 </svg>

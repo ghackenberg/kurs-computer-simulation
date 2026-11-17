@@ -68,7 +68,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 ### Was ist ein Modell?
 
 <div class="columns">
-<div>
+<div class="three">
 
 Ein **Modell** ist eine vereinfachte, abstrakte Darstellung eines realen Systems oder Prozesses.
 
@@ -82,7 +82,7 @@ Es erfasst die wesentlichen Aspekte, die für eine bestimmte Fragestellung relev
 - **Überprüfbarkeit:** Vorhersagen müssen sich an Messdaten testen lassen.
 
 </div>
-<div>
+<div class="two">
 
 ![](./Illustrationen/Realitaet_und_Modell.jpg)
 
@@ -224,7 +224,7 @@ Modelle können nach verschiedenen Kriterien klassifiziert werden:
 Die Wahl des Modelltyps hängt von der Problemstellung und dem zu untersuchenden System ab.
 
 </div>
-<div class="three">
+<div class="two">
 
 ![](./Diagramme/Modell_Arten.svg)
 
@@ -907,12 +907,13 @@ Ein Digitaler Zwilling ist kein Selbstläufer – drei typische Fehlerquellen en
 ### Vom Prototyp zum Regelkreis: Ausblick in die Praxis
 
 <div class="columns">
-<div class="two">
+<div class="three">
 
 Wie sich der Digitale Zwilling von der frühen Konzeptphase bis in den laufenden Betrieb entwickelt:
 
 - **Offline (Engineering):** Antriebe, Federn und Kühler virtuell auslegen; SPS-Logik gefahrlos testen; Grenzlasten durchspielen.
 - **Online (Betrieb):** Nicht messbare Innentemperaturen live schätzen; Restlebensdauer prognostizieren; Parameter zurückführen.
+- **Regelkreis (Closed-Loop):** Modellbasierte Sollwerte, Sicherheitsgrenzen und geschätzte Zustandsgrößen in Echtzeit an die SPS-Steuerung zurückführen.
 
 > **Schlüsselprinzip:** Je sauberer Modell, Numerik und Visualisierung getrennt sind, desto leichter wächst der Prototyp zum produktiven Zwilling.
 

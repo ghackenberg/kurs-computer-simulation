@@ -551,12 +551,14 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const availableHeight = Math.max(1, s.footerTop - s.headerBottom);
     const contentHeight = s.contentBottom > s.contentTop ? (s.contentBottom - s.contentTop) : 0;
     const fillRatio = contentHeight / availableHeight;
-    const minFillRatio = options.minFillRatio !== undefined ? options.minFillRatio : 0.80;
-    const sparseCols = (s.colRatios || []).filter(c => c.ratio < minFillRatio);
-    const narrowCols = (s.colWidthRatios || []).filter(c => c.ratio < minFillRatio);
-    const hasUnderfill = !isAppendix && !s.isOpener && minFillRatio > 0 && fillRatio < minFillRatio;
-    const hasSparseCol = !isAppendix && !s.isOpener && minFillRatio > 0 && sparseCols.length > 0;
-    const hasNarrowCol = !isAppendix && !s.isOpener && minFillRatio > 0 && narrowCols.length > 0;
+    const minSlideFillRatio = options.minSlideFillRatio !== undefined ? options.minSlideFillRatio : 0.80;
+    const minColHeightRatio = options.minFillRatio !== undefined ? options.minFillRatio : 0.80;
+    const minColWidthRatio = options.minColWidthRatio !== undefined ? options.minColWidthRatio : 0.90;
+    const sparseCols = (s.colRatios || []).filter(c => c.ratio < minColHeightRatio);
+    const narrowCols = (s.colWidthRatios || []).filter(c => c.ratio < minColWidthRatio);
+    const hasUnderfill = !isAppendix && !s.isOpener && minSlideFillRatio > 0 && fillRatio < minSlideFillRatio;
+    const hasSparseCol = !isAppendix && !s.isOpener && minColHeightRatio > 0 && sparseCols.length > 0;
+    const hasNarrowCol = !isAppendix && !s.isOpener && minColWidthRatio > 0 && narrowCols.length > 0;
 
     const gapTolerance = options.gapTolerance !== undefined ? options.gapTolerance : 1;
     const gapIssues = (s.elementGaps || []).filter(g => Math.abs(g.gap - (g.expected || 16)) > gapTolerance);
@@ -798,7 +800,7 @@ async function main() {
           err.sparseCols.forEach(c => issues.push(`Spalte ${c.colIndex} zu leer: ${Math.round(c.ratio * 100)}% der Spaltenhöhe (${c.height}/${c.maxHeight}px, < ${Math.round(minFillRatio * 100)}%)`));
         }
         if (err.hasNarrowCol) {
-          err.narrowCols.forEach(c => issues.push(`Spalte ${c.colIndex} zu schmal: ${Math.round(c.ratio * 100)}% der Spaltenbreite (${c.width}/${c.colWidth}px, < ${Math.round(minFillRatio * 100)}%)`));
+          err.narrowCols.forEach(c => issues.push(`Spalte ${c.colIndex} zu schmal: ${Math.round(c.ratio * 100)}% der Spaltenbreite (${c.width}/${c.colWidth}px, < 90%)`));
         }
         if (err.hasGapError) {
           err.gapIssues.forEach(g => issues.push(`Vertikaler Gap inkonsistent (${g.scope}: ${g.pair} = ${g.gap}px, erwartet ${g.expected || 16}px)`));

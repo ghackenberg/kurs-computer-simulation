@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 44 270 376" width="270" height="376">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 44 295 376" width="295" height="376">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -81,9 +81,9 @@
 
   <!-- Schritt 1: Maus zieht Knoten -->
   <g transform="translate(15, 52)">
-    <rect class="sem-muted-stroke" width="240" height="116" rx="6" fill="#ffffff" stroke-width="1.2" />
-    <rect class="sem-muted" x="0" y="0" width="240" height="22" rx="6"  stroke="none"/>
-    <text x="120" y="16" class="lbl sem-primary-text" >1. Maus zieht K3 nach oben</text>
+    <rect class="sem-muted-stroke" width="265" height="116" rx="6" fill="#ffffff" stroke-width="1.2" />
+    <rect class="sem-muted" x="0" y="0" width="265" height="22" rx="6"  stroke="none"/>
+    <text x="132.5" y="16" class="lbl sem-primary-text" >1. Maus zieht K3 nach oben</text>
 
     <!-- Canvas Simulation Area -->
     <rect class="sem-card" x="15" y="28" width="210" height="80" rx="4" stroke-dasharray="3,2" />
@@ -108,9 +108,9 @@
 
   <!-- Schritt 2: Auto-Fit schrumpft & Knoten hüpft weg -->
   <g transform="translate(15, 176)">
-    <rect class="sem-muted-stroke" width="240" height="116" rx="6" fill="#ffffff" stroke-width="1.2" />
-    <rect class="sem-danger" x="0" y="0" width="240" height="22" rx="6"  stroke="none"/>
-    <text x="120" y="16" class="lbl sem-danger-text" >2. Auto-Fit verkleinert s</text>
+    <rect class="sem-muted-stroke" width="265" height="116" rx="6" fill="#ffffff" stroke-width="1.2" />
+    <rect class="sem-danger" x="0" y="0" width="265" height="22" rx="6"  stroke="none"/>
+    <text x="132.5" y="16" class="lbl sem-danger-text" >2. Auto-Fit verkleinert s</text>
 
     <!-- Canvas Simulation Area -->
     <rect class="sem-card" x="15" y="28" width="210" height="80" rx="4" stroke-dasharray="3,2" />
@@ -140,11 +140,11 @@
 
   <!-- Problem Summary Box -->
   <g transform="translate(15, 300)">
-    <rect class="sem-danger-stroke sem-danger" width="240" height="106" rx="6" stroke-width="1.5"  stroke="none"/>
-    <text x="120" y="20" class="lbl sem-danger-text" >Ergebnis: Heftiges Jittering</text>
-    <text x="120" y="41" class="desc sem-neutral-text sem-danger-text" >Knoten reißt vom Mauszeiger ab</text>
-    <text x="120" y="59" class="desc sem-neutral-text sem-danger-text" >Nächster MouseMove korrigiert zurück</text>
-    <text x="120" y="79" class="warn sem-danger-text" style="font-size: 12px;">60 Hz Oszillation &amp; Flackern!</text>
-    <text x="120" y="96" class="desc sem-neutral-text sem-muted-text" >Modell vibriert unkontrollierbar</text>
+    <rect class="sem-danger-stroke sem-danger" width="265" height="106" rx="6" stroke-width="1.5"  stroke="none"/>
+    <text x="132.5" y="20" class="lbl sem-danger-text" >Ergebnis: Heftiges Jittering</text>
+    <text x="132.5" y="41" class="desc sem-neutral-text sem-danger-text" >Knoten reißt vom Mauszeiger ab</text>
+    <text x="132.5" y="59" class="desc sem-neutral-text sem-danger-text" >Nächster MouseMove korrigiert zurück</text>
+    <text x="132.5" y="79" class="warn sem-danger-text" style="font-size: 12px;">60 Hz Oszillation &amp; Flackern!</text>
+    <text x="132.5" y="96" class="desc sem-neutral-text sem-muted-text" >Modell vibriert unkontrollierbar</text>
   </g>
 </svg>

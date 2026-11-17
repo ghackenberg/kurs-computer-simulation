@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 46 270 374" width="270" height="374">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 46 295 374" width="295" height="374">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -125,11 +125,11 @@
 
   <!-- Transformations-Mathematik -->
   <g transform="translate(15, 212)">
-    <rect class="sem-card sem-muted-stroke" width="240" height="194" rx="6" stroke-width="1.5" />
-    <text x="120" y="24" class="lbl sem-neutral-text" >Spiegelung an Y_max</text>
+    <rect class="sem-card sem-muted-stroke" width="265" height="194" rx="6" stroke-width="1.5" />
+    <text x="132.5" y="24" class="lbl sem-neutral-text" >Spiegelung an Y_max</text>
     <line class="sem-card-stroke" x1="15" y1="36" x2="225" y2="36" stroke-width="1" />
 
-    <text x="120" y="60" class="fml sem-danger-text" style="font-size: 13px; font-weight: bold;">y_s = y_off + (Y_max - y_w) · s</text>
+    <text x="132.5" y="60" class="fml sem-danger-text" style="font-size: 13px; font-weight: bold;">y_s = y_off + (Y_max - y_w) · s</text>
 
     <g transform="translate(10, 78)">
       <rect class="sem-primary" width="220" height="46" rx="4" />

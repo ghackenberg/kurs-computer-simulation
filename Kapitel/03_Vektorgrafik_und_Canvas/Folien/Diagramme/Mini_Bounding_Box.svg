@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 46 270 374" width="270" height="374">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 46 295 374" width="295" height="374">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -104,15 +104,15 @@
 
   <!-- Outer Canvas Box -->
   <g transform="translate(15, 54)">
-    <rect class="sem-info-stroke" width="240" height="220" rx="6" fill="#ffffff" stroke-width="2" />
-    <text x="120" y="18" class="dim sem-info-text" style="text-anchor: middle;">Canvas Viewport</text>
+    <rect class="sem-info-stroke" width="265" height="220" rx="6" fill="#ffffff" stroke-width="2" />
+    <text x="132.5" y="18" class="dim sem-info-text" style="text-anchor: middle;">Canvas Viewport</text>
 
     <!-- Margin Inset -->
     <rect class="sem-card sem-muted-stroke" x="20" y="26" width="200" height="176" stroke-width="1.2" stroke-dasharray="4,3" />
-    <text x="120" y="40" class="dim sem-info-text sem-muted-text" style="font-size: 11.5px; text-anchor: middle;">Nutzfläche (W_draw × H_draw)</text>
+    <text x="132.5" y="40" class="dim sem-info-text sem-muted-text" style="font-size: 11.5px; text-anchor: middle;">Nutzfläche (W_draw × H_draw)</text>
 
     <!-- Centered Truss Bounding Box -->
-    <g transform="translate(58, 65)">
+    <g transform="translate(70.5, 65)">
       <rect class="sem-primary" width="124" height="105" stroke-width="1.5" stroke-dasharray="2,2" />
       <polygon class="sem-primary-stroke" points="12,90 112,90 62,18" fill="none" stroke-width="2.5" />
       <circle class="sem-primary-fill" cx="12" cy="90" r="4" />
@@ -135,10 +135,10 @@
 
   <!-- Formula Summary Card -->
   <g transform="translate(15, 286)">
-    <rect class="sem-success" width="240" height="120" rx="6" stroke-width="1.5" />
-    <text x="120" y="24" class="lbl sem-success-text" >Modell- &amp; Zeichenmaße</text>
-    <text x="120" y="48" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">W_world = X_max - X_min</text>
-    <text x="120" y="70" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">H_world = Y_max - Y_min</text>
-    <text x="120" y="94" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">W_draw = W_canvas - 2·margin</text>
+    <rect class="sem-success" width="265" height="120" rx="6" stroke-width="1.5" />
+    <text x="132.5" y="24" class="lbl sem-success-text" >Modell- &amp; Zeichenmaße</text>
+    <text x="132.5" y="48" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">W_world = X_max - X_min</text>
+    <text x="132.5" y="70" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">H_world = Y_max - Y_min</text>
+    <text x="132.5" y="94" class="desc sem-neutral-text sem-success-text" style="font-weight: bold;">W_draw = W_canvas - 2·margin</text>
   </g>
 </svg>

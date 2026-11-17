@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 46 270 374" width="270" height="374">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 46 295 374" width="295" height="374">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -117,7 +117,7 @@
 
   <!-- Shape 1: Line -->
   <g transform="translate(15, 54)">
-    <rect class="sem-card-stroke" width="240" height="66" rx="5" fill="#ffffff" stroke-width="1.2" />
+    <rect class="sem-card-stroke" width="265" height="66" rx="5" fill="#ffffff" stroke-width="1.2" />
     <line class="sem-primary-stroke" x1="20" y1="46" x2="90" y2="20" stroke-width="3" stroke-linecap="round" />
     <circle class="sem-primary-fill" cx="20" cy="46" r="3" />
     <circle class="sem-primary-fill" cx="90" cy="20" r="3" />
@@ -127,7 +127,7 @@
 
   <!-- Shape 2: Polygon & Ellipse -->
   <g transform="translate(15, 126)">
-    <rect class="sem-card-stroke" width="240" height="74" rx="5" fill="#ffffff" stroke-width="1.2" />
+    <rect class="sem-card-stroke" width="265" height="74" rx="5" fill="#ffffff" stroke-width="1.2" />
     <circle class="sem-accent" cx="28" cy="37" r="14" stroke-width="2" />
     <polygon class="sem-warning-fill sem-warning-stroke" points="72,50 56,24 88,24" stroke-width="2" />
     <text x="164" y="30" class="code sem-info-text" style="text-anchor: middle;">Ellipse, Polygon</text>
@@ -136,7 +136,7 @@
 
   <!-- Shape 3: Path -->
   <g transform="translate(15, 206)">
-    <rect class="sem-card-stroke" width="240" height="84" rx="5" fill="#ffffff" stroke-width="1.2" />
+    <rect class="sem-card-stroke" width="265" height="84" rx="5" fill="#ffffff" stroke-width="1.2" />
     <path class="sem-danger-stroke" d="M 15 60 C 35 10, 75 80, 105 25" fill="none" stroke-width="2.5" />
     <circle class="sem-muted-fill" cx="35" cy="10" r="2.5" />
     <circle class="sem-muted-fill" cx="75" cy="80" r="2.5" />
@@ -145,9 +145,9 @@
   </g>
 
   <!-- Summary Footer -->
-  <rect class="sem-card sem-muted-stroke" x="15" y="298" width="240" height="108" rx="6" stroke-width="1.2" />
-  <text x="135" y="322" class="lbl sem-neutral-text" >Attached Properties</text>
-  <text x="135" y="345" class="code sem-info-text" style="text-anchor: middle;">Canvas.SetLeft(el, x);</text>
-  <text x="135" y="365" class="code sem-info-text" style="text-anchor: middle;">Canvas.SetTop(el, y);</text>
-  <text x="135" y="390" class="desc sem-neutral-text" style="font-weight: bold;">Container steuert Position!</text>
+  <rect class="sem-card sem-muted-stroke" x="15" y="298" width="265" height="108" rx="6" stroke-width="1.2" />
+  <text x="147.5" y="322" class="lbl sem-neutral-text" >Attached Properties</text>
+  <text x="147.5" y="345" class="code sem-info-text" style="text-anchor: middle;">Canvas.SetLeft(el, x);</text>
+  <text x="147.5" y="365" class="code sem-info-text" style="text-anchor: middle;">Canvas.SetTop(el, y);</text>
+  <text x="147.5" y="390" class="desc sem-neutral-text" style="font-weight: bold;">Container steuert Position!</text>
 </svg>
