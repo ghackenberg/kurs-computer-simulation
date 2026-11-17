@@ -87,7 +87,7 @@ Darstellung von Zahlen ($b \in \{2, 10, 16\}$) und Text im Arbeitsspeicher:
 - **ASCII (7 Bit) vs. ANSI (8 Bit):** Basiszeichen (`'A'` = `0x41`) vs. fehleranfällige regionale Codepages
 - **UTF-8 (1–4 Byte):** Rückwärtskompatibel zu ASCII (`'ä'` = `0xC3 0xA4`), Standard für `.cs`, `.md` und `.xml`
 
-> **Praxis:** In `WriteableBitmap` (Kap. 2) kodieren wir Pixel direkt als `int`, und alle Kursdateien nutzen UTF-8.
+> **Praxis:** In `WriteableBitmap` (Kap. 2) kodieren wir Pixel als `int`; alle Kursdateien nutzen UTF-8.
 
 ---
 

@@ -37,13 +37,13 @@
       .sem-info { fill: url(#grad-sem-info); stroke: #0284c7; }
       .sem-info-bg { fill: url(#grad-sem-info); stroke: none; }
       .sem-info-stroke { stroke: #0284c7; }
-      .sem-info-fill { fill: #0284c7; }
-      .sem-info-text { fill: #0369a1; }
+      .sem-info-fill { fill: #0369a1; }
+      .sem-info-text { fill: #075985; }
       .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
       .sem-warning-stroke { stroke: #d97706; }
-      .sem-warning-fill { fill: #d97706; }
-      .sem-warning-text { fill: #b45309; }
+      .sem-warning-fill { fill: #b45309; }
+      .sem-warning-text { fill: #92400e; }
       .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
       .sem-card-bg { fill: url(#grad-sem-card); stroke: none; }
       .sem-card-stroke { stroke: #cbd5e1; }
@@ -52,8 +52,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
       .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }
@@ -81,7 +81,6 @@
     </filter>
   </defs>
 
-  <rect class="sem-card" width="1000" height="520" rx="12" stroke-width="1.5" />
 
   <text x="35" y="36" class="title sem-primary-text">Die 3 physikalischen Randbedingungen am Pixelgitter im Vergleich</text>
   <text x="35" y="56" class="subtitle sem-muted-text">Was passiert, wenn die Wärmewelle an den Rand des Simulationsgebietes oder an eine Wand stößt?</text>
@@ -151,7 +150,7 @@
       <rect class="sem-muted-fill" x="0" y="0" width="56" height="90" rx="4" />
       <text x="28" y="34" class="label-bold sem-neutral-text" style="fill: #ffffff; text-anchor: middle; font-size: 14px;">Dämm-</text>
       <text x="28" y="55" class="label-bold sem-neutral-text" style="fill: #ffffff; text-anchor: middle; font-size: 14px;">wand</text>
-      <text x="28" y="76" class="label sem-neutral-text sem-card-text" style="text-anchor: middle; font-size: 14px;">q̇ = 0</text>
+      <text x="28" y="76" class="label" style="fill: #ffffff; text-anchor: middle; font-size: 14px;">q̇ = 0</text>
 
       <!-- Boundary Node 0: 68..166 -->
       <rect class="sem-warning" x="68" y="10" width="98" height="70" rx="5" stroke-width="2.5" stroke-dasharray="4,3" />

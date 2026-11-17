@@ -172,6 +172,8 @@ Ein 2D-Rasterbild existiert im Arbeitsspeicher als **kontinuierlicher 1D-Byte-Bl
 
 ---
 
+### Speicherlayout: 2D-Rasterbild $\to$ 1D-BackBuffer im RAM
+
 ![](./Diagramme/Speicherlayout_Stride.svg)
 
 ---

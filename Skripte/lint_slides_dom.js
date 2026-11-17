@@ -516,6 +516,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
     const hasGapError = !isAppendix && gapIssues.length > 0;
     const colorIssues = s.colorIssues || [];
     const hasColorError = colorIssues.length > 0;
+    const hasMissingTitle = !s.isOpener && s.sectionIndex > 1 && (!s.title || !s.title.trim());
     for (const bgErr of fullBleedBgIssues) {
       if ((!bgErr.pagination && s.sectionIndex === 1) || bgErr.pagination === String(s.pagination)) {
         svgIssues.push({
@@ -536,7 +537,7 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       svgIssues,
       gapIssues,
       colorIssues,
-      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssuesAfterBg || hasUnderfill || hasGapError || hasColorError,
+      hasError: hasVOverflow || hasHOverflow || hasHeaderCollision || hasFooterCollision || hasSvgIssuesAfterBg || hasUnderfill || hasGapError || hasColorError || hasMissingTitle,
       hasVOverflow,
       hasHOverflow,
       hasHeaderCollision,
@@ -544,7 +545,8 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       hasSvgIssues: hasSvgIssuesAfterBg,
       hasUnderfill,
       hasGapError,
-      hasColorError
+      hasColorError,
+      hasMissingTitle
     });
   }
 
@@ -741,6 +743,9 @@ async function main() {
         }
         if (err.hasColorError) {
           err.colorIssues.forEach(c => issues.push(`Ungetönter Grauton auf Highlight-Hintergrund (${c.tag} "${c.sample}..." hat ${c.fg} auf ${c.bg})`));
+        }
+        if (err.hasMissingTitle) {
+          issues.push(`Fehlender Folientitel (# / ## / ### im Markdown)`);
         }
         console.log(`    - Folie ${err.pagination} [${err.title || 'Ohne Titel'}]: ${issues.join(' | ')}`);
       }

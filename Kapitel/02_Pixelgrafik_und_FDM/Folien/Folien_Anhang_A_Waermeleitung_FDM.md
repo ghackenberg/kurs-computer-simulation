@@ -36,6 +36,8 @@ Wärmeleitung funktioniert nach **demselben Prinzip** wie ein elektrisches RC-Ne
 
 ---
 
+### Thermodynamische Grundbegriffe: Elektro- & Hydraulik-Analogie
+
 ![](./Diagramme/Thermo_Grundbegriffe_Analogie.svg)
 
 ---

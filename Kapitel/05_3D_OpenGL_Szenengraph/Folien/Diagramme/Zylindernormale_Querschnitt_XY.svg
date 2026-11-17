@@ -18,10 +18,6 @@
       <stop offset="0%" stop-color="#fef2f2" />
       <stop offset="100%" stop-color="#fee2e2" />
     </linearGradient>
-    <linearGradient id="grad-sem-card" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="100%" stop-color="#f1f5f9" />
-    </linearGradient>
     <linearGradient id="grad-sem-muted" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#f8fafc" />
       <stop offset="100%" stop-color="#e2e8f0" />
@@ -38,28 +34,23 @@
       .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
       .sem-success-stroke { stroke: #16a34a; }
-      .sem-success-fill { fill: #16a34a; }
-      .sem-success-text { fill: #15803d; }
+      .sem-success-fill { fill: #15803d; }
+      .sem-success-text { fill: #166534; }
       .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
       .sem-warning-stroke { stroke: #d97706; }
-      .sem-warning-fill { fill: #d97706; }
-      .sem-warning-text { fill: #b45309; }
+      .sem-warning-fill { fill: #b45309; }
+      .sem-warning-text { fill: #92400e; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
       .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
       .sem-danger-stroke { stroke: #dc2626; }
       .sem-danger-fill { fill: #dc2626; }
       .sem-danger-text { fill: #991b1b; }
-      .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
-      .sem-card-bg { fill: url(#grad-sem-card); stroke: none; }
-      .sem-card-stroke { stroke: #cbd5e1; }
-      .sem-card-fill { fill: #cbd5e1; }
-      .sem-card-text { fill: #1e293b; }
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       /* @svg-palette:end */
 .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
       .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
@@ -106,7 +97,6 @@
     </radialGradient>
   </defs>
 
-  <rect class="sem-card" x="-35" y="8" width="550" height="364" rx="12" stroke-width="2" />
   <text x="240" y="36" class="hdr sem-primary-text">Rotationskörper in der XY-Ebene (Radien r_1, r_2 und Höhe h)</text>
 
   <line class="sem-muted-stroke" x1="80" y1="310" x2="430" y2="310" stroke-width="2.5" marker-end="url(#arr-slate)" />

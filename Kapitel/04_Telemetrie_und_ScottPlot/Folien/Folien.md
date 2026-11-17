@@ -757,13 +757,13 @@ Sie modellieren zwei unterschiedliche Systeme in `MSAGL` als gerichteten Graphen
 1. **Layout-Wahl:**
    - **PID-Regelkreis:** **`SugiyamaLayoutSettings`** (kausaler Signalfluss in hierarchischen Schichten, saubere Feedback-Splines).
    - **IoT-Sensornetz:** **`MdsLayoutSettings`** (Force-Directed, bildet automatisch Gateway-Cluster durch Zug- und Abstoßungskräfte).
-2. **Keine Koordinaten nötig:** `MSAGL` ermittelt die $(x, y)$-Positionen erst durch den Layout-Algorithmus aus der reinen Kantenliste $E$ von `g`:
+2. **Keine Koordinaten nötig:** `MSAGL` berechnet die $(x, y)$-Positionen automatisch aus der Kantenliste $E$ von `g`:
    ```csharp
    var g = new Graph();
    g.AddEdge("Gateway-A", "SPS-CNC");
    g.LayoutAlgorithmSettings = new SugiyamaLayoutSettings();
    ```
-3. **`MSAGL` vs. `Nodify`:** `MSAGL` für **automatische Anzeige** aus Code/Daten; `Nodify`, wenn der Anwender Blöcke und Pins interaktiv per Maus verdrahten soll.
+3. **`MSAGL` vs. `Nodify`:** `MSAGL` für **automatische Anzeige** aus Code; `Nodify` für interaktives Verdrahten.
 
 > **Merksatz:** Signalfluss $\to$ `Sugiyama`; vermaschtes Netz $\to$ `MdsLayoutSettings`; interaktive Verdrahtung $\to$ `Nodify`.
 

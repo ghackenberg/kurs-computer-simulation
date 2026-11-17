@@ -29,8 +29,8 @@
       .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
       .sem-success-stroke { stroke: #16a34a; }
-      .sem-success-fill { fill: #16a34a; }
-      .sem-success-text { fill: #15803d; }
+      .sem-success-fill { fill: #15803d; }
+      .sem-success-text { fill: #166534; }
       .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
       .sem-card-bg { fill: url(#grad-sem-card); stroke: none; }
       .sem-card-stroke { stroke: #cbd5e1; }
@@ -39,8 +39,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       /* @svg-palette:end */
 .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; }
       .fsum { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 600; }

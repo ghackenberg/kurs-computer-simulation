@@ -37,8 +37,8 @@
       .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
       .sem-success-stroke { stroke: #16a34a; }
-      .sem-success-fill { fill: #16a34a; }
-      .sem-success-text { fill: #15803d; }
+      .sem-success-fill { fill: #15803d; }
+      .sem-success-text { fill: #166534; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
       .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
       .sem-danger-stroke { stroke: #dc2626; }
@@ -52,8 +52,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
       .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }
@@ -68,7 +68,6 @@
     </style>
   </defs>
 
-  <rect class="sem-card" width="270" height="420" rx="10" stroke-width="1.5" />
   <text x="135" y="24" class="hdr sem-primary-text">Y-Achsen Invertierung</text>
   <text x="135" y="42" class="sub sem-muted-text">Welt (unten) vs. Screen (oben)</text>
 

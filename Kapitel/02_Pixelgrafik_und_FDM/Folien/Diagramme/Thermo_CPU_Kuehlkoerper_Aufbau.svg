@@ -41,13 +41,13 @@
       .sem-info { fill: url(#grad-sem-info); stroke: #0284c7; }
       .sem-info-bg { fill: url(#grad-sem-info); stroke: none; }
       .sem-info-stroke { stroke: #0284c7; }
-      .sem-info-fill { fill: #0284c7; }
-      .sem-info-text { fill: #0369a1; }
+      .sem-info-fill { fill: #0369a1; }
+      .sem-info-text { fill: #075985; }
       .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
       .sem-warning-stroke { stroke: #d97706; }
-      .sem-warning-fill { fill: #d97706; }
-      .sem-warning-text { fill: #b45309; }
+      .sem-warning-fill { fill: #b45309; }
+      .sem-warning-text { fill: #92400e; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
       .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
       .sem-danger-stroke { stroke: #dc2626; }
@@ -61,8 +61,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
       .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }
@@ -82,7 +82,6 @@
     </filter>
   </defs>
 
-  <rect class="sem-card" width="1000" height="500" rx="12" stroke-width="1.5" />
 
   <text x="35" y="36" class="title sem-primary-text">Praxisbeispiel im Gitter: Thermisches Modell eines CPU-Kühlkörpers</text>
   <text x="35" y="56" class="subtitle sem-muted-text">Zusammenspiel von Wärmequelle Q, Materialübergängen α(x,y), Isolierung (Neumann) und Luftkühlung (Robin)</text>
@@ -122,7 +121,7 @@
 
     <!-- Thermal Interface Material (TIM / Paste) - widened to 310px so text fits cleanly inside! -->
     <rect class="sem-warning-fill sem-warning-stroke" x="100" y="253" width="310" height="22" stroke-width="1.5" />
-    <text x="255" y="268" class="label-bold sem-neutral-text sem-warning-text" style="font-size: 11px; text-anchor: middle;">
+    <text x="255" y="268" class="label-bold" style="fill: #ffffff; font-size: 11px; text-anchor: middle;">
       TIM / Wärmeleitpaste (Engpass: α ≈ 2,5 mm²/s)
     </text>
 
@@ -131,13 +130,13 @@
     <text x="255" y="294" class="label-bold sem-neutral-text" style="fill: #ffffff; font-size: 12px; text-anchor: middle;">
       Silizium CPU-Die (Heizquelle P = 150 W)
     </text>
-    <text x="255" y="311" class="label sem-neutral-text sem-danger-text" style="font-size: 11px; text-anchor: middle;">
+    <text x="255" y="311" class="label" style="fill: #ffffff; font-size: 11px; text-anchor: middle;">
       Quellterm Q = +q̇_V / (ρ · c_p) [K/s]
     </text>
 
     <!-- PCB Bottom Insulation (Neumann) -->
     <rect class="sem-neutral-fill" x="25" y="318" width="460" height="37" rx="4" />
-    <text x="255" y="341" class="label-bold sem-neutral-text sem-card-text" style="text-anchor: middle;">
+    <text x="255" y="341" class="label-bold" style="fill: #ffffff; text-anchor: middle;">
       Leiterplatte (PCB) unten: Adiabate Isolierung (Neumann ∂T/∂y = 0)
     </text>
   </g>

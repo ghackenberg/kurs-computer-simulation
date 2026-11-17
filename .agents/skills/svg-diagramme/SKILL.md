@@ -22,7 +22,7 @@ Verbindliche Gestaltungs-, Typografie- und Prüfregeln für SVG-Illustrationen i
 | **Code- & Zahlenwerte (`.code`, `.val`)** | `13.5px`–`15px`, `'Consolas', monospace`, `bold` | Hohe Lesbarkeit für Indizes, Formeln und Array-Werte. |
 | **Untertitel / Indizes (`.sub`, `.idx`)** | $\ge 12.5\text{px}$ (niemals $< 12\text{px}$) | Hält die effektive Schriftgröße nach Browser-CTM sicher über dem Linter-Limit von `11.5 px`. |
 | **Box-Innenabstand (`panel_clipping`)** | $\ge 8\text{px}$ horizontaler Abstand zum `<rect>`-Rand | Verhindert seitliches Überlaufen von `<text>`-Elementen. |
-| **Hintergrund-Transparenz** | Kein rahmenloses Vollflächen-`<rect fill="#FFFFFF">` | SVG-Canvas bleibt transparent, damit CSS-`drop-shadow` und getönte Highlight-Folien sauber wirken (Container-Karten immer mit `rx` + `stroke`). |
+| **Hintergrund-Transparenz & kein Außenrahmen** | Kein Vollflächen-`<rect>` (`>= 80 %` der `viewBox`) | SVG-Canvas bleibt transparent und ohne äußeren Kasten-Rahmen („Folie-in-Folie“), damit Inhalte organisch auf der Folie liegen und CSS-`drop-shadow` sauber wirkt. |
 | **Semantische Farbklassen (`sem-*`)** | Ausschließlich Klassen aus [`Themen/svg_palette.json`](../../../Themen/svg_palette.json) (`sem-primary`, `sem-info`, `sem-success`, `sem-warning`, `sem-danger`, `sem-accent`, `sem-card`, `sem-muted`, `sem-neutral` inkl. `-bg`, `-fill`, `-stroke`, `-text`) | Keine hartcodierten Hex-Farben in handgezeichneten `Diagramme/*.svg`; Änderungen zentral über `npm run sync:svg-palette` verteilbar. |
 
 ---

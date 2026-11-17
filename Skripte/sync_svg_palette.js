@@ -28,7 +28,7 @@ function buildPaletteCss(palette, usedRoles) {
     lines.push(`      .${role} { fill: ${fillVal}; stroke: ${cfg.stroke}; }`);
     lines.push(`      .${role}-bg { fill: ${fillVal}; stroke: none; }`);
     lines.push(`      .${role}-stroke { stroke: ${cfg.stroke}; }`);
-    lines.push(`      .${role}-fill { fill: ${cfg.stroke}; }`);
+    lines.push(`      .${role}-fill { fill: ${cfg.solidFill || cfg.stroke}; }`);
     lines.push(`      .${role}-text { fill: ${cfg.text}; }`);
   }
   lines.push(`      ${END_MARKER}`);

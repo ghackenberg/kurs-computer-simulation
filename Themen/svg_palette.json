@@ -14,21 +14,24 @@
       "fill": "#f0f9ff",
       "fillEnd": "#bae6fd",
       "stroke": "#0284c7",
-      "text": "#0369a1"
+      "solidFill": "#0369a1",
+      "text": "#075985"
     },
     "sem-success": {
       "description": "Zieltreffer, korrekter Pfad, Optimierungserfolg, validierte Lösung",
       "fill": "#f0fdf4",
       "fillEnd": "#dcfce7",
       "stroke": "#16a34a",
-      "text": "#15803d"
+      "solidFill": "#15803d",
+      "text": "#166534"
     },
     "sem-warning": {
       "description": "Zwischenzustand, aktuell geprüfter Index, Hinweis, Grenzfall",
       "fill": "#fffbeb",
       "fillEnd": "#fef3c7",
       "stroke": "#d97706",
-      "text": "#b45309"
+      "solidFill": "#b45309",
+      "text": "#92400e"
     },
     "sem-danger": {
       "description": "Fehlerfall, ausgeschlossener Bereich, Engpass, Divergenz",
@@ -56,7 +59,8 @@
       "fill": "#f8fafc",
       "fillEnd": "#e2e8f0",
       "stroke": "#94a3b8",
-      "text": "#475569"
+      "solidFill": "#475569",
+      "text": "#334155"
     },
     "sem-neutral": {
       "description": "Neutrale Container, Achsen, Rahmen und Standard-Beschriftungen",

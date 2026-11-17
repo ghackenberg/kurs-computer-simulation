@@ -43,8 +43,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
       .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }

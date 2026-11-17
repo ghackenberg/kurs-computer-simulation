@@ -37,8 +37,8 @@
       .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
       .sem-warning-stroke { stroke: #d97706; }
-      .sem-warning-fill { fill: #d97706; }
-      .sem-warning-text { fill: #b45309; }
+      .sem-warning-fill { fill: #b45309; }
+      .sem-warning-text { fill: #92400e; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
       .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
       .sem-danger-stroke { stroke: #dc2626; }
@@ -52,8 +52,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
       .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }
@@ -70,7 +70,6 @@
   </defs>
 
   <!-- Outer Card Frame -->
-  <rect class="sem-card" width="270" height="420" rx="10" stroke-width="1.5" />
   <text x="135" y="24" class="hdr sem-primary-text">Das Zentrierungs-Problem</text>
   <text x="135" y="42" class="sub sem-muted-text">Naive Platzierung bei (margin, margin)</text>
 

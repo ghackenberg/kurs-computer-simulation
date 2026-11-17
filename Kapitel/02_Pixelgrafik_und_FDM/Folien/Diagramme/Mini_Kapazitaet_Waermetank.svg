@@ -9,10 +9,6 @@
       <stop offset="0%" stop-color="#fef2f2" />
       <stop offset="100%" stop-color="#fee2e2" />
     </linearGradient>
-    <linearGradient id="grad-sem-card" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="100%" stop-color="#f1f5f9" />
-    </linearGradient>
     <linearGradient id="grad-sem-muted" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#f8fafc" />
       <stop offset="100%" stop-color="#e2e8f0" />
@@ -31,16 +27,11 @@
       .sem-danger-stroke { stroke: #dc2626; }
       .sem-danger-fill { fill: #dc2626; }
       .sem-danger-text { fill: #991b1b; }
-      .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
-      .sem-card-bg { fill: url(#grad-sem-card); stroke: none; }
-      .sem-card-stroke { stroke: #cbd5e1; }
-      .sem-card-fill { fill: #cbd5e1; }
-      .sem-card-text { fill: #1e293b; }
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       /* @svg-palette:end */
 .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold;  text-anchor: middle; }
       .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px;  text-anchor: middle; }
@@ -48,7 +39,6 @@
     </style>
   </defs>
 
-  <rect class="sem-card" width="260" height="420" rx="10" stroke-width="1.5" />
   <text x="130" y="24" class="hdr sem-primary-text">Speicherträgheit ρ · c_p</text>
   <text x="130" y="41" class="sub sem-muted-text">„Wie groß ist der Wärmetank?“</text>
 
@@ -61,7 +51,7 @@
     <!-- Narrow Tank -->
     <rect class="sem-danger-stroke" x="85" y="46" width="60" height="76" rx="4" fill="#ffffff" stroke-width="2" />
     <rect class="sem-danger-fill" x="87" y="56" width="56" height="64" rx="2" />
-    <text x="115" y="92" class="lbl sem-danger-text" >+100 J</text>
+    <text x="115" y="92" class="lbl" style="fill: #ffffff;">+100 J</text>
 
     <text x="115" y="144" class="lbl sem-danger-text" >➔ Temperatur T schießt hoch!</text>
   </g>
@@ -75,7 +65,7 @@
     <!-- Wide Tank -->
     <rect class="sem-primary-stroke" x="35" y="46" width="160" height="76" rx="4" fill="#ffffff" stroke-width="2" />
     <rect class="sem-primary-fill" x="37" y="96" width="156" height="24" rx="2" />
-    <text x="115" y="112" class="lbl sem-primary-text" >Dieselben +100 J</text>
+    <text x="115" y="112" class="lbl" style="fill: #ffffff;">Dieselben +100 J</text>
 
     <text x="115" y="146" class="lbl sem-primary-text" >➔ Temperatur T steigt nur wenig!</text>
   </g>

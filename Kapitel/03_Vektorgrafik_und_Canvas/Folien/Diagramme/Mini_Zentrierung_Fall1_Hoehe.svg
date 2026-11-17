@@ -33,8 +33,8 @@
       .sem-info { fill: url(#grad-sem-info); stroke: #0284c7; }
       .sem-info-bg { fill: url(#grad-sem-info); stroke: none; }
       .sem-info-stroke { stroke: #0284c7; }
-      .sem-info-fill { fill: #0284c7; }
-      .sem-info-text { fill: #0369a1; }
+      .sem-info-fill { fill: #0369a1; }
+      .sem-info-text { fill: #075985; }
       .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
       .sem-card-bg { fill: url(#grad-sem-card); stroke: none; }
       .sem-card-stroke { stroke: #cbd5e1; }
@@ -43,8 +43,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
       .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }
@@ -60,7 +60,6 @@
   </defs>
 
   <!-- Frame -->
-  <rect class="sem-card" width="270" height="420" rx="10" stroke-width="1.5" />
   <text x="135" y="24" class="hdr sem-primary-text">Fall 1: Höhen-limitiert</text>
   <text x="135" y="42" class="sub sem-muted-text">s = s_y (horizontaler Freiraum)</text>
 

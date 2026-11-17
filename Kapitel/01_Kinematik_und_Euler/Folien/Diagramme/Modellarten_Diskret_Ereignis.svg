@@ -36,8 +36,8 @@
       .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
       .sem-warning-stroke { stroke: #d97706; }
-      .sem-warning-fill { fill: #d97706; }
-      .sem-warning-text { fill: #b45309; }
+      .sem-warning-fill { fill: #b45309; }
+      .sem-warning-text { fill: #92400e; }
       .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
       .sem-card-bg { fill: url(#grad-sem-card); stroke: none; }
       .sem-card-stroke { stroke: #cbd5e1; }
@@ -46,8 +46,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
       .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }
@@ -60,7 +60,6 @@ text { font-family: 'Segoe UI', Arial, sans-serif; }
   </defs>
 
   <!-- Card Background -->
-  <rect class="sem-card" x="-38" y="8" width="556" height="364" rx="10" stroke-width="1.5"/>
 
   <!-- Horizontal Grid Lines -->
   <line class="sem-muted-stroke" x1="36" y1="224" x2="480" y2="224" stroke-width="1"/>

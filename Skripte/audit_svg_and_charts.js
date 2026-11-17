@@ -88,6 +88,31 @@ function checkSemanticPalette(svgPath) {
     }
   }
 
+  // 3. Kein fast vollflächiger äußerer Rahmen (<rect> >= 80% der viewBox) in handgezeichneten Diagrammen
+  if (isDiagramSvg && !isMermaid && !isTikz && vbMatch) {
+    const vbW = parseFloat(vbMatch[1]);
+    const vbH = parseFloat(vbMatch[2]);
+    const allRects = raw.match(/<rect\b[^>]*>/gi) || [];
+    const outerFrames = allRects.filter(r => {
+      const wm = r.match(/\bwidth\s*=\s*["']\s*([\d.]+%?)\s*["']/i);
+      const hm = r.match(/\bheight\s*=\s*["']\s*([\d.]+%?)\s*["']/i);
+      if (!wm || !hm) return false;
+      const w = wm[1].endsWith('%') ? (parseFloat(wm[1]) / 100) * vbW : parseFloat(wm[1]);
+      const h = hm[1].endsWith('%') ? (parseFloat(hm[1]) / 100) * vbH : parseFloat(hm[1]);
+      if (w < vbW * 0.8 || h < vbH * 0.8) return false;
+      const isFillNone = /\bfill\s*=\s*["'](?:none|transparent)["']/i.test(r);
+      const hasStrokeAttr = /\bstroke\s*=\s*["'](?!none|transparent)/i.test(r);
+      const hasSemClass = /\bclass\s*=\s*["'][^"']*\bsem-/i.test(r);
+      return !(isFillNone && !hasStrokeAttr && !hasSemClass);
+    });
+    if (outerFrames.length > 0) {
+      paletteIssues.push({
+        type: 'OUTER_FRAME_RECT',
+        message: 'Fast vollflächiger äußerer Rahmen (<rect> >= 80% der viewBox) gefunden. Diagramme ohne äußeren Kasten direkt/organisch auf die Folie einbetten.'
+      });
+    }
+  }
+
   return paletteIssues;
 }
 
@@ -681,6 +706,108 @@ async function auditSvgFile(browser, svgPath, options = {}) {
           type: 'FONT_TOO_SMALL',
           message: `Text "${t.text.slice(0, 25)}" font size (${fs.toFixed(1)}px) is below 11px`
         });
+      }
+    });
+
+    // 7. WCAG 2.1 Text-to-Background Contrast Check
+    const parseColorStr = (str) => {
+      if (!str || str === 'none' || str === 'transparent') return null;
+      const m = str.match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)(?:\s*,\s*([\d.]+))?\s*\)/i);
+      if (m) {
+        const a = m[4] !== undefined ? parseFloat(m[4]) : 1;
+        return { r: parseFloat(m[1]), g: parseFloat(m[2]), b: parseFloat(m[3]), a };
+      }
+      const hm = str.trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+      if (hm) {
+        let h = hm[1];
+        if (h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+        return { r: parseInt(h.slice(0,2),16), g: parseInt(h.slice(2,4),16), b: parseInt(h.slice(4,6),16), a: 1 };
+      }
+      return null;
+    };
+    const blendOnWhite = (c) => {
+      if (!c) return { r: 255, g: 255, b: 255 };
+      const a = c.a !== undefined ? c.a : 1;
+      return {
+        r: c.r * a + 255 * (1 - a),
+        g: c.g * a + 255 * (1 - a),
+        b: c.b * a + 255 * (1 - a)
+      };
+    };
+    const relLum = (c) => {
+      const lin = (v) => {
+        const s = v / 255;
+        return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+      };
+      return 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
+    };
+    const contrastRatio = (c1, c2) => {
+      const l1 = relLum(c1), l2 = relLum(c2);
+      return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    };
+    const resolveBgCandidates = (fillStr) => {
+      if (!fillStr || fillStr === 'none' || fillStr === 'transparent') return null;
+      const urlM = fillStr.match(/url\(\s*["']?#([^"')]+)["']?\s*\)/i);
+      if (urlM) {
+        const grad = document.getElementById(urlM[1]);
+        if (grad) {
+          const stops = Array.from(grad.querySelectorAll('stop'));
+          const cols = stops.map(st => {
+            const sc = window.getComputedStyle(st).stopColor || st.getAttribute('stop-color');
+            return parseColorStr(sc);
+          }).filter(Boolean).map(blendOnWhite);
+          if (cols.length > 0) return cols;
+        }
+        return null;
+      }
+      const parsed = parseColorStr(fillStr);
+      if (!parsed || parsed.a === 0) return null;
+      return [blendOnWhite(parsed)];
+    };
+
+    const contrastSeen = new Set();
+    texts.forEach(t => {
+      if (t.el.tagName && t.el.tagName.toLowerCase() === 'tspan') return;
+      const style = window.getComputedStyle(t.el);
+      if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity || '1') === 0) return;
+      const fgParsed = parseColorStr(style.fill);
+      if (!fgParsed || fgParsed.a === 0) return;
+      const fg = blendOnWhite(fgParsed);
+
+      const cx = (t.rect.left + t.rect.right) / 2;
+      const cy = (t.rect.top + t.rect.bottom) / 2;
+      const stack = document.elementsFromPoint(cx, cy);
+      const tIdx = stack.indexOf(t.el);
+      let bgCandidates = [{ r: 255, g: 255, b: 255 }];
+      if (tIdx !== -1) {
+        for (let i = tIdx + 1; i < stack.length; i++) {
+          const bgEl = stack[i];
+          const bTag = bgEl.tagName ? bgEl.tagName.toLowerCase() : '';
+          if (!['rect', 'circle', 'ellipse', 'polygon', 'path'].includes(bTag)) continue;
+          const bStyle = window.getComputedStyle(bgEl);
+          if (bStyle.display === 'none' || bStyle.visibility === 'hidden' || parseFloat(bStyle.opacity || '1') === 0 || parseFloat(bStyle.fillOpacity || '1') === 0) continue;
+          const cands = resolveBgCandidates(bStyle.fill);
+          if (cands) {
+            bgCandidates = cands;
+            break;
+          }
+        }
+      }
+
+      const fs = parseFloat(style.fontSize || '12');
+      const fw = parseInt(style.fontWeight || '400', 10) || (style.fontWeight === 'bold' ? 700 : 400);
+      const isLarge = fs >= 18.66 || (fs >= 14 && fw >= 700);
+      const minRatio = isLarge ? 3.0 : 4.5;
+      const worstRatio = Math.min(...bgCandidates.map(bg => contrastRatio(fg, bg)));
+      if (worstRatio < minRatio) {
+        const key = `${t.text.slice(0, 20)}_${worstRatio.toFixed(1)}`;
+        if (!contrastSeen.has(key)) {
+          contrastSeen.add(key);
+          issues.push({
+            type: 'LOW_TEXT_CONTRAST',
+            message: `Low contrast (${worstRatio.toFixed(2)}:1 < ${minRatio}:1) for text "${t.text.slice(0, 25)}"`
+          });
+        }
       }
     });
 

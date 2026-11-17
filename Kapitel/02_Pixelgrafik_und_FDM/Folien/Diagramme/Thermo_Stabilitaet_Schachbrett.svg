@@ -45,18 +45,18 @@
       .sem-info { fill: url(#grad-sem-info); stroke: #0284c7; }
       .sem-info-bg { fill: url(#grad-sem-info); stroke: none; }
       .sem-info-stroke { stroke: #0284c7; }
-      .sem-info-fill { fill: #0284c7; }
-      .sem-info-text { fill: #0369a1; }
+      .sem-info-fill { fill: #0369a1; }
+      .sem-info-text { fill: #075985; }
       .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
       .sem-success-stroke { stroke: #16a34a; }
-      .sem-success-fill { fill: #16a34a; }
-      .sem-success-text { fill: #15803d; }
+      .sem-success-fill { fill: #15803d; }
+      .sem-success-text { fill: #166534; }
       .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
       .sem-warning-stroke { stroke: #d97706; }
-      .sem-warning-fill { fill: #d97706; }
-      .sem-warning-text { fill: #b45309; }
+      .sem-warning-fill { fill: #b45309; }
+      .sem-warning-text { fill: #92400e; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
       .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
       .sem-danger-stroke { stroke: #dc2626; }
@@ -70,8 +70,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
       .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }
@@ -91,7 +91,6 @@
   </defs>
 
   <!-- Background -->
-  <rect class="sem-card" width="1000" height="520" rx="12" stroke-width="1.5" />
 
   <!-- Header -->
   <text x="35" y="36" class="title sem-primary-text">Von-Neumann-Stabilität: Warum explodiert das Gitter ab s &gt; 0,25?</text>
@@ -154,11 +153,11 @@
       <rect class="sem-info-fill" x="150" y="12" width="60" height="28" />
       <rect class="sem-primary-fill" x="225" y="16" width="60" height="24" />
       <rect class="sem-primary-fill" x="300" y="18" width="60" height="22" />
-      <text x="30" y="33" class="label-bold sem-neutral-text" style="text-anchor: middle;">+4°</text>
+      <text x="30" y="33" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+4°</text>
       <text x="105" y="32" class="label-bold sem-neutral-text" style="fill: #ffffff; text-anchor: middle;">+8°</text>
       <text x="180" y="30" class="label-bold sem-neutral-text" style="fill: #ffffff; text-anchor: middle;">+20°</text>
       <text x="255" y="32" class="label-bold sem-neutral-text" style="fill: #ffffff; text-anchor: middle;">+8°</text>
-      <text x="330" y="33" class="label-bold sem-neutral-text" style="text-anchor: middle;">+4°</text>
+      <text x="330" y="33" class="label-bold" style="fill: #ffffff; text-anchor: middle;">+4°</text>
     </g>
 
     <!-- Conclusion Left -->

@@ -41,18 +41,18 @@
       .sem-info { fill: url(#grad-sem-info); stroke: #0284c7; }
       .sem-info-bg { fill: url(#grad-sem-info); stroke: none; }
       .sem-info-stroke { stroke: #0284c7; }
-      .sem-info-fill { fill: #0284c7; }
-      .sem-info-text { fill: #0369a1; }
+      .sem-info-fill { fill: #0369a1; }
+      .sem-info-text { fill: #075985; }
       .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
       .sem-success-stroke { stroke: #16a34a; }
-      .sem-success-fill { fill: #16a34a; }
-      .sem-success-text { fill: #15803d; }
+      .sem-success-fill { fill: #15803d; }
+      .sem-success-text { fill: #166534; }
       .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
       .sem-warning-stroke { stroke: #d97706; }
-      .sem-warning-fill { fill: #d97706; }
-      .sem-warning-text { fill: #b45309; }
+      .sem-warning-fill { fill: #b45309; }
+      .sem-warning-text { fill: #92400e; }
       .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
       .sem-card-bg { fill: url(#grad-sem-card); stroke: none; }
       .sem-card-stroke { stroke: #cbd5e1; }
@@ -61,8 +61,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
       .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }
@@ -77,7 +77,6 @@
     </style>
   </defs>
 
-  <rect class="sem-card" width="270" height="420" rx="10" stroke-width="1.5" />
   <text x="135" y="24" class="hdr sem-primary-text">Bounding Box &amp; Offsets</text>
   <text x="135" y="42" class="sub sem-muted-text">Vom Extremwert zur Zeichenfläche</text>
 

@@ -45,13 +45,13 @@
       .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
       .sem-success-stroke { stroke: #16a34a; }
-      .sem-success-fill { fill: #16a34a; }
-      .sem-success-text { fill: #15803d; }
+      .sem-success-fill { fill: #15803d; }
+      .sem-success-text { fill: #166534; }
       .sem-warning { fill: url(#grad-sem-warning); stroke: #d97706; }
       .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
       .sem-warning-stroke { stroke: #d97706; }
-      .sem-warning-fill { fill: #d97706; }
-      .sem-warning-text { fill: #b45309; }
+      .sem-warning-fill { fill: #b45309; }
+      .sem-warning-text { fill: #92400e; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
       .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
       .sem-danger-stroke { stroke: #dc2626; }
@@ -70,8 +70,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
       .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
       .sem-neutral-stroke { stroke: #334155; }
@@ -90,7 +90,6 @@
     </marker>
   </defs>
 
-  <rect class="sem-card" x="10" y="8" width="1060" height="434" rx="12" stroke-width="2" />
 
   <!-- ====================================================================== -->
   <!-- LINKS: Orthogonale Projektion (gl.Ortho)                               -->
@@ -129,7 +128,7 @@
   <text x="63" y="216" class="code sem-warning-text">h1=h2</text>
 
   <!-- Rechts daneben: Resultierendes 2D-Bild (NDC [-1, +1]) -->
-  <rect class="sem-neutral-fill sem-muted-stroke" x="368" y="126" width="142" height="180" rx="6" stroke-width="2" />
+  <rect class="sem-card sem-muted-stroke" x="368" y="126" width="142" height="180" rx="6" stroke-width="2" />
   <line class="sem-neutral-stroke" x1="386" y1="278" x2="386" y2="144" stroke-width="1.5" />
   <line class="sem-neutral-stroke" x1="492" y1="278" x2="492" y2="144" stroke-width="1.5" />
   <polygon class="sem-primary-fill sem-primary-stroke" points="434,154 486,154 486,206 434,206" stroke-width="1.8" />
@@ -184,7 +183,7 @@
   <line class="sem-warning-stroke" x1="665" y1="197" x2="665" y2="215" stroke-width="6" stroke-linecap="round" />
 
   <!-- Rechts daneben: Resultierendes 2D-Bild (NDC [-1, +1]) -->
-  <rect class="sem-neutral-fill sem-muted-stroke" x="896" y="126" width="142" height="180" rx="6" stroke-width="2" />
+  <rect class="sem-card sem-muted-stroke" x="896" y="126" width="142" height="180" rx="6" stroke-width="2" />
   <line class="sem-neutral-stroke" x1="908" y1="278" x2="967" y2="148" stroke-width="1.5" />
   <line class="sem-neutral-stroke" x1="1026" y1="278" x2="967" y2="148" stroke-width="1.5" />
   <polygon class="sem-accent-fill sem-accent-stroke" points="972,164 998,164 998,190 972,190" stroke-width="1.8" />

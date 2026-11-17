@@ -37,13 +37,13 @@
       .sem-info { fill: url(#grad-sem-info); stroke: #0284c7; }
       .sem-info-bg { fill: url(#grad-sem-info); stroke: none; }
       .sem-info-stroke { stroke: #0284c7; }
-      .sem-info-fill { fill: #0284c7; }
-      .sem-info-text { fill: #0369a1; }
+      .sem-info-fill { fill: #0369a1; }
+      .sem-info-text { fill: #075985; }
       .sem-success { fill: url(#grad-sem-success); stroke: #16a34a; }
       .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
       .sem-success-stroke { stroke: #16a34a; }
-      .sem-success-fill { fill: #16a34a; }
-      .sem-success-text { fill: #15803d; }
+      .sem-success-fill { fill: #15803d; }
+      .sem-success-text { fill: #166534; }
       .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
       .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
       .sem-danger-stroke { stroke: #dc2626; }
@@ -57,8 +57,8 @@
       .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
       .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
       .sem-muted-stroke { stroke: #94a3b8; }
-      .sem-muted-fill { fill: #94a3b8; }
-      .sem-muted-text { fill: #475569; }
+      .sem-muted-fill { fill: #475569; }
+      .sem-muted-text { fill: #334155; }
       /* @svg-palette:end */
 .hdr { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold;  text-anchor: middle; }
       .sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px;  text-anchor: middle; }
@@ -67,36 +67,35 @@
     </style>
   </defs>
 
-  <rect class="sem-card" width="260" height="420" rx="10" stroke-width="1.5" />
   <text x="130" y="24" class="hdr sem-primary-text">32-Bit Pixel (Bgra32)</text>
   <text x="130" y="42" class="sub sem-muted-text">4 Kanäle in 1 uint (4 Bytes)</text>
 
   <!-- Byte 3: Alpha -->
   <g transform="translate(20, 56)">
     <rect class="sem-muted-fill" width="220" height="58" rx="6" />
-    <text x="110" y="22" class="lbl sem-card-text" >Byte 3: Alpha (Deckkraft)</text>
-    <text x="110" y="44" class="code sem-card-text" >Bits 24..31  (Alpha &lt;&lt; 24)</text>
+    <text x="110" y="22" class="lbl" style="fill: #ffffff;">Byte 3: Alpha (Deckkraft)</text>
+    <text x="110" y="44" class="code" style="fill: #ffffff;">Bits 24..31  (Alpha &lt;&lt; 24)</text>
   </g>
 
   <!-- Byte 2: Red -->
   <g transform="translate(20, 124)">
     <rect class="sem-danger-fill" width="220" height="58" rx="6" />
     <text x="110" y="22" class="lbl" style="fill: #ffffff;">Byte 2: Rot-Kanal (0..255)</text>
-    <text x="110" y="44" class="code sem-danger-text" >Bits 16..23  (Rot &lt;&lt; 16)</text>
+    <text x="110" y="44" class="code" style="fill: #ffffff;">Bits 16..23  (Rot &lt;&lt; 16)</text>
   </g>
 
   <!-- Byte 1: Green -->
   <g transform="translate(20, 192)">
     <rect class="sem-success-fill" width="220" height="58" rx="6" />
     <text x="110" y="22" class="lbl" style="fill: #ffffff;">Byte 1: Grün-Kanal (0..255)</text>
-    <text x="110" y="44" class="code sem-success-text" >Bits 8..15   (Grün &lt;&lt; 8)</text>
+    <text x="110" y="44" class="code" style="fill: #ffffff;">Bits 8..15   (Grün &lt;&lt; 8)</text>
   </g>
 
   <!-- Byte 0: Blue -->
   <g transform="translate(20, 260)">
     <rect class="sem-primary-fill" width="220" height="58" rx="6" />
     <text x="110" y="22" class="lbl" style="fill: #ffffff;">Byte 0: Blau-Kanal (0..255)</text>
-    <text x="110" y="44" class="code sem-primary-text" >Bits 0..7    (Blau &lt;&lt; 0)</text>
+    <text x="110" y="44" class="code" style="fill: #ffffff;">Bits 0..7    (Blau &lt;&lt; 0)</text>
   </g>
 
   <!-- Combined uint -->

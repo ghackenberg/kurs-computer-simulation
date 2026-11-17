@@ -695,7 +695,7 @@ Der Begriff wurde maßgeblich von **Dr. Michael Grieves** (University of Michiga
 2. Ein **virtuelles Produkt** im digitalen Raum (Geometrie, Physik & Logik).
 3. Eine bidirektionale **Datenverbindung** zwischen realer und virtueller Welt.
 
-> **Abgrenzung:** Ohne Datenaustausch bleibt es ein statisches *Digital Model*; bei rein unidirektionalem Live-Datenfluss (Physisch $\to$ Virtuell) spricht man vom *Digital Shadow* – erst der bidirektionale Rückkanal macht es zum **Digitalen Zwilling**.
+> **Abgrenzung:** Ohne Austausch bleibt es ein *Digital Model*; bei reinem Live-Zufluss (Physisch $\to$ Virtuell) ein *Digital Shadow* – erst der Rückkanal macht es zum **Digitalen Zwilling**.
 
 ---
 
