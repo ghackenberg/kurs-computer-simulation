@@ -97,18 +97,10 @@ Die Vorlage enthält bereits die Basisklasse `Transform2D`, das Dreieckstragwerk
 > Wählen Sie als 2er-Team für die Hausübung **entweder Track A (Industrie)** ODER **Track B (Simulation Game)**.  
 > Beide Tracks bauen direkt auf Ihrem Ergebnis aus Stufe 1 (`VectorTrussCanvas.sln`) auf, haben exakt denselben Umfang (4 Arbeitspakete) und führen zur Höchstpunktzahl (10 Punkte).
 
-```
-                    ┌──────────────────────────────────────────────┐
-                    │ WÄHLEN SIE GENAU EINEN DER BEIDEN TRACKS:    │
-                    └──────────────────────┬───────────────────────┘
-                                           │
-                 ┌─────────────────────────┴─────────────────────────┐
-                 ▼                                                   ▼
-┌─────────────────────────────────┐                 ┌─────────────────────────────────┐
-│  Track A: Industrie & CAD       │                 │  Track B: Simulation Game       │
-│  2D-CAD Tragwerks-Inspektor mit │                 │  Poly Bridge Blueprint-         │
-│  DIN 406, Last-Editor & Zoom    │                 │  Baumeister (Snap, Budget, JSON)│
-└─────────────────────────────────┘                 └─────────────────────────────────┘
+```mermaid
+flowchart TD
+    Choice["Wählen Sie genau einen der beiden Tracks"] --> A["Track A (Industrie)<br/>Interaktiver 2D-CAD Tragwerks-Inspektor & Last-Editor"]
+    Choice --> B["Track B (Simulation Game)<br/>„Poly Bridge“ Blueprint-Baumeister"]
 ```
 
 

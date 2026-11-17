@@ -104,18 +104,10 @@ $$I_f = k_a I_{La} + k_d I_{Ld} \max(0, \vec{n} \cdot \vec{l}) + k_s I_{Ls} \lef
 > Wählen Sie als 2er-Team für die Hausübung **entweder Track A (Industrie)** ODER **Track B (Simulation Game)**.  
 > Beide Tracks basieren auf dem hierarchischen SharpGL-Szenengraphen, Transformationsmatrizen und 3D-Interaktion und führen zur Höchstpunktzahl (10 Punkte).
 
-```
-                    ┌──────────────────────────────────────────────┐
-                    │ WÄHLEN SIE GENAU EINEN DER BEIDEN TRACKS:    │
-                    └──────────────────────┬───────────────────────┘
-                                           │
-                 ┌─────────────────────────┴─────────────────────────┐
-                 ▼                                                   ▼
-┌─────────────────────────────────┐                 ┌─────────────────────────────────┐
-│  Track A: Industrie & Mechatronik│                 │   Track B: Simulation Game      │
-│  4-Achs-SCARA mit Parallelgreifer│                 │   3D Arcade Claw Crane          │
-│  Teach-In & Pick-and-Place      │                 │   Jahrmarkt-Greifarm-Simulator  │
-└─────────────────────────────────┘                 └─────────────────────────────────┘
+```mermaid
+flowchart TD
+    Choice["Wählen Sie genau einen der beiden Tracks"] --> A["Track A (Industrie)<br/>Ausbau zum 4-Achs-SCARA mit Parallelgreifer, Teach-In & Pick-and-Place"]
+    Choice --> B["Track B (Simulation Game)<br/>3D Arcade Claw Crane (Jahrmarkt-Greifarm)"]
 ```
 
 

@@ -81,18 +81,10 @@ Die Vorlage enthält bereits die Klassen `CircularBuffer<T>` und `WelfordStatist
 > Wählen Sie als 2er-Team für die Hausübung **entweder Track A (Industrie)** ODER **Track B (Simulation Game)**.  
 > Beide Tracks bauen direkt auf Ihrem Ergebnis aus Stufe 1 (`ScottPlotTelemetry.sln`) auf, nutzen ScottPlot 5, Multikanal-Streaming, Welford-Statistik sowie MSAGL-Graphen und führen zur Höchstpunktzahl (10 Punkte).
 
-```
-                    ┌──────────────────────────────────────────────┐
-                    │ WÄHLEN SIE GENAU EINEN DER BEIDEN TRACKS:    │
-                    └──────────────────────┬───────────────────────┘
-                                           │
-                 ┌─────────────────────────┴─────────────────────────┐
-                 ▼                                                   ▼
-┌─────────────────────────────────┐                 ┌─────────────────────────────────┐
-│  Track A: Industrie & Mechatronik│                 │   Track B: Simulation Game      │
-│  Industrieller Antriebsprüfstand│                 │   Retro Arcade Racing HUD       │
-│  & Schwingungsüberwachung       │                 │   G-Kräfte, Speed & Streckengraph│
-└─────────────────────────────────┘                 └─────────────────────────────────┘
+```mermaid
+flowchart TD
+    Choice["Wählen Sie genau einen der beiden Tracks"] --> A["Track A (Industrie)<br/>Industrieller Antriebsprüfstand & Schwingungs-Leitstand"]
+    Choice --> B["Track B (Simulation Game)<br/>Retro Arcade Racing HUD & G-Force Telemetrie"]
 ```
 
 

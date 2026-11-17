@@ -103,18 +103,10 @@ Die Vorlage enthält bereits ein lauffähiges $128 \times 128$ Basis-Gitter (`fl
 > Wählen Sie als 2er-Team für die Hausübung **entweder Track A (Industrie)** ODER **Track B (Simulation Game)**.  
 > Beide Tracks basieren auf der 2D-Gitterdiskretisierung und performantem Pixel-Rendering mit `WriteableBitmap` und führen zur Höchstpunktzahl (10 Punkte).
 
-```
-                    ┌──────────────────────────────────────────────┐
-                    │ WÄHLEN SIE GENAU EINEN DER BEIDEN TRACKS:    │
-                    └──────────────────────┬───────────────────────┘
-                                           │
-                 ┌─────────────────────────┴─────────────────────────┐
-                 ▼                                                   ▼
-┌─────────────────────────────────┐                 ┌─────────────────────────────────┐
-│  Track A: Industrie & Mechatronik│                 │   Track B: Simulation Game      │
-│  Gamer-PC & Server-Blade        │                 │   Falling Sand & Doom Fire /    │
-│  Kühlkörper-Optimizer (Robin)   │                 │   Lava-Diffusions-Simulator     │
-└─────────────────────────────────┘                 └─────────────────────────────────┘
+```mermaid
+flowchart TD
+    Choice["Wählen Sie genau einen der beiden Tracks"] --> A["Track A (Industrie)<br/>Gamer-PC & Server-Blade Kühlkörper-Optimizer"]
+    Choice --> B["Track B (Simulation Game)<br/>Falling Sand & Doom Fire / Lava-Simulator"]
 ```
 
 

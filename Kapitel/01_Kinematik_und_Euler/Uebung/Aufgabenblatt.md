@@ -91,18 +91,10 @@ $$\tau = \frac{0 - y_k}{y_{k+1} - y_k} \in [0, 1] \implies t^* = t_k + \tau \cdo
 > Wählen Sie als 2er-Team für die Hausübung **entweder Track A (Industrie)** ODER **Track B (Simulation Game)**.  
 > Beide Tracks basieren auf denselben mathematischen Integrationsprinzipien (Euler vs. Heun, nichtlineare Dämpfung/Widerstand, Ereignisprüfung) und werden nach denselben Qualitätskriterien mit maximal 10 Punkten bewertet.
 
-```
-                    ┌──────────────────────────────────────────────┐
-                    │ WÄHLEN SIE GENAU EINEN DER BEIDEN TRACKS:    │
-                    └──────────────────────┬───────────────────────┘
-                                           │
-                 ┌─────────────────────────┴─────────────────────────┐
-                 ▼                                                   ▼
-┌─────────────────────────────────┐                 ┌─────────────────────────────────┐
-│  Track A: Industrie & Mechatronik│                 │   Track B: Simulation Game      │
-│  Hydraulikzylinder-Dämpfung mit │                 │   Artillery Strike / Retro Tank │
-│  viskoser & Blenden-Reibung     │                 │   mit Newton-Drag & Windböen    │
-└─────────────────────────────────┘                 └─────────────────────────────────┘
+```mermaid
+flowchart TD
+    Choice["Wählen Sie genau einen der beiden Tracks"] --> A["Track A (Industrie)<br/>Hydraulikzylinder-Endlagendämpfung & Parameterstudie"]
+    Choice --> B["Track B (Simulation Game)<br/>Retro Artillery Duel mit Newton-Luftwiderstand & Windböen"]
 ```
 
 

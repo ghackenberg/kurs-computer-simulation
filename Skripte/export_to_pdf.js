@@ -38,6 +38,10 @@ const puppeteer = requireLocalOrGlobal('puppeteer');
 const marked = requireLocalOrGlobal('marked');
 const katex = requireLocalOrGlobal('katex');
 const hljs = requireLocalOrGlobal('highlight.js');
+let MERMAID_JS_PATH = null;
+try {
+  MERMAID_JS_PATH = require.resolve('mermaid/dist/mermaid.min.js', { paths: [ROOT_DIR, GLOBAL_NODE_MODULES, GLOBAL_MERMAID_MODULES] });
+} catch (e) {}
 
 const CHROME_PATHS = [
   'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -347,6 +351,10 @@ function renderAufgabenblattToHtml(mdContent, terminTitle) {
   renderer.code = function(tokenOrCode, lang) {
     let code = typeof tokenOrCode === 'object' ? tokenOrCode.text : tokenOrCode;
     let language = (typeof tokenOrCode === 'object' ? tokenOrCode.lang : lang) || '';
+    if (language.toLowerCase() === 'mermaid') {
+      const escaped = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return `<div class="mermaid">${escaped}</div>`;
+    }
     let highlighted = '';
     if (language && hljs.getLanguage(language)) {
       try {
@@ -610,6 +618,14 @@ function buildExerciseDocument(renderedBody, terminTitle) {
       font-size: 1.05em;
     }
 
+    .mermaid {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0 12px 0;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
     a {
       color: #0969da;
       text-decoration: none;
@@ -677,6 +693,24 @@ async function exportAllExercises(browser, filterTermin = null) {
       fs.writeFileSync(tmpHtml, fullHtml, 'utf8');
 
       await page.goto('file:///' + tmpHtml.replace(/\\/g, '/'), { waitUntil: 'networkidle0' });
+
+      if (fullHtml.includes('class="mermaid"') && MERMAID_JS_PATH) {
+        await page.addScriptTag({ path: MERMAID_JS_PATH });
+        await page.evaluate(async () => {
+          mermaid.initialize({
+            startOnLoad: false,
+            theme: 'base',
+            themeVariables: {
+              primaryColor: '#eff6ff',
+              primaryBorderColor: '#2563eb',
+              primaryTextColor: '#0f172a',
+              lineColor: '#475569',
+              fontFamily: 'Segoe UI, Arial, sans-serif'
+            }
+          });
+          await mermaid.run();
+        });
+      }
 
       await page.pdf({
         path: exportPdfNamed,
