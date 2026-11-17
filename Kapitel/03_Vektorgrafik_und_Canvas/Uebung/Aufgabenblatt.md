@@ -99,8 +99,11 @@ Die Vorlage enthält bereits die Basisklasse `Transform2D`, das Dreieckstragwerk
 
 ```mermaid
 flowchart TD
-    Choice["Wählen Sie genau einen der beiden Tracks"] --> A["Track A (Industrie)<br/>Interaktiver 2D-CAD Tragwerks-Inspektor & Last-Editor"]
-    Choice --> B["Track B (Simulation Game)<br/>„Poly Bridge“ Blueprint-Baumeister"]
+    Choice(["<b>Wählen Sie genau einen Track</b><br/><i>Stufe 2 · Wahlmodell</i>"]) -->|Industrie-Fokus| A["<b>Track A: Industrie</b><br/><i>Interaktiver 2D-CAD Tragwerks-Inspektor & Last-Editor</i>"]
+    Choice -->|Game-Fokus| B["<b>Track B: Simulation Game</b><br/><i>„Poly Bridge“ Blueprint-Baumeister</i>"]
+    style Choice fill:#f8fafc,stroke:#475569,stroke-width:2px,color:#0f172a
+    style A fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style B fill:#f0fdf4,stroke:#15803d,stroke-width:2px,color:#14532d
 ```
 
 
