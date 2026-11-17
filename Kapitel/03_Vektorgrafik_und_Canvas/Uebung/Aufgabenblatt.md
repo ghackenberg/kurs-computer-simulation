@@ -3,11 +3,13 @@
 **Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
-**Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
-- **Stufe 1 (Basisaufgabe, ca. 60 Min.):** `Transform2D`, `TrussGeometry`, DIN-406-Bemaßung & Jitter-Fix auf `VectorTrussCanvas.sln` (`1.1`–`1.4`)
-- **Stufe 2 (Vertiefungsaufgabe, ca. 3–4 h – Wahl: Track A ODER Track B):**
-  - **Track A (Industrie):** Interaktiver 2D-CAD Tragwerks-Inspektor & Last-Editor
-  - **Track B (Simulation Game):** „Poly Bridge“ Blueprint-Baumeister
+**Bearbeitungsform:** Zweistufige Hausübung im 2er-Team (1 Woche)
+
+| Stufe | Richtwert | Thema / Inhalt |
+| :--- | :--- | :--- |
+| **Stufe 1 (Basisaufgabe)** | ca. 60 Min. | `Transform2D`, `TrussGeometry`, DIN-406-Bemaßung & Jitter-Fix auf `VectorTrussCanvas.sln` (`1.1`–`1.4`) |
+| **Stufe 2 – Track A (Industrie)** | ca. 3–4 h *(Wahl)* | Interaktiver 2D-CAD Tragwerks-Inspektor & Last-Editor |
+| **Stufe 2 – Track B (Simulation Game)** | ca. 3–4 h *(Wahl)* | „Poly Bridge“ Blueprint-Baumeister |
 
 > [!IMPORTANT]
 > **Technische Rahmenbedingungen**

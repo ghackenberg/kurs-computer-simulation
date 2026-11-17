@@ -3,11 +3,13 @@
 **Lehrveranstaltung:** Systemsimulation / Digitaler Zwilling  
 **Studiengang:** B.Sc. Automatisierungstechnik, 5. Semester  
 **Institution:** Fachhochschule Oberösterreich – Campus Wels  
-**Bearbeitungsform:** Zweistufige Hausübung im festen 2er-Team (1 Woche):
-- **Stufe 1 (Basisaufgabe, ca. 60 Min.):** `Task.Run`, `IProgress<T>`, `CancellationTokenSource` & Amdahl-Skalierung auf `MultithreadingBenchmark.sln` (`1.1`–`1.4`)
-- **Stufe 2 (Vertiefungsaufgabe, ca. 3–4 h – Wahl: Track A ODER Track B):**
-  - **Track A (Industrie):** Parallele Monte-Carlo-Toleranzanalyse für Baugruppen-Passungen
-  - **Track B (Simulation Game):** Interaktive 2D-Schwarm- & Zombie-Horden-Simulation in WPF
+**Bearbeitungsform:** Zweistufige Hausübung im 2er-Team (1 Woche)
+
+| Stufe | Richtwert | Thema / Inhalt |
+| :--- | :--- | :--- |
+| **Stufe 1 (Basisaufgabe)** | ca. 60 Min. | `Task.Run`, `IProgress<T>`, `CancellationTokenSource` & Amdahl-Skalierung auf `MultithreadingBenchmark.sln` (`1.1`–`1.4`) |
+| **Stufe 2 – Track A (Industrie)** | ca. 3–4 h *(Wahl)* | Parallele Monte-Carlo-Toleranzanalyse für Baugruppen-Passungen |
+| **Stufe 2 – Track B (Simulation Game)** | ca. 3–4 h *(Wahl)* | Interaktive 2D-Schwarm- & Zombie-Horden-Simulation in WPF |
 
 > [!IMPORTANT]
 > **Technische Rahmenbedingungen**

@@ -241,11 +241,11 @@ function lintChapter(dirName) {
   // Check Header Block before first H2
   const firstH2Idx = mdNoCode.search(/^##\s+/m);
   const headerBlock = firstH2Idx > 0 ? mdNoCode.slice(0, firstH2Idx) : mdNoCode;
-  if (!/\*\*Bearbeitungsform:\*\*/.test(headerBlock) || !/\*\*Stufe 1 \(Basisaufgabe/.test(headerBlock) || !/\*\*Stufe 2 \(Vertiefungsaufgabe/.test(headerBlock) || !/\*\*Track A \(Industrie\):\*\*/.test(headerBlock) || !/\*\*Track B \(Simulation Game\):\*\*/.test(headerBlock)) {
-    issues.push({ type: 'MISSING_HEADER_META', file: relMd, message: 'Metadaten-Kopfblock muss **Bearbeitungsform:**, **Stufe 1 (Basisaufgabe...):**, **Stufe 2 (Vertiefungsaufgabe...):** sowie **Track A (Industrie):** und **Track B (Simulation Game):** enthalten.' });
+  if (!/\*\*Bearbeitungsform:\*\*/.test(headerBlock) || !/\*\*Stufe 1 \(Basisaufgabe\)\*\*/.test(headerBlock) || !/\*\*Stufe 2 – Track A \(Industrie\)\*\*/.test(headerBlock) || !/\*\*Stufe 2 – Track B \(Simulation Game\)\*\*/.test(headerBlock)) {
+    issues.push({ type: 'MISSING_HEADER_META', file: relMd, message: 'Metadaten-Kopfblock muss **Bearbeitungsform:** sowie die Übersichtstabelle mit **Stufe 1 (Basisaufgabe)**, **Stufe 2 – Track A (Industrie)** und **Stufe 2 – Track B (Simulation Game)** enthalten.' });
   }
-  const hdrTrackA = (headerBlock.match(/\*\*Track A \(Industrie\):\*\*\s*(.+)/) || [])[1]?.trim();
-  const hdrTrackB = (headerBlock.match(/\*\*Track B \(Simulation Game\):\*\*\s*(.+)/) || [])[1]?.trim();
+  const hdrTrackA = (headerBlock.match(/\|\s*\*\*Stufe 2 – Track A \(Industrie\)\*\*\s*\|[^|]+\|\s*([^|\r\n]+?)\s*\|/) || [])[1]?.trim();
+  const hdrTrackB = (headerBlock.match(/\|\s*\*\*Stufe 2 – Track B \(Simulation Game\)\*\*\s*\|[^|]+\|\s*([^|\r\n]+?)\s*\|/) || [])[1]?.trim();
   const secTrackA = (mdNoCode.match(/^### Track A \(Industrie\):\s*(.+)$/m) || [])[1]?.trim();
   const secTrackB = (mdNoCode.match(/^### Track B \(Simulation Game\):\s*(.+)$/m) || [])[1]?.trim();
   if (hdrTrackA && secTrackA && hdrTrackA !== secTrackA) {
