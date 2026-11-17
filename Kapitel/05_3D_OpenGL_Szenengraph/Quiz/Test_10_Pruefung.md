@@ -68,36 +68,30 @@ Welchen numerischen Wert (als Dezimalzahl) erhält `nx`?
 
 ---
 
-## Frage 4 [Q02_T10_Q4]: C#-Code-Lückentext: Box-Whisker-Plot-Element in ScottPlot 5 konfigurieren *(gapselect, 1.0 Pkt.)*
+## Frage 4 [Q02_T10_Q4]: C#-Code-Lückentext: Äquidistantes Zeitsignal in ScottPlot 5 konfigurieren *(gapselect, 1.0 Pkt.)*
 
-Vervollständigen Sie den C#-Code zum Anlegen einer einzelnen Box (Median `50`, Quartile `40` und `60`, Antennen `25` bis `85`) für einen **ScottPlot 5** Box-Whisker-Plot:
+Vervollständigen Sie den C#-Code, um eine äquidistante Messreihe `ys` ($1\,\text{kHz}$, Start bei $t_0 = 5{,}0\,\text{s}$) speichersparend ohne X-Array in **ScottPlot 5** darzustellen:
 
 ```csharp
-var box = new ScottPlot.Box {
-    Position = 1,
-    BoxMin = [[1]],
-    BoxMax = [[2]],
-    BoxMiddle = 50,
-    WhiskerMin = 25,
-    WhiskerMax = 85
-};
-MainPlot.Plot.Add.[[3]](new[] { box });
+var sig = MainPlot.Plot.Add.[[1]](ys);
+sig.Data.[[2]] = 0.001; // Abtastintervall 1 ms
+sig.Data.[[3]] = 5.0;   // Startzeitpunkt t0
 ```
 
 **Dropdown-Optionen (`gapselect`):**
-* `[[1]]` (Gruppe 1): `40`
-* `[[2]]` (Gruppe 2): `60`
-* `[[3]]` (Gruppe 3): `Boxes`
-* `[[4]]` (Gruppe 1): `25`
-* `[[5]]` (Gruppe 1): `85`
-* `[[6]]` (Gruppe 2): `40`
-* `[[7]]` (Gruppe 2): `25`
-* `[[8]]` (Gruppe 3): `DataStreamer`
-* `[[9]]` (Gruppe 3): `Signal`
+* `[[1]]` (Gruppe 1): `Signal`
+* `[[2]]` (Gruppe 2): `Period`
+* `[[3]]` (Gruppe 3): `XOffset`
+* `[[4]]` (Gruppe 1): `Scatter`
+* `[[5]]` (Gruppe 1): `DataStreamer`
+* `[[6]]` (Gruppe 2): `XOffset`
+* `[[7]]` (Gruppe 2): `Capacity`
+* `[[8]]` (Gruppe 3): `Period`
+* `[[9]]` (Gruppe 3): `LineWidth`
 
 **Musterherleitung & Gesamt-Feedback:**
 
-**Erklärung:** In `ScottPlot.Box` definieren `BoxMin` und `BoxMax` das 25-%-Quartil ($Q_1 = 40$) und das 75-%-Quartil ($Q_3 = 60$), `BoxMiddle` den Median (`50`) und `WhiskerMin/Max` die Antennenenden. Hinzugefügt wird die Liste über `Plot.Add.Boxes(...)`.
+**Erklärung:** `Plot.Add.Signal(ys)` rendert äquidistante Y-Daten ohne eigenes X-Array; `sig.Data.Period` setzt das konstante Abtastintervall ($\Delta t = 0{,}001\,\text{s}$) und `sig.Data.XOffset` den Startzeitpunkt ($t_0 = 5{,}0\,\text{s}$).
 
 ---
 

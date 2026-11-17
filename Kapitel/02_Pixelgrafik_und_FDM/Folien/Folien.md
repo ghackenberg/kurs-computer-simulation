@@ -791,7 +791,7 @@ Bearbeite die folgenden drei Fragen kurz mit deinem Nachbarn:
 
 - **1. Dirichlet (Feste Wand):** $T_{\text{Rand}} = \text{const.}$ (äußere Pixel auslassen).
 - **2. Neumann (Isolator, $\dot{q}=0$):** Rand spiegelt Nachbar (`tNeighbor = tCenter`).
-- **3. Robin (Konvektion):** Gewichtetes Mittel aus Metall ($\lambda$) & Luft ($h \cdot \Delta x$, siehe Anhang).
+- **3. Robin (Konvektion):** $T_{0,y} = \frac{\lambda \cdot T_{1,y} + (h \cdot \Delta x) \cdot T_\infty}{\lambda + h \cdot \Delta x}$ (Metall $\lambda$, Luft $h \cdot \Delta x$; Herleitung siehe [Anhang A](./Folien_Anhang_A_Waermeleitung_FDM.md)).
 - **Innere Isolator-Wände (`_alphaMap == 0f`):** Ohne Spiegelung fließt ΔT fälschlich in die kalte Wand (**Kühlakku-Falle**)!
   ```csharp
   float tRight = _alphaMap[x + 1, y] == 0f ? tCenter : _tCurrent[x + 1, y];

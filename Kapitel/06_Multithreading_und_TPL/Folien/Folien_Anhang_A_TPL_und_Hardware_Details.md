@@ -2,11 +2,15 @@
 marp: true
 theme: fhooe
 paginate: true
+math: mathjax
 header: 'Kapitel 6 (Anhang A): TPL-Interna & Hardware-Effizienz'
-footer: 'Prof. Dr. Georg Hackenberg | Systemsimulation / Digitaler Zwilling'
+footer: 'Dr. Georg Hackenberg, Professor für Informatik und Industriesysteme'
 ---
 
 <!-- _class: title -->
+<!-- _paginate: false -->
+<!-- _header: "" -->
+<!-- _footer: "" -->
 ![bg](./Titelbild.jpg)
 
 # Kapitel 6 (Anhang A): TPL-Interna & Hardware-Effizienz

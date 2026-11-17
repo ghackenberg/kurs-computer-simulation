@@ -201,5 +201,10 @@ namespace MultithreadingBenchmark
             ScalingGrid.ItemsSource = results;
             TxtStatus.Text = $"Skalierungsreihe für {results.Count} Thread-Stufen abgeschlossen.";
         }
+
+        // TODO [Stufe 2 - Track A / Track B]:
+        // Track A (Thread-lokale Reduktion & False-Sharing-Elimination) oder
+        // Track B (Parallel.ForEach mit Range-Partitioner & Thread-lokalem Random)
+        // gemäß Aufgabenblatt 06 in der Architektur ergänzen und benchmarken.
     }
 }

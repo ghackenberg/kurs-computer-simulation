@@ -44,27 +44,26 @@ Berechnen Sie die erwartungstreue empirische Stichprobenvarianz $s^2$ (in $\text
 
 ---
 
-## Frage 3 [Q02_T04_Q3]: C#-Code-Tracing: Box-Whisker-Plot Interquartilsabstand (IQR) und oberes Whisker-Limit *(numerical, 1.5 Pkt.)*
+## Frage 3 [Q02_T04_Q3]: C#-Code-Tracing: Zeitachse bei `Signal` über `XOffset` und `Period` *(numerical, 1.5 Pkt.)*
 
-Für einen Box-Whisker-Plot nach Tukey in ScottPlot 5 werden aus einem sortierten Array von Drehmoment-Messwerten (in $\text{Nm}$) das erste Quartil `q1` und das dritte Quartil `q3` bestimmt:
+Für eine äquidistante Messreihe mit `Add.Signal(ys)` in ScottPlot 5 werden Startzeitpunkt und Abtastschrittweite (in Sekunden) konfiguriert:
 
 ```csharp
-double q1 = 20.0;
-double median = 24.0;
-double q3 = 30.0;
-double iqr = q3 - q1;
-double upperWhiskerLimit = q3 + 1.5 * iqr;
+double xOffset = 2.0;   // Startzeit t0 in s
+double period = 0.005;  // Abtastintervall dt in s (200 Hz)
+int index = 400;        // Sample-Index im Array ys
+double timestamp = xOffset + index * period;
 ```
 
-Welchen numerischen Wert (in $\text{Nm}$) erhält `upperWhiskerLimit`?
+Welchen numerischen Wert (in $\text{s}$) erhält `timestamp`?
 
 **Automatische Bewertung & Teilpunkte (`numerical`):**
-* **Wert `45` (± `0.1`) → 100%:** Richtig! iqr = 30.0 - 20.0 = 10.0 Nm; upperWhiskerLimit = 30.0 + 1.5 * 10.0 = 45.0 Nm.
-* **Wert `39` (± `0.1`) → 50%:** Teilpunkte: Sie haben 1.5 * iqr auf den Median (24 + 15 = 39) statt auf das obere Quartil q3 = 30 addiert.
+* **Wert `4.0` (± `0.01`) → 100%:** Richtig! timestamp = 2.0 + 400 * 0.005 = 2.0 + 2.0 = 4.0 s.
+* **Wert `2.0` (± `0.01`) → 50%:** Teilpunkte: Sie haben die verstrichene Zeitspanne index * period = 2.0 s berechnet, aber den Startzeitpunkt xOffset = 2.0 s vergessen.
 
 **Musterherleitung & Gesamt-Feedback:**
 
-**Musterherleitung:** Der Interquartilsabstand beträgt $\text{IQR} = Q_3 - Q_1 = 30{,}0 - 20{,}0 = 10{,}0\,\text{Nm}$. Die obere Antennengrenze (Tukey-Fence) liegt bei $Q_3 + 1{,}5 \cdot \text{IQR} = 30{,}0 + 15{,}0 = 45{,}0\,\text{Nm}$.
+**Musterherleitung:** Bei `Add.Signal` berechnet sich die X-Koordinate in $\mathcal{O}(1)$ ohne separates X-Array als $t_i = \text{XOffset} + i \cdot \text{Period} = 2{,}0 + 400 \cdot 0{,}005 = 4{,}0\,\text{s}$.
 
 ---
 

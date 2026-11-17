@@ -69,5 +69,9 @@ namespace MultithreadingBenchmark.Tests
             // Stellt sicher, dass Warmup ohne Exception durchläuft
             ParallelRunner.Warmup(particleCount: 500, steps: 1);
         }
+
+        // TODO [Stufe 1 - Aufgabe 1.4]:
+        // Ergänzen Sie hier den Unit-Test TestCustomAmdahlReference(), der ParallelRunner.AmdahlSpeedup(p: 4, s: 0.25)
+        // sowie die Umkehrfunktion EstimateSerialFraction(...) auf ±1e-6 gegen die Golden Reference (2.285714) prüft!
     }
 }

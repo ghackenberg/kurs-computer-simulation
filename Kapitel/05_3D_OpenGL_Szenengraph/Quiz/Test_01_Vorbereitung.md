@@ -109,13 +109,13 @@ Ordnen Sie den vier Visualisierungsaufgaben in **ScottPlot 5** jeweils den archi
 * Statisches Zeitreihen-Signal mit 1 Million äquidistant abgetasteten Messpunkten (konstantes dt) $\to$ **Add.Signal() – nutzt festes X-Intervall für schnelles Min/Max-Downsampling ohne X-Array**
 * Phasenraum-Trajektorie (x über v) mit unregelmäßigen Abständen und Schleifenbildung $\to$ **Add.Scatter() – speichert explizite (X, Y)-Koordinatenpaare für beliebige Kurvenverläufe**
 * Kontinuierlich einlaufendes Live-Sensorsignal in einem Oszilloskop-Fenster fester Breite $\to$ **Add.DataStreamer() – überschreibt Daten in einem Ringpuffer fester Größe (Wipe- oder Scroll-Modus)**
-* Statistische Verteilung mehrerer Versuchsreihen mit Median, Interquartilsabstand (IQR) und Whiskers $\to$ **Add.Boxes() – stellt 5-Punkte-Zusammenfassungen (Q1, Median, Q3, Antennen) dar**
+* Klassierte Häufigkeitsverteilung oder Gruppenvergleich diskreter Kategorien mit Balkenhöhen $\to$ **Add.Bars() – stellt diskrete Balkenwerte für Histogramme oder Gruppenvergleiche dar**
 * *(Überhang-Distraktor)* $\to$ Add.Pie() – erzeugt Kreissektoren für prozentuale Anteile ohne Zeitbezug
 * *(Überhang-Distraktor)* $\to$ Add.Heatmap() – rendert 2D-Skalarfelder als farbcodierte Pixelmatrix
 
 **Musterherleitung & Gesamt-Feedback:**
 
-**Lösung:** `Signal` ist auf äquidistante Daten optimiert, `Scatter` benötigt explizite X/Y-Paare, `DataStreamer` verwaltet Echtzeit-Ringpuffer und `Boxes` zeichnet Box-Whisker-Plots.
+**Lösung:** `Signal` ist auf äquidistante Daten optimiert, `Scatter` benötigt explizite X/Y-Paare, `DataStreamer` verwaltet Echtzeit-Ringpuffer und `Bars` zeichnet diskrete Balken für Verteilungen oder Gruppenvergleiche.
 
 ---
 

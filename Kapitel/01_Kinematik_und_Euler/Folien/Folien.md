@@ -521,11 +521,11 @@ Um DGLs 2. Ordnung im Code einheitlich zu lösen, überführen wir sie in ein Sy
 <div class="columns top">
 <div class="one">
 
-**1. Zustandsraum-Transformation:**
-Ort und Geschwindigkeit bilden zusammen den **Zustandsvektor $\mathbf{x}$** und seine Ableitung `dx`:
+**1. Zustandsraum:** Vektor $\mathbf{x}$ (`state`) & Beschleunigung `accel`:
 $$\mathbf{x} = \begin{pmatrix} x \\ y \\ v_x \\ v_y \end{pmatrix} \implies \dot{\mathbf{x}} = \mathbf{f}(t, \mathbf{x}) = \begin{pmatrix} v_x \\ v_y \\ F_{Rx}/m \\ -g + F_{Ry}/m \end{pmatrix}$$
 ```csharp
-var dx = new KinematicState(v_x, v_y, F_Rx / m, -g + F_Ry / m);
+var state = new KinematicState(t, x, y, v_x, v_y);
+var accel = (F_Rx / m, -g + F_Ry / m);
 ```
 
 </div>
@@ -533,12 +533,13 @@ var dx = new KinematicState(v_x, v_y, F_Rx / m, -g + F_Ry / m);
 
 **2. Heun-Verfahren (RK2, Ordnung $\mathcal{O}(\Delta t^2)$):**
 Mittelt Anfangssteigung $\mathbf{k}_1 = \mathbf{f}(t_k, \mathbf{x}_k)$ und Endsteigung $\mathbf{k}_2$:
-1. *Prädiktor:* $\tilde{\mathbf{x}}_{k+1} = \mathbf{x}_k + \Delta t \cdot \mathbf{k}_1$
+1. *Prädiktor (`pred`):* $\tilde{\mathbf{x}}_{k+1} = \mathbf{x}_k + \Delta t \cdot \mathbf{k}_1$
 2. *Steigung am Ziel:* $\mathbf{k}_2 = \mathbf{f}(t_k + \Delta t, \tilde{\mathbf{x}}_{k+1})$
 3. *Korrektor:* $\mathbf{x}_{k+1} = \mathbf{x}_k + \frac{\Delta t}{2}\left(\mathbf{k}_1 + \mathbf{k}_2\right)$
 
 ```csharp
-var x = x + 0.5 * dt * (k1 + k2);
+// Prädiktor-Zustand über Euler-Schritt (dt)
+var pred = StepEuler(state, dt, _ => accel);
 ```
 
 </div>
@@ -558,19 +559,23 @@ Fällt $y_{k+1} < 0$ unter den Boden, liefert $\tau \in [0, 1]$ den exakten Auft
 $$\tau = \frac{0 - y_k}{y_{k+1} - y_k}, \qquad t_{\text{impact}} = t_k + \tau \Delta t$$
 $$x_{\text{impact}} = x_k + \tau (x_{k+1} - x_k)$$
 
-- **`StepHeun`:** Berechnet Anfangssteigung `k1`, Prädiktor `pred` sowie Endsteigung `k2` und mittelt beide.
+- **`StepHeun`:** Berechnet aus `state` über `accel` die Anfangssteigung `(ax1, ay1)`, den Prädiktor `pred` (`StepEuler`) sowie die Endsteigung `(ax2, ay2)` und mittelt über `CombineHeun`.
 
 </div>
 <div class="one">
 
 ```csharp
 public static KinematicState StepHeun(
-    KinematicState state, double dt)
+    KinematicState state, double dt,
+    Func<KinematicState, (double ax, double ay)> accel)
 {
-    var k1 = ComputeDerivative(state);
-    var pred = state + dt * k1;
-    var k2 = ComputeDerivative(pred);
-    return state + 0.5 * dt * (k1 + k2);
+    // 1. Anfangssteigung & Prädiktor-Zustand
+    var (ax1, ay1) = accel(state);
+    var pred = StepEuler(state, dt, accel);
+
+    // 2. Endsteigung & Korrektor-Mittelung
+    var (ax2, ay2) = accel(pred);
+    return CombineHeun(state, dt, ax1, ay1, ax2, ay2);
 }
 
 // Aufprall bei y_next < 0 (Boden y = 0):
@@ -582,7 +587,7 @@ double xImpact = x_k + tau * (x_next - x_k);
 </div>
 </div>
 
-> **Architektur-Vorteil:** Euler und Heun teilen sich exakt dieselbe Physik-Funktion `ComputeDerivative(state)` – sauber entkoppelt vom Zeitschritt-Löser!
+> **Architektur-Vorteil:** Euler und Heun teilen sich exakt dieselbe Physik-Funktion `accel(state)` – sauber entkoppelt vom Zeitschritt-Löser!
 
 ---
 

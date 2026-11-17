@@ -25,7 +25,7 @@ Analytische Herleitung parametrischer 3D-Körper (Ergänzung zu [Kapitel 5](./Fo
 
 ---
 
-## A.1: Analytische Herleitung der Kugelkoordinaten
+## B.1: Analytische Herleitung der Kugelkoordinaten
 
 <div class="columns">
 <div class="two">
@@ -153,7 +153,7 @@ for (int i = 0; i < stacks; i++)
 
 ---
 
-## A.2: Parametrisierung von Zylinder, Kegel & Kegelstumpf
+## B.2: Parametrisierung von Zylinder, Kegel & Kegelstumpf
 
 <div class="columns">
 <div class="two">

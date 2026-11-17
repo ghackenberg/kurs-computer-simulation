@@ -336,7 +336,7 @@ Eine 1-kHz-Simulation läuft $10.000\,\text{s}$ lang ($N = 10^7$ `double`-Werte 
 double[] ys = Simulation.RunFixedStepEuler(
     steps: 10_000_000, dt: 0.001);
 
-WpfPlot1.Plot.Add.Signal(ys);
+var sig = WpfPlot1.Plot.Add.Signal(ys);
 sig.Data.Period  = 0.001; // dt = 1 ms (1 kHz)
 sig.Data.XOffset = 0.0;   // Startzeitpunkt t0 = 0 s
 WpfPlot1.Refresh();
