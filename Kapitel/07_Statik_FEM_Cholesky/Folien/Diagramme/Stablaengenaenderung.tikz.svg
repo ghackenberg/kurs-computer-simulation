@@ -28,7 +28,7 @@
 <path clip-rule="nonzero" d="M 8 75 L 50 75 L 50 107.027344 L 8 107.027344 Z M 8 75 "/>
 </clipPath>
 </defs>
-<path fill="none" stroke-width="1.99255" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(75%, 75%, 75%)" stroke-opacity="1" stroke-miterlimit="10" d="M -0.000704779 0.000914088 L -0.000704779 85.038463 " transform="matrix(0.98812, 0, 0, -0.98812, 19.512415, 98.563403)"/>
+<path fill="none" stroke-width="1.99255" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(45%, 45%, 45%)" stroke-opacity="1" stroke-miterlimit="10" d="M -0.000704779 0.000914088 L -0.000704779 85.038463 " transform="matrix(0.98812, 0, 0, -0.98812, 19.512415, 98.563403)"/>
 <path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 21.601562 98.5625 C 21.601562 97.410156 20.664062 96.476562 19.511719 96.476562 C 18.359375 96.476562 17.425781 97.410156 17.425781 98.5625 C 17.425781 99.714844 18.359375 100.652344 19.511719 100.652344 C 20.664062 100.652344 21.601562 99.714844 21.601562 98.5625 Z M 21.601562 98.5625 "/>
 <g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
 <use xlink:href="#glyph-0-0" x="4.151094" y="101.188839"/>

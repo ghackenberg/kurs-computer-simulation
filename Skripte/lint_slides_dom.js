@@ -179,10 +179,11 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
       const ext = path.extname(localPath).toLowerCase().replace('.', '') || 'jpeg';
       const mime = ext === 'jpg' ? 'jpeg' : ext;
       const dataUri = `data:image/${mime};base64,${fs.readFileSync(localPath).toString('base64')}`;
-      const leftLum = await page.evaluate((src) => new Promise(resolve => {
+      const bgMetrics = await page.evaluate((src) => new Promise(resolve => {
         const im = new Image();
         im.onload = () => {
           try {
+            const aspectRatio = (im.naturalWidth && im.naturalHeight) ? (im.naturalWidth / im.naturalHeight) : null;
             const c = document.createElement('canvas');
             c.width = 64;
             c.height = 36;
@@ -194,12 +195,20 @@ async function lintSlideDeck(markdownPath, browser, options = {}) {
             for (let i = 0; i < data.length; i += 4) {
               sum += (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255;
             }
-            resolve(count > 0 ? sum / count : null);
-          } catch (e) { resolve(null); }
+            resolve({ leftLum: count > 0 ? sum / count : null, aspectRatio });
+          } catch (e) { resolve({ leftLum: null, aspectRatio: null }); }
         };
-        im.onerror = () => resolve(null);
+        im.onerror = () => resolve({ leftLum: null, aspectRatio: null });
         im.src = src;
       }), dataUri);
+      const { leftLum, aspectRatio } = bgMetrics || {};
+      if (aspectRatio !== null && aspectRatio < 1.5) {
+        fullBleedBgIssues.push({
+          pagination: bg.pagination,
+          url: bg.url,
+          message: `Hintergrundbild hat kein 16:9-Querformat (Seitenverhältnis ${aspectRatio.toFixed(2)}:1 < 1.50:1).`
+        });
+      }
       if (leftLum !== null) {
         if (bg.isTitle && leftLum > 0.30) {
           fullBleedBgIssues.push({

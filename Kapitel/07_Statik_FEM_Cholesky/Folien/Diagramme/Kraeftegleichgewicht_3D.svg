@@ -89,12 +89,8 @@ text {
     }
   </style>
 
-  <!-- Rahmen & Hintergrund -->
-  <rect class="sem-card-stroke" x="5" y="5" width="370" height="330" rx="12" fill="#FFFFFF" stroke-width="1.5" filter="url(#card-shadow)" />
-
   <!-- Titelbanner -->
-  <rect class="sem-muted" x="5" y="5" width="370" height="36" rx="12"  stroke="none"/>
-  <rect class="sem-muted" x="5" y="29" width="370" height="12"  stroke="none"/>
+  <rect class="sem-muted" x="5" y="5" width="370" height="36" rx="8" stroke="none"/>
   <line class="sem-muted-stroke" x1="5" y1="41" x2="375" y2="41" stroke-width="1.5" />
   <text class="sem-primary-text" x="18" y="27" font-size="16" font-weight="700">3D-Kräfte am Knoten i</text>
 
@@ -109,8 +105,8 @@ text {
   <text class="sem-muted-text" x="325" y="180" font-size="16" font-weight="700">y</text>
 
   <!-- z-Achse (nach oben) -->
-  <line class="sem-muted-stroke" x1="170" y1="175" x2="170" y2="52" stroke-width="1.8" stroke-dasharray="4,4" marker-end="url(#arrow-axis)" />
-  <text class="sem-muted-text" x="170" y="46" font-size="16" font-weight="700" text-anchor="middle">z</text>
+  <line class="sem-muted-stroke" x1="170" y1="175" x2="170" y2="68" stroke-width="1.8" stroke-dasharray="4,4" marker-end="url(#arrow-axis)" />
+  <text class="sem-muted-text" x="182" y="66" font-size="16" font-weight="700">z</text>
 
   <!-- STABACHSEN (3D-Stäbe) -->
   <!-- Stab 1 -->
@@ -123,22 +119,22 @@ text {
   <!-- STABKRÄFTE (Vektoren S_j · e_j) -->
   <!-- Kraft Stab 1 -->
   <line class="sem-info-stroke" x1="170" y1="175" x2="265" y2="119" stroke-width="3" marker-end="url(#arrow-force-blue)" />
-  <text class="sem-info-text" x="240" y="105" font-size="15" font-weight="700">S1 · e1</text>
+  <text class="sem-info-text" x="230" y="84" font-size="15" font-weight="700">S_1 · e_1</text>
 
   <!-- Kraft Stab 2 (mit Shield-Badge) -->
   <line class="sem-info-stroke" x1="170" y1="175" x2="98" y2="120" stroke-width="3" marker-end="url(#arrow-force-blue)" />
   <g transform="translate(50, 95)">
     <rect class="sem-info" x="0" y="0" width="62" height="22" rx="3" stroke-width="1" />
-    <text class="sem-info-text" x="31" y="16" font-size="14" font-weight="700" text-anchor="middle">S2 · e2</text>
+    <text class="sem-info-text" x="31" y="16" font-size="14" font-weight="700" text-anchor="middle">S_2 · e_2</text>
   </g>
 
   <!-- Kraft Stab 3 -->
   <line class="sem-info-stroke" x1="170" y1="175" x2="255" y2="227" stroke-width="3" marker-end="url(#arrow-force-blue)" />
-  <text class="sem-info-text" x="250" y="215" font-size="15" font-weight="700">S3 · e3</text>
+  <text class="sem-info-text" x="250" y="215" font-size="15" font-weight="700">S_3 · e_3</text>
 
   <!-- EXTERNE LAST (F_ext) -->
   <line class="sem-danger-stroke" x1="170" y1="175" x2="128" y2="255" stroke-width="3.5" marker-end="url(#arrow-force-red)" />
-  <text class="sem-danger-text" x="95" y="272" font-size="16" font-weight="700">F_ext</text>
+  <text class="sem-danger-text" x="62" y="272" font-size="16" font-weight="700">F_ext</text>
 
   <!-- KNOTEN i (Zentrum, mit Shield-Badge) -->
   <circle class="sem-primary-stroke" cx="170" cy="175" r="8" fill="#FFFFFF" stroke-width="3" />

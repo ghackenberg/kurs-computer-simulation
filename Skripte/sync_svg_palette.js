@@ -20,7 +20,7 @@ function loadPalette() {
   return JSON.parse(fs.readFileSync(PALETTE_PATH, 'utf8'));
 }
 
-function buildPaletteCss(palette, usedRoles) {
+function buildPaletteCss(palette, usedRoles, eol = '\n') {
   const lines = [START_MARKER];
   for (const [role, cfg] of Object.entries(palette.roles)) {
     if (usedRoles && !usedRoles.has(role)) continue;
@@ -33,10 +33,10 @@ function buildPaletteCss(palette, usedRoles) {
     lines.push(`      .${role}-text { fill: ${cfg.text}; }`);
   }
   lines.push(`      ${END_MARKER}`);
-  return lines.join('\n');
+  return lines.join(eol);
 }
 
-function buildPaletteDefs(palette, usedRoles) {
+function buildPaletteDefs(palette, usedRoles, eol = '\n') {
   const lines = [`    ${DEFS_START_MARKER}`];
   for (const [role, cfg] of Object.entries(palette.roles)) {
     if (usedRoles && !usedRoles.has(role)) continue;
@@ -54,7 +54,7 @@ function buildPaletteDefs(palette, usedRoles) {
     }
   }
   lines.push(`    ${DEFS_END_MARKER}`);
-  return lines.join('\n');
+  return lines.join(eol);
 }
 
 function extractUsedRoles(svgText, palette) {
@@ -88,26 +88,27 @@ function syncSvgContent(svgText, palette) {
   if (usedRoles.size === 0 && !svgText.includes(START_MARKER)) {
     return { changed: false, content: svgText, usedRoles };
   }
-  const block = buildPaletteCss(palette, usedRoles);
+  const eol = svgText.includes('\r\n') ? '\r\n' : '\n';
+  const block = buildPaletteCss(palette, usedRoles, eol);
   let next = svgText;
 
   const markerRegex = /\/\*\s*@svg-palette:start\s*\*\/[\s\S]*?\/\*\s*@svg-palette:end\s*\*\//;
   if (markerRegex.test(next)) {
     next = next.replace(markerRegex, block);
   } else if (/<style[^>]*>/i.test(next)) {
-    next = next.replace(/(<style[^>]*>\s*)/i, `$1\n${block}\n`);
+    next = next.replace(/(<style[^>]*>\s*)/i, `$1${eol}${block}${eol}`);
   } else {
-    next = next.replace(/(<svg[^>]*>)/i, `$1\n  <style>\n${block}\n  </style>`);
+    next = next.replace(/(<svg[^>]*>)/i, `$1${eol}  <style>${eol}${block}${eol}  </style>`);
   }
 
-  const defsBlock = buildPaletteDefs(palette, usedRoles);
-  const defsMarkerRegex = /\s*<!--\s*@svg-palette-defs:start\s*-->[\s\S]*?<!--\s*@svg-palette-defs:end\s*-->/;
+  const defsBlock = buildPaletteDefs(palette, usedRoles, eol);
+  const defsMarkerRegex = /(?:\r?\n)?[ \t]*<!--\s*@svg-palette-defs:start\s*-->[\s\S]*?<!--\s*@svg-palette-defs:end\s*-->/;
   if (defsMarkerRegex.test(next)) {
-    next = next.replace(defsMarkerRegex, `\n${defsBlock}`);
+    next = next.replace(defsMarkerRegex, `${eol}${defsBlock}`);
   } else if (/<defs[^>]*>/i.test(next)) {
-    next = next.replace(/(<defs[^>]*>)/i, `$1\n${defsBlock}`);
+    next = next.replace(/(<defs[^>]*>)/i, `$1${eol}${defsBlock}`);
   } else {
-    next = next.replace(/(<svg[^>]*>)/i, `$1\n  <defs>\n${defsBlock}\n  </defs>`);
+    next = next.replace(/(<svg[^>]*>)/i, `$1${eol}  <defs>${eol}${defsBlock}${eol}  </defs>`);
   }
 
   return { changed: next !== svgText, content: next, usedRoles };

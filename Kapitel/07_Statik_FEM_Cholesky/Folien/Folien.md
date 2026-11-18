@@ -10,18 +10,17 @@ math: mathjax
 <!-- _paginate: false -->
 <!-- _header: "" -->
 <!-- _footer: "" -->
+<!-- _class: title -->
 
-![bg right](./Titelbild.jpg)
+![bg](./Titelbild.jpg)
 
 # Kapitel 7: Statische Modelle
 
 Dieses Kapitel umfasst die folgenden Abschnitte:
 
-- 7.1: Einführung und historische Entwicklung
-- 7.2: Das ideale Fachwerk in 2D
-- 7.3: Das elastische Fachwerk in 2D
-- 7.4: Erweiterung der Berechnungsmodelle auf 3D
-- 7.5: Programmtechnische Umsetzung
+- 7.1: Statische Modelle & das ideale Fachwerk
+- 7.2: Das elastische Fachwerk & FEM-Mathematik
+- 7.3: C#-Implementierung & `Math.NET Numerics`
 
 ---
 
@@ -34,27 +33,27 @@ Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 
 <div class="columns">
 <div class="two">
 
-#### Stufe 2 – Track A: Monte-Carlo-Toleranzanalyse (Industrie)
+#### Stufe 2 – Track A: Monte-Carlo-Toleranzanalyse
 - Getriebe-Passungsspiel mit Maßketten
-- $10\,000\,000$ Bauteile parallel berechnet
-- Datenparallelität mit `Parallel.For` & TPL
-- Thread-sichere Aggregation (`Interlocked` / lokal)
+- $10\,000\,000$ Bauteile mit `Parallel.For`
+- Thread-sichere Aggregation (`Interlocked`)
+- Amdahl-Speedup-Fit in `ScottPlot 5`
 - *Code-Defense:* Skalierung & UI-Entkopplung
 
 </div>
 <div class="two">
 
-#### Stufe 2 – Track B: Boids & Zombie-Horde (Game)
+#### Stufe 2 – Track B: Boids & Zombie-Horde
 - Schwarm-Simulation à la Craig Reynolds
-- $50\,000+$ Boids mit Nachbarschaftssuche
-- CPU-Skalierung: Von 12 FPS auf flüssige 60 FPS
+- $50\,000+$ Boids bei flüssigen 60 FPS
 - Asynchroner Task-Loop mit `CancellationToken`
-- *Code-Defense:* Race Conditions & Not-Aus-Stresstest
+- Räumliches Grid für Nachbarschaftssuche
+- *Code-Defense:* Race Conditions & Not-Aus
 
 </div>
 </div>
 
-> **Code-Defense (Säule 2b, 20 %):** Live-Vorführung am Beamer. Stresstest des kooperativen Not-Aus-Abbruchs (`CancellationToken`) unter Volllast.
+> **Code-Defense (20 %):** Live-Vorführung am Beamer inkl. Stresstest des kooperativen Not-Aus-Abbruchs (`CancellationToken`) unter Volllast.
 
 ---
 
@@ -62,14 +61,14 @@ Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 ### Kontext & Einordnung: Von paralleler Infrastruktur zur gekoppelten Strukturmechanik
 
-<div class="columns top">
+<div class="columns">
 <div class="three">
 
 Mit **Termin 06** steht unser Unterbau – heute starten wir in die **4 Simulationsmodellarten (T07–T10)**:
 
-- **Brücke zu T03 (2D-Canvas):** Unser Tragwerks-Editor exportierte bereits Knoten $(x, y)$, Stäbe und Lasten $\vec{F}$ als JSON – noch ohne Kräfte!
-- **Heute (1. Modellart: Statik):** Wir stellen die Steifigkeitsmatrix $\mathbf{K}$ auf und lösen $\mathbf{K} \cdot \mathbf{u} = \mathbf{f}$ via **Cholesky** (`Math.NET`).
-- **Ausblick:** Statik beschreibt das Gleichgewicht ($\sum \vec{F} = \mathbf{0}$) vor der Dynamik in T08–T10.
+- **Brücke zu T03 (2D-Canvas):** Der Editor exportierte Knoten $(x, y)$, Stäbe und Lasten $\vec{F}$ als JSON – ohne Kräfte.
+- **Heute (Statik):** Steifigkeitsmatrix $\mathbf{K}$ aufstellen und $\mathbf{K}\mathbf{u} = \mathbf{f}$ via **Cholesky** (`Math.NET`) lösen.
+- **Checks:** Gleichgewicht ($\sum \vec{F} = \vec{0}$) und Euler-Knicklast.
 
 </div>
 <div class="two">
@@ -79,38 +78,61 @@ Mit **Termin 06** steht unser Unterbau – heute starten wir in die **4 Simulati
 </div>
 </div>
 
+> **Roter Faden:** Statik liefert das zeitunabhängige Gleichgewicht ($\sum\vec{F} = \vec{0}$), bevor ab **Termin 08** die Dynamik startet – die FEM-Engine aus Termin 07 baut direkt auf dem JSON-Tragwerksformat und dem 2D-Canvas aus Termin 03 auf.
+
 ---
-## 7.1: Einführung und historische Entwicklung
+
+![bg](./Illustrationen/Abschnitt_1.jpg)
+
+## 7.1: Statische Modelle & das ideale Fachwerk
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Brücke zu Termin 03 (2D-CAD) & 06 und Auftakt der 4 Modellarten
-- Definition eines statischen Modells
-- Das Fachwerk als Anwendungsbeispiel
-- Historischer Abriss der Fachwerktheorie
-- Typische Fragestellungen für die Modellierung
+- Statisches Gleichgewicht & Anwendungsbeispiel Fachwerk
+- Knotenpunktverfahren & lineares Gleichungssystem (LGS)
+- Statische Bestimmtheit vs. kinematischer Mechanismus
+- Warum Cholesky für die Strukturmechanik ideal ist
 
 ---
 
-### Was ist ein statisches Modell?
-
-- Beschreibt ein System im **Ruhezustand** (im mechanischen Gleichgewicht).
-- Alle wirkenden Kräfte und Momente kompensieren sich exakt zu Null:
-  $$\sum_{i=1}^n \vec{F}_i = \vec{0} \quad [\mathrm{N}] \qquad \text{und} \qquad \sum_{j=1}^m \vec{M}_j = \vec{0} \quad [\mathrm{N\cdot m}]$$
-- Das System ist **zeitunabhängig** ($\dot{\mathbf{x}} = \mathbf{0}$).
-- **Typische Fragestellung**: Welche Schnittkräfte ($S$) wirken in den Stäben eines Tragwerks und wie groß sind die elastischen Verformungen ($\mathbf{u}$) unter konstanter Nennlast?
-
----
-
-### Das Fachwerk als klassisches Beispiel
+### Anwendungsbeispiel: Was leistet ein statisches Modell?
 
 <div class="columns">
-<div>
+<div class="two">
 
-Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist, die an ihren Enden durch Knoten (Gelenke) miteinander verbunden sind.
+Ein **statisches Modell** beschreibt ein System im **zeitunabhängigen Ruhezustand** ($\dot{\mathbf{x}} = \mathbf{0}$):
+
+$$\sum_{i=1}^n \vec{F}_i = \vec{0} \ [\mathrm{N}], \qquad \sum_{j=1}^m \vec{M}_j = \vec{0} \ [\mathrm{N\cdot m}]$$
+
+- **Interne Kräfte:** Zug- oder Druckkraft in jedem Stab.
+- **Auflagerreaktionen:** Kräfte am Fundament.
+- **Verformung:** Knotenverschiebungen $\mathbf{u}$ *(erst im elastischen Modell!)*.
 
 </div>
-<div>
+<div class="two">
+
+![](./Screenshots/FachwerkIdeal2D_Screenshot.png)
+
+</div>
+</div>
+
+> **Ziel heute:** Wir verknüpfen diese Gleichgewichtsbedingungen mit `TrussFemSolver.sln` und Ihrem 2D-Canvas aus Termin 03.
+
+---
+
+### Das Fachwerk als klassisches Modell
+
+<div class="columns">
+<div class="two">
+
+Ein **ideales 2D-Fachwerk** besteht aus geraden, gewichtslosen Stäben mit reibungsfreien Gelenken (Knoten) und reinen Knotenlasten $\vec{F}$:
+
+- **Knoten `1..5`:** Position $\vec{p}_i$ mit je 2 Freiheitsgraden (DOF).
+- **Stäbe `S1..S7`:** Übertragen nur axiale **Normalkräfte** (Zug oder Druck).
+- **Lager:** Festlager (Reaktionen $A_x, A_y$) und Loselager (Reaktion $C_y$) verhindern Starrkörper-Bewegungen ($2k = s + l$).
+
+</div>
+<div class="three">
 
 ![](./Diagramme/Fachwerk_Topologie_2D.svg)
 
@@ -119,376 +141,227 @@ Ein **Fachwerk** ist ein Tragwerk, das aus einzelnen Stäben zusammengesetzt ist
 
 ---
 
-### Historische Entwicklung
-
-- **Antike**: Römer nutzen grundlegende Prinzipien für Brücken und Aquädukte (Bögen, aber auch frühe Holzfachwerke).
-- **Mittelalter/Renaissance**: Bau von Dachstühlen in Kirchen und Kathedralen. Das Wissen ist rein empirisch (Erfahrungswissen).
-- **18. Jahrhundert**: Leonhard Euler leistet Pionierarbeit in der Balkentheorie und Stabilitätsanalyse (z.B. Knickung).
-- **19. Jahrhundert**: Das Zeitalter der Eisenbahn erfordert lange, stabile und leichte Brücken. Die Fachwerktheorie wird formalisiert.
-
----
-
-### Pioniere der Fachwerktheorie
+### Knotengleichgewicht & lineares Gleichungssystem (LGS)
 
 <div class="columns top">
 <div class="one">
 
-**Squire Whipple<br/>(1847)**
-- "A Work on Bridge Building"
-- Entwickelt als einer der ersten die korrekte mathematische Methode zur Berechnung der Kräfte in den Stäben eines Fachwerks (Ritter'sches Schnittverfahren, Knotenpunktverfahren).
+**Gleichgewicht am Einzelknoten $i$**
+- Für einen Stab zwischen $\vec{p}_i$ und $\vec{p}_k$ lautet der Einheitsvektor:
+  $$\vec{e}_{ik} = \frac{\vec{p}_k - \vec{p}_i}{|\vec{p}_k - \vec{p}_i|} = \begin{pmatrix} e_{x,ik} \\ e_{y,ik} \end{pmatrix}$$
+- Die vektorielle Summe aller Stabkräfte $S_{ik}\vec{e}_{ik}$ und der äußeren Last $\vec{F}_{\text{ext}, i}$ verschwindet:
+  $$\sum_{k} S_{ik} \cdot \vec{e}_{ik} + \vec{F}_{\text{ext}, i} = \vec{0}$$
 
 </div>
 <div class="one">
 
-**Karl Culmann & Luigi Cremona (ca. 1860)**
-- Entwickeln die **grafische Statik**.
-- Mit dem **Cremonaplan** können die Stabkräfte zeichnerisch ermittelt werden – eine geniale Methode für das Zeitalter ohne Computer.
+**Globales System $\mathbf{A} \cdot \mathbf{x} = \mathbf{b}$**
+- Für $k$ Knoten entstehen $2k$ lineare Gleichungen (jeweils $x$- und $y$-Komponente).
+- **Geometriematrix $\mathbf{A}$:** Enthält die Richtungskosinusse $e_{x,ik}, e_{y,ik}$ und Lager-Einsätze.
+- **Lösungsvektor $\mathbf{x}$:** Unbekannte Stabkräfte $S_1, \dots, S_s$ und Lagerreaktionen ($A_x, A_y, C_y$).
+- **Lastvektor $\mathbf{b}$:** Negative äußere Knotenlasten $-\vec{F}_{\text{ext},i}$.
+
+</div>
+</div>
+
+> **Eigenschaft:** Da jeder Stab nur 2 Knoten verbindet, sind die meisten Einträge in $\mathbf{A}$ gleich Null (*dünn besetzt*).
+
+---
+
+### Lösbarkeit: Statische Bestimmtheit vs. Mechanismus
+
+<div class="columns top">
+<div class="two">
+
+- **Reguläres System ($\det(\mathbf{A}) \neq 0$, $2k = s + l$):**
+  - Gleichungen ($2k$) = Unbekannte ($s$ Stäbe + $l$ Lager).
+  - Beispiel: $k = 5$, $s = 7$, $l = 3 \implies 10 = 10$ (stabil).
+- **Singuläres System ($\det(\mathbf{A}) = 0$):**
+  - Fehlende Lager oder Diagonalen erzeugen einen **kinematischen Mechanismus** – das Tragwerk kollabiert!
+
+</div>
+<div class="two">
+
+```csharp
+// Singuläre Systemmatrix im Solver abfangen
+// (z. B. fehlender Diagonalstab oder X-Lager)
+if (Math.Abs(matrix.Determinant()) < 1e-12)
+{
+    throw new InvalidOperationException(
+        "Kinematischer Mechanismus: Tragwerk instabil!");
+}
+```
+
+- Ohne vollen Rang ist keine eindeutige Kraftverteilung berechenbar.
+- Cholesky erfordert zusätzlich Symmetrie und positive Definitheit.
+
+</div>
+</div>
+
+> **Merke:** Eine singuläre Matrix im Solver ist kein reines Mathematik-Problem, sondern meldet eine **einsturzgefährdete Konstruktion**! Prüfen Sie deshalb immer zuerst Lagerung und Aussteifung.
+
+---
+
+### LGS-Löser im Überblick: Warum Cholesky?
+
+Beim idealen Fachwerk ist $\mathbf{A}$ unsymmetrisch (`A.Solve(b)` via Lower-Upper-Zerlegung, LU). In der **elastischen Finite-Elemente-Methode (FEM)** ist die Systemmatrix dagegen **symmetrisch positiv-definit (SPD)**:
+
+| Verfahren | Matrix-Anforderung | Aufwand ($n = 3\,000$) | `Math.NET`-Aufruf |
+| :--- | :--- | :--- | :--- |
+| **LU-Zerlegung** | beliebig regulär | $\mathcal{O}(\frac{2}{3}n^3) \approx 18\cdot 10^9$ Ops | `A.LU().Solve(b)` |
+| **Cholesky ($\mathbf{L}\mathbf{L}^\top$)** | **SPD** (symm. & pos.-def.) | $\mathcal{O}(\frac{1}{3}n^3) \approx 9\cdot 10^9$ Ops | `kff.Cholesky().Solve(ff)` |
+| **Matrix-Inversion** | regulär *(Anti-Pattern!)* | $\mathcal{O}(2n^3)$ + Rundungsfehler | `A.Inverse()` *(verboten!)* |
+
+```csharp
+// Cholesky nutzt Symmetrie aus: 2x schneller und halber Speicher gegenüber LU!
+Vector<double> uf = kff.Cholesky().Solve(ff);
+```
+
+> **Vertiefung:** Details zu Gauß-Elimination, LU-Zerlegung und iterativen Jacobi-Verfahren (inkl. Codebeispielen für mehrfache Lastfälle) finden Sie in [Anhang A](./Folien_Anhang_A_Grundlagen_LGS.md).
+
+---
+
+<!-- _class: activity -->
+
+### Aufgabe: Statische Bestimmtheit & Mechanismus
+
+<div class="columns top">
+<div class="one">
+
+Ein 2D-Rechteckrahmen besteht aus $k = 4$ Knoten und $s = 4$ Randstäben, gelagert auf einem Festlager (2 Reaktionen) und einem Loselager (1 Reaktion, $l = 3$).
+
+1. Wie viele Gleichgewichtsgleichungen ($2k$) stehen wie vielen Unbekannten ($s + l$) gegenüber?
+2. Was passiert physikalisch ohne Diagonalstab?
+3. Was meldet $\det(\mathbf{A})$ in diesem Fall?
+4. Wie ändert sich die Stabilität mit 1 bzw. 2 Diagonalen?
 
 </div>
 <div class="one">
 
-**James Clerk Maxwell<br/>(1864)**
-- Führt das **Kräfteplanverfahren** ein und erkennt, dass die Stabkräfte als reziproke Figuren zum Lageplan des Fachwerks aufgefasst werden können.
+| Variante | $k$ | $s$ | $l$ | $2k$ | $s + l$ |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Ohne Diagonale** | 4 | 4 | 3 | `?` | `?` |
+| **Mit 1 Diagonale** | 4 | 5 | 3 | 8 | 8 |
+| **Mit 2 Diagonalen** | 4 | 6 | 3 | 8 | 9 *(überbest.)* |
+
+- Prüfen Sie das Abzählkriterium $2k = s + l$ für alle drei Varianten und bestimmen Sie die fehlenden Werte `?`!
+- Welche der drei Varianten ist statisch bestimmt, welche unterbestimmt?
 
 </div>
 </div>
 
----
-
-### Fragestellungen an das Modell
-
-- **Stabilität**: Ist das Fachwerk unter der gegebenen Lagerung und Last statisch bestimmt und stabil?
-- **Interne Kräfte**: Welche Zug- oder Druckkraft wirkt in jedem einzelnen Stab? (Dimensionierung der Stäbe)
-- **Verformung**: Wie stark verschieben sich die Knoten unter der Last? (Nur mit elastischem Modell beantwortbar)
-- **Optimierung**: Wie kann das Fachwerk mit minimalem Materialeinsatz (Gewicht) für eine gegebene Last entworfen werden?
+> **Hinweis:** Überlegen Sie, welche Bewegung im Fall *ohne Diagonale* noch frei bleibt – genau diesen Mechanismus testen Sie in Aufgabe 1.3 von HÜ 07 durch Entfernen eines Lager-DOFs!
 
 ---
-## 7.2: Das ideale Fachwerk in 2D
+
+<!-- _class: solution -->
+
+### Auflösung: Statische Bestimmtheit & Mechanismus
+
+<div class="columns top">
+<div class="two">
+
+1. **Abzählkriterium:** $2k = 8$ Gleichungen vs. $s + l = 7$ Unbekannte $\implies$ **1 Freiheitsgrad unterbestimmt**.
+2. **Physik:** Ohne Diagonale fehlt die Schubsteifigkeit – der Rahmen klappt wie ein Parallelogramm seitlich weg (**Mechanismus**).
+3. **Abhilfe:** Ein zusätzlicher Diagonalstab ($s = 5$) stellt die volle statische Bestimmtheit her.
+
+</div>
+<div class="two">
+
+4. **Mathematik:** Die Systemmatrix $\mathbf{A}$ bzw. $\mathbf{K}_{ff}$ hat keinen vollen Rang ($\det = 0$, singulär).
+5. **Solver-Verhalten:** `Cholesky()` wirft beim Faktorisieren sofort eine `ArgumentException` (*„Matrix must be positive definite“*).
+6. **Prüfung:** Genau diese Instabilität testen Sie in Aufgabe 1.3 von HÜ 07 (`dotnet test`) – erst eine Diagonale behebt den Fehler.
+
+</div>
+</div>
+
+> **Merksatz:** Das Abzählkriterium $2k = s + l$ ist notwendig, aber erst die **Regularität** ($\det \neq 0$) garantiert ein stabiles Tragwerk im Gleichgewicht! Auch in der 2D-FEM gilt: Ohne mindestens 3 nicht-parallele Lager-Freiheitsgrade bleibt die Matrix singulär und nicht Cholesky-tauglich – genau deshalb prüft die Vorlage die Lösbarkeit bei jedem Run!
+
+---
+
+![bg](./Illustrationen/Abschnitt_2.jpg)
+
+## 7.2: Das elastische Fachwerk & FEM-Mathematik
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Annahmen und physikalische Grundlagen
-- Aufstellen des linearen Gleichungssystems (LGS)
-- Algorithmen zur Lösung des LGS
+- Hooke'sches Gesetz & Linearisierung der Längenänderung
+- Herleitung der $4 \times 4$-Elementsteifigkeitsmatrix $\mathbf{K}_e$
+- Assemblierung & exakte Blockpartitionierung ($\mathbf{K}_{ff}, \mathbf{K}_{pf}$)
+- Stabnormalkräfte, Auflagerreaktionen & Euler-Knicklast
 
 ---
 
-### Annahmen des idealen Fachwerks
+### Anwendungsbeispiel: Elastische Verformung unter Last
 
 <div class="columns">
-<div>
+<div class="two">
 
-1.  Die Stäbe sind **gerade** und haben ein **vernachlässigbares Eigengewicht**.
-2.  Die Stäbe sind an ihren Enden durch **reibungsfreie Gelenke** (Knoten) verbunden.
-3.  Äußere Kräfte (Lasten) greifen **ausschließlich an den Knoten** an.
+Das ideale Fachwerk liefert nur Kräfte – **keine Verschiebungen** $\mathbf{u}$ und **keine Lösung für statisch überbestimmte** Systeme!
 
-**Folgerung**: In den Stäben treten nur **Normalkräfte** (Zug- oder Druckkräfte) in Längsrichtung auf, keine Biegemomente oder Querkräfte.
+- **Neue Annahme:** Jeder Stab verhält sich wie eine lineare Feder nach dem **Hooke'schen Gesetz**.
+- **Neue Unbekannte:** Gesucht sind zuerst die **Knotenverschiebungen** $\mathbf{u}$, daraus folgen Dehnung und Stabkraft.
+- **Visualisierung:** Überhöhte Verformung plus Zug-/Druck-Farbcode im WPF-`Canvas`.
 
 </div>
-<div>
+<div class="two">
 
-**Modellelemente eines 2D-Fachwerks**:
-
-- **Knoten** (Gelenke)
-  - Geometrische Position $\vec{p}_i = (x_i, y_i)$
-- **Stäbe** (Verbindungselemente)
-  - Übertragen reine Normalkräfte
-  - *Gesucht*: Stabkräfte $S_j$ (Zug / Druck)
-- **Lasten** (Äußere Kräfte)
-  - Vektor $\vec{F}_{\text{ext}}$ mit Betrag, Richtung & Angriffspunkt an Knoten
-- **Lager** (Randbedingungen)
-  - Fixieren Freiheitsgrade
-  - *Gesucht*: Lagerreaktionskräfte ($A_x, A_y, C_y$)
+![](./Screenshots/FachwerkElastisch2D_Screenshot.png)
 
 </div>
 </div>
 
----
-
-### Mathematische Beschreibung des Fachwerks
-
-Um das Fachwerk mathematisch zu beschreiben, definieren wir:
-
-1.  **Eine Menge von Knoten**: $N = \{n_1, n_2, ..., n_k\}$
-    - Jeder Knoten $n_i$ hat als Eigenschaften:
-        - Eine Position $\vec{p}_i = (x_i, y_i)$.
-        - Eine externe Kraft $\vec{F}_{ext,i}$ (kann auch $\vec{0}$ sein).
-        - Lagerbedingungen (z.B. fix in x/y, frei).
-
-2.  **Eine Menge von Stäben**: $R = \{r_1, r_2, ..., r_s\}$
-    - Jeder Stab $r_j$ verbindet zwei Knoten, z.B. $r_j = (n_a, n_b)$ mit $n_a, n_b \in N$.
-    - Jedem Stab ist eine unbekannte Stabkraft $S_j$ zugeordnet.
-
-Ziel ist es, die Stabkräfte $S_j$ und die Lagerreaktionen zu finden.
+> **Praxis-Nutzen:** Erst das elastische FEM-Modell beantwortet, ob ein Kranausleger unter Nennlast zu stark durchhängt oder bei Überbestimmtheit Kräfte umlagert.
 
 ---
 
-### Kräftegleichgewicht in jedem Knoten
-
-Für einen Stab zwischen Knoten $i$ (Position $\vec{p}_i$) und Knoten $k$ (Position $\vec{p}_k$):
-1.  **Verbindungsvektor**: $\vec{v}_{ik} = \vec{p}_k - \vec{p}_i$
-2.  **Stablänge**: $L_{ik} = |\vec{v}_{ik}|$
-3.  **Normalisierter Richtungsvektor**: $\vec{e}_{ik} = \frac{\vec{v}_{ik}}{L_{ik}} = \begin{pmatrix} e_{x,ik} \\ e_{y,ik} \end{pmatrix}$
-
-Die Kraft, die der Stab auf den Knoten $i$ ausübt, ist $\vec{F}_i = S_{ik} \cdot \vec{e}_{ik}$.
-
-Das Gleichgewicht am Knoten $i$ lautet dann:
-
-$\sum_{k} (S_{ik} \cdot \vec{e}_{ik}) + \vec{F}_{ext,i} = \vec{0}$
-
-Aufgeteilt in Komponenten:
-- $\sum_{k} S_{ik} \cdot e_{x,ik} + F_{ext,ix} = 0$
-- $\sum_{k} S_{ik} \cdot e_{y,ik} + F_{ext,iy} = 0$
-
----
-
-### Gesamtes Gleichungssystem
-
-Stellt man die zwei Gleichgewichts-Gleichungen für jeden der $k$ Knoten auf, erhält man ein System von $2k$ linearen Gleichungen.
-
-$$
-\begin{pmatrix}
-e_{x,11} & e_{x,12} & \dots & e_{x,1s} & 1 & 0 & \dots \\
-e_{y,11} & e_{y,12} & \dots & e_{y,1s} & 0 & 1 & \dots \\
-\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots \\
-e_{x,k1} & e_{x,k2} & \dots & e_{x,ks} & 0 & 0 & \dots \\
-e_{y,k1} & e_{y,k2} & \dots & e_{y,ks} & 0 & 0 & \dots
-\end{pmatrix}
-\cdot
-\begin{pmatrix}
-S_1 \\
-\vdots \\
-S_s \\
-F_{Lager,1,x} \\
-F_{Lager,1,y} \\
-\vdots
-\end{pmatrix}
-=
-\begin{pmatrix}
--F_{ext,1,x} \\
--F_{ext,1,y} \\
-\vdots \\
--F_{ext,k,x} \\
--F_{ext,k,y}
-\end{pmatrix}
-$$
-
-- Die Matrix enthält die Koeffizienten ($e_{x,ik}, e_{y,ik}$) für jede Stabkraft $S_j$ und jede Lagerkraft in jeder Knotengleichung.
-- Viele Einträge in der Matrix sind Null, da ein Stab nur an zwei Knoten angreift.
-
----
-
-### Das lineare Gleichungssystem (LGS)
-
-Allgemein schreiben wir das lineare Gleichungssystem so:
-
-$A \cdot x = b$
-
-Und so nennen wir die Variablen dieses Gleichungssystems:
-
-- $A$: Die **Koeffizientenmatrix** (Geometriematrix). Sie enthält die normierten Richtungsvektoren der Stäbe und beschreibt, wie die Stäbe an den Knoten "zusammenhängen".
-- $x$: Der **Lösungsvektor**. Er enthält die unbekannten Stabkräfte und Lagerreaktionen (die Gesuchten in unserer Problemstellung).
-- $b$: Der **Lastvektor**. Er enthält die an den Knoten angreifenden externen Kräfte (gegebene Größen in unserer Problemstellung).
-
----
-
-### Lösbarkeit des Gleichungssystems
-
-Ein LGS $A \cdot x = b$ ist genau dann eindeutig lösbar, wenn die Koeffizientenmatrix $A$ **quadratisch** und **regulär** (invertierbar) ist.
-
-- **Quadratisch**: Die Anzahl der Gleichungen muss der Anzahl der Unbekannten entsprechen. Für ein statisch bestimmtes Fachwerk ist dies der Fall ($2k = s + l$).
-- **Regulär**: Die Determinante der Matrix muss ungleich null sein ($\det(A) \neq 0$).
-    - Physikalisch bedeutet eine singuläre Matrix ($\det(A) = 0$), dass das Fachwerk **instabil** ist. Es würde unter Last kollabieren oder sich als Mechanismus bewegen.
-    - Dies wird auch als **kinematische Unbestimmtheit** bezeichnet.
-
-Die Lösbarkeit hängt also direkt von der statischen Bestimmtheit und Stabilität des Fachwerks ab.
-
----
-
-### Lösung des LGS: Algorithmen
-
-<div class="columns top">
-<div class="one">
-
-**Direkte Löser**
-- Finden die exakte Lösung (abgesehen von Rundungsfehlern) in einer endlichen Anzahl von Schritten.
-- **Gauß-Elimination**: Umformung der Matrix $A$ in eine obere Dreiecksmatrix.
-- **LU-Zerlegung**: Zerlegung von $A$ in eine untere ($L$) und eine obere ($U$) Dreiecksmatrix.
-
-</div>
-<div class="one">
-
-**Iterative Löser**
-- Starten mit einer Schätzung und verbessern die Lösung schrittweise.
-- Oft effizienter für sehr große, dünn besetzte Systeme.
-- Beispiele: Jacobi-Verfahren, Gauß-Seidel-Verfahren.
-
-</div>
-</div>
-
----
-
-### Direkter Löser: Gauß-Elimination
-
-Das Gauß'sche Eliminationsverfahren ist ein klassischer Algorithmus zur Lösung von LGS.
-
-**Vorgehen:**
-1.  **Vorwärtselimination**: Das LGS $A \cdot x = b$ wird durch zeilenweise Umformungen in eine obere Dreiecksform $U \cdot x = c$ gebracht.
-    - Für jede Spalte $j$ von $1$ bis $n-1$:
-    - Eliminiere die Koeffizienten unterhalb der Diagonalen ($A_{ij}$ mit $i > j$) durch Subtraktion eines Vielfachen der $j$-ten Zeile.
-    - Die gleichen Operationen werden auf den Vektor $b$ angewendet.
-2.  **Rückwärtseinsetzen**: Das gestaffelte System wird von unten nach oben gelöst.
-    - $x_n = c_n / U_{nn}$
-    - $x_i = (c_i - \sum_{j=i+1}^{n} U_{ij} \cdot x_j) / U_{ii}$ für $i = n-1, ..., 1$.
-
----
-
-### Direkter Löser: LU-Zerlegung
-
-Die LU-Zerlegung faktorisiert die Matrix $A$ in ein Produkt aus einer unteren Dreiecksmatrix $L$ und einer oberen Dreiecksmatrix $U$, d.h. $A = L \cdot U$
-
-**Vorgehen:**
-1.  **Zerlegung**: Finde $L$ und $U$. Dies geschieht oft mit einer Variante des Gauß-Algorithmus. $L$ enthält die Multiplikatoren der Elimination, $U$ ist das Ergebnis der Vorwärtselimination.
-2.  **Löse $A \cdot x = b$ in zwei Schritten:**
-    - Ersetze $A$ durch $L \cdot U \implies L \cdot (U \cdot x) = b$.
-    - Definiere $y = U \cdot x$.
-    - **Vorwärtseinsetzen**: Löse $L \cdot y = b$ nach $y$.
-    - **Rückwärtseinsetzen**: Löse $U \cdot x = y$ nach $x$.
-
-**Vorteil**: Die teure Zerlegung muss nur einmal berechnet werden. Danach können LGS mit derselben Matrix $A$ aber unterschiedlichen Lastvektoren $b$ sehr schnell gelöst werden.
-
----
-
-### Iterative Löser (z.B. Jacobi-Verfahren)
-
-Iterative Löser nähern sich der Lösung schrittweise an. Sie sind besonders für große, dünn besetzte Matrizen geeignet.
-
-**Grundidee:**
-1.  Forme die Gleichung $A \cdot x = b$ um, sodass $x$ auf einer Seite isoliert wird.
-2.  Zerlege dazu $A$ in $A = D + R$, wobei $D$ die Diagonale von $A$ ist und $R$ den Rest enthält.
-3.  $D \cdot x + R \cdot x = b \implies D \cdot x = b - R \cdot x \implies x = D^{-1} \cdot (b - R \cdot x)$
-4.  Daraus wird eine Iterationsvorschrift:
-    $x^{(k+1)} = D^{-1} \cdot (b - R \cdot x^{(k)})$
-5.  Starte mit einem Schätzwert $x^{(0)}$ und wiederhole die Iteration, bis die Änderung $\|x^{(k+1)} - x^{(k)}\|$ klein genug ist.
-
----
-## 7.3: Das elastische Fachwerk in 2D
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Grenzen des idealen Fachwerks (Verformungen)
-- Hooke'sches Gesetz & Stabsteifigkeitsmatrix in lokalen Koordinaten
-- Koordinatentransformation & globale Stabsteifigkeit
-- Assemblierung der globalen Gesamtsteifigkeitsmatrix
-- Einbau von Randbedingungen & statische Kondensation
-- Numerische Lösung und Schnittkraftberechnung
-
----
-
-### Grenzen des idealen Fachwerks
-
-- Das ideale Fachwerkmodell kann nur die **Kräfte** berechnen.
-- Es kann **keine Aussage über Verformungen** treffen, da die Stäbe als unendlich steif angenommen werden.
-- In der Realität ist jeder Werkstoff elastisch und verformt sich unter Last.
-- **Fragestellung**: Wie stark verschieben sich die Knoten, wenn eine Last angreift?
-
----
-
-### Das elastische Modell: Neue Annahmen
-
-- Die Stäbe sind nicht mehr starr, sondern **elastisch**. Ihr Verhalten wird durch das **Hooke'sche Gesetz** beschrieben.
-- Die Knoten sind weiterhin **gelenkig**.
-- Die entscheidende neue Unbekannte sind nicht die Stabkräfte, sondern die **Knotenverschiebungen** $\mathbf{u}$.
-
----
-
-### Hooke'sches Gesetz für einen Stab
-
-Die Kraft $S$ in einem Stab ist proportional zu seiner Längenänderung $\Delta L$.
-
-$S = \frac{E \cdot A}{L_0} \cdot \Delta L$
-
-- $E$: **Elastizitätsmodul** (Materialkonstante, z.B. für Stahl ca. 210 GPa)
-- $A$: **Querschnittsfläche** des Stabes
-- $L_0$: **Anfangslänge** des Stabes
-- Der Term $\frac{E \cdot A}{L_0}$ wird als **Stabsteifigkeit** $k$ bezeichnet.
-
----
-
-### Von der Knotenverschiebung zur Längenänderung
+### Hooke'sches Gesetz & exakte Längenänderung
 
 <div class="columns">
 <div class="three">
 
-- Die Längenänderung $\Delta L$ eines Stabes hängt von den Verschiebungen seiner beiden Endknoten ab.
-- Für einen Stab zwischen Knoten $i$ und $j$ mit Verschiebungsvektoren $\vec{u}_i$ und $\vec{u}_j$.
-- Die exakte Längenänderung ist die Differenz zwischen der neuen Länge $L'$ (nach der Verformung) und der ursprünglichen Länge $L$.
+Mit **Elastizitätsmodul $E$**, **Querschnittsfläche $A$** (**Dehnsteifigkeit (EA)**) und **Ausgangslänge $L$** gilt für die Normalkraft $S$:
 
-- **Neuer Stabvektor**: $\vec{L}' = (\vec{p}_j + \vec{u}_j) - (\vec{p}_i + \vec{u}_i) = \vec{L} + (\vec{u}_j - \vec{u}_i)$
-- **Neue Länge**: $L' = |\vec{L}'|$
-- **Exakte Längenänderung**: $\Delta L = L' - L$
+$$S = \frac{EA}{L} \cdot \Delta L$$
 
-Diese Formel ist nichtlinear. Für die **Finite-Elemente-Methode** wird sie üblicherweise linearisiert.
+Aus dem verschobenen Stabvektor $\vec{L}' = \vec{L} + \Delta\vec{u}$ (mit $\Delta\vec{u} = \vec{u}_j - \vec{u}_i$) folgt die exakte, nichtlineare Längenänderung:
+
+$$\Delta L = |\vec{L} + \Delta\vec{u}| - L = \sqrt{L^2 + 2(\vec{L}\cdot\Delta\vec{u}) + |\Delta\vec{u}|^2} - L$$
+
+- **Problem:** Die Wurzel macht das Gleichungssystem nichtlinear.
+- **Lösung:** Lineare Näherung für kleine Verformungen ($|\Delta\vec{u}| \ll L$).
 
 </div>
-<div>
+<div class="one">
 
 ![](./Diagramme/Stablaengenaenderung.tikz.svg)
 
 </div>
 </div>
 
+> **Schlüsselidee:** Für kleine Dehnungen ersetzen wir die gekrümmte Kreisbewegung durch eine lineare Projektion auf die Ausgangsachse.
+
 ---
 
-### Herleitung der Näherungsformel (1/2)
+### Linearisierung für kleine Verschiebungen ($|\Delta\vec{u}| \ll L$)
 
 <div class="columns">
 <div class="two">
 
-Um die exakte, nichtlineare Formel zu linearisieren, betrachten wir das Quadrat der neuen Länge $L'^2$. Sei $\Delta \vec{u} = \vec{u}_j - \vec{u}_i$.
+Bei Stahltragwerken gilt typischerweise $|\Delta\vec{u}| \approx 1\,\text{mm} \ll L \approx 2\,\text{m}$:
 
-$L'^2 = |\vec{L} + \Delta \vec{u}|^2 = (\vec{L} + \Delta \vec{u}) \cdot (\vec{L} + \Delta \vec{u})$
+1. Der quadratische Term $\frac{|\Delta\vec{u}|^2}{L^2} \approx 2{,}5\cdot 10^{-7}$ ist vernachlässigbar.
+2. Mit der Taylor-Näherung $\sqrt{1 + x} \approx 1 + \frac{x}{2}$ folgt:
+   $$L' \approx L + \vec{e}\cdot\Delta\vec{u}$$
+3. **Projektion auf die Stabachse:**
+   $$\Delta L \approx \vec{e} \cdot (\vec{u}_j - \vec{u}_i)$$
 
-Ausmultiplizieren des Skalarprodukts ergibt:
-
-$L'^2 = \vec{L} \cdot \vec{L} + 2(\vec{L} \cdot \Delta \vec{u}) + \Delta \vec{u} \cdot \Delta \vec{u}$
-$L'^2 = L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2$
-
-Die neue Länge ist somit:
-
-$L' = \sqrt{L^2 + 2(\vec{L} \cdot \Delta \vec{u}) + |\Delta \vec{u}|^2}$
-
-</div>
-<div>
-
-![](./Diagramme/Stablaengenaenderung.tikz.svg)
+- **Vorteil:** Das Gleichungssystem bleibt streng linear ($\mathbf{K}\mathbf{u} = \mathbf{f}$).
+- **Zahlenbeispiel:** Bei $\Delta u = 1\,\text{mm}$ und $L = 2\,\text{m}$ beträgt der relative Fehler nur $0{,}05\,\%$.
+- **Grenze:** Für extrem weiche Seilnetze wäre ein nichtlinearer Solver nötig.
 
 </div>
-</div>
-
----
-
-### Herleitung der Näherungsformel (2/2)
-
-<div class="columns">
-<div class="two">
-
-$L' = L \sqrt{1 + \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2} + \frac{|\Delta \vec{u}|^2}{L^2}}$
-
-Für die Annahme **kleiner Verschiebungen** gilt $|\Delta \vec{u}| \ll L$. Daher kann der quadratische Term $\frac{|\Delta \vec{u}|^2}{L^2}$ vernachlässigt werden.
-
-$L' \approx L \sqrt{1 + \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2}}$
-
-Mit der Taylor-Näherung $\sqrt{1+x} \approx 1 + \frac{x}{2}$ für kleine $x$ erhalten wir:
-
-$L' \approx L \left(1 + \frac{1}{2} \cdot \frac{2(\vec{L} \cdot \Delta \vec{u})}{L^2}\right) = L + \frac{\vec{L} \cdot \Delta \vec{u}}{L}$
-
-Die Längenänderung $\Delta L = L' - L$ ist damit:
-
-$\Delta L \approx \frac{\vec{L} \cdot \Delta \vec{u}}{L} = \left(\frac{\vec{L}}{L}\right) \cdot \Delta \vec{u} = \vec{e} \cdot (\vec{u}_j - \vec{u}_i)$
-
-</div>
-<div>
+<div class="one">
 
 ![](./Diagramme/Stablaengenaenderung_Approximation.tikz.svg)
 
@@ -497,553 +370,277 @@ $\Delta L \approx \frac{\vec{L} \cdot \Delta \vec{u}}{L} = \left(\frac{\vec{L}}{
 
 ---
 
-### Stab-Steifigkeitsbeziehung
+<!-- _class: activity -->
+
+### Aufgabe: Längenänderung & Zug/Druck bestimmen
+
+Ein horizontaler Stahlstab ($\vec{e} = (1, 0)^\top$, $L = 2\,\text{m}$, $E = 210\,\text{GPa}$, $A = 10^{-4}\,\text{m}^2$) verbindet Knoten $i$ und $j$:
+
+| Größe | Knoten $i$ | Knoten $j$ |
+| :--- | :--- | :--- |
+| **Verschiebung $\vec{u}$** | $\vec{u}_i = (0;\; 0)^\top\,\text{mm}$ | $\vec{u}_j = (-1{,}0;\; -2{,}0)^\top\,\text{mm}$ |
+| **Material & Steifigkeit** | $E \cdot A = 2{,}1 \cdot 10^7\,\text{N}$ | $\frac{EA}{L} = 1{,}05 \cdot 10^7\,\text{N/m}$ |
+| **Richtung & Länge** | $\vec{e} = (1, 0)^\top$ | $L = 2{,}0\,\text{m}$ |
+
+1. Wie groß ist die linearisierte Längenänderung $\Delta L = \vec{e}\cdot(\vec{u}_j - \vec{u}_i)$?
+2. Welche Normalkraft $S = \frac{EA}{L}\Delta L$ wirkt im Stab?
+3. Handelt es sich um einen **Zug-** oder einen **Druckstab**?
+
+> **Tipp:** Prüfen Sie zuerst das Skalarprodukt $\vec{e}\cdot(\vec{u}_j - \vec{u}_i)$ komponentenweise – achten Sie genau auf das Vorzeichen und rechnen Sie $\Delta L$ vor dem Einsetzen in Metern um ($\text{mm} \to \text{m}$)!
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Längenänderung & Zug/Druck bestimmen
+
+1. **Längenänderung $\Delta L$:** Nur die axiale Komponente entlang $\vec{e} = (1, 0)^\top$ zählt – die Querkomponente $-2\,\text{mm}$ fällt durch das Skalarprodukt vollständig weg:
+   $$\Delta L = 1 \cdot (-1{,}0\,\text{mm}) + 0 \cdot (-2{,}0\,\text{mm}) = -1{,}0\,\text{mm} = -10^{-3}\,\text{m}$$
+2. **Normalkraft $S$:** Mit der Stabsteifigkeit $\frac{EA}{L} = \frac{210\cdot 10^9 \cdot 10^{-4}}{2} = 1{,}05 \cdot 10^7\,\text{N/m}$ ergibt sich:
+   $$S = 1{,}05 \cdot 10^7\,\frac{\text{N}}{\text{m}} \cdot (-10^{-3}\,\text{m}) = -10\,500\,\text{N} = -10{,}5\,\text{kN}$$
+3. **Beanspruchung:** Da $S < 0$ (axiale Verkürzung $\Delta L < 0$), liegt ein **Druckstab** vor – im WPF-`Canvas` wird er deshalb rot eingefärbt.
+
+> **Merksatz:** Eine reine Querauslenkung trägt in erster Näherung nichts zur Dehnung bei – entscheidend ist allein die Projektion $\vec{e}\cdot\Delta\vec{u}$. Im nächsten Schritt verknüpfen wir beide Knotenverschiebungen zu einer symmetrischen $4\times 4$-Matrix $\mathbf{K}_e$.
+
+---
+
+### Die $4 \times 4$-Elementsteifigkeitsmatrix $\mathbf{K}_e$
 
 <div class="columns">
-<div>
+<div class="two">
 
-Kombiniert man Hooke'sches Gesetz und die Längenänderung, erhält man die Beziehung zwischen Knotenverschiebungen $\mathbf{u}_e$ und Knotenkräften $\mathbf{f}_e$:
+Mit dem lokalen Verschiebungsvektor $\mathbf{u}_e \in \mathbb{R}^4$ und den Knotenkräften $\mathbf{f}_i = -S\vec{e}$, $\mathbf{f}_j = +S\vec{e}$ folgt:
 
-$$
-\mathbf{k}_e \cdot \mathbf{u}_e = \mathbf{f}_e
-$$
+$$\mathbf{f}_e = \frac{EA}{L}\begin{pmatrix} -\vec{e} \\ \vec{e} \end{pmatrix}\begin{pmatrix} -\vec{e}^\top & \vec{e}^\top \end{pmatrix}\mathbf{u}_e = \mathbf{K}_e \mathbf{u}_e$$
 
-- $\mathbf{u}_e = (u_{ix}, u_{iy}, u_{jx}, u_{jy})^T$
-- $\mathbf{f}_e = (f_{ix}, f_{iy}, f_{jx}, f_{jy})^T$
-- $\mathbf{k}_e$: Symmetrische $4 \times 4$-Elementsteifigkeitsmatrix
+- $\mathbf{K}_e$ ist **symmetrisch** ($\mathbf{K}_e = \mathbf{K}_e^\top$).
+- $\vec{n} \equiv \vec{e} = (\cos\alpha, \sin\alpha)^\top$ ist der Einheitsrichtungsvektor.
 
 </div>
-<div>
+<div class="three">
 
-$$
-\frac{EA}{L}
-\begin{pmatrix}
- e_x^2 & e_x e_y & -e_x^2 & -e_x e_y \\
- e_x e_y & e_y^2 & -e_x e_y & -e_y^2 \\
--e_x^2 & -e_x e_y & e_x^2 & e_x e_y \\
--e_x e_y & -e_y^2 & e_x e_y & e_y^2
-\end{pmatrix}
-\begin{pmatrix} u_{ix} \\ u_{iy} \\ u_{jx} \\ u_{jy} \end{pmatrix}
-=
-\begin{pmatrix} f_{ix} \\ f_{iy} \\ f_{jx} \\ f_{jy} \end{pmatrix}
-$$
+$$\mathbf{K}_e = \frac{EA}{L} \begin{pmatrix} n_x^2 & n_x n_y & -n_x^2 & -n_x n_y \\ n_x n_y & n_y^2 & -n_x n_y & -n_y^2 \\ -n_x^2 & -n_x n_y & n_x^2 & n_x n_y \\ -n_x n_y & -n_y^2 & n_x n_y & n_y^2 \end{pmatrix}$$
 
-**$2 \times 2$-Blockstruktur** mit dyadischem Produkt $\vec{e}\vec{e}^T$:
-$$
-\mathbf{k}_e = \begin{pmatrix} \mathbf{k}_{ii} & \mathbf{k}_{ij} \\ \mathbf{k}_{ji} & \mathbf{k}_{jj} \end{pmatrix} = \frac{EA}{L}\begin{pmatrix} \vec{e}\vec{e}^T & -\vec{e}\vec{e}^T \\ -\vec{e}\vec{e}^T & \vec{e}\vec{e}^T \end{pmatrix}
-$$
+```csharp
+// In TrussElement.cs: 4x4 Matrix K_e
+var (n_x, n_y) = Direction;
+double k = YoungsModulus * Area / Length;
+// Block [0..1, 0..1]: k * [n_x*n_x, n_x*n_y; ...]
+```
 
 </div>
 </div>
 
----
-
-### Herleitung der Stab-Steifigkeitsmatrix (1/2)
-
-Gesucht ist die Matrix $\mathbf{k}_{\text{Stab}}$ mit $\mathbf{f}_{\text{Stab}} = \mathbf{k}_{\text{Stab}} \mathbf{u}$:
-
-1. **Kräfte am Stab**: Die Stabkraft $S$ wirkt an den Knoten $i$ und $j$: $\mathbf{f}_i = -S \mathbf{e}$, $\mathbf{f}_j = S \mathbf{e}$.
-2. **Knotenkraftvektor**:
-   $$\mathbf{f}_{\text{Stab}} = \begin{pmatrix} \mathbf{f}_i \\ \mathbf{f}_j \end{pmatrix} = S \begin{pmatrix} -\mathbf{e} \\ \mathbf{e} \end{pmatrix} = \frac{EA}{L} \Delta L \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix}^T$$
-3. **Längenänderung in Matrixform**:
-   $$\Delta L \approx \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \mathbf{u} \quad \text{mit} \quad \mathbf{u} = \begin{pmatrix} u_{ix} & u_{iy} & u_{jx} & u_{jy} \end{pmatrix}^T$$
+> **Hinweis:** Die alternative Herleitung über Koordinatentransformation ($\mathbf{T}^\top \mathbf{k}_e^{\text{loc}}\mathbf{T}$) und den Bezug zur lokalen 1D-Feder finden Sie in [Anhang A](./Folien_Anhang_A_Grundlagen_LGS.md) (Kapitel A.3) – das Ergebnis für $\mathbf{K}_e$ ist mathematisch identisch und gilt für jeden Winkel $\alpha$!
 
 ---
 
-### Herleitung der Stab-Steifigkeitsmatrix (2/2)
+### Assemblierung zur globalen Steifigkeitsmatrix $\mathbf{K}$
 
-Setzt man die Matrixform für $\Delta L$ in die Gleichung für $\mathbf{f}_{\text{Stab}}$ ein, erhält man:
+<div class="columns top">
+<div class="one">
 
-$$
-\mathbf{f}_{\text{Stab}} = \frac{EA}{L} \left( \begin{pmatrix} -e_x & -e_y & e_x & e_y \end{pmatrix} \mathbf{u} \right) \begin{pmatrix} -e_x \\ -e_y \\ e_x \\ e_y \end{pmatrix}
-$$
+**Direkte Steifigkeitsmethode**
+- Jeder Knoten $i$ besitzt zwei globale Freiheitsgrade: `DofX = 2*i` und `DofY = 2*i + 1`.
+- Für jeden Stab werden die $4\times 4$ Einträge von $\mathbf{K}_e$ in `kGlobal` aufaddiert:
 
-Durch Ausmultiplizieren der Vektoren (äußeres Produkt) ergibt sich die **4x4-Stab-Steifigkeitsmatrix** $\mathbf{k}_{\text{Stab}}$:
+```csharp
+int[] dofs = { n1.DofX, n1.DofY, n2.DofX, n2.DofY };
+for (int r = 0; r < 4; r++)
+    for (int c = 0; c < 4; c++)
+        kGlobal[dofs[r], dofs[c]] += ke[r, c];
+```
 
-$$
-\mathbf{k}_{\text{Stab}} = \frac{EA}{L} \begin{pmatrix}
-e_x^2 & e_x e_y & -e_x^2 & -e_x e_y \\
-e_y e_x & e_y^2 & -e_y e_x & -e_y^2 \\
--e_x^2 & -e_x e_y & e_x^2 & e_x e_y \\
--e_y e_x & -e_y^2 & e_y e_x & e_y^2
-\end{pmatrix}
-$$
+</div>
+<div class="one">
 
-Diese Matrix beschreibt den linearen Zusammenhang zwischen den 4 Verschiebungs-Freiheitsgraden eines Stabes und den daraus resultierenden 4 Knotenkräften im globalen Koordinatensystem.
+**Das globale System $\mathbf{K}\mathbf{u} = \mathbf{f}$**
+- $\mathbf{K} \in \mathbb{R}^{2N\times 2N}$ ist symmetrisch, aber **noch singulär**!
+- *Warum?* Ohne Lagerung kann sich das gesamte Fachwerk als starrer Körper in X, Y und Rotation frei bewegen ($\det(\mathbf{K}) = 0$).
+- Erst durch den **Einbau der Randbedingungen** wird das System eindeutig lösbar.
+- Die Assemblierung erfolgt unabhängig von den Lagern über alle Stäbe.
 
----
+</div>
+</div>
 
-### Alternative FEM-Sicht: Koordinatentransformation
-
-In der Finiten-Elemente-Methode (FEM) wird die globale Matrix standardmäßig über eine **Transformationsmatrix $\mathbf{T}$** aus dem lokalen 1D-Stab abgeleitet:
-
-1. **Lokale Elementsteifigkeit:** Im mitrotierenden Stab-System ($\xi$-Achse):
-   $$\mathbf{f}^{loc} = \mathbf{k}_e^{loc} \mathbf{u}^{loc} \quad \text{mit} \quad \mathbf{k}_e^{loc} = \frac{EA}{L} \begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix}$$
-2. **Kinematische Transformation:** $\mathbf{u}^{loc} = \mathbf{T} \mathbf{u}$ mit $\mathbf{T} = \begin{pmatrix} e_x & e_y & 0 & 0 \\ 0 & 0 & e_x & e_y \end{pmatrix}$ ($e_x = \cos\alpha, e_y = \sin\alpha$)
-3. **Globale Elementsteifigkeit via Kontragredienz:**
-   $$\mathbf{f} = \mathbf{T}^T \mathbf{f}^{loc} = \mathbf{T}^T (\mathbf{k}_e^{loc} \mathbf{T} \mathbf{u}) \implies \mathbf{k}_e^{glob} = \mathbf{T}^T \mathbf{k}_e^{loc} \mathbf{T} \equiv \mathbf{k}_{\text{Stab}}$$
-
-> [!NOTE]
-> Beide Wege führen zum identischen Resultat. Die Transformationsmatrix-Methode $\mathbf{T}^T \mathbf{k}_e^{loc} \mathbf{T}$ ist der universelle FEM-Standard für Balken, Schalen und 3D-Volumenelemente.
-
----
-
-### Assemblierung der globalen Steifigkeitsmatrix
-
-- Der entscheidende Schritt ist die "Assemblierung": Die einzelnen Stab-Steifigkeitsmatrizen werden zu einer **globalen Steifigkeitsmatrix** $\mathbf{K}$ für das gesamte Fachwerk zusammengesetzt.
-- Das Prinzip lautet: Die globale Steifigkeit an einem Knoten ist die Summe der Steifigkeiten aller Stäbe, die an diesem Knoten zusammentreffen.
-- Dieser Prozess folgt einem festen Algorithmus und lässt sich gut programmieren.
-
----
-
-### Das globale Gleichungssystem
-
-Das Ergebnis ist wieder ein lineares Gleichungssystem, diesmal für das elastische Fachwerk:
-
-$$\mathbf{K} \mathbf{u} = \mathbf{f}$$
-
-- $\mathbf{K}$: Die **globale Steifigkeitsmatrix**. Sie hängt von der Geometrie und den Materialeigenschaften (E, A) ab. Sie ist quadratisch, symmetrisch und (für stabile Fachwerke) positiv definit.
-- $\mathbf{u}$: Der Vektor der unbekannten **Knotenverschiebungen**.
-- $\mathbf{f}$: Der Vektor der bekannten **externen Knotenkräfte**.
+> **Merke:** Die Assemblierung ist reine Überlagerung (`+=`) der Elementsteifigkeiten an gemeinsamen Knoten.
 
 ---
 
 ### Einbau der Randbedingungen: Blockpartitionierung
 
-- Unbeschränktes $\mathbf{K}\mathbf{u} = \mathbf{f}$ ist singulär; Lagerung erzwingt $\mathbf{u}_p = \mathbf{0}$ ($p \equiv A$: Auflager; $f \equiv B$: frei).
-- Zeile 1 bestimmt Verschiebungen: $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$; Zeile 2 liefert Lagerreaktionen: $\mathbf{f}_p = \mathbf{K}_{pf}\mathbf{u}_f$.
+Aufteilung in $n_f$ freie DOFs ($f \equiv B$, $\mathbf{u}_f$ gesucht, $\mathbf{f}_f$ bekannt) und $n_p$ gesperrte Lager-DOFs ($p \equiv A$, $\mathbf{u}_p = \mathbf{0}$, $\mathbf{f}_p$ gesucht) mit $\mathbf{K}_{ff}, \mathbf{K}_{fp}, \mathbf{K}_{pf}, \mathbf{K}_{pp}$, Cholesky $\mathbf{K}_{ff} = \mathbf{L}\mathbf{L}^\top$ ($\mathbf{L}\mathbf{y} = \mathbf{f}_f$) sowie $\mathbf{u}_B, \mathbf{f}_B, \mathbf{u}_A, \mathbf{f}_A$:
 
 ![](./Diagramme/LGS_Partitionierung_Matrix.svg)
 
 ---
 
-### Lösung des partitionierten Systems & Auflagerreaktionen
-
-- **Verschiebungen freier Knoten ($\mathbf{u}_f \equiv \mathbf{u}_B$):**
-  - Bei starren Lagern ($\mathbf{u}_p = \mathbf{0}$) entfällt der Koppelterm:
-    $$\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f \iff \mathbf{K}_{BB} \mathbf{u}_B = \mathbf{f}_B$$
-  - $\mathbf{K}_{ff}$ ist **symmetrisch positiv-definit (SPD)** $\implies$ Direkte Cholesky-Zerlegung $\mathbf{K}_{ff} = \mathbf{L}\mathbf{L}^T$.
-  - Aufwand: $\mathcal{O}(\frac{1}{3} n_f^3)$ statt $\mathcal{O}(\frac{2}{3} n_f^3)$ (LU) bzw. $\mathcal{O}(2 n_f^3)$ (Inversion).
-- **Lagerreaktionskräfte ($\mathbf{f}_p \equiv \mathbf{f}_A$):**
-  - Unbekannte Lagerkräfte folgen aus der 2. Zeile des partitionierten Systems:
-    $$\mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f + \mathbf{K}_{pp} \mathbf{u}_p \xrightarrow{\mathbf{u}_p = \mathbf{0}} \mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f$$
-- **Nomenklatur-Mapping:**
-  - International: $f$ (*free*), $p$ (*prescribed*)
-  - Deutschsprachig: $B$ (*beweglich*), $A$ (*Auflager*)
-
----
-
-### Lösung und Ergebnisse: Stabkräfte & Knicknachweis
-
-1. **Löse $\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f$ nach $\mathbf{u}_f$ auf**: Liefert die Verschiebungen aller freien Knoten.
-2. **Post-Processing (Normalkraft $S_e$ pro Stab):**
-   $$S_e = \frac{EA}{L} \cdot \Delta L = \frac{EA}{L} \left[ \vec{e}_{ij} \cdot (\vec{u}_j - \vec{u}_i) \right] \quad (S_e > 0\text{: Zug}, \ S_e < 0\text{: Druck})$$
-3. **Festigkeits- und Stabilitätsnachweis (Euler-Knickung):**
-   - **Fließgrenze (Zug & Druck):** $|\sigma_e| = \frac{|S_e|}{A} \le R_{p0,2}$
-   - **Euler-Knicklast für schlanke Druckstäbe ($S_e < 0$, beidseitig gelenkig – Euler-Fall 2):**
-     $$N_{\text{knick}} = \frac{\pi^2 \cdot E \cdot I}{L^2} \quad \implies \quad \text{Stabilitätsversagen falls } |S_e| \ge N_{\text{knick}}$$
-     *(mit Flächenträgheitsmoment $I\ [\mathrm{m^4}]$, z. B. Kreisrohr: $I = \frac{\pi}{64}(D^4 - d^4)$).*
-
----
-## 7.4: Erweiterung der Berechnungsmodelle auf 3D
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Erweiterung der Freiheitsgrade von 2D auf 3D
-- Anpassung des idealen Fachwerk-Modells für 3D
-- Anpassung des elastischen Fachwerk-Modells für 3D
-- Numerische Lösungsverfahren (LU vs. Cholesky)
-
----
-
-### Vom 2D- zum 3D-Fachwerk
-
-Die grundlegenden physikalischen Prinzipien (Kräftegleichgewicht, Hooke\'sches Gesetz) bleiben exakt gleich. Die Mathematik wird lediglich um eine Dimension erweitert:
+### Post-Processing: Stabkräfte, Gleichgewicht & Euler-Knickung
 
 <div class="columns top">
 <div class="one">
 
-**2D**
-- Knoten haben 2 Freiheitsgrade (DOF): $u_x, u_y$.
-- Gleichgewicht in 2 Richtungen: $\sum F_x = 0, \sum F_y = 0$.
-- Geometrie durch Vektoren in $\mathbb{R}^2$.
+**1. Stabnormalkraft $N_e$ & Spannung $\sigma_e$**
+$$N_e = \frac{EA}{L}\,\vec{n}\cdot(\vec{u}_j - \vec{u}_i), \qquad \sigma_e = \frac{N_e}{A}$$
+- $N_e > 0$: Zugstab (blau); $N_e < 0$: Druckstab (rot).
+- Vergleich von `stress` ($\sigma_e$) mit der Werkstoff-Streckgrenze.
+
+**2. Globale Gleichgewichtsinvariante**
+$$\sum \vec{F}_{\text{ext}} + \sum \vec{F}_{\text{Lager}} = \vec{0} \quad (\text{Fehler } < 10^{-8}\,\mathrm{N})$$
 
 </div>
 <div class="one">
 
-**3D**
-- Knoten haben 3 Freiheitsgrade (DOF): $u_x, u_y, u_z$.
-- Gleichgewicht in 3 Richtungen: $\sum F_x = 0, \sum F_y = 0, \sum F_z = 0$.
-- Geometrie durch Vektoren in $\mathbb{R}^3$.
+**3. Euler-Knicklast (Druckstäbe $N_e < 0$)**
+$$N_{\text{knick}} = \frac{\pi^2 E I}{L^2} \quad \implies \quad \text{Versagen falls } |N_e| \ge N_{\text{knick}}$$
+
+```csharp
+// Stabilitäts-Check pro Druckstab (Track A & B)
+bool buckled = n_e < 0 && Math.Abs(n_e) >= nKnick;
+double stress = sigma_e;
+```
+
+- **3D-Erweiterung:** Identisches Prinzip mit $6\times 6$-Matrizen in [Anhang B](./Folien_Anhang_B_3D_Fachwerke.md).
 
 </div>
 </div>
+
+> **Ingenieur-Pflicht:** Prüfen Sie nach jeder FEM-Lösung zuerst `IsEquilibriumSatisfied` ($\sum \vec{F} = \vec{0}$), bevor Sie Ergebnisse visualisieren!
 
 ---
 
-### **Ideales** Fachwerk in 3D
+<!-- _class: activity -->
 
-<div class="columns">
-<div>
+### Aufgabe: Blockpartitionierung am 3-Knoten-Träger
 
-- **Knotenpunktverfahren**: An jedem Knoten werden nun **drei** Gleichgewichtsgleichungen aufgestellt.
-- Für ein Fachwerk mit $k$ Knoten, $s$ Stäben und $l$ Lagerreaktionen muss gelten: $3k = s + l$ (statische Bestimmtheit).
-- Das LGS $A \cdot x = b$ wird entsprechend größer, das Prinzip ist aber identisch. Die Koeffizienten in $A$ sind nun die Richtungskosinusse der Stäbe im 3D-Raum.
+In **Hausübung 07 (Stufe 1)** besitzt ein 3-Knoten-Dreiecksträger ($N = 3 \implies 6$ DOFs `[0..5]`) folgende Lagerung:
 
-</div>
-<div>
+| Knoten | X-Freiheitsgrad | Y-Freiheitsgrad | Lager-Typ |
+| :---: | :---: | :---: | :--- |
+| **Knoten 0** | `DOF 0` (fest) | `DOF 1` (fest) | Festlager |
+| **Knoten 1** | `DOF 2` (frei) | `DOF 3` (fest) | Loselager (in X verschieblich) |
+| **Knoten 2** | `DOF 4` (frei) | `DOF 5` (frei) | Freier Lastknoten ($F_y = -10\,\text{kN}$) |
 
-![](./Screenshots/FachwerkIdeal3D_Screenshot.png)
+1. Welche Indizes liegen in `prescribed` ($p$) und welche in `free` ($f$)?
+2. Welche Dimensionen haben $\mathbf{K}_{ff}$ und $\mathbf{K}_{pf}$?
+3. Was passiert mit $\mathbf{K}_{ff}$, wenn `DOF 0` (Festlager in X) gelöst wird?
 
-</div>
-</div>
-
----
-
-### Kräftegleichgewicht im 3D-Knoten
-
-Für jeden freien Knoten im Fachwerk muss die Summe aller Kräfte in jeder Raumrichtung null ergeben. Ein Stab $j$, der am Knoten $i$ angreift, übt eine Kraft $S_j$ aus, die entlang der Stabachse wirkt.
-
-- **Stabvektor**: $\vec{L}_j = \vec{P}_k - \vec{P}_i$ (Vektor von Knoten $i$ zu Knoten $k$)
-- **Einheitsvektor**: $\vec{e}_j = \frac{\vec{L}_j}{|\vec{L}_j|}$
-- **Kraftvektor**: $\vec{F}_j = S_j \cdot \vec{e}_j = S_j \cdot \begin{pmatrix} e_{j,x} \\ e_{j,y} \\ e_{j,z} \end{pmatrix}$
-
-Das Gleichgewicht am Knoten $i$ lautet dann:
-
-$$\sum_{j} \vec{F}_j + \vec{F}_{\text{ext},i} = \vec{0} \ [\mathrm{N}] \implies \begin{cases} \sum_j S_j \cdot e_{j,x} + F_{\text{ext},i,x} = 0 \\ \sum_j S_j \cdot e_{j,y} + F_{\text{ext},i,y} = 0 \\ \sum_j S_j \cdot e_{j,z} + F_{\text{ext},i,z} = 0 \end{cases}$$
+> **Hinweis:** Zählen Sie die gesperrten und freien Freiheitsgrade direkt aus der Tabelle ab.
 
 ---
 
-### Matrixdarstellung für einen Knoten
+<!-- _class: solution -->
 
-<div class="columns">
-<div class="two">
-
-Die drei Gleichgewichtsgleichungen für einen Knoten lassen sich in Matrixform schreiben. Für einen Knoten, an dem die Stäbe 1, 2 und 3 angreifen, sieht das so aus:
-
-$$
-\begin{pmatrix}
-e_{1,x} & e_{2,x} & e_{3,x} \\
-e_{1,y} & e_{2,y} & e_{3,y} \\
-e_{1,z} & e_{2,z} & e_{3,z}
-\end{pmatrix}
-\cdot
-\begin{pmatrix}
-S_1 \\ S_2 \\ S_3
-\end{pmatrix}
-=
-\begin{pmatrix}
--F_{ext,x} \\ -F_{ext,y} \\ -F_{ext,z}
-\end{pmatrix}
-$$
-
-- Die Matrix enthält die x-, y- und z-Komponenten der Einheitsvektoren der Stäbe.
-- Der Vektor $S$ enthält die unbekannten Stabkräfte.
-- Der Vektor auf der rechten Seite enthält die externen Kräfte.
-
-</div>
-<div>
-
-![](./Diagramme/Kraeftegleichgewicht_3D.svg)
-
-</div>
-</div>
-
----
-
-### Globales Gleichungssystem
-
-Stellt man die Gleichungen für alle $k$ Knoten auf, erhält man ein großes lineares Gleichungssystem mit $3k$ Gleichungen.
-
-$A \cdot s = f_{ext}$
-
-- **$A$ (Geometriematrix)**: Eine $3k \times s$ Matrix, die die Geometrie des Fachwerks beschreibt (die Richtungskosinusse der Stäbe). Jede Spalte entspricht einem Stab, jede Zeile einer Gleichgewichtsrichtung an einem Knoten.
-- **$s$ (Stabkraftvektor)**: Ein Vektor der Länge $s$ mit den unbekannten Stabkräften.
-- **$f_{ext}$ (Lastvektor)**: Ein Vektor der Länge $3k$, der die externen Kräfte an allen Knoten enthält.
-
-Nach Einbau der Lagerbedingungen (statisch bestimmtes System) wird die Matrix $A$ quadratisch ($s \times s$) und kann gelöst werden.
-
----
-
-### **Elastisches** Fachwerk in 3D
-
-<div class="columns">
-<div>
-
-- **Knotenverschiebungen**: Der Vektor $\mathbf{u}$ enthält nun für jeden Knoten drei Komponenten ($u_x, u_y, u_z$).
-- **Dimensionsunabhängige Vektorformel:** Die in Abschnitt 7.2 über Taylor-Linearisierung ($|\Delta \vec{u}| \ll L$) hergeleitete Längenänderung gilt in $\mathbb{R}^3$ identisch:
-  $$\Delta L \approx \vec{e}_{ij} \cdot (\vec{u}_j - \vec{u}_i), \quad S = \frac{EA}{L} \Delta L, \quad \vec{f}_j = -\vec{f}_i = S \cdot \vec{e}_{ij}$$
-- **Stab-Steifigkeitsmatrix**: $\mathbf{k}_{\text{Stab}}$ wird zur $6 \times 6$-Matrix, die globale Steifigkeitsmatrix $\mathbf{K}$ hat die Dimension $3k \times 3k$.
-
-</div>
-<div>
-
-![](./Screenshots/FachwerkElastisch3D_Screenshot.png)
-
-</div>
-</div>
-
----
-
-### Die 3D-Stab-Steifigkeitsmatrix (1/2)
-
-Ziel ist es, eine Matrix $\mathbf{k}_{\text{Stab}}$ zu finden, die die Knotenverschiebungen $\mathbf{u}$ direkt mit den resultierenden Knotenkäften $\mathbf{f}_{\text{Stab}}$ in Beziehung setzt: $\mathbf{f}_{\text{Stab}} = \mathbf{k}_{\text{Stab}} \mathbf{u}$.
-
-- **Vektor der Knotenverschiebungen**: $\mathbf{u} = (u_{ix}, u_{iy}, u_{iz}, u_{jx}, u_{jy}, u_{jz})^T$
-- **Vektor der Stabkräfte**: $\mathbf{f}_{\text{Stab}} = (\mathbf{f}_i^T, \mathbf{f}_j^T)^T$
-
-Setzt man die Formeln für $\Delta L$ und $S$ in die Kraftgleichungen ein, erhält man:
-
-$$
-\mathbf{f}_{\text{Stab}} = \frac{EA}{L} \cdot \Delta L \begin{pmatrix} -e_x \\ -e_y \\ -e_z \\ e_x \\ e_y \\ e_z \end{pmatrix} = \frac{EA}{L} \left( \begin{pmatrix} -e_x & -e_y & -e_z & e_x & e_y & e_z \end{pmatrix} \mathbf{u} \right) \begin{pmatrix} -e_x \\ -e_y \\ -e_z \\ e_x \\ e_y \\ e_z \end{pmatrix}
-$$
-
----
-
-### Die 3D-Stab-Steifigkeitsmatrix (2/2)
-
-Das Ausmultiplizieren der Vektoren führt zur **6x6-Stab-Steifigkeitsmatrix** $\mathbf{k}_{\text{Stab}}$:
-
-$$
-\mathbf{k}_{\text{Stab}} = \frac{EA}{L} \begin{pmatrix}
-e_x^2 & e_x e_y & e_x e_z & -e_x^2 & -e_x e_y & -e_x e_z \\
-e_y e_x & e_y^2 & e_y e_z & -e_y e_x & -e_y^2 & -e_y e_z \\
-e_z e_x & e_z e_y & e_z^2 & -e_z e_x & -e_z e_y & -e_z^2 \\
--e_x^2 & -e_x e_y & -e_x e_z & e_x^2 & e_x e_y & e_x e_z \\
--e_y e_x & -e_y^2 & -e_y e_z & e_y e_x & e_y^2 & e_y e_z \\
--e_z e_x & -e_z e_y & -e_z^2 & e_z e_x & e_z e_y & e_z^2
-\end{pmatrix}
-$$
-
-Diese Matrix beschreibt den Zusammenhang zwischen den 6 Verschiebungs-Freiheitsgraden eines Stabes und den daraus resultierenden 6 Knotenkräften im globalen Koordinatensystem.
-
----
-
-### Globales Gleichungssystem
-
-Die globale Steifigkeitsmatrix $\mathbf{K}$ des gesamten Fachwerks wird durch "Assemblierung" der einzelnen Stab-Steifigkeitsmatrizen $\mathbf{k}_{\text{Stab}}$ aufgebaut.
-
-- Für jeden Stab werden die 36 Elemente seiner $\mathbf{k}_{\text{Stab}}$-Matrix an die richtigen Positionen in der globalen Matrix $\mathbf{K}$ addiert. Die Positionen ergeben sich aus den globalen Freiheitsgraden der beiden Knoten des Stabes.
-- Dieser Prozess wird als **Direkte Steifigkeitsmethode** bezeichnet.
-
-Das resultierende globale Gleichungssystem lautet:
-
-$$
-\mathbf{K} \mathbf{u} = \mathbf{f}
-$$
-
-- $\mathbf{K}$: Globale Steifigkeitsmatrix (Größe $3k \times 3k$ für $k$ Knoten)
-- $\mathbf{u}$: Globaler Vektor der unbekannten Knotenverschiebungen
-- $\mathbf{f}$: Globaler Vektor der externen Kräfte
-
----
-
-### Numerische Lösung des Gleichungssystems
-
-Partitioniertes System: $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f - \mathbf{K}_{fp}\mathbf{u}_p \iff \mathbf{K}_{BB}\mathbf{u}_B = \mathbf{f}_B - \mathbf{K}_{BA}\mathbf{u}_A$
+### Auflösung: Blockpartitionierung am 3-Knoten-Träger
 
 <div class="columns top">
-<div>
+<div class="one">
 
-**Ideales Fachwerk ($\mathbf{A} \mathbf{x} = \mathbf{b}$)**
-- Regulär, nicht symmetrisch
-- LU-Faktorisierung mit Pivotisierung:
+**1. Index-Aufteilung**
+- `prescribed` ($p$): `[0, 1, 3]` (3 gesperrte DOFs).
+- `free` ($f$): `[2, 4, 5]` (3 freie DOFs).
+
+**2. Matrixdimensionen**
+- $\mathbf{K}_{ff} \in \mathbb{R}^{3\times 3}$ (quadratisch, SPD).
+- $\mathbf{K}_{pf} \in \mathbb{R}^{3\times 3}$ (gesperrte $\times$ freie DOFs).
+- Ergeben sich direkt aus `free.Length` und `prescribed.Length`.
+
+</div>
+<div class="one">
+
+**3. Gelöstes X-Lager (`DOF 0`)**
+- Das Fachwerk kann sich horizontal frei verschieben (Starrkörper-Translation).
+- $\mathbf{K}_{ff} \in \mathbb{R}^{4\times 4}$ wird **singulär** ($\det = 0$) $\implies$ `Cholesky()` wirft eine Exception!
+
 ```csharp
-// O(2/3 n^3) Aufwand
-Vector<double> x = A.Solve(b);
+// Festlager fehlt -> Eigenwert 0 in K_ff!
+kff.Cholesky().Solve(ff); // ArgumentException
+// Genau dies prüfen Sie in Aufgabe 1.3!
 ```
-- Nie explizit invertieren (`A.Inverse()`)!
-
-</div>
-<div>
-
-**Elastisches Fachwerk ($\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f'$)**
-- $\mathbf{K}_{ff} \equiv \mathbf{K}_{BB}$ ist **symmetrisch positiv-definit**
-- **Cholesky-Zerlegung** ($\mathbf{K}_{ff} = \mathbf{L}\mathbf{L}^T$):
-```csharp
-// O(1/3 n^3): 2x schneller als LU
-var uB = kBB.Cholesky().Solve(fB);
-```
-- Robuster Fallback bei Singularität
 
 </div>
 </div>
+
+> **Merksatz:** Mindestens 3 nicht-parallele Lager-DOFs sperren alle 3 Starrkörper-Bewegungen in 2D (Translation X/Y und Rotation).
 
 ---
-## 7.5: Programmtechnische Umsetzung
+
+![bg](./Illustrationen/Abschnitt_3.jpg)
+
+## 7.3: C#-Implementierung & `Math.NET Numerics`
 
 Dieser Abschnitt umfasst die folgenden Inhalte:
 
-- Datenstrukturen zur Repräsentation eines Fachwerks
-- Klassen für Knoten (`Node`), Stäbe (`Rod`) und das Fachwerk (`Truss`)
-- Verwendung von numerischen Bibliotheken am Beispiel von `Math.NET Numerics`
+- Klassenarchitektur in `TrussFemSolver.sln`
+- `TrussElement`: $\mathbf{K}_e$ und Schnittkraftberechnung
+- `GlobalStiffnessMatrix`: Assemblierung & Partitionierung
+- `CholeskySolver`: Lösung & Fehlerbehandlung bei Singularität
 
 ---
 
-### Programmtechnische Umsetzung: Datenstrukturen für das ideale 2D-Fachwerk
+### Klassenarchitektur der FEM-Engine (`TrussFemSolver.sln`)
 
 <div class="columns">
-<div class="one">
+<div class="two">
 
-Das Modell umfasst drei zentrale Klassen:
+Die Vorlage entkoppelt Physik (`Fem/`) vom WPF-`Canvas`:
 
-- **`Truss`**: Gesamtes Fachwerk mit `Node`- und `Rod`-Listen. `Solve()` berechnet das Gleichgewicht.
-- **`Node`**: Koordinaten, Lagerung (`FixX`, `FixY`) und Lasten (`ForceX`, `ForceY`).
-- **`Rod`**: Stab zwischen zwei Knoten; speichert die Stabkraft `Force`.
+- **`Node`:** `(X, Y)` sowie `DofX`, `DofY`.
+- **`TrussElement`:** `Node1`, `Node2`, $E$, $A$.
+- **`GlobalStiffnessMatrix` & `CholeskySolver`:** Assemblierung, Partitionierung und Lösung.
 
 </div>
-<div class="two">
+<div class="three">
 
 ![](./Diagramme/Model.svg)
 
 </div>
 </div>
 
+> **Architektur-Regel:** Keine UI-Referenzen in `Fem/` – die View konsumiert ausschließlich das Ergebnis-Objekt `FemSolution` (Verschiebungen, Reaktionen, Elementkräfte und Gleichgewichtsstatus) zur reinen Darstellung auf dem WPF-`Canvas`, wodurch die Numerik deterministisch und allokationsfrei testbar bleibt (`dotnet test` in Aufgabe 1.4).
+
 ---
 
-### Die `Node`-Klasse
+### Normalkraftberechnung in C# (`TrussElement.cs`)
 
 <div class="columns">
-<div>
+<div class="two">
 
-Die `Node`-Klasse speichert alle relevanten Informationen für einen einzelnen Knotenpunkt:
-- **`Name`**: Ein Bezeichner für den Knoten.
-- **`PositionX`, `PositionY`**: Die Koordinaten des Knotens in der 2D-Ebene.
-- **`FixX`, `FixY`**: Boole'sche Werte, die angeben, ob der Knoten in X- oder Y-Richtung als Festlager fixiert ist.
-- **`ForceX`, `ForceY`**: Die an diesem Knoten angreifenden externen Kräfte (Lasten).
+Aus den Koordinatendifferenzen `dx`, `dy` und der Stablänge `l` folgen Richtung `(cx, cy)` und Normalkraft:
+
+- Die Knotenverschiebungen `ux1`, `uy1` (an `Node1`) und `ux2`, `uy2` (an `Node2`) werden aus `uGlobal` gelesen.
+- Die Projektion `du` entlang `(cx, cy)` liefert über $\frac{EA}{l}\cdot\Delta L$ direkt die Stabnormalkraft.
 
 </div>
-<div>
+<div class="three">
 
 ```csharp
-public class Node
+public double ComputeNormalForce(Vector<double> uGlobal)
 {
-    public string Name { get; set; }
-    
-    // Position des Knotens
-    public double PositionX { get; set; }
-    public double PositionY { get; set; }
+    double dx = Node2.X - Node1.X;
+    double dy = Node2.Y - Node1.Y;
+    double l = Math.Sqrt(dx * dx + dy * dy);
+    double cx = dx / l, cy = dy / l;
 
-    // Lagerung des Knoten (true = fixiert)
-    public bool FixX { get; set; }
-    public bool FixY { get; set; }
+    double ux1 = uGlobal[Node1.DofX], uy1 = uGlobal[Node1.DofY];
+    double ux2 = uGlobal[Node2.DofX], uy2 = uGlobal[Node2.DofY];
+    double du = (ux2 - ux1) * cx + (uy2 - uy1) * cy;
 
-    // Last- oder Lagerkraft
-    public double ForceX { get; set; }
-    public double ForceY { get; set; }
+    // Hooke: N = (E * A / L) * Delta_L
+    return (YoungsModulus * Area / l) * du;
 }
 ```
 
 </div>
 </div>
 
----
-
-### Die `Rod`-Klasse
-
-<div class="columns">
-<div>
-
-Die `Rod`-Klasse ist die einfachste Struktur:
-- Sie verbindet zwei Knoten (`NodeA`, `NodeB`).
-- Das `Force`-Feld speichert das Ergebnis der Berechnung: die Zug- (positiv) oder Druckkraft (negativ) im Stab.
-
-</div>
-<div>
-
-```csharp
-public class Rod
-{
-    public Node NodeA { get; set; }
-    public Node NodeB { get; set; }
-    
-    // Berechnetes Ergebnis
-    public double Force { get; set; }
-}
-```
-
-</div>
-</div>
+> **Golden Reference:** Im 3-Knoten-Träger der Stufe 1 liefert diese Methode für das Zugband exakt `+5,000 kN` und für die Dachstäbe `-7,071 kN` (Fehler $< 10^{-11}\,\mathrm{N}$).
 
 ---
 
-### Die `Truss`-Klasse
+### Index-Partitionierung in C# (`GlobalStiffnessMatrix.cs`)
 
-<div class="columns">
-<div>
-
-Die `Truss`-Klasse orchestriert das Modell:
-- Sie hält Listen für alle Knoten und Stäbe.
-- `AddNode` und `AddRod` sind "Factory"-Methoden, um das Fachwerk einfach aufzubauen.
-- Die `Solve`-Methode (hier nur angedeutet) ist der Ort, an dem die Koeffizientenmatrix `A` und der Lastvektor `b` aufgebaut und das LGS gelöst wird.
-
-</div>
-<div>
-
-```csharp
-public class Truss
-{
-    public List<Node> Nodes = new List<Node>();
-    public List<Rod> Rods = new List<Rod>();
-
-    public Node AddNode(double posX, double posY,
-        bool fixX, bool fixY, double fx, double fy)
-    {
-        // Knoten erzeugen, registrieren und zurückgeben
-    }
-
-    public Rod AddRod(Node a, Node b) => /* Stab registrieren */;
-
-    public void Solve() => /* LGS A*x = b aufbauen und lösen */;
-}
-```
-
-</div>
-</div>
-
----
-
-### Erweiterung: Datenmodell für das elastische Fachwerk (FEM)
-
-<div class="columns">
-<div>
-
-Für die FEM-Berechnung werden die Datenstrukturen erweitert:
-
-- **`ElasticNode`**: Verschiebungen `DisplacementX`, `DisplacementY` ($u_x, u_y$).
-- **`ElasticRod`**: Elastizitätsmodul `Elasticity` ($E$) und Querschnittsfläche `Area` ($A$).
-- **Schnittkraft (Post-Processing):** Nach Lösen von $\mathbf{K}_{BB} \mathbf{u}_B = \mathbf{f}_B'$:
-  $$S = \frac{EA}{L} \left[ \mathbf{e} \cdot (\mathbf{u}_j - \mathbf{u}_i) \right]$$
-
-</div>
-<div>
-
-```csharp
-public class ElasticNode : Node {
-    public double DisplacementX { get; set; }
-    public double DisplacementY { get; set; }
-}
-public class ElasticRod : Rod {
-    public double Elasticity { get; set; } // E [Pa]
-    public double Area { get; set; }       // A [m^2]
-    public double ComputeNormalForce() {
-        var (a, b) = ((ElasticNode)NodeA, (ElasticNode)NodeB);
-        double dx = b.PositionX - a.PositionX, dy = b.PositionY - a.PositionY;
-        double L = Math.Sqrt(dx * dx + dy * dy);
-        double du = (b.DisplacementX - a.DisplacementX) * (dx / L) + (b.DisplacementY - a.DisplacementY) * (dy / L);
-        return (Elasticity * Area / L) * du;
-    }
-}
-```
-
-</div>
-</div>
-
----
-
-### C#-Implementierung: Index-Partitionierung (`Kff`, `Kpf`, `Ff`)
-
-Extraktion der freien (`free`) und gesperrten (`prescribed`) Freiheitsgrade aus $\mathbf{K}_{\text{global}}$ (`GlobalStiffnessMatrix.cs`):
+Extraktion der freien (`free`) und gesperrten (`prescribed`) Freiheitsgrade für die Submatrizen `kff`, `kpf` und den Lastvektor `ff`:
 
 ```csharp
 var prescribed = FixedDofs.OrderBy(d => d).ToArray();
@@ -1056,6 +653,7 @@ for (int i = 0; i < free.Length; i++) {
     for (int j = 0; j < free.Length; j++)
         kff[i, j] = kGlobal[free[i], free[j]];
 }
+
 var kpf = new DenseMatrix(prescribed.Length, free.Length);
 for (int i = 0; i < prescribed.Length; i++)
     for (int j = 0; j < free.Length; j++)
@@ -1064,27 +662,98 @@ for (int i = 0; i < prescribed.Length; i++)
 
 ---
 
-### Verwendung von Bibliotheken (`Math.NET Numerics`)
+### Cholesky-Lösung & Singularitäts-Schutz (`CholeskySolver.cs`)
 
-- Numerische Bibliotheken bieten hochoptimierte und stabile LGS-Löser.
-- **Ideales Fachwerk:** Direkte Lösung via `A.Solve(b)` (LU-Zerlegung)
-- **Elastisches Fachwerk:** Cholesky-Zerlegung `kff.Cholesky().Solve(ff)` ($\mathbf{K}_{ff} \equiv \mathbf{K}_{BB}$)
+<div class="columns">
+<div class="two">
+
+In `MathNet.Numerics` löst `kff.Cholesky().Solve(ff)` das System $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$ ohne Matrix-Inversion:
+
+- **Was passiert ohne `try/catch`?** Bricht im Track B ein Stab und entsteht ein Mechanismus, stürzt die Anwendung mit einer unbehandelten `ArgumentException` ab!
+- **Saubere Reaktion:** Exception abfangen, als Einsturz melden und Gleichgewicht (`sumX`, `sumY`) als Invariante prüfen.
+
+</div>
+<div class="three">
 
 ```csharp
-using MathNet.Numerics.LinearAlgebra;
-
-// Ideales Fachwerk: Direkte LU-Lösung mit partieller Pivotisierung
-Vector<double> x = A.Solve(b);
-
-// Elastisches Fachwerk: Cholesky-Zerlegung (LL^T) & Auflagerreaktionen f_p = K_pf * u_f
 Vector<double> uf;
 try {
     uf = kff.Cholesky().Solve(ff);
-} catch (ArgumentException ex) { // Falls K_ff nicht positiv definit (Mechanismus!)
-    throw new InvalidOperationException("Tragwerk kinematisch instabil!", ex);
+} catch (Exception ex) {
+    throw new InvalidOperationException(
+        "Cholesky fehlgeschlagen: Tragwerk kinematisch instabil!", ex);
 }
-Vector<double> fp = kpf.Multiply(uf); // Auflagerreaktionskräfte
+
+// Auflagerreaktionen: f_p = K_pf * u_f
+Vector<double> fp = kpf.Multiply(uf);
+
+// Globales Gleichgewicht prüfen: sum(F_ext + F_reac) = 0
+double sumX = 0.0, sumY = 0.0;
+for (int dof = 0; dof < model.TotalDofs; dof++) {
+    double f = model.ExternalForces[dof] +
+        (solution.ReactionForces.TryGetValue(dof, out var r) ? r : 0.0);
+    if (dof % 2 == 0) sumX += f; else sumY += f;
+}
 ```
+
+</div>
+</div>
+
+---
+
+<!-- _class: activity -->
+
+### Frage: Bug-Hunt im Cholesky-Löser
+
+Ein Team implementiert den Einsturz-Check für **Track B** wie folgt, erhält aber *immer* eine Cholesky-Exception – selbst bei einer stabilen Brücke:
+
+```csharp
+// Fehlerhafte Implementierung im Bridge Constructor (Track B)
+var kGlobal = model.AssembleGlobalMatrix();
+// Fehlt: FixedDofs + Partition() -> kGlobal ist immer singulär!
+var uf = kGlobal.Cholesky().Solve(model.ExternalForces);
+```
+
+1. Warum schlägt `kGlobal.Cholesky()` selbst bei einem korrekt gelagerten Fachwerk fehl?
+2. Welche zwei Schritte fehlen vor dem Aufruf von `.Cholesky()`?
+3. Warum darf `kGlobal.Inverse()` auch bei einer regulären Matrix nicht verwendet werden?
+
+> **Hinweis:** Überlegen Sie, welche Eigenwerte `kGlobal` vor dem Einbau von `FixedDofs` besitzt, warum ein ungelagerter Körper sich frei im Raum verschieben kann und welche Methode in `GlobalStiffnessMatrix.cs` genau dafür fehlt.
+
+---
+
+<!-- _class: solution -->
+
+### Auflösung: Bug-Hunt im Cholesky-Löser
+
+<div class="columns top">
+<div class="one">
+
+**1. Ursache der Exception**
+- `kGlobal` enthält noch alle gesperrten Lager-DOFs unpartitioniert ($\det(\mathbf{K}) = 0$ durch 3 Starrkörper-Moden).
+
+**2. Fehlende Schritte**
+- `FixedDofs` setzen, per `Partition()` das Tupel `part` (`kff`, `kpf`, `ff`) extrahieren, dann `uf` und `fp` berechnen.
+
+</div>
+<div class="one">
+
+**3. Korrekter Fix & Verbot von `.Inverse()`**
+- `.Inverse()` ist $3\times$–$6\times$ langsamer als Cholesky und numerisch schlechter konditioniert:
+
+```csharp
+var part = model.Partition();
+// 1. Verschiebungen u_f via Cholesky lösen
+var uf = part.Kff.Cholesky().Solve(part.Ff);
+// 2. Auflagerreaktionen f_p berechnen
+var fp = part.Kpf.Multiply(uf);
+// Gleichgewicht: sum(F_ext + fp) == 0
+```
+
+</div>
+</div>
+
+> **Merksatz:** Niemals `kGlobal.Cholesky()` aufrufen – immer zuerst über `FixedDofs` in `kff` partitionieren und erst dann faktorisieren; bei Singularität gezielt eine `InvalidOperationException` auslösen, um den Einsturz sauber anzuzeigen!
 
 ---
 
@@ -1092,12 +761,29 @@ Vector<double> fp = kpf.Multiply(uf); // Auflagerreaktionskräfte
 
 # Zusammenfassung Kapitel 7
 
-- **Statische Modelle** beschreiben Systeme im Kräfte- und Momentengleichgewicht.
-- Das **ideale Fachwerk (2D und 3D)** beruht auf reinen Zug- und Druckstäben mit gelenkigen Knoten und führt zu einem linearen Gleichungssystem $\mathbf{A} \mathbf{s} = \mathbf{f}$.
-- Das **elastische Fachwerk (2D und 3D)** berücksichtigt die Dehnbarkeit der Stäbe nach dem Hooke'schen Gesetz. Die Linearisierung für kleine Verformungen führt zur Stab-Steifigkeitsmatrix $\mathbf{k}_{\text{Stab}}$.
-- Durch **Assemblierung** aller Stabsteifigkeiten und Einbau der Randbedingungen entsteht das globale Gleichungssystem $\mathbf{K} \mathbf{u} = \mathbf{f}$.
-- Für die **programmtechnische Lösung** des LGS eignen sich direkte Verfahren (Gauß, LU) und iterative Methoden (z.B. mit `Math.NET Numerics`).
-- Die Visualisierung der berechneten Verformungen und Kräfte erfolgt über 2D-Vektorgrafiken (Kapitel 3) bzw. 3D-OpenGL (Kapitel 5).
+- **Statische Modelle** beschreiben das zeitunabhängige Kräfte- und Momentengleichgewicht ($\sum \vec{F} = \vec{0}$, $\sum \vec{M} = \vec{0}$).
+- **Ideales Fachwerk ($\mathbf{A}\mathbf{x} = \mathbf{b}$):** Berechnet reine Stabkräfte bei starren Stäben; $\det(\mathbf{A}) = 0$ signalisiert einen kinematischen Mechanismus.
+- **Elastisches Fachwerk (FEM):** Die Linearisierung $\Delta L \approx \vec{n}\cdot(\vec{u}_j - \vec{u}_i)$ und das Hooke'sche Gesetz liefern die symmetrische $4\times 4$-Elementsteifigkeitsmatrix $\mathbf{K}_e$.
+- **Blockpartitionierung & Cholesky:** Durch Aufteilung in freie ($f$) und gesperrte ($p$) DOFs entsteht das SPD-System $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$, das via $\mathbf{K}_{ff} = \mathbf{L}\mathbf{L}^\top$ doppelt so schnell wie LU gelöst wird.
+- **Ingenieur-Checks:** Auflagerreaktionen $\mathbf{f}_p = \mathbf{K}_{pf}\mathbf{u}_f$, globales Gleichgewicht ($\sum \vec{F} = \vec{0}$) und Euler-Knicklast $N_{\text{knick}} = \frac{\pi^2 E I}{L^2}$.
+
+---
+
+<!-- _class: appendix -->
+
+### Vertiefende Anhänge (Selbststudium)
+
+Ergänzende Herleitungen und die räumliche Verallgemeinerung stehen in zwei optionalen Begleitfolien bereit:
+
+| Anhang | Thema | Kerninhalte für das Selbststudium |
+| :--- | :--- | :--- |
+| **[Anhang A](./Folien_Anhang_A_Grundlagen_LGS.md)** | **Historie, LGS-Löser & Trafo** | Pioniere (Whipple, Culmann, Maxwell), Gauß-Elimination, LU-Zerlegung, Jacobi-Iteration & $\mathbf{K}_e = \mathbf{T}^\top \mathbf{k}_e^{\text{loc}} \mathbf{T}$. |
+| **[Anhang B](./Folien_Anhang_B_3D_Fachwerke.md)** | **Erweiterung auf 3D-Fachwerke** | 3 Freiheitsgrade pro Knoten ($3k \times 3k$-System), räumliches Knotengleichgewicht & $6 \times 6$-Elementsteifigkeitsmatrix. |
+
+- Alle Formeln und C#-Muster der Anhänge bauen nahtlos auf der 2D-Notation dieses Hauptdecks auf.
+- Die PDF-Exporte der Anhänge stehen automatisch parallel zum Hauptfoliensatz in Moodle bereit.
+
+> **Hinweis:** Der prüfungsrelevante Stoff für **Hausübung 07** und **Moodle-Test 3** ist vollständig im Hauptdeck enthalten; die Anhänge dienen der freiwilligen Vertiefung.
 
 ---
 
@@ -1105,10 +791,32 @@ Vector<double> fp = kpf.Multiply(uf); // Auflagerreaktionskräfte
 
 ### Ausblick: Vom Gleichgewicht zur Bewegung (Termin 08)
 
-Mit der FEM-Steifigkeitsmatrix $\mathbf{K}\mathbf{u} = \mathbf{f}$ und der Cholesky-Zerlegung beherrschen wir nun das **zeitunabhängige statische Gleichgewicht** ($\sum \vec{F} = \mathbf{0}$):
+<div class="columns top">
+<div class="one">
 
-- **Wo Statik endet:** Sobald Antriebskräfte, Trägheiten und Dämpfungen wirken ($\sum \vec{F} = m \cdot \ddot{\mathbf{x}} \neq \mathbf{0}$), reicht kein einzelnes lineares Gleichungssystem mehr aus.
-- **Nächster Schritt (Termin 08):** Wir steigen ein in **kontinuierliche Differentialgleichungen (ODEs)**, modulare S-Functions, **Runge-Kutta 4 (RK4)** und geschlossene PID-Regelkreise!
+**Wo Statik endet (Heute – T07)**
+- Zeitunabhängiges Gleichgewicht: $\sum \vec{F} = \vec{0}$.
+- Einmalige Lösung von $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$ via Cholesky liefert den Endzustand.
+- Keine Massenträgheit, keine Dämpfung, keine Zeitachse $t$.
+- Jeder Belastungsfall ist eine statische Momentaufnahme.
+
+</div>
+<div class="one">
+
+**Nächster Schritt: Dynamik (Termin 08)**
+- Bewegungsgleichung mit Trägheit & Dämpfung: $m\ddot{\mathbf{x}} + d\dot{\mathbf{x}} + k\mathbf{x} = \mathbf{f}(t)$.
+- **Kontinuierliche ODEs**, modulare S-Functions, **Runge-Kutta 4 (RK4)** und PID-Regelkreise:
+
+```csharp
+// T08: Zeitintegration statt einmaligem LGS
+state = rk4.Step(state, t, dt, sFunction);
+// Zeitschrittverfahren für dynamische Systeme
+```
+
+</div>
+</div>
+
+> **Wichtiger Termin-Hinweis:** Zu Beginn von **Termin 08** findet **Moodle-Test 3** (Stoff: Kapitel 05–07) statt – nutzen Sie zur Vorbereitung die unbegrenzten Moodle-Übungstests (`Test_01`–`Test_03`) im Kursbereich und prüfen Sie Ihre Vorjahres-Notizen!
 
 ---
 
@@ -1116,7 +824,7 @@ Mit der FEM-Steifigkeitsmatrix $\mathbf{K}\mathbf{u} = \mathbf{f}$ und der Chole
 
 ### Hausübung Termin 07: Statik, FEM & Cholesky
 
-**Stufe 1 (Basisaufgabe `1.1`–`1.3` für alle Teams auf `TrussFemSolver.sln`):** Auflager-/Kraftpfeile, 5-Knoten-Auslegerkran & Singularitäts-Test ([Aufgabenblatt 07](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Vertiefung – Wahl: Track A ODER Track B, 10 Pkt.):**
+**Stufe 1 (`1.1`–`1.3` auf `TrussFemSolver.sln`):** Auflager-/Kraftpfeile, 5-Knoten-Auslegerkran & Singularitäts-Test ([Aufgabenblatt 07](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">
@@ -1126,18 +834,19 @@ Mit der FEM-Steifigkeitsmatrix $\mathbf{K}\mathbf{u} = \mathbf{f}$ und der Chole
 - Reale Hallenkran-Geometrie ($24\,\text{m}$)
 - Wanderlast $F_{\text{Last}} = 50\,\text{kN}$ (Laufkatze)
 - Math.NET Cholesky-Lösung für $\mathbf{u}$
-- Farbgradient (Zug blau, Druck rot)
+- Zug-/Druck-Farbgradient & Euler-Knicknachweis
 
 </div>
 <div class="two">
 
 #### Stufe 2 – Track B: Bridge Constructor (Game)
 - **Verheiratung mit T03:** Interaktive Brücke
-- LKW-Überfahrt mit dynamischer Achslast
+- Lastkraftwagen (LKW)-Überfahrt mit Achslast
 - Cholesky-Statik in jedem Zeitschritt
-- Knicknachweis & Bruch ($S \ge S_{\text{krit}}$)
-- Dynamischer Einsturz kollabierender Stäbe
+- Knicknachweis & Stabbruch ($|N_e| > N_{\max}$)
+- Einsturz-Detektion bei singulärer $\mathbf{K}_{ff}$
 
 </div>
 </div>
 
+> **Selbsttest:** Verifizieren Sie Ihre Stufe-1-Implementierung gegen die *Golden Reference Numbers* ($u_{y3} = -1{,}823\,\text{mm}$, $F_{y1} = F_{y2} = +5{,}00\,\text{kN}$) und bringen Sie alle Tests mit `dotnet test` auf Grün. Abgabe als Git-Commit bis zum nächsten Termin!

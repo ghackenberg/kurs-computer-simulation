@@ -13,7 +13,7 @@
 - **Vorgreif-Sperre (Technologie-Stand T05):** `SharpGL.WPF`, homogene $4\times 4$-Matrizen, `OrbitCamera`, `SceneNode`, Vorwärtskinematik. *Strikte Tabus:* Kein Multithreading (erst T06), keine inversen Jacobi-LGS (erst T07).
 - **Kapitel-Brücken & Quiz-Zuordnung:**
   - **Rückwärts ($\leftarrow$):** [`T03`](../03_Vektorgrafik_und_Canvas/Konzept.md) (Kontrast linkshändiges 2D-Canvas vs. rechtshändiges 3D-OpenGL; isotrope `aspect`-Skalierung); [`T04`](../04_Telemetrie_und_ScottPlot/Konzept.md) (`MSAGL`-Baumstruktur als Vorläufer des 3D-Szenengraphen `SceneNode`).
-  - **Vorwärts ($\to$):** [`T07`](../07_Statik_FEM_Cholesky/Konzept.md) (Die in T05 hergeleitete SCARA-*Vorwärtskinematik* $(\theta_1, \theta_2) \mapsto (x, z)$ mit $L_1, L_2$ wird in T07 als *Inverse Kinematik* $(x, z) \mapsto (\theta_1, \theta_2)$ über die Jacobi-Matrix $\mathbf{J}$ numerisch invertiert); [`T10`](../10_Hybride_Dynamik_Synthese/Konzept.md) (3D-Anlagenmodell als Frontend der Virtuellen Inbetriebnahme).
+  - **Vorwärts ($\to$):** [`T10`](../10_Hybride_Dynamik_Synthese/Konzept.md) (3D-Anlagenmodell als Frontend der Virtuellen Inbetriebnahme).
   - **Geprüft in:** **Quiz 03** (zu Beginn von [`T08`](../08_DGL_und_SFunctions/Konzept.md), prüft Kap. 05–07).
 
 ## 2. Lernziele der Vorlesung (Bloom-Kaskade)

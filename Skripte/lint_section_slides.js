@@ -176,7 +176,7 @@ function lintSectionDeck(markdownPath) {
   const chapNumMatchEarly = deckName.match(/^(\d+)_/);
   const chapNumEarly = chapNumMatchEarly ? parseInt(chapNumMatchEarly[1], 10) : -1;
   const strictRhythm = chapNumEarly <= 5 || chapNumEarly >= 6;
-  const STRICT_FULLBLEED_CHAPTERS = new Set([0, 1, 2, 3, 4, 5, 6]);
+  const STRICT_FULLBLEED_CHAPTERS = new Set([0, 1, 2, 3, 4, 5, 6, 7]);
   const strictFullBleed = STRICT_FULLBLEED_CHAPTERS.has(chapNumEarly);
 
   slides.forEach((slide, idx) => {

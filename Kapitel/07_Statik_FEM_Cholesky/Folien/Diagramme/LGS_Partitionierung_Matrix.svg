@@ -123,9 +123,6 @@ text {
     </style>
   </defs>
 
-  <!-- Outer Canvas Background -->
-  <rect class="sem-card" x="5" y="5" width="950" height="430" rx="10" stroke-width="1.5"/>
-
   <!-- Top Title Banner -->
   <path class="sem-muted sem-card-stroke" d="M 5 15 Q 5 5 15 5 L 945 5 Q 955 5 955 15 L 955 42 L 5 42 Z" stroke-width="1"/>
   <text class="sem-primary-text" x="24" y="27" font-size="15" font-weight="bold">LGS-Partitionierung: Randbedingungen &amp; Blockzerlegung</text>
@@ -133,16 +130,16 @@ text {
 
   <!-- ==================== MATRIX & VECTOR BACKGROUNDS & GEOMETRY ==================== -->
   <!-- Matrix K: Block K_ff (Frei/Beweglich, n_f x n_f) -->
-  <rect x="45" y="65" width="165" height="135" rx="6" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2.5"/>
+  <rect class="sem-success" x="45" y="65" width="165" height="135" rx="6" stroke-width="2.5"/>
 
   <!-- Matrix K: Block K_fp (Kopplung frei-fest, n_f x n_p) -->
-  <rect x="215" y="65" width="95" height="135" rx="6" fill="#ECEFF1" stroke="#90A4AE" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <rect class="sem-muted" x="215" y="65" width="95" height="135" rx="6" stroke-width="1.5" stroke-dasharray="4,4"/>
 
   <!-- Matrix K: Block K_pf (Kopplung fest-frei, n_p x n_f) -->
-  <rect class="sem-info-stroke" x="45" y="205" width="165" height="75" rx="6" fill="#E1F5FE" stroke-width="2"/>
+  <rect class="sem-info" x="45" y="205" width="165" height="75" rx="6" stroke-width="2"/>
 
   <!-- Matrix K: Block K_pp (Lager-Lager, n_p x n_p) -->
-  <rect x="215" y="205" width="95" height="75" rx="6" fill="#CFD8DC" stroke="#78909C" stroke-width="1.5"/>
+  <rect class="sem-muted" x="215" y="205" width="95" height="75" rx="6" stroke-width="1.5"/>
 
   <!-- Large Structural Brackets for Matrix K -->
   <path class="sem-neutral-stroke" d="M 40 65 L 34 65 L 34 280 L 40 280" fill="none" stroke-width="2.5"/>
@@ -177,15 +174,14 @@ text {
   <!-- Strike-through diagonal red cancellation lines indicating u_p = 0 elimination -->
   <line class="sem-danger-stroke" x1="225" y1="75" x2="300" y2="190" stroke-width="2.5" stroke-opacity="0.6"/>
   <line class="sem-danger-stroke" x1="355" y1="215" x2="405" y2="270" stroke-width="2.5" stroke-opacity="0.6"/>
-  <line class="sem-muted-stroke" x1="225" y1="215" x2="300" y2="270" stroke-width="2" stroke-dasharray="3,3" stroke-opacity="0.7"/>
 
   <!-- ==================== LABELS INSIDE MATRIX & VECTORS (WITH SHIELDS) ==================== -->
   <!-- Block K_ff labels -->
   <rect class="sem-success-stroke" x="52" y="73" width="151" height="20" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
-  <text x="127" y="87" font-size="13" font-weight="bold" fill="#1B5E20" text-anchor="middle">K_ff (Freie FG)</text>
+  <text class="sem-success-text" x="127" y="87" font-size="13" font-weight="bold" text-anchor="middle">K_ff (Freie FG)</text>
 
   <rect x="52" y="98" width="151" height="18" rx="3" fill="#FFFFFF"/>
-  <text x="127" y="111" font-size="12" fill="#2E7D32" text-anchor="middle">Größe: n_f × n_f</text>
+  <text class="sem-success-text" x="127" y="111" font-size="12" text-anchor="middle">Größe: n_f × n_f</text>
 
   <rect class="sem-success" x="52" y="122" width="151" height="20" rx="3" stroke-width="0.8"/>
   <text class="sem-success-text" x="127" y="136" font-size="12" font-weight="bold" text-anchor="middle">SPD (Symm. Pos.-Def.)</text>
@@ -217,7 +213,7 @@ text {
   <text class="sem-info-text" x="127" y="247" font-size="12" text-anchor="middle">n_p × n_f (Lagerreakt.)</text>
 
   <rect class="sem-info" x="52" y="255" width="151" height="18" rx="3" stroke="none"/>
-  <text x="127" y="268" font-size="12" font-weight="bold" fill="#075985" text-anchor="middle">Berechnet Lagerkräfte</text>
+  <text class="sem-info-text" x="127" y="268" font-size="12" font-weight="bold" text-anchor="middle">Berechnet Lagerkräfte</text>
 
   <!-- Block K_pp labels -->
   <rect class="sem-muted-stroke" x="220" y="211" width="85" height="20" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
@@ -259,13 +255,13 @@ text {
   <text class="sem-info-text" x="485" y="89" font-size="15" font-weight="bold" text-anchor="middle">f_f</text>
 
   <rect class="sem-primary" x="453" y="103" width="64" height="18" rx="3" stroke="none"/>
-  <text class="sem-info-text" x="485" y="116" font-size="12" font-weight="bold" text-anchor="middle">Bekannt</text>
+  <text class="sem-primary-text" x="485" y="116" font-size="12" font-weight="bold" text-anchor="middle">Bekannt</text>
 
   <rect x="453" y="125" width="64" height="18" rx="3" fill="#FFFFFF"/>
-  <text x="485" y="138" font-size="12" fill="#075985" text-anchor="middle">Äußere</text>
+  <text class="sem-info-text" x="485" y="138" font-size="12" text-anchor="middle">Äußere</text>
 
   <rect x="453" y="145" width="64" height="18" rx="3" fill="#FFFFFF"/>
-  <text x="485" y="158" font-size="12" fill="#075985" text-anchor="middle">Knotenlast</text>
+  <text class="sem-info-text" x="485" y="158" font-size="12" text-anchor="middle">Knotenlast</text>
 
   <rect x="453" y="170" width="64" height="18" rx="3" fill="#FFFFFF"/>
   <text class="sem-info-text" x="485" y="183" font-size="12" font-weight="bold" text-anchor="middle">[ N ]</text>

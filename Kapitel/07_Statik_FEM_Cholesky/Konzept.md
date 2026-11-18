@@ -6,11 +6,12 @@
 ---
 
 ## 1. Artefakte, Vorgreif-Sperre & Kapitel-Schnittstellen
-- **Foliensatz:** [`Folien/Folien.md`](./Folien/Folien.md)
+- **Foliensatz:** [`Folien/Folien.md`](./Folien/Folien.md) | **Anhänge:** [`Folien_Anhang_A_Grundlagen_LGS.md`](./Folien/Folien_Anhang_A_Grundlagen_LGS.md), [`Folien_Anhang_B_3D_Fachwerke.md`](./Folien/Folien_Anhang_B_3D_Fachwerke.md)
+- **Abgrenzung Hauptdeck vs. Anhang (optional fürs Selbststudium):** *Hauptdeck (`Folien.md`):* Statisches Gleichgewicht, ideales 2D-Fachwerk ($\mathbf{A}\mathbf{s}=\mathbf{b}$), Lösbarkeit/Mechanismus, elastisches 2D-Fachwerk (Hooke, Linearisierung $\Delta L$, $4\times 4$-Matrix $\mathbf{K}_e$, Assemblierung, Blockpartitionierung $\mathbf{K}_{ff}\mathbf{u}_f=\mathbf{f}_f$, Cholesky $\mathbf{L}\mathbf{L}^\top$, Euler-Knicklast) und C#-Umsetzung in `TrussFemSolver` (vollständig für Übung & Quiz 3). *Anhang A (`Folien_Anhang_A_Grundlagen_LGS.md`):* Historische Entwicklung, Gauß-Elimination, LU-Zerlegung, Jacobi-Iteration und Koordinatentransformation $\mathbf{T}^\top \mathbf{k}_e^{\text{loc}}\mathbf{T}$. *Anhang B (`Folien_Anhang_B_3D_Fachwerke.md`):* Erweiterung von 2D auf 3D ($6\times 6$-Elementsteifigkeitsmatrix, $3k\times 3k$-System).
 - **Übungsblatt & Vorlage:** [`Aufgabenblatt.md`](./Uebung/Aufgabenblatt.md) | **Moodle-Text:** [`Text.md`](./Moodle/Text.md) | [`TrussFemSolver.sln`](./Uebung/Vorlage/TrussFemSolver.sln)
-- **Vorgreif-Sperre (Technologie-Stand T07):** `MathNet.Numerics`, Steifigkeitsmatrix $\mathbf{K}$, Cholesky ($\mathbf{L}\mathbf{L}^\top$), Newton-Raphson ($\mathbf{J}$). *Strikte Tabus:* Noch keine dynamischen ODE-Solver höherer Ordnung (RK4 erst T08).
+- **Vorgreif-Sperre (Technologie-Stand T07):** `MathNet.Numerics`, Steifigkeitsmatrix $\mathbf{K}$, Cholesky ($\mathbf{L}\mathbf{L}^\top$). *Strikte Tabus:* Noch keine dynamischen ODE-Solver höherer Ordnung (RK4 erst T08).
 - **Kapitel-Brücken & Quiz-Zuordnung:**
-  - **Rückwärts ($\leftarrow$):** [`T03`](../03_Vektorgrafik_und_Canvas/Konzept.md) (Das in T03 rein geometrisch gezeichnete 2D-Fachwerk samt JSON-Format erhält nun seine FEM-Physik $\mathbf{K}\mathbf{u}=\mathbf{f}$); [`T05`](../05_3D_OpenGL_Szenengraph/Konzept.md) (Die SCARA-Vorwärtskinematik $L_1, L_2, \theta_1, \theta_2$ wird via Jacobi-Matrix $\mathbf{J}$ und Newton-Raphson invertiert).
+  - **Rückwärts ($\leftarrow$):** [`T03`](../03_Vektorgrafik_und_Canvas/Konzept.md) (Das in T03 rein geometrisch gezeichnete 2D-Fachwerk samt JSON-Format erhält nun seine FEM-Physik $\mathbf{K}\mathbf{u}=\mathbf{f}$); [`T06`](../06_Multithreading_und_TPL/Konzept.md) (Aufbauend auf der parallelen Infrastruktur starten nun die 4 Simulationsmodellarten T07–T10).
   - **Vorwärts ($\to$):** [`T08`](../08_DGL_und_SFunctions/Konzept.md) (Übergang vom statischen Kräftegleichgewicht $\sum \vec{F} = \mathbf{0}$ zur dynamischen Bewegungsgleichung $m\ddot{\mathbf{x}} + d\dot{\mathbf{x}} + k\mathbf{x} = \mathbf{f}(t)$).
   - **Geprüft in:** **Quiz 03** (zu Beginn von [`T08`](../08_DGL_und_SFunctions/Konzept.md), prüft Kap. 05–07).
 
