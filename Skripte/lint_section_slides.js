@@ -394,23 +394,28 @@ function lintSectionDeck(markdownPath) {
       });
     }
 
-    // 4. Gewichtete Vortragszeit pro Folientyp schätzen
+    // 4. Gewichtete Vortragszeit pro Folientyp schätzen (kalibriert nach Hörsaal-Praxis)
     let slideMins = 3.5;
     if (/###\s+.*(?:Live-Showcase|Hausübung)/i.test(slide)) {
       slideMins = 0;
     } else if (/<!--\s*_class:\s*solution\s*-->/i.test(slide)) {
-      slideMins = 1.5;
+      slideMins = 2.0;
       contentSlideCount++;
     } else if (/<!--\s*_class:\s*activity\s*-->/i.test(slide)) {
-      slideMins = 3.0;
+      slideMins = /^###\s+Aufgabe:/m.test(slide) ? 5.5 : 4.5;
       contentSlideCount++;
-    } else if (chapterMatch || sectionMatch || /^#\s+Zusammenfassung/im.test(slide) || /<!--\s*_class:\s*appendix\s*-->/i.test(slide)) {
+    } else if (/^#\s+Zusammenfassung/im.test(slide)) {
+      slideMins = 2.0;
+    } else if (chapterMatch || sectionMatch || /<!--\s*_class:\s*appendix\s*-->/i.test(slide)) {
       slideMins = 0.5;
     } else if (/###\s+Kontext\s*&\s*Einordnung:/i.test(slide)) {
       slideMins = 2.0;
       contentSlideCount++;
     } else if (/###\s+.*(?:Blick unter die Haube|Herleitung|Mathematik|Kontrast)/i.test(slide) || (/!\[[^\]]*\]\(\.\/Diagramme\/[^)]+\.svg\)/i.test(slide) && /\$\$[\s\S]+?\$\$/.test(slide))) {
       slideMins = 4.5;
+      contentSlideCount++;
+    } else if (/\$\$[\s\S]+?\$\$/.test(slide) || /```/i.test(slide)) {
+      slideMins = 4.0;
       contentSlideCount++;
     } else {
       slideMins = 3.5;
@@ -634,7 +639,8 @@ function lintSectionDeck(markdownPath) {
     }
     const hasQuiz = [3, 5, 8, 10].includes(chapNum);
     const hasShowcase = chapNum >= 2;
-    budgetMinutes = 150 - 15 - (hasShowcase ? 15 : 0) - 5 - (hasQuiz ? 15 : 0);
+    // 15 Min. Pause, 15 Min. Showcase, 5 Min. Hausübung, 15 Min. Quiz, 10 Min. Frage-/Übergangspuffer
+    budgetMinutes = 150 - 15 - (hasShowcase ? 15 : 0) - 5 - (hasQuiz ? 15 : 0) - 10;
     if (estimatedMinutes > budgetMinutes) {
       warnings.push({
         type: 'TIME_BUDGET_EXCEEDED',

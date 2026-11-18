@@ -15,14 +15,16 @@ Verbindliche Regeln für den Aufbau, das Layout und die Prüfung von MARP-Vorles
 ## 1. Folien-Dramaturgie & Kapitel-Rahmen
 
 1. **Gewichtetes Netto-Zeitbudget (statt pauschaler Folienzahl):**
-   - Von den **150 Min.** Gesamtzeit gehen feste Blöcke ab: **15 Min. Pause**, **15 Min. Showcase & Code-Defense** *(ab T02)*, **5 Min. Hausübungs-Briefing** *(T01–T10)* sowie **15 Min. Moodle-Quiz** *(nur T03, T05, T08, T10)*.
-   - $\implies$ **Netto-Vorlesungszeit:** **115 Min.** ohne Quiz (*T01: 130 Min.*) bzw. **100 Min.** an Quiz-Terminen (*T03, T05, T08, T10*).
-   - Kalkuliere die Folien nach **Folientyp-Gewichten** (geprüft durch `npm run lint:sections:XX`):
-     - `Showcase` / `Hausübung`: **0 Min.** *(eigener Block)*
-     - `Kapitel-Opener` / `Abschnitts-Opener` / `Zusammenfassung`: **0,5 Min.**
-     - `Rückblick & Brücke`: **2,0 Min.**
-     - `Standard-Inhaltsfolie` *(Beispiel, Code, Überblick)*: **3,5 Min.**
-     - `Schwere Erklär-Folie` *(„Blick unter die Haube“, Herleitung, komplexes Kontrast-SVG)*: **4,5 Min.**
+   - Von den **150 Min.** Gesamtzeit gehen feste Blöcke ab: **15 Min. Pause**, **15 Min. Showcase & Code-Defense** *(ab T02)*, **5 Min. Hausübungs-Briefing** *(T01–T10)*, **10 Min. Frage-/Übergangspuffer** sowie **15 Min. Moodle-Quiz** *(nur T03, T05, T08, T10)*.
+   - $\implies$ **Netto-Vorlesungszeit:** **105 Min.** ohne Quiz (*T01: 120 Min.*) bzw. **90 Min.** an Quiz-Terminen (*T03, T05, T08, T10*).
+   - Kalkuliere die Folien nach **kalibrierten Folientyp-Gewichten** (geprüft durch `npm run lint:sections:XX`):
+     - `Showcase` / `Hausübung`: **0 Min.** *(eigener Block im Fixabzug)*
+     - `Kapitel-Opener` / `Abschnitts-Opener` / `Appendix`-Hinweis: **0,5 Min.**
+     - `Rückblick & Brücke` / `Zusammenfassung`: **2,0 Min.**
+     - `Standard-Inhaltsfolie` / `Ausblick`: **3,5 Min.**
+     - `Mathe- oder Code-Folie ohne SVG` (`$$...$$` oder Codeblock): **4,0 Min.**
+     - `Schwere Erklär-Folie` *(„Blick unter die Haube“, Herleitung, Kontrast, `SVG + $$`)*: **4,5 Min.**
+     - `activity`-Folie (`4,5 Min.` bei `Frage:`, `5,5 Min.` bei `Aufgabe:`) + `solution`-Folie (`2,0 Min.`)
    - Richtwert in der Praxis: ca. **28–32 Folien** an Quiz-Terminen bzw. **32–36 Folien** ohne Quiz. Keine separaten Kleinst-Folien für triviale 1-Zeilen-API-Aufrufe.
 5. **Visueller Rhythmus & Layout-Shift (`lint:sections`):**
    - Reine Textfolien (ohne Grafik/SVG und ohne Code) dürfen niemals direkt aufeinanderfolgen (`CONSECUTIVE_TEXT_SLIDES`) – spätestens jede zweite Inhaltsfolie bringt eine Grafik oder ein Code-Element.

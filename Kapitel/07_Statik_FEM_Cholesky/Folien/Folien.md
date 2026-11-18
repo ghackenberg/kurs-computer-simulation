@@ -254,7 +254,7 @@ Vector<double> x = aSpd.Cholesky().Solve(b); // Blockreduktion K_ff folgt in 7.2
 
 <!-- _class: activity -->
 
-### Aufgabe: Statische Bestimmtheit & Mechanismus
+### Frage: Statische Bestimmtheit & Mechanismus
 
 <div class="columns top">
 <div class="one">
@@ -402,7 +402,7 @@ $$L' = \sqrt{L^2 + 2\vec{L}\cdot\Delta\vec{u} + |\Delta\vec{u}|^2} = L\sqrt{1 + 
 
 <!-- _class: activity -->
 
-### Aufgabe: Längenänderung & Zug/Druck bestimmen
+### Frage: Längenänderung & Zug/Druck bestimmen
 
 Ein horizontaler Stahlstab ($\vec{e} = (1, 0)^\top$, $L = 2\,\text{m}$, $E = 210\,\text{GPa}$, $A = 10^{-4}\,\text{m}^2$) verbindet Knoten $i$ und $j$:
 
@@ -586,121 +586,6 @@ Systemaufteilung ($n_f$ frei, $n_p$ gesperrt; $\mathbf{u}_p=\mathbf{0}$) für $\
 
 ---
 
-### Post-Processing: Stabkräfte, Gleichgewicht & Euler-Knickung
-
-<div class="columns top">
-<div class="one">
-
-**1. Stabnormalkraft $N_e \equiv S$ & Spannung $\sigma_e$**
-$$N_e = \frac{EA}{L}\,\vec{n}\cdot(\vec{u}_j - \vec{u}_i), \qquad \sigma_e = \frac{N_e}{A}$$
-- Die Stabkraft $S$ heißt in der FEM **Normalkraft $N_e$**: $N_e > 0$ Zug (blau), $N_e < 0$ Druck (rot); Vergleich von `stress` ($\sigma_e$) mit der Streckgrenze.
-
-**2. Globale Gleichgewichtsinvariante**
-$$\sum \vec{F}_{\text{ext}} + \sum \vec{F}_{\text{Lager}} = \vec{0} \quad (\text{Fehler } < 10^{-8}\,\mathrm{N})$$
-
-</div>
-<div class="one">
-
-**3. 3D-Erweiterung & Stabilitätsgrenze**
-- **3D-Fachwerke:** Identisches Prinzip ($6\times 6$) in [Anhang B](./Folien_Anhang_B_3D_Fachwerke.md).
-- **Knickung:** Bei Druck ($N_e < 0$) zusätzlich Euler-Knickung prüfen (*nächste Folie*).
-
-```csharp
-double n_e = (e * area / len) * dL;
-double stress = n_e / area; // = sigma_e
-bool ok = IsEquilibriumSatisfied(reactions, loads);
-```
-
-</div>
-</div>
-
-> **Ingenieur-Pflicht:** Prüfen Sie nach jeder FEM-Lösung zuerst `IsEquilibriumSatisfied` ($\sum \vec{F} = \vec{0}$), bevor Sie Ergebnisse visualisieren!
-
----
-
-### Versagensarten: Material-Fließen vs. Euler-Knickung
-
-<div class="columns">
-<div class="two">
-
-Bei Druckstäben ($N_e < 0$) konkurrieren zwei Grenzen:
-
-1. **Material-Fließen:** $|\sigma_e| = \frac{|N_e|}{A} \ge R_{p02}$ ($A = 200\,\text{mm}^2$, $R_{p02} = 235\,\text{MPa} \implies N_{\text{max}} = 47{,}0\,\text{kN}$).
-2. **Elastische Euler-Knickung:**
-   $$N_{\text{knick}} = \frac{\pi^2 E I}{L^2} \implies \text{Versagen falls } |N_e| \ge N_{\text{knick}}$$
-
-```csharp
-bool buckled = n_e < 0 && Math.Abs(n_e) >= nKnick;
-```
-
-</div>
-<div class="three">
-
-![](./Diagramme/Euler_Knickung_Versagen.svg)
-
-</div>
-</div>
-
-> **Merke:** $N_{\text{knick}}$ sinkt quadratisch mit $L$ und hängt vom Flächenträgheitsmoment $I$ ab, nicht nur von $A$!
-
----
-
-<!-- _class: activity -->
-
-### Aufgabe: Blockpartitionierung am 3-Knoten-Träger
-
-In **Hausübung 07 (Stufe 1)** besitzt ein 3-Knoten-Dreiecksträger ($N = 3 \implies 6$ DOFs `[0..5]`) folgende Lagerung:
-
-| Knoten | X-Freiheitsgrad | Y-Freiheitsgrad | Lager-Typ |
-| :---: | :---: | :---: | :--- |
-| **Knoten 0** | `DOF 0` (fest) | `DOF 1` (fest) | Festlager |
-| **Knoten 1** | `DOF 2` (frei) | `DOF 3` (fest) | Loselager (in X verschieblich) |
-| **Knoten 2** | `DOF 4` (frei) | `DOF 5` (frei) | Freier Lastknoten ($F_y = -10\,\text{kN}$) |
-
-1. Welche Indizes liegen in `prescribed` ($p$) und welche in `free` ($f$)?
-2. Welche Dimensionen haben $\mathbf{K}_{ff}$ und $\mathbf{K}_{pf}$?
-3. Was passiert mit $\mathbf{K}_{ff}$, wenn `DOF 0` (Festlager in X) gelöst wird?
-
-> **Hinweis:** Zählen Sie die gesperrten und freien Freiheitsgrade direkt aus der Tabelle ab.
-
----
-
-<!-- _class: solution -->
-
-### Auflösung: Blockpartitionierung am 3-Knoten-Träger
-
-<div class="columns top">
-<div class="one">
-
-**1. Index-Aufteilung**
-- `prescribed` ($p$): `[0, 1, 3]` (3 gesperrte DOFs).
-- `free` ($f$): `[2, 4, 5]` (3 freie DOFs).
-
-**2. Matrixdimensionen**
-- $\mathbf{K}_{ff} \in \mathbb{R}^{3\times 3}$ (quadratisch, SPD).
-- $\mathbf{K}_{pf} \in \mathbb{R}^{3\times 3}$ (gesperrte $\times$ freie DOFs).
-- Ergeben sich direkt aus `free.Length` und `prescribed.Length`.
-
-</div>
-<div class="one">
-
-**3. Gelöstes X-Lager (`DOF 0`)**
-- Das Fachwerk kann sich horizontal frei verschieben (Starrkörper-Translation).
-- $\mathbf{K}_{ff} \in \mathbb{R}^{4\times 4}$ wird **singulär** ($\det = 0$) $\implies$ `Cholesky()` wirft eine Exception!
-
-```csharp
-// Festlager fehlt -> Eigenwert 0 in K_ff!
-kff.Cholesky().Solve(ff); // ArgumentException
-// Genau dies prüfen Sie in Aufgabe 1.3!
-```
-
-</div>
-</div>
-
-> **Merksatz:** Mindestens 3 nicht-parallele Lager-DOFs sperren alle 3 Starrkörper-Bewegungen in 2D (Translation X/Y und Rotation).
-
----
-
 ### Klassenarchitektur der FEM-Engine (`TrussFemSolver.sln`)
 
 <div class="columns">
@@ -721,66 +606,6 @@ Die Vorlage entkoppelt Physik (`Fem/`) vom WPF-`Canvas`:
 </div>
 
 > **Architektur-Regel:** Keine UI-Referenzen in `Fem/` – die View konsumiert ausschließlich das Ergebnis-Objekt `FemSolution` (Verschiebungen, Reaktionen, Elementkräfte und Gleichgewichtsstatus) zur reinen Darstellung auf dem WPF-`Canvas`, wodurch die Numerik deterministisch und allokationsfrei testbar bleibt (`dotnet test` in Aufgabe 1.4).
-
----
-
-### Normalkraftberechnung in C# (`TrussElement.cs`)
-
-<div class="columns">
-<div class="two">
-
-Aus `(c, s) = Direction` und `ux1`, `uy1`, `ux2`, `uy2` in `globalDisplacements` folgt:
-
-- Projektion `deltaL` entlang `(c, s)` liefert die Dehnung `strain`.
-- `YoungsModulus * Area * strain` ergibt Zug ($>0$) bzw. Druck ($<0$).
-- Identisch zur analytischen Formel $\frac{EA}{L}\Delta L$.
-
-</div>
-<div class="three">
-
-```csharp
-public double ComputeNormalForce(Vector<double> globalDisplacements)
-{
-    var (c, s) = Direction;
-    double ux1 = globalDisplacements[Node1.DofX];
-    double uy1 = globalDisplacements[Node1.DofY];
-    double ux2 = globalDisplacements[Node2.DofX];
-    double uy2 = globalDisplacements[Node2.DofY];
-
-    double deltaL = c * (ux2 - ux1) + s * (uy2 - uy1);
-    double strain = deltaL / Length;
-    return YoungsModulus * Area * strain;
-}
-```
-
-</div>
-</div>
-
-> **Golden Reference:** Im 3-Knoten-Träger der Stufe 1 liefert diese Methode für das Zugband exakt `+5,000 kN` und für die Dachstäbe `-7,071 kN` (Fehler $< 10^{-11}\,\mathrm{N}$, geprüft via `dotnet test` in Aufgabe 1.4 – erst bei korrektem Vorzeichen stimmen die Farbwerte im Canvas!).
-
----
-
-### Index-Partitionierung in C# (`GlobalStiffnessMatrix.cs`)
-
-`Partition()` extrahiert die freien (`free`) und gesperrten (`prescribed`) Freiheitsgrade aus `kGlobal` und gibt `(free, prescribed, kff, kpf, ff)` zurück:
-
-```csharp
-var prescribed = FixedDofs.OrderBy(d => d).ToArray();
-var free = Enumerable.Range(0, TotalDofs).Except(FixedDofs).OrderBy(d => d).ToArray();
-var kGlobal = AssembleGlobalMatrix();
-
-var kff = new DenseMatrix(free.Length, free.Length);
-for (int i = 0; i < free.Length; i++)
-    for (int j = 0; j < free.Length; j++)
-        kff[i, j] = kGlobal[free[i], free[j]];
-
-var kpf = new DenseMatrix(prescribed.Length, free.Length);
-for (int i = 0; i < prescribed.Length; i++)
-    for (int j = 0; j < free.Length; j++)
-        kpf[i, j] = kGlobal[prescribed[i], free[j]];
-
-return (free, prescribed, kff, kpf, ff);
-```
 
 ---
 
@@ -876,6 +701,65 @@ var fp = kpf.Multiply(uf);
 </div>
 
 > **Merksatz:** Niemals `kGlobal.Cholesky()` aufrufen – immer zuerst über `FixedDofs` in `kff` partitionieren und erst dann faktorisieren; bei Singularität gezielt eine `InvalidOperationException` auslösen, um den Einsturz sauber anzuzeigen!
+
+---
+
+### Post-Processing: Stabkräfte, Gleichgewicht & Euler-Knickung
+
+<div class="columns top">
+<div class="one">
+
+**1. Stabnormalkraft $N_e \equiv S$ & Spannung $\sigma_e$**
+$$N_e = \frac{EA}{L}\,\vec{n}\cdot(\vec{u}_j - \vec{u}_i), \qquad \sigma_e = \frac{N_e}{A}$$
+- Die Stabkraft $S$ heißt in der FEM **Normalkraft $N_e$**: $N_e > 0$ Zug (blau), $N_e < 0$ Druck (rot); Vergleich von `stress` ($\sigma_e$) mit der Streckgrenze.
+
+**2. Globale Gleichgewichtsinvariante**
+$$\sum \vec{F}_{\text{ext}} + \sum \vec{F}_{\text{Lager}} = \vec{0} \quad (\text{Fehler } < 10^{-8}\,\mathrm{N})$$
+
+</div>
+<div class="one">
+
+**3. 3D-Erweiterung & Stabilitätsgrenze**
+- **3D-Fachwerke:** Identisches Prinzip ($6\times 6$) in [Anhang B](./Folien_Anhang_B_3D_Fachwerke.md).
+- **Knickung:** Bei Druck ($N_e < 0$) zusätzlich Euler-Knickung prüfen (*nächste Folie*).
+
+```csharp
+double n_e = (e * area / len) * dL;
+double stress = n_e / area; // = sigma_e
+bool ok = IsEquilibriumSatisfied(reactions, loads);
+```
+
+</div>
+</div>
+
+> **Ingenieur-Pflicht:** Prüfen Sie nach jeder FEM-Lösung zuerst `IsEquilibriumSatisfied` ($\sum \vec{F} = \vec{0}$), bevor Sie Ergebnisse visualisieren!
+
+---
+
+### Versagensarten: Material-Fließen vs. Euler-Knickung
+
+<div class="columns">
+<div class="two">
+
+Bei Druckstäben ($N_e < 0$) konkurrieren zwei Grenzen:
+
+1. **Material-Fließen:** $|\sigma_e| = \frac{|N_e|}{A} \ge R_{p02}$ ($A = 200\,\text{mm}^2$, $R_{p02} = 235\,\text{MPa} \implies N_{\text{max}} = 47{,}0\,\text{kN}$).
+2. **Elastische Euler-Knickung:**
+   $$N_{\text{knick}} = \frac{\pi^2 E I}{L^2} \implies \text{Versagen falls } |N_e| \ge N_{\text{knick}}$$
+
+```csharp
+bool buckled = n_e < 0 && Math.Abs(n_e) >= nKnick;
+```
+
+</div>
+<div class="three">
+
+![](./Diagramme/Euler_Knickung_Versagen.svg)
+
+</div>
+</div>
+
+> **Merke:** $N_{\text{knick}}$ sinkt quadratisch mit $L$ und hängt vom Flächenträgheitsmoment $I$ ab, nicht nur von $A$!
 
 ---
 
