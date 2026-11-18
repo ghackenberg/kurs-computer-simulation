@@ -168,6 +168,48 @@ Ein **ideales 2D-Fachwerk** besteht aus geraden, gewichtslosen Stäben mit reibu
 
 ---
 
+### Rechenbeispiel: Von Knoten 1 zu zwei Zeilen in $\mathbf{A}\mathbf{x} = \mathbf{b}$
+
+<div class="columns">
+<div class="three">
+
+Am **Festlager-Knoten `1`** greifen Stab `S1` (horizontal, $\vec{e}_{12} = (1;\, 0)^\top$), Stab `S2` (diagonal, $\vec{e}_{14} = (0{,}6;\, 0{,}8)^\top$) und die Lagerreaktionen $A_x, A_y$ an ($\vec{F}_{\text{ext},1} = \vec{0}$):
+
+$$\begin{aligned}
+x\text{-Richtung (Zeile 0):} \quad 1{,}0\cdot S_1 + 0{,}6\cdot S_2 + 1\cdot A_x &= 0 \\
+y\text{-Richtung (Zeile 1):} \quad 0{,}0\cdot S_1 + 0{,}8\cdot S_2 + 1\cdot A_y &= 0
+\end{aligned}$$
+
+- **Eintrag:** Jeder Stab trägt in $\mathbf{A}$ an den 4 Zeilen seiner Endknoten $\pm e_x, \pm e_y$ ein.
+- **Lager:** Festlager liefert $+1$ in Zeile 0 ($A_x$) und Zeile 1 ($A_y$).
+- **Ergebnis:** Alle anderen Spalten dieser beiden Zeilen bleiben `0`!
+
+</div>
+<div class="two">
+
+**Eintrag in der Geometriematrix $\mathbf{A}$** ($S_1, S_2, \dots, A_x, A_y, C_y$):
+
+$$\begin{pmatrix}
+1{,}0 & 0{,}6 & \dots & 1 & 0 & 0 \\
+0{,}0 & 0{,}8 & \dots & 0 & 1 & 0 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots
+\end{pmatrix}
+\begin{pmatrix} S_1 \\ S_2 \\ \vdots \\ A_x \\ A_y \\ C_y \end{pmatrix}
+= \begin{pmatrix} 0 \\ 0 \\ \vdots \end{pmatrix}$$
+
+```csharp
+// Knoten 1 in A eintragen (x = [S_1, S_2, ..., A_x, A_y, C_y])
+a[0, 0] = 1.0; a[0, 1] = 0.6; // x-Zeile: S_1, S_2, A_x
+a[1, 0] = 0.0; a[1, 1] = 0.8; // y-Zeile: S_1, S_2, A_y, C_y
+```
+
+</div>
+</div>
+
+> **Merke:** Jeder Stab erzeugt genau 4 Nicht-Null-Einträge in $\mathbf{A}$ – deshalb bleibt die Matrix dünn besetzt.
+
+---
+
 ### Lösbarkeit: Statische Bestimmtheit vs. Mechanismus
 
 <div class="columns">
@@ -337,17 +379,16 @@ $$\Delta L = |\vec{L} + \Delta\vec{u}| - L = \sqrt{L^2 + 2(\vec{L}\cdot\Delta\ve
 <div class="columns">
 <div class="two">
 
-Bei Stahltragwerken gilt typischerweise $|\Delta\vec{u}| \approx 1\,\text{mm} \ll L \approx 2\,\text{m}$:
+Bei Stahltragwerken gilt typischerweise $|\Delta\vec{u}| \approx 1\,\text{mm} \ll L \approx 2\,\text{m}$. Ausklammern von $L$ liefert:
+
+$$L' = \sqrt{L^2 + 2\vec{L}\cdot\Delta\vec{u} + |\Delta\vec{u}|^2} = L\sqrt{1 + \frac{2\vec{L}\cdot\Delta\vec{u}}{L^2} + \frac{|\Delta\vec{u}|^2}{L^2}}$$
 
 1. Der quadratische Term $\frac{|\Delta\vec{u}|^2}{L^2} \approx 2{,}5\cdot 10^{-7}$ ist vernachlässigbar.
-2. Mit der Taylor-Näherung $\sqrt{1 + x} \approx 1 + \frac{x}{2}$ folgt:
-   $$L' \approx L + \vec{e}\cdot\Delta\vec{u}$$
-3. **Projektion auf die Stabachse:**
-   $$\Delta L \approx \vec{e} \cdot (\vec{u}_j - \vec{u}_i)$$
+2. Mit der Taylor-Näherung $\sqrt{1 + x} \approx 1 + \frac{x}{2}$ und $\vec{e} = \frac{\vec{L}}{L}$ folgt:
+   $$L' \approx L + \vec{e}\cdot\Delta\vec{u} \quad\implies\quad \Delta L \approx \vec{e} \cdot (\vec{u}_j - \vec{u}_i)$$
 
-- **Vorteil:** Das Gleichungssystem bleibt streng linear ($\mathbf{K}\mathbf{u} = \mathbf{f}$).
-- **Zahlenbeispiel:** Bei $\Delta u = 1\,\text{mm}$ und $L = 2\,\text{m}$ beträgt der relative Fehler nur $0{,}05\,\%$.
-- **Grenze:** Für extrem weiche Seilnetze wäre ein nichtlinearer Solver nötig.
+- **Vorteil:** Das Gleichungssystem bleibt streng linear ($\mathbf{K}\mathbf{u} = \mathbf{f}$); der relative Fehler liegt bei $0{,}05\,\%$.
+- **Grenze:** Für extrem weiche Seilnetze mit großen Verformungen wäre ein nichtlinearer Solver nötig.
 
 </div>
 <div class="one">
@@ -447,6 +488,36 @@ double k = YoungsModulus * Area / Length;
 
 ---
 
+### $\mathbf{K}_e$ zum Anfassen: Horizontal- vs. $45^\circ$-Stab
+
+<div class="columns top">
+<div class="one">
+
+**1. Horizontalstab ($\alpha = 0^\circ$, $\vec{n} = (1;\, 0)^\top$)**
+- Mit $k = \frac{EA}{L} = 100\,\text{Meganewton (MN) pro Meter}$ gilt $n_x^2 = 1$, $n_y^2 = 0$, $n_x n_y = 0$:
+
+$$\mathbf{K}_e = 100\,\frac{\text{MN}}{\text{m}} \begin{pmatrix} 1 & 0 & -1 & 0 \\ 0 & 0 & 0 & 0 \\ -1 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$$
+
+- **Effekt:** Querverformungen ($y$) erzeugen keine Stabkraft; $+u_{xi}$ erzeugt Gegenkraft $-k\cdot u_{xi}$ am Knoten $j$.
+
+</div>
+<div class="one">
+
+**2. Diagonalstab ($\alpha = 45^\circ$, $\vec{n} = (\frac{\sqrt{2}}{2};\, \frac{\sqrt{2}}{2})^\top$)**
+- Hier gilt $n_x^2 = n_y^2 = n_x n_y = 0{,}5$:
+
+$$\mathbf{K}_e = 100\,\frac{\text{MN}}{\text{m}} \begin{pmatrix} 0{,}5 & 0{,}5 & -0{,}5 & -0{,}5 \\ 0{,}5 & 0{,}5 & -0{,}5 & -0{,}5 \\ -0{,}5 & -0{,}5 & 0{,}5 & 0{,}5 \\ -0{,}5 & -0{,}5 & 0{,}5 & 0{,}5 \end{pmatrix}$$
+
+- **Effekt:** Eine reine $x$-Verschiebung koppelt sofort in $y$-Kräfte (alle Zeilen sind Vielfache von $(-1,-1,1,1)$).
+- **Symmetrie:** Auch gedreht bleibt $\mathbf{K}_e$ exakt symmetrisch ($\mathbf{K}_e = \mathbf{K}_e^\top$).
+
+</div>
+</div>
+
+> **Check:** In jeder Zeile und Spalte von $\mathbf{K}_e$ ist die Summe der Einträge gleich Null (Starrkörper-Invarianz).
+
+---
+
 ### Assemblierung zur globalen Steifigkeitsmatrix $\mathbf{K}$
 
 <div class="columns">
@@ -467,6 +538,43 @@ Am gemeinsamen Knoten addieren sich die inneren Stabkräfte zum Lastvektor ($\su
 </div>
 
 > **Merke:** Die Überlagerung (`+=`) am gemeinsamen Knoten entspricht direkt der Summe aller angreifenden Stabkräfte.
+
+---
+
+![bg](./Illustrationen/Abschnitt_3.jpg)
+
+## 7.3: C#-Implementierung & `Math.NET Numerics`
+
+Dieser Abschnitt umfasst die folgenden Inhalte:
+
+- Blockpartitionierung (`kff`, `kpf`) & Index-Umordnung
+- Klassenarchitektur in `TrussFemSolver.sln`
+- `GlobalStiffnessMatrix` & `CholeskySolver`
+- Post-Processing: Gleichgewicht, Spannung & Euler-Knickung
+
+---
+
+### Von der globalen Matrix zu `kff` & `kpf` (Index-Umordnung)
+
+<div class="columns">
+<div class="two">
+
+In $\mathbf{K}$ liegen gesperrte (`prescribed`, $p$) und freie (`free`, $f$) DOFs (`0..5`) gemischt:
+
+- **Keine Zeilen löschen!** Indizes in Listen sammeln: `free = [2, 4, 5]`, `prescribed = [0, 1, 3]`.
+- **Untermatrizen extrahieren:**
+  - `kff[i, j] = K[free[i], free[j]]` für `kff * u_f = f_f` ($\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$)
+  - `kpf[i, j] = K[prescribed[i], free[j]]` für die Lagerreaktionen
+
+</div>
+<div class="three">
+
+![](./Diagramme/Index_Partitionierung_Schema.svg)
+
+</div>
+</div>
+
+> **Merke:** Index-Listen ersetzen physisches Umsortieren und liefern direkt `kff`.
 
 ---
 
@@ -493,21 +601,47 @@ $$\sum \vec{F}_{\text{ext}} + \sum \vec{F}_{\text{Lager}} = \vec{0} \quad (\text
 </div>
 <div class="one">
 
-**3. Euler-Knicklast (Druckstäbe $N_e < 0$)**
-$$N_{\text{knick}} = \frac{\pi^2 E I}{L^2} \quad \implies \quad \text{Versagen falls } |N_e| \ge N_{\text{knick}}$$
+**3. 3D-Erweiterung & Stabilitätsgrenze**
+- **3D-Fachwerke:** Identisches Prinzip ($6\times 6$) in [Anhang B](./Folien_Anhang_B_3D_Fachwerke.md).
+- **Knickung:** Bei Druck ($N_e < 0$) zusätzlich Euler-Knickung prüfen (*nächste Folie*).
 
 ```csharp
-// Stabilitäts-Check pro Druckstab (Track A & B)
-bool buckled = n_e < 0 && Math.Abs(n_e) >= nKnick;
-double stress = sigma_e;
+double n_e = (e * area / len) * dL;
+double stress = n_e / area; // = sigma_e
+bool ok = IsEquilibriumSatisfied(reactions, loads);
 ```
-
-- **3D-Erweiterung:** Identisches Prinzip mit $6\times 6$-Matrizen in [Anhang B](./Folien_Anhang_B_3D_Fachwerke.md).
 
 </div>
 </div>
 
 > **Ingenieur-Pflicht:** Prüfen Sie nach jeder FEM-Lösung zuerst `IsEquilibriumSatisfied` ($\sum \vec{F} = \vec{0}$), bevor Sie Ergebnisse visualisieren!
+
+---
+
+### Versagensarten: Material-Fließen vs. Euler-Knickung
+
+<div class="columns">
+<div class="two">
+
+Bei Druckstäben ($N_e < 0$) konkurrieren zwei Grenzen:
+
+1. **Material-Fließen:** $|\sigma_e| = \frac{|N_e|}{A} \ge R_{p02}$ ($A = 200\,\text{mm}^2$, $R_{p02} = 235\,\text{MPa} \implies N_{\text{max}} = 47{,}0\,\text{kN}$).
+2. **Elastische Euler-Knickung:**
+   $$N_{\text{knick}} = \frac{\pi^2 E I}{L^2} \implies \text{Versagen falls } |N_e| \ge N_{\text{knick}}$$
+
+```csharp
+bool buckled = n_e < 0 && Math.Abs(n_e) >= nKnick;
+```
+
+</div>
+<div class="three">
+
+![](./Diagramme/Euler_Knickung_Versagen.svg)
+
+</div>
+</div>
+
+> **Merke:** $N_{\text{knick}}$ sinkt quadratisch mit $L$ und hängt vom Flächenträgheitsmoment $I$ ab, nicht nur von $A$!
 
 ---
 
@@ -564,19 +698,6 @@ kff.Cholesky().Solve(ff); // ArgumentException
 </div>
 
 > **Merksatz:** Mindestens 3 nicht-parallele Lager-DOFs sperren alle 3 Starrkörper-Bewegungen in 2D (Translation X/Y und Rotation).
-
----
-
-![bg](./Illustrationen/Abschnitt_3.jpg)
-
-## 7.3: C#-Implementierung & `Math.NET Numerics`
-
-Dieser Abschnitt umfasst die folgenden Inhalte:
-
-- Klassenarchitektur in `TrussFemSolver.sln`
-- `TrussElement`: $\mathbf{K}_e$ und Schnittkraftberechnung
-- `GlobalStiffnessMatrix`: Assemblierung & Partitionierung
-- `CholeskySolver`: Lösung & Fehlerbehandlung bei Singularität
 
 ---
 

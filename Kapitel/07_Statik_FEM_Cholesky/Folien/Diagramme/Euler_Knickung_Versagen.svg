@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340" width="560" height="340">
+  <defs>
+    <!-- @svg-palette-defs:start -->
+    <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff" />
+      <stop offset="100%" stop-color="#dbeafe" />
+    </linearGradient>
+    <linearGradient id="grad-sem-primary-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="grad-sem-success" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0fdf4" />
+      <stop offset="100%" stop-color="#dcfce7" />
+    </linearGradient>
+    <linearGradient id="grad-sem-success-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#15803d" />
+      <stop offset="100%" stop-color="#166534" />
+    </linearGradient>
+    <linearGradient id="grad-sem-danger" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef2f2" />
+      <stop offset="100%" stop-color="#fee2e2" />
+    </linearGradient>
+    <linearGradient id="grad-sem-danger-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dc2626" />
+      <stop offset="100%" stop-color="#b91c1c" />
+    </linearGradient>
+    <linearGradient id="grad-sem-muted" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+    <linearGradient id="grad-sem-muted-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+    <linearGradient id="grad-sem-neutral" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+    <linearGradient id="grad-sem-neutral-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <!-- @svg-palette-defs:end -->
+    <marker id="arrow-force" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" class="sem-danger-fill"/>
+    </marker>
+    <marker id="arrow-force-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" class="sem-primary-fill"/>
+    </marker>
+  </defs>
+
+  <style>
+    
+/* @svg-palette:start */
+      .sem-primary { fill: url(#grad-sem-primary); stroke: #2563eb; }
+      .sem-primary-bg { fill: url(#grad-sem-primary); stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: url(#grad-sem-primary-fill); }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: url(#grad-sem-success); stroke: #15803d; }
+      .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
+      .sem-success-stroke { stroke: #15803d; }
+      .sem-success-fill { fill: url(#grad-sem-success-fill); }
+      .sem-success-text { fill: #166534; }
+      .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
+      .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: url(#grad-sem-danger-fill); }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
+      .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: url(#grad-sem-muted-fill); }
+      .sem-muted-text { fill: #334155; }
+      .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
+      .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: url(#grad-sem-neutral-fill); }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  </style>
+
+  <!-- Vertical divider -->
+  <line x1="280" y1="18" x2="280" y2="322" stroke-width="1.5" stroke-dasharray="5,4" class="sem-muted-stroke"/>
+
+  <!-- LEFT PANEL: Material Yielding -->
+  <text x="140" y="26" text-anchor="middle" font-size="14" font-weight="700" class="sem-primary-text">1. Material-Fließen (Zug &amp; Druck)</text>
+  <text x="140" y="46" text-anchor="middle" font-size="12.5" class="sem-muted-text">Hängt nur von Fläche A ab</text>
+
+  <!-- Thick short bar under compression -->
+  <line x1="120" y1="62" x2="120" y2="96" stroke-width="3" class="sem-primary-stroke" marker-end="url(#arrow-force-blue)"/>
+  <text x="134" y="82" font-size="13.5" font-weight="700" class="sem-primary-text">N_e</text>
+
+  <rect x="102" y="102" width="36" height="106" rx="3" stroke-width="2.5" class="sem-primary"/>
+  <!-- Cross section note -->
+  <line x1="96" y1="155" x2="144" y2="155" stroke-width="1.4" stroke-dasharray="3,2" class="sem-primary-stroke"/>
+  <text x="152" y="159" font-size="12.5" class="sem-neutral-text">A, sigma_e = N_e / A</text>
+
+  <line x1="120" y1="248" x2="120" y2="214" stroke-width="3" class="sem-primary-stroke" marker-end="url(#arrow-force-blue)"/>
+  <line x1="82" y1="252" x2="158" y2="252" stroke-width="2.5" class="sem-neutral-stroke"/>
+
+  <text x="140" y="282" text-anchor="middle" font-size="13" class="sem-neutral-text">|sigma_e| &gt;= R_p02</text>
+  <text x="140" y="304" text-anchor="middle" font-size="12.5" class="sem-muted-text">z. B. A = 200 mm²: N_max = 47,0 kN</text>
+  <text x="140" y="324" text-anchor="middle" font-size="13" font-weight="700" class="sem-success-text">Unabhängig von Länge L</text>
+
+  <!-- RIGHT PANEL: Euler Buckling -->
+  <text x="420" y="26" text-anchor="middle" font-size="14" font-weight="700" class="sem-danger-text">2. Euler-Knickung (nur Druck)</text>
+  <text x="420" y="46" text-anchor="middle" font-size="12.5" class="sem-muted-text">Hängt stark von L² und I ab</text>
+
+  <line x1="410" y1="62" x2="410" y2="96" stroke-width="3" class="sem-danger-stroke" marker-end="url(#arrow-force)"/>
+  <text x="424" y="82" font-size="13.5" font-weight="700" class="sem-danger-text">N_e &lt; 0</text>
+
+  <!-- Straight reference axis -->
+  <line x1="410" y1="102" x2="410" y2="210" stroke-width="1.5" stroke-dasharray="4,4" class="sem-muted-stroke"/>
+  <!-- Buckled curve (half-sine) -->
+  <path d="M 410 102 Q 456 156 410 210" fill="none" stroke-width="4" stroke-linecap="round" class="sem-danger-stroke"/>
+  <!-- Deflection arrow -->
+  <line x1="410" y1="156" x2="433" y2="156" stroke-width="1.8" class="sem-danger-stroke"/>
+  <text x="444" y="160" font-size="13" font-weight="700" class="sem-danger-text">Ausweichen!</text>
+
+  <!-- Length dimension -->
+  <line x1="355" y1="102" x2="355" y2="210" stroke-width="1.4" class="sem-neutral-stroke"/>
+  <line x1="350" y1="102" x2="360" y2="102" stroke-width="1.4" class="sem-neutral-stroke"/>
+  <line x1="350" y1="210" x2="360" y2="210" stroke-width="1.4" class="sem-neutral-stroke"/>
+  <text x="346" y="160" text-anchor="end" font-size="13" class="sem-neutral-text">L</text>
+
+  <line x1="410" y1="248" x2="410" y2="214" stroke-width="3" class="sem-danger-stroke" marker-end="url(#arrow-force)"/>
+  <line x1="372" y1="252" x2="448" y2="252" stroke-width="2.5" class="sem-neutral-stroke"/>
+
+  <text x="420" y="282" text-anchor="middle" font-size="13" class="sem-neutral-text">|N_e| &gt;= N_knick = pi²·E·I / L²</text>
+  <text x="420" y="304" text-anchor="middle" font-size="12.5" class="sem-muted-text">z. B. L = 2,0 m: N_knick = 12,4 kN</text>
+  <text x="420" y="324" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">Versagt bei 26 % der Fließlast!</text>
+</svg>

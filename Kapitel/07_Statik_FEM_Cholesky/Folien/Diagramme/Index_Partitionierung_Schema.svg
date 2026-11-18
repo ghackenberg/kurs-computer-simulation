@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340" width="560" height="340">
+  <defs>
+    <!-- @svg-palette-defs:start -->
+    <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff" />
+      <stop offset="100%" stop-color="#dbeafe" />
+    </linearGradient>
+    <linearGradient id="grad-sem-primary-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="grad-sem-warning" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb" />
+      <stop offset="100%" stop-color="#fef3c7" />
+    </linearGradient>
+    <linearGradient id="grad-sem-warning-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b45309" />
+      <stop offset="100%" stop-color="#92400e" />
+    </linearGradient>
+    <linearGradient id="grad-sem-danger" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef2f2" />
+      <stop offset="100%" stop-color="#fee2e2" />
+    </linearGradient>
+    <linearGradient id="grad-sem-danger-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dc2626" />
+      <stop offset="100%" stop-color="#b91c1c" />
+    </linearGradient>
+    <linearGradient id="grad-sem-muted" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+    <linearGradient id="grad-sem-muted-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+    <linearGradient id="grad-sem-neutral" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+    <linearGradient id="grad-sem-neutral-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <!-- @svg-palette-defs:end -->
+    <marker id="arrow-map" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" class="sem-primary-fill"/>
+    </marker>
+    <marker id="arrow-map-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" class="sem-danger-fill"/>
+    </marker>
+  </defs>
+
+  <style>
+    
+/* @svg-palette:start */
+      .sem-primary { fill: url(#grad-sem-primary); stroke: #2563eb; }
+      .sem-primary-bg { fill: url(#grad-sem-primary); stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: url(#grad-sem-primary-fill); }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-warning { fill: url(#grad-sem-warning); stroke: #b45309; }
+      .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
+      .sem-warning-stroke { stroke: #b45309; }
+      .sem-warning-fill { fill: url(#grad-sem-warning-fill); }
+      .sem-warning-text { fill: #92400e; }
+      .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
+      .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: url(#grad-sem-danger-fill); }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
+      .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: url(#grad-sem-muted-fill); }
+      .sem-muted-text { fill: #334155; }
+      .sem-neutral { fill: url(#grad-sem-neutral); stroke: #334155; }
+      .sem-neutral-bg { fill: url(#grad-sem-neutral); stroke: none; }
+      .sem-neutral-stroke { stroke: #334155; }
+      .sem-neutral-fill { fill: url(#grad-sem-neutral-fill); }
+      .sem-neutral-text { fill: #0f172a; }
+      /* @svg-palette:end */
+text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  </style>
+
+  <!-- Left: Global 6x6 Matrix K with scattered DOFs -->
+  <text x="155" y="24" text-anchor="middle" font-size="15" font-weight="700" class="sem-neutral-text">Globale Matrix K (6 × 6)</text>
+  <text x="155" y="44" text-anchor="middle" font-size="12.5" class="sem-muted-text">DOFs gemischt: p = [0, 1, 3], f = [2, 4, 5]</text>
+
+  <!-- Column headers 0..5 -->
+  <text x="68" y="68" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">0</text>
+  <text x="104" y="68" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">1</text>
+  <text x="140" y="68" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">2</text>
+  <text x="176" y="68" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">3</text>
+  <text x="212" y="68" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">4</text>
+  <text x="248" y="68" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">5</text>
+
+  <!-- Row headers 0..5 -->
+  <text x="40" y="99" text-anchor="end" font-size="13" font-weight="700" class="sem-danger-text">0</text>
+  <text x="40" y="135" text-anchor="end" font-size="13" font-weight="700" class="sem-danger-text">1</text>
+  <text x="40" y="171" text-anchor="end" font-size="13" font-weight="700" class="sem-primary-text">2</text>
+  <text x="40" y="207" text-anchor="end" font-size="13" font-weight="700" class="sem-danger-text">3</text>
+  <text x="40" y="243" text-anchor="end" font-size="13" font-weight="700" class="sem-primary-text">4</text>
+  <text x="40" y="279" text-anchor="end" font-size="13" font-weight="700" class="sem-primary-text">5</text>
+
+  <!-- 6x6 Grid: x = 51 + col*36, y = 77 + row*36, size 34x34 -->
+  <!-- Row 0 (prescribed) -->
+  <rect x="51" y="77" width="34" height="34" rx="4" stroke-width="1.2" class="sem-neutral"/>
+  <rect x="87" y="77" width="34" height="34" rx="4" stroke-width="1.2" class="sem-neutral"/>
+  <rect x="123" y="77" width="34" height="34" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="159" y="77" width="34" height="34" rx="4" stroke-width="1.2" class="sem-neutral"/>
+  <rect x="195" y="77" width="34" height="34" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="231" y="77" width="34" height="34" rx="4" stroke-width="1.4" class="sem-danger"/>
+
+  <!-- Row 1 (prescribed) -->
+  <rect x="51" y="113" width="34" height="34" rx="4" stroke-width="1.2" class="sem-neutral"/>
+  <rect x="87" y="113" width="34" height="34" rx="4" stroke-width="1.2" class="sem-neutral"/>
+  <rect x="123" y="113" width="34" height="34" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="159" y="113" width="34" height="34" rx="4" stroke-width="1.2" class="sem-neutral"/>
+  <rect x="195" y="113" width="34" height="34" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="231" y="113" width="34" height="34" rx="4" stroke-width="1.4" class="sem-danger"/>
+
+  <!-- Row 2 (free) -->
+  <rect x="51" y="149" width="34" height="34" rx="4" stroke-width="1.2" class="sem-warning"/>
+  <rect x="87" y="149" width="34" height="34" rx="4" stroke-width="1.2" class="sem-warning"/>
+  <rect x="123" y="149" width="34" height="34" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="159" y="149" width="34" height="34" rx="4" stroke-width="1.2" class="sem-warning"/>
+  <rect x="195" y="149" width="34" height="34" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="231" y="149" width="34" height="34" rx="4" stroke-width="1.4" class="sem-primary"/>
+
+  <!-- Row 3 (prescribed) -->
+  <rect x="51" y="185" width="34" height="34" rx="4" stroke-width="1.2" class="sem-neutral"/>
+  <rect x="87" y="185" width="34" height="34" rx="4" stroke-width="1.2" class="sem-neutral"/>
+  <rect x="123" y="185" width="34" height="34" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="159" y="185" width="34" height="34" rx="4" stroke-width="1.2" class="sem-neutral"/>
+  <rect x="195" y="185" width="34" height="34" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="231" y="185" width="34" height="34" rx="4" stroke-width="1.4" class="sem-danger"/>
+
+  <!-- Row 4 (free) -->
+  <rect x="51" y="221" width="34" height="34" rx="4" stroke-width="1.2" class="sem-warning"/>
+  <rect x="87" y="221" width="34" height="34" rx="4" stroke-width="1.2" class="sem-warning"/>
+  <rect x="123" y="221" width="34" height="34" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="159" y="221" width="34" height="34" rx="4" stroke-width="1.2" class="sem-warning"/>
+  <rect x="195" y="221" width="34" height="34" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="231" y="221" width="34" height="34" rx="4" stroke-width="1.4" class="sem-primary"/>
+
+  <!-- Row 5 (free) -->
+  <rect x="51" y="257" width="34" height="34" rx="4" stroke-width="1.2" class="sem-warning"/>
+  <rect x="87" y="257" width="34" height="34" rx="4" stroke-width="1.2" class="sem-warning"/>
+  <rect x="123" y="257" width="34" height="34" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="159" y="257" width="34" height="34" rx="4" stroke-width="1.2" class="sem-warning"/>
+  <rect x="195" y="257" width="34" height="34" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="231" y="257" width="34" height="34" rx="4" stroke-width="1.4" class="sem-primary"/>
+
+  <!-- Labels inside key cells -->
+  <text x="140" y="170" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">ff</text>
+  <text x="212" y="170" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">ff</text>
+  <text x="248" y="170" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">ff</text>
+  <text x="140" y="242" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">ff</text>
+  <text x="212" y="242" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">ff</text>
+  <text x="248" y="242" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">ff</text>
+  <text x="140" y="278" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">ff</text>
+  <text x="212" y="278" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">ff</text>
+  <text x="248" y="278" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">ff</text>
+
+  <text x="140" y="98" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">pf</text>
+  <text x="212" y="98" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">pf</text>
+  <text x="248" y="98" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">pf</text>
+  <text x="140" y="134" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">pf</text>
+  <text x="212" y="134" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">pf</text>
+  <text x="248" y="134" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">pf</text>
+  <text x="140" y="206" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">pf</text>
+  <text x="212" y="206" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">pf</text>
+  <text x="248" y="206" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">pf</text>
+
+  <!-- Mapping Arrows -->
+  <path d="M 272 238 C 315 238, 325 118, 365 118" fill="none" stroke-width="2.4" class="sem-primary-stroke" marker-end="url(#arrow-map)"/>
+  <path d="M 272 130 C 315 130, 325 245, 365 245" fill="none" stroke-width="2.4" class="sem-danger-stroke" marker-end="url(#arrow-map-red)"/>
+
+  <!-- Right Top: Extracted K_ff (3x3) -->
+  <text x="455" y="44" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">kff (3 × 3): K[free[i], free[j]]</text>
+  <text x="422" y="68" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">2</text>
+  <text x="456" y="68" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">4</text>
+  <text x="490" y="68" text-anchor="middle" font-size="13" font-weight="700" class="sem-primary-text">5</text>
+  <text x="395" y="98" text-anchor="end" font-size="13" font-weight="700" class="sem-primary-text">2</text>
+  <text x="395" y="132" text-anchor="end" font-size="13" font-weight="700" class="sem-primary-text">4</text>
+  <text x="395" y="166" text-anchor="end" font-size="13" font-weight="700" class="sem-primary-text">5</text>
+
+  <rect x="406" y="77" width="32" height="32" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="440" y="77" width="32" height="32" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="474" y="77" width="32" height="32" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="406" y="111" width="32" height="32" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="440" y="111" width="32" height="32" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="474" y="111" width="32" height="32" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="406" y="145" width="32" height="32" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="440" y="145" width="32" height="32" rx="4" stroke-width="1.4" class="sem-primary"/>
+  <rect x="474" y="145" width="32" height="32" rx="4" stroke-width="1.4" class="sem-primary"/>
+
+  <!-- Right Bottom: Extracted K_pf (3x3) -->
+  <text x="455" y="198" text-anchor="middle" font-size="13" font-weight="700" class="sem-danger-text">kpf (3 × 3): K[prescribed[i], free[j]]</text>
+  <text x="395" y="232" text-anchor="end" font-size="13" font-weight="700" class="sem-danger-text">0</text>
+  <text x="395" y="266" text-anchor="end" font-size="13" font-weight="700" class="sem-danger-text">1</text>
+  <text x="395" y="300" text-anchor="end" font-size="13" font-weight="700" class="sem-danger-text">3</text>
+
+  <rect x="406" y="211" width="32" height="32" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="440" y="211" width="32" height="32" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="474" y="211" width="32" height="32" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="406" y="245" width="32" height="32" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="440" y="245" width="32" height="32" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="474" y="245" width="32" height="32" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="406" y="279" width="32" height="32" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="440" y="279" width="32" height="32" rx="4" stroke-width="1.4" class="sem-danger"/>
+  <rect x="474" y="279" width="32" height="32" rx="4" stroke-width="1.4" class="sem-danger"/>
+
+  <!-- Bottom summary -->
+  <text x="155" y="324" text-anchor="middle" font-size="12.5" class="sem-muted-text">Kein Zeilen-Löschen nötig: Index-Listen ordnen um</text>
+  <text x="455" y="329" text-anchor="middle" font-size="12.5" class="sem-muted-text">Cholesky löst kff · u_f = f_f</text>
+</svg>
