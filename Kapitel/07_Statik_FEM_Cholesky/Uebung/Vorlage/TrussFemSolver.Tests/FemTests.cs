@@ -92,5 +92,25 @@ namespace TrussFemSolver.Tests
             Assert.AreEqual(0.002, ux2, 1e-9, "Stabdehnung weicht von analytischer Formel Delta L = F*L/(EA) ab!");
             Assert.AreEqual(20_000.0, sol.ElementForces[1], 1e-6);
         }
+
+        [TestMethod]
+        public void TestCantileverStage1AndSingularity()
+        {
+            // TODO [Stufe 1 - Aufgabe 1.4]:
+            // 1. Erstellen Sie Ihren 5-Knoten-Auslegerkran über CholeskySolver.CreateCantileverStage1Model(-10_000.0)
+            //    und prüfen Sie solution.IsEquilibriumSatisfied sowie Zug-/Druck-Vorzeichen (Obergurt > 0, Untergurt < 0).
+            // 2. Entfernen Sie testweise das X-Lager eines statisch unterbestimmten Modells und prüfen Sie per
+            //    Assert.ThrowsException<InvalidOperationException>(() => CholeskySolver.Solve(unstableModel)),
+            //    dass Cholesky den kinematischen Mechanismus sauber abfängt.
+            var unstable = new GlobalStiffnessMatrix();
+            var n0 = new Node(0, 0, 0);
+            var n1 = new Node(1, 2, 0);
+            unstable.AddNode(n0);
+            unstable.AddNode(n1);
+            unstable.AddElement(new TrussElement(1, n0, n1, 210e9, 1e-4));
+            unstable.FixDof(n0.DofY);
+            unstable.FixDof(n1.DofY);
+            Assert.ThrowsException<InvalidOperationException>(() => CholeskySolver.Solve(unstable));
+        }
     }
 }

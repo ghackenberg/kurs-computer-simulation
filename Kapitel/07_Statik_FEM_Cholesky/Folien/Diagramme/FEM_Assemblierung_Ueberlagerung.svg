@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 335" width="560" height="335">
+  <defs>
+    <!-- @svg-palette-defs:start -->
+    <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff" />
+      <stop offset="100%" stop-color="#dbeafe" />
+    </linearGradient>
+    <linearGradient id="grad-sem-primary-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="grad-sem-success" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0fdf4" />
+      <stop offset="100%" stop-color="#dcfce7" />
+    </linearGradient>
+    <linearGradient id="grad-sem-success-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#15803d" />
+      <stop offset="100%" stop-color="#166534" />
+    </linearGradient>
+    <linearGradient id="grad-sem-warning" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb" />
+      <stop offset="100%" stop-color="#fef3c7" />
+    </linearGradient>
+    <linearGradient id="grad-sem-warning-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b45309" />
+      <stop offset="100%" stop-color="#92400e" />
+    </linearGradient>
+    <linearGradient id="grad-sem-card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+    <linearGradient id="grad-sem-muted" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+    <linearGradient id="grad-sem-muted-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+    <!-- @svg-palette-defs:end -->
+  </defs>
+  <style>
+    
+/* @svg-palette:start */
+      .sem-primary { fill: url(#grad-sem-primary); stroke: #2563eb; }
+      .sem-primary-bg { fill: url(#grad-sem-primary); stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: url(#grad-sem-primary-fill); }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: url(#grad-sem-success); stroke: #15803d; }
+      .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
+      .sem-success-stroke { stroke: #15803d; }
+      .sem-success-fill { fill: url(#grad-sem-success-fill); }
+      .sem-success-text { fill: #166534; }
+      .sem-warning { fill: url(#grad-sem-warning); stroke: #b45309; }
+      .sem-warning-bg { fill: url(#grad-sem-warning); stroke: none; }
+      .sem-warning-stroke { stroke: #b45309; }
+      .sem-warning-fill { fill: url(#grad-sem-warning-fill); }
+      .sem-warning-text { fill: #92400e; }
+      .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
+      .sem-card-bg { fill: url(#grad-sem-card); stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
+      .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: url(#grad-sem-muted-fill); }
+      .sem-muted-text { fill: #334155; }
+      /* @svg-palette:end */
+text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  </style>
+
+  <!-- Titel -->
+  <rect class="sem-muted" x="10" y="10" width="540" height="34" rx="8" stroke-width="1" />
+  <text class="sem-primary-text" x="280" y="32" font-size="15" font-weight="700" text-anchor="middle">Assemblierung: Überlagerung zweier 4&#215;4-Matrizen in K (6&#215;6)</text>
+
+  <!-- Links: 2 Stäbe Topologie -->
+  <line class="sem-primary-stroke" x1="45" y1="115" x2="120" y2="115" stroke-width="5" stroke-linecap="round" />
+  <line class="sem-success-stroke" x1="120" y1="115" x2="195" y2="115" stroke-width="5" stroke-linecap="round" />
+
+  <circle class="sem-primary" cx="45" cy="115" r="13" stroke-width="2" />
+  <text class="sem-primary-text" x="45" y="120" font-size="14" font-weight="700" text-anchor="middle">0</text>
+  <circle class="sem-warning" cx="120" cy="115" r="13" stroke-width="2.5" />
+  <text class="sem-warning-text" x="120" y="120" font-size="14" font-weight="700" text-anchor="middle">1</text>
+  <circle class="sem-success" cx="195" cy="115" r="13" stroke-width="2" />
+  <text class="sem-success-text" x="195" y="120" font-size="14" font-weight="700" text-anchor="middle">2</text>
+
+  <text class="sem-primary-text" x="82" y="95" font-size="13.5" font-weight="700" text-anchor="middle">K_1</text>
+  <text class="sem-success-text" x="158" y="95" font-size="13.5" font-weight="700" text-anchor="middle">K_2</text>
+
+  <!-- DOF-Mapping Box links -->
+  <rect class="sem-card" x="10" y="155" width="198" height="165" rx="8" stroke-width="1.2" />
+  <text class="sem-card-text" x="109" y="180" font-size="14" font-weight="700" text-anchor="middle">Globale DOF-Indizes:</text>
+  <text class="sem-primary-text" x="20" y="206" font-size="13" font-weight="700">Stab 1 (0&#8594;1): [0, 1, 2, 3]</text>
+  <text class="sem-success-text" x="20" y="232" font-size="13" font-weight="700">Stab 2 (1&#8594;2): [2, 3, 4, 5]</text>
+  <line class="sem-muted-stroke" x1="20" y1="248" x2="198" y2="248" stroke-width="1" />
+  <text class="sem-warning-text" x="20" y="272" font-size="13" font-weight="700">Überlappung an Knoten 1:</text>
+  <text class="sem-warning-text" x="20" y="294" font-size="13">DOFs [2, 3]: K_1 + K_2</text>
+
+  <!-- Rechts: 6x6 Matrix K -->
+  <!-- Achsenbeschriftung oben & links -->
+  <text class="sem-muted-text" x="285" y="72" font-size="13" font-weight="700" text-anchor="middle">0,1</text>
+  <text class="sem-warning-text" x="375" y="72" font-size="13" font-weight="700" text-anchor="middle">2,3</text>
+  <text class="sem-muted-text" x="465" y="72" font-size="13" font-weight="700" text-anchor="middle">4,5</text>
+
+  <text class="sem-muted-text" x="236" y="122" font-size="13" font-weight="700" text-anchor="end">0,1</text>
+  <text class="sem-warning-text" x="236" y="202" font-size="13" font-weight="700" text-anchor="end">2,3</text>
+  <text class="sem-muted-text" x="236" y="282" font-size="13" font-weight="700" text-anchor="end">4,5</text>
+
+  <!-- 6x6 Matrix Hintergrund (3x3 2x2-Blöcke: x=240..510, y=82..322, je 90x80) -->
+  <!-- Stab 1 (4x4 Block oben links: 180x160) -->
+  <rect class="sem-primary" x="242" y="84" width="176" height="156" rx="6" stroke-width="2" />
+  <!-- Stab 2 (4x4 Block unten rechts: 180x160) -->
+  <rect class="sem-success" x="332" y="164" width="176" height="156" rx="6" stroke-width="2" />
+  <!-- Überlappungsblock 2x2 in der Mitte (x=332..418, y=164..240) -->
+  <rect class="sem-warning" x="332" y="164" width="86" height="76" rx="6" stroke-width="2.5" />
+
+  <!-- Nullblöcke -->
+  <rect class="sem-muted" x="424" y="84" width="84" height="74" rx="4" stroke-width="1" />
+  <text class="sem-muted-text" x="466" y="126" font-size="15" font-weight="700" text-anchor="middle">0</text>
+  <rect class="sem-muted" x="242" y="246" width="84" height="74" rx="4" stroke-width="1" />
+  <text class="sem-muted-text" x="284" y="288" font-size="15" font-weight="700" text-anchor="middle">0</text>
+
+  <!-- Block-Labels -->
+  <text class="sem-primary-text" x="286" y="126" font-size="14" font-weight="700" text-anchor="middle">K_1</text>
+  <text class="sem-primary-text" x="375" y="126" font-size="13.5" font-weight="700" text-anchor="middle">K_1</text>
+  <text class="sem-primary-text" x="286" y="206" font-size="13.5" font-weight="700" text-anchor="middle">K_1</text>
+
+  <text class="sem-warning-text" x="375" y="206" font-size="14.5" font-weight="700" text-anchor="middle">K_1 + K_2</text>
+
+  <text class="sem-success-text" x="466" y="206" font-size="13.5" font-weight="700" text-anchor="middle">K_2</text>
+  <text class="sem-success-text" x="375" y="288" font-size="13.5" font-weight="700" text-anchor="middle">K_2</text>
+  <text class="sem-success-text" x="466" y="288" font-size="14" font-weight="700" text-anchor="middle">K_2</text>
+</svg>

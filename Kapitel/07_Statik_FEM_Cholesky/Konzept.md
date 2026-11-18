@@ -1,4 +1,4 @@
-# Termin-Steckbrief T07: Statische Systeme: FEM-Fachwerke, Cholesky & Newton-Raphson
+# Termin-Steckbrief T07: Statische Systeme: FEM-Fachwerke & Cholesky
 
 **Dokument-ID:** `Kapitel/07_Statik_FEM_Cholesky/Konzept.md`  
 **Rahmendokumente:** [`01_Didaktik_und_Lernziele.md`](../../Konzept/01_Didaktik_und_Lernziele.md) | [`02_Semestermatrix_und_Abhaengigkeiten.md`](../../Konzept/02_Semestermatrix_und_Abhaengigkeiten.md) | [`03_Beurteilung_und_Pruefungen.md`](../../Konzept/03_Beurteilung_und_Pruefungen.md)
@@ -22,10 +22,10 @@
 
 ## 3. Zweistufige Hausübung (`Einheit 07`) & Showcase-Fokus
 - **Stufe 1 – Basisaufgabe (`1.1`–`1.4`):**
-  - `1.1`: $4\times 4$-Elementsteifigkeitsmatrix $\mathbf{K}_e$ in die globale Matrix $\mathbf{K}$ assemblieren.
-  - `1.2`: Blockpartitionierung nach freien ($f$) und gesperrten ($p$) Freiheitsgraden ($\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$) via `kff.Cholesky().Solve(ff)` sowie Auflagerreaktionen $\mathbf{f}_p$ und Stabkräfte $N_e$ berechnen.
-  - `1.3`: Auflager-Symbole, Reaktionspfeile und 5-Knoten-Auslegerkran im Canvas-Frontend ergänzen.
-  - `1.4`: Analytische Kragträger-Referenz ($N_0 = +20\,\text{kN}, N_1 = -20\sqrt{2}\,\text{kN}$), globales Gleichgewicht ($\|\sum \vec{F}\| < 10^{-9}\,\text{N}$) und Singularitäts-Erkennung via `dotnet test` verifizieren.
+  - `1.1`: Auflager-Symbole sowie Last- und Reaktionskraft-Pfeile in `RenderCanvas()` des WPF-Frontends ergänzen.
+  - `1.2`: 5-Knoten-Auslegerkran (`CreateCantileverStage1Model`, 7 Stäbe) modellieren und Verformung im Canvas prüfen.
+  - `1.3`: Singularitäts-Test (unterbestimmte Lagerung $\implies$ Cholesky-Exception bei $\det \mathbf{K}_{ff} = 0$) nachvollziehen.
+  - `1.4`: Unit-Tests in `TrussFemSolver.Tests/FemTests.cs` (inkl. 5-Knoten-Auslegerkran, globales Gleichgewicht $\|\sum \vec{F}\| < 10^{-8}\,\text{N}$ und Singularitäts-Test) mit `dotnet test` verifizieren.
 - **Stufe 2 – Wahlmodell (10 Pkt.):**
   - **Track A (`A.1`–`A.4` – Portalkran-Verformung unter Wanderlast):** Verfahrbare Laufkatzen-Last über das Tragwerk aus T03, überhöhte elastische Verformungsdarstellung ($\mathbf{p}_i + \alpha_{\text{scale}}\mathbf{u}_i$), Zug-/Druck-Farbcodierung und Euler-Knicknachweis ($N_{\text{knick}} = \frac{\pi^2 E I}{L^2}$).
   - **Track B (`B.1`–`B.4` – Bridge Constructor Physics Engine):** Kontinuierliche Cholesky-Lösung bei LKW-Überfahrt, Stabbruch bei $|N_e| > N_{\max}$ (`IsBroken = true`), Re-Assemblierung und Einsturz-Detektion bei singulärer Matrix $\mathbf{K}_{ff}$.

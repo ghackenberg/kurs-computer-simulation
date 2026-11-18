@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" width="560" height="360">
+  <defs>
+    <!-- @svg-palette-defs:start -->
+    <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff" />
+      <stop offset="100%" stop-color="#dbeafe" />
+    </linearGradient>
+    <linearGradient id="grad-sem-primary-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="grad-sem-success" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0fdf4" />
+      <stop offset="100%" stop-color="#dcfce7" />
+    </linearGradient>
+    <linearGradient id="grad-sem-success-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#15803d" />
+      <stop offset="100%" stop-color="#166534" />
+    </linearGradient>
+    <linearGradient id="grad-sem-danger" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef2f2" />
+      <stop offset="100%" stop-color="#fee2e2" />
+    </linearGradient>
+    <linearGradient id="grad-sem-danger-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dc2626" />
+      <stop offset="100%" stop-color="#b91c1c" />
+    </linearGradient>
+    <linearGradient id="grad-sem-card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+    <linearGradient id="grad-sem-muted" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+    <linearGradient id="grad-sem-muted-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+    <!-- @svg-palette-defs:end -->
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path class="sem-danger-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path class="sem-success-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
+    </marker>
+  </defs>
+  <style>
+    
+/* @svg-palette:start */
+      .sem-primary { fill: url(#grad-sem-primary); stroke: #2563eb; }
+      .sem-primary-bg { fill: url(#grad-sem-primary); stroke: none; }
+      .sem-primary-stroke { stroke: #2563eb; }
+      .sem-primary-fill { fill: url(#grad-sem-primary-fill); }
+      .sem-primary-text { fill: #1e40af; }
+      .sem-success { fill: url(#grad-sem-success); stroke: #15803d; }
+      .sem-success-bg { fill: url(#grad-sem-success); stroke: none; }
+      .sem-success-stroke { stroke: #15803d; }
+      .sem-success-fill { fill: url(#grad-sem-success-fill); }
+      .sem-success-text { fill: #166534; }
+      .sem-danger { fill: url(#grad-sem-danger); stroke: #dc2626; }
+      .sem-danger-bg { fill: url(#grad-sem-danger); stroke: none; }
+      .sem-danger-stroke { stroke: #dc2626; }
+      .sem-danger-fill { fill: url(#grad-sem-danger-fill); }
+      .sem-danger-text { fill: #991b1b; }
+      .sem-card { fill: url(#grad-sem-card); stroke: #cbd5e1; }
+      .sem-card-bg { fill: url(#grad-sem-card); stroke: none; }
+      .sem-card-stroke { stroke: #cbd5e1; }
+      .sem-card-fill { fill: #cbd5e1; }
+      .sem-card-text { fill: #1e293b; }
+      .sem-muted { fill: url(#grad-sem-muted); stroke: #94a3b8; }
+      .sem-muted-bg { fill: url(#grad-sem-muted); stroke: none; }
+      .sem-muted-stroke { stroke: #94a3b8; }
+      .sem-muted-fill { fill: url(#grad-sem-muted-fill); }
+      .sem-muted-text { fill: #334155; }
+      /* @svg-palette:end */
+text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  </style>
+
+  <!-- Links: Instabil / Mechanismus -->
+  <rect class="sem-danger" x="15" y="15" width="250" height="36" rx="8" stroke-width="1.5" />
+  <text class="sem-danger-text" x="140" y="39" font-size="15" font-weight="700" text-anchor="middle">Falsch: Mechanismus (det = 0)</text>
+
+  <!-- Verformtes Parallelogramm (gestrichelt Ausgangslage) -->
+  <line class="sem-muted-stroke" x1="70" y1="230" x2="70" y2="120" stroke-width="2" stroke-dasharray="5,4" />
+  <line class="sem-muted-stroke" x1="190" y1="230" x2="190" y2="120" stroke-width="2" stroke-dasharray="5,4" />
+  <line class="sem-muted-stroke" x1="70" y1="120" x2="190" y2="120" stroke-width="2" stroke-dasharray="5,4" />
+
+  <!-- Gekippte Stäbe -->
+  <line class="sem-danger-stroke" x1="70" y1="230" x2="105" y2="125" stroke-width="4.5" stroke-linecap="round" />
+  <line class="sem-danger-stroke" x1="190" y1="230" x2="225" y2="125" stroke-width="4.5" stroke-linecap="round" />
+  <line class="sem-danger-stroke" x1="105" y1="125" x2="225" y2="125" stroke-width="4.5" stroke-linecap="round" />
+  <line class="sem-danger-stroke" x1="70" y1="230" x2="190" y2="230" stroke-width="4.5" stroke-linecap="round" />
+
+  <!-- Last F_x -->
+  <line class="sem-danger-stroke" x1="45" y1="125" x2="92" y2="125" stroke-width="3" marker-end="url(#arrow-red)" />
+  <text class="sem-danger-text" x="30" y="116" font-size="14" font-weight="700">F_x</text>
+
+  <!-- Lager links -->
+  <polygon class="sem-muted" points="70,230 58,248 82,248" stroke-width="1.5" />
+  <polygon class="sem-muted" points="190,230 178,248 202,248" stroke-width="1.5" />
+  <circle class="sem-muted-stroke" cx="184" cy="253" r="3" fill="#FFFFFF" stroke-width="1.5" />
+  <circle class="sem-muted-stroke" cx="196" cy="253" r="3" fill="#FFFFFF" stroke-width="1.5" />
+
+  <!-- Knoten -->
+  <circle class="sem-danger" cx="70" cy="230" r="6" stroke-width="2" />
+  <circle class="sem-danger" cx="190" cy="230" r="6" stroke-width="2" />
+  <circle class="sem-danger" cx="105" cy="125" r="6" stroke-width="2" />
+  <circle class="sem-danger" cx="225" cy="125" r="6" stroke-width="2" />
+
+  <!-- Info Box links -->
+  <rect class="sem-card" x="20" y="276" width="240" height="62" rx="8" stroke-width="1.2" />
+  <text class="sem-danger-text" x="140" y="300" font-size="14" font-weight="700" text-anchor="middle">2k = 8  &gt;  s + l = 4 + 3 = 7</text>
+  <text class="sem-muted-text" x="140" y="322" font-size="13.5" text-anchor="middle">Klappt ohne Diagonale weg!</text>
+
+  <!-- Trennlinie -->
+  <line class="sem-muted-stroke" x1="280" y1="20" x2="280" y2="340" stroke-width="1.5" stroke-dasharray="4,4" />
+
+  <!-- Rechts: Stabil / Dreiecksverband -->
+  <rect class="sem-success" x="295" y="15" width="250" height="36" rx="8" stroke-width="1.5" />
+  <text class="sem-success-text" x="420" y="39" font-size="15" font-weight="700" text-anchor="middle">Richtig: Stabil (det &#8800; 0)</text>
+
+  <!-- Stäbe + Diagonale -->
+  <line class="sem-primary-stroke" x1="355" y1="230" x2="355" y2="125" stroke-width="4.5" stroke-linecap="round" />
+  <line class="sem-primary-stroke" x1="475" y1="230" x2="475" y2="125" stroke-width="4.5" stroke-linecap="round" />
+  <line class="sem-primary-stroke" x1="355" y1="125" x2="475" y2="125" stroke-width="4.5" stroke-linecap="round" />
+  <line class="sem-primary-stroke" x1="355" y1="230" x2="475" y2="230" stroke-width="4.5" stroke-linecap="round" />
+  <!-- Diagonale -->
+  <line class="sem-success-stroke" x1="355" y1="230" x2="475" y2="125" stroke-width="5" stroke-linecap="round" />
+
+  <!-- Last F_x -->
+  <line class="sem-danger-stroke" x1="305" y1="125" x2="342" y2="125" stroke-width="3" marker-end="url(#arrow-red)" />
+  <text class="sem-danger-text" x="298" y="114" font-size="14" font-weight="700">F_x</text>
+
+  <!-- Lager rechts -->
+  <polygon class="sem-muted" points="355,230 343,248 367,248" stroke-width="1.5" />
+  <polygon class="sem-muted" points="475,230 463,248 487,248" stroke-width="1.5" />
+  <circle class="sem-muted-stroke" cx="469" cy="253" r="3" fill="#FFFFFF" stroke-width="1.5" />
+  <circle class="sem-muted-stroke" cx="481" cy="253" r="3" fill="#FFFFFF" stroke-width="1.5" />
+
+  <!-- Knoten -->
+  <circle class="sem-primary" cx="355" cy="230" r="6" stroke-width="2" />
+  <circle class="sem-primary" cx="475" cy="230" r="6" stroke-width="2" />
+  <circle class="sem-primary" cx="355" cy="125" r="6" stroke-width="2" />
+  <circle class="sem-primary" cx="475" cy="125" r="6" stroke-width="2" />
+
+  <!-- Info Box rechts -->
+  <rect class="sem-card" x="300" y="276" width="240" height="62" rx="8" stroke-width="1.2" />
+  <text class="sem-success-text" x="420" y="300" font-size="14" font-weight="700" text-anchor="middle">2k = 8  =  s + l = 5 + 3 = 8</text>
+  <text class="sem-muted-text" x="420" y="322" font-size="13.5" text-anchor="middle">Diagonale sperrt Schub!</text>
+</svg>

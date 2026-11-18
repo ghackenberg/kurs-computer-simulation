@@ -1,4 +1,4 @@
-# Kapitel 07: Statische Systeme: FEM-Fachwerke, Cholesky & Newton-Raphson
+# Kapitel 07: Statische Systeme: FEM-Fachwerke & Cholesky
 
 Dieses Verzeichnis bündelt alle Unterlagen für **Kapitel 07 (`07_Statik_FEM_Cholesky`)** der Lehrveranstaltung *Systemsimulation / Digitaler Zwilling*:
 

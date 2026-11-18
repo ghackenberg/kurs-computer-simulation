@@ -66,7 +66,7 @@ Präsentation der Hausübung aus Termin 06 (**Stufe 1: Basisaufgabe** + **Stufe 
 
 Mit **Termin 06** steht unser Unterbau – heute starten wir in die **4 Simulationsmodellarten (T07–T10)**:
 
-- **Brücke zu T03 (2D-Canvas):** Der Editor exportierte Knoten $(x, y)$, Stäbe und Lasten $\vec{F}$ als JSON – ohne Kräfte.
+- **Brücke zu T03 (2D-Canvas):** Der Editor zeichnete bereits Knoten $(x, y)$, Stäbe und Lasten $\vec{F}$ – noch ohne Physik!
 - **Heute (Statik):** Steifigkeitsmatrix $\mathbf{K}$ aufstellen und $\mathbf{K}\mathbf{u} = \mathbf{f}$ via **Cholesky** (`Math.NET`) lösen.
 - **Checks:** Gleichgewicht ($\sum \vec{F} = \vec{0}$) und Euler-Knicklast.
 
@@ -78,7 +78,7 @@ Mit **Termin 06** steht unser Unterbau – heute starten wir in die **4 Simulati
 </div>
 </div>
 
-> **Roter Faden:** Statik liefert das zeitunabhängige Gleichgewicht ($\sum\vec{F} = \vec{0}$), bevor ab **Termin 08** die Dynamik startet – die FEM-Engine aus Termin 07 baut direkt auf dem JSON-Tragwerksformat und dem 2D-Canvas aus Termin 03 auf.
+> **Roter Faden:** Statik liefert das zeitunabhängige Gleichgewicht ($\sum\vec{F} = \vec{0}$), bevor ab **Termin 08** die Dynamik startet – die FEM-Engine aus Termin 07 erweckt das 2D-Tragwerksmodell aus Termin 03 mit realen Verformungen und Kräften zum Leben.
 
 ---
 
@@ -170,51 +170,40 @@ Ein **ideales 2D-Fachwerk** besteht aus geraden, gewichtslosen Stäben mit reibu
 
 ### Lösbarkeit: Statische Bestimmtheit vs. Mechanismus
 
-<div class="columns top">
+<div class="columns">
 <div class="two">
 
 - **Reguläres System ($\det(\mathbf{A}) \neq 0$, $2k = s + l$):**
   - Gleichungen ($2k$) = Unbekannte ($s$ Stäbe + $l$ Lager).
-  - Beispiel: $k = 5$, $s = 7$, $l = 3 \implies 10 = 10$ (stabil).
+  - Ein Dreiecksverband ist starr und eindeutig lösbar.
 - **Singuläres System ($\det(\mathbf{A}) = 0$):**
-  - Fehlende Lager oder Diagonalen erzeugen einen **kinematischen Mechanismus** – das Tragwerk kollabiert!
+  - Fehlende Diagonalen oder Lager erzeugen einen **kinematischen Mechanismus** unter Last $F_x$!
 
 </div>
 <div class="two">
 
-```csharp
-// Singuläre Systemmatrix im Solver abfangen
-// (z. B. fehlender Diagonalstab oder X-Lager)
-if (Math.Abs(matrix.Determinant()) < 1e-12)
-{
-    throw new InvalidOperationException(
-        "Kinematischer Mechanismus: Tragwerk instabil!");
-}
-```
-
-- Ohne vollen Rang ist keine eindeutige Kraftverteilung berechenbar.
-- Cholesky erfordert zusätzlich Symmetrie und positive Definitheit.
+![](./Diagramme/Mechanismus_vs_Dreieck.svg)
 
 </div>
 </div>
 
-> **Merke:** Eine singuläre Matrix im Solver ist kein reines Mathematik-Problem, sondern meldet eine **einsturzgefährdete Konstruktion**! Prüfen Sie deshalb immer zuerst Lagerung und Aussteifung.
+> **Merke:** Eine singuläre Matrix im Solver ist kein reines Mathematik-Problem, sondern meldet eine **einsturzgefährdete Konstruktion**!
 
 ---
 
 ### LGS-Löser im Überblick: Warum Cholesky?
 
-Beim idealen Fachwerk ist $\mathbf{A}$ unsymmetrisch (`A.Solve(b)` via Lower-Upper-Zerlegung, LU). In der **elastischen Finite-Elemente-Methode (FEM)** ist die Systemmatrix dagegen **symmetrisch positiv-definit (SPD)**:
+Beim idealen Fachwerk ist $\mathbf{A}$ unsymmetrisch (`A.Solve(b)` via Lower-Upper-Zerlegung, LU). In der **elastischen Finite-Elemente-Methode (FEM)** ist die reduzierte Systemmatrix dagegen **symmetrisch positiv-definit (SPD)**:
 
 | Verfahren | Matrix-Anforderung | Aufwand ($n = 3\,000$) | `Math.NET`-Aufruf |
 | :--- | :--- | :--- | :--- |
 | **LU-Zerlegung** | beliebig regulär | $\mathcal{O}(\frac{2}{3}n^3) \approx 18\cdot 10^9$ Ops | `A.LU().Solve(b)` |
-| **Cholesky ($\mathbf{L}\mathbf{L}^\top$)** | **SPD** (symm. & pos.-def.) | $\mathcal{O}(\frac{1}{3}n^3) \approx 9\cdot 10^9$ Ops | `kff.Cholesky().Solve(ff)` |
+| **Cholesky ($\mathbf{L}\mathbf{L}^\top$)** | **SPD** (symm. & pos.-def.) | $\mathcal{O}(\frac{1}{3}n^3) \approx 9\cdot 10^9$ Ops | `aSpd.Cholesky().Solve(b)` |
 | **Matrix-Inversion** | regulär *(Anti-Pattern!)* | $\mathcal{O}(2n^3)$ + Rundungsfehler | `A.Inverse()` *(verboten!)* |
 
 ```csharp
 // Cholesky nutzt Symmetrie aus: 2x schneller und halber Speicher gegenüber LU!
-Vector<double> uf = kff.Cholesky().Solve(ff);
+Vector<double> x = aSpd.Cholesky().Solve(b); // Blockreduktion K_ff folgt in 7.2
 ```
 
 > **Vertiefung:** Details zu Gauß-Elimination, LU-Zerlegung und iterativen Jacobi-Verfahren (inkl. Codebeispielen für mehrfache Lastfälle) finden Sie in [Anhang A](./Folien_Anhang_A_Grundlagen_LGS.md).
@@ -404,17 +393,40 @@ Ein horizontaler Stahlstab ($\vec{e} = (1, 0)^\top$, $L = 2\,\text{m}$, $E = 210
 
 ---
 
+### Vom Hooke'schen Gesetz zum Kräftepaar am Stab
+
+<div class="columns">
+<div class="two">
+
+Wir fassen $\vec{u}_i, \vec{u}_j$ zu $\mathbf{u}_e = (\vec{u}_i, \vec{u}_j)^\top$ zusammen:
+
+1. **Dehnung in Vektorform:**
+   $$\Delta L = \begin{pmatrix} -\vec{e}^\top & +\vec{e}^\top \end{pmatrix} \mathbf{u}_e$$
+2. **Kräftepaar (`actio = reactio`):** Bei Zug ($S > 0$) zieht der Stab an $i$ nach $-\vec{e}$ ($\mathbf{f}_i = -S\vec{e}$) und an $j$ nach $+\vec{e}$ ($\mathbf{f}_j = +S\vec{e}$):
+   $$\mathbf{f}_e = \begin{pmatrix} \mathbf{f}_i \\ \mathbf{f}_j \end{pmatrix} = \begin{pmatrix} -\vec{e} \\ +\vec{e} \end{pmatrix} S$$
+
+</div>
+<div class="three">
+
+![](./Diagramme/Stab_Kraeftepaar_Herleitung.svg)
+
+</div>
+</div>
+
+> **Merke:** Die beiden Vorzeichen ($-\vec{e}$ an $i$, $+\vec{e}$ an $j$) garantieren das Kräftegleichgewicht am Stab ($\mathbf{f}_i + \mathbf{f}_j = \mathbf{0}$).
+
+---
+
 ### Die $4 \times 4$-Elementsteifigkeitsmatrix $\mathbf{K}_e$
 
 <div class="columns">
 <div class="two">
 
-Mit dem lokalen Verschiebungsvektor $\mathbf{u}_e \in \mathbb{R}^4$ und den Knotenkräften $\mathbf{f}_i = -S\vec{e}$, $\mathbf{f}_j = +S\vec{e}$ folgt:
+Setzt man $S = \frac{EA}{L}\Delta L$ in $\mathbf{f}_e$ ein und nutzt $\vec{n} \equiv \vec{e} = (\cos\alpha, \sin\alpha)^\top$, entsteht direkt das dyadische Produkt:
 
-$$\mathbf{f}_e = \frac{EA}{L}\begin{pmatrix} -\vec{e} \\ \vec{e} \end{pmatrix}\begin{pmatrix} -\vec{e}^\top & \vec{e}^\top \end{pmatrix}\mathbf{u}_e = \mathbf{K}_e \mathbf{u}_e$$
+$$\mathbf{f}_e = \frac{EA}{L}\begin{pmatrix} -\vec{n} \\ \vec{n} \end{pmatrix}\begin{pmatrix} -\vec{n}^\top & \vec{n}^\top \end{pmatrix}\mathbf{u}_e = \mathbf{K}_e \mathbf{u}_e$$
 
-- $\mathbf{K}_e$ ist **symmetrisch** ($\mathbf{K}_e = \mathbf{K}_e^\top$).
-- $\vec{n} \equiv \vec{e} = (\cos\alpha, \sin\alpha)^\top$ ist der Einheitsrichtungsvektor.
+- $\mathbf{K}_e$ ist **symmetrisch** ($\mathbf{K}_e = \mathbf{K}_e^\top$) und unabhängig von den globalen Knotennummern.
 
 </div>
 <div class="three">
@@ -422,54 +434,45 @@ $$\mathbf{f}_e = \frac{EA}{L}\begin{pmatrix} -\vec{e} \\ \vec{e} \end{pmatrix}\b
 $$\mathbf{K}_e = \frac{EA}{L} \begin{pmatrix} n_x^2 & n_x n_y & -n_x^2 & -n_x n_y \\ n_x n_y & n_y^2 & -n_x n_y & -n_y^2 \\ -n_x^2 & -n_x n_y & n_x^2 & n_x n_y \\ -n_x n_y & -n_y^2 & n_x n_y & n_y^2 \end{pmatrix}$$
 
 ```csharp
-// In TrussElement.cs: 4x4 Matrix K_e
+// In TrussElement.cs: symmetrische 4x4 Matrix K_e
 var (n_x, n_y) = Direction;
 double k = YoungsModulus * Area / Length;
-// Block [0..1, 0..1]: k * [n_x*n_x, n_x*n_y; ...]
+// Block [0..1, 0..1]: k * [n_x^2, n_x*n_y; ...]
 ```
 
 </div>
 </div>
 
-> **Hinweis:** Die alternative Herleitung über Koordinatentransformation ($\mathbf{T}^\top \mathbf{k}_e^{\text{loc}}\mathbf{T}$) und den Bezug zur lokalen 1D-Feder finden Sie in [Anhang A](./Folien_Anhang_A_Grundlagen_LGS.md) (Kapitel A.3) – das Ergebnis für $\mathbf{K}_e$ ist mathematisch identisch und gilt für jeden Winkel $\alpha$!
+> **Hinweis:** Die alternative Herleitung über Koordinatentransformation ($\mathbf{T}^\top \mathbf{k}_e^{\text{loc}}\mathbf{T}$) und den Bezug zur lokalen 1D-Feder finden Sie in [Anhang A](./Folien_Anhang_A_Grundlagen_LGS.md) (Kapitel A.3) – das Ergebnis für $\mathbf{K}_e$ ist mathematisch identisch und gilt für beliebige Stabwinkel $\alpha$!
 
 ---
 
 ### Assemblierung zur globalen Steifigkeitsmatrix $\mathbf{K}$
 
-<div class="columns top">
-<div class="one">
+<div class="columns">
+<div class="two">
 
-**Direkte Steifigkeitsmethode**
-- Jeder Knoten $i$ besitzt zwei globale Freiheitsgrade: `DofX = 2*i` und `DofY = 2*i + 1`.
-- Für jeden Stab werden die $4\times 4$ Einträge von $\mathbf{K}_e$ in `kGlobal` aufaddiert:
+Am gemeinsamen Knoten addieren sich die inneren Stabkräfte zum Lastvektor ($\sum \mathbf{f}_{e,i} = \mathbf{f}_i$):
 
-```csharp
-int[] dofs = { n1.DofX, n1.DofY, n2.DofX, n2.DofY };
-for (int r = 0; r < 4; r++)
-    for (int c = 0; c < 4; c++)
-        kGlobal[dofs[r], dofs[c]] += ke[r, c];
-```
+- Knoten $i$ hat globale DOFs `[2*i, 2*i + 1]`.
+- Alle $4\times 4$-Matrizen ($\mathbf{K}_1, \mathbf{K}_2$) werden in $\mathbf{K}$ **aufaddiert (`+=`)**.
+- **Warum ist $\mathbf{K}$ singulär?** Ohne Lager kann sich das Fachwerk als starrer Körper frei bewegen ($\det(\mathbf{K}) = 0$).
 
 </div>
-<div class="one">
+<div class="three">
 
-**Das globale System $\mathbf{K}\mathbf{u} = \mathbf{f}$**
-- $\mathbf{K} \in \mathbb{R}^{2N\times 2N}$ ist symmetrisch, aber **noch singulär**!
-- *Warum?* Ohne Lagerung kann sich das gesamte Fachwerk als starrer Körper in X, Y und Rotation frei bewegen ($\det(\mathbf{K}) = 0$).
-- Erst durch den **Einbau der Randbedingungen** wird das System eindeutig lösbar.
-- Die Assemblierung erfolgt unabhängig von den Lagern über alle Stäbe.
+![](./Diagramme/FEM_Assemblierung_Ueberlagerung.svg)
 
 </div>
 </div>
 
-> **Merke:** Die Assemblierung ist reine Überlagerung (`+=`) der Elementsteifigkeiten an gemeinsamen Knoten.
+> **Merke:** Die Überlagerung (`+=`) am gemeinsamen Knoten entspricht direkt der Summe aller angreifenden Stabkräfte.
 
 ---
 
 ### Einbau der Randbedingungen: Blockpartitionierung
 
-Aufteilung in $n_f$ freie DOFs ($f \equiv B$, $\mathbf{u}_f$ gesucht, $\mathbf{f}_f$ bekannt) und $n_p$ gesperrte Lager-DOFs ($p \equiv A$, $\mathbf{u}_p = \mathbf{0}$, $\mathbf{f}_p$ gesucht) mit $\mathbf{K}_{ff}, \mathbf{K}_{fp}, \mathbf{K}_{pf}, \mathbf{K}_{pp}$, Cholesky $\mathbf{K}_{ff} = \mathbf{L}\mathbf{L}^\top$ ($\mathbf{L}\mathbf{y} = \mathbf{f}_f$) sowie $\mathbf{u}_B, \mathbf{f}_B, \mathbf{u}_A, \mathbf{f}_A$:
+Systemaufteilung ($n_f$ frei, $n_p$ gesperrt; $\mathbf{u}_p=\mathbf{0}$) für $\mathbf{u}_f$ und $\mathbf{f}_p$ mit $\mathbf{K}_{ff}, \mathbf{K}_{fp}, \mathbf{K}_{pf}, \mathbf{K}_{pp}$: $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$ (Cholesky $\mathbf{K}_{ff}=\mathbf{L}\mathbf{L}^\top$, $\mathbf{L}\mathbf{y}=\mathbf{f}_f$) und $\mathbf{f}_p = \mathbf{K}_{pf}\mathbf{u}_f$:
 
 ![](./Diagramme/LGS_Partitionierung_Matrix.svg)
 
@@ -480,10 +483,9 @@ Aufteilung in $n_f$ freie DOFs ($f \equiv B$, $\mathbf{u}_f$ gesucht, $\mathbf{f
 <div class="columns top">
 <div class="one">
 
-**1. Stabnormalkraft $N_e$ & Spannung $\sigma_e$**
+**1. Stabnormalkraft $N_e \equiv S$ & Spannung $\sigma_e$**
 $$N_e = \frac{EA}{L}\,\vec{n}\cdot(\vec{u}_j - \vec{u}_i), \qquad \sigma_e = \frac{N_e}{A}$$
-- $N_e > 0$: Zugstab (blau); $N_e < 0$: Druckstab (rot).
-- Vergleich von `stress` ($\sigma_e$) mit der Werkstoff-Streckgrenze.
+- Die Stabkraft $S$ heißt in der FEM **Normalkraft $N_e$**: $N_e > 0$ Zug (blau), $N_e < 0$ Druck (rot); Vergleich von `stress` ($\sigma_e$) mit der Streckgrenze.
 
 **2. Globale Gleichgewichtsinvariante**
 $$\sum \vec{F}_{\text{ext}} + \sum \vec{F}_{\text{Lager}} = \vec{0} \quad (\text{Fehler } < 10^{-8}\,\mathrm{N})$$
@@ -606,58 +608,57 @@ Die Vorlage entkoppelt Physik (`Fem/`) vom WPF-`Canvas`:
 <div class="columns">
 <div class="two">
 
-Aus den Koordinatendifferenzen `dx`, `dy` und der Stablänge `l` folgen Richtung `(cx, cy)` und Normalkraft:
+Aus `(c, s) = Direction` und `ux1`, `uy1`, `ux2`, `uy2` in `globalDisplacements` folgt:
 
-- Die Knotenverschiebungen `ux1`, `uy1` (an `Node1`) und `ux2`, `uy2` (an `Node2`) werden aus `uGlobal` gelesen.
-- Die Projektion `du` entlang `(cx, cy)` liefert über $\frac{EA}{l}\cdot\Delta L$ direkt die Stabnormalkraft.
+- Projektion `deltaL` entlang `(c, s)` liefert die Dehnung `strain`.
+- `YoungsModulus * Area * strain` ergibt Zug ($>0$) bzw. Druck ($<0$).
+- Identisch zur analytischen Formel $\frac{EA}{L}\Delta L$.
 
 </div>
 <div class="three">
 
 ```csharp
-public double ComputeNormalForce(Vector<double> uGlobal)
+public double ComputeNormalForce(Vector<double> globalDisplacements)
 {
-    double dx = Node2.X - Node1.X;
-    double dy = Node2.Y - Node1.Y;
-    double l = Math.Sqrt(dx * dx + dy * dy);
-    double cx = dx / l, cy = dy / l;
+    var (c, s) = Direction;
+    double ux1 = globalDisplacements[Node1.DofX];
+    double uy1 = globalDisplacements[Node1.DofY];
+    double ux2 = globalDisplacements[Node2.DofX];
+    double uy2 = globalDisplacements[Node2.DofY];
 
-    double ux1 = uGlobal[Node1.DofX], uy1 = uGlobal[Node1.DofY];
-    double ux2 = uGlobal[Node2.DofX], uy2 = uGlobal[Node2.DofY];
-    double du = (ux2 - ux1) * cx + (uy2 - uy1) * cy;
-
-    // Hooke: N = (E * A / L) * Delta_L
-    return (YoungsModulus * Area / l) * du;
+    double deltaL = c * (ux2 - ux1) + s * (uy2 - uy1);
+    double strain = deltaL / Length;
+    return YoungsModulus * Area * strain;
 }
 ```
 
 </div>
 </div>
 
-> **Golden Reference:** Im 3-Knoten-Träger der Stufe 1 liefert diese Methode für das Zugband exakt `+5,000 kN` und für die Dachstäbe `-7,071 kN` (Fehler $< 10^{-11}\,\mathrm{N}$).
+> **Golden Reference:** Im 3-Knoten-Träger der Stufe 1 liefert diese Methode für das Zugband exakt `+5,000 kN` und für die Dachstäbe `-7,071 kN` (Fehler $< 10^{-11}\,\mathrm{N}$, geprüft via `dotnet test` in Aufgabe 1.4 – erst bei korrektem Vorzeichen stimmen die Farbwerte im Canvas!).
 
 ---
 
 ### Index-Partitionierung in C# (`GlobalStiffnessMatrix.cs`)
 
-Extraktion der freien (`free`) und gesperrten (`prescribed`) Freiheitsgrade für die Submatrizen `kff`, `kpf` und den Lastvektor `ff`:
+`Partition()` extrahiert die freien (`free`) und gesperrten (`prescribed`) Freiheitsgrade aus `kGlobal` und gibt `(free, prescribed, kff, kpf, ff)` zurück:
 
 ```csharp
 var prescribed = FixedDofs.OrderBy(d => d).ToArray();
 var free = Enumerable.Range(0, TotalDofs).Except(FixedDofs).OrderBy(d => d).ToArray();
+var kGlobal = AssembleGlobalMatrix();
 
 var kff = new DenseMatrix(free.Length, free.Length);
-var ff  = new DenseVector(free.Length);
-for (int i = 0; i < free.Length; i++) {
-    ff[i] = ExternalForces[free[i]];
+for (int i = 0; i < free.Length; i++)
     for (int j = 0; j < free.Length; j++)
         kff[i, j] = kGlobal[free[i], free[j]];
-}
 
 var kpf = new DenseMatrix(prescribed.Length, free.Length);
 for (int i = 0; i < prescribed.Length; i++)
     for (int j = 0; j < free.Length; j++)
         kpf[i, j] = kGlobal[prescribed[i], free[j]];
+
+return (free, prescribed, kff, kpf, ff);
 ```
 
 ---
@@ -733,7 +734,7 @@ var uf = kGlobal.Cholesky().Solve(model.ExternalForces);
 - `kGlobal` enthält noch alle gesperrten Lager-DOFs unpartitioniert ($\det(\mathbf{K}) = 0$ durch 3 Starrkörper-Moden).
 
 **2. Fehlende Schritte**
-- `FixedDofs` setzen, per `Partition()` das Tupel `part` (`kff`, `kpf`, `ff`) extrahieren, dann `uf` und `fp` berechnen.
+- `FixedDofs` setzen, per `Partition()` die Listen `free` / `presc` sowie `kff`, `kpf` und `ff` extrahieren, dann `uf` und `fp` berechnen.
 
 </div>
 <div class="one">
@@ -742,12 +743,12 @@ var uf = kGlobal.Cholesky().Solve(model.ExternalForces);
 - `.Inverse()` ist $3\times$–$6\times$ langsamer als Cholesky und numerisch schlechter konditioniert:
 
 ```csharp
-var part = model.Partition();
-// 1. Verschiebungen u_f via Cholesky lösen
-var uf = part.Kff.Cholesky().Solve(part.Ff);
-// 2. Auflagerreaktionen f_p berechnen
-var fp = part.Kpf.Multiply(uf);
-// Gleichgewicht: sum(F_ext + fp) == 0
+// 1. Partitionieren (frei vs. gesperrt)
+var (free, presc, kff, kpf, ff) = model.Partition();
+// 2. Verschiebungen u_f via Cholesky lösen
+var uf = kff.Cholesky().Solve(ff);
+// 3. Auflagerreaktionen f_p & Gleichgewicht
+var fp = kpf.Multiply(uf);
 ```
 
 </div>
@@ -816,7 +817,7 @@ state = rk4.Step(state, t, dt, sFunction);
 </div>
 </div>
 
-> **Wichtiger Termin-Hinweis:** Zu Beginn von **Termin 08** findet **Moodle-Test 3** (Stoff: Kapitel 05–07) statt – nutzen Sie zur Vorbereitung die unbegrenzten Moodle-Übungstests (`Test_01`–`Test_03`) im Kursbereich und prüfen Sie Ihre Vorjahres-Notizen!
+> **Wichtiger Termin-Hinweis:** Zu Beginn von **Termin 08** findet **Moodle-Test 3** (Stoff: Kapitel 05–07) statt – nutzen Sie zur Vorbereitung die unbegrenzten Moodle-Übungstests (`Test_01`–`Test_03`) im Kursbereich und prüfen Sie Ihre Vorlesungs-Notizen!
 
 ---
 
@@ -824,7 +825,7 @@ state = rk4.Step(state, t, dt, sFunction);
 
 ### Hausübung Termin 07: Statik, FEM & Cholesky
 
-**Stufe 1 (`1.1`–`1.3` auf `TrussFemSolver.sln`):** Auflager-/Kraftpfeile, 5-Knoten-Auslegerkran & Singularitäts-Test ([Aufgabenblatt 07](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Track A ODER Track B, 10 Pkt.):**
+**Stufe 1 (`1.1`–`1.4` auf `TrussFemSolver.sln`):** Auflager-/Kraftpfeile, 5-Knoten-Auslegerkran, Singularitäts-Test & Unit-Tests ([Aufgabenblatt 07](../Uebung/Aufgabenblatt.md)) $\to$ **Stufe 2 (Track A ODER Track B, 10 Pkt.):**
 
 <div class="columns">
 <div class="two">

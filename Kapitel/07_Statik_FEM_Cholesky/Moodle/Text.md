@@ -7,6 +7,6 @@ Heute erwecken wir die Vektor-Fachwerke aus Termin 03 statisch zum Leben! Wir le
 
 **Ablauf & Übungsaufgaben:**
 * 🎤 **Showcase T06:** Zwei ausgewählte Teams präsentieren ihre Multithreading-Benchmarks und Speedup-Messungen am Beamer.
-* **Stufe 1 (Basisaufgabe):** Aufstellen der Elementmatrix und Cholesky-Lösung für einen 3-Knoten-Kragträger mit Vergleich gegen geschlossene Handrechnung.
+* **Stufe 1 (Basisaufgabe):** Erweitern der Canvas-Visualisierung um Auflager- und Kraftpfeile, Modellierung eines fünf-knotigen Auslegerkrans sowie Nachweis des globalen Kräftegleichgewichts und der Cholesky-Singularitätserkennung über automatisierte Unit-Tests.
 * 🏭 **Stufe 2 – Track A (Industrie):** *Portalkran-Verformung unter Wanderlast* – Verschiebung mit Überhöhung, Nachweis des globalen Kräftegleichgewichts und Spannungs-Farbcodierung.
 * 🎮 **Stufe 2 – Track B (Game):** *„Bridge Constructor Physics Engine“* – Kontinuierliche Cholesky-Berechnung bei LKW-Überfahrt mit Stabbruch bei Grenzlast und animiertem Einsturz.

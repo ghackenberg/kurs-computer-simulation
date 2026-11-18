@@ -323,10 +323,10 @@ text {
   <path class="sem-muted sem-card-stroke" d="M 45 356 Q 45 348 53 348 L 937 348 Q 945 348 945 356 L 945 372 L 45 372 Z" stroke-width="1"/>
   <text class="sem-neutral-text" x="58" y="365" font-size="12" font-weight="bold">Nomenklatur-Harmonisierung &amp; Mathematische Fundierung</text>
 
-  <!-- Left Column: Nomenklatur-Mapping -->
-  <text class="sem-primary-text" x="58" y="388" font-size="12" font-weight="bold">Nomenklatur-Mapping (International ↔ Deutsch):</text>
-  <text class="sem-neutral-text" x="58" y="405" font-size="12">• Index f (free)  ≡  Index B (beweglich / frei verschiebbar):  u_f ≡ u_B,  f_f ≡ f_B</text>
-  <text class="sem-neutral-text" x="58" y="420" font-size="12">• Index p (prescribed)  ≡  Index A (Auflager / fest eingespannt):  u_p ≡ u_A,  f_p ≡ f_A</text>
+  <!-- Left Column: Nomenklatur-Erklärung -->
+  <text class="sem-primary-text" x="58" y="388" font-size="12" font-weight="bold">Index-Aufteilung der Freiheitsgrade (DOFs):</text>
+  <text class="sem-neutral-text" x="58" y="405" font-size="12">• Index f (free): Unbekannte Verschiebung u_f, bekannte Knotenlast f_f</text>
+  <text class="sem-neutral-text" x="58" y="420" font-size="12">• Index p (prescribed): Gesperrtes Lager u_p = 0, gesuchte Reaktion f_p</text>
 
   <!-- Vertical Divider -->
   <line class="sem-muted-stroke" x1="515" y1="375" x2="515" y2="422" stroke-width="1"/>

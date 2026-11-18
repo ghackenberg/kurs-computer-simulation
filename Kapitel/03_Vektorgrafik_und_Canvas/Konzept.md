@@ -12,7 +12,7 @@
 - **Assessment zu Terminbeginn:** **Moodle-Test 1** ([`Quiz/README.md`](./Quiz/README.md), 15 Min., prüft ausschließlich Kap. 00–02).
 - **Vorgreif-Sperre (Technologie-Stand T03):** Rein geometrisch auf WPF `Canvas` / `DrawingVisual`. *Strikte Tabus:* **Keine Fachwerk-Statik, keine Steifigkeitsmatrix $\mathbf{K}$, kein Math.NET Cholesky (erst in T07!)** – alle Kräfte sind fest vorgegebene Vektoren.
 - **Kapitel-Brücken & Quiz-Zuordnung:**
-  - **Vorwärts ($\to$):** [`T05`](../05_3D_OpenGL_Szenengraph/Konzept.md) (Verallgemeinerung von 2D-Transformationen $3\times 3$ mit $+Y$ unten auf 3D $4\times 4$ mit $+Y$ oben, $+Z$ zum Betrachter und `aspect`-Skalierung); [`T07`](../07_Statik_FEM_Cholesky/Konzept.md) (Das in T03 rein geometrisch gezeichnete 2D-Fachwerk samt JSON-Format erhält in T07 seinen Cholesky-Statiklöser $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$).
+  - **Vorwärts ($\to$):** [`T05`](../05_3D_OpenGL_Szenengraph/Konzept.md) (Verallgemeinerung von 2D-Transformationen $3\times 3$ mit $+Y$ unten auf 3D $4\times 4$ mit $+Y$ oben, $+Z$ zum Betrachter und `aspect`-Skalierung); [`T07`](../07_Statik_FEM_Cholesky/Konzept.md) (Das in T03 rein geometrisch gezeichnete 2D-Fachwerk- und Canvas-Datenmodell erhält in T07 seinen Cholesky-Statiklöser $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$).
   - **Geprüft in:** **Quiz 02** (zu Beginn von [`T05`](../05_3D_OpenGL_Szenengraph/Konzept.md), prüft Kap. 03–04).
 
 ## 2. Lernziele der Vorlesung (Bloom-Kaskade)

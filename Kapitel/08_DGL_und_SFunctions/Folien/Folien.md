@@ -39,7 +39,7 @@ Präsentation der Hausübung aus Termin 07 (**Stufe 1: Basisaufgabe** + **Stufe 
 - Wandernde Kranlast ($F_{\text{Last}} = 50\,\text{kN}$)
 - Überhöhte Verformungsdarstellung im Canvas
 - Reale Normalkräfte (Zug blau, Druck rot)
-- *Code-Defense:* Euler-Knicknachweis & Kondition
+- *Code-Defense:* Euler-Knicknachweis & Gleichgewicht
 
 </div>
 <div class="two">
@@ -47,14 +47,14 @@ Präsentation der Hausübung aus Termin 07 (**Stufe 1: Basisaufgabe** + **Stufe 
 #### Stufe 2 – Track B: Bridge Constructor Engine (Game)
 - Interaktive Fachwerkbrücke mit LKW-Überfahrt
 - Schrittweise Cholesky-LGS-Lösung
-- Bauteilversagen bei Grenzspannung $S_{\text{krit}}$
+- Bauteilversagen bei Grenzkraft $N_{\text{zul}}$
 - Physikalischer Kollaps & Trägerwerk-Einsturz
 - *Code-Defense:* Singularität bei Stab-Ausfall
 
 </div>
 </div>
 
-> **Code-Defense (Säule 2b, 20 %):** Live-Demonstration am Beamer. Fokus: Numerische Stabilität, Konditionszahl $\kappa(\mathbf{K}_{ff})$ und Singularität bei Unterbestimmtheit.
+> **Code-Defense (Säule 2b, 20 %):** Live-Demonstration am Beamer. Fokus: Globales Gleichgewicht ($\sum \vec{F} = \vec{0}$), Cholesky-Faktorisierung und Singularität bei Unterbestimmtheit.
 
 ---
 

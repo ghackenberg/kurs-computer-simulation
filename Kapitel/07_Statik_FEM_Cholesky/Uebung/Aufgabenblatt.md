@@ -25,7 +25,7 @@ Nach erfolgreicher Bearbeitung dieser Übungseinheit sind Sie in der Lage:
 2. **Globale Gleichungssysteme assemblieren:** Die globale Steifigkeitsmatrix $\mathbf{K} \in \mathbb{R}^{2N \times 2N}$ durch Topologie-Mapping (Freiheitsgrad-Zuordnung) korrekt aufzuakkumulieren.
 3. **Randbedingungen exakt partitionieren:** Das Gesamtsystem ohne numerische Hilfskonstrukte (wie Penalty-Verfahren) mathematisch exakt in freie ($f$) und vorgeschriebene ($p$) Freiheitsgrade zu partitionieren:
    $$\mathbf{K}_{ff} \mathbf{u}_f = \mathbf{f}_f - \mathbf{K}_{fp} \mathbf{u}_p, \quad \mathbf{f}_p = \mathbf{K}_{pf} \mathbf{u}_f + \mathbf{K}_{pp} \mathbf{u}_p$$
-4. **Cholesky-Zerlegung anwenden:** Die symmetrische, positiv definite Submatrix $\mathbf{K}_{ff}$ mittels Cholesky-Faktorisierung ($\mathbf{L}\mathbf{L}^\top$) über `MathNet.Numerics` hocheffizient zu invertieren bzw. zu lösen.
+4. **Cholesky-Zerlegung anwenden:** Die symmetrische, positiv definite Submatrix $\mathbf{K}_{ff}$ mittels Cholesky-Faktorisierung ($\mathbf{L}\mathbf{L}^\top$) über `MathNet.Numerics` hocheffizient zu faktorisieren bzw. zu lösen.
 5. **Kräfte, Spannungen & Invarianten prüfen:** Stabnormalkräfte $N_i$, Normalspannungen $\sigma_i$ und Euler-Knicklasten $N_{\text{knick}}$ zu berechnen sowie das globale Vektorgleichgewicht ($\sum \vec{F} = \vec{0}$) als Invariante auf Maschinengenauigkeit nachzuweisen.
 6. **Verheiratung mit Termin 03:** Den in Termin 03 entwickelten interaktiven WPF Canvas mit der FEM-Rechenengine zu verbinden, sodass Zug- und Druckstäbe farbkodiert und Lagerkräfte als dynamische Vektorpfeile dargestellt werden.
 
@@ -117,6 +117,9 @@ $$\begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf
 3. **Aufgabe 1.3 – Singularitäts-Test (Was passiert bei unterbestimmter Lagerung?):**
    - Kommentieren Sie testweise in `CreateStage1Model` die Zeile `model.FixDof(n1.DofX);` aus (sodass beide Lager in X-Richtung verschieblich sind $\to$ horizontale Starrkörper-Bewegung möglich).
    - Beobachten Sie, warum `kff.Cholesky()` in `CholeskySolver.Solve()` eine Exception wirft (Symmetrisch Positiv Definite Matrix $\mathbf{K}_{ff}$ erfordert $\det(\mathbf{K}_{ff}) > 0$ ohne Eigenwert $0$!) und machen Sie die Änderung anschließend wieder rückgängig.
+4. **Aufgabe 1.4 – Auslegerkran & Singularität via Unit-Tests verifizieren (`dotnet test`):**
+   - Öffnen Sie `TrussFemSolver.Tests/FemTests.cs` und vervollständigen Sie den vorbereiteten Test `TestCantileverStage1AndSingularity` (`TODO [Stufe 1 - Aufgabe 1.4]`): Prüfen Sie für Ihren 5-Knoten-Auslegerkran (`CreateCantileverStage1Model`) das globale Gleichgewicht (`IsEquilibriumSatisfied`), das Zug-/Druck-Vorzeichen im Obergurt ($N > 0$) bzw. Untergurt ($N < 0$) sowie die erwartete `InvalidOperationException` bei unterbestimmter Lagerung.
+   - Führen Sie `dotnet test` in `Vorlage/` aus und stellen Sie sicher, dass alle Unit-Tests grün durchlaufen.
 
 
 ## 4. Stufe 2: Vertiefungsaufgabe / Track-Ausbau (Wahlmodell: Track A ODER Track B)
