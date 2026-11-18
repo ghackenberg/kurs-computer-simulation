@@ -472,7 +472,7 @@ Am gemeinsamen Knoten addieren sich die inneren Stabkräfte zum Lastvektor ($\su
 
 ### Einbau der Randbedingungen: Blockpartitionierung
 
-Systemaufteilung ($n_f$ frei, $n_p$ gesperrt; $\mathbf{u}_p=\mathbf{0}$) für $\mathbf{u}_f$ und $\mathbf{f}_p$ mit $\mathbf{K}_{ff}, \mathbf{K}_{fp}, \mathbf{K}_{pf}, \mathbf{K}_{pp}$: $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$ (Cholesky $\mathbf{K}_{ff}=\mathbf{L}\mathbf{L}^\top$, $\mathbf{L}\mathbf{y}=\mathbf{f}_f$) und $\mathbf{f}_p = \mathbf{K}_{pf}\mathbf{u}_f$:
+Systemaufteilung ($n_f$ frei, $n_p$ gesperrt; $\mathbf{u}_p=\mathbf{0}$) für $\mathbf{u}_f$ mit $\mathbf{K}_{ff}, \mathbf{K}_{fp}, \mathbf{K}_{pf}, \mathbf{K}_{pp}$: $\mathbf{K}_{ff}\mathbf{u}_f = \mathbf{f}_f$ ($\mathbf{L}\mathbf{y}=\mathbf{f}_f$), $\mathbf{f}_p = \mathbf{K}_{pf}\mathbf{u}_f$ ($u_{y3}=-1{,}823\,\text{mm}$, $F_{y1}=F_{y2}=+5{,}00\,\text{kN}$):
 
 ![](./Diagramme/LGS_Partitionierung_Matrix.svg)
 

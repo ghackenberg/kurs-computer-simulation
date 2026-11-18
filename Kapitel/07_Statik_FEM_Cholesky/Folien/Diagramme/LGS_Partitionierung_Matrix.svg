@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="960" height="440">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 420" width="1080" height="420">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -62,19 +62,15 @@
       <stop offset="100%" stop-color="#1e293b" />
     </linearGradient>
     <!-- @svg-palette-defs:end -->
-    <!-- Arrow Markers -->
-    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path class="sem-success-fill" d="M 0 1.5 L 8 5 L 0 8.5 z"/>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path class="sem-success-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
     </marker>
-    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path class="sem-warning-fill" d="M 0 1.5 L 8 5 L 0 8.5 z"/>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path class="sem-warning-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
     </marker>
-    <marker id="arrowDark" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path class="sem-muted-fill" d="M 0 1.5 L 8 5 L 0 8.5 z"/>
-    </marker>
-
-    <style>
-      
+  </defs>
+  <style>
+    
 /* @svg-palette:start */
       .sem-primary { fill: url(#grad-sem-primary); stroke: #2563eb; }
       .sem-primary-bg { fill: url(#grad-sem-primary); stroke: none; }
@@ -117,222 +113,95 @@
       .sem-neutral-fill { fill: url(#grad-sem-neutral-fill); }
       .sem-neutral-text { fill: #0f172a; }
       /* @svg-palette:end */
-text {
-        font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
-      }
-    </style>
-  </defs>
+text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  </style>
 
-  <!-- Top Title Banner -->
-  <path class="sem-muted sem-card-stroke" d="M 5 15 Q 5 5 15 5 L 945 5 Q 955 5 955 15 L 955 42 L 5 42 Z" stroke-width="1"/>
-  <text class="sem-primary-text" x="24" y="27" font-size="15" font-weight="bold">LGS-Partitionierung: Randbedingungen &amp; Blockzerlegung</text>
-  <text class="sem-muted-text" x="936" y="27" font-size="12" font-weight="bold" text-anchor="end">Kapitel 07: Statische Modelle (Fachwerke &amp; FEM)</text>
+  <!-- Spalten-Header über K, u, f -->
+  <text class="sem-success-text" x="135" y="24" font-size="15" font-weight="700" text-anchor="middle">f (n_f = 3)</text>
+  <text class="sem-muted-text" x="285" y="24" font-size="15" font-weight="700" text-anchor="middle">p (n_p = 3)</text>
+  <text class="sem-neutral-text" x="425" y="24" font-size="15" font-weight="700" text-anchor="middle">u</text>
+  <text class="sem-neutral-text" x="555" y="24" font-size="15" font-weight="700" text-anchor="middle">f</text>
 
-  <!-- ==================== MATRIX & VECTOR BACKGROUNDS & GEOMETRY ==================== -->
-  <!-- Matrix K: Block K_ff (Frei/Beweglich, n_f x n_f) -->
-  <rect class="sem-success" x="45" y="65" width="165" height="135" rx="6" stroke-width="2.5"/>
+  <!-- Matrix K Klammern -->
+  <path class="sem-neutral-stroke" d="M 45 40 L 34 40 L 34 320 L 45 320" fill="none" stroke-width="3" />
+  <path class="sem-neutral-stroke" d="M 335 40 L 346 40 L 346 320 L 335 320" fill="none" stroke-width="3" />
 
-  <!-- Matrix K: Block K_fp (Kopplung frei-fest, n_f x n_p) -->
-  <rect class="sem-muted" x="215" y="65" width="95" height="135" rx="6" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <!-- K_ff (oben links) -->
+  <rect class="sem-success" x="52" y="46" width="166" height="148" rx="8" stroke-width="2.5" />
+  <text class="sem-success-text" x="135" y="96" font-size="22" font-weight="700" text-anchor="middle">K_ff</text>
+  <text class="sem-success-text" x="135" y="124" font-size="15" font-weight="700" text-anchor="middle">n_f &#215; n_f (SPD)</text>
+  <text class="sem-success-text" x="135" y="150" font-size="14" text-anchor="middle">Cholesky: L &#183; L&#7488;</text>
 
-  <!-- Matrix K: Block K_pf (Kopplung fest-frei, n_p x n_f) -->
-  <rect class="sem-info" x="45" y="205" width="165" height="75" rx="6" stroke-width="2"/>
+  <!-- K_fp (oben rechts) -->
+  <rect class="sem-muted" x="226" y="46" width="104" height="148" rx="8" stroke-width="1.5" stroke-dasharray="5,4" />
+  <text class="sem-muted-text" x="278" y="96" font-size="20" font-weight="700" text-anchor="middle">K_fp</text>
+  <text class="sem-danger-text" x="278" y="126" font-size="15" font-weight="700" text-anchor="middle">&#183; u_p = 0</text>
+  <text class="sem-muted-text" x="278" y="152" font-size="14" text-anchor="middle">(entfällt)</text>
 
-  <!-- Matrix K: Block K_pp (Lager-Lager, n_p x n_p) -->
-  <rect class="sem-muted" x="215" y="205" width="95" height="75" rx="6" stroke-width="1.5"/>
+  <!-- K_pf (unten links) -->
+  <rect class="sem-info" x="52" y="204" width="166" height="110" rx="8" stroke-width="2" />
+  <text class="sem-info-text" x="135" y="250" font-size="20" font-weight="700" text-anchor="middle">K_pf</text>
+  <text class="sem-info-text" x="135" y="278" font-size="14.5" font-weight="700" text-anchor="middle">n_p &#215; n_f (Reaktion)</text>
 
-  <!-- Large Structural Brackets for Matrix K -->
-  <path class="sem-neutral-stroke" d="M 40 65 L 34 65 L 34 280 L 40 280" fill="none" stroke-width="2.5"/>
-  <path class="sem-neutral-stroke" d="M 315 65 L 321 65 L 321 280 L 315 280" fill="none" stroke-width="2.5"/>
+  <!-- K_pp (unten rechts) -->
+  <rect class="sem-muted" x="226" y="204" width="104" height="110" rx="8" stroke-width="1.5" />
+  <text class="sem-muted-text" x="278" y="250" font-size="20" font-weight="700" text-anchor="middle">K_pp</text>
+  <text class="sem-muted-text" x="278" y="278" font-size="14.5" text-anchor="middle">&#183; u_p = 0</text>
 
-  <!-- Vector u: Blocks -->
-  <rect class="sem-danger" x="345" y="65" width="70" height="135" rx="6" stroke-width="2.5"/>
-  <rect class="sem-muted" x="345" y="205" width="70" height="75" rx="6" stroke-width="1.5"/>
+  <!-- Malpunkt -->
+  <text class="sem-neutral-text" x="364" y="188" font-size="26" font-weight="700" text-anchor="middle">&#183;</text>
 
-  <!-- Large Brackets for Vector u -->
-  <path class="sem-neutral-stroke" d="M 340 65 L 334 65 L 334 280 L 340 280" fill="none" stroke-width="2"/>
-  <path class="sem-neutral-stroke" d="M 420 65 L 426 65 L 426 280 L 420 280" fill="none" stroke-width="2"/>
+  <!-- Vektor u Klammern -->
+  <path class="sem-neutral-stroke" d="M 386 40 L 378 40 L 378 320 L 386 320" fill="none" stroke-width="2.5" />
+  <path class="sem-neutral-stroke" d="M 464 40 L 472 40 L 472 320 L 464 320" fill="none" stroke-width="2.5" />
 
-  <!-- Vector f: Blocks -->
-  <rect class="sem-primary sem-info-stroke" x="450" y="65" width="70" height="135" rx="6" stroke-width="2"/>
-  <rect class="sem-warning" x="450" y="205" width="70" height="75" rx="6" stroke-width="2"/>
+  <!-- u_f -->
+  <rect class="sem-danger" x="386" y="46" width="78" height="148" rx="8" stroke-width="2.5" />
+  <text class="sem-danger-text" x="425" y="106" font-size="22" font-weight="700" text-anchor="middle">u_f</text>
+  <text class="sem-danger-text" x="425" y="136" font-size="14.5" font-weight="700" text-anchor="middle">gesucht</text>
+  <text class="sem-danger-text" x="425" y="160" font-size="14" text-anchor="middle">[m]</text>
 
-  <!-- Large Brackets for Vector f -->
-  <path class="sem-neutral-stroke" d="M 445 65 L 439 65 L 439 280 L 445 280" fill="none" stroke-width="2"/>
-  <path class="sem-neutral-stroke" d="M 525 65 L 531 65 L 531 280 L 525 280" fill="none" stroke-width="2"/>
+  <!-- u_p = 0 -->
+  <rect class="sem-muted" x="386" y="204" width="78" height="110" rx="8" stroke-width="1.5" />
+  <text class="sem-muted-text" x="425" y="254" font-size="19" font-weight="700" text-anchor="middle">u_p = 0</text>
+  <text class="sem-muted-text" x="425" y="280" font-size="14" text-anchor="middle">Lager</text>
 
-  <!-- Connecting Workflow Arrows from Equations to Solution Cards -->
-  <!-- Row 1 to Cholesky Card -->
-  <line class="sem-success-stroke" x1="535" y1="132" x2="565" y2="132" stroke-width="3" marker-end="url(#arrowGreen)"/>
+  <!-- Gleichheitszeichen -->
+  <text class="sem-neutral-text" x="492" y="188" font-size="26" font-weight="700" text-anchor="middle">=</text>
 
-  <!-- Row 2 to Reaction Card -->
-  <line class="sem-warning-stroke" x1="535" y1="242" x2="565" y2="242" stroke-width="3" marker-end="url(#arrowAmber)"/>
+  <!-- Vektor f Klammern -->
+  <path class="sem-neutral-stroke" d="M 514 40 L 506 40 L 506 320 L 514 320" fill="none" stroke-width="2.5" />
+  <path class="sem-neutral-stroke" d="M 596 40 L 604 40 L 604 320 L 596 320" fill="none" stroke-width="2.5" />
 
-  <!-- Horizontal Partition Line (Dashed) -->
-  <line class="sem-muted-stroke" x1="30" y1="202" x2="535" y2="202" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <!-- f_f -->
+  <rect class="sem-primary" x="514" y="46" width="82" height="148" rx="8" stroke-width="2.5" />
+  <text class="sem-primary-text" x="555" y="106" font-size="22" font-weight="700" text-anchor="middle">f_f</text>
+  <text class="sem-primary-text" x="555" y="136" font-size="14.5" font-weight="700" text-anchor="middle">bekannt</text>
+  <text class="sem-primary-text" x="555" y="160" font-size="14" text-anchor="middle">[N]</text>
 
-  <!-- Strike-through diagonal red cancellation lines indicating u_p = 0 elimination -->
-  <line class="sem-danger-stroke" x1="225" y1="75" x2="300" y2="190" stroke-width="2.5" stroke-opacity="0.6"/>
-  <line class="sem-danger-stroke" x1="355" y1="215" x2="405" y2="270" stroke-width="2.5" stroke-opacity="0.6"/>
+  <!-- f_p -->
+  <rect class="sem-warning" x="514" y="204" width="82" height="110" rx="8" stroke-width="2.5" />
+  <text class="sem-warning-text" x="555" y="250" font-size="21" font-weight="700" text-anchor="middle">f_p</text>
+  <text class="sem-warning-text" x="555" y="278" font-size="14.5" font-weight="700" text-anchor="middle">Reaktion</text>
 
-  <!-- ==================== LABELS INSIDE MATRIX & VECTORS (WITH SHIELDS) ==================== -->
-  <!-- Block K_ff labels -->
-  <rect class="sem-success-stroke" x="52" y="73" width="151" height="20" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
-  <text class="sem-success-text" x="127" y="87" font-size="13" font-weight="bold" text-anchor="middle">K_ff (Freie FG)</text>
+  <!-- Pfeile rechts zu den 2 Rechenschritten -->
+  <line class="sem-success-stroke" x1="614" y1="120" x2="652" y2="120" stroke-width="3.5" marker-end="url(#arrow-green)" />
+  <line class="sem-warning-stroke" x1="614" y1="259" x2="652" y2="259" stroke-width="3.5" marker-end="url(#arrow-amber)" />
 
-  <rect x="52" y="98" width="151" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-success-text" x="127" y="111" font-size="12" text-anchor="middle">Größe: n_f × n_f</text>
+  <!-- Schritt 1 rechts (kompakt & konkret) -->
+  <rect class="sem-success" x="660" y="46" width="405" height="148" rx="10" stroke-width="2" />
+  <text class="sem-success-text" x="680" y="76" font-size="16" font-weight="700">1. Verschiebungen (Cholesky)</text>
+  <text class="sem-neutral-text" x="680" y="106" font-size="15.5" font-weight="700">K_ff &#183; u_f = f_f   &#8658;   L &#183; y = f_f,  L&#7488; &#183; u_f = y</text>
+  <text class="sem-success-text" x="680" y="138" font-size="14.5">Aufwand: 1/3 n_f&#179; Ops (2&#215; schneller als LU)</text>
+  <text class="sem-neutral-text" x="680" y="168" font-size="14.5" font-weight="700">Stufe 1 (3-Knoten):  u_y3 = -1,823 mm</text>
 
-  <rect class="sem-success" x="52" y="122" width="151" height="20" rx="3" stroke-width="0.8"/>
-  <text class="sem-success-text" x="127" y="136" font-size="12" font-weight="bold" text-anchor="middle">SPD (Symm. Pos.-Def.)</text>
+  <!-- Schritt 2 rechts -->
+  <rect class="sem-warning" x="660" y="204" width="405" height="110" rx="10" stroke-width="2" />
+  <text class="sem-warning-text" x="680" y="234" font-size="16" font-weight="700">2. Lagerreaktionen (Post-Processing)</text>
+  <text class="sem-neutral-text" x="680" y="264" font-size="15.5" font-weight="700">f_p = K_pf &#183; u_f   (keine Inversion nötig!)</text>
+  <text class="sem-neutral-text" x="680" y="294" font-size="14.5" font-weight="700">Stufe 1 (3-Knoten):  F_y1 = F_y2 = +5,00 kN</text>
 
-  <rect x="52" y="148" width="151" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-success-text" x="127" y="161" font-size="12" text-anchor="middle">Eindeutig invertierbar!</text>
-
-  <rect x="52" y="171" width="151" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-success-text" x="127" y="184" font-size="12" text-anchor="middle">Cholesky-tauglich</text>
-
-  <!-- Block K_fp labels -->
-  <rect class="sem-card-stroke" x="220" y="73" width="85" height="20" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
-  <text class="sem-muted-text" x="262" y="87" font-size="12" font-weight="bold" text-anchor="middle">K_fp (Koppl.)</text>
-
-  <rect x="220" y="98" width="85" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-muted-text" x="262" y="111" font-size="12" text-anchor="middle">n_f × n_p</text>
-
-  <rect class="sem-danger" x="220" y="125" width="85" height="20" rx="3" stroke-width="0.8"/>
-  <text class="sem-danger-text" x="262" y="139" font-size="12" font-weight="bold" text-anchor="middle">· u_p = 0</text>
-
-  <rect x="220" y="152" width="85" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-danger-text" x="262" y="165" font-size="12" text-anchor="middle">(Entfällt)</text>
-
-  <!-- Block K_pf labels -->
-  <rect class="sem-info-stroke" x="52" y="211" width="151" height="20" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
-  <text class="sem-info-text" x="127" y="225" font-size="12" font-weight="bold" text-anchor="middle">K_pf (Reaktion)</text>
-
-  <rect x="52" y="234" width="151" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-info-text" x="127" y="247" font-size="12" text-anchor="middle">n_p × n_f (Lagerreakt.)</text>
-
-  <rect class="sem-info" x="52" y="255" width="151" height="18" rx="3" stroke="none"/>
-  <text class="sem-info-text" x="127" y="268" font-size="12" font-weight="bold" text-anchor="middle">Berechnet Lagerkräfte</text>
-
-  <!-- Block K_pp labels -->
-  <rect class="sem-muted-stroke" x="220" y="211" width="85" height="20" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
-  <text class="sem-muted-text" x="262" y="225" font-size="12" font-weight="bold" text-anchor="middle">K_pp (Lager)</text>
-
-  <rect x="220" y="234" width="85" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-muted-text" x="262" y="247" font-size="12" text-anchor="middle">n_p × n_p</text>
-
-  <rect x="220" y="255" width="85" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-muted-text" x="262" y="268" font-size="12" text-anchor="middle">· u_p = 0</text>
-
-  <!-- Vector u labels -->
-  <rect class="sem-danger-stroke" x="350" y="73" width="60" height="24" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
-  <text class="sem-danger-text" x="380" y="89" font-size="15" font-weight="bold" text-anchor="middle">u_f</text>
-
-  <rect class="sem-danger" x="348" y="103" width="64" height="18" rx="3" stroke="none"/>
-  <text class="sem-danger-text" x="380" y="116" font-size="12" font-weight="bold" text-anchor="middle">Gesucht!</text>
-
-  <rect x="348" y="125" width="64" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-danger-text" x="380" y="138" font-size="12" text-anchor="middle">Freie</text>
-
-  <rect x="348" y="145" width="64" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-danger-text" x="380" y="158" font-size="12" text-anchor="middle">Verschiebg.</text>
-
-  <rect x="348" y="170" width="64" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-danger-text" x="380" y="183" font-size="12" font-weight="bold" text-anchor="middle">[ m ]</text>
-
-  <rect class="sem-card-stroke" x="348" y="211" width="64" height="20" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
-  <text class="sem-muted-text" x="380" y="225" font-size="13" font-weight="bold" text-anchor="middle">u_p = 0</text>
-
-  <rect x="348" y="235" width="64" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-muted-text" x="380" y="248" font-size="12" text-anchor="middle">Starre</text>
-
-  <rect x="348" y="255" width="64" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-muted-text" x="380" y="268" font-size="12" text-anchor="middle">Auflager</text>
-
-  <!-- Vector f labels -->
-  <rect class="sem-info-stroke" x="455" y="73" width="60" height="24" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
-  <text class="sem-info-text" x="485" y="89" font-size="15" font-weight="bold" text-anchor="middle">f_f</text>
-
-  <rect class="sem-primary" x="453" y="103" width="64" height="18" rx="3" stroke="none"/>
-  <text class="sem-primary-text" x="485" y="116" font-size="12" font-weight="bold" text-anchor="middle">Bekannt</text>
-
-  <rect x="453" y="125" width="64" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-info-text" x="485" y="138" font-size="12" text-anchor="middle">Äußere</text>
-
-  <rect x="453" y="145" width="64" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-info-text" x="485" y="158" font-size="12" text-anchor="middle">Knotenlast</text>
-
-  <rect x="453" y="170" width="64" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-info-text" x="485" y="183" font-size="12" font-weight="bold" text-anchor="middle">[ N ]</text>
-
-  <rect class="sem-warning-stroke" x="455" y="211" width="60" height="20" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
-  <text class="sem-warning-text" x="485" y="225" font-size="13" font-weight="bold" text-anchor="middle">f_p</text>
-
-  <rect class="sem-warning" x="453" y="235" width="64" height="18" rx="3" stroke="none"/>
-  <text class="sem-warning-text" x="485" y="248" font-size="12" font-weight="bold" text-anchor="middle">Reaktionen</text>
-
-  <rect x="453" y="255" width="64" height="18" rx="3" fill="#FFFFFF"/>
-  <text class="sem-warning-text" x="485" y="268" font-size="12" text-anchor="middle">Lagerkräfte</text>
-
-  <!-- Operators Between Matrices with Shields -->
-  <rect class="sem-card-stroke" x="325" y="160" width="16" height="24" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
-  <text class="sem-muted-text" x="333" y="177" font-size="18" font-weight="bold" text-anchor="middle">·</text>
-
-  <rect class="sem-card-stroke" x="430" y="160" width="16" height="24" rx="3" fill="#FFFFFF" stroke-width="0.8"/>
-  <text class="sem-muted-text" x="438" y="177" font-size="18" font-weight="bold" text-anchor="middle">=</text>
-
-  <!-- Row Index Labels at Left -->
-  <rect class="sem-primary" x="8" y="122" width="22" height="20" rx="3" stroke-width="0.8"/>
-  <text class="sem-primary-text" x="19" y="136" font-size="12" font-weight="bold" text-anchor="middle">Z1</text>
-
-  <rect class="sem-warning" x="8" y="233" width="22" height="20" rx="3" stroke-width="0.8"/>
-  <text class="sem-warning-text" x="19" y="247" font-size="12" font-weight="bold" text-anchor="middle">Z2</text>
-
-  <!-- ==================== RIGHT WORKFLOW PANELS ==================== -->
-  <!-- Card 1: Primäres LGS lösen via Cholesky (Zeile 1) -->
-  <rect class="sem-success" x="570" y="55" width="375" height="175" rx="8" stroke-width="1.5"/>
-  <path class="sem-success" d="M 570 63 Q 570 55 578 55 L 937 55 Q 945 55 945 63 L 945 80 L 570 80 Z" stroke-width="1"/>
-  <text class="sem-success-text" x="582" y="72" font-size="13" font-weight="bold">Schritt 1: Primäres LGS lösen (Verschiebungen u_f)</text>
-
-  <text class="sem-success-text" x="582" y="98" font-size="12">Zeile 1:  K_ff · u_f + K_fp · u_p = f_f</text>
-  <text class="sem-success-text" x="582" y="115" font-size="12">Mit u_p = 0 entfällt der Koppelterm vollständig:</text>
-
-  <rect class="sem-success-stroke" x="582" y="122" width="351" height="28" rx="5" fill="#FFFFFF" stroke-width="1.2"/>
-  <text class="sem-success-text" x="757" y="141" font-size="15" font-weight="bold" text-anchor="middle">K_ff · u_f = f_f  ⟹  SPD-System</text>
-
-  <text class="sem-success-text" x="582" y="167" font-size="12" font-weight="bold">Cholesky-Lösung (Direktes Verfahren, ⅓ n_f³ Ops):</text>
-  <text class="sem-success-text" x="582" y="185" font-size="12">1. Zerlegung:  K_ff = L · Lᵀ  (L = untere Dreiecksmatrix)</text>
-  <text class="sem-success-text" x="582" y="203" font-size="12">2. Lösen:  L · y = f_f (Vorwärts)  und  Lᵀ · u_f = y (Rückwärts)</text>
-  <text class="sem-success-text" x="582" y="221" font-size="12" font-weight="bold">✓ Liefert alle elastischen Knotenverschiebungen u_f</text>
-
-  <!-- Card 2: Auflagerreaktionen berechnen (Zeile 2) -->
-  <rect class="sem-warning" x="570" y="238" width="375" height="98" rx="8" stroke-width="1.5"/>
-  <path class="sem-warning" d="M 570 246 Q 570 238 578 238 L 937 238 Q 945 238 945 246 L 945 263 L 570 263 Z" stroke-width="1"/>
-  <text class="sem-warning-text" x="582" y="255" font-size="13" font-weight="bold">Schritt 2: Auflagerkräfte berechnen (Post-Processing)</text>
-
-  <text class="sem-warning-text" x="582" y="280" font-size="12">Zeile 2:  f_p = K_pf · u_f + K_pp · u_p  mit u_p = 0:</text>
-
-  <rect class="sem-warning-stroke" x="582" y="288" width="351" height="26" rx="4" fill="#FFFFFF" stroke-width="1"/>
-  <text class="sem-warning-text" x="757" y="306" font-size="14" font-weight="bold" text-anchor="middle">f_p = K_pf · u_f  [Keine Inversion erforderlich!]</text>
-
-  <text class="sem-warning-text" x="582" y="328" font-size="12">Reine Matrix-Vektor-Multiplikation mit Aufwand O(n_p · n_f).</text>
-
-  <!-- ==================== BOTTOM NOMENCLATURE & THEORY BANNER ==================== -->
-  <rect class="sem-card-stroke" x="45" y="348" width="900" height="78" rx="8" fill="#FFFFFF" stroke-width="1.2"/>
-  <path class="sem-muted sem-card-stroke" d="M 45 356 Q 45 348 53 348 L 937 348 Q 945 348 945 356 L 945 372 L 45 372 Z" stroke-width="1"/>
-  <text class="sem-neutral-text" x="58" y="365" font-size="12" font-weight="bold">Nomenklatur-Harmonisierung &amp; Mathematische Fundierung</text>
-
-  <!-- Left Column: Nomenklatur-Erklärung -->
-  <text class="sem-primary-text" x="58" y="388" font-size="12" font-weight="bold">Index-Aufteilung der Freiheitsgrade (DOFs):</text>
-  <text class="sem-neutral-text" x="58" y="405" font-size="12">• Index f (free): Unbekannte Verschiebung u_f, bekannte Knotenlast f_f</text>
-  <text class="sem-neutral-text" x="58" y="420" font-size="12">• Index p (prescribed): Gesperrtes Lager u_p = 0, gesuchte Reaktion f_p</text>
-
-  <!-- Vertical Divider -->
-  <line class="sem-muted-stroke" x1="515" y1="375" x2="515" y2="422" stroke-width="1"/>
-
-  <!-- Right Column: Mathematischer Kern-Vorteil -->
-  <text class="sem-success-text" x="530" y="388" font-size="12" font-weight="bold">Mathematischer Vorteil der Partitionierung:</text>
-  <text class="sem-neutral-text" x="530" y="405" font-size="12">• Gesamtsystem K ist singulär (Rangdefizit durch Starrkörper-Freiheitsgrade).</text>
-  <text class="sem-neutral-text" x="530" y="420" font-size="12">• Erst K_ff ist symmetrisch positiv-definit (SPD) und eindeutig lösbar!</text>
+  <!-- Fußzeile: DOF-Beispiel aus Stufe 1 -->
+  <rect class="sem-card" x="34" y="346" width="1031" height="54" rx="8" stroke-width="1.2" />
+  <text class="sem-card-text" x="550" y="378" font-size="15" font-weight="700" text-anchor="middle">Beispiel 3-Knoten-Träger (Stufe 1):   f = [2, 4, 5] (3 freie DOFs)   |   p = [0, 1, 3] (3 gesperrte Lager-DOFs)</text>
 </svg>

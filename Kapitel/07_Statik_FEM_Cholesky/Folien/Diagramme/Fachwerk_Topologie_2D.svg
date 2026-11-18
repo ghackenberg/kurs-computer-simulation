@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 370" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 0 560 360" width="560" height="360">
   <defs>
     <!-- @svg-palette-defs:start -->
     <linearGradient id="grad-sem-primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -38,19 +38,13 @@
       <stop offset="100%" stop-color="#334155" />
     </linearGradient>
     <!-- @svg-palette-defs:end -->
-    <!-- Pfeilspitze Last / Kraft -->
     <marker id="arrow-force" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path class="sem-danger-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
     </marker>
-    <!-- Pfeilspitze Lagerreaktion -->
     <marker id="arrow-reaction" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path class="sem-success-fill" d="M 0 1.5 L 8 5 L 0 8.5 z" />
     </marker>
-    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="110%">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.08" />
-    </filter>
   </defs>
-
   <style>
     
 /* @svg-palette:start */
@@ -80,128 +74,83 @@
       .sem-muted-fill { fill: url(#grad-sem-muted-fill); }
       .sem-muted-text { fill: #334155; }
       /* @svg-palette:end */
-text {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
+text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
   </style>
 
-  <!-- Titelbanner -->
-  <rect class="sem-muted" x="5" y="5" width="530" height="40" rx="12"  stroke="none"/>
-  <rect class="sem-muted" x="5" y="33" width="530" height="12"  stroke="none"/>
-  <line class="sem-muted-stroke" x1="5" y1="45" x2="535" y2="45" stroke-width="1.5" />
-  <text class="sem-primary-text" x="20" y="30" font-size="17" font-weight="700">Topologie eines 2D-Fachwerks (5 Knoten, 7 Stäbe)</text>
+  <!-- Stäbe (5 Knoten, 7 Stäbe) -->
+  <!-- S1: 1 (100,220) -> 2 (260,220) -->
+  <line class="sem-primary-stroke" x1="100" y1="220" x2="260" y2="220" stroke-width="5" stroke-linecap="round" />
+  <!-- S2: 2 (260,220) -> 3 (420,220) -->
+  <line class="sem-primary-stroke" x1="260" y1="220" x2="420" y2="220" stroke-width="5" stroke-linecap="round" />
+  <!-- S3: 4 (180,100) -> 5 (340,100) -->
+  <line class="sem-primary-stroke" x1="180" y1="100" x2="340" y2="100" stroke-width="5" stroke-linecap="round" />
+  <!-- S4: 1 (100,220) -> 4 (180,100) -->
+  <line class="sem-primary-stroke" x1="100" y1="220" x2="180" y2="100" stroke-width="5" stroke-linecap="round" />
+  <!-- S5: 2 (260,220) -> 4 (180,100) -->
+  <line class="sem-primary-stroke" x1="260" y1="220" x2="180" y2="100" stroke-width="5" stroke-linecap="round" />
+  <!-- S6: 2 (260,220) -> 5 (340,100) -->
+  <line class="sem-primary-stroke" x1="260" y1="220" x2="340" y2="100" stroke-width="5" stroke-linecap="round" />
+  <!-- S7: 3 (420,220) -> 5 (340,100) -->
+  <line class="sem-primary-stroke" x1="420" y1="220" x2="340" y2="100" stroke-width="5" stroke-linecap="round" />
 
-  <!-- STÄBE (Truss Members) -->
-  <!-- S1: 1 -> 2 -->
-  <line class="sem-primary-stroke" x1="95" y1="240" x2="265" y2="240" stroke-width="4.5" stroke-linecap="round" />
-  <!-- S2: 2 -> 3 -->
-  <line class="sem-primary-stroke" x1="265" y1="240" x2="435" y2="240" stroke-width="4.5" stroke-linecap="round" />
-  <!-- S3: 4 -> 5 -->
-  <line class="sem-primary-stroke" x1="180" y1="120" x2="350" y2="120" stroke-width="4.5" stroke-linecap="round" />
-  <!-- S4: 1 -> 4 -->
-  <line class="sem-primary-stroke" x1="95" y1="240" x2="180" y2="120" stroke-width="4.5" stroke-linecap="round" />
-  <!-- S5: 2 -> 4 -->
-  <line class="sem-primary-stroke" x1="265" y1="240" x2="180" y2="120" stroke-width="4.5" stroke-linecap="round" />
-  <!-- S6: 2 -> 5 -->
-  <line class="sem-primary-stroke" x1="265" y1="240" x2="350" y2="120" stroke-width="4.5" stroke-linecap="round" />
-  <!-- S7: 3 -> 5 -->
-  <line class="sem-primary-stroke" x1="435" y1="240" x2="350" y2="120" stroke-width="4.5" stroke-linecap="round" />
+  <!-- Stab-Labels (sauber neben den Stäben, keine engen Rects) -->
+  <text class="sem-primary-text" x="180" y="208" font-size="15" font-weight="700" text-anchor="middle">S1</text>
+  <text class="sem-primary-text" x="340" y="208" font-size="15" font-weight="700" text-anchor="middle">S2</text>
+  <text class="sem-primary-text" x="260" y="88" font-size="15" font-weight="700" text-anchor="middle">S3</text>
+  <text class="sem-primary-text" x="120" y="154" font-size="15" font-weight="700" text-anchor="middle">S4</text>
+  <text class="sem-primary-text" x="200" y="164" font-size="15" font-weight="700" text-anchor="middle">S5</text>
+  <text class="sem-primary-text" x="320" y="164" font-size="15" font-weight="700" text-anchor="middle">S6</text>
+  <text class="sem-primary-text" x="400" y="154" font-size="15" font-weight="700" text-anchor="middle">S7</text>
 
-  <!-- STAB-BESCHRIFTUNGEN (Badges, font-size: 16px) -->
-  <!-- S1 -->
-  <rect class="sem-primary" x="162" y="227" width="36" height="26" rx="5" stroke-width="1.5" />
-  <text class="sem-primary-text" x="180" y="245" font-size="16" font-weight="700" text-anchor="middle">S1</text>
+  <!-- Festlager bei Knoten 1 (100, 220) -->
+  <polygon class="sem-muted" points="100,220 86,242 114,242" stroke-width="2" />
+  <line class="sem-muted-stroke" x1="76" y1="242" x2="124" y2="242" stroke-width="2.5" />
+  <line class="sem-muted-stroke" x1="82" y1="242" x2="76" y2="250" stroke-width="1.5" />
+  <line class="sem-muted-stroke" x1="94" y1="242" x2="88" y2="250" stroke-width="1.5" />
+  <line class="sem-muted-stroke" x1="106" y1="242" x2="100" y2="250" stroke-width="1.5" />
+  <line class="sem-muted-stroke" x1="118" y1="242" x2="112" y2="250" stroke-width="1.5" />
 
-  <!-- S2 -->
-  <rect class="sem-primary" x="332" y="227" width="36" height="26" rx="5" stroke-width="1.5" />
-  <text class="sem-primary-text" x="350" y="245" font-size="16" font-weight="700" text-anchor="middle">S2</text>
+  <!-- Reaktionen Festlager: A_x, A_y -->
+  <line class="sem-success-stroke" x1="25" y1="220" x2="80" y2="220" stroke-width="3" marker-end="url(#arrow-reaction)" />
+  <text class="sem-success-text" x="45" y="206" font-size="15" font-weight="700" text-anchor="middle">A_x = 0 kN</text>
 
-  <!-- S3 -->
-  <rect class="sem-primary" x="247" y="107" width="36" height="26" rx="5" stroke-width="1.5" />
-  <text class="sem-primary-text" x="265" y="125" font-size="16" font-weight="700" text-anchor="middle">S3</text>
+  <line class="sem-success-stroke" x1="100" y1="305" x2="100" y2="256" stroke-width="3" marker-end="url(#arrow-reaction)" />
+  <text class="sem-success-text" x="114" y="295" font-size="15" font-weight="700">A_y = +2,5 kN</text>
+  <text class="sem-muted-text" x="14" y="266" font-size="15" font-weight="600">Festlager</text>
 
-  <!-- S4 -->
-  <rect class="sem-primary" x="115" y="167" width="36" height="26" rx="5" stroke-width="1.5" />
-  <text class="sem-primary-text" x="133" y="185" font-size="16" font-weight="700" text-anchor="middle">S4</text>
+  <!-- Loselager bei Knoten 3 (420, 220) -->
+  <polygon class="sem-muted" points="420,220 406,240 434,240" stroke-width="2" />
+  <circle class="sem-muted-stroke" cx="412" cy="245" r="3.5" fill="none" stroke-width="1.8" />
+  <circle class="sem-muted-stroke" cx="428" cy="245" r="3.5" fill="none" stroke-width="1.8" />
+  <line class="sem-muted-stroke" x1="396" y1="250" x2="444" y2="250" stroke-width="2.5" />
 
-  <!-- S5 -->
-  <rect class="sem-primary" x="202" y="167" width="36" height="26" rx="5" stroke-width="1.5" />
-  <text class="sem-primary-text" x="220" y="185" font-size="16" font-weight="700" text-anchor="middle">S5</text>
+  <!-- Reaktion Loselager: C_y -->
+  <line class="sem-success-stroke" x1="420" y1="305" x2="420" y2="256" stroke-width="3" marker-end="url(#arrow-reaction)" />
+  <text class="sem-success-text" x="434" y="295" font-size="15" font-weight="700">C_y = +7,5 kN</text>
+  <text class="sem-muted-text" x="448" y="246" font-size="15" font-weight="600">Loselager</text>
 
-  <!-- S6 -->
-  <rect class="sem-primary" x="292" y="167" width="36" height="26" rx="5" stroke-width="1.5" />
-  <text class="sem-primary-text" x="310" y="185" font-size="16" font-weight="700" text-anchor="middle">S6</text>
+  <!-- Äußere Last F bei Knoten 5 (340, 100) -->
+  <line class="sem-danger-stroke" x1="340" y1="18" x2="340" y2="80" stroke-width="3.5" marker-end="url(#arrow-force)" />
+  <text class="sem-danger-text" x="354" y="42" font-size="16" font-weight="700">F = 10 kN</text>
+  <text class="sem-danger-text" x="354" y="62" font-size="15">(Knotenlast)</text>
 
-  <!-- S7 -->
-  <rect class="sem-primary" x="380" y="167" width="36" height="26" rx="5" stroke-width="1.5" />
-  <text class="sem-primary-text" x="398" y="185" font-size="16" font-weight="700" text-anchor="middle">S7</text>
+  <!-- Knoten 1..5 -->
+  <circle class="sem-primary" cx="100" cy="220" r="14" stroke-width="2.5" />
+  <text class="sem-primary-text" x="100" y="225" font-size="15" font-weight="700" text-anchor="middle">1</text>
 
-  <!-- LAGERUNGEN -->
-  <!-- Festlager bei Knoten 1 (95, 240) -->
-  <polygon class="sem-muted" points="95,240 82,260 108,260" stroke-width="1.8" />
-  <line class="sem-muted-stroke" x1="72" y1="260" x2="118" y2="260" stroke-width="2.5" />
-  <line class="sem-muted-stroke" x1="76" y1="260" x2="71" y2="268" stroke-width="1.5" />
-  <line class="sem-muted-stroke" x1="86" y1="260" x2="81" y2="268" stroke-width="1.5" />
-  <line class="sem-muted-stroke" x1="96" y1="260" x2="91" y2="268" stroke-width="1.5" />
-  <line class="sem-muted-stroke" x1="106" y1="260" x2="101" y2="268" stroke-width="1.5" />
-  <line class="sem-muted-stroke" x1="116" y1="260" x2="111" y2="268" stroke-width="1.5" />
-  <!-- Lagerreaktionskräfte Ax, Ay -->
-  <line class="sem-success-stroke" x1="25" y1="240" x2="78" y2="240" stroke-width="2.5" marker-end="url(#arrow-reaction)" />
-  <text class="sem-success-text" x="45" y="232" font-size="16" font-weight="700">A_x</text>
+  <circle class="sem-primary" cx="260" cy="220" r="14" stroke-width="2.5" />
+  <text class="sem-primary-text" x="260" y="225" font-size="15" font-weight="700" text-anchor="middle">2</text>
 
-  <line class="sem-success-stroke" x1="95" y1="305" x2="95" y2="268" stroke-width="2.5" marker-end="url(#arrow-reaction)" />
-  <text class="sem-success-text" x="105" y="295" font-size="16" font-weight="700">A_y</text>
-  <text class="sem-muted-text" x="12" y="286" font-size="15" font-weight="600">Festlager</text>
+  <circle class="sem-primary" cx="420" cy="220" r="14" stroke-width="2.5" />
+  <text class="sem-primary-text" x="420" y="225" font-size="15" font-weight="700" text-anchor="middle">3</text>
 
-  <!-- Loslager bei Knoten 3 (435, 240) -->
-  <polygon class="sem-muted" points="435,240 422,258 448,258" stroke-width="1.8" />
-  <!-- Rollen -->
-  <circle class="sem-muted-stroke" cx="428" cy="263" r="3.5" fill="#FFFFFF" stroke-width="1.5" />
-  <circle class="sem-muted-stroke" cx="442" cy="263" r="3.5" fill="#FFFFFF" stroke-width="1.5" />
-  <!-- Bodenlinie -->
-  <line class="sem-muted-stroke" x1="412" y1="268" x2="458" y2="268" stroke-width="2.5" />
-  <line class="sem-muted-stroke" x1="416" y1="268" x2="411" y2="276" stroke-width="1.5" />
-  <line class="sem-muted-stroke" x1="426" y1="268" x2="421" y2="276" stroke-width="1.5" />
-  <line class="sem-muted-stroke" x1="436" y1="268" x2="431" y2="276" stroke-width="1.5" />
-  <line class="sem-muted-stroke" x1="446" y1="268" x2="441" y2="276" stroke-width="1.5" />
-  <line class="sem-muted-stroke" x1="456" y1="268" x2="451" y2="276" stroke-width="1.5" />
-  <!-- Lagerreaktionskraft Cy -->
-  <line class="sem-success-stroke" x1="435" y1="305" x2="435" y2="276" stroke-width="2.5" marker-end="url(#arrow-reaction)" />
-  <text class="sem-success-text" x="445" y="295" font-size="16" font-weight="700">C_y</text>
-  <text class="sem-muted-text" x="465" y="265" font-size="15" font-weight="600">Loslager</text>
+  <circle class="sem-primary" cx="180" cy="100" r="14" stroke-width="2.5" />
+  <text class="sem-primary-text" x="180" y="105" font-size="15" font-weight="700" text-anchor="middle">4</text>
 
-  <!-- ÄUSSERE LASTEN -->
-  <!-- Last F bei Knoten 5 (350, 120) -->
-  <line class="sem-danger-stroke" x1="350" y1="50" x2="350" y2="98" stroke-width="3" marker-end="url(#arrow-force)" />
-  <text class="sem-danger-text" x="364" y="82" font-size="17" font-weight="700">F (Last)</text>
+  <circle class="sem-primary" cx="340" cy="100" r="14" stroke-width="2.5" />
+  <text class="sem-primary-text" x="340" y="105" font-size="15" font-weight="700" text-anchor="middle">5</text>
 
-  <!-- KNOTEN -->
-  <!-- Knoten 1 -->
-  <circle class="sem-primary-stroke" cx="95" cy="240" r="14" fill="#FFFFFF" stroke-width="3" />
-  <text class="sem-primary-text" x="95" y="246" font-size="16" font-weight="700" text-anchor="middle">1</text>
-
-  <!-- Knoten 2 -->
-  <circle class="sem-primary-stroke" cx="265" cy="240" r="14" fill="#FFFFFF" stroke-width="3" />
-  <text class="sem-primary-text" x="265" y="246" font-size="16" font-weight="700" text-anchor="middle">2</text>
-
-  <!-- Knoten 3 -->
-  <circle class="sem-primary-stroke" cx="435" cy="240" r="14" fill="#FFFFFF" stroke-width="3" />
-  <text class="sem-primary-text" x="435" y="246" font-size="16" font-weight="700" text-anchor="middle">3</text>
-
-  <!-- Knoten 4 -->
-  <circle class="sem-primary-stroke" cx="180" cy="120" r="14" fill="#FFFFFF" stroke-width="3" />
-  <text class="sem-primary-text" x="180" y="126" font-size="16" font-weight="700" text-anchor="middle">4</text>
-
-  <!-- Knoten 5 -->
-  <circle class="sem-primary-stroke" cx="350" cy="120" r="14" fill="#FFFFFF" stroke-width="3" />
-  <text class="sem-primary-text" x="350" y="126" font-size="16" font-weight="700" text-anchor="middle">5</text>
-
-  <!-- LEGENDE / STATIK-INFO BOX -->
-  <rect class="sem-card" x="20" y="320" width="500" height="36" rx="8" stroke-width="1.2" />
-  <text class="sem-card-text" x="270" y="343" font-size="15" text-anchor="middle">
-    <tspan class="sem-primary-text" font-weight="700">5 Knoten</tspan>  •  
-    <tspan class="sem-primary-text" font-weight="700">7 Stäbe</tspan>  •  
-    <tspan class="sem-success-text" font-weight="700">3 Lagerreaktionen</tspan>  •  
-    <tspan font-weight="700">2k = s + l</tspan>
-  </text>
+  <!-- Statik-Bilanz unten (organische Pill) -->
+  <rect class="sem-card" x="40" y="320" width="440" height="32" rx="8" stroke-width="1.2" />
+  <text class="sem-card-text" x="260" y="341" font-size="15" font-weight="700" text-anchor="middle">2k = s + l  (10 = 7 + 3, Spannweite 4 m)</text>
 </svg>

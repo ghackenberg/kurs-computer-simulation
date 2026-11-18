@@ -43,7 +43,7 @@ Dieser Abschnitt umfasst die folgenden Inhalte:
 - **Antike:** Römer nutzen erste Dreiecksverbände für Brücken und Lehrgerüste.
 - **Mittelalter & Renaissance:** Empirische Dachstühle in Kirchen und Kathedralen.
 - **18. Jahrhundert:** Leonhard Euler begründet die Balken- und Knicktheorie (*Euler-Knicklast*).
-- **19. Jahrhundert:** Das Eisenbahnzeitalter erzwingt leichte, weitgespannte Brücken und eine exakte mathematische Theorie für Stabkräfte und Lagerreaktionen ($A_x, A_y, C_y$).
+- **19. Jahrhundert:** Das Eisenbahnzeitalter erzwingt leichte, weitgespannte Brücken und eine exakte mathematische Theorie für Stabkräfte unter Last $F$ und Lagerreaktionen ($A_x, A_y, C_y$).
 
 </div>
 <div class="two">
